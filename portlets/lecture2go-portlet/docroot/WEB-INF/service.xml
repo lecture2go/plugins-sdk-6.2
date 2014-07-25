@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+<service-builder package-path="de.uhh.l2g.plugins" auto-namespace-tables="true">
+    <author>Iavor Sturm</author>
+    <namespace>LG</namespace>
+    <entity name="Lectureseries" local-service="true" remote-service="false">
+        <column name="lectureseriesId" type="long" primary="true" id-type="increment"></column>
+        <column name="number" type="String"></column>
+        <column name="eventType" type="String"></column>
+        <column name="eventCategory" type="String"></column>
+        <column name="name" type="String"></column>
+        <column name="shortDesc" type="String"></column>
+        <column name="semesterName" type="String"></column>
+        <column name="language" type="String"></column>
+        <column name="facultyName" type="String"></column>
+        <column name="instructorsString" type="String"></column>
+        <column name="password" type="String"></column>
+        <column name="approved" type="int"></column>
+        <column name="longDesc" type="String"></column>
+        <order by="asc">
+            <order-column name="name" order-by="asc"></order-column>
+        </order>
+        <finder name="Semester" return-type="Collection">
+            <finder-column name="semesterName"></finder-column>
+        </finder>
+        <finder name="Language" return-type="Collection">
+            <finder-column name="language"></finder-column>
+        </finder>
+        <finder name="Number" return-type="Collection">
+            <finder-column name="number"></finder-column>
+        </finder>
+        <finder name="Type" return-type="Collection">
+            <finder-column name="eventType" case-sensitive="false"></finder-column>
+        </finder>
+        <finder name="Category" return-type="Collection">
+            <finder-column name="eventCategory"></finder-column>
+        </finder>
+        <finder name="Name" return-type="Collection">
+            <finder-column name="name"></finder-column>
+        </finder>
+        <finder name="Faculty" return-type="Collection">
+            <finder-column name="facultyName"></finder-column>
+        </finder>
+        <finder name="Approved" return-type="Collection">
+            <finder-column name="approved"></finder-column>
+        </finder>
+    </entity>
+    <entity name="Facility" local-service="true" remote-service="false">
+        <column name="facilityId" type="long" primary="true" id-type="increment"></column>
+        <column name="parentId" type="int"></column>
+        <column name="name" type="String"></column>
+        <column name="typ" type="String"></column>
+        <column name="www" type="String"></column>
+        <column name="level" type="int"></column>
+        <column name="sort" type="int"></column>
+        <finder name="Parent" return-type="Collection">
+            <finder-column name="parentId"></finder-column>
+        </finder>
+        <finder name="Name" return-type="Collection">
+            <finder-column name="name"></finder-column>
+        </finder>
+        <finder name="Typ" return-type="Collection">
+            <finder-column name="typ"></finder-column>
+        </finder>
+        <finder name="Www" return-type="Collection">
+            <finder-column name="www"></finder-column>
+        </finder>
+        <finder name="level" return-type="Collection">
+            <finder-column name="level"></finder-column>
+        </finder>
+        <finder name="Sort" return-type="Collection">
+            <finder-column name="sort"></finder-column>
+        </finder>
+    </entity>
+    <entity name="Lectureseries_Facility" local-service="true" remote-service="false">
+        <column name="lectureseriesFacilityId" type="long" primary="true" id-type="increment"></column>
+        <column name="lectureseriesId" type="long" primary="false"></column>
+        <column name="facilityId" type="long" primary="false"></column>
+    </entity>
+    <entity name="Producer" local-service="true" remote-service="false">
+        <column name="producerId" type="long" primary="true"></column>
+        <column name="idNum" type="String"></column>
+        <column name="homeDir" type="String"></column>
+        <column name="hostId" type="long"></column>
+        <column name="facilityId" type="long"></column>
+        <column name="numberOfProductions" type="long"></column>
+        <column name="approved" type="int"></column>
+        <finder name="Host" return-type="Collection">
+            <finder-column name="hostId"></finder-column>
+        </finder>
+        <finder name="Facility" return-type="Collection">
+            <finder-column name="facilityId"></finder-column>
+        </finder>
+        <finder name="Status" return-type="Collection">
+            <finder-column name="approved"></finder-column>
+        </finder>
+        <finder name="Directory" return-type="Producer">
+            <finder-column name="homeDir"></finder-column>
+        </finder>
+        <finder name="UID" return-type="Producer">
+            <finder-column name="idNum"></finder-column>
+        </finder>
+    </entity>
+    <entity name="Producer_Lectureseries" local-service="true" remote-service="false">
+        <column name="producerLectureseries" type="long" primary="true" id-type="increment"></column>
+        <column name="lectureseriesId" type="long"></column>
+        <column name="producerId" type="long"></column>
+    </entity>
+    <entity name="Host" local-service="true" remote-service="false">
+        <column name="hostId" primary="true" type="long" id-type="increment"></column>
+        <column name="protocol" type="String"></column>
+        <column name="streamer" type="String"></column>
+        <column name="port" type="int"></column>
+        <column name="serverRoot" type="String"></column>
+        <column name="name" type="String"></column>
+    </entity>
+    <entity name="Facility_Host" local-service="true" remote-service="false">
+        <column name="fasilityHostId" type="long" primary="true" id-type="increment"></column>
+        <column name="facilityId" type="long"></column>
+        <column name="hostId" type="long"></column>
+    </entity>
+    <entity name="Office" local-service="true" remote-service="false">
+        <column name="officeId" type="long" primary="true" id-type="increment"></column>
+        <column name="name" type="String"></column>
+        <column name="www" type="String"></column>
+        <column name="email" type="String"></column>
+        <column name="facilityId" type="long"></column>
+    </entity>
+    <entity name="Coordinator" local-service="true" remote-service="false">
+        <column name="coordinatorId" type="long" primary="true"></column>
+        <column name="facilityId" type="long"></column>
+        <column name="officeId" type="long"></column>
+        <finder name="Facility" return-type="Collection">
+            <finder-column name="facilityId"></finder-column>
+        </finder>
+        <finder name="Office" return-type="Collection">
+            <finder-column name="officeId"></finder-column>
+        </finder>
+    </entity>
+    <entity name="Sys" local-service="true" remote-service="false">
+        <column name="sysId" type="int" primary="true" id-type="increment"></column>
+        <column name="version" type="String"></column>
+        <column name="setupWizard" type="int"></column>
+    </entity>
+    <entity name="Lastvideolist" local-service="true" remote-service="false">
+        <column name="lastvideolistId" type="int" primary="true" id-type="increment"></column>
+        <column name="videoId" type="int"></column>
+    </entity>
+    <entity name="License" local-service="true" remote-service="false">
+        <column name="licenseId" type="int" primary="true" id-type="increment"></column>
+        <column name="videoId" type="int"></column>
+        <column name="ccby" type="String"></column>
+        <column name="ccbybc" type="String"></column>
+        <column name="ccbyncnd" type="String"></column>
+        <column name="ccbyncsa" type="String"></column>
+        <column name="ccbysa" type="String"></column>
+        <column name="ccbync" type="String"></column>
+        <column name="l2go" type="String"></column>
+    </entity>
+    <entity name="Metadata" local-service="true" remote-service="false">
+        <column name="metadataId" type="long" primary="true" id-type="increment"></column>
+        <column name="URLID" type="String"></column>
+        <column name="format" type="String"></column>
+        <column name="type" type="String"></column>
+        <column name="language" type="String"></column>
+        <column name="title" type="String"></column>
+        <column name="subject" type="String"></column>
+        <column name="coverage" type="String"></column>
+        <column name="description" type="String"></column>
+        <column name="creator" type="String"></column>
+        <column name="publisher" type="String"></column>
+        <column name="contributor" type="String"></column>
+        <column name="rightsHolder" type="String"></column>
+        <column name="rights" type="String"></column>
+        <column name="provenance" type="String"></column>
+        <column name="source" type="String"></column>
+        <column name="relation" type="String"></column>
+        <column name="audience" type="String"></column>
+        <column name="instructionalMethods" type="String"></column>
+        <column name="date" type="Date"></column>
+    </entity>
+    <entity name="Segment" local-service="true" remote-service="false">
+        <column name="segmentId" type="int" primary="true" id-type="increment"></column>
+        <column name="videoId" type="int"></column>
+        <column name="start" type="String"></column>
+        <column name="title" type="String"></column>
+        <column name="description" type="String"></column>
+        <column name="end" type="String"></column>
+        <column name="chapter" type="String"></column>
+        <column name="userId" type="int"></column>
+    </entity>
+    <entity local-service="true" remote-service="false" name="Segment_User_Video">
+        <column name="segmentId" type="long"></column>
+        <column name="userId" type="long"></column>
+        <column name="videoId" type="long"></column>
+        <column name="segmentUserVideoId" type="long" primary="true" id-type="increment"></column>
+    </entity>
+    <entity name="Upload" local-service="true" remote-service="false">
+        <column name="uploadId" type="long" primary="true" id-type="increment"></column>
+        <column name="userId" type="long"></column>
+        <column name="contentLength" type="long"></column>
+        <column name="timestamp" type="long"></column>
+        <column name="status" type="int"></column>
+        <column name="videoId" type="int"></column>
+    </entity>
+    <entity name="Video" local-service="true" remote-service="false">
+        <column name="videoId" type="long" primary="true" id-type="increment"></column>
+        <column name="title" type="String"></column>
+        <column name="tags" type="String"></column>
+        <column name="lectureseriesId" type="long"></column>
+        <column name="producerId" type="long"></column>
+        <column name="containerFormat" type="String"></column>
+        <column name="filename" type="String"></column>
+        <column name="resolution" type="String"></column>
+        <column name="duration" type="String"></column>
+        <column name="hostId" type="long"></column>
+        <column name="fileSize" type="String"></column>
+        <column name="generationDate" type="String"></column>
+        <column name="openAccess" type="int"></column>
+        <column name="downloadLink" type="int"></column>
+        <column name="metadataId" type="int"></column>
+        <column name="surl" type="String"></column>
+        <column name="hits" type="int"></column>
+        <column name="uploadDate" type="Date"></column>
+        <column name="permittedToSegment" type="int"></column>
+        <column name="facilityId" type="long"></column>
+        <column name="citation2go" type="int"></column>
+    </entity>
+    <entity name="Video_Facility" local-service="true" remote-service="false">
+        <column name="videoFacilityId" type="long" primary="true" id-type="increment"></column>
+        <column name="videoId" type="long"></column>
+        <column name="facilityId" type="long"></column>
+    </entity>
+    <entity name="Videohitlist" local-service="true" remote-service="false">
+        <column name="videohitlistId" type="int" primary="true" id-type="increment"></column>
+        <column name="hitsPerDay" type="int"></column>
+        <column name="hitsPerWeek" type="int"></column>
+        <column name="hitsPerMonth" type="int"></column>
+        <column name="hitsPerYear" type="int"></column>
+    </entity>
+</service-builder>

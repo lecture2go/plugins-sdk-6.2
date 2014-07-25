@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="de.uhh.l2g.plugins.service.CoordinatorLocalService" class="de.uhh.l2g.plugins.service.impl.CoordinatorLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.CoordinatorPersistence" class="de.uhh.l2g.plugins.service.persistence.CoordinatorPersistenceImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.FacilityLocalService" class="de.uhh.l2g.plugins.service.impl.FacilityLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.FacilityPersistence" class="de.uhh.l2g.plugins.service.persistence.FacilityPersistenceImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.Facility_HostLocalService" class="de.uhh.l2g.plugins.service.impl.Facility_HostLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.Facility_HostPersistence" class="de.uhh.l2g.plugins.service.persistence.Facility_HostPersistenceImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.HostLocalService" class="de.uhh.l2g.plugins.service.impl.HostLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.HostPersistence" class="de.uhh.l2g.plugins.service.persistence.HostPersistenceImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.LastvideolistLocalService" class="de.uhh.l2g.plugins.service.impl.LastvideolistLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.LastvideolistPersistence" class="de.uhh.l2g.plugins.service.persistence.LastvideolistPersistenceImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.LectureseriesLocalService" class="de.uhh.l2g.plugins.service.impl.LectureseriesLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.LectureseriesPersistence" class="de.uhh.l2g.plugins.service.persistence.LectureseriesPersistenceImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.Lectureseries_FacilityLocalService" class="de.uhh.l2g.plugins.service.impl.Lectureseries_FacilityLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.Lectureseries_FacilityPersistence" class="de.uhh.l2g.plugins.service.persistence.Lectureseries_FacilityPersistenceImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.LicenseLocalService" class="de.uhh.l2g.plugins.service.impl.LicenseLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.LicensePersistence" class="de.uhh.l2g.plugins.service.persistence.LicensePersistenceImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.MetadataLocalService" class="de.uhh.l2g.plugins.service.impl.MetadataLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.MetadataPersistence" class="de.uhh.l2g.plugins.service.persistence.MetadataPersistenceImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.OfficeLocalService" class="de.uhh.l2g.plugins.service.impl.OfficeLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.OfficePersistence" class="de.uhh.l2g.plugins.service.persistence.OfficePersistenceImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.ProducerLocalService" class="de.uhh.l2g.plugins.service.impl.ProducerLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.ProducerPersistence" class="de.uhh.l2g.plugins.service.persistence.ProducerPersistenceImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.Producer_LectureseriesLocalService" class="de.uhh.l2g.plugins.service.impl.Producer_LectureseriesLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.Producer_LectureseriesPersistence" class="de.uhh.l2g.plugins.service.persistence.Producer_LectureseriesPersistenceImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.SegmentLocalService" class="de.uhh.l2g.plugins.service.impl.SegmentLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.SegmentPersistence" class="de.uhh.l2g.plugins.service.persistence.SegmentPersistenceImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.Segment_User_VideoLocalService" class="de.uhh.l2g.plugins.service.impl.Segment_User_VideoLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.Segment_User_VideoPersistence" class="de.uhh.l2g.plugins.service.persistence.Segment_User_VideoPersistenceImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.SysLocalService" class="de.uhh.l2g.plugins.service.impl.SysLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.SysPersistence" class="de.uhh.l2g.plugins.service.persistence.SysPersistenceImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.UploadLocalService" class="de.uhh.l2g.plugins.service.impl.UploadLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.UploadPersistence" class="de.uhh.l2g.plugins.service.persistence.UploadPersistenceImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.VideoLocalService" class="de.uhh.l2g.plugins.service.impl.VideoLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.VideoPersistence" class="de.uhh.l2g.plugins.service.persistence.VideoPersistenceImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.Video_FacilityLocalService" class="de.uhh.l2g.plugins.service.impl.Video_FacilityLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.Video_FacilityPersistence" class="de.uhh.l2g.plugins.service.persistence.Video_FacilityPersistenceImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.VideohitlistLocalService" class="de.uhh.l2g.plugins.service.impl.VideohitlistLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.VideohitlistPersistence" class="de.uhh.l2g.plugins.service.persistence.VideohitlistPersistenceImpl" parent="basePersistence" />
+</beans>

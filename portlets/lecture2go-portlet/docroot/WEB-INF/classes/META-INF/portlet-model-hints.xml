@@ -1,0 +1,173 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="de.uhh.l2g.plugins.model.Coordinator">
+		<field name="coordinatorId" type="long" />
+		<field name="facilityId" type="long" />
+		<field name="officeId" type="long" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Facility">
+		<field name="facilityId" type="long" />
+		<field name="parentId" type="int" />
+		<field name="name" type="String" />
+		<field name="typ" type="String" />
+		<field name="www" type="String" />
+		<field name="level" type="int" />
+		<field name="sort" type="int" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Facility_Host">
+		<field name="fasilityHostId" type="long" />
+		<field name="facilityId" type="long" />
+		<field name="hostId" type="long" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Host">
+		<field name="hostId" type="long" />
+		<field name="protocol" type="String" />
+		<field name="streamer" type="String" />
+		<field name="port" type="int" />
+		<field name="serverRoot" type="String" />
+		<field name="name" type="String" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Lastvideolist">
+		<field name="lastvideolistId" type="int" />
+		<field name="videoId" type="int" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Lectureseries">
+		<field name="lectureseriesId" type="long" />
+		<field name="number" type="String" />
+		<field name="eventType" type="String" />
+		<field name="eventCategory" type="String" />
+		<field name="name" type="String" />
+		<field name="shortDesc" type="String" />
+		<field name="semesterName" type="String" />
+		<field name="language" type="String" />
+		<field name="facultyName" type="String" />
+		<field name="instructorsString" type="String" />
+		<field name="password" type="String" />
+		<field name="approved" type="int" />
+		<field name="longDesc" type="String" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Lectureseries_Facility">
+		<field name="lectureseriesFacilityId" type="long" />
+		<field name="lectureseriesId" type="long" />
+		<field name="facilityId" type="long" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.License">
+		<field name="licenseId" type="int" />
+		<field name="videoId" type="int" />
+		<field name="ccby" type="String" />
+		<field name="ccbybc" type="String" />
+		<field name="ccbyncnd" type="String" />
+		<field name="ccbyncsa" type="String" />
+		<field name="ccbysa" type="String" />
+		<field name="ccbync" type="String" />
+		<field name="l2go" type="String" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Metadata">
+		<field name="metadataId" type="long" />
+		<field name="URLID" type="String" />
+		<field name="format" type="String" />
+		<field name="type" type="String" />
+		<field name="language" type="String" />
+		<field name="title" type="String" />
+		<field name="subject" type="String" />
+		<field name="coverage" type="String" />
+		<field name="description" type="String" />
+		<field name="creator" type="String" />
+		<field name="publisher" type="String" />
+		<field name="contributor" type="String" />
+		<field name="rightsHolder" type="String" />
+		<field name="rights" type="String" />
+		<field name="provenance" type="String" />
+		<field name="source" type="String" />
+		<field name="relation" type="String" />
+		<field name="audience" type="String" />
+		<field name="instructionalMethods" type="String" />
+		<field name="date" type="Date" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Office">
+		<field name="officeId" type="long" />
+		<field name="name" type="String" />
+		<field name="www" type="String" />
+		<field name="email" type="String" />
+		<field name="facilityId" type="long" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Producer">
+		<field name="producerId" type="long" />
+		<field name="idNum" type="String" />
+		<field name="homeDir" type="String" />
+		<field name="hostId" type="long" />
+		<field name="facilityId" type="long" />
+		<field name="numberOfProductions" type="long" />
+		<field name="approved" type="int" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Producer_Lectureseries">
+		<field name="producerLectureseries" type="long" />
+		<field name="lectureseriesId" type="long" />
+		<field name="producerId" type="long" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Segment">
+		<field name="segmentId" type="int" />
+		<field name="videoId" type="int" />
+		<field name="start" type="String" />
+		<field name="title" type="String" />
+		<field name="description" type="String" />
+		<field name="end" type="String" />
+		<field name="chapter" type="String" />
+		<field name="userId" type="int" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Segment_User_Video">
+		<field name="segmentId" type="long" />
+		<field name="userId" type="long" />
+		<field name="videoId" type="long" />
+		<field name="segmentUserVideoId" type="long" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Sys">
+		<field name="sysId" type="int" />
+		<field name="version" type="String" />
+		<field name="setupWizard" type="int" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Upload">
+		<field name="uploadId" type="long" />
+		<field name="userId" type="long" />
+		<field name="contentLength" type="long" />
+		<field name="timestamp" type="long" />
+		<field name="status" type="int" />
+		<field name="videoId" type="int" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Video">
+		<field name="videoId" type="long" />
+		<field name="title" type="String" />
+		<field name="tags" type="String" />
+		<field name="lectureseriesId" type="long" />
+		<field name="producerId" type="long" />
+		<field name="containerFormat" type="String" />
+		<field name="filename" type="String" />
+		<field name="resolution" type="String" />
+		<field name="duration" type="String" />
+		<field name="hostId" type="long" />
+		<field name="fileSize" type="String" />
+		<field name="generationDate" type="String" />
+		<field name="openAccess" type="int" />
+		<field name="downloadLink" type="int" />
+		<field name="metadataId" type="int" />
+		<field name="surl" type="String" />
+		<field name="hits" type="int" />
+		<field name="uploadDate" type="Date" />
+		<field name="permittedToSegment" type="int" />
+		<field name="facilityId" type="long" />
+		<field name="citation2go" type="int" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Video_Facility">
+		<field name="videoFacilityId" type="long" />
+		<field name="videoId" type="long" />
+		<field name="facilityId" type="long" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Videohitlist">
+		<field name="videohitlistId" type="int" />
+		<field name="hitsPerDay" type="int" />
+		<field name="hitsPerWeek" type="int" />
+		<field name="hitsPerMonth" type="int" />
+		<field name="hitsPerYear" type="int" />
+	</model>
+</model-hints>

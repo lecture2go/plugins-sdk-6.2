@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+	version="2.0">
+	
+	<portlet>
+		<description xml:lang="de">Landing Page Thread</description>
+		<portlet-name>thread-landing-page</portlet-name>
+		<display-name xml:lang="de">Landing Page Thread</display-name>
+		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+		<init-param>
+			<name>contextConfigLocation</name>
+			<value>/WEB-INF/context/thread-landing-page.xml</value>
+		</init-param>
+		<expiration-cache>-1</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<supported-locale>en_US</supported-locale>
+		<supported-locale>de_DE</supported-locale>
+		<resource-bundle>de.uhh.l2g.resources.Resource</resource-bundle>
+		<portlet-info>
+			<title>Landing Page Thread</title>
+			<short-title>Landing Page Thread</short-title>
+			<keywords>Landing Page, Thread</keywords>
+		</portlet-info>
+	</portlet>
+	
+    <portlet>
+     	<portlet-name>lg-admin-user-management</portlet-name>
+     	<display-name>L2Go-User Management</display-name>
+     	<portlet-class>de.uhh.l2g.plugins.admin.AdminUserManagement</portlet-class>
+	    <init-param>
+	      	<name>view-template</name>
+	      	<value>/admin/userList.jsp</value>
+	    </init-param>
+	    <init-param>
+	      	<name>add-process-action-success-action</name>
+	      	<value>false</value>
+	    </init-param>
+	    <expiration-cache>0</expiration-cache>
+	    <supports>
+	      	<mime-type>text/html</mime-type>
+	    </supports>
+	    <resource-bundle>content.Language</resource-bundle>
+	    <portlet-info>
+	      	<title>L2Go-User Management</title>
+	      	<short-title>L2Go User Administration</short-title>
+	      	<keywords>L2Go User Administration</keywords>
+	    </portlet-info>
+	    <security-role-ref>
+	      	<role-name>administrator</role-name>
+	    </security-role-ref>
+	    <security-role-ref>
+	     	<role-name>guest</role-name>
+	    </security-role-ref>
+	    <security-role-ref>
+	      	<role-name>power-user</role-name>
+	    </security-role-ref>
+	    <security-role-ref>
+	      	<role-name>user</role-name>
+	    </security-role-ref>
+  </portlet>
+  
+</portlet-app>
