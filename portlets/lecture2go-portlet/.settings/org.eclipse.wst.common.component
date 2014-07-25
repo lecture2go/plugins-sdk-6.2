@@ -2,7 +2,6 @@
 <project-modules id="moduleCoreId" project-version="1.5.0">
     <wb-module deploy-name="lecture2go-portlet">
         <wb-resource deploy-path="/" source-path="/docroot" tag="defaultRootSource"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/lecture2go-src"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/docroot/WEB-INF/src"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/docroot/WEB-INF/service"/>
         <property name="java-output-path" value="/lecture2go-portlet/docroot/WEB-INF/classes"/>

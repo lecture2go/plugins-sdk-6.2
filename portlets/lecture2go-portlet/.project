@@ -33,11 +33,4 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>lecture2go-src</name>
-			<type>2</type>
-			<location>/Users/isturm/Documents/workspace-for-liferay-6.2.0/liferay-plugins-sdk-6.2/portlets/lecture2go-src</location>
-		</link>
-	</linkedResources>
 </projectDescription>
