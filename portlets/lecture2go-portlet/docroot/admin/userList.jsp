@@ -1,6 +1,11 @@
+<%@page import="de.uhh.l2g.plugins.service.ProducerLocalServiceUtil"%>
+<%@page import="de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil"%>
+<%@page import="de.uhh.l2g.plugins.service.FacilityLocalServiceUtil"%>
 <%@include file="/init.jsp"%>
 
 <%
+	long groupId = themeDisplay.getLayout().getGroupId();
+	String name = User.class.getName();
 	User u = UserLocalServiceUtil.getUser(new Long (request.getRemoteUser()));
 	List<User> tempUserList = new ArrayList();
 	AdminUserManagement aum = new AdminUserManagement();
@@ -17,12 +22,19 @@
 	<aui:select name="roleId" label="select-l2go-role" onChange="submit();">
 		<aui:option value="">select-l2go-role</aui:option>
 		<%for (int i = 0; i < l2goRoles.size(); i++) {
-		if(l2goRoles.get(i).getRoleId()==roleId){
-		%>
-		<aui:option value='<%=l2goRoles.get(i).getRoleId()%>' selected="true"><%=l2goRoles.get(i).getName()%></aui:option>
-		<%}else{%>
-		<aui:option value='<%=l2goRoles.get(i).getRoleId()%>'><%=l2goRoles.get(i).getName()%></aui:option>
-		<%}
+			//check for permissions
+			boolean permission = false;
+			if(permissionChecker.hasPermission(groupId,name,u.getPrimaryKey(),"ADD_L2GOPRODUCER") && (l2goRoles.get(i).getName().equals("L2Go Producer") || l2goRoles.get(i).getName().equals("L2Go Student"))) permission = true;
+			else if(permissionChecker.hasPermission(groupId,name,u.getPrimaryKey(),"ADD_L2GOADMIN")) permission = true;
+			
+			if(permission){
+				if(l2goRoles.get(i).getRoleId()==roleId){
+					%>
+					<aui:option value='<%=l2goRoles.get(i).getRoleId()%>' selected="true"><%=l2goRoles.get(i).getName()%></aui:option>
+					<%}else{%>
+					<aui:option value='<%=l2goRoles.get(i).getRoleId()%>'><%=l2goRoles.get(i).getName()%></aui:option>
+					<%}					
+			}
 		}%>
 	</aui:select>
 </aui:form>
@@ -44,9 +56,21 @@
 		<liferay-ui:search-container-column-text name="name">
 			<aui:a  href="<%=editURL.toString()%>"><%=usr.getFullName()%></aui:a>
 			<br/>
-			<%for (int i = 0; i < usr.getRoles().size(); i++) {	
-				String n = usr.getRoles().get(i).getName()+"; ";
-				out.println(n);
+			<%for (int i = 0; i < usr.getRoles().size(); i++) {
+				String n = usr.getRoles().get(i).getName();
+				//check for l2g role
+				if(n.contains("L2Go Coordinator")){
+					long fId = CoordinatorLocalServiceUtil.getCoordinator(usr.getUserId()).getFacilityId();
+					String fN = FacilityLocalServiceUtil.getFacility(fId).getName();
+					n+=" for "+ fN;
+				}
+				if(n.contains("L2Go Producer")){
+					long fId = ProducerLocalServiceUtil.getProducer(usr.getUserId()).getFacilityId();
+					String fN = FacilityLocalServiceUtil.getFacility(fId).getName();
+					n+=" for "+ fN;
+				}
+				n+="<br/>";
+				out.println(n);					
 			}%>
 		</liferay-ui:search-container-column-text>
 		<liferay-ui:search-container-column-jsp path="/admin/adminEditL2GoRolesButton.jsp"/>
