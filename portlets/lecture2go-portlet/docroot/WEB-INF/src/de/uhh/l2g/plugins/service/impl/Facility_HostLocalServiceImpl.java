@@ -14,6 +14,11 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+
+import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.service.base.Facility_HostLocalServiceBaseImpl;
 
 /**
@@ -37,4 +42,19 @@ public class Facility_HostLocalServiceImpl
 	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.Facility_HostLocalServiceUtil} to access the facility_ host local service.
 	 */
+	
+	public Host getByFacilityId(long facilityId) throws SystemException, PortalException {
+		long hId = facility_HostPersistence.findByfacilityId(facilityId).iterator().next().getHostId();
+		Host h = hostLocalService.getHost(hId);
+		return h;
+	}
+	
+	public Host getByHostId(long hostId) throws SystemException, PortalException {
+		long hId = facility_HostPersistence.findByhostId(hostId).iterator().next().getHostId();
+		Host h = hostLocalService.getHost(hId);
+		return h;
+	}
+	
+	
+	
 }

@@ -113,6 +113,14 @@ public class Facility_HostLocalServiceClpInvoker {
 		_methodName105 = "setBeanIdentifier";
 
 		_methodParameterTypes105 = new String[] { "java.lang.String" };
+
+		_methodName110 = "getByFacilityId";
+
+		_methodParameterTypes110 = new String[] { "long" };
+
+		_methodName111 = "getByHostId";
+
+		_methodParameterTypes111 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -216,6 +224,16 @@ public class Facility_HostLocalServiceClpInvoker {
 			return null;
 		}
 
+		if (_methodName110.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes110, parameterTypes)) {
+			return Facility_HostLocalServiceUtil.getByFacilityId(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName111.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes111, parameterTypes)) {
+			return Facility_HostLocalServiceUtil.getByHostId(((Long)arguments[0]).longValue());
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -255,4 +273,8 @@ public class Facility_HostLocalServiceClpInvoker {
 	private String[] _methodParameterTypes104;
 	private String _methodName105;
 	private String[] _methodParameterTypes105;
+	private String _methodName110;
+	private String[] _methodParameterTypes110;
+	private String _methodName111;
+	private String[] _methodParameterTypes111;
 }

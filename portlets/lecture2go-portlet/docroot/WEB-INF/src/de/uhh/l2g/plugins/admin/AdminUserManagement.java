@@ -1,5 +1,7 @@
 package de.uhh.l2g.plugins.admin;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +12,7 @@ import javax.portlet.ActionResponse;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
@@ -22,9 +25,12 @@ import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import de.uhh.l2g.plugins.model.Coordinator;
 import de.uhh.l2g.plugins.model.Facility;
+import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.FacilityLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Facility_HostLocalServiceUtil;
+import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 
 public class AdminUserManagement extends MVCPortlet {
@@ -154,7 +160,7 @@ public class AdminUserManagement extends MVCPortlet {
 	}
 	
 	
-	public void editRole(ActionRequest request, ActionResponse response) throws SystemException, NumberFormatException, PortalException {
+	public void editRole(ActionRequest request, ActionResponse response) throws SystemException, NumberFormatException, PortalException, IOException {
 		User u = UserLocalServiceUtil.getUser(new Long(request.getParameter("userId")));
 		
 		// coordinator request --- start
@@ -242,7 +248,7 @@ public class AdminUserManagement extends MVCPortlet {
 		CoordinatorLocalServiceUtil.updateCoordinator(c);// add or edit entry
 	}
 	
-	private void handleProducerRequest(ActionRequest request) throws NumberFormatException, PortalException, SystemException {
+	private void handleProducerRequest(ActionRequest request) throws NumberFormatException, PortalException, SystemException, IOException {
 		User u = UserLocalServiceUtil.getUser(new Long(request.getParameter("userId")));
 		Producer p = null;
 
@@ -260,6 +266,31 @@ public class AdminUserManagement extends MVCPortlet {
 		p.setProducerId(u.getUserId());
 		p.setFacilityId(new Long(request.getParameter("pfId")));
 		ProducerLocalServiceUtil.updateProducer(p);// add or edit entry
+		
+		//create repository for producer
+		Host h = Facility_HostLocalServiceUtil.getByFacilityId(p.getFacilityId());
+		createProducerRepository(h, p);
+	}
+	
+	public void createProducerRepository(Host host, Producer producer) throws IOException{
+		File folder = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/");
+		if (!folder.exists()) {
+			if (folder.mkdir()) {
+				Runtime runtime = Runtime.getRuntime();
+				String[] cmdArray = {PropsUtil.get("lecture2go.shell.bin"), "-c", "chown nobody " + folder.getAbsolutePath() };
+				runtime.exec(cmdArray);
+				String[] cmdArray1 = { PropsUtil.get("lecture2go.shell.bin"), "-c", "chown nobody:nobody " + folder.getAbsolutePath() };
+				runtime.exec(cmdArray1);
+				String[] cmdArray2 = { PropsUtil.get("lecture2go.shell.bin"), "-c", "chmod 701 " + folder.getAbsolutePath() };
+				runtime.exec(cmdArray2);
+
+				File prodFolder = new File(PropsUtil.get("lecture2go.httpstreaming.video.repository") + "/" + producer.getFacilityId() + "l2g" + producer.getHomeDir());
+				if (!prodFolder.exists()) {
+					String cmd = "ln -s " + folder.getAbsolutePath() + " " + prodFolder.getAbsolutePath();
+					runtime.exec(cmd);
+				}
+			}
+		}	
 	}
 	
 	public void initL2goRoles(User u) throws SystemException{

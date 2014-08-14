@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
@@ -82,6 +84,989 @@ public class Facility_HostPersistenceImpl extends BasePersistenceImpl<Facility_H
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(Facility_HostModelImpl.ENTITY_CACHE_ENABLED,
 			Facility_HostModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_FACILITYID =
+		new FinderPath(Facility_HostModelImpl.ENTITY_CACHE_ENABLED,
+			Facility_HostModelImpl.FINDER_CACHE_ENABLED,
+			Facility_HostImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByfacilityId",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITYID =
+		new FinderPath(Facility_HostModelImpl.ENTITY_CACHE_ENABLED,
+			Facility_HostModelImpl.FINDER_CACHE_ENABLED,
+			Facility_HostImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByfacilityId", new String[] { Long.class.getName() },
+			Facility_HostModelImpl.FACILITYID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_FACILITYID = new FinderPath(Facility_HostModelImpl.ENTITY_CACHE_ENABLED,
+			Facility_HostModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByfacilityId",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the facility_ hosts where facilityId = &#63;.
+	 *
+	 * @param facilityId the facility ID
+	 * @return the matching facility_ hosts
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Facility_Host> findByfacilityId(long facilityId)
+		throws SystemException {
+		return findByfacilityId(facilityId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the facility_ hosts where facilityId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.Facility_HostModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param facilityId the facility ID
+	 * @param start the lower bound of the range of facility_ hosts
+	 * @param end the upper bound of the range of facility_ hosts (not inclusive)
+	 * @return the range of matching facility_ hosts
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Facility_Host> findByfacilityId(long facilityId, int start,
+		int end) throws SystemException {
+		return findByfacilityId(facilityId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the facility_ hosts where facilityId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.Facility_HostModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param facilityId the facility ID
+	 * @param start the lower bound of the range of facility_ hosts
+	 * @param end the upper bound of the range of facility_ hosts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching facility_ hosts
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Facility_Host> findByfacilityId(long facilityId, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITYID;
+			finderArgs = new Object[] { facilityId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_FACILITYID;
+			finderArgs = new Object[] { facilityId, start, end, orderByComparator };
+		}
+
+		List<Facility_Host> list = (List<Facility_Host>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (Facility_Host facility_Host : list) {
+				if ((facilityId != facility_Host.getFacilityId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_FACILITY_HOST_WHERE);
+
+			query.append(_FINDER_COLUMN_FACILITYID_FACILITYID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(Facility_HostModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(facilityId);
+
+				if (!pagination) {
+					list = (List<Facility_Host>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<Facility_Host>(list);
+				}
+				else {
+					list = (List<Facility_Host>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first facility_ host in the ordered set where facilityId = &#63;.
+	 *
+	 * @param facilityId the facility ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching facility_ host
+	 * @throws de.uhh.l2g.plugins.NoSuchFacility_HostException if a matching facility_ host could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Facility_Host findByfacilityId_First(long facilityId,
+		OrderByComparator orderByComparator)
+		throws NoSuchFacility_HostException, SystemException {
+		Facility_Host facility_Host = fetchByfacilityId_First(facilityId,
+				orderByComparator);
+
+		if (facility_Host != null) {
+			return facility_Host;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("facilityId=");
+		msg.append(facilityId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFacility_HostException(msg.toString());
+	}
+
+	/**
+	 * Returns the first facility_ host in the ordered set where facilityId = &#63;.
+	 *
+	 * @param facilityId the facility ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching facility_ host, or <code>null</code> if a matching facility_ host could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Facility_Host fetchByfacilityId_First(long facilityId,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<Facility_Host> list = findByfacilityId(facilityId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last facility_ host in the ordered set where facilityId = &#63;.
+	 *
+	 * @param facilityId the facility ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching facility_ host
+	 * @throws de.uhh.l2g.plugins.NoSuchFacility_HostException if a matching facility_ host could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Facility_Host findByfacilityId_Last(long facilityId,
+		OrderByComparator orderByComparator)
+		throws NoSuchFacility_HostException, SystemException {
+		Facility_Host facility_Host = fetchByfacilityId_Last(facilityId,
+				orderByComparator);
+
+		if (facility_Host != null) {
+			return facility_Host;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("facilityId=");
+		msg.append(facilityId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFacility_HostException(msg.toString());
+	}
+
+	/**
+	 * Returns the last facility_ host in the ordered set where facilityId = &#63;.
+	 *
+	 * @param facilityId the facility ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching facility_ host, or <code>null</code> if a matching facility_ host could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Facility_Host fetchByfacilityId_Last(long facilityId,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByfacilityId(facilityId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Facility_Host> list = findByfacilityId(facilityId, count - 1,
+				count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the facility_ hosts before and after the current facility_ host in the ordered set where facilityId = &#63;.
+	 *
+	 * @param fasilityHostId the primary key of the current facility_ host
+	 * @param facilityId the facility ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next facility_ host
+	 * @throws de.uhh.l2g.plugins.NoSuchFacility_HostException if a facility_ host with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Facility_Host[] findByfacilityId_PrevAndNext(long fasilityHostId,
+		long facilityId, OrderByComparator orderByComparator)
+		throws NoSuchFacility_HostException, SystemException {
+		Facility_Host facility_Host = findByPrimaryKey(fasilityHostId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Facility_Host[] array = new Facility_HostImpl[3];
+
+			array[0] = getByfacilityId_PrevAndNext(session, facility_Host,
+					facilityId, orderByComparator, true);
+
+			array[1] = facility_Host;
+
+			array[2] = getByfacilityId_PrevAndNext(session, facility_Host,
+					facilityId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Facility_Host getByfacilityId_PrevAndNext(Session session,
+		Facility_Host facility_Host, long facilityId,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_FACILITY_HOST_WHERE);
+
+		query.append(_FINDER_COLUMN_FACILITYID_FACILITYID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(Facility_HostModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(facilityId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(facility_Host);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<Facility_Host> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the facility_ hosts where facilityId = &#63; from the database.
+	 *
+	 * @param facilityId the facility ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByfacilityId(long facilityId) throws SystemException {
+		for (Facility_Host facility_Host : findByfacilityId(facilityId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(facility_Host);
+		}
+	}
+
+	/**
+	 * Returns the number of facility_ hosts where facilityId = &#63;.
+	 *
+	 * @param facilityId the facility ID
+	 * @return the number of matching facility_ hosts
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByfacilityId(long facilityId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_FACILITYID;
+
+		Object[] finderArgs = new Object[] { facilityId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_FACILITY_HOST_WHERE);
+
+			query.append(_FINDER_COLUMN_FACILITYID_FACILITYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(facilityId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_FACILITYID_FACILITYID_2 = "facility_Host.facilityId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_HOSTID = new FinderPath(Facility_HostModelImpl.ENTITY_CACHE_ENABLED,
+			Facility_HostModelImpl.FINDER_CACHE_ENABLED,
+			Facility_HostImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByhostId",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_HOSTID =
+		new FinderPath(Facility_HostModelImpl.ENTITY_CACHE_ENABLED,
+			Facility_HostModelImpl.FINDER_CACHE_ENABLED,
+			Facility_HostImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByhostId", new String[] { Long.class.getName() },
+			Facility_HostModelImpl.HOSTID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_HOSTID = new FinderPath(Facility_HostModelImpl.ENTITY_CACHE_ENABLED,
+			Facility_HostModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByhostId",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the facility_ hosts where hostId = &#63;.
+	 *
+	 * @param hostId the host ID
+	 * @return the matching facility_ hosts
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Facility_Host> findByhostId(long hostId)
+		throws SystemException {
+		return findByhostId(hostId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the facility_ hosts where hostId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.Facility_HostModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param hostId the host ID
+	 * @param start the lower bound of the range of facility_ hosts
+	 * @param end the upper bound of the range of facility_ hosts (not inclusive)
+	 * @return the range of matching facility_ hosts
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Facility_Host> findByhostId(long hostId, int start, int end)
+		throws SystemException {
+		return findByhostId(hostId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the facility_ hosts where hostId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.Facility_HostModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param hostId the host ID
+	 * @param start the lower bound of the range of facility_ hosts
+	 * @param end the upper bound of the range of facility_ hosts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching facility_ hosts
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Facility_Host> findByhostId(long hostId, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_HOSTID;
+			finderArgs = new Object[] { hostId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_HOSTID;
+			finderArgs = new Object[] { hostId, start, end, orderByComparator };
+		}
+
+		List<Facility_Host> list = (List<Facility_Host>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (Facility_Host facility_Host : list) {
+				if ((hostId != facility_Host.getHostId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_FACILITY_HOST_WHERE);
+
+			query.append(_FINDER_COLUMN_HOSTID_HOSTID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(Facility_HostModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(hostId);
+
+				if (!pagination) {
+					list = (List<Facility_Host>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<Facility_Host>(list);
+				}
+				else {
+					list = (List<Facility_Host>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first facility_ host in the ordered set where hostId = &#63;.
+	 *
+	 * @param hostId the host ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching facility_ host
+	 * @throws de.uhh.l2g.plugins.NoSuchFacility_HostException if a matching facility_ host could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Facility_Host findByhostId_First(long hostId,
+		OrderByComparator orderByComparator)
+		throws NoSuchFacility_HostException, SystemException {
+		Facility_Host facility_Host = fetchByhostId_First(hostId,
+				orderByComparator);
+
+		if (facility_Host != null) {
+			return facility_Host;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("hostId=");
+		msg.append(hostId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFacility_HostException(msg.toString());
+	}
+
+	/**
+	 * Returns the first facility_ host in the ordered set where hostId = &#63;.
+	 *
+	 * @param hostId the host ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching facility_ host, or <code>null</code> if a matching facility_ host could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Facility_Host fetchByhostId_First(long hostId,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<Facility_Host> list = findByhostId(hostId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last facility_ host in the ordered set where hostId = &#63;.
+	 *
+	 * @param hostId the host ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching facility_ host
+	 * @throws de.uhh.l2g.plugins.NoSuchFacility_HostException if a matching facility_ host could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Facility_Host findByhostId_Last(long hostId,
+		OrderByComparator orderByComparator)
+		throws NoSuchFacility_HostException, SystemException {
+		Facility_Host facility_Host = fetchByhostId_Last(hostId,
+				orderByComparator);
+
+		if (facility_Host != null) {
+			return facility_Host;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("hostId=");
+		msg.append(hostId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFacility_HostException(msg.toString());
+	}
+
+	/**
+	 * Returns the last facility_ host in the ordered set where hostId = &#63;.
+	 *
+	 * @param hostId the host ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching facility_ host, or <code>null</code> if a matching facility_ host could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Facility_Host fetchByhostId_Last(long hostId,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByhostId(hostId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Facility_Host> list = findByhostId(hostId, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the facility_ hosts before and after the current facility_ host in the ordered set where hostId = &#63;.
+	 *
+	 * @param fasilityHostId the primary key of the current facility_ host
+	 * @param hostId the host ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next facility_ host
+	 * @throws de.uhh.l2g.plugins.NoSuchFacility_HostException if a facility_ host with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Facility_Host[] findByhostId_PrevAndNext(long fasilityHostId,
+		long hostId, OrderByComparator orderByComparator)
+		throws NoSuchFacility_HostException, SystemException {
+		Facility_Host facility_Host = findByPrimaryKey(fasilityHostId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Facility_Host[] array = new Facility_HostImpl[3];
+
+			array[0] = getByhostId_PrevAndNext(session, facility_Host, hostId,
+					orderByComparator, true);
+
+			array[1] = facility_Host;
+
+			array[2] = getByhostId_PrevAndNext(session, facility_Host, hostId,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Facility_Host getByhostId_PrevAndNext(Session session,
+		Facility_Host facility_Host, long hostId,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_FACILITY_HOST_WHERE);
+
+		query.append(_FINDER_COLUMN_HOSTID_HOSTID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(Facility_HostModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(hostId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(facility_Host);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<Facility_Host> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the facility_ hosts where hostId = &#63; from the database.
+	 *
+	 * @param hostId the host ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByhostId(long hostId) throws SystemException {
+		for (Facility_Host facility_Host : findByhostId(hostId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(facility_Host);
+		}
+	}
+
+	/**
+	 * Returns the number of facility_ hosts where hostId = &#63;.
+	 *
+	 * @param hostId the host ID
+	 * @return the number of matching facility_ hosts
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByhostId(long hostId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_HOSTID;
+
+		Object[] finderArgs = new Object[] { hostId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_FACILITY_HOST_WHERE);
+
+			query.append(_FINDER_COLUMN_HOSTID_HOSTID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(hostId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_HOSTID_HOSTID_2 = "facility_Host.hostId = ?";
 
 	public Facility_HostPersistenceImpl() {
 		setModelClass(Facility_Host.class);
@@ -279,6 +1264,8 @@ public class Facility_HostPersistenceImpl extends BasePersistenceImpl<Facility_H
 
 		boolean isNew = facility_Host.isNew();
 
+		Facility_HostModelImpl facility_HostModelImpl = (Facility_HostModelImpl)facility_Host;
+
 		Session session = null;
 
 		try {
@@ -302,8 +1289,46 @@ public class Facility_HostPersistenceImpl extends BasePersistenceImpl<Facility_H
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (isNew || !Facility_HostModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		}
+
+		else {
+			if ((facility_HostModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITYID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						facility_HostModelImpl.getOriginalFacilityId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FACILITYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITYID,
+					args);
+
+				args = new Object[] { facility_HostModelImpl.getFacilityId() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FACILITYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITYID,
+					args);
+			}
+
+			if ((facility_HostModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_HOSTID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						facility_HostModelImpl.getOriginalHostId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_HOSTID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_HOSTID,
+					args);
+
+				args = new Object[] { facility_HostModelImpl.getHostId() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_HOSTID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_HOSTID,
+					args);
+			}
 		}
 
 		EntityCacheUtil.putResult(Facility_HostModelImpl.ENTITY_CACHE_ENABLED,
@@ -636,9 +1661,12 @@ public class Facility_HostPersistenceImpl extends BasePersistenceImpl<Facility_H
 	}
 
 	private static final String _SQL_SELECT_FACILITY_HOST = "SELECT facility_Host FROM Facility_Host facility_Host";
+	private static final String _SQL_SELECT_FACILITY_HOST_WHERE = "SELECT facility_Host FROM Facility_Host facility_Host WHERE ";
 	private static final String _SQL_COUNT_FACILITY_HOST = "SELECT COUNT(facility_Host) FROM Facility_Host facility_Host";
+	private static final String _SQL_COUNT_FACILITY_HOST_WHERE = "SELECT COUNT(facility_Host) FROM Facility_Host facility_Host WHERE ";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "facility_Host.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Facility_Host exists with the primary key ";
+	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Facility_Host exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = GetterUtil.getBoolean(PropsUtil.get(
 				PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
 	private static Log _log = LogFactoryUtil.getLog(Facility_HostPersistenceImpl.class);

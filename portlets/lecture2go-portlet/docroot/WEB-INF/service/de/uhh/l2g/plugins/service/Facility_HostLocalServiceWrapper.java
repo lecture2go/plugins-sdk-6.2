@@ -288,6 +288,20 @@ public class Facility_HostLocalServiceWrapper
 			arguments);
 	}
 
+	@Override
+	public de.uhh.l2g.plugins.model.Host getByFacilityId(long facilityId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _facility_HostLocalService.getByFacilityId(facilityId);
+	}
+
+	@Override
+	public de.uhh.l2g.plugins.model.Host getByHostId(long hostId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _facility_HostLocalService.getByHostId(hostId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

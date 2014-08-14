@@ -8,6 +8,9 @@ create index IX_89A9675F on LG_Facility (sort);
 create index IX_2DCDB70E on LG_Facility (typ);
 create index IX_2DF72F1A on LG_Facility (www);
 
+create index IX_C28682D8 on LG_Facility_Host (facilityId);
+create index IX_43DE435D on LG_Facility_Host (hostId);
+
 create index IX_8CD13042 on LG_Lectureseries (approved);
 create index IX_9D792271 on LG_Lectureseries (eventCategory);
 create index IX_EBC55E2D on LG_Lectureseries (eventType);

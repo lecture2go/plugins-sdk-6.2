@@ -118,6 +118,12 @@
         <column name="fasilityHostId" type="long" primary="true" id-type="increment"></column>
         <column name="facilityId" type="long"></column>
         <column name="hostId" type="long"></column>
+        <finder name="facilityId" return-type="Collection">
+            <finder-column name="facilityId" case-sensitive="false"></finder-column>
+        </finder>
+        <finder name="hostId" return-type="Collection">
+            <finder-column name="hostId"></finder-column>
+        </finder>
     </entity>
     <entity name="Office" local-service="true" remote-service="false">
         <column name="officeId" type="long" primary="true" id-type="increment"></column>

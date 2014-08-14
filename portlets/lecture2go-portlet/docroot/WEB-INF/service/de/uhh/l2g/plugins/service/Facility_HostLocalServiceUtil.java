@@ -275,6 +275,18 @@ public class Facility_HostLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static de.uhh.l2g.plugins.model.Host getByFacilityId(long facilityId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getByFacilityId(facilityId);
+	}
+
+	public static de.uhh.l2g.plugins.model.Host getByHostId(long hostId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getByHostId(hostId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

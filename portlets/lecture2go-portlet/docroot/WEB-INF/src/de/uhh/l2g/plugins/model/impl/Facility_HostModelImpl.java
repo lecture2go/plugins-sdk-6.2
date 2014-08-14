@@ -74,7 +74,12 @@ public class Facility_HostModelImpl extends BaseModelImpl<Facility_Host>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.finder.cache.enabled.de.uhh.l2g.plugins.model.Facility_Host"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.Facility_Host"),
+			true);
+	public static long FACILITYID_COLUMN_BITMASK = 1L;
+	public static long HOSTID_COLUMN_BITMASK = 2L;
+	public static long FASILITYHOSTID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Facility_Host"));
 
@@ -160,7 +165,19 @@ public class Facility_HostModelImpl extends BaseModelImpl<Facility_Host>
 
 	@Override
 	public void setFacilityId(long facilityId) {
+		_columnBitmask |= FACILITYID_COLUMN_BITMASK;
+
+		if (!_setOriginalFacilityId) {
+			_setOriginalFacilityId = true;
+
+			_originalFacilityId = _facilityId;
+		}
+
 		_facilityId = facilityId;
+	}
+
+	public long getOriginalFacilityId() {
+		return _originalFacilityId;
 	}
 
 	@Override
@@ -170,7 +187,23 @@ public class Facility_HostModelImpl extends BaseModelImpl<Facility_Host>
 
 	@Override
 	public void setHostId(long hostId) {
+		_columnBitmask |= HOSTID_COLUMN_BITMASK;
+
+		if (!_setOriginalHostId) {
+			_setOriginalHostId = true;
+
+			_originalHostId = _hostId;
+		}
+
 		_hostId = hostId;
+	}
+
+	public long getOriginalHostId() {
+		return _originalHostId;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -253,6 +286,17 @@ public class Facility_HostModelImpl extends BaseModelImpl<Facility_Host>
 
 	@Override
 	public void resetOriginalValues() {
+		Facility_HostModelImpl facility_HostModelImpl = this;
+
+		facility_HostModelImpl._originalFacilityId = facility_HostModelImpl._facilityId;
+
+		facility_HostModelImpl._setOriginalFacilityId = false;
+
+		facility_HostModelImpl._originalHostId = facility_HostModelImpl._hostId;
+
+		facility_HostModelImpl._setOriginalHostId = false;
+
+		facility_HostModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -315,6 +359,11 @@ public class Facility_HostModelImpl extends BaseModelImpl<Facility_Host>
 		};
 	private long _fasilityHostId;
 	private long _facilityId;
+	private long _originalFacilityId;
+	private boolean _setOriginalFacilityId;
 	private long _hostId;
+	private long _originalHostId;
+	private boolean _setOriginalHostId;
+	private long _columnBitmask;
 	private Facility_Host _escapedModel;
 }
