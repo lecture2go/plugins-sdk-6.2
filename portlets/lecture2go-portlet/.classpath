@@ -19,10 +19,7 @@
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Users/isturm/Documents/workspace-for-liferay-6.2.0/liferay-plugins-sdk-6.2/portlets/l2g-user-portlet/docroot/WEB-INF/lib/spring-webmvc-portlet.jar"/>
-	<classpathentry kind="lib" path="/Users/isturm/Documents/workspace-for-liferay-6.2.0/liferay-plugins-sdk-6.2/portlets/l2g-user-portlet/docroot/WEB-INF/lib/spring.jar"/>
 	<classpathentry kind="lib" path="/liferay-portal-6.2-ce-ga2/tomcat-7.0.42/webapps/ROOT/WEB-INF/lib/commons-fileupload.jar"/>
-	<classpathentry kind="lib" path="/Users/isturm/Documents/workspace-for-liferay-6.2.0/liferay-plugins-sdk-6.2/portlets/l2g-user-portlet/docroot/WEB-INF/lib/spring-webmvc.jar"/>
 	<classpathentry kind="lib" path="/liferay-portal-6.2-ce-ga2/tomcat-7.0.42/webapps/ROOT/WEB-INF/lib/ant.jar"/>
 	<classpathentry kind="lib" path="/liferay-portal-6.2-ce-ga2/tomcat-7.0.42/webapps/ROOT/WEB-INF/lib/commons-collections.jar"/>
 	<classpathentry kind="output" path="docroot/WEB-INF/classes"/>

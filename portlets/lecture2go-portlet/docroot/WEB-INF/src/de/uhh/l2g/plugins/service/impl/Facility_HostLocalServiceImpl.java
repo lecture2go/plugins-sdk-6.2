@@ -42,15 +42,14 @@ public class Facility_HostLocalServiceImpl
 	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.Facility_HostLocalServiceUtil} to access the facility_ host local service.
 	 */
-	
 	public Host getByFacilityId(long facilityId) throws SystemException, PortalException {
-		long hId = facility_HostPersistence.findByfacilityId(facilityId).iterator().next().getHostId();
+		long hId = facility_HostPersistence.findByfacilityId(facilityId).getHostId();
 		Host h = hostLocalService.getHost(hId);
 		return h;
 	}
 	
 	public Host getByHostId(long hostId) throws SystemException, PortalException {
-		long hId = facility_HostPersistence.findByhostId(hostId).iterator().next().getHostId();
+		long hId = facility_HostPersistence.findByhostId(hostId).getHostId();
 		Host h = hostLocalService.getHost(hId);
 		return h;
 	}

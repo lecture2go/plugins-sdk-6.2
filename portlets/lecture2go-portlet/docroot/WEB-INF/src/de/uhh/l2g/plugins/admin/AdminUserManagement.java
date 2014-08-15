@@ -12,6 +12,7 @@ import javax.portlet.ActionResponse;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Role;
@@ -30,7 +31,6 @@ import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.FacilityLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Facility_HostLocalServiceUtil;
-import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 
 public class AdminUserManagement extends MVCPortlet {
@@ -251,28 +251,35 @@ public class AdminUserManagement extends MVCPortlet {
 	private void handleProducerRequest(ActionRequest request) throws NumberFormatException, PortalException, SystemException, IOException {
 		User u = UserLocalServiceUtil.getUser(new Long(request.getParameter("userId")));
 		Producer p = null;
-
+		//initialize producer
 		try {
 			p = ProducerLocalServiceUtil.getProducer(new Long(u.getUserId()));
 		} catch (PortalException e) {
 			p = ProducerLocalServiceUtil.createProducer(u.getUserId());
 		}
-
-		// add role to user
-		addL2GoRole("L2Go Producer", u);
-		UserLocalServiceUtil.addRoleUser(RoleLocalServiceUtil.getRole(u.getCompanyId(), "L2Go Producer").getRoleId(), u.getUserId());
-		
 		// save role to l2go producer table
 		p.setProducerId(u.getUserId());
 		p.setFacilityId(new Long(request.getParameter("pfId")));
-		ProducerLocalServiceUtil.updateProducer(p);// add or edit entry
-		
-		//create repository for producer
-		Host h = Facility_HostLocalServiceUtil.getByFacilityId(p.getFacilityId());
-		createProducerRepository(h, p);
+		// repository for producer
+		Host h = null;
+		try{
+			h = Facility_HostLocalServiceUtil.getByFacilityId(p.getFacilityId());
+			// host to producer 
+			p.setHostId(h.getHostId());
+			// home directory 
+			p.setHomeDir(u.getScreenName());
+			// add or update entry
+			ProducerLocalServiceUtil.updateProducer(p);
+			createProducersRepository(h, p);
+			// finaly add role to user
+			addL2GoRole("L2Go Producer", u);
+			UserLocalServiceUtil.addRoleUser(RoleLocalServiceUtil.getRole(u.getCompanyId(), "L2Go Producer").getRoleId(), u.getUserId());	
+		}catch(Exception e){
+			SessionErrors.add(request, "host-or-facility-error");
+		}
 	}
 	
-	public void createProducerRepository(Host host, Producer producer) throws IOException{
+	public static void createProducersRepository(Host host, Producer producer) throws IOException{
 		File folder = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/");
 		if (!folder.exists()) {
 			if (folder.mkdir()) {

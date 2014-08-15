@@ -2,7 +2,7 @@
 <%@page import="de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil"%>
 <%@page import="de.uhh.l2g.plugins.service.FacilityLocalServiceUtil"%>
 <%@include file="/init.jsp"%>
-
+<liferay-ui:error key="host-or-facility-error" message="host-or-facility-error"/>
 <%
 	long groupId = themeDisplay.getLayout().getGroupId();
 	String name = User.class.getName();
