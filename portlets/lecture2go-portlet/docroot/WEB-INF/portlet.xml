@@ -5,9 +5,45 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
 	version="2.0">
 		
+	<portlet>
+     	<portlet-name>lg-admin-lecture-series-management</portlet-name>
+     	<display-name>L2Go Lecture Series Management</display-name>
+     	<portlet-class>de.uhh.l2g.plugins.admin.AdminLectureSeriesManagement</portlet-class>
+	    <init-param>
+	      	<name>view-template</name>
+	      	<value>/admin/lectureSeriesList.jsp</value>
+	    </init-param>
+	    <init-param>
+	      	<name>add-process-action-success-action</name>
+	      	<value>false</value>
+	    </init-param>
+	    <expiration-cache>0</expiration-cache>
+	    <supports>
+	      	<mime-type>text/html</mime-type>
+	    </supports>
+	    <resource-bundle>content.Language</resource-bundle>
+	    <portlet-info>
+	      	<title>L2Go Lecture Series Management</title>
+	      	<short-title>L2Go Lecture Series Management</short-title>
+	      	<keywords>L2Go Lecture Series Management</keywords>
+	    </portlet-info>
+	    <security-role-ref>
+	      	<role-name>administrator</role-name>
+	    </security-role-ref>
+	    <security-role-ref>
+	     	<role-name>guest</role-name>
+	    </security-role-ref>
+	    <security-role-ref>
+	      	<role-name>power-user</role-name>
+	    </security-role-ref>
+	    <security-role-ref>
+	      	<role-name>user</role-name>
+	    </security-role-ref>
+    </portlet> 
+  
     <portlet>
      	<portlet-name>lg-admin-user-management</portlet-name>
-     	<display-name>L2Go-User Management</display-name>
+     	<display-name>L2Go User Management</display-name>
      	<portlet-class>de.uhh.l2g.plugins.admin.AdminUserManagement</portlet-class>
 	    <init-param>
 	      	<name>view-template</name>
@@ -23,9 +59,9 @@
 	    </supports>
 	    <resource-bundle>content.Language</resource-bundle>
 	    <portlet-info>
-	      	<title>L2Go-User Management</title>
-	      	<short-title>L2Go User Administration</short-title>
-	      	<keywords>L2Go User Administration</keywords>
+	      	<title>L2Go User Management</title>
+	      	<short-title>L2Go User Management</short-title>
+	      	<keywords>L2Go User Management</keywords>
 	    </portlet-info>
 	    <security-role-ref>
 	      	<role-name>administrator</role-name>
@@ -40,5 +76,5 @@
 	      	<role-name>user</role-name>
 	    </security-role-ref>
   </portlet>
-  
+
 </portlet-app>

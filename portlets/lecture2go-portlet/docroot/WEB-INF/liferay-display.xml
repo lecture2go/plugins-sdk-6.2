@@ -3,7 +3,7 @@
 
 <display>
 	<category name="Lecture2Go">
-		<portlet id="thread-landing-page"/>
 		<portlet id="lg-admin-user-management"/>
+		<portlet id="lg-admin-lecture-series-management"/>
 	</category>
 </display>
