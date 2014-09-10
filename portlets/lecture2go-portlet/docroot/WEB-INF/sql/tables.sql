@@ -35,7 +35,6 @@ create table LG_Lastvideolist (
 );
 
 create table LG_Lectureseries (
-	lectureseriesId LONG not null primary key,
 	number_ VARCHAR(75) null,
 	eventType VARCHAR(75) null,
 	eventCategory VARCHAR(75) null,
@@ -45,6 +44,7 @@ create table LG_Lectureseries (
 	language VARCHAR(75) null,
 	facultyName VARCHAR(75) null,
 	instructorsString VARCHAR(75) null,
+	lectureseriesId LONG not null primary key,
 	password_ VARCHAR(75) null,
 	approved INTEGER,
 	longDesc VARCHAR(75) null

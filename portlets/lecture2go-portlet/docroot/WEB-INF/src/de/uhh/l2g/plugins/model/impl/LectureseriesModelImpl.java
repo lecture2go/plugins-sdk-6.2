@@ -58,7 +58,6 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 	 */
 	public static final String TABLE_NAME = "LG_Lectureseries";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "lectureseriesId", Types.BIGINT },
 			{ "number_", Types.VARCHAR },
 			{ "eventType", Types.VARCHAR },
 			{ "eventCategory", Types.VARCHAR },
@@ -68,11 +67,12 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 			{ "language", Types.VARCHAR },
 			{ "facultyName", Types.VARCHAR },
 			{ "instructorsString", Types.VARCHAR },
+			{ "lectureseriesId", Types.BIGINT },
 			{ "password_", Types.VARCHAR },
 			{ "approved", Types.INTEGER },
 			{ "longDesc", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Lectureseries (lectureseriesId LONG not null primary key,number_ VARCHAR(75) null,eventType VARCHAR(75) null,eventCategory VARCHAR(75) null,name VARCHAR(75) null,shortDesc VARCHAR(75) null,semesterName VARCHAR(75) null,language VARCHAR(75) null,facultyName VARCHAR(75) null,instructorsString VARCHAR(75) null,password_ VARCHAR(75) null,approved INTEGER,longDesc VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Lectureseries (number_ VARCHAR(75) null,eventType VARCHAR(75) null,eventCategory VARCHAR(75) null,name VARCHAR(75) null,shortDesc VARCHAR(75) null,semesterName VARCHAR(75) null,language VARCHAR(75) null,facultyName VARCHAR(75) null,instructorsString VARCHAR(75) null,lectureseriesId LONG not null primary key,password_ VARCHAR(75) null,approved INTEGER,longDesc VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Lectureseries";
 	public static final String ORDER_BY_JPQL = " ORDER BY lectureseries.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Lectureseries.name ASC";
@@ -136,7 +136,6 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("lectureseriesId", getLectureseriesId());
 		attributes.put("number", getNumber());
 		attributes.put("eventType", getEventType());
 		attributes.put("eventCategory", getEventCategory());
@@ -146,6 +145,7 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 		attributes.put("language", getLanguage());
 		attributes.put("facultyName", getFacultyName());
 		attributes.put("instructorsString", getInstructorsString());
+		attributes.put("lectureseriesId", getLectureseriesId());
 		attributes.put("password", getPassword());
 		attributes.put("approved", getApproved());
 		attributes.put("longDesc", getLongDesc());
@@ -155,12 +155,6 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long lectureseriesId = (Long)attributes.get("lectureseriesId");
-
-		if (lectureseriesId != null) {
-			setLectureseriesId(lectureseriesId);
-		}
-
 		String number = (String)attributes.get("number");
 
 		if (number != null) {
@@ -215,6 +209,12 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 			setInstructorsString(instructorsString);
 		}
 
+		Long lectureseriesId = (Long)attributes.get("lectureseriesId");
+
+		if (lectureseriesId != null) {
+			setLectureseriesId(lectureseriesId);
+		}
+
 		String password = (String)attributes.get("password");
 
 		if (password != null) {
@@ -232,16 +232,6 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 		if (longDesc != null) {
 			setLongDesc(longDesc);
 		}
-	}
-
-	@Override
-	public long getLectureseriesId() {
-		return _lectureseriesId;
-	}
-
-	@Override
-	public void setLectureseriesId(long lectureseriesId) {
-		_lectureseriesId = lectureseriesId;
 	}
 
 	@Override
@@ -450,6 +440,16 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 	}
 
 	@Override
+	public long getLectureseriesId() {
+		return _lectureseriesId;
+	}
+
+	@Override
+	public void setLectureseriesId(long lectureseriesId) {
+		_lectureseriesId = lectureseriesId;
+	}
+
+	@Override
 	public String getPassword() {
 		if (_password == null) {
 			return StringPool.BLANK;
@@ -532,7 +532,6 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 	public Object clone() {
 		LectureseriesImpl lectureseriesImpl = new LectureseriesImpl();
 
-		lectureseriesImpl.setLectureseriesId(getLectureseriesId());
 		lectureseriesImpl.setNumber(getNumber());
 		lectureseriesImpl.setEventType(getEventType());
 		lectureseriesImpl.setEventCategory(getEventCategory());
@@ -542,6 +541,7 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 		lectureseriesImpl.setLanguage(getLanguage());
 		lectureseriesImpl.setFacultyName(getFacultyName());
 		lectureseriesImpl.setInstructorsString(getInstructorsString());
+		lectureseriesImpl.setLectureseriesId(getLectureseriesId());
 		lectureseriesImpl.setPassword(getPassword());
 		lectureseriesImpl.setApproved(getApproved());
 		lectureseriesImpl.setLongDesc(getLongDesc());
@@ -620,8 +620,6 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 	public CacheModel<Lectureseries> toCacheModel() {
 		LectureseriesCacheModel lectureseriesCacheModel = new LectureseriesCacheModel();
 
-		lectureseriesCacheModel.lectureseriesId = getLectureseriesId();
-
 		lectureseriesCacheModel.number = getNumber();
 
 		String number = lectureseriesCacheModel.number;
@@ -694,6 +692,8 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 			lectureseriesCacheModel.instructorsString = null;
 		}
 
+		lectureseriesCacheModel.lectureseriesId = getLectureseriesId();
+
 		lectureseriesCacheModel.password = getPassword();
 
 		String password = lectureseriesCacheModel.password;
@@ -719,9 +719,7 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 	public String toString() {
 		StringBundler sb = new StringBundler(27);
 
-		sb.append("{lectureseriesId=");
-		sb.append(getLectureseriesId());
-		sb.append(", number=");
+		sb.append("{number=");
 		sb.append(getNumber());
 		sb.append(", eventType=");
 		sb.append(getEventType());
@@ -739,6 +737,8 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 		sb.append(getFacultyName());
 		sb.append(", instructorsString=");
 		sb.append(getInstructorsString());
+		sb.append(", lectureseriesId=");
+		sb.append(getLectureseriesId());
 		sb.append(", password=");
 		sb.append(getPassword());
 		sb.append(", approved=");
@@ -758,10 +758,6 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 		sb.append("de.uhh.l2g.plugins.model.Lectureseries");
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>lectureseriesId</column-name><column-value><![CDATA[");
-		sb.append(getLectureseriesId());
-		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>number</column-name><column-value><![CDATA[");
 		sb.append(getNumber());
@@ -799,6 +795,10 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 		sb.append(getInstructorsString());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>lectureseriesId</column-name><column-value><![CDATA[");
+		sb.append(getLectureseriesId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>password</column-name><column-value><![CDATA[");
 		sb.append(getPassword());
 		sb.append("]]></column-value></column>");
@@ -820,7 +820,6 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 	private static Class<?>[] _escapedModelInterfaces = new Class[] {
 			Lectureseries.class
 		};
-	private long _lectureseriesId;
 	private String _number;
 	private String _originalNumber;
 	private String _eventType;
@@ -837,6 +836,7 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 	private String _facultyName;
 	private String _originalFacultyName;
 	private String _instructorsString;
+	private long _lectureseriesId;
 	private String _password;
 	private int _approved;
 	private int _originalApproved;

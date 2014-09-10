@@ -58,20 +58,6 @@ public interface LectureseriesModel extends BaseModel<Lectureseries> {
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the lectureseries ID of this lectureseries.
-	 *
-	 * @return the lectureseries ID of this lectureseries
-	 */
-	public long getLectureseriesId();
-
-	/**
-	 * Sets the lectureseries ID of this lectureseries.
-	 *
-	 * @param lectureseriesId the lectureseries ID of this lectureseries
-	 */
-	public void setLectureseriesId(long lectureseriesId);
-
-	/**
 	 * Returns the number of this lectureseries.
 	 *
 	 * @return the number of this lectureseries
@@ -205,6 +191,20 @@ public interface LectureseriesModel extends BaseModel<Lectureseries> {
 	 * @param instructorsString the instructors string of this lectureseries
 	 */
 	public void setInstructorsString(String instructorsString);
+
+	/**
+	 * Returns the lectureseries ID of this lectureseries.
+	 *
+	 * @return the lectureseries ID of this lectureseries
+	 */
+	public long getLectureseriesId();
+
+	/**
+	 * Sets the lectureseries ID of this lectureseries.
+	 *
+	 * @param lectureseriesId the lectureseries ID of this lectureseries
+	 */
+	public void setLectureseriesId(long lectureseriesId);
 
 	/**
 	 * Returns the password of this lectureseries.

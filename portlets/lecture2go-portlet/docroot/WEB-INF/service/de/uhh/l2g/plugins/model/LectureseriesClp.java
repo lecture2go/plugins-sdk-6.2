@@ -73,7 +73,6 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("lectureseriesId", getLectureseriesId());
 		attributes.put("number", getNumber());
 		attributes.put("eventType", getEventType());
 		attributes.put("eventCategory", getEventCategory());
@@ -83,6 +82,7 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 		attributes.put("language", getLanguage());
 		attributes.put("facultyName", getFacultyName());
 		attributes.put("instructorsString", getInstructorsString());
+		attributes.put("lectureseriesId", getLectureseriesId());
 		attributes.put("password", getPassword());
 		attributes.put("approved", getApproved());
 		attributes.put("longDesc", getLongDesc());
@@ -92,12 +92,6 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long lectureseriesId = (Long)attributes.get("lectureseriesId");
-
-		if (lectureseriesId != null) {
-			setLectureseriesId(lectureseriesId);
-		}
-
 		String number = (String)attributes.get("number");
 
 		if (number != null) {
@@ -152,6 +146,12 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 			setInstructorsString(instructorsString);
 		}
 
+		Long lectureseriesId = (Long)attributes.get("lectureseriesId");
+
+		if (lectureseriesId != null) {
+			setLectureseriesId(lectureseriesId);
+		}
+
 		String password = (String)attributes.get("password");
 
 		if (password != null) {
@@ -168,29 +168,6 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 
 		if (longDesc != null) {
 			setLongDesc(longDesc);
-		}
-	}
-
-	@Override
-	public long getLectureseriesId() {
-		return _lectureseriesId;
-	}
-
-	@Override
-	public void setLectureseriesId(long lectureseriesId) {
-		_lectureseriesId = lectureseriesId;
-
-		if (_lectureseriesRemoteModel != null) {
-			try {
-				Class<?> clazz = _lectureseriesRemoteModel.getClass();
-
-				Method method = clazz.getMethod("setLectureseriesId", long.class);
-
-				method.invoke(_lectureseriesRemoteModel, lectureseriesId);
-			}
-			catch (Exception e) {
-				throw new UnsupportedOperationException(e);
-			}
 		}
 	}
 
@@ -403,6 +380,29 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 	}
 
 	@Override
+	public long getLectureseriesId() {
+		return _lectureseriesId;
+	}
+
+	@Override
+	public void setLectureseriesId(long lectureseriesId) {
+		_lectureseriesId = lectureseriesId;
+
+		if (_lectureseriesRemoteModel != null) {
+			try {
+				Class<?> clazz = _lectureseriesRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setLectureseriesId", long.class);
+
+				method.invoke(_lectureseriesRemoteModel, lectureseriesId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
 	public String getPassword() {
 		return _password;
 	}
@@ -541,7 +541,6 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 	public Object clone() {
 		LectureseriesClp clone = new LectureseriesClp();
 
-		clone.setLectureseriesId(getLectureseriesId());
 		clone.setNumber(getNumber());
 		clone.setEventType(getEventType());
 		clone.setEventCategory(getEventCategory());
@@ -551,6 +550,7 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 		clone.setLanguage(getLanguage());
 		clone.setFacultyName(getFacultyName());
 		clone.setInstructorsString(getInstructorsString());
+		clone.setLectureseriesId(getLectureseriesId());
 		clone.setPassword(getPassword());
 		clone.setApproved(getApproved());
 		clone.setLongDesc(getLongDesc());
@@ -602,9 +602,7 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 	public String toString() {
 		StringBundler sb = new StringBundler(27);
 
-		sb.append("{lectureseriesId=");
-		sb.append(getLectureseriesId());
-		sb.append(", number=");
+		sb.append("{number=");
 		sb.append(getNumber());
 		sb.append(", eventType=");
 		sb.append(getEventType());
@@ -622,6 +620,8 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 		sb.append(getFacultyName());
 		sb.append(", instructorsString=");
 		sb.append(getInstructorsString());
+		sb.append(", lectureseriesId=");
+		sb.append(getLectureseriesId());
 		sb.append(", password=");
 		sb.append(getPassword());
 		sb.append(", approved=");
@@ -641,10 +641,6 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 		sb.append("de.uhh.l2g.plugins.model.Lectureseries");
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>lectureseriesId</column-name><column-value><![CDATA[");
-		sb.append(getLectureseriesId());
-		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>number</column-name><column-value><![CDATA[");
 		sb.append(getNumber());
@@ -682,6 +678,10 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 		sb.append(getInstructorsString());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>lectureseriesId</column-name><column-value><![CDATA[");
+		sb.append(getLectureseriesId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>password</column-name><column-value><![CDATA[");
 		sb.append(getPassword());
 		sb.append("]]></column-value></column>");
@@ -699,7 +699,6 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 		return sb.toString();
 	}
 
-	private long _lectureseriesId;
 	private String _number;
 	private String _eventType;
 	private String _eventCategory;
@@ -709,6 +708,7 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 	private String _language;
 	private String _facultyName;
 	private String _instructorsString;
+	private long _lectureseriesId;
 	private String _password;
 	private int _approved;
 	private String _longDesc;

@@ -1,6 +1,3 @@
-<%@page import="de.uhh.l2g.plugins.service.ProducerLocalServiceUtil"%>
-<%@page import="de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil"%>
-<%@page import="de.uhh.l2g.plugins.service.FacilityLocalServiceUtil"%>
 <%@include file="/init.jsp"%>
 <liferay-ui:error key="host-or-facility-error" message="host-or-facility-error"/>
 <%
@@ -73,7 +70,7 @@
 				out.println(n);					
 			}%>
 		</liferay-ui:search-container-column-text>
-		<liferay-ui:search-container-column-jsp path="/admin/adminEditL2GoRolesButton.jsp"/>
+		<liferay-ui:search-container-column-jsp path="/admin/editL2GoRolesButton.jsp"/>
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator />

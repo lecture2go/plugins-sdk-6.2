@@ -38,5 +38,12 @@
 <%@ page import="de.uhh.l2g.plugins.model.Facility"%>
 <%@ page import="de.uhh.l2g.plugins.admin.AdminUserManagement"%>
 
+<%@page import="de.uhh.l2g.plugins.service.ProducerLocalServiceUtil"%>
+<%@page import="de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil"%>
+<%@page import="de.uhh.l2g.plugins.service.FacilityLocalServiceUtil"%>
+<%@page import="de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil"%>
+<%@page import="de.uhh.l2g.plugins.model.Lectureseries"%>
+
+
 <portlet:defineObjects />
 <liferay-theme:defineObjects/>

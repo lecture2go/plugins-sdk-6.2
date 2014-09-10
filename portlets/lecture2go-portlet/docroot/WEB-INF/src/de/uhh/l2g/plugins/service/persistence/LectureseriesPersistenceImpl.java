@@ -4721,7 +4721,6 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 		lectureseriesImpl.setNew(lectureseries.isNew());
 		lectureseriesImpl.setPrimaryKey(lectureseries.getPrimaryKey());
 
-		lectureseriesImpl.setLectureseriesId(lectureseries.getLectureseriesId());
 		lectureseriesImpl.setNumber(lectureseries.getNumber());
 		lectureseriesImpl.setEventType(lectureseries.getEventType());
 		lectureseriesImpl.setEventCategory(lectureseries.getEventCategory());
@@ -4731,6 +4730,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 		lectureseriesImpl.setLanguage(lectureseries.getLanguage());
 		lectureseriesImpl.setFacultyName(lectureseries.getFacultyName());
 		lectureseriesImpl.setInstructorsString(lectureseries.getInstructorsString());
+		lectureseriesImpl.setLectureseriesId(lectureseries.getLectureseriesId());
 		lectureseriesImpl.setPassword(lectureseries.getPassword());
 		lectureseriesImpl.setApproved(lectureseries.getApproved());
 		lectureseriesImpl.setLongDesc(lectureseries.getLongDesc());

@@ -49,7 +49,6 @@ public class LectureseriesWrapper implements Lectureseries,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("lectureseriesId", getLectureseriesId());
 		attributes.put("number", getNumber());
 		attributes.put("eventType", getEventType());
 		attributes.put("eventCategory", getEventCategory());
@@ -59,6 +58,7 @@ public class LectureseriesWrapper implements Lectureseries,
 		attributes.put("language", getLanguage());
 		attributes.put("facultyName", getFacultyName());
 		attributes.put("instructorsString", getInstructorsString());
+		attributes.put("lectureseriesId", getLectureseriesId());
 		attributes.put("password", getPassword());
 		attributes.put("approved", getApproved());
 		attributes.put("longDesc", getLongDesc());
@@ -68,12 +68,6 @@ public class LectureseriesWrapper implements Lectureseries,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long lectureseriesId = (Long)attributes.get("lectureseriesId");
-
-		if (lectureseriesId != null) {
-			setLectureseriesId(lectureseriesId);
-		}
-
 		String number = (String)attributes.get("number");
 
 		if (number != null) {
@@ -128,6 +122,12 @@ public class LectureseriesWrapper implements Lectureseries,
 			setInstructorsString(instructorsString);
 		}
 
+		Long lectureseriesId = (Long)attributes.get("lectureseriesId");
+
+		if (lectureseriesId != null) {
+			setLectureseriesId(lectureseriesId);
+		}
+
 		String password = (String)attributes.get("password");
 
 		if (password != null) {
@@ -165,26 +165,6 @@ public class LectureseriesWrapper implements Lectureseries,
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		_lectureseries.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the lectureseries ID of this lectureseries.
-	*
-	* @return the lectureseries ID of this lectureseries
-	*/
-	@Override
-	public long getLectureseriesId() {
-		return _lectureseries.getLectureseriesId();
-	}
-
-	/**
-	* Sets the lectureseries ID of this lectureseries.
-	*
-	* @param lectureseriesId the lectureseries ID of this lectureseries
-	*/
-	@Override
-	public void setLectureseriesId(long lectureseriesId) {
-		_lectureseries.setLectureseriesId(lectureseriesId);
 	}
 
 	/**
@@ -365,6 +345,26 @@ public class LectureseriesWrapper implements Lectureseries,
 	@Override
 	public void setInstructorsString(java.lang.String instructorsString) {
 		_lectureseries.setInstructorsString(instructorsString);
+	}
+
+	/**
+	* Returns the lectureseries ID of this lectureseries.
+	*
+	* @return the lectureseries ID of this lectureseries
+	*/
+	@Override
+	public long getLectureseriesId() {
+		return _lectureseries.getLectureseriesId();
+	}
+
+	/**
+	* Sets the lectureseries ID of this lectureseries.
+	*
+	* @param lectureseriesId the lectureseries ID of this lectureseries
+	*/
+	@Override
+	public void setLectureseriesId(long lectureseriesId) {
+		_lectureseries.setLectureseriesId(lectureseriesId);
 	}
 
 	/**

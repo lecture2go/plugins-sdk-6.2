@@ -38,9 +38,7 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 	public String toString() {
 		StringBundler sb = new StringBundler(27);
 
-		sb.append("{lectureseriesId=");
-		sb.append(lectureseriesId);
-		sb.append(", number=");
+		sb.append("{number=");
 		sb.append(number);
 		sb.append(", eventType=");
 		sb.append(eventType);
@@ -58,6 +56,8 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 		sb.append(facultyName);
 		sb.append(", instructorsString=");
 		sb.append(instructorsString);
+		sb.append(", lectureseriesId=");
+		sb.append(lectureseriesId);
 		sb.append(", password=");
 		sb.append(password);
 		sb.append(", approved=");
@@ -72,8 +72,6 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 	@Override
 	public Lectureseries toEntityModel() {
 		LectureseriesImpl lectureseriesImpl = new LectureseriesImpl();
-
-		lectureseriesImpl.setLectureseriesId(lectureseriesId);
 
 		if (number == null) {
 			lectureseriesImpl.setNumber(StringPool.BLANK);
@@ -138,6 +136,8 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 			lectureseriesImpl.setInstructorsString(instructorsString);
 		}
 
+		lectureseriesImpl.setLectureseriesId(lectureseriesId);
+
 		if (password == null) {
 			lectureseriesImpl.setPassword(StringPool.BLANK);
 		}
@@ -161,7 +161,6 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		lectureseriesId = objectInput.readLong();
 		number = objectInput.readUTF();
 		eventType = objectInput.readUTF();
 		eventCategory = objectInput.readUTF();
@@ -171,6 +170,7 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 		language = objectInput.readUTF();
 		facultyName = objectInput.readUTF();
 		instructorsString = objectInput.readUTF();
+		lectureseriesId = objectInput.readLong();
 		password = objectInput.readUTF();
 		approved = objectInput.readInt();
 		longDesc = objectInput.readUTF();
@@ -179,8 +179,6 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(lectureseriesId);
-
 		if (number == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -244,6 +242,8 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 			objectOutput.writeUTF(instructorsString);
 		}
 
+		objectOutput.writeLong(lectureseriesId);
+
 		if (password == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -261,7 +261,6 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 		}
 	}
 
-	public long lectureseriesId;
 	public String number;
 	public String eventType;
 	public String eventCategory;
@@ -271,6 +270,7 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 	public String language;
 	public String facultyName;
 	public String instructorsString;
+	public long lectureseriesId;
 	public String password;
 	public int approved;
 	public String longDesc;

@@ -33,7 +33,6 @@
 		<field name="videoId" type="int" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Lectureseries">
-		<field name="lectureseriesId" type="long" />
 		<field name="number" type="String" />
 		<field name="eventType" type="String" />
 		<field name="eventCategory" type="String" />
@@ -43,6 +42,7 @@
 		<field name="language" type="String" />
 		<field name="facultyName" type="String" />
 		<field name="instructorsString" type="String" />
+		<field name="lectureseriesId" type="long" />
 		<field name="password" type="String" />
 		<field name="approved" type="int" />
 		<field name="longDesc" type="String" />

@@ -4,7 +4,6 @@
     <author>Iavor Sturm</author>
     <namespace>LG</namespace>
     <entity name="Lectureseries" local-service="true" remote-service="false">
-        <column name="lectureseriesId" type="long" primary="true" id-type="increment"></column>
         <column name="number" type="String"></column>
         <column name="eventType" type="String"></column>
         <column name="eventCategory" type="String"></column>
@@ -14,6 +13,7 @@
         <column name="language" type="String"></column>
         <column name="facultyName" type="String"></column>
         <column name="instructorsString" type="String"></column>
+        <column name="lectureseriesId" type="long" primary="true" id-type="increment"></column>
         <column name="password" type="String"></column>
         <column name="approved" type="int"></column>
         <column name="longDesc" type="String"></column>

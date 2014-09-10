@@ -29,7 +29,6 @@ public class LectureseriesSoap implements Serializable {
 	public static LectureseriesSoap toSoapModel(Lectureseries model) {
 		LectureseriesSoap soapModel = new LectureseriesSoap();
 
-		soapModel.setLectureseriesId(model.getLectureseriesId());
 		soapModel.setNumber(model.getNumber());
 		soapModel.setEventType(model.getEventType());
 		soapModel.setEventCategory(model.getEventCategory());
@@ -39,6 +38,7 @@ public class LectureseriesSoap implements Serializable {
 		soapModel.setLanguage(model.getLanguage());
 		soapModel.setFacultyName(model.getFacultyName());
 		soapModel.setInstructorsString(model.getInstructorsString());
+		soapModel.setLectureseriesId(model.getLectureseriesId());
 		soapModel.setPassword(model.getPassword());
 		soapModel.setApproved(model.getApproved());
 		soapModel.setLongDesc(model.getLongDesc());
@@ -92,14 +92,6 @@ public class LectureseriesSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setLectureseriesId(pk);
-	}
-
-	public long getLectureseriesId() {
-		return _lectureseriesId;
-	}
-
-	public void setLectureseriesId(long lectureseriesId) {
-		_lectureseriesId = lectureseriesId;
 	}
 
 	public String getNumber() {
@@ -174,6 +166,14 @@ public class LectureseriesSoap implements Serializable {
 		_instructorsString = instructorsString;
 	}
 
+	public long getLectureseriesId() {
+		return _lectureseriesId;
+	}
+
+	public void setLectureseriesId(long lectureseriesId) {
+		_lectureseriesId = lectureseriesId;
+	}
+
 	public String getPassword() {
 		return _password;
 	}
@@ -198,7 +198,6 @@ public class LectureseriesSoap implements Serializable {
 		_longDesc = longDesc;
 	}
 
-	private long _lectureseriesId;
 	private String _number;
 	private String _eventType;
 	private String _eventCategory;
@@ -208,6 +207,7 @@ public class LectureseriesSoap implements Serializable {
 	private String _language;
 	private String _facultyName;
 	private String _instructorsString;
+	private long _lectureseriesId;
 	private String _password;
 	private int _approved;
 	private String _longDesc;
