@@ -5,6 +5,7 @@
 	<bean id="de.uhh.l2g.plugins.service.persistence.CoordinatorPersistence" class="de.uhh.l2g.plugins.service.persistence.CoordinatorPersistenceImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.FacilityLocalService" class="de.uhh.l2g.plugins.service.impl.FacilityLocalServiceImpl" />
 	<bean id="de.uhh.l2g.plugins.service.persistence.FacilityPersistence" class="de.uhh.l2g.plugins.service.persistence.FacilityPersistenceImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.FacilityFinder" class="de.uhh.l2g.plugins.service.persistence.FacilityFinderImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.Facility_HostLocalService" class="de.uhh.l2g.plugins.service.impl.Facility_HostLocalServiceImpl" />
 	<bean id="de.uhh.l2g.plugins.service.persistence.Facility_HostPersistence" class="de.uhh.l2g.plugins.service.persistence.Facility_HostPersistenceImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.HostLocalService" class="de.uhh.l2g.plugins.service.impl.HostLocalServiceImpl" />

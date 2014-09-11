@@ -288,6 +288,20 @@ public class FacilityLocalServiceWrapper implements FacilityLocalService,
 		return _facilityLocalService.getByLevel(level);
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Facility> findAllSortedAsTree(
+		int begin, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _facilityLocalService.findAllSortedAsTree(begin, end);
+	}
+
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Facility> findAll(
+		int begin, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _facilityLocalService.findAll(begin, end);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

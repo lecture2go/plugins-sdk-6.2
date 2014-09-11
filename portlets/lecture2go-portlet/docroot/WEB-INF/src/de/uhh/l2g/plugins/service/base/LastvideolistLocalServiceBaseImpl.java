@@ -34,6 +34,7 @@ import com.liferay.portal.service.persistence.UserPersistence;
 import de.uhh.l2g.plugins.model.Lastvideolist;
 import de.uhh.l2g.plugins.service.LastvideolistLocalService;
 import de.uhh.l2g.plugins.service.persistence.CoordinatorPersistence;
+import de.uhh.l2g.plugins.service.persistence.FacilityFinder;
 import de.uhh.l2g.plugins.service.persistence.FacilityPersistence;
 import de.uhh.l2g.plugins.service.persistence.Facility_HostPersistence;
 import de.uhh.l2g.plugins.service.persistence.HostPersistence;
@@ -371,6 +372,24 @@ public abstract class LastvideolistLocalServiceBaseImpl
 	 */
 	public void setFacilityPersistence(FacilityPersistence facilityPersistence) {
 		this.facilityPersistence = facilityPersistence;
+	}
+
+	/**
+	 * Returns the facility finder.
+	 *
+	 * @return the facility finder
+	 */
+	public FacilityFinder getFacilityFinder() {
+		return facilityFinder;
+	}
+
+	/**
+	 * Sets the facility finder.
+	 *
+	 * @param facilityFinder the facility finder
+	 */
+	public void setFacilityFinder(FacilityFinder facilityFinder) {
+		this.facilityFinder = facilityFinder;
 	}
 
 	/**
@@ -1194,6 +1213,8 @@ public abstract class LastvideolistLocalServiceBaseImpl
 	protected de.uhh.l2g.plugins.service.FacilityLocalService facilityLocalService;
 	@BeanReference(type = FacilityPersistence.class)
 	protected FacilityPersistence facilityPersistence;
+	@BeanReference(type = FacilityFinder.class)
+	protected FacilityFinder facilityFinder;
 	@BeanReference(type = de.uhh.l2g.plugins.service.Facility_HostLocalService.class)
 	protected de.uhh.l2g.plugins.service.Facility_HostLocalService facility_HostLocalService;
 	@BeanReference(type = Facility_HostPersistence.class)

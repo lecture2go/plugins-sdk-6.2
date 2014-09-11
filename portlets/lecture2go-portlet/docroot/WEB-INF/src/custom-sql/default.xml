@@ -1,1 +1,22 @@
-	
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+    <sql id="de.uhh.l2g.plugins.service.persistence.FacilityFinder.findAllSortedAsTree">
+		<![CDATA[
+			SELECT myNode.facilityId, myNode.parentId, myNode.name, myNode.typ, myNode.www, myNode.level, myNode.sort, 
+			IF(myParent.facilityId>=0, IF(myGrandparent.facilityId>=0, 
+			CONCAT(myGrandparent.facilityId, '/', myParent.facilityId, '/', myNode.facilityId), 
+			CONCAT('', myParent.facilityId, '/', myNode.facilityId)), 
+			CONCAT( myNode.facilityId, '')) AS path 
+			FROM lg_facility AS myNode 
+			LEFT JOIN lg_facility AS myParent ON myNode.parentId = myParent.facilityId
+			LEFT JOIN lg_facility AS myGrandparent ON myParent.parentId = myGrandparent.facilityId 
+			ORDER BY path ASC
+		]]>
+    </sql>
+    
+    <sql id="de.uhh.l2g.plugins.service.persistence.FacilityFinder.findAll">
+		<![CDATA[
+			SELECT * FROM lportal620.lg_facility
+		]]>
+    </sql>
+</custom-sql>
