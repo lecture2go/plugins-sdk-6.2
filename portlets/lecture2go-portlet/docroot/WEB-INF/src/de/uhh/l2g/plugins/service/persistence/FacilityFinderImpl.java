@@ -64,4 +64,3 @@ public class FacilityFinderImpl extends BasePersistenceImpl<Facility> implements
 	public static final String FIND_ALL = FacilityFinder.class.getName() + ".findAll";
 
 }
-      
