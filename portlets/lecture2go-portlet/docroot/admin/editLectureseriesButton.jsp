@@ -16,4 +16,4 @@
 
 <liferay-ui:icon-menu>
 	<liferay-ui:icon image="edit" message="Edit" url="<%= editURL.toString() %>" />
-</liferay-ui:icon-menu>
+</liferay-ui:icon-menu>   
