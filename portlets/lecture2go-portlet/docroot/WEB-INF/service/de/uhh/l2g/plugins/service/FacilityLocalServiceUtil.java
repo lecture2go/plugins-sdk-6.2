@@ -279,6 +279,18 @@ public class FacilityLocalServiceUtil {
 		return getService().getByLevel(level);
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.Facility> findAllSortedAsTree(
+		int begin, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().findAllSortedAsTree(begin, end);
+	}
+
+	public static java.util.List<de.uhh.l2g.plugins.model.Facility> findAll(
+		int begin, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().findAll(begin, end);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}
