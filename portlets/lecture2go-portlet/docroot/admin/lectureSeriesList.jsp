@@ -1,13 +1,12 @@
-<%@page import="de.uhh.l2g.plugins.model.Producer"%>
 <%@include file="/init.jsp"%>
 
 <%
 	List<Lectureseries> tempLectureseriesList = new ArrayList();
 	tempLectureseriesList = LectureseriesLocalServiceUtil.getLectureserieses(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS );
 	
-	Map<String, String> facilities = FacilityLocalServiceUtil.getAllSortedAsTree(0, 10000000);
+	Map<String, String> facilities = FacilityLocalServiceUtil.getAllSortedAsTree(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 
-	List<Producer> producers = ProducerLocalServiceUtil.getProducers(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS );
+	List<Producer> producers = ProducerLocalServiceUtil.getAllProducers();
 	
 	List<String> semesters = new ArrayList();
 	
@@ -29,8 +28,7 @@
 							<aui:select name="facilityId" label="select-facility" onChange="submit();">
 								<aui:option value="">select-facility</aui:option>
 
-								<%
-								for (Map.Entry<String, String> f : facilities.entrySet()) {
+								<%for (Map.Entry<String, String> f : facilities.entrySet()) {
 										if(f.getKey().equals(facilityId.toString())){
 											%>
 											<aui:option value='<%=f.getKey()%>' selected="true"><%=f.getValue()%></aui:option>
@@ -49,9 +47,9 @@
 								<%for (int i = 0; i < producers.size(); i++) {
 										if(producers.get(i).getProducerId()==producerId){
 											%>
-											<aui:option value='<%=producers.get(i).getProducerId()%>' selected="true"><%=producers.get(i).getHomeDir()%></aui:option>
+											<aui:option value='<%=producers.get(i).getProducerId()%>' selected="true"><%=producers.get(i).getLastName()+", "+producers.get(i).getFirstName()%></aui:option>
 											<%}else{%>
-											<aui:option value='<%=producers.get(i).getProducerId()%>'><%=producers.get(i).getHomeDir()%></aui:option>
+											<aui:option value='<%=producers.get(i).getProducerId()%>'><%=producers.get(i).getLastName()+", "+producers.get(i).getFirstName()%></aui:option>
 											<%}					
 								}%>
 							</aui:select>
@@ -63,7 +61,6 @@
 							<aui:select name="semesterId" label="select-semester" onChange="submit();">
 								<aui:option value="">select-semester</aui:option>
 								<%for (int i = 0; i < semesters.size(); i++) {
-									
 										if(semesters.get(i).equals(semesterId)){
 											%>
 											<aui:option value='<%=semesters.get(i)%>' selected="true"><%=semesters.get(i)%></aui:option>

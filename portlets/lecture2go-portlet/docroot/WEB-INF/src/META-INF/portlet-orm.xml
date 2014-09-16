@@ -332,7 +332,12 @@
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.ProducerImpl" name="Producer">
 		<table name="LG_Producer" />
-		<attributes />
+		<attributes>
+			<transient name="emailAddress" />
+			<transient name="firstName" />
+			<transient name="lastLoginDate" />
+			<transient name="lastName" />
+		</attributes>
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.Producer_LectureseriesImpl" name="Producer_Lectureseries">
 		<table name="LG_Producer_Lectureseries" />

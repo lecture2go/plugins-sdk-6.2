@@ -282,6 +282,12 @@ public class ProducerLocalServiceWrapper implements ProducerLocalService,
 			arguments);
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Producer> getAllProducers()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _producerLocalService.getAllProducers();
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

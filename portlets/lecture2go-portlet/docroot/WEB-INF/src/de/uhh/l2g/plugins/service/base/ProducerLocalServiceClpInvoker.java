@@ -113,6 +113,10 @@ public class ProducerLocalServiceClpInvoker {
 		_methodName107 = "setBeanIdentifier";
 
 		_methodParameterTypes107 = new String[] { "java.lang.String" };
+
+		_methodName112 = "getAllProducers";
+
+		_methodParameterTypes112 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -216,6 +220,11 @@ public class ProducerLocalServiceClpInvoker {
 			return null;
 		}
 
+		if (_methodName112.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes112, parameterTypes)) {
+			return ProducerLocalServiceUtil.getAllProducers();
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -255,4 +264,6 @@ public class ProducerLocalServiceClpInvoker {
 	private String[] _methodParameterTypes106;
 	private String _methodName107;
 	private String[] _methodParameterTypes107;
+	private String _methodName112;
+	private String[] _methodParameterTypes112;
 }

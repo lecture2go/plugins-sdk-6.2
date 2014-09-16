@@ -14,6 +14,16 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import java.util.Iterator;
+import java.util.List;
+
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.UserLocalServiceUtil;
+
+import de.uhh.l2g.plugins.model.Producer;
+import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.ProducerLocalServiceBaseImpl;
 
 /**
@@ -35,5 +45,24 @@ public class ProducerLocalServiceImpl extends ProducerLocalServiceBaseImpl {
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.ProducerLocalServiceUtil} to access the producer local service.
-	 */
+	 */	
+	
+	public List<Producer> getAllProducers() throws SystemException{
+		List<Producer> prods = ProducerLocalServiceUtil.getProducers(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+		Iterator<Producer> it = prods.iterator();
+		while (it.hasNext()){
+			Producer p = it.next();
+			User u;
+			try {
+				u = UserLocalServiceUtil.getUser(p.getProducerId());
+				p.setLastName(u.getLastName());
+				p.setFirstName(u.getFirstName());
+				p.setEmailAddress(u.getEmailAddress());
+				p.setLastLoginDate(u.getLastLoginDate());
+			} catch (PortalException e) {
+				e.printStackTrace();
+			}
+		}
+		return prods;
+	}
 }

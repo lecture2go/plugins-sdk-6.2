@@ -369,6 +369,46 @@ public class ProducerWrapper implements Producer, ModelWrapper<Producer> {
 	}
 
 	@Override
+	public java.lang.String getLastName() {
+		return _producer.getLastName();
+	}
+
+	@Override
+	public void setLastName(java.lang.String lastName) {
+		_producer.setLastName(lastName);
+	}
+
+	@Override
+	public java.lang.String getFirstName() {
+		return _producer.getFirstName();
+	}
+
+	@Override
+	public void setFirstName(java.lang.String firstName) {
+		_producer.setFirstName(firstName);
+	}
+
+	@Override
+	public java.lang.String getEmailAddress() {
+		return _producer.getEmailAddress();
+	}
+
+	@Override
+	public void setEmailAddress(java.lang.String emailAddress) {
+		_producer.setEmailAddress(emailAddress);
+	}
+
+	@Override
+	public java.util.Date getLastLoginDate() {
+		return _producer.getLastLoginDate();
+	}
+
+	@Override
+	public void setLastLoginDate(java.util.Date lastLoginDate) {
+		_producer.setLastLoginDate(lastLoginDate);
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;

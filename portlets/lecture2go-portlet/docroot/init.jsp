@@ -44,7 +44,7 @@
 <%@page import="de.uhh.l2g.plugins.service.FacilityLocalServiceUtil"%>
 <%@page import="de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil"%>
 <%@page import="de.uhh.l2g.plugins.model.Lectureseries"%>
-
+<%@page import="de.uhh.l2g.plugins.model.Producer"%>
 
 <portlet:defineObjects />
 <liferay-theme:defineObjects/>

@@ -274,6 +274,11 @@ public class ProducerLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.Producer> getAllProducers()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getAllProducers();
+	}
+
 	public static void clearService() {
 		_service = null;
 	}
