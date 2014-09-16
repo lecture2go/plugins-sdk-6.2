@@ -10,6 +10,7 @@
 <%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="java.util.ArrayList"%>
+<%@ page import="java.util.Map"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Calendar"%>
 <%@ page import="java.util.Collections"%>

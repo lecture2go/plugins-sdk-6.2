@@ -14,11 +14,14 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.liferay.portal.kernel.exception.SystemException;
 
 import de.uhh.l2g.plugins.model.Facility;
+import de.uhh.l2g.plugins.model.impl.FacilityImpl;
 import de.uhh.l2g.plugins.service.base.FacilityLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.FacilityFinderUtil;
 
@@ -46,18 +49,31 @@ public class FacilityLocalServiceImpl extends FacilityLocalServiceBaseImpl {
 	 * 
 	 * Never reference this interface directly. Always use {@link
 	 * de.uhh.l2g.plugins.service.FacilityLocalServiceUtil} to access the
-	 * facility local service.
+	 * facility local service.	
 	 */
 
 	public List<Facility> getByLevel(int level) throws SystemException {
 		return facilityPersistence.findBylevel(level);
 	}
 
-	public List<Facility> findAllSortedAsTree(int begin, int end) throws SystemException {
-		return FacilityFinderUtil.findAllSortedAsTree(begin, end);
-	}
+	public Map<String, String> getAllSortedAsTree(int begin, int end) throws SystemException {
+		Map<String,String> allFaculties = new LinkedHashMap<String, String>();
+		List <Facility> einListAll = FacilityFinderUtil.findAllSortedAsTree(begin, end);
 
-	public List<Facility> findAll(int begin, int end) throws SystemException {
-		return FacilityFinderUtil.findAll(begin, end);
+		for (Facility faculty : einListAll) {
+			String id = "" + faculty.getFacilityId();
+			String name = _indentFromPath(faculty.getPath(), "/") + faculty.getName();
+			allFaculties.put(id, name);
+		}
+		
+		return allFaculties;
+	}
+	
+	private String _indentFromPath(String path, String sep) {
+		String s = "";
+		for (int i = 1; i <= path.split(sep).length - 1; i++) {
+			s += "--";
+		}
+		return s;
 	}
 }

@@ -31,4 +31,7 @@ public interface Facility extends FacilityModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link de.uhh.l2g.plugins.model.impl.FacilityImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public java.lang.String getPath();
+
+	public void setPath(java.lang.String path);
 }

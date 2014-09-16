@@ -369,6 +369,16 @@ public class FacilityWrapper implements Facility, ModelWrapper<Facility> {
 	}
 
 	@Override
+	public java.lang.String getPath() {
+		return _facility.getPath();
+	}
+
+	@Override
+	public void setPath(java.lang.String path) {
+		_facility.setPath(path);
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;

@@ -118,13 +118,9 @@ public class FacilityLocalServiceClp implements FacilityLocalService {
 
 		_methodParameterTypes19 = new String[] { "int" };
 
-		_methodName20 = "findAllSortedAsTree";
+		_methodName20 = "getAllSortedAsTree";
 
 		_methodParameterTypes20 = new String[] { "int", "int" };
-
-		_methodName21 = "findAll";
-
-		_methodParameterTypes21 = new String[] { "int", "int" };
 	}
 
 	@Override
@@ -702,7 +698,7 @@ public class FacilityLocalServiceClp implements FacilityLocalService {
 	}
 
 	@Override
-	public java.util.List<de.uhh.l2g.plugins.model.Facility> findAllSortedAsTree(
+	public java.util.Map<java.lang.String, java.lang.String> getAllSortedAsTree(
 		int begin, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -727,36 +723,7 @@ public class FacilityLocalServiceClp implements FacilityLocalService {
 			}
 		}
 
-		return (java.util.List<de.uhh.l2g.plugins.model.Facility>)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public java.util.List<de.uhh.l2g.plugins.model.Facility> findAll(
-		int begin, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName21,
-					_methodParameterTypes21, new Object[] { begin, end });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.util.List<de.uhh.l2g.plugins.model.Facility>)ClpSerializer.translateOutput(returnObj);
+		return (java.util.Map<java.lang.String, java.lang.String>)ClpSerializer.translateOutput(returnObj);
 	}
 
 	private InvokableLocalService _invokableLocalService;
@@ -800,6 +767,4 @@ public class FacilityLocalServiceClp implements FacilityLocalService {
 	private String[] _methodParameterTypes19;
 	private String _methodName20;
 	private String[] _methodParameterTypes20;
-	private String _methodName21;
-	private String[] _methodParameterTypes21;
 }

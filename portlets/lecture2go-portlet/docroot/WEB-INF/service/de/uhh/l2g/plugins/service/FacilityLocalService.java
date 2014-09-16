@@ -249,11 +249,8 @@ public interface FacilityLocalService extends BaseLocalService,
 	public java.util.List<de.uhh.l2g.plugins.model.Facility> getByLevel(
 		int level) throws com.liferay.portal.kernel.exception.SystemException;
 
-	public java.util.List<de.uhh.l2g.plugins.model.Facility> findAllSortedAsTree(
-		int begin, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public java.util.List<de.uhh.l2g.plugins.model.Facility> findAll(
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.Map<java.lang.String, java.lang.String> getAllSortedAsTree(
 		int begin, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

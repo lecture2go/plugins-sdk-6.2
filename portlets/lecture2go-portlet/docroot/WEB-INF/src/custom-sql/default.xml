@@ -13,10 +13,4 @@
 			ORDER BY path ASC
 		]]>
     </sql>
-    
-    <sql id="de.uhh.l2g.plugins.service.persistence.FacilityFinder.findAll">
-		<![CDATA[
-			SELECT * FROM lportal620.lg_facility
-		]]>
-    </sql>
 </custom-sql>

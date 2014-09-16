@@ -5,8 +5,8 @@
 	List<Lectureseries> tempLectureseriesList = new ArrayList();
 	tempLectureseriesList = LectureseriesLocalServiceUtil.getLectureserieses(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS );
 	
-	List<Facility> facilities = FacilityLocalServiceUtil.getByLevel(1);
-	
+	Map<String, String> facilities = FacilityLocalServiceUtil.getAllSortedAsTree(0, 10000000);
+
 	List<Producer> producers = ProducerLocalServiceUtil.getProducers(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS );
 	
 	List<String> semesters = new ArrayList();
@@ -23,19 +23,20 @@
 
 <aui:fieldset helpMessage="choose-filter" column="true">
 		<aui:layout>
-			<aui:column>
+ 			<aui:column>
 						<portlet:renderURL var="sortByFacility"><portlet:param name="jspPage" value="/admin/lectureSeriesList.jsp" /></portlet:renderURL>
 						<aui:form action="<%= sortByFacility.toString() %>" method="post">
 							<aui:select name="facilityId" label="select-facility" onChange="submit();">
 								<aui:option value="">select-facility</aui:option>
-								<%for (int i = 0; i < facilities.size(); i++) {
-									
-										if(facilities.get(i).getFacilityId()==facilityId){
+
+								<%
+								for (Map.Entry<String, String> f : facilities.entrySet()) {
+										if(f.getKey().equals(facilityId.toString())){
 											%>
-											<aui:option value='<%=facilities.get(i).getFacilityId()%>' selected="true"><%=facilities.get(i).getName()%></aui:option>
+											<aui:option value='<%=f.getKey()%>' selected="true"><%=f.getValue()%></aui:option>
 											<%}else{%>
-											<aui:option value='<%=facilities.get(i).getFacilityId()%>'><%=facilities.get(i).getName()%></aui:option>
-											<%}					
+											<aui:option value='<%=f.getKey()%>'><%=f.getValue()%></aui:option>
+											<%}	
 								}%>
 							</aui:select>
 						</aui:form>	

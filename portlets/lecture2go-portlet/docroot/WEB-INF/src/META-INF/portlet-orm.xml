@@ -294,7 +294,9 @@
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.FacilityImpl" name="Facility">
 		<table name="LG_Facility" />
-		<attributes />
+		<attributes>
+			<transient name="path" />
+		</attributes>
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.Facility_HostImpl" name="Facility_Host">
 		<table name="LG_Facility_Host" />

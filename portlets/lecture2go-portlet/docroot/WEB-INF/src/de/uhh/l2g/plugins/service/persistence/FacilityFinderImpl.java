@@ -1,22 +1,22 @@
 package de.uhh.l2g.plugins.service.persistence;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
+import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.Type;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import de.uhh.l2g.plugins.model.Facility;
 import de.uhh.l2g.plugins.model.impl.FacilityImpl;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.orm.SQLQuery;
-import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.util.dao.orm.CustomSQLUtil;
-
 public class FacilityFinderImpl extends BasePersistenceImpl<Facility> implements FacilityFinder {
+
+	public static final String FIND_ALL_SORTED_AS_TREE = FacilityFinder.class.getName() + ".findAllSortedAsTree";
 
 	public List<Facility> findAllSortedAsTree(int begin, int end) {
 		Session session = null;
@@ -24,9 +24,17 @@ public class FacilityFinderImpl extends BasePersistenceImpl<Facility> implements
 			session = openSession();
 			String sql = CustomSQLUtil.get(FIND_ALL_SORTED_AS_TREE);
 			SQLQuery q = session.createSQLQuery(sql);
+			q.addScalar("facilityId", Type.LONG);
+			q.addScalar("parentId", Type.INTEGER);
+			q.addScalar("name", Type.STRING);
+			q.addScalar("typ", Type.STRING);
+			q.addScalar("www", Type.STRING);
+			q.addScalar("level", Type.INTEGER);
+			q.addScalar("sort", Type.INTEGER);
+			q.addScalar("path", Type.STRING);
 			q.setCacheable(false);
-			q.addEntity("Facility_Facility", FacilityImpl.class);
-			return (List<Facility>) QueryUtil.list(q, getDialect(), begin, end);
+			List <Object[]> fl =  (List<Object[]>) QueryUtil.list(q, getDialect(), begin, end);
+			return assembleFacilities(fl);
 		} catch (Exception e) {
 			try {
 				throw new SystemException(e);
@@ -38,29 +46,22 @@ public class FacilityFinderImpl extends BasePersistenceImpl<Facility> implements
 		}
 		return null;
 	}
-
-	public List<Facility> findAll(int begin, int end) {
-		Session session = null;
-		try {
-			session =  openSession();
-			String sql = CustomSQLUtil.get(FIND_ALL);
-			SQLQuery q = session.createSQLQuery(sql);
-			q.setCacheable(false);
-			q.addEntity("Facility_Facility", FacilityImpl.class);
-			return (List<Facility>) QueryUtil.list(q, getDialect(), begin, end);
-		} catch (Exception e) {
-			try {
-				throw new SystemException(e);
-			} catch (SystemException se) {
-				se.printStackTrace();
-			}
-		} finally {
-			closeSession(session);
+	
+	private List<Facility> assembleFacilities(List<Object[]> objectList){
+		List<Facility> fl = new ArrayList<Facility>();
+		for (Object[] facility: objectList){
+			FacilityImpl f = new FacilityImpl();
+			f.setFacilityId((Long) facility[0]);
+			f.setParentId((Integer) facility[1]);
+			f.setName((String) facility[2]);
+			f.setTyp((String) facility[3]);
+			f.setWww((String) facility[4]);
+			f.setLevel((Integer) facility[5]);
+			f.setSort((Integer) facility[6]);
+			String s = (String) facility[7];
+			f.setPath(s);
+			fl.add(f);
 		}
-		return null;
+		return fl;
 	}
-
-	public static final String FIND_ALL_SORTED_AS_TREE = FacilityFinder.class.getName() + ".findAllSortedAsTree";
-	public static final String FIND_ALL = FacilityFinder.class.getName() + ".findAll";
-
 }

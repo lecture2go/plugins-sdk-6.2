@@ -289,6 +289,41 @@ public class FacilityClp extends BaseModelImpl<Facility> implements Facility {
 		}
 	}
 
+	@Override
+	public java.lang.String getPath() {
+		try {
+			String methodName = "getPath";
+
+			Class<?>[] parameterTypes = new Class<?>[] {  };
+
+			Object[] parameterValues = new Object[] {  };
+
+			java.lang.String returnObj = (java.lang.String)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public void setPath(java.lang.String path) {
+		try {
+			String methodName = "setPath";
+
+			Class<?>[] parameterTypes = new Class<?>[] { java.lang.String.class };
+
+			Object[] parameterValues = new Object[] { path };
+
+			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
 	public BaseModel<?> getFacilityRemoteModel() {
 		return _facilityRemoteModel;
 	}

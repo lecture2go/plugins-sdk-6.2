@@ -289,17 +289,10 @@ public class FacilityLocalServiceWrapper implements FacilityLocalService,
 	}
 
 	@Override
-	public java.util.List<de.uhh.l2g.plugins.model.Facility> findAllSortedAsTree(
+	public java.util.Map<java.lang.String, java.lang.String> getAllSortedAsTree(
 		int begin, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _facilityLocalService.findAllSortedAsTree(begin, end);
-	}
-
-	@Override
-	public java.util.List<de.uhh.l2g.plugins.model.Facility> findAll(
-		int begin, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _facilityLocalService.findAll(begin, end);
+		return _facilityLocalService.getAllSortedAsTree(begin, end);
 	}
 
 	/**

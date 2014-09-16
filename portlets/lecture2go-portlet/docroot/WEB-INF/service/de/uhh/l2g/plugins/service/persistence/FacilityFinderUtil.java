@@ -26,11 +26,6 @@ public class FacilityFinderUtil {
 		return getFinder().findAllSortedAsTree(begin, end);
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.Facility> findAll(
-		int begin, int end) {
-		return getFinder().findAll(begin, end);
-	}
-
 	public static FacilityFinder getFinder() {
 		if (_finder == null) {
 			_finder = (FacilityFinder)PortletBeanLocatorUtil.locate(de.uhh.l2g.plugins.service.ClpSerializer.getServletContextName(),

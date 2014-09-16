@@ -20,7 +20,4 @@ package de.uhh.l2g.plugins.service.persistence;
 public interface FacilityFinder {
 	public java.util.List<de.uhh.l2g.plugins.model.Facility> findAllSortedAsTree(
 		int begin, int end);
-
-	public java.util.List<de.uhh.l2g.plugins.model.Facility> findAll(
-		int begin, int end);
 }
