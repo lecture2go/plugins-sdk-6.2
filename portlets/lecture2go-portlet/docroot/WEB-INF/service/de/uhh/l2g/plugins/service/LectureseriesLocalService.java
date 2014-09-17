@@ -248,4 +248,8 @@ public interface LectureseriesLocalService extends BaseLocalService,
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<java.lang.String> getAllSemesters(int begin, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

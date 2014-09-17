@@ -1,5 +1,7 @@
 package de.uhh.l2g.plugins.admin;
 
+import java.util.List;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 

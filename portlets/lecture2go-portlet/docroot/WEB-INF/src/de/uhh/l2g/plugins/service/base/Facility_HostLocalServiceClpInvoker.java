@@ -106,21 +106,21 @@ public class Facility_HostLocalServiceClpInvoker {
 				"de.uhh.l2g.plugins.model.Facility_Host"
 			};
 
-		_methodName106 = "getBeanIdentifier";
+		_methodName108 = "getBeanIdentifier";
 
-		_methodParameterTypes106 = new String[] {  };
+		_methodParameterTypes108 = new String[] {  };
 
-		_methodName107 = "setBeanIdentifier";
+		_methodName109 = "setBeanIdentifier";
 
-		_methodParameterTypes107 = new String[] { "java.lang.String" };
+		_methodParameterTypes109 = new String[] { "java.lang.String" };
 
-		_methodName112 = "getByFacilityId";
+		_methodName114 = "getByFacilityId";
 
-		_methodParameterTypes112 = new String[] { "long" };
+		_methodParameterTypes114 = new String[] { "long" };
 
-		_methodName113 = "getByHostId";
+		_methodName115 = "getByHostId";
 
-		_methodParameterTypes113 = new String[] { "long" };
+		_methodParameterTypes115 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -212,25 +212,25 @@ public class Facility_HostLocalServiceClpInvoker {
 			return Facility_HostLocalServiceUtil.updateFacility_Host((de.uhh.l2g.plugins.model.Facility_Host)arguments[0]);
 		}
 
-		if (_methodName106.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes106, parameterTypes)) {
+		if (_methodName108.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes108, parameterTypes)) {
 			return Facility_HostLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName107.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes107, parameterTypes)) {
+		if (_methodName109.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes109, parameterTypes)) {
 			Facility_HostLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName112.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes112, parameterTypes)) {
+		if (_methodName114.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes114, parameterTypes)) {
 			return Facility_HostLocalServiceUtil.getByFacilityId(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName113.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes113, parameterTypes)) {
+		if (_methodName115.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes115, parameterTypes)) {
 			return Facility_HostLocalServiceUtil.getByHostId(((Long)arguments[0]).longValue());
 		}
 
@@ -269,12 +269,12 @@ public class Facility_HostLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName106;
-	private String[] _methodParameterTypes106;
-	private String _methodName107;
-	private String[] _methodParameterTypes107;
-	private String _methodName112;
-	private String[] _methodParameterTypes112;
-	private String _methodName113;
-	private String[] _methodParameterTypes113;
+	private String _methodName108;
+	private String[] _methodParameterTypes108;
+	private String _methodName109;
+	private String[] _methodParameterTypes109;
+	private String _methodName114;
+	private String[] _methodParameterTypes114;
+	private String _methodName115;
+	private String[] _methodParameterTypes115;
 }

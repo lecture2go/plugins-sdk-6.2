@@ -288,6 +288,12 @@ public class LectureseriesLocalServiceWrapper
 			arguments);
 	}
 
+	@Override
+	public java.util.List<java.lang.String> getAllSemesters(int begin, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _lectureseriesLocalService.getAllSemesters(begin, end);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

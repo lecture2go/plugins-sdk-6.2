@@ -14,6 +14,7 @@
 	<bean id="de.uhh.l2g.plugins.service.persistence.LastvideolistPersistence" class="de.uhh.l2g.plugins.service.persistence.LastvideolistPersistenceImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.LectureseriesLocalService" class="de.uhh.l2g.plugins.service.impl.LectureseriesLocalServiceImpl" />
 	<bean id="de.uhh.l2g.plugins.service.persistence.LectureseriesPersistence" class="de.uhh.l2g.plugins.service.persistence.LectureseriesPersistenceImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.LectureseriesFinder" class="de.uhh.l2g.plugins.service.persistence.LectureseriesFinderImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.Lectureseries_FacilityLocalService" class="de.uhh.l2g.plugins.service.impl.Lectureseries_FacilityLocalServiceImpl" />
 	<bean id="de.uhh.l2g.plugins.service.persistence.Lectureseries_FacilityPersistence" class="de.uhh.l2g.plugins.service.persistence.Lectureseries_FacilityPersistenceImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.LicenseLocalService" class="de.uhh.l2g.plugins.service.impl.LicenseLocalServiceImpl" />

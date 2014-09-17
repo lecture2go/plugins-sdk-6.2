@@ -39,6 +39,7 @@ import de.uhh.l2g.plugins.service.persistence.FacilityPersistence;
 import de.uhh.l2g.plugins.service.persistence.Facility_HostPersistence;
 import de.uhh.l2g.plugins.service.persistence.HostPersistence;
 import de.uhh.l2g.plugins.service.persistence.LastvideolistPersistence;
+import de.uhh.l2g.plugins.service.persistence.LectureseriesFinder;
 import de.uhh.l2g.plugins.service.persistence.LectureseriesPersistence;
 import de.uhh.l2g.plugins.service.persistence.Lectureseries_FacilityPersistence;
 import de.uhh.l2g.plugins.service.persistence.LicensePersistence;
@@ -541,6 +542,24 @@ public abstract class LectureseriesLocalServiceBaseImpl
 	public void setLectureseriesPersistence(
 		LectureseriesPersistence lectureseriesPersistence) {
 		this.lectureseriesPersistence = lectureseriesPersistence;
+	}
+
+	/**
+	 * Returns the lectureseries finder.
+	 *
+	 * @return the lectureseries finder
+	 */
+	public LectureseriesFinder getLectureseriesFinder() {
+		return lectureseriesFinder;
+	}
+
+	/**
+	 * Sets the lectureseries finder.
+	 *
+	 * @param lectureseriesFinder the lectureseries finder
+	 */
+	public void setLectureseriesFinder(LectureseriesFinder lectureseriesFinder) {
+		this.lectureseriesFinder = lectureseriesFinder;
 	}
 
 	/**
@@ -1231,6 +1250,8 @@ public abstract class LectureseriesLocalServiceBaseImpl
 	protected de.uhh.l2g.plugins.service.LectureseriesLocalService lectureseriesLocalService;
 	@BeanReference(type = LectureseriesPersistence.class)
 	protected LectureseriesPersistence lectureseriesPersistence;
+	@BeanReference(type = LectureseriesFinder.class)
+	protected LectureseriesFinder lectureseriesFinder;
 	@BeanReference(type = de.uhh.l2g.plugins.service.Lectureseries_FacilityLocalService.class)
 	protected de.uhh.l2g.plugins.service.Lectureseries_FacilityLocalService lectureseries_FacilityLocalService;
 	@BeanReference(type = Lectureseries_FacilityPersistence.class)

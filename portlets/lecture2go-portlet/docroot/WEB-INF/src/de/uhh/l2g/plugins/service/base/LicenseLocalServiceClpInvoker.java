@@ -102,13 +102,13 @@ public class LicenseLocalServiceClpInvoker {
 				"de.uhh.l2g.plugins.model.License"
 			};
 
-		_methodName106 = "getBeanIdentifier";
+		_methodName108 = "getBeanIdentifier";
 
-		_methodParameterTypes106 = new String[] {  };
+		_methodParameterTypes108 = new String[] {  };
 
-		_methodName107 = "setBeanIdentifier";
+		_methodName109 = "setBeanIdentifier";
 
-		_methodParameterTypes107 = new String[] { "java.lang.String" };
+		_methodParameterTypes109 = new String[] { "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -200,13 +200,13 @@ public class LicenseLocalServiceClpInvoker {
 			return LicenseLocalServiceUtil.updateLicense((de.uhh.l2g.plugins.model.License)arguments[0]);
 		}
 
-		if (_methodName106.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes106, parameterTypes)) {
+		if (_methodName108.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes108, parameterTypes)) {
 			return LicenseLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName107.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes107, parameterTypes)) {
+		if (_methodName109.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes109, parameterTypes)) {
 			LicenseLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
@@ -247,8 +247,8 @@ public class LicenseLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName106;
-	private String[] _methodParameterTypes106;
-	private String _methodName107;
-	private String[] _methodParameterTypes107;
+	private String _methodName108;
+	private String[] _methodParameterTypes108;
+	private String _methodName109;
+	private String[] _methodParameterTypes109;
 }

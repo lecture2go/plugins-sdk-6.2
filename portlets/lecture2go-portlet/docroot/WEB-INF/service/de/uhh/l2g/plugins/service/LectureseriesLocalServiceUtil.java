@@ -275,6 +275,11 @@ public class LectureseriesLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static java.util.List<java.lang.String> getAllSemesters(int begin,
+		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getAllSemesters(begin, end);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

@@ -14,7 +14,13 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.liferay.portal.kernel.exception.SystemException;
+
 import de.uhh.l2g.plugins.service.base.LectureseriesLocalServiceBaseImpl;
+import de.uhh.l2g.plugins.service.persistence.LectureseriesFinderUtil;
 
 /**
  * The implementation of the lectureseries local service.
@@ -37,4 +43,10 @@ public class LectureseriesLocalServiceImpl
 	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil} to access the lectureseries local service.
 	 */
+	
+	public List<String> getAllSemesters(int begin, int end) throws SystemException {
+		List <String> sl = new ArrayList<String>();
+		sl = LectureseriesFinderUtil.findAllSemesters(begin, end);
+		return sl;
+	}
 }

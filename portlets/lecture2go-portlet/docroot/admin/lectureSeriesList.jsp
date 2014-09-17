@@ -3,12 +3,9 @@
 <%
 	List<Lectureseries> tempLectureseriesList = new ArrayList();
 	tempLectureseriesList = LectureseriesLocalServiceUtil.getLectureserieses(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS );
-	
 	Map<String, String> facilities = FacilityLocalServiceUtil.getAllSortedAsTree(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
-
-	List<Producer> producers = ProducerLocalServiceUtil.getAllProducers();
-	
-	List<String> semesters = new ArrayList();
+	List<Producer> producers = ProducerLocalServiceUtil.getAllProducers(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+	List<String> semesters = LectureseriesLocalServiceUtil.getAllSemesters(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 	
 	List<Integer> statusList= new ArrayList();
 	statusList.add(0, 0);

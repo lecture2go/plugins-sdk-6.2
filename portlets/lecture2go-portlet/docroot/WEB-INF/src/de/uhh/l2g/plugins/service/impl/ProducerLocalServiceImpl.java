@@ -47,8 +47,8 @@ public class ProducerLocalServiceImpl extends ProducerLocalServiceBaseImpl {
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.ProducerLocalServiceUtil} to access the producer local service.
 	 */	
 	
-	public List<Producer> getAllProducers() throws SystemException{
-		List<Producer> prods = ProducerLocalServiceUtil.getProducers(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+	public List<Producer> getAllProducers(int begin, int end) throws SystemException{
+		List<Producer> prods = ProducerLocalServiceUtil.getProducers(begin, end);
 		Iterator<Producer> it = prods.iterator();
 		while (it.hasNext()){
 			Producer p = it.next();

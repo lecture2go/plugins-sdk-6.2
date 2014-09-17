@@ -116,7 +116,7 @@ public class ProducerLocalServiceClp implements ProducerLocalService {
 
 		_methodName19 = "getAllProducers";
 
-		_methodParameterTypes19 = new String[] {  };
+		_methodParameterTypes19 = new String[] { "int", "int" };
 	}
 
 	@Override
@@ -666,13 +666,14 @@ public class ProducerLocalServiceClp implements ProducerLocalService {
 	}
 
 	@Override
-	public java.util.List<de.uhh.l2g.plugins.model.Producer> getAllProducers()
+	public java.util.List<de.uhh.l2g.plugins.model.Producer> getAllProducers(
+		int begin, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName19,
-					_methodParameterTypes19, new Object[] {  });
+					_methodParameterTypes19, new Object[] { begin, end });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);

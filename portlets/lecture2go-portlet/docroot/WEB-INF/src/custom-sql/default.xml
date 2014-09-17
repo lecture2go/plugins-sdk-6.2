@@ -13,4 +13,11 @@
 			ORDER BY path ASC
 		]]>
     </sql>
+    
+    <sql id="de.uhh.l2g.plugins.service.persistence.LectureseriesFinder.findAllSemesters">
+		<![CDATA[
+			SELECT semesterName FROM lg_lectureseries WHERE semesterName!='' GROUP BY semesterName
+		]]>
+    </sql> 
+    
 </custom-sql>
