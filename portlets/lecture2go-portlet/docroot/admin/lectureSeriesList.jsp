@@ -76,9 +76,9 @@
 								<%for (int i = 0; i < statusList.size(); i++) {
 										if(statusList.get(i)==statusId){
 											%>
-											<aui:option value='<%=statusList.get(i)%>' selected="true"><%=statusList.get(i)%></aui:option>
+											<aui:option value='<%=statusList.get(i)%>' selected="true">approved-true</aui:option>
 											<%}else{%>
-											<aui:option value='<%=statusList.get(i)%>'><%=statusList.get(i)%></aui:option>
+											<aui:option value='<%=statusList.get(i)%>'>approved-false</aui:option>
 											<%}					
 								}%>
 							</aui:select>
