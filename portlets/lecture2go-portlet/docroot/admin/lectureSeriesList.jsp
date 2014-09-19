@@ -1,5 +1,7 @@
 <%@include file="/init.jsp"%>
 
+<portlet:renderURL var="addLectureseriesURL"><portlet:param name="jspPage" value="/admin/editLectureseries.jsp" /></portlet:renderURL>
+
 <%
 	List<Lectureseries> tempLectureseriesList = new ArrayList();
 	tempLectureseriesList = LectureseriesLocalServiceUtil.getLectureserieses(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS );
@@ -7,15 +9,12 @@
 	List<Producer> producers = ProducerLocalServiceUtil.getAllProducers(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 	List<String> semesters = LectureseriesLocalServiceUtil.getAllSemesters(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 	
-	List<Integer> statusList= new ArrayList();
-	statusList.add(0, 0);
-	statusList.add(1, 1);
-	
 	Integer facilityId = 0;
 	Integer producerId = 0;
-	String semesterId = null;
-	Integer statusId = null;
+	String semesterId = "";
+	Integer statusId = 3;
 %>
+
 
 <aui:fieldset helpMessage="choose-filter" column="true">
 		<aui:layout>
@@ -73,17 +72,24 @@
 						<aui:form action="<%= sortByStatus.toString() %>" method="post">
 							<aui:select name="statusId" label="select-status" onChange="submit();">
 								<aui:option value="">select-status</aui:option>
-								<%for (int i = 0; i < statusList.size(); i++) {
-										if(statusList.get(i)==statusId){
-											%>
-											<aui:option value='<%=statusList.get(i)%>' selected="true">approved-true</aui:option>
-											<%}else{%>
-											<aui:option value='<%=statusList.get(i)%>'>approved-false</aui:option>
-											<%}					
-								}%>
+										<%if(statusId==0){%>
+											<aui:option value='0' selected="true">approved-false</aui:option>
+										<%}else{%>
+											<aui:option value='0'>approved-false</aui:option>
+										<%}%>				
+										<%if(statusId==1){%>
+											<aui:option value='1' selected="true">approved-true</aui:option>
+										<%}else{%>
+											<aui:option value='1'>approved-true</aui:option>
+										<%}%>
 							</aui:select>
 						</aui:form>
 				</aui:column>		
+		</aui:layout>
+		<aui:layout>
+			<aui:row>
+				<aui:button value="add-new-lectureseries" onClick="<%=addLectureseriesURL%>"/>
+			</aui:row>
 		</aui:layout>
 </aui:fieldset>
 

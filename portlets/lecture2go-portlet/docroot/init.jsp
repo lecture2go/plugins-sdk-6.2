@@ -32,6 +32,7 @@
 <%@page import="com.liferay.portal.service.UserGroupRoleServiceUtil"%>
 <%@page import="com.liferay.portal.service.RoleLocalServiceUtil"%>
 <%@page import="com.liferay.portal.service.PortletLocalServiceUtil"%>
+<%@page import="com.liferay.portal.kernel.util.UnicodeFormatter"%>
 
 <%@ page import="javax.portlet.PortletURL"%>
 
