@@ -19,6 +19,7 @@ import java.util.List;
 
 import com.liferay.portal.kernel.exception.SystemException;
 
+import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.service.base.LectureseriesLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.LectureseriesFinderUtil;
 
@@ -48,5 +49,15 @@ public class LectureseriesLocalServiceImpl
 		List <String> sl = new ArrayList<String>();
 		sl = LectureseriesFinderUtil.findAllSemesters(begin, end);
 		return sl;
+	}
+	
+	public List<Lectureseries> getFilteredBySemesterFacultyProducer(Integer approved, String semester, int facultyId, int producerId) {
+		List<Lectureseries> l = LectureseriesFinderUtil.findeFilteredByApprovedSemesterFacultyProducer(approved, semester, facultyId, producerId);
+		try{
+			l.isEmpty();//check
+		}catch(NullPointerException npe){
+			l = new ArrayList<Lectureseries>();
+		}
+		return l;
 	}
 }

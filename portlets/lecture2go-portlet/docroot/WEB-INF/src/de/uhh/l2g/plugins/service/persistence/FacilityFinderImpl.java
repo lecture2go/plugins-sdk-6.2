@@ -33,6 +33,7 @@ public class FacilityFinderImpl extends BasePersistenceImpl<Facility> implements
 			q.addScalar("sort", Type.INTEGER);
 			q.addScalar("path", Type.STRING);
 			q.setCacheable(false);
+			@SuppressWarnings("unchecked")
 			List <Object[]> fl =  (List<Object[]>) QueryUtil.list(q, getDialect(), begin, end);
 			return assembleFacilities(fl);
 		} catch (Exception e) {

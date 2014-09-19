@@ -22,5 +22,13 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		
 		response.setRenderParameter("jspPage", "/admin/editLectureseries.jsp");
 	}
+	
+	public void filterLectureseries(ActionRequest request, ActionResponse response) throws SystemException, PortalException {
+		// requested lectureseries
+		List<Lectureseries> l = LectureseriesLocalServiceUtil.getFilteredBySemesterFacultyProducer(0, "", 8, 0);
+
+		request.setAttribute("reqLectureseries", l);
+		response.setRenderParameter("jspPage", "/admin/editLectureseries.jsp");
+	}
 
 }

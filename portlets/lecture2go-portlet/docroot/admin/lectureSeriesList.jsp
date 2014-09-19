@@ -1,18 +1,27 @@
+<%@page import="org.springframework.web.bind.ServletRequestUtils"%>
+<%@page import="org.springframework.web.portlet.bind.PortletRequestUtils"%>
+<%@page import="com.liferay.util.portlet.PortletRequestUtil"%>
 <%@include file="/init.jsp"%>
 
 <portlet:renderURL var="addLectureseriesURL"><portlet:param name="jspPage" value="/admin/editLectureseries.jsp" /></portlet:renderURL>
+<portlet:actionURL var="test" name="test"><portlet:param name="jspPage" value="/admin/lectureSeriesList.jsp" /></portlet:actionURL>
 
 <%
 	List<Lectureseries> tempLectureseriesList = new ArrayList();
-	tempLectureseriesList = LectureseriesLocalServiceUtil.getLectureserieses(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS );
 	Map<String, String> facilities = FacilityLocalServiceUtil.getAllSortedAsTree(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 	List<Producer> producers = ProducerLocalServiceUtil.getAllProducers(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 	List<String> semesters = LectureseriesLocalServiceUtil.getAllSemesters(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 	
-	Integer facilityId = 0;
-	Integer producerId = 0;
-	String semesterId = "";
-	Integer statusId = 3;
+	Integer facilityId = ServletRequestUtils.getIntParameter(request, "facilityId", 0);
+	Integer producerId = ServletRequestUtils.getIntParameter(request, "producerId", 0);
+	String semesterId = ServletRequestUtils.getStringParameter(request, "semesterId", "");
+	Integer statusId = ServletRequestUtils.getIntParameter(request, "statusId", 3);
+	
+	PortletURL portletURL = renderResponse.createRenderURL();
+	portletURL.setParameter("facilityId", facilityId+"");
+	portletURL.setParameter("producerId", producerId+"");
+	portletURL.setParameter("semesterId", semesterId+"");
+	portletURL.setParameter("statusId", statusId+"");
 %>
 
 
@@ -93,9 +102,10 @@
 		</aui:layout>
 </aui:fieldset>
 
-<liferay-ui:search-container emptyResultsMessage="no-l2go-roles-found" delta="10">
+<liferay-ui:search-container emptyResultsMessage="no-lectureseries-found" delta="10" iteratorURL="<%= portletURL %>">
 	<liferay-ui:search-container-results>
 		<%
+			tempLectureseriesList = LectureseriesLocalServiceUtil.getFilteredBySemesterFacultyProducer(statusId, semesterId, facilityId, producerId);
 			results = ListUtil.subList(tempLectureseriesList, searchContainer.getStart(), searchContainer.getEnd());
 			total = tempLectureseriesList.size();
 			pageContext.setAttribute("results", results);

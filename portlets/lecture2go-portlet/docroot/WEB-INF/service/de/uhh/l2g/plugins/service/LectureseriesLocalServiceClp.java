@@ -118,6 +118,12 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 		_methodName19 = "getAllSemesters";
 
 		_methodParameterTypes19 = new String[] { "int", "int" };
+
+		_methodName20 = "getFilteredBySemesterFacultyProducer";
+
+		_methodParameterTypes20 = new String[] {
+				"java.lang.Integer", "java.lang.String", "int", "int"
+			};
 	}
 
 	@Override
@@ -698,6 +704,40 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 		return (java.util.List<java.lang.String>)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getFilteredBySemesterFacultyProducer(
+		java.lang.Integer approved, java.lang.String semester, int facultyId,
+		int producerId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20,
+					new Object[] {
+						ClpSerializer.translateInput(approved),
+						
+					ClpSerializer.translateInput(semester),
+						
+					facultyId,
+						
+					producerId
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<de.uhh.l2g.plugins.model.Lectureseries>)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -737,4 +777,6 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 	private String[] _methodParameterTypes17;
 	private String _methodName19;
 	private String[] _methodParameterTypes19;
+	private String _methodName20;
+	private String[] _methodParameterTypes20;
 }

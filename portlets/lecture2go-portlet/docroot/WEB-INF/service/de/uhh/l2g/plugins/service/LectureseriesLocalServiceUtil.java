@@ -280,6 +280,14 @@ public class LectureseriesLocalServiceUtil {
 		return getService().getAllSemesters(begin, end);
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getFilteredBySemesterFacultyProducer(
+		java.lang.Integer approved, java.lang.String semester, int facultyId,
+		int producerId) {
+		return getService()
+				   .getFilteredBySemesterFacultyProducer(approved, semester,
+			facultyId, producerId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

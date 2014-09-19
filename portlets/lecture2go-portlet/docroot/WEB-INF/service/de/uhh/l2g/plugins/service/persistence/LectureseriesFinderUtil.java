@@ -26,6 +26,14 @@ public class LectureseriesFinderUtil {
 		return getFinder().findAllSemesters(begin, end);
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findeFilteredByApprovedSemesterFacultyProducer(
+		java.lang.Integer approved, java.lang.String semester, int facultyId,
+		int producerId) {
+		return getFinder()
+				   .findeFilteredByApprovedSemesterFacultyProducer(approved,
+			semester, facultyId, producerId);
+	}
+
 	public static LectureseriesFinder getFinder() {
 		if (_finder == null) {
 			_finder = (LectureseriesFinder)PortletBeanLocatorUtil.locate(de.uhh.l2g.plugins.service.ClpSerializer.getServletContextName(),

@@ -117,6 +117,12 @@ public class LectureseriesLocalServiceClpInvoker {
 		_methodName114 = "getAllSemesters";
 
 		_methodParameterTypes114 = new String[] { "int", "int" };
+
+		_methodName115 = "getFilteredBySemesterFacultyProducer";
+
+		_methodParameterTypes115 = new String[] {
+				"java.lang.Integer", "java.lang.String", "int", "int"
+			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -226,6 +232,14 @@ public class LectureseriesLocalServiceClpInvoker {
 				((Integer)arguments[1]).intValue());
 		}
 
+		if (_methodName115.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes115, parameterTypes)) {
+			return LectureseriesLocalServiceUtil.getFilteredBySemesterFacultyProducer((java.lang.Integer)arguments[0],
+				(java.lang.String)arguments[1],
+				((Integer)arguments[2]).intValue(),
+				((Integer)arguments[3]).intValue());
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -267,4 +281,6 @@ public class LectureseriesLocalServiceClpInvoker {
 	private String[] _methodParameterTypes109;
 	private String _methodName114;
 	private String[] _methodParameterTypes114;
+	private String _methodName115;
+	private String[] _methodParameterTypes115;
 }

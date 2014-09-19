@@ -294,6 +294,14 @@ public class LectureseriesLocalServiceWrapper
 		return _lectureseriesLocalService.getAllSemesters(begin, end);
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getFilteredBySemesterFacultyProducer(
+		java.lang.Integer approved, java.lang.String semester, int facultyId,
+		int producerId) {
+		return _lectureseriesLocalService.getFilteredBySemesterFacultyProducer(approved,
+			semester, facultyId, producerId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
