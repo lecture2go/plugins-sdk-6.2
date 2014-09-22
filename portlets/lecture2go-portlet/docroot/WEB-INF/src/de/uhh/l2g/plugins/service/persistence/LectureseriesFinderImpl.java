@@ -114,17 +114,17 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			query += "INNER JOIN lg_producer AS p ON ( pc.producerId = p.producerId ) ";
 		}
 
-		if ((!"".equals(semester) && semester != null) || ("true".equals(approved) || "false".equals(approved)) || facultyId > 0 || producerId > 0) {
+		if ((!"".equals(semester) && semester != null) || (approved==1 || approved==0) || facultyId > 0 || producerId > 0) {
 			query += "WHERE ";
 			int i = 0;
 			if (!"".equals(semester) && semester != null) {
-				query += "c.semesterName = "+semester;
+				query += "c.semesterName = \""+semester + "\" ";
 				i++;
 			}
 
-			if ("true".equals(approved) || "false".equals(approved)) {
+			if (approved==1 || approved==0) {
 				query += i > 0 ? "AND " : "";
-				query += "c.approved = "+approved;
+				query += "c.approved = "+approved + " ";
 				i++;
 			}
 
@@ -137,7 +137,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 
 			if (producerId > 0) {
 				query += i > 0 ? "AND " : "";
-				query += "pc.producerId = "+producerId;
+				query += "pc.producerId = "+producerId + " ";
 				i++;
 			}
 		}
