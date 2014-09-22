@@ -1,3 +1,4 @@
+<%@page import="com.liferay.taglib.portlet.RenderURLParamsTag"%>
 <%@page import="org.springframework.web.bind.ServletRequestUtils"%>
 <%@page import="org.springframework.web.portlet.bind.PortletRequestUtils"%>
 <%@page import="com.liferay.util.portlet.PortletRequestUtil"%>
@@ -24,11 +25,15 @@
 	portletURL.setParameter("statusId", statusId+"");
 %>
 
-
 <aui:fieldset helpMessage="choose-filter" column="true">
 		<aui:layout>
  			<aui:column>
-						<portlet:renderURL var="sortByFacility"><portlet:param name="jspPage" value="/admin/lectureSeriesList.jsp" /></portlet:renderURL>
+						<portlet:renderURL var="sortByFacility">
+							<portlet:param name="jspPage" value="/admin/lectureSeriesList.jsp" />
+							<portlet:param name="producerId" value="<%=producerId.toString()%>"/>
+							<portlet:param name="semesterId" value="<%=semesterId.toString()%>"/>
+							<portlet:param name="statusId" value="<%=statusId.toString()%>"/>
+						</portlet:renderURL>
 						<aui:form action="<%= sortByFacility.toString() %>" method="post">
 							<aui:select name="facilityId" label="select-facility" onChange="submit();">
 								<aui:option value="">select-facility</aui:option>
@@ -45,7 +50,12 @@
 						</aui:form>	
 				</aui:column>			
 				<aui:column>
-						<portlet:renderURL var="sortByProducer"><portlet:param name="jspPage" value="/admin/lectureSeriesList.jsp" /></portlet:renderURL>
+						<portlet:renderURL var="sortByProducer">
+							<portlet:param name="jspPage" value="/admin/lectureSeriesList.jsp" />
+							<portlet:param name="facilityId" value="<%=facilityId.toString()%>"/>
+							<portlet:param name="semesterId" value="<%=semesterId.toString()%>"/>
+							<portlet:param name="statusId" value="<%=statusId.toString()%>"/>
+						</portlet:renderURL>
 						<aui:form action="<%= sortByProducer.toString() %>" method="post">
 							<aui:select name="producerId" label="select-producer" onChange="submit();">
 								<aui:option value="">select-producer</aui:option>
@@ -61,7 +71,12 @@
 						</aui:form>		
 				</aui:column>	
 				<aui:column>
-						<portlet:renderURL var="sortBySemester"><portlet:param name="jspPage" value="/admin/lectureSeriesList.jsp" /></portlet:renderURL>
+						<portlet:renderURL var="sortBySemester">
+							<portlet:param name="jspPage" value="/admin/lectureSeriesList.jsp" />
+							<portlet:param name="facilityId" value="<%=facilityId.toString()%>"/>
+							<portlet:param name="statusId" value="<%=statusId.toString()%>"/>
+							<portlet:param name="producerId" value="<%=producerId.toString()%>"/>
+						</portlet:renderURL>
 						<aui:form action="<%= sortBySemester.toString() %>" method="post">
 							<aui:select name="semesterId" label="select-semester" onChange="submit();">
 								<aui:option value="">select-semester</aui:option>
@@ -77,7 +92,12 @@
 						</aui:form>				
 				</aui:column>	
 				<aui:column>
-						<portlet:renderURL var="sortByStatus"><portlet:param name="jspPage" value="/admin/lectureSeriesList.jsp" /></portlet:renderURL>
+						<portlet:renderURL var="sortByStatus">
+							<portlet:param name="jspPage" value="/admin/lectureSeriesList.jsp" />
+							<portlet:param name="facilityId" value="<%=facilityId.toString()%>"/>
+							<portlet:param name="producerId" value="<%=producerId.toString()%>"/>
+							<portlet:param name="semesterId" value="<%=semesterId.toString()%>"/>
+						</portlet:renderURL>
 						<aui:form action="<%= sortByStatus.toString() %>" method="post">
 							<aui:select name="statusId" label="select-status" onChange="submit();">
 								<aui:option value="">select-status</aui:option>
