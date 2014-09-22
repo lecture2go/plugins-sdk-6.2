@@ -13,7 +13,7 @@
 	}catch(NullPointerException npe){}
 	
 	Long facilityId=new Long(0);
-	List<Facility> facilities = FacilityLocalServiceUtil.getFacilities(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+	Map<String, String> facilities = FacilityLocalServiceUtil.getAllSortedAsTree(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 	
 	Long producerId=new Long(0);
 	List<Producer>producers = ProducerLocalServiceUtil.getAllProducers(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
@@ -42,13 +42,16 @@
 			</aui:select>
 			
 			<aui:select size="1" name="facilityId" label="facility" required="true" helpMessage="please-add-at-lest-one-facility">
-				<aui:option value=""></aui:option>
-				<%for (int i = 0; i < facilities.size(); i++) {if (facilities.get(i).getFacilityId() == facilityId) {%>
-				<aui:option value='<%=facilities.get(i).getFacilityId()%>' selected="true"><%=facilities.get(i).getName()%></aui:option>
-				<%} else {%>
-				<aui:option value='<%=facilities.get(i).getFacilityId()%>'><%=facilities.get(i).getName()%></aui:option>
-				<%}}%>
-			</aui:select>
+					<aui:option value="">select-facility</aui:option>
+						<%for (Map.Entry<String, String> f : facilities.entrySet()) {
+								if(f.getKey().equals(facilityId.toString())){
+									%>
+									<aui:option value='<%=f.getKey()%>' selected="true"><%=f.getValue()%></aui:option>
+								<%}else{%>
+									<aui:option value='<%=f.getKey()%>'><%=f.getValue()%></aui:option>
+								<%}	
+						}%>
+					</aui:select>
 			<aui:button name="addFacility" value="add-facility" type="button" />
 
 			<aui:select size="1" name="producerId" label="producer" required="true" helpMessage="please-add-at-lest-one-producer">
@@ -59,8 +62,20 @@
 				<aui:option value='<%=producers.get(i).getProducerId()%>'><%=producers.get(i).getLastName() + ", " + producers.get(i).getFirstName()%></aui:option>
 				<%}}%>
 			</aui:select>
-			<aui:button name="addProducer" value="add-producer" type="button" />
-
+				
+			<div class="dynamicRow">
+				<div id="producerSelect">
+					<div class="formtitle">${producer}:<span class="orange">*</span></div>
+					<select size="1" >
+						<option value=""></option>
+						<c:forEach items="${model.allProducers}" var="producer">
+							<option value="${producer.key}">${producer.value}</option>
+						</c:forEach>
+					</select>
+				</div>
+				<aui:button name="addProducer" value="add-producer" type="button" class="addProducerButton"/>
+			</div>
+							
 			<aui:input name="shortDescription" label="short-sescription"/>
 
 			<aui:select size="1" name="allSemesters" label="all-semesters">
@@ -103,3 +118,59 @@
 		</aui:layout>
 	</aui:fieldset>
 </aui:form>
+
+<div class="container">
+	<div class="job" id="job1"></div>
+</div>
+
+
+<aui:button name="addJob" value="Add another job"/>
+
+<script>
+// Create an AUI instance and load the 'aui-node' module
+AUI().use(
+  'aui-node',
+  function(Y) {
+    var lastJobNumber = 1;
+    var newJobNumber = 2;
+    var job = '<div class="job added"><label for="position2">Position: </label></div>';
+
+    Y.one('#<portlet:namespace></portlet:namespace>addJob').on('click',
+      function() {
+        // Create a new Job node and give it an appropriate ID
+        var newJob = Y.Node.create(job);
+        newJob.attr('id', 'job' + newJobNumber);
+
+        // Place the node in its spot in the DOM and populate it
+        var lastJob = '#job' + lastJobNumber;
+        Y.one(lastJob).placeAfter(newJob);
+
+        // Increment the values in case another job is added
+        lastJobNumber++;
+        newJobNumber++;
+      }
+    );
+
+    Y.one('#reset').on('click',
+     function() {
+    	// Reset the original number of fields when "Reset" is pressed
+    	Y.all('#jobForm .added').remove(true);
+
+    	lastJobNumber = 1;
+    	newJobNumber = 2;
+      }
+     );
+    
+    Y.one('#delete').on('click',
+      function() {
+        // Reset the original number of fields when "Reset" is pressed
+        Y.all('#jobForm .added').remove(true);
+
+        lastJobNumber = 1;
+        newJobNumber = 2;
+      }
+    );
+    
+  }
+);
+</script>
