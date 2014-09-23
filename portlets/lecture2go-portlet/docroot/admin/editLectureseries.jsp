@@ -119,58 +119,40 @@
 	</aui:fieldset>
 </aui:form>
 
-<div class="container">
-	<div class="job" id="job1"></div>
-</div>
+<div class="container"></div>
 
-
-<aui:button name="addJob" value="Add another job"/>
+<aui:button name="add" value="add"/>
 
 <script>
-// Create an AUI instance and load the 'aui-node' module
+//Create an AUI instance and load the 'aui-node' module
 AUI().use(
   'aui-node',
   function(Y) {
-    var lastJobNumber = 1;
-    var newJobNumber = 2;
-    var job = '<div class="job added"><label for="position2">Position: </label></div>';
-
-    Y.one('#<portlet:namespace></portlet:namespace>addJob').on('click',
-      function() {
-        // Create a new Job node and give it an appropriate ID
-        var newJob = Y.Node.create(job);
-        newJob.attr('id', 'job' + newJobNumber);
-
-        // Place the node in its spot in the DOM and populate it
-        var lastJob = '#job' + lastJobNumber;
-        Y.one(lastJob).placeAfter(newJob);
-
-        // Increment the values in case another job is added
-        lastJobNumber++;
-        newJobNumber++;
-      }
-    );
-
-    Y.one('#reset').on('click',
-     function() {
-    	// Reset the original number of fields when "Reset" is pressed
-    	Y.all('#jobForm .added').remove(true);
-
-    	lastJobNumber = 1;
-    	newJobNumber = 2;
-      }
-     );
+    // Select the node(s) using a css selector string
+    var container = Y.one('.container');
+    var add = Y.one('#<portlet:namespace />add');
+    var id = 0;
     
-    Y.one('#delete').on('click',
+    // Change the background color on a `click` event
+    node.on(
+      'click',
       function() {
-        // Reset the original number of fields when "Reset" is pressed
-        Y.all('#jobForm .added').remove(true);
+        alert("remove");
 
-        lastJobNumber = 1;
-        newJobNumber = 2;
       }
     );
     
+    add.on(
+      'click',
+      function(Y) {
+    	  var newNode ='<div id="<portlet:namespace />'+id+'" > <div id="remBut"><a style="cursor: pointer;" class=" taglib-icon"> <img id="<portlet:namespace></portlet:namespace>deleteNode" src="/welcome-theme/images/common/delete.png" alt=""/> </a></div></div><br/>';
+    	  id++;
+    	  
+  	      var n = Y.Node.create('<div class="mini"><p>xxxxxxxxx</p></div>');
+  	      
+      }
+    );
+
   }
 );
 </script>
