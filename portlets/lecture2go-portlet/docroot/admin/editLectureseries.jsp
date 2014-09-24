@@ -41,40 +41,27 @@
 				</c:forEach>
 			</aui:select>
 			
-			<aui:select size="1" name="facilityId" label="facility" required="true" helpMessage="please-add-at-lest-one-facility">
-					<aui:option value="">select-facility</aui:option>
-						<%for (Map.Entry<String, String> f : facilities.entrySet()) {
-								if(f.getKey().equals(facilityId.toString())){
-									%>
-									<aui:option value='<%=f.getKey()%>' selected="true"><%=f.getValue()%></aui:option>
-								<%}else{%>
-									<aui:option value='<%=f.getKey()%>'><%=f.getValue()%></aui:option>
-								<%}	
-						}%>
-					</aui:select>
-			<aui:button name="addFacility" value="add-facility" type="button" />
-
+			<aui:select size="1" name="facilityId" label="facility" required="true" helpMessage="please-add-only-one-facility">
+				<aui:option value="">select-facility</aui:option>
+				<%for (Map.Entry<String, String> f : facilities.entrySet()) {
+				if(f.getKey().equals(facilityId.toString())){
+				%><aui:option value='<%=f.getKey()%>' selected="true"><%=f.getValue()%></aui:option>
+				<%}else{%><aui:option value='<%=f.getKey()%>'><%=f.getValue()%></aui:option><%}	
+				}%>
+			</aui:select>
+			<aui:button name="addFacility" value="add-facility" type="button"/>
+			<div class="facilCont"></div>			
+			
 			<aui:select size="1" name="producerId" label="producer" required="true" helpMessage="please-add-at-lest-one-producer">
-				<aui:option value=""></aui:option>
+				<aui:option value="">select-producer</aui:option>
 				<%for (int i = 0; i < producers.size(); i++) {if (producers.get(i).getProducerId() == producerId) {%>
 				<aui:option value='<%=producers.get(i).getProducerId()%>' selected="true"><%=producers.get(i).getLastName() + ", " + producers.get(i).getFirstName()%></aui:option>
 				<%} else {%>
 				<aui:option value='<%=producers.get(i).getProducerId()%>'><%=producers.get(i).getLastName() + ", " + producers.get(i).getFirstName()%></aui:option>
 				<%}}%>
 			</aui:select>
-				
-			<div class="dynamicRow">
-				<div id="producerSelect">
-					<div class="formtitle">${producer}:<span class="orange">*</span></div>
-					<select size="1" >
-						<option value=""></option>
-						<c:forEach items="${model.allProducers}" var="producer">
-							<option value="${producer.key}">${producer.value}</option>
-						</c:forEach>
-					</select>
-				</div>
-				<aui:button name="addProducer" value="add-producer" type="button" class="addProducerButton"/>
-			</div>
+			<aui:button name="addProducer" value="add-producer" type="button"/>
+			<div class="prodCont"></div>	
 							
 			<aui:input name="shortDescription" label="short-sescription"/>
 
@@ -119,40 +106,44 @@
 	</aui:fieldset>
 </aui:form>
 
-<div class="container"></div>
-
-<aui:button name="add" value="add"/>
-
 <script>
-//Create an AUI instance and load the 'aui-node' module
 AUI().use(
   'aui-node',
-  function(Y) {
+  function(A) {
     // Select the node(s) using a css selector string
-    var container = Y.one('.container');
-    var add = Y.one('#<portlet:namespace />add');
-    var id = 0;
+    var contFacil = A.one('.facilCont');
+    var contProduc = A.one('.prodCont');
+    var addFacil = A.one('#<portlet:namespace/>addFacility');
+    var addProduc = A.one('#<portlet:namespace/>addProducer');
+    var facilitiesNode = A.one('#<portlet:namespace/>facilityId');
+    var producerNode = A.one('#<portlet:namespace/>producerId');
+    var i = 0;
+    var j = 0;
     
-    // Change the background color on a `click` event
-    node.on(
+    addFacil.on(
       'click',
-      function() {
-        alert("remove");
-
-      }
-    );
-    
-    add.on(
-      'click',
-      function(Y) {
-    	  var newNode ='<div id="<portlet:namespace />'+id+'" > <div id="remBut"><a style="cursor: pointer;" class=" taglib-icon"> <img id="<portlet:namespace></portlet:namespace>deleteNode" src="/welcome-theme/images/common/delete.png" alt=""/> </a></div></div><br/>';
-    	  id++;
-    	  
-  	      var n = Y.Node.create('<div class="mini"><p>xxxxxxxxx</p></div>');
-  	      
+      function(A) {
+		if(facilitiesNode.get('value')>0){
+	    	i++;
+	  	    var n = "node_"+i;
+	  	    var t = facilitiesNode.get(facilitiesNode.get('selectedIndex')).get('text')+"&nbsp;&nbsp;&nbsp;";
+	  	    contFacil.append("<div id='"+n+"'> "+t+" <a onClick='document.getElementById(&quot;"+n+"&quot;).remove();'><b>X</b></a></div>");
+		}
       }
     );
 
+    addProduc.on(
+      'click',
+      function(A) {
+  		if(producerNode.get('value')>0){
+		j++;
+  	    var n = "node_"+j;
+  	    var t = producerNode.get(producerNode.get('selectedIndex')).get('text')+"&nbsp;&nbsp;&nbsp;";
+  	  	contProduc.append("<div id='"+n+"'> "+t+" <a onClick='document.getElementById(&quot;"+n+"&quot;).remove();'><b>X</b></a></div>");
+  		}
+      }
+    );
+    
   }
 );
 </script>
