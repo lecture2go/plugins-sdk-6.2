@@ -1,3 +1,9 @@
+<%@page import="com.liferay.portal.kernel.language.LanguageUtil"%>
+<%@page import="org.springframework.scripting.config.LangNamespaceUtils"%>
+<%@page import="com.liferay.portal.kernel.language.LanguageUtil"%>
+<%@page import="com.liferay.portal.kernel.util.LocaleUtil"%>
+<%@page import="java.util.Locale"%>
+
 <%@include file="/init.jsp"%>
 
 <%
@@ -14,9 +20,16 @@
 	
 	Long facilityId=new Long(0);
 	Map<String, String> facilities = FacilityLocalServiceUtil.getAllSortedAsTree(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+
+	Locale[] languages = LanguageUtil.getAvailableLocales();
+	String[] availableLanguageIds = LocaleUtil.toLanguageIds(languages);
+	String languageId="";
+	String semesterId="";
 	
 	Long producerId=new Long(0);
 	List<Producer>producers = ProducerLocalServiceUtil.getAllProducers(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+	
+	List<String> semesters = LectureseriesLocalServiceUtil.getAllSemesters(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 %>
 
 <portlet:renderURL var="cancelURL"><portlet:param name="jspPage" value="/admin/lectureSeriesList.jsp" /></portlet:renderURL>
@@ -25,32 +38,30 @@
 <portlet:actionURL name="saveURL" var="saveURL"><portlet:param name="lectureseriesId" value='<%=""+lId%>' /></portlet:actionURL>
 
 
-
 <aui:form action="${actionURL}" commandName="model">
 	<aui:fieldset helpMessage="test" column="true" label='<%=lName%>'>
 		<aui:layout>
-
+			
 			<aui:input name="lectureseriesNumber" label="lectureseries-number" required="true" cssClass="testa"/>
 
 			<aui:input name="lectureseriesName" label="lectureseries-name" required="true"/>
 
 			<aui:select size="1" name="eventType" label="event-type" required="true">
 				<aui:option value=""></aui:option>
-				<c:forEach items="${eventtypesforselect}" var="type">
+				<c:forEach items='<%=LanguageUtil.get(pageContext, "event-types-for-select")%>' var="type">
 					<aui:option value="${type}">${type}</aui:option>
 				</c:forEach>
 			</aui:select>
 			
-			<aui:select size="1" name="facilityId" label="facility" required="true" helpMessage="please-add-only-one-facility">
+			<aui:select size="1" name="facilityId" label="facility" required="true">
 				<aui:option value="">select-facility</aui:option>
 				<%for (Map.Entry<String, String> f : facilities.entrySet()) {
+				boolean dis=true; if(f.getValue().startsWith("----"))dis=false;
 				if(f.getKey().equals(facilityId.toString())){
 				%><aui:option value='<%=f.getKey()%>' selected="true"><%=f.getValue()%></aui:option>
-				<%}else{%><aui:option value='<%=f.getKey()%>'><%=f.getValue()%></aui:option><%}	
+				<%}else{%><aui:option value='<%=f.getKey()%>' disabled="<%=dis%>"><%=f.getValue()%></aui:option><%}	
 				}%>
 			</aui:select>
-			<aui:button name="addFacility" value="add-facility" type="button"/>
-			<div class="facilCont"></div>			
 			
 			<aui:select size="1" name="producerId" label="producer" required="true" helpMessage="please-add-at-lest-one-producer">
 				<aui:option value="">select-producer</aui:option>
@@ -60,28 +71,32 @@
 				<aui:option value='<%=producers.get(i).getProducerId()%>'><%=producers.get(i).getLastName() + ", " + producers.get(i).getFirstName()%></aui:option>
 				<%}}%>
 			</aui:select>
-			<aui:button name="addProducer" value="add-producer" type="button"/>
 			<div class="prodCont"></div>	
 							
-			<aui:input name="shortDescription" label="short-sescription"/>
+			<aui:input name="shortDescription" label="short-description"/>
 
-			<aui:select size="1" name="allSemesters" label="all-semesters">
-				<aui:option value=""></aui:option>
-				<c:forEach items="${allSemesters}" var="semester">
-					<aui:option value="${semester.key}">${semester.value}</aui:option>
-				</c:forEach>
+			<aui:select size="1" name="allSemesters" label="semester">
+				<aui:option value="">select-semester</aui:option>
+				<%for (int i = 0; i < semesters.size(); i++) {if (semesters.get(i) == semesterId) {%>
+				<aui:option value='<%=semesters.get(i)%>' selected="true"><%=semesters.get(i)%></aui:option>
+				<%} else {%>
+				<aui:option value='<%=semesters.get(i)%>'><%=semesters.get(i)%></aui:option>
+				<%}}%>
 			</aui:select>
-			<aui:a name="add-semester" label="add-semester" href="#" />
-			<aui:input name="new-semester" disabled="true" />
+			
+			<a id="addSemester" style="cur	sor:pointer;">add-new-semester</a>
+			<aui:input id="newSemester" name="newSemester" style="display:none;" label="" />
 
 			<aui:row>
-				<aui:select name="languageSelect" label="language-select" required="true" helpMessage="please-add-at-lest-one-language">
-					<aui:option value=""></aui:option>
-					<c:forEach items="${languagesforselect}" var="lang">
-						<aui:option value="${lang}">${lang}</aui:option>
-					</c:forEach>
+				<aui:select size="1" name="languageId" label="language" required="true">
+					<aui:option value="">select-language</aui:option>
+					<%for (int i=0; i<languages.length; i++){if (languages[i].getCountry().equals(languageId)) {%>
+					<aui:option value='<%=languages[i].getLanguage()%>' selected="true"><%=languages[i].getDisplayLanguage()%></aui:option>
+					<%} else {%>
+					<aui:option value='<%=languages[i].getLanguage()%>'><%=languages[i].getDisplayLanguage()%></aui:option>
+					<%}}%>
 				</aui:select>
-				<aui:button type="button" name="addLanguage" value="add-language" />			
+				
 			</aui:row>
 
 			<aui:field-wrapper label="long-description">
@@ -110,40 +125,37 @@
 AUI().use(
   'aui-node',
   function(A) {
-    // Select the node(s) using a css selector string
-    var contFacil = A.one('.facilCont');
+    
+	// Select the node(s) using a css selector string
     var contProduc = A.one('.prodCont');
-    var addFacil = A.one('#<portlet:namespace/>addFacility');
-    var addProduc = A.one('#<portlet:namespace/>addProducer');
-    var facilitiesNode = A.one('#<portlet:namespace/>facilityId');
-    var producerNode = A.one('#<portlet:namespace/>producerId');
-    var i = 0;
+    var producerId = A.one('#<portlet:namespace/>producerId');
+    var addSemester = A.one('#addSemester');
+    var newSemester = A.one('#<portlet:namespace/>newSemester');
+    var allSemesters = A.one('#<portlet:namespace/>allSemesters');
+    
     var j = 0;
     
-    addFacil.on(
-      'click',
-      function(A) {
-		if(facilitiesNode.get('value')>0){
-	    	i++;
-	  	    var n = "node_"+i;
-	  	    var t = facilitiesNode.get(facilitiesNode.get('selectedIndex')).get('text')+"&nbsp;&nbsp;&nbsp;";
-	  	    contFacil.append("<div id='"+n+"'> "+t+" <a onClick='document.getElementById(&quot;"+n+"&quot;).remove();'><b>X</b></a></div>");
-		}
-      }
-    );
 
-    addProduc.on(
-      'click',
-      function(A) {
-  		if(producerNode.get('value')>0){
-		j++;
-  	    var n = "node_"+j;
-  	    var t = producerNode.get(producerNode.get('selectedIndex')).get('text')+"&nbsp;&nbsp;&nbsp;";
-  	  	contProduc.append("<div id='"+n+"'> "+t+" <a onClick='document.getElementById(&quot;"+n+"&quot;).remove();'><b>X</b></a></div>");
-  		}
-      }
+    producerId.on(
+      	'change',
+      	function(A) {
+  			if(producerId.get('value')>0){
+				j++;
+  	   	 		var n = "node_"+j;
+  	    		var t = producerId.get(producerId.get('selectedIndex')).get('text')+"&nbsp;&nbsp;&nbsp;";
+  	  			contProduc.append("<div id='"+n+"'> "+t+" <a style='cursor:pointer;' onClick='document.getElementById(&quot;"+n+"&quot;).remove();'><b>X</b></a></div>");
+  			}
+      	}
     );
     
+    addSemester.on(
+    		'click',
+    		function(A) {
+    			newSemester.show(); 
+    			allSemesters.set("disabled","disabled");
+    		}
+    );
+
   }
 );
 </script>
