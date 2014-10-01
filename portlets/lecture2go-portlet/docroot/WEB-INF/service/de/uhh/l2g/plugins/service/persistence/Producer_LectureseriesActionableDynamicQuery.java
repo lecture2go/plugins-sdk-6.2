@@ -33,6 +33,6 @@ public abstract class Producer_LectureseriesActionableDynamicQuery
 
 		setClassLoader(de.uhh.l2g.plugins.service.ClpSerializer.class.getClassLoader());
 
-		setPrimaryKeyPropertyName("producerLectureseries");
+		setPrimaryKeyPropertyName("producerLectureseriesId");
 	}
 }

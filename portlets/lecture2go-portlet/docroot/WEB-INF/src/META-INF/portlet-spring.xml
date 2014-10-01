@@ -25,6 +25,7 @@
 	<bean id="de.uhh.l2g.plugins.service.persistence.OfficePersistence" class="de.uhh.l2g.plugins.service.persistence.OfficePersistenceImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.ProducerLocalService" class="de.uhh.l2g.plugins.service.impl.ProducerLocalServiceImpl" />
 	<bean id="de.uhh.l2g.plugins.service.persistence.ProducerPersistence" class="de.uhh.l2g.plugins.service.persistence.ProducerPersistenceImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.ProducerFinder" class="de.uhh.l2g.plugins.service.persistence.ProducerFinderImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.Producer_LectureseriesLocalService" class="de.uhh.l2g.plugins.service.impl.Producer_LectureseriesLocalServiceImpl" />
 	<bean id="de.uhh.l2g.plugins.service.persistence.Producer_LectureseriesPersistence" class="de.uhh.l2g.plugins.service.persistence.Producer_LectureseriesPersistenceImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.SegmentLocalService" class="de.uhh.l2g.plugins.service.impl.SegmentLocalServiceImpl" />

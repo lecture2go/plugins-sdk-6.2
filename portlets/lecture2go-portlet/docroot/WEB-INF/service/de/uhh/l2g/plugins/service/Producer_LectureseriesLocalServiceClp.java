@@ -151,13 +151,13 @@ public class Producer_LectureseriesLocalServiceClp
 
 	@Override
 	public de.uhh.l2g.plugins.model.Producer_Lectureseries createProducer_Lectureseries(
-		long producerLectureseries) {
+		long producerLectureseriesId) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName1,
 					_methodParameterTypes1,
-					new Object[] { producerLectureseries });
+					new Object[] { producerLectureseriesId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -176,7 +176,7 @@ public class Producer_LectureseriesLocalServiceClp
 
 	@Override
 	public de.uhh.l2g.plugins.model.Producer_Lectureseries deleteProducer_Lectureseries(
-		long producerLectureseries)
+		long producerLectureseriesId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -184,7 +184,7 @@ public class Producer_LectureseriesLocalServiceClp
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName2,
 					_methodParameterTypes2,
-					new Object[] { producerLectureseries });
+					new Object[] { producerLectureseriesId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -440,14 +440,14 @@ public class Producer_LectureseriesLocalServiceClp
 
 	@Override
 	public de.uhh.l2g.plugins.model.Producer_Lectureseries fetchProducer_Lectureseries(
-		long producerLectureseries)
+		long producerLectureseriesId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName10,
 					_methodParameterTypes10,
-					new Object[] { producerLectureseries });
+					new Object[] { producerLectureseriesId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -470,7 +470,7 @@ public class Producer_LectureseriesLocalServiceClp
 
 	@Override
 	public de.uhh.l2g.plugins.model.Producer_Lectureseries getProducer_Lectureseries(
-		long producerLectureseries)
+		long producerLectureseriesId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -478,7 +478,7 @@ public class Producer_LectureseriesLocalServiceClp
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName11,
 					_methodParameterTypes11,
-					new Object[] { producerLectureseries });
+					new Object[] { producerLectureseriesId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);

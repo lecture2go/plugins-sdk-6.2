@@ -26,25 +26,26 @@
 	String languageId="";
 	String semesterId="";
 	
-	Long producerId=new Long(0);
-	List<Producer>producers = ProducerLocalServiceUtil.getAllProducers(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
-	
+	List<Producer> producers = ProducerLocalServiceUtil.getAllProducers(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 	List<String> semesters = LectureseriesLocalServiceUtil.getAllSemesters(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 %>
 
 <portlet:renderURL var="cancelURL"><portlet:param name="jspPage" value="/admin/lectureSeriesList.jsp" /></portlet:renderURL>
 <portlet:actionURL name="editLectureseries" var="editURL"><portlet:param name="lectureseriesId" value='<%=""+lId%>' /></portlet:actionURL>
 <portlet:actionURL name="deleteURL" var="deleteURL"><portlet:param name="lectureseriesId" value='<%=""+lId%>' /></portlet:actionURL>
-<portlet:actionURL name="saveURL" var="saveURL"><portlet:param name="lectureseriesId" value='<%=""+lId%>' /></portlet:actionURL>
+<portlet:actionURL name="addLectureseries" var="addURL"><portlet:param name="lectureseriesId" value='<%=""+lId%>' /></portlet:actionURL>
 
-
-<aui:form action="${actionURL}" commandName="model">
+<%
+if(lId >0) actionURL=editURL.toString();
+else actionURL = addURL.toString();
+%>
+<aui:form action="<%=actionURL%>" commandName="model">
 	<aui:fieldset helpMessage="test" column="true" label='<%=lName%>'>
 		<aui:layout>
 			
-			<aui:input name="lectureseriesNumber" label="lectureseries-number" required="true" cssClass="testa"/>
+			<aui:input name="lectureseriesNumber" label="lectureseries-number" required="true" value="<%=reqLectureseries.getNumber() %>" />
 
-			<aui:input name="lectureseriesName" label="lectureseries-name" required="true"/>
+			<aui:input name="lectureseriesName" label="lectureseries-name" required="true" value="<%=reqLectureseries.getName()%>"/>
 
 			<aui:select size="1" name="eventType" label="event-type" required="true">
 				<aui:option value=""></aui:option>
@@ -66,18 +67,16 @@
 			<aui:select size="1" name="producerId" label="producer" required="true" helpMessage="please-add-at-lest-one-producer">
 				<aui:option value="">select-producer</aui:option>
 				<%for (int i = 0; i < producers.size(); i++) {if (producers.get(i).getProducerId() == producerId) {%>
-				<aui:option value='<%=producers.get(i).getProducerId()%>' selected="true"><%=producers.get(i).getLastName() + ", " + producers.get(i).getFirstName()%></aui:option>
-				<%} else {%>
 				<aui:option value='<%=producers.get(i).getProducerId()%>'><%=producers.get(i).getLastName() + ", " + producers.get(i).getFirstName()%></aui:option>
-				<%}}%>
+				<%}%>
 			</aui:select>
 			<div class="prodCont"></div>	
 							
-			<aui:input name="shortDescription" label="short-description"/>
+			<aui:input name="shortDescription" label="short-description"  value="<%=reqLectureseries.getShortDesc()%>"/>
 
 			<aui:select size="1" name="allSemesters" label="semester">
 				<aui:option value="">select-semester</aui:option>
-				<%for (int i = 0; i < semesters.size(); i++) {if (semesters.get(i) == semesterId) {%>
+				<%for (int i = 0; i < semesters.size(); i++) {if (semesters.get(i).equals(reqLectureseries.getSemesterName())) {%>
 				<aui:option value='<%=semesters.get(i)%>' selected="true"><%=semesters.get(i)%></aui:option>
 				<%} else {%>
 				<aui:option value='<%=semesters.get(i)%>'><%=semesters.get(i)%></aui:option>
@@ -85,20 +84,17 @@
 			</aui:select>
 			
 			<a id="addSemester" style="cur	sor:pointer;">add-new-semester</a>
-			<aui:input id="newSemester" name="newSemester" style="display:none;" label="" />
+			<aui:input id="newSemester" name="newSemester" style="display:none;" label=""/>
 
-			<aui:row>
-				<aui:select size="1" name="languageId" label="language" required="true">
-					<aui:option value="">select-language</aui:option>
-					<%for (int i=0; i<languages.length; i++){if (languages[i].getCountry().equals(languageId)) {%>
-					<aui:option value='<%=languages[i].getLanguage()%>' selected="true"><%=languages[i].getDisplayLanguage()%></aui:option>
-					<%} else {%>
-					<aui:option value='<%=languages[i].getLanguage()%>'><%=languages[i].getDisplayLanguage()%></aui:option>
-					<%}}%>
-				</aui:select>
+			<aui:select size="1" name="languageId" label="language" required="true">
+				<aui:option value="">select-language</aui:option>
+				<%for (int i=0; i<languages.length; i++){if (languages[i].getLanguage().equals(reqLectureseries.getLanguage())) {%>
+				<aui:option value='<%=languages[i].getLanguage()%>' selected="true"><%=languages[i].getDisplayLanguage()%></aui:option>
+				<%} else {%>
+				<aui:option value='<%=languages[i].getLanguage()%>'><%=languages[i].getDisplayLanguage()%></aui:option>
+				<%}}%>
+			</aui:select>
 				
-			</aui:row>
-
 			<aui:field-wrapper label="long-description">
 			    <liferay-ui:input-editor name="descriptionEditor" toolbarSet="liferay-article" initMethod="initEditor" width="50%" />
 			    <script type="text/javascript">

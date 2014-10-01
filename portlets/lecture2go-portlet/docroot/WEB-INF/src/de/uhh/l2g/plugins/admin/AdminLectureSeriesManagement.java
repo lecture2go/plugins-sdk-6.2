@@ -30,5 +30,15 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		request.setAttribute("reqLectureseries", l);
 		response.setRenderParameter("jspPage", "/admin/editLectureseries.jsp");
 	}
+	
+	public void editLectureseries(ActionRequest request, ActionResponse response){
+		int i = 0;
+		i++;
+	}
+
+	public void addLectureseries(ActionRequest request, ActionResponse response){
+		int i = 0;
+		i++;		
+	}
 
 }

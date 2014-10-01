@@ -57,18 +57,18 @@ public interface Producer_LectureseriesModel extends BaseModel<Producer_Lectures
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the producer lectureseries of this producer_ lectureseries.
+	 * Returns the producer lectureseries ID of this producer_ lectureseries.
 	 *
-	 * @return the producer lectureseries of this producer_ lectureseries
+	 * @return the producer lectureseries ID of this producer_ lectureseries
 	 */
-	public long getProducerLectureseries();
+	public long getProducerLectureseriesId();
 
 	/**
-	 * Sets the producer lectureseries of this producer_ lectureseries.
+	 * Sets the producer lectureseries ID of this producer_ lectureseries.
 	 *
-	 * @param producerLectureseries the producer lectureseries of this producer_ lectureseries
+	 * @param producerLectureseriesId the producer lectureseries ID of this producer_ lectureseries
 	 */
-	public void setProducerLectureseries(long producerLectureseries);
+	public void setProducerLectureseriesId(long producerLectureseriesId);
 
 	/**
 	 * Returns the lectureseries ID of this producer_ lectureseries.

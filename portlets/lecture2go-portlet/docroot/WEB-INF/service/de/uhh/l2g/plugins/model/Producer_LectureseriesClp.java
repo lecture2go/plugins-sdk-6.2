@@ -51,17 +51,17 @@ public class Producer_LectureseriesClp extends BaseModelImpl<Producer_Lectureser
 
 	@Override
 	public long getPrimaryKey() {
-		return _producerLectureseries;
+		return _producerLectureseriesId;
 	}
 
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		setProducerLectureseries(primaryKey);
+		setProducerLectureseriesId(primaryKey);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _producerLectureseries;
+		return _producerLectureseriesId;
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class Producer_LectureseriesClp extends BaseModelImpl<Producer_Lectureser
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("producerLectureseries", getProducerLectureseries());
+		attributes.put("producerLectureseriesId", getProducerLectureseriesId());
 		attributes.put("lectureseriesId", getLectureseriesId());
 		attributes.put("producerId", getProducerId());
 
@@ -82,11 +82,11 @@ public class Producer_LectureseriesClp extends BaseModelImpl<Producer_Lectureser
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long producerLectureseries = (Long)attributes.get(
-				"producerLectureseries");
+		Long producerLectureseriesId = (Long)attributes.get(
+				"producerLectureseriesId");
 
-		if (producerLectureseries != null) {
-			setProducerLectureseries(producerLectureseries);
+		if (producerLectureseriesId != null) {
+			setProducerLectureseriesId(producerLectureseriesId);
 		}
 
 		Long lectureseriesId = (Long)attributes.get("lectureseriesId");
@@ -103,23 +103,23 @@ public class Producer_LectureseriesClp extends BaseModelImpl<Producer_Lectureser
 	}
 
 	@Override
-	public long getProducerLectureseries() {
-		return _producerLectureseries;
+	public long getProducerLectureseriesId() {
+		return _producerLectureseriesId;
 	}
 
 	@Override
-	public void setProducerLectureseries(long producerLectureseries) {
-		_producerLectureseries = producerLectureseries;
+	public void setProducerLectureseriesId(long producerLectureseriesId) {
+		_producerLectureseriesId = producerLectureseriesId;
 
 		if (_producer_LectureseriesRemoteModel != null) {
 			try {
 				Class<?> clazz = _producer_LectureseriesRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setProducerLectureseries",
+				Method method = clazz.getMethod("setProducerLectureseriesId",
 						long.class);
 
 				method.invoke(_producer_LectureseriesRemoteModel,
-					producerLectureseries);
+					producerLectureseriesId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -245,7 +245,7 @@ public class Producer_LectureseriesClp extends BaseModelImpl<Producer_Lectureser
 	public Object clone() {
 		Producer_LectureseriesClp clone = new Producer_LectureseriesClp();
 
-		clone.setProducerLectureseries(getProducerLectureseries());
+		clone.setProducerLectureseriesId(getProducerLectureseriesId());
 		clone.setLectureseriesId(getLectureseriesId());
 		clone.setProducerId(getProducerId());
 
@@ -298,8 +298,8 @@ public class Producer_LectureseriesClp extends BaseModelImpl<Producer_Lectureser
 	public String toString() {
 		StringBundler sb = new StringBundler(7);
 
-		sb.append("{producerLectureseries=");
-		sb.append(getProducerLectureseries());
+		sb.append("{producerLectureseriesId=");
+		sb.append(getProducerLectureseriesId());
 		sb.append(", lectureseriesId=");
 		sb.append(getLectureseriesId());
 		sb.append(", producerId=");
@@ -318,8 +318,8 @@ public class Producer_LectureseriesClp extends BaseModelImpl<Producer_Lectureser
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>producerLectureseries</column-name><column-value><![CDATA[");
-		sb.append(getProducerLectureseries());
+			"<column><column-name>producerLectureseriesId</column-name><column-value><![CDATA[");
+		sb.append(getProducerLectureseriesId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>lectureseriesId</column-name><column-value><![CDATA[");
@@ -335,7 +335,7 @@ public class Producer_LectureseriesClp extends BaseModelImpl<Producer_Lectureser
 		return sb.toString();
 	}
 
-	private long _producerLectureseries;
+	private long _producerLectureseriesId;
 	private long _lectureseriesId;
 	private long _producerId;
 	private BaseModel<?> _producer_LectureseriesRemoteModel;

@@ -57,14 +57,14 @@ public class Producer_LectureseriesModelImpl extends BaseModelImpl<Producer_Lect
 	 */
 	public static final String TABLE_NAME = "LG_Producer_Lectureseries";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "producerLectureseries", Types.BIGINT },
+			{ "producerLectureseriesId", Types.BIGINT },
 			{ "lectureseriesId", Types.BIGINT },
 			{ "producerId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Producer_Lectureseries (producerLectureseries LONG not null primary key,lectureseriesId LONG,producerId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Producer_Lectureseries (producerLectureseriesId LONG not null primary key,lectureseriesId LONG,producerId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Producer_Lectureseries";
-	public static final String ORDER_BY_JPQL = " ORDER BY producer_Lectureseries.producerLectureseries ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY LG_Producer_Lectureseries.producerLectureseries ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY producer_Lectureseries.producerLectureseriesId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY LG_Producer_Lectureseries.producerLectureseriesId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -83,17 +83,17 @@ public class Producer_LectureseriesModelImpl extends BaseModelImpl<Producer_Lect
 
 	@Override
 	public long getPrimaryKey() {
-		return _producerLectureseries;
+		return _producerLectureseriesId;
 	}
 
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		setProducerLectureseries(primaryKey);
+		setProducerLectureseriesId(primaryKey);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _producerLectureseries;
+		return _producerLectureseriesId;
 	}
 
 	@Override
@@ -115,7 +115,7 @@ public class Producer_LectureseriesModelImpl extends BaseModelImpl<Producer_Lect
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("producerLectureseries", getProducerLectureseries());
+		attributes.put("producerLectureseriesId", getProducerLectureseriesId());
 		attributes.put("lectureseriesId", getLectureseriesId());
 		attributes.put("producerId", getProducerId());
 
@@ -124,11 +124,11 @@ public class Producer_LectureseriesModelImpl extends BaseModelImpl<Producer_Lect
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long producerLectureseries = (Long)attributes.get(
-				"producerLectureseries");
+		Long producerLectureseriesId = (Long)attributes.get(
+				"producerLectureseriesId");
 
-		if (producerLectureseries != null) {
-			setProducerLectureseries(producerLectureseries);
+		if (producerLectureseriesId != null) {
+			setProducerLectureseriesId(producerLectureseriesId);
 		}
 
 		Long lectureseriesId = (Long)attributes.get("lectureseriesId");
@@ -145,13 +145,13 @@ public class Producer_LectureseriesModelImpl extends BaseModelImpl<Producer_Lect
 	}
 
 	@Override
-	public long getProducerLectureseries() {
-		return _producerLectureseries;
+	public long getProducerLectureseriesId() {
+		return _producerLectureseriesId;
 	}
 
 	@Override
-	public void setProducerLectureseries(long producerLectureseries) {
-		_producerLectureseries = producerLectureseries;
+	public void setProducerLectureseriesId(long producerLectureseriesId) {
+		_producerLectureseriesId = producerLectureseriesId;
 	}
 
 	@Override
@@ -201,7 +201,7 @@ public class Producer_LectureseriesModelImpl extends BaseModelImpl<Producer_Lect
 	public Object clone() {
 		Producer_LectureseriesImpl producer_LectureseriesImpl = new Producer_LectureseriesImpl();
 
-		producer_LectureseriesImpl.setProducerLectureseries(getProducerLectureseries());
+		producer_LectureseriesImpl.setProducerLectureseriesId(getProducerLectureseriesId());
 		producer_LectureseriesImpl.setLectureseriesId(getLectureseriesId());
 		producer_LectureseriesImpl.setProducerId(getProducerId());
 
@@ -260,7 +260,7 @@ public class Producer_LectureseriesModelImpl extends BaseModelImpl<Producer_Lect
 	public CacheModel<Producer_Lectureseries> toCacheModel() {
 		Producer_LectureseriesCacheModel producer_LectureseriesCacheModel = new Producer_LectureseriesCacheModel();
 
-		producer_LectureseriesCacheModel.producerLectureseries = getProducerLectureseries();
+		producer_LectureseriesCacheModel.producerLectureseriesId = getProducerLectureseriesId();
 
 		producer_LectureseriesCacheModel.lectureseriesId = getLectureseriesId();
 
@@ -273,8 +273,8 @@ public class Producer_LectureseriesModelImpl extends BaseModelImpl<Producer_Lect
 	public String toString() {
 		StringBundler sb = new StringBundler(7);
 
-		sb.append("{producerLectureseries=");
-		sb.append(getProducerLectureseries());
+		sb.append("{producerLectureseriesId=");
+		sb.append(getProducerLectureseriesId());
 		sb.append(", lectureseriesId=");
 		sb.append(getLectureseriesId());
 		sb.append(", producerId=");
@@ -293,8 +293,8 @@ public class Producer_LectureseriesModelImpl extends BaseModelImpl<Producer_Lect
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>producerLectureseries</column-name><column-value><![CDATA[");
-		sb.append(getProducerLectureseries());
+			"<column><column-name>producerLectureseriesId</column-name><column-value><![CDATA[");
+		sb.append(getProducerLectureseriesId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>lectureseriesId</column-name><column-value><![CDATA[");
@@ -314,7 +314,7 @@ public class Producer_LectureseriesModelImpl extends BaseModelImpl<Producer_Lect
 	private static Class<?>[] _escapedModelInterfaces = new Class[] {
 			Producer_Lectureseries.class
 		};
-	private long _producerLectureseries;
+	private long _producerLectureseriesId;
 	private long _lectureseriesId;
 	private long _producerId;
 	private Producer_Lectureseries _escapedModel;

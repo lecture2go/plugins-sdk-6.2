@@ -135,27 +135,27 @@ public class Producer_LectureseriesUtil {
 	/**
 	* Creates a new producer_ lectureseries with the primary key. Does not add the producer_ lectureseries to the database.
 	*
-	* @param producerLectureseries the primary key for the new producer_ lectureseries
+	* @param producerLectureseriesId the primary key for the new producer_ lectureseries
 	* @return the new producer_ lectureseries
 	*/
 	public static de.uhh.l2g.plugins.model.Producer_Lectureseries create(
-		long producerLectureseries) {
-		return getPersistence().create(producerLectureseries);
+		long producerLectureseriesId) {
+		return getPersistence().create(producerLectureseriesId);
 	}
 
 	/**
 	* Removes the producer_ lectureseries with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param producerLectureseries the primary key of the producer_ lectureseries
+	* @param producerLectureseriesId the primary key of the producer_ lectureseries
 	* @return the producer_ lectureseries that was removed
 	* @throws de.uhh.l2g.plugins.NoSuchProducer_LectureseriesException if a producer_ lectureseries with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static de.uhh.l2g.plugins.model.Producer_Lectureseries remove(
-		long producerLectureseries)
+		long producerLectureseriesId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchProducer_LectureseriesException {
-		return getPersistence().remove(producerLectureseries);
+		return getPersistence().remove(producerLectureseriesId);
 	}
 
 	public static de.uhh.l2g.plugins.model.Producer_Lectureseries updateImpl(
@@ -167,29 +167,29 @@ public class Producer_LectureseriesUtil {
 	/**
 	* Returns the producer_ lectureseries with the primary key or throws a {@link de.uhh.l2g.plugins.NoSuchProducer_LectureseriesException} if it could not be found.
 	*
-	* @param producerLectureseries the primary key of the producer_ lectureseries
+	* @param producerLectureseriesId the primary key of the producer_ lectureseries
 	* @return the producer_ lectureseries
 	* @throws de.uhh.l2g.plugins.NoSuchProducer_LectureseriesException if a producer_ lectureseries with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static de.uhh.l2g.plugins.model.Producer_Lectureseries findByPrimaryKey(
-		long producerLectureseries)
+		long producerLectureseriesId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchProducer_LectureseriesException {
-		return getPersistence().findByPrimaryKey(producerLectureseries);
+		return getPersistence().findByPrimaryKey(producerLectureseriesId);
 	}
 
 	/**
 	* Returns the producer_ lectureseries with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param producerLectureseries the primary key of the producer_ lectureseries
+	* @param producerLectureseriesId the primary key of the producer_ lectureseries
 	* @return the producer_ lectureseries, or <code>null</code> if a producer_ lectureseries with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static de.uhh.l2g.plugins.model.Producer_Lectureseries fetchByPrimaryKey(
-		long producerLectureseries)
+		long producerLectureseriesId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByPrimaryKey(producerLectureseries);
+		return getPersistence().fetchByPrimaryKey(producerLectureseriesId);
 	}
 
 	/**

@@ -55,27 +55,27 @@ public class Producer_LectureseriesLocalServiceUtil {
 	/**
 	* Creates a new producer_ lectureseries with the primary key. Does not add the producer_ lectureseries to the database.
 	*
-	* @param producerLectureseries the primary key for the new producer_ lectureseries
+	* @param producerLectureseriesId the primary key for the new producer_ lectureseries
 	* @return the new producer_ lectureseries
 	*/
 	public static de.uhh.l2g.plugins.model.Producer_Lectureseries createProducer_Lectureseries(
-		long producerLectureseries) {
-		return getService().createProducer_Lectureseries(producerLectureseries);
+		long producerLectureseriesId) {
+		return getService().createProducer_Lectureseries(producerLectureseriesId);
 	}
 
 	/**
 	* Deletes the producer_ lectureseries with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param producerLectureseries the primary key of the producer_ lectureseries
+	* @param producerLectureseriesId the primary key of the producer_ lectureseries
 	* @return the producer_ lectureseries that was removed
 	* @throws PortalException if a producer_ lectureseries with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static de.uhh.l2g.plugins.model.Producer_Lectureseries deleteProducer_Lectureseries(
-		long producerLectureseries)
+		long producerLectureseriesId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().deleteProducer_Lectureseries(producerLectureseries);
+		return getService().deleteProducer_Lectureseries(producerLectureseriesId);
 	}
 
 	/**
@@ -182,24 +182,24 @@ public class Producer_LectureseriesLocalServiceUtil {
 	}
 
 	public static de.uhh.l2g.plugins.model.Producer_Lectureseries fetchProducer_Lectureseries(
-		long producerLectureseries)
+		long producerLectureseriesId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchProducer_Lectureseries(producerLectureseries);
+		return getService().fetchProducer_Lectureseries(producerLectureseriesId);
 	}
 
 	/**
 	* Returns the producer_ lectureseries with the primary key.
 	*
-	* @param producerLectureseries the primary key of the producer_ lectureseries
+	* @param producerLectureseriesId the primary key of the producer_ lectureseries
 	* @return the producer_ lectureseries
 	* @throws PortalException if a producer_ lectureseries with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static de.uhh.l2g.plugins.model.Producer_Lectureseries getProducer_Lectureseries(
-		long producerLectureseries)
+		long producerLectureseriesId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getProducer_Lectureseries(producerLectureseries);
+		return getService().getProducer_Lectureseries(producerLectureseriesId);
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(

@@ -45,6 +45,7 @@ import de.uhh.l2g.plugins.service.persistence.Lectureseries_FacilityPersistence;
 import de.uhh.l2g.plugins.service.persistence.LicensePersistence;
 import de.uhh.l2g.plugins.service.persistence.MetadataPersistence;
 import de.uhh.l2g.plugins.service.persistence.OfficePersistence;
+import de.uhh.l2g.plugins.service.persistence.ProducerFinder;
 import de.uhh.l2g.plugins.service.persistence.ProducerPersistence;
 import de.uhh.l2g.plugins.service.persistence.Producer_LectureseriesPersistence;
 import de.uhh.l2g.plugins.service.persistence.SegmentPersistence;
@@ -102,19 +103,19 @@ public abstract class Producer_LectureseriesLocalServiceBaseImpl
 	/**
 	 * Creates a new producer_ lectureseries with the primary key. Does not add the producer_ lectureseries to the database.
 	 *
-	 * @param producerLectureseries the primary key for the new producer_ lectureseries
+	 * @param producerLectureseriesId the primary key for the new producer_ lectureseries
 	 * @return the new producer_ lectureseries
 	 */
 	@Override
 	public Producer_Lectureseries createProducer_Lectureseries(
-		long producerLectureseries) {
-		return producer_LectureseriesPersistence.create(producerLectureseries);
+		long producerLectureseriesId) {
+		return producer_LectureseriesPersistence.create(producerLectureseriesId);
 	}
 
 	/**
 	 * Deletes the producer_ lectureseries with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param producerLectureseries the primary key of the producer_ lectureseries
+	 * @param producerLectureseriesId the primary key of the producer_ lectureseries
 	 * @return the producer_ lectureseries that was removed
 	 * @throws PortalException if a producer_ lectureseries with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
@@ -122,8 +123,8 @@ public abstract class Producer_LectureseriesLocalServiceBaseImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public Producer_Lectureseries deleteProducer_Lectureseries(
-		long producerLectureseries) throws PortalException, SystemException {
-		return producer_LectureseriesPersistence.remove(producerLectureseries);
+		long producerLectureseriesId) throws PortalException, SystemException {
+		return producer_LectureseriesPersistence.remove(producerLectureseriesId);
 	}
 
 	/**
@@ -236,22 +237,22 @@ public abstract class Producer_LectureseriesLocalServiceBaseImpl
 
 	@Override
 	public Producer_Lectureseries fetchProducer_Lectureseries(
-		long producerLectureseries) throws SystemException {
-		return producer_LectureseriesPersistence.fetchByPrimaryKey(producerLectureseries);
+		long producerLectureseriesId) throws SystemException {
+		return producer_LectureseriesPersistence.fetchByPrimaryKey(producerLectureseriesId);
 	}
 
 	/**
 	 * Returns the producer_ lectureseries with the primary key.
 	 *
-	 * @param producerLectureseries the primary key of the producer_ lectureseries
+	 * @param producerLectureseriesId the primary key of the producer_ lectureseries
 	 * @return the producer_ lectureseries
 	 * @throws PortalException if a producer_ lectureseries with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Producer_Lectureseries getProducer_Lectureseries(
-		long producerLectureseries) throws PortalException, SystemException {
-		return producer_LectureseriesPersistence.findByPrimaryKey(producerLectureseries);
+		long producerLectureseriesId) throws PortalException, SystemException {
+		return producer_LectureseriesPersistence.findByPrimaryKey(producerLectureseriesId);
 	}
 
 	@Override
@@ -750,6 +751,24 @@ public abstract class Producer_LectureseriesLocalServiceBaseImpl
 	 */
 	public void setProducerPersistence(ProducerPersistence producerPersistence) {
 		this.producerPersistence = producerPersistence;
+	}
+
+	/**
+	 * Returns the producer finder.
+	 *
+	 * @return the producer finder
+	 */
+	public ProducerFinder getProducerFinder() {
+		return producerFinder;
+	}
+
+	/**
+	 * Sets the producer finder.
+	 *
+	 * @param producerFinder the producer finder
+	 */
+	public void setProducerFinder(ProducerFinder producerFinder) {
+		this.producerFinder = producerFinder;
 	}
 
 	/**
@@ -1276,6 +1295,8 @@ public abstract class Producer_LectureseriesLocalServiceBaseImpl
 	protected de.uhh.l2g.plugins.service.ProducerLocalService producerLocalService;
 	@BeanReference(type = ProducerPersistence.class)
 	protected ProducerPersistence producerPersistence;
+	@BeanReference(type = ProducerFinder.class)
+	protected ProducerFinder producerFinder;
 	@BeanReference(type = de.uhh.l2g.plugins.service.Producer_LectureseriesLocalService.class)
 	protected de.uhh.l2g.plugins.service.Producer_LectureseriesLocalService producer_LectureseriesLocalService;
 	@BeanReference(type = Producer_LectureseriesPersistence.class)

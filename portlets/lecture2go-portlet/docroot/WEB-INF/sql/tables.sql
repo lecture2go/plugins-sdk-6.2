@@ -110,7 +110,7 @@ create table LG_Producer (
 );
 
 create table LG_Producer_Lectureseries (
-	producerLectureseries LONG not null primary key,
+	producerLectureseriesId LONG not null primary key,
 	lectureseriesId LONG,
 	producerId LONG
 );

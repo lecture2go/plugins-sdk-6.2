@@ -19,5 +19,13 @@
 			SELECT semesterName FROM lg_lectureseries WHERE semesterName!='' GROUP BY semesterName
 		]]>
     </sql> 
-    
+
+    <sql id="de.uhh.l2g.plugins.service.persistence.ProducerFinder.findProducerIds">
+		<![CDATA[
+			SELECT p.producerId 
+			FROM lg_producer_lectureseries AS pc 
+			INNER JOIN lg_producer AS p ON pc.producerId = p.producerId 
+			WHERE pc.lectureseriesId = ?
+		]]>
+    </sql> 
 </custom-sql>

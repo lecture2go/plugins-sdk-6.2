@@ -30,7 +30,7 @@ public class Producer_LectureseriesSoap implements Serializable {
 		Producer_Lectureseries model) {
 		Producer_LectureseriesSoap soapModel = new Producer_LectureseriesSoap();
 
-		soapModel.setProducerLectureseries(model.getProducerLectureseries());
+		soapModel.setProducerLectureseriesId(model.getProducerLectureseriesId());
 		soapModel.setLectureseriesId(model.getLectureseriesId());
 		soapModel.setProducerId(model.getProducerId());
 
@@ -81,19 +81,19 @@ public class Producer_LectureseriesSoap implements Serializable {
 	}
 
 	public long getPrimaryKey() {
-		return _producerLectureseries;
+		return _producerLectureseriesId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setProducerLectureseries(pk);
+		setProducerLectureseriesId(pk);
 	}
 
-	public long getProducerLectureseries() {
-		return _producerLectureseries;
+	public long getProducerLectureseriesId() {
+		return _producerLectureseriesId;
 	}
 
-	public void setProducerLectureseries(long producerLectureseries) {
-		_producerLectureseries = producerLectureseries;
+	public void setProducerLectureseriesId(long producerLectureseriesId) {
+		_producerLectureseriesId = producerLectureseriesId;
 	}
 
 	public long getLectureseriesId() {
@@ -112,7 +112,7 @@ public class Producer_LectureseriesSoap implements Serializable {
 		_producerId = producerId;
 	}
 
-	private long _producerLectureseries;
+	private long _producerLectureseriesId;
 	private long _lectureseriesId;
 	private long _producerId;
 }

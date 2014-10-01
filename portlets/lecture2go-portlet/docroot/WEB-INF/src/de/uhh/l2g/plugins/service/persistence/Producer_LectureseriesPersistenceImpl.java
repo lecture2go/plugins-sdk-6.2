@@ -175,15 +175,15 @@ public class Producer_LectureseriesPersistenceImpl extends BasePersistenceImpl<P
 	/**
 	 * Creates a new producer_ lectureseries with the primary key. Does not add the producer_ lectureseries to the database.
 	 *
-	 * @param producerLectureseries the primary key for the new producer_ lectureseries
+	 * @param producerLectureseriesId the primary key for the new producer_ lectureseries
 	 * @return the new producer_ lectureseries
 	 */
 	@Override
-	public Producer_Lectureseries create(long producerLectureseries) {
+	public Producer_Lectureseries create(long producerLectureseriesId) {
 		Producer_Lectureseries producer_Lectureseries = new Producer_LectureseriesImpl();
 
 		producer_Lectureseries.setNew(true);
-		producer_Lectureseries.setPrimaryKey(producerLectureseries);
+		producer_Lectureseries.setPrimaryKey(producerLectureseriesId);
 
 		return producer_Lectureseries;
 	}
@@ -191,15 +191,15 @@ public class Producer_LectureseriesPersistenceImpl extends BasePersistenceImpl<P
 	/**
 	 * Removes the producer_ lectureseries with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param producerLectureseries the primary key of the producer_ lectureseries
+	 * @param producerLectureseriesId the primary key of the producer_ lectureseries
 	 * @return the producer_ lectureseries that was removed
 	 * @throws de.uhh.l2g.plugins.NoSuchProducer_LectureseriesException if a producer_ lectureseries with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Producer_Lectureseries remove(long producerLectureseries)
+	public Producer_Lectureseries remove(long producerLectureseriesId)
 		throws NoSuchProducer_LectureseriesException, SystemException {
-		return remove((Serializable)producerLectureseries);
+		return remove((Serializable)producerLectureseriesId);
 	}
 
 	/**
@@ -330,7 +330,7 @@ public class Producer_LectureseriesPersistenceImpl extends BasePersistenceImpl<P
 		producer_LectureseriesImpl.setNew(producer_Lectureseries.isNew());
 		producer_LectureseriesImpl.setPrimaryKey(producer_Lectureseries.getPrimaryKey());
 
-		producer_LectureseriesImpl.setProducerLectureseries(producer_Lectureseries.getProducerLectureseries());
+		producer_LectureseriesImpl.setProducerLectureseriesId(producer_Lectureseries.getProducerLectureseriesId());
 		producer_LectureseriesImpl.setLectureseriesId(producer_Lectureseries.getLectureseriesId());
 		producer_LectureseriesImpl.setProducerId(producer_Lectureseries.getProducerId());
 
@@ -365,15 +365,15 @@ public class Producer_LectureseriesPersistenceImpl extends BasePersistenceImpl<P
 	/**
 	 * Returns the producer_ lectureseries with the primary key or throws a {@link de.uhh.l2g.plugins.NoSuchProducer_LectureseriesException} if it could not be found.
 	 *
-	 * @param producerLectureseries the primary key of the producer_ lectureseries
+	 * @param producerLectureseriesId the primary key of the producer_ lectureseries
 	 * @return the producer_ lectureseries
 	 * @throws de.uhh.l2g.plugins.NoSuchProducer_LectureseriesException if a producer_ lectureseries with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Producer_Lectureseries findByPrimaryKey(long producerLectureseries)
+	public Producer_Lectureseries findByPrimaryKey(long producerLectureseriesId)
 		throws NoSuchProducer_LectureseriesException, SystemException {
-		return findByPrimaryKey((Serializable)producerLectureseries);
+		return findByPrimaryKey((Serializable)producerLectureseriesId);
 	}
 
 	/**
@@ -428,14 +428,14 @@ public class Producer_LectureseriesPersistenceImpl extends BasePersistenceImpl<P
 	/**
 	 * Returns the producer_ lectureseries with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param producerLectureseries the primary key of the producer_ lectureseries
+	 * @param producerLectureseriesId the primary key of the producer_ lectureseries
 	 * @return the producer_ lectureseries, or <code>null</code> if a producer_ lectureseries with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Producer_Lectureseries fetchByPrimaryKey(long producerLectureseries)
-		throws SystemException {
-		return fetchByPrimaryKey((Serializable)producerLectureseries);
+	public Producer_Lectureseries fetchByPrimaryKey(
+		long producerLectureseriesId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)producerLectureseriesId);
 	}
 
 	/**

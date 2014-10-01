@@ -45,6 +45,7 @@ import de.uhh.l2g.plugins.service.persistence.Lectureseries_FacilityPersistence;
 import de.uhh.l2g.plugins.service.persistence.LicensePersistence;
 import de.uhh.l2g.plugins.service.persistence.MetadataPersistence;
 import de.uhh.l2g.plugins.service.persistence.OfficePersistence;
+import de.uhh.l2g.plugins.service.persistence.ProducerFinder;
 import de.uhh.l2g.plugins.service.persistence.ProducerPersistence;
 import de.uhh.l2g.plugins.service.persistence.Producer_LectureseriesPersistence;
 import de.uhh.l2g.plugins.service.persistence.SegmentPersistence;
@@ -749,6 +750,24 @@ public abstract class Video_FacilityLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the producer finder.
+	 *
+	 * @return the producer finder
+	 */
+	public ProducerFinder getProducerFinder() {
+		return producerFinder;
+	}
+
+	/**
+	 * Sets the producer finder.
+	 *
+	 * @param producerFinder the producer finder
+	 */
+	public void setProducerFinder(ProducerFinder producerFinder) {
+		this.producerFinder = producerFinder;
+	}
+
+	/**
 	 * Returns the producer_ lectureseries local service.
 	 *
 	 * @return the producer_ lectureseries local service
@@ -1272,6 +1291,8 @@ public abstract class Video_FacilityLocalServiceBaseImpl
 	protected de.uhh.l2g.plugins.service.ProducerLocalService producerLocalService;
 	@BeanReference(type = ProducerPersistence.class)
 	protected ProducerPersistence producerPersistence;
+	@BeanReference(type = ProducerFinder.class)
+	protected ProducerFinder producerFinder;
 	@BeanReference(type = de.uhh.l2g.plugins.service.Producer_LectureseriesLocalService.class)
 	protected de.uhh.l2g.plugins.service.Producer_LectureseriesLocalService producer_LectureseriesLocalService;
 	@BeanReference(type = Producer_LectureseriesPersistence.class)

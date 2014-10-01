@@ -65,4 +65,8 @@ public class ProducerLocalServiceImpl extends ProducerLocalServiceBaseImpl {
 		}
 		return prods;
 	}
+	
+	public List<Integer> getProducerIds(Long lectureseriesId, int begin, int end)throws SystemException{
+		return null;
+	}
 }

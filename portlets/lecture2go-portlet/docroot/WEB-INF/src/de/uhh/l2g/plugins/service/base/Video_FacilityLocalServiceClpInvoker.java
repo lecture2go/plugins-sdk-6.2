@@ -106,13 +106,13 @@ public class Video_FacilityLocalServiceClpInvoker {
 				"de.uhh.l2g.plugins.model.Video_Facility"
 			};
 
-		_methodName108 = "getBeanIdentifier";
+		_methodName110 = "getBeanIdentifier";
 
-		_methodParameterTypes108 = new String[] {  };
+		_methodParameterTypes110 = new String[] {  };
 
-		_methodName109 = "setBeanIdentifier";
+		_methodName111 = "setBeanIdentifier";
 
-		_methodParameterTypes109 = new String[] { "java.lang.String" };
+		_methodParameterTypes111 = new String[] { "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -204,13 +204,13 @@ public class Video_FacilityLocalServiceClpInvoker {
 			return Video_FacilityLocalServiceUtil.updateVideo_Facility((de.uhh.l2g.plugins.model.Video_Facility)arguments[0]);
 		}
 
-		if (_methodName108.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes108, parameterTypes)) {
+		if (_methodName110.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes110, parameterTypes)) {
 			return Video_FacilityLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName109.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes109, parameterTypes)) {
+		if (_methodName111.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes111, parameterTypes)) {
 			Video_FacilityLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
@@ -251,8 +251,8 @@ public class Video_FacilityLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName108;
-	private String[] _methodParameterTypes108;
-	private String _methodName109;
-	private String[] _methodParameterTypes109;
+	private String _methodName110;
+	private String[] _methodParameterTypes110;
+	private String _methodName111;
+	private String[] _methodParameterTypes111;
 }

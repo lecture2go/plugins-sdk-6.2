@@ -37,8 +37,8 @@ public class Producer_LectureseriesCacheModel implements CacheModel<Producer_Lec
 	public String toString() {
 		StringBundler sb = new StringBundler(7);
 
-		sb.append("{producerLectureseries=");
-		sb.append(producerLectureseries);
+		sb.append("{producerLectureseriesId=");
+		sb.append(producerLectureseriesId);
 		sb.append(", lectureseriesId=");
 		sb.append(lectureseriesId);
 		sb.append(", producerId=");
@@ -52,7 +52,7 @@ public class Producer_LectureseriesCacheModel implements CacheModel<Producer_Lec
 	public Producer_Lectureseries toEntityModel() {
 		Producer_LectureseriesImpl producer_LectureseriesImpl = new Producer_LectureseriesImpl();
 
-		producer_LectureseriesImpl.setProducerLectureseries(producerLectureseries);
+		producer_LectureseriesImpl.setProducerLectureseriesId(producerLectureseriesId);
 		producer_LectureseriesImpl.setLectureseriesId(lectureseriesId);
 		producer_LectureseriesImpl.setProducerId(producerId);
 
@@ -63,7 +63,7 @@ public class Producer_LectureseriesCacheModel implements CacheModel<Producer_Lec
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		producerLectureseries = objectInput.readLong();
+		producerLectureseriesId = objectInput.readLong();
 		lectureseriesId = objectInput.readLong();
 		producerId = objectInput.readLong();
 	}
@@ -71,12 +71,12 @@ public class Producer_LectureseriesCacheModel implements CacheModel<Producer_Lec
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(producerLectureseries);
+		objectOutput.writeLong(producerLectureseriesId);
 		objectOutput.writeLong(lectureseriesId);
 		objectOutput.writeLong(producerId);
 	}
 
-	public long producerLectureseries;
+	public long producerLectureseriesId;
 	public long lectureseriesId;
 	public long producerId;
 }

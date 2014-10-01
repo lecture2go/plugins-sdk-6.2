@@ -50,7 +50,7 @@ public class Producer_LectureseriesWrapper implements Producer_Lectureseries,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("producerLectureseries", getProducerLectureseries());
+		attributes.put("producerLectureseriesId", getProducerLectureseriesId());
 		attributes.put("lectureseriesId", getLectureseriesId());
 		attributes.put("producerId", getProducerId());
 
@@ -59,11 +59,11 @@ public class Producer_LectureseriesWrapper implements Producer_Lectureseries,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long producerLectureseries = (Long)attributes.get(
-				"producerLectureseries");
+		Long producerLectureseriesId = (Long)attributes.get(
+				"producerLectureseriesId");
 
-		if (producerLectureseries != null) {
-			setProducerLectureseries(producerLectureseries);
+		if (producerLectureseriesId != null) {
+			setProducerLectureseriesId(producerLectureseriesId);
 		}
 
 		Long lectureseriesId = (Long)attributes.get("lectureseriesId");
@@ -100,23 +100,23 @@ public class Producer_LectureseriesWrapper implements Producer_Lectureseries,
 	}
 
 	/**
-	* Returns the producer lectureseries of this producer_ lectureseries.
+	* Returns the producer lectureseries ID of this producer_ lectureseries.
 	*
-	* @return the producer lectureseries of this producer_ lectureseries
+	* @return the producer lectureseries ID of this producer_ lectureseries
 	*/
 	@Override
-	public long getProducerLectureseries() {
-		return _producer_Lectureseries.getProducerLectureseries();
+	public long getProducerLectureseriesId() {
+		return _producer_Lectureseries.getProducerLectureseriesId();
 	}
 
 	/**
-	* Sets the producer lectureseries of this producer_ lectureseries.
+	* Sets the producer lectureseries ID of this producer_ lectureseries.
 	*
-	* @param producerLectureseries the producer lectureseries of this producer_ lectureseries
+	* @param producerLectureseriesId the producer lectureseries ID of this producer_ lectureseries
 	*/
 	@Override
-	public void setProducerLectureseries(long producerLectureseries) {
-		_producer_Lectureseries.setProducerLectureseries(producerLectureseries);
+	public void setProducerLectureseriesId(long producerLectureseriesId) {
+		_producer_Lectureseries.setProducerLectureseriesId(producerLectureseriesId);
 	}
 
 	/**

@@ -102,7 +102,7 @@
         </finder>
     </entity>
     <entity name="Producer_Lectureseries" local-service="true" remote-service="false">
-        <column name="producerLectureseries" type="long" primary="true" id-type="increment"></column>
+        <column name="producerLectureseriesId" type="long" primary="true" id-type="increment"></column>
         <column name="lectureseriesId" type="long"></column>
         <column name="producerId" type="long"></column>
     </entity>

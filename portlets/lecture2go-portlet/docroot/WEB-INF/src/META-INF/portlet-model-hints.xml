@@ -102,7 +102,7 @@
 		<field name="approved" type="int" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Producer_Lectureseries">
-		<field name="producerLectureseries" type="long" />
+		<field name="producerLectureseriesId" type="long" />
 		<field name="lectureseriesId" type="long" />
 		<field name="producerId" type="long" />
 	</model>

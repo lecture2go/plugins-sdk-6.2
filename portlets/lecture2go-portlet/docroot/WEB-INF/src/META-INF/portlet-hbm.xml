@@ -156,7 +156,7 @@
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.Producer_LectureseriesImpl" table="LG_Producer_Lectureseries">
 		<cache usage="read-write" />
-		<id name="producerLectureseries" type="long">
+		<id name="producerLectureseriesId" type="long">
 			<generator class="increment" />
 		</id>
 		<property name="lectureseriesId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

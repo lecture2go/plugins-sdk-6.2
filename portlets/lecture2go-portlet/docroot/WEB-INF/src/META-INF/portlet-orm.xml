@@ -173,7 +173,7 @@
 	</mapped-superclass>
 	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.Producer_LectureseriesModelImpl">
 		<attributes>
-			<id name="producerLectureseries" />
+			<id name="producerLectureseriesId" />
 			<basic name="lectureseriesId" />
 			<basic name="producerId" />
 			<transient name="modelAttributes" />
