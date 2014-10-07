@@ -250,6 +250,11 @@ public interface FacilityLocalService extends BaseLocalService,
 		int level) throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<de.uhh.l2g.plugins.model.Facility> getByLectureseriesId(
+		long lectureseriesId, int begin, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.Map<java.lang.String, java.lang.String> getAllSortedAsTree(
 		int begin, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;

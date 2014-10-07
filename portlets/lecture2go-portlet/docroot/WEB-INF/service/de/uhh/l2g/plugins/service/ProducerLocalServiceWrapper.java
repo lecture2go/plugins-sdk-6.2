@@ -289,6 +289,28 @@ public class ProducerLocalServiceWrapper implements ProducerLocalService,
 		return _producerLocalService.getAllProducers(begin, end);
 	}
 
+	@Override
+	public de.uhh.l2g.plugins.model.Producer getProdUcer(
+		java.lang.Long producerId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _producerLocalService.getProdUcer(producerId);
+	}
+
+	@Override
+	public java.util.List<java.lang.Integer> getAllProducerIds(
+		java.lang.Long lectureseriesId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _producerLocalService.getAllProducerIds(lectureseriesId);
+	}
+
+	@Override
+	public java.util.List<java.lang.Integer> getProducerIds(
+		java.lang.Long lectureseriesId, int begin, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _producerLocalService.getProducerIds(lectureseriesId, begin, end);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

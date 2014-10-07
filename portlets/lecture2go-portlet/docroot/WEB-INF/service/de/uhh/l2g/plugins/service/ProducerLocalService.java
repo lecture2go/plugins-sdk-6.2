@@ -249,4 +249,20 @@ public interface ProducerLocalService extends BaseLocalService,
 	public java.util.List<de.uhh.l2g.plugins.model.Producer> getAllProducers(
 		int begin, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public de.uhh.l2g.plugins.model.Producer getProdUcer(
+		java.lang.Long producerId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<java.lang.Integer> getAllProducerIds(
+		java.lang.Long lectureseriesId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<java.lang.Integer> getProducerIds(
+		java.lang.Long lectureseriesId, int begin, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

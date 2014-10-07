@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <custom-sql>
+    
     <sql id="de.uhh.l2g.plugins.service.persistence.FacilityFinder.findAllSortedAsTree">
 		<![CDATA[
 			SELECT myNode.facilityId, myNode.parentId, myNode.name, myNode.typ, myNode.www, myNode.level, myNode.sort, 
@@ -14,6 +15,14 @@
 		]]>
     </sql>
     
+    <sql id="de.uhh.l2g.plugins.service.persistence.FacilityFinder.findByLectureseriesId">
+		<![CDATA[
+			SELECT lg_facility.facilityId, lg_facility.parentId, lg_facility.name, lg_facility.typ, lg_facility.www, lg_facility.level, lg_facility.sort 
+			FROM lg_facility, lg_lectureseries_facility 
+			WHERE (lg_lectureseries_facility.lectureseriesId=? AND lg_facility.facilityId=lg_lectureseries_facility.facilityId)
+		]]>
+    </sql> 
+
     <sql id="de.uhh.l2g.plugins.service.persistence.LectureseriesFinder.findAllSemesters">
 		<![CDATA[
 			SELECT semesterName FROM lg_lectureseries WHERE semesterName!='' GROUP BY semesterName
@@ -28,4 +37,5 @@
 			WHERE pc.lectureseriesId = ?
 		]]>
     </sql> 
+    
 </custom-sql>

@@ -118,9 +118,13 @@ public class FacilityLocalServiceClpInvoker {
 
 		_methodParameterTypes116 = new String[] { "int" };
 
-		_methodName117 = "getAllSortedAsTree";
+		_methodName117 = "getByLectureseriesId";
 
-		_methodParameterTypes117 = new String[] { "int", "int" };
+		_methodParameterTypes117 = new String[] { "long", "int", "int" };
+
+		_methodName118 = "getAllSortedAsTree";
+
+		_methodParameterTypes118 = new String[] { "int", "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -231,6 +235,13 @@ public class FacilityLocalServiceClpInvoker {
 
 		if (_methodName117.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes117, parameterTypes)) {
+			return FacilityLocalServiceUtil.getByLectureseriesId(((Long)arguments[0]).longValue(),
+				((Integer)arguments[1]).intValue(),
+				((Integer)arguments[2]).intValue());
+		}
+
+		if (_methodName118.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
 			return FacilityLocalServiceUtil.getAllSortedAsTree(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
@@ -278,4 +289,6 @@ public class FacilityLocalServiceClpInvoker {
 	private String[] _methodParameterTypes116;
 	private String _methodName117;
 	private String[] _methodParameterTypes117;
+	private String _methodName118;
+	private String[] _methodParameterTypes118;
 }

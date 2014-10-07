@@ -56,6 +56,10 @@ public class FacilityLocalServiceImpl extends FacilityLocalServiceBaseImpl {
 		return facilityPersistence.findBylevel(level);
 	}
 
+	public List<Facility> getByLectureseriesId(long lectureseriesId, int begin, int end) throws SystemException {
+		return FacilityFinderUtil.findByLectureseriesId(lectureseriesId, begin, end);
+	}
+
 	public Map<String, String> getAllSortedAsTree(int begin, int end) throws SystemException {
 		Map<String,String> allFaculties = new LinkedHashMap<String, String>();
 		List <Facility> einListAll = FacilityFinderUtil.findAllSortedAsTree(begin, end);

@@ -289,6 +289,14 @@ public class FacilityLocalServiceWrapper implements FacilityLocalService,
 	}
 
 	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Facility> getByLectureseriesId(
+		long lectureseriesId, int begin, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _facilityLocalService.getByLectureseriesId(lectureseriesId,
+			begin, end);
+	}
+
+	@Override
 	public java.util.Map<java.lang.String, java.lang.String> getAllSortedAsTree(
 		int begin, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {

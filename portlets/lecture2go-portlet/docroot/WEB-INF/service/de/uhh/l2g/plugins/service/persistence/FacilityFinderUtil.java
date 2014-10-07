@@ -21,6 +21,11 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @author Iavor Sturm
  */
 public class FacilityFinderUtil {
+	public static java.util.List<de.uhh.l2g.plugins.model.Facility> findByLectureseriesId(
+		long lectureseriesId, int begin, int end) {
+		return getFinder().findByLectureseriesId(lectureseriesId, begin, end);
+	}
+
 	public static java.util.List<de.uhh.l2g.plugins.model.Facility> findAllSortedAsTree(
 		int begin, int end) {
 		return getFinder().findAllSortedAsTree(begin, end);

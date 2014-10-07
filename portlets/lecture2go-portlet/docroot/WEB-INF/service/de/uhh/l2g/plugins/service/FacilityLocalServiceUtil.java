@@ -279,6 +279,12 @@ public class FacilityLocalServiceUtil {
 		return getService().getByLevel(level);
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.Facility> getByLectureseriesId(
+		long lectureseriesId, int begin, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getByLectureseriesId(lectureseriesId, begin, end);
+	}
+
 	public static java.util.Map<java.lang.String, java.lang.String> getAllSortedAsTree(
 		int begin, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {

@@ -25,6 +25,7 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.ProducerLocalServiceBaseImpl;
+import de.uhh.l2g.plugins.service.persistence.ProducerFinderUtil;
 
 /**
  * The implementation of the producer local service.
@@ -65,8 +66,24 @@ public class ProducerLocalServiceImpl extends ProducerLocalServiceBaseImpl {
 		}
 		return prods;
 	}
+
+	public Producer getProdUcer(Long producerId) throws SystemException, PortalException{
+		Producer p = ProducerLocalServiceUtil.getProducer(producerId);
+		User u = UserLocalServiceUtil.getUser(producerId);
+		p.setFirstName(u.getFirstName());
+		p.setLastName(u.getLastName());
+		p.setLastLoginDate(u.getLastLoginDate());
+		p.setEmailAddress(u.getEmailAddress());
+		return p;
+	}
 	
+	public List<Integer> getAllProducerIds(Long lectureseriesId)throws SystemException{
+		List<Integer> pIds = ProducerFinderUtil.findProducerIds(lectureseriesId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+		return pIds;
+	}
+
 	public List<Integer> getProducerIds(Long lectureseriesId, int begin, int end)throws SystemException{
-		return null;
+		List<Integer> pIds = ProducerFinderUtil.findProducerIds(lectureseriesId, begin, end);
+		return pIds;
 	}
 }

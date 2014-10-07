@@ -280,6 +280,25 @@ public class ProducerLocalServiceUtil {
 		return getService().getAllProducers(begin, end);
 	}
 
+	public static de.uhh.l2g.plugins.model.Producer getProdUcer(
+		java.lang.Long producerId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getProdUcer(producerId);
+	}
+
+	public static java.util.List<java.lang.Integer> getAllProducerIds(
+		java.lang.Long lectureseriesId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getAllProducerIds(lectureseriesId);
+	}
+
+	public static java.util.List<java.lang.Integer> getProducerIds(
+		java.lang.Long lectureseriesId, int begin, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getProducerIds(lectureseriesId, begin, end);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

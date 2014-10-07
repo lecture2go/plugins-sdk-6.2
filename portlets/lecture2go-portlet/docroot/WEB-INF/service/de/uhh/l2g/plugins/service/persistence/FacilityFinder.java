@@ -18,6 +18,9 @@ package de.uhh.l2g.plugins.service.persistence;
  * @author Iavor Sturm
  */
 public interface FacilityFinder {
+	public java.util.List<de.uhh.l2g.plugins.model.Facility> findByLectureseriesId(
+		long lectureseriesId, int begin, int end);
+
 	public java.util.List<de.uhh.l2g.plugins.model.Facility> findAllSortedAsTree(
 		int begin, int end);
 }

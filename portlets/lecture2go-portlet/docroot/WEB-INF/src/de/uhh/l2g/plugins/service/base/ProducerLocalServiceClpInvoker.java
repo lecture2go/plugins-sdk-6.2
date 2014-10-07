@@ -117,6 +117,18 @@ public class ProducerLocalServiceClpInvoker {
 		_methodName116 = "getAllProducers";
 
 		_methodParameterTypes116 = new String[] { "int", "int" };
+
+		_methodName117 = "getProdUcer";
+
+		_methodParameterTypes117 = new String[] { "java.lang.Long" };
+
+		_methodName118 = "getAllProducerIds";
+
+		_methodParameterTypes118 = new String[] { "java.lang.Long" };
+
+		_methodName119 = "getProducerIds";
+
+		_methodParameterTypes119 = new String[] { "java.lang.Long", "int", "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -226,6 +238,23 @@ public class ProducerLocalServiceClpInvoker {
 				((Integer)arguments[1]).intValue());
 		}
 
+		if (_methodName117.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes117, parameterTypes)) {
+			return ProducerLocalServiceUtil.getProdUcer((java.lang.Long)arguments[0]);
+		}
+
+		if (_methodName118.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
+			return ProducerLocalServiceUtil.getAllProducerIds((java.lang.Long)arguments[0]);
+		}
+
+		if (_methodName119.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
+			return ProducerLocalServiceUtil.getProducerIds((java.lang.Long)arguments[0],
+				((Integer)arguments[1]).intValue(),
+				((Integer)arguments[2]).intValue());
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -267,4 +296,10 @@ public class ProducerLocalServiceClpInvoker {
 	private String[] _methodParameterTypes111;
 	private String _methodName116;
 	private String[] _methodParameterTypes116;
+	private String _methodName117;
+	private String[] _methodParameterTypes117;
+	private String _methodName118;
+	private String[] _methodParameterTypes118;
+	private String _methodName119;
+	private String[] _methodParameterTypes119;
 }
