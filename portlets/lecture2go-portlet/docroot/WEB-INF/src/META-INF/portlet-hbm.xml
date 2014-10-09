@@ -20,6 +20,7 @@
 	<import class="de.uhh.l2g.plugins.model.Upload" />
 	<import class="de.uhh.l2g.plugins.model.Video" />
 	<import class="de.uhh.l2g.plugins.model.Video_Facility" />
+	<import class="de.uhh.l2g.plugins.model.Video_Lectureseries" />
 	<import class="de.uhh.l2g.plugins.model.Videohitlist" />
 	<class name="de.uhh.l2g.plugins.model.impl.CoordinatorImpl" table="LG_Coordinator">
 		<cache usage="read-write" />
@@ -236,6 +237,14 @@
 		</id>
 		<property name="videoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="facilityId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="de.uhh.l2g.plugins.model.impl.Video_LectureseriesImpl" table="LG_Video_Lectureseries">
+		<cache usage="read-write" />
+		<id name="videoLectureseriesId" type="long">
+			<generator class="increment" />
+		</id>
+		<property name="videoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="lectureseriesId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.VideohitlistImpl" table="LG_Videohitlist">
 		<cache usage="read-write" />

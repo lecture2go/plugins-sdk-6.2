@@ -275,6 +275,11 @@ public class Producer_LectureseriesLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static boolean removeByLectureseriesId(
+		java.lang.Long lectureseriesId) {
+		return getService().removeByLectureseriesId(lectureseriesId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

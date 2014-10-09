@@ -14,7 +14,10 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import com.liferay.portal.kernel.exception.SystemException;
+
 import de.uhh.l2g.plugins.service.base.Lectureseries_FacilityLocalServiceBaseImpl;
+import de.uhh.l2g.plugins.service.persistence.Lectureseries_FacilityUtil;
 
 /**
  * The implementation of the lectureseries_ facility local service.
@@ -30,11 +33,31 @@ import de.uhh.l2g.plugins.service.base.Lectureseries_FacilityLocalServiceBaseImp
  * @see de.uhh.l2g.plugins.service.base.Lectureseries_FacilityLocalServiceBaseImpl
  * @see de.uhh.l2g.plugins.service.Lectureseries_FacilityLocalServiceUtil
  */
-public class Lectureseries_FacilityLocalServiceImpl
-	extends Lectureseries_FacilityLocalServiceBaseImpl {
+public class Lectureseries_FacilityLocalServiceImpl extends Lectureseries_FacilityLocalServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.Lectureseries_FacilityLocalServiceUtil} to access the lectureseries_ facility local service.
 	 */
+	public boolean removeByLectureseriesId(Long lectureseriesId) {
+		boolean ret = false;
+		try {
+			Lectureseries_FacilityUtil.removeByLectureseries(lectureseriesId);
+		} catch (SystemException e) {
+			ret = true;
+			e.printStackTrace();
+		}
+		return ret;
+	}
+
+	public boolean removeByacilityId(Long facilityId){
+		boolean ret = false;
+		try {
+			Lectureseries_FacilityUtil.removeByFacility(facilityId);
+		} catch (SystemException e) {
+			ret = true;
+			e.printStackTrace();
+		}
+		return ret;
+	}
 }

@@ -36,6 +36,7 @@ import de.uhh.l2g.plugins.service.SysLocalServiceUtil;
 import de.uhh.l2g.plugins.service.UploadLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_FacilityLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideohitlistLocalServiceUtil;
 
 /**
@@ -88,6 +89,8 @@ public class ClpMessageListener extends BaseMessageListener {
 			VideoLocalServiceUtil.clearService();
 
 			Video_FacilityLocalServiceUtil.clearService();
+
+			Video_LectureseriesLocalServiceUtil.clearService();
 
 			VideohitlistLocalServiceUtil.clearService();
 		}

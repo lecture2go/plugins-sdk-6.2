@@ -290,6 +290,16 @@ public class Lectureseries_FacilityLocalServiceWrapper
 			parameterTypes, arguments);
 	}
 
+	@Override
+	public boolean removeByLectureseriesId(java.lang.Long lectureseriesId) {
+		return _lectureseries_FacilityLocalService.removeByLectureseriesId(lectureseriesId);
+	}
+
+	@Override
+	public boolean removeByacilityId(java.lang.Long facilityId) {
+		return _lectureseries_FacilityLocalService.removeByacilityId(facilityId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

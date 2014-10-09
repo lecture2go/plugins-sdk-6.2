@@ -74,7 +74,12 @@ public class Producer_LectureseriesModelImpl extends BaseModelImpl<Producer_Lect
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.finder.cache.enabled.de.uhh.l2g.plugins.model.Producer_Lectureseries"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.Producer_Lectureseries"),
+			true);
+	public static long LECTURESERIESID_COLUMN_BITMASK = 1L;
+	public static long PRODUCERID_COLUMN_BITMASK = 2L;
+	public static long PRODUCERLECTURESERIESID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Producer_Lectureseries"));
 
@@ -161,7 +166,19 @@ public class Producer_LectureseriesModelImpl extends BaseModelImpl<Producer_Lect
 
 	@Override
 	public void setLectureseriesId(long lectureseriesId) {
+		_columnBitmask |= LECTURESERIESID_COLUMN_BITMASK;
+
+		if (!_setOriginalLectureseriesId) {
+			_setOriginalLectureseriesId = true;
+
+			_originalLectureseriesId = _lectureseriesId;
+		}
+
 		_lectureseriesId = lectureseriesId;
+	}
+
+	public long getOriginalLectureseriesId() {
+		return _originalLectureseriesId;
 	}
 
 	@Override
@@ -171,7 +188,23 @@ public class Producer_LectureseriesModelImpl extends BaseModelImpl<Producer_Lect
 
 	@Override
 	public void setProducerId(long producerId) {
+		_columnBitmask |= PRODUCERID_COLUMN_BITMASK;
+
+		if (!_setOriginalProducerId) {
+			_setOriginalProducerId = true;
+
+			_originalProducerId = _producerId;
+		}
+
 		_producerId = producerId;
+	}
+
+	public long getOriginalProducerId() {
+		return _originalProducerId;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -254,6 +287,17 @@ public class Producer_LectureseriesModelImpl extends BaseModelImpl<Producer_Lect
 
 	@Override
 	public void resetOriginalValues() {
+		Producer_LectureseriesModelImpl producer_LectureseriesModelImpl = this;
+
+		producer_LectureseriesModelImpl._originalLectureseriesId = producer_LectureseriesModelImpl._lectureseriesId;
+
+		producer_LectureseriesModelImpl._setOriginalLectureseriesId = false;
+
+		producer_LectureseriesModelImpl._originalProducerId = producer_LectureseriesModelImpl._producerId;
+
+		producer_LectureseriesModelImpl._setOriginalProducerId = false;
+
+		producer_LectureseriesModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -316,6 +360,11 @@ public class Producer_LectureseriesModelImpl extends BaseModelImpl<Producer_Lect
 		};
 	private long _producerLectureseriesId;
 	private long _lectureseriesId;
+	private long _originalLectureseriesId;
+	private boolean _setOriginalLectureseriesId;
 	private long _producerId;
+	private long _originalProducerId;
+	private boolean _setOriginalProducerId;
+	private long _columnBitmask;
 	private Producer_Lectureseries _escapedModel;
 }

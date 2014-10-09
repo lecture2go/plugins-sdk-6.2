@@ -76,6 +76,12 @@
         <column name="lectureseriesFacilityId" type="long" primary="true" id-type="increment"></column>
         <column name="lectureseriesId" type="long" primary="false"></column>
         <column name="facilityId" type="long" primary="false"></column>
+        <finder name="Lectureseries" return-type="Collection">
+            <finder-column name="lectureseriesId"></finder-column>
+        </finder>
+        <finder name="Facility" return-type="Collection">
+            <finder-column name="facilityId"></finder-column>
+        </finder>
     </entity>
     <entity name="Producer" local-service="true" remote-service="false">
         <column name="producerId" type="long" primary="true"></column>
@@ -105,6 +111,12 @@
         <column name="producerLectureseriesId" type="long" primary="true" id-type="increment"></column>
         <column name="lectureseriesId" type="long"></column>
         <column name="producerId" type="long"></column>
+        <finder name="Lectureseries" return-type="Collection">
+            <finder-column name="lectureseriesId"></finder-column>
+        </finder>
+        <finder name="Producer" return-type="Collection">
+            <finder-column name="producerId"></finder-column>
+        </finder>
     </entity>
     <entity name="Host" local-service="true" remote-service="false">
         <column name="hostId" primary="true" type="long" id-type="increment"></column>
@@ -243,5 +255,16 @@
         <column name="hitsPerWeek" type="int"></column>
         <column name="hitsPerMonth" type="int"></column>
         <column name="hitsPerYear" type="int"></column>
+    </entity>
+    <entity name="Video_Lectureseries" local-service="true" remote-service="false">
+        <column name="videoLectureseriesId" type="long" primary="true" id-type="increment"></column>
+        <column name="videoId" type="long"></column>
+        <column name="lectureseriesId" type="long"></column>
+        <finder name="video" return-type="Collection">
+            <finder-column name="videoId"></finder-column>
+        </finder>
+        <finder name="lectureseries" return-type="Collection">
+            <finder-column name="lectureseriesId"></finder-column>
+        </finder>
     </entity>
 </service-builder>

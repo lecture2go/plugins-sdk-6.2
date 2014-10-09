@@ -14,10 +14,10 @@
 
 package de.uhh.l2g.plugins.service.persistence;
 
+import java.io.Serializable;
+
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-
-import java.io.Serializable;
 
 /**
  * @author Iavor Sturm

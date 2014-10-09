@@ -20,8 +20,20 @@ create index IX_DB929396 on LG_Lectureseries (name);
 create index IX_225A0AF on LG_Lectureseries (number_);
 create index IX_2E421DEE on LG_Lectureseries (semesterName);
 
+create index IX_9ACE8C9 on LG_Lectureseries_Facility (facilityId);
+create index IX_1E259A49 on LG_Lectureseries_Facility (lectureseriesId);
+
 create index IX_4FD6C927 on LG_Producer (approved);
 create index IX_B7B3784E on LG_Producer (facilityId);
 create index IX_7DAEE222 on LG_Producer (homeDir);
 create index IX_FE9C63D3 on LG_Producer (hostId);
 create index IX_4115449F on LG_Producer (idNum);
+
+create index IX_2A06594E on LG_Producer_Lectureseries (lectureseriesId);
+create index IX_C19D6C13 on LG_Producer_Lectureseries (producerId);
+
+create index IX_7D0E80BC on LG_VideoLectureseries (lectureseriesId);
+create index IX_EADAE6C2 on LG_VideoLectureseries (videoId);
+
+create index IX_12087ECD on LG_Video_Lectureseries (lectureseriesId);
+create index IX_F35885D3 on LG_Video_Lectureseries (videoId);

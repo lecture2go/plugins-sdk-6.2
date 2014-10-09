@@ -163,6 +163,11 @@
 		<field name="videoId" type="long" />
 		<field name="facilityId" type="long" />
 	</model>
+	<model name="de.uhh.l2g.plugins.model.Video_Lectureseries">
+		<field name="videoLectureseriesId" type="long" />
+		<field name="videoId" type="long" />
+		<field name="lectureseriesId" type="long" />
+	</model>
 	<model name="de.uhh.l2g.plugins.model.Videohitlist">
 		<field name="videohitlistId" type="int" />
 		<field name="hitsPerDay" type="int" />

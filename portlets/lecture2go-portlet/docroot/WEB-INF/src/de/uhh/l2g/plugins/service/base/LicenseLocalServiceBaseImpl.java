@@ -52,8 +52,10 @@ import de.uhh.l2g.plugins.service.persistence.SegmentPersistence;
 import de.uhh.l2g.plugins.service.persistence.Segment_User_VideoPersistence;
 import de.uhh.l2g.plugins.service.persistence.SysPersistence;
 import de.uhh.l2g.plugins.service.persistence.UploadPersistence;
+import de.uhh.l2g.plugins.service.persistence.VideoFinder;
 import de.uhh.l2g.plugins.service.persistence.VideoPersistence;
 import de.uhh.l2g.plugins.service.persistence.Video_FacilityPersistence;
+import de.uhh.l2g.plugins.service.persistence.Video_LectureseriesPersistence;
 import de.uhh.l2g.plugins.service.persistence.VideohitlistPersistence;
 
 import java.io.Serializable;
@@ -985,6 +987,24 @@ public abstract class LicenseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the video finder.
+	 *
+	 * @return the video finder
+	 */
+	public VideoFinder getVideoFinder() {
+		return videoFinder;
+	}
+
+	/**
+	 * Sets the video finder.
+	 *
+	 * @param videoFinder the video finder
+	 */
+	public void setVideoFinder(VideoFinder videoFinder) {
+		this.videoFinder = videoFinder;
+	}
+
+	/**
 	 * Returns the video_ facility local service.
 	 *
 	 * @return the video_ facility local service
@@ -1020,6 +1040,44 @@ public abstract class LicenseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public void setVideo_FacilityPersistence(
 		Video_FacilityPersistence video_FacilityPersistence) {
 		this.video_FacilityPersistence = video_FacilityPersistence;
+	}
+
+	/**
+	 * Returns the video_ lectureseries local service.
+	 *
+	 * @return the video_ lectureseries local service
+	 */
+	public de.uhh.l2g.plugins.service.Video_LectureseriesLocalService getVideo_LectureseriesLocalService() {
+		return video_LectureseriesLocalService;
+	}
+
+	/**
+	 * Sets the video_ lectureseries local service.
+	 *
+	 * @param video_LectureseriesLocalService the video_ lectureseries local service
+	 */
+	public void setVideo_LectureseriesLocalService(
+		de.uhh.l2g.plugins.service.Video_LectureseriesLocalService video_LectureseriesLocalService) {
+		this.video_LectureseriesLocalService = video_LectureseriesLocalService;
+	}
+
+	/**
+	 * Returns the video_ lectureseries persistence.
+	 *
+	 * @return the video_ lectureseries persistence
+	 */
+	public Video_LectureseriesPersistence getVideo_LectureseriesPersistence() {
+		return video_LectureseriesPersistence;
+	}
+
+	/**
+	 * Sets the video_ lectureseries persistence.
+	 *
+	 * @param video_LectureseriesPersistence the video_ lectureseries persistence
+	 */
+	public void setVideo_LectureseriesPersistence(
+		Video_LectureseriesPersistence video_LectureseriesPersistence) {
+		this.video_LectureseriesPersistence = video_LectureseriesPersistence;
 	}
 
 	/**
@@ -1310,10 +1368,16 @@ public abstract class LicenseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected de.uhh.l2g.plugins.service.VideoLocalService videoLocalService;
 	@BeanReference(type = VideoPersistence.class)
 	protected VideoPersistence videoPersistence;
+	@BeanReference(type = VideoFinder.class)
+	protected VideoFinder videoFinder;
 	@BeanReference(type = de.uhh.l2g.plugins.service.Video_FacilityLocalService.class)
 	protected de.uhh.l2g.plugins.service.Video_FacilityLocalService video_FacilityLocalService;
 	@BeanReference(type = Video_FacilityPersistence.class)
 	protected Video_FacilityPersistence video_FacilityPersistence;
+	@BeanReference(type = de.uhh.l2g.plugins.service.Video_LectureseriesLocalService.class)
+	protected de.uhh.l2g.plugins.service.Video_LectureseriesLocalService video_LectureseriesLocalService;
+	@BeanReference(type = Video_LectureseriesPersistence.class)
+	protected Video_LectureseriesPersistence video_LectureseriesPersistence;
 	@BeanReference(type = de.uhh.l2g.plugins.service.VideohitlistLocalService.class)
 	protected de.uhh.l2g.plugins.service.VideohitlistLocalService videohitlistLocalService;
 	@BeanReference(type = VideohitlistPersistence.class)

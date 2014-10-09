@@ -14,7 +14,10 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import com.liferay.portal.kernel.exception.SystemException;
+
 import de.uhh.l2g.plugins.service.base.Producer_LectureseriesLocalServiceBaseImpl;
+import de.uhh.l2g.plugins.service.persistence.Producer_LectureseriesUtil;
 
 /**
  * The implementation of the producer_ lectureseries local service.
@@ -37,4 +40,15 @@ public class Producer_LectureseriesLocalServiceImpl
 	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.Producer_LectureseriesLocalServiceUtil} to access the producer_ lectureseries local service.
 	 */
+	
+	public boolean removeByLectureseriesId(Long lectureseriesId) {
+		boolean ret = false;
+		try {
+			Producer_LectureseriesUtil.removeByLectureseries(lectureseriesId);
+		} catch (SystemException e) {
+			ret = true;
+			e.printStackTrace();
+		}
+		return ret;
+	}	
 }

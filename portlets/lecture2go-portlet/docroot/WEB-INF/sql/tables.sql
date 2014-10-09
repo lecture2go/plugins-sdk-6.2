@@ -172,10 +172,22 @@ create table LG_Video (
 	citation2go INTEGER
 );
 
+create table LG_VideoLectureseries (
+	videoLectureseriesId LONG not null primary key,
+	videoId LONG,
+	lectureseriesId LONG
+);
+
 create table LG_Video_Facility (
 	videoFacilityId LONG not null primary key,
 	videoId LONG,
 	facilityId LONG
+);
+
+create table LG_Video_Lectureseries (
+	videoLectureseriesId LONG not null primary key,
+	videoId LONG,
+	lectureseriesId LONG
 );
 
 create table LG_Videohitlist (

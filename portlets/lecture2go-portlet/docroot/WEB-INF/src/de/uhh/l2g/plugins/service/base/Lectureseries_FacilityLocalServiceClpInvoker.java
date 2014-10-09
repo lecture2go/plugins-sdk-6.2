@@ -106,13 +106,21 @@ public class Lectureseries_FacilityLocalServiceClpInvoker {
 				"de.uhh.l2g.plugins.model.Lectureseries_Facility"
 			};
 
-		_methodName110 = "getBeanIdentifier";
+		_methodName116 = "getBeanIdentifier";
 
-		_methodParameterTypes110 = new String[] {  };
+		_methodParameterTypes116 = new String[] {  };
 
-		_methodName111 = "setBeanIdentifier";
+		_methodName117 = "setBeanIdentifier";
 
-		_methodParameterTypes111 = new String[] { "java.lang.String" };
+		_methodParameterTypes117 = new String[] { "java.lang.String" };
+
+		_methodName122 = "removeByLectureseriesId";
+
+		_methodParameterTypes122 = new String[] { "java.lang.Long" };
+
+		_methodName123 = "removeByacilityId";
+
+		_methodParameterTypes123 = new String[] { "java.lang.Long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -204,16 +212,26 @@ public class Lectureseries_FacilityLocalServiceClpInvoker {
 			return Lectureseries_FacilityLocalServiceUtil.updateLectureseries_Facility((de.uhh.l2g.plugins.model.Lectureseries_Facility)arguments[0]);
 		}
 
-		if (_methodName110.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes110, parameterTypes)) {
+		if (_methodName116.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes116, parameterTypes)) {
 			return Lectureseries_FacilityLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName111.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes111, parameterTypes)) {
+		if (_methodName117.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes117, parameterTypes)) {
 			Lectureseries_FacilityLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
+		}
+
+		if (_methodName122.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
+			return Lectureseries_FacilityLocalServiceUtil.removeByLectureseriesId((java.lang.Long)arguments[0]);
+		}
+
+		if (_methodName123.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
+			return Lectureseries_FacilityLocalServiceUtil.removeByacilityId((java.lang.Long)arguments[0]);
 		}
 
 		throw new UnsupportedOperationException();
@@ -251,8 +269,12 @@ public class Lectureseries_FacilityLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName110;
-	private String[] _methodParameterTypes110;
-	private String _methodName111;
-	private String[] _methodParameterTypes111;
+	private String _methodName116;
+	private String[] _methodParameterTypes116;
+	private String _methodName117;
+	private String[] _methodParameterTypes117;
+	private String _methodName122;
+	private String[] _methodParameterTypes122;
+	private String _methodName123;
+	private String[] _methodParameterTypes123;
 }

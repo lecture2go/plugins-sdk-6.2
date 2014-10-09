@@ -113,6 +113,338 @@ public class Producer_LectureseriesUtil {
 	}
 
 	/**
+	* Returns all the producer_ lectureserieses where lectureseriesId = &#63;.
+	*
+	* @param lectureseriesId the lectureseries ID
+	* @return the matching producer_ lectureserieses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<de.uhh.l2g.plugins.model.Producer_Lectureseries> findByLectureseries(
+		long lectureseriesId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByLectureseries(lectureseriesId);
+	}
+
+	/**
+	* Returns a range of all the producer_ lectureserieses where lectureseriesId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.Producer_LectureseriesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param lectureseriesId the lectureseries ID
+	* @param start the lower bound of the range of producer_ lectureserieses
+	* @param end the upper bound of the range of producer_ lectureserieses (not inclusive)
+	* @return the range of matching producer_ lectureserieses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<de.uhh.l2g.plugins.model.Producer_Lectureseries> findByLectureseries(
+		long lectureseriesId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByLectureseries(lectureseriesId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the producer_ lectureserieses where lectureseriesId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.Producer_LectureseriesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param lectureseriesId the lectureseries ID
+	* @param start the lower bound of the range of producer_ lectureserieses
+	* @param end the upper bound of the range of producer_ lectureserieses (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching producer_ lectureserieses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<de.uhh.l2g.plugins.model.Producer_Lectureseries> findByLectureseries(
+		long lectureseriesId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByLectureseries(lectureseriesId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first producer_ lectureseries in the ordered set where lectureseriesId = &#63;.
+	*
+	* @param lectureseriesId the lectureseries ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching producer_ lectureseries
+	* @throws de.uhh.l2g.plugins.NoSuchProducer_LectureseriesException if a matching producer_ lectureseries could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Producer_Lectureseries findByLectureseries_First(
+		long lectureseriesId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchProducer_LectureseriesException {
+		return getPersistence()
+				   .findByLectureseries_First(lectureseriesId, orderByComparator);
+	}
+
+	/**
+	* Returns the first producer_ lectureseries in the ordered set where lectureseriesId = &#63;.
+	*
+	* @param lectureseriesId the lectureseries ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching producer_ lectureseries, or <code>null</code> if a matching producer_ lectureseries could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Producer_Lectureseries fetchByLectureseries_First(
+		long lectureseriesId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByLectureseries_First(lectureseriesId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last producer_ lectureseries in the ordered set where lectureseriesId = &#63;.
+	*
+	* @param lectureseriesId the lectureseries ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching producer_ lectureseries
+	* @throws de.uhh.l2g.plugins.NoSuchProducer_LectureseriesException if a matching producer_ lectureseries could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Producer_Lectureseries findByLectureseries_Last(
+		long lectureseriesId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchProducer_LectureseriesException {
+		return getPersistence()
+				   .findByLectureseries_Last(lectureseriesId, orderByComparator);
+	}
+
+	/**
+	* Returns the last producer_ lectureseries in the ordered set where lectureseriesId = &#63;.
+	*
+	* @param lectureseriesId the lectureseries ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching producer_ lectureseries, or <code>null</code> if a matching producer_ lectureseries could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Producer_Lectureseries fetchByLectureseries_Last(
+		long lectureseriesId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByLectureseries_Last(lectureseriesId, orderByComparator);
+	}
+
+	/**
+	* Returns the producer_ lectureserieses before and after the current producer_ lectureseries in the ordered set where lectureseriesId = &#63;.
+	*
+	* @param producerLectureseriesId the primary key of the current producer_ lectureseries
+	* @param lectureseriesId the lectureseries ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next producer_ lectureseries
+	* @throws de.uhh.l2g.plugins.NoSuchProducer_LectureseriesException if a producer_ lectureseries with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Producer_Lectureseries[] findByLectureseries_PrevAndNext(
+		long producerLectureseriesId, long lectureseriesId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchProducer_LectureseriesException {
+		return getPersistence()
+				   .findByLectureseries_PrevAndNext(producerLectureseriesId,
+			lectureseriesId, orderByComparator);
+	}
+
+	/**
+	* Removes all the producer_ lectureserieses where lectureseriesId = &#63; from the database.
+	*
+	* @param lectureseriesId the lectureseries ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByLectureseries(long lectureseriesId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByLectureseries(lectureseriesId);
+	}
+
+	/**
+	* Returns the number of producer_ lectureserieses where lectureseriesId = &#63;.
+	*
+	* @param lectureseriesId the lectureseries ID
+	* @return the number of matching producer_ lectureserieses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByLectureseries(long lectureseriesId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByLectureseries(lectureseriesId);
+	}
+
+	/**
+	* Returns all the producer_ lectureserieses where producerId = &#63;.
+	*
+	* @param producerId the producer ID
+	* @return the matching producer_ lectureserieses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<de.uhh.l2g.plugins.model.Producer_Lectureseries> findByProducer(
+		long producerId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByProducer(producerId);
+	}
+
+	/**
+	* Returns a range of all the producer_ lectureserieses where producerId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.Producer_LectureseriesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param producerId the producer ID
+	* @param start the lower bound of the range of producer_ lectureserieses
+	* @param end the upper bound of the range of producer_ lectureserieses (not inclusive)
+	* @return the range of matching producer_ lectureserieses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<de.uhh.l2g.plugins.model.Producer_Lectureseries> findByProducer(
+		long producerId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByProducer(producerId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the producer_ lectureserieses where producerId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.Producer_LectureseriesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param producerId the producer ID
+	* @param start the lower bound of the range of producer_ lectureserieses
+	* @param end the upper bound of the range of producer_ lectureserieses (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching producer_ lectureserieses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<de.uhh.l2g.plugins.model.Producer_Lectureseries> findByProducer(
+		long producerId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByProducer(producerId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first producer_ lectureseries in the ordered set where producerId = &#63;.
+	*
+	* @param producerId the producer ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching producer_ lectureseries
+	* @throws de.uhh.l2g.plugins.NoSuchProducer_LectureseriesException if a matching producer_ lectureseries could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Producer_Lectureseries findByProducer_First(
+		long producerId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchProducer_LectureseriesException {
+		return getPersistence()
+				   .findByProducer_First(producerId, orderByComparator);
+	}
+
+	/**
+	* Returns the first producer_ lectureseries in the ordered set where producerId = &#63;.
+	*
+	* @param producerId the producer ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching producer_ lectureseries, or <code>null</code> if a matching producer_ lectureseries could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Producer_Lectureseries fetchByProducer_First(
+		long producerId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByProducer_First(producerId, orderByComparator);
+	}
+
+	/**
+	* Returns the last producer_ lectureseries in the ordered set where producerId = &#63;.
+	*
+	* @param producerId the producer ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching producer_ lectureseries
+	* @throws de.uhh.l2g.plugins.NoSuchProducer_LectureseriesException if a matching producer_ lectureseries could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Producer_Lectureseries findByProducer_Last(
+		long producerId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchProducer_LectureseriesException {
+		return getPersistence()
+				   .findByProducer_Last(producerId, orderByComparator);
+	}
+
+	/**
+	* Returns the last producer_ lectureseries in the ordered set where producerId = &#63;.
+	*
+	* @param producerId the producer ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching producer_ lectureseries, or <code>null</code> if a matching producer_ lectureseries could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Producer_Lectureseries fetchByProducer_Last(
+		long producerId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByProducer_Last(producerId, orderByComparator);
+	}
+
+	/**
+	* Returns the producer_ lectureserieses before and after the current producer_ lectureseries in the ordered set where producerId = &#63;.
+	*
+	* @param producerLectureseriesId the primary key of the current producer_ lectureseries
+	* @param producerId the producer ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next producer_ lectureseries
+	* @throws de.uhh.l2g.plugins.NoSuchProducer_LectureseriesException if a producer_ lectureseries with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Producer_Lectureseries[] findByProducer_PrevAndNext(
+		long producerLectureseriesId, long producerId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchProducer_LectureseriesException {
+		return getPersistence()
+				   .findByProducer_PrevAndNext(producerLectureseriesId,
+			producerId, orderByComparator);
+	}
+
+	/**
+	* Removes all the producer_ lectureserieses where producerId = &#63; from the database.
+	*
+	* @param producerId the producer ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByProducer(long producerId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByProducer(producerId);
+	}
+
+	/**
+	* Returns the number of producer_ lectureserieses where producerId = &#63;.
+	*
+	* @param producerId the producer ID
+	* @return the number of matching producer_ lectureserieses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByProducer(long producerId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByProducer(producerId);
+	}
+
+	/**
 	* Caches the producer_ lectureseries in the entity cache if it is enabled.
 	*
 	* @param producer_Lectureseries the producer_ lectureseries

@@ -275,6 +275,15 @@ public class Lectureseries_FacilityLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static boolean removeByLectureseriesId(
+		java.lang.Long lectureseriesId) {
+		return getService().removeByLectureseriesId(lectureseriesId);
+	}
+
+	public static boolean removeByacilityId(java.lang.Long facilityId) {
+		return getService().removeByacilityId(facilityId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

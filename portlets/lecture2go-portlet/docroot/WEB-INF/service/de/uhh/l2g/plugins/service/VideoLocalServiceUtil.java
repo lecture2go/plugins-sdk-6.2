@@ -271,6 +271,11 @@ public class VideoLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static int unlinkLectureseriesFromVideos(
+		java.lang.Long lectureseriesId) {
+		return getService().unlinkLectureseriesFromVideos(lectureseriesId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

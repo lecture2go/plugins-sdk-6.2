@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
@@ -82,6 +84,1008 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(Lectureseries_FacilityModelImpl.ENTITY_CACHE_ENABLED,
 			Lectureseries_FacilityModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_LECTURESERIES =
+		new FinderPath(Lectureseries_FacilityModelImpl.ENTITY_CACHE_ENABLED,
+			Lectureseries_FacilityModelImpl.FINDER_CACHE_ENABLED,
+			Lectureseries_FacilityImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLectureseries",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LECTURESERIES =
+		new FinderPath(Lectureseries_FacilityModelImpl.ENTITY_CACHE_ENABLED,
+			Lectureseries_FacilityModelImpl.FINDER_CACHE_ENABLED,
+			Lectureseries_FacilityImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByLectureseries",
+			new String[] { Long.class.getName() },
+			Lectureseries_FacilityModelImpl.LECTURESERIESID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_LECTURESERIES = new FinderPath(Lectureseries_FacilityModelImpl.ENTITY_CACHE_ENABLED,
+			Lectureseries_FacilityModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLectureseries",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the lectureseries_ facilities where lectureseriesId = &#63;.
+	 *
+	 * @param lectureseriesId the lectureseries ID
+	 * @return the matching lectureseries_ facilities
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Lectureseries_Facility> findByLectureseries(
+		long lectureseriesId) throws SystemException {
+		return findByLectureseries(lectureseriesId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the lectureseries_ facilities where lectureseriesId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.Lectureseries_FacilityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param lectureseriesId the lectureseries ID
+	 * @param start the lower bound of the range of lectureseries_ facilities
+	 * @param end the upper bound of the range of lectureseries_ facilities (not inclusive)
+	 * @return the range of matching lectureseries_ facilities
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Lectureseries_Facility> findByLectureseries(
+		long lectureseriesId, int start, int end) throws SystemException {
+		return findByLectureseries(lectureseriesId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the lectureseries_ facilities where lectureseriesId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.Lectureseries_FacilityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param lectureseriesId the lectureseries ID
+	 * @param start the lower bound of the range of lectureseries_ facilities
+	 * @param end the upper bound of the range of lectureseries_ facilities (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching lectureseries_ facilities
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Lectureseries_Facility> findByLectureseries(
+		long lectureseriesId, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LECTURESERIES;
+			finderArgs = new Object[] { lectureseriesId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_LECTURESERIES;
+			finderArgs = new Object[] {
+					lectureseriesId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<Lectureseries_Facility> list = (List<Lectureseries_Facility>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (Lectureseries_Facility lectureseries_Facility : list) {
+				if ((lectureseriesId != lectureseries_Facility.getLectureseriesId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_LECTURESERIES_FACILITY_WHERE);
+
+			query.append(_FINDER_COLUMN_LECTURESERIES_LECTURESERIESID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(Lectureseries_FacilityModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(lectureseriesId);
+
+				if (!pagination) {
+					list = (List<Lectureseries_Facility>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<Lectureseries_Facility>(list);
+				}
+				else {
+					list = (List<Lectureseries_Facility>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first lectureseries_ facility in the ordered set where lectureseriesId = &#63;.
+	 *
+	 * @param lectureseriesId the lectureseries ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching lectureseries_ facility
+	 * @throws de.uhh.l2g.plugins.NoSuchLectureseries_FacilityException if a matching lectureseries_ facility could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Lectureseries_Facility findByLectureseries_First(
+		long lectureseriesId, OrderByComparator orderByComparator)
+		throws NoSuchLectureseries_FacilityException, SystemException {
+		Lectureseries_Facility lectureseries_Facility = fetchByLectureseries_First(lectureseriesId,
+				orderByComparator);
+
+		if (lectureseries_Facility != null) {
+			return lectureseries_Facility;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("lectureseriesId=");
+		msg.append(lectureseriesId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchLectureseries_FacilityException(msg.toString());
+	}
+
+	/**
+	 * Returns the first lectureseries_ facility in the ordered set where lectureseriesId = &#63;.
+	 *
+	 * @param lectureseriesId the lectureseries ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching lectureseries_ facility, or <code>null</code> if a matching lectureseries_ facility could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Lectureseries_Facility fetchByLectureseries_First(
+		long lectureseriesId, OrderByComparator orderByComparator)
+		throws SystemException {
+		List<Lectureseries_Facility> list = findByLectureseries(lectureseriesId,
+				0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last lectureseries_ facility in the ordered set where lectureseriesId = &#63;.
+	 *
+	 * @param lectureseriesId the lectureseries ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching lectureseries_ facility
+	 * @throws de.uhh.l2g.plugins.NoSuchLectureseries_FacilityException if a matching lectureseries_ facility could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Lectureseries_Facility findByLectureseries_Last(
+		long lectureseriesId, OrderByComparator orderByComparator)
+		throws NoSuchLectureseries_FacilityException, SystemException {
+		Lectureseries_Facility lectureseries_Facility = fetchByLectureseries_Last(lectureseriesId,
+				orderByComparator);
+
+		if (lectureseries_Facility != null) {
+			return lectureseries_Facility;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("lectureseriesId=");
+		msg.append(lectureseriesId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchLectureseries_FacilityException(msg.toString());
+	}
+
+	/**
+	 * Returns the last lectureseries_ facility in the ordered set where lectureseriesId = &#63;.
+	 *
+	 * @param lectureseriesId the lectureseries ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching lectureseries_ facility, or <code>null</code> if a matching lectureseries_ facility could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Lectureseries_Facility fetchByLectureseries_Last(
+		long lectureseriesId, OrderByComparator orderByComparator)
+		throws SystemException {
+		int count = countByLectureseries(lectureseriesId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Lectureseries_Facility> list = findByLectureseries(lectureseriesId,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the lectureseries_ facilities before and after the current lectureseries_ facility in the ordered set where lectureseriesId = &#63;.
+	 *
+	 * @param lectureseriesFacilityId the primary key of the current lectureseries_ facility
+	 * @param lectureseriesId the lectureseries ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next lectureseries_ facility
+	 * @throws de.uhh.l2g.plugins.NoSuchLectureseries_FacilityException if a lectureseries_ facility with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Lectureseries_Facility[] findByLectureseries_PrevAndNext(
+		long lectureseriesFacilityId, long lectureseriesId,
+		OrderByComparator orderByComparator)
+		throws NoSuchLectureseries_FacilityException, SystemException {
+		Lectureseries_Facility lectureseries_Facility = findByPrimaryKey(lectureseriesFacilityId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Lectureseries_Facility[] array = new Lectureseries_FacilityImpl[3];
+
+			array[0] = getByLectureseries_PrevAndNext(session,
+					lectureseries_Facility, lectureseriesId, orderByComparator,
+					true);
+
+			array[1] = lectureseries_Facility;
+
+			array[2] = getByLectureseries_PrevAndNext(session,
+					lectureseries_Facility, lectureseriesId, orderByComparator,
+					false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Lectureseries_Facility getByLectureseries_PrevAndNext(
+		Session session, Lectureseries_Facility lectureseries_Facility,
+		long lectureseriesId, OrderByComparator orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_LECTURESERIES_FACILITY_WHERE);
+
+		query.append(_FINDER_COLUMN_LECTURESERIES_LECTURESERIESID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(Lectureseries_FacilityModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(lectureseriesId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(lectureseries_Facility);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<Lectureseries_Facility> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the lectureseries_ facilities where lectureseriesId = &#63; from the database.
+	 *
+	 * @param lectureseriesId the lectureseries ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByLectureseries(long lectureseriesId)
+		throws SystemException {
+		for (Lectureseries_Facility lectureseries_Facility : findByLectureseries(
+				lectureseriesId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(lectureseries_Facility);
+		}
+	}
+
+	/**
+	 * Returns the number of lectureseries_ facilities where lectureseriesId = &#63;.
+	 *
+	 * @param lectureseriesId the lectureseries ID
+	 * @return the number of matching lectureseries_ facilities
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByLectureseries(long lectureseriesId)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_LECTURESERIES;
+
+		Object[] finderArgs = new Object[] { lectureseriesId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_LECTURESERIES_FACILITY_WHERE);
+
+			query.append(_FINDER_COLUMN_LECTURESERIES_LECTURESERIESID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(lectureseriesId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_LECTURESERIES_LECTURESERIESID_2 = "lectureseries_Facility.lectureseriesId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_FACILITY = new FinderPath(Lectureseries_FacilityModelImpl.ENTITY_CACHE_ENABLED,
+			Lectureseries_FacilityModelImpl.FINDER_CACHE_ENABLED,
+			Lectureseries_FacilityImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFacility",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITY =
+		new FinderPath(Lectureseries_FacilityModelImpl.ENTITY_CACHE_ENABLED,
+			Lectureseries_FacilityModelImpl.FINDER_CACHE_ENABLED,
+			Lectureseries_FacilityImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByFacility",
+			new String[] { Long.class.getName() },
+			Lectureseries_FacilityModelImpl.FACILITYID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_FACILITY = new FinderPath(Lectureseries_FacilityModelImpl.ENTITY_CACHE_ENABLED,
+			Lectureseries_FacilityModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFacility",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the lectureseries_ facilities where facilityId = &#63;.
+	 *
+	 * @param facilityId the facility ID
+	 * @return the matching lectureseries_ facilities
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Lectureseries_Facility> findByFacility(long facilityId)
+		throws SystemException {
+		return findByFacility(facilityId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the lectureseries_ facilities where facilityId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.Lectureseries_FacilityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param facilityId the facility ID
+	 * @param start the lower bound of the range of lectureseries_ facilities
+	 * @param end the upper bound of the range of lectureseries_ facilities (not inclusive)
+	 * @return the range of matching lectureseries_ facilities
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Lectureseries_Facility> findByFacility(long facilityId,
+		int start, int end) throws SystemException {
+		return findByFacility(facilityId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the lectureseries_ facilities where facilityId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.Lectureseries_FacilityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param facilityId the facility ID
+	 * @param start the lower bound of the range of lectureseries_ facilities
+	 * @param end the upper bound of the range of lectureseries_ facilities (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching lectureseries_ facilities
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Lectureseries_Facility> findByFacility(long facilityId,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITY;
+			finderArgs = new Object[] { facilityId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_FACILITY;
+			finderArgs = new Object[] { facilityId, start, end, orderByComparator };
+		}
+
+		List<Lectureseries_Facility> list = (List<Lectureseries_Facility>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (Lectureseries_Facility lectureseries_Facility : list) {
+				if ((facilityId != lectureseries_Facility.getFacilityId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_LECTURESERIES_FACILITY_WHERE);
+
+			query.append(_FINDER_COLUMN_FACILITY_FACILITYID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(Lectureseries_FacilityModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(facilityId);
+
+				if (!pagination) {
+					list = (List<Lectureseries_Facility>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<Lectureseries_Facility>(list);
+				}
+				else {
+					list = (List<Lectureseries_Facility>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first lectureseries_ facility in the ordered set where facilityId = &#63;.
+	 *
+	 * @param facilityId the facility ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching lectureseries_ facility
+	 * @throws de.uhh.l2g.plugins.NoSuchLectureseries_FacilityException if a matching lectureseries_ facility could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Lectureseries_Facility findByFacility_First(long facilityId,
+		OrderByComparator orderByComparator)
+		throws NoSuchLectureseries_FacilityException, SystemException {
+		Lectureseries_Facility lectureseries_Facility = fetchByFacility_First(facilityId,
+				orderByComparator);
+
+		if (lectureseries_Facility != null) {
+			return lectureseries_Facility;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("facilityId=");
+		msg.append(facilityId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchLectureseries_FacilityException(msg.toString());
+	}
+
+	/**
+	 * Returns the first lectureseries_ facility in the ordered set where facilityId = &#63;.
+	 *
+	 * @param facilityId the facility ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching lectureseries_ facility, or <code>null</code> if a matching lectureseries_ facility could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Lectureseries_Facility fetchByFacility_First(long facilityId,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<Lectureseries_Facility> list = findByFacility(facilityId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last lectureseries_ facility in the ordered set where facilityId = &#63;.
+	 *
+	 * @param facilityId the facility ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching lectureseries_ facility
+	 * @throws de.uhh.l2g.plugins.NoSuchLectureseries_FacilityException if a matching lectureseries_ facility could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Lectureseries_Facility findByFacility_Last(long facilityId,
+		OrderByComparator orderByComparator)
+		throws NoSuchLectureseries_FacilityException, SystemException {
+		Lectureseries_Facility lectureseries_Facility = fetchByFacility_Last(facilityId,
+				orderByComparator);
+
+		if (lectureseries_Facility != null) {
+			return lectureseries_Facility;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("facilityId=");
+		msg.append(facilityId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchLectureseries_FacilityException(msg.toString());
+	}
+
+	/**
+	 * Returns the last lectureseries_ facility in the ordered set where facilityId = &#63;.
+	 *
+	 * @param facilityId the facility ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching lectureseries_ facility, or <code>null</code> if a matching lectureseries_ facility could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Lectureseries_Facility fetchByFacility_Last(long facilityId,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByFacility(facilityId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Lectureseries_Facility> list = findByFacility(facilityId,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the lectureseries_ facilities before and after the current lectureseries_ facility in the ordered set where facilityId = &#63;.
+	 *
+	 * @param lectureseriesFacilityId the primary key of the current lectureseries_ facility
+	 * @param facilityId the facility ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next lectureseries_ facility
+	 * @throws de.uhh.l2g.plugins.NoSuchLectureseries_FacilityException if a lectureseries_ facility with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Lectureseries_Facility[] findByFacility_PrevAndNext(
+		long lectureseriesFacilityId, long facilityId,
+		OrderByComparator orderByComparator)
+		throws NoSuchLectureseries_FacilityException, SystemException {
+		Lectureseries_Facility lectureseries_Facility = findByPrimaryKey(lectureseriesFacilityId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Lectureseries_Facility[] array = new Lectureseries_FacilityImpl[3];
+
+			array[0] = getByFacility_PrevAndNext(session,
+					lectureseries_Facility, facilityId, orderByComparator, true);
+
+			array[1] = lectureseries_Facility;
+
+			array[2] = getByFacility_PrevAndNext(session,
+					lectureseries_Facility, facilityId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Lectureseries_Facility getByFacility_PrevAndNext(
+		Session session, Lectureseries_Facility lectureseries_Facility,
+		long facilityId, OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_LECTURESERIES_FACILITY_WHERE);
+
+		query.append(_FINDER_COLUMN_FACILITY_FACILITYID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(Lectureseries_FacilityModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(facilityId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(lectureseries_Facility);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<Lectureseries_Facility> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the lectureseries_ facilities where facilityId = &#63; from the database.
+	 *
+	 * @param facilityId the facility ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByFacility(long facilityId) throws SystemException {
+		for (Lectureseries_Facility lectureseries_Facility : findByFacility(
+				facilityId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(lectureseries_Facility);
+		}
+	}
+
+	/**
+	 * Returns the number of lectureseries_ facilities where facilityId = &#63;.
+	 *
+	 * @param facilityId the facility ID
+	 * @return the number of matching lectureseries_ facilities
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByFacility(long facilityId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_FACILITY;
+
+		Object[] finderArgs = new Object[] { facilityId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_LECTURESERIES_FACILITY_WHERE);
+
+			query.append(_FINDER_COLUMN_FACILITY_FACILITYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(facilityId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_FACILITY_FACILITYID_2 = "lectureseries_Facility.facilityId = ?";
 
 	public Lectureseries_FacilityPersistenceImpl() {
 		setModelClass(Lectureseries_Facility.class);
@@ -285,6 +1289,8 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 
 		boolean isNew = lectureseries_Facility.isNew();
 
+		Lectureseries_FacilityModelImpl lectureseries_FacilityModelImpl = (Lectureseries_FacilityModelImpl)lectureseries_Facility;
+
 		Session session = null;
 
 		try {
@@ -308,8 +1314,50 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (isNew || !Lectureseries_FacilityModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		}
+
+		else {
+			if ((lectureseries_FacilityModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LECTURESERIES.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						lectureseries_FacilityModelImpl.getOriginalLectureseriesId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LECTURESERIES,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LECTURESERIES,
+					args);
+
+				args = new Object[] {
+						lectureseries_FacilityModelImpl.getLectureseriesId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LECTURESERIES,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LECTURESERIES,
+					args);
+			}
+
+			if ((lectureseries_FacilityModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITY.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						lectureseries_FacilityModelImpl.getOriginalFacilityId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FACILITY, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITY,
+					args);
+
+				args = new Object[] {
+						lectureseries_FacilityModelImpl.getFacilityId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FACILITY, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITY,
+					args);
+			}
 		}
 
 		EntityCacheUtil.putResult(Lectureseries_FacilityModelImpl.ENTITY_CACHE_ENABLED,
@@ -644,9 +1692,12 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 	}
 
 	private static final String _SQL_SELECT_LECTURESERIES_FACILITY = "SELECT lectureseries_Facility FROM Lectureseries_Facility lectureseries_Facility";
+	private static final String _SQL_SELECT_LECTURESERIES_FACILITY_WHERE = "SELECT lectureseries_Facility FROM Lectureseries_Facility lectureseries_Facility WHERE ";
 	private static final String _SQL_COUNT_LECTURESERIES_FACILITY = "SELECT COUNT(lectureseries_Facility) FROM Lectureseries_Facility lectureseries_Facility";
+	private static final String _SQL_COUNT_LECTURESERIES_FACILITY_WHERE = "SELECT COUNT(lectureseries_Facility) FROM Lectureseries_Facility lectureseries_Facility WHERE ";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "lectureseries_Facility.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Lectureseries_Facility exists with the primary key ";
+	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Lectureseries_Facility exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = GetterUtil.getBoolean(PropsUtil.get(
 				PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
 	private static Log _log = LogFactoryUtil.getLog(Lectureseries_FacilityPersistenceImpl.class);

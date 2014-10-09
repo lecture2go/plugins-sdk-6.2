@@ -1,9 +1,3 @@
-<%@page import="com.liferay.portal.kernel.language.LanguageUtil"%>
-<%@page import="org.springframework.scripting.config.LangNamespaceUtils"%>
-<%@page import="com.liferay.portal.kernel.language.LanguageUtil"%>
-<%@page import="com.liferay.portal.kernel.util.LocaleUtil"%>
-<%@page import="java.util.Locale"%>
-
 <%@include file="/init.jsp"%>
 
 <%
@@ -13,7 +7,10 @@
 	String lLanguage = "";
 	String lEventType = "";
 	String lSemesterName = "";
-	String lShortDescription = "";
+	String lShortDesc = "";
+	String lInstructors = "";
+	String lPassword = "";
+	String lLongDesc = "";
 	
 	Long lId=new Long(0);
 	Lectureseries reqLectureseries = LectureseriesLocalServiceUtil.createLectureseries(0);
@@ -25,7 +22,10 @@
 		lLanguage=reqLectureseries.getLanguage();
 		lEventType=reqLectureseries.getEventType();
 		lSemesterName=reqLectureseries.getSemesterName();
-		lShortDescription=reqLectureseries.getShortDesc();
+		lShortDesc=reqLectureseries.getShortDesc();
+		lInstructors=reqLectureseries.getInstructorsString();
+		lPassword=reqLectureseries.getPassword();
+		lLongDesc=reqLectureseries.getLongDesc();
 	}catch(NullPointerException npe){}
 	
 	Long facilityId = new Long(0);
@@ -45,7 +45,7 @@
 %>
 <portlet:renderURL var="cancelURL"><portlet:param name="jspPage" value="/admin/lectureSeriesList.jsp" /></portlet:renderURL>
 <portlet:actionURL name="editLectureseries" var="editURL"><portlet:param name="lectureseriesId" value='<%=""+lId%>' /></portlet:actionURL>
-<portlet:actionURL name="deleteURL" var="deleteURL"><portlet:param name="lectureseriesId" value='<%=""+lId%>' /></portlet:actionURL>
+<portlet:actionURL name="removeLectureseries" var="removeURL"><portlet:param name="lectureseriesId" value='<%=""+lId%>' /></portlet:actionURL>
 <portlet:actionURL name="addLectureseries" var="addURL"><portlet:param name="lectureseriesId" value='<%=""+lId%>' /></portlet:actionURL>
 
 <%
@@ -56,9 +56,9 @@ else {actionURL = addURL.toString();}
 	<aui:fieldset helpMessage="test" column="true" label='<%=lName%>'>
 		<aui:layout>
 			
-			<aui:input name="lectureseriesNumber" label="lectureseries-number" required="true" value="<%=lNumber %>" />
+			<aui:input name="number" label="number" required="true" value="<%=lNumber %>" />
 
-			<aui:input name="lectureseriesName" label="lectureseries-name" required="true" value="<%=lName%>"/>
+			<aui:input name="name" label="name" required="true" value="<%=lName%>"/>
 
 			<aui:select size="1" name="eventType" label="event-type" required="true">
 				<aui:option value=""></aui:option>
@@ -104,9 +104,9 @@ else {actionURL = addURL.toString();}
 				%>				
 			</div>	
 							
-			<aui:input name="shortDescription" label="short-description"  value="<%=lShortDescription%>"/>
+			<aui:input name="shortDesc" label="short-description"  value="<%=lShortDesc%>"/>
 
-			<aui:select size="1" name="allSemesters" label="semester">
+			<aui:select size="1" name="semesterName" label="semester">
 				<aui:option value="">select-semester</aui:option>
 				<%for (int i = 0; i < semesters.size(); i++) {
 					if (semesters.get(i).equals(lSemesterName)) {%>
@@ -118,9 +118,9 @@ else {actionURL = addURL.toString();}
 			</aui:select>
 			
 			<a id="addSemester" style="cur	sor:pointer;">add-new-semester</a>
-			<aui:input id="newSemester" name="newSemester" style="display:none;" label=""/>
+			<aui:input id="newSemester" name="semesterName" style="display:none;" label=""/>
 
-			<aui:select size="1" name="languageId" label="language" required="true">
+			<aui:select size="1" name="language" label="language" required="true">
 				<aui:option value="">select-language</aui:option>
 				<%for (int i=0; i<languages.length; i++){
 					if (languages[i].getLanguage().equals(lLanguage)) {%>
@@ -131,12 +131,14 @@ else {actionURL = addURL.toString();}
 				}%>
 			</aui:select>
 				
-			<aui:field-wrapper label="long-description">
-			    <liferay-ui:input-editor name="descriptionEditor" toolbarSet="liferay-article" initMethod="initEditor" width="50%" />
+			<aui:input name="instructorsString" label="instructors" value="<%=lInstructors%>"/>
+			
+			<aui:input name="password" label="password" value="<%=lPassword%>"/>
+			
+			<aui:field-wrapper label="description">
+			    <liferay-ui:input-editor name="longDesc" toolbarSet="liferay-article" initMethod="initEditor" width="250" />
 			    <script type="text/javascript">
-			        function <portlet:namespace />initEditor() {
-			        	return <%= UnicodeFormatter.toString("default content safgas gagbag  agas gas gas g") %>; 
-			        }
+			        function <portlet:namespace />initEditor() { return "<%= UnicodeFormatter.toString(lLongDesc) %>"; }
 			    </script>
 			</aui:field-wrapper>
 			
@@ -145,7 +147,7 @@ else {actionURL = addURL.toString();}
 				<aui:button type="cancel" value="cancel" onClick="<%=cancelURL.toString()%>" />
 				<%if (lId>0) {%>
 				<liferay-ui:icon-menu cssClass="right">
-					<liferay-ui:icon image="delete" message="Delete" url="<%=deleteURL.toString()%>" />
+					<liferay-ui:icon image="delete" message="Remove" url="<%=removeURL.toString()%>" />
 				</liferay-ui:icon-menu>
 				<%}%>
 			</aui:button-row>

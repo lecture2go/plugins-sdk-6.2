@@ -15,6 +15,7 @@
 package de.uhh.l2g.plugins.service.impl;
 
 import de.uhh.l2g.plugins.service.base.VideoLocalServiceBaseImpl;
+import de.uhh.l2g.plugins.service.persistence.VideoFinderUtil;
 
 /**
  * The implementation of the video local service.
@@ -36,4 +37,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.VideoLocalServiceUtil} to access the video local service.
 	 */
+	public int unlinkLectureseriesFromVideos(Long lectureseriesId){
+		return VideoFinderUtil.unlinkLectureseriesFromVideos(lectureseriesId);
+	}
 }

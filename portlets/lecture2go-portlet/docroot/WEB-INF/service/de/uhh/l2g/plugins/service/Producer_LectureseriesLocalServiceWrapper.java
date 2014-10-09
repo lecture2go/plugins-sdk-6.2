@@ -290,6 +290,11 @@ public class Producer_LectureseriesLocalServiceWrapper
 			parameterTypes, arguments);
 	}
 
+	@Override
+	public boolean removeByLectureseriesId(java.lang.Long lectureseriesId) {
+		return _producer_LectureseriesLocalService.removeByLectureseriesId(lectureseriesId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

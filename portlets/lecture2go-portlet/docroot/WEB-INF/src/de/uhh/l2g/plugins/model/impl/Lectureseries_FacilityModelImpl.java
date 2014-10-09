@@ -74,7 +74,12 @@ public class Lectureseries_FacilityModelImpl extends BaseModelImpl<Lectureseries
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.finder.cache.enabled.de.uhh.l2g.plugins.model.Lectureseries_Facility"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.Lectureseries_Facility"),
+			true);
+	public static long FACILITYID_COLUMN_BITMASK = 1L;
+	public static long LECTURESERIESID_COLUMN_BITMASK = 2L;
+	public static long LECTURESERIESFACILITYID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Lectureseries_Facility"));
 
@@ -161,7 +166,19 @@ public class Lectureseries_FacilityModelImpl extends BaseModelImpl<Lectureseries
 
 	@Override
 	public void setLectureseriesId(long lectureseriesId) {
+		_columnBitmask |= LECTURESERIESID_COLUMN_BITMASK;
+
+		if (!_setOriginalLectureseriesId) {
+			_setOriginalLectureseriesId = true;
+
+			_originalLectureseriesId = _lectureseriesId;
+		}
+
 		_lectureseriesId = lectureseriesId;
+	}
+
+	public long getOriginalLectureseriesId() {
+		return _originalLectureseriesId;
 	}
 
 	@Override
@@ -171,7 +188,23 @@ public class Lectureseries_FacilityModelImpl extends BaseModelImpl<Lectureseries
 
 	@Override
 	public void setFacilityId(long facilityId) {
+		_columnBitmask |= FACILITYID_COLUMN_BITMASK;
+
+		if (!_setOriginalFacilityId) {
+			_setOriginalFacilityId = true;
+
+			_originalFacilityId = _facilityId;
+		}
+
 		_facilityId = facilityId;
+	}
+
+	public long getOriginalFacilityId() {
+		return _originalFacilityId;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -254,6 +287,17 @@ public class Lectureseries_FacilityModelImpl extends BaseModelImpl<Lectureseries
 
 	@Override
 	public void resetOriginalValues() {
+		Lectureseries_FacilityModelImpl lectureseries_FacilityModelImpl = this;
+
+		lectureseries_FacilityModelImpl._originalLectureseriesId = lectureseries_FacilityModelImpl._lectureseriesId;
+
+		lectureseries_FacilityModelImpl._setOriginalLectureseriesId = false;
+
+		lectureseries_FacilityModelImpl._originalFacilityId = lectureseries_FacilityModelImpl._facilityId;
+
+		lectureseries_FacilityModelImpl._setOriginalFacilityId = false;
+
+		lectureseries_FacilityModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -316,6 +360,11 @@ public class Lectureseries_FacilityModelImpl extends BaseModelImpl<Lectureseries
 		};
 	private long _lectureseriesFacilityId;
 	private long _lectureseriesId;
+	private long _originalLectureseriesId;
+	private boolean _setOriginalLectureseriesId;
 	private long _facilityId;
+	private long _originalFacilityId;
+	private boolean _setOriginalFacilityId;
+	private long _columnBitmask;
 	private Lectureseries_Facility _escapedModel;
 }

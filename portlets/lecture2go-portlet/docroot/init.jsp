@@ -14,6 +14,8 @@
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Calendar"%>
 <%@ page import="java.util.Collections"%>
+<%@ page import="java.util.Locale"%>
+
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil"%>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil"%>
 <%@ page import="com.liferay.portal.kernel.util.CalendarFactoryUtil"%>
@@ -22,30 +24,35 @@
 <%@ page import="com.liferay.portal.kernel.exception.SystemException"%>
 <%@ page import="com.liferay.portal.kernel.util.WebKeys"%>
 <%@ page import="com.liferay.portal.kernel.util.ListUtil"%>
-<%@page import="com.liferay.portal.model.Portlet"%>
+<%@ page import="com.liferay.portal.model.Portlet"%>
 <%@ page import="com.liferay.portal.model.User"%>
 <%@ page import="com.liferay.portal.model.Role"%>
 <%@ page import="com.liferay.portal.security.permission.ActionKeys"%>
 <%@ page import="com.liferay.portal.service.permission.PortletPermissionUtil"%>
 <%@ page import="com.liferay.portal.service.UserLocalServiceUtil"%>
-<%@page import="com.liferay.portal.service.UserGroupRoleLocalServiceUtil"%>
-<%@page import="com.liferay.portal.service.UserGroupRoleServiceUtil"%>
-<%@page import="com.liferay.portal.service.RoleLocalServiceUtil"%>
-<%@page import="com.liferay.portal.service.PortletLocalServiceUtil"%>
-<%@page import="com.liferay.portal.kernel.util.UnicodeFormatter"%>
+<%@ page import="com.liferay.portal.service.UserGroupRoleLocalServiceUtil"%>
+<%@ page import="com.liferay.portal.service.UserGroupRoleServiceUtil"%>
+<%@ page import="com.liferay.portal.service.RoleLocalServiceUtil"%>
+<%@ page import="com.liferay.portal.service.PortletLocalServiceUtil"%>
+<%@ page import="com.liferay.portal.kernel.util.UnicodeFormatter"%>
+<%@ page import="com.liferay.portal.kernel.language.LanguageUtil"%>
+<%@ page import="com.liferay.portal.kernel.language.LanguageUtil"%>
+<%@ page import="com.liferay.portal.kernel.util.LocaleUtil"%>
 
 <%@ page import="javax.portlet.PortletURL"%>
 
 <%@ page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
+<%@ page import="org.springframework.scripting.config.LangNamespaceUtils"%>
+
 <%@ page import="de.uhh.l2g.plugins.model.Facility"%>
 <%@ page import="de.uhh.l2g.plugins.admin.AdminUserManagement"%>
+<%@ page import="de.uhh.l2g.plugins.service.ProducerLocalServiceUtil"%>
+<%@ page import="de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil"%>
+<%@ page import="de.uhh.l2g.plugins.service.FacilityLocalServiceUtil"%>
+<%@ page import="de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil"%>
+<%@ page import="de.uhh.l2g.plugins.model.Lectureseries"%>
+<%@ page import="de.uhh.l2g.plugins.model.Producer"%>
 
-<%@page import="de.uhh.l2g.plugins.service.ProducerLocalServiceUtil"%>
-<%@page import="de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil"%>
-<%@page import="de.uhh.l2g.plugins.service.FacilityLocalServiceUtil"%>
-<%@page import="de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil"%>
-<%@page import="de.uhh.l2g.plugins.model.Lectureseries"%>
-<%@page import="de.uhh.l2g.plugins.model.Producer"%>
 
 <portlet:defineObjects />
 <liferay-theme:defineObjects/>

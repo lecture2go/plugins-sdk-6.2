@@ -279,6 +279,11 @@ public class VideoLocalServiceWrapper implements VideoLocalService,
 		return _videoLocalService.invokeMethod(name, parameterTypes, arguments);
 	}
 
+	@Override
+	public int unlinkLectureseriesFromVideos(java.lang.Long lectureseriesId) {
+		return _videoLocalService.unlinkLectureseriesFromVideos(lectureseriesId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

@@ -38,4 +38,10 @@
 		]]>
     </sql> 
     
+    <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.resetLectureseriesForVideos">
+		<![CDATA[
+			UPDATE lg_video SET lectureseriesId=0 WHERE lectureseriesId=?
+		]]>
+    </sql> 
+    
 </custom-sql>

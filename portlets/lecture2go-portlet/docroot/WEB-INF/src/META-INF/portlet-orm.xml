@@ -276,6 +276,16 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.Video_LectureseriesModelImpl">
+		<attributes>
+			<id name="videoLectureseriesId" />
+			<basic name="videoId" />
+			<basic name="lectureseriesId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.VideohitlistModelImpl">
 		<attributes>
 			<id name="videohitlistId" />
@@ -365,6 +375,10 @@
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.Video_FacilityImpl" name="Video_Facility">
 		<table name="LG_Video_Facility" />
+		<attributes />
+	</entity>
+	<entity class="de.uhh.l2g.plugins.model.impl.Video_LectureseriesImpl" name="Video_Lectureseries">
+		<table name="LG_Video_Lectureseries" />
 		<attributes />
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.VideohitlistImpl" name="Videohitlist">
