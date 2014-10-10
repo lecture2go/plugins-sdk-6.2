@@ -19,7 +19,7 @@ public class FacilityFinderImpl extends BasePersistenceImpl<Facility> implements
 
 	public static final String FIND_ALL_SORTED_AS_TREE = FacilityFinder.class.getName() + ".findAllSortedAsTree";
 	public static final String FIND_FROM_LECTURESERIES = FacilityFinder.class.getName() + ".findByLectureseriesId";
-
+	
 	public List<Facility> findByLectureseriesId(long lectureseriesId, int begin, int end) {
 		Session session = null;
 		try {

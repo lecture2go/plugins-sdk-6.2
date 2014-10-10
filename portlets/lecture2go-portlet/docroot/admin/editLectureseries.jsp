@@ -1,3 +1,4 @@
+<%@page import="de.uhh.l2g.plugins.service.Lectureseries_FacilityLocalServiceUtil"%>
 <%@include file="/init.jsp"%>
 
 <%
@@ -52,6 +53,10 @@
 if(lId >0) {actionURL=editURL.toString();}
 else {actionURL = addURL.toString();}
 %>
+
+<aui:input name="teste" type="hidden"/>
+
+
 <aui:form action="<%=actionURL%>" commandName="model">
 	<aui:fieldset helpMessage="test" column="true" label='<%=lName%>'>
 		<aui:layout>
@@ -83,13 +88,29 @@ else {actionURL = addURL.toString();}
 				<%}else{%><aui:option value='<%=f.getKey()%>' disabled="<%=dis%>"><%=f.getValue()%></aui:option><%}	
 				}%>
 			</aui:select>
-			
+		
+			<div class="facilCont">
+				<%
+				List<Facility> fs = FacilityLocalServiceUtil.getByLectureseriesId(lId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+				for(int i=0;i<fs.size();i++){
+					Facility f = fs.get(i);
+					%>
+					<div id='<%=f.getFacilityId()%>'> 
+						<%=f.getName()+"&nbsp;&nbsp;&nbsp;" %> 
+						<a style='cursor:pointer;' onClick='document.getElementById("<%=f.getFacilityId()%>").remove();'><b>X</b></a>
+						<aui:input type="hidden" name="facilities" id="facilities" value="<%=f.getFacilityId()%>"/>
+					</div>
+					<%
+				}
+				%>				
+			</div>
+				
 			<aui:select size="1" name="producerId" label="producer" required="true" helpMessage="please-add-at-lest-one-producer">
 				<aui:option value="">select-producer</aui:option>
 				<%for (int i = 0; i < producers.size(); i++) {
 					if (producers.get(i).getProducerId()>0) {%><aui:option value='<%=producers.get(i).getProducerId()%>'><%=producers.get(i).getLastName() + ", " + producers.get(i).getFirstName()%></aui:option><%}
+				
 				}%>	
-			
 			</aui:select>
 
 			<div class="prodCont">
@@ -98,7 +119,11 @@ else {actionURL = addURL.toString();}
 				for(int i=0;i<pIds.size();i++){
 					Producer p = ProducerLocalServiceUtil.getProdUcer(new Long(pIds.get(i)+""));
 					%>
-					<div id='<%=p.getProducerId()%>'> <%=p.getLastName() +", "+p.getFirstName()+"&nbsp;&nbsp;&nbsp;" %> <a style='cursor:pointer;' onClick='document.getElementById("<%=p.getProducerId()%>").remove();'><b>X</b></a></div>
+					<div id='<%=p.getProducerId()%>'> 
+						<%=p.getLastName() +", "+p.getFirstName()+"&nbsp;&nbsp;&nbsp;" %> 
+						<a style='cursor:pointer;' onClick='document.getElementById("<%=p.getProducerId()%>").remove();'><b>X</b></a>
+						<aui:input type="hidden" name="producers" id="producers" value="<%=p.getProducerId()%>"/>
+					</div>
 					<%
 				}
 				%>				
@@ -154,7 +179,6 @@ else {actionURL = addURL.toString();}
 		</aui:layout>
 	</aui:fieldset>
 </aui:form>
-
 <script>
 
 AUI().use(
@@ -164,21 +188,31 @@ AUI().use(
     
 	// Select the node(s) using a css selector string
     var contProduc = A.one('.prodCont');
+    var contFacil = A.one('.facilCont');
     var producerId = A.one('#<portlet:namespace/>producerId');
+    var facilityId = A.one('#<portlet:namespace/>facilityId');
     var addSemester = A.one('#addSemester');
     var newSemester = A.one('#<portlet:namespace/>newSemester');
     var allSemesters = A.one('#<portlet:namespace/>allSemesters');
-    
-    var j = 0;
     
     producerId.on(
       	'change',
       	function(A) {
   			if(producerId.get('value')>0){
-				j++;
   	   	 		var n = producerId.get(producerId.get('selectedIndex')).get('value');
   	    		var t = producerId.get(producerId.get('selectedIndex')).get('text')+"&nbsp;&nbsp;&nbsp;";
-  	  			contProduc.append("<div id='"+n+"'> "+t+" <a style='cursor:pointer;' onClick='document.getElementById(&quot;"+n+"&quot;).remove();'><b>X</b></a></div>");
+  	  			contProduc.append("<div id='"+n+"'> "+t+" <a style='cursor:pointer;' onClick='document.getElementById(&quot;"+n+"&quot;).remove();'><b>X</b></a><input id='<portlet:namespace></portlet:namespace>producers' name='<portlet:namespace></portlet:namespace>producers' value='"+n+"' type='hidden'/></div>");
+  			}
+      	}
+    );
+
+    facilityId.on(
+      	'change',
+      	function(A) {
+  			if(facilityId.get('value')>0){
+  	   	 		var n = facilityId.get(facilityId.get('selectedIndex')).get('value');
+  	    		var t = facilityId.get(facilityId.get('selectedIndex')).get('text')+"&nbsp;&nbsp;&nbsp;";
+  	    		contFacil.append("<div id='"+n+"'> "+t+" <a style='cursor:pointer;' onClick='document.getElementById(&quot;"+n+"&quot;).remove();'><b>X</b></a><input id='<portlet:namespace></portlet:namespace>facilities' name='<portlet:namespace></portlet:namespace>facilities' value='"+n+"' type='hidden'/></div>");
   			}
       	}
     );

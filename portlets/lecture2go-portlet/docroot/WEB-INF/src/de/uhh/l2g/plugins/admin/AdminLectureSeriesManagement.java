@@ -55,16 +55,58 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		}
 	}
 
-	public void editLectureseries(ActionRequest request, ActionResponse response){
-		@SuppressWarnings("unused")
-		int i = 0;
+	public void editLectureseries(ActionRequest request, ActionResponse response) throws NumberFormatException, PortalException, SystemException{
+		Long lId = new Long(request.getParameter("lectureseriesId"));
+		String[] producers = request.getParameterValues("producers");
+		String[] facilities = request.getParameterValues("facilities");
+		String s = request.getParameter("longDesc");
+		
+		//update object
+		Lectureseries lectureseries = LectureseriesLocalServiceUtil.getLectureseries(lId);
+		lectureseries.setApproved(lectureseries.getApproved());
+		lectureseries.setNumber(request.getParameter("number"));
+		lectureseries.setEventType(request.getParameter("eventType"));
+		lectureseries.setEventCategory(request.getParameter("eventCategory"));
+		lectureseries.setName(request.getParameter("name"));
+		lectureseries.setShortDesc(request.getParameter("shortDesc"));
+		lectureseries.setSemesterName(request.getParameter("semesterName"));
+		lectureseries.setLanguage(request.getParameter("language"));
+		lectureseries.setFacultyName(request.getParameter("facultyName"));
+		lectureseries.setInstructorsString(request.getParameter("instructorsString"));
+		lectureseries.setPassword(request.getParameter("password"));
+		lectureseries.setLongDesc(s);	
+		
+		//update database
+		LectureseriesLocalServiceUtil.updateLectureseries(lectureseries);
+		
+		//update facility link
+		//delete old entries first
+		Lectureseries_FacilityLocalServiceUtil.removeByLectureseriesId(lectureseries.getLectureseriesId());
+		//new links to facility
+		for(int i=0;i<facilities.length;i++){
+			Lectureseries_FacilityImpl lf = new Lectureseries_FacilityImpl();
+			lf.setLectureseriesId(lId);
+			lf.setFacilityId(new Long(facilities[i]));
+			Lectureseries_FacilityLocalServiceUtil.addLectureseries_Facility(lf);
+		}
+		
+		//update producer link
+		//delete old entries first
+		Producer_LectureseriesLocalServiceUtil.removeByLectureseriesId(lId);
+		//new links to producer
+		for(int i=0;i<producers.length;i++){
+			Producer_LectureseriesImpl pl = new Producer_LectureseriesImpl();
+			pl.setProducerId(new Long(producers[i]));
+			pl.setLectureseriesId(lId);
+			Producer_LectureseriesLocalServiceUtil.addProducer_Lectureseries(pl);
+		}		
 	}
 
 	public void addLectureseries(ActionRequest request, ActionResponse response) throws SystemException, PortalException {
-		String fId = request.getParameter("facilityId");
-		String pId = request.getParameter("producerId");
 		String s = request.getParameter("longDesc");
-		
+		String[] producers = request.getParameterValues("producers");
+		String[] facilities = request.getParameterValues("facilities");
+
 		//build lecture series object
 		LectureseriesImpl lectureseries = new LectureseriesImpl();
 		lectureseries.setApproved(0);
@@ -82,16 +124,22 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		
 		//save object to database
 		Long lId = LectureseriesLocalServiceUtil.addLectureseries(lectureseries).getLectureseriesId();
+		
 		//link to facility
-		Lectureseries_FacilityImpl lf = new Lectureseries_FacilityImpl();
-		lf.setLectureseriesId(lId);
-		lf.setFacilityId(new Long(fId));
-		Lectureseries_FacilityLocalServiceUtil.addLectureseries_Facility(lf);
+		for(int i=0;i<facilities.length;i++){
+			Lectureseries_FacilityImpl lf = new Lectureseries_FacilityImpl();
+			lf.setLectureseriesId(lId);
+			lf.setFacilityId(new Long(facilities[i]));
+			Lectureseries_FacilityLocalServiceUtil.addLectureseries_Facility(lf);
+		}
+
 		//link to producer
-		Producer_LectureseriesImpl pl = new Producer_LectureseriesImpl();
-		pl.setProducerId(new Long(pId));
-		pl.setLectureseriesId(lId);
-		Producer_LectureseriesLocalServiceUtil.addProducer_Lectureseries(pl);
+		for(int i=0;i<producers.length;i++){
+			Producer_LectureseriesImpl pl = new Producer_LectureseriesImpl();
+			pl.setProducerId(new Long(producers[i]));
+			pl.setLectureseriesId(lId);
+			Producer_LectureseriesLocalServiceUtil.addProducer_Lectureseries(pl);
+		}
 	}
 
 }
