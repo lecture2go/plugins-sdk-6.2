@@ -22,6 +22,7 @@ create index IX_2E421DEE on LG_Lectureseries (semesterName);
 
 create index IX_9ACE8C9 on LG_Lectureseries_Facility (facilityId);
 create index IX_1E259A49 on LG_Lectureseries_Facility (lectureseriesId);
+create index IX_77C632DB on LG_Lectureseries_Facility (lectureseriesId, facilityId);
 
 create index IX_4FD6C927 on LG_Producer (approved);
 create index IX_B7B3784E on LG_Producer (facilityId);
@@ -30,6 +31,7 @@ create index IX_FE9C63D3 on LG_Producer (hostId);
 create index IX_4115449F on LG_Producer (idNum);
 
 create index IX_2A06594E on LG_Producer_Lectureseries (lectureseriesId);
+create index IX_2BD4E3CF on LG_Producer_Lectureseries (lectureseriesId, producerId);
 create index IX_C19D6C13 on LG_Producer_Lectureseries (producerId);
 
 create index IX_7D0E80BC on LG_VideoLectureseries (lectureseriesId);

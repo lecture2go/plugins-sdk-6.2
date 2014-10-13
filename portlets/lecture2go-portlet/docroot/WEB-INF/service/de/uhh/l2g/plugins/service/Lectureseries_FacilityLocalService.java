@@ -252,4 +252,7 @@ public interface Lectureseries_FacilityLocalService extends BaseLocalService,
 	public boolean removeByLectureseriesId(java.lang.Long lectureseriesId);
 
 	public boolean removeByacilityId(java.lang.Long facilityId);
+
+	public boolean facilityAssignedToLectureseries(
+		de.uhh.l2g.plugins.model.Lectureseries_Facility lf);
 }

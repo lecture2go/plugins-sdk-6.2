@@ -17,6 +17,7 @@ package de.uhh.l2g.plugins.service.impl;
 import java.util.Iterator;
 import java.util.List;
 
+import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
@@ -24,8 +25,10 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 
 import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Producer_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.ProducerLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.ProducerFinderUtil;
+import de.uhh.l2g.plugins.service.persistence.Producer_LectureseriesUtil;
 
 /**
  * The implementation of the producer local service.
@@ -77,13 +80,14 @@ public class ProducerLocalServiceImpl extends ProducerLocalServiceBaseImpl {
 		return p;
 	}
 	
-	public List<Integer> getAllProducerIds(Long lectureseriesId)throws SystemException{
-		List<Integer> pIds = ProducerFinderUtil.findProducerIds(lectureseriesId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+	public List<Long> getAllProducerIds(Long lectureseriesId)throws SystemException{
+		List<Long> pIds = ProducerFinderUtil.findProducerIds(lectureseriesId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 		return pIds;
 	}
 
-	public List<Integer> getProducerIds(Long lectureseriesId, int begin, int end)throws SystemException{
-		List<Integer> pIds = ProducerFinderUtil.findProducerIds(lectureseriesId, begin, end);
+	public List<Long> getProducerIds(Long lectureseriesId, int begin, int end)throws SystemException{
+		List<Long> pIds = ProducerFinderUtil.findProducerIds(lectureseriesId, begin, end);
 		return pIds;
 	}
+	
 }

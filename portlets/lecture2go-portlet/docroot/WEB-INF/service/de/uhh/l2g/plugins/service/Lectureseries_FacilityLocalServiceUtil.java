@@ -284,6 +284,11 @@ public class Lectureseries_FacilityLocalServiceUtil {
 		return getService().removeByacilityId(facilityId);
 	}
 
+	public static boolean facilityAssignedToLectureseries(
+		de.uhh.l2g.plugins.model.Lectureseries_Facility lf) {
+		return getService().facilityAssignedToLectureseries(lf);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

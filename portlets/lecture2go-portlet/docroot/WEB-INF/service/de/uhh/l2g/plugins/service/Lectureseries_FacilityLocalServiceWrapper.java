@@ -300,6 +300,12 @@ public class Lectureseries_FacilityLocalServiceWrapper
 		return _lectureseries_FacilityLocalService.removeByacilityId(facilityId);
 	}
 
+	@Override
+	public boolean facilityAssignedToLectureseries(
+		de.uhh.l2g.plugins.model.Lectureseries_Facility lf) {
+		return _lectureseries_FacilityLocalService.facilityAssignedToLectureseries(lf);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

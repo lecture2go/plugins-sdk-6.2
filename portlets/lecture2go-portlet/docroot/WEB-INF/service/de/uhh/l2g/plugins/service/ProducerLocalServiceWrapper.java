@@ -298,14 +298,14 @@ public class ProducerLocalServiceWrapper implements ProducerLocalService,
 	}
 
 	@Override
-	public java.util.List<java.lang.Integer> getAllProducerIds(
+	public java.util.List<java.lang.Long> getAllProducerIds(
 		java.lang.Long lectureseriesId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _producerLocalService.getAllProducerIds(lectureseriesId);
 	}
 
 	@Override
-	public java.util.List<java.lang.Integer> getProducerIds(
+	public java.util.List<java.lang.Long> getProducerIds(
 		java.lang.Long lectureseriesId, int begin, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _producerLocalService.getProducerIds(lectureseriesId, begin, end);

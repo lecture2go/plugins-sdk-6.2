@@ -250,4 +250,7 @@ public interface Producer_LectureseriesLocalService extends BaseLocalService,
 		throws java.lang.Throwable;
 
 	public boolean removeByLectureseriesId(java.lang.Long lectureseriesId);
+
+	public boolean producerAssignedToLectureseries(
+		de.uhh.l2g.plugins.model.Producer_Lectureseries pl);
 }

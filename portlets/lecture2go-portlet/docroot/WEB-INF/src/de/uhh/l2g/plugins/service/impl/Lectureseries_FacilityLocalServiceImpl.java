@@ -14,8 +14,13 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.liferay.portal.kernel.exception.SystemException;
 
+import de.uhh.l2g.plugins.model.Lectureseries_Facility;
+import de.uhh.l2g.plugins.model.Producer_Lectureseries;
 import de.uhh.l2g.plugins.service.base.Lectureseries_FacilityLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.Lectureseries_FacilityUtil;
 
@@ -42,7 +47,7 @@ public class Lectureseries_FacilityLocalServiceImpl extends Lectureseries_Facili
 	public boolean removeByLectureseriesId(Long lectureseriesId) {
 		boolean ret = false;
 		try {
-			Lectureseries_FacilityUtil.removeByLectureseries(lectureseriesId);
+			Lectureseries_FacilityUtil.removeByLectureseriesId(lectureseriesId);
 		} catch (SystemException e) {
 			ret = true;
 			e.printStackTrace();
@@ -53,11 +58,23 @@ public class Lectureseries_FacilityLocalServiceImpl extends Lectureseries_Facili
 	public boolean removeByacilityId(Long facilityId){
 		boolean ret = false;
 		try {
-			Lectureseries_FacilityUtil.removeByFacility(facilityId);
+			Lectureseries_FacilityUtil.removeByFacilityId(facilityId);
 		} catch (SystemException e) {
 			ret = true;
 			e.printStackTrace();
 		}
+		return ret;
+	}
+	
+	public boolean facilityAssignedToLectureseries(Lectureseries_Facility lf){
+		boolean ret = false;
+				List<Lectureseries_Facility> lfL = new ArrayList();
+				try {
+					lfL = lectureseries_FacilityPersistence.findByLectureseriesIdAndFacilityId(lf.getLectureseriesId(), lf.getFacilityId());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+		if (lfL.size()>0) ret=true;
 		return ret;
 	}
 }

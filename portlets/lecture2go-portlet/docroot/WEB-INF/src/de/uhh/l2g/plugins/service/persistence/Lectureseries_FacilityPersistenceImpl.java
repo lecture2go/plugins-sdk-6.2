@@ -84,28 +84,28 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(Lectureseries_FacilityModelImpl.ENTITY_CACHE_ENABLED,
 			Lectureseries_FacilityModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_LECTURESERIES =
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_LECTURESERIESID =
 		new FinderPath(Lectureseries_FacilityModelImpl.ENTITY_CACHE_ENABLED,
 			Lectureseries_FacilityModelImpl.FINDER_CACHE_ENABLED,
 			Lectureseries_FacilityImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLectureseries",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLectureseriesId",
 			new String[] {
 				Long.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LECTURESERIES =
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LECTURESERIESID =
 		new FinderPath(Lectureseries_FacilityModelImpl.ENTITY_CACHE_ENABLED,
 			Lectureseries_FacilityModelImpl.FINDER_CACHE_ENABLED,
 			Lectureseries_FacilityImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByLectureseries",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByLectureseriesId",
 			new String[] { Long.class.getName() },
 			Lectureseries_FacilityModelImpl.LECTURESERIESID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_LECTURESERIES = new FinderPath(Lectureseries_FacilityModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_LECTURESERIESID = new FinderPath(Lectureseries_FacilityModelImpl.ENTITY_CACHE_ENABLED,
 			Lectureseries_FacilityModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLectureseries",
-			new String[] { Long.class.getName() });
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByLectureseriesId", new String[] { Long.class.getName() });
 
 	/**
 	 * Returns all the lectureseries_ facilities where lectureseriesId = &#63;.
@@ -115,9 +115,9 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Lectureseries_Facility> findByLectureseries(
+	public List<Lectureseries_Facility> findByLectureseriesId(
 		long lectureseriesId) throws SystemException {
-		return findByLectureseries(lectureseriesId, QueryUtil.ALL_POS,
+		return findByLectureseriesId(lectureseriesId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
@@ -135,9 +135,9 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Lectureseries_Facility> findByLectureseries(
+	public List<Lectureseries_Facility> findByLectureseriesId(
 		long lectureseriesId, int start, int end) throws SystemException {
-		return findByLectureseries(lectureseriesId, start, end, null);
+		return findByLectureseriesId(lectureseriesId, start, end, null);
 	}
 
 	/**
@@ -155,7 +155,7 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Lectureseries_Facility> findByLectureseries(
+	public List<Lectureseries_Facility> findByLectureseriesId(
 		long lectureseriesId, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
 		boolean pagination = true;
@@ -165,11 +165,11 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LECTURESERIES;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LECTURESERIESID;
 			finderArgs = new Object[] { lectureseriesId };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_LECTURESERIES;
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_LECTURESERIESID;
 			finderArgs = new Object[] {
 					lectureseriesId,
 					
@@ -203,7 +203,7 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 
 			query.append(_SQL_SELECT_LECTURESERIES_FACILITY_WHERE);
 
-			query.append(_FINDER_COLUMN_LECTURESERIES_LECTURESERIESID_2);
+			query.append(_FINDER_COLUMN_LECTURESERIESID_LECTURESERIESID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -267,10 +267,10 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Lectureseries_Facility findByLectureseries_First(
+	public Lectureseries_Facility findByLectureseriesId_First(
 		long lectureseriesId, OrderByComparator orderByComparator)
 		throws NoSuchLectureseries_FacilityException, SystemException {
-		Lectureseries_Facility lectureseries_Facility = fetchByLectureseries_First(lectureseriesId,
+		Lectureseries_Facility lectureseries_Facility = fetchByLectureseriesId_First(lectureseriesId,
 				orderByComparator);
 
 		if (lectureseries_Facility != null) {
@@ -298,10 +298,10 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Lectureseries_Facility fetchByLectureseries_First(
+	public Lectureseries_Facility fetchByLectureseriesId_First(
 		long lectureseriesId, OrderByComparator orderByComparator)
 		throws SystemException {
-		List<Lectureseries_Facility> list = findByLectureseries(lectureseriesId,
+		List<Lectureseries_Facility> list = findByLectureseriesId(lectureseriesId,
 				0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -321,10 +321,10 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Lectureseries_Facility findByLectureseries_Last(
+	public Lectureseries_Facility findByLectureseriesId_Last(
 		long lectureseriesId, OrderByComparator orderByComparator)
 		throws NoSuchLectureseries_FacilityException, SystemException {
-		Lectureseries_Facility lectureseries_Facility = fetchByLectureseries_Last(lectureseriesId,
+		Lectureseries_Facility lectureseries_Facility = fetchByLectureseriesId_Last(lectureseriesId,
 				orderByComparator);
 
 		if (lectureseries_Facility != null) {
@@ -352,16 +352,16 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Lectureseries_Facility fetchByLectureseries_Last(
+	public Lectureseries_Facility fetchByLectureseriesId_Last(
 		long lectureseriesId, OrderByComparator orderByComparator)
 		throws SystemException {
-		int count = countByLectureseries(lectureseriesId);
+		int count = countByLectureseriesId(lectureseriesId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<Lectureseries_Facility> list = findByLectureseries(lectureseriesId,
+		List<Lectureseries_Facility> list = findByLectureseriesId(lectureseriesId,
 				count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -382,7 +382,7 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Lectureseries_Facility[] findByLectureseries_PrevAndNext(
+	public Lectureseries_Facility[] findByLectureseriesId_PrevAndNext(
 		long lectureseriesFacilityId, long lectureseriesId,
 		OrderByComparator orderByComparator)
 		throws NoSuchLectureseries_FacilityException, SystemException {
@@ -395,13 +395,13 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 
 			Lectureseries_Facility[] array = new Lectureseries_FacilityImpl[3];
 
-			array[0] = getByLectureseries_PrevAndNext(session,
+			array[0] = getByLectureseriesId_PrevAndNext(session,
 					lectureseries_Facility, lectureseriesId, orderByComparator,
 					true);
 
 			array[1] = lectureseries_Facility;
 
-			array[2] = getByLectureseries_PrevAndNext(session,
+			array[2] = getByLectureseriesId_PrevAndNext(session,
 					lectureseries_Facility, lectureseriesId, orderByComparator,
 					false);
 
@@ -415,7 +415,7 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 		}
 	}
 
-	protected Lectureseries_Facility getByLectureseries_PrevAndNext(
+	protected Lectureseries_Facility getByLectureseriesId_PrevAndNext(
 		Session session, Lectureseries_Facility lectureseries_Facility,
 		long lectureseriesId, OrderByComparator orderByComparator,
 		boolean previous) {
@@ -431,7 +431,7 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 
 		query.append(_SQL_SELECT_LECTURESERIES_FACILITY_WHERE);
 
-		query.append(_FINDER_COLUMN_LECTURESERIES_LECTURESERIESID_2);
+		query.append(_FINDER_COLUMN_LECTURESERIESID_LECTURESERIESID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -528,9 +528,9 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByLectureseries(long lectureseriesId)
+	public void removeByLectureseriesId(long lectureseriesId)
 		throws SystemException {
-		for (Lectureseries_Facility lectureseries_Facility : findByLectureseries(
+		for (Lectureseries_Facility lectureseries_Facility : findByLectureseriesId(
 				lectureseriesId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(lectureseries_Facility);
 		}
@@ -544,9 +544,9 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByLectureseries(long lectureseriesId)
+	public int countByLectureseriesId(long lectureseriesId)
 		throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_LECTURESERIES;
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_LECTURESERIESID;
 
 		Object[] finderArgs = new Object[] { lectureseriesId };
 
@@ -558,7 +558,7 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 
 			query.append(_SQL_COUNT_LECTURESERIES_FACILITY_WHERE);
 
-			query.append(_FINDER_COLUMN_LECTURESERIES_LECTURESERIESID_2);
+			query.append(_FINDER_COLUMN_LECTURESERIESID_LECTURESERIESID_2);
 
 			String sql = query.toString();
 
@@ -590,27 +590,29 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_LECTURESERIES_LECTURESERIESID_2 = "lectureseries_Facility.lectureseriesId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_FACILITY = new FinderPath(Lectureseries_FacilityModelImpl.ENTITY_CACHE_ENABLED,
+	private static final String _FINDER_COLUMN_LECTURESERIESID_LECTURESERIESID_2 =
+		"lectureseries_Facility.lectureseriesId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_FACILITYID =
+		new FinderPath(Lectureseries_FacilityModelImpl.ENTITY_CACHE_ENABLED,
 			Lectureseries_FacilityModelImpl.FINDER_CACHE_ENABLED,
 			Lectureseries_FacilityImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFacility",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFacilityId",
 			new String[] {
 				Long.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITY =
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITYID =
 		new FinderPath(Lectureseries_FacilityModelImpl.ENTITY_CACHE_ENABLED,
 			Lectureseries_FacilityModelImpl.FINDER_CACHE_ENABLED,
 			Lectureseries_FacilityImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByFacility",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByFacilityId",
 			new String[] { Long.class.getName() },
 			Lectureseries_FacilityModelImpl.FACILITYID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_FACILITY = new FinderPath(Lectureseries_FacilityModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_FACILITYID = new FinderPath(Lectureseries_FacilityModelImpl.ENTITY_CACHE_ENABLED,
 			Lectureseries_FacilityModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFacility",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFacilityId",
 			new String[] { Long.class.getName() });
 
 	/**
@@ -621,10 +623,10 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Lectureseries_Facility> findByFacility(long facilityId)
+	public List<Lectureseries_Facility> findByFacilityId(long facilityId)
 		throws SystemException {
-		return findByFacility(facilityId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+		return findByFacilityId(facilityId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -641,9 +643,9 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Lectureseries_Facility> findByFacility(long facilityId,
+	public List<Lectureseries_Facility> findByFacilityId(long facilityId,
 		int start, int end) throws SystemException {
-		return findByFacility(facilityId, start, end, null);
+		return findByFacilityId(facilityId, start, end, null);
 	}
 
 	/**
@@ -661,7 +663,7 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Lectureseries_Facility> findByFacility(long facilityId,
+	public List<Lectureseries_Facility> findByFacilityId(long facilityId,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
 		boolean pagination = true;
@@ -671,11 +673,11 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITY;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITYID;
 			finderArgs = new Object[] { facilityId };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_FACILITY;
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_FACILITYID;
 			finderArgs = new Object[] { facilityId, start, end, orderByComparator };
 		}
 
@@ -705,7 +707,7 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 
 			query.append(_SQL_SELECT_LECTURESERIES_FACILITY_WHERE);
 
-			query.append(_FINDER_COLUMN_FACILITY_FACILITYID_2);
+			query.append(_FINDER_COLUMN_FACILITYID_FACILITYID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -769,10 +771,10 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Lectureseries_Facility findByFacility_First(long facilityId,
+	public Lectureseries_Facility findByFacilityId_First(long facilityId,
 		OrderByComparator orderByComparator)
 		throws NoSuchLectureseries_FacilityException, SystemException {
-		Lectureseries_Facility lectureseries_Facility = fetchByFacility_First(facilityId,
+		Lectureseries_Facility lectureseries_Facility = fetchByFacilityId_First(facilityId,
 				orderByComparator);
 
 		if (lectureseries_Facility != null) {
@@ -800,9 +802,9 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Lectureseries_Facility fetchByFacility_First(long facilityId,
+	public Lectureseries_Facility fetchByFacilityId_First(long facilityId,
 		OrderByComparator orderByComparator) throws SystemException {
-		List<Lectureseries_Facility> list = findByFacility(facilityId, 0, 1,
+		List<Lectureseries_Facility> list = findByFacilityId(facilityId, 0, 1,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -822,10 +824,10 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Lectureseries_Facility findByFacility_Last(long facilityId,
+	public Lectureseries_Facility findByFacilityId_Last(long facilityId,
 		OrderByComparator orderByComparator)
 		throws NoSuchLectureseries_FacilityException, SystemException {
-		Lectureseries_Facility lectureseries_Facility = fetchByFacility_Last(facilityId,
+		Lectureseries_Facility lectureseries_Facility = fetchByFacilityId_Last(facilityId,
 				orderByComparator);
 
 		if (lectureseries_Facility != null) {
@@ -853,15 +855,15 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Lectureseries_Facility fetchByFacility_Last(long facilityId,
+	public Lectureseries_Facility fetchByFacilityId_Last(long facilityId,
 		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByFacility(facilityId);
+		int count = countByFacilityId(facilityId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<Lectureseries_Facility> list = findByFacility(facilityId,
+		List<Lectureseries_Facility> list = findByFacilityId(facilityId,
 				count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -882,7 +884,7 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Lectureseries_Facility[] findByFacility_PrevAndNext(
+	public Lectureseries_Facility[] findByFacilityId_PrevAndNext(
 		long lectureseriesFacilityId, long facilityId,
 		OrderByComparator orderByComparator)
 		throws NoSuchLectureseries_FacilityException, SystemException {
@@ -895,12 +897,12 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 
 			Lectureseries_Facility[] array = new Lectureseries_FacilityImpl[3];
 
-			array[0] = getByFacility_PrevAndNext(session,
+			array[0] = getByFacilityId_PrevAndNext(session,
 					lectureseries_Facility, facilityId, orderByComparator, true);
 
 			array[1] = lectureseries_Facility;
 
-			array[2] = getByFacility_PrevAndNext(session,
+			array[2] = getByFacilityId_PrevAndNext(session,
 					lectureseries_Facility, facilityId, orderByComparator, false);
 
 			return array;
@@ -913,7 +915,7 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 		}
 	}
 
-	protected Lectureseries_Facility getByFacility_PrevAndNext(
+	protected Lectureseries_Facility getByFacilityId_PrevAndNext(
 		Session session, Lectureseries_Facility lectureseries_Facility,
 		long facilityId, OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
@@ -928,7 +930,7 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 
 		query.append(_SQL_SELECT_LECTURESERIES_FACILITY_WHERE);
 
-		query.append(_FINDER_COLUMN_FACILITY_FACILITYID_2);
+		query.append(_FINDER_COLUMN_FACILITYID_FACILITYID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -1025,8 +1027,8 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByFacility(long facilityId) throws SystemException {
-		for (Lectureseries_Facility lectureseries_Facility : findByFacility(
+	public void removeByFacilityId(long facilityId) throws SystemException {
+		for (Lectureseries_Facility lectureseries_Facility : findByFacilityId(
 				facilityId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(lectureseries_Facility);
 		}
@@ -1040,8 +1042,8 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByFacility(long facilityId) throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_FACILITY;
+	public int countByFacilityId(long facilityId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_FACILITYID;
 
 		Object[] finderArgs = new Object[] { facilityId };
 
@@ -1053,7 +1055,7 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 
 			query.append(_SQL_COUNT_LECTURESERIES_FACILITY_WHERE);
 
-			query.append(_FINDER_COLUMN_FACILITY_FACILITYID_2);
+			query.append(_FINDER_COLUMN_FACILITYID_FACILITYID_2);
 
 			String sql = query.toString();
 
@@ -1085,7 +1087,557 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_FACILITY_FACILITYID_2 = "lectureseries_Facility.facilityId = ?";
+	private static final String _FINDER_COLUMN_FACILITYID_FACILITYID_2 = "lectureseries_Facility.facilityId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_LECTURESERIESIDANDFACILITYID =
+		new FinderPath(Lectureseries_FacilityModelImpl.ENTITY_CACHE_ENABLED,
+			Lectureseries_FacilityModelImpl.FINDER_CACHE_ENABLED,
+			Lectureseries_FacilityImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByLectureseriesIdAndFacilityId",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LECTURESERIESIDANDFACILITYID =
+		new FinderPath(Lectureseries_FacilityModelImpl.ENTITY_CACHE_ENABLED,
+			Lectureseries_FacilityModelImpl.FINDER_CACHE_ENABLED,
+			Lectureseries_FacilityImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByLectureseriesIdAndFacilityId",
+			new String[] { Long.class.getName(), Long.class.getName() },
+			Lectureseries_FacilityModelImpl.LECTURESERIESID_COLUMN_BITMASK |
+			Lectureseries_FacilityModelImpl.FACILITYID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_LECTURESERIESIDANDFACILITYID =
+		new FinderPath(Lectureseries_FacilityModelImpl.ENTITY_CACHE_ENABLED,
+			Lectureseries_FacilityModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByLectureseriesIdAndFacilityId",
+			new String[] { Long.class.getName(), Long.class.getName() });
+
+	/**
+	 * Returns all the lectureseries_ facilities where lectureseriesId = &#63; and facilityId = &#63;.
+	 *
+	 * @param lectureseriesId the lectureseries ID
+	 * @param facilityId the facility ID
+	 * @return the matching lectureseries_ facilities
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Lectureseries_Facility> findByLectureseriesIdAndFacilityId(
+		long lectureseriesId, long facilityId) throws SystemException {
+		return findByLectureseriesIdAndFacilityId(lectureseriesId, facilityId,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the lectureseries_ facilities where lectureseriesId = &#63; and facilityId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.Lectureseries_FacilityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param lectureseriesId the lectureseries ID
+	 * @param facilityId the facility ID
+	 * @param start the lower bound of the range of lectureseries_ facilities
+	 * @param end the upper bound of the range of lectureseries_ facilities (not inclusive)
+	 * @return the range of matching lectureseries_ facilities
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Lectureseries_Facility> findByLectureseriesIdAndFacilityId(
+		long lectureseriesId, long facilityId, int start, int end)
+		throws SystemException {
+		return findByLectureseriesIdAndFacilityId(lectureseriesId, facilityId,
+			start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the lectureseries_ facilities where lectureseriesId = &#63; and facilityId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.Lectureseries_FacilityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param lectureseriesId the lectureseries ID
+	 * @param facilityId the facility ID
+	 * @param start the lower bound of the range of lectureseries_ facilities
+	 * @param end the upper bound of the range of lectureseries_ facilities (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching lectureseries_ facilities
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Lectureseries_Facility> findByLectureseriesIdAndFacilityId(
+		long lectureseriesId, long facilityId, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LECTURESERIESIDANDFACILITYID;
+			finderArgs = new Object[] { lectureseriesId, facilityId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_LECTURESERIESIDANDFACILITYID;
+			finderArgs = new Object[] {
+					lectureseriesId, facilityId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<Lectureseries_Facility> list = (List<Lectureseries_Facility>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (Lectureseries_Facility lectureseries_Facility : list) {
+				if ((lectureseriesId != lectureseries_Facility.getLectureseriesId()) ||
+						(facilityId != lectureseries_Facility.getFacilityId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_LECTURESERIES_FACILITY_WHERE);
+
+			query.append(_FINDER_COLUMN_LECTURESERIESIDANDFACILITYID_LECTURESERIESID_2);
+
+			query.append(_FINDER_COLUMN_LECTURESERIESIDANDFACILITYID_FACILITYID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(Lectureseries_FacilityModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(lectureseriesId);
+
+				qPos.add(facilityId);
+
+				if (!pagination) {
+					list = (List<Lectureseries_Facility>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<Lectureseries_Facility>(list);
+				}
+				else {
+					list = (List<Lectureseries_Facility>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first lectureseries_ facility in the ordered set where lectureseriesId = &#63; and facilityId = &#63;.
+	 *
+	 * @param lectureseriesId the lectureseries ID
+	 * @param facilityId the facility ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching lectureseries_ facility
+	 * @throws de.uhh.l2g.plugins.NoSuchLectureseries_FacilityException if a matching lectureseries_ facility could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Lectureseries_Facility findByLectureseriesIdAndFacilityId_First(
+		long lectureseriesId, long facilityId,
+		OrderByComparator orderByComparator)
+		throws NoSuchLectureseries_FacilityException, SystemException {
+		Lectureseries_Facility lectureseries_Facility = fetchByLectureseriesIdAndFacilityId_First(lectureseriesId,
+				facilityId, orderByComparator);
+
+		if (lectureseries_Facility != null) {
+			return lectureseries_Facility;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("lectureseriesId=");
+		msg.append(lectureseriesId);
+
+		msg.append(", facilityId=");
+		msg.append(facilityId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchLectureseries_FacilityException(msg.toString());
+	}
+
+	/**
+	 * Returns the first lectureseries_ facility in the ordered set where lectureseriesId = &#63; and facilityId = &#63;.
+	 *
+	 * @param lectureseriesId the lectureseries ID
+	 * @param facilityId the facility ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching lectureseries_ facility, or <code>null</code> if a matching lectureseries_ facility could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Lectureseries_Facility fetchByLectureseriesIdAndFacilityId_First(
+		long lectureseriesId, long facilityId,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<Lectureseries_Facility> list = findByLectureseriesIdAndFacilityId(lectureseriesId,
+				facilityId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last lectureseries_ facility in the ordered set where lectureseriesId = &#63; and facilityId = &#63;.
+	 *
+	 * @param lectureseriesId the lectureseries ID
+	 * @param facilityId the facility ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching lectureseries_ facility
+	 * @throws de.uhh.l2g.plugins.NoSuchLectureseries_FacilityException if a matching lectureseries_ facility could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Lectureseries_Facility findByLectureseriesIdAndFacilityId_Last(
+		long lectureseriesId, long facilityId,
+		OrderByComparator orderByComparator)
+		throws NoSuchLectureseries_FacilityException, SystemException {
+		Lectureseries_Facility lectureseries_Facility = fetchByLectureseriesIdAndFacilityId_Last(lectureseriesId,
+				facilityId, orderByComparator);
+
+		if (lectureseries_Facility != null) {
+			return lectureseries_Facility;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("lectureseriesId=");
+		msg.append(lectureseriesId);
+
+		msg.append(", facilityId=");
+		msg.append(facilityId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchLectureseries_FacilityException(msg.toString());
+	}
+
+	/**
+	 * Returns the last lectureseries_ facility in the ordered set where lectureseriesId = &#63; and facilityId = &#63;.
+	 *
+	 * @param lectureseriesId the lectureseries ID
+	 * @param facilityId the facility ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching lectureseries_ facility, or <code>null</code> if a matching lectureseries_ facility could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Lectureseries_Facility fetchByLectureseriesIdAndFacilityId_Last(
+		long lectureseriesId, long facilityId,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByLectureseriesIdAndFacilityId(lectureseriesId,
+				facilityId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Lectureseries_Facility> list = findByLectureseriesIdAndFacilityId(lectureseriesId,
+				facilityId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the lectureseries_ facilities before and after the current lectureseries_ facility in the ordered set where lectureseriesId = &#63; and facilityId = &#63;.
+	 *
+	 * @param lectureseriesFacilityId the primary key of the current lectureseries_ facility
+	 * @param lectureseriesId the lectureseries ID
+	 * @param facilityId the facility ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next lectureseries_ facility
+	 * @throws de.uhh.l2g.plugins.NoSuchLectureseries_FacilityException if a lectureseries_ facility with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Lectureseries_Facility[] findByLectureseriesIdAndFacilityId_PrevAndNext(
+		long lectureseriesFacilityId, long lectureseriesId, long facilityId,
+		OrderByComparator orderByComparator)
+		throws NoSuchLectureseries_FacilityException, SystemException {
+		Lectureseries_Facility lectureseries_Facility = findByPrimaryKey(lectureseriesFacilityId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Lectureseries_Facility[] array = new Lectureseries_FacilityImpl[3];
+
+			array[0] = getByLectureseriesIdAndFacilityId_PrevAndNext(session,
+					lectureseries_Facility, lectureseriesId, facilityId,
+					orderByComparator, true);
+
+			array[1] = lectureseries_Facility;
+
+			array[2] = getByLectureseriesIdAndFacilityId_PrevAndNext(session,
+					lectureseries_Facility, lectureseriesId, facilityId,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Lectureseries_Facility getByLectureseriesIdAndFacilityId_PrevAndNext(
+		Session session, Lectureseries_Facility lectureseries_Facility,
+		long lectureseriesId, long facilityId,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_LECTURESERIES_FACILITY_WHERE);
+
+		query.append(_FINDER_COLUMN_LECTURESERIESIDANDFACILITYID_LECTURESERIESID_2);
+
+		query.append(_FINDER_COLUMN_LECTURESERIESIDANDFACILITYID_FACILITYID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(Lectureseries_FacilityModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(lectureseriesId);
+
+		qPos.add(facilityId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(lectureseries_Facility);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<Lectureseries_Facility> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the lectureseries_ facilities where lectureseriesId = &#63; and facilityId = &#63; from the database.
+	 *
+	 * @param lectureseriesId the lectureseries ID
+	 * @param facilityId the facility ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByLectureseriesIdAndFacilityId(long lectureseriesId,
+		long facilityId) throws SystemException {
+		for (Lectureseries_Facility lectureseries_Facility : findByLectureseriesIdAndFacilityId(
+				lectureseriesId, facilityId, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(lectureseries_Facility);
+		}
+	}
+
+	/**
+	 * Returns the number of lectureseries_ facilities where lectureseriesId = &#63; and facilityId = &#63;.
+	 *
+	 * @param lectureseriesId the lectureseries ID
+	 * @param facilityId the facility ID
+	 * @return the number of matching lectureseries_ facilities
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByLectureseriesIdAndFacilityId(long lectureseriesId,
+		long facilityId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_LECTURESERIESIDANDFACILITYID;
+
+		Object[] finderArgs = new Object[] { lectureseriesId, facilityId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_LECTURESERIES_FACILITY_WHERE);
+
+			query.append(_FINDER_COLUMN_LECTURESERIESIDANDFACILITYID_LECTURESERIESID_2);
+
+			query.append(_FINDER_COLUMN_LECTURESERIESIDANDFACILITYID_FACILITYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(lectureseriesId);
+
+				qPos.add(facilityId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_LECTURESERIESIDANDFACILITYID_LECTURESERIESID_2 =
+		"lectureseries_Facility.lectureseriesId = ? AND ";
+	private static final String _FINDER_COLUMN_LECTURESERIESIDANDFACILITYID_FACILITYID_2 =
+		"lectureseries_Facility.facilityId = ?";
 
 	public Lectureseries_FacilityPersistenceImpl() {
 		setModelClass(Lectureseries_Facility.class);
@@ -1320,42 +1872,67 @@ public class Lectureseries_FacilityPersistenceImpl extends BasePersistenceImpl<L
 
 		else {
 			if ((lectureseries_FacilityModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LECTURESERIES.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LECTURESERIESID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						lectureseries_FacilityModelImpl.getOriginalLectureseriesId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LECTURESERIES,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LECTURESERIESID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LECTURESERIES,
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LECTURESERIESID,
 					args);
 
 				args = new Object[] {
 						lectureseries_FacilityModelImpl.getLectureseriesId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LECTURESERIES,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LECTURESERIESID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LECTURESERIES,
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LECTURESERIESID,
 					args);
 			}
 
 			if ((lectureseries_FacilityModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITY.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						lectureseries_FacilityModelImpl.getOriginalFacilityId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FACILITY, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITY,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FACILITYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITYID,
 					args);
 
 				args = new Object[] {
 						lectureseries_FacilityModelImpl.getFacilityId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FACILITY, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITY,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FACILITYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITYID,
+					args);
+			}
+
+			if ((lectureseries_FacilityModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LECTURESERIESIDANDFACILITYID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						lectureseries_FacilityModelImpl.getOriginalLectureseriesId(),
+						lectureseries_FacilityModelImpl.getOriginalFacilityId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LECTURESERIESIDANDFACILITYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LECTURESERIESIDANDFACILITYID,
+					args);
+
+				args = new Object[] {
+						lectureseries_FacilityModelImpl.getLectureseriesId(),
+						lectureseries_FacilityModelImpl.getFacilityId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LECTURESERIESIDANDFACILITYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LECTURESERIESIDANDFACILITYID,
 					args);
 			}
 		}

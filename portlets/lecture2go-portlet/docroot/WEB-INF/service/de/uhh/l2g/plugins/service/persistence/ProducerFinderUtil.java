@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @author Iavor Sturm
  */
 public class ProducerFinderUtil {
-	public static java.util.List<java.lang.Integer> findProducerIds(
+	public static java.util.List<java.lang.Long> findProducerIds(
 		java.lang.Long lectureseriesId, int begin, int end) {
 		return getFinder().findProducerIds(lectureseriesId, begin, end);
 	}

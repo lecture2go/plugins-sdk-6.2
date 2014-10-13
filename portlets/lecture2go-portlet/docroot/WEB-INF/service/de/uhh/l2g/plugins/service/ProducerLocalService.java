@@ -257,12 +257,12 @@ public interface ProducerLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<java.lang.Integer> getAllProducerIds(
+	public java.util.List<java.lang.Long> getAllProducerIds(
 		java.lang.Long lectureseriesId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<java.lang.Integer> getProducerIds(
+	public java.util.List<java.lang.Long> getProducerIds(
 		java.lang.Long lectureseriesId, int begin, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

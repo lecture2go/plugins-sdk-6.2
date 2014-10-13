@@ -119,10 +119,10 @@ public class Lectureseries_FacilityUtil {
 	* @return the matching lectureseries_ facilities
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Facility> findByLectureseries(
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Facility> findByLectureseriesId(
 		long lectureseriesId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByLectureseries(lectureseriesId);
+		return getPersistence().findByLectureseriesId(lectureseriesId);
 	}
 
 	/**
@@ -138,10 +138,11 @@ public class Lectureseries_FacilityUtil {
 	* @return the range of matching lectureseries_ facilities
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Facility> findByLectureseries(
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Facility> findByLectureseriesId(
 		long lectureseriesId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByLectureseries(lectureseriesId, start, end);
+		return getPersistence()
+				   .findByLectureseriesId(lectureseriesId, start, end);
 	}
 
 	/**
@@ -158,12 +159,12 @@ public class Lectureseries_FacilityUtil {
 	* @return the ordered range of matching lectureseries_ facilities
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Facility> findByLectureseries(
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Facility> findByLectureseriesId(
 		long lectureseriesId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByLectureseries(lectureseriesId, start, end,
+				   .findByLectureseriesId(lectureseriesId, start, end,
 			orderByComparator);
 	}
 
@@ -176,13 +177,14 @@ public class Lectureseries_FacilityUtil {
 	* @throws de.uhh.l2g.plugins.NoSuchLectureseries_FacilityException if a matching lectureseries_ facility could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Lectureseries_Facility findByLectureseries_First(
+	public static de.uhh.l2g.plugins.model.Lectureseries_Facility findByLectureseriesId_First(
 		long lectureseriesId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchLectureseries_FacilityException {
 		return getPersistence()
-				   .findByLectureseries_First(lectureseriesId, orderByComparator);
+				   .findByLectureseriesId_First(lectureseriesId,
+			orderByComparator);
 	}
 
 	/**
@@ -193,12 +195,12 @@ public class Lectureseries_FacilityUtil {
 	* @return the first matching lectureseries_ facility, or <code>null</code> if a matching lectureseries_ facility could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Lectureseries_Facility fetchByLectureseries_First(
+	public static de.uhh.l2g.plugins.model.Lectureseries_Facility fetchByLectureseriesId_First(
 		long lectureseriesId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .fetchByLectureseries_First(lectureseriesId,
+				   .fetchByLectureseriesId_First(lectureseriesId,
 			orderByComparator);
 	}
 
@@ -211,13 +213,14 @@ public class Lectureseries_FacilityUtil {
 	* @throws de.uhh.l2g.plugins.NoSuchLectureseries_FacilityException if a matching lectureseries_ facility could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Lectureseries_Facility findByLectureseries_Last(
+	public static de.uhh.l2g.plugins.model.Lectureseries_Facility findByLectureseriesId_Last(
 		long lectureseriesId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchLectureseries_FacilityException {
 		return getPersistence()
-				   .findByLectureseries_Last(lectureseriesId, orderByComparator);
+				   .findByLectureseriesId_Last(lectureseriesId,
+			orderByComparator);
 	}
 
 	/**
@@ -228,12 +231,13 @@ public class Lectureseries_FacilityUtil {
 	* @return the last matching lectureseries_ facility, or <code>null</code> if a matching lectureseries_ facility could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Lectureseries_Facility fetchByLectureseries_Last(
+	public static de.uhh.l2g.plugins.model.Lectureseries_Facility fetchByLectureseriesId_Last(
 		long lectureseriesId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .fetchByLectureseries_Last(lectureseriesId, orderByComparator);
+				   .fetchByLectureseriesId_Last(lectureseriesId,
+			orderByComparator);
 	}
 
 	/**
@@ -246,13 +250,13 @@ public class Lectureseries_FacilityUtil {
 	* @throws de.uhh.l2g.plugins.NoSuchLectureseries_FacilityException if a lectureseries_ facility with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Lectureseries_Facility[] findByLectureseries_PrevAndNext(
+	public static de.uhh.l2g.plugins.model.Lectureseries_Facility[] findByLectureseriesId_PrevAndNext(
 		long lectureseriesFacilityId, long lectureseriesId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchLectureseries_FacilityException {
 		return getPersistence()
-				   .findByLectureseries_PrevAndNext(lectureseriesFacilityId,
+				   .findByLectureseriesId_PrevAndNext(lectureseriesFacilityId,
 			lectureseriesId, orderByComparator);
 	}
 
@@ -262,9 +266,9 @@ public class Lectureseries_FacilityUtil {
 	* @param lectureseriesId the lectureseries ID
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByLectureseries(long lectureseriesId)
+	public static void removeByLectureseriesId(long lectureseriesId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByLectureseries(lectureseriesId);
+		getPersistence().removeByLectureseriesId(lectureseriesId);
 	}
 
 	/**
@@ -274,9 +278,9 @@ public class Lectureseries_FacilityUtil {
 	* @return the number of matching lectureseries_ facilities
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByLectureseries(long lectureseriesId)
+	public static int countByLectureseriesId(long lectureseriesId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByLectureseries(lectureseriesId);
+		return getPersistence().countByLectureseriesId(lectureseriesId);
 	}
 
 	/**
@@ -286,10 +290,10 @@ public class Lectureseries_FacilityUtil {
 	* @return the matching lectureseries_ facilities
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Facility> findByFacility(
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Facility> findByFacilityId(
 		long facilityId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByFacility(facilityId);
+		return getPersistence().findByFacilityId(facilityId);
 	}
 
 	/**
@@ -305,10 +309,10 @@ public class Lectureseries_FacilityUtil {
 	* @return the range of matching lectureseries_ facilities
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Facility> findByFacility(
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Facility> findByFacilityId(
 		long facilityId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByFacility(facilityId, start, end);
+		return getPersistence().findByFacilityId(facilityId, start, end);
 	}
 
 	/**
@@ -325,12 +329,12 @@ public class Lectureseries_FacilityUtil {
 	* @return the ordered range of matching lectureseries_ facilities
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Facility> findByFacility(
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Facility> findByFacilityId(
 		long facilityId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByFacility(facilityId, start, end, orderByComparator);
+				   .findByFacilityId(facilityId, start, end, orderByComparator);
 	}
 
 	/**
@@ -342,13 +346,13 @@ public class Lectureseries_FacilityUtil {
 	* @throws de.uhh.l2g.plugins.NoSuchLectureseries_FacilityException if a matching lectureseries_ facility could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Lectureseries_Facility findByFacility_First(
+	public static de.uhh.l2g.plugins.model.Lectureseries_Facility findByFacilityId_First(
 		long facilityId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchLectureseries_FacilityException {
 		return getPersistence()
-				   .findByFacility_First(facilityId, orderByComparator);
+				   .findByFacilityId_First(facilityId, orderByComparator);
 	}
 
 	/**
@@ -359,12 +363,12 @@ public class Lectureseries_FacilityUtil {
 	* @return the first matching lectureseries_ facility, or <code>null</code> if a matching lectureseries_ facility could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Lectureseries_Facility fetchByFacility_First(
+	public static de.uhh.l2g.plugins.model.Lectureseries_Facility fetchByFacilityId_First(
 		long facilityId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .fetchByFacility_First(facilityId, orderByComparator);
+				   .fetchByFacilityId_First(facilityId, orderByComparator);
 	}
 
 	/**
@@ -376,13 +380,13 @@ public class Lectureseries_FacilityUtil {
 	* @throws de.uhh.l2g.plugins.NoSuchLectureseries_FacilityException if a matching lectureseries_ facility could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Lectureseries_Facility findByFacility_Last(
+	public static de.uhh.l2g.plugins.model.Lectureseries_Facility findByFacilityId_Last(
 		long facilityId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchLectureseries_FacilityException {
 		return getPersistence()
-				   .findByFacility_Last(facilityId, orderByComparator);
+				   .findByFacilityId_Last(facilityId, orderByComparator);
 	}
 
 	/**
@@ -393,12 +397,12 @@ public class Lectureseries_FacilityUtil {
 	* @return the last matching lectureseries_ facility, or <code>null</code> if a matching lectureseries_ facility could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Lectureseries_Facility fetchByFacility_Last(
+	public static de.uhh.l2g.plugins.model.Lectureseries_Facility fetchByFacilityId_Last(
 		long facilityId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .fetchByFacility_Last(facilityId, orderByComparator);
+				   .fetchByFacilityId_Last(facilityId, orderByComparator);
 	}
 
 	/**
@@ -411,13 +415,13 @@ public class Lectureseries_FacilityUtil {
 	* @throws de.uhh.l2g.plugins.NoSuchLectureseries_FacilityException if a lectureseries_ facility with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Lectureseries_Facility[] findByFacility_PrevAndNext(
+	public static de.uhh.l2g.plugins.model.Lectureseries_Facility[] findByFacilityId_PrevAndNext(
 		long lectureseriesFacilityId, long facilityId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchLectureseries_FacilityException {
 		return getPersistence()
-				   .findByFacility_PrevAndNext(lectureseriesFacilityId,
+				   .findByFacilityId_PrevAndNext(lectureseriesFacilityId,
 			facilityId, orderByComparator);
 	}
 
@@ -427,9 +431,9 @@ public class Lectureseries_FacilityUtil {
 	* @param facilityId the facility ID
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByFacility(long facilityId)
+	public static void removeByFacilityId(long facilityId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByFacility(facilityId);
+		getPersistence().removeByFacilityId(facilityId);
 	}
 
 	/**
@@ -439,9 +443,198 @@ public class Lectureseries_FacilityUtil {
 	* @return the number of matching lectureseries_ facilities
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByFacility(long facilityId)
+	public static int countByFacilityId(long facilityId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByFacility(facilityId);
+		return getPersistence().countByFacilityId(facilityId);
+	}
+
+	/**
+	* Returns all the lectureseries_ facilities where lectureseriesId = &#63; and facilityId = &#63;.
+	*
+	* @param lectureseriesId the lectureseries ID
+	* @param facilityId the facility ID
+	* @return the matching lectureseries_ facilities
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Facility> findByLectureseriesIdAndFacilityId(
+		long lectureseriesId, long facilityId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByLectureseriesIdAndFacilityId(lectureseriesId,
+			facilityId);
+	}
+
+	/**
+	* Returns a range of all the lectureseries_ facilities where lectureseriesId = &#63; and facilityId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.Lectureseries_FacilityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param lectureseriesId the lectureseries ID
+	* @param facilityId the facility ID
+	* @param start the lower bound of the range of lectureseries_ facilities
+	* @param end the upper bound of the range of lectureseries_ facilities (not inclusive)
+	* @return the range of matching lectureseries_ facilities
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Facility> findByLectureseriesIdAndFacilityId(
+		long lectureseriesId, long facilityId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByLectureseriesIdAndFacilityId(lectureseriesId,
+			facilityId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the lectureseries_ facilities where lectureseriesId = &#63; and facilityId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.Lectureseries_FacilityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param lectureseriesId the lectureseries ID
+	* @param facilityId the facility ID
+	* @param start the lower bound of the range of lectureseries_ facilities
+	* @param end the upper bound of the range of lectureseries_ facilities (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching lectureseries_ facilities
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Facility> findByLectureseriesIdAndFacilityId(
+		long lectureseriesId, long facilityId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByLectureseriesIdAndFacilityId(lectureseriesId,
+			facilityId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first lectureseries_ facility in the ordered set where lectureseriesId = &#63; and facilityId = &#63;.
+	*
+	* @param lectureseriesId the lectureseries ID
+	* @param facilityId the facility ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching lectureseries_ facility
+	* @throws de.uhh.l2g.plugins.NoSuchLectureseries_FacilityException if a matching lectureseries_ facility could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Lectureseries_Facility findByLectureseriesIdAndFacilityId_First(
+		long lectureseriesId, long facilityId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchLectureseries_FacilityException {
+		return getPersistence()
+				   .findByLectureseriesIdAndFacilityId_First(lectureseriesId,
+			facilityId, orderByComparator);
+	}
+
+	/**
+	* Returns the first lectureseries_ facility in the ordered set where lectureseriesId = &#63; and facilityId = &#63;.
+	*
+	* @param lectureseriesId the lectureseries ID
+	* @param facilityId the facility ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching lectureseries_ facility, or <code>null</code> if a matching lectureseries_ facility could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Lectureseries_Facility fetchByLectureseriesIdAndFacilityId_First(
+		long lectureseriesId, long facilityId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByLectureseriesIdAndFacilityId_First(lectureseriesId,
+			facilityId, orderByComparator);
+	}
+
+	/**
+	* Returns the last lectureseries_ facility in the ordered set where lectureseriesId = &#63; and facilityId = &#63;.
+	*
+	* @param lectureseriesId the lectureseries ID
+	* @param facilityId the facility ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching lectureseries_ facility
+	* @throws de.uhh.l2g.plugins.NoSuchLectureseries_FacilityException if a matching lectureseries_ facility could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Lectureseries_Facility findByLectureseriesIdAndFacilityId_Last(
+		long lectureseriesId, long facilityId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchLectureseries_FacilityException {
+		return getPersistence()
+				   .findByLectureseriesIdAndFacilityId_Last(lectureseriesId,
+			facilityId, orderByComparator);
+	}
+
+	/**
+	* Returns the last lectureseries_ facility in the ordered set where lectureseriesId = &#63; and facilityId = &#63;.
+	*
+	* @param lectureseriesId the lectureseries ID
+	* @param facilityId the facility ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching lectureseries_ facility, or <code>null</code> if a matching lectureseries_ facility could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Lectureseries_Facility fetchByLectureseriesIdAndFacilityId_Last(
+		long lectureseriesId, long facilityId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByLectureseriesIdAndFacilityId_Last(lectureseriesId,
+			facilityId, orderByComparator);
+	}
+
+	/**
+	* Returns the lectureseries_ facilities before and after the current lectureseries_ facility in the ordered set where lectureseriesId = &#63; and facilityId = &#63;.
+	*
+	* @param lectureseriesFacilityId the primary key of the current lectureseries_ facility
+	* @param lectureseriesId the lectureseries ID
+	* @param facilityId the facility ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next lectureseries_ facility
+	* @throws de.uhh.l2g.plugins.NoSuchLectureseries_FacilityException if a lectureseries_ facility with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Lectureseries_Facility[] findByLectureseriesIdAndFacilityId_PrevAndNext(
+		long lectureseriesFacilityId, long lectureseriesId, long facilityId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchLectureseries_FacilityException {
+		return getPersistence()
+				   .findByLectureseriesIdAndFacilityId_PrevAndNext(lectureseriesFacilityId,
+			lectureseriesId, facilityId, orderByComparator);
+	}
+
+	/**
+	* Removes all the lectureseries_ facilities where lectureseriesId = &#63; and facilityId = &#63; from the database.
+	*
+	* @param lectureseriesId the lectureseries ID
+	* @param facilityId the facility ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByLectureseriesIdAndFacilityId(
+		long lectureseriesId, long facilityId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence()
+			.removeByLectureseriesIdAndFacilityId(lectureseriesId, facilityId);
+	}
+
+	/**
+	* Returns the number of lectureseries_ facilities where lectureseriesId = &#63; and facilityId = &#63;.
+	*
+	* @param lectureseriesId the lectureseries ID
+	* @param facilityId the facility ID
+	* @return the number of matching lectureseries_ facilities
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByLectureseriesIdAndFacilityId(
+		long lectureseriesId, long facilityId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .countByLectureseriesIdAndFacilityId(lectureseriesId,
+			facilityId);
 	}
 
 	/**

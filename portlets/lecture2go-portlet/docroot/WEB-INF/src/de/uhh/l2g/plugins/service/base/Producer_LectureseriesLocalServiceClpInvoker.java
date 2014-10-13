@@ -117,6 +117,12 @@ public class Producer_LectureseriesLocalServiceClpInvoker {
 		_methodName122 = "removeByLectureseriesId";
 
 		_methodParameterTypes122 = new String[] { "java.lang.Long" };
+
+		_methodName123 = "producerAssignedToLectureseries";
+
+		_methodParameterTypes123 = new String[] {
+				"de.uhh.l2g.plugins.model.Producer_Lectureseries"
+			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -225,6 +231,11 @@ public class Producer_LectureseriesLocalServiceClpInvoker {
 			return Producer_LectureseriesLocalServiceUtil.removeByLectureseriesId((java.lang.Long)arguments[0]);
 		}
 
+		if (_methodName123.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
+			return Producer_LectureseriesLocalServiceUtil.producerAssignedToLectureseries((de.uhh.l2g.plugins.model.Producer_Lectureseries)arguments[0]);
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -266,4 +277,6 @@ public class Producer_LectureseriesLocalServiceClpInvoker {
 	private String[] _methodParameterTypes117;
 	private String _methodName122;
 	private String[] _methodParameterTypes122;
+	private String _methodName123;
+	private String[] _methodParameterTypes123;
 }

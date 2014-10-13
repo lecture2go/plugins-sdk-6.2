@@ -2,6 +2,7 @@ package de.uhh.l2g.plugins.service.persistence;
 
 import java.util.List;
 
+import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -17,7 +18,7 @@ public class ProducerFinderImpl extends BasePersistenceImpl<Producer> implements
 	
 	public static final String FIND_PRODUCER_IDS = ProducerFinder.class.getName() + ".findProducerIds";
 
-	public List<Integer> findProducerIds(Long lectureseriesId, int begin, int end) {
+	public List<Long> findProducerIds(Long lectureseriesId, int begin, int end) {
 		Session session = null;
 		try {
 			session = openSession();
@@ -25,7 +26,7 @@ public class ProducerFinderImpl extends BasePersistenceImpl<Producer> implements
 			SQLQuery q = session.createSQLQuery(sql);
 			QueryPos qPos = QueryPos.getInstance(q);
 			qPos.add(lectureseriesId);
-			List <Integer> sl =  (List<Integer>) QueryUtil.list(q, getDialect(), begin, end);
+			List <Long> sl =  (List<Long>) QueryUtil.list(q, getDialect(), begin, end);
 			return sl;
 		} catch (Exception e) {
 			try {
@@ -38,5 +39,5 @@ public class ProducerFinderImpl extends BasePersistenceImpl<Producer> implements
 		}
 		return null;
 	}
-	
+
 }

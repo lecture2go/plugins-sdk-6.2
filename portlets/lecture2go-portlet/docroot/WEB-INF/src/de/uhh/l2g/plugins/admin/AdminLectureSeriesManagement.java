@@ -15,6 +15,7 @@ import de.uhh.l2g.plugins.model.impl.Lectureseries_FacilityImpl;
 import de.uhh.l2g.plugins.model.impl.Producer_LectureseriesImpl;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Lectureseries_FacilityLocalServiceUtil;
+import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Producer_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
@@ -87,7 +88,8 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			Lectureseries_FacilityImpl lf = new Lectureseries_FacilityImpl();
 			lf.setLectureseriesId(lId);
 			lf.setFacilityId(new Long(facilities[i]));
-			Lectureseries_FacilityLocalServiceUtil.addLectureseries_Facility(lf);
+			if(!Lectureseries_FacilityLocalServiceUtil.facilityAssignedToLectureseries(lf))
+				Lectureseries_FacilityLocalServiceUtil.addLectureseries_Facility(lf);
 		}
 		
 		//update producer link
@@ -98,7 +100,9 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			Producer_LectureseriesImpl pl = new Producer_LectureseriesImpl();
 			pl.setProducerId(new Long(producers[i]));
 			pl.setLectureseriesId(lId);
-			Producer_LectureseriesLocalServiceUtil.addProducer_Lectureseries(pl);
+			//producer not assigned to lecture series yet
+			if(!Producer_LectureseriesLocalServiceUtil.producerAssignedToLectureseries(pl))
+				Producer_LectureseriesLocalServiceUtil.addProducer_Lectureseries(pl);
 		}		
 	}
 

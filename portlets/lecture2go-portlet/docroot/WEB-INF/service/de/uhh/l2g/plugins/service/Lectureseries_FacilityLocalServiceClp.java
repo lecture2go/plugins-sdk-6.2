@@ -123,6 +123,12 @@ public class Lectureseries_FacilityLocalServiceClp
 		_methodName20 = "removeByacilityId";
 
 		_methodParameterTypes20 = new String[] { "java.lang.Long" };
+
+		_methodName21 = "facilityAssignedToLectureseries";
+
+		_methodParameterTypes21 = new String[] {
+				"de.uhh.l2g.plugins.model.Lectureseries_Facility"
+			};
 	}
 
 	@Override
@@ -733,6 +739,31 @@ public class Lectureseries_FacilityLocalServiceClp
 		return ((Boolean)returnObj).booleanValue();
 	}
 
+	@Override
+	public boolean facilityAssignedToLectureseries(
+		de.uhh.l2g.plugins.model.Lectureseries_Facility lf) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21,
+					new Object[] { ClpSerializer.translateInput(lf) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Boolean)returnObj).booleanValue();
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -774,4 +805,6 @@ public class Lectureseries_FacilityLocalServiceClp
 	private String[] _methodParameterTypes19;
 	private String _methodName20;
 	private String[] _methodParameterTypes20;
+	private String _methodName21;
+	private String[] _methodParameterTypes21;
 }

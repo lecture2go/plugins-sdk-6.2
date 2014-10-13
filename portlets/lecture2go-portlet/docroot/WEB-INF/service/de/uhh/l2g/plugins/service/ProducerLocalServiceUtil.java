@@ -287,13 +287,13 @@ public class ProducerLocalServiceUtil {
 		return getService().getProdUcer(producerId);
 	}
 
-	public static java.util.List<java.lang.Integer> getAllProducerIds(
+	public static java.util.List<java.lang.Long> getAllProducerIds(
 		java.lang.Long lectureseriesId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getAllProducerIds(lectureseriesId);
 	}
 
-	public static java.util.List<java.lang.Integer> getProducerIds(
+	public static java.util.List<java.lang.Long> getProducerIds(
 		java.lang.Long lectureseriesId, int begin, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getProducerIds(lectureseriesId, begin, end);

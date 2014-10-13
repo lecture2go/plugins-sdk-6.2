@@ -76,10 +76,14 @@
         <column name="lectureseriesFacilityId" type="long" primary="true" id-type="increment"></column>
         <column name="lectureseriesId" type="long" primary="false"></column>
         <column name="facilityId" type="long" primary="false"></column>
-        <finder name="Lectureseries" return-type="Collection">
+        <finder name="LectureseriesId" return-type="Collection">
             <finder-column name="lectureseriesId"></finder-column>
         </finder>
-        <finder name="Facility" return-type="Collection">
+        <finder name="FacilityId" return-type="Collection">
+            <finder-column name="facilityId"></finder-column>
+        </finder>
+        <finder name="LectureseriesIdAndFacilityId" return-type="Collection">
+            <finder-column name="lectureseriesId"></finder-column>
             <finder-column name="facilityId"></finder-column>
         </finder>
     </entity>
@@ -111,10 +115,14 @@
         <column name="producerLectureseriesId" type="long" primary="true" id-type="increment"></column>
         <column name="lectureseriesId" type="long"></column>
         <column name="producerId" type="long"></column>
-        <finder name="Lectureseries" return-type="Collection">
+        <finder name="LectureseriesId" return-type="Collection">
             <finder-column name="lectureseriesId"></finder-column>
         </finder>
-        <finder name="Producer" return-type="Collection">
+        <finder name="ProducerId" return-type="Collection">
+            <finder-column name="producerId"></finder-column>
+        </finder>
+        <finder name="LectureseriesIdAndProducerId" return-type="Collection">
+            <finder-column name="lectureseriesId"></finder-column>
             <finder-column name="producerId"></finder-column>
         </finder>
     </entity>

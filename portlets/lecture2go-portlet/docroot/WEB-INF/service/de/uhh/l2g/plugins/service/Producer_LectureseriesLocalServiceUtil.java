@@ -280,6 +280,11 @@ public class Producer_LectureseriesLocalServiceUtil {
 		return getService().removeByLectureseriesId(lectureseriesId);
 	}
 
+	public static boolean producerAssignedToLectureseries(
+		de.uhh.l2g.plugins.model.Producer_Lectureseries pl) {
+		return getService().producerAssignedToLectureseries(pl);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

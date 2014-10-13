@@ -18,6 +18,6 @@ package de.uhh.l2g.plugins.service.persistence;
  * @author Iavor Sturm
  */
 public interface ProducerFinder {
-	public java.util.List<java.lang.Integer> findProducerIds(
+	public java.util.List<java.lang.Long> findProducerIds(
 		java.lang.Long lectureseriesId, int begin, int end);
 }

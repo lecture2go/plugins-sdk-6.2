@@ -295,6 +295,12 @@ public class Producer_LectureseriesLocalServiceWrapper
 		return _producer_LectureseriesLocalService.removeByLectureseriesId(lectureseriesId);
 	}
 
+	@Override
+	public boolean producerAssignedToLectureseries(
+		de.uhh.l2g.plugins.model.Producer_Lectureseries pl) {
+		return _producer_LectureseriesLocalService.producerAssignedToLectureseries(pl);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

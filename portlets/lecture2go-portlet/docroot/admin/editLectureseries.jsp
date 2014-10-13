@@ -1,3 +1,5 @@
+<%@page import="de.uhh.l2g.plugins.service.Producer_LectureseriesLocalServiceUtil"%>
+<%@page import="de.uhh.l2g.plugins.model.Producer_Lectureseries"%>
 <%@page import="de.uhh.l2g.plugins.service.Lectureseries_FacilityLocalServiceUtil"%>
 <%@include file="/init.jsp"%>
 
@@ -33,6 +35,7 @@
 	try{
 		facilityId = FacilityLocalServiceUtil.getByLectureseriesId(lId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS).iterator().next().getFacilityId();
 	}catch(Exception npe){}
+
 	Map<String, String> facilities = FacilityLocalServiceUtil.getAllSortedAsTree(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 
 	Locale[] languages = LanguageUtil.getAvailableLocales();
@@ -41,8 +44,8 @@
 	String semesterId="";
 	
 	List<Producer> producers = ProducerLocalServiceUtil.getAllProducers(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+	List<Long> pIds = ProducerLocalServiceUtil.getAllProducerIds(lId);
 	List<String> semesters = LectureseriesLocalServiceUtil.getAllSemesters(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
-
 %>
 <portlet:renderURL var="cancelURL"><portlet:param name="jspPage" value="/admin/lectureSeriesList.jsp" /></portlet:renderURL>
 <portlet:actionURL name="editLectureseries" var="editURL"><portlet:param name="lectureseriesId" value='<%=""+lId%>' /></portlet:actionURL>
@@ -50,8 +53,8 @@
 <portlet:actionURL name="addLectureseries" var="addURL"><portlet:param name="lectureseriesId" value='<%=""+lId%>' /></portlet:actionURL>
 
 <%
-if(lId >0) {actionURL=editURL.toString();}
-else {actionURL = addURL.toString();}
+	if(lId >0) {actionURL=editURL.toString();}
+	else {actionURL = addURL.toString();}
 %>
 
 <aui:input name="teste" type="hidden"/>
@@ -108,15 +111,18 @@ else {actionURL = addURL.toString();}
 			<aui:select size="1" name="producerId" label="producer" required="true" helpMessage="please-add-at-lest-one-producer">
 				<aui:option value="">select-producer</aui:option>
 				<%for (int i = 0; i < producers.size(); i++) {
-					if (producers.get(i).getProducerId()>0) {%><aui:option value='<%=producers.get(i).getProducerId()%>'><%=producers.get(i).getLastName() + ", " + producers.get(i).getFirstName()%></aui:option><%}
-				
+					Long z = new Long(0);
+					if(pIds.size()>0) z = new Long(pIds.get(0)+"");
+					if(producers.get(i).getProducerId()==new Long(z+"")){
+						%><aui:option value='<%=producers.get(i).getProducerId()%>' selected="true"><%=producers.get(i).getLastName() + ", " + producers.get(i).getFirstName()%></aui:option><%
+					}else{
+						%><aui:option value='<%=producers.get(i).getProducerId()%>'><%=producers.get(i).getLastName() + ", " + producers.get(i).getFirstName()%></aui:option><%
+					}
 				}%>	
 			</aui:select>
 
 			<div class="prodCont">
-				<%
-				List<Integer> pIds = ProducerLocalServiceUtil.getAllProducerIds(lId);
-				for(int i=0;i<pIds.size();i++){
+				<%for(int i=0;i<pIds.size();i++){
 					Producer p = ProducerLocalServiceUtil.getProdUcer(new Long(pIds.get(i)+""));
 					%>
 					<div id='<%=p.getProducerId()%>'> 
@@ -125,8 +131,7 @@ else {actionURL = addURL.toString();}
 						<aui:input type="hidden" name="producers" id="producers" value="<%=p.getProducerId()%>"/>
 					</div>
 					<%
-				}
-				%>				
+				}%>				
 			</div>	
 							
 			<aui:input name="shortDesc" label="short-description"  value="<%=lShortDesc%>"/>
