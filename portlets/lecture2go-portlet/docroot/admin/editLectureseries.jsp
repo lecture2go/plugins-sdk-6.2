@@ -49,7 +49,6 @@
 	List<Long> pIds = ProducerLocalServiceUtil.getAllProducerIds(lId);
 	List<String> semesters = LectureseriesLocalServiceUtil.getAllSemesters(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 	
-	PortletURLUtil.getCurrent(renderRequest, renderResponse);	
 %>
 
 <portlet:renderURL var="cancelURL">

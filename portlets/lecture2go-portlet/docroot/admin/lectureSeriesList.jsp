@@ -153,6 +153,7 @@
 		<liferay-ui:search-container-column-text name="name">
 			<aui:a  href="<%=editURL.toString()%>"><%=lectser.getName()%></aui:a>
 		</liferay-ui:search-container-column-text>
+		<liferay-ui:search-container-column-jsp path="/admin/editLectureseriesButton.jsp"/>
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator />
