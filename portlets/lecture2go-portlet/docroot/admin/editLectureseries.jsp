@@ -1,6 +1,4 @@
-<%@page import="de.uhh.l2g.plugins.service.Producer_LectureseriesLocalServiceUtil"%>
-<%@page import="de.uhh.l2g.plugins.model.Producer_Lectureseries"%>
-<%@page import="de.uhh.l2g.plugins.service.Lectureseries_FacilityLocalServiceUtil"%>
+<%@page import="com.liferay.portlet.PortletURLUtil"%>
 <%@include file="/init.jsp"%>
 
 <%
@@ -36,21 +34,39 @@
 		facilityId = FacilityLocalServiceUtil.getByLectureseriesId(lId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS).iterator().next().getFacilityId();
 	}catch(Exception npe){}
 
-	Map<String, String> facilities = FacilityLocalServiceUtil.getAllSortedAsTree(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+	Map<String,String> facilities = new LinkedHashMap<String, String>();
+	if(permissionAdmin){
+		facilities = FacilityLocalServiceUtil.getAllSortedAsTree(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+		permissionCoordinator = false;
+	}
+	if(permissionCoordinator)facilities = FacilityLocalServiceUtil.getByParent(CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getFacilityId());
 
 	Locale[] languages = LanguageUtil.getAvailableLocales();
 	String[] availableLanguageIds = LocaleUtil.toLanguageIds(languages);
 	String languageId="";
-	String semesterId="";
-	
-	List<Producer> producers = ProducerLocalServiceUtil.getAllProducers(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+
+    List<Producer> producers = ProducerLocalServiceUtil.getAllProducers(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);	
 	List<Long> pIds = ProducerLocalServiceUtil.getAllProducerIds(lId);
 	List<String> semesters = LectureseriesLocalServiceUtil.getAllSemesters(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+	
+	PortletURLUtil.getCurrent(renderRequest, renderResponse);	
 %>
-<portlet:renderURL var="cancelURL"><portlet:param name="jspPage" value="/admin/lectureSeriesList.jsp" /></portlet:renderURL>
-<portlet:actionURL name="editLectureseries" var="editURL"><portlet:param name="lectureseriesId" value='<%=""+lId%>' /></portlet:actionURL>
-<portlet:actionURL name="removeLectureseries" var="removeURL"><portlet:param name="lectureseriesId" value='<%=""+lId%>' /></portlet:actionURL>
-<portlet:actionURL name="addLectureseries" var="addURL"><portlet:param name="lectureseriesId" value='<%=""+lId%>' /></portlet:actionURL>
+
+<portlet:renderURL var="cancelURL">
+	<portlet:param name="jspPage" value="/admin/lectureSeriesList.jsp" />
+</portlet:renderURL>
+
+<portlet:actionURL name="editLectureseries" var="editURL">
+	<portlet:param name="lectureseriesId" value='<%=""+lId%>' />
+</portlet:actionURL>
+
+<portlet:actionURL name="removeLectureseries" var="removeURL">
+	<portlet:param name="lectureseriesId" value='<%=""+lId%>' />
+</portlet:actionURL>
+
+<portlet:actionURL name="addLectureseries" var="addURL">
+	<portlet:param name="lectureseriesId" value='<%=""+lId%>' />
+</portlet:actionURL>
 
 <%
 	if(lId >0) {actionURL=editURL.toString();}
@@ -58,7 +74,6 @@
 %>
 
 <aui:input name="teste" type="hidden"/>
-
 
 <aui:form action="<%=actionURL%>" commandName="model">
 	<aui:fieldset helpMessage="test" column="true" label='<%=lName%>'>
@@ -78,16 +93,15 @@
 					else{%> <aui:option value="<%=type%>"><%=type%></aui:option><%}
 				}
 				%>
-				
 			</aui:select>
 			
 			<aui:select size="1" name="facilityId" label="facility" required="true">
 				<aui:option value="">select-facility</aui:option>
 				<%for (Map.Entry<String, String> f : facilities.entrySet()) {
 				boolean dis=true; 
-				if(f.getValue().startsWith("----"))dis=false;
+				if(f.getValue().startsWith("----") || permissionCoordinator)dis=false;
 				if(f.getKey().equals(facilityId.toString())){
-					%><aui:option value='<%=f.getKey()%>' selected="true"><%=f.getValue()%></aui:option>
+					%><aui:option value='<%=f.getKey()%>' selected="true" disabled="<%=dis%>"><%=f.getValue()%></aui:option>
 				<%}else{%><aui:option value='<%=f.getKey()%>' disabled="<%=dis%>"><%=f.getValue()%></aui:option><%}	
 				}%>
 			</aui:select>
@@ -136,7 +150,7 @@
 							
 			<aui:input name="shortDesc" label="short-description"  value="<%=lShortDesc%>"/>
 
-			<aui:select size="1" name="semesterName" label="semester">
+			<aui:select id="allSemesters" size="1" name="semesterName" label="semester">
 				<aui:option value="">select-semester</aui:option>
 				<%for (int i = 0; i < semesters.size(); i++) {
 					if (semesters.get(i).equals(lSemesterName)) {%>
@@ -147,7 +161,7 @@
 				}%>
 			</aui:select>
 			
-			<a id="addSemester" style="cur	sor:pointer;">add-new-semester</a>
+			<a id="<portlet:namespace/>addSemester" style="cursor:pointer;">add-new-semester</a>
 			<aui:input id="newSemester" name="semesterName" style="display:none;" label=""/>
 
 			<aui:select size="1" name="language" label="language" required="true">
@@ -174,7 +188,7 @@
 			
 			<aui:button-row>
 				<aui:button type="submit" onclick="<portlet:namespace />extractCodeFromEditor()"/>
-				<aui:button type="cancel" value="cancel" onClick="<%=cancelURL.toString()%>" />
+				<aui:button type="submit" value="cancel" onClick="<%=cancelURL.toString()%>" />
 				<%if (lId>0) {%>
 				<liferay-ui:icon-menu cssClass="right">
 					<liferay-ui:icon image="delete" message="Remove" url="<%=removeURL.toString()%>" />
@@ -184,19 +198,18 @@
 		</aui:layout>
 	</aui:fieldset>
 </aui:form>
+
 <script>
 
-AUI().use(
-		  'aui-node',
-
-  function(A) {
-    
+AUI().use('aui-node',
+  
+function(A) {
 	// Select the node(s) using a css selector string
     var contProduc = A.one('.prodCont');
     var contFacil = A.one('.facilCont');
     var producerId = A.one('#<portlet:namespace/>producerId');
     var facilityId = A.one('#<portlet:namespace/>facilityId');
-    var addSemester = A.one('#addSemester');
+    var addSemester = A.one('#<portlet:namespace/>addSemester');
     var newSemester = A.one('#<portlet:namespace/>newSemester');
     var allSemesters = A.one('#<portlet:namespace/>allSemesters');
     

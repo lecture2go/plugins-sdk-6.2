@@ -1,18 +1,29 @@
 package de.uhh.l2g.plugins.admin;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.User;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import de.uhh.l2g.plugins.model.Lectureseries;
+import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.model.impl.LectureseriesImpl;
 import de.uhh.l2g.plugins.model.impl.Lectureseries_FacilityImpl;
 import de.uhh.l2g.plugins.model.impl.Producer_LectureseriesImpl;
+import de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil;
+import de.uhh.l2g.plugins.service.FacilityLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Lectureseries_FacilityLocalServiceUtil;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
@@ -23,20 +34,42 @@ import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 public class AdminLectureSeriesManagement extends MVCPortlet {
 	
 	public void viewLectureseries(ActionRequest request, ActionResponse response) throws SystemException, PortalException {
-		// requested lectureseries
-		long reqUserId = new Long(request.getParameterMap().get("lectureseriesId")[0]);
-		Lectureseries reqLectureseries = LectureseriesLocalServiceUtil.getLectureseries(reqUserId);
-		request.setAttribute("reqLectureseries", reqLectureseries);
-		
-		response.setRenderParameter("jspPage", "/admin/editLectureseries.jsp");
-	}
-	
-	public void filterLectureseries(ActionRequest request, ActionResponse response) throws SystemException, PortalException {
-		// requested lectureseries
-		List<Lectureseries> l = LectureseriesLocalServiceUtil.getFilteredBySemesterFacultyProducer(0, "", 8, 0);
+		//permissions
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
+		PermissionChecker permissionChecker = themeDisplay.getPermissionChecker();
 
-		request.setAttribute("reqLectureseries", l);
+		//user 
+		String uId = request.getRemoteUser();
+		Long userId = new Long(uId);
+		User remoteUser = UserLocalServiceUtil.getUserById(userId);
+
+		// requested lectureseries
+		long reqLectureseriesId = new Long(request.getParameterMap().get("lectureseriesId")[0]);
+		Lectureseries reqLectureseries = LectureseriesLocalServiceUtil.getLectureseries(reqLectureseriesId);
+		request.setAttribute("reqLectureseries", reqLectureseries);
+
 		response.setRenderParameter("jspPage", "/admin/editLectureseries.jsp");
+
+		//facilities for coordinator or administrator
+		//l2go administrator is logged in
+		boolean permissionAdmin = permissionChecker.hasPermission(remoteUser.getGroupId(), User.class.getName(), remoteUser.getPrimaryKey(), "ADD_L2GOADMIN");
+		//l2go coordinator is logged in
+		boolean permissionCoordinator = permissionChecker.hasPermission(remoteUser.getGroupId(), User.class.getName(), remoteUser.getPrimaryKey(), "ADD_L2GOPRODUCER");
+
+		Map<String,String> facilities = new LinkedHashMap<String, String>();
+		List<Producer> producers = new ArrayList<Producer>();
+		
+		if(permissionAdmin){
+			facilities = FacilityLocalServiceUtil.getAllSortedAsTree(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+			producers = ProducerLocalServiceUtil.getAllProducers(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+			permissionCoordinator = false;
+		}
+		if(permissionCoordinator){
+			facilities = FacilityLocalServiceUtil.getByParent(CoordinatorLocalServiceUtil.getCoordinator(userId).getFacilityId());
+			producers = ProducerLocalServiceUtil.getProducersByFacilityId(CoordinatorLocalServiceUtil.getCoordinator(userId).getFacilityId());
+		}
+		request.setAttribute("facilities", facilities);
+		request.setAttribute("producers", producers);
 	}
 	
 	public void removeLectureseries(ActionRequest request, ActionResponse response) {
@@ -144,6 +177,8 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			pl.setLectureseriesId(lId);
 			Producer_LectureseriesLocalServiceUtil.addProducer_Lectureseries(pl);
 		}
+		request.setAttribute("facilities", facilities);
+		request.setAttribute("producers", producers);
 	}
 
 }

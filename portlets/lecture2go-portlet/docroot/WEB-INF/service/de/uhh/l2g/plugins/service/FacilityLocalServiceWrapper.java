@@ -283,6 +283,20 @@ public class FacilityLocalServiceWrapper implements FacilityLocalService,
 	}
 
 	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Facility> getByParentId(
+		long parentId, java.lang.String type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _facilityLocalService.getByParentId(parentId, type);
+	}
+
+	@Override
+	public java.util.Map<java.lang.String, java.lang.String> getByParent(
+		long parentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _facilityLocalService.getByParent(parentId);
+	}
+
+	@Override
 	public java.util.List<de.uhh.l2g.plugins.model.Facility> getByLevel(
 		int level) throws com.liferay.portal.kernel.exception.SystemException {
 		return _facilityLocalService.getByLevel(level);

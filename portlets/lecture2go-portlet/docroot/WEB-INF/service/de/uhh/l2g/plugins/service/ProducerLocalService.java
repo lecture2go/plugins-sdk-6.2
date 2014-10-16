@@ -246,6 +246,11 @@ public interface ProducerLocalService extends BaseLocalService,
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<de.uhh.l2g.plugins.model.Producer> getProducersByFacilityId(
+		long facilityId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<de.uhh.l2g.plugins.model.Producer> getAllProducers(
 		int begin, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;

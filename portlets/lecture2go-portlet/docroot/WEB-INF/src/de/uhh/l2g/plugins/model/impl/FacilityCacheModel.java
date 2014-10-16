@@ -95,7 +95,7 @@ public class FacilityCacheModel implements CacheModel<Facility>, Externalizable 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		facilityId = objectInput.readLong();
-		parentId = objectInput.readInt();
+		parentId = objectInput.readLong();
 		name = objectInput.readUTF();
 		typ = objectInput.readUTF();
 		www = objectInput.readUTF();
@@ -107,7 +107,7 @@ public class FacilityCacheModel implements CacheModel<Facility>, Externalizable 
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(facilityId);
-		objectOutput.writeInt(parentId);
+		objectOutput.writeLong(parentId);
 
 		if (name == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -135,7 +135,7 @@ public class FacilityCacheModel implements CacheModel<Facility>, Externalizable 
 	}
 
 	public long facilityId;
-	public int parentId;
+	public long parentId;
 	public String name;
 	public String typ;
 	public String www;

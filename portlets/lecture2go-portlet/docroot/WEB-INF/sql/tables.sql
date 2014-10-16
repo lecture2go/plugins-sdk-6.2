@@ -6,7 +6,7 @@ create table LG_Coordinator (
 
 create table LG_Facility (
 	facilityId LONG not null primary key,
-	parentId INTEGER,
+	parentId LONG,
 	name VARCHAR(75) null,
 	typ VARCHAR(75) null,
 	www VARCHAR(75) null,

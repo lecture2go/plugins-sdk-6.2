@@ -51,7 +51,7 @@ public class LectureseriesLocalServiceImpl
 		return sl;
 	}
 	
-	public List<Lectureseries> getFilteredBySemesterFacultyProducer(Integer approved, String semester, int facultyId, int producerId) {
+	public List<Lectureseries> getFilteredBySemesterFacultyProducer(Integer approved, String semester, Long facultyId, Long producerId) {
 		List<Lectureseries> l = LectureseriesFinderUtil.findeFilteredByApprovedSemesterFacultyProducer(approved, semester, facultyId, producerId);
 		try{
 			l.isEmpty();//check

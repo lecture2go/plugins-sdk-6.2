@@ -87,7 +87,7 @@ public class FacilityPersistenceImpl extends BasePersistenceImpl<Facility>
 			FacilityModelImpl.FINDER_CACHE_ENABLED, FacilityImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByParent",
 			new String[] {
-				Integer.class.getName(),
+				Long.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
@@ -96,12 +96,12 @@ public class FacilityPersistenceImpl extends BasePersistenceImpl<Facility>
 		new FinderPath(FacilityModelImpl.ENTITY_CACHE_ENABLED,
 			FacilityModelImpl.FINDER_CACHE_ENABLED, FacilityImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByParent",
-			new String[] { Integer.class.getName() },
+			new String[] { Long.class.getName() },
 			FacilityModelImpl.PARENTID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_PARENT = new FinderPath(FacilityModelImpl.ENTITY_CACHE_ENABLED,
 			FacilityModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByParent",
-			new String[] { Integer.class.getName() });
+			new String[] { Long.class.getName() });
 
 	/**
 	 * Returns all the facilities where parentId = &#63;.
@@ -111,7 +111,7 @@ public class FacilityPersistenceImpl extends BasePersistenceImpl<Facility>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Facility> findByParent(int parentId) throws SystemException {
+	public List<Facility> findByParent(long parentId) throws SystemException {
 		return findByParent(parentId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -129,7 +129,7 @@ public class FacilityPersistenceImpl extends BasePersistenceImpl<Facility>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Facility> findByParent(int parentId, int start, int end)
+	public List<Facility> findByParent(long parentId, int start, int end)
 		throws SystemException {
 		return findByParent(parentId, start, end, null);
 	}
@@ -149,7 +149,7 @@ public class FacilityPersistenceImpl extends BasePersistenceImpl<Facility>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Facility> findByParent(int parentId, int start, int end,
+	public List<Facility> findByParent(long parentId, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -256,7 +256,7 @@ public class FacilityPersistenceImpl extends BasePersistenceImpl<Facility>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Facility findByParent_First(int parentId,
+	public Facility findByParent_First(long parentId,
 		OrderByComparator orderByComparator)
 		throws NoSuchFacilityException, SystemException {
 		Facility facility = fetchByParent_First(parentId, orderByComparator);
@@ -286,7 +286,7 @@ public class FacilityPersistenceImpl extends BasePersistenceImpl<Facility>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Facility fetchByParent_First(int parentId,
+	public Facility fetchByParent_First(long parentId,
 		OrderByComparator orderByComparator) throws SystemException {
 		List<Facility> list = findByParent(parentId, 0, 1, orderByComparator);
 
@@ -307,7 +307,7 @@ public class FacilityPersistenceImpl extends BasePersistenceImpl<Facility>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Facility findByParent_Last(int parentId,
+	public Facility findByParent_Last(long parentId,
 		OrderByComparator orderByComparator)
 		throws NoSuchFacilityException, SystemException {
 		Facility facility = fetchByParent_Last(parentId, orderByComparator);
@@ -337,7 +337,7 @@ public class FacilityPersistenceImpl extends BasePersistenceImpl<Facility>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Facility fetchByParent_Last(int parentId,
+	public Facility fetchByParent_Last(long parentId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByParent(parentId);
 
@@ -366,7 +366,7 @@ public class FacilityPersistenceImpl extends BasePersistenceImpl<Facility>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Facility[] findByParent_PrevAndNext(long facilityId, int parentId,
+	public Facility[] findByParent_PrevAndNext(long facilityId, long parentId,
 		OrderByComparator orderByComparator)
 		throws NoSuchFacilityException, SystemException {
 		Facility facility = findByPrimaryKey(facilityId);
@@ -397,7 +397,7 @@ public class FacilityPersistenceImpl extends BasePersistenceImpl<Facility>
 	}
 
 	protected Facility getByParent_PrevAndNext(Session session,
-		Facility facility, int parentId, OrderByComparator orderByComparator,
+		Facility facility, long parentId, OrderByComparator orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
 
@@ -508,7 +508,7 @@ public class FacilityPersistenceImpl extends BasePersistenceImpl<Facility>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByParent(int parentId) throws SystemException {
+	public void removeByParent(long parentId) throws SystemException {
 		for (Facility facility : findByParent(parentId, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null)) {
 			remove(facility);
@@ -523,7 +523,7 @@ public class FacilityPersistenceImpl extends BasePersistenceImpl<Facility>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByParent(int parentId) throws SystemException {
+	public int countByParent(long parentId) throws SystemException {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_PARENT;
 
 		Object[] finderArgs = new Object[] { parentId };

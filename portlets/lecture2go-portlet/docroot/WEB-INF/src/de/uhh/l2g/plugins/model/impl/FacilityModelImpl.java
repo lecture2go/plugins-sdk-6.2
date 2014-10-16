@@ -59,14 +59,14 @@ public class FacilityModelImpl extends BaseModelImpl<Facility>
 	public static final String TABLE_NAME = "LG_Facility";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "facilityId", Types.BIGINT },
-			{ "parentId", Types.INTEGER },
+			{ "parentId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "typ", Types.VARCHAR },
 			{ "www", Types.VARCHAR },
 			{ "level", Types.INTEGER },
 			{ "sort", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Facility (facilityId LONG not null primary key,parentId INTEGER,name VARCHAR(75) null,typ VARCHAR(75) null,www VARCHAR(75) null,level INTEGER,sort INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Facility (facilityId LONG not null primary key,parentId LONG,name VARCHAR(75) null,typ VARCHAR(75) null,www VARCHAR(75) null,level INTEGER,sort INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Facility";
 	public static final String ORDER_BY_JPQL = " ORDER BY facility.facilityId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Facility.facilityId ASC";
@@ -148,7 +148,7 @@ public class FacilityModelImpl extends BaseModelImpl<Facility>
 			setFacilityId(facilityId);
 		}
 
-		Integer parentId = (Integer)attributes.get("parentId");
+		Long parentId = (Long)attributes.get("parentId");
 
 		if (parentId != null) {
 			setParentId(parentId);
@@ -196,12 +196,12 @@ public class FacilityModelImpl extends BaseModelImpl<Facility>
 	}
 
 	@Override
-	public int getParentId() {
+	public long getParentId() {
 		return _parentId;
 	}
 
 	@Override
-	public void setParentId(int parentId) {
+	public void setParentId(long parentId) {
 		_columnBitmask |= PARENTID_COLUMN_BITMASK;
 
 		if (!_setOriginalParentId) {
@@ -213,7 +213,7 @@ public class FacilityModelImpl extends BaseModelImpl<Facility>
 		_parentId = parentId;
 	}
 
-	public int getOriginalParentId() {
+	public long getOriginalParentId() {
 		return _originalParentId;
 	}
 
@@ -556,8 +556,8 @@ public class FacilityModelImpl extends BaseModelImpl<Facility>
 			Facility.class
 		};
 	private long _facilityId;
-	private int _parentId;
-	private int _originalParentId;
+	private long _parentId;
+	private long _originalParentId;
 	private boolean _setOriginalParentId;
 	private String _name;
 	private String _originalName;

@@ -91,7 +91,7 @@ public class FacilityClp extends BaseModelImpl<Facility> implements Facility {
 			setFacilityId(facilityId);
 		}
 
-		Integer parentId = (Integer)attributes.get("parentId");
+		Long parentId = (Long)attributes.get("parentId");
 
 		if (parentId != null) {
 			setParentId(parentId);
@@ -152,19 +152,19 @@ public class FacilityClp extends BaseModelImpl<Facility> implements Facility {
 	}
 
 	@Override
-	public int getParentId() {
+	public long getParentId() {
 		return _parentId;
 	}
 
 	@Override
-	public void setParentId(int parentId) {
+	public void setParentId(long parentId) {
 		_parentId = parentId;
 
 		if (_facilityRemoteModel != null) {
 			try {
 				Class<?> clazz = _facilityRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setParentId", int.class);
+				Method method = clazz.getMethod("setParentId", long.class);
 
 				method.invoke(_facilityRemoteModel, parentId);
 			}
@@ -512,7 +512,7 @@ public class FacilityClp extends BaseModelImpl<Facility> implements Facility {
 	}
 
 	private long _facilityId;
-	private int _parentId;
+	private long _parentId;
 	private String _name;
 	private String _typ;
 	private String _www;

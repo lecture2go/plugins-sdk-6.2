@@ -41,7 +41,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 		return null;
 	}
 
-	public List<Lectureseries> findeFilteredByApprovedSemesterFacultyProducer(Integer approved, String semester, int facultyId, int producerId) {
+	public List<Lectureseries> findeFilteredByApprovedSemesterFacultyProducer(Integer approved, String semester, Long facultyId, Long producerId) {
 		Session session = null;
 		try {
 			session = openSession();
@@ -99,7 +99,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 		return ll;
 	}
 	
-	private String sqlFilterForLectureseries(Integer approved, String semester, int facultyId, int producerId) {
+	private String sqlFilterForLectureseries(Integer approved, String semester, Long facultyId, Long producerId) {
 		// build query
 		String query = "SELECT c.number_, c.eventType, c.eventCategory, c.name, c.shortDesc, c.longDesc, c.semesterName, c.language, c.facultyName, c.instructorsString, c.lectureseriesId, c.password_, c.approved ";
 			   query += "FROM lg_lectureseries AS c ";

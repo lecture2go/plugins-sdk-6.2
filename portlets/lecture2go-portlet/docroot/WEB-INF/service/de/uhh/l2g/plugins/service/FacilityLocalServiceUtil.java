@@ -274,6 +274,18 @@ public class FacilityLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.Facility> getByParentId(
+		long parentId, java.lang.String type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getByParentId(parentId, type);
+	}
+
+	public static java.util.Map<java.lang.String, java.lang.String> getByParent(
+		long parentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getByParent(parentId);
+	}
+
 	public static java.util.List<de.uhh.l2g.plugins.model.Facility> getByLevel(
 		int level) throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getByLevel(level);

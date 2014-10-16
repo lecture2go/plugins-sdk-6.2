@@ -35,7 +35,7 @@
 		<id name="facilityId" type="long">
 			<generator class="increment" />
 		</id>
-		<property name="parentId" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="parentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="typ" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="www" type="com.liferay.portal.dao.orm.hibernate.StringType" />

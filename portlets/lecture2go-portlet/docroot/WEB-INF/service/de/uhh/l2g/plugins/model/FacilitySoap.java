@@ -96,11 +96,11 @@ public class FacilitySoap implements Serializable {
 		_facilityId = facilityId;
 	}
 
-	public int getParentId() {
+	public long getParentId() {
 		return _parentId;
 	}
 
-	public void setParentId(int parentId) {
+	public void setParentId(long parentId) {
 		_parentId = parentId;
 	}
 
@@ -145,7 +145,7 @@ public class FacilitySoap implements Serializable {
 	}
 
 	private long _facilityId;
-	private int _parentId;
+	private long _parentId;
 	private String _name;
 	private String _typ;
 	private String _www;

@@ -67,7 +67,7 @@ public class FacilityWrapper implements Facility, ModelWrapper<Facility> {
 			setFacilityId(facilityId);
 		}
 
-		Integer parentId = (Integer)attributes.get("parentId");
+		Long parentId = (Long)attributes.get("parentId");
 
 		if (parentId != null) {
 			setParentId(parentId);
@@ -150,7 +150,7 @@ public class FacilityWrapper implements Facility, ModelWrapper<Facility> {
 	* @return the parent ID of this facility
 	*/
 	@Override
-	public int getParentId() {
+	public long getParentId() {
 		return _facility.getParentId();
 	}
 
@@ -160,7 +160,7 @@ public class FacilityWrapper implements Facility, ModelWrapper<Facility> {
 	* @param parentId the parent ID of this facility
 	*/
 	@Override
-	public void setParentId(int parentId) {
+	public void setParentId(long parentId) {
 		_facility.setParentId(parentId);
 	}
 

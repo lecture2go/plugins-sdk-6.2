@@ -1,28 +1,37 @@
-<%@page import="com.liferay.taglib.portlet.RenderURLParamsTag"%>
-<%@page import="org.springframework.web.bind.ServletRequestUtils"%>
-<%@page import="org.springframework.web.portlet.bind.PortletRequestUtils"%>
-<%@page import="com.liferay.util.portlet.PortletRequestUtil"%>
 <%@include file="/init.jsp"%>
 
 <portlet:renderURL var="addLectureseriesURL"><portlet:param name="jspPage" value="/admin/editLectureseries.jsp" /></portlet:renderURL>
-<portlet:actionURL var="test" name="test"><portlet:param name="jspPage" value="/admin/lectureSeriesList.jsp" /></portlet:actionURL>
 
 <%
+	Map<String,String> facilities = new LinkedHashMap<String, String>();
+	List<Producer> producers = new ArrayList<Producer>();
+	
 	List<Lectureseries> tempLectureseriesList = new ArrayList();
-	Map<String, String> facilities = FacilityLocalServiceUtil.getAllSortedAsTree(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
-	List<Producer> producers = ProducerLocalServiceUtil.getAllProducers(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 	List<String> semesters = LectureseriesLocalServiceUtil.getAllSemesters(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 	
-	Integer facilityId = ServletRequestUtils.getIntParameter(request, "facilityId", 0);
-	Integer producerId = ServletRequestUtils.getIntParameter(request, "producerId", 0);
+	Long facilityId = ServletRequestUtils.getLongParameter(request, "facilityId", 0);
+	
+	Long producerId = ServletRequestUtils.getLongParameter(request, "producerId", 0);
 	String semesterId = ServletRequestUtils.getStringParameter(request, "semesterId", "");
-	Integer statusId = ServletRequestUtils.getIntParameter(request, "statusId", 3);
+	Integer statusId = ServletRequestUtils.getIntParameter(request, "statusId", 0);
 	
 	PortletURL portletURL = renderResponse.createRenderURL();
 	portletURL.setParameter("facilityId", facilityId+"");
 	portletURL.setParameter("producerId", producerId+"");
 	portletURL.setParameter("semesterId", semesterId+"");
 	portletURL.setParameter("statusId", statusId+"");
+
+	if(permissionAdmin){
+		facilities = FacilityLocalServiceUtil.getAllSortedAsTree(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+		producers = ProducerLocalServiceUtil.getAllProducers(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+		permissionCoordinator = false;
+	}
+	
+	if(permissionCoordinator){
+		if(facilityId==0)facilityId = CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getFacilityId();
+		facilities = FacilityLocalServiceUtil.getByParent(CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getFacilityId());
+		producers = ProducerLocalServiceUtil.getProducersByFacilityId(CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getFacilityId());
+	}	
 %>
 
 <aui:fieldset helpMessage="choose-filter" column="true">
@@ -100,7 +109,7 @@
 						</portlet:renderURL>
 						<aui:form action="<%= sortByStatus.toString() %>" method="post">
 							<aui:select name="statusId" label="select-status" onChange="submit();">
-								<aui:option value="">select-status</aui:option>
+								<aui:option value="3">select-status</aui:option>
 										<%if(statusId==0){%>
 											<aui:option value='0' selected="true">approved-false</aui:option>
 										<%}else{%>
@@ -125,7 +134,7 @@
 <liferay-ui:search-container emptyResultsMessage="no-lectureseries-found" delta="10" iteratorURL="<%= portletURL %>">
 	<liferay-ui:search-container-results>
 		<%
-			tempLectureseriesList = LectureseriesLocalServiceUtil.getFilteredBySemesterFacultyProducer(statusId, semesterId, facilityId, producerId);
+			tempLectureseriesList = LectureseriesLocalServiceUtil.getFilteredBySemesterFacultyProducer(statusId, semesterId, new Long(facilityId), new Long(producerId));
 			results = ListUtil.subList(tempLectureseriesList, searchContainer.getStart(), searchContainer.getEnd());
 			total = tempLectureseriesList.size();
 			pageContext.setAttribute("results", results);
@@ -136,11 +145,14 @@
 	<liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.Lectureseries" keyProperty="lectureseriesId" modelVar="lectser">
 		<portlet:actionURL name="viewLectureseries" var="editURL">
 			<portlet:param name="lectureseriesId" value="<%= String.valueOf(lectser.getLectureseriesId())%>" />
+			<portlet:param name="facilityId" value="<%=facilityId.toString()%>"/>
+			<portlet:param name="producerId" value="<%=producerId.toString()%>"/>
+			<portlet:param name="semesterId" value="<%=semesterId.toString()%>"/>		
+			<portlet:param name="statusId" value="<%=statusId.toString()%>"/>
 		</portlet:actionURL>
 		<liferay-ui:search-container-column-text name="name">
 			<aui:a  href="<%=editURL.toString()%>"><%=lectser.getName()%></aui:a>
 		</liferay-ui:search-container-column-text>
-		<liferay-ui:search-container-column-jsp path="/admin/editLectureseriesButton.jsp"/>
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator />

@@ -114,17 +114,25 @@ public class FacilityLocalServiceClp implements FacilityLocalService {
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
 
-		_methodName19 = "getByLevel";
+		_methodName19 = "getByParentId";
 
-		_methodParameterTypes19 = new String[] { "int" };
+		_methodParameterTypes19 = new String[] { "long", "java.lang.String" };
 
-		_methodName20 = "getByLectureseriesId";
+		_methodName20 = "getByParent";
 
-		_methodParameterTypes20 = new String[] { "long", "int", "int" };
+		_methodParameterTypes20 = new String[] { "long" };
 
-		_methodName21 = "getAllSortedAsTree";
+		_methodName21 = "getByLevel";
 
-		_methodParameterTypes21 = new String[] { "int", "int" };
+		_methodParameterTypes21 = new String[] { "int" };
+
+		_methodName22 = "getByLectureseriesId";
+
+		_methodParameterTypes22 = new String[] { "long", "int", "int" };
+
+		_methodName23 = "getAllSortedAsTree";
+
+		_methodParameterTypes23 = new String[] { "int", "int" };
 	}
 
 	@Override
@@ -674,13 +682,72 @@ public class FacilityLocalServiceClp implements FacilityLocalService {
 	}
 
 	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Facility> getByParentId(
+		long parentId, java.lang.String type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName19,
+					_methodParameterTypes19,
+					new Object[] { parentId, ClpSerializer.translateInput(type) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<de.uhh.l2g.plugins.model.Facility>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.Map<java.lang.String, java.lang.String> getByParent(
+		long parentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20, new Object[] { parentId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.Map<java.lang.String, java.lang.String>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public java.util.List<de.uhh.l2g.plugins.model.Facility> getByLevel(
 		int level) throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName19,
-					_methodParameterTypes19, new Object[] { level });
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21, new Object[] { level });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -708,8 +775,8 @@ public class FacilityLocalServiceClp implements FacilityLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName20,
-					_methodParameterTypes20,
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22,
 					new Object[] { lectureseriesId, begin, end });
 		}
 		catch (Throwable t) {
@@ -738,8 +805,8 @@ public class FacilityLocalServiceClp implements FacilityLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName21,
-					_methodParameterTypes21, new Object[] { begin, end });
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23, new Object[] { begin, end });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -803,4 +870,8 @@ public class FacilityLocalServiceClp implements FacilityLocalService {
 	private String[] _methodParameterTypes20;
 	private String _methodName21;
 	private String[] _methodParameterTypes21;
+	private String _methodName22;
+	private String[] _methodParameterTypes22;
+	private String _methodName23;
+	private String[] _methodParameterTypes23;
 }

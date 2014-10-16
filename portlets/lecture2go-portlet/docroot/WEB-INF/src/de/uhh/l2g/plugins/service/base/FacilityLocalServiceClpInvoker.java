@@ -114,17 +114,25 @@ public class FacilityLocalServiceClpInvoker {
 
 		_methodParameterTypes117 = new String[] { "java.lang.String" };
 
-		_methodName122 = "getByLevel";
+		_methodName122 = "getByParentId";
 
-		_methodParameterTypes122 = new String[] { "int" };
+		_methodParameterTypes122 = new String[] { "long", "java.lang.String" };
 
-		_methodName123 = "getByLectureseriesId";
+		_methodName123 = "getByParent";
 
-		_methodParameterTypes123 = new String[] { "long", "int", "int" };
+		_methodParameterTypes123 = new String[] { "long" };
 
-		_methodName124 = "getAllSortedAsTree";
+		_methodName124 = "getByLevel";
 
-		_methodParameterTypes124 = new String[] { "int", "int" };
+		_methodParameterTypes124 = new String[] { "int" };
+
+		_methodName125 = "getByLectureseriesId";
+
+		_methodParameterTypes125 = new String[] { "long", "int", "int" };
+
+		_methodName126 = "getAllSortedAsTree";
+
+		_methodParameterTypes126 = new String[] { "int", "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -230,18 +238,29 @@ public class FacilityLocalServiceClpInvoker {
 
 		if (_methodName122.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
-			return FacilityLocalServiceUtil.getByLevel(((Integer)arguments[0]).intValue());
+			return FacilityLocalServiceUtil.getByParentId(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1]);
 		}
 
 		if (_methodName123.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
+			return FacilityLocalServiceUtil.getByParent(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName124.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
+			return FacilityLocalServiceUtil.getByLevel(((Integer)arguments[0]).intValue());
+		}
+
+		if (_methodName125.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
 			return FacilityLocalServiceUtil.getByLectureseriesId(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				((Integer)arguments[2]).intValue());
 		}
 
-		if (_methodName124.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
+		if (_methodName126.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
 			return FacilityLocalServiceUtil.getAllSortedAsTree(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
@@ -291,4 +310,8 @@ public class FacilityLocalServiceClpInvoker {
 	private String[] _methodParameterTypes123;
 	private String _methodName124;
 	private String[] _methodParameterTypes124;
+	private String _methodName125;
+	private String[] _methodParameterTypes125;
+	private String _methodName126;
+	private String[] _methodParameterTypes126;
 }

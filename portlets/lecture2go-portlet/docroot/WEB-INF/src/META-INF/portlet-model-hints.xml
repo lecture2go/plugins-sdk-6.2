@@ -8,7 +8,7 @@
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Facility">
 		<field name="facilityId" type="long" />
-		<field name="parentId" type="int" />
+		<field name="parentId" type="long" />
 		<field name="name" type="String" />
 		<field name="typ" type="String" />
 		<field name="www" type="String" />

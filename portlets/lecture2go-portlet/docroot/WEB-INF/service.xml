@@ -47,7 +47,7 @@
     </entity>
     <entity name="Facility" local-service="true" remote-service="false">
         <column name="facilityId" type="long" primary="true" id-type="increment"></column>
-        <column name="parentId" type="int"></column>
+        <column name="parentId" type="long"></column>
         <column name="name" type="String"></column>
         <column name="typ" type="String"></column>
         <column name="www" type="String"></column>

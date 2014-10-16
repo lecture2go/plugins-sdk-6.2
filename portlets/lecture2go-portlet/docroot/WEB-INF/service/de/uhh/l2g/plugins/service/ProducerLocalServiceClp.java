@@ -114,21 +114,25 @@ public class ProducerLocalServiceClp implements ProducerLocalService {
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
 
-		_methodName19 = "getAllProducers";
+		_methodName19 = "getProducersByFacilityId";
 
-		_methodParameterTypes19 = new String[] { "int", "int" };
+		_methodParameterTypes19 = new String[] { "long" };
 
-		_methodName20 = "getProdUcer";
+		_methodName20 = "getAllProducers";
 
-		_methodParameterTypes20 = new String[] { "java.lang.Long" };
+		_methodParameterTypes20 = new String[] { "int", "int" };
 
-		_methodName21 = "getAllProducerIds";
+		_methodName21 = "getProdUcer";
 
 		_methodParameterTypes21 = new String[] { "java.lang.Long" };
 
-		_methodName22 = "getProducerIds";
+		_methodName22 = "getAllProducerIds";
 
-		_methodParameterTypes22 = new String[] { "java.lang.Long", "int", "int" };
+		_methodParameterTypes22 = new String[] { "java.lang.Long" };
+
+		_methodName23 = "getProducerIds";
+
+		_methodParameterTypes23 = new String[] { "java.lang.Long", "int", "int" };
 	}
 
 	@Override
@@ -678,14 +682,43 @@ public class ProducerLocalServiceClp implements ProducerLocalService {
 	}
 
 	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Producer> getProducersByFacilityId(
+		long facilityId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName19,
+					_methodParameterTypes19, new Object[] { facilityId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<de.uhh.l2g.plugins.model.Producer>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public java.util.List<de.uhh.l2g.plugins.model.Producer> getAllProducers(
 		int begin, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName19,
-					_methodParameterTypes19, new Object[] { begin, end });
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20, new Object[] { begin, end });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -714,8 +747,8 @@ public class ProducerLocalServiceClp implements ProducerLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName20,
-					_methodParameterTypes20,
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21,
 					new Object[] { ClpSerializer.translateInput(producerId) });
 		}
 		catch (Throwable t) {
@@ -748,8 +781,8 @@ public class ProducerLocalServiceClp implements ProducerLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName21,
-					_methodParameterTypes21,
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22,
 					new Object[] { ClpSerializer.translateInput(lectureseriesId) });
 		}
 		catch (Throwable t) {
@@ -778,8 +811,8 @@ public class ProducerLocalServiceClp implements ProducerLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName22,
-					_methodParameterTypes22,
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23,
 					new Object[] {
 						ClpSerializer.translateInput(lectureseriesId),
 						
@@ -852,4 +885,6 @@ public class ProducerLocalServiceClp implements ProducerLocalService {
 	private String[] _methodParameterTypes21;
 	private String _methodName22;
 	private String[] _methodParameterTypes22;
+	private String _methodName23;
+	private String[] _methodParameterTypes23;
 }

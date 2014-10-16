@@ -121,7 +121,8 @@ public class LectureseriesLocalServiceClpInvoker {
 		_methodName123 = "getFilteredBySemesterFacultyProducer";
 
 		_methodParameterTypes123 = new String[] {
-				"java.lang.Integer", "java.lang.String", "int", "int"
+				"java.lang.Integer", "java.lang.String", "java.lang.Long",
+				"java.lang.Long"
 			};
 	}
 
@@ -235,9 +236,8 @@ public class LectureseriesLocalServiceClpInvoker {
 		if (_methodName123.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
 			return LectureseriesLocalServiceUtil.getFilteredBySemesterFacultyProducer((java.lang.Integer)arguments[0],
-				(java.lang.String)arguments[1],
-				((Integer)arguments[2]).intValue(),
-				((Integer)arguments[3]).intValue());
+				(java.lang.String)arguments[1], (java.lang.Long)arguments[2],
+				(java.lang.Long)arguments[3]);
 		}
 
 		throw new UnsupportedOperationException();

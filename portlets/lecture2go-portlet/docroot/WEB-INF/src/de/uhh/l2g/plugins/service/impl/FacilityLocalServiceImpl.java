@@ -21,7 +21,6 @@ import java.util.Map;
 import com.liferay.portal.kernel.exception.SystemException;
 
 import de.uhh.l2g.plugins.model.Facility;
-import de.uhh.l2g.plugins.model.impl.FacilityImpl;
 import de.uhh.l2g.plugins.service.base.FacilityLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.FacilityFinderUtil;
 
@@ -51,6 +50,22 @@ public class FacilityLocalServiceImpl extends FacilityLocalServiceBaseImpl {
 	 * de.uhh.l2g.plugins.service.FacilityLocalServiceUtil} to access the
 	 * facility local service.	
 	 */
+
+	public List<Facility> getByParentId(long parentId, String type) throws SystemException {
+		return facilityPersistence.findByParent(parentId);
+	}
+	
+	public Map<String, String> getByParent(long parentId) throws SystemException {
+		Map<String,String> facilities = new LinkedHashMap<String, String>();
+		List <Facility> fList = facilityPersistence.findByParent(parentId);
+
+		for (Facility faculty : fList) {
+			String id = "" + faculty.getFacilityId();
+			String name = "" + faculty.getName();
+			facilities.put(id, name);
+		}
+		return facilities;
+	}
 
 	public List<Facility> getByLevel(int level) throws SystemException {
 		return facilityPersistence.findBylevel(level);

@@ -45,7 +45,7 @@ public interface FacilityPersistence extends BasePersistence<Facility> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<de.uhh.l2g.plugins.model.Facility> findByParent(
-		int parentId)
+		long parentId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -62,7 +62,7 @@ public interface FacilityPersistence extends BasePersistence<Facility> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<de.uhh.l2g.plugins.model.Facility> findByParent(
-		int parentId, int start, int end)
+		long parentId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -80,7 +80,7 @@ public interface FacilityPersistence extends BasePersistence<Facility> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<de.uhh.l2g.plugins.model.Facility> findByParent(
-		int parentId, int start, int end,
+		long parentId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -93,7 +93,7 @@ public interface FacilityPersistence extends BasePersistence<Facility> {
 	* @throws de.uhh.l2g.plugins.NoSuchFacilityException if a matching facility could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.Facility findByParent_First(int parentId,
+	public de.uhh.l2g.plugins.model.Facility findByParent_First(long parentId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchFacilityException;
@@ -106,7 +106,8 @@ public interface FacilityPersistence extends BasePersistence<Facility> {
 	* @return the first matching facility, or <code>null</code> if a matching facility could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.Facility fetchByParent_First(int parentId,
+	public de.uhh.l2g.plugins.model.Facility fetchByParent_First(
+		long parentId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -119,7 +120,7 @@ public interface FacilityPersistence extends BasePersistence<Facility> {
 	* @throws de.uhh.l2g.plugins.NoSuchFacilityException if a matching facility could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.Facility findByParent_Last(int parentId,
+	public de.uhh.l2g.plugins.model.Facility findByParent_Last(long parentId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchFacilityException;
@@ -132,7 +133,7 @@ public interface FacilityPersistence extends BasePersistence<Facility> {
 	* @return the last matching facility, or <code>null</code> if a matching facility could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.Facility fetchByParent_Last(int parentId,
+	public de.uhh.l2g.plugins.model.Facility fetchByParent_Last(long parentId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -147,7 +148,7 @@ public interface FacilityPersistence extends BasePersistence<Facility> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public de.uhh.l2g.plugins.model.Facility[] findByParent_PrevAndNext(
-		long facilityId, int parentId,
+		long facilityId, long parentId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchFacilityException;
@@ -158,7 +159,7 @@ public interface FacilityPersistence extends BasePersistence<Facility> {
 	* @param parentId the parent ID
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByParent(int parentId)
+	public void removeByParent(long parentId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -168,7 +169,7 @@ public interface FacilityPersistence extends BasePersistence<Facility> {
 	* @return the number of matching facilities
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByParent(int parentId)
+	public int countByParent(long parentId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

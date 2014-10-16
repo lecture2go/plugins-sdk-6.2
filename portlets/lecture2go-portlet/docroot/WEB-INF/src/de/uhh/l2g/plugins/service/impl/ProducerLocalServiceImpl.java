@@ -17,7 +17,6 @@ package de.uhh.l2g.plugins.service.impl;
 import java.util.Iterator;
 import java.util.List;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
@@ -25,10 +24,8 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 
 import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
-import de.uhh.l2g.plugins.service.Producer_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.ProducerLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.ProducerFinderUtil;
-import de.uhh.l2g.plugins.service.persistence.Producer_LectureseriesUtil;
 
 /**
  * The implementation of the producer local service.
@@ -51,9 +48,8 @@ public class ProducerLocalServiceImpl extends ProducerLocalServiceBaseImpl {
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.ProducerLocalServiceUtil} to access the producer local service.
 	 */	
 	
-	public List<Producer> getAllProducers(int begin, int end) throws SystemException{
-		List<Producer> prods = ProducerLocalServiceUtil.getProducers(begin, end);
-		Iterator<Producer> it = prods.iterator();
+	private List<Producer> fillProps(List<Producer> pl) throws SystemException{
+		Iterator<Producer> it = pl.iterator();
 		while (it.hasNext()){
 			Producer p = it.next();
 			User u;
@@ -67,7 +63,18 @@ public class ProducerLocalServiceImpl extends ProducerLocalServiceBaseImpl {
 				e.printStackTrace();
 			}
 		}
-		return prods;
+		return pl;
+	}
+	
+	
+	public List<Producer> getProducersByFacilityId(long facilityId) throws SystemException{
+		List<Producer> prods = producerPersistence.findByFacility(facilityId);
+		return fillProps(prods);
+	}
+
+	public List<Producer> getAllProducers(int begin, int end) throws SystemException{
+		List<Producer> prods = ProducerLocalServiceUtil.getProducers(begin, end);
+		return fillProps(prods);
 	}
 
 	public Producer getProdUcer(Long producerId) throws SystemException, PortalException{

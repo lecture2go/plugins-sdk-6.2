@@ -122,7 +122,8 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 		_methodName20 = "getFilteredBySemesterFacultyProducer";
 
 		_methodParameterTypes20 = new String[] {
-				"java.lang.Integer", "java.lang.String", "int", "int"
+				"java.lang.Integer", "java.lang.String", "java.lang.Long",
+				"java.lang.Long"
 			};
 	}
 
@@ -706,8 +707,8 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 
 	@Override
 	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getFilteredBySemesterFacultyProducer(
-		java.lang.Integer approved, java.lang.String semester, int facultyId,
-		int producerId) {
+		java.lang.Integer approved, java.lang.String semester,
+		java.lang.Long facultyId, java.lang.Long producerId) {
 		Object returnObj = null;
 
 		try {
@@ -718,9 +719,9 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 						
 					ClpSerializer.translateInput(semester),
 						
-					facultyId,
+					ClpSerializer.translateInput(facultyId),
 						
-					producerId
+					ClpSerializer.translateInput(producerId)
 					});
 		}
 		catch (Throwable t) {

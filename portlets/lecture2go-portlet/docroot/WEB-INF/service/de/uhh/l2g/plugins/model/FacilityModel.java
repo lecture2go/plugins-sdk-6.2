@@ -76,14 +76,14 @@ public interface FacilityModel extends BaseModel<Facility> {
 	 *
 	 * @return the parent ID of this facility
 	 */
-	public int getParentId();
+	public long getParentId();
 
 	/**
 	 * Sets the parent ID of this facility.
 	 *
 	 * @param parentId the parent ID of this facility
 	 */
-	public void setParentId(int parentId);
+	public void setParentId(long parentId);
 
 	/**
 	 * Returns the name of this facility.

@@ -117,7 +117,7 @@ public class FacilityUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<de.uhh.l2g.plugins.model.Facility> findByParent(
-		int parentId)
+		long parentId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().findByParent(parentId);
 	}
@@ -136,7 +136,7 @@ public class FacilityUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<de.uhh.l2g.plugins.model.Facility> findByParent(
-		int parentId, int start, int end)
+		long parentId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().findByParent(parentId, start, end);
 	}
@@ -156,7 +156,7 @@ public class FacilityUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<de.uhh.l2g.plugins.model.Facility> findByParent(
-		int parentId, int start, int end,
+		long parentId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
@@ -173,7 +173,7 @@ public class FacilityUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static de.uhh.l2g.plugins.model.Facility findByParent_First(
-		int parentId,
+		long parentId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchFacilityException {
@@ -189,7 +189,7 @@ public class FacilityUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static de.uhh.l2g.plugins.model.Facility fetchByParent_First(
-		int parentId,
+		long parentId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().fetchByParent_First(parentId, orderByComparator);
@@ -205,7 +205,7 @@ public class FacilityUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static de.uhh.l2g.plugins.model.Facility findByParent_Last(
-		int parentId,
+		long parentId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchFacilityException {
@@ -221,7 +221,7 @@ public class FacilityUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static de.uhh.l2g.plugins.model.Facility fetchByParent_Last(
-		int parentId,
+		long parentId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().fetchByParent_Last(parentId, orderByComparator);
@@ -238,7 +238,7 @@ public class FacilityUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static de.uhh.l2g.plugins.model.Facility[] findByParent_PrevAndNext(
-		long facilityId, int parentId,
+		long facilityId, long parentId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchFacilityException {
@@ -253,7 +253,7 @@ public class FacilityUtil {
 	* @param parentId the parent ID
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByParent(int parentId)
+	public static void removeByParent(long parentId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getPersistence().removeByParent(parentId);
 	}
@@ -265,7 +265,7 @@ public class FacilityUtil {
 	* @return the number of matching facilities
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByParent(int parentId)
+	public static int countByParent(long parentId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().countByParent(parentId);
 	}
