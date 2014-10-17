@@ -62,7 +62,8 @@
 <%@ page import="de.uhh.l2g.plugins.service.Producer_LectureseriesLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.service.Lectureseries_FacilityLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.model.Producer"%>
-
+<%@page import="de.uhh.l2g.plugins.service.VideoLocalServiceUtil"%>
+<%@page import="de.uhh.l2g.plugins.model.Video"%>
 
 <portlet:defineObjects />
 <liferay-theme:defineObjects/>
