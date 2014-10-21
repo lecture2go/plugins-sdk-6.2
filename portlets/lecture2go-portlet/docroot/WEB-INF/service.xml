@@ -251,6 +251,15 @@
         <column name="permittedToSegment" type="int"></column>
         <column name="facilityId" type="long"></column>
         <column name="citation2go" type="int"></column>
+        <finder name="Facility" return-type="Collection">
+            <finder-column name="facilityId"></finder-column>
+        </finder>
+        <finder name="Producer" return-type="Collection">
+            <finder-column name="producerId"></finder-column>
+        </finder>
+        <finder name="Lectureseries" return-type="Collection">
+            <finder-column name="lectureseriesId"></finder-column>
+        </finder>
     </entity>
     <entity name="Video_Facility" local-service="true" remote-service="false">
         <column name="videoFacilityId" type="long" primary="true" id-type="increment"></column>

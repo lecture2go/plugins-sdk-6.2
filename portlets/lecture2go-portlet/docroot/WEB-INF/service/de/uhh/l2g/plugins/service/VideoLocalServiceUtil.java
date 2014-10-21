@@ -276,6 +276,24 @@ public class VideoLocalServiceUtil {
 		return getService().unlinkLectureseriesFromVideos(lectureseriesId);
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByFacility(
+		java.lang.Long facilityId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getByFacility(facilityId);
+	}
+
+	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByProducer(
+		java.lang.Long producerId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getByProducer(producerId);
+	}
+
+	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByLectureseries(
+		java.lang.Long lectureseriesId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getByLectureseries(lectureseriesId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

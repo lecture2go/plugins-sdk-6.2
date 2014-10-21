@@ -44,6 +44,7 @@
 <%@ page import="com.liferay.portal.kernel.util.LocaleUtil"%>
 <%@ page import="com.liferay.taglib.portlet.RenderURLParamsTag"%>
 <%@ page import="com.liferay.util.portlet.PortletRequestUtil"%>
+<%@ page import="com.liferay.portlet.PortletURLUtil"%>
 
 <%@ page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@ page import="org.springframework.scripting.config.LangNamespaceUtils"%>
@@ -61,10 +62,16 @@
 <%@ page import="de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.service.Producer_LectureseriesLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.service.Lectureseries_FacilityLocalServiceUtil"%>
-<%@ page import="de.uhh.l2g.plugins.model.Producer"%>
-<%@page import="de.uhh.l2g.plugins.service.VideoLocalServiceUtil"%>
-<%@page import="de.uhh.l2g.plugins.model.Video"%>
-
+<%@ page import="de.uhh.l2g.plugins.service.VideoLocalServiceUtil"%>
+<%@ page import="de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil"%>
+<%@ page import="de.uhh.l2g.plugins.model.Video"%>
+<%@ page import="de.uhh.l2g.plugins.model.Coordinator"%>
+<%@ page import="de.uhh.l2g.plugins.NoSuchMetadataException"%>
+<%@ page import="de.uhh.l2g.plugins.service.MetadataLocalServiceUtil"%>
+<%@ page import="de.uhh.l2g.plugins.model.impl.LectureseriesImpl"%>
+<%@ page import="de.uhh.l2g.plugins.model.impl.MetadataImpl"%>
+<%@ page import="de.uhh.l2g.plugins.model.impl.VideoImpl"%>
+<%@ page import="de.uhh.l2g.plugins.model.impl.ProducerImpl"%>
 <portlet:defineObjects />
 <liferay-theme:defineObjects/>
 

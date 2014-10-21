@@ -31,4 +31,19 @@ public interface Coordinator extends CoordinatorModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link de.uhh.l2g.plugins.model.impl.CoordinatorImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public java.lang.String getLastName();
+
+	public void setLastName(java.lang.String lastName);
+
+	public java.lang.String getFirstName();
+
+	public void setFirstName(java.lang.String firstName);
+
+	public java.lang.String getEmailAddress();
+
+	public void setEmailAddress(java.lang.String emailAddress);
+
+	public java.util.Date getLastLoginDate();
+
+	public void setLastLoginDate(java.util.Date lastLoginDate);
 }

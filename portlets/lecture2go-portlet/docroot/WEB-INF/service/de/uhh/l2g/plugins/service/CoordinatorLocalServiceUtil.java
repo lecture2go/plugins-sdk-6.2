@@ -275,6 +275,12 @@ public class CoordinatorLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.Coordinator> getAllCoordinators(
+		int begin, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getAllCoordinators(begin, end);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

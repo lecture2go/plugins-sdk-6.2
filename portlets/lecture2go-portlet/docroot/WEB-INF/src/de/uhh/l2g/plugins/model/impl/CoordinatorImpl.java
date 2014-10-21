@@ -14,6 +14,13 @@
 
 package de.uhh.l2g.plugins.model.impl;
 
+import java.util.Date;
+
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.UserLocalServiceUtil;
+
 /**
  * The extended model implementation for the Coordinator service. Represents a row in the &quot;LG_Coordinator&quot; database table, with each column mapped to a property of this class.
  *
@@ -29,6 +36,52 @@ public class CoordinatorImpl extends CoordinatorBaseImpl {
 	 *
 	 * Never reference this class directly. All methods that expect a coordinator model instance should use the {@link de.uhh.l2g.plugins.model.Coordinator} interface instead.
 	 */
+	
+	private String lastName; 
+	private String firstName; 
+	private String emailAddress; 
+	private Date lastLoginDate; 
+	
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+	public Date getLastLoginDate() {
+		return lastLoginDate;
+	}
+
+	public void setLastLoginDate(Date lastLoginDate) {
+		this.lastLoginDate = lastLoginDate;
+	}
+
 	public CoordinatorImpl() {
+	}
+
+	public CoordinatorImpl(Long coordinatorId) throws PortalException, SystemException {
+		User lu = UserLocalServiceUtil.getUser(coordinatorId);
+		lastName = lu.getLastName();
+		firstName = lu.getFirstName();
+		emailAddress = lu.getEmailAddress();
+		lastLoginDate = lu.getLastLoginDate();	
 	}
 }

@@ -61,4 +61,5 @@ public class Video_LectureseriesLocalServiceImpl
 		}
 		return ret;
 	}
+	
 }

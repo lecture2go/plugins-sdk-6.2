@@ -245,4 +245,19 @@ public interface VideoLocalService extends BaseLocalService,
 		throws java.lang.Throwable;
 
 	public int unlinkLectureseriesFromVideos(java.lang.Long lectureseriesId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<de.uhh.l2g.plugins.model.Video> getByFacility(
+		java.lang.Long facilityId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<de.uhh.l2g.plugins.model.Video> getByProducer(
+		java.lang.Long producerId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<de.uhh.l2g.plugins.model.Video> getByLectureseries(
+		java.lang.Long lectureseriesId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

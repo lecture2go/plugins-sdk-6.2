@@ -14,6 +14,11 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import java.util.List;
+
+import com.liferay.portal.kernel.exception.SystemException;
+
+import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.service.base.VideoLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.VideoFinderUtil;
 
@@ -39,5 +44,20 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	 */
 	public int unlinkLectureseriesFromVideos(Long lectureseriesId){
 		return VideoFinderUtil.unlinkLectureseriesFromVideos(lectureseriesId);
+	}
+
+	public List<Video> getByFacility(Long facilityId) throws SystemException{
+		List<Video> vl = videoPersistence.findByFacility(facilityId);
+		return vl;
+	}
+	
+	public List<Video> getByProducer(Long producerId) throws SystemException{
+		List<Video> vl = videoPersistence.findByProducer(producerId);
+		return vl;
+	}
+	
+	public List<Video> getByLectureseries(Long lectureseriesId) throws SystemException{
+		List<Video> vl =  videoPersistence.findByLectureseries(lectureseriesId);
+		return vl;
 	}
 }

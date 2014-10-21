@@ -300,7 +300,12 @@
 	</mapped-superclass>
 	<entity class="de.uhh.l2g.plugins.model.impl.CoordinatorImpl" name="Coordinator">
 		<table name="LG_Coordinator" />
-		<attributes />
+		<attributes>
+			<transient name="emailAddress" />
+			<transient name="firstName" />
+			<transient name="lastLoginDate" />
+			<transient name="lastName" />
+		</attributes>
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.FacilityImpl" name="Facility">
 		<table name="LG_Facility" />

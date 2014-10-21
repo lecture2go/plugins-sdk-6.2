@@ -34,6 +34,10 @@ create index IX_2A06594E on LG_Producer_Lectureseries (lectureseriesId);
 create index IX_2BD4E3CF on LG_Producer_Lectureseries (lectureseriesId, producerId);
 create index IX_C19D6C13 on LG_Producer_Lectureseries (producerId);
 
+create index IX_27903D2F on LG_Video (facilityId);
+create index IX_3B4515A3 on LG_Video (lectureseriesId);
+create index IX_35558E9E on LG_Video (producerId);
+
 create index IX_7D0E80BC on LG_VideoLectureseries (lectureseriesId);
 create index IX_EADAE6C2 on LG_VideoLectureseries (videoId);
 

@@ -287,6 +287,13 @@ public class CoordinatorLocalServiceWrapper implements CoordinatorLocalService,
 			arguments);
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Coordinator> getAllCoordinators(
+		int begin, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _coordinatorLocalService.getAllCoordinators(begin, end);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

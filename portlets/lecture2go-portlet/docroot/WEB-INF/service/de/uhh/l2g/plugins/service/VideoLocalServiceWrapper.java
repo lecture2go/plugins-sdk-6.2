@@ -284,6 +284,27 @@ public class VideoLocalServiceWrapper implements VideoLocalService,
 		return _videoLocalService.unlinkLectureseriesFromVideos(lectureseriesId);
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Video> getByFacility(
+		java.lang.Long facilityId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _videoLocalService.getByFacility(facilityId);
+	}
+
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Video> getByProducer(
+		java.lang.Long producerId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _videoLocalService.getByProducer(producerId);
+	}
+
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Video> getByLectureseries(
+		java.lang.Long lectureseriesId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _videoLocalService.getByLectureseries(lectureseriesId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

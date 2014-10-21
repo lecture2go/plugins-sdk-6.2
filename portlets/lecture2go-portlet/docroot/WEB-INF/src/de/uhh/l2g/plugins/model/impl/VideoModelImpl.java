@@ -93,7 +93,13 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.finder.cache.enabled.de.uhh.l2g.plugins.model.Video"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.Video"),
+			true);
+	public static long FACILITYID_COLUMN_BITMASK = 1L;
+	public static long LECTURESERIESID_COLUMN_BITMASK = 2L;
+	public static long PRODUCERID_COLUMN_BITMASK = 4L;
+	public static long VIDEOID_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Video"));
 
@@ -336,7 +342,19 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 
 	@Override
 	public void setLectureseriesId(long lectureseriesId) {
+		_columnBitmask |= LECTURESERIESID_COLUMN_BITMASK;
+
+		if (!_setOriginalLectureseriesId) {
+			_setOriginalLectureseriesId = true;
+
+			_originalLectureseriesId = _lectureseriesId;
+		}
+
 		_lectureseriesId = lectureseriesId;
+	}
+
+	public long getOriginalLectureseriesId() {
+		return _originalLectureseriesId;
 	}
 
 	@Override
@@ -346,7 +364,19 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 
 	@Override
 	public void setProducerId(long producerId) {
+		_columnBitmask |= PRODUCERID_COLUMN_BITMASK;
+
+		if (!_setOriginalProducerId) {
+			_setOriginalProducerId = true;
+
+			_originalProducerId = _producerId;
+		}
+
 		_producerId = producerId;
+	}
+
+	public long getOriginalProducerId() {
+		return _originalProducerId;
 	}
 
 	@Override
@@ -531,7 +561,19 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 
 	@Override
 	public void setFacilityId(long facilityId) {
+		_columnBitmask |= FACILITYID_COLUMN_BITMASK;
+
+		if (!_setOriginalFacilityId) {
+			_setOriginalFacilityId = true;
+
+			_originalFacilityId = _facilityId;
+		}
+
 		_facilityId = facilityId;
+	}
+
+	public long getOriginalFacilityId() {
+		return _originalFacilityId;
 	}
 
 	@Override
@@ -542,6 +584,10 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	@Override
 	public void setCitation2go(int citation2go) {
 		_citation2go = citation2go;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -642,6 +688,21 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 
 	@Override
 	public void resetOriginalValues() {
+		VideoModelImpl videoModelImpl = this;
+
+		videoModelImpl._originalLectureseriesId = videoModelImpl._lectureseriesId;
+
+		videoModelImpl._setOriginalLectureseriesId = false;
+
+		videoModelImpl._originalProducerId = videoModelImpl._producerId;
+
+		videoModelImpl._setOriginalProducerId = false;
+
+		videoModelImpl._originalFacilityId = videoModelImpl._facilityId;
+
+		videoModelImpl._setOriginalFacilityId = false;
+
+		videoModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -909,7 +970,11 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	private String _title;
 	private String _tags;
 	private long _lectureseriesId;
+	private long _originalLectureseriesId;
+	private boolean _setOriginalLectureseriesId;
 	private long _producerId;
+	private long _originalProducerId;
+	private boolean _setOriginalProducerId;
 	private String _containerFormat;
 	private String _filename;
 	private String _resolution;
@@ -925,6 +990,9 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	private Date _uploadDate;
 	private int _permittedToSegment;
 	private long _facilityId;
+	private long _originalFacilityId;
+	private boolean _setOriginalFacilityId;
 	private int _citation2go;
+	private long _columnBitmask;
 	private Video _escapedModel;
 }

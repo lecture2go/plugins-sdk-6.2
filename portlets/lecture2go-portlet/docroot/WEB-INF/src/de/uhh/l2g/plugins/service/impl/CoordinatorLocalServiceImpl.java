@@ -14,6 +14,16 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import java.util.Iterator;
+import java.util.List;
+
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.UserLocalServiceUtil;
+
+import de.uhh.l2g.plugins.model.Coordinator;
+import de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.CoordinatorLocalServiceBaseImpl;
 
 /**
@@ -36,4 +46,27 @@ public class CoordinatorLocalServiceImpl extends CoordinatorLocalServiceBaseImpl
 	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil} to access the coordinator local service.
 	 */
+
+	private List<Coordinator> fillProps(List<Coordinator> cl) throws SystemException{
+		Iterator<Coordinator> it = cl.iterator();
+		while (it.hasNext()){
+			Coordinator c = it.next();
+			User u;
+			try {
+				u = UserLocalServiceUtil.getUser(c.getCoordinatorId());
+				c.setLastName(u.getLastName());
+				c.setFirstName(u.getFirstName());
+				c.setEmailAddress(u.getEmailAddress());
+				c.setLastLoginDate(u.getLastLoginDate());
+			} catch (PortalException e) {
+				e.printStackTrace();
+			}
+		}
+		return cl;
+	}
+	
+	public List<Coordinator> getAllCoordinators(int begin, int end) throws SystemException{
+		List<Coordinator> coords = CoordinatorLocalServiceUtil.getCoordinators(begin, end);
+		return fillProps(coords);
+	}
 }

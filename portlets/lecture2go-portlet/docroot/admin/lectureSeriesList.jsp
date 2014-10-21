@@ -46,7 +46,6 @@
 						<aui:form action="<%= sortByFacility.toString() %>" method="post">
 							<aui:select name="facilityId" label="select-facility" onChange="submit();">
 								<aui:option value="">select-facility</aui:option>
-
 								<%for (Map.Entry<String, String> f : facilities.entrySet()) {
 										if(f.getKey().equals(facilityId.toString())){
 											%>

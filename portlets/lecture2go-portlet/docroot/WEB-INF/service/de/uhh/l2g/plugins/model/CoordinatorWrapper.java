@@ -262,6 +262,46 @@ public class CoordinatorWrapper implements Coordinator,
 	}
 
 	@Override
+	public java.lang.String getLastName() {
+		return _coordinator.getLastName();
+	}
+
+	@Override
+	public void setLastName(java.lang.String lastName) {
+		_coordinator.setLastName(lastName);
+	}
+
+	@Override
+	public java.lang.String getFirstName() {
+		return _coordinator.getFirstName();
+	}
+
+	@Override
+	public void setFirstName(java.lang.String firstName) {
+		_coordinator.setFirstName(firstName);
+	}
+
+	@Override
+	public java.lang.String getEmailAddress() {
+		return _coordinator.getEmailAddress();
+	}
+
+	@Override
+	public void setEmailAddress(java.lang.String emailAddress) {
+		_coordinator.setEmailAddress(emailAddress);
+	}
+
+	@Override
+	public java.util.Date getLastLoginDate() {
+		return _coordinator.getLastLoginDate();
+	}
+
+	@Override
+	public void setLastLoginDate(java.util.Date lastLoginDate) {
+		_coordinator.setLastLoginDate(lastLoginDate);
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;

@@ -111,6 +111,18 @@ public class VideoLocalServiceClpInvoker {
 		_methodName122 = "unlinkLectureseriesFromVideos";
 
 		_methodParameterTypes122 = new String[] { "java.lang.Long" };
+
+		_methodName123 = "getByFacility";
+
+		_methodParameterTypes123 = new String[] { "java.lang.Long" };
+
+		_methodName124 = "getByProducer";
+
+		_methodParameterTypes124 = new String[] { "java.lang.Long" };
+
+		_methodName125 = "getByLectureseries";
+
+		_methodParameterTypes125 = new String[] { "java.lang.Long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -219,6 +231,21 @@ public class VideoLocalServiceClpInvoker {
 			return VideoLocalServiceUtil.unlinkLectureseriesFromVideos((java.lang.Long)arguments[0]);
 		}
 
+		if (_methodName123.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
+			return VideoLocalServiceUtil.getByFacility((java.lang.Long)arguments[0]);
+		}
+
+		if (_methodName124.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
+			return VideoLocalServiceUtil.getByProducer((java.lang.Long)arguments[0]);
+		}
+
+		if (_methodName125.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
+			return VideoLocalServiceUtil.getByLectureseries((java.lang.Long)arguments[0]);
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -260,4 +287,10 @@ public class VideoLocalServiceClpInvoker {
 	private String[] _methodParameterTypes117;
 	private String _methodName122;
 	private String[] _methodParameterTypes122;
+	private String _methodName123;
+	private String[] _methodParameterTypes123;
+	private String _methodName124;
+	private String[] _methodParameterTypes124;
+	private String _methodName125;
+	private String[] _methodParameterTypes125;
 }
