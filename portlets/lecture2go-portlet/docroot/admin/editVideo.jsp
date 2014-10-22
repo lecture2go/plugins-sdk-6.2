@@ -87,21 +87,21 @@
 
 			<aui:input name="tags" label="tags" required="false" value="<%=reqVideo.getTags()%>"/>
 
-			<aui:input name="author" label="author" required="true" value=""/>
+			<aui:input name="author" label="author" required="true" value="<%=metadata.getCreator() %>"/>
 
-			<aui:input name="videoproducer" label="videoproducer" required="true" value='<%=producer.getLastName()+", "+producer.getFirstName()%>'/>
+			<aui:input name="videoproducer" label="videoproducer" required="true" value='<%=metadata.getRightsHolder()%>'/>
 			
-			<aui:input name="publisher" label="publisher" required="true" value=""/>
+			<aui:input name="publisher" label="publisher" required="true" value="<%=metadata.getPublisher() %>"/>
 	
 			license
 			<br/>
 			<em>uhh-l2go</em>
-			<aui:input name="license" value="uhhl2go" checked="checked" type="radio"/>
+			<aui:input name="license" value="uhhl2go"  type="radio"/>
 			lecture2go-licence <a href="/license" target="_blank"> details </a>	 	      	      
 			<br/><br/>
 			
 			<em>by-nc-sa</em>	
-			<aui:input name="license" value="ccbyncsa" type="radio"/>	    	
+			<aui:input name="license" value="ccbyncsa" <%if(reqVideo.getCitation2go()==1){%>checked="checked"<%}%> type="radio"/>	    	
 			Creative Commons <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank"> details </a>
 			<br/><br/>
 			
