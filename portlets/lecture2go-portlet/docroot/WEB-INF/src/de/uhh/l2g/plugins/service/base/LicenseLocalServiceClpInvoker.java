@@ -30,11 +30,11 @@ public class LicenseLocalServiceClpInvoker {
 
 		_methodName1 = "createLicense";
 
-		_methodParameterTypes1 = new String[] { "int" };
+		_methodParameterTypes1 = new String[] { "long" };
 
 		_methodName2 = "deleteLicense";
 
-		_methodParameterTypes2 = new String[] { "int" };
+		_methodParameterTypes2 = new String[] { "long" };
 
 		_methodName3 = "deleteLicense";
 
@@ -78,11 +78,11 @@ public class LicenseLocalServiceClpInvoker {
 
 		_methodName10 = "fetchLicense";
 
-		_methodParameterTypes10 = new String[] { "int" };
+		_methodParameterTypes10 = new String[] { "long" };
 
 		_methodName11 = "getLicense";
 
-		_methodParameterTypes11 = new String[] { "int" };
+		_methodParameterTypes11 = new String[] { "long" };
 
 		_methodName12 = "getPersistedModel";
 
@@ -109,6 +109,10 @@ public class LicenseLocalServiceClpInvoker {
 		_methodName117 = "setBeanIdentifier";
 
 		_methodParameterTypes117 = new String[] { "java.lang.String" };
+
+		_methodName122 = "getByVideoId";
+
+		_methodParameterTypes122 = new String[] { "java.lang.Long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -120,12 +124,12 @@ public class LicenseLocalServiceClpInvoker {
 
 		if (_methodName1.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes1, parameterTypes)) {
-			return LicenseLocalServiceUtil.createLicense(((Integer)arguments[0]).intValue());
+			return LicenseLocalServiceUtil.createLicense(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName2.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes2, parameterTypes)) {
-			return LicenseLocalServiceUtil.deleteLicense(((Integer)arguments[0]).intValue());
+			return LicenseLocalServiceUtil.deleteLicense(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName3.equals(name) &&
@@ -171,12 +175,12 @@ public class LicenseLocalServiceClpInvoker {
 
 		if (_methodName10.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes10, parameterTypes)) {
-			return LicenseLocalServiceUtil.fetchLicense(((Integer)arguments[0]).intValue());
+			return LicenseLocalServiceUtil.fetchLicense(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName11.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes11, parameterTypes)) {
-			return LicenseLocalServiceUtil.getLicense(((Integer)arguments[0]).intValue());
+			return LicenseLocalServiceUtil.getLicense(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName12.equals(name) &&
@@ -210,6 +214,11 @@ public class LicenseLocalServiceClpInvoker {
 			LicenseLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
+		}
+
+		if (_methodName122.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
+			return LicenseLocalServiceUtil.getByVideoId((java.lang.Long)arguments[0]);
 		}
 
 		throw new UnsupportedOperationException();
@@ -251,4 +260,6 @@ public class LicenseLocalServiceClpInvoker {
 	private String[] _methodParameterTypes116;
 	private String _methodName117;
 	private String[] _methodParameterTypes117;
+	private String _methodName122;
+	private String[] _methodParameterTypes122;
 }

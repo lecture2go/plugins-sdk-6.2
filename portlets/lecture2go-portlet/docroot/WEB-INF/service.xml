@@ -173,15 +173,18 @@
         <column name="videoId" type="int"></column>
     </entity>
     <entity name="License" local-service="true" remote-service="false">
-        <column name="licenseId" type="int" primary="true" id-type="increment"></column>
-        <column name="videoId" type="int"></column>
-        <column name="ccby" type="String"></column>
-        <column name="ccbybc" type="String"></column>
-        <column name="ccbyncnd" type="String"></column>
-        <column name="ccbyncsa" type="String"></column>
-        <column name="ccbysa" type="String"></column>
-        <column name="ccbync" type="String"></column>
-        <column name="l2go" type="String"></column>
+        <column name="licenseId" type="long" primary="true" id-type="increment"></column>
+        <column name="videoId" type="long"></column>
+        <column name="ccby" type="int"></column>
+        <column name="ccbybc" type="int"></column>
+        <column name="ccbyncnd" type="int"></column>
+        <column name="ccbyncsa" type="int"></column>
+        <column name="ccbysa" type="int"></column>
+        <column name="ccbync" type="int"></column>
+        <column name="l2go" type="int"></column>
+        <finder name="Video" return-type="de.uhh.l2g.plugins.model.License">
+            <finder-column name="videoId"></finder-column>
+        </finder>
     </entity>
     <entity name="Metadata" local-service="true" remote-service="false">
         <column name="metadataId" type="long" primary="true" id-type="increment"></column>
@@ -258,6 +261,10 @@
             <finder-column name="producerId"></finder-column>
         </finder>
         <finder name="Lectureseries" return-type="Collection">
+            <finder-column name="lectureseriesId"></finder-column>
+        </finder>
+        <finder name="ProducerAndLectureseries" return-type="Collection">
+            <finder-column name="producerId"></finder-column>
             <finder-column name="lectureseriesId"></finder-column>
         </finder>
     </entity>

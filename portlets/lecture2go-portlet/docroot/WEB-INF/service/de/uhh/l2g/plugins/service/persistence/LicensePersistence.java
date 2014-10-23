@@ -38,6 +38,61 @@ public interface LicensePersistence extends BasePersistence<License> {
 	 */
 
 	/**
+	* Returns the license where videoId = &#63; or throws a {@link de.uhh.l2g.plugins.NoSuchLicenseException} if it could not be found.
+	*
+	* @param videoId the video ID
+	* @return the matching license
+	* @throws de.uhh.l2g.plugins.NoSuchLicenseException if a matching license could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.License findByVideo(long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchLicenseException;
+
+	/**
+	* Returns the license where videoId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param videoId the video ID
+	* @return the matching license, or <code>null</code> if a matching license could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.License fetchByVideo(long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the license where videoId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param videoId the video ID
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching license, or <code>null</code> if a matching license could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.License fetchByVideo(long videoId,
+		boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the license where videoId = &#63; from the database.
+	*
+	* @param videoId the video ID
+	* @return the license that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.License removeByVideo(long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchLicenseException;
+
+	/**
+	* Returns the number of licenses where videoId = &#63;.
+	*
+	* @param videoId the video ID
+	* @return the number of matching licenses
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByVideo(long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Caches the license in the entity cache if it is enabled.
 	*
 	* @param license the license
@@ -58,7 +113,7 @@ public interface LicensePersistence extends BasePersistence<License> {
 	* @param licenseId the primary key for the new license
 	* @return the new license
 	*/
-	public de.uhh.l2g.plugins.model.License create(int licenseId);
+	public de.uhh.l2g.plugins.model.License create(long licenseId);
 
 	/**
 	* Removes the license with the primary key from the database. Also notifies the appropriate model listeners.
@@ -68,7 +123,7 @@ public interface LicensePersistence extends BasePersistence<License> {
 	* @throws de.uhh.l2g.plugins.NoSuchLicenseException if a license with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.License remove(int licenseId)
+	public de.uhh.l2g.plugins.model.License remove(long licenseId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchLicenseException;
 
@@ -84,7 +139,7 @@ public interface LicensePersistence extends BasePersistence<License> {
 	* @throws de.uhh.l2g.plugins.NoSuchLicenseException if a license with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.License findByPrimaryKey(int licenseId)
+	public de.uhh.l2g.plugins.model.License findByPrimaryKey(long licenseId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchLicenseException;
 
@@ -95,7 +150,7 @@ public interface LicensePersistence extends BasePersistence<License> {
 	* @return the license, or <code>null</code> if a license with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.License fetchByPrimaryKey(int licenseId)
+	public de.uhh.l2g.plugins.model.License fetchByPrimaryKey(long licenseId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

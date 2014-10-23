@@ -18,9 +18,12 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 
 import de.uhh.l2g.plugins.model.License;
 import de.uhh.l2g.plugins.model.LicenseModel;
@@ -54,17 +57,17 @@ public class LicenseModelImpl extends BaseModelImpl<License>
 	 */
 	public static final String TABLE_NAME = "LG_License";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "licenseId", Types.INTEGER },
-			{ "videoId", Types.INTEGER },
-			{ "ccby", Types.VARCHAR },
-			{ "ccbybc", Types.VARCHAR },
-			{ "ccbyncnd", Types.VARCHAR },
-			{ "ccbyncsa", Types.VARCHAR },
-			{ "ccbysa", Types.VARCHAR },
-			{ "ccbync", Types.VARCHAR },
-			{ "l2go", Types.VARCHAR }
+			{ "licenseId", Types.BIGINT },
+			{ "videoId", Types.BIGINT },
+			{ "ccby", Types.INTEGER },
+			{ "ccbybc", Types.INTEGER },
+			{ "ccbyncnd", Types.INTEGER },
+			{ "ccbyncsa", Types.INTEGER },
+			{ "ccbysa", Types.INTEGER },
+			{ "ccbync", Types.INTEGER },
+			{ "l2go", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_License (licenseId INTEGER not null primary key,videoId INTEGER,ccby VARCHAR(75) null,ccbybc VARCHAR(75) null,ccbyncnd VARCHAR(75) null,ccbyncsa VARCHAR(75) null,ccbysa VARCHAR(75) null,ccbync VARCHAR(75) null,l2go VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table LG_License (licenseId LONG not null primary key,videoId LONG,ccby INTEGER,ccbybc INTEGER,ccbyncnd INTEGER,ccbyncsa INTEGER,ccbysa INTEGER,ccbync INTEGER,l2go INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table LG_License";
 	public static final String ORDER_BY_JPQL = " ORDER BY license.licenseId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_License.licenseId ASC";
@@ -77,7 +80,11 @@ public class LicenseModelImpl extends BaseModelImpl<License>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.finder.cache.enabled.de.uhh.l2g.plugins.model.License"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.License"),
+			true);
+	public static long VIDEOID_COLUMN_BITMASK = 1L;
+	public static long LICENSEID_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.License"));
 
@@ -85,12 +92,12 @@ public class LicenseModelImpl extends BaseModelImpl<License>
 	}
 
 	@Override
-	public int getPrimaryKey() {
+	public long getPrimaryKey() {
 		return _licenseId;
 	}
 
 	@Override
-	public void setPrimaryKey(int primaryKey) {
+	public void setPrimaryKey(long primaryKey) {
 		setLicenseId(primaryKey);
 	}
 
@@ -101,7 +108,7 @@ public class LicenseModelImpl extends BaseModelImpl<License>
 
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		setPrimaryKey(((Integer)primaryKeyObj).intValue());
+		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
 	@Override
@@ -133,55 +140,55 @@ public class LicenseModelImpl extends BaseModelImpl<License>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Integer licenseId = (Integer)attributes.get("licenseId");
+		Long licenseId = (Long)attributes.get("licenseId");
 
 		if (licenseId != null) {
 			setLicenseId(licenseId);
 		}
 
-		Integer videoId = (Integer)attributes.get("videoId");
+		Long videoId = (Long)attributes.get("videoId");
 
 		if (videoId != null) {
 			setVideoId(videoId);
 		}
 
-		String ccby = (String)attributes.get("ccby");
+		Integer ccby = (Integer)attributes.get("ccby");
 
 		if (ccby != null) {
 			setCcby(ccby);
 		}
 
-		String ccbybc = (String)attributes.get("ccbybc");
+		Integer ccbybc = (Integer)attributes.get("ccbybc");
 
 		if (ccbybc != null) {
 			setCcbybc(ccbybc);
 		}
 
-		String ccbyncnd = (String)attributes.get("ccbyncnd");
+		Integer ccbyncnd = (Integer)attributes.get("ccbyncnd");
 
 		if (ccbyncnd != null) {
 			setCcbyncnd(ccbyncnd);
 		}
 
-		String ccbyncsa = (String)attributes.get("ccbyncsa");
+		Integer ccbyncsa = (Integer)attributes.get("ccbyncsa");
 
 		if (ccbyncsa != null) {
 			setCcbyncsa(ccbyncsa);
 		}
 
-		String ccbysa = (String)attributes.get("ccbysa");
+		Integer ccbysa = (Integer)attributes.get("ccbysa");
 
 		if (ccbysa != null) {
 			setCcbysa(ccbysa);
 		}
 
-		String ccbync = (String)attributes.get("ccbync");
+		Integer ccbync = (Integer)attributes.get("ccbync");
 
 		if (ccbync != null) {
 			setCcbync(ccbync);
 		}
 
-		String l2go = (String)attributes.get("l2go");
+		Integer l2go = (Integer)attributes.get("l2go");
 
 		if (l2go != null) {
 			setL2go(l2go);
@@ -189,128 +196,122 @@ public class LicenseModelImpl extends BaseModelImpl<License>
 	}
 
 	@Override
-	public int getLicenseId() {
+	public long getLicenseId() {
 		return _licenseId;
 	}
 
 	@Override
-	public void setLicenseId(int licenseId) {
+	public void setLicenseId(long licenseId) {
 		_licenseId = licenseId;
 	}
 
 	@Override
-	public int getVideoId() {
+	public long getVideoId() {
 		return _videoId;
 	}
 
 	@Override
-	public void setVideoId(int videoId) {
+	public void setVideoId(long videoId) {
+		_columnBitmask |= VIDEOID_COLUMN_BITMASK;
+
+		if (!_setOriginalVideoId) {
+			_setOriginalVideoId = true;
+
+			_originalVideoId = _videoId;
+		}
+
 		_videoId = videoId;
 	}
 
-	@Override
-	public String getCcby() {
-		if (_ccby == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _ccby;
-		}
+	public long getOriginalVideoId() {
+		return _originalVideoId;
 	}
 
 	@Override
-	public void setCcby(String ccby) {
+	public int getCcby() {
+		return _ccby;
+	}
+
+	@Override
+	public void setCcby(int ccby) {
 		_ccby = ccby;
 	}
 
 	@Override
-	public String getCcbybc() {
-		if (_ccbybc == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _ccbybc;
-		}
+	public int getCcbybc() {
+		return _ccbybc;
 	}
 
 	@Override
-	public void setCcbybc(String ccbybc) {
+	public void setCcbybc(int ccbybc) {
 		_ccbybc = ccbybc;
 	}
 
 	@Override
-	public String getCcbyncnd() {
-		if (_ccbyncnd == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _ccbyncnd;
-		}
+	public int getCcbyncnd() {
+		return _ccbyncnd;
 	}
 
 	@Override
-	public void setCcbyncnd(String ccbyncnd) {
+	public void setCcbyncnd(int ccbyncnd) {
 		_ccbyncnd = ccbyncnd;
 	}
 
 	@Override
-	public String getCcbyncsa() {
-		if (_ccbyncsa == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _ccbyncsa;
-		}
+	public int getCcbyncsa() {
+		return _ccbyncsa;
 	}
 
 	@Override
-	public void setCcbyncsa(String ccbyncsa) {
+	public void setCcbyncsa(int ccbyncsa) {
 		_ccbyncsa = ccbyncsa;
 	}
 
 	@Override
-	public String getCcbysa() {
-		if (_ccbysa == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _ccbysa;
-		}
+	public int getCcbysa() {
+		return _ccbysa;
 	}
 
 	@Override
-	public void setCcbysa(String ccbysa) {
+	public void setCcbysa(int ccbysa) {
 		_ccbysa = ccbysa;
 	}
 
 	@Override
-	public String getCcbync() {
-		if (_ccbync == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _ccbync;
-		}
+	public int getCcbync() {
+		return _ccbync;
 	}
 
 	@Override
-	public void setCcbync(String ccbync) {
+	public void setCcbync(int ccbync) {
 		_ccbync = ccbync;
 	}
 
 	@Override
-	public String getL2go() {
-		if (_l2go == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _l2go;
-		}
+	public int getL2go() {
+		return _l2go;
 	}
 
 	@Override
-	public void setL2go(String l2go) {
+	public void setL2go(int l2go) {
 		_l2go = l2go;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+			License.class.getName(), getPrimaryKey());
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -344,7 +345,7 @@ public class LicenseModelImpl extends BaseModelImpl<License>
 
 	@Override
 	public int compareTo(License license) {
-		int primaryKey = license.getPrimaryKey();
+		long primaryKey = license.getPrimaryKey();
 
 		if (getPrimaryKey() < primaryKey) {
 			return -1;
@@ -369,7 +370,7 @@ public class LicenseModelImpl extends BaseModelImpl<License>
 
 		License license = (License)obj;
 
-		int primaryKey = license.getPrimaryKey();
+		long primaryKey = license.getPrimaryKey();
 
 		if (getPrimaryKey() == primaryKey) {
 			return true;
@@ -381,11 +382,18 @@ public class LicenseModelImpl extends BaseModelImpl<License>
 
 	@Override
 	public int hashCode() {
-		return getPrimaryKey();
+		return (int)getPrimaryKey();
 	}
 
 	@Override
 	public void resetOriginalValues() {
+		LicenseModelImpl licenseModelImpl = this;
+
+		licenseModelImpl._originalVideoId = licenseModelImpl._videoId;
+
+		licenseModelImpl._setOriginalVideoId = false;
+
+		licenseModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -398,59 +406,17 @@ public class LicenseModelImpl extends BaseModelImpl<License>
 
 		licenseCacheModel.ccby = getCcby();
 
-		String ccby = licenseCacheModel.ccby;
-
-		if ((ccby != null) && (ccby.length() == 0)) {
-			licenseCacheModel.ccby = null;
-		}
-
 		licenseCacheModel.ccbybc = getCcbybc();
-
-		String ccbybc = licenseCacheModel.ccbybc;
-
-		if ((ccbybc != null) && (ccbybc.length() == 0)) {
-			licenseCacheModel.ccbybc = null;
-		}
 
 		licenseCacheModel.ccbyncnd = getCcbyncnd();
 
-		String ccbyncnd = licenseCacheModel.ccbyncnd;
-
-		if ((ccbyncnd != null) && (ccbyncnd.length() == 0)) {
-			licenseCacheModel.ccbyncnd = null;
-		}
-
 		licenseCacheModel.ccbyncsa = getCcbyncsa();
-
-		String ccbyncsa = licenseCacheModel.ccbyncsa;
-
-		if ((ccbyncsa != null) && (ccbyncsa.length() == 0)) {
-			licenseCacheModel.ccbyncsa = null;
-		}
 
 		licenseCacheModel.ccbysa = getCcbysa();
 
-		String ccbysa = licenseCacheModel.ccbysa;
-
-		if ((ccbysa != null) && (ccbysa.length() == 0)) {
-			licenseCacheModel.ccbysa = null;
-		}
-
 		licenseCacheModel.ccbync = getCcbync();
 
-		String ccbync = licenseCacheModel.ccbync;
-
-		if ((ccbync != null) && (ccbync.length() == 0)) {
-			licenseCacheModel.ccbync = null;
-		}
-
 		licenseCacheModel.l2go = getL2go();
-
-		String l2go = licenseCacheModel.l2go;
-
-		if ((l2go != null) && (l2go.length() == 0)) {
-			licenseCacheModel.l2go = null;
-		}
 
 		return licenseCacheModel;
 	}
@@ -536,14 +502,17 @@ public class LicenseModelImpl extends BaseModelImpl<License>
 	private static Class<?>[] _escapedModelInterfaces = new Class[] {
 			License.class
 		};
-	private int _licenseId;
-	private int _videoId;
-	private String _ccby;
-	private String _ccbybc;
-	private String _ccbyncnd;
-	private String _ccbyncsa;
-	private String _ccbysa;
-	private String _ccbync;
-	private String _l2go;
+	private long _licenseId;
+	private long _videoId;
+	private long _originalVideoId;
+	private boolean _setOriginalVideoId;
+	private int _ccby;
+	private int _ccbybc;
+	private int _ccbyncnd;
+	private int _ccbyncsa;
+	private int _ccbysa;
+	private int _ccbync;
+	private int _l2go;
+	private long _columnBitmask;
 	private License _escapedModel;
 }

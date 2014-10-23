@@ -58,7 +58,7 @@ public class LicenseLocalServiceUtil {
 	* @param licenseId the primary key for the new license
 	* @return the new license
 	*/
-	public static de.uhh.l2g.plugins.model.License createLicense(int licenseId) {
+	public static de.uhh.l2g.plugins.model.License createLicense(long licenseId) {
 		return getService().createLicense(licenseId);
 	}
 
@@ -70,7 +70,7 @@ public class LicenseLocalServiceUtil {
 	* @throws PortalException if a license with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.License deleteLicense(int licenseId)
+	public static de.uhh.l2g.plugins.model.License deleteLicense(long licenseId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().deleteLicense(licenseId);
@@ -179,7 +179,7 @@ public class LicenseLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static de.uhh.l2g.plugins.model.License fetchLicense(int licenseId)
+	public static de.uhh.l2g.plugins.model.License fetchLicense(long licenseId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().fetchLicense(licenseId);
 	}
@@ -192,7 +192,7 @@ public class LicenseLocalServiceUtil {
 	* @throws PortalException if a license with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.License getLicense(int licenseId)
+	public static de.uhh.l2g.plugins.model.License getLicense(long licenseId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getLicense(licenseId);
@@ -269,6 +269,13 @@ public class LicenseLocalServiceUtil {
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable {
 		return getService().invokeMethod(name, parameterTypes, arguments);
+	}
+
+	public static de.uhh.l2g.plugins.model.License getByVideoId(
+		java.lang.Long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchLicenseException {
+		return getService().getByVideoId(videoId);
 	}
 
 	public static void clearService() {

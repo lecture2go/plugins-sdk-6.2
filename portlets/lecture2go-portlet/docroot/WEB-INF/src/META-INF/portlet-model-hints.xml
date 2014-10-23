@@ -53,15 +53,15 @@
 		<field name="facilityId" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.License">
-		<field name="licenseId" type="int" />
-		<field name="videoId" type="int" />
-		<field name="ccby" type="String" />
-		<field name="ccbybc" type="String" />
-		<field name="ccbyncnd" type="String" />
-		<field name="ccbyncsa" type="String" />
-		<field name="ccbysa" type="String" />
-		<field name="ccbync" type="String" />
-		<field name="l2go" type="String" />
+		<field name="licenseId" type="long" />
+		<field name="videoId" type="long" />
+		<field name="ccby" type="int" />
+		<field name="ccbybc" type="int" />
+		<field name="ccbyncnd" type="int" />
+		<field name="ccbyncsa" type="int" />
+		<field name="ccbysa" type="int" />
+		<field name="ccbync" type="int" />
+		<field name="l2go" type="int" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Metadata">
 		<field name="metadataId" type="long" />

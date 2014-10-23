@@ -82,93 +82,93 @@ public class LicenseSoap implements Serializable {
 	public LicenseSoap() {
 	}
 
-	public int getPrimaryKey() {
+	public long getPrimaryKey() {
 		return _licenseId;
 	}
 
-	public void setPrimaryKey(int pk) {
+	public void setPrimaryKey(long pk) {
 		setLicenseId(pk);
 	}
 
-	public int getLicenseId() {
+	public long getLicenseId() {
 		return _licenseId;
 	}
 
-	public void setLicenseId(int licenseId) {
+	public void setLicenseId(long licenseId) {
 		_licenseId = licenseId;
 	}
 
-	public int getVideoId() {
+	public long getVideoId() {
 		return _videoId;
 	}
 
-	public void setVideoId(int videoId) {
+	public void setVideoId(long videoId) {
 		_videoId = videoId;
 	}
 
-	public String getCcby() {
+	public int getCcby() {
 		return _ccby;
 	}
 
-	public void setCcby(String ccby) {
+	public void setCcby(int ccby) {
 		_ccby = ccby;
 	}
 
-	public String getCcbybc() {
+	public int getCcbybc() {
 		return _ccbybc;
 	}
 
-	public void setCcbybc(String ccbybc) {
+	public void setCcbybc(int ccbybc) {
 		_ccbybc = ccbybc;
 	}
 
-	public String getCcbyncnd() {
+	public int getCcbyncnd() {
 		return _ccbyncnd;
 	}
 
-	public void setCcbyncnd(String ccbyncnd) {
+	public void setCcbyncnd(int ccbyncnd) {
 		_ccbyncnd = ccbyncnd;
 	}
 
-	public String getCcbyncsa() {
+	public int getCcbyncsa() {
 		return _ccbyncsa;
 	}
 
-	public void setCcbyncsa(String ccbyncsa) {
+	public void setCcbyncsa(int ccbyncsa) {
 		_ccbyncsa = ccbyncsa;
 	}
 
-	public String getCcbysa() {
+	public int getCcbysa() {
 		return _ccbysa;
 	}
 
-	public void setCcbysa(String ccbysa) {
+	public void setCcbysa(int ccbysa) {
 		_ccbysa = ccbysa;
 	}
 
-	public String getCcbync() {
+	public int getCcbync() {
 		return _ccbync;
 	}
 
-	public void setCcbync(String ccbync) {
+	public void setCcbync(int ccbync) {
 		_ccbync = ccbync;
 	}
 
-	public String getL2go() {
+	public int getL2go() {
 		return _l2go;
 	}
 
-	public void setL2go(String l2go) {
+	public void setL2go(int l2go) {
 		_l2go = l2go;
 	}
 
-	private int _licenseId;
-	private int _videoId;
-	private String _ccby;
-	private String _ccbybc;
-	private String _ccbyncnd;
-	private String _ccbyncsa;
-	private String _ccbysa;
-	private String _ccbync;
-	private String _l2go;
+	private long _licenseId;
+	private long _videoId;
+	private int _ccby;
+	private int _ccbybc;
+	private int _ccbyncnd;
+	private int _ccbyncsa;
+	private int _ccbysa;
+	private int _ccbync;
+	private int _l2go;
 }

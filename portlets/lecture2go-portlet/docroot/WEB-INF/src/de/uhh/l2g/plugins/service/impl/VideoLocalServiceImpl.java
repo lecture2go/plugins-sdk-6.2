@@ -60,4 +60,9 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		List<Video> vl =  videoPersistence.findByLectureseries(lectureseriesId);
 		return vl;
 	}
+
+	public List<Video> getByProducerAndLectureseries(Long producerId, Long lectureseriesId) throws SystemException{
+		List<Video> vl =  videoPersistence.findByProducerAndLectureseries(producerId, lectureseriesId);
+		return vl;
+	}
 }

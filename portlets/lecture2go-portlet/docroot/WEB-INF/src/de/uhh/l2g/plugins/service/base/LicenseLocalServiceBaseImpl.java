@@ -106,7 +106,7 @@ public abstract class LicenseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the new license
 	 */
 	@Override
-	public License createLicense(int licenseId) {
+	public License createLicense(long licenseId) {
 		return licensePersistence.create(licenseId);
 	}
 
@@ -120,7 +120,7 @@ public abstract class LicenseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public License deleteLicense(int licenseId)
+	public License deleteLicense(long licenseId)
 		throws PortalException, SystemException {
 		return licensePersistence.remove(licenseId);
 	}
@@ -230,7 +230,7 @@ public abstract class LicenseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	@Override
-	public License fetchLicense(int licenseId) throws SystemException {
+	public License fetchLicense(long licenseId) throws SystemException {
 		return licensePersistence.fetchByPrimaryKey(licenseId);
 	}
 
@@ -243,7 +243,7 @@ public abstract class LicenseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public License getLicense(int licenseId)
+	public License getLicense(long licenseId)
 		throws PortalException, SystemException {
 		return licensePersistence.findByPrimaryKey(licenseId);
 	}

@@ -62,7 +62,7 @@ public interface LicenseLocalService extends BaseLocalService,
 	* @param licenseId the primary key for the new license
 	* @return the new license
 	*/
-	public de.uhh.l2g.plugins.model.License createLicense(int licenseId);
+	public de.uhh.l2g.plugins.model.License createLicense(long licenseId);
 
 	/**
 	* Deletes the license with the primary key from the database. Also notifies the appropriate model listeners.
@@ -72,7 +72,7 @@ public interface LicenseLocalService extends BaseLocalService,
 	* @throws PortalException if a license with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.License deleteLicense(int licenseId)
+	public de.uhh.l2g.plugins.model.License deleteLicense(long licenseId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -165,7 +165,7 @@ public interface LicenseLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public de.uhh.l2g.plugins.model.License fetchLicense(int licenseId)
+	public de.uhh.l2g.plugins.model.License fetchLicense(long licenseId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -177,7 +177,7 @@ public interface LicenseLocalService extends BaseLocalService,
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public de.uhh.l2g.plugins.model.License getLicense(int licenseId)
+	public de.uhh.l2g.plugins.model.License getLicense(long licenseId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -244,4 +244,9 @@ public interface LicenseLocalService extends BaseLocalService,
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public de.uhh.l2g.plugins.model.License getByVideoId(java.lang.Long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchLicenseException;
 }

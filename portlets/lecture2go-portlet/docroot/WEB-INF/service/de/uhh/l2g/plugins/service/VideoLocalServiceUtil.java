@@ -294,6 +294,13 @@ public class VideoLocalServiceUtil {
 		return getService().getByLectureseries(lectureseriesId);
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByProducerAndLectureseries(
+		java.lang.Long producerId, java.lang.Long lectureseriesId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getByProducerAndLectureseries(producerId, lectureseriesId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

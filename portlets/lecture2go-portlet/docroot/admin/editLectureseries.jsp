@@ -1,4 +1,3 @@
-<%@page import="com.liferay.portlet.PortletURLUtil"%>
 <%@include file="/init.jsp"%>
 
 <%

@@ -49,12 +49,12 @@ public class LicenseClp extends BaseModelImpl<License> implements License {
 	}
 
 	@Override
-	public int getPrimaryKey() {
+	public long getPrimaryKey() {
 		return _licenseId;
 	}
 
 	@Override
-	public void setPrimaryKey(int primaryKey) {
+	public void setPrimaryKey(long primaryKey) {
 		setLicenseId(primaryKey);
 	}
 
@@ -65,7 +65,7 @@ public class LicenseClp extends BaseModelImpl<License> implements License {
 
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		setPrimaryKey(((Integer)primaryKeyObj).intValue());
+		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
 	@Override
@@ -87,55 +87,55 @@ public class LicenseClp extends BaseModelImpl<License> implements License {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Integer licenseId = (Integer)attributes.get("licenseId");
+		Long licenseId = (Long)attributes.get("licenseId");
 
 		if (licenseId != null) {
 			setLicenseId(licenseId);
 		}
 
-		Integer videoId = (Integer)attributes.get("videoId");
+		Long videoId = (Long)attributes.get("videoId");
 
 		if (videoId != null) {
 			setVideoId(videoId);
 		}
 
-		String ccby = (String)attributes.get("ccby");
+		Integer ccby = (Integer)attributes.get("ccby");
 
 		if (ccby != null) {
 			setCcby(ccby);
 		}
 
-		String ccbybc = (String)attributes.get("ccbybc");
+		Integer ccbybc = (Integer)attributes.get("ccbybc");
 
 		if (ccbybc != null) {
 			setCcbybc(ccbybc);
 		}
 
-		String ccbyncnd = (String)attributes.get("ccbyncnd");
+		Integer ccbyncnd = (Integer)attributes.get("ccbyncnd");
 
 		if (ccbyncnd != null) {
 			setCcbyncnd(ccbyncnd);
 		}
 
-		String ccbyncsa = (String)attributes.get("ccbyncsa");
+		Integer ccbyncsa = (Integer)attributes.get("ccbyncsa");
 
 		if (ccbyncsa != null) {
 			setCcbyncsa(ccbyncsa);
 		}
 
-		String ccbysa = (String)attributes.get("ccbysa");
+		Integer ccbysa = (Integer)attributes.get("ccbysa");
 
 		if (ccbysa != null) {
 			setCcbysa(ccbysa);
 		}
 
-		String ccbync = (String)attributes.get("ccbync");
+		Integer ccbync = (Integer)attributes.get("ccbync");
 
 		if (ccbync != null) {
 			setCcbync(ccbync);
 		}
 
-		String l2go = (String)attributes.get("l2go");
+		Integer l2go = (Integer)attributes.get("l2go");
 
 		if (l2go != null) {
 			setL2go(l2go);
@@ -143,19 +143,19 @@ public class LicenseClp extends BaseModelImpl<License> implements License {
 	}
 
 	@Override
-	public int getLicenseId() {
+	public long getLicenseId() {
 		return _licenseId;
 	}
 
 	@Override
-	public void setLicenseId(int licenseId) {
+	public void setLicenseId(long licenseId) {
 		_licenseId = licenseId;
 
 		if (_licenseRemoteModel != null) {
 			try {
 				Class<?> clazz = _licenseRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setLicenseId", int.class);
+				Method method = clazz.getMethod("setLicenseId", long.class);
 
 				method.invoke(_licenseRemoteModel, licenseId);
 			}
@@ -166,19 +166,19 @@ public class LicenseClp extends BaseModelImpl<License> implements License {
 	}
 
 	@Override
-	public int getVideoId() {
+	public long getVideoId() {
 		return _videoId;
 	}
 
 	@Override
-	public void setVideoId(int videoId) {
+	public void setVideoId(long videoId) {
 		_videoId = videoId;
 
 		if (_licenseRemoteModel != null) {
 			try {
 				Class<?> clazz = _licenseRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setVideoId", int.class);
+				Method method = clazz.getMethod("setVideoId", long.class);
 
 				method.invoke(_licenseRemoteModel, videoId);
 			}
@@ -189,19 +189,19 @@ public class LicenseClp extends BaseModelImpl<License> implements License {
 	}
 
 	@Override
-	public String getCcby() {
+	public int getCcby() {
 		return _ccby;
 	}
 
 	@Override
-	public void setCcby(String ccby) {
+	public void setCcby(int ccby) {
 		_ccby = ccby;
 
 		if (_licenseRemoteModel != null) {
 			try {
 				Class<?> clazz = _licenseRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setCcby", String.class);
+				Method method = clazz.getMethod("setCcby", int.class);
 
 				method.invoke(_licenseRemoteModel, ccby);
 			}
@@ -212,19 +212,19 @@ public class LicenseClp extends BaseModelImpl<License> implements License {
 	}
 
 	@Override
-	public String getCcbybc() {
+	public int getCcbybc() {
 		return _ccbybc;
 	}
 
 	@Override
-	public void setCcbybc(String ccbybc) {
+	public void setCcbybc(int ccbybc) {
 		_ccbybc = ccbybc;
 
 		if (_licenseRemoteModel != null) {
 			try {
 				Class<?> clazz = _licenseRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setCcbybc", String.class);
+				Method method = clazz.getMethod("setCcbybc", int.class);
 
 				method.invoke(_licenseRemoteModel, ccbybc);
 			}
@@ -235,19 +235,19 @@ public class LicenseClp extends BaseModelImpl<License> implements License {
 	}
 
 	@Override
-	public String getCcbyncnd() {
+	public int getCcbyncnd() {
 		return _ccbyncnd;
 	}
 
 	@Override
-	public void setCcbyncnd(String ccbyncnd) {
+	public void setCcbyncnd(int ccbyncnd) {
 		_ccbyncnd = ccbyncnd;
 
 		if (_licenseRemoteModel != null) {
 			try {
 				Class<?> clazz = _licenseRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setCcbyncnd", String.class);
+				Method method = clazz.getMethod("setCcbyncnd", int.class);
 
 				method.invoke(_licenseRemoteModel, ccbyncnd);
 			}
@@ -258,19 +258,19 @@ public class LicenseClp extends BaseModelImpl<License> implements License {
 	}
 
 	@Override
-	public String getCcbyncsa() {
+	public int getCcbyncsa() {
 		return _ccbyncsa;
 	}
 
 	@Override
-	public void setCcbyncsa(String ccbyncsa) {
+	public void setCcbyncsa(int ccbyncsa) {
 		_ccbyncsa = ccbyncsa;
 
 		if (_licenseRemoteModel != null) {
 			try {
 				Class<?> clazz = _licenseRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setCcbyncsa", String.class);
+				Method method = clazz.getMethod("setCcbyncsa", int.class);
 
 				method.invoke(_licenseRemoteModel, ccbyncsa);
 			}
@@ -281,19 +281,19 @@ public class LicenseClp extends BaseModelImpl<License> implements License {
 	}
 
 	@Override
-	public String getCcbysa() {
+	public int getCcbysa() {
 		return _ccbysa;
 	}
 
 	@Override
-	public void setCcbysa(String ccbysa) {
+	public void setCcbysa(int ccbysa) {
 		_ccbysa = ccbysa;
 
 		if (_licenseRemoteModel != null) {
 			try {
 				Class<?> clazz = _licenseRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setCcbysa", String.class);
+				Method method = clazz.getMethod("setCcbysa", int.class);
 
 				method.invoke(_licenseRemoteModel, ccbysa);
 			}
@@ -304,19 +304,19 @@ public class LicenseClp extends BaseModelImpl<License> implements License {
 	}
 
 	@Override
-	public String getCcbync() {
+	public int getCcbync() {
 		return _ccbync;
 	}
 
 	@Override
-	public void setCcbync(String ccbync) {
+	public void setCcbync(int ccbync) {
 		_ccbync = ccbync;
 
 		if (_licenseRemoteModel != null) {
 			try {
 				Class<?> clazz = _licenseRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setCcbync", String.class);
+				Method method = clazz.getMethod("setCcbync", int.class);
 
 				method.invoke(_licenseRemoteModel, ccbync);
 			}
@@ -327,19 +327,19 @@ public class LicenseClp extends BaseModelImpl<License> implements License {
 	}
 
 	@Override
-	public String getL2go() {
+	public int getL2go() {
 		return _l2go;
 	}
 
 	@Override
-	public void setL2go(String l2go) {
+	public void setL2go(int l2go) {
 		_l2go = l2go;
 
 		if (_licenseRemoteModel != null) {
 			try {
 				Class<?> clazz = _licenseRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setL2go", String.class);
+				Method method = clazz.getMethod("setL2go", int.class);
 
 				method.invoke(_licenseRemoteModel, l2go);
 			}
@@ -433,7 +433,7 @@ public class LicenseClp extends BaseModelImpl<License> implements License {
 
 	@Override
 	public int compareTo(License license) {
-		int primaryKey = license.getPrimaryKey();
+		long primaryKey = license.getPrimaryKey();
 
 		if (getPrimaryKey() < primaryKey) {
 			return -1;
@@ -458,7 +458,7 @@ public class LicenseClp extends BaseModelImpl<License> implements License {
 
 		LicenseClp license = (LicenseClp)obj;
 
-		int primaryKey = license.getPrimaryKey();
+		long primaryKey = license.getPrimaryKey();
 
 		if (getPrimaryKey() == primaryKey) {
 			return true;
@@ -470,7 +470,7 @@ public class LicenseClp extends BaseModelImpl<License> implements License {
 
 	@Override
 	public int hashCode() {
-		return getPrimaryKey();
+		return (int)getPrimaryKey();
 	}
 
 	@Override
@@ -550,14 +550,14 @@ public class LicenseClp extends BaseModelImpl<License> implements License {
 		return sb.toString();
 	}
 
-	private int _licenseId;
-	private int _videoId;
-	private String _ccby;
-	private String _ccbybc;
-	private String _ccbyncnd;
-	private String _ccbyncsa;
-	private String _ccbysa;
-	private String _ccbync;
-	private String _l2go;
+	private long _licenseId;
+	private long _videoId;
+	private int _ccby;
+	private int _ccbybc;
+	private int _ccbyncnd;
+	private int _ccbyncsa;
+	private int _ccbysa;
+	private int _ccbync;
+	private int _l2go;
 	private BaseModel<?> _licenseRemoteModel;
 }

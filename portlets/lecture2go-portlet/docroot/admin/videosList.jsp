@@ -33,12 +33,12 @@
 		lectureseriesId=new Long(0);
 	}
 	if(lectureseriesId>0){
-		tempVideosList = VideoLocalServiceUtil.getByLectureseries(lectureseriesId);
+		tempVideosList = VideoLocalServiceUtil.getByProducerAndLectureseries(producerId, lectureseriesId);
 	}
 	if(coordinatorId==0 && producerId==0) tempVideosList = VideoLocalServiceUtil.getVideos(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 	
 %>
-<portlet:renderURL var="addVideoURL"><portlet:param name="jspPage" value="/admin/editVideo.jsp" /></portlet:renderURL>
+<portlet:renderURL var="addVideoURL"><portlet:param name="jspPage" value="/admin/editVideo.jsp" /><portlet:param name="lectureseriesId" value='<%=lectureseriesId+""%>'></portlet:param><portlet:param name="producerId" value='<%=producerId+""%>'></portlet:param></portlet:renderURL>
 
 <aui:fieldset helpMessage="choose-filter" column="true">
 		<aui:layout>
@@ -105,9 +105,11 @@
 				<%}%>
 		</aui:layout>
 		<aui:layout>
-			<aui:row>
-				<aui:button value="add-new-video" onClick="<%=addVideoURL%>"/>
-			</aui:row>
+			<%if(producerId>0){%>	
+				<aui:row>
+					<aui:button value="add-new-video" onClick="<%=addVideoURL%>"/>
+				</aui:row>
+			<%}%>
 		</aui:layout>
 </aui:fieldset>
 

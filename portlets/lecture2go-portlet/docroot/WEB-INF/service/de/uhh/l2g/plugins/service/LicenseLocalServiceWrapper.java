@@ -50,7 +50,7 @@ public class LicenseLocalServiceWrapper implements LicenseLocalService,
 	* @return the new license
 	*/
 	@Override
-	public de.uhh.l2g.plugins.model.License createLicense(int licenseId) {
+	public de.uhh.l2g.plugins.model.License createLicense(long licenseId) {
 		return _licenseLocalService.createLicense(licenseId);
 	}
 
@@ -63,7 +63,7 @@ public class LicenseLocalServiceWrapper implements LicenseLocalService,
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public de.uhh.l2g.plugins.model.License deleteLicense(int licenseId)
+	public de.uhh.l2g.plugins.model.License deleteLicense(long licenseId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _licenseLocalService.deleteLicense(licenseId);
@@ -180,7 +180,7 @@ public class LicenseLocalServiceWrapper implements LicenseLocalService,
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.License fetchLicense(int licenseId)
+	public de.uhh.l2g.plugins.model.License fetchLicense(long licenseId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _licenseLocalService.fetchLicense(licenseId);
 	}
@@ -194,7 +194,7 @@ public class LicenseLocalServiceWrapper implements LicenseLocalService,
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public de.uhh.l2g.plugins.model.License getLicense(int licenseId)
+	public de.uhh.l2g.plugins.model.License getLicense(long licenseId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _licenseLocalService.getLicense(licenseId);
@@ -278,6 +278,13 @@ public class LicenseLocalServiceWrapper implements LicenseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable {
 		return _licenseLocalService.invokeMethod(name, parameterTypes, arguments);
+	}
+
+	@Override
+	public de.uhh.l2g.plugins.model.License getByVideoId(java.lang.Long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchLicenseException {
+		return _licenseLocalService.getByVideoId(videoId);
 	}
 
 	/**

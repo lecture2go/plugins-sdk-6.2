@@ -57,15 +57,15 @@ create table LG_Lectureseries_Facility (
 );
 
 create table LG_License (
-	licenseId INTEGER not null primary key,
-	videoId INTEGER,
-	ccby VARCHAR(75) null,
-	ccbybc VARCHAR(75) null,
-	ccbyncnd VARCHAR(75) null,
-	ccbyncsa VARCHAR(75) null,
-	ccbysa VARCHAR(75) null,
-	ccbync VARCHAR(75) null,
-	l2go VARCHAR(75) null
+	licenseId LONG not null primary key,
+	videoId LONG,
+	ccby INTEGER,
+	ccbybc INTEGER,
+	ccbyncnd INTEGER,
+	ccbyncsa INTEGER,
+	ccbysa INTEGER,
+	ccbync INTEGER,
+	l2go INTEGER
 );
 
 create table LG_Metadata (

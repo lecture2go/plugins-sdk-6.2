@@ -96,17 +96,17 @@
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.LicenseImpl" table="LG_License">
 		<cache usage="read-write" />
-		<id name="licenseId" type="int">
+		<id name="licenseId" type="long">
 			<generator class="increment" />
 		</id>
-		<property name="videoId" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="ccby" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="ccbybc" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="ccbyncnd" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="ccbyncsa" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="ccbysa" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="ccbync" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="l2go" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="videoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="ccby" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="ccbybc" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="ccbyncnd" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="ccbyncsa" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="ccbysa" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="ccbync" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="l2go" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.MetadataImpl" table="LG_Metadata">
 		<cache usage="read-write" />

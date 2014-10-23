@@ -15,7 +15,6 @@
 package de.uhh.l2g.plugins.model.impl;
 
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 
 import de.uhh.l2g.plugins.model.License;
@@ -66,55 +65,13 @@ public class LicenseCacheModel implements CacheModel<License>, Externalizable {
 
 		licenseImpl.setLicenseId(licenseId);
 		licenseImpl.setVideoId(videoId);
-
-		if (ccby == null) {
-			licenseImpl.setCcby(StringPool.BLANK);
-		}
-		else {
-			licenseImpl.setCcby(ccby);
-		}
-
-		if (ccbybc == null) {
-			licenseImpl.setCcbybc(StringPool.BLANK);
-		}
-		else {
-			licenseImpl.setCcbybc(ccbybc);
-		}
-
-		if (ccbyncnd == null) {
-			licenseImpl.setCcbyncnd(StringPool.BLANK);
-		}
-		else {
-			licenseImpl.setCcbyncnd(ccbyncnd);
-		}
-
-		if (ccbyncsa == null) {
-			licenseImpl.setCcbyncsa(StringPool.BLANK);
-		}
-		else {
-			licenseImpl.setCcbyncsa(ccbyncsa);
-		}
-
-		if (ccbysa == null) {
-			licenseImpl.setCcbysa(StringPool.BLANK);
-		}
-		else {
-			licenseImpl.setCcbysa(ccbysa);
-		}
-
-		if (ccbync == null) {
-			licenseImpl.setCcbync(StringPool.BLANK);
-		}
-		else {
-			licenseImpl.setCcbync(ccbync);
-		}
-
-		if (l2go == null) {
-			licenseImpl.setL2go(StringPool.BLANK);
-		}
-		else {
-			licenseImpl.setL2go(l2go);
-		}
+		licenseImpl.setCcby(ccby);
+		licenseImpl.setCcbybc(ccbybc);
+		licenseImpl.setCcbyncnd(ccbyncnd);
+		licenseImpl.setCcbyncsa(ccbyncsa);
+		licenseImpl.setCcbysa(ccbysa);
+		licenseImpl.setCcbync(ccbync);
+		licenseImpl.setL2go(l2go);
 
 		licenseImpl.resetOriginalValues();
 
@@ -123,80 +80,38 @@ public class LicenseCacheModel implements CacheModel<License>, Externalizable {
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		licenseId = objectInput.readInt();
-		videoId = objectInput.readInt();
-		ccby = objectInput.readUTF();
-		ccbybc = objectInput.readUTF();
-		ccbyncnd = objectInput.readUTF();
-		ccbyncsa = objectInput.readUTF();
-		ccbysa = objectInput.readUTF();
-		ccbync = objectInput.readUTF();
-		l2go = objectInput.readUTF();
+		licenseId = objectInput.readLong();
+		videoId = objectInput.readLong();
+		ccby = objectInput.readInt();
+		ccbybc = objectInput.readInt();
+		ccbyncnd = objectInput.readInt();
+		ccbyncsa = objectInput.readInt();
+		ccbysa = objectInput.readInt();
+		ccbync = objectInput.readInt();
+		l2go = objectInput.readInt();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeInt(licenseId);
-		objectOutput.writeInt(videoId);
-
-		if (ccby == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(ccby);
-		}
-
-		if (ccbybc == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(ccbybc);
-		}
-
-		if (ccbyncnd == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(ccbyncnd);
-		}
-
-		if (ccbyncsa == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(ccbyncsa);
-		}
-
-		if (ccbysa == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(ccbysa);
-		}
-
-		if (ccbync == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(ccbync);
-		}
-
-		if (l2go == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(l2go);
-		}
+		objectOutput.writeLong(licenseId);
+		objectOutput.writeLong(videoId);
+		objectOutput.writeInt(ccby);
+		objectOutput.writeInt(ccbybc);
+		objectOutput.writeInt(ccbyncnd);
+		objectOutput.writeInt(ccbyncsa);
+		objectOutput.writeInt(ccbysa);
+		objectOutput.writeInt(ccbync);
+		objectOutput.writeInt(l2go);
 	}
 
-	public int licenseId;
-	public int videoId;
-	public String ccby;
-	public String ccbybc;
-	public String ccbyncnd;
-	public String ccbyncsa;
-	public String ccbysa;
-	public String ccbync;
-	public String l2go;
+	public long licenseId;
+	public long videoId;
+	public int ccby;
+	public int ccbybc;
+	public int ccbyncnd;
+	public int ccbyncsa;
+	public int ccbysa;
+	public int ccbync;
+	public int l2go;
 }

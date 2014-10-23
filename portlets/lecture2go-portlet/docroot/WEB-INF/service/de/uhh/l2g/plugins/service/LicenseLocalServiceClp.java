@@ -30,11 +30,11 @@ public class LicenseLocalServiceClp implements LicenseLocalService {
 
 		_methodName1 = "createLicense";
 
-		_methodParameterTypes1 = new String[] { "int" };
+		_methodParameterTypes1 = new String[] { "long" };
 
 		_methodName2 = "deleteLicense";
 
-		_methodParameterTypes2 = new String[] { "int" };
+		_methodParameterTypes2 = new String[] { "long" };
 
 		_methodName3 = "deleteLicense";
 
@@ -78,11 +78,11 @@ public class LicenseLocalServiceClp implements LicenseLocalService {
 
 		_methodName10 = "fetchLicense";
 
-		_methodParameterTypes10 = new String[] { "int" };
+		_methodParameterTypes10 = new String[] { "long" };
 
 		_methodName11 = "getLicense";
 
-		_methodParameterTypes11 = new String[] { "int" };
+		_methodParameterTypes11 = new String[] { "long" };
 
 		_methodName12 = "getPersistedModel";
 
@@ -109,6 +109,10 @@ public class LicenseLocalServiceClp implements LicenseLocalService {
 		_methodName17 = "setBeanIdentifier";
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
+
+		_methodName19 = "getByVideoId";
+
+		_methodParameterTypes19 = new String[] { "java.lang.Long" };
 	}
 
 	@Override
@@ -142,7 +146,7 @@ public class LicenseLocalServiceClp implements LicenseLocalService {
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.License createLicense(int licenseId) {
+	public de.uhh.l2g.plugins.model.License createLicense(long licenseId) {
 		Object returnObj = null;
 
 		try {
@@ -165,7 +169,7 @@ public class LicenseLocalServiceClp implements LicenseLocalService {
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.License deleteLicense(int licenseId)
+	public de.uhh.l2g.plugins.model.License deleteLicense(long licenseId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -425,7 +429,7 @@ public class LicenseLocalServiceClp implements LicenseLocalService {
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.License fetchLicense(int licenseId)
+	public de.uhh.l2g.plugins.model.License fetchLicense(long licenseId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
@@ -453,7 +457,7 @@ public class LicenseLocalServiceClp implements LicenseLocalService {
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.License getLicense(int licenseId)
+	public de.uhh.l2g.plugins.model.License getLicense(long licenseId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -657,6 +661,40 @@ public class LicenseLocalServiceClp implements LicenseLocalService {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public de.uhh.l2g.plugins.model.License getByVideoId(java.lang.Long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchLicenseException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName19,
+					_methodParameterTypes19,
+					new Object[] { ClpSerializer.translateInput(videoId) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof de.uhh.l2g.plugins.NoSuchLicenseException) {
+				throw (de.uhh.l2g.plugins.NoSuchLicenseException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (de.uhh.l2g.plugins.model.License)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -694,4 +732,6 @@ public class LicenseLocalServiceClp implements LicenseLocalService {
 	private String[] _methodParameterTypes16;
 	private String _methodName17;
 	private String[] _methodParameterTypes17;
+	private String _methodName19;
+	private String[] _methodParameterTypes19;
 }

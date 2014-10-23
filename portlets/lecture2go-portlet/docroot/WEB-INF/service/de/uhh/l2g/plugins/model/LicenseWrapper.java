@@ -63,55 +63,55 @@ public class LicenseWrapper implements License, ModelWrapper<License> {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Integer licenseId = (Integer)attributes.get("licenseId");
+		Long licenseId = (Long)attributes.get("licenseId");
 
 		if (licenseId != null) {
 			setLicenseId(licenseId);
 		}
 
-		Integer videoId = (Integer)attributes.get("videoId");
+		Long videoId = (Long)attributes.get("videoId");
 
 		if (videoId != null) {
 			setVideoId(videoId);
 		}
 
-		String ccby = (String)attributes.get("ccby");
+		Integer ccby = (Integer)attributes.get("ccby");
 
 		if (ccby != null) {
 			setCcby(ccby);
 		}
 
-		String ccbybc = (String)attributes.get("ccbybc");
+		Integer ccbybc = (Integer)attributes.get("ccbybc");
 
 		if (ccbybc != null) {
 			setCcbybc(ccbybc);
 		}
 
-		String ccbyncnd = (String)attributes.get("ccbyncnd");
+		Integer ccbyncnd = (Integer)attributes.get("ccbyncnd");
 
 		if (ccbyncnd != null) {
 			setCcbyncnd(ccbyncnd);
 		}
 
-		String ccbyncsa = (String)attributes.get("ccbyncsa");
+		Integer ccbyncsa = (Integer)attributes.get("ccbyncsa");
 
 		if (ccbyncsa != null) {
 			setCcbyncsa(ccbyncsa);
 		}
 
-		String ccbysa = (String)attributes.get("ccbysa");
+		Integer ccbysa = (Integer)attributes.get("ccbysa");
 
 		if (ccbysa != null) {
 			setCcbysa(ccbysa);
 		}
 
-		String ccbync = (String)attributes.get("ccbync");
+		Integer ccbync = (Integer)attributes.get("ccbync");
 
 		if (ccbync != null) {
 			setCcbync(ccbync);
 		}
 
-		String l2go = (String)attributes.get("l2go");
+		Integer l2go = (Integer)attributes.get("l2go");
 
 		if (l2go != null) {
 			setL2go(l2go);
@@ -124,7 +124,7 @@ public class LicenseWrapper implements License, ModelWrapper<License> {
 	* @return the primary key of this license
 	*/
 	@Override
-	public int getPrimaryKey() {
+	public long getPrimaryKey() {
 		return _license.getPrimaryKey();
 	}
 
@@ -134,7 +134,7 @@ public class LicenseWrapper implements License, ModelWrapper<License> {
 	* @param primaryKey the primary key of this license
 	*/
 	@Override
-	public void setPrimaryKey(int primaryKey) {
+	public void setPrimaryKey(long primaryKey) {
 		_license.setPrimaryKey(primaryKey);
 	}
 
@@ -144,7 +144,7 @@ public class LicenseWrapper implements License, ModelWrapper<License> {
 	* @return the license ID of this license
 	*/
 	@Override
-	public int getLicenseId() {
+	public long getLicenseId() {
 		return _license.getLicenseId();
 	}
 
@@ -154,7 +154,7 @@ public class LicenseWrapper implements License, ModelWrapper<License> {
 	* @param licenseId the license ID of this license
 	*/
 	@Override
-	public void setLicenseId(int licenseId) {
+	public void setLicenseId(long licenseId) {
 		_license.setLicenseId(licenseId);
 	}
 
@@ -164,7 +164,7 @@ public class LicenseWrapper implements License, ModelWrapper<License> {
 	* @return the video ID of this license
 	*/
 	@Override
-	public int getVideoId() {
+	public long getVideoId() {
 		return _license.getVideoId();
 	}
 
@@ -174,7 +174,7 @@ public class LicenseWrapper implements License, ModelWrapper<License> {
 	* @param videoId the video ID of this license
 	*/
 	@Override
-	public void setVideoId(int videoId) {
+	public void setVideoId(long videoId) {
 		_license.setVideoId(videoId);
 	}
 
@@ -184,7 +184,7 @@ public class LicenseWrapper implements License, ModelWrapper<License> {
 	* @return the ccby of this license
 	*/
 	@Override
-	public java.lang.String getCcby() {
+	public int getCcby() {
 		return _license.getCcby();
 	}
 
@@ -194,7 +194,7 @@ public class LicenseWrapper implements License, ModelWrapper<License> {
 	* @param ccby the ccby of this license
 	*/
 	@Override
-	public void setCcby(java.lang.String ccby) {
+	public void setCcby(int ccby) {
 		_license.setCcby(ccby);
 	}
 
@@ -204,7 +204,7 @@ public class LicenseWrapper implements License, ModelWrapper<License> {
 	* @return the ccbybc of this license
 	*/
 	@Override
-	public java.lang.String getCcbybc() {
+	public int getCcbybc() {
 		return _license.getCcbybc();
 	}
 
@@ -214,7 +214,7 @@ public class LicenseWrapper implements License, ModelWrapper<License> {
 	* @param ccbybc the ccbybc of this license
 	*/
 	@Override
-	public void setCcbybc(java.lang.String ccbybc) {
+	public void setCcbybc(int ccbybc) {
 		_license.setCcbybc(ccbybc);
 	}
 
@@ -224,7 +224,7 @@ public class LicenseWrapper implements License, ModelWrapper<License> {
 	* @return the ccbyncnd of this license
 	*/
 	@Override
-	public java.lang.String getCcbyncnd() {
+	public int getCcbyncnd() {
 		return _license.getCcbyncnd();
 	}
 
@@ -234,7 +234,7 @@ public class LicenseWrapper implements License, ModelWrapper<License> {
 	* @param ccbyncnd the ccbyncnd of this license
 	*/
 	@Override
-	public void setCcbyncnd(java.lang.String ccbyncnd) {
+	public void setCcbyncnd(int ccbyncnd) {
 		_license.setCcbyncnd(ccbyncnd);
 	}
 
@@ -244,7 +244,7 @@ public class LicenseWrapper implements License, ModelWrapper<License> {
 	* @return the ccbyncsa of this license
 	*/
 	@Override
-	public java.lang.String getCcbyncsa() {
+	public int getCcbyncsa() {
 		return _license.getCcbyncsa();
 	}
 
@@ -254,7 +254,7 @@ public class LicenseWrapper implements License, ModelWrapper<License> {
 	* @param ccbyncsa the ccbyncsa of this license
 	*/
 	@Override
-	public void setCcbyncsa(java.lang.String ccbyncsa) {
+	public void setCcbyncsa(int ccbyncsa) {
 		_license.setCcbyncsa(ccbyncsa);
 	}
 
@@ -264,7 +264,7 @@ public class LicenseWrapper implements License, ModelWrapper<License> {
 	* @return the ccbysa of this license
 	*/
 	@Override
-	public java.lang.String getCcbysa() {
+	public int getCcbysa() {
 		return _license.getCcbysa();
 	}
 
@@ -274,7 +274,7 @@ public class LicenseWrapper implements License, ModelWrapper<License> {
 	* @param ccbysa the ccbysa of this license
 	*/
 	@Override
-	public void setCcbysa(java.lang.String ccbysa) {
+	public void setCcbysa(int ccbysa) {
 		_license.setCcbysa(ccbysa);
 	}
 
@@ -284,7 +284,7 @@ public class LicenseWrapper implements License, ModelWrapper<License> {
 	* @return the ccbync of this license
 	*/
 	@Override
-	public java.lang.String getCcbync() {
+	public int getCcbync() {
 		return _license.getCcbync();
 	}
 
@@ -294,7 +294,7 @@ public class LicenseWrapper implements License, ModelWrapper<License> {
 	* @param ccbync the ccbync of this license
 	*/
 	@Override
-	public void setCcbync(java.lang.String ccbync) {
+	public void setCcbync(int ccbync) {
 		_license.setCcbync(ccbync);
 	}
 
@@ -304,7 +304,7 @@ public class LicenseWrapper implements License, ModelWrapper<License> {
 	* @return the l2go of this license
 	*/
 	@Override
-	public java.lang.String getL2go() {
+	public int getL2go() {
 		return _license.getL2go();
 	}
 
@@ -314,7 +314,7 @@ public class LicenseWrapper implements License, ModelWrapper<License> {
 	* @param l2go the l2go of this license
 	*/
 	@Override
-	public void setL2go(java.lang.String l2go) {
+	public void setL2go(int l2go) {
 		_license.setL2go(l2go);
 	}
 

@@ -260,4 +260,9 @@ public interface VideoLocalService extends BaseLocalService,
 	public java.util.List<de.uhh.l2g.plugins.model.Video> getByLectureseries(
 		java.lang.Long lectureseriesId)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<de.uhh.l2g.plugins.model.Video> getByProducerAndLectureseries(
+		java.lang.Long producerId, java.lang.Long lectureseriesId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

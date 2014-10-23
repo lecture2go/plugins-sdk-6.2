@@ -51,11 +51,7 @@
 <%@ page import="org.springframework.web.bind.ServletRequestUtils"%>
 <%@ page import="org.springframework.web.portlet.bind.PortletRequestUtils"%>
 
-<%@ page import="de.uhh.l2g.plugins.model.Producer"%>
-<%@ page import="de.uhh.l2g.plugins.model.Facility"%>
-<%@ page import="de.uhh.l2g.plugins.model.Lectureseries"%>
 <%@ page import="de.uhh.l2g.plugins.admin.AdminUserManagement"%>
-<%@ page import="de.uhh.l2g.plugins.model.Producer_Lectureseries"%>
 <%@ page import="de.uhh.l2g.plugins.service.ProducerLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.service.FacilityLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil"%>
@@ -64,14 +60,22 @@
 <%@ page import="de.uhh.l2g.plugins.service.Lectureseries_FacilityLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.service.VideoLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil"%>
-<%@ page import="de.uhh.l2g.plugins.model.Video"%>
-<%@ page import="de.uhh.l2g.plugins.model.Coordinator"%>
+<%@ page import="de.uhh.l2g.plugins.service.LicenseLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.NoSuchMetadataException"%>
 <%@ page import="de.uhh.l2g.plugins.service.MetadataLocalServiceUtil"%>
+<%@ page import="de.uhh.l2g.plugins.model.Producer"%>
+<%@ page import="de.uhh.l2g.plugins.model.Facility"%>
+<%@ page import="de.uhh.l2g.plugins.model.Lectureseries"%>
+<%@ page import="de.uhh.l2g.plugins.model.Producer_Lectureseries"%>
+<%@ page import="de.uhh.l2g.plugins.model.Video"%>
+<%@ page import="de.uhh.l2g.plugins.model.Coordinator"%>
+<%@ page import="de.uhh.l2g.plugins.model.License"%>
 <%@ page import="de.uhh.l2g.plugins.model.impl.LectureseriesImpl"%>
 <%@ page import="de.uhh.l2g.plugins.model.impl.MetadataImpl"%>
 <%@ page import="de.uhh.l2g.plugins.model.impl.VideoImpl"%>
 <%@ page import="de.uhh.l2g.plugins.model.impl.ProducerImpl"%>
+<%@ page import="de.uhh.l2g.plugins.model.impl.LicenseImpl"%>
+
 <portlet:defineObjects />
 <liferay-theme:defineObjects/>
 

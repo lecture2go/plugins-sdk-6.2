@@ -305,6 +305,14 @@ public class VideoLocalServiceWrapper implements VideoLocalService,
 		return _videoLocalService.getByLectureseries(lectureseriesId);
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Video> getByProducerAndLectureseries(
+		java.lang.Long producerId, java.lang.Long lectureseriesId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _videoLocalService.getByProducerAndLectureseries(producerId,
+			lectureseriesId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

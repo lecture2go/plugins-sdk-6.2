@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
@@ -80,6 +82,223 @@ public class LicensePersistenceImpl extends BasePersistenceImpl<License>
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(LicenseModelImpl.ENTITY_CACHE_ENABLED,
 			LicenseModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
+	public static final FinderPath FINDER_PATH_FETCH_BY_VIDEO = new FinderPath(LicenseModelImpl.ENTITY_CACHE_ENABLED,
+			LicenseModelImpl.FINDER_CACHE_ENABLED, LicenseImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByVideo",
+			new String[] { Long.class.getName() },
+			LicenseModelImpl.VIDEOID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_VIDEO = new FinderPath(LicenseModelImpl.ENTITY_CACHE_ENABLED,
+			LicenseModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByVideo",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns the license where videoId = &#63; or throws a {@link de.uhh.l2g.plugins.NoSuchLicenseException} if it could not be found.
+	 *
+	 * @param videoId the video ID
+	 * @return the matching license
+	 * @throws de.uhh.l2g.plugins.NoSuchLicenseException if a matching license could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public License findByVideo(long videoId)
+		throws NoSuchLicenseException, SystemException {
+		License license = fetchByVideo(videoId);
+
+		if (license == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("videoId=");
+			msg.append(videoId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchLicenseException(msg.toString());
+		}
+
+		return license;
+	}
+
+	/**
+	 * Returns the license where videoId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param videoId the video ID
+	 * @return the matching license, or <code>null</code> if a matching license could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public License fetchByVideo(long videoId) throws SystemException {
+		return fetchByVideo(videoId, true);
+	}
+
+	/**
+	 * Returns the license where videoId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param videoId the video ID
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching license, or <code>null</code> if a matching license could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public License fetchByVideo(long videoId, boolean retrieveFromCache)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { videoId };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_VIDEO,
+					finderArgs, this);
+		}
+
+		if (result instanceof License) {
+			License license = (License)result;
+
+			if ((videoId != license.getVideoId())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_LICENSE_WHERE);
+
+			query.append(_FINDER_COLUMN_VIDEO_VIDEOID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(videoId);
+
+				List<License> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_VIDEO,
+						finderArgs, list);
+				}
+				else {
+					if ((list.size() > 1) && _log.isWarnEnabled()) {
+						_log.warn(
+							"LicensePersistenceImpl.fetchByVideo(long, boolean) with parameters (" +
+							StringUtil.merge(finderArgs) +
+							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					}
+
+					License license = list.get(0);
+
+					result = license;
+
+					cacheResult(license);
+
+					if ((license.getVideoId() != videoId)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_VIDEO,
+							finderArgs, license);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_VIDEO,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (License)result;
+		}
+	}
+
+	/**
+	 * Removes the license where videoId = &#63; from the database.
+	 *
+	 * @param videoId the video ID
+	 * @return the license that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public License removeByVideo(long videoId)
+		throws NoSuchLicenseException, SystemException {
+		License license = findByVideo(videoId);
+
+		return remove(license);
+	}
+
+	/**
+	 * Returns the number of licenses where videoId = &#63;.
+	 *
+	 * @param videoId the video ID
+	 * @return the number of matching licenses
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByVideo(long videoId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_VIDEO;
+
+		Object[] finderArgs = new Object[] { videoId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_LICENSE_WHERE);
+
+			query.append(_FINDER_COLUMN_VIDEO_VIDEOID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(videoId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_VIDEO_VIDEOID_2 = "license.videoId = ?";
 
 	public LicensePersistenceImpl() {
 		setModelClass(License.class);
@@ -94,6 +313,9 @@ public class LicensePersistenceImpl extends BasePersistenceImpl<License>
 	public void cacheResult(License license) {
 		EntityCacheUtil.putResult(LicenseModelImpl.ENTITY_CACHE_ENABLED,
 			LicenseImpl.class, license.getPrimaryKey(), license);
+
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_VIDEO,
+			new Object[] { license.getVideoId() }, license);
 
 		license.resetOriginalValues();
 	}
@@ -151,6 +373,8 @@ public class LicensePersistenceImpl extends BasePersistenceImpl<License>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache(license);
 	}
 
 	@Override
@@ -161,6 +385,48 @@ public class LicensePersistenceImpl extends BasePersistenceImpl<License>
 		for (License license : licenses) {
 			EntityCacheUtil.removeResult(LicenseModelImpl.ENTITY_CACHE_ENABLED,
 				LicenseImpl.class, license.getPrimaryKey());
+
+			clearUniqueFindersCache(license);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(License license) {
+		if (license.isNew()) {
+			Object[] args = new Object[] { license.getVideoId() };
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_VIDEO, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_VIDEO, args, license);
+		}
+		else {
+			LicenseModelImpl licenseModelImpl = (LicenseModelImpl)license;
+
+			if ((licenseModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_VIDEO.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { license.getVideoId() };
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_VIDEO, args,
+					Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_VIDEO, args,
+					license);
+			}
+		}
+	}
+
+	protected void clearUniqueFindersCache(License license) {
+		LicenseModelImpl licenseModelImpl = (LicenseModelImpl)license;
+
+		Object[] args = new Object[] { license.getVideoId() };
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_VIDEO, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_VIDEO, args);
+
+		if ((licenseModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_VIDEO.getColumnBitmask()) != 0) {
+			args = new Object[] { licenseModelImpl.getOriginalVideoId() };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_VIDEO, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_VIDEO, args);
 		}
 	}
 
@@ -171,7 +437,7 @@ public class LicensePersistenceImpl extends BasePersistenceImpl<License>
 	 * @return the new license
 	 */
 	@Override
-	public License create(int licenseId) {
+	public License create(long licenseId) {
 		License license = new LicenseImpl();
 
 		license.setNew(true);
@@ -189,7 +455,7 @@ public class LicensePersistenceImpl extends BasePersistenceImpl<License>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public License remove(int licenseId)
+	public License remove(long licenseId)
 		throws NoSuchLicenseException, SystemException {
 		return remove((Serializable)licenseId);
 	}
@@ -296,12 +562,15 @@ public class LicensePersistenceImpl extends BasePersistenceImpl<License>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (isNew || !LicenseModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		EntityCacheUtil.putResult(LicenseModelImpl.ENTITY_CACHE_ENABLED,
 			LicenseImpl.class, license.getPrimaryKey(), license);
+
+		clearUniqueFindersCache(license);
+		cacheUniqueFindersCache(license);
 
 		return license;
 	}
@@ -363,7 +632,7 @@ public class LicensePersistenceImpl extends BasePersistenceImpl<License>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public License findByPrimaryKey(int licenseId)
+	public License findByPrimaryKey(long licenseId)
 		throws NoSuchLicenseException, SystemException {
 		return findByPrimaryKey((Serializable)licenseId);
 	}
@@ -423,7 +692,7 @@ public class LicensePersistenceImpl extends BasePersistenceImpl<License>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public License fetchByPrimaryKey(int licenseId) throws SystemException {
+	public License fetchByPrimaryKey(long licenseId) throws SystemException {
 		return fetchByPrimaryKey((Serializable)licenseId);
 	}
 
@@ -632,9 +901,12 @@ public class LicensePersistenceImpl extends BasePersistenceImpl<License>
 	}
 
 	private static final String _SQL_SELECT_LICENSE = "SELECT license FROM License license";
+	private static final String _SQL_SELECT_LICENSE_WHERE = "SELECT license FROM License license WHERE ";
 	private static final String _SQL_COUNT_LICENSE = "SELECT COUNT(license) FROM License license";
+	private static final String _SQL_COUNT_LICENSE_WHERE = "SELECT COUNT(license) FROM License license WHERE ";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "license.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No License exists with the primary key ";
+	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No License exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = GetterUtil.getBoolean(PropsUtil.get(
 				PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
 	private static Log _log = LogFactoryUtil.getLog(LicensePersistenceImpl.class);

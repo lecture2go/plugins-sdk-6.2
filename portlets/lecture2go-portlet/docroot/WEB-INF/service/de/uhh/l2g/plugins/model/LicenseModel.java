@@ -14,7 +14,6 @@
 
 package de.uhh.l2g.plugins.model;
 
-import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
@@ -48,147 +47,140 @@ public interface LicenseModel extends BaseModel<License> {
 	 *
 	 * @return the primary key of this license
 	 */
-	public int getPrimaryKey();
+	public long getPrimaryKey();
 
 	/**
 	 * Sets the primary key of this license.
 	 *
 	 * @param primaryKey the primary key of this license
 	 */
-	public void setPrimaryKey(int primaryKey);
+	public void setPrimaryKey(long primaryKey);
 
 	/**
 	 * Returns the license ID of this license.
 	 *
 	 * @return the license ID of this license
 	 */
-	public int getLicenseId();
+	public long getLicenseId();
 
 	/**
 	 * Sets the license ID of this license.
 	 *
 	 * @param licenseId the license ID of this license
 	 */
-	public void setLicenseId(int licenseId);
+	public void setLicenseId(long licenseId);
 
 	/**
 	 * Returns the video ID of this license.
 	 *
 	 * @return the video ID of this license
 	 */
-	public int getVideoId();
+	public long getVideoId();
 
 	/**
 	 * Sets the video ID of this license.
 	 *
 	 * @param videoId the video ID of this license
 	 */
-	public void setVideoId(int videoId);
+	public void setVideoId(long videoId);
 
 	/**
 	 * Returns the ccby of this license.
 	 *
 	 * @return the ccby of this license
 	 */
-	@AutoEscape
-	public String getCcby();
+	public int getCcby();
 
 	/**
 	 * Sets the ccby of this license.
 	 *
 	 * @param ccby the ccby of this license
 	 */
-	public void setCcby(String ccby);
+	public void setCcby(int ccby);
 
 	/**
 	 * Returns the ccbybc of this license.
 	 *
 	 * @return the ccbybc of this license
 	 */
-	@AutoEscape
-	public String getCcbybc();
+	public int getCcbybc();
 
 	/**
 	 * Sets the ccbybc of this license.
 	 *
 	 * @param ccbybc the ccbybc of this license
 	 */
-	public void setCcbybc(String ccbybc);
+	public void setCcbybc(int ccbybc);
 
 	/**
 	 * Returns the ccbyncnd of this license.
 	 *
 	 * @return the ccbyncnd of this license
 	 */
-	@AutoEscape
-	public String getCcbyncnd();
+	public int getCcbyncnd();
 
 	/**
 	 * Sets the ccbyncnd of this license.
 	 *
 	 * @param ccbyncnd the ccbyncnd of this license
 	 */
-	public void setCcbyncnd(String ccbyncnd);
+	public void setCcbyncnd(int ccbyncnd);
 
 	/**
 	 * Returns the ccbyncsa of this license.
 	 *
 	 * @return the ccbyncsa of this license
 	 */
-	@AutoEscape
-	public String getCcbyncsa();
+	public int getCcbyncsa();
 
 	/**
 	 * Sets the ccbyncsa of this license.
 	 *
 	 * @param ccbyncsa the ccbyncsa of this license
 	 */
-	public void setCcbyncsa(String ccbyncsa);
+	public void setCcbyncsa(int ccbyncsa);
 
 	/**
 	 * Returns the ccbysa of this license.
 	 *
 	 * @return the ccbysa of this license
 	 */
-	@AutoEscape
-	public String getCcbysa();
+	public int getCcbysa();
 
 	/**
 	 * Sets the ccbysa of this license.
 	 *
 	 * @param ccbysa the ccbysa of this license
 	 */
-	public void setCcbysa(String ccbysa);
+	public void setCcbysa(int ccbysa);
 
 	/**
 	 * Returns the ccbync of this license.
 	 *
 	 * @return the ccbync of this license
 	 */
-	@AutoEscape
-	public String getCcbync();
+	public int getCcbync();
 
 	/**
 	 * Sets the ccbync of this license.
 	 *
 	 * @param ccbync the ccbync of this license
 	 */
-	public void setCcbync(String ccbync);
+	public void setCcbync(int ccbync);
 
 	/**
 	 * Returns the l2go of this license.
 	 *
 	 * @return the l2go of this license
 	 */
-	@AutoEscape
-	public String getL2go();
+	public int getL2go();
 
 	/**
 	 * Sets the l2go of this license.
 	 *
 	 * @param l2go the l2go of this license
 	 */
-	public void setL2go(String l2go);
+	public void setL2go(int l2go);
 
 	@Override
 	public boolean isNew();
