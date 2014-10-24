@@ -72,6 +72,7 @@
 <%@ page import="de.uhh.l2g.plugins.model.License"%>
 <%@ page import="de.uhh.l2g.plugins.model.impl.LectureseriesImpl"%>
 <%@ page import="de.uhh.l2g.plugins.model.impl.MetadataImpl"%>
+<%@ page import="de.uhh.l2g.plugins.model.Metadata"%>
 <%@ page import="de.uhh.l2g.plugins.model.impl.VideoImpl"%>
 <%@ page import="de.uhh.l2g.plugins.model.impl.ProducerImpl"%>
 <%@ page import="de.uhh.l2g.plugins.model.impl.LicenseImpl"%>
