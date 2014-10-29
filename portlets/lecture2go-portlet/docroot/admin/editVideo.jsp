@@ -38,16 +38,31 @@
 	<portlet:param name="videoId" value='<%=""+0%>' />
 </portlet:actionURL>
 
+<portlet:actionURL var="editCaseURL" name="uploadCase">
+	<portlet:param name="jspPage" value="/admin/editVideo.jsp" />
+</portlet:actionURL>
+
 <%
 	if(reqVideo.getVideoId() >0) {actionURL=editURL.toString();}
 	else {actionURL = addURL.toString();}
 %>
 
+<aui:fieldset helpMessage="test" column="true" label="file-upload" id="upload">
+	<aui:layout>
+		<liferay-ui:success key="success" message="YEAH. Case uploaded successfully!" />
+		<liferay-ui:error key="error" message="Sorry, an error prevented the upload. Please try again." />
+		<liferay-ui:upload-progress id="<%=uploadProgressId%>" message="uploading" redirect="<%= editCaseURL %>"/>
+		 
+		<aui:form action="<%= editCaseURL %>" enctype="multipart/form-data" method="post">
+			<aui:input type="file" name="fileName" size="75"/>
+			<input type="submit" value="<liferay-ui:message key="upload" />" onClick="<%= uploadProgressId %>.startProgress(); return true;"/>
+		</aui:form>
+	</aui:layout>
+</aui:fieldset>
 
-<aui:form action="<%=actionURL%>" commandName="model">
-	<aui:fieldset helpMessage="test" column="true" label="">
-		<aui:layout>
-			
+<aui:fieldset helpMessage="test" column="true" label="video-metadata" id="metadata">
+	<aui:layout>
+		<aui:form action="<%=actionURL%>" commandName="model">
 			<aui:select size="1" name="lectureseriesId" label="lectureseries" required="true">
 				<aui:option value="">select-lecture-series</aui:option>
 					<%for (int i = 0; i < reqLectureseriesList.size(); i++) {
@@ -110,14 +125,21 @@
 					</liferay-ui:icon-menu>
 				<%}%>
 			</aui:button-row>
-		</aui:layout>
-	</aui:fieldset>
-</aui:form>
+			
+			<aui:input name="producerId" type="hidden" value="<%=reqProducer.getProducerId()%>"/>
+			<aui:input name="lectureseriesId" type="hidden" value="<%=reqLectureseries.getLectureseriesId()%>"/>
+		</aui:form>
+	</aui:layout>
+</aui:fieldset>
 
 <script>
 
 AUI().use('aui-node',
 	function(A) {
+    	var metadata = A.one('#<portlet:namespace/>metadata');
+    	var upload = A.one('#<portlet:namespace/>upload');
+    	<%if(reqVideo.getVideoId()==0){%>metadata.hide();upload.show()<%}%>
+    	<%if(reqVideo.getVideoId()>0){%>metadata.show();upload.show()<%}%>
 	}
 );
 </script>

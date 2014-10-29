@@ -1,18 +1,32 @@
 package de.uhh.l2g.plugins.admin;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import de.uhh.l2g.plugins.model.Lectureseries;
@@ -32,6 +46,9 @@ import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 
 public class AdminVideoManagement extends MVCPortlet {
+
+	private final static Logger logger = Logger.getLogger(AdminVideoManagement.class.getName());
+	
 	@SuppressWarnings("unused")
 	public void viewVideo(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
 		//permissions
@@ -88,6 +105,7 @@ public class AdminVideoManagement extends MVCPortlet {
 				reqMetadata.setCreator(reqProducer.getFirstName()+" "+reqProducer.getLastName());
 				reqMetadata.setRightsHolder(reqLectureseries.getInstructorsString());
 				reqMetadata.setPublisher(reqProducer.getFirstName()+" "+reqProducer.getLastName());
+				reqMetadata.setLanguage(reqLectureseries.getLanguage());
 			}
 		}catch(Exception e){}
 		request.setAttribute("reqMetadata", reqMetadata);
@@ -111,6 +129,67 @@ public class AdminVideoManagement extends MVCPortlet {
 	
 	public void addVideo(ActionRequest request, ActionResponse response) throws SystemException, PortalException {
 		//build new video object
+	}
+	
+	
+	public void uploadCase(ActionRequest actionRequest,ActionResponse actionRresponse) throws PortletException, IOException {
+		String folder = getInitParameter("uploadFolder");
+		String realPath = "";
+		realPath = getPortletContext().getRealPath("/");
+		logger.info("RealPath" + realPath + " UploadFolder :" + folder);
+		
+		try {
+			logger.info("Siamo nel try");
+			UploadPortletRequest uploadRequest = PortalUtil.getUploadPortletRequest(actionRequest);
+			System.out.println("Size: "+uploadRequest.getSize("fileName"));
+		 
+			if (uploadRequest.getSize("fileName")==0) {
+				SessionErrors.add(actionRequest, "error");
+			}
+		
+			String sourceFileName = uploadRequest.getFileName("fileName");
+			File file = uploadRequest.getFile("fileName");
+
+			logger.info("Nome file:" + uploadRequest.getFileName("fileName"));
+			File newFile = null;
+			newFile = new File(folder + sourceFileName);
+			logger.info("New file name: " + newFile.getName());
+			logger.info("New file path: " + newFile.getPath());
+
+			InputStream in = new BufferedInputStream(uploadRequest.getFileAsStream("fileName"));
+			FileInputStream fis = new FileInputStream(file);
+			FileOutputStream fos = new FileOutputStream(newFile);
+
+			byte[] bytes_ = FileUtil.getBytes(in);
+			int i = fis.read(bytes_);
+
+			while (i != -1) {
+				fos.write(bytes_, 0, i);
+				i = fis.read(bytes_);
+			}
+			
+			fis.close();
+			fos.close();
+			Float size = (float) newFile.length();
+			System.out.println("file size bytes:" + size);
+			System.out.println("file size Mb:" + size / 1048576);
+
+			logger.info("File created: " + newFile.getName());
+			SessionMessages.add(actionRequest, "success");
+
+		} catch (FileNotFoundException e) {
+			System.out.println("File Not Found.");
+			e.printStackTrace();
+			SessionMessages.add(actionRequest, "error");
+		} catch (NullPointerException e) {
+			System.out.println("File Not Found");
+			e.printStackTrace();
+			SessionMessages.add(actionRequest, "error");
+		} catch (IOException e1) {
+			System.out.println("Error Reading The File.");
+			SessionMessages.add(actionRequest, "error");
+			e1.printStackTrace();
+		}
 	}
 	
 	public void editVideo(ActionRequest request, ActionResponse response) throws NumberFormatException, PortalException, SystemException{

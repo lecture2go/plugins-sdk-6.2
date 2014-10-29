@@ -9,6 +9,10 @@
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
+<%@ page import="com.liferay.portal.kernel.util.Validator"%>
+<%@ page import="javax.portlet.PortletPreferences"%>
+<%@ page import="com.liferay.util.PwdGenerator"%>
+
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.Map"%>
 <%@ page import="java.util.List"%>
@@ -87,4 +91,7 @@ User remoteUser = UserLocalServiceUtil.getUser(new Long (request.getRemoteUser()
 boolean permissionAdmin = permissionChecker.hasPermission(remoteUser.getGroupId(), User.class.getName(), remoteUser.getPrimaryKey(), "ADD_L2GOADMIN");
 //l2go coordinator is logged in
 boolean permissionCoordinator = permissionChecker.hasPermission(remoteUser.getGroupId(), User.class.getName(), remoteUser.getPrimaryKey(), "ADD_L2GOPRODUCER");
+
+String uploadProgressId = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
+PortletPreferences prefs = renderRequest.getPreferences();
 %>
