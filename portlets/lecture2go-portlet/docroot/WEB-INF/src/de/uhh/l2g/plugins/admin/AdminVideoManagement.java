@@ -1,6 +1,7 @@
 package de.uhh.l2g.plugins.admin;
 
 import java.io.BufferedInputStream;
+import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -14,6 +15,8 @@ import java.util.logging.Logger;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -21,6 +24,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -192,6 +196,61 @@ public class AdminVideoManagement extends MVCPortlet {
 		}
 	}
 	
+	public void serveResource(ResourceRequest resourceRequest,
+			ResourceResponse resourceResponse) throws PortletException, IOException {
+
+			try {
+			UploadPortletRequest uploadrequest = PortalUtil
+			.getUploadPortletRequest(resourceRequest);
+			InputStream inputStream = uploadrequest
+			.getFileAsStream("fileToUpload");
+			if(Validator.isNotNull(inputStream)){
+			File file = FileUtil.createTempFile(inputStream);
+			String uploadString = getFileAsString(file);
+
+			if (Validator.isNotNull(uploadString)) {
+
+			resourceResponse.getWriter().write( "validated_successfully");
+
+
+			logger.info("VALIDATED_SUCCESSFULLY");
+			}else{
+			resourceResponse.getWriter().write( "failed");
+
+			logger.info("VALIDATION_FAILED");
+			}
+			}
+			} catch (Exception e) {
+
+			logger.info( "Error in adding modem");
+			}
+	}
+
+	public String getFileAsString(File file) {
+			FileInputStream fis = null;
+			BufferedInputStream bis = null;
+			DataInputStream dis = null;
+			StringBuffer sb = new StringBuffer();
+			try {
+			fis = new FileInputStream(file);
+			bis = new BufferedInputStream(fis);
+			dis = new DataInputStream(bis);
+
+			while (dis.available() != 0) {
+			sb.append(dis.readLine() + "\n");
+			}
+			fis.close();
+			bis.close();
+			dis.close();
+
+			} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			} catch (IOException e) {
+			e.printStackTrace();
+			}
+			return sb.toString();
+	}
+
 	public void editVideo(ActionRequest request, ActionResponse response) throws NumberFormatException, PortalException, SystemException{
 		Long videoId = new Long(request.getParameter("videoId"));
 		String lic = request.getParameter("license");
