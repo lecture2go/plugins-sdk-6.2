@@ -92,6 +92,5 @@ boolean permissionAdmin = permissionChecker.hasPermission(remoteUser.getGroupId(
 //l2go coordinator is logged in
 boolean permissionCoordinator = permissionChecker.hasPermission(remoteUser.getGroupId(), User.class.getName(), remoteUser.getPrimaryKey(), "ADD_L2GOPRODUCER");
 
-String uploadProgressId = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
 PortletPreferences prefs = renderRequest.getPreferences();
 %>

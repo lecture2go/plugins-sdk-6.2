@@ -1,4 +1,5 @@
 <%@include file="/init.jsp"%>
+
 <jsp:useBean id="reqLectureseriesList" type="java.util.List<de.uhh.l2g.plugins.model.Lectureseries>" scope="request" />
 <jsp:useBean id="reqLectureseries" type="de.uhh.l2g.plugins.model.Lectureseries" scope="request" />
 <jsp:useBean id="reqLicense" type="de.uhh.l2g.plugins.model.License" scope="request" />
@@ -20,6 +21,9 @@
 	String languageId="";
 
 	List<String> semesters = LectureseriesLocalServiceUtil.getAllSemesters(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+
+	String uploadProgressId = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
+
 %>
 
 <portlet:renderURL var="cancelURL">
@@ -47,16 +51,15 @@
 	else {actionURL = addURL.toString();}
 %>
 
-<aui:fieldset helpMessage="test" column="true" label="file-upload" id="upload">
+
+<portlet:resourceURL id="uploadMe" var="uploadMe" />
+
+<aui:fieldset helpMessage="test" column="true" label="file-upload">
 	<aui:layout>
-		<liferay-ui:success key="success" message="YEAH. Case uploaded successfully!" />
-		<liferay-ui:error key="error" message="Sorry, an error prevented the upload. Please try again." />
-		<liferay-ui:upload-progress id="<%=uploadProgressId%>" message="uploading" redirect="<%= editCaseURL %>"/>
-		 
-		<aui:form action="<%= editCaseURL %>" enctype="multipart/form-data" method="post">
-			<aui:input type="file" name="fileName" size="75"/>
-			<input type="submit" value="<liferay-ui:message key="upload" />" onClick="<%= uploadProgressId %>.startProgress(); return true;"/>
-		</aui:form>
+		<form method="post" enctype="multipart/form-data" name="form">
+		     <input type="file" name="fileToUpload" id="fileToUpload" value="Browse" class="input" required="required"/>
+		     <input type="button" name="upload" id="upload" value="Upload"  class="noText_shadow" onClick="uploadFileMe();" />
+		</form>
 	</aui:layout>
 </aui:fieldset>
 
@@ -132,14 +135,50 @@
 	</aui:layout>
 </aui:fieldset>
 
-<script>
+<script type="text/javascript">
 
-AUI().use('aui-node',
+AUI().use('aui-node','file',
 	function(A) {
     	var metadata = A.one('#<portlet:namespace/>metadata');
-    	var upload = A.one('#<portlet:namespace/>upload');
+    	var upload = A.one('#upload');
+    	var fileToUpload = A.one('#fileToUpload');
     	<%if(reqVideo.getVideoId()==0){%>metadata.hide();upload.show()<%}%>
     	<%if(reqVideo.getVideoId()>0){%>metadata.show();upload.show()<%}%>
+    	upload.on(
+    		'click',
+    		function() {
+    			//add new video
+    			alert("test " + fileToUpload.get("x.y.z"));
+    			//then show metadata
+    			metadata.show();
+    		}
+    	)
 	}
 );
+
+function uploadFileMe(){
+	$.ajaxFileUpload
+	({
+		url:'<%=uploadMe%>',
+		secureuri : false,
+		fileElementId : 'fileToUpload',
+		dataType : 'json',
+		data : {
+		name : 'logan',
+		id : 'id'
+		},
+		success : function(data, status) {
+			if (typeof (data.error) != 'undefined') {
+				if (data.error != '') {
+				 //alert(data.error);
+				} else {
+				 //alert(data.msg);
+				}
+			}
+		},
+		error : function(data, status, e) {
+		 //alert(e);
+		}
+	});
+}
 </script>

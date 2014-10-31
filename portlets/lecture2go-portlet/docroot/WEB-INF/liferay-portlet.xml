@@ -2,6 +2,14 @@
 <!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 6.2.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_6_2_0.dtd">
 
 <liferay-portlet-app>
+	<portlet>
+		<portlet-name>lg-admin-video-management</portlet-name>
+		<icon>/img/loading.gif</icon>
+		<instanceable>false</instanceable>
+		<private-request-attributes>false</private-request-attributes>
+		<header-portlet-javascript>/js/jquery-1.11.1.min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/ajaxfileupload.js</header-portlet-javascript>
+	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>
 		<role-link>Administrator</role-link>
