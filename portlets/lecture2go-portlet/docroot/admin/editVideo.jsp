@@ -52,7 +52,7 @@
 %>
 
 
-<portlet:resourceURL id="uploadMe" var="uploadMe" />
+<portlet:resourceURL id="uploadMe" var="uploadMe"><portlet:param name="test" value="test"/></portlet:resourceURL>
 
 <aui:fieldset helpMessage="test" column="true" label="file-upload">
 	<aui:layout>
@@ -141,18 +141,11 @@ AUI().use('aui-node','file',
 	function(A) {
     	var metadata = A.one('#<portlet:namespace/>metadata');
     	var upload = A.one('#upload');
+    	
     	var fileToUpload = A.one('#fileToUpload');
+    	
     	<%if(reqVideo.getVideoId()==0){%>metadata.hide();upload.show()<%}%>
     	<%if(reqVideo.getVideoId()>0){%>metadata.show();upload.show()<%}%>
-    	upload.on(
-    		'click',
-    		function() {
-    			//add new video
-    			alert("test " + fileToUpload.get("x.y.z"));
-    			//then show metadata
-    			metadata.show();
-    		}
-    	)
 	}
 );
 
@@ -164,8 +157,8 @@ function uploadFileMe(){
 		fileElementId : 'fileToUpload',
 		dataType : 'json',
 		data : {
-		name : 'logan',
-		id : 'id'
+			name : 'fileToUpload',
+			id : 'fileToUpload'
 		},
 		success : function(data, status) {
 			if (typeof (data.error) != 'undefined') {
@@ -181,4 +174,5 @@ function uploadFileMe(){
 		}
 	});
 }
+
 </script>

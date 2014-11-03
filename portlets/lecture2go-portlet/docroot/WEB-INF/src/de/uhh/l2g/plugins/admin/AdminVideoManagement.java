@@ -136,13 +136,18 @@ public class AdminVideoManagement extends MVCPortlet {
 	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws PortletException, IOException {
 		try {
 			UploadPortletRequest uploadrequest = PortalUtil.getUploadPortletRequest(resourceRequest);
+			String s = uploadrequest.getParameter("test");
 			InputStream inputStream = uploadrequest.getFileAsStream("fileToUpload");
+			int i = 0;
+			i++;
 			if(Validator.isNotNull(inputStream)){
-				File file = FileUtil.createTempFile(inputStream);
+				File file = uploadrequest.getFile("fileToUpload");
 				String uploadString = getFileAsString(file);
 	
 				if (Validator.isNotNull(uploadString)) {
 					resourceResponse.getWriter().write( "validated_successfully");
+					File newFile = new File("/Users/isturm/Desktop/l2gomedia/"+file.getName());
+					file.renameTo(newFile);
 					logger.info("VALIDATED_SUCCESSFULLY");
 				}else{
 					resourceResponse.getWriter().write( "failed");
@@ -152,6 +157,8 @@ public class AdminVideoManagement extends MVCPortlet {
 		} catch (Exception e) {
 			logger.info( "Error in adding modem");
 		}
+		int j = 0;
+		j++;
 	}
 
 	public String getFileAsString(File file) {
