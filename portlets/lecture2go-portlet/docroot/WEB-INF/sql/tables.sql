@@ -163,7 +163,7 @@ create table LG_Video (
 	generationDate VARCHAR(75) null,
 	openAccess INTEGER,
 	downloadLink INTEGER,
-	metadataId INTEGER,
+	metadataId LONG,
 	surl VARCHAR(75) null,
 	hits INTEGER,
 	uploadDate DATE null,

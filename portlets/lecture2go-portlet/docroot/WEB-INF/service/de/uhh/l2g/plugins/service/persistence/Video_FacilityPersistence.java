@@ -38,6 +38,282 @@ public interface Video_FacilityPersistence extends BasePersistence<Video_Facilit
 	 */
 
 	/**
+	* Returns all the video_ facilities where videoId = &#63;.
+	*
+	* @param videoId the video ID
+	* @return the matching video_ facilities
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<de.uhh.l2g.plugins.model.Video_Facility> findByVideo(
+		long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the video_ facilities where videoId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.Video_FacilityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param videoId the video ID
+	* @param start the lower bound of the range of video_ facilities
+	* @param end the upper bound of the range of video_ facilities (not inclusive)
+	* @return the range of matching video_ facilities
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<de.uhh.l2g.plugins.model.Video_Facility> findByVideo(
+		long videoId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the video_ facilities where videoId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.Video_FacilityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param videoId the video ID
+	* @param start the lower bound of the range of video_ facilities
+	* @param end the upper bound of the range of video_ facilities (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching video_ facilities
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<de.uhh.l2g.plugins.model.Video_Facility> findByVideo(
+		long videoId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first video_ facility in the ordered set where videoId = &#63;.
+	*
+	* @param videoId the video ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching video_ facility
+	* @throws de.uhh.l2g.plugins.NoSuchVideo_FacilityException if a matching video_ facility could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.Video_Facility findByVideo_First(
+		long videoId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchVideo_FacilityException;
+
+	/**
+	* Returns the first video_ facility in the ordered set where videoId = &#63;.
+	*
+	* @param videoId the video ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching video_ facility, or <code>null</code> if a matching video_ facility could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.Video_Facility fetchByVideo_First(
+		long videoId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last video_ facility in the ordered set where videoId = &#63;.
+	*
+	* @param videoId the video ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching video_ facility
+	* @throws de.uhh.l2g.plugins.NoSuchVideo_FacilityException if a matching video_ facility could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.Video_Facility findByVideo_Last(
+		long videoId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchVideo_FacilityException;
+
+	/**
+	* Returns the last video_ facility in the ordered set where videoId = &#63;.
+	*
+	* @param videoId the video ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching video_ facility, or <code>null</code> if a matching video_ facility could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.Video_Facility fetchByVideo_Last(
+		long videoId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the video_ facilities before and after the current video_ facility in the ordered set where videoId = &#63;.
+	*
+	* @param videoFacilityId the primary key of the current video_ facility
+	* @param videoId the video ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next video_ facility
+	* @throws de.uhh.l2g.plugins.NoSuchVideo_FacilityException if a video_ facility with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.Video_Facility[] findByVideo_PrevAndNext(
+		long videoFacilityId, long videoId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchVideo_FacilityException;
+
+	/**
+	* Removes all the video_ facilities where videoId = &#63; from the database.
+	*
+	* @param videoId the video ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByVideo(long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of video_ facilities where videoId = &#63;.
+	*
+	* @param videoId the video ID
+	* @return the number of matching video_ facilities
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByVideo(long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns all the video_ facilities where facilityId = &#63;.
+	*
+	* @param facilityId the facility ID
+	* @return the matching video_ facilities
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<de.uhh.l2g.plugins.model.Video_Facility> findByFacility(
+		long facilityId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the video_ facilities where facilityId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.Video_FacilityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param facilityId the facility ID
+	* @param start the lower bound of the range of video_ facilities
+	* @param end the upper bound of the range of video_ facilities (not inclusive)
+	* @return the range of matching video_ facilities
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<de.uhh.l2g.plugins.model.Video_Facility> findByFacility(
+		long facilityId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the video_ facilities where facilityId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.Video_FacilityModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param facilityId the facility ID
+	* @param start the lower bound of the range of video_ facilities
+	* @param end the upper bound of the range of video_ facilities (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching video_ facilities
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<de.uhh.l2g.plugins.model.Video_Facility> findByFacility(
+		long facilityId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first video_ facility in the ordered set where facilityId = &#63;.
+	*
+	* @param facilityId the facility ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching video_ facility
+	* @throws de.uhh.l2g.plugins.NoSuchVideo_FacilityException if a matching video_ facility could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.Video_Facility findByFacility_First(
+		long facilityId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchVideo_FacilityException;
+
+	/**
+	* Returns the first video_ facility in the ordered set where facilityId = &#63;.
+	*
+	* @param facilityId the facility ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching video_ facility, or <code>null</code> if a matching video_ facility could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.Video_Facility fetchByFacility_First(
+		long facilityId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last video_ facility in the ordered set where facilityId = &#63;.
+	*
+	* @param facilityId the facility ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching video_ facility
+	* @throws de.uhh.l2g.plugins.NoSuchVideo_FacilityException if a matching video_ facility could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.Video_Facility findByFacility_Last(
+		long facilityId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchVideo_FacilityException;
+
+	/**
+	* Returns the last video_ facility in the ordered set where facilityId = &#63;.
+	*
+	* @param facilityId the facility ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching video_ facility, or <code>null</code> if a matching video_ facility could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.Video_Facility fetchByFacility_Last(
+		long facilityId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the video_ facilities before and after the current video_ facility in the ordered set where facilityId = &#63;.
+	*
+	* @param videoFacilityId the primary key of the current video_ facility
+	* @param facilityId the facility ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next video_ facility
+	* @throws de.uhh.l2g.plugins.NoSuchVideo_FacilityException if a video_ facility with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.Video_Facility[] findByFacility_PrevAndNext(
+		long videoFacilityId, long facilityId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchVideo_FacilityException;
+
+	/**
+	* Removes all the video_ facilities where facilityId = &#63; from the database.
+	*
+	* @param facilityId the facility ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByFacility(long facilityId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of video_ facilities where facilityId = &#63;.
+	*
+	* @param facilityId the facility ID
+	* @return the number of matching video_ facilities
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByFacility(long facilityId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Caches the video_ facility in the entity cache if it is enabled.
 	*
 	* @param video_Facility the video_ facility

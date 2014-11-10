@@ -113,6 +113,10 @@ public class LicenseLocalServiceClpInvoker {
 		_methodName122 = "getByVideoId";
 
 		_methodParameterTypes122 = new String[] { "java.lang.Long" };
+
+		_methodName123 = "removeByVideoId";
+
+		_methodParameterTypes123 = new String[] { "java.lang.Long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -221,6 +225,11 @@ public class LicenseLocalServiceClpInvoker {
 			return LicenseLocalServiceUtil.getByVideoId((java.lang.Long)arguments[0]);
 		}
 
+		if (_methodName123.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
+			return LicenseLocalServiceUtil.removeByVideoId((java.lang.Long)arguments[0]);
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -262,4 +271,6 @@ public class LicenseLocalServiceClpInvoker {
 	private String[] _methodParameterTypes117;
 	private String _methodName122;
 	private String[] _methodParameterTypes122;
+	private String _methodName123;
+	private String[] _methodParameterTypes123;
 }

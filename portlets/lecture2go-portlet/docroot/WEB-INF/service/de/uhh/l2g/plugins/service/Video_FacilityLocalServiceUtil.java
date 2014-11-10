@@ -275,6 +275,14 @@ public class Video_FacilityLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static boolean removeByVideoId(java.lang.Long videoId) {
+		return getService().removeByVideoId(videoId);
+	}
+
+	public static boolean removeByFacilityId(java.lang.Long facilityId) {
+		return getService().removeByFacilityId(facilityId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

@@ -77,7 +77,13 @@ public class Segment_User_VideoModelImpl extends BaseModelImpl<Segment_User_Vide
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.finder.cache.enabled.de.uhh.l2g.plugins.model.Segment_User_Video"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.Segment_User_Video"),
+			true);
+	public static long SEGMENTID_COLUMN_BITMASK = 1L;
+	public static long USERID_COLUMN_BITMASK = 2L;
+	public static long VIDEOID_COLUMN_BITMASK = 4L;
+	public static long SEGMENTUSERVIDEOID_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Segment_User_Video"));
 
@@ -160,7 +166,19 @@ public class Segment_User_VideoModelImpl extends BaseModelImpl<Segment_User_Vide
 
 	@Override
 	public void setSegmentId(long segmentId) {
+		_columnBitmask |= SEGMENTID_COLUMN_BITMASK;
+
+		if (!_setOriginalSegmentId) {
+			_setOriginalSegmentId = true;
+
+			_originalSegmentId = _segmentId;
+		}
+
 		_segmentId = segmentId;
+	}
+
+	public long getOriginalSegmentId() {
+		return _originalSegmentId;
 	}
 
 	@Override
@@ -170,6 +188,14 @@ public class Segment_User_VideoModelImpl extends BaseModelImpl<Segment_User_Vide
 
 	@Override
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -183,6 +209,10 @@ public class Segment_User_VideoModelImpl extends BaseModelImpl<Segment_User_Vide
 		_userUuid = userUuid;
 	}
 
+	public long getOriginalUserId() {
+		return _originalUserId;
+	}
+
 	@Override
 	public long getVideoId() {
 		return _videoId;
@@ -190,7 +220,19 @@ public class Segment_User_VideoModelImpl extends BaseModelImpl<Segment_User_Vide
 
 	@Override
 	public void setVideoId(long videoId) {
+		_columnBitmask |= VIDEOID_COLUMN_BITMASK;
+
+		if (!_setOriginalVideoId) {
+			_setOriginalVideoId = true;
+
+			_originalVideoId = _videoId;
+		}
+
 		_videoId = videoId;
+	}
+
+	public long getOriginalVideoId() {
+		return _originalVideoId;
 	}
 
 	@Override
@@ -201,6 +243,10 @@ public class Segment_User_VideoModelImpl extends BaseModelImpl<Segment_User_Vide
 	@Override
 	public void setSegmentUserVideoId(long segmentUserVideoId) {
 		_segmentUserVideoId = segmentUserVideoId;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -284,6 +330,21 @@ public class Segment_User_VideoModelImpl extends BaseModelImpl<Segment_User_Vide
 
 	@Override
 	public void resetOriginalValues() {
+		Segment_User_VideoModelImpl segment_User_VideoModelImpl = this;
+
+		segment_User_VideoModelImpl._originalSegmentId = segment_User_VideoModelImpl._segmentId;
+
+		segment_User_VideoModelImpl._setOriginalSegmentId = false;
+
+		segment_User_VideoModelImpl._originalUserId = segment_User_VideoModelImpl._userId;
+
+		segment_User_VideoModelImpl._setOriginalUserId = false;
+
+		segment_User_VideoModelImpl._originalVideoId = segment_User_VideoModelImpl._videoId;
+
+		segment_User_VideoModelImpl._setOriginalVideoId = false;
+
+		segment_User_VideoModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -353,9 +414,16 @@ public class Segment_User_VideoModelImpl extends BaseModelImpl<Segment_User_Vide
 			Segment_User_Video.class
 		};
 	private long _segmentId;
+	private long _originalSegmentId;
+	private boolean _setOriginalSegmentId;
 	private long _userId;
 	private String _userUuid;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private long _videoId;
+	private long _originalVideoId;
+	private boolean _setOriginalVideoId;
 	private long _segmentUserVideoId;
+	private long _columnBitmask;
 	private Segment_User_Video _escapedModel;
 }

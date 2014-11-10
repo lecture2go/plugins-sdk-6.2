@@ -14,7 +14,10 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import com.liferay.portal.kernel.exception.SystemException;
+
 import de.uhh.l2g.plugins.service.base.Video_FacilityLocalServiceBaseImpl;
+import de.uhh.l2g.plugins.service.persistence.Video_FacilityUtil;
 
 /**
  * The implementation of the video_ facility local service.
@@ -37,4 +40,26 @@ public class Video_FacilityLocalServiceImpl
 	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.Video_FacilityLocalServiceUtil} to access the video_ facility local service.
 	 */
+	
+	public boolean removeByVideoId(Long videoId) {
+		boolean ret = false;
+		try {
+			Video_FacilityUtil.removeByVideo(videoId);
+		} catch (SystemException e) {
+			ret = true;
+			e.printStackTrace();
+		}
+		return ret;
+	}
+
+	public boolean removeByFacilityId(Long facilityId) {
+		boolean ret = false;
+		try {
+			Video_FacilityUtil.removeByFacility(facilityId);
+		} catch (SystemException e) {
+			ret = true;
+			e.printStackTrace();
+		}
+		return ret;
+	}
 }

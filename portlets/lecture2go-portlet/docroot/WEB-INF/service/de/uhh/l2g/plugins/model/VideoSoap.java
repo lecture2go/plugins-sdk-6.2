@@ -215,11 +215,11 @@ public class VideoSoap implements Serializable {
 		_downloadLink = downloadLink;
 	}
 
-	public int getMetadataId() {
+	public long getMetadataId() {
 		return _metadataId;
 	}
 
-	public void setMetadataId(int metadataId) {
+	public void setMetadataId(long metadataId) {
 		_metadataId = metadataId;
 	}
 
@@ -285,7 +285,7 @@ public class VideoSoap implements Serializable {
 	private String _generationDate;
 	private int _openAccess;
 	private int _downloadLink;
-	private int _metadataId;
+	private long _metadataId;
 	private String _surl;
 	private int _hits;
 	private Date _uploadDate;

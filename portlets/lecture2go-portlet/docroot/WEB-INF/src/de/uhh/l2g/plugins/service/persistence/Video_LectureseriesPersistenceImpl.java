@@ -87,7 +87,7 @@ public class Video_LectureseriesPersistenceImpl extends BasePersistenceImpl<Vide
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_VIDEO = new FinderPath(Video_LectureseriesModelImpl.ENTITY_CACHE_ENABLED,
 			Video_LectureseriesModelImpl.FINDER_CACHE_ENABLED,
 			Video_LectureseriesImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByvideo",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByVideo",
 			new String[] {
 				Long.class.getName(),
 				
@@ -97,12 +97,12 @@ public class Video_LectureseriesPersistenceImpl extends BasePersistenceImpl<Vide
 	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_VIDEO = new FinderPath(Video_LectureseriesModelImpl.ENTITY_CACHE_ENABLED,
 			Video_LectureseriesModelImpl.FINDER_CACHE_ENABLED,
 			Video_LectureseriesImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByvideo",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByVideo",
 			new String[] { Long.class.getName() },
 			Video_LectureseriesModelImpl.VIDEOID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_VIDEO = new FinderPath(Video_LectureseriesModelImpl.ENTITY_CACHE_ENABLED,
 			Video_LectureseriesModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByvideo",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByVideo",
 			new String[] { Long.class.getName() });
 
 	/**
@@ -113,9 +113,9 @@ public class Video_LectureseriesPersistenceImpl extends BasePersistenceImpl<Vide
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Video_Lectureseries> findByvideo(long videoId)
+	public List<Video_Lectureseries> findByVideo(long videoId)
 		throws SystemException {
-		return findByvideo(videoId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		return findByVideo(videoId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -132,9 +132,9 @@ public class Video_LectureseriesPersistenceImpl extends BasePersistenceImpl<Vide
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Video_Lectureseries> findByvideo(long videoId, int start,
+	public List<Video_Lectureseries> findByVideo(long videoId, int start,
 		int end) throws SystemException {
-		return findByvideo(videoId, start, end, null);
+		return findByVideo(videoId, start, end, null);
 	}
 
 	/**
@@ -152,7 +152,7 @@ public class Video_LectureseriesPersistenceImpl extends BasePersistenceImpl<Vide
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Video_Lectureseries> findByvideo(long videoId, int start,
+	public List<Video_Lectureseries> findByVideo(long videoId, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -259,10 +259,10 @@ public class Video_LectureseriesPersistenceImpl extends BasePersistenceImpl<Vide
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Video_Lectureseries findByvideo_First(long videoId,
+	public Video_Lectureseries findByVideo_First(long videoId,
 		OrderByComparator orderByComparator)
 		throws NoSuchVideo_LectureseriesException, SystemException {
-		Video_Lectureseries video_Lectureseries = fetchByvideo_First(videoId,
+		Video_Lectureseries video_Lectureseries = fetchByVideo_First(videoId,
 				orderByComparator);
 
 		if (video_Lectureseries != null) {
@@ -290,9 +290,9 @@ public class Video_LectureseriesPersistenceImpl extends BasePersistenceImpl<Vide
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Video_Lectureseries fetchByvideo_First(long videoId,
+	public Video_Lectureseries fetchByVideo_First(long videoId,
 		OrderByComparator orderByComparator) throws SystemException {
-		List<Video_Lectureseries> list = findByvideo(videoId, 0, 1,
+		List<Video_Lectureseries> list = findByVideo(videoId, 0, 1,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -312,10 +312,10 @@ public class Video_LectureseriesPersistenceImpl extends BasePersistenceImpl<Vide
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Video_Lectureseries findByvideo_Last(long videoId,
+	public Video_Lectureseries findByVideo_Last(long videoId,
 		OrderByComparator orderByComparator)
 		throws NoSuchVideo_LectureseriesException, SystemException {
-		Video_Lectureseries video_Lectureseries = fetchByvideo_Last(videoId,
+		Video_Lectureseries video_Lectureseries = fetchByVideo_Last(videoId,
 				orderByComparator);
 
 		if (video_Lectureseries != null) {
@@ -343,15 +343,15 @@ public class Video_LectureseriesPersistenceImpl extends BasePersistenceImpl<Vide
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Video_Lectureseries fetchByvideo_Last(long videoId,
+	public Video_Lectureseries fetchByVideo_Last(long videoId,
 		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByvideo(videoId);
+		int count = countByVideo(videoId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<Video_Lectureseries> list = findByvideo(videoId, count - 1, count,
+		List<Video_Lectureseries> list = findByVideo(videoId, count - 1, count,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -372,7 +372,7 @@ public class Video_LectureseriesPersistenceImpl extends BasePersistenceImpl<Vide
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Video_Lectureseries[] findByvideo_PrevAndNext(
+	public Video_Lectureseries[] findByVideo_PrevAndNext(
 		long videoLectureseriesId, long videoId,
 		OrderByComparator orderByComparator)
 		throws NoSuchVideo_LectureseriesException, SystemException {
@@ -385,12 +385,12 @@ public class Video_LectureseriesPersistenceImpl extends BasePersistenceImpl<Vide
 
 			Video_Lectureseries[] array = new Video_LectureseriesImpl[3];
 
-			array[0] = getByvideo_PrevAndNext(session, video_Lectureseries,
+			array[0] = getByVideo_PrevAndNext(session, video_Lectureseries,
 					videoId, orderByComparator, true);
 
 			array[1] = video_Lectureseries;
 
-			array[2] = getByvideo_PrevAndNext(session, video_Lectureseries,
+			array[2] = getByVideo_PrevAndNext(session, video_Lectureseries,
 					videoId, orderByComparator, false);
 
 			return array;
@@ -403,7 +403,7 @@ public class Video_LectureseriesPersistenceImpl extends BasePersistenceImpl<Vide
 		}
 	}
 
-	protected Video_Lectureseries getByvideo_PrevAndNext(Session session,
+	protected Video_Lectureseries getByVideo_PrevAndNext(Session session,
 		Video_Lectureseries video_Lectureseries, long videoId,
 		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
@@ -515,8 +515,8 @@ public class Video_LectureseriesPersistenceImpl extends BasePersistenceImpl<Vide
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByvideo(long videoId) throws SystemException {
-		for (Video_Lectureseries video_Lectureseries : findByvideo(videoId,
+	public void removeByVideo(long videoId) throws SystemException {
+		for (Video_Lectureseries video_Lectureseries : findByVideo(videoId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(video_Lectureseries);
 		}
@@ -530,7 +530,7 @@ public class Video_LectureseriesPersistenceImpl extends BasePersistenceImpl<Vide
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByvideo(long videoId) throws SystemException {
+	public int countByVideo(long videoId) throws SystemException {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_VIDEO;
 
 		Object[] finderArgs = new Object[] { videoId };
@@ -580,7 +580,7 @@ public class Video_LectureseriesPersistenceImpl extends BasePersistenceImpl<Vide
 		new FinderPath(Video_LectureseriesModelImpl.ENTITY_CACHE_ENABLED,
 			Video_LectureseriesModelImpl.FINDER_CACHE_ENABLED,
 			Video_LectureseriesImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBylectureseries",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLectureseries",
 			new String[] {
 				Long.class.getName(),
 				
@@ -591,12 +591,12 @@ public class Video_LectureseriesPersistenceImpl extends BasePersistenceImpl<Vide
 		new FinderPath(Video_LectureseriesModelImpl.ENTITY_CACHE_ENABLED,
 			Video_LectureseriesModelImpl.FINDER_CACHE_ENABLED,
 			Video_LectureseriesImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBylectureseries",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByLectureseries",
 			new String[] { Long.class.getName() },
 			Video_LectureseriesModelImpl.LECTURESERIESID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_LECTURESERIES = new FinderPath(Video_LectureseriesModelImpl.ENTITY_CACHE_ENABLED,
 			Video_LectureseriesModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBylectureseries",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLectureseries",
 			new String[] { Long.class.getName() });
 
 	/**
@@ -607,9 +607,9 @@ public class Video_LectureseriesPersistenceImpl extends BasePersistenceImpl<Vide
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Video_Lectureseries> findBylectureseries(long lectureseriesId)
+	public List<Video_Lectureseries> findByLectureseries(long lectureseriesId)
 		throws SystemException {
-		return findBylectureseries(lectureseriesId, QueryUtil.ALL_POS,
+		return findByLectureseries(lectureseriesId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
@@ -627,9 +627,9 @@ public class Video_LectureseriesPersistenceImpl extends BasePersistenceImpl<Vide
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Video_Lectureseries> findBylectureseries(long lectureseriesId,
+	public List<Video_Lectureseries> findByLectureseries(long lectureseriesId,
 		int start, int end) throws SystemException {
-		return findBylectureseries(lectureseriesId, start, end, null);
+		return findByLectureseries(lectureseriesId, start, end, null);
 	}
 
 	/**
@@ -647,7 +647,7 @@ public class Video_LectureseriesPersistenceImpl extends BasePersistenceImpl<Vide
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Video_Lectureseries> findBylectureseries(long lectureseriesId,
+	public List<Video_Lectureseries> findByLectureseries(long lectureseriesId,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
 		boolean pagination = true;
@@ -759,10 +759,10 @@ public class Video_LectureseriesPersistenceImpl extends BasePersistenceImpl<Vide
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Video_Lectureseries findBylectureseries_First(long lectureseriesId,
+	public Video_Lectureseries findByLectureseries_First(long lectureseriesId,
 		OrderByComparator orderByComparator)
 		throws NoSuchVideo_LectureseriesException, SystemException {
-		Video_Lectureseries video_Lectureseries = fetchBylectureseries_First(lectureseriesId,
+		Video_Lectureseries video_Lectureseries = fetchByLectureseries_First(lectureseriesId,
 				orderByComparator);
 
 		if (video_Lectureseries != null) {
@@ -790,10 +790,10 @@ public class Video_LectureseriesPersistenceImpl extends BasePersistenceImpl<Vide
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Video_Lectureseries fetchBylectureseries_First(
+	public Video_Lectureseries fetchByLectureseries_First(
 		long lectureseriesId, OrderByComparator orderByComparator)
 		throws SystemException {
-		List<Video_Lectureseries> list = findBylectureseries(lectureseriesId,
+		List<Video_Lectureseries> list = findByLectureseries(lectureseriesId,
 				0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -813,10 +813,10 @@ public class Video_LectureseriesPersistenceImpl extends BasePersistenceImpl<Vide
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Video_Lectureseries findBylectureseries_Last(long lectureseriesId,
+	public Video_Lectureseries findByLectureseries_Last(long lectureseriesId,
 		OrderByComparator orderByComparator)
 		throws NoSuchVideo_LectureseriesException, SystemException {
-		Video_Lectureseries video_Lectureseries = fetchBylectureseries_Last(lectureseriesId,
+		Video_Lectureseries video_Lectureseries = fetchByLectureseries_Last(lectureseriesId,
 				orderByComparator);
 
 		if (video_Lectureseries != null) {
@@ -844,15 +844,15 @@ public class Video_LectureseriesPersistenceImpl extends BasePersistenceImpl<Vide
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Video_Lectureseries fetchBylectureseries_Last(long lectureseriesId,
+	public Video_Lectureseries fetchByLectureseries_Last(long lectureseriesId,
 		OrderByComparator orderByComparator) throws SystemException {
-		int count = countBylectureseries(lectureseriesId);
+		int count = countByLectureseries(lectureseriesId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<Video_Lectureseries> list = findBylectureseries(lectureseriesId,
+		List<Video_Lectureseries> list = findByLectureseries(lectureseriesId,
 				count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -873,7 +873,7 @@ public class Video_LectureseriesPersistenceImpl extends BasePersistenceImpl<Vide
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Video_Lectureseries[] findBylectureseries_PrevAndNext(
+	public Video_Lectureseries[] findByLectureseries_PrevAndNext(
 		long videoLectureseriesId, long lectureseriesId,
 		OrderByComparator orderByComparator)
 		throws NoSuchVideo_LectureseriesException, SystemException {
@@ -886,13 +886,13 @@ public class Video_LectureseriesPersistenceImpl extends BasePersistenceImpl<Vide
 
 			Video_Lectureseries[] array = new Video_LectureseriesImpl[3];
 
-			array[0] = getBylectureseries_PrevAndNext(session,
+			array[0] = getByLectureseries_PrevAndNext(session,
 					video_Lectureseries, lectureseriesId, orderByComparator,
 					true);
 
 			array[1] = video_Lectureseries;
 
-			array[2] = getBylectureseries_PrevAndNext(session,
+			array[2] = getByLectureseries_PrevAndNext(session,
 					video_Lectureseries, lectureseriesId, orderByComparator,
 					false);
 
@@ -906,7 +906,7 @@ public class Video_LectureseriesPersistenceImpl extends BasePersistenceImpl<Vide
 		}
 	}
 
-	protected Video_Lectureseries getBylectureseries_PrevAndNext(
+	protected Video_Lectureseries getByLectureseries_PrevAndNext(
 		Session session, Video_Lectureseries video_Lectureseries,
 		long lectureseriesId, OrderByComparator orderByComparator,
 		boolean previous) {
@@ -1019,9 +1019,9 @@ public class Video_LectureseriesPersistenceImpl extends BasePersistenceImpl<Vide
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeBylectureseries(long lectureseriesId)
+	public void removeByLectureseries(long lectureseriesId)
 		throws SystemException {
-		for (Video_Lectureseries video_Lectureseries : findBylectureseries(
+		for (Video_Lectureseries video_Lectureseries : findByLectureseries(
 				lectureseriesId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(video_Lectureseries);
 		}
@@ -1035,7 +1035,7 @@ public class Video_LectureseriesPersistenceImpl extends BasePersistenceImpl<Vide
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countBylectureseries(long lectureseriesId)
+	public int countByLectureseries(long lectureseriesId)
 		throws SystemException {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_LECTURESERIES;
 

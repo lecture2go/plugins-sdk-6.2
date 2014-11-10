@@ -74,7 +74,12 @@ public class Video_FacilityModelImpl extends BaseModelImpl<Video_Facility>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.finder.cache.enabled.de.uhh.l2g.plugins.model.Video_Facility"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.Video_Facility"),
+			true);
+	public static long FACILITYID_COLUMN_BITMASK = 1L;
+	public static long VIDEOID_COLUMN_BITMASK = 2L;
+	public static long VIDEOFACILITYID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Video_Facility"));
 
@@ -160,7 +165,19 @@ public class Video_FacilityModelImpl extends BaseModelImpl<Video_Facility>
 
 	@Override
 	public void setVideoId(long videoId) {
+		_columnBitmask |= VIDEOID_COLUMN_BITMASK;
+
+		if (!_setOriginalVideoId) {
+			_setOriginalVideoId = true;
+
+			_originalVideoId = _videoId;
+		}
+
 		_videoId = videoId;
+	}
+
+	public long getOriginalVideoId() {
+		return _originalVideoId;
 	}
 
 	@Override
@@ -170,7 +187,23 @@ public class Video_FacilityModelImpl extends BaseModelImpl<Video_Facility>
 
 	@Override
 	public void setFacilityId(long facilityId) {
+		_columnBitmask |= FACILITYID_COLUMN_BITMASK;
+
+		if (!_setOriginalFacilityId) {
+			_setOriginalFacilityId = true;
+
+			_originalFacilityId = _facilityId;
+		}
+
 		_facilityId = facilityId;
+	}
+
+	public long getOriginalFacilityId() {
+		return _originalFacilityId;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -253,6 +286,17 @@ public class Video_FacilityModelImpl extends BaseModelImpl<Video_Facility>
 
 	@Override
 	public void resetOriginalValues() {
+		Video_FacilityModelImpl video_FacilityModelImpl = this;
+
+		video_FacilityModelImpl._originalVideoId = video_FacilityModelImpl._videoId;
+
+		video_FacilityModelImpl._setOriginalVideoId = false;
+
+		video_FacilityModelImpl._originalFacilityId = video_FacilityModelImpl._facilityId;
+
+		video_FacilityModelImpl._setOriginalFacilityId = false;
+
+		video_FacilityModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -315,6 +359,11 @@ public class Video_FacilityModelImpl extends BaseModelImpl<Video_Facility>
 		};
 	private long _videoFacilityId;
 	private long _videoId;
+	private long _originalVideoId;
+	private boolean _setOriginalVideoId;
 	private long _facilityId;
+	private long _originalFacilityId;
+	private boolean _setOriginalFacilityId;
+	private long _columnBitmask;
 	private Video_Facility _escapedModel;
 }

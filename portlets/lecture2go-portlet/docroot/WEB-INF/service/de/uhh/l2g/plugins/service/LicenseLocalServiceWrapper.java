@@ -287,6 +287,12 @@ public class LicenseLocalServiceWrapper implements LicenseLocalService,
 		return _licenseLocalService.getByVideoId(videoId);
 	}
 
+	@Override
+	public boolean removeByVideoId(java.lang.Long videoId)
+		throws de.uhh.l2g.plugins.NoSuchLicenseException {
+		return _licenseLocalService.removeByVideoId(videoId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

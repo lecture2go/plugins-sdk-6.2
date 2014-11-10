@@ -184,7 +184,7 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 			setDownloadLink(downloadLink);
 		}
 
-		Integer metadataId = (Integer)attributes.get("metadataId");
+		Long metadataId = (Long)attributes.get("metadataId");
 
 		if (metadataId != null) {
 			setMetadataId(metadataId);
@@ -553,19 +553,19 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 	}
 
 	@Override
-	public int getMetadataId() {
+	public long getMetadataId() {
 		return _metadataId;
 	}
 
 	@Override
-	public void setMetadataId(int metadataId) {
+	public void setMetadataId(long metadataId) {
 		_metadataId = metadataId;
 
 		if (_videoRemoteModel != null) {
 			try {
 				Class<?> clazz = _videoRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setMetadataId", int.class);
+				Method method = clazz.getMethod("setMetadataId", long.class);
 
 				method.invoke(_videoRemoteModel, metadataId);
 			}
@@ -1013,7 +1013,7 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 	private String _generationDate;
 	private int _openAccess;
 	private int _downloadLink;
-	private int _metadataId;
+	private long _metadataId;
 	private String _surl;
 	private int _hits;
 	private Date _uploadDate;

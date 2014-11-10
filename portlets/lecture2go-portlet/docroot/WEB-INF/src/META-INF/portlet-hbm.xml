@@ -222,7 +222,7 @@
 		<property name="generationDate" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="openAccess" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="downloadLink" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="metadataId" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="metadataId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="surl" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="hits" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="uploadDate" type="org.hibernate.type.TimestampType" />

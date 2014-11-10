@@ -113,6 +113,10 @@ public class LicenseLocalServiceClp implements LicenseLocalService {
 		_methodName19 = "getByVideoId";
 
 		_methodParameterTypes19 = new String[] { "java.lang.Long" };
+
+		_methodName20 = "removeByVideoId";
+
+		_methodParameterTypes20 = new String[] { "java.lang.Long" };
 	}
 
 	@Override
@@ -695,6 +699,35 @@ public class LicenseLocalServiceClp implements LicenseLocalService {
 		return (de.uhh.l2g.plugins.model.License)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public boolean removeByVideoId(java.lang.Long videoId)
+		throws de.uhh.l2g.plugins.NoSuchLicenseException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20,
+					new Object[] { ClpSerializer.translateInput(videoId) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof de.uhh.l2g.plugins.NoSuchLicenseException) {
+				throw (de.uhh.l2g.plugins.NoSuchLicenseException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Boolean)returnObj).booleanValue();
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -734,4 +767,6 @@ public class LicenseLocalServiceClp implements LicenseLocalService {
 	private String[] _methodParameterTypes17;
 	private String _methodName19;
 	private String[] _methodParameterTypes19;
+	private String _methodName20;
+	private String[] _methodParameterTypes20;
 }

@@ -38,7 +38,6 @@
 	if(coordinatorId==0 && producerId==0) tempVideosList = VideoLocalServiceUtil.getVideos(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 	
 %>
-<portlet:actionURL name="viewVideo" var="addVideoURL"><portlet:param name="jspPage" value="/admin/editVideo.jsp" /><portlet:param name="lectureseriesId" value='<%=lectureseriesId+""%>'></portlet:param><portlet:param name="producerId" value='<%=producerId+""%>'></portlet:param></portlet:actionURL>
 
 <aui:fieldset helpMessage="choose-filter" column="true">
 		<aui:layout>
@@ -107,6 +106,11 @@
 		<aui:layout>
 			<%if(producerId>0){%>	
 				<aui:row>
+					<portlet:actionURL name="addVideo" var="addVideoURL">
+						<portlet:param name="jspPage" value="/admin/editVideo.jsp" />
+						<portlet:param name="lectureseriesId" value='<%=lectureseriesId+""%>'/>
+						<portlet:param name="producerId" value='<%=producerId+""%>'/>
+					</portlet:actionURL>				
 					<aui:button value="add-new-video" onClick="<%=addVideoURL%>"/>
 				</aui:row>
 			<%}%>
@@ -124,11 +128,11 @@
 	</liferay-ui:search-container-results>
 
 	<liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.Video" keyProperty="videoId" modelVar="video">
-		<portlet:actionURL name="viewVideo" var="editURL">
+		<portlet:actionURL name="viewVideo" var="viewURL">
 			<portlet:param name="videoId" value="<%= String.valueOf(video.getVideoId())%>" />
 		</portlet:actionURL>
 		<liferay-ui:search-container-column-text name="name">
-			<aui:a  href="<%=editURL.toString()%>"><%=video.getTitle()%></aui:a>
+			<aui:a  href="<%=viewURL.toString()%>"><%=video.getTitle()%></aui:a>
 		</liferay-ui:search-container-column-text>
 		<liferay-ui:search-container-column-jsp path="/admin/editVideoButton.jsp"/>
 	</liferay-ui:search-container-row>

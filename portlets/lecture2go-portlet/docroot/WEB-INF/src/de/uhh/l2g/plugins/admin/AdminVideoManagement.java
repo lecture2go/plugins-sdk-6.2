@@ -20,7 +20,6 @@ import javax.portlet.ResourceResponse;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
@@ -35,16 +34,24 @@ import de.uhh.l2g.plugins.model.License;
 import de.uhh.l2g.plugins.model.Metadata;
 import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.model.Video;
+import de.uhh.l2g.plugins.model.Video_Facility;
+import de.uhh.l2g.plugins.model.Video_Lectureseries;
 import de.uhh.l2g.plugins.model.impl.LectureseriesImpl;
 import de.uhh.l2g.plugins.model.impl.LicenseImpl;
 import de.uhh.l2g.plugins.model.impl.MetadataImpl;
 import de.uhh.l2g.plugins.model.impl.ProducerImpl;
 import de.uhh.l2g.plugins.model.impl.VideoImpl;
+import de.uhh.l2g.plugins.model.impl.Video_FacilityImpl;
+import de.uhh.l2g.plugins.model.impl.Video_LectureseriesImpl;
+import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LicenseLocalServiceUtil;
 import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Video_FacilityLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
+import de.uhh.l2g.plugins.service.persistence.Video_LectureseriesUtil;
 
 public class AdminVideoManagement extends MVCPortlet {
 
@@ -128,8 +135,60 @@ public class AdminVideoManagement extends MVCPortlet {
 		response.setRenderParameter("jspPage", "/admin/editVideo.jsp");
 	}
 	
+	@SuppressWarnings("unused")
 	public void addVideo(ActionRequest request, ActionResponse response) throws SystemException, PortalException {
-		//build new video object
+		//first metadata
+		Metadata reqMetadata = new MetadataImpl();
+		reqMetadata = MetadataLocalServiceUtil.addMetadata(reqMetadata);
+		request.setAttribute("reqMetadata", reqMetadata);
+
+		//lecture series
+		Long lectureseriesId = new Long(request.getParameter("lectureseriesId"));
+		Lectureseries reqLectureseries = new LectureseriesImpl();
+		try{reqLectureseries = (Lectureseries) LectureseriesLocalServiceUtil.getLectureseries(lectureseriesId); }catch(Exception e){}
+		request.setAttribute("reqLectureseries", reqLectureseries);
+
+		//producer
+		Long producerId = new Long(request.getParameter("producerId"));
+		ProducerImpl reqProducer = new ProducerImpl();
+		reqProducer = (ProducerImpl)ProducerLocalServiceUtil.getProdUcer(producerId);
+		request.setAttribute("reqProducer", reqProducer);
+
+		//video
+		Video newVideo = new VideoImpl();
+		newVideo.setProducerId(producerId);
+		newVideo.setLectureseriesId(lectureseriesId);
+		newVideo.setHostId(reqProducer.getHostId());
+		newVideo.setMetadataId(reqMetadata.getMetadataId());
+		newVideo.setFacilityId(reqProducer.getFacilityId());
+		//save it
+		Video video = VideoLocalServiceUtil.addVideo(newVideo);
+		request.setAttribute("reqVideo", newVideo);
+		
+		//link to lectureseries list
+		Video_Lectureseries vl = new Video_LectureseriesImpl();
+		vl.setLectureseriesId(lectureseriesId);
+		vl.setVideoId(newVideo.getVideoId());
+		Video_LectureseriesLocalServiceUtil.addVideo_Lectureseries(vl);
+		
+		// requested lecture series list
+		List<Lectureseries> reqLectureseriesList = new ArrayList<Lectureseries>();
+		try{reqLectureseriesList = LectureseriesLocalServiceUtil.getFilteredBySemesterFacultyProducer(1, "", (long) 0, producerId);}catch(Exception e){}
+		request.setAttribute("reqLectureseriesList", reqLectureseriesList);
+		
+		//licence
+		License license = new LicenseImpl();
+		license.setVideoId(newVideo.getVideoId());
+		LicenseLocalServiceUtil.addLicense(license);
+		request.setAttribute("reqLicense", license);
+
+		//update lg_video_facility table
+		Video_Facility vf = new Video_FacilityImpl();
+		vf.setVideoId(video.getVideoId());
+		vf.setFacilityId(reqProducer.getFacilityId());
+		Video_FacilityLocalServiceUtil.addVideo_Facility(vf);
+		
+		response.setRenderParameter("jspPage", "/admin/editVideo.jsp");
 	}
 	
 	
@@ -150,7 +209,7 @@ public class AdminVideoManagement extends MVCPortlet {
 					file.renameTo(newFile);
 					logger.info("VALIDATED_SUCCESSFULLY");
 				}else{
-					resourceResponse.getWriter().write( "failed");
+					resourceResponse.getWriter().write("failed");
 					logger.info("VALIDATION_FAILED");
 				}
 			}
@@ -159,6 +218,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		}
 		int j = 0;
 		j++;
+		
 	}
 
 	public String getFileAsString(File file) {
@@ -185,6 +245,42 @@ public class AdminVideoManagement extends MVCPortlet {
 		return sb.toString();
 	}
 
+	public void removeVideo(ActionRequest request, ActionResponse response) throws NumberFormatException, PortalException, SystemException{
+		Long videoId = new Long(request.getParameter("videoId"));
+
+		// delete this video from the file system
+
+		// delete image
+
+		// delete segments
+
+		// delete all segment data from table
+
+		// delete the symbolic link
+
+		// update the data row
+
+		// update RSS
+		
+		//refresh last video list
+		
+		// delete video
+		VideoLocalServiceUtil.deleteVideo(videoId);
+		
+		//delete license
+		LicenseLocalServiceUtil.removeByVideoId(videoId);
+		
+		// delete video_lectureseries
+		Video_LectureseriesLocalServiceUtil.removeByVideoId(videoId);
+		
+		// delete video_facility
+		Video_FacilityLocalServiceUtil.removeByVideoId(videoId);
+		
+		//forward to list
+		response.setRenderParameter("jspPage", "/admin/videosList.jsp");
+	}
+	
+	
 	public void editVideo(ActionRequest request, ActionResponse response) throws NumberFormatException, PortalException, SystemException{
 		Long videoId = new Long(request.getParameter("videoId"));
 		String lic = request.getParameter("license");

@@ -288,6 +288,16 @@ public class Video_FacilityLocalServiceWrapper
 			arguments);
 	}
 
+	@Override
+	public boolean removeByVideoId(java.lang.Long videoId) {
+		return _video_FacilityLocalService.removeByVideoId(videoId);
+	}
+
+	@Override
+	public boolean removeByFacilityId(java.lang.Long facilityId) {
+		return _video_FacilityLocalService.removeByFacilityId(facilityId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

@@ -150,7 +150,7 @@
 		<field name="generationDate" type="String" />
 		<field name="openAccess" type="int" />
 		<field name="downloadLink" type="int" />
-		<field name="metadataId" type="int" />
+		<field name="metadataId" type="long" />
 		<field name="surl" type="String" />
 		<field name="hits" type="int" />
 		<field name="uploadDate" type="Date" />

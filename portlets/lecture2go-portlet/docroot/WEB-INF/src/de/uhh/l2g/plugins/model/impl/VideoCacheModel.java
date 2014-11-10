@@ -198,7 +198,7 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 		generationDate = objectInput.readUTF();
 		openAccess = objectInput.readInt();
 		downloadLink = objectInput.readInt();
-		metadataId = objectInput.readInt();
+		metadataId = objectInput.readLong();
 		surl = objectInput.readUTF();
 		hits = objectInput.readInt();
 		uploadDate = objectInput.readLong();
@@ -275,7 +275,7 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 
 		objectOutput.writeInt(openAccess);
 		objectOutput.writeInt(downloadLink);
-		objectOutput.writeInt(metadataId);
+		objectOutput.writeLong(metadataId);
 
 		if (surl == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -305,7 +305,7 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 	public String generationDate;
 	public int openAccess;
 	public int downloadLink;
-	public int metadataId;
+	public long metadataId;
 	public String surl;
 	public int hits;
 	public long uploadDate;

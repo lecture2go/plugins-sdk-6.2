@@ -36,6 +36,10 @@ create index IX_2A06594E on LG_Producer_Lectureseries (lectureseriesId);
 create index IX_2BD4E3CF on LG_Producer_Lectureseries (lectureseriesId, producerId);
 create index IX_C19D6C13 on LG_Producer_Lectureseries (producerId);
 
+create index IX_87A17CC1 on LG_Segment_User_Video (segmentId);
+create index IX_165E5A37 on LG_Segment_User_Video (userId);
+create index IX_F1DC7249 on LG_Segment_User_Video (videoId);
+
 create index IX_27903D2F on LG_Video (facilityId);
 create index IX_3B4515A3 on LG_Video (lectureseriesId);
 create index IX_35558E9E on LG_Video (producerId);
@@ -43,6 +47,9 @@ create index IX_99A86BC2 on LG_Video (producerId, lectureseriesId);
 
 create index IX_7D0E80BC on LG_VideoLectureseries (lectureseriesId);
 create index IX_EADAE6C2 on LG_VideoLectureseries (videoId);
+
+create index IX_946D6703 on LG_Video_Facility (facilityId);
+create index IX_1A4F9955 on LG_Video_Facility (videoId);
 
 create index IX_12087ECD on LG_Video_Lectureseries (lectureseriesId);
 create index IX_F35885D3 on LG_Video_Lectureseries (videoId);

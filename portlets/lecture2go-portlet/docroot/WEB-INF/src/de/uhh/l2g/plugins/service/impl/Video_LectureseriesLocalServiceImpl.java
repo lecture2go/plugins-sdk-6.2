@@ -43,7 +43,7 @@ public class Video_LectureseriesLocalServiceImpl
 	public boolean removeByLectureseriesId(Long lectureseriesId) {
 		boolean ret = false;
 		try {
-			Video_LectureseriesUtil.removeBylectureseries(lectureseriesId);
+			Video_LectureseriesUtil.removeByLectureseries(lectureseriesId);
 		} catch (SystemException e) {
 			ret = true;
 			e.printStackTrace();
@@ -54,7 +54,7 @@ public class Video_LectureseriesLocalServiceImpl
 	public boolean removeByVideoId(Long videoId) {
 		boolean ret = false;
 		try {
-			Video_LectureseriesUtil.removeByvideo(videoId);
+			Video_LectureseriesUtil.removeByVideo(videoId);
 		} catch (SystemException e) {
 			ret = true;
 			e.printStackTrace();

@@ -223,6 +223,15 @@
         <column name="userId" type="long"></column>
         <column name="videoId" type="long"></column>
         <column name="segmentUserVideoId" type="long" primary="true" id-type="increment"></column>
+        <finder name="Segment" return-type="Collection">
+            <finder-column name="segmentId"></finder-column>
+        </finder>
+        <finder name="User" return-type="Collection">
+            <finder-column name="userId"></finder-column>
+        </finder>
+        <finder name="Video" return-type="Collection">
+            <finder-column name="videoId"></finder-column>
+        </finder>
     </entity>
     <entity name="Upload" local-service="true" remote-service="false">
         <column name="uploadId" type="long" primary="true" id-type="increment"></column>
@@ -247,7 +256,7 @@
         <column name="generationDate" type="String"></column>
         <column name="openAccess" type="int"></column>
         <column name="downloadLink" type="int"></column>
-        <column name="metadataId" type="int"></column>
+        <column name="metadataId" type="long"></column>
         <column name="surl" type="String"></column>
         <column name="hits" type="int"></column>
         <column name="uploadDate" type="Date"></column>
@@ -272,6 +281,12 @@
         <column name="videoFacilityId" type="long" primary="true" id-type="increment"></column>
         <column name="videoId" type="long"></column>
         <column name="facilityId" type="long"></column>
+        <finder name="Video" return-type="Collection">
+            <finder-column name="videoId"></finder-column>
+        </finder>
+        <finder name="Facility" return-type="Collection">
+            <finder-column name="facilityId"></finder-column>
+        </finder>
     </entity>
     <entity name="Videohitlist" local-service="true" remote-service="false">
         <column name="videohitlistId" type="int" primary="true" id-type="increment"></column>
@@ -284,10 +299,10 @@
         <column name="videoLectureseriesId" type="long" primary="true" id-type="increment"></column>
         <column name="videoId" type="long"></column>
         <column name="lectureseriesId" type="long"></column>
-        <finder name="video" return-type="Collection">
+        <finder name="Video" return-type="Collection">
             <finder-column name="videoId"></finder-column>
         </finder>
-        <finder name="lectureseries" return-type="Collection">
+        <finder name="Lectureseries" return-type="Collection">
             <finder-column name="lectureseriesId"></finder-column>
         </finder>
     </entity>

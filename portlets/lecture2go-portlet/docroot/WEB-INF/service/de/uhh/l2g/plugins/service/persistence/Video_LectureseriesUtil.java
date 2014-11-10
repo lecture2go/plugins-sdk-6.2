@@ -118,10 +118,10 @@ public class Video_LectureseriesUtil {
 	* @return the matching video_ lectureserieses
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> findByvideo(
+	public static java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> findByVideo(
 		long videoId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByvideo(videoId);
+		return getPersistence().findByVideo(videoId);
 	}
 
 	/**
@@ -137,10 +137,10 @@ public class Video_LectureseriesUtil {
 	* @return the range of matching video_ lectureserieses
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> findByvideo(
+	public static java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> findByVideo(
 		long videoId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByvideo(videoId, start, end);
+		return getPersistence().findByVideo(videoId, start, end);
 	}
 
 	/**
@@ -157,12 +157,12 @@ public class Video_LectureseriesUtil {
 	* @return the ordered range of matching video_ lectureserieses
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> findByvideo(
+	public static java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> findByVideo(
 		long videoId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByvideo(videoId, start, end, orderByComparator);
+				   .findByVideo(videoId, start, end, orderByComparator);
 	}
 
 	/**
@@ -174,12 +174,12 @@ public class Video_LectureseriesUtil {
 	* @throws de.uhh.l2g.plugins.NoSuchVideo_LectureseriesException if a matching video_ lectureseries could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Video_Lectureseries findByvideo_First(
+	public static de.uhh.l2g.plugins.model.Video_Lectureseries findByVideo_First(
 		long videoId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchVideo_LectureseriesException {
-		return getPersistence().findByvideo_First(videoId, orderByComparator);
+		return getPersistence().findByVideo_First(videoId, orderByComparator);
 	}
 
 	/**
@@ -190,11 +190,11 @@ public class Video_LectureseriesUtil {
 	* @return the first matching video_ lectureseries, or <code>null</code> if a matching video_ lectureseries could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Video_Lectureseries fetchByvideo_First(
+	public static de.uhh.l2g.plugins.model.Video_Lectureseries fetchByVideo_First(
 		long videoId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByvideo_First(videoId, orderByComparator);
+		return getPersistence().fetchByVideo_First(videoId, orderByComparator);
 	}
 
 	/**
@@ -206,12 +206,12 @@ public class Video_LectureseriesUtil {
 	* @throws de.uhh.l2g.plugins.NoSuchVideo_LectureseriesException if a matching video_ lectureseries could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Video_Lectureseries findByvideo_Last(
+	public static de.uhh.l2g.plugins.model.Video_Lectureseries findByVideo_Last(
 		long videoId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchVideo_LectureseriesException {
-		return getPersistence().findByvideo_Last(videoId, orderByComparator);
+		return getPersistence().findByVideo_Last(videoId, orderByComparator);
 	}
 
 	/**
@@ -222,11 +222,11 @@ public class Video_LectureseriesUtil {
 	* @return the last matching video_ lectureseries, or <code>null</code> if a matching video_ lectureseries could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Video_Lectureseries fetchByvideo_Last(
+	public static de.uhh.l2g.plugins.model.Video_Lectureseries fetchByVideo_Last(
 		long videoId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByvideo_Last(videoId, orderByComparator);
+		return getPersistence().fetchByVideo_Last(videoId, orderByComparator);
 	}
 
 	/**
@@ -239,13 +239,13 @@ public class Video_LectureseriesUtil {
 	* @throws de.uhh.l2g.plugins.NoSuchVideo_LectureseriesException if a video_ lectureseries with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Video_Lectureseries[] findByvideo_PrevAndNext(
+	public static de.uhh.l2g.plugins.model.Video_Lectureseries[] findByVideo_PrevAndNext(
 		long videoLectureseriesId, long videoId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchVideo_LectureseriesException {
 		return getPersistence()
-				   .findByvideo_PrevAndNext(videoLectureseriesId, videoId,
+				   .findByVideo_PrevAndNext(videoLectureseriesId, videoId,
 			orderByComparator);
 	}
 
@@ -255,9 +255,9 @@ public class Video_LectureseriesUtil {
 	* @param videoId the video ID
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByvideo(long videoId)
+	public static void removeByVideo(long videoId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByvideo(videoId);
+		getPersistence().removeByVideo(videoId);
 	}
 
 	/**
@@ -267,9 +267,9 @@ public class Video_LectureseriesUtil {
 	* @return the number of matching video_ lectureserieses
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByvideo(long videoId)
+	public static int countByVideo(long videoId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByvideo(videoId);
+		return getPersistence().countByVideo(videoId);
 	}
 
 	/**
@@ -279,10 +279,10 @@ public class Video_LectureseriesUtil {
 	* @return the matching video_ lectureserieses
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> findBylectureseries(
+	public static java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> findByLectureseries(
 		long lectureseriesId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findBylectureseries(lectureseriesId);
+		return getPersistence().findByLectureseries(lectureseriesId);
 	}
 
 	/**
@@ -298,10 +298,10 @@ public class Video_LectureseriesUtil {
 	* @return the range of matching video_ lectureserieses
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> findBylectureseries(
+	public static java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> findByLectureseries(
 		long lectureseriesId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findBylectureseries(lectureseriesId, start, end);
+		return getPersistence().findByLectureseries(lectureseriesId, start, end);
 	}
 
 	/**
@@ -318,12 +318,12 @@ public class Video_LectureseriesUtil {
 	* @return the ordered range of matching video_ lectureserieses
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> findBylectureseries(
+	public static java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> findByLectureseries(
 		long lectureseriesId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findBylectureseries(lectureseriesId, start, end,
+				   .findByLectureseries(lectureseriesId, start, end,
 			orderByComparator);
 	}
 
@@ -336,13 +336,13 @@ public class Video_LectureseriesUtil {
 	* @throws de.uhh.l2g.plugins.NoSuchVideo_LectureseriesException if a matching video_ lectureseries could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Video_Lectureseries findBylectureseries_First(
+	public static de.uhh.l2g.plugins.model.Video_Lectureseries findByLectureseries_First(
 		long lectureseriesId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchVideo_LectureseriesException {
 		return getPersistence()
-				   .findBylectureseries_First(lectureseriesId, orderByComparator);
+				   .findByLectureseries_First(lectureseriesId, orderByComparator);
 	}
 
 	/**
@@ -353,12 +353,12 @@ public class Video_LectureseriesUtil {
 	* @return the first matching video_ lectureseries, or <code>null</code> if a matching video_ lectureseries could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Video_Lectureseries fetchBylectureseries_First(
+	public static de.uhh.l2g.plugins.model.Video_Lectureseries fetchByLectureseries_First(
 		long lectureseriesId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .fetchBylectureseries_First(lectureseriesId,
+				   .fetchByLectureseries_First(lectureseriesId,
 			orderByComparator);
 	}
 
@@ -371,13 +371,13 @@ public class Video_LectureseriesUtil {
 	* @throws de.uhh.l2g.plugins.NoSuchVideo_LectureseriesException if a matching video_ lectureseries could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Video_Lectureseries findBylectureseries_Last(
+	public static de.uhh.l2g.plugins.model.Video_Lectureseries findByLectureseries_Last(
 		long lectureseriesId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchVideo_LectureseriesException {
 		return getPersistence()
-				   .findBylectureseries_Last(lectureseriesId, orderByComparator);
+				   .findByLectureseries_Last(lectureseriesId, orderByComparator);
 	}
 
 	/**
@@ -388,12 +388,12 @@ public class Video_LectureseriesUtil {
 	* @return the last matching video_ lectureseries, or <code>null</code> if a matching video_ lectureseries could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Video_Lectureseries fetchBylectureseries_Last(
+	public static de.uhh.l2g.plugins.model.Video_Lectureseries fetchByLectureseries_Last(
 		long lectureseriesId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .fetchBylectureseries_Last(lectureseriesId, orderByComparator);
+				   .fetchByLectureseries_Last(lectureseriesId, orderByComparator);
 	}
 
 	/**
@@ -406,13 +406,13 @@ public class Video_LectureseriesUtil {
 	* @throws de.uhh.l2g.plugins.NoSuchVideo_LectureseriesException if a video_ lectureseries with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Video_Lectureseries[] findBylectureseries_PrevAndNext(
+	public static de.uhh.l2g.plugins.model.Video_Lectureseries[] findByLectureseries_PrevAndNext(
 		long videoLectureseriesId, long lectureseriesId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchVideo_LectureseriesException {
 		return getPersistence()
-				   .findBylectureseries_PrevAndNext(videoLectureseriesId,
+				   .findByLectureseries_PrevAndNext(videoLectureseriesId,
 			lectureseriesId, orderByComparator);
 	}
 
@@ -422,9 +422,9 @@ public class Video_LectureseriesUtil {
 	* @param lectureseriesId the lectureseries ID
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeBylectureseries(long lectureseriesId)
+	public static void removeByLectureseries(long lectureseriesId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeBylectureseries(lectureseriesId);
+		getPersistence().removeByLectureseries(lectureseriesId);
 	}
 
 	/**
@@ -434,9 +434,9 @@ public class Video_LectureseriesUtil {
 	* @return the number of matching video_ lectureserieses
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countBylectureseries(long lectureseriesId)
+	public static int countByLectureseries(long lectureseriesId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countBylectureseries(lectureseriesId);
+		return getPersistence().countByLectureseries(lectureseriesId);
 	}
 
 	/**

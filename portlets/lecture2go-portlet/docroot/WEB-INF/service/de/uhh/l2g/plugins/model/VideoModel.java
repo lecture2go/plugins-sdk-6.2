@@ -268,14 +268,14 @@ public interface VideoModel extends BaseModel<Video> {
 	 *
 	 * @return the metadata ID of this video
 	 */
-	public int getMetadataId();
+	public long getMetadataId();
 
 	/**
 	 * Sets the metadata ID of this video.
 	 *
 	 * @param metadataId the metadata ID of this video
 	 */
-	public void setMetadataId(int metadataId);
+	public void setMetadataId(long metadataId);
 
 	/**
 	 * Returns the surl of this video.

@@ -23,7 +23,6 @@
 	List<String> semesters = LectureseriesLocalServiceUtil.getAllSemesters(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 
 	String uploadProgressId = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
-
 %>
 
 <portlet:renderURL var="cancelURL">
@@ -146,6 +145,15 @@ AUI().use('aui-node','file',
     	
     	<%if(reqVideo.getVideoId()==0){%>metadata.hide();upload.show()<%}%>
     	<%if(reqVideo.getVideoId()>0){%>metadata.show();upload.show()<%}%>
+    	
+    	upload.on(
+    		'click',
+    		function() {
+    			//then show metadata
+    			metadata.show();
+    		}
+    	)
+    	
 	}
 );
 

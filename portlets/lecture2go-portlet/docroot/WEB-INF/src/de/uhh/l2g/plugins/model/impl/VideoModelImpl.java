@@ -72,7 +72,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 			{ "generationDate", Types.VARCHAR },
 			{ "openAccess", Types.INTEGER },
 			{ "downloadLink", Types.INTEGER },
-			{ "metadataId", Types.INTEGER },
+			{ "metadataId", Types.BIGINT },
 			{ "surl", Types.VARCHAR },
 			{ "hits", Types.INTEGER },
 			{ "uploadDate", Types.TIMESTAMP },
@@ -80,7 +80,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 			{ "facilityId", Types.BIGINT },
 			{ "citation2go", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Video (videoId LONG not null primary key,title VARCHAR(75) null,tags VARCHAR(75) null,lectureseriesId LONG,producerId LONG,containerFormat VARCHAR(75) null,filename VARCHAR(75) null,resolution VARCHAR(75) null,duration VARCHAR(75) null,hostId LONG,fileSize VARCHAR(75) null,generationDate VARCHAR(75) null,openAccess INTEGER,downloadLink INTEGER,metadataId INTEGER,surl VARCHAR(75) null,hits INTEGER,uploadDate DATE null,permittedToSegment INTEGER,facilityId LONG,citation2go INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Video (videoId LONG not null primary key,title VARCHAR(75) null,tags VARCHAR(75) null,lectureseriesId LONG,producerId LONG,containerFormat VARCHAR(75) null,filename VARCHAR(75) null,resolution VARCHAR(75) null,duration VARCHAR(75) null,hostId LONG,fileSize VARCHAR(75) null,generationDate VARCHAR(75) null,openAccess INTEGER,downloadLink INTEGER,metadataId LONG,surl VARCHAR(75) null,hits INTEGER,uploadDate DATE null,permittedToSegment INTEGER,facilityId LONG,citation2go INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Video";
 	public static final String ORDER_BY_JPQL = " ORDER BY video.videoId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Video.videoId ASC";
@@ -251,7 +251,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 			setDownloadLink(downloadLink);
 		}
 
-		Integer metadataId = (Integer)attributes.get("metadataId");
+		Long metadataId = (Long)attributes.get("metadataId");
 
 		if (metadataId != null) {
 			setMetadataId(metadataId);
@@ -500,12 +500,12 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	}
 
 	@Override
-	public int getMetadataId() {
+	public long getMetadataId() {
 		return _metadataId;
 	}
 
 	@Override
-	public void setMetadataId(int metadataId) {
+	public void setMetadataId(long metadataId) {
 		_metadataId = metadataId;
 	}
 
@@ -984,7 +984,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	private String _generationDate;
 	private int _openAccess;
 	private int _downloadLink;
-	private int _metadataId;
+	private long _metadataId;
 	private String _surl;
 	private int _hits;
 	private Date _uploadDate;

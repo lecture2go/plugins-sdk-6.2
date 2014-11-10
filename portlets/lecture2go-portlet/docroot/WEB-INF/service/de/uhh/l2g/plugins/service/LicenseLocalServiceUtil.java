@@ -278,6 +278,11 @@ public class LicenseLocalServiceUtil {
 		return getService().getByVideoId(videoId);
 	}
 
+	public static boolean removeByVideoId(java.lang.Long videoId)
+		throws de.uhh.l2g.plugins.NoSuchLicenseException {
+		return getService().removeByVideoId(videoId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

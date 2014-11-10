@@ -160,7 +160,7 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 			setDownloadLink(downloadLink);
 		}
 
-		Integer metadataId = (Integer)attributes.get("metadataId");
+		Long metadataId = (Long)attributes.get("metadataId");
 
 		if (metadataId != null) {
 			setMetadataId(metadataId);
@@ -510,7 +510,7 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 	* @return the metadata ID of this video
 	*/
 	@Override
-	public int getMetadataId() {
+	public long getMetadataId() {
 		return _video.getMetadataId();
 	}
 
@@ -520,7 +520,7 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 	* @param metadataId the metadata ID of this video
 	*/
 	@Override
-	public void setMetadataId(int metadataId) {
+	public void setMetadataId(long metadataId) {
 		_video.setMetadataId(metadataId);
 	}
 

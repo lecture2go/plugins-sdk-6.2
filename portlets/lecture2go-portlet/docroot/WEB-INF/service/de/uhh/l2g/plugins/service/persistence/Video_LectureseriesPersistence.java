@@ -44,7 +44,7 @@ public interface Video_LectureseriesPersistence extends BasePersistence<Video_Le
 	* @return the matching video_ lectureserieses
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> findByvideo(
+	public java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> findByVideo(
 		long videoId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -61,7 +61,7 @@ public interface Video_LectureseriesPersistence extends BasePersistence<Video_Le
 	* @return the range of matching video_ lectureserieses
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> findByvideo(
+	public java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> findByVideo(
 		long videoId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -79,7 +79,7 @@ public interface Video_LectureseriesPersistence extends BasePersistence<Video_Le
 	* @return the ordered range of matching video_ lectureserieses
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> findByvideo(
+	public java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> findByVideo(
 		long videoId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -93,7 +93,7 @@ public interface Video_LectureseriesPersistence extends BasePersistence<Video_Le
 	* @throws de.uhh.l2g.plugins.NoSuchVideo_LectureseriesException if a matching video_ lectureseries could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.Video_Lectureseries findByvideo_First(
+	public de.uhh.l2g.plugins.model.Video_Lectureseries findByVideo_First(
 		long videoId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -107,7 +107,7 @@ public interface Video_LectureseriesPersistence extends BasePersistence<Video_Le
 	* @return the first matching video_ lectureseries, or <code>null</code> if a matching video_ lectureseries could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.Video_Lectureseries fetchByvideo_First(
+	public de.uhh.l2g.plugins.model.Video_Lectureseries fetchByVideo_First(
 		long videoId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -121,7 +121,7 @@ public interface Video_LectureseriesPersistence extends BasePersistence<Video_Le
 	* @throws de.uhh.l2g.plugins.NoSuchVideo_LectureseriesException if a matching video_ lectureseries could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.Video_Lectureseries findByvideo_Last(
+	public de.uhh.l2g.plugins.model.Video_Lectureseries findByVideo_Last(
 		long videoId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -135,7 +135,7 @@ public interface Video_LectureseriesPersistence extends BasePersistence<Video_Le
 	* @return the last matching video_ lectureseries, or <code>null</code> if a matching video_ lectureseries could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.Video_Lectureseries fetchByvideo_Last(
+	public de.uhh.l2g.plugins.model.Video_Lectureseries fetchByVideo_Last(
 		long videoId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -150,7 +150,7 @@ public interface Video_LectureseriesPersistence extends BasePersistence<Video_Le
 	* @throws de.uhh.l2g.plugins.NoSuchVideo_LectureseriesException if a video_ lectureseries with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.Video_Lectureseries[] findByvideo_PrevAndNext(
+	public de.uhh.l2g.plugins.model.Video_Lectureseries[] findByVideo_PrevAndNext(
 		long videoLectureseriesId, long videoId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -162,7 +162,7 @@ public interface Video_LectureseriesPersistence extends BasePersistence<Video_Le
 	* @param videoId the video ID
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByvideo(long videoId)
+	public void removeByVideo(long videoId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -172,7 +172,7 @@ public interface Video_LectureseriesPersistence extends BasePersistence<Video_Le
 	* @return the number of matching video_ lectureserieses
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByvideo(long videoId)
+	public int countByVideo(long videoId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -182,7 +182,7 @@ public interface Video_LectureseriesPersistence extends BasePersistence<Video_Le
 	* @return the matching video_ lectureserieses
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> findBylectureseries(
+	public java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> findByLectureseries(
 		long lectureseriesId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -199,7 +199,7 @@ public interface Video_LectureseriesPersistence extends BasePersistence<Video_Le
 	* @return the range of matching video_ lectureserieses
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> findBylectureseries(
+	public java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> findByLectureseries(
 		long lectureseriesId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -217,7 +217,7 @@ public interface Video_LectureseriesPersistence extends BasePersistence<Video_Le
 	* @return the ordered range of matching video_ lectureserieses
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> findBylectureseries(
+	public java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> findByLectureseries(
 		long lectureseriesId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -231,7 +231,7 @@ public interface Video_LectureseriesPersistence extends BasePersistence<Video_Le
 	* @throws de.uhh.l2g.plugins.NoSuchVideo_LectureseriesException if a matching video_ lectureseries could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.Video_Lectureseries findBylectureseries_First(
+	public de.uhh.l2g.plugins.model.Video_Lectureseries findByLectureseries_First(
 		long lectureseriesId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -245,7 +245,7 @@ public interface Video_LectureseriesPersistence extends BasePersistence<Video_Le
 	* @return the first matching video_ lectureseries, or <code>null</code> if a matching video_ lectureseries could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.Video_Lectureseries fetchBylectureseries_First(
+	public de.uhh.l2g.plugins.model.Video_Lectureseries fetchByLectureseries_First(
 		long lectureseriesId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -259,7 +259,7 @@ public interface Video_LectureseriesPersistence extends BasePersistence<Video_Le
 	* @throws de.uhh.l2g.plugins.NoSuchVideo_LectureseriesException if a matching video_ lectureseries could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.Video_Lectureseries findBylectureseries_Last(
+	public de.uhh.l2g.plugins.model.Video_Lectureseries findByLectureseries_Last(
 		long lectureseriesId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -273,7 +273,7 @@ public interface Video_LectureseriesPersistence extends BasePersistence<Video_Le
 	* @return the last matching video_ lectureseries, or <code>null</code> if a matching video_ lectureseries could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.Video_Lectureseries fetchBylectureseries_Last(
+	public de.uhh.l2g.plugins.model.Video_Lectureseries fetchByLectureseries_Last(
 		long lectureseriesId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -288,7 +288,7 @@ public interface Video_LectureseriesPersistence extends BasePersistence<Video_Le
 	* @throws de.uhh.l2g.plugins.NoSuchVideo_LectureseriesException if a video_ lectureseries with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.Video_Lectureseries[] findBylectureseries_PrevAndNext(
+	public de.uhh.l2g.plugins.model.Video_Lectureseries[] findByLectureseries_PrevAndNext(
 		long videoLectureseriesId, long lectureseriesId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -300,7 +300,7 @@ public interface Video_LectureseriesPersistence extends BasePersistence<Video_Le
 	* @param lectureseriesId the lectureseries ID
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeBylectureseries(long lectureseriesId)
+	public void removeByLectureseries(long lectureseriesId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -310,7 +310,7 @@ public interface Video_LectureseriesPersistence extends BasePersistence<Video_Le
 	* @return the number of matching video_ lectureserieses
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countBylectureseries(long lectureseriesId)
+	public int countByLectureseries(long lectureseriesId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
