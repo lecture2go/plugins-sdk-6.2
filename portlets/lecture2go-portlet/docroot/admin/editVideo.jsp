@@ -62,6 +62,16 @@
 	</aui:layout>
 </aui:fieldset>
 
+
+<br/>
+<br/>
+<br/>
+
+
+
+<div id="testId">Text wird aktuallisiert!</div>
+
+
 <aui:fieldset helpMessage="test" column="true" label="video-metadata" id="metadata">
 	<aui:layout>
 		<aui:form action="<%=actionURL%>" commandName="model">
@@ -87,7 +97,7 @@
 				}%>				
 			</aui:select>
 			
-			<aui:input name="title" label="title" required="true" value="<%=reqVideo.getTitle()%>" />
+			<aui:input id="title" name="title" label="title" required="true" value="<%=reqVideo.getTitle()%>" />
 
 			<aui:input name="tags" label="tags" required="false" value="<%=reqVideo.getTags()%>"/>
 
@@ -134,28 +144,33 @@
 	</aui:layout>
 </aui:fieldset>
 
-<script type="text/javascript">
 
-AUI().use('aui-node','file',
-	function(A) {
-    	var metadata = A.one('#<portlet:namespace/>metadata');
-    	var upload = A.one('#upload');
-    	
-    	var fileToUpload = A.one('#fileToUpload');
-    	
-    	<%if(reqVideo.getVideoId()==0){%>metadata.hide();upload.show()<%}%>
-    	<%if(reqVideo.getVideoId()>0){%>metadata.show();upload.show()<%}%>
-    	
-    	upload.on(
-    		'click',
-    		function() {
-    			//then show metadata
-    			metadata.show();
-    		}
-    	)
-    	
-	}
-);
+<script type="text/javascript">
+	
+AUI().use(
+		'aui-node',
+		function(A) {
+				// Select the node(s) using a css selector string
+			    var title = A.one('#<portlet:namespace/>title');
+				var videoId = <%=reqVideo.getVideoId()%>;
+			    title.on(
+			      	'keyup',
+			      	function(A) {
+			  			AdminVideoManagement.updateMetadata(videoId,title.get('value'), handleGetData);
+			      	}
+			    );
+			  }
+		);
+		
+function handleGetData(data) {
+	  AUI().use(
+		'aui-node',
+		function(A) {
+			var testId = A.one('#testId');
+			testId.set('text', data);
+		}
+	  )
+}
 
 function uploadFileMe(){
 	$.ajaxFileUpload
@@ -166,7 +181,7 @@ function uploadFileMe(){
 		dataType : 'json',
 		data : {
 			name : 'fileToUpload',
-			id : 'fileToUpload'
+			id : 'fileToUpload'	
 		},
 		success : function(data, status) {
 			if (typeof (data.error) != 'undefined') {
@@ -182,5 +197,4 @@ function uploadFileMe(){
 		}
 	});
 }
-
 </script>

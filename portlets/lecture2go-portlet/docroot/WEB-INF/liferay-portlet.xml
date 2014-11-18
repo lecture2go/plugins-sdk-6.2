@@ -7,6 +7,9 @@
 		<icon>/img/loading.gif</icon>
 		<instanceable>false</instanceable>
 		<private-request-attributes>false</private-request-attributes>
+		<header-portlet-javascript>/dwr/util.js</header-portlet-javascript>
+		<header-portlet-javascript>/dwr/engine.js</header-portlet-javascript>
+		<header-portlet-javascript>/dwr/interface/AdminVideoManagement.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/jquery-1.11.1.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/ajaxfileupload.js</header-portlet-javascript>
 	</portlet>
@@ -26,4 +29,5 @@
 		<role-name>user</role-name>
 		<role-link>User</role-link>
 	</role-mapper>
+	
 </liferay-portlet-app>

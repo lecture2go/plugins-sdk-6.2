@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -19,6 +20,8 @@ import javax.portlet.ResourceResponse;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -43,7 +46,6 @@ import de.uhh.l2g.plugins.model.impl.ProducerImpl;
 import de.uhh.l2g.plugins.model.impl.VideoImpl;
 import de.uhh.l2g.plugins.model.impl.Video_FacilityImpl;
 import de.uhh.l2g.plugins.model.impl.Video_LectureseriesImpl;
-import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LicenseLocalServiceUtil;
 import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
@@ -51,7 +53,6 @@ import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_FacilityLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
-import de.uhh.l2g.plugins.service.persistence.Video_LectureseriesUtil;
 
 public class AdminVideoManagement extends MVCPortlet {
 
@@ -135,7 +136,6 @@ public class AdminVideoManagement extends MVCPortlet {
 		response.setRenderParameter("jspPage", "/admin/editVideo.jsp");
 	}
 	
-	@SuppressWarnings("unused")
 	public void addVideo(ActionRequest request, ActionResponse response) throws SystemException, PortalException {
 		//first metadata
 		Metadata reqMetadata = new MetadataImpl();
@@ -191,11 +191,23 @@ public class AdminVideoManagement extends MVCPortlet {
 		response.setRenderParameter("jspPage", "/admin/editVideo.jsp");
 	}
 	
+	public String updateMetadata(Long reqVideoId, String title) throws PortalException, SystemException{
+		Video reqVideo = VideoLocalServiceUtil.getVideo(reqVideoId);
+		Metadata reqMetadata = MetadataLocalServiceUtil.getMetadata(reqVideo.getMetadataId());
+		
+		reqMetadata.setTitle(title);
+		reqVideo.setTitle(title);
+		
+		MetadataLocalServiceUtil.updateMetadata(reqMetadata);
+		VideoLocalServiceUtil.updateVideo(reqVideo);
+		
+		return title;
+	}
 	
 	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws PortletException, IOException {
 		try {
 			UploadPortletRequest uploadrequest = PortalUtil.getUploadPortletRequest(resourceRequest);
-			String s = uploadrequest.getParameter("test");
+			String s = uploadrequest.getParameter("test");	
 			InputStream inputStream = uploadrequest.getFileAsStream("fileToUpload");
 			int i = 0;
 			i++;
@@ -245,9 +257,10 @@ public class AdminVideoManagement extends MVCPortlet {
 		return sb.toString();
 	}
 
-	public void removeVideo(ActionRequest request, ActionResponse response) throws NumberFormatException, PortalException, SystemException{
+    public void removeVideo(ActionRequest request, ActionResponse response) throws NumberFormatException, PortalException, SystemException{
 		Long videoId = new Long(request.getParameter("videoId"));
-
+		Video video = VideoLocalServiceUtil.getVideo(videoId);
+		
 		// delete this video from the file system
 
 		// delete image
@@ -265,7 +278,10 @@ public class AdminVideoManagement extends MVCPortlet {
 		//refresh last video list
 		
 		// delete video
-		VideoLocalServiceUtil.deleteVideo(videoId);
+		VideoLocalServiceUtil.deleteVideo(video.getVideoId());
+		
+		//delete metadata
+		MetadataLocalServiceUtil.deleteMetadata(video.getVideoId());
 		
 		//delete license
 		LicenseLocalServiceUtil.removeByVideoId(videoId);
