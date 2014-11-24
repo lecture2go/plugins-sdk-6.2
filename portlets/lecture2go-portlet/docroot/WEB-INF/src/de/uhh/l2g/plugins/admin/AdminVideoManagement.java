@@ -20,9 +20,11 @@ import javax.portlet.ResourceResponse;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
@@ -191,46 +193,96 @@ public class AdminVideoManagement extends MVCPortlet {
 		response.setRenderParameter("jspPage", "/admin/editVideo.jsp");
 	}
 	
-	public String updateMetadata(Long reqVideoId, String title) throws PortalException, SystemException{
-		Video reqVideo = VideoLocalServiceUtil.getVideo(reqVideoId);
-		Metadata reqMetadata = MetadataLocalServiceUtil.getMetadata(reqVideo.getMetadataId());
-		
-		reqMetadata.setTitle(title);
-		reqVideo.setTitle(title);
-		
-		MetadataLocalServiceUtil.updateMetadata(reqMetadata);
-		VideoLocalServiceUtil.updateVideo(reqVideo);
-		
-		return title;
-	}
-	
 	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws PortletException, IOException {
-		try {
-			UploadPortletRequest uploadrequest = PortalUtil.getUploadPortletRequest(resourceRequest);
-			String s = uploadrequest.getParameter("test");	
-			InputStream inputStream = uploadrequest.getFileAsStream("fileToUpload");
-			int i = 0;
-			i++;
-			if(Validator.isNotNull(inputStream)){
-				File file = uploadrequest.getFile("fileToUpload");
-				String uploadString = getFileAsString(file);
-	
-				if (Validator.isNotNull(uploadString)) {
-					resourceResponse.getWriter().write( "validated_successfully");
-					File newFile = new File("/Users/isturm/Desktop/l2gomedia/"+file.getName());
-					file.renameTo(newFile);
-					logger.info("VALIDATED_SUCCESSFULLY");
-				}else{
-					resourceResponse.getWriter().write("failed");
-					logger.info("VALIDATION_FAILED");
-				}
-			}
-		} catch (Exception e) {
-			logger.info( "Error in adding modem");
-		}
-		int j = 0;
-		j++;
+		String resourceID = resourceRequest.getResourceID();
 		
+		if(resourceID.equals("updateMeatadata")){
+	 	   	String lectureseriesId = ParamUtil.getString(resourceRequest, "lectureseriesId");
+	 	    String metadataId = ParamUtil.getString(resourceRequest, "metadataId");
+	 	    String licenseId = ParamUtil.getString(resourceRequest, "licenseId");
+	 	    String videoId = ParamUtil.getString(resourceRequest, "videoId");
+	 	  
+			String title = ParamUtil.getString(resourceRequest, "title");
+			String licens = ParamUtil.getString(resourceRequest, "license");
+			String language = ParamUtil.getString(resourceRequest, "language");
+			String tags = ParamUtil.getString(resourceRequest, "tags");
+			String creator = ParamUtil.getString(resourceRequest, "creator");
+			String rightsHolder = ParamUtil.getString(resourceRequest, "rightsHolder");
+			String publisher = ParamUtil.getString(resourceRequest, "publisher");
+			String longDesc = ParamUtil.getString(resourceRequest, "longDesc");
+	 	   	
+			//update data base
+			try {
+				Video video = VideoLocalServiceUtil.getVideo(new Long(videoId));
+				video.setTitle(title);
+				video.setTags(tags);
+				video.setLectureseriesId(new Long(lectureseriesId));
+				VideoLocalServiceUtil.updateVideo(video);
+			} catch (NumberFormatException e) {
+			} catch (PortalException e) {
+			} catch (SystemException e) {
+			}
+			//metadata
+			try {
+				Metadata metadata = MetadataLocalServiceUtil.getMetadata(new Long(metadataId));
+				metadata.setTitle(title);
+				metadata.setCreator(creator);
+				metadata.setRightsHolder(rightsHolder);
+				metadata.setPublisher(publisher);
+				metadata.setDescription(longDesc);
+				metadata.setLanguage(language);
+				MetadataLocalServiceUtil.updateMetadata(metadata);
+			} catch (NumberFormatException e) {
+			} catch (PortalException e) {
+			} catch (SystemException e) {
+			}
+			//license
+			try {
+				License license = LicenseLocalServiceUtil.getLicense(new Long(licenseId));
+				//reset lecense
+				license.setL2go(0);
+				license.setCcby(0);
+				license.setCcbybc(0);
+				license.setCcbync(0);
+				license.setCcbyncnd(0);
+				license.setCcbyncsa(0);
+				license.setCcbysa(0);
+				//set new license
+				if(licens.equalsIgnoreCase("uhhl2go"))license.setL2go(1);
+				if(licens.equalsIgnoreCase("ccbyncsa"))license.setCcbyncsa(1);
+				LicenseLocalServiceUtil.updateLicense(license);
+			} catch (NumberFormatException e) {
+			} catch (PortalException e) {
+			} catch (SystemException e) {
+			}
+			JSONObject json = JSONFactoryUtil.createJSONObject();
+			writeJSON(resourceRequest, resourceResponse, json);
+		}
+		
+		if(resourceID.equals("uploadMe")){
+			try {
+				UploadPortletRequest uploadrequest = PortalUtil.getUploadPortletRequest(resourceRequest);
+				InputStream inputStream = uploadrequest.getFileAsStream("fileToUpload");
+
+				if(Validator.isNotNull(inputStream)){
+					File file = uploadrequest.getFile("fileToUpload");
+					String uploadString = getFileAsString(file);
+		
+					if (Validator.isNotNull(uploadString)) {
+						resourceResponse.getWriter().write( "validated_successfully");
+						File newFile = new File("/Users/isturm/Desktop/l2gomedia/"+file.getName());
+						file.renameTo(newFile);
+						logger.info("VALIDATED_SUCCESSFULLY");
+					}else{
+						resourceResponse.getWriter().write("failed");
+						logger.info("VALIDATION_FAILED");
+					}
+				}
+			} catch (Exception e) {
+				logger.info( "Error in adding modem");
+			}			
+		}
+
 	}
 
 	public String getFileAsString(File file) {

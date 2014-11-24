@@ -1,3 +1,4 @@
+<%@page import="com.sun.xml.internal.rngom.ast.builder.Include"%>
 <%@include file="/init.jsp"%>
 
 <jsp:useBean id="reqLectureseriesList" type="java.util.List<de.uhh.l2g.plugins.model.Lectureseries>" scope="request" />
@@ -50,31 +51,15 @@
 	else {actionURL = addURL.toString();}
 %>
 
+<%@include file="/admin/includeYUIUploader.jsp" %>
 
-<portlet:resourceURL id="uploadMe" var="uploadMe"><portlet:param name="test" value="test"/></portlet:resourceURL>
+<br/>
+<br/>
+<br/>
 
-<aui:fieldset helpMessage="test" column="true" label="file-upload">
+<aui:fieldset helpMessage="test" column="true" label="video-metadata" >
 	<aui:layout>
-		<form method="post" enctype="multipart/form-data" name="form">
-		     <input type="file" name="fileToUpload" id="fileToUpload" value="Browse" class="input" required="required"/>
-		     <input type="button" name="upload" id="upload" value="Upload"  class="noText_shadow" onClick="uploadFileMe();" />
-		</form>
-	</aui:layout>
-</aui:fieldset>
-
-
-<br/>
-<br/>
-<br/>
-
-
-
-<div id="testId">Text wird aktuallisiert!</div>
-
-
-<aui:fieldset helpMessage="test" column="true" label="video-metadata" id="metadata">
-	<aui:layout>
-		<aui:form action="<%=actionURL%>" commandName="model">
+		<aui:form action="<%=actionURL%>" commandName="model" name="metadata">
 			<aui:select size="1" name="lectureseriesId" label="lectureseries" required="true">
 				<aui:option value="">select-lecture-series</aui:option>
 					<%for (int i = 0; i < reqLectureseriesList.size(); i++) {
@@ -110,27 +95,24 @@
 			license
 			<br/>
 			<em>uhh-l2go</em>
-			<%if(reqLicense.getL2go()==1){%><aui:input name="license" value="uhhl2go" checked="true" type="radio"/><%}%>
-			<%if(reqLicense.getL2go()==0){%><aui:input name="license" value="uhhl2go" type="radio"/><%}%>
+			<%if(reqLicense.getL2go()==1){%><aui:input name="license"  id="uhhl2go" value="uhhl2go" checked="true" type="radio"/><%}%>
+			<%if(reqLicense.getL2go()==0){%><aui:input name="license" id="uhhl2go" value="uhhl2go" type="radio"/><%}%>
 			lecture2go-licence <a href="/license" target="_blank"> details </a>	 	      	      
 			<br/><br/>
 			
 			<em>by-nc-sa</em>	
-			<%if(reqLicense.getCcbyncsa()==1){%><aui:input name="license" value="ccbyncsa" checked="true" type="radio" /><%}%>
-			<%if(reqLicense.getCcbyncsa()==0){%><aui:input name="license" value="ccbyncsa" type="radio"/><%}%>
+			<%if(reqLicense.getCcbyncsa()==1){%><aui:input name="license" id="ccbyncsa" value="ccbyncsa" checked="true" type="radio" /><%}%>
+			<%if(reqLicense.getCcbyncsa()==0){%><aui:input name="license" id="ccbyncsa" value="ccbyncsa" type="radio"/><%}%>
 			creative-commons <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank"> details </a>
 			<br/><br/>
-			
 			<aui:field-wrapper label="description">
-			    <liferay-ui:input-editor name="longDesc" toolbarSet="liferay-article" initMethod="initEditor" width="250" />
+			    <liferay-ui:input-editor name="longDesc" toolbarSet="liferay-article" initMethod="initEditor" width="250" onChangeMethod="setLongDesc"/>
 			    <script type="text/javascript">
 			        function <portlet:namespace />initEditor() { return "<%= UnicodeFormatter.toString(reqMetadata.getDescription()) %>"; }
 			    </script>
 			</aui:field-wrapper>
-			
 			<aui:button-row>
-				<aui:button type="submit" onclick="<portlet:namespace />extractCodeFromEditor()"/>
-				<aui:button type="cancel" value="cancel" onClick="<%=cancelURL.toString()%>" />
+				<aui:button type="cancel" value="go to overview" onClick="<%=cancelURL.toString()%>" />
 				<%if (reqVideo.getVideoId()>0) {%>
 					<liferay-ui:icon-menu cssClass="right">
 						<liferay-ui:icon image="delete" message="Remove" url="<%=removeURL.toString()%>" />
@@ -139,62 +121,90 @@
 			</aui:button-row>
 			
 			<aui:input name="producerId" type="hidden" value="<%=reqProducer.getProducerId()%>"/>
+			<aui:input name="licenseId" type="hidden" value="<%=reqLicense.getLicenseId()%>"/>
+			<aui:input name="videoId" type="hidden" value="<%=reqVideo.getVideoId()%>"/>
+			<aui:input name="metadataId" type="hidden" value="<%=reqMetadata.getMetadataId()%>"/>
 			<aui:input name="lectureseriesId" type="hidden" value="<%=reqLectureseries.getLectureseriesId()%>"/>
 		</aui:form>
 	</aui:layout>
 </aui:fieldset>
 
 
+<liferay-portlet:resourceURL id="updateMeatadata" var="updateURL" />
+
 <script type="text/javascript">
-	
+var longDesc;
+var license;
+
+function setLicense(data){
+	this.license = data;
+	updateMetadata();
+}
+
+function <portlet:namespace/>setLongDesc(data){
+	this.longDesc = data;
+	updateMetadata();
+}
+
+function updateMetadata(){
+	AUI().use('aui-io-request', 'aui-node',
+		function(A){
+			A.io.request('<%=updateURL%>', {
+		 	dataType: 'json',
+		 	method: 'POST',
+			 	//send data to server
+			 	data: {
+				 	   	<portlet:namespace/>lectureseriesId: A.one('#<portlet:namespace/>lectureseriesId').get('value'),
+				 	   	<portlet:namespace/>videoId: A.one('#<portlet:namespace/>videoId').get('value'),
+				 	   	<portlet:namespace/>metadataId: A.one('#<portlet:namespace/>metadataId').get('value'),
+				 	   	<portlet:namespace/>licenseId: A.one('#<portlet:namespace/>licenseId').get('value'),
+				 	   	<portlet:namespace/>language: A.one('#<portlet:namespace/>language').get('value'),
+				 	   	<portlet:namespace/>title: A.one('#<portlet:namespace/>title').get('value'),
+				 	   	<portlet:namespace/>tags: A.one('#<portlet:namespace/>tags').get('value'),
+				 	   	<portlet:namespace/>creator: A.one('#<portlet:namespace/>creator').get('value'),
+				 	   	<portlet:namespace/>rightsHolder: A.one('#<portlet:namespace/>rightsHolder').get('value'),
+				 	   	<portlet:namespace/>publisher: A.one('#<portlet:namespace/>publisher').get('value'),
+				 	   	<portlet:namespace/>longDesc: this.longDesc,
+				 	   	<portlet:namespace/>producerId: A.one('#<portlet:namespace/>producerId').get('value'),
+				 	   	<portlet:namespace/>lectureseriesId: A.one('#<portlet:namespace/>lectureseriesId').get('value'),
+				 	   	<portlet:namespace/>license: this.license
+			 	},
+			 	//get server response
+				on: {
+					   success: function() {
+					     var jsonResponse = this.get('responseData');
+					     //alert(jsonResponse.key1);
+					   }
+				}
+			});	
+		}
+	);
+}
+
+
 AUI().use(
 		'aui-node',
 		function(A) {
 				// Select the node(s) using a css selector string
+			    var language = A.one('#<portlet:namespace/>language');
 			    var title = A.one('#<portlet:namespace/>title');
+			    var tags = A.one('#<portlet:namespace/>tags');
+			    var creator = A.one('#<portlet:namespace/>creator');
+			    var rightsHolder = A.one('#<portlet:namespace/>rightsHolder');
+			    var publisher = A.one('#<portlet:namespace/>publisher');
+			    var longDesc = A.one('#<portlet:namespace/>longDesc');
+			    var license1 = A.one('#<portlet:namespace/>ccbyncsa');
+			    var license2 = A.one('#<portlet:namespace/>uhhl2go');
+			    
 				var videoId = <%=reqVideo.getVideoId()%>;
-			    title.on(
-			      	'keyup',
-			      	function(A) {
-			  			AdminVideoManagement.updateMetadata(videoId,title.get('value'), handleGetData);
-			      	}
-			    );
-			  }
-		);
-		
-function handleGetData(data) {
-	  AUI().use(
-		'aui-node',
-		function(A) {
-			var testId = A.one('#testId');
-			testId.set('text', data);
+			    title.on('keyup',function(A){updateMetadata()});
+				language.on('change',function(A){updateMetadata()});
+			    tags.on('keyup',function(A){updateMetadata()});
+			    creator.on('keyup',function(A){updateMetadata()});
+			    rightsHolder.on('keyup',function(A){updateMetadata()});
+			    publisher.on('keyup',function(A){updateMetadata()});
+			    license1.on('change',function(A){setLicense(license1.get('value'))});
+			    license2.on('change',function(A){setLicense(license2.get('value'))});
 		}
-	  )
-}
-
-function uploadFileMe(){
-	$.ajaxFileUpload
-	({
-		url:'<%=uploadMe%>',
-		secureuri : false,
-		fileElementId : 'fileToUpload',
-		dataType : 'json',
-		data : {
-			name : 'fileToUpload',
-			id : 'fileToUpload'	
-		},
-		success : function(data, status) {
-			if (typeof (data.error) != 'undefined') {
-				if (data.error != '') {
-				 //alert(data.error);
-				} else {
-				 //alert(data.msg);
-				}
-			}
-		},
-		error : function(data, status, e) {
-		 //alert(e);
-		}
-	});
-}
+);
 </script>

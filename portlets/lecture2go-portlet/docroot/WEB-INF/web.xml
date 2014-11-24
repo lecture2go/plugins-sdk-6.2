@@ -9,37 +9,4 @@
     <servlet-name>view-servlet</servlet-name>
     <url-pattern>/WEB-INF/servlet/view</url-pattern>
   </servlet-mapping>
-  
-  <servlet>
-     <servlet-name>DwrServlet</servlet-name>
-     <servlet-class>org.directwebremoting.servlet.DwrServlet</servlet-class>
-     <load-on-startup>12</load-on-startup>
-     <!-- Enables debugging -->
-     <init-param>
-        <param-name>debug</param-name>
-        <param-value>false</param-value>
-     </init-param>
-	<!-- Enables <script> remoting -->
-	<init-param>
-	  <param-name>allowScriptTagRemoting</param-name>
-	  <param-value>true</param-value>
-	</init-param>
-	
-	<!-- Disables DWR's CSRF protection -->
-	<init-param>
-	  <param-name>crossDomainSessionSecurity</param-name>
-	  <param-value>false</param-value>
-	</init-param>
-	
-	<!-- Enables GET requests which are necessary for X-domain calls -->
-	<init-param>
-	  <param-name>allowGetForSafariButMakeForgeryEasier</param-name>
-	  <param-value>true</param-value>
-	</init-param>      
- </servlet>
-
- <servlet-mapping>
-    <servlet-name>DwrServlet</servlet-name>
-    <url-pattern>/dwr/*</url-pattern>
- </servlet-mapping>
 </web-app>
