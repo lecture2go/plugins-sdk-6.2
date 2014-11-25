@@ -45,16 +45,14 @@
 <portlet:actionURL var="editCaseURL" name="uploadCase">
 	<portlet:param name="jspPage" value="/admin/editVideo.jsp" />
 </portlet:actionURL>
-
 <%
 	if(reqVideo.getVideoId() >0) {actionURL=editURL.toString();}
 	else {actionURL = addURL.toString();}
 %>
+<aui:fieldset helpMessage="test" column="true" label="video-file" >
+	<%@include file="/admin/includeYUIUploader.jsp" %>
+</aui:fieldset>
 
-<%@include file="/admin/includeYUIUploader.jsp" %>
-
-<br/>
-<br/>
 <br/>
 
 <aui:fieldset helpMessage="test" column="true" label="video-metadata" >
@@ -129,7 +127,6 @@
 	</aui:layout>
 </aui:fieldset>
 
-
 <liferay-portlet:resourceURL id="updateMeatadata" var="updateURL" />
 
 <script type="text/javascript">
@@ -195,8 +192,8 @@ AUI().use(
 			    var longDesc = A.one('#<portlet:namespace/>longDesc');
 			    var license1 = A.one('#<portlet:namespace/>ccbyncsa');
 			    var license2 = A.one('#<portlet:namespace/>uhhl2go');
-			    
 				var videoId = <%=reqVideo.getVideoId()%>;
+				
 			    title.on('keyup',function(A){updateMetadata()});
 				language.on('change',function(A){updateMetadata()});
 			    tags.on('keyup',function(A){updateMetadata()});

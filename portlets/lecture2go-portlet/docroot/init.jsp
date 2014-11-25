@@ -81,6 +81,8 @@
 <%@ page import="de.uhh.l2g.plugins.model.impl.ProducerImpl"%>
 <%@ page import="de.uhh.l2g.plugins.model.impl.LicenseImpl"%>
 
+<%@ page import="de.uhh.l2g.plugins.util.Lecture2GoRoleChecker"%>
+
 <portlet:defineObjects />
 <liferay-theme:defineObjects/>
 
@@ -91,6 +93,25 @@ User remoteUser = UserLocalServiceUtil.getUser(new Long (request.getRemoteUser()
 boolean permissionAdmin = permissionChecker.hasPermission(remoteUser.getGroupId(), User.class.getName(), remoteUser.getPrimaryKey(), "ADD_L2GOADMIN");
 //l2go coordinator is logged in
 boolean permissionCoordinator = permissionChecker.hasPermission(remoteUser.getGroupId(), User.class.getName(), remoteUser.getPrimaryKey(), "ADD_L2GOPRODUCER");
+//l2go producer is logged in
+boolean permissionProducer = Lecture2GoRoleChecker.isProducer(remoteUser);
+//l2go student is logged in
+boolean permissionStudent = Lecture2GoRoleChecker.isStudent(remoteUser);
+
+if(permissionAdmin){
+	permissionCoordinator=false;
+	permissionProducer=false;
+	permissionStudent=false;
+}else{
+	if(permissionCoordinator){
+		permissionProducer=false;
+		permissionStudent=false;		
+	}else{
+		if(permissionProducer){
+			permissionStudent=false;
+		}
+	}
+}
 
 PortletPreferences prefs = renderRequest.getPreferences();
 %>

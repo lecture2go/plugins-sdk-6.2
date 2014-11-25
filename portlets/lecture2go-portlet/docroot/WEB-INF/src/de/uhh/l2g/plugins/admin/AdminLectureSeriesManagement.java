@@ -97,7 +97,7 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		
 		//update object
 		Lectureseries lectureseries = LectureseriesLocalServiceUtil.getLectureseries(lId);
-		lectureseries.setApproved(lectureseries.getApproved());
+		lectureseries.setApproved(1);
 		lectureseries.setNumber(request.getParameter("number"));
 		lectureseries.setEventType(request.getParameter("eventType"));
 		lectureseries.setEventCategory(request.getParameter("eventCategory"));
