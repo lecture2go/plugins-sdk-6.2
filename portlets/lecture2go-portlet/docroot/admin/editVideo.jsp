@@ -104,7 +104,7 @@
 			creative-commons <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank"> details </a>
 			<br/><br/>
 			<aui:field-wrapper label="description">
-			    <liferay-ui:input-editor name="longDesc" toolbarSet="liferay-article" initMethod="initEditor" width="250" onChangeMethod="setLongDesc"/>
+			    <liferay-ui:input-editor name="longDesc" toolbarSet="liferay-article" initMethod="initEditor" width="250" onChangeMethod="setLongDesc" />
 			    <script type="text/javascript">
 			        function <portlet:namespace />initEditor() { return "<%= UnicodeFormatter.toString(reqMetadata.getDescription()) %>"; }
 			    </script>
@@ -131,16 +131,10 @@
 
 <script type="text/javascript">
 var longDesc;
-var license;
-
-function setLicense(data){
-	this.license = data;
-	updateMetadata();
-}
 
 function <portlet:namespace/>setLongDesc(data){
 	this.longDesc = data;
-	updateMetadata();
+	//update desc
 }
 
 function updateMetadata(){
@@ -161,10 +155,8 @@ function updateMetadata(){
 				 	   	<portlet:namespace/>creator: A.one('#<portlet:namespace/>creator').get('value'),
 				 	   	<portlet:namespace/>rightsHolder: A.one('#<portlet:namespace/>rightsHolder').get('value'),
 				 	   	<portlet:namespace/>publisher: A.one('#<portlet:namespace/>publisher').get('value'),
-				 	   	<portlet:namespace/>longDesc: this.longDesc,
 				 	   	<portlet:namespace/>producerId: A.one('#<portlet:namespace/>producerId').get('value'),
 				 	   	<portlet:namespace/>lectureseriesId: A.one('#<portlet:namespace/>lectureseriesId').get('value'),
-				 	   	<portlet:namespace/>license: this.license
 			 	},
 			 	//get server response
 				on: {
@@ -189,19 +181,17 @@ AUI().use(
 			    var creator = A.one('#<portlet:namespace/>creator');
 			    var rightsHolder = A.one('#<portlet:namespace/>rightsHolder');
 			    var publisher = A.one('#<portlet:namespace/>publisher');
-			    var longDesc = A.one('#<portlet:namespace/>longDesc');
 			    var license1 = A.one('#<portlet:namespace/>ccbyncsa');
 			    var license2 = A.one('#<portlet:namespace/>uhhl2go');
-				var videoId = <%=reqVideo.getVideoId()%>;
-				
+			    
 			    title.on('keyup',function(A){updateMetadata()});
 				language.on('change',function(A){updateMetadata()});
 			    tags.on('keyup',function(A){updateMetadata()});
 			    creator.on('keyup',function(A){updateMetadata()});
 			    rightsHolder.on('keyup',function(A){updateMetadata()});
 			    publisher.on('keyup',function(A){updateMetadata()});
-			    license1.on('change',function(A){setLicense(license1.get('value'))});
-			    license2.on('change',function(A){setLicense(license2.get('value'))});
+			    license1.on('change',function(A){updateMetadata()});
+			    license2.on('change',function(A){updateMetadata()});
 		}
 );
 </script>

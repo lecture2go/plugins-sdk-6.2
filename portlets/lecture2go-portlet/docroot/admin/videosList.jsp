@@ -17,6 +17,8 @@
 		coordinators = CoordinatorLocalServiceUtil.getAllCoordinators(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 		coordinatorId = ServletRequestUtils.getLongParameter(request, "coordinatorId", 0);
 		portletURL.setParameter("coordinatorId", coordinatorId+"");
+		producerId = ServletRequestUtils.getLongParameter(request, "producerId", 0);
+		portletURL.setParameter("coordinatorId", coordinatorId+"");		
 		if(coordinatorId>0){
 			Long facilityId = CoordinatorLocalServiceUtil.getCoordinator(coordinatorId).getFacilityId();
 			producers = ProducerLocalServiceUtil.getProducersByFacilityId(facilityId);
@@ -39,8 +41,10 @@
 			producers = ProducerLocalServiceUtil.getProducersByFacilityId(facilityId);
 			if(producerId>0){
 				lectureseries = LectureseriesLocalServiceUtil.getFilteredBySemesterFacultyProducer(1, "", new Long(0), producerId);
-				if(lectureseriesId>0)tempVideosList = VideoLocalServiceUtil.getByProducer(producerId);
+				if(lectureseriesId==0)tempVideosList = VideoLocalServiceUtil.getByProducer(producerId);
 				else tempVideosList = VideoLocalServiceUtil.getByProducerAndLectureseries(producerId, lectureseriesId);
+			}else{
+				tempVideosList = VideoLocalServiceUtil.getByFacility(facilityId);
 			}
 		}else{
 			if(permissionProducer){
