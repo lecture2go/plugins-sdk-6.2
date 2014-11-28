@@ -7,7 +7,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -20,7 +19,6 @@ import javax.portlet.ResourceResponse;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -39,21 +37,21 @@ import de.uhh.l2g.plugins.model.License;
 import de.uhh.l2g.plugins.model.Metadata;
 import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.model.Video;
-import de.uhh.l2g.plugins.model.Video_Facility;
+import de.uhh.l2g.plugins.model.Video_Institution;
 import de.uhh.l2g.plugins.model.Video_Lectureseries;
 import de.uhh.l2g.plugins.model.impl.LectureseriesImpl;
 import de.uhh.l2g.plugins.model.impl.LicenseImpl;
 import de.uhh.l2g.plugins.model.impl.MetadataImpl;
 import de.uhh.l2g.plugins.model.impl.ProducerImpl;
 import de.uhh.l2g.plugins.model.impl.VideoImpl;
-import de.uhh.l2g.plugins.model.impl.Video_FacilityImpl;
+import de.uhh.l2g.plugins.model.impl.Video_InstitutionImpl;
 import de.uhh.l2g.plugins.model.impl.Video_LectureseriesImpl;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LicenseLocalServiceUtil;
 import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
-import de.uhh.l2g.plugins.service.Video_FacilityLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 
 public class AdminVideoManagement extends MVCPortlet {
@@ -162,7 +160,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		newVideo.setLectureseriesId(lectureseriesId);
 		newVideo.setHostId(reqProducer.getHostId());
 		newVideo.setMetadataId(reqMetadata.getMetadataId());
-		newVideo.setFacilityId(reqProducer.getFacilityId());
+		newVideo.setRootInstitutionId(reqProducer.getInstitutionId());
 		//save it
 		Video video = VideoLocalServiceUtil.addVideo(newVideo);
 		request.setAttribute("reqVideo", newVideo);
@@ -185,10 +183,10 @@ public class AdminVideoManagement extends MVCPortlet {
 		request.setAttribute("reqLicense", license);
 
 		//update lg_video_facility table
-		Video_Facility vf = new Video_FacilityImpl();
+		Video_Institution vf = new Video_InstitutionImpl();
 		vf.setVideoId(video.getVideoId());
-		vf.setFacilityId(reqProducer.getFacilityId());
-		Video_FacilityLocalServiceUtil.addVideo_Facility(vf);
+		vf.setInstitutionId(reqProducer.getInstitutionId());
+		Video_InstitutionLocalServiceUtil.addVideo_Institution(vf);
 		
 		response.setRenderParameter("jspPage", "/admin/editVideo.jsp");
 	}
@@ -319,7 +317,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		Video_LectureseriesLocalServiceUtil.removeByVideoId(videoId);
 		
 		// delete video_facility
-		Video_FacilityLocalServiceUtil.removeByVideoId(videoId);
+		Video_InstitutionLocalServiceUtil.removeByVideoId(videoId);
 		
 		//forward to list
 		response.setRenderParameter("jspPage", "/admin/videosList.jsp");

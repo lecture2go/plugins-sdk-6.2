@@ -52,7 +52,7 @@ public class OfficeWrapper implements Office, ModelWrapper<Office> {
 		attributes.put("name", getName());
 		attributes.put("www", getWww());
 		attributes.put("email", getEmail());
-		attributes.put("facilityId", getFacilityId());
+		attributes.put("institutionId", getInstitutionId());
 
 		return attributes;
 	}
@@ -83,10 +83,10 @@ public class OfficeWrapper implements Office, ModelWrapper<Office> {
 			setEmail(email);
 		}
 
-		Long facilityId = (Long)attributes.get("facilityId");
+		Long institutionId = (Long)attributes.get("institutionId");
 
-		if (facilityId != null) {
-			setFacilityId(facilityId);
+		if (institutionId != null) {
+			setInstitutionId(institutionId);
 		}
 	}
 
@@ -191,23 +191,23 @@ public class OfficeWrapper implements Office, ModelWrapper<Office> {
 	}
 
 	/**
-	* Returns the facility ID of this office.
+	* Returns the institution ID of this office.
 	*
-	* @return the facility ID of this office
+	* @return the institution ID of this office
 	*/
 	@Override
-	public long getFacilityId() {
-		return _office.getFacilityId();
+	public long getInstitutionId() {
+		return _office.getInstitutionId();
 	}
 
 	/**
-	* Sets the facility ID of this office.
+	* Sets the institution ID of this office.
 	*
-	* @param facilityId the facility ID of this office
+	* @param institutionId the institution ID of this office
 	*/
 	@Override
-	public void setFacilityId(long facilityId) {
-		_office.setFacilityId(facilityId);
+	public void setInstitutionId(long institutionId) {
+		_office.setInstitutionId(institutionId);
 	}
 
 	@Override

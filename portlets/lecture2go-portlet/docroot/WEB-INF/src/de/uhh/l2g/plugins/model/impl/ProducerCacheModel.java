@@ -45,8 +45,8 @@ public class ProducerCacheModel implements CacheModel<Producer>, Externalizable 
 		sb.append(homeDir);
 		sb.append(", hostId=");
 		sb.append(hostId);
-		sb.append(", facilityId=");
-		sb.append(facilityId);
+		sb.append(", institutionId=");
+		sb.append(institutionId);
 		sb.append(", numberOfProductions=");
 		sb.append(numberOfProductions);
 		sb.append(", approved=");
@@ -77,7 +77,7 @@ public class ProducerCacheModel implements CacheModel<Producer>, Externalizable 
 		}
 
 		producerImpl.setHostId(hostId);
-		producerImpl.setFacilityId(facilityId);
+		producerImpl.setInstitutionId(institutionId);
 		producerImpl.setNumberOfProductions(numberOfProductions);
 		producerImpl.setApproved(approved);
 
@@ -92,7 +92,7 @@ public class ProducerCacheModel implements CacheModel<Producer>, Externalizable 
 		idNum = objectInput.readUTF();
 		homeDir = objectInput.readUTF();
 		hostId = objectInput.readLong();
-		facilityId = objectInput.readLong();
+		institutionId = objectInput.readLong();
 		numberOfProductions = objectInput.readLong();
 		approved = objectInput.readInt();
 	}
@@ -117,7 +117,7 @@ public class ProducerCacheModel implements CacheModel<Producer>, Externalizable 
 		}
 
 		objectOutput.writeLong(hostId);
-		objectOutput.writeLong(facilityId);
+		objectOutput.writeLong(institutionId);
 		objectOutput.writeLong(numberOfProductions);
 		objectOutput.writeInt(approved);
 	}
@@ -126,7 +126,7 @@ public class ProducerCacheModel implements CacheModel<Producer>, Externalizable 
 	public String idNum;
 	public String homeDir;
 	public long hostId;
-	public long facilityId;
+	public long institutionId;
 	public long numberOfProductions;
 	public int approved;
 }

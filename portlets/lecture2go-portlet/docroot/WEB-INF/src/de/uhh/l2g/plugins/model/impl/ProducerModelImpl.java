@@ -62,11 +62,11 @@ public class ProducerModelImpl extends BaseModelImpl<Producer>
 			{ "idNum", Types.VARCHAR },
 			{ "homeDir", Types.VARCHAR },
 			{ "hostId", Types.BIGINT },
-			{ "facilityId", Types.BIGINT },
+			{ "institutionId", Types.BIGINT },
 			{ "numberOfProductions", Types.BIGINT },
 			{ "approved", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Producer (producerId LONG not null primary key,idNum VARCHAR(75) null,homeDir VARCHAR(75) null,hostId LONG,facilityId LONG,numberOfProductions LONG,approved INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Producer (producerId LONG not null primary key,idNum VARCHAR(75) null,homeDir VARCHAR(75) null,hostId LONG,institutionId LONG,numberOfProductions LONG,approved INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Producer";
 	public static final String ORDER_BY_JPQL = " ORDER BY producer.producerId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Producer.producerId ASC";
@@ -83,10 +83,10 @@ public class ProducerModelImpl extends BaseModelImpl<Producer>
 				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.Producer"),
 			true);
 	public static long APPROVED_COLUMN_BITMASK = 1L;
-	public static long FACILITYID_COLUMN_BITMASK = 2L;
-	public static long HOMEDIR_COLUMN_BITMASK = 4L;
-	public static long HOSTID_COLUMN_BITMASK = 8L;
-	public static long IDNUM_COLUMN_BITMASK = 16L;
+	public static long HOMEDIR_COLUMN_BITMASK = 2L;
+	public static long HOSTID_COLUMN_BITMASK = 4L;
+	public static long IDNUM_COLUMN_BITMASK = 8L;
+	public static long INSTITUTIONID_COLUMN_BITMASK = 16L;
 	public static long PRODUCERID_COLUMN_BITMASK = 32L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Producer"));
@@ -132,7 +132,7 @@ public class ProducerModelImpl extends BaseModelImpl<Producer>
 		attributes.put("idNum", getIdNum());
 		attributes.put("homeDir", getHomeDir());
 		attributes.put("hostId", getHostId());
-		attributes.put("facilityId", getFacilityId());
+		attributes.put("institutionId", getInstitutionId());
 		attributes.put("numberOfProductions", getNumberOfProductions());
 		attributes.put("approved", getApproved());
 
@@ -165,10 +165,10 @@ public class ProducerModelImpl extends BaseModelImpl<Producer>
 			setHostId(hostId);
 		}
 
-		Long facilityId = (Long)attributes.get("facilityId");
+		Long institutionId = (Long)attributes.get("institutionId");
 
-		if (facilityId != null) {
-			setFacilityId(facilityId);
+		if (institutionId != null) {
+			setInstitutionId(institutionId);
 		}
 
 		Long numberOfProductions = (Long)attributes.get("numberOfProductions");
@@ -267,25 +267,25 @@ public class ProducerModelImpl extends BaseModelImpl<Producer>
 	}
 
 	@Override
-	public long getFacilityId() {
-		return _facilityId;
+	public long getInstitutionId() {
+		return _institutionId;
 	}
 
 	@Override
-	public void setFacilityId(long facilityId) {
-		_columnBitmask |= FACILITYID_COLUMN_BITMASK;
+	public void setInstitutionId(long institutionId) {
+		_columnBitmask |= INSTITUTIONID_COLUMN_BITMASK;
 
-		if (!_setOriginalFacilityId) {
-			_setOriginalFacilityId = true;
+		if (!_setOriginalInstitutionId) {
+			_setOriginalInstitutionId = true;
 
-			_originalFacilityId = _facilityId;
+			_originalInstitutionId = _institutionId;
 		}
 
-		_facilityId = facilityId;
+		_institutionId = institutionId;
 	}
 
-	public long getOriginalFacilityId() {
-		return _originalFacilityId;
+	public long getOriginalInstitutionId() {
+		return _originalInstitutionId;
 	}
 
 	@Override
@@ -355,7 +355,7 @@ public class ProducerModelImpl extends BaseModelImpl<Producer>
 		producerImpl.setIdNum(getIdNum());
 		producerImpl.setHomeDir(getHomeDir());
 		producerImpl.setHostId(getHostId());
-		producerImpl.setFacilityId(getFacilityId());
+		producerImpl.setInstitutionId(getInstitutionId());
 		producerImpl.setNumberOfProductions(getNumberOfProductions());
 		producerImpl.setApproved(getApproved());
 
@@ -418,9 +418,9 @@ public class ProducerModelImpl extends BaseModelImpl<Producer>
 
 		producerModelImpl._setOriginalHostId = false;
 
-		producerModelImpl._originalFacilityId = producerModelImpl._facilityId;
+		producerModelImpl._originalInstitutionId = producerModelImpl._institutionId;
 
-		producerModelImpl._setOriginalFacilityId = false;
+		producerModelImpl._setOriginalInstitutionId = false;
 
 		producerModelImpl._originalApproved = producerModelImpl._approved;
 
@@ -453,7 +453,7 @@ public class ProducerModelImpl extends BaseModelImpl<Producer>
 
 		producerCacheModel.hostId = getHostId();
 
-		producerCacheModel.facilityId = getFacilityId();
+		producerCacheModel.institutionId = getInstitutionId();
 
 		producerCacheModel.numberOfProductions = getNumberOfProductions();
 
@@ -474,8 +474,8 @@ public class ProducerModelImpl extends BaseModelImpl<Producer>
 		sb.append(getHomeDir());
 		sb.append(", hostId=");
 		sb.append(getHostId());
-		sb.append(", facilityId=");
-		sb.append(getFacilityId());
+		sb.append(", institutionId=");
+		sb.append(getInstitutionId());
 		sb.append(", numberOfProductions=");
 		sb.append(getNumberOfProductions());
 		sb.append(", approved=");
@@ -510,8 +510,8 @@ public class ProducerModelImpl extends BaseModelImpl<Producer>
 		sb.append(getHostId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>facilityId</column-name><column-value><![CDATA[");
-		sb.append(getFacilityId());
+			"<column><column-name>institutionId</column-name><column-value><![CDATA[");
+		sb.append(getInstitutionId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>numberOfProductions</column-name><column-value><![CDATA[");
@@ -539,9 +539,9 @@ public class ProducerModelImpl extends BaseModelImpl<Producer>
 	private long _hostId;
 	private long _originalHostId;
 	private boolean _setOriginalHostId;
-	private long _facilityId;
-	private long _originalFacilityId;
-	private boolean _setOriginalFacilityId;
+	private long _institutionId;
+	private long _originalInstitutionId;
+	private boolean _setOriginalInstitutionId;
 	private long _numberOfProductions;
 	private int _approved;
 	private int _originalApproved;

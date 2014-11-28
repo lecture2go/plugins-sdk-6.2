@@ -171,141 +171,141 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns all the producers where facilityId = &#63;.
+	* Returns all the producers where institutionId = &#63;.
 	*
-	* @param facilityId the facility ID
+	* @param institutionId the institution ID
 	* @return the matching producers
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<de.uhh.l2g.plugins.model.Producer> findByFacility(
-		long facilityId)
+	public java.util.List<de.uhh.l2g.plugins.model.Producer> findByInstitution(
+		long institutionId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns a range of all the producers where facilityId = &#63;.
+	* Returns a range of all the producers where institutionId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.ProducerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param facilityId the facility ID
+	* @param institutionId the institution ID
 	* @param start the lower bound of the range of producers
 	* @param end the upper bound of the range of producers (not inclusive)
 	* @return the range of matching producers
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<de.uhh.l2g.plugins.model.Producer> findByFacility(
-		long facilityId, int start, int end)
+	public java.util.List<de.uhh.l2g.plugins.model.Producer> findByInstitution(
+		long institutionId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns an ordered range of all the producers where facilityId = &#63;.
+	* Returns an ordered range of all the producers where institutionId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.ProducerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param facilityId the facility ID
+	* @param institutionId the institution ID
 	* @param start the lower bound of the range of producers
 	* @param end the upper bound of the range of producers (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching producers
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<de.uhh.l2g.plugins.model.Producer> findByFacility(
-		long facilityId, int start, int end,
+	public java.util.List<de.uhh.l2g.plugins.model.Producer> findByInstitution(
+		long institutionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the first producer in the ordered set where facilityId = &#63;.
+	* Returns the first producer in the ordered set where institutionId = &#63;.
 	*
-	* @param facilityId the facility ID
+	* @param institutionId the institution ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching producer
 	* @throws de.uhh.l2g.plugins.NoSuchProducerException if a matching producer could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.Producer findByFacility_First(
-		long facilityId,
+	public de.uhh.l2g.plugins.model.Producer findByInstitution_First(
+		long institutionId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchProducerException;
 
 	/**
-	* Returns the first producer in the ordered set where facilityId = &#63;.
+	* Returns the first producer in the ordered set where institutionId = &#63;.
 	*
-	* @param facilityId the facility ID
+	* @param institutionId the institution ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching producer, or <code>null</code> if a matching producer could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.Producer fetchByFacility_First(
-		long facilityId,
+	public de.uhh.l2g.plugins.model.Producer fetchByInstitution_First(
+		long institutionId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the last producer in the ordered set where facilityId = &#63;.
+	* Returns the last producer in the ordered set where institutionId = &#63;.
 	*
-	* @param facilityId the facility ID
+	* @param institutionId the institution ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching producer
 	* @throws de.uhh.l2g.plugins.NoSuchProducerException if a matching producer could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.Producer findByFacility_Last(
-		long facilityId,
+	public de.uhh.l2g.plugins.model.Producer findByInstitution_Last(
+		long institutionId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchProducerException;
 
 	/**
-	* Returns the last producer in the ordered set where facilityId = &#63;.
+	* Returns the last producer in the ordered set where institutionId = &#63;.
 	*
-	* @param facilityId the facility ID
+	* @param institutionId the institution ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching producer, or <code>null</code> if a matching producer could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.Producer fetchByFacility_Last(
-		long facilityId,
+	public de.uhh.l2g.plugins.model.Producer fetchByInstitution_Last(
+		long institutionId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the producers before and after the current producer in the ordered set where facilityId = &#63;.
+	* Returns the producers before and after the current producer in the ordered set where institutionId = &#63;.
 	*
 	* @param producerId the primary key of the current producer
-	* @param facilityId the facility ID
+	* @param institutionId the institution ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next producer
 	* @throws de.uhh.l2g.plugins.NoSuchProducerException if a producer with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.Producer[] findByFacility_PrevAndNext(
-		long producerId, long facilityId,
+	public de.uhh.l2g.plugins.model.Producer[] findByInstitution_PrevAndNext(
+		long producerId, long institutionId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchProducerException;
 
 	/**
-	* Removes all the producers where facilityId = &#63; from the database.
+	* Removes all the producers where institutionId = &#63; from the database.
 	*
-	* @param facilityId the facility ID
+	* @param institutionId the institution ID
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByFacility(long facilityId)
+	public void removeByInstitution(long institutionId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the number of producers where facilityId = &#63;.
+	* Returns the number of producers where institutionId = &#63;.
 	*
-	* @param facilityId the facility ID
+	* @param institutionId the institution ID
 	* @return the number of matching producers
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByFacility(long facilityId)
+	public int countByInstitution(long institutionId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

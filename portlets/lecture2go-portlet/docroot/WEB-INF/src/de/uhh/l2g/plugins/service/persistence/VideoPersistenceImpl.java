@@ -82,67 +82,68 @@ public class VideoPersistenceImpl extends BasePersistenceImpl<Video>
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(VideoModelImpl.ENTITY_CACHE_ENABLED,
 			VideoModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_FACILITY = new FinderPath(VideoModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_INSTITUTION =
+		new FinderPath(VideoModelImpl.ENTITY_CACHE_ENABLED,
 			VideoModelImpl.FINDER_CACHE_ENABLED, VideoImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFacility",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByInstitution",
 			new String[] {
 				Long.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITY =
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_INSTITUTION =
 		new FinderPath(VideoModelImpl.ENTITY_CACHE_ENABLED,
 			VideoModelImpl.FINDER_CACHE_ENABLED, VideoImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByFacility",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByInstitution",
 			new String[] { Long.class.getName() },
-			VideoModelImpl.FACILITYID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_FACILITY = new FinderPath(VideoModelImpl.ENTITY_CACHE_ENABLED,
+			VideoModelImpl.ROOTINSTITUTIONID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_INSTITUTION = new FinderPath(VideoModelImpl.ENTITY_CACHE_ENABLED,
 			VideoModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFacility",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByInstitution",
 			new String[] { Long.class.getName() });
 
 	/**
-	 * Returns all the videos where facilityId = &#63;.
+	 * Returns all the videos where rootInstitutionId = &#63;.
 	 *
-	 * @param facilityId the facility ID
+	 * @param rootInstitutionId the root institution ID
 	 * @return the matching videos
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Video> findByFacility(long facilityId)
+	public List<Video> findByInstitution(long rootInstitutionId)
 		throws SystemException {
-		return findByFacility(facilityId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+		return findByInstitution(rootInstitutionId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the videos where facilityId = &#63;.
+	 * Returns a range of all the videos where rootInstitutionId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.VideoModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param facilityId the facility ID
+	 * @param rootInstitutionId the root institution ID
 	 * @param start the lower bound of the range of videos
 	 * @param end the upper bound of the range of videos (not inclusive)
 	 * @return the range of matching videos
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Video> findByFacility(long facilityId, int start, int end)
-		throws SystemException {
-		return findByFacility(facilityId, start, end, null);
+	public List<Video> findByInstitution(long rootInstitutionId, int start,
+		int end) throws SystemException {
+		return findByInstitution(rootInstitutionId, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the videos where facilityId = &#63;.
+	 * Returns an ordered range of all the videos where rootInstitutionId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.VideoModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param facilityId the facility ID
+	 * @param rootInstitutionId the root institution ID
 	 * @param start the lower bound of the range of videos
 	 * @param end the upper bound of the range of videos (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -150,8 +151,8 @@ public class VideoPersistenceImpl extends BasePersistenceImpl<Video>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Video> findByFacility(long facilityId, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+	public List<Video> findByInstitution(long rootInstitutionId, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -159,12 +160,16 @@ public class VideoPersistenceImpl extends BasePersistenceImpl<Video>
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITY;
-			finderArgs = new Object[] { facilityId };
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_INSTITUTION;
+			finderArgs = new Object[] { rootInstitutionId };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_FACILITY;
-			finderArgs = new Object[] { facilityId, start, end, orderByComparator };
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_INSTITUTION;
+			finderArgs = new Object[] {
+					rootInstitutionId,
+					
+					start, end, orderByComparator
+				};
 		}
 
 		List<Video> list = (List<Video>)FinderCacheUtil.getResult(finderPath,
@@ -172,7 +177,7 @@ public class VideoPersistenceImpl extends BasePersistenceImpl<Video>
 
 		if ((list != null) && !list.isEmpty()) {
 			for (Video video : list) {
-				if ((facilityId != video.getFacilityId())) {
+				if ((rootInstitutionId != video.getRootInstitutionId())) {
 					list = null;
 
 					break;
@@ -193,7 +198,7 @@ public class VideoPersistenceImpl extends BasePersistenceImpl<Video>
 
 			query.append(_SQL_SELECT_VIDEO_WHERE);
 
-			query.append(_FINDER_COLUMN_FACILITY_FACILITYID_2);
+			query.append(_FINDER_COLUMN_INSTITUTION_ROOTINSTITUTIONID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -215,7 +220,7 @@ public class VideoPersistenceImpl extends BasePersistenceImpl<Video>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(facilityId);
+				qPos.add(rootInstitutionId);
 
 				if (!pagination) {
 					list = (List<Video>)QueryUtil.list(q, getDialect(), start,
@@ -248,19 +253,20 @@ public class VideoPersistenceImpl extends BasePersistenceImpl<Video>
 	}
 
 	/**
-	 * Returns the first video in the ordered set where facilityId = &#63;.
+	 * Returns the first video in the ordered set where rootInstitutionId = &#63;.
 	 *
-	 * @param facilityId the facility ID
+	 * @param rootInstitutionId the root institution ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching video
 	 * @throws de.uhh.l2g.plugins.NoSuchVideoException if a matching video could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Video findByFacility_First(long facilityId,
+	public Video findByInstitution_First(long rootInstitutionId,
 		OrderByComparator orderByComparator)
 		throws NoSuchVideoException, SystemException {
-		Video video = fetchByFacility_First(facilityId, orderByComparator);
+		Video video = fetchByInstitution_First(rootInstitutionId,
+				orderByComparator);
 
 		if (video != null) {
 			return video;
@@ -270,8 +276,8 @@ public class VideoPersistenceImpl extends BasePersistenceImpl<Video>
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("facilityId=");
-		msg.append(facilityId);
+		msg.append("rootInstitutionId=");
+		msg.append(rootInstitutionId);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -279,74 +285,17 @@ public class VideoPersistenceImpl extends BasePersistenceImpl<Video>
 	}
 
 	/**
-	 * Returns the first video in the ordered set where facilityId = &#63;.
+	 * Returns the first video in the ordered set where rootInstitutionId = &#63;.
 	 *
-	 * @param facilityId the facility ID
+	 * @param rootInstitutionId the root institution ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching video, or <code>null</code> if a matching video could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Video fetchByFacility_First(long facilityId,
+	public Video fetchByInstitution_First(long rootInstitutionId,
 		OrderByComparator orderByComparator) throws SystemException {
-		List<Video> list = findByFacility(facilityId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last video in the ordered set where facilityId = &#63;.
-	 *
-	 * @param facilityId the facility ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching video
-	 * @throws de.uhh.l2g.plugins.NoSuchVideoException if a matching video could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public Video findByFacility_Last(long facilityId,
-		OrderByComparator orderByComparator)
-		throws NoSuchVideoException, SystemException {
-		Video video = fetchByFacility_Last(facilityId, orderByComparator);
-
-		if (video != null) {
-			return video;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("facilityId=");
-		msg.append(facilityId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchVideoException(msg.toString());
-	}
-
-	/**
-	 * Returns the last video in the ordered set where facilityId = &#63;.
-	 *
-	 * @param facilityId the facility ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching video, or <code>null</code> if a matching video could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public Video fetchByFacility_Last(long facilityId,
-		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByFacility(facilityId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Video> list = findByFacility(facilityId, count - 1, count,
+		List<Video> list = findByInstitution(rootInstitutionId, 0, 1,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -357,18 +306,77 @@ public class VideoPersistenceImpl extends BasePersistenceImpl<Video>
 	}
 
 	/**
-	 * Returns the videos before and after the current video in the ordered set where facilityId = &#63;.
+	 * Returns the last video in the ordered set where rootInstitutionId = &#63;.
+	 *
+	 * @param rootInstitutionId the root institution ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching video
+	 * @throws de.uhh.l2g.plugins.NoSuchVideoException if a matching video could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Video findByInstitution_Last(long rootInstitutionId,
+		OrderByComparator orderByComparator)
+		throws NoSuchVideoException, SystemException {
+		Video video = fetchByInstitution_Last(rootInstitutionId,
+				orderByComparator);
+
+		if (video != null) {
+			return video;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("rootInstitutionId=");
+		msg.append(rootInstitutionId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchVideoException(msg.toString());
+	}
+
+	/**
+	 * Returns the last video in the ordered set where rootInstitutionId = &#63;.
+	 *
+	 * @param rootInstitutionId the root institution ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching video, or <code>null</code> if a matching video could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Video fetchByInstitution_Last(long rootInstitutionId,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByInstitution(rootInstitutionId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Video> list = findByInstitution(rootInstitutionId, count - 1,
+				count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the videos before and after the current video in the ordered set where rootInstitutionId = &#63;.
 	 *
 	 * @param videoId the primary key of the current video
-	 * @param facilityId the facility ID
+	 * @param rootInstitutionId the root institution ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next video
 	 * @throws de.uhh.l2g.plugins.NoSuchVideoException if a video with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Video[] findByFacility_PrevAndNext(long videoId, long facilityId,
-		OrderByComparator orderByComparator)
+	public Video[] findByInstitution_PrevAndNext(long videoId,
+		long rootInstitutionId, OrderByComparator orderByComparator)
 		throws NoSuchVideoException, SystemException {
 		Video video = findByPrimaryKey(videoId);
 
@@ -379,13 +387,13 @@ public class VideoPersistenceImpl extends BasePersistenceImpl<Video>
 
 			Video[] array = new VideoImpl[3];
 
-			array[0] = getByFacility_PrevAndNext(session, video, facilityId,
-					orderByComparator, true);
+			array[0] = getByInstitution_PrevAndNext(session, video,
+					rootInstitutionId, orderByComparator, true);
 
 			array[1] = video;
 
-			array[2] = getByFacility_PrevAndNext(session, video, facilityId,
-					orderByComparator, false);
+			array[2] = getByInstitution_PrevAndNext(session, video,
+					rootInstitutionId, orderByComparator, false);
 
 			return array;
 		}
@@ -397,8 +405,9 @@ public class VideoPersistenceImpl extends BasePersistenceImpl<Video>
 		}
 	}
 
-	protected Video getByFacility_PrevAndNext(Session session, Video video,
-		long facilityId, OrderByComparator orderByComparator, boolean previous) {
+	protected Video getByInstitution_PrevAndNext(Session session, Video video,
+		long rootInstitutionId, OrderByComparator orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -411,7 +420,7 @@ public class VideoPersistenceImpl extends BasePersistenceImpl<Video>
 
 		query.append(_SQL_SELECT_VIDEO_WHERE);
 
-		query.append(_FINDER_COLUMN_FACILITY_FACILITYID_2);
+		query.append(_FINDER_COLUMN_INSTITUTION_ROOTINSTITUTIONID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -481,7 +490,7 @@ public class VideoPersistenceImpl extends BasePersistenceImpl<Video>
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		qPos.add(facilityId);
+		qPos.add(rootInstitutionId);
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(video);
@@ -502,31 +511,33 @@ public class VideoPersistenceImpl extends BasePersistenceImpl<Video>
 	}
 
 	/**
-	 * Removes all the videos where facilityId = &#63; from the database.
+	 * Removes all the videos where rootInstitutionId = &#63; from the database.
 	 *
-	 * @param facilityId the facility ID
+	 * @param rootInstitutionId the root institution ID
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByFacility(long facilityId) throws SystemException {
-		for (Video video : findByFacility(facilityId, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+	public void removeByInstitution(long rootInstitutionId)
+		throws SystemException {
+		for (Video video : findByInstitution(rootInstitutionId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(video);
 		}
 	}
 
 	/**
-	 * Returns the number of videos where facilityId = &#63;.
+	 * Returns the number of videos where rootInstitutionId = &#63;.
 	 *
-	 * @param facilityId the facility ID
+	 * @param rootInstitutionId the root institution ID
 	 * @return the number of matching videos
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByFacility(long facilityId) throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_FACILITY;
+	public int countByInstitution(long rootInstitutionId)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_INSTITUTION;
 
-		Object[] finderArgs = new Object[] { facilityId };
+		Object[] finderArgs = new Object[] { rootInstitutionId };
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
@@ -536,7 +547,7 @@ public class VideoPersistenceImpl extends BasePersistenceImpl<Video>
 
 			query.append(_SQL_COUNT_VIDEO_WHERE);
 
-			query.append(_FINDER_COLUMN_FACILITY_FACILITYID_2);
+			query.append(_FINDER_COLUMN_INSTITUTION_ROOTINSTITUTIONID_2);
 
 			String sql = query.toString();
 
@@ -549,7 +560,7 @@ public class VideoPersistenceImpl extends BasePersistenceImpl<Video>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(facilityId);
+				qPos.add(rootInstitutionId);
 
 				count = (Long)q.uniqueResult();
 
@@ -568,7 +579,7 @@ public class VideoPersistenceImpl extends BasePersistenceImpl<Video>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_FACILITY_FACILITYID_2 = "video.facilityId = ?";
+	private static final String _FINDER_COLUMN_INSTITUTION_ROOTINSTITUTIONID_2 = "video.rootInstitutionId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_PRODUCER = new FinderPath(VideoModelImpl.ENTITY_CACHE_ENABLED,
 			VideoModelImpl.FINDER_CACHE_ENABLED, VideoImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByProducer",
@@ -2317,19 +2328,21 @@ public class VideoPersistenceImpl extends BasePersistenceImpl<Video>
 
 		else {
 			if ((videoModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITY.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_INSTITUTION.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						videoModelImpl.getOriginalFacilityId()
+						videoModelImpl.getOriginalRootInstitutionId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FACILITY, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITY,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_INSTITUTION,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_INSTITUTION,
 					args);
 
-				args = new Object[] { videoModelImpl.getFacilityId() };
+				args = new Object[] { videoModelImpl.getRootInstitutionId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FACILITY, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITY,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_INSTITUTION,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_INSTITUTION,
 					args);
 			}
 
@@ -2428,7 +2441,7 @@ public class VideoPersistenceImpl extends BasePersistenceImpl<Video>
 		videoImpl.setHits(video.getHits());
 		videoImpl.setUploadDate(video.getUploadDate());
 		videoImpl.setPermittedToSegment(video.getPermittedToSegment());
-		videoImpl.setFacilityId(video.getFacilityId());
+		videoImpl.setRootInstitutionId(video.getRootInstitutionId());
 		videoImpl.setCitation2go(video.getCitation2go());
 
 		return videoImpl;

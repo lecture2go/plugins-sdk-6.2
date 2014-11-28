@@ -117,18 +117,18 @@ public interface OfficeModel extends BaseModel<Office> {
 	public void setEmail(String email);
 
 	/**
-	 * Returns the facility ID of this office.
+	 * Returns the institution ID of this office.
 	 *
-	 * @return the facility ID of this office
+	 * @return the institution ID of this office
 	 */
-	public long getFacilityId();
+	public long getInstitutionId();
 
 	/**
-	 * Sets the facility ID of this office.
+	 * Sets the institution ID of this office.
 	 *
-	 * @param facilityId the facility ID of this office
+	 * @param institutionId the institution ID of this office
 	 */
-	public void setFacilityId(long facilityId);
+	public void setInstitutionId(long institutionId);
 
 	@Override
 	public boolean isNew();

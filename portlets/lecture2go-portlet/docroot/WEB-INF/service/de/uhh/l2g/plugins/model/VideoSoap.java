@@ -49,7 +49,7 @@ public class VideoSoap implements Serializable {
 		soapModel.setHits(model.getHits());
 		soapModel.setUploadDate(model.getUploadDate());
 		soapModel.setPermittedToSegment(model.getPermittedToSegment());
-		soapModel.setFacilityId(model.getFacilityId());
+		soapModel.setRootInstitutionId(model.getRootInstitutionId());
 		soapModel.setCitation2go(model.getCitation2go());
 
 		return soapModel;
@@ -255,12 +255,12 @@ public class VideoSoap implements Serializable {
 		_permittedToSegment = permittedToSegment;
 	}
 
-	public long getFacilityId() {
-		return _facilityId;
+	public long getRootInstitutionId() {
+		return _rootInstitutionId;
 	}
 
-	public void setFacilityId(long facilityId) {
-		_facilityId = facilityId;
+	public void setRootInstitutionId(long rootInstitutionId) {
+		_rootInstitutionId = rootInstitutionId;
 	}
 
 	public int getCitation2go() {
@@ -290,6 +290,6 @@ public class VideoSoap implements Serializable {
 	private int _hits;
 	private Date _uploadDate;
 	private int _permittedToSegment;
-	private long _facilityId;
+	private long _rootInstitutionId;
 	private int _citation2go;
 }

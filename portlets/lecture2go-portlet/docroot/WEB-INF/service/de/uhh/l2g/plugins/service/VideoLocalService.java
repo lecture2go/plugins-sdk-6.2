@@ -247,7 +247,7 @@ public interface VideoLocalService extends BaseLocalService,
 	public int unlinkLectureseriesFromVideos(java.lang.Long lectureseriesId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<de.uhh.l2g.plugins.model.Video> getByFacility(
+	public java.util.List<de.uhh.l2g.plugins.model.Video> getByInstitution(
 		java.lang.Long facilityId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

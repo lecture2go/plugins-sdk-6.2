@@ -50,7 +50,7 @@ public class CoordinatorWrapper implements Coordinator,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("coordinatorId", getCoordinatorId());
-		attributes.put("facilityId", getFacilityId());
+		attributes.put("institutionId", getInstitutionId());
 		attributes.put("officeId", getOfficeId());
 
 		return attributes;
@@ -64,10 +64,10 @@ public class CoordinatorWrapper implements Coordinator,
 			setCoordinatorId(coordinatorId);
 		}
 
-		Long facilityId = (Long)attributes.get("facilityId");
+		Long institutionId = (Long)attributes.get("institutionId");
 
-		if (facilityId != null) {
-			setFacilityId(facilityId);
+		if (institutionId != null) {
+			setInstitutionId(institutionId);
 		}
 
 		Long officeId = (Long)attributes.get("officeId");
@@ -118,23 +118,23 @@ public class CoordinatorWrapper implements Coordinator,
 	}
 
 	/**
-	* Returns the facility ID of this coordinator.
+	* Returns the institution ID of this coordinator.
 	*
-	* @return the facility ID of this coordinator
+	* @return the institution ID of this coordinator
 	*/
 	@Override
-	public long getFacilityId() {
-		return _coordinator.getFacilityId();
+	public long getInstitutionId() {
+		return _coordinator.getInstitutionId();
 	}
 
 	/**
-	* Sets the facility ID of this coordinator.
+	* Sets the institution ID of this coordinator.
 	*
-	* @param facilityId the facility ID of this coordinator
+	* @param institutionId the institution ID of this coordinator
 	*/
 	@Override
-	public void setFacilityId(long facilityId) {
-		_coordinator.setFacilityId(facilityId);
+	public void setInstitutionId(long institutionId) {
+		_coordinator.setInstitutionId(institutionId);
 	}
 
 	/**

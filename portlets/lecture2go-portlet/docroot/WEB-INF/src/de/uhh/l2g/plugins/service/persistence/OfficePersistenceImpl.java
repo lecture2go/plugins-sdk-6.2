@@ -320,7 +320,7 @@ public class OfficePersistenceImpl extends BasePersistenceImpl<Office>
 		officeImpl.setName(office.getName());
 		officeImpl.setWww(office.getWww());
 		officeImpl.setEmail(office.getEmail());
-		officeImpl.setFacilityId(office.getFacilityId());
+		officeImpl.setInstitutionId(office.getInstitutionId());
 
 		return officeImpl;
 	}

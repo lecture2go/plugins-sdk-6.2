@@ -52,7 +52,7 @@ public class ProducerWrapper implements Producer, ModelWrapper<Producer> {
 		attributes.put("idNum", getIdNum());
 		attributes.put("homeDir", getHomeDir());
 		attributes.put("hostId", getHostId());
-		attributes.put("facilityId", getFacilityId());
+		attributes.put("institutionId", getInstitutionId());
 		attributes.put("numberOfProductions", getNumberOfProductions());
 		attributes.put("approved", getApproved());
 
@@ -85,10 +85,10 @@ public class ProducerWrapper implements Producer, ModelWrapper<Producer> {
 			setHostId(hostId);
 		}
 
-		Long facilityId = (Long)attributes.get("facilityId");
+		Long institutionId = (Long)attributes.get("institutionId");
 
-		if (facilityId != null) {
-			setFacilityId(facilityId);
+		if (institutionId != null) {
+			setInstitutionId(institutionId);
 		}
 
 		Long numberOfProductions = (Long)attributes.get("numberOfProductions");
@@ -205,23 +205,23 @@ public class ProducerWrapper implements Producer, ModelWrapper<Producer> {
 	}
 
 	/**
-	* Returns the facility ID of this producer.
+	* Returns the institution ID of this producer.
 	*
-	* @return the facility ID of this producer
+	* @return the institution ID of this producer
 	*/
 	@Override
-	public long getFacilityId() {
-		return _producer.getFacilityId();
+	public long getInstitutionId() {
+		return _producer.getInstitutionId();
 	}
 
 	/**
-	* Sets the facility ID of this producer.
+	* Sets the institution ID of this producer.
 	*
-	* @param facilityId the facility ID of this producer
+	* @param institutionId the institution ID of this producer
 	*/
 	@Override
-	public void setFacilityId(long facilityId) {
-		_producer.setFacilityId(facilityId);
+	public void setInstitutionId(long institutionId) {
+		_producer.setInstitutionId(institutionId);
 	}
 
 	/**

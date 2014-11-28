@@ -58,10 +58,10 @@ public class CoordinatorModelImpl extends BaseModelImpl<Coordinator>
 	public static final String TABLE_NAME = "LG_Coordinator";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "coordinatorId", Types.BIGINT },
-			{ "facilityId", Types.BIGINT },
+			{ "institutionId", Types.BIGINT },
 			{ "officeId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Coordinator (coordinatorId LONG not null primary key,facilityId LONG,officeId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Coordinator (coordinatorId LONG not null primary key,institutionId LONG,officeId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Coordinator";
 	public static final String ORDER_BY_JPQL = " ORDER BY coordinator.coordinatorId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Coordinator.coordinatorId ASC";
@@ -77,7 +77,7 @@ public class CoordinatorModelImpl extends BaseModelImpl<Coordinator>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.Coordinator"),
 			true);
-	public static long FACILITYID_COLUMN_BITMASK = 1L;
+	public static long INSTITUTIONID_COLUMN_BITMASK = 1L;
 	public static long OFFICEID_COLUMN_BITMASK = 2L;
 	public static long COORDINATORID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
@@ -121,7 +121,7 @@ public class CoordinatorModelImpl extends BaseModelImpl<Coordinator>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("coordinatorId", getCoordinatorId());
-		attributes.put("facilityId", getFacilityId());
+		attributes.put("institutionId", getInstitutionId());
 		attributes.put("officeId", getOfficeId());
 
 		return attributes;
@@ -135,10 +135,10 @@ public class CoordinatorModelImpl extends BaseModelImpl<Coordinator>
 			setCoordinatorId(coordinatorId);
 		}
 
-		Long facilityId = (Long)attributes.get("facilityId");
+		Long institutionId = (Long)attributes.get("institutionId");
 
-		if (facilityId != null) {
-			setFacilityId(facilityId);
+		if (institutionId != null) {
+			setInstitutionId(institutionId);
 		}
 
 		Long officeId = (Long)attributes.get("officeId");
@@ -159,25 +159,25 @@ public class CoordinatorModelImpl extends BaseModelImpl<Coordinator>
 	}
 
 	@Override
-	public long getFacilityId() {
-		return _facilityId;
+	public long getInstitutionId() {
+		return _institutionId;
 	}
 
 	@Override
-	public void setFacilityId(long facilityId) {
-		_columnBitmask |= FACILITYID_COLUMN_BITMASK;
+	public void setInstitutionId(long institutionId) {
+		_columnBitmask |= INSTITUTIONID_COLUMN_BITMASK;
 
-		if (!_setOriginalFacilityId) {
-			_setOriginalFacilityId = true;
+		if (!_setOriginalInstitutionId) {
+			_setOriginalInstitutionId = true;
 
-			_originalFacilityId = _facilityId;
+			_originalInstitutionId = _institutionId;
 		}
 
-		_facilityId = facilityId;
+		_institutionId = institutionId;
 	}
 
-	public long getOriginalFacilityId() {
-		return _originalFacilityId;
+	public long getOriginalInstitutionId() {
+		return _originalInstitutionId;
 	}
 
 	@Override
@@ -234,7 +234,7 @@ public class CoordinatorModelImpl extends BaseModelImpl<Coordinator>
 		CoordinatorImpl coordinatorImpl = new CoordinatorImpl();
 
 		coordinatorImpl.setCoordinatorId(getCoordinatorId());
-		coordinatorImpl.setFacilityId(getFacilityId());
+		coordinatorImpl.setInstitutionId(getInstitutionId());
 		coordinatorImpl.setOfficeId(getOfficeId());
 
 		coordinatorImpl.resetOriginalValues();
@@ -288,9 +288,9 @@ public class CoordinatorModelImpl extends BaseModelImpl<Coordinator>
 	public void resetOriginalValues() {
 		CoordinatorModelImpl coordinatorModelImpl = this;
 
-		coordinatorModelImpl._originalFacilityId = coordinatorModelImpl._facilityId;
+		coordinatorModelImpl._originalInstitutionId = coordinatorModelImpl._institutionId;
 
-		coordinatorModelImpl._setOriginalFacilityId = false;
+		coordinatorModelImpl._setOriginalInstitutionId = false;
 
 		coordinatorModelImpl._originalOfficeId = coordinatorModelImpl._officeId;
 
@@ -305,7 +305,7 @@ public class CoordinatorModelImpl extends BaseModelImpl<Coordinator>
 
 		coordinatorCacheModel.coordinatorId = getCoordinatorId();
 
-		coordinatorCacheModel.facilityId = getFacilityId();
+		coordinatorCacheModel.institutionId = getInstitutionId();
 
 		coordinatorCacheModel.officeId = getOfficeId();
 
@@ -318,8 +318,8 @@ public class CoordinatorModelImpl extends BaseModelImpl<Coordinator>
 
 		sb.append("{coordinatorId=");
 		sb.append(getCoordinatorId());
-		sb.append(", facilityId=");
-		sb.append(getFacilityId());
+		sb.append(", institutionId=");
+		sb.append(getInstitutionId());
 		sb.append(", officeId=");
 		sb.append(getOfficeId());
 		sb.append("}");
@@ -340,8 +340,8 @@ public class CoordinatorModelImpl extends BaseModelImpl<Coordinator>
 		sb.append(getCoordinatorId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>facilityId</column-name><column-value><![CDATA[");
-		sb.append(getFacilityId());
+			"<column><column-name>institutionId</column-name><column-value><![CDATA[");
+		sb.append(getInstitutionId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>officeId</column-name><column-value><![CDATA[");
@@ -358,9 +358,9 @@ public class CoordinatorModelImpl extends BaseModelImpl<Coordinator>
 			Coordinator.class
 		};
 	private long _coordinatorId;
-	private long _facilityId;
-	private long _originalFacilityId;
-	private boolean _setOriginalFacilityId;
+	private long _institutionId;
+	private long _originalInstitutionId;
+	private boolean _setOriginalInstitutionId;
 	private long _officeId;
 	private long _originalOfficeId;
 	private boolean _setOriginalOfficeId;

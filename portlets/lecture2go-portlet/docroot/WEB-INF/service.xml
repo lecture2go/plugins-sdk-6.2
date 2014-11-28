@@ -45,8 +45,8 @@
             <finder-column name="approved"></finder-column>
         </finder>
     </entity>
-    <entity name="Facility" local-service="true" remote-service="false">
-        <column name="facilityId" type="long" primary="true" id-type="increment"></column>
+    <entity name="Institution" local-service="true" remote-service="false">
+        <column name="institutionId" type="long" primary="true" id-type="increment"></column>
         <column name="parentId" type="long"></column>
         <column name="name" type="String"></column>
         <column name="typ" type="String"></column>
@@ -72,19 +72,19 @@
             <finder-column name="sort"></finder-column>
         </finder>
     </entity>
-    <entity name="Lectureseries_Facility" local-service="true" remote-service="false">
-        <column name="lectureseriesFacilityId" type="long" primary="true" id-type="increment"></column>
+    <entity name="Lectureseries_Institution" local-service="true" remote-service="false">
+        <column name="lectureseriesInstitutionId" type="long" primary="true" id-type="increment"></column>
         <column name="lectureseriesId" type="long" primary="false"></column>
-        <column name="facilityId" type="long" primary="false"></column>
+        <column name="institutionId" type="long" primary="false"></column>
         <finder name="LectureseriesId" return-type="Collection">
             <finder-column name="lectureseriesId"></finder-column>
         </finder>
-        <finder name="FacilityId" return-type="Collection">
-            <finder-column name="facilityId"></finder-column>
+        <finder name="InstitutionId" return-type="Collection">
+            <finder-column name="institutionId"></finder-column>
         </finder>
-        <finder name="LectureseriesIdAndFacilityId" return-type="Collection">
+        <finder name="LectureseriesIdAndInstitutionId" return-type="Collection">
             <finder-column name="lectureseriesId"></finder-column>
-            <finder-column name="facilityId"></finder-column>
+            <finder-column name="institutionId"></finder-column>
         </finder>
     </entity>
     <entity name="Producer" local-service="true" remote-service="false">
@@ -92,14 +92,14 @@
         <column name="idNum" type="String"></column>
         <column name="homeDir" type="String"></column>
         <column name="hostId" type="long"></column>
-        <column name="facilityId" type="long"></column>
+        <column name="institutionId" type="long"></column>
         <column name="numberOfProductions" type="long"></column>
         <column name="approved" type="int"></column>
         <finder name="Host" return-type="Collection">
             <finder-column name="hostId"></finder-column>
         </finder>
-        <finder name="Facility" return-type="Collection">
-            <finder-column name="facilityId"></finder-column>
+        <finder name="Institution" return-type="Collection">
+            <finder-column name="institutionId"></finder-column>
         </finder>
         <finder name="Status" return-type="Collection">
             <finder-column name="approved"></finder-column>
@@ -134,14 +134,14 @@
         <column name="serverRoot" type="String"></column>
         <column name="name" type="String"></column>
     </entity>
-    <entity name="Facility_Host" local-service="true" remote-service="false">
-        <column name="fasilityHostId" type="long" primary="true" id-type="increment"></column>
-        <column name="facilityId" type="long"></column>
+    <entity name="Institution_Host" local-service="true" remote-service="false">
+        <column name="institutionHostId" type="long" primary="true" id-type="increment"></column>
+        <column name="institutionId" type="long"></column>
         <column name="hostId" type="long"></column>
-        <finder name="facilityId" return-type="Facility_Host">
-            <finder-column name="facilityId" case-sensitive="false"></finder-column>
+        <finder name="institutionId" return-type="Institution_Host">
+            <finder-column name="institutionId" case-sensitive="false"></finder-column>
         </finder>
-        <finder name="hostId" return-type="Facility_Host">
+        <finder name="hostId" return-type="Institution_Host">
             <finder-column name="hostId"></finder-column>
         </finder>
     </entity>
@@ -150,14 +150,14 @@
         <column name="name" type="String"></column>
         <column name="www" type="String"></column>
         <column name="email" type="String"></column>
-        <column name="facilityId" type="long"></column>
+        <column name="institutionId" type="long"></column>
     </entity>
     <entity name="Coordinator" local-service="true" remote-service="false">
         <column name="coordinatorId" type="long" primary="true"></column>
-        <column name="facilityId" type="long"></column>
+        <column name="institutionId" type="long"></column>
         <column name="officeId" type="long"></column>
-        <finder name="Facility" return-type="Collection">
-            <finder-column name="facilityId"></finder-column>
+        <finder name="Institution" return-type="Collection">
+            <finder-column name="institutionId"></finder-column>
         </finder>
         <finder name="Office" return-type="Collection">
             <finder-column name="officeId"></finder-column>
@@ -261,10 +261,10 @@
         <column name="hits" type="int"></column>
         <column name="uploadDate" type="Date"></column>
         <column name="permittedToSegment" type="int"></column>
-        <column name="facilityId" type="long"></column>
+        <column name="rootInstitutionId" type="long"></column>
         <column name="citation2go" type="int"></column>
-        <finder name="Facility" return-type="Collection">
-            <finder-column name="facilityId"></finder-column>
+        <finder name="Institution" return-type="Collection">
+            <finder-column name="rootInstitutionId"></finder-column>
         </finder>
         <finder name="Producer" return-type="Collection">
             <finder-column name="producerId"></finder-column>
@@ -277,15 +277,15 @@
             <finder-column name="lectureseriesId"></finder-column>
         </finder>
     </entity>
-    <entity name="Video_Facility" local-service="true" remote-service="false">
-        <column name="videoFacilityId" type="long" primary="true" id-type="increment"></column>
+    <entity name="Video_Institution" local-service="true" remote-service="false">
+        <column name="videoInstitutionId" type="long" primary="true" id-type="increment"></column>
         <column name="videoId" type="long"></column>
-        <column name="facilityId" type="long"></column>
+        <column name="institutionId" type="long"></column>
         <finder name="Video" return-type="Collection">
             <finder-column name="videoId"></finder-column>
         </finder>
-        <finder name="Facility" return-type="Collection">
-            <finder-column name="facilityId"></finder-column>
+        <finder name="Institution" return-type="Collection">
+            <finder-column name="institutionId"></finder-column>
         </finder>
     </entity>
     <entity name="Videohitlist" local-service="true" remote-service="false">

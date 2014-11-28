@@ -26,12 +26,12 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BaseModel;
 
 import de.uhh.l2g.plugins.model.CoordinatorClp;
-import de.uhh.l2g.plugins.model.FacilityClp;
-import de.uhh.l2g.plugins.model.Facility_HostClp;
 import de.uhh.l2g.plugins.model.HostClp;
+import de.uhh.l2g.plugins.model.InstitutionClp;
+import de.uhh.l2g.plugins.model.Institution_HostClp;
 import de.uhh.l2g.plugins.model.LastvideolistClp;
 import de.uhh.l2g.plugins.model.LectureseriesClp;
-import de.uhh.l2g.plugins.model.Lectureseries_FacilityClp;
+import de.uhh.l2g.plugins.model.Lectureseries_InstitutionClp;
 import de.uhh.l2g.plugins.model.LicenseClp;
 import de.uhh.l2g.plugins.model.MetadataClp;
 import de.uhh.l2g.plugins.model.OfficeClp;
@@ -42,7 +42,7 @@ import de.uhh.l2g.plugins.model.Segment_User_VideoClp;
 import de.uhh.l2g.plugins.model.SysClp;
 import de.uhh.l2g.plugins.model.UploadClp;
 import de.uhh.l2g.plugins.model.VideoClp;
-import de.uhh.l2g.plugins.model.Video_FacilityClp;
+import de.uhh.l2g.plugins.model.Video_InstitutionClp;
 import de.uhh.l2g.plugins.model.Video_LectureseriesClp;
 import de.uhh.l2g.plugins.model.VideohitlistClp;
 
@@ -125,16 +125,16 @@ public class ClpSerializer {
 			return translateInputCoordinator(oldModel);
 		}
 
-		if (oldModelClassName.equals(FacilityClp.class.getName())) {
-			return translateInputFacility(oldModel);
-		}
-
-		if (oldModelClassName.equals(Facility_HostClp.class.getName())) {
-			return translateInputFacility_Host(oldModel);
-		}
-
 		if (oldModelClassName.equals(HostClp.class.getName())) {
 			return translateInputHost(oldModel);
+		}
+
+		if (oldModelClassName.equals(InstitutionClp.class.getName())) {
+			return translateInputInstitution(oldModel);
+		}
+
+		if (oldModelClassName.equals(Institution_HostClp.class.getName())) {
+			return translateInputInstitution_Host(oldModel);
 		}
 
 		if (oldModelClassName.equals(LastvideolistClp.class.getName())) {
@@ -145,8 +145,9 @@ public class ClpSerializer {
 			return translateInputLectureseries(oldModel);
 		}
 
-		if (oldModelClassName.equals(Lectureseries_FacilityClp.class.getName())) {
-			return translateInputLectureseries_Facility(oldModel);
+		if (oldModelClassName.equals(
+					Lectureseries_InstitutionClp.class.getName())) {
+			return translateInputLectureseries_Institution(oldModel);
 		}
 
 		if (oldModelClassName.equals(LicenseClp.class.getName())) {
@@ -189,8 +190,8 @@ public class ClpSerializer {
 			return translateInputVideo(oldModel);
 		}
 
-		if (oldModelClassName.equals(Video_FacilityClp.class.getName())) {
-			return translateInputVideo_Facility(oldModel);
+		if (oldModelClassName.equals(Video_InstitutionClp.class.getName())) {
+			return translateInputVideo_Institution(oldModel);
 		}
 
 		if (oldModelClassName.equals(Video_LectureseriesClp.class.getName())) {
@@ -226,30 +227,30 @@ public class ClpSerializer {
 		return newModel;
 	}
 
-	public static Object translateInputFacility(BaseModel<?> oldModel) {
-		FacilityClp oldClpModel = (FacilityClp)oldModel;
-
-		BaseModel<?> newModel = oldClpModel.getFacilityRemoteModel();
-
-		newModel.setModelAttributes(oldClpModel.getModelAttributes());
-
-		return newModel;
-	}
-
-	public static Object translateInputFacility_Host(BaseModel<?> oldModel) {
-		Facility_HostClp oldClpModel = (Facility_HostClp)oldModel;
-
-		BaseModel<?> newModel = oldClpModel.getFacility_HostRemoteModel();
-
-		newModel.setModelAttributes(oldClpModel.getModelAttributes());
-
-		return newModel;
-	}
-
 	public static Object translateInputHost(BaseModel<?> oldModel) {
 		HostClp oldClpModel = (HostClp)oldModel;
 
 		BaseModel<?> newModel = oldClpModel.getHostRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputInstitution(BaseModel<?> oldModel) {
+		InstitutionClp oldClpModel = (InstitutionClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getInstitutionRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputInstitution_Host(BaseModel<?> oldModel) {
+		Institution_HostClp oldClpModel = (Institution_HostClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getInstitution_HostRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -276,11 +277,11 @@ public class ClpSerializer {
 		return newModel;
 	}
 
-	public static Object translateInputLectureseries_Facility(
+	public static Object translateInputLectureseries_Institution(
 		BaseModel<?> oldModel) {
-		Lectureseries_FacilityClp oldClpModel = (Lectureseries_FacilityClp)oldModel;
+		Lectureseries_InstitutionClp oldClpModel = (Lectureseries_InstitutionClp)oldModel;
 
-		BaseModel<?> newModel = oldClpModel.getLectureseries_FacilityRemoteModel();
+		BaseModel<?> newModel = oldClpModel.getLectureseries_InstitutionRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -388,10 +389,10 @@ public class ClpSerializer {
 		return newModel;
 	}
 
-	public static Object translateInputVideo_Facility(BaseModel<?> oldModel) {
-		Video_FacilityClp oldClpModel = (Video_FacilityClp)oldModel;
+	public static Object translateInputVideo_Institution(BaseModel<?> oldModel) {
+		Video_InstitutionClp oldClpModel = (Video_InstitutionClp)oldModel;
 
-		BaseModel<?> newModel = oldClpModel.getVideo_FacilityRemoteModel();
+		BaseModel<?> newModel = oldClpModel.getVideo_InstitutionRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -441,18 +442,18 @@ public class ClpSerializer {
 			return translateOutputCoordinator(oldModel);
 		}
 
-		if (oldModelClassName.equals(
-					"de.uhh.l2g.plugins.model.impl.FacilityImpl")) {
-			return translateOutputFacility(oldModel);
-		}
-
-		if (oldModelClassName.equals(
-					"de.uhh.l2g.plugins.model.impl.Facility_HostImpl")) {
-			return translateOutputFacility_Host(oldModel);
-		}
-
 		if (oldModelClassName.equals("de.uhh.l2g.plugins.model.impl.HostImpl")) {
 			return translateOutputHost(oldModel);
+		}
+
+		if (oldModelClassName.equals(
+					"de.uhh.l2g.plugins.model.impl.InstitutionImpl")) {
+			return translateOutputInstitution(oldModel);
+		}
+
+		if (oldModelClassName.equals(
+					"de.uhh.l2g.plugins.model.impl.Institution_HostImpl")) {
+			return translateOutputInstitution_Host(oldModel);
 		}
 
 		if (oldModelClassName.equals(
@@ -466,8 +467,8 @@ public class ClpSerializer {
 		}
 
 		if (oldModelClassName.equals(
-					"de.uhh.l2g.plugins.model.impl.Lectureseries_FacilityImpl")) {
-			return translateOutputLectureseries_Facility(oldModel);
+					"de.uhh.l2g.plugins.model.impl.Lectureseries_InstitutionImpl")) {
+			return translateOutputLectureseries_Institution(oldModel);
 		}
 
 		if (oldModelClassName.equals(
@@ -517,8 +518,8 @@ public class ClpSerializer {
 		}
 
 		if (oldModelClassName.equals(
-					"de.uhh.l2g.plugins.model.impl.Video_FacilityImpl")) {
-			return translateOutputVideo_Facility(oldModel);
+					"de.uhh.l2g.plugins.model.impl.Video_InstitutionImpl")) {
+			return translateOutputVideo_Institution(oldModel);
 		}
 
 		if (oldModelClassName.equals(
@@ -615,16 +616,17 @@ public class ClpSerializer {
 			return new de.uhh.l2g.plugins.NoSuchCoordinatorException();
 		}
 
-		if (className.equals("de.uhh.l2g.plugins.NoSuchFacilityException")) {
-			return new de.uhh.l2g.plugins.NoSuchFacilityException();
-		}
-
-		if (className.equals("de.uhh.l2g.plugins.NoSuchFacility_HostException")) {
-			return new de.uhh.l2g.plugins.NoSuchFacility_HostException();
-		}
-
 		if (className.equals("de.uhh.l2g.plugins.NoSuchHostException")) {
 			return new de.uhh.l2g.plugins.NoSuchHostException();
+		}
+
+		if (className.equals("de.uhh.l2g.plugins.NoSuchInstitutionException")) {
+			return new de.uhh.l2g.plugins.NoSuchInstitutionException();
+		}
+
+		if (className.equals(
+					"de.uhh.l2g.plugins.NoSuchInstitution_HostException")) {
+			return new de.uhh.l2g.plugins.NoSuchInstitution_HostException();
 		}
 
 		if (className.equals("de.uhh.l2g.plugins.NoSuchLastvideolistException")) {
@@ -636,8 +638,8 @@ public class ClpSerializer {
 		}
 
 		if (className.equals(
-					"de.uhh.l2g.plugins.NoSuchLectureseries_FacilityException")) {
-			return new de.uhh.l2g.plugins.NoSuchLectureseries_FacilityException();
+					"de.uhh.l2g.plugins.NoSuchLectureseries_InstitutionException")) {
+			return new de.uhh.l2g.plugins.NoSuchLectureseries_InstitutionException();
 		}
 
 		if (className.equals("de.uhh.l2g.plugins.NoSuchLicenseException")) {
@@ -682,8 +684,9 @@ public class ClpSerializer {
 			return new de.uhh.l2g.plugins.NoSuchVideoException();
 		}
 
-		if (className.equals("de.uhh.l2g.plugins.NoSuchVideo_FacilityException")) {
-			return new de.uhh.l2g.plugins.NoSuchVideo_FacilityException();
+		if (className.equals(
+					"de.uhh.l2g.plugins.NoSuchVideo_InstitutionException")) {
+			return new de.uhh.l2g.plugins.NoSuchVideo_InstitutionException();
 		}
 
 		if (className.equals(
@@ -708,32 +711,32 @@ public class ClpSerializer {
 		return newModel;
 	}
 
-	public static Object translateOutputFacility(BaseModel<?> oldModel) {
-		FacilityClp newModel = new FacilityClp();
-
-		newModel.setModelAttributes(oldModel.getModelAttributes());
-
-		newModel.setFacilityRemoteModel(oldModel);
-
-		return newModel;
-	}
-
-	public static Object translateOutputFacility_Host(BaseModel<?> oldModel) {
-		Facility_HostClp newModel = new Facility_HostClp();
-
-		newModel.setModelAttributes(oldModel.getModelAttributes());
-
-		newModel.setFacility_HostRemoteModel(oldModel);
-
-		return newModel;
-	}
-
 	public static Object translateOutputHost(BaseModel<?> oldModel) {
 		HostClp newModel = new HostClp();
 
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
 		newModel.setHostRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputInstitution(BaseModel<?> oldModel) {
+		InstitutionClp newModel = new InstitutionClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setInstitutionRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputInstitution_Host(BaseModel<?> oldModel) {
+		Institution_HostClp newModel = new Institution_HostClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setInstitution_HostRemoteModel(oldModel);
 
 		return newModel;
 	}
@@ -758,13 +761,13 @@ public class ClpSerializer {
 		return newModel;
 	}
 
-	public static Object translateOutputLectureseries_Facility(
+	public static Object translateOutputLectureseries_Institution(
 		BaseModel<?> oldModel) {
-		Lectureseries_FacilityClp newModel = new Lectureseries_FacilityClp();
+		Lectureseries_InstitutionClp newModel = new Lectureseries_InstitutionClp();
 
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
-		newModel.setLectureseries_FacilityRemoteModel(oldModel);
+		newModel.setLectureseries_InstitutionRemoteModel(oldModel);
 
 		return newModel;
 	}
@@ -871,12 +874,12 @@ public class ClpSerializer {
 		return newModel;
 	}
 
-	public static Object translateOutputVideo_Facility(BaseModel<?> oldModel) {
-		Video_FacilityClp newModel = new Video_FacilityClp();
+	public static Object translateOutputVideo_Institution(BaseModel<?> oldModel) {
+		Video_InstitutionClp newModel = new Video_InstitutionClp();
 
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
-		newModel.setVideo_FacilityRemoteModel(oldModel);
+		newModel.setVideo_InstitutionRemoteModel(oldModel);
 
 		return newModel;
 	}

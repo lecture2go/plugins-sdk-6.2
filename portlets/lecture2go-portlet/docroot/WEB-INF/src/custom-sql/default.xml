@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <custom-sql>
     
-    <sql id="de.uhh.l2g.plugins.service.persistence.FacilityFinder.findAllSortedAsTree">
+    <sql id="de.uhh.l2g.plugins.service.persistence.InstitutionFinder.findAllSortedAsTree">
 		<![CDATA[
-			SELECT myNode.facilityId, myNode.parentId, myNode.name, myNode.typ, myNode.www, myNode.level, myNode.sort, 
-			IF(myParent.facilityId>=0, IF(myGrandparent.facilityId>=0, 
-			CONCAT(myGrandparent.facilityId, '/', myParent.facilityId, '/', myNode.facilityId), 
-			CONCAT('', myParent.facilityId, '/', myNode.facilityId)), 
-			CONCAT( myNode.facilityId, '')) AS path 
-			FROM lg_facility AS myNode 
-			LEFT JOIN lg_facility AS myParent ON myNode.parentId = myParent.facilityId
-			LEFT JOIN lg_facility AS myGrandparent ON myParent.parentId = myGrandparent.facilityId 
+			SELECT myNode.institutionId, myNode.parentId, myNode.name, myNode.typ, myNode.www, myNode.level, myNode.sort, 
+			IF(myParent.institutionId>=0, IF(myGrandparent.institutionId>=0, 
+			CONCAT(myGrandparent.institutionId, '/', myParent.institutionId, '/', myNode.institutionId), 
+			CONCAT('', myParent.institutionId, '/', myNode.institutionId)), 
+			CONCAT( myNode.institutionId, '')) AS path 
+			FROM lg_institution AS myNode 
+			LEFT JOIN lg_institution AS myParent ON myNode.parentId = myParent.institutionId
+			LEFT JOIN lg_institution AS myGrandparent ON myParent.parentId = myGrandparent.institutionId 
 			ORDER BY path ASC
 		]]>
     </sql>
     
-    <sql id="de.uhh.l2g.plugins.service.persistence.FacilityFinder.findByLectureseriesId">
+    <sql id="de.uhh.l2g.plugins.service.persistence.InstitutionFinder.findByLectureseriesId">
 		<![CDATA[
-			SELECT lg_facility.facilityId, lg_facility.parentId, lg_facility.name, lg_facility.typ, lg_facility.www, lg_facility.level, lg_facility.sort 
-			FROM lg_facility, lg_lectureseries_facility 
-			WHERE (lg_lectureseries_facility.lectureseriesId=? AND lg_facility.facilityId=lg_lectureseries_facility.facilityId)
+			SELECT lg_institution.institutionId, lg_institution.parentId, lg_institution.name, lg_institution.typ, lg_institution.www, lg_institution.level, lg_institution.sort 
+			FROM lg_institution, lg_lectureseries_institution 
+			WHERE (lg_lectureseries_institution.lectureseriesId=? AND lg_institution.institutionId=lg_lectureseries_institution.institutionId)
 		]]>
     </sql> 
 

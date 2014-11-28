@@ -112,7 +112,7 @@ public class VideoLocalServiceClp implements VideoLocalService {
 
 		_methodParameterTypes19 = new String[] { "java.lang.Long" };
 
-		_methodName20 = "getByFacility";
+		_methodName20 = "getByInstitution";
 
 		_methodParameterTypes20 = new String[] { "java.lang.Long" };
 
@@ -701,7 +701,7 @@ public class VideoLocalServiceClp implements VideoLocalService {
 	}
 
 	@Override
-	public java.util.List<de.uhh.l2g.plugins.model.Video> getByFacility(
+	public java.util.List<de.uhh.l2g.plugins.model.Video> getByInstitution(
 		java.lang.Long facilityId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;

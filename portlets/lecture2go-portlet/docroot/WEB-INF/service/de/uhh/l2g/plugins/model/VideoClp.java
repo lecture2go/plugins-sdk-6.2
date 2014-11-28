@@ -92,7 +92,7 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 		attributes.put("hits", getHits());
 		attributes.put("uploadDate", getUploadDate());
 		attributes.put("permittedToSegment", getPermittedToSegment());
-		attributes.put("facilityId", getFacilityId());
+		attributes.put("rootInstitutionId", getRootInstitutionId());
 		attributes.put("citation2go", getCitation2go());
 
 		return attributes;
@@ -215,10 +215,10 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 			setPermittedToSegment(permittedToSegment);
 		}
 
-		Long facilityId = (Long)attributes.get("facilityId");
+		Long rootInstitutionId = (Long)attributes.get("rootInstitutionId");
 
-		if (facilityId != null) {
-			setFacilityId(facilityId);
+		if (rootInstitutionId != null) {
+			setRootInstitutionId(rootInstitutionId);
 		}
 
 		Integer citation2go = (Integer)attributes.get("citation2go");
@@ -669,21 +669,22 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 	}
 
 	@Override
-	public long getFacilityId() {
-		return _facilityId;
+	public long getRootInstitutionId() {
+		return _rootInstitutionId;
 	}
 
 	@Override
-	public void setFacilityId(long facilityId) {
-		_facilityId = facilityId;
+	public void setRootInstitutionId(long rootInstitutionId) {
+		_rootInstitutionId = rootInstitutionId;
 
 		if (_videoRemoteModel != null) {
 			try {
 				Class<?> clazz = _videoRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setFacilityId", long.class);
+				Method method = clazz.getMethod("setRootInstitutionId",
+						long.class);
 
-				method.invoke(_videoRemoteModel, facilityId);
+				method.invoke(_videoRemoteModel, rootInstitutionId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -802,7 +803,7 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 		clone.setHits(getHits());
 		clone.setUploadDate(getUploadDate());
 		clone.setPermittedToSegment(getPermittedToSegment());
-		clone.setFacilityId(getFacilityId());
+		clone.setRootInstitutionId(getRootInstitutionId());
 		clone.setCitation2go(getCitation2go());
 
 		return clone;
@@ -892,8 +893,8 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 		sb.append(getUploadDate());
 		sb.append(", permittedToSegment=");
 		sb.append(getPermittedToSegment());
-		sb.append(", facilityId=");
-		sb.append(getFacilityId());
+		sb.append(", rootInstitutionId=");
+		sb.append(getRootInstitutionId());
 		sb.append(", citation2go=");
 		sb.append(getCitation2go());
 		sb.append("}");
@@ -986,8 +987,8 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 		sb.append(getPermittedToSegment());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>facilityId</column-name><column-value><![CDATA[");
-		sb.append(getFacilityId());
+			"<column><column-name>rootInstitutionId</column-name><column-value><![CDATA[");
+		sb.append(getRootInstitutionId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>citation2go</column-name><column-value><![CDATA[");
@@ -1018,7 +1019,7 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 	private int _hits;
 	private Date _uploadDate;
 	private int _permittedToSegment;
-	private long _facilityId;
+	private long _rootInstitutionId;
 	private int _citation2go;
 	private BaseModel<?> _videoRemoteModel;
 }

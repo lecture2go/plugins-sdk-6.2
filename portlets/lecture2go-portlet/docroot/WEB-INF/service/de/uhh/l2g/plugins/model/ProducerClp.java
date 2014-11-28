@@ -76,7 +76,7 @@ public class ProducerClp extends BaseModelImpl<Producer> implements Producer {
 		attributes.put("idNum", getIdNum());
 		attributes.put("homeDir", getHomeDir());
 		attributes.put("hostId", getHostId());
-		attributes.put("facilityId", getFacilityId());
+		attributes.put("institutionId", getInstitutionId());
 		attributes.put("numberOfProductions", getNumberOfProductions());
 		attributes.put("approved", getApproved());
 
@@ -109,10 +109,10 @@ public class ProducerClp extends BaseModelImpl<Producer> implements Producer {
 			setHostId(hostId);
 		}
 
-		Long facilityId = (Long)attributes.get("facilityId");
+		Long institutionId = (Long)attributes.get("institutionId");
 
-		if (facilityId != null) {
-			setFacilityId(facilityId);
+		if (institutionId != null) {
+			setInstitutionId(institutionId);
 		}
 
 		Long numberOfProductions = (Long)attributes.get("numberOfProductions");
@@ -221,21 +221,21 @@ public class ProducerClp extends BaseModelImpl<Producer> implements Producer {
 	}
 
 	@Override
-	public long getFacilityId() {
-		return _facilityId;
+	public long getInstitutionId() {
+		return _institutionId;
 	}
 
 	@Override
-	public void setFacilityId(long facilityId) {
-		_facilityId = facilityId;
+	public void setInstitutionId(long institutionId) {
+		_institutionId = institutionId;
 
 		if (_producerRemoteModel != null) {
 			try {
 				Class<?> clazz = _producerRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setFacilityId", long.class);
+				Method method = clazz.getMethod("setInstitutionId", long.class);
 
-				method.invoke(_producerRemoteModel, facilityId);
+				method.invoke(_producerRemoteModel, institutionId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -503,7 +503,7 @@ public class ProducerClp extends BaseModelImpl<Producer> implements Producer {
 		clone.setIdNum(getIdNum());
 		clone.setHomeDir(getHomeDir());
 		clone.setHostId(getHostId());
-		clone.setFacilityId(getFacilityId());
+		clone.setInstitutionId(getInstitutionId());
 		clone.setNumberOfProductions(getNumberOfProductions());
 		clone.setApproved(getApproved());
 
@@ -564,8 +564,8 @@ public class ProducerClp extends BaseModelImpl<Producer> implements Producer {
 		sb.append(getHomeDir());
 		sb.append(", hostId=");
 		sb.append(getHostId());
-		sb.append(", facilityId=");
-		sb.append(getFacilityId());
+		sb.append(", institutionId=");
+		sb.append(getInstitutionId());
 		sb.append(", numberOfProductions=");
 		sb.append(getNumberOfProductions());
 		sb.append(", approved=");
@@ -600,8 +600,8 @@ public class ProducerClp extends BaseModelImpl<Producer> implements Producer {
 		sb.append(getHostId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>facilityId</column-name><column-value><![CDATA[");
-		sb.append(getFacilityId());
+			"<column><column-name>institutionId</column-name><column-value><![CDATA[");
+		sb.append(getInstitutionId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>numberOfProductions</column-name><column-value><![CDATA[");
@@ -621,7 +621,7 @@ public class ProducerClp extends BaseModelImpl<Producer> implements Producer {
 	private String _idNum;
 	private String _homeDir;
 	private long _hostId;
-	private long _facilityId;
+	private long _institutionId;
 	private long _numberOfProductions;
 	private int _approved;
 	private BaseModel<?> _producerRemoteModel;

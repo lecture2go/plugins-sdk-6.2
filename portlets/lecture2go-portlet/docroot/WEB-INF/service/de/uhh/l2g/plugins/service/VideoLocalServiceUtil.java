@@ -276,10 +276,10 @@ public class VideoLocalServiceUtil {
 		return getService().unlinkLectureseriesFromVideos(lectureseriesId);
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByFacility(
+	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByInstitution(
 		java.lang.Long facilityId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getByFacility(facilityId);
+		return getService().getByInstitution(facilityId);
 	}
 
 	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByProducer(

@@ -57,18 +57,18 @@
 
 <%@ page import="de.uhh.l2g.plugins.admin.AdminUserManagement"%>
 <%@ page import="de.uhh.l2g.plugins.service.ProducerLocalServiceUtil"%>
-<%@ page import="de.uhh.l2g.plugins.service.FacilityLocalServiceUtil"%>
+<%@ page import="de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.service.Producer_LectureseriesLocalServiceUtil"%>
-<%@ page import="de.uhh.l2g.plugins.service.Lectureseries_FacilityLocalServiceUtil"%>
+<%@ page import="de.uhh.l2g.plugins.service.Lectureseries_InstitutionLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.service.VideoLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.service.LicenseLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.NoSuchMetadataException"%>
 <%@ page import="de.uhh.l2g.plugins.service.MetadataLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.model.Producer"%>
-<%@ page import="de.uhh.l2g.plugins.model.Facility"%>
+<%@ page import="de.uhh.l2g.plugins.model.Institution"%>
 <%@ page import="de.uhh.l2g.plugins.model.Lectureseries"%>
 <%@ page import="de.uhh.l2g.plugins.model.Producer_Lectureseries"%>
 <%@ page import="de.uhh.l2g.plugins.model.Video"%>

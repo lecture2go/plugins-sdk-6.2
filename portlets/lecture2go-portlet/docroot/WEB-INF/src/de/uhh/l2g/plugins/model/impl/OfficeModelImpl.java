@@ -62,9 +62,9 @@ public class OfficeModelImpl extends BaseModelImpl<Office>
 			{ "name", Types.VARCHAR },
 			{ "www", Types.VARCHAR },
 			{ "email", Types.VARCHAR },
-			{ "facilityId", Types.BIGINT }
+			{ "institutionId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Office (officeId LONG not null primary key,name VARCHAR(75) null,www VARCHAR(75) null,email VARCHAR(75) null,facilityId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Office (officeId LONG not null primary key,name VARCHAR(75) null,www VARCHAR(75) null,email VARCHAR(75) null,institutionId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Office";
 	public static final String ORDER_BY_JPQL = " ORDER BY office.officeId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Office.officeId ASC";
@@ -122,7 +122,7 @@ public class OfficeModelImpl extends BaseModelImpl<Office>
 		attributes.put("name", getName());
 		attributes.put("www", getWww());
 		attributes.put("email", getEmail());
-		attributes.put("facilityId", getFacilityId());
+		attributes.put("institutionId", getInstitutionId());
 
 		return attributes;
 	}
@@ -153,10 +153,10 @@ public class OfficeModelImpl extends BaseModelImpl<Office>
 			setEmail(email);
 		}
 
-		Long facilityId = (Long)attributes.get("facilityId");
+		Long institutionId = (Long)attributes.get("institutionId");
 
-		if (facilityId != null) {
-			setFacilityId(facilityId);
+		if (institutionId != null) {
+			setInstitutionId(institutionId);
 		}
 	}
 
@@ -216,13 +216,13 @@ public class OfficeModelImpl extends BaseModelImpl<Office>
 	}
 
 	@Override
-	public long getFacilityId() {
-		return _facilityId;
+	public long getInstitutionId() {
+		return _institutionId;
 	}
 
 	@Override
-	public void setFacilityId(long facilityId) {
-		_facilityId = facilityId;
+	public void setInstitutionId(long institutionId) {
+		_institutionId = institutionId;
 	}
 
 	@Override
@@ -256,7 +256,7 @@ public class OfficeModelImpl extends BaseModelImpl<Office>
 		officeImpl.setName(getName());
 		officeImpl.setWww(getWww());
 		officeImpl.setEmail(getEmail());
-		officeImpl.setFacilityId(getFacilityId());
+		officeImpl.setInstitutionId(getInstitutionId());
 
 		officeImpl.resetOriginalValues();
 
@@ -339,7 +339,7 @@ public class OfficeModelImpl extends BaseModelImpl<Office>
 			officeCacheModel.email = null;
 		}
 
-		officeCacheModel.facilityId = getFacilityId();
+		officeCacheModel.institutionId = getInstitutionId();
 
 		return officeCacheModel;
 	}
@@ -356,8 +356,8 @@ public class OfficeModelImpl extends BaseModelImpl<Office>
 		sb.append(getWww());
 		sb.append(", email=");
 		sb.append(getEmail());
-		sb.append(", facilityId=");
-		sb.append(getFacilityId());
+		sb.append(", institutionId=");
+		sb.append(getInstitutionId());
 		sb.append("}");
 
 		return sb.toString();
@@ -388,8 +388,8 @@ public class OfficeModelImpl extends BaseModelImpl<Office>
 		sb.append(getEmail());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>facilityId</column-name><column-value><![CDATA[");
-		sb.append(getFacilityId());
+			"<column><column-name>institutionId</column-name><column-value><![CDATA[");
+		sb.append(getInstitutionId());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -403,6 +403,6 @@ public class OfficeModelImpl extends BaseModelImpl<Office>
 	private String _name;
 	private String _www;
 	private String _email;
-	private long _facilityId;
+	private long _institutionId;
 	private Office _escapedModel;
 }

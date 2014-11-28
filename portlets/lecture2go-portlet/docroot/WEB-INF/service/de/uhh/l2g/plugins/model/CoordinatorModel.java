@@ -71,18 +71,18 @@ public interface CoordinatorModel extends BaseModel<Coordinator> {
 	public void setCoordinatorId(long coordinatorId);
 
 	/**
-	 * Returns the facility ID of this coordinator.
+	 * Returns the institution ID of this coordinator.
 	 *
-	 * @return the facility ID of this coordinator
+	 * @return the institution ID of this coordinator
 	 */
-	public long getFacilityId();
+	public long getInstitutionId();
 
 	/**
-	 * Sets the facility ID of this coordinator.
+	 * Sets the institution ID of this coordinator.
 	 *
-	 * @param facilityId the facility ID of this coordinator
+	 * @param institutionId the institution ID of this coordinator
 	 */
-	public void setFacilityId(long facilityId);
+	public void setInstitutionId(long institutionId);
 
 	/**
 	 * Returns the office ID of this coordinator.

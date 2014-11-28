@@ -77,8 +77,8 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 		sb.append(uploadDate);
 		sb.append(", permittedToSegment=");
 		sb.append(permittedToSegment);
-		sb.append(", facilityId=");
-		sb.append(facilityId);
+		sb.append(", rootInstitutionId=");
+		sb.append(rootInstitutionId);
 		sb.append(", citation2go=");
 		sb.append(citation2go);
 		sb.append("}");
@@ -174,7 +174,7 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 		}
 
 		videoImpl.setPermittedToSegment(permittedToSegment);
-		videoImpl.setFacilityId(facilityId);
+		videoImpl.setRootInstitutionId(rootInstitutionId);
 		videoImpl.setCitation2go(citation2go);
 
 		videoImpl.resetOriginalValues();
@@ -203,7 +203,7 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 		hits = objectInput.readInt();
 		uploadDate = objectInput.readLong();
 		permittedToSegment = objectInput.readInt();
-		facilityId = objectInput.readLong();
+		rootInstitutionId = objectInput.readLong();
 		citation2go = objectInput.readInt();
 	}
 
@@ -287,7 +287,7 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 		objectOutput.writeInt(hits);
 		objectOutput.writeLong(uploadDate);
 		objectOutput.writeInt(permittedToSegment);
-		objectOutput.writeLong(facilityId);
+		objectOutput.writeLong(rootInstitutionId);
 		objectOutput.writeInt(citation2go);
 	}
 
@@ -310,6 +310,6 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 	public int hits;
 	public long uploadDate;
 	public int permittedToSegment;
-	public long facilityId;
+	public long rootInstitutionId;
 	public int citation2go;
 }

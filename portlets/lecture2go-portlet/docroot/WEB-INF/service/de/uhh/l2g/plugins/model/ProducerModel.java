@@ -116,18 +116,18 @@ public interface ProducerModel extends BaseModel<Producer> {
 	public void setHostId(long hostId);
 
 	/**
-	 * Returns the facility ID of this producer.
+	 * Returns the institution ID of this producer.
 	 *
-	 * @return the facility ID of this producer
+	 * @return the institution ID of this producer
 	 */
-	public long getFacilityId();
+	public long getInstitutionId();
 
 	/**
-	 * Sets the facility ID of this producer.
+	 * Sets the institution ID of this producer.
 	 *
-	 * @param facilityId the facility ID of this producer
+	 * @param institutionId the institution ID of this producer
 	 */
-	public void setFacilityId(long facilityId);
+	public void setInstitutionId(long institutionId);
 
 	/**
 	 * Returns the number of productions of this producer.

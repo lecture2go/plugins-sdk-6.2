@@ -76,7 +76,7 @@ public class OfficeClp extends BaseModelImpl<Office> implements Office {
 		attributes.put("name", getName());
 		attributes.put("www", getWww());
 		attributes.put("email", getEmail());
-		attributes.put("facilityId", getFacilityId());
+		attributes.put("institutionId", getInstitutionId());
 
 		return attributes;
 	}
@@ -107,10 +107,10 @@ public class OfficeClp extends BaseModelImpl<Office> implements Office {
 			setEmail(email);
 		}
 
-		Long facilityId = (Long)attributes.get("facilityId");
+		Long institutionId = (Long)attributes.get("institutionId");
 
-		if (facilityId != null) {
-			setFacilityId(facilityId);
+		if (institutionId != null) {
+			setInstitutionId(institutionId);
 		}
 	}
 
@@ -207,21 +207,21 @@ public class OfficeClp extends BaseModelImpl<Office> implements Office {
 	}
 
 	@Override
-	public long getFacilityId() {
-		return _facilityId;
+	public long getInstitutionId() {
+		return _institutionId;
 	}
 
 	@Override
-	public void setFacilityId(long facilityId) {
-		_facilityId = facilityId;
+	public void setInstitutionId(long institutionId) {
+		_institutionId = institutionId;
 
 		if (_officeRemoteModel != null) {
 			try {
 				Class<?> clazz = _officeRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setFacilityId", long.class);
+				Method method = clazz.getMethod("setInstitutionId", long.class);
 
-				method.invoke(_officeRemoteModel, facilityId);
+				method.invoke(_officeRemoteModel, institutionId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -302,7 +302,7 @@ public class OfficeClp extends BaseModelImpl<Office> implements Office {
 		clone.setName(getName());
 		clone.setWww(getWww());
 		clone.setEmail(getEmail());
-		clone.setFacilityId(getFacilityId());
+		clone.setInstitutionId(getInstitutionId());
 
 		return clone;
 	}
@@ -361,8 +361,8 @@ public class OfficeClp extends BaseModelImpl<Office> implements Office {
 		sb.append(getWww());
 		sb.append(", email=");
 		sb.append(getEmail());
-		sb.append(", facilityId=");
-		sb.append(getFacilityId());
+		sb.append(", institutionId=");
+		sb.append(getInstitutionId());
 		sb.append("}");
 
 		return sb.toString();
@@ -393,8 +393,8 @@ public class OfficeClp extends BaseModelImpl<Office> implements Office {
 		sb.append(getEmail());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>facilityId</column-name><column-value><![CDATA[");
-		sb.append(getFacilityId());
+			"<column><column-name>institutionId</column-name><column-value><![CDATA[");
+		sb.append(getInstitutionId());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -406,6 +406,6 @@ public class OfficeClp extends BaseModelImpl<Office> implements Office {
 	private String _name;
 	private String _www;
 	private String _email;
-	private long _facilityId;
+	private long _institutionId;
 	private BaseModel<?> _officeRemoteModel;
 }

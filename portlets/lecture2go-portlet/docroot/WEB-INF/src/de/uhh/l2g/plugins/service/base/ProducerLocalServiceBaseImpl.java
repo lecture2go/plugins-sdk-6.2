@@ -34,14 +34,14 @@ import com.liferay.portal.service.persistence.UserPersistence;
 import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.service.ProducerLocalService;
 import de.uhh.l2g.plugins.service.persistence.CoordinatorPersistence;
-import de.uhh.l2g.plugins.service.persistence.FacilityFinder;
-import de.uhh.l2g.plugins.service.persistence.FacilityPersistence;
-import de.uhh.l2g.plugins.service.persistence.Facility_HostPersistence;
 import de.uhh.l2g.plugins.service.persistence.HostPersistence;
+import de.uhh.l2g.plugins.service.persistence.InstitutionFinder;
+import de.uhh.l2g.plugins.service.persistence.InstitutionPersistence;
+import de.uhh.l2g.plugins.service.persistence.Institution_HostPersistence;
 import de.uhh.l2g.plugins.service.persistence.LastvideolistPersistence;
 import de.uhh.l2g.plugins.service.persistence.LectureseriesFinder;
 import de.uhh.l2g.plugins.service.persistence.LectureseriesPersistence;
-import de.uhh.l2g.plugins.service.persistence.Lectureseries_FacilityPersistence;
+import de.uhh.l2g.plugins.service.persistence.Lectureseries_InstitutionPersistence;
 import de.uhh.l2g.plugins.service.persistence.LicensePersistence;
 import de.uhh.l2g.plugins.service.persistence.MetadataPersistence;
 import de.uhh.l2g.plugins.service.persistence.OfficePersistence;
@@ -54,7 +54,7 @@ import de.uhh.l2g.plugins.service.persistence.SysPersistence;
 import de.uhh.l2g.plugins.service.persistence.UploadPersistence;
 import de.uhh.l2g.plugins.service.persistence.VideoFinder;
 import de.uhh.l2g.plugins.service.persistence.VideoPersistence;
-import de.uhh.l2g.plugins.service.persistence.Video_FacilityPersistence;
+import de.uhh.l2g.plugins.service.persistence.Video_InstitutionPersistence;
 import de.uhh.l2g.plugins.service.persistence.Video_LectureseriesPersistence;
 import de.uhh.l2g.plugins.service.persistence.VideohitlistPersistence;
 
@@ -336,99 +336,6 @@ public abstract class ProducerLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the facility local service.
-	 *
-	 * @return the facility local service
-	 */
-	public de.uhh.l2g.plugins.service.FacilityLocalService getFacilityLocalService() {
-		return facilityLocalService;
-	}
-
-	/**
-	 * Sets the facility local service.
-	 *
-	 * @param facilityLocalService the facility local service
-	 */
-	public void setFacilityLocalService(
-		de.uhh.l2g.plugins.service.FacilityLocalService facilityLocalService) {
-		this.facilityLocalService = facilityLocalService;
-	}
-
-	/**
-	 * Returns the facility persistence.
-	 *
-	 * @return the facility persistence
-	 */
-	public FacilityPersistence getFacilityPersistence() {
-		return facilityPersistence;
-	}
-
-	/**
-	 * Sets the facility persistence.
-	 *
-	 * @param facilityPersistence the facility persistence
-	 */
-	public void setFacilityPersistence(FacilityPersistence facilityPersistence) {
-		this.facilityPersistence = facilityPersistence;
-	}
-
-	/**
-	 * Returns the facility finder.
-	 *
-	 * @return the facility finder
-	 */
-	public FacilityFinder getFacilityFinder() {
-		return facilityFinder;
-	}
-
-	/**
-	 * Sets the facility finder.
-	 *
-	 * @param facilityFinder the facility finder
-	 */
-	public void setFacilityFinder(FacilityFinder facilityFinder) {
-		this.facilityFinder = facilityFinder;
-	}
-
-	/**
-	 * Returns the facility_ host local service.
-	 *
-	 * @return the facility_ host local service
-	 */
-	public de.uhh.l2g.plugins.service.Facility_HostLocalService getFacility_HostLocalService() {
-		return facility_HostLocalService;
-	}
-
-	/**
-	 * Sets the facility_ host local service.
-	 *
-	 * @param facility_HostLocalService the facility_ host local service
-	 */
-	public void setFacility_HostLocalService(
-		de.uhh.l2g.plugins.service.Facility_HostLocalService facility_HostLocalService) {
-		this.facility_HostLocalService = facility_HostLocalService;
-	}
-
-	/**
-	 * Returns the facility_ host persistence.
-	 *
-	 * @return the facility_ host persistence
-	 */
-	public Facility_HostPersistence getFacility_HostPersistence() {
-		return facility_HostPersistence;
-	}
-
-	/**
-	 * Sets the facility_ host persistence.
-	 *
-	 * @param facility_HostPersistence the facility_ host persistence
-	 */
-	public void setFacility_HostPersistence(
-		Facility_HostPersistence facility_HostPersistence) {
-		this.facility_HostPersistence = facility_HostPersistence;
-	}
-
-	/**
 	 * Returns the host local service.
 	 *
 	 * @return the host local service
@@ -463,6 +370,100 @@ public abstract class ProducerLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setHostPersistence(HostPersistence hostPersistence) {
 		this.hostPersistence = hostPersistence;
+	}
+
+	/**
+	 * Returns the institution local service.
+	 *
+	 * @return the institution local service
+	 */
+	public de.uhh.l2g.plugins.service.InstitutionLocalService getInstitutionLocalService() {
+		return institutionLocalService;
+	}
+
+	/**
+	 * Sets the institution local service.
+	 *
+	 * @param institutionLocalService the institution local service
+	 */
+	public void setInstitutionLocalService(
+		de.uhh.l2g.plugins.service.InstitutionLocalService institutionLocalService) {
+		this.institutionLocalService = institutionLocalService;
+	}
+
+	/**
+	 * Returns the institution persistence.
+	 *
+	 * @return the institution persistence
+	 */
+	public InstitutionPersistence getInstitutionPersistence() {
+		return institutionPersistence;
+	}
+
+	/**
+	 * Sets the institution persistence.
+	 *
+	 * @param institutionPersistence the institution persistence
+	 */
+	public void setInstitutionPersistence(
+		InstitutionPersistence institutionPersistence) {
+		this.institutionPersistence = institutionPersistence;
+	}
+
+	/**
+	 * Returns the institution finder.
+	 *
+	 * @return the institution finder
+	 */
+	public InstitutionFinder getInstitutionFinder() {
+		return institutionFinder;
+	}
+
+	/**
+	 * Sets the institution finder.
+	 *
+	 * @param institutionFinder the institution finder
+	 */
+	public void setInstitutionFinder(InstitutionFinder institutionFinder) {
+		this.institutionFinder = institutionFinder;
+	}
+
+	/**
+	 * Returns the institution_ host local service.
+	 *
+	 * @return the institution_ host local service
+	 */
+	public de.uhh.l2g.plugins.service.Institution_HostLocalService getInstitution_HostLocalService() {
+		return institution_HostLocalService;
+	}
+
+	/**
+	 * Sets the institution_ host local service.
+	 *
+	 * @param institution_HostLocalService the institution_ host local service
+	 */
+	public void setInstitution_HostLocalService(
+		de.uhh.l2g.plugins.service.Institution_HostLocalService institution_HostLocalService) {
+		this.institution_HostLocalService = institution_HostLocalService;
+	}
+
+	/**
+	 * Returns the institution_ host persistence.
+	 *
+	 * @return the institution_ host persistence
+	 */
+	public Institution_HostPersistence getInstitution_HostPersistence() {
+		return institution_HostPersistence;
+	}
+
+	/**
+	 * Sets the institution_ host persistence.
+	 *
+	 * @param institution_HostPersistence the institution_ host persistence
+	 */
+	public void setInstitution_HostPersistence(
+		Institution_HostPersistence institution_HostPersistence) {
+		this.institution_HostPersistence = institution_HostPersistence;
 	}
 
 	/**
@@ -560,41 +561,41 @@ public abstract class ProducerLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the lectureseries_ facility local service.
+	 * Returns the lectureseries_ institution local service.
 	 *
-	 * @return the lectureseries_ facility local service
+	 * @return the lectureseries_ institution local service
 	 */
-	public de.uhh.l2g.plugins.service.Lectureseries_FacilityLocalService getLectureseries_FacilityLocalService() {
-		return lectureseries_FacilityLocalService;
+	public de.uhh.l2g.plugins.service.Lectureseries_InstitutionLocalService getLectureseries_InstitutionLocalService() {
+		return lectureseries_InstitutionLocalService;
 	}
 
 	/**
-	 * Sets the lectureseries_ facility local service.
+	 * Sets the lectureseries_ institution local service.
 	 *
-	 * @param lectureseries_FacilityLocalService the lectureseries_ facility local service
+	 * @param lectureseries_InstitutionLocalService the lectureseries_ institution local service
 	 */
-	public void setLectureseries_FacilityLocalService(
-		de.uhh.l2g.plugins.service.Lectureseries_FacilityLocalService lectureseries_FacilityLocalService) {
-		this.lectureseries_FacilityLocalService = lectureseries_FacilityLocalService;
+	public void setLectureseries_InstitutionLocalService(
+		de.uhh.l2g.plugins.service.Lectureseries_InstitutionLocalService lectureseries_InstitutionLocalService) {
+		this.lectureseries_InstitutionLocalService = lectureseries_InstitutionLocalService;
 	}
 
 	/**
-	 * Returns the lectureseries_ facility persistence.
+	 * Returns the lectureseries_ institution persistence.
 	 *
-	 * @return the lectureseries_ facility persistence
+	 * @return the lectureseries_ institution persistence
 	 */
-	public Lectureseries_FacilityPersistence getLectureseries_FacilityPersistence() {
-		return lectureseries_FacilityPersistence;
+	public Lectureseries_InstitutionPersistence getLectureseries_InstitutionPersistence() {
+		return lectureseries_InstitutionPersistence;
 	}
 
 	/**
-	 * Sets the lectureseries_ facility persistence.
+	 * Sets the lectureseries_ institution persistence.
 	 *
-	 * @param lectureseries_FacilityPersistence the lectureseries_ facility persistence
+	 * @param lectureseries_InstitutionPersistence the lectureseries_ institution persistence
 	 */
-	public void setLectureseries_FacilityPersistence(
-		Lectureseries_FacilityPersistence lectureseries_FacilityPersistence) {
-		this.lectureseries_FacilityPersistence = lectureseries_FacilityPersistence;
+	public void setLectureseries_InstitutionPersistence(
+		Lectureseries_InstitutionPersistence lectureseries_InstitutionPersistence) {
+		this.lectureseries_InstitutionPersistence = lectureseries_InstitutionPersistence;
 	}
 
 	/**
@@ -1006,41 +1007,41 @@ public abstract class ProducerLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the video_ facility local service.
+	 * Returns the video_ institution local service.
 	 *
-	 * @return the video_ facility local service
+	 * @return the video_ institution local service
 	 */
-	public de.uhh.l2g.plugins.service.Video_FacilityLocalService getVideo_FacilityLocalService() {
-		return video_FacilityLocalService;
+	public de.uhh.l2g.plugins.service.Video_InstitutionLocalService getVideo_InstitutionLocalService() {
+		return video_InstitutionLocalService;
 	}
 
 	/**
-	 * Sets the video_ facility local service.
+	 * Sets the video_ institution local service.
 	 *
-	 * @param video_FacilityLocalService the video_ facility local service
+	 * @param video_InstitutionLocalService the video_ institution local service
 	 */
-	public void setVideo_FacilityLocalService(
-		de.uhh.l2g.plugins.service.Video_FacilityLocalService video_FacilityLocalService) {
-		this.video_FacilityLocalService = video_FacilityLocalService;
+	public void setVideo_InstitutionLocalService(
+		de.uhh.l2g.plugins.service.Video_InstitutionLocalService video_InstitutionLocalService) {
+		this.video_InstitutionLocalService = video_InstitutionLocalService;
 	}
 
 	/**
-	 * Returns the video_ facility persistence.
+	 * Returns the video_ institution persistence.
 	 *
-	 * @return the video_ facility persistence
+	 * @return the video_ institution persistence
 	 */
-	public Video_FacilityPersistence getVideo_FacilityPersistence() {
-		return video_FacilityPersistence;
+	public Video_InstitutionPersistence getVideo_InstitutionPersistence() {
+		return video_InstitutionPersistence;
 	}
 
 	/**
-	 * Sets the video_ facility persistence.
+	 * Sets the video_ institution persistence.
 	 *
-	 * @param video_FacilityPersistence the video_ facility persistence
+	 * @param video_InstitutionPersistence the video_ institution persistence
 	 */
-	public void setVideo_FacilityPersistence(
-		Video_FacilityPersistence video_FacilityPersistence) {
-		this.video_FacilityPersistence = video_FacilityPersistence;
+	public void setVideo_InstitutionPersistence(
+		Video_InstitutionPersistence video_InstitutionPersistence) {
+		this.video_InstitutionPersistence = video_InstitutionPersistence;
 	}
 
 	/**
@@ -1299,20 +1300,20 @@ public abstract class ProducerLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected de.uhh.l2g.plugins.service.CoordinatorLocalService coordinatorLocalService;
 	@BeanReference(type = CoordinatorPersistence.class)
 	protected CoordinatorPersistence coordinatorPersistence;
-	@BeanReference(type = de.uhh.l2g.plugins.service.FacilityLocalService.class)
-	protected de.uhh.l2g.plugins.service.FacilityLocalService facilityLocalService;
-	@BeanReference(type = FacilityPersistence.class)
-	protected FacilityPersistence facilityPersistence;
-	@BeanReference(type = FacilityFinder.class)
-	protected FacilityFinder facilityFinder;
-	@BeanReference(type = de.uhh.l2g.plugins.service.Facility_HostLocalService.class)
-	protected de.uhh.l2g.plugins.service.Facility_HostLocalService facility_HostLocalService;
-	@BeanReference(type = Facility_HostPersistence.class)
-	protected Facility_HostPersistence facility_HostPersistence;
 	@BeanReference(type = de.uhh.l2g.plugins.service.HostLocalService.class)
 	protected de.uhh.l2g.plugins.service.HostLocalService hostLocalService;
 	@BeanReference(type = HostPersistence.class)
 	protected HostPersistence hostPersistence;
+	@BeanReference(type = de.uhh.l2g.plugins.service.InstitutionLocalService.class)
+	protected de.uhh.l2g.plugins.service.InstitutionLocalService institutionLocalService;
+	@BeanReference(type = InstitutionPersistence.class)
+	protected InstitutionPersistence institutionPersistence;
+	@BeanReference(type = InstitutionFinder.class)
+	protected InstitutionFinder institutionFinder;
+	@BeanReference(type = de.uhh.l2g.plugins.service.Institution_HostLocalService.class)
+	protected de.uhh.l2g.plugins.service.Institution_HostLocalService institution_HostLocalService;
+	@BeanReference(type = Institution_HostPersistence.class)
+	protected Institution_HostPersistence institution_HostPersistence;
 	@BeanReference(type = de.uhh.l2g.plugins.service.LastvideolistLocalService.class)
 	protected de.uhh.l2g.plugins.service.LastvideolistLocalService lastvideolistLocalService;
 	@BeanReference(type = LastvideolistPersistence.class)
@@ -1323,10 +1324,10 @@ public abstract class ProducerLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected LectureseriesPersistence lectureseriesPersistence;
 	@BeanReference(type = LectureseriesFinder.class)
 	protected LectureseriesFinder lectureseriesFinder;
-	@BeanReference(type = de.uhh.l2g.plugins.service.Lectureseries_FacilityLocalService.class)
-	protected de.uhh.l2g.plugins.service.Lectureseries_FacilityLocalService lectureseries_FacilityLocalService;
-	@BeanReference(type = Lectureseries_FacilityPersistence.class)
-	protected Lectureseries_FacilityPersistence lectureseries_FacilityPersistence;
+	@BeanReference(type = de.uhh.l2g.plugins.service.Lectureseries_InstitutionLocalService.class)
+	protected de.uhh.l2g.plugins.service.Lectureseries_InstitutionLocalService lectureseries_InstitutionLocalService;
+	@BeanReference(type = Lectureseries_InstitutionPersistence.class)
+	protected Lectureseries_InstitutionPersistence lectureseries_InstitutionPersistence;
 	@BeanReference(type = de.uhh.l2g.plugins.service.LicenseLocalService.class)
 	protected de.uhh.l2g.plugins.service.LicenseLocalService licenseLocalService;
 	@BeanReference(type = LicensePersistence.class)
@@ -1371,10 +1372,10 @@ public abstract class ProducerLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected VideoPersistence videoPersistence;
 	@BeanReference(type = VideoFinder.class)
 	protected VideoFinder videoFinder;
-	@BeanReference(type = de.uhh.l2g.plugins.service.Video_FacilityLocalService.class)
-	protected de.uhh.l2g.plugins.service.Video_FacilityLocalService video_FacilityLocalService;
-	@BeanReference(type = Video_FacilityPersistence.class)
-	protected Video_FacilityPersistence video_FacilityPersistence;
+	@BeanReference(type = de.uhh.l2g.plugins.service.Video_InstitutionLocalService.class)
+	protected de.uhh.l2g.plugins.service.Video_InstitutionLocalService video_InstitutionLocalService;
+	@BeanReference(type = Video_InstitutionPersistence.class)
+	protected Video_InstitutionPersistence video_InstitutionPersistence;
 	@BeanReference(type = de.uhh.l2g.plugins.service.Video_LectureseriesLocalService.class)
 	protected de.uhh.l2g.plugins.service.Video_LectureseriesLocalService video_LectureseriesLocalService;
 	@BeanReference(type = Video_LectureseriesPersistence.class)

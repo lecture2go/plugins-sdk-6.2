@@ -3,22 +3,8 @@
 <model-hints>
 	<model name="de.uhh.l2g.plugins.model.Coordinator">
 		<field name="coordinatorId" type="long" />
-		<field name="facilityId" type="long" />
+		<field name="institutionId" type="long" />
 		<field name="officeId" type="long" />
-	</model>
-	<model name="de.uhh.l2g.plugins.model.Facility">
-		<field name="facilityId" type="long" />
-		<field name="parentId" type="long" />
-		<field name="name" type="String" />
-		<field name="typ" type="String" />
-		<field name="www" type="String" />
-		<field name="level" type="int" />
-		<field name="sort" type="int" />
-	</model>
-	<model name="de.uhh.l2g.plugins.model.Facility_Host">
-		<field name="fasilityHostId" type="long" />
-		<field name="facilityId" type="long" />
-		<field name="hostId" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Host">
 		<field name="hostId" type="long" />
@@ -27,6 +13,20 @@
 		<field name="port" type="int" />
 		<field name="serverRoot" type="String" />
 		<field name="name" type="String" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Institution">
+		<field name="institutionId" type="long" />
+		<field name="parentId" type="long" />
+		<field name="name" type="String" />
+		<field name="typ" type="String" />
+		<field name="www" type="String" />
+		<field name="level" type="int" />
+		<field name="sort" type="int" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Institution_Host">
+		<field name="institutionHostId" type="long" />
+		<field name="institutionId" type="long" />
+		<field name="hostId" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Lastvideolist">
 		<field name="lastvideolistId" type="int" />
@@ -47,10 +47,10 @@
 		<field name="approved" type="int" />
 		<field name="longDesc" type="String" />
 	</model>
-	<model name="de.uhh.l2g.plugins.model.Lectureseries_Facility">
-		<field name="lectureseriesFacilityId" type="long" />
+	<model name="de.uhh.l2g.plugins.model.Lectureseries_Institution">
+		<field name="lectureseriesInstitutionId" type="long" />
 		<field name="lectureseriesId" type="long" />
-		<field name="facilityId" type="long" />
+		<field name="institutionId" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.License">
 		<field name="licenseId" type="long" />
@@ -90,14 +90,14 @@
 		<field name="name" type="String" />
 		<field name="www" type="String" />
 		<field name="email" type="String" />
-		<field name="facilityId" type="long" />
+		<field name="institutionId" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Producer">
 		<field name="producerId" type="long" />
 		<field name="idNum" type="String" />
 		<field name="homeDir" type="String" />
 		<field name="hostId" type="long" />
-		<field name="facilityId" type="long" />
+		<field name="institutionId" type="long" />
 		<field name="numberOfProductions" type="long" />
 		<field name="approved" type="int" />
 	</model>
@@ -155,13 +155,13 @@
 		<field name="hits" type="int" />
 		<field name="uploadDate" type="Date" />
 		<field name="permittedToSegment" type="int" />
-		<field name="facilityId" type="long" />
+		<field name="rootInstitutionId" type="long" />
 		<field name="citation2go" type="int" />
 	</model>
-	<model name="de.uhh.l2g.plugins.model.Video_Facility">
-		<field name="videoFacilityId" type="long" />
+	<model name="de.uhh.l2g.plugins.model.Video_Institution">
+		<field name="videoInstitutionId" type="long" />
 		<field name="videoId" type="long" />
-		<field name="facilityId" type="long" />
+		<field name="institutionId" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Video_Lectureseries">
 		<field name="videoLectureseriesId" type="long" />

@@ -68,7 +68,7 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 		attributes.put("hits", getHits());
 		attributes.put("uploadDate", getUploadDate());
 		attributes.put("permittedToSegment", getPermittedToSegment());
-		attributes.put("facilityId", getFacilityId());
+		attributes.put("rootInstitutionId", getRootInstitutionId());
 		attributes.put("citation2go", getCitation2go());
 
 		return attributes;
@@ -191,10 +191,10 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 			setPermittedToSegment(permittedToSegment);
 		}
 
-		Long facilityId = (Long)attributes.get("facilityId");
+		Long rootInstitutionId = (Long)attributes.get("rootInstitutionId");
 
-		if (facilityId != null) {
-			setFacilityId(facilityId);
+		if (rootInstitutionId != null) {
+			setRootInstitutionId(rootInstitutionId);
 		}
 
 		Integer citation2go = (Integer)attributes.get("citation2go");
@@ -605,23 +605,23 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 	}
 
 	/**
-	* Returns the facility ID of this video.
+	* Returns the root institution ID of this video.
 	*
-	* @return the facility ID of this video
+	* @return the root institution ID of this video
 	*/
 	@Override
-	public long getFacilityId() {
-		return _video.getFacilityId();
+	public long getRootInstitutionId() {
+		return _video.getRootInstitutionId();
 	}
 
 	/**
-	* Sets the facility ID of this video.
+	* Sets the root institution ID of this video.
 	*
-	* @param facilityId the facility ID of this video
+	* @param rootInstitutionId the root institution ID of this video
 	*/
 	@Override
-	public void setFacilityId(long facilityId) {
-		_video.setFacilityId(facilityId);
+	public void setRootInstitutionId(long rootInstitutionId) {
+		_video.setRootInstitutionId(rootInstitutionId);
 	}
 
 	/**

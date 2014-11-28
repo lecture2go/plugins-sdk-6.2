@@ -274,10 +274,10 @@ public class ProducerLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.Producer> getProducersByFacilityId(
+	public static java.util.List<de.uhh.l2g.plugins.model.Producer> getProducersByInstitutionId(
 		long facilityId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getProducersByFacilityId(facilityId);
+		return getService().getProducersByInstitutionId(facilityId);
 	}
 
 	public static java.util.List<de.uhh.l2g.plugins.model.Producer> getAllProducers(

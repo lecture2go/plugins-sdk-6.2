@@ -20,12 +20,12 @@ import com.liferay.util.bridges.mvc.MVCPortlet;
 import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.model.impl.LectureseriesImpl;
-import de.uhh.l2g.plugins.model.impl.Lectureseries_FacilityImpl;
+import de.uhh.l2g.plugins.model.impl.Lectureseries_InstitutionImpl;
 import de.uhh.l2g.plugins.model.impl.Producer_LectureseriesImpl;
 import de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil;
-import de.uhh.l2g.plugins.service.FacilityLocalServiceUtil;
+import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
-import de.uhh.l2g.plugins.service.Lectureseries_FacilityLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Lectureseries_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Producer_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
@@ -60,13 +60,13 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		List<Producer> producers = new ArrayList<Producer>();
 		
 		if(permissionAdmin){
-			facilities = FacilityLocalServiceUtil.getAllSortedAsTree(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+			facilities = InstitutionLocalServiceUtil.getAllSortedAsTree(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 			producers = ProducerLocalServiceUtil.getAllProducers(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 			permissionCoordinator = false;
 		}
 		if(permissionCoordinator){
-			facilities = FacilityLocalServiceUtil.getByParent(CoordinatorLocalServiceUtil.getCoordinator(userId).getFacilityId());
-			producers = ProducerLocalServiceUtil.getProducersByFacilityId(CoordinatorLocalServiceUtil.getCoordinator(userId).getFacilityId());
+			facilities = InstitutionLocalServiceUtil.getByParent(CoordinatorLocalServiceUtil.getCoordinator(userId).getInstitutionId());
+			producers = ProducerLocalServiceUtil.getProducersByInstitutionId(CoordinatorLocalServiceUtil.getCoordinator(userId).getInstitutionId());
 		}
 		request.setAttribute("facilities", facilities);
 		request.setAttribute("producers", producers);
@@ -78,7 +78,7 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		try {
 			LectureseriesLocalServiceUtil.deleteLectureseries(lId);
 			//dependencies
-			Lectureseries_FacilityLocalServiceUtil.removeByLectureseriesId(lId);//facility
+			Lectureseries_InstitutionLocalServiceUtil.removeByLectureseriesId(lId);//facility
 			Producer_LectureseriesLocalServiceUtil.removeByLectureseriesId(lId);//producer
 			VideoLocalServiceUtil.unlinkLectureseriesFromVideos(lId);//video
 			Video_LectureseriesLocalServiceUtil.removeByLectureseriesId(lId);//video links to lecture series
@@ -115,14 +115,14 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		
 		//update facility link
 		//delete old entries first
-		Lectureseries_FacilityLocalServiceUtil.removeByLectureseriesId(lectureseries.getLectureseriesId());
+		Lectureseries_InstitutionLocalServiceUtil.removeByLectureseriesId(lectureseries.getLectureseriesId());
 		//new links to facility
 		for(int i=0;i<facilities.length;i++){
-			Lectureseries_FacilityImpl lf = new Lectureseries_FacilityImpl();
+			Lectureseries_InstitutionImpl lf = new Lectureseries_InstitutionImpl();
 			lf.setLectureseriesId(lId);
-			lf.setFacilityId(new Long(facilities[i]));
-			if(!Lectureseries_FacilityLocalServiceUtil.facilityAssignedToLectureseries(lf))
-				Lectureseries_FacilityLocalServiceUtil.addLectureseries_Facility(lf);
+			lf.setInstitutionId(new Long(facilities[i]));
+			if(!Lectureseries_InstitutionLocalServiceUtil.facilityAssignedToLectureseries(lf))
+				Lectureseries_InstitutionLocalServiceUtil.addLectureseries_Institution(lf);
 		}
 		
 		//update producer link
@@ -164,10 +164,10 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		
 		//link to facility
 		for(int i=0;i<facilities.length;i++){
-			Lectureseries_FacilityImpl lf = new Lectureseries_FacilityImpl();
+			Lectureseries_InstitutionImpl lf = new Lectureseries_InstitutionImpl();
 			lf.setLectureseriesId(lId);
-			lf.setFacilityId(new Long(facilities[i]));
-			Lectureseries_FacilityLocalServiceUtil.addLectureseries_Facility(lf);
+			lf.setInstitutionId(new Long(facilities[i]));
+			Lectureseries_InstitutionLocalServiceUtil.addLectureseries_Institution(lf);
 		}
 
 		//link to producer

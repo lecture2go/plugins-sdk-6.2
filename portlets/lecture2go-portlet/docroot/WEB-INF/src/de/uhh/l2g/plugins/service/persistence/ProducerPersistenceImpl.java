@@ -568,67 +568,68 @@ public class ProducerPersistenceImpl extends BasePersistenceImpl<Producer>
 	}
 
 	private static final String _FINDER_COLUMN_HOST_HOSTID_2 = "producer.hostId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_FACILITY = new FinderPath(ProducerModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_INSTITUTION =
+		new FinderPath(ProducerModelImpl.ENTITY_CACHE_ENABLED,
 			ProducerModelImpl.FINDER_CACHE_ENABLED, ProducerImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFacility",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByInstitution",
 			new String[] {
 				Long.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITY =
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_INSTITUTION =
 		new FinderPath(ProducerModelImpl.ENTITY_CACHE_ENABLED,
 			ProducerModelImpl.FINDER_CACHE_ENABLED, ProducerImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByFacility",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByInstitution",
 			new String[] { Long.class.getName() },
-			ProducerModelImpl.FACILITYID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_FACILITY = new FinderPath(ProducerModelImpl.ENTITY_CACHE_ENABLED,
+			ProducerModelImpl.INSTITUTIONID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_INSTITUTION = new FinderPath(ProducerModelImpl.ENTITY_CACHE_ENABLED,
 			ProducerModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFacility",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByInstitution",
 			new String[] { Long.class.getName() });
 
 	/**
-	 * Returns all the producers where facilityId = &#63;.
+	 * Returns all the producers where institutionId = &#63;.
 	 *
-	 * @param facilityId the facility ID
+	 * @param institutionId the institution ID
 	 * @return the matching producers
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Producer> findByFacility(long facilityId)
+	public List<Producer> findByInstitution(long institutionId)
 		throws SystemException {
-		return findByFacility(facilityId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+		return findByInstitution(institutionId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the producers where facilityId = &#63;.
+	 * Returns a range of all the producers where institutionId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.ProducerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param facilityId the facility ID
+	 * @param institutionId the institution ID
 	 * @param start the lower bound of the range of producers
 	 * @param end the upper bound of the range of producers (not inclusive)
 	 * @return the range of matching producers
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Producer> findByFacility(long facilityId, int start, int end)
-		throws SystemException {
-		return findByFacility(facilityId, start, end, null);
+	public List<Producer> findByInstitution(long institutionId, int start,
+		int end) throws SystemException {
+		return findByInstitution(institutionId, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the producers where facilityId = &#63;.
+	 * Returns an ordered range of all the producers where institutionId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.ProducerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param facilityId the facility ID
+	 * @param institutionId the institution ID
 	 * @param start the lower bound of the range of producers
 	 * @param end the upper bound of the range of producers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -636,8 +637,8 @@ public class ProducerPersistenceImpl extends BasePersistenceImpl<Producer>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Producer> findByFacility(long facilityId, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+	public List<Producer> findByInstitution(long institutionId, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -645,12 +646,16 @@ public class ProducerPersistenceImpl extends BasePersistenceImpl<Producer>
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITY;
-			finderArgs = new Object[] { facilityId };
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_INSTITUTION;
+			finderArgs = new Object[] { institutionId };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_FACILITY;
-			finderArgs = new Object[] { facilityId, start, end, orderByComparator };
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_INSTITUTION;
+			finderArgs = new Object[] {
+					institutionId,
+					
+					start, end, orderByComparator
+				};
 		}
 
 		List<Producer> list = (List<Producer>)FinderCacheUtil.getResult(finderPath,
@@ -658,7 +663,7 @@ public class ProducerPersistenceImpl extends BasePersistenceImpl<Producer>
 
 		if ((list != null) && !list.isEmpty()) {
 			for (Producer producer : list) {
-				if ((facilityId != producer.getFacilityId())) {
+				if ((institutionId != producer.getInstitutionId())) {
 					list = null;
 
 					break;
@@ -679,7 +684,7 @@ public class ProducerPersistenceImpl extends BasePersistenceImpl<Producer>
 
 			query.append(_SQL_SELECT_PRODUCER_WHERE);
 
-			query.append(_FINDER_COLUMN_FACILITY_FACILITYID_2);
+			query.append(_FINDER_COLUMN_INSTITUTION_INSTITUTIONID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -701,7 +706,7 @@ public class ProducerPersistenceImpl extends BasePersistenceImpl<Producer>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(facilityId);
+				qPos.add(institutionId);
 
 				if (!pagination) {
 					list = (List<Producer>)QueryUtil.list(q, getDialect(),
@@ -734,19 +739,20 @@ public class ProducerPersistenceImpl extends BasePersistenceImpl<Producer>
 	}
 
 	/**
-	 * Returns the first producer in the ordered set where facilityId = &#63;.
+	 * Returns the first producer in the ordered set where institutionId = &#63;.
 	 *
-	 * @param facilityId the facility ID
+	 * @param institutionId the institution ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching producer
 	 * @throws de.uhh.l2g.plugins.NoSuchProducerException if a matching producer could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Producer findByFacility_First(long facilityId,
+	public Producer findByInstitution_First(long institutionId,
 		OrderByComparator orderByComparator)
 		throws NoSuchProducerException, SystemException {
-		Producer producer = fetchByFacility_First(facilityId, orderByComparator);
+		Producer producer = fetchByInstitution_First(institutionId,
+				orderByComparator);
 
 		if (producer != null) {
 			return producer;
@@ -756,8 +762,8 @@ public class ProducerPersistenceImpl extends BasePersistenceImpl<Producer>
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("facilityId=");
-		msg.append(facilityId);
+		msg.append("institutionId=");
+		msg.append(institutionId);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -765,74 +771,17 @@ public class ProducerPersistenceImpl extends BasePersistenceImpl<Producer>
 	}
 
 	/**
-	 * Returns the first producer in the ordered set where facilityId = &#63;.
+	 * Returns the first producer in the ordered set where institutionId = &#63;.
 	 *
-	 * @param facilityId the facility ID
+	 * @param institutionId the institution ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching producer, or <code>null</code> if a matching producer could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Producer fetchByFacility_First(long facilityId,
+	public Producer fetchByInstitution_First(long institutionId,
 		OrderByComparator orderByComparator) throws SystemException {
-		List<Producer> list = findByFacility(facilityId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last producer in the ordered set where facilityId = &#63;.
-	 *
-	 * @param facilityId the facility ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching producer
-	 * @throws de.uhh.l2g.plugins.NoSuchProducerException if a matching producer could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public Producer findByFacility_Last(long facilityId,
-		OrderByComparator orderByComparator)
-		throws NoSuchProducerException, SystemException {
-		Producer producer = fetchByFacility_Last(facilityId, orderByComparator);
-
-		if (producer != null) {
-			return producer;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("facilityId=");
-		msg.append(facilityId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchProducerException(msg.toString());
-	}
-
-	/**
-	 * Returns the last producer in the ordered set where facilityId = &#63;.
-	 *
-	 * @param facilityId the facility ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching producer, or <code>null</code> if a matching producer could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public Producer fetchByFacility_Last(long facilityId,
-		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByFacility(facilityId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Producer> list = findByFacility(facilityId, count - 1, count,
+		List<Producer> list = findByInstitution(institutionId, 0, 1,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -843,18 +792,77 @@ public class ProducerPersistenceImpl extends BasePersistenceImpl<Producer>
 	}
 
 	/**
-	 * Returns the producers before and after the current producer in the ordered set where facilityId = &#63;.
+	 * Returns the last producer in the ordered set where institutionId = &#63;.
+	 *
+	 * @param institutionId the institution ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching producer
+	 * @throws de.uhh.l2g.plugins.NoSuchProducerException if a matching producer could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Producer findByInstitution_Last(long institutionId,
+		OrderByComparator orderByComparator)
+		throws NoSuchProducerException, SystemException {
+		Producer producer = fetchByInstitution_Last(institutionId,
+				orderByComparator);
+
+		if (producer != null) {
+			return producer;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("institutionId=");
+		msg.append(institutionId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchProducerException(msg.toString());
+	}
+
+	/**
+	 * Returns the last producer in the ordered set where institutionId = &#63;.
+	 *
+	 * @param institutionId the institution ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching producer, or <code>null</code> if a matching producer could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Producer fetchByInstitution_Last(long institutionId,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByInstitution(institutionId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Producer> list = findByInstitution(institutionId, count - 1,
+				count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the producers before and after the current producer in the ordered set where institutionId = &#63;.
 	 *
 	 * @param producerId the primary key of the current producer
-	 * @param facilityId the facility ID
+	 * @param institutionId the institution ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next producer
 	 * @throws de.uhh.l2g.plugins.NoSuchProducerException if a producer with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Producer[] findByFacility_PrevAndNext(long producerId,
-		long facilityId, OrderByComparator orderByComparator)
+	public Producer[] findByInstitution_PrevAndNext(long producerId,
+		long institutionId, OrderByComparator orderByComparator)
 		throws NoSuchProducerException, SystemException {
 		Producer producer = findByPrimaryKey(producerId);
 
@@ -865,13 +873,13 @@ public class ProducerPersistenceImpl extends BasePersistenceImpl<Producer>
 
 			Producer[] array = new ProducerImpl[3];
 
-			array[0] = getByFacility_PrevAndNext(session, producer, facilityId,
-					orderByComparator, true);
+			array[0] = getByInstitution_PrevAndNext(session, producer,
+					institutionId, orderByComparator, true);
 
 			array[1] = producer;
 
-			array[2] = getByFacility_PrevAndNext(session, producer, facilityId,
-					orderByComparator, false);
+			array[2] = getByInstitution_PrevAndNext(session, producer,
+					institutionId, orderByComparator, false);
 
 			return array;
 		}
@@ -883,8 +891,8 @@ public class ProducerPersistenceImpl extends BasePersistenceImpl<Producer>
 		}
 	}
 
-	protected Producer getByFacility_PrevAndNext(Session session,
-		Producer producer, long facilityId,
+	protected Producer getByInstitution_PrevAndNext(Session session,
+		Producer producer, long institutionId,
 		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -898,7 +906,7 @@ public class ProducerPersistenceImpl extends BasePersistenceImpl<Producer>
 
 		query.append(_SQL_SELECT_PRODUCER_WHERE);
 
-		query.append(_FINDER_COLUMN_FACILITY_FACILITYID_2);
+		query.append(_FINDER_COLUMN_INSTITUTION_INSTITUTIONID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -968,7 +976,7 @@ public class ProducerPersistenceImpl extends BasePersistenceImpl<Producer>
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		qPos.add(facilityId);
+		qPos.add(institutionId);
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(producer);
@@ -989,31 +997,32 @@ public class ProducerPersistenceImpl extends BasePersistenceImpl<Producer>
 	}
 
 	/**
-	 * Removes all the producers where facilityId = &#63; from the database.
+	 * Removes all the producers where institutionId = &#63; from the database.
 	 *
-	 * @param facilityId the facility ID
+	 * @param institutionId the institution ID
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByFacility(long facilityId) throws SystemException {
-		for (Producer producer : findByFacility(facilityId, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+	public void removeByInstitution(long institutionId)
+		throws SystemException {
+		for (Producer producer : findByInstitution(institutionId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(producer);
 		}
 	}
 
 	/**
-	 * Returns the number of producers where facilityId = &#63;.
+	 * Returns the number of producers where institutionId = &#63;.
 	 *
-	 * @param facilityId the facility ID
+	 * @param institutionId the institution ID
 	 * @return the number of matching producers
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByFacility(long facilityId) throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_FACILITY;
+	public int countByInstitution(long institutionId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_INSTITUTION;
 
-		Object[] finderArgs = new Object[] { facilityId };
+		Object[] finderArgs = new Object[] { institutionId };
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
@@ -1023,7 +1032,7 @@ public class ProducerPersistenceImpl extends BasePersistenceImpl<Producer>
 
 			query.append(_SQL_COUNT_PRODUCER_WHERE);
 
-			query.append(_FINDER_COLUMN_FACILITY_FACILITYID_2);
+			query.append(_FINDER_COLUMN_INSTITUTION_INSTITUTIONID_2);
 
 			String sql = query.toString();
 
@@ -1036,7 +1045,7 @@ public class ProducerPersistenceImpl extends BasePersistenceImpl<Producer>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(facilityId);
+				qPos.add(institutionId);
 
 				count = (Long)q.uniqueResult();
 
@@ -1055,7 +1064,7 @@ public class ProducerPersistenceImpl extends BasePersistenceImpl<Producer>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_FACILITY_FACILITYID_2 = "producer.facilityId = ?";
+	private static final String _FINDER_COLUMN_INSTITUTION_INSTITUTIONID_2 = "producer.institutionId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_STATUS = new FinderPath(ProducerModelImpl.ENTITY_CACHE_ENABLED,
 			ProducerModelImpl.FINDER_CACHE_ENABLED, ProducerImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStatus",
@@ -2360,19 +2369,21 @@ public class ProducerPersistenceImpl extends BasePersistenceImpl<Producer>
 			}
 
 			if ((producerModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITY.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_INSTITUTION.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						producerModelImpl.getOriginalFacilityId()
+						producerModelImpl.getOriginalInstitutionId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FACILITY, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITY,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_INSTITUTION,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_INSTITUTION,
 					args);
 
-				args = new Object[] { producerModelImpl.getFacilityId() };
+				args = new Object[] { producerModelImpl.getInstitutionId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FACILITY, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITY,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_INSTITUTION,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_INSTITUTION,
 					args);
 			}
 
@@ -2417,7 +2428,7 @@ public class ProducerPersistenceImpl extends BasePersistenceImpl<Producer>
 		producerImpl.setIdNum(producer.getIdNum());
 		producerImpl.setHomeDir(producer.getHomeDir());
 		producerImpl.setHostId(producer.getHostId());
-		producerImpl.setFacilityId(producer.getFacilityId());
+		producerImpl.setInstitutionId(producer.getInstitutionId());
 		producerImpl.setNumberOfProductions(producer.getNumberOfProductions());
 		producerImpl.setApproved(producer.getApproved());
 

@@ -10,32 +10,8 @@
 	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.CoordinatorModelImpl">
 		<attributes>
 			<id name="coordinatorId" />
-			<basic name="facilityId" />
+			<basic name="institutionId" />
 			<basic name="officeId" />
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.FacilityModelImpl">
-		<attributes>
-			<id name="facilityId" />
-			<basic name="parentId" />
-			<basic name="name" />
-			<basic name="typ" />
-			<basic name="www" />
-			<basic name="level" />
-			<basic name="sort" />
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.Facility_HostModelImpl">
-		<attributes>
-			<id name="fasilityHostId" />
-			<basic name="facilityId" />
-			<basic name="hostId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -49,6 +25,30 @@
 			<basic name="port" />
 			<basic name="serverRoot" />
 			<basic name="name" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.InstitutionModelImpl">
+		<attributes>
+			<id name="institutionId" />
+			<basic name="parentId" />
+			<basic name="name" />
+			<basic name="typ" />
+			<basic name="www" />
+			<basic name="level" />
+			<basic name="sort" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.Institution_HostModelImpl">
+		<attributes>
+			<id name="institutionHostId" />
+			<basic name="institutionId" />
+			<basic name="hostId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -87,11 +87,11 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.Lectureseries_FacilityModelImpl">
+	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.Lectureseries_InstitutionModelImpl">
 		<attributes>
-			<id name="lectureseriesFacilityId" />
+			<id name="lectureseriesInstitutionId" />
 			<basic name="lectureseriesId" />
-			<basic name="facilityId" />
+			<basic name="institutionId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -151,7 +151,7 @@
 			<basic name="name" />
 			<basic name="www" />
 			<basic name="email" />
-			<basic name="facilityId" />
+			<basic name="institutionId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -163,7 +163,7 @@
 			<basic name="idNum" />
 			<basic name="homeDir" />
 			<basic name="hostId" />
-			<basic name="facilityId" />
+			<basic name="institutionId" />
 			<basic name="numberOfProductions" />
 			<basic name="approved" />
 			<transient name="modelAttributes" />
@@ -259,18 +259,18 @@
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="permittedToSegment" />
-			<basic name="facilityId" />
+			<basic name="rootInstitutionId" />
 			<basic name="citation2go" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.Video_FacilityModelImpl">
+	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.Video_InstitutionModelImpl">
 		<attributes>
-			<id name="videoFacilityId" />
+			<id name="videoInstitutionId" />
 			<basic name="videoId" />
-			<basic name="facilityId" />
+			<basic name="institutionId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -307,18 +307,18 @@
 			<transient name="lastName" />
 		</attributes>
 	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.FacilityImpl" name="Facility">
-		<table name="LG_Facility" />
+	<entity class="de.uhh.l2g.plugins.model.impl.HostImpl" name="Host">
+		<table name="LG_Host" />
+		<attributes />
+	</entity>
+	<entity class="de.uhh.l2g.plugins.model.impl.InstitutionImpl" name="Institution">
+		<table name="LG_Institution" />
 		<attributes>
 			<transient name="path" />
 		</attributes>
 	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.Facility_HostImpl" name="Facility_Host">
-		<table name="LG_Facility_Host" />
-		<attributes />
-	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.HostImpl" name="Host">
-		<table name="LG_Host" />
+	<entity class="de.uhh.l2g.plugins.model.impl.Institution_HostImpl" name="Institution_Host">
+		<table name="LG_Institution_Host" />
 		<attributes />
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.LastvideolistImpl" name="Lastvideolist">
@@ -329,8 +329,8 @@
 		<table name="LG_Lectureseries" />
 		<attributes />
 	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.Lectureseries_FacilityImpl" name="Lectureseries_Facility">
-		<table name="LG_Lectureseries_Facility" />
+	<entity class="de.uhh.l2g.plugins.model.impl.Lectureseries_InstitutionImpl" name="Lectureseries_Institution">
+		<table name="LG_Lectureseries_Institution" />
 		<attributes />
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.LicenseImpl" name="License">
@@ -378,8 +378,8 @@
 		<table name="LG_Video" />
 		<attributes />
 	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.Video_FacilityImpl" name="Video_Facility">
-		<table name="LG_Video_Facility" />
+	<entity class="de.uhh.l2g.plugins.model.impl.Video_InstitutionImpl" name="Video_Institution">
+		<table name="LG_Video_Institution" />
 		<attributes />
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.Video_LectureseriesImpl" name="Video_Lectureseries">

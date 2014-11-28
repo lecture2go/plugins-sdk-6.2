@@ -335,18 +335,18 @@ public interface VideoModel extends BaseModel<Video> {
 	public void setPermittedToSegment(int permittedToSegment);
 
 	/**
-	 * Returns the facility ID of this video.
+	 * Returns the root institution ID of this video.
 	 *
-	 * @return the facility ID of this video
+	 * @return the root institution ID of this video
 	 */
-	public long getFacilityId();
+	public long getRootInstitutionId();
 
 	/**
-	 * Sets the facility ID of this video.
+	 * Sets the root institution ID of this video.
 	 *
-	 * @param facilityId the facility ID of this video
+	 * @param rootInstitutionId the root institution ID of this video
 	 */
-	public void setFacilityId(long facilityId);
+	public void setRootInstitutionId(long rootInstitutionId);
 
 	/**
 	 * Returns the citation2go of this video.

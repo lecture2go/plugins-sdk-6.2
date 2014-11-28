@@ -57,13 +57,15 @@
 				String n = usr.getRoles().get(i).getName();
 				//check for l2g role
 				if(n.contains("L2Go Coordinator")){
-					long fId = CoordinatorLocalServiceUtil.getCoordinator(usr.getUserId()).getFacilityId();
-					String fN = FacilityLocalServiceUtil.getFacility(fId).getName();
+					long fId = new Long(0);
+					try{ fId=CoordinatorLocalServiceUtil.getCoordinator(usr.getUserId()).getInstitutionId(); }catch (Exception e){}
+					String fN = InstitutionLocalServiceUtil.getInstitution(fId).getName();
 					n+=" for "+ fN;
 				}
 				if(n.contains("L2Go Producer")){
-					long fId = ProducerLocalServiceUtil.getProducer(usr.getUserId()).getFacilityId();
-					String fN = FacilityLocalServiceUtil.getFacility(fId).getName();
+					long fId = new Long(0);
+					try{fId = ProducerLocalServiceUtil.getProducer(usr.getUserId()).getInstitutionId();}catch (Exception e){}
+					String fN = InstitutionLocalServiceUtil.getInstitution(fId).getName();
 					n+=" for "+ fN;
 				}
 				n+="<br/>";

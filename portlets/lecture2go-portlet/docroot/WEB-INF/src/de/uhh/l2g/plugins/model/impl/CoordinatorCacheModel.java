@@ -39,8 +39,8 @@ public class CoordinatorCacheModel implements CacheModel<Coordinator>,
 
 		sb.append("{coordinatorId=");
 		sb.append(coordinatorId);
-		sb.append(", facilityId=");
-		sb.append(facilityId);
+		sb.append(", institutionId=");
+		sb.append(institutionId);
 		sb.append(", officeId=");
 		sb.append(officeId);
 		sb.append("}");
@@ -53,7 +53,7 @@ public class CoordinatorCacheModel implements CacheModel<Coordinator>,
 		CoordinatorImpl coordinatorImpl = new CoordinatorImpl();
 
 		coordinatorImpl.setCoordinatorId(coordinatorId);
-		coordinatorImpl.setFacilityId(facilityId);
+		coordinatorImpl.setInstitutionId(institutionId);
 		coordinatorImpl.setOfficeId(officeId);
 
 		coordinatorImpl.resetOriginalValues();
@@ -64,7 +64,7 @@ public class CoordinatorCacheModel implements CacheModel<Coordinator>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		coordinatorId = objectInput.readLong();
-		facilityId = objectInput.readLong();
+		institutionId = objectInput.readLong();
 		officeId = objectInput.readLong();
 	}
 
@@ -72,11 +72,11 @@ public class CoordinatorCacheModel implements CacheModel<Coordinator>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(coordinatorId);
-		objectOutput.writeLong(facilityId);
+		objectOutput.writeLong(institutionId);
 		objectOutput.writeLong(officeId);
 	}
 
 	public long coordinatorId;
-	public long facilityId;
+	public long institutionId;
 	public long officeId;
 }

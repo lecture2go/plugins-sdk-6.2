@@ -22,28 +22,28 @@
 	portletURL.setParameter("statusId", statusId+"");
 
 	if(permissionAdmin){
-		facilities = FacilityLocalServiceUtil.getAllSortedAsTree(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+		facilities = InstitutionLocalServiceUtil.getAllSortedAsTree(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 		producers = ProducerLocalServiceUtil.getAllProducers(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 		permissionCoordinator = false;
 	}
 	
 	if(permissionCoordinator){
-		if(facilityId==0)facilityId = CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getFacilityId();
-		facilities = FacilityLocalServiceUtil.getByParent(CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getFacilityId());
-		producers = ProducerLocalServiceUtil.getProducersByFacilityId(CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getFacilityId());
+		if(facilityId==0)facilityId = CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getInstitutionId();
+		facilities = InstitutionLocalServiceUtil.getByParent(CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getInstitutionId());
+		producers = ProducerLocalServiceUtil.getProducersByInstitutionId(CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getInstitutionId());
 	}	
 %>
 
 <aui:fieldset helpMessage="choose-filter" column="true">
 		<aui:layout>
  			<aui:column>
-						<portlet:renderURL var="sortByFacility">
+						<portlet:renderURL var="sortByInstitution">
 							<portlet:param name="jspPage" value="/admin/lectureSeriesList.jsp" />
 							<portlet:param name="producerId" value="<%=producerId.toString()%>"/>
 							<portlet:param name="semesterId" value="<%=semesterId.toString()%>"/>
 							<portlet:param name="statusId" value="<%=statusId.toString()%>"/>
 						</portlet:renderURL>
-						<aui:form action="<%= sortByFacility.toString() %>" method="post">
+						<aui:form action="<%= sortByInstitution.toString() %>" method="post">
 							<aui:select name="facilityId" label="select-facility" onChange="submit();">
 								<aui:option value="">select-facility</aui:option>
 								<%for (Map.Entry<String, String> f : facilities.entrySet()) {

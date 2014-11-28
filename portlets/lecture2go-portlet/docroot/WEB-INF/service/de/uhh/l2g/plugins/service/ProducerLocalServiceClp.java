@@ -114,7 +114,7 @@ public class ProducerLocalServiceClp implements ProducerLocalService {
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
 
-		_methodName19 = "getProducersByFacilityId";
+		_methodName19 = "getProducersByInstitutionId";
 
 		_methodParameterTypes19 = new String[] { "long" };
 
@@ -682,7 +682,7 @@ public class ProducerLocalServiceClp implements ProducerLocalService {
 	}
 
 	@Override
-	public java.util.List<de.uhh.l2g.plugins.model.Producer> getProducersByFacilityId(
+	public java.util.List<de.uhh.l2g.plugins.model.Producer> getProducersByInstitutionId(
 		long facilityId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;

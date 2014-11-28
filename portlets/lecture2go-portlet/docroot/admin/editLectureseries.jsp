@@ -30,15 +30,15 @@
 	
 	Long facilityId = new Long(0);
 	try{
-		facilityId = FacilityLocalServiceUtil.getByLectureseriesId(lId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS).iterator().next().getFacilityId();
+		facilityId = InstitutionLocalServiceUtil.getByLectureseriesId(lId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS).iterator().next().getInstitutionId();
 	}catch(Exception npe){}
 
 	Map<String,String> facilities = new LinkedHashMap<String, String>();
 	if(permissionAdmin){
-		facilities = FacilityLocalServiceUtil.getAllSortedAsTree(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+		facilities = InstitutionLocalServiceUtil.getAllSortedAsTree(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 		permissionCoordinator = false;
 	}
-	if(permissionCoordinator)facilities = FacilityLocalServiceUtil.getByParent(CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getFacilityId());
+	if(permissionCoordinator)facilities = InstitutionLocalServiceUtil.getByParent(CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getInstitutionId());
 
 	Locale[] languages = LanguageUtil.getAvailableLocales();
 	String[] availableLanguageIds = LocaleUtil.toLanguageIds(languages);
@@ -106,14 +106,14 @@
 		
 			<div class="facilCont">
 				<%
-				List<Facility> fs = FacilityLocalServiceUtil.getByLectureseriesId(lId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+				List<Institution> fs = InstitutionLocalServiceUtil.getByLectureseriesId(lId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 				for(int i=0;i<fs.size();i++){
-					Facility f = fs.get(i);
+					Institution f = fs.get(i);
 					%>
-					<div id='<%=f.getFacilityId()%>'> 
+					<div id='<%=f.getInstitutionId()%>'> 
 						<%=f.getName()+"&nbsp;&nbsp;&nbsp;" %> 
-						<a style='cursor:pointer;' onClick='document.getElementById("<%=f.getFacilityId()%>").remove();'><b>X</b></a>
-						<aui:input type="hidden" name="facilities" id="facilities" value="<%=f.getFacilityId()%>"/>
+						<a style='cursor:pointer;' onClick='document.getElementById("<%=f.getInstitutionId()%>").remove();'><b>X</b></a>
+						<aui:input type="hidden" name="facilities" id="facilities" value="<%=f.getInstitutionId()%>"/>
 					</div>
 					<%
 				}

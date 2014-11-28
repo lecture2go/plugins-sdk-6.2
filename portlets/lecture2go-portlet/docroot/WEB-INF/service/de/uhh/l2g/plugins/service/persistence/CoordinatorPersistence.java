@@ -38,141 +38,141 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 */
 
 	/**
-	* Returns all the coordinators where facilityId = &#63;.
+	* Returns all the coordinators where institutionId = &#63;.
 	*
-	* @param facilityId the facility ID
+	* @param institutionId the institution ID
 	* @return the matching coordinators
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<de.uhh.l2g.plugins.model.Coordinator> findByFacility(
-		long facilityId)
+	public java.util.List<de.uhh.l2g.plugins.model.Coordinator> findByInstitution(
+		long institutionId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns a range of all the coordinators where facilityId = &#63;.
+	* Returns a range of all the coordinators where institutionId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.CoordinatorModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param facilityId the facility ID
+	* @param institutionId the institution ID
 	* @param start the lower bound of the range of coordinators
 	* @param end the upper bound of the range of coordinators (not inclusive)
 	* @return the range of matching coordinators
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<de.uhh.l2g.plugins.model.Coordinator> findByFacility(
-		long facilityId, int start, int end)
+	public java.util.List<de.uhh.l2g.plugins.model.Coordinator> findByInstitution(
+		long institutionId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns an ordered range of all the coordinators where facilityId = &#63;.
+	* Returns an ordered range of all the coordinators where institutionId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.CoordinatorModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param facilityId the facility ID
+	* @param institutionId the institution ID
 	* @param start the lower bound of the range of coordinators
 	* @param end the upper bound of the range of coordinators (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching coordinators
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<de.uhh.l2g.plugins.model.Coordinator> findByFacility(
-		long facilityId, int start, int end,
+	public java.util.List<de.uhh.l2g.plugins.model.Coordinator> findByInstitution(
+		long institutionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the first coordinator in the ordered set where facilityId = &#63;.
+	* Returns the first coordinator in the ordered set where institutionId = &#63;.
 	*
-	* @param facilityId the facility ID
+	* @param institutionId the institution ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching coordinator
 	* @throws de.uhh.l2g.plugins.NoSuchCoordinatorException if a matching coordinator could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.Coordinator findByFacility_First(
-		long facilityId,
+	public de.uhh.l2g.plugins.model.Coordinator findByInstitution_First(
+		long institutionId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchCoordinatorException;
 
 	/**
-	* Returns the first coordinator in the ordered set where facilityId = &#63;.
+	* Returns the first coordinator in the ordered set where institutionId = &#63;.
 	*
-	* @param facilityId the facility ID
+	* @param institutionId the institution ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching coordinator, or <code>null</code> if a matching coordinator could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.Coordinator fetchByFacility_First(
-		long facilityId,
+	public de.uhh.l2g.plugins.model.Coordinator fetchByInstitution_First(
+		long institutionId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the last coordinator in the ordered set where facilityId = &#63;.
+	* Returns the last coordinator in the ordered set where institutionId = &#63;.
 	*
-	* @param facilityId the facility ID
+	* @param institutionId the institution ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching coordinator
 	* @throws de.uhh.l2g.plugins.NoSuchCoordinatorException if a matching coordinator could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.Coordinator findByFacility_Last(
-		long facilityId,
+	public de.uhh.l2g.plugins.model.Coordinator findByInstitution_Last(
+		long institutionId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchCoordinatorException;
 
 	/**
-	* Returns the last coordinator in the ordered set where facilityId = &#63;.
+	* Returns the last coordinator in the ordered set where institutionId = &#63;.
 	*
-	* @param facilityId the facility ID
+	* @param institutionId the institution ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching coordinator, or <code>null</code> if a matching coordinator could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.Coordinator fetchByFacility_Last(
-		long facilityId,
+	public de.uhh.l2g.plugins.model.Coordinator fetchByInstitution_Last(
+		long institutionId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the coordinators before and after the current coordinator in the ordered set where facilityId = &#63;.
+	* Returns the coordinators before and after the current coordinator in the ordered set where institutionId = &#63;.
 	*
 	* @param coordinatorId the primary key of the current coordinator
-	* @param facilityId the facility ID
+	* @param institutionId the institution ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next coordinator
 	* @throws de.uhh.l2g.plugins.NoSuchCoordinatorException if a coordinator with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.Coordinator[] findByFacility_PrevAndNext(
-		long coordinatorId, long facilityId,
+	public de.uhh.l2g.plugins.model.Coordinator[] findByInstitution_PrevAndNext(
+		long coordinatorId, long institutionId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchCoordinatorException;
 
 	/**
-	* Removes all the coordinators where facilityId = &#63; from the database.
+	* Removes all the coordinators where institutionId = &#63; from the database.
 	*
-	* @param facilityId the facility ID
+	* @param institutionId the institution ID
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByFacility(long facilityId)
+	public void removeByInstitution(long institutionId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the number of coordinators where facilityId = &#63;.
+	* Returns the number of coordinators where institutionId = &#63;.
 	*
-	* @param facilityId the facility ID
+	* @param institutionId the institution ID
 	* @return the number of matching coordinators
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByFacility(long facilityId)
+	public int countByInstitution(long institutionId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

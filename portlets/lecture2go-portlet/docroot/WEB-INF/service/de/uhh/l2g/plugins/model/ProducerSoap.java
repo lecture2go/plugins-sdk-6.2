@@ -33,7 +33,7 @@ public class ProducerSoap implements Serializable {
 		soapModel.setIdNum(model.getIdNum());
 		soapModel.setHomeDir(model.getHomeDir());
 		soapModel.setHostId(model.getHostId());
-		soapModel.setFacilityId(model.getFacilityId());
+		soapModel.setInstitutionId(model.getInstitutionId());
 		soapModel.setNumberOfProductions(model.getNumberOfProductions());
 		soapModel.setApproved(model.getApproved());
 
@@ -120,12 +120,12 @@ public class ProducerSoap implements Serializable {
 		_hostId = hostId;
 	}
 
-	public long getFacilityId() {
-		return _facilityId;
+	public long getInstitutionId() {
+		return _institutionId;
 	}
 
-	public void setFacilityId(long facilityId) {
-		_facilityId = facilityId;
+	public void setInstitutionId(long institutionId) {
+		_institutionId = institutionId;
 	}
 
 	public long getNumberOfProductions() {
@@ -148,7 +148,7 @@ public class ProducerSoap implements Serializable {
 	private String _idNum;
 	private String _homeDir;
 	private long _hostId;
-	private long _facilityId;
+	private long _institutionId;
 	private long _numberOfProductions;
 	private int _approved;
 }

@@ -25,12 +25,12 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import de.uhh.l2g.plugins.model.Coordinator;
-import de.uhh.l2g.plugins.model.Facility;
+import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil;
-import de.uhh.l2g.plugins.service.FacilityLocalServiceUtil;
-import de.uhh.l2g.plugins.service.Facility_HostLocalServiceUtil;
+import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 
 public class AdminUserManagement extends MVCPortlet {
@@ -88,20 +88,20 @@ public class AdminUserManagement extends MVCPortlet {
 		
 		//l2go admin is logged in
 		boolean permissionAdmin = permissionChecker.hasPermission(remoteUser.getGroupId(), User.class.getName(), remoteUser.getPrimaryKey(), "ADD_L2GOADMIN");
-		List<Facility> cfL = new ArrayList<Facility>();//for coordinator
-		List<Facility> pfL = new ArrayList<Facility>();//for producer
+		List<Institution> cfL = new ArrayList<Institution>();//for coordinator
+		List<Institution> pfL = new ArrayList<Institution>();//for producer
 		
 		if(permissionAdmin){//logged in as l2go admin
-			List<Facility> allFacil = FacilityLocalServiceUtil.getByLevel(1);//all facilities for coordinator drop down menu
+			List<Institution> allFacil = InstitutionLocalServiceUtil.getByLevel(1);//all facilities for coordinator drop down menu
 			List<User> allCoord = UserLocalServiceUtil.getRoleUsers(RoleLocalServiceUtil.getRole(remoteUser.getCompanyId(), "L2Go Coordinator").getRoleId()); 
-			List<Facility> assignedFacilities = new ArrayList<Facility>();		
+			List<Institution> assignedFacilities = new ArrayList<Institution>();		
 			for (int i = 0; i < allCoord.size(); i++)
-				assignedFacilities.add(FacilityLocalServiceUtil.getFacility(CoordinatorLocalServiceUtil.getCoordinator(allCoord.get(i).getUserId()).getFacilityId()));
-			List<Facility> notAssignedFacilities = new ArrayList<Facility>();
+				assignedFacilities.add(InstitutionLocalServiceUtil.getInstitution(CoordinatorLocalServiceUtil.getCoordinator(allCoord.get(i).getUserId()).getInstitutionId()));
+			List<Institution> notAssignedFacilities = new ArrayList<Institution>();
 			for(int i = 0; i < allFacil.size(); i++){
 				boolean assigned = false;
 				for (int j = 0; j < assignedFacilities.size(); j++){
-					if(allFacil.get(i).equals(assignedFacilities.get(j)) && allFacil.get(i).getFacilityId()!=reqCoord.getFacilityId())assigned=true;
+					if(allFacil.get(i).equals(assignedFacilities.get(j)) && allFacil.get(i).getInstitutionId()!=reqCoord.getInstitutionId())assigned=true;
 				}
 				if(!assigned)notAssignedFacilities.add(allFacil.get(i));
 			}
@@ -116,12 +116,12 @@ public class AdminUserManagement extends MVCPortlet {
 		if(permissionCoordinator){//logged in as coordinator
 			try{
 				loggedInCoord = CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId());
-				cfL.add(FacilityLocalServiceUtil.getFacility(loggedInCoord.getFacilityId()));//facilities for coordinator
+				cfL.add(InstitutionLocalServiceUtil.getInstitution(loggedInCoord.getInstitutionId()));//facilities for coordinator
 				//coordinator and requested producer belong to different facilities
-				if(loggedInCoord.getFacilityId()==reqProd.getFacilityId())pfL=cfL;
+				if(loggedInCoord.getInstitutionId()==reqProd.getInstitutionId())pfL=cfL;
 				else {
-					if(reqProd.getFacilityId()!=0) pfL.add(FacilityLocalServiceUtil.getFacility(reqProd.getFacilityId()));
-					else pfL.add(FacilityLocalServiceUtil.getFacility(loggedInCoord.getFacilityId()));
+					if(reqProd.getInstitutionId()!=0) pfL.add(InstitutionLocalServiceUtil.getInstitution(reqProd.getInstitutionId()));
+					else pfL.add(InstitutionLocalServiceUtil.getInstitution(loggedInCoord.getInstitutionId()));
 				}
 			}catch(PortalException e){
 			}
@@ -244,7 +244,7 @@ public class AdminUserManagement extends MVCPortlet {
 		
 		// save role to l2go coordinator table
 		c.setCoordinatorId(u.getUserId());
-		c.setFacilityId(new Long(request.getParameter("cfId")));
+		c.setInstitutionId(new Long(request.getParameter("cfId")));
 		CoordinatorLocalServiceUtil.updateCoordinator(c);// add or edit entry
 	}
 	
@@ -259,11 +259,11 @@ public class AdminUserManagement extends MVCPortlet {
 		}
 		// save role to l2go producer table
 		p.setProducerId(u.getUserId());
-		p.setFacilityId(new Long(request.getParameter("pfId")));
+		p.setInstitutionId(new Long(request.getParameter("pfId")));
 		// repository for producer
 		Host h = null;
 		try{
-			h = Facility_HostLocalServiceUtil.getByFacilityId(p.getFacilityId());
+			h = Institution_HostLocalServiceUtil.getByInstitutionId(p.getInstitutionId());
 			// host to producer 
 			p.setHostId(h.getHostId());
 			// home directory 
@@ -291,7 +291,7 @@ public class AdminUserManagement extends MVCPortlet {
 				String[] cmdArray2 = { PropsUtil.get("lecture2go.shell.bin"), "-c", "chmod 701 " + folder.getAbsolutePath() };
 				runtime.exec(cmdArray2);
 
-				File prodFolder = new File(PropsUtil.get("lecture2go.httpstreaming.video.repository") + "/" + producer.getFacilityId() + "l2g" + producer.getHomeDir());
+				File prodFolder = new File(PropsUtil.get("lecture2go.httpstreaming.video.repository") + "/" + producer.getInstitutionId() + "l2g" + producer.getHomeDir());
 				if (!prodFolder.exists()) {
 					String cmd = "ln -s " + folder.getAbsolutePath() + " " + prodFolder.getAbsolutePath();
 					runtime.exec(cmd);

@@ -82,67 +82,68 @@ public class CoordinatorPersistenceImpl extends BasePersistenceImpl<Coordinator>
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(CoordinatorModelImpl.ENTITY_CACHE_ENABLED,
 			CoordinatorModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_FACILITY = new FinderPath(CoordinatorModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_INSTITUTION =
+		new FinderPath(CoordinatorModelImpl.ENTITY_CACHE_ENABLED,
 			CoordinatorModelImpl.FINDER_CACHE_ENABLED, CoordinatorImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFacility",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByInstitution",
 			new String[] {
 				Long.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITY =
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_INSTITUTION =
 		new FinderPath(CoordinatorModelImpl.ENTITY_CACHE_ENABLED,
 			CoordinatorModelImpl.FINDER_CACHE_ENABLED, CoordinatorImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByFacility",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByInstitution",
 			new String[] { Long.class.getName() },
-			CoordinatorModelImpl.FACILITYID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_FACILITY = new FinderPath(CoordinatorModelImpl.ENTITY_CACHE_ENABLED,
+			CoordinatorModelImpl.INSTITUTIONID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_INSTITUTION = new FinderPath(CoordinatorModelImpl.ENTITY_CACHE_ENABLED,
 			CoordinatorModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFacility",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByInstitution",
 			new String[] { Long.class.getName() });
 
 	/**
-	 * Returns all the coordinators where facilityId = &#63;.
+	 * Returns all the coordinators where institutionId = &#63;.
 	 *
-	 * @param facilityId the facility ID
+	 * @param institutionId the institution ID
 	 * @return the matching coordinators
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Coordinator> findByFacility(long facilityId)
+	public List<Coordinator> findByInstitution(long institutionId)
 		throws SystemException {
-		return findByFacility(facilityId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+		return findByInstitution(institutionId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the coordinators where facilityId = &#63;.
+	 * Returns a range of all the coordinators where institutionId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.CoordinatorModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param facilityId the facility ID
+	 * @param institutionId the institution ID
 	 * @param start the lower bound of the range of coordinators
 	 * @param end the upper bound of the range of coordinators (not inclusive)
 	 * @return the range of matching coordinators
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Coordinator> findByFacility(long facilityId, int start, int end)
-		throws SystemException {
-		return findByFacility(facilityId, start, end, null);
+	public List<Coordinator> findByInstitution(long institutionId, int start,
+		int end) throws SystemException {
+		return findByInstitution(institutionId, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the coordinators where facilityId = &#63;.
+	 * Returns an ordered range of all the coordinators where institutionId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.CoordinatorModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param facilityId the facility ID
+	 * @param institutionId the institution ID
 	 * @param start the lower bound of the range of coordinators
 	 * @param end the upper bound of the range of coordinators (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -150,7 +151,7 @@ public class CoordinatorPersistenceImpl extends BasePersistenceImpl<Coordinator>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Coordinator> findByFacility(long facilityId, int start,
+	public List<Coordinator> findByInstitution(long institutionId, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -159,12 +160,16 @@ public class CoordinatorPersistenceImpl extends BasePersistenceImpl<Coordinator>
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITY;
-			finderArgs = new Object[] { facilityId };
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_INSTITUTION;
+			finderArgs = new Object[] { institutionId };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_FACILITY;
-			finderArgs = new Object[] { facilityId, start, end, orderByComparator };
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_INSTITUTION;
+			finderArgs = new Object[] {
+					institutionId,
+					
+					start, end, orderByComparator
+				};
 		}
 
 		List<Coordinator> list = (List<Coordinator>)FinderCacheUtil.getResult(finderPath,
@@ -172,7 +177,7 @@ public class CoordinatorPersistenceImpl extends BasePersistenceImpl<Coordinator>
 
 		if ((list != null) && !list.isEmpty()) {
 			for (Coordinator coordinator : list) {
-				if ((facilityId != coordinator.getFacilityId())) {
+				if ((institutionId != coordinator.getInstitutionId())) {
 					list = null;
 
 					break;
@@ -193,7 +198,7 @@ public class CoordinatorPersistenceImpl extends BasePersistenceImpl<Coordinator>
 
 			query.append(_SQL_SELECT_COORDINATOR_WHERE);
 
-			query.append(_FINDER_COLUMN_FACILITY_FACILITYID_2);
+			query.append(_FINDER_COLUMN_INSTITUTION_INSTITUTIONID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -215,7 +220,7 @@ public class CoordinatorPersistenceImpl extends BasePersistenceImpl<Coordinator>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(facilityId);
+				qPos.add(institutionId);
 
 				if (!pagination) {
 					list = (List<Coordinator>)QueryUtil.list(q, getDialect(),
@@ -248,19 +253,19 @@ public class CoordinatorPersistenceImpl extends BasePersistenceImpl<Coordinator>
 	}
 
 	/**
-	 * Returns the first coordinator in the ordered set where facilityId = &#63;.
+	 * Returns the first coordinator in the ordered set where institutionId = &#63;.
 	 *
-	 * @param facilityId the facility ID
+	 * @param institutionId the institution ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching coordinator
 	 * @throws de.uhh.l2g.plugins.NoSuchCoordinatorException if a matching coordinator could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Coordinator findByFacility_First(long facilityId,
+	public Coordinator findByInstitution_First(long institutionId,
 		OrderByComparator orderByComparator)
 		throws NoSuchCoordinatorException, SystemException {
-		Coordinator coordinator = fetchByFacility_First(facilityId,
+		Coordinator coordinator = fetchByInstitution_First(institutionId,
 				orderByComparator);
 
 		if (coordinator != null) {
@@ -271,8 +276,8 @@ public class CoordinatorPersistenceImpl extends BasePersistenceImpl<Coordinator>
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("facilityId=");
-		msg.append(facilityId);
+		msg.append("institutionId=");
+		msg.append(institutionId);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -280,17 +285,17 @@ public class CoordinatorPersistenceImpl extends BasePersistenceImpl<Coordinator>
 	}
 
 	/**
-	 * Returns the first coordinator in the ordered set where facilityId = &#63;.
+	 * Returns the first coordinator in the ordered set where institutionId = &#63;.
 	 *
-	 * @param facilityId the facility ID
+	 * @param institutionId the institution ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching coordinator, or <code>null</code> if a matching coordinator could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Coordinator fetchByFacility_First(long facilityId,
+	public Coordinator fetchByInstitution_First(long institutionId,
 		OrderByComparator orderByComparator) throws SystemException {
-		List<Coordinator> list = findByFacility(facilityId, 0, 1,
+		List<Coordinator> list = findByInstitution(institutionId, 0, 1,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -301,19 +306,19 @@ public class CoordinatorPersistenceImpl extends BasePersistenceImpl<Coordinator>
 	}
 
 	/**
-	 * Returns the last coordinator in the ordered set where facilityId = &#63;.
+	 * Returns the last coordinator in the ordered set where institutionId = &#63;.
 	 *
-	 * @param facilityId the facility ID
+	 * @param institutionId the institution ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching coordinator
 	 * @throws de.uhh.l2g.plugins.NoSuchCoordinatorException if a matching coordinator could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Coordinator findByFacility_Last(long facilityId,
+	public Coordinator findByInstitution_Last(long institutionId,
 		OrderByComparator orderByComparator)
 		throws NoSuchCoordinatorException, SystemException {
-		Coordinator coordinator = fetchByFacility_Last(facilityId,
+		Coordinator coordinator = fetchByInstitution_Last(institutionId,
 				orderByComparator);
 
 		if (coordinator != null) {
@@ -324,8 +329,8 @@ public class CoordinatorPersistenceImpl extends BasePersistenceImpl<Coordinator>
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("facilityId=");
-		msg.append(facilityId);
+		msg.append("institutionId=");
+		msg.append(institutionId);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -333,24 +338,24 @@ public class CoordinatorPersistenceImpl extends BasePersistenceImpl<Coordinator>
 	}
 
 	/**
-	 * Returns the last coordinator in the ordered set where facilityId = &#63;.
+	 * Returns the last coordinator in the ordered set where institutionId = &#63;.
 	 *
-	 * @param facilityId the facility ID
+	 * @param institutionId the institution ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching coordinator, or <code>null</code> if a matching coordinator could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Coordinator fetchByFacility_Last(long facilityId,
+	public Coordinator fetchByInstitution_Last(long institutionId,
 		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByFacility(facilityId);
+		int count = countByInstitution(institutionId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<Coordinator> list = findByFacility(facilityId, count - 1, count,
-				orderByComparator);
+		List<Coordinator> list = findByInstitution(institutionId, count - 1,
+				count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -360,18 +365,18 @@ public class CoordinatorPersistenceImpl extends BasePersistenceImpl<Coordinator>
 	}
 
 	/**
-	 * Returns the coordinators before and after the current coordinator in the ordered set where facilityId = &#63;.
+	 * Returns the coordinators before and after the current coordinator in the ordered set where institutionId = &#63;.
 	 *
 	 * @param coordinatorId the primary key of the current coordinator
-	 * @param facilityId the facility ID
+	 * @param institutionId the institution ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next coordinator
 	 * @throws de.uhh.l2g.plugins.NoSuchCoordinatorException if a coordinator with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Coordinator[] findByFacility_PrevAndNext(long coordinatorId,
-		long facilityId, OrderByComparator orderByComparator)
+	public Coordinator[] findByInstitution_PrevAndNext(long coordinatorId,
+		long institutionId, OrderByComparator orderByComparator)
 		throws NoSuchCoordinatorException, SystemException {
 		Coordinator coordinator = findByPrimaryKey(coordinatorId);
 
@@ -382,13 +387,13 @@ public class CoordinatorPersistenceImpl extends BasePersistenceImpl<Coordinator>
 
 			Coordinator[] array = new CoordinatorImpl[3];
 
-			array[0] = getByFacility_PrevAndNext(session, coordinator,
-					facilityId, orderByComparator, true);
+			array[0] = getByInstitution_PrevAndNext(session, coordinator,
+					institutionId, orderByComparator, true);
 
 			array[1] = coordinator;
 
-			array[2] = getByFacility_PrevAndNext(session, coordinator,
-					facilityId, orderByComparator, false);
+			array[2] = getByInstitution_PrevAndNext(session, coordinator,
+					institutionId, orderByComparator, false);
 
 			return array;
 		}
@@ -400,8 +405,8 @@ public class CoordinatorPersistenceImpl extends BasePersistenceImpl<Coordinator>
 		}
 	}
 
-	protected Coordinator getByFacility_PrevAndNext(Session session,
-		Coordinator coordinator, long facilityId,
+	protected Coordinator getByInstitution_PrevAndNext(Session session,
+		Coordinator coordinator, long institutionId,
 		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -415,7 +420,7 @@ public class CoordinatorPersistenceImpl extends BasePersistenceImpl<Coordinator>
 
 		query.append(_SQL_SELECT_COORDINATOR_WHERE);
 
-		query.append(_FINDER_COLUMN_FACILITY_FACILITYID_2);
+		query.append(_FINDER_COLUMN_INSTITUTION_INSTITUTIONID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -485,7 +490,7 @@ public class CoordinatorPersistenceImpl extends BasePersistenceImpl<Coordinator>
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		qPos.add(facilityId);
+		qPos.add(institutionId);
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(coordinator);
@@ -506,31 +511,32 @@ public class CoordinatorPersistenceImpl extends BasePersistenceImpl<Coordinator>
 	}
 
 	/**
-	 * Removes all the coordinators where facilityId = &#63; from the database.
+	 * Removes all the coordinators where institutionId = &#63; from the database.
 	 *
-	 * @param facilityId the facility ID
+	 * @param institutionId the institution ID
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByFacility(long facilityId) throws SystemException {
-		for (Coordinator coordinator : findByFacility(facilityId,
+	public void removeByInstitution(long institutionId)
+		throws SystemException {
+		for (Coordinator coordinator : findByInstitution(institutionId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(coordinator);
 		}
 	}
 
 	/**
-	 * Returns the number of coordinators where facilityId = &#63;.
+	 * Returns the number of coordinators where institutionId = &#63;.
 	 *
-	 * @param facilityId the facility ID
+	 * @param institutionId the institution ID
 	 * @return the number of matching coordinators
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByFacility(long facilityId) throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_FACILITY;
+	public int countByInstitution(long institutionId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_INSTITUTION;
 
-		Object[] finderArgs = new Object[] { facilityId };
+		Object[] finderArgs = new Object[] { institutionId };
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
@@ -540,7 +546,7 @@ public class CoordinatorPersistenceImpl extends BasePersistenceImpl<Coordinator>
 
 			query.append(_SQL_COUNT_COORDINATOR_WHERE);
 
-			query.append(_FINDER_COLUMN_FACILITY_FACILITYID_2);
+			query.append(_FINDER_COLUMN_INSTITUTION_INSTITUTIONID_2);
 
 			String sql = query.toString();
 
@@ -553,7 +559,7 @@ public class CoordinatorPersistenceImpl extends BasePersistenceImpl<Coordinator>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(facilityId);
+				qPos.add(institutionId);
 
 				count = (Long)q.uniqueResult();
 
@@ -572,7 +578,7 @@ public class CoordinatorPersistenceImpl extends BasePersistenceImpl<Coordinator>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_FACILITY_FACILITYID_2 = "coordinator.facilityId = ?";
+	private static final String _FINDER_COLUMN_INSTITUTION_INSTITUTIONID_2 = "coordinator.institutionId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_OFFICE = new FinderPath(CoordinatorModelImpl.ENTITY_CACHE_ENABLED,
 			CoordinatorModelImpl.FINDER_CACHE_ENABLED, CoordinatorImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByOffice",
@@ -1288,19 +1294,21 @@ public class CoordinatorPersistenceImpl extends BasePersistenceImpl<Coordinator>
 
 		else {
 			if ((coordinatorModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITY.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_INSTITUTION.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						coordinatorModelImpl.getOriginalFacilityId()
+						coordinatorModelImpl.getOriginalInstitutionId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FACILITY, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITY,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_INSTITUTION,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_INSTITUTION,
 					args);
 
-				args = new Object[] { coordinatorModelImpl.getFacilityId() };
+				args = new Object[] { coordinatorModelImpl.getInstitutionId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FACILITY, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FACILITY,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_INSTITUTION,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_INSTITUTION,
 					args);
 			}
 
@@ -1339,7 +1347,7 @@ public class CoordinatorPersistenceImpl extends BasePersistenceImpl<Coordinator>
 		coordinatorImpl.setPrimaryKey(coordinator.getPrimaryKey());
 
 		coordinatorImpl.setCoordinatorId(coordinator.getCoordinatorId());
-		coordinatorImpl.setFacilityId(coordinator.getFacilityId());
+		coordinatorImpl.setInstitutionId(coordinator.getInstitutionId());
 		coordinatorImpl.setOfficeId(coordinator.getOfficeId());
 
 		return coordinatorImpl;

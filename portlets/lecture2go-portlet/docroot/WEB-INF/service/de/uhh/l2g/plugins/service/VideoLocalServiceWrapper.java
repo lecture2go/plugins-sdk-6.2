@@ -285,10 +285,10 @@ public class VideoLocalServiceWrapper implements VideoLocalService,
 	}
 
 	@Override
-	public java.util.List<de.uhh.l2g.plugins.model.Video> getByFacility(
+	public java.util.List<de.uhh.l2g.plugins.model.Video> getByInstitution(
 		java.lang.Long facilityId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _videoLocalService.getByFacility(facilityId);
+		return _videoLocalService.getByInstitution(facilityId);
 	}
 
 	@Override

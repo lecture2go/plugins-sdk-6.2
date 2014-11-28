@@ -114,7 +114,7 @@ public class ProducerLocalServiceClpInvoker {
 
 		_methodParameterTypes117 = new String[] { "java.lang.String" };
 
-		_methodName123 = "getProducersByFacilityId";
+		_methodName123 = "getProducersByInstitutionId";
 
 		_methodParameterTypes123 = new String[] { "long" };
 
@@ -238,7 +238,7 @@ public class ProducerLocalServiceClpInvoker {
 
 		if (_methodName123.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
-			return ProducerLocalServiceUtil.getProducersByFacilityId(((Long)arguments[0]).longValue());
+			return ProducerLocalServiceUtil.getProducersByInstitutionId(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName124.equals(name) &&

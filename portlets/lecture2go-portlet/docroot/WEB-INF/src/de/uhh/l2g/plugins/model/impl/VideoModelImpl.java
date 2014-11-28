@@ -77,10 +77,10 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 			{ "hits", Types.INTEGER },
 			{ "uploadDate", Types.TIMESTAMP },
 			{ "permittedToSegment", Types.INTEGER },
-			{ "facilityId", Types.BIGINT },
+			{ "rootInstitutionId", Types.BIGINT },
 			{ "citation2go", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Video (videoId LONG not null primary key,title VARCHAR(75) null,tags VARCHAR(75) null,lectureseriesId LONG,producerId LONG,containerFormat VARCHAR(75) null,filename VARCHAR(75) null,resolution VARCHAR(75) null,duration VARCHAR(75) null,hostId LONG,fileSize VARCHAR(75) null,generationDate VARCHAR(75) null,openAccess INTEGER,downloadLink INTEGER,metadataId LONG,surl VARCHAR(75) null,hits INTEGER,uploadDate DATE null,permittedToSegment INTEGER,facilityId LONG,citation2go INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Video (videoId LONG not null primary key,title VARCHAR(75) null,tags VARCHAR(75) null,lectureseriesId LONG,producerId LONG,containerFormat VARCHAR(75) null,filename VARCHAR(75) null,resolution VARCHAR(75) null,duration VARCHAR(75) null,hostId LONG,fileSize VARCHAR(75) null,generationDate VARCHAR(75) null,openAccess INTEGER,downloadLink INTEGER,metadataId LONG,surl VARCHAR(75) null,hits INTEGER,uploadDate DATE null,permittedToSegment INTEGER,rootInstitutionId LONG,citation2go INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Video";
 	public static final String ORDER_BY_JPQL = " ORDER BY video.videoId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Video.videoId ASC";
@@ -96,9 +96,9 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.Video"),
 			true);
-	public static long FACILITYID_COLUMN_BITMASK = 1L;
-	public static long LECTURESERIESID_COLUMN_BITMASK = 2L;
-	public static long PRODUCERID_COLUMN_BITMASK = 4L;
+	public static long LECTURESERIESID_COLUMN_BITMASK = 1L;
+	public static long PRODUCERID_COLUMN_BITMASK = 2L;
+	public static long ROOTINSTITUTIONID_COLUMN_BITMASK = 4L;
 	public static long VIDEOID_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Video"));
@@ -159,7 +159,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		attributes.put("hits", getHits());
 		attributes.put("uploadDate", getUploadDate());
 		attributes.put("permittedToSegment", getPermittedToSegment());
-		attributes.put("facilityId", getFacilityId());
+		attributes.put("rootInstitutionId", getRootInstitutionId());
 		attributes.put("citation2go", getCitation2go());
 
 		return attributes;
@@ -282,10 +282,10 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 			setPermittedToSegment(permittedToSegment);
 		}
 
-		Long facilityId = (Long)attributes.get("facilityId");
+		Long rootInstitutionId = (Long)attributes.get("rootInstitutionId");
 
-		if (facilityId != null) {
-			setFacilityId(facilityId);
+		if (rootInstitutionId != null) {
+			setRootInstitutionId(rootInstitutionId);
 		}
 
 		Integer citation2go = (Integer)attributes.get("citation2go");
@@ -555,25 +555,25 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	}
 
 	@Override
-	public long getFacilityId() {
-		return _facilityId;
+	public long getRootInstitutionId() {
+		return _rootInstitutionId;
 	}
 
 	@Override
-	public void setFacilityId(long facilityId) {
-		_columnBitmask |= FACILITYID_COLUMN_BITMASK;
+	public void setRootInstitutionId(long rootInstitutionId) {
+		_columnBitmask |= ROOTINSTITUTIONID_COLUMN_BITMASK;
 
-		if (!_setOriginalFacilityId) {
-			_setOriginalFacilityId = true;
+		if (!_setOriginalRootInstitutionId) {
+			_setOriginalRootInstitutionId = true;
 
-			_originalFacilityId = _facilityId;
+			_originalRootInstitutionId = _rootInstitutionId;
 		}
 
-		_facilityId = facilityId;
+		_rootInstitutionId = rootInstitutionId;
 	}
 
-	public long getOriginalFacilityId() {
-		return _originalFacilityId;
+	public long getOriginalRootInstitutionId() {
+		return _originalRootInstitutionId;
 	}
 
 	@Override
@@ -636,7 +636,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		videoImpl.setHits(getHits());
 		videoImpl.setUploadDate(getUploadDate());
 		videoImpl.setPermittedToSegment(getPermittedToSegment());
-		videoImpl.setFacilityId(getFacilityId());
+		videoImpl.setRootInstitutionId(getRootInstitutionId());
 		videoImpl.setCitation2go(getCitation2go());
 
 		videoImpl.resetOriginalValues();
@@ -698,9 +698,9 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 
 		videoModelImpl._setOriginalProducerId = false;
 
-		videoModelImpl._originalFacilityId = videoModelImpl._facilityId;
+		videoModelImpl._originalRootInstitutionId = videoModelImpl._rootInstitutionId;
 
-		videoModelImpl._setOriginalFacilityId = false;
+		videoModelImpl._setOriginalRootInstitutionId = false;
 
 		videoModelImpl._columnBitmask = 0;
 	}
@@ -808,7 +808,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 
 		videoCacheModel.permittedToSegment = getPermittedToSegment();
 
-		videoCacheModel.facilityId = getFacilityId();
+		videoCacheModel.rootInstitutionId = getRootInstitutionId();
 
 		videoCacheModel.citation2go = getCitation2go();
 
@@ -857,8 +857,8 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		sb.append(getUploadDate());
 		sb.append(", permittedToSegment=");
 		sb.append(getPermittedToSegment());
-		sb.append(", facilityId=");
-		sb.append(getFacilityId());
+		sb.append(", rootInstitutionId=");
+		sb.append(getRootInstitutionId());
 		sb.append(", citation2go=");
 		sb.append(getCitation2go());
 		sb.append("}");
@@ -951,8 +951,8 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		sb.append(getPermittedToSegment());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>facilityId</column-name><column-value><![CDATA[");
-		sb.append(getFacilityId());
+			"<column><column-name>rootInstitutionId</column-name><column-value><![CDATA[");
+		sb.append(getRootInstitutionId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>citation2go</column-name><column-value><![CDATA[");
@@ -989,9 +989,9 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	private int _hits;
 	private Date _uploadDate;
 	private int _permittedToSegment;
-	private long _facilityId;
-	private long _originalFacilityId;
-	private boolean _setOriginalFacilityId;
+	private long _rootInstitutionId;
+	private long _originalRootInstitutionId;
+	private boolean _setOriginalRootInstitutionId;
 	private int _citation2go;
 	private long _columnBitmask;
 	private Video _escapedModel;

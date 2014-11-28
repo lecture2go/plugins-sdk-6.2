@@ -1,23 +1,7 @@
 create table LG_Coordinator (
 	coordinatorId LONG not null primary key,
-	facilityId LONG,
+	institutionId LONG,
 	officeId LONG
-);
-
-create table LG_Facility (
-	facilityId LONG not null primary key,
-	parentId LONG,
-	name VARCHAR(75) null,
-	typ VARCHAR(75) null,
-	www VARCHAR(75) null,
-	level INTEGER,
-	sort INTEGER
-);
-
-create table LG_Facility_Host (
-	fasilityHostId LONG not null primary key,
-	facilityId LONG,
-	hostId LONG
 );
 
 create table LG_Host (
@@ -27,6 +11,22 @@ create table LG_Host (
 	port INTEGER,
 	serverRoot VARCHAR(75) null,
 	name VARCHAR(75) null
+);
+
+create table LG_Institution (
+	institutionId LONG not null primary key,
+	parentId LONG,
+	name VARCHAR(75) null,
+	typ VARCHAR(75) null,
+	www VARCHAR(75) null,
+	level INTEGER,
+	sort INTEGER
+);
+
+create table LG_Institution_Host (
+	institutionHostId LONG not null primary key,
+	institutionId LONG,
+	hostId LONG
 );
 
 create table LG_Lastvideolist (
@@ -50,10 +50,10 @@ create table LG_Lectureseries (
 	longDesc VARCHAR(75) null
 );
 
-create table LG_Lectureseries_Facility (
-	lectureseriesFacilityId LONG not null primary key,
+create table LG_Lectureseries_Institution (
+	lectureseriesInstitutionId LONG not null primary key,
 	lectureseriesId LONG,
-	facilityId LONG
+	institutionId LONG
 );
 
 create table LG_License (
@@ -96,7 +96,7 @@ create table LG_Office (
 	name VARCHAR(75) null,
 	www VARCHAR(75) null,
 	email VARCHAR(75) null,
-	facilityId LONG
+	institutionId LONG
 );
 
 create table LG_Producer (
@@ -104,7 +104,7 @@ create table LG_Producer (
 	idNum VARCHAR(75) null,
 	homeDir VARCHAR(75) null,
 	hostId LONG,
-	facilityId LONG,
+	institutionId LONG,
 	numberOfProductions LONG,
 	approved INTEGER
 );
@@ -168,20 +168,14 @@ create table LG_Video (
 	hits INTEGER,
 	uploadDate DATE null,
 	permittedToSegment INTEGER,
-	facilityId LONG,
+	rootInstitutionId LONG,
 	citation2go INTEGER
 );
 
-create table LG_VideoLectureseries (
-	videoLectureseriesId LONG not null primary key,
+create table LG_Video_Institution (
+	videoInstitutionId LONG not null primary key,
 	videoId LONG,
-	lectureseriesId LONG
-);
-
-create table LG_Video_Facility (
-	videoFacilityId LONG not null primary key,
-	videoId LONG,
-	facilityId LONG
+	institutionId LONG
 );
 
 create table LG_Video_Lectureseries (

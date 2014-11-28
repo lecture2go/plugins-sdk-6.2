@@ -45,8 +45,8 @@ public class OfficeCacheModel implements CacheModel<Office>, Externalizable {
 		sb.append(www);
 		sb.append(", email=");
 		sb.append(email);
-		sb.append(", facilityId=");
-		sb.append(facilityId);
+		sb.append(", institutionId=");
+		sb.append(institutionId);
 		sb.append("}");
 
 		return sb.toString();
@@ -79,7 +79,7 @@ public class OfficeCacheModel implements CacheModel<Office>, Externalizable {
 			officeImpl.setEmail(email);
 		}
 
-		officeImpl.setFacilityId(facilityId);
+		officeImpl.setInstitutionId(institutionId);
 
 		officeImpl.resetOriginalValues();
 
@@ -92,7 +92,7 @@ public class OfficeCacheModel implements CacheModel<Office>, Externalizable {
 		name = objectInput.readUTF();
 		www = objectInput.readUTF();
 		email = objectInput.readUTF();
-		facilityId = objectInput.readLong();
+		institutionId = objectInput.readLong();
 	}
 
 	@Override
@@ -121,12 +121,12 @@ public class OfficeCacheModel implements CacheModel<Office>, Externalizable {
 			objectOutput.writeUTF(email);
 		}
 
-		objectOutput.writeLong(facilityId);
+		objectOutput.writeLong(institutionId);
 	}
 
 	public long officeId;
 	public String name;
 	public String www;
 	public String email;
-	public long facilityId;
+	public long institutionId;
 }

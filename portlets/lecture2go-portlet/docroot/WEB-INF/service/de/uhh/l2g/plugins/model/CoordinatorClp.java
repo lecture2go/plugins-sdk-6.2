@@ -74,7 +74,7 @@ public class CoordinatorClp extends BaseModelImpl<Coordinator>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("coordinatorId", getCoordinatorId());
-		attributes.put("facilityId", getFacilityId());
+		attributes.put("institutionId", getInstitutionId());
 		attributes.put("officeId", getOfficeId());
 
 		return attributes;
@@ -88,10 +88,10 @@ public class CoordinatorClp extends BaseModelImpl<Coordinator>
 			setCoordinatorId(coordinatorId);
 		}
 
-		Long facilityId = (Long)attributes.get("facilityId");
+		Long institutionId = (Long)attributes.get("institutionId");
 
-		if (facilityId != null) {
-			setFacilityId(facilityId);
+		if (institutionId != null) {
+			setInstitutionId(institutionId);
 		}
 
 		Long officeId = (Long)attributes.get("officeId");
@@ -125,21 +125,21 @@ public class CoordinatorClp extends BaseModelImpl<Coordinator>
 	}
 
 	@Override
-	public long getFacilityId() {
-		return _facilityId;
+	public long getInstitutionId() {
+		return _institutionId;
 	}
 
 	@Override
-	public void setFacilityId(long facilityId) {
-		_facilityId = facilityId;
+	public void setInstitutionId(long institutionId) {
+		_institutionId = institutionId;
 
 		if (_coordinatorRemoteModel != null) {
 			try {
 				Class<?> clazz = _coordinatorRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setFacilityId", long.class);
+				Method method = clazz.getMethod("setInstitutionId", long.class);
 
-				method.invoke(_coordinatorRemoteModel, facilityId);
+				method.invoke(_coordinatorRemoteModel, institutionId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -380,7 +380,7 @@ public class CoordinatorClp extends BaseModelImpl<Coordinator>
 		CoordinatorClp clone = new CoordinatorClp();
 
 		clone.setCoordinatorId(getCoordinatorId());
-		clone.setFacilityId(getFacilityId());
+		clone.setInstitutionId(getInstitutionId());
 		clone.setOfficeId(getOfficeId());
 
 		return clone;
@@ -434,8 +434,8 @@ public class CoordinatorClp extends BaseModelImpl<Coordinator>
 
 		sb.append("{coordinatorId=");
 		sb.append(getCoordinatorId());
-		sb.append(", facilityId=");
-		sb.append(getFacilityId());
+		sb.append(", institutionId=");
+		sb.append(getInstitutionId());
 		sb.append(", officeId=");
 		sb.append(getOfficeId());
 		sb.append("}");
@@ -456,8 +456,8 @@ public class CoordinatorClp extends BaseModelImpl<Coordinator>
 		sb.append(getCoordinatorId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>facilityId</column-name><column-value><![CDATA[");
-		sb.append(getFacilityId());
+			"<column><column-name>institutionId</column-name><column-value><![CDATA[");
+		sb.append(getInstitutionId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>officeId</column-name><column-value><![CDATA[");
@@ -470,7 +470,7 @@ public class CoordinatorClp extends BaseModelImpl<Coordinator>
 	}
 
 	private long _coordinatorId;
-	private long _facilityId;
+	private long _institutionId;
 	private long _officeId;
 	private BaseModel<?> _coordinatorRemoteModel;
 }

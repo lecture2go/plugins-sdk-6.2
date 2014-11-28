@@ -33,7 +33,7 @@ public class OfficeSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setWww(model.getWww());
 		soapModel.setEmail(model.getEmail());
-		soapModel.setFacilityId(model.getFacilityId());
+		soapModel.setInstitutionId(model.getInstitutionId());
 
 		return soapModel;
 	}
@@ -118,17 +118,17 @@ public class OfficeSoap implements Serializable {
 		_email = email;
 	}
 
-	public long getFacilityId() {
-		return _facilityId;
+	public long getInstitutionId() {
+		return _institutionId;
 	}
 
-	public void setFacilityId(long facilityId) {
-		_facilityId = facilityId;
+	public void setInstitutionId(long institutionId) {
+		_institutionId = institutionId;
 	}
 
 	private long _officeId;
 	private String _name;
 	private String _www;
 	private String _email;
-	private long _facilityId;
+	private long _institutionId;
 }

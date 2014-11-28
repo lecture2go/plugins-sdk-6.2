@@ -112,7 +112,7 @@ public class VideoLocalServiceClpInvoker {
 
 		_methodParameterTypes122 = new String[] { "java.lang.Long" };
 
-		_methodName123 = "getByFacility";
+		_methodName123 = "getByInstitution";
 
 		_methodParameterTypes123 = new String[] { "java.lang.Long" };
 
@@ -239,7 +239,7 @@ public class VideoLocalServiceClpInvoker {
 
 		if (_methodName123.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
-			return VideoLocalServiceUtil.getByFacility((java.lang.Long)arguments[0]);
+			return VideoLocalServiceUtil.getByInstitution((java.lang.Long)arguments[0]);
 		}
 
 		if (_methodName124.equals(name) &&

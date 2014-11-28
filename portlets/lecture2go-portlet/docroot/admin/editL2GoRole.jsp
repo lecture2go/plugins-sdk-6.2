@@ -1,8 +1,8 @@
 <%@include file="/init.jsp"%>
 
 <jsp:useBean id="reqUser" type="com.liferay.portal.model.User" scope="request" />
-<jsp:useBean id="cFacilities" type="java.util.List<de.uhh.l2g.plugins.model.Facility>" scope="request"/>
-<jsp:useBean id="pFacilities" type="java.util.List<de.uhh.l2g.plugins.model.Facility>" scope="request"/>
+<jsp:useBean id="cFacilities" type="java.util.List<de.uhh.l2g.plugins.model.Institution>" scope="request"/>
+<jsp:useBean id="pFacilities" type="java.util.List<de.uhh.l2g.plugins.model.Institution>" scope="request"/>
 <jsp:useBean id="reqProducer" type="de.uhh.l2g.plugins.model.Producer" scope="request" />
 <jsp:useBean id="reqCoordinator" type="de.uhh.l2g.plugins.model.Coordinator" scope="request" />
 <jsp:useBean id="loggedInCoordinator" type="de.uhh.l2g.plugins.model.Coordinator" scope="request" />
@@ -25,11 +25,11 @@
 					<aui:select name="cfId" label="set-coordinator-for-facility">
 						<aui:option value="">select-facility</aui:option>
 						<%for (int i = 0; i < cFacilities.size(); i++) {
-							if(cFacilities.get(i).getFacilityId()==reqCoordinator.getFacilityId()){
+							if(cFacilities.get(i).getInstitutionId()==reqCoordinator.getInstitutionId()){
 						%>	
-						<aui:option value='<%=cFacilities.get(i).getFacilityId()%>' selected="true"><%=cFacilities.get(i).getName() %></aui:option>
+						<aui:option value='<%=cFacilities.get(i).getInstitutionId()%>' selected="true"><%=cFacilities.get(i).getName() %></aui:option>
 						<%}else{%>
-						<aui:option value='<%=cFacilities.get(i).getFacilityId()%>'><%=cFacilities.get(i).getName() %></aui:option>
+						<aui:option value='<%=cFacilities.get(i).getInstitutionId()%>'><%=cFacilities.get(i).getName() %></aui:option>
 						<%}
 						}%>
 					</aui:select>
@@ -39,16 +39,16 @@
 				<aui:column>
 					<%
 					boolean dis = false;
-					if(loggedInCoordinator.getFacilityId()!=reqProducer.getFacilityId() && reqProducer.getFacilityId()!=0 && !permissionChecker.hasPermission(groupId,name,reqUser.getPrimaryKey(),"ADD_L2GOCOORDINATOR"))dis=true;
+					if(loggedInCoordinator.getInstitutionId()!=reqProducer.getInstitutionId() && reqProducer.getInstitutionId()!=0 && !permissionChecker.hasPermission(groupId,name,reqUser.getPrimaryKey(),"ADD_L2GOCOORDINATOR"))dis=true;
 					%>
 					<aui:select name="pfId" label="set-producer-for-facility" disabled="<%=dis%>">
 						<aui:option value="">select-facility</aui:option>
 						<%for (int i = 0; i < pFacilities.size(); i++) {
-							if(pFacilities.get(i).getFacilityId()==reqProducer.getFacilityId()){
+							if(pFacilities.get(i).getInstitutionId()==reqProducer.getInstitutionId()){
 						%>	
-						<aui:option value='<%=pFacilities.get(i).getFacilityId()%>' selected="true"><%=pFacilities.get(i).getName() %></aui:option>
+						<aui:option value='<%=pFacilities.get(i).getInstitutionId()%>' selected="true"><%=pFacilities.get(i).getName() %></aui:option>
 						<%}else{%>
-						<aui:option value='<%=pFacilities.get(i).getFacilityId()%>'><%=pFacilities.get(i).getName() %></aui:option>
+						<aui:option value='<%=pFacilities.get(i).getInstitutionId()%>'><%=pFacilities.get(i).getName() %></aui:option>
 						<%}
 						}%>
 					</aui:select>

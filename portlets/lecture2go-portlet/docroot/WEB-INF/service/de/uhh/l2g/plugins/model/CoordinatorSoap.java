@@ -30,7 +30,7 @@ public class CoordinatorSoap implements Serializable {
 		CoordinatorSoap soapModel = new CoordinatorSoap();
 
 		soapModel.setCoordinatorId(model.getCoordinatorId());
-		soapModel.setFacilityId(model.getFacilityId());
+		soapModel.setInstitutionId(model.getInstitutionId());
 		soapModel.setOfficeId(model.getOfficeId());
 
 		return soapModel;
@@ -92,12 +92,12 @@ public class CoordinatorSoap implements Serializable {
 		_coordinatorId = coordinatorId;
 	}
 
-	public long getFacilityId() {
-		return _facilityId;
+	public long getInstitutionId() {
+		return _institutionId;
 	}
 
-	public void setFacilityId(long facilityId) {
-		_facilityId = facilityId;
+	public void setInstitutionId(long institutionId) {
+		_institutionId = institutionId;
 	}
 
 	public long getOfficeId() {
@@ -109,6 +109,6 @@ public class CoordinatorSoap implements Serializable {
 	}
 
 	private long _coordinatorId;
-	private long _facilityId;
+	private long _institutionId;
 	private long _officeId;
 }
