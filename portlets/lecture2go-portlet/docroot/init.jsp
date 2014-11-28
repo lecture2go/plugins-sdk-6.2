@@ -82,6 +82,7 @@
 <%@ page import="de.uhh.l2g.plugins.model.impl.LicenseImpl"%>
 
 <%@ page import="de.uhh.l2g.plugins.util.Lecture2GoRoleChecker"%>
+<%@page import="com.sun.xml.internal.rngom.ast.builder.Include"%>
 
 <portlet:defineObjects />
 <liferay-theme:defineObjects/>

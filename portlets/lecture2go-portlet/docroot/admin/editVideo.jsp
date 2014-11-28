@@ -1,4 +1,3 @@
-<%@page import="com.sun.xml.internal.rngom.ast.builder.Include"%>
 <%@include file="/init.jsp"%>
 
 <jsp:useBean id="reqLectureseriesList" type="java.util.List<de.uhh.l2g.plugins.model.Lectureseries>" scope="request" />
@@ -49,8 +48,21 @@
 	if(reqVideo.getVideoId() >0) {actionURL=editURL.toString();}
 	else {actionURL = addURL.toString();}
 %>
+
+<portlet:resourceURL id="uploadMe" var="uploadMe" />
+<form method="post" enctype="multipart/form-data" name="form" id=" ">
+           <div class="popup_row2_browse popup_add_bottomBtns" id="uploadFileDiv"> 
+              <input type="file" name="fileToUpload" id="fileToUpload" value="Browse" class="input" required="required"/>
+          </div>          
+       <div class="popup_row3">
+           <input type="button" name="upload" id="upload" value="Upload"  class="noText_shadow" onclick="uploadFileMe()" />
+       </div>
+ </form>
+
+<iframe src="http://localhost:8080/Upload/"></iframe> 
+ 
 <aui:fieldset helpMessage="test" column="true" label="video-file" >
-	<%@include file="/admin/includeYUIUploader.jsp" %>
+	<%@include file="/admin/includeJQueryUpload.jsp" %>
 </aui:fieldset>
 
 <br/>
@@ -194,4 +206,30 @@ AUI().use(
 			    license2.on('change',function(A){updateMetadata()});
 		}
 );
+
+function uploadFileMe(){
+	$.ajaxFileUpload
+	({
+		url:'<%=uploadMe%>',
+		secureuri : false,
+		fileElementId : 'fileToUpload',
+		dataType : 'json',
+		data : {
+			name : 'fileToUpload',
+			id : 'fileToUpload'	
+		},
+		success : function(data, status) {
+			if (typeof (data.error) != 'undefined') {
+				if (data.error != '') {
+				 //alert(data.error);
+				} else {
+				 //alert(data.msg);
+				}
+			}
+		},
+		error : function(data, status, e) {
+		 //alert(e);
+		}
+	});
+}
 </script>
