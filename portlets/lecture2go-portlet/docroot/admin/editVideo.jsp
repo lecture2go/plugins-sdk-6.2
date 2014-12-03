@@ -50,16 +50,6 @@
 %>
 
 <portlet:resourceURL id="uploadMe" var="uploadMe" />
-<form method="post" enctype="multipart/form-data" name="form" id=" ">
-           <div class="popup_row2_browse popup_add_bottomBtns" id="uploadFileDiv"> 
-              <input type="file" name="fileToUpload" id="fileToUpload" value="Browse" class="input" required="required"/>
-          </div>          
-       <div class="popup_row3">
-           <input type="button" name="upload" id="upload" value="Upload"  class="noText_shadow" onclick="uploadFileMe()" />
-       </div>
- </form>
-
-<iframe src="http://localhost:8080/Upload/"></iframe> 
  
 <aui:fieldset helpMessage="test" column="true" label="video-file" >
 	<%@include file="/admin/includeJQueryUpload.jsp" %>
