@@ -1,6 +1,6 @@
 <?php
 /*
- * jQuery File Upload Plugin PHP Class 8.1.0
+ * jQuery File Upload Plugin PHP Class 8.2.3
  * https://github.com/blueimp/jQuery-File-Upload
  *
  * Copyright 2010, Sebastian Tschan
@@ -41,6 +41,7 @@ class UploadHandler
     protected $image_objects = array();
 
     function __construct($options = null, $initialize = true, $error_messages = null) {
+        $this->response = array();
         $this->options = array(
             'script_url' => $this->get_full_url().'/',
             'upload_dir' => dirname($this->get_server_var('SCRIPT_FILENAME')).'/files/',
@@ -147,7 +148,8 @@ class UploadHandler
                     'max_width' => 80,
                     'max_height' => 80
                 )
-            )
+            ),
+            'print_response' => true
         );
         if ($options) {
             $this->options = $options + $this->options;
@@ -167,15 +169,15 @@ class UploadHandler
                 $this->head();
                 break;
             case 'GET':
-                $this->get();
+                $this->get($this->options['print_response']);
                 break;
             case 'PATCH':
             case 'PUT':
             case 'POST':
-                $this->post();
+                $this->post($this->options['print_response']);
                 break;
             case 'DELETE':
-                $this->delete();
+                $this->delete($this->options['print_response']);
                 break;
             default:
                 $this->header('HTTP/1.1 405 Method Not Allowed');
@@ -332,7 +334,7 @@ class UploadHandler
     }
 
     protected function get_error_message($error) {
-        return array_key_exists($error, $this->error_messages) ?
+        return isset($this->error_messages[$error]) ?
             $this->error_messages[$error] : $error;
     }
 
@@ -355,9 +357,9 @@ class UploadHandler
             $file->error = $this->get_error_message($error);
             return false;
         }
-        $content_length = $this->fix_integer_overflow(intval(
-            $this->get_server_var('CONTENT_LENGTH')
-        ));
+        $content_length = $this->fix_integer_overflow(
+            (int)$this->get_server_var('CONTENT_LENGTH')
+        );
         $post_max_size = $this->get_config_bytes(ini_get('post_max_size'));
         if ($post_max_size && ($content_length > $post_max_size)) {
             $file->error = $this->get_error_message('post_max_size');
@@ -421,7 +423,7 @@ class UploadHandler
     }
 
     protected function upcount_name_callback($matches) {
-        $index = isset($matches[1]) ? intval($matches[1]) + 1 : 1;
+        $index = isset($matches[1]) ? ((int)$matches[1]) + 1 : 1;
         $ext = isset($matches[2]) ? $matches[2] : '';
         return ' ('.$index.')'.$ext;
     }
@@ -441,7 +443,7 @@ class UploadHandler
             $name = $this->upcount_name($name);
         }
         // Keep an existing filename if this is part of a chunked upload:
-        $uploaded_bytes = $this->fix_integer_overflow(intval($content_range[1]));
+        $uploaded_bytes = $this->fix_integer_overflow((int)$content_range[1]);
         while(is_file($this->get_upload_path($name))) {
             if ($uploaded_bytes === $this->get_file_size(
                     $this->get_upload_path($name))) {
@@ -601,7 +603,7 @@ class UploadHandler
         if ($exif === false) {
             return false;
         }
-        $orientation = intval(@$exif['Orientation']);
+        $orientation = (int)@$exif['Orientation'];
         if ($orientation < 2 || $orientation > 8) {
             return false;
         }
@@ -1035,7 +1037,7 @@ class UploadHandler
         $file = new \stdClass();
         $file->name = $this->get_file_name($uploaded_file, $name, $size, $type, $error,
             $index, $content_range);
-        $file->size = $this->fix_integer_overflow(intval($size));
+        $file->size = $this->fix_integer_overflow((int)$size);
         $file->type = $type;
         if ($this->validate($uploaded_file, $file, $error, $index)) {
             $this->handle_form_data($file, $index);
@@ -1109,30 +1111,6 @@ class UploadHandler
 
     protected function get_server_var($id) {
         return isset($_SERVER[$id]) ? $_SERVER[$id] : '';
-    }
-
-    protected function generate_response($content, $print_response = true) {
-        if ($print_response) {
-            $json = json_encode($content);
-            $redirect = isset($_REQUEST['redirect']) ?
-                stripslashes($_REQUEST['redirect']) : null;
-            if ($redirect) {
-                $this->header('Location: '.sprintf($redirect, rawurlencode($json)));
-                return;
-            }
-            $this->head();
-            if ($this->get_server_var('HTTP_CONTENT_RANGE')) {
-                $files = isset($content[$this->options['param_name']]) ?
-                    $content[$this->options['param_name']] : null;
-                if ($files && is_array($files) && is_object($files[0]) && $files[0]->size) {
-                    $this->header('Range: 0-'.(
-                        $this->fix_integer_overflow(intval($files[0]->size)) - 1
-                    ));
-                }
-            }
-            $this->body($json);
-        }
-        return $content;
     }
 
     protected function get_version_param() {
@@ -1232,6 +1210,35 @@ class UploadHandler
             .implode(', ', $this->options['access_control_allow_headers']));
     }
 
+    public function generate_response($content, $print_response = true) {
+        $this->response = $content;
+        if ($print_response) {
+            $json = json_encode($content);
+            $redirect = isset($_REQUEST['redirect']) ?
+                stripslashes($_REQUEST['redirect']) : null;
+            if ($redirect) {
+                $this->header('Location: '.sprintf($redirect, rawurlencode($json)));
+                return;
+            }
+            $this->head();
+            if ($this->get_server_var('HTTP_CONTENT_RANGE')) {
+                $files = isset($content[$this->options['param_name']]) ?
+                    $content[$this->options['param_name']] : null;
+                if ($files && is_array($files) && is_object($files[0]) && $files[0]->size) {
+                    $this->header('Range: 0-'.(
+                        $this->fix_integer_overflow((int)$files[0]->size) - 1
+                    ));
+                }
+            }
+            $this->body($json);
+        }
+        return $content;
+    }
+
+    public function get_response () {
+        return $this->response;
+    }
+
     public function head() {
         $this->header('Pragma: no-cache');
         $this->header('Cache-Control: no-store, no-cache, must-revalidate');
@@ -1310,10 +1317,8 @@ class UploadHandler
                 $content_range
             );
         }
-        return $this->generate_response(
-            array($this->options['param_name'] => $files),
-            $print_response
-        );
+        $response = array($this->options['param_name'] => $files);
+        return $this->generate_response($response, $print_response);
     }
 
     public function delete($print_response = true) {
