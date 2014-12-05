@@ -6,6 +6,8 @@
 <jsp:useBean id="reqProducer" type="de.uhh.l2g.plugins.model.Producer" scope="request" />
 <jsp:useBean id="reqVideo" type="de.uhh.l2g.plugins.model.Video" scope="request" />
 <jsp:useBean id="reqMetadata" type="de.uhh.l2g.plugins.model.Metadata" scope="request" />
+
+
 <%
 	String actionURL = "";
 	
@@ -194,32 +196,12 @@ AUI().use(
 			    publisher.on('keyup',function(A){updateMetadata()});
 			    license1.on('change',function(A){updateMetadata()});
 			    license2.on('change',function(A){updateMetadata()});
+			    test();
 		}
 );
 
-function uploadFileMe(){
-	$.ajaxFileUpload
-	({
-		url:'<%=uploadMe%>',
-		secureuri : false,
-		fileElementId : 'fileToUpload',
-		dataType : 'json',
-		data : {
-			name : 'fileToUpload',
-			id : 'fileToUpload'	
-		},
-		success : function(data, status) {
-			if (typeof (data.error) != 'undefined') {
-				if (data.error != '') {
-				 //alert(data.error);
-				} else {
-				 //alert(data.msg);
-				}
-			}
-		},
-		error : function(data, status, e) {
-		 //alert(e);
-		}
-	});
+function test() {
+	var tt = <%=VideoLocalServiceUtil.getJSONVideo(reqVideo.getVideoId()).toString()%>;
+	document.getElementById("fls").innerHTML = tmpl("template-download", tt);
 }
 </script>
