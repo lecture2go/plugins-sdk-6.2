@@ -151,6 +151,9 @@
         <column name="www" type="String"></column>
         <column name="email" type="String"></column>
         <column name="institutionId" type="long"></column>
+        <finder name="Institution" return-type="Office">
+            <finder-column name="institutionId"></finder-column>
+        </finder>
     </entity>
     <entity name="Coordinator" local-service="true" remote-service="false">
         <column name="coordinatorId" type="long" primary="true"></column>

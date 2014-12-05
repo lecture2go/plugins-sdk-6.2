@@ -299,6 +299,18 @@ public class Video_InstitutionLocalServiceWrapper
 		return _video_InstitutionLocalService.removeByInstitutionId(facilityId);
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Video_Institution> getByVideo(
+		java.lang.Long videoId) {
+		return _video_InstitutionLocalService.getByVideo(videoId);
+	}
+
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Video_Institution> getByInstitution(
+		java.lang.Long institutionId) {
+		return _video_InstitutionLocalService.getByInstitution(institutionId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

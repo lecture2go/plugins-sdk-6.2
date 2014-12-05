@@ -109,6 +109,75 @@ public class OfficeUtil {
 	}
 
 	/**
+	* Returns the office where institutionId = &#63; or throws a {@link de.uhh.l2g.plugins.NoSuchOfficeException} if it could not be found.
+	*
+	* @param institutionId the institution ID
+	* @return the matching office
+	* @throws de.uhh.l2g.plugins.NoSuchOfficeException if a matching office could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Office findByInstitution(
+		long institutionId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchOfficeException {
+		return getPersistence().findByInstitution(institutionId);
+	}
+
+	/**
+	* Returns the office where institutionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param institutionId the institution ID
+	* @return the matching office, or <code>null</code> if a matching office could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Office fetchByInstitution(
+		long institutionId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByInstitution(institutionId);
+	}
+
+	/**
+	* Returns the office where institutionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param institutionId the institution ID
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching office, or <code>null</code> if a matching office could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Office fetchByInstitution(
+		long institutionId, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByInstitution(institutionId, retrieveFromCache);
+	}
+
+	/**
+	* Removes the office where institutionId = &#63; from the database.
+	*
+	* @param institutionId the institution ID
+	* @return the office that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Office removeByInstitution(
+		long institutionId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchOfficeException {
+		return getPersistence().removeByInstitution(institutionId);
+	}
+
+	/**
+	* Returns the number of offices where institutionId = &#63;.
+	*
+	* @param institutionId the institution ID
+	* @return the number of matching offices
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByInstitution(long institutionId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByInstitution(institutionId);
+	}
+
+	/**
 	* Caches the office in the entity cache if it is enabled.
 	*
 	* @param office the office

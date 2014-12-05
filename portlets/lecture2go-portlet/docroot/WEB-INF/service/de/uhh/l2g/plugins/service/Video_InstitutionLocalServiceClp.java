@@ -123,6 +123,14 @@ public class Video_InstitutionLocalServiceClp
 		_methodName20 = "removeByInstitutionId";
 
 		_methodParameterTypes20 = new String[] { "java.lang.Long" };
+
+		_methodName21 = "getByVideo";
+
+		_methodParameterTypes21 = new String[] { "java.lang.Long" };
+
+		_methodName22 = "getByInstitution";
+
+		_methodParameterTypes22 = new String[] { "java.lang.Long" };
 	}
 
 	@Override
@@ -726,6 +734,56 @@ public class Video_InstitutionLocalServiceClp
 		return ((Boolean)returnObj).booleanValue();
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Video_Institution> getByVideo(
+		java.lang.Long videoId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21,
+					new Object[] { ClpSerializer.translateInput(videoId) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<de.uhh.l2g.plugins.model.Video_Institution>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Video_Institution> getByInstitution(
+		java.lang.Long institutionId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22,
+					new Object[] { ClpSerializer.translateInput(institutionId) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<de.uhh.l2g.plugins.model.Video_Institution>)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -767,4 +825,8 @@ public class Video_InstitutionLocalServiceClp
 	private String[] _methodParameterTypes19;
 	private String _methodName20;
 	private String[] _methodParameterTypes20;
+	private String _methodName21;
+	private String[] _methodParameterTypes21;
+	private String _methodName22;
+	private String[] _methodParameterTypes22;
 }

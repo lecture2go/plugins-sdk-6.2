@@ -14,8 +14,13 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.liferay.portal.kernel.exception.SystemException;
 
+import de.uhh.l2g.plugins.model.Video_Institution;
+import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.Video_InstitutionLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.Video_InstitutionUtil;
 
@@ -61,5 +66,25 @@ public class Video_InstitutionLocalServiceImpl
 			e.printStackTrace();
 		}
 		return ret;
+	}
+	
+	public List<Video_Institution> getByVideo(Long videoId){
+		List<Video_Institution> vi = new ArrayList<Video_Institution>();
+		try {
+			vi = video_InstitutionPersistence.findByVideo(videoId);
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return vi;
+	}
+
+	public List<Video_Institution> getByInstitution(Long institutionId){
+		List<Video_Institution> vi = new ArrayList<Video_Institution>();
+		try {
+			vi = video_InstitutionPersistence.findByInstitution(institutionId);
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return vi;
 	}
 }

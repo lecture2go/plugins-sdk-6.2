@@ -129,6 +129,14 @@ public class VideoLocalServiceClp implements VideoLocalService {
 		_methodParameterTypes23 = new String[] {
 				"java.lang.Long", "java.lang.Long"
 			};
+
+		_methodName24 = "getVideo";
+
+		_methodParameterTypes24 = new String[] { "java.lang.Long" };
+
+		_methodName25 = "getJSONVideo";
+
+		_methodParameterTypes25 = new String[] { "java.lang.Long" };
 	}
 
 	@Override
@@ -824,6 +832,54 @@ public class VideoLocalServiceClp implements VideoLocalService {
 		return (java.util.List<de.uhh.l2g.plugins.model.Video>)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public de.uhh.l2g.plugins.model.Video getVideo(java.lang.Long videoId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24,
+					new Object[] { ClpSerializer.translateInput(videoId) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (de.uhh.l2g.plugins.model.Video)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public org.json.JSONObject getJSONVideo(java.lang.Long videoId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
+					new Object[] { ClpSerializer.translateInput(videoId) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.json.JSONObject)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -871,4 +927,8 @@ public class VideoLocalServiceClp implements VideoLocalService {
 	private String[] _methodParameterTypes22;
 	private String _methodName23;
 	private String[] _methodParameterTypes23;
+	private String _methodName24;
+	private String[] _methodParameterTypes24;
+	private String _methodName25;
+	private String[] _methodParameterTypes25;
 }

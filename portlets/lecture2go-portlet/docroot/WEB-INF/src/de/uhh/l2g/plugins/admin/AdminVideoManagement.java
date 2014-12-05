@@ -78,7 +78,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		try{reqLectureseriesId = new Long(request.getParameterMap().get("lectureseriesId")[0]);}catch(Exception e){}
 				
 		// requested video
-		long reqVideoId = 0;
+		Long reqVideoId = new Long(0);
 		try{reqVideoId = new Long(request.getParameterMap().get("videoId")[0]);}catch(Exception e){}
 		Video reqVideo = new VideoImpl(); 
 		try{reqVideo = VideoLocalServiceUtil.getVideo(reqVideoId);}catch(Exception e){}
@@ -214,7 +214,6 @@ public class AdminVideoManagement extends MVCPortlet {
 				video.setLectureseriesId(new Long(lectureseriesId));
 				VideoLocalServiceUtil.updateVideo(video);
 			} catch (NumberFormatException e) {
-			} catch (PortalException e) {
 			} catch (SystemException e) {
 			}
 			//metadata

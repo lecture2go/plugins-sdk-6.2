@@ -749,6 +749,216 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 	}
 
 	@Override
+	public boolean isHasChapters() {
+		return _video.isHasChapters();
+	}
+
+	@Override
+	public void setHasChapters(boolean hasChapters) {
+		_video.setHasChapters(hasChapters);
+	}
+
+	@Override
+	public boolean isHasComments() {
+		return _video.isHasComments();
+	}
+
+	@Override
+	public void setHasComments(boolean hasComments) {
+		_video.setHasComments(hasComments);
+	}
+
+	@Override
+	public java.lang.String getStreamUrl() {
+		return _video.getStreamUrl();
+	}
+
+	@Override
+	public void setStreamUrl(java.lang.String streamUrl) {
+		_video.setStreamUrl(streamUrl);
+	}
+
+	@Override
+	public java.lang.String getStreamIosUrl() {
+		return _video.getStreamIosUrl();
+	}
+
+	@Override
+	public void setStreamIosUrl(java.lang.String streamIosUrl) {
+		_video.setStreamIosUrl(streamIosUrl);
+	}
+
+	@Override
+	public java.lang.String getStreamAndroidUrl() {
+		return _video.getStreamAndroidUrl();
+	}
+
+	@Override
+	public void setStreamAndroidUrl(java.lang.String streamAndroidUrl) {
+		_video.setStreamAndroidUrl(streamAndroidUrl);
+	}
+
+	@Override
+	public java.lang.String getUrl() {
+		return _video.getUrl();
+	}
+
+	@Override
+	public void setUrl(java.lang.String url) {
+		_video.setUrl(url);
+	}
+
+	@Override
+	public java.lang.String getSecureUrl() {
+		return _video.getSecureUrl();
+	}
+
+	@Override
+	public void setSecureUrl(java.lang.String secureUrl) {
+		_video.setSecureUrl(secureUrl);
+	}
+
+	@Override
+	public java.io.File getMp4File() {
+		return _video.getMp4File();
+	}
+
+	@Override
+	public void setMp4File(java.io.File mp4File) {
+		_video.setMp4File(mp4File);
+	}
+
+	@Override
+	public java.io.File getPdfFile() {
+		return _video.getPdfFile();
+	}
+
+	@Override
+	public void setPdfFile(java.io.File pdfFile) {
+		_video.setPdfFile(pdfFile);
+	}
+
+	@Override
+	public java.io.File getMp3File() {
+		return _video.getMp3File();
+	}
+
+	@Override
+	public void setMp3File(java.io.File mp3File) {
+		_video.setMp3File(mp3File);
+	}
+
+	@Override
+	public java.io.File getM4vFile() {
+		return _video.getM4vFile();
+	}
+
+	@Override
+	public void setM4vFile(java.io.File m4vFile) {
+		_video.setM4vFile(m4vFile);
+	}
+
+	@Override
+	public java.io.File getM4aFile() {
+		return _video.getM4aFile();
+	}
+
+	@Override
+	public void setM4aFile(java.io.File m4aFile) {
+		_video.setM4aFile(m4aFile);
+	}
+
+	@Override
+	public java.lang.String getDate() {
+		return _video.getDate();
+	}
+
+	@Override
+	public void setDate(java.lang.String date) {
+		_video.setDate(date);
+	}
+
+	@Override
+	public java.lang.String getSimpleDate() {
+		return _video.getSimpleDate();
+	}
+
+	@Override
+	public void setSimpleDate(java.lang.String simpleDate) {
+		_video.setSimpleDate(simpleDate);
+	}
+
+	@Override
+	public java.lang.String getBitrate() {
+		return _video.getBitrate();
+	}
+
+	@Override
+	public void setBitrate(java.lang.String bitrate) {
+		_video.setBitrate(bitrate);
+	}
+
+	@Override
+	public java.lang.String getImage() {
+		return _video.getImage();
+	}
+
+	@Override
+	public void setImage(java.lang.String image) {
+		_video.setImage(image);
+	}
+
+	@Override
+	public java.lang.String getImageSmall() {
+		return _video.getImageSmall();
+	}
+
+	@Override
+	public void setImageSmall(java.lang.String imageSmall) {
+		_video.setImageSmall(imageSmall);
+	}
+
+	@Override
+	public java.lang.String getImageMedium() {
+		return _video.getImageMedium();
+	}
+
+	@Override
+	public void setImageMedium(java.lang.String imageMedium) {
+		_video.setImageMedium(imageMedium);
+	}
+
+	@Override
+	public java.lang.String getShortTitle() {
+		return _video.getShortTitle();
+	}
+
+	@Override
+	public void setShortTitle(java.lang.String shortTitle) {
+		_video.setShortTitle(shortTitle);
+	}
+
+	@Override
+	public java.lang.String getShortName() {
+		return _video.getShortName();
+	}
+
+	@Override
+	public void setShortName(java.lang.String shortName) {
+		_video.setShortName(shortName);
+	}
+
+	@Override
+	public java.lang.String getSPreffix() {
+		return _video.getSPreffix();
+	}
+
+	@Override
+	public java.lang.String getPreffix() {
+		return _video.getPreffix();
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;

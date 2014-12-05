@@ -301,6 +301,15 @@ public class VideoLocalServiceUtil {
 				   .getByProducerAndLectureseries(producerId, lectureseriesId);
 	}
 
+	public static de.uhh.l2g.plugins.model.Video getVideo(
+		java.lang.Long videoId) {
+		return getService().getVideo(videoId);
+	}
+
+	public static org.json.JSONObject getJSONVideo(java.lang.Long videoId) {
+		return getService().getJSONVideo(videoId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}
