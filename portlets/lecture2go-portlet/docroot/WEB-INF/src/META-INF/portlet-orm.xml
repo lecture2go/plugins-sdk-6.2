@@ -391,7 +391,28 @@
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.VideoImpl" name="Video">
 		<table name="LG_Video" />
-		<attributes />
+		<attributes>
+			<transient name="bitrate" />
+			<transient name="date" />
+			<transient name="hasChapters" />
+			<transient name="hasComments" />
+			<transient name="image" />
+			<transient name="imageMedium" />
+			<transient name="imageSmall" />
+			<transient name="m4aFile" />
+			<transient name="m4vFile" />
+			<transient name="mp3File" />
+			<transient name="mp4File" />
+			<transient name="pdfFile" />
+			<transient name="secureUrl" />
+			<transient name="shortName" />
+			<transient name="shortTitle" />
+			<transient name="simpleDate" />
+			<transient name="streamAndroidUrl" />
+			<transient name="streamIosUrl" />
+			<transient name="streamUrl" />
+			<transient name="url" />
+		</attributes>
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.Video_InstitutionImpl" name="Video_Institution">
 		<table name="LG_Video_Institution" />
