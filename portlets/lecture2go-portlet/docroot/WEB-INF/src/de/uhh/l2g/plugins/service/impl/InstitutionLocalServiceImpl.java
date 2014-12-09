@@ -89,4 +89,6 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		}
 		return s;
 	}
+	
+	
 }

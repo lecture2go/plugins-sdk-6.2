@@ -121,6 +121,14 @@ public class Video_InstitutionLocalServiceClpInvoker {
 		_methodName123 = "removeByInstitutionId";
 
 		_methodParameterTypes123 = new String[] { "java.lang.Long" };
+
+		_methodName124 = "getByVideo";
+
+		_methodParameterTypes124 = new String[] { "java.lang.Long" };
+
+		_methodName125 = "getByInstitution";
+
+		_methodParameterTypes125 = new String[] { "java.lang.Long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -234,6 +242,16 @@ public class Video_InstitutionLocalServiceClpInvoker {
 			return Video_InstitutionLocalServiceUtil.removeByInstitutionId((java.lang.Long)arguments[0]);
 		}
 
+		if (_methodName124.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
+			return Video_InstitutionLocalServiceUtil.getByVideo((java.lang.Long)arguments[0]);
+		}
+
+		if (_methodName125.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
+			return Video_InstitutionLocalServiceUtil.getByInstitution((java.lang.Long)arguments[0]);
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -277,4 +295,8 @@ public class Video_InstitutionLocalServiceClpInvoker {
 	private String[] _methodParameterTypes122;
 	private String _methodName123;
 	private String[] _methodParameterTypes123;
+	private String _methodName124;
+	private String[] _methodParameterTypes124;
+	private String _methodName125;
+	private String[] _methodParameterTypes125;
 }

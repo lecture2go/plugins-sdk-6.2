@@ -107,6 +107,30 @@ public class HostLocalServiceClpInvoker {
 		_methodName117 = "setBeanIdentifier";
 
 		_methodParameterTypes117 = new String[] { "java.lang.String" };
+
+		_methodName122 = "getHosts";
+
+		_methodParameterTypes122 = new String[] { "long" };
+
+		_methodName123 = "getHosts";
+
+		_methodParameterTypes123 = new String[] { "long", "int", "int" };
+
+		_methodName124 = "getByInstitution";
+
+		_methodParameterTypes124 = new String[] { "long" };
+
+		_methodName125 = "getByHostId";
+
+		_methodParameterTypes125 = new String[] { "long" };
+
+		_methodName127 = "addHost";
+
+		_methodParameterTypes127 = new String[] {
+				"long", "java.lang.String", "java.lang.String",
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"int", "com.liferay.portal.service.ServiceContext"
+			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -210,6 +234,38 @@ public class HostLocalServiceClpInvoker {
 			return null;
 		}
 
+		if (_methodName122.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
+			return HostLocalServiceUtil.getHosts(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName123.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
+			return HostLocalServiceUtil.getHosts(((Long)arguments[0]).longValue(),
+				((Integer)arguments[1]).intValue(),
+				((Integer)arguments[2]).intValue());
+		}
+
+		if (_methodName124.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
+			return HostLocalServiceUtil.getByInstitution(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName125.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
+			return HostLocalServiceUtil.getByHostId(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName127.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
+			return HostLocalServiceUtil.addHost(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
+				(java.lang.String)arguments[3], (java.lang.String)arguments[4],
+				(java.lang.String)arguments[5],
+				((Integer)arguments[6]).intValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[7]);
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -249,4 +305,14 @@ public class HostLocalServiceClpInvoker {
 	private String[] _methodParameterTypes116;
 	private String _methodName117;
 	private String[] _methodParameterTypes117;
+	private String _methodName122;
+	private String[] _methodParameterTypes122;
+	private String _methodName123;
+	private String[] _methodParameterTypes123;
+	private String _methodName124;
+	private String[] _methodParameterTypes124;
+	private String _methodName125;
+	private String[] _methodParameterTypes125;
+	private String _methodName127;
+	private String[] _methodParameterTypes127;
 }

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
@@ -80,6 +82,224 @@ public class OfficePersistenceImpl extends BasePersistenceImpl<Office>
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(OfficeModelImpl.ENTITY_CACHE_ENABLED,
 			OfficeModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
+	public static final FinderPath FINDER_PATH_FETCH_BY_INSTITUTION = new FinderPath(OfficeModelImpl.ENTITY_CACHE_ENABLED,
+			OfficeModelImpl.FINDER_CACHE_ENABLED, OfficeImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByInstitution",
+			new String[] { Long.class.getName() },
+			OfficeModelImpl.INSTITUTIONID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_INSTITUTION = new FinderPath(OfficeModelImpl.ENTITY_CACHE_ENABLED,
+			OfficeModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByInstitution",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns the office where institutionId = &#63; or throws a {@link de.uhh.l2g.plugins.NoSuchOfficeException} if it could not be found.
+	 *
+	 * @param institutionId the institution ID
+	 * @return the matching office
+	 * @throws de.uhh.l2g.plugins.NoSuchOfficeException if a matching office could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Office findByInstitution(long institutionId)
+		throws NoSuchOfficeException, SystemException {
+		Office office = fetchByInstitution(institutionId);
+
+		if (office == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("institutionId=");
+			msg.append(institutionId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchOfficeException(msg.toString());
+		}
+
+		return office;
+	}
+
+	/**
+	 * Returns the office where institutionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param institutionId the institution ID
+	 * @return the matching office, or <code>null</code> if a matching office could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Office fetchByInstitution(long institutionId)
+		throws SystemException {
+		return fetchByInstitution(institutionId, true);
+	}
+
+	/**
+	 * Returns the office where institutionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param institutionId the institution ID
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching office, or <code>null</code> if a matching office could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Office fetchByInstitution(long institutionId,
+		boolean retrieveFromCache) throws SystemException {
+		Object[] finderArgs = new Object[] { institutionId };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_INSTITUTION,
+					finderArgs, this);
+		}
+
+		if (result instanceof Office) {
+			Office office = (Office)result;
+
+			if ((institutionId != office.getInstitutionId())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_OFFICE_WHERE);
+
+			query.append(_FINDER_COLUMN_INSTITUTION_INSTITUTIONID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(institutionId);
+
+				List<Office> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_INSTITUTION,
+						finderArgs, list);
+				}
+				else {
+					if ((list.size() > 1) && _log.isWarnEnabled()) {
+						_log.warn(
+							"OfficePersistenceImpl.fetchByInstitution(long, boolean) with parameters (" +
+							StringUtil.merge(finderArgs) +
+							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					}
+
+					Office office = list.get(0);
+
+					result = office;
+
+					cacheResult(office);
+
+					if ((office.getInstitutionId() != institutionId)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_INSTITUTION,
+							finderArgs, office);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_INSTITUTION,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (Office)result;
+		}
+	}
+
+	/**
+	 * Removes the office where institutionId = &#63; from the database.
+	 *
+	 * @param institutionId the institution ID
+	 * @return the office that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Office removeByInstitution(long institutionId)
+		throws NoSuchOfficeException, SystemException {
+		Office office = findByInstitution(institutionId);
+
+		return remove(office);
+	}
+
+	/**
+	 * Returns the number of offices where institutionId = &#63;.
+	 *
+	 * @param institutionId the institution ID
+	 * @return the number of matching offices
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByInstitution(long institutionId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_INSTITUTION;
+
+		Object[] finderArgs = new Object[] { institutionId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_OFFICE_WHERE);
+
+			query.append(_FINDER_COLUMN_INSTITUTION_INSTITUTIONID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(institutionId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_INSTITUTION_INSTITUTIONID_2 = "office.institutionId = ?";
 
 	public OfficePersistenceImpl() {
 		setModelClass(Office.class);
@@ -94,6 +314,9 @@ public class OfficePersistenceImpl extends BasePersistenceImpl<Office>
 	public void cacheResult(Office office) {
 		EntityCacheUtil.putResult(OfficeModelImpl.ENTITY_CACHE_ENABLED,
 			OfficeImpl.class, office.getPrimaryKey(), office);
+
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_INSTITUTION,
+			new Object[] { office.getInstitutionId() }, office);
 
 		office.resetOriginalValues();
 	}
@@ -151,6 +374,8 @@ public class OfficePersistenceImpl extends BasePersistenceImpl<Office>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache(office);
 	}
 
 	@Override
@@ -161,6 +386,49 @@ public class OfficePersistenceImpl extends BasePersistenceImpl<Office>
 		for (Office office : offices) {
 			EntityCacheUtil.removeResult(OfficeModelImpl.ENTITY_CACHE_ENABLED,
 				OfficeImpl.class, office.getPrimaryKey());
+
+			clearUniqueFindersCache(office);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(Office office) {
+		if (office.isNew()) {
+			Object[] args = new Object[] { office.getInstitutionId() };
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_INSTITUTION, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_INSTITUTION, args,
+				office);
+		}
+		else {
+			OfficeModelImpl officeModelImpl = (OfficeModelImpl)office;
+
+			if ((officeModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_INSTITUTION.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { office.getInstitutionId() };
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_INSTITUTION,
+					args, Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_INSTITUTION,
+					args, office);
+			}
+		}
+	}
+
+	protected void clearUniqueFindersCache(Office office) {
+		OfficeModelImpl officeModelImpl = (OfficeModelImpl)office;
+
+		Object[] args = new Object[] { office.getInstitutionId() };
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_INSTITUTION, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_INSTITUTION, args);
+
+		if ((officeModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_INSTITUTION.getColumnBitmask()) != 0) {
+			args = new Object[] { officeModelImpl.getOriginalInstitutionId() };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_INSTITUTION, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_INSTITUTION, args);
 		}
 	}
 
@@ -296,12 +564,15 @@ public class OfficePersistenceImpl extends BasePersistenceImpl<Office>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (isNew || !OfficeModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		EntityCacheUtil.putResult(OfficeModelImpl.ENTITY_CACHE_ENABLED,
 			OfficeImpl.class, office.getPrimaryKey(), office);
+
+		clearUniqueFindersCache(office);
+		cacheUniqueFindersCache(office);
 
 		return office;
 	}
@@ -628,9 +899,12 @@ public class OfficePersistenceImpl extends BasePersistenceImpl<Office>
 	}
 
 	private static final String _SQL_SELECT_OFFICE = "SELECT office FROM Office office";
+	private static final String _SQL_SELECT_OFFICE_WHERE = "SELECT office FROM Office office WHERE ";
 	private static final String _SQL_COUNT_OFFICE = "SELECT COUNT(office) FROM Office office";
+	private static final String _SQL_COUNT_OFFICE_WHERE = "SELECT COUNT(office) FROM Office office WHERE ";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "office.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Office exists with the primary key ";
+	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Office exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = GetterUtil.getBoolean(PropsUtil.get(
 				PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
 	private static Log _log = LogFactoryUtil.getLog(OfficePersistenceImpl.class);

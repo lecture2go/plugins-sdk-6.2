@@ -127,12 +127,41 @@
         </finder>
     </entity>
     <entity name="Host" local-service="true" remote-service="false">
-        <column name="hostId" primary="true" type="long" id-type="increment"></column>
-        <column name="protocol" type="String"></column>
-        <column name="streamer" type="String"></column>
-        <column name="port" type="int"></column>
-        <column name="serverRoot" type="String"></column>
-        <column name="name" type="String"></column>
+    	<column name="hostId" primary="true" type="long"
+    		id-type="increment">
+    	</column>
+    	<column name="protocol" type="String"></column>
+    	<column name="streamer" type="String"></column>
+    	<column name="port" type="int"></column>
+    	<column name="serverRoot" type="String"></column>
+    	<column name="name" type="String"></column>
+
+
+    	<!-- PK fields -->
+
+    	<!-- Group instance -->
+        <column name="serverTemplate" type="String"></column>
+
+    	<column name="groupId" type="long"></column>
+
+    	<!-- Audit fields -->
+
+    	<column name="companyId" type="long"></column>
+    	<column name="userId" type="long"></column>
+    	<column name="userName" type="String"></column>
+    	<column name="createDate" type="Date"></column>
+    	<column name="modifiedDate" type="Date"></column>
+        <column name="uuid" type="String"></column>
+        <finder name="GroupId" return-type="Collection">
+            <finder-column name="groupId"></finder-column>
+        </finder>
+        <finder name="G_H" return-type="Collection">
+            <finder-column name="groupId"></finder-column>
+            <finder-column name="hostId"></finder-column>
+        </finder>
+        <finder name="HostId" return-type="Collection">
+            <finder-column name="hostId"></finder-column>
+        </finder>
     </entity>
     <entity name="Institution_Host" local-service="true" remote-service="false">
         <column name="institutionHostId" type="long" primary="true" id-type="increment"></column>
@@ -151,6 +180,9 @@
         <column name="www" type="String"></column>
         <column name="email" type="String"></column>
         <column name="institutionId" type="long"></column>
+        <finder name="Institution" return-type="Office">
+            <finder-column name="institutionId"></finder-column>
+        </finder>
     </entity>
     <entity name="Coordinator" local-service="true" remote-service="false">
         <column name="coordinatorId" type="long" primary="true"></column>
@@ -306,4 +338,9 @@
             <finder-column name="lectureseriesId"></finder-column>
         </finder>
     </entity>
+    <exceptions>
+        <exception>HostName</exception>
+        <exception>HostStreamer</exception>
+        <exception>HostServerTemplate</exception>
+    </exceptions>
 </service-builder>

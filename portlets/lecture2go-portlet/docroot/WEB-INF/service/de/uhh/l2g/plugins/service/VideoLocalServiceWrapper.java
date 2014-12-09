@@ -313,6 +313,16 @@ public class VideoLocalServiceWrapper implements VideoLocalService,
 			lectureseriesId);
 	}
 
+	@Override
+	public de.uhh.l2g.plugins.model.Video getVideo(java.lang.Long videoId) {
+		return _videoLocalService.getVideo(videoId);
+	}
+
+	@Override
+	public org.json.JSONObject getJSONVideo(java.lang.Long videoId) {
+		return _videoLocalService.getJSONVideo(videoId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

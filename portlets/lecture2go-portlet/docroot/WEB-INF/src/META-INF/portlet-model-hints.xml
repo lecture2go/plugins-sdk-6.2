@@ -13,6 +13,14 @@
 		<field name="port" type="int" />
 		<field name="serverRoot" type="String" />
 		<field name="name" type="String" />
+		<field name="serverTemplate" type="String" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="uuid" type="String" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Institution">
 		<field name="institutionId" type="long" />

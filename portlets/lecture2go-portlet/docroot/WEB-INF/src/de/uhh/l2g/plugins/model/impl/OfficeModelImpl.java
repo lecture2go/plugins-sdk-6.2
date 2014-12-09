@@ -77,7 +77,11 @@ public class OfficeModelImpl extends BaseModelImpl<Office>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.finder.cache.enabled.de.uhh.l2g.plugins.model.Office"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.Office"),
+			true);
+	public static long INSTITUTIONID_COLUMN_BITMASK = 1L;
+	public static long OFFICEID_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Office"));
 
@@ -222,7 +226,23 @@ public class OfficeModelImpl extends BaseModelImpl<Office>
 
 	@Override
 	public void setInstitutionId(long institutionId) {
+		_columnBitmask |= INSTITUTIONID_COLUMN_BITMASK;
+
+		if (!_setOriginalInstitutionId) {
+			_setOriginalInstitutionId = true;
+
+			_originalInstitutionId = _institutionId;
+		}
+
 		_institutionId = institutionId;
+	}
+
+	public long getOriginalInstitutionId() {
+		return _originalInstitutionId;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -307,6 +327,13 @@ public class OfficeModelImpl extends BaseModelImpl<Office>
 
 	@Override
 	public void resetOriginalValues() {
+		OfficeModelImpl officeModelImpl = this;
+
+		officeModelImpl._originalInstitutionId = officeModelImpl._institutionId;
+
+		officeModelImpl._setOriginalInstitutionId = false;
+
+		officeModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -404,5 +431,8 @@ public class OfficeModelImpl extends BaseModelImpl<Office>
 	private String _www;
 	private String _email;
 	private long _institutionId;
+	private long _originalInstitutionId;
+	private boolean _setOriginalInstitutionId;
+	private long _columnBitmask;
 	private Office _escapedModel;
 }

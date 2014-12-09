@@ -279,6 +279,45 @@ public class HostLocalServiceWrapper implements HostLocalService,
 		return _hostLocalService.invokeMethod(name, parameterTypes, arguments);
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Host> getHosts(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _hostLocalService.getHosts(groupId);
+	}
+
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Host> getHosts(
+		long groupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _hostLocalService.getHosts(groupId, start, end);
+	}
+
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Host> getByInstitution(
+		long institutionId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _hostLocalService.getByInstitution(institutionId);
+	}
+
+	@Override
+	public de.uhh.l2g.plugins.model.Host getByHostId(long hostId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _hostLocalService.getByHostId(hostId);
+	}
+
+	@Override
+	public de.uhh.l2g.plugins.model.Host addHost(long userId,
+		java.lang.String name, java.lang.String streamer,
+		java.lang.String serverTemplate, java.lang.String protocol,
+		java.lang.String serverRoot, int port,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _hostLocalService.addHost(userId, name, streamer,
+			serverTemplate, protocol, serverRoot, port, serviceContext);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

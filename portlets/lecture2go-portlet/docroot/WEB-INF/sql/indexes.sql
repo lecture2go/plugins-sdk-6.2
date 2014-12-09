@@ -26,6 +26,8 @@ create index IX_4B074373 on LG_Lectureseries_Institution (lectureseriesId, insti
 
 create index IX_C0376223 on LG_License (videoId);
 
+create index IX_41F2963D on LG_Office (institutionId);
+
 create index IX_4FD6C927 on LG_Producer (approved);
 create index IX_7DAEE222 on LG_Producer (homeDir);
 create index IX_FE9C63D3 on LG_Producer (hostId);

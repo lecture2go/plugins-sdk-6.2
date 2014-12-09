@@ -612,6 +612,18 @@ public class ClpSerializer {
 			return new SystemException();
 		}
 
+		if (className.equals("de.uhh.l2g.plugins.HostNameException")) {
+			return new de.uhh.l2g.plugins.HostNameException();
+		}
+
+		if (className.equals("de.uhh.l2g.plugins.HostServerTemplateException")) {
+			return new de.uhh.l2g.plugins.HostServerTemplateException();
+		}
+
+		if (className.equals("de.uhh.l2g.plugins.HostStreamerException")) {
+			return new de.uhh.l2g.plugins.HostStreamerException();
+		}
+
 		if (className.equals("de.uhh.l2g.plugins.NoSuchCoordinatorException")) {
 			return new de.uhh.l2g.plugins.NoSuchCoordinatorException();
 		}
