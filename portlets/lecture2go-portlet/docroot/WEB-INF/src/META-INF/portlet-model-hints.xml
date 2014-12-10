@@ -30,7 +30,7 @@
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Lastvideolist">
 		<field name="lastvideolistId" type="int" />
-		<field name="videoId" type="int" />
+		<field name="videoId" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Lectureseries">
 		<field name="number" type="String" />
