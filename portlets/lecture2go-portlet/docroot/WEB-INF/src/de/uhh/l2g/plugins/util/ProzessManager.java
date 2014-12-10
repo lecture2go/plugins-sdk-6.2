@@ -1,0 +1,443 @@
+package de.uhh.l2g.plugins.util;
+
+/***************************************************************************
+ * The Lecture2Go software is based on the liferay portal 6.1.1
+ * <http://www.liferay.com>
+ *
+ * Lecture2Go <http://lecture2go.uni-hamburg.de> is an open source
+ * platform for media management and distribution. Our goal is to
+ * support the free access to knowledge because this is a component
+ * of each democratic society. The open source software is aimed at
+ * academic institutions and has to strengthen the blended learning.
+ *
+ * All Lecture2Go plugins are continuously being developed and improved.
+ * For more details please visit <http://lecture2go-open-source.rrz.uni-hamburg.de>
+ *
+ * @Autor Lecture2Go Team
+ * @Version 1.0
+ * @Contact lecture2go-open-source@uni-hamburg.de
+ *
+ * Copyright (c) 2013 University of Hamburg / Computer and Data Center (RRZ)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ ***************************************************************************/
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
+import javax.portlet.ActionRequest;
+
+import org.springframework.beans.factory.xml.XmlBeanFactory;
+
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
+
+import de.uhh.l2g.plugins.model.Host;
+import de.uhh.l2g.plugins.model.Producer;
+import de.uhh.l2g.plugins.model.Video;
+import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
+
+/**
+ * The Class ProzessManager.
+ */
+public class ProzessManager {
+	/**
+	 * Deactivate download.
+	 *
+	 * @param model
+	 *            the model
+	 * @param video
+	 *            the video
+	 * @param host
+	 *            the host
+	 * @param producer
+	 *            the producer
+	 */
+	
+	Htaccess HTACCESS = new Htaccess();
+	
+	public void deactivateDownload(Video video, Host host, Producer producer) throws SystemException {
+		video.setDownloadLink(0);
+		VideoLocalServiceUtil.updateVideo(video);
+		// set RSS
+		try {
+			RSS(video, "mp4");
+			RSS(video, "mp3");
+			RSS(video, "m4v");
+			RSS(video, "m4a");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/";
+		HTACCESS.makeHtaccess(url, VideoLocalServiceUtil.getByProducerAndDownloadLink(producer.getProducerId(), 0));
+	}
+
+	/**
+	 * Activate download.
+	 *
+	 * @param model
+	 *            the model
+	 * @param video
+	 *            the video
+	 * @param host
+	 *            the host
+	 * @param producer
+	 *            the producer
+	 * @throws SystemException 
+	 */
+	public void activateDownload(Video video, Host host, Producer producer) throws SystemException {
+		video.setDownloadLink(1);
+		VideoLocalServiceUtil.updateVideo(video);
+		// set RSS
+		try {
+			RSS(video, "mp4");
+			RSS(video, "mp3");
+			RSS(video, "m4v");
+			RSS(video, "m4a");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/";
+		HTACCESS.makeHtaccess(url, VideoLocalServiceUtil.getByProducerAndDownloadLink(producer.getProducerId(), 0));
+	}
+
+	/**
+	 * Activate openaccess.
+	 *
+	 * @param model
+	 *            the model
+	 * @param video
+	 *            the video
+	 * @param host
+	 *            the host
+	 * @param producer
+	 *            the producer
+	 * @throws SystemException 
+	 */
+	public void activateOpenaccess(Video video, Host host, Producer producer) throws SystemException {
+		// first rename the file from the filesystem first
+		String path = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir();
+		String videoPreffix = video.getPreffix();
+		String videoSPreffix = video.getSPreffix();
+		try {
+			// then update the filesystem
+			// here rename
+			File fJpg = new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoSPreffix + ".jpg");
+			File fJpgm = new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoSPreffix + "_m.jpg");
+			File fJpgs = new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoSPreffix + "_s.jpg");
+			File fPdf = new File(path + "/" + videoSPreffix + ".pdf");
+			File fMp3 = new File(path + "/" + videoSPreffix + ".mp3");
+			File fM4v = new File(path + "/" + videoSPreffix + ".m4v");
+			File fMp4 = new File(path + "/" + videoSPreffix + ".mp4");
+			File fM4a = new File(path + "/" + videoSPreffix + ".m4a");
+			File fTar = new File(path + "/" + videoSPreffix + ".tar");
+			timeout();// wait for a while!
+			// if mp4 or mp3 exists
+			if (fMp4.isFile() || fMp3.isFile()) {
+				fJpg.renameTo(new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoPreffix + ".jpg"));
+				fJpgm.renameTo(new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoPreffix + "_m.jpg"));
+				fJpgs.renameTo(new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoPreffix + "_s.jpg"));
+				fPdf.renameTo(new File(path + "/" + videoPreffix + ".pdf"));
+				fMp3.renameTo(new File(path + "/" + videoPreffix + ".mp3"));
+				fM4v.renameTo(new File(path + "/" + videoPreffix + ".m4v"));
+				fMp4.renameTo(new File(path + "/" + videoPreffix + ".mp4"));
+				fM4a.renameTo(new File(path + "/" + videoPreffix + ".m4a"));
+				fTar.renameTo(new File(path + "/" + videoPreffix + ".tar"));
+				// then update the video in the database
+				video.setOpenAccess(1);
+				VideoLocalServiceUtil.updateVideo(video);
+			}
+		} catch (Exception e) {
+		}
+		// set RSS
+		try {
+			RSS(video, "mp4");
+			RSS(video, "mp3");
+			RSS(video, "m4v");
+			RSS(video, "m4a");
+		} catch (Exception e) {
+		}
+		// rss reload
+		RSS(video, "mp4");
+		RSS(video, "mp3");
+		RSS(video, "m4v");
+		RSS(video, "m4a");
+		String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/";
+		HTACCESS.makeHtaccess(url, VideoLocalServiceUtil.getByProducerAndDownloadLink(producer.getProducerId(), 0));
+		// refresh last video list
+		VideoLocalServiceUtil.createLastVideoList();
+	}
+
+	/**
+	 * Deactivate openaccess.
+	 *
+	 * @param video
+	 *            the video
+	 * @param model
+	 *            the model
+	 * @param host
+	 *            the host
+	 * @param producer
+	 *            the producer
+	 */
+	public void deactivateOpenaccess(Video video, Host host, Producer producer) {
+		// then update the filesystem
+		String path = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir();
+		String videoPreffix = video.getPreffix();
+		// here rename
+		File fJpg = new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoPreffix + ".jpg");
+		File fJpgm = new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoPreffix + "_m.jpg");
+		File fJpgs = new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoPreffix + "_s.jpg");
+		File fPdf = new File(path + "/" + videoPreffix + ".pdf");
+		File fMp3 = new File(path + "/" + videoPreffix + ".mp3");
+		File fM4v = new File(path + "/" + videoPreffix + ".m4v");
+		File fMp4 = new File(path + "/" + videoPreffix + ".mp4");
+		File fM4a = new File(path + "/" + videoPreffix + ".m4a");
+		File fTar = new File(path + "/" + videoPreffix + ".tar");
+		// wait for a wile!
+		timeout();
+		if (fMp4.isFile() || fMp3.isFile()) {
+			// first update the video in the database and create secure name
+			((VideoDao) getDaoBeanFactory().getBean("videoDao")).deactivateOpenaccess(video.getId());
+			Video v = ((VideoDao) getDaoBeanFactory().getBean("videoDao")).getById(video.getId()).iterator().next();
+			String vidSPreffix = v.getSPreffix();
+			// then rename all system files
+			fJpg.renameTo(new File(PropsUtil.get("lecture2go.images.system.path") + "/" + vidSPreffix + ".jpg"));
+			fJpgm.renameTo(new File(PropsUtil.get("lecture2go.images.system.path") + "/" + vidSPreffix + "_m.jpg"));
+			fJpgs.renameTo(new File(PropsUtil.get("lecture2go.images.system.path") + "/" + vidSPreffix + "_s.jpg"));
+			fPdf.renameTo(new File(path + "/" + vidSPreffix + ".pdf"));
+			fMp3.renameTo(new File(path + "/" + vidSPreffix + ".mp3"));
+			fM4v.renameTo(new File(path + "/" + vidSPreffix + ".m4v"));
+			fMp4.renameTo(new File(path + "/" + vidSPreffix + ".mp4"));
+			fM4a.renameTo(new File(path + "/" + vidSPreffix + ".m4a"));
+			fTar.renameTo(new File(path + "/" + vidSPreffix + ".tar"));
+		}
+		// delete all symbolic links
+		File symLinkMp4 = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + video.getPreffix() + ".mp4");
+		File symLinkM4v = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + video.getPreffix() + ".m4v");
+		File symLinkM4a = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + video.getPreffix() + ".m4a");
+		File symLinkMp3 = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + video.getPreffix() + ".mp3");
+		symLinkMp4.delete();
+		symLinkM4v.delete();
+		symLinkM4a.delete();
+		symLinkMp3.delete();
+		// set RSS
+		try {
+			RSS(video, "mp4");
+			RSS(video, "mp3");
+			RSS(video, "m4v");
+			RSS(video, "m4a");
+		} catch (Exception e) {
+		}
+		// delete video from videohitlist
+		((VideoDao) getDaoBeanFactory().getBean("videoDao")).deleteVideoFromVideoHitListById(video.getId());
+		String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/";
+		HTACCESS.makeHtaccess(url, ((VideoDao) getDaoBeanFactory().getBean("videoDao")).getLockedByProducerId(producer.getId()));
+		// refresh last video list
+		((VideoDao) getDaoBeanFactory().getBean("videoDao")).createLastVideoList(0, 30, 0, "all");
+	}
+
+	/**
+	 * Delete thumbnails.
+	 *
+	 * @param video
+	 *            the video
+	 */
+	public void deleteThumbnails(Video video) {
+		try {
+			String videoPreffix = "";
+			if (video.isOpenaccess())
+				videoPreffix = video.getPreffix();
+			else
+				videoPreffix = video.getSPreffix();
+			File jpgFile = new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoPreffix + ".jpg");
+			File jpgmFile = new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoPreffix + "_m.jpg");
+			File jpgsFile = new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoPreffix + "_s.jpg");
+			jpgFile.delete();
+			jpgmFile.delete();
+			jpgsFile.delete();
+		} catch (NullPointerException npe) {
+		}
+	}
+
+	/**
+	 * Delete.
+	 *
+	 * @param model
+	 *            the model
+	 * @param video
+	 *            the video
+	 * @param host
+	 *            the host
+	 * @param producer
+	 *            the producer
+	 * @param request
+	 *            the request
+	 */
+	public void delete(ProducerMetaDataModel model, Video video, Host host, Producer producer, ActionRequest request) {
+		model.setAction("loeschen");
+		int metadataId = video.getMetadataId();
+		// delete all segment images from repository location first!
+		List<Mark> segmentList = ((SegmentDao) getDaoBeanFactory().getBean("segmentDao")).getSegmentsByVideoId(video.getId());
+		((SegmentDao) getDaoBeanFactory().getBean("segmentDao")).deleteThumbhailsFromSegments(segmentList);
+		// delete all segment data from table
+		((SegmentDao) getDaoBeanFactory().getBean("segmentDao")).deleteByVideoId(video.getId());
+		// delete license
+		((LicenseDao) getDaoBeanFactory().getBean("licenseDao")).deleteByIdVideoId(video.getId());
+		// delete all data contents
+		((MetadataDao) getDaoBeanFactory().getBean("metadataDao")).deleteById(metadataId);
+		((VideoDao) getDaoBeanFactory().getBean("videoDao")).deleteById(video.getId());
+		// delete video from videohitlist
+		((VideoDao) getDaoBeanFactory().getBean("videoDao")).deleteVideoFromVideoHitListById(video.getId());
+		String videoPreffix = "";
+		if (video.isOpenaccess())
+			videoPreffix = video.getPreffix();
+		else
+			videoPreffix = video.getSPreffix();
+		try {
+			// delete all video contents
+			if (video.getFilename() != null) {
+				File mp3File = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".mp3");
+				File m4aFile = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".m4a");
+				File mp4vFile = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".m4v");
+				File pdfFile = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".pdf");
+				File mp4File = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".mp4");
+				File tarFile = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".tar");
+				mp3File.delete();
+				m4aFile.delete();
+				mp4vFile.delete();
+				pdfFile.delete();
+				mp4File.delete();
+				tarFile.delete();
+				deleteThumbnails(video);
+			}
+			// delete all symbolic links
+			File symLinkMp4 = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".mp4");
+			File symLinkM4v = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".m4v");
+			File symLinkM4a = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".m4a");
+			File symLinkMp3 = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".mp3");
+			File symLinkJpg = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".jpg");
+			symLinkMp4.delete();
+			symLinkM4v.delete();
+			symLinkM4a.delete();
+			symLinkMp3.delete();
+			symLinkJpg.delete();
+		} catch (NullPointerException npe) {
+		}
+		// set RSS
+		try {
+			RSS(video, "mp4");
+			RSS(video, "mp3");
+			RSS(video, "m4v");
+			RSS(video, "m4a");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// update uploads for producer
+		((ProducerDao) getDaoBeanFactory().getBean("producerDao")).updateNumberOfProductionsByUserId(producer.getId());
+	}
+
+	/**
+	 * Rss.
+	 *
+	 * @param video
+	 *            the video
+	 * @param type
+	 *            the type
+	 * @param model
+	 *            the model
+	 */
+	public void RSS(Video video, String type) {
+		// RSS generate for this lecture
+		try {
+			List<Video> videoList = ((VideoDao) getDaoBeanFactory().getBean("videoDao")).getOpenAccessVideosByLectureseriesNumberAndFillWP(video.getLectureseriesId(), "DESC");
+			String feedName = "";
+			if (type.equals("mp4"))
+				feedName = "" + video.getLectureseriesId() + ".mp4.xml";
+			if (type.equals("mp3"))
+				feedName = "" + video.getLectureseriesId() + ".mp3.xml";
+			if (type.equals("m4a"))
+				feedName = "" + video.getLectureseriesId() + ".m4a.xml";
+			if (type.equals("m4v"))
+				feedName = "" + video.getLectureseriesId() + ".m4v.xml";
+			getRssManager().setRssFilename(feedName);
+			getRssManager().setTitle(video.getObjectLectureseries().getName());
+			if (type.equals("mp4"))
+				getRssManager().createRssFile(videoList, "mp4");
+			if (type.equals("mp3"))
+				getRssManager().createRssFile(videoList, "mp3");
+			if (type.equals("m4a"))
+				getRssManager().createRssFile(videoList, "m4a");
+			if (type.equals("m4v"))
+				getRssManager().createRssFile(videoList, "m4v");
+		} catch (Exception e) {
+			try {
+				if (type.equals("mp4"))
+					getRssManager().createRssFile(null, "mp4");
+				if (type.equals("mp3"))
+					getRssManager().createRssFile(null, "mp3");
+				if (type.equals("m4a"))
+					getRssManager().createRssFile(null, "m4a");
+				if (type.equals("m4v"))
+					getRssManager().createRssFile(null, "m4v");
+			} catch (IOException ie) {
+			}
+		}
+		// RSS end
+	}
+
+	/**
+	 * Timeout.
+	 */
+	private void timeout() {
+		double a = 0;
+		for (int i = 0; i <= 10000000; i++) {
+			a++;
+			a = Math.exp(a);
+		}
+	}
+
+
+
+	/**
+	 * Adds the new media directory for producer.
+	 *
+	 * @param host
+	 *            the host
+	 * @param producer
+	 *            the producer
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 */
+	public void addNewMediaDirectoryForProducer(Host host, Producer producer) throws IOException {
+		File folder = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/");
+		if (!folder.exists()) {
+			if (folder.mkdir()) {
+				Runtime runtime = Runtime.getRuntime();
+				String[] cmdArray = { PropsUtil.get("lecture2go.shell.bin"), "-c", "chown nobody " + folder.getAbsolutePath() };
+				runtime.exec(cmdArray);
+				String[] cmdArray1 = { PropsUtil.get("lecture2go.shell.bin"), "-c", "chown nobody:nobody " + folder.getAbsolutePath() };
+				runtime.exec(cmdArray1);
+				String[] cmdArray2 = { PropsUtil.get("lecture2go.shell.bin"), "-c", "chmod 701 " + folder.getAbsolutePath() };
+				runtime.exec(cmdArray2);
+				File prodFolder = new File(PropsUtil.get("lecture2go.httpstreaming.video.repository") + "/" + producer.getInstitutionId() + "l2g" + producer.getHomeDir());
+				if (!prodFolder.exists()) {
+					String cmd = "ln -s " + folder.getAbsolutePath() + " " + prodFolder.getAbsolutePath();
+					runtime.exec(cmd);
+				}
+			}
+		}
+	}
+}
