@@ -17,6 +17,7 @@ package de.uhh.l2g.plugins.model;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,6 +55,14 @@ public class HostWrapper implements Host, ModelWrapper<Host> {
 		attributes.put("port", getPort());
 		attributes.put("serverRoot", getServerRoot());
 		attributes.put("name", getName());
+		attributes.put("serverTemplate", getServerTemplate());
+		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
+		attributes.put("createDate", getCreateDate());
+		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("uuid", getUuid());
 
 		return attributes;
 	}
@@ -94,6 +103,54 @@ public class HostWrapper implements Host, ModelWrapper<Host> {
 
 		if (name != null) {
 			setName(name);
+		}
+
+		String serverTemplate = (String)attributes.get("serverTemplate");
+
+		if (serverTemplate != null) {
+			setServerTemplate(serverTemplate);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
+		}
+
+		Date createDate = (Date)attributes.get("createDate");
+
+		if (createDate != null) {
+			setCreateDate(createDate);
+		}
+
+		Date modifiedDate = (Date)attributes.get("modifiedDate");
+
+		if (modifiedDate != null) {
+			setModifiedDate(modifiedDate);
+		}
+
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
 		}
 	}
 
@@ -235,6 +292,188 @@ public class HostWrapper implements Host, ModelWrapper<Host> {
 	@Override
 	public void setName(java.lang.String name) {
 		_host.setName(name);
+	}
+
+	/**
+	* Returns the server template of this host.
+	*
+	* @return the server template of this host
+	*/
+	@Override
+	public java.lang.String getServerTemplate() {
+		return _host.getServerTemplate();
+	}
+
+	/**
+	* Sets the server template of this host.
+	*
+	* @param serverTemplate the server template of this host
+	*/
+	@Override
+	public void setServerTemplate(java.lang.String serverTemplate) {
+		_host.setServerTemplate(serverTemplate);
+	}
+
+	/**
+	* Returns the group ID of this host.
+	*
+	* @return the group ID of this host
+	*/
+	@Override
+	public long getGroupId() {
+		return _host.getGroupId();
+	}
+
+	/**
+	* Sets the group ID of this host.
+	*
+	* @param groupId the group ID of this host
+	*/
+	@Override
+	public void setGroupId(long groupId) {
+		_host.setGroupId(groupId);
+	}
+
+	/**
+	* Returns the company ID of this host.
+	*
+	* @return the company ID of this host
+	*/
+	@Override
+	public long getCompanyId() {
+		return _host.getCompanyId();
+	}
+
+	/**
+	* Sets the company ID of this host.
+	*
+	* @param companyId the company ID of this host
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_host.setCompanyId(companyId);
+	}
+
+	/**
+	* Returns the user ID of this host.
+	*
+	* @return the user ID of this host
+	*/
+	@Override
+	public long getUserId() {
+		return _host.getUserId();
+	}
+
+	/**
+	* Sets the user ID of this host.
+	*
+	* @param userId the user ID of this host
+	*/
+	@Override
+	public void setUserId(long userId) {
+		_host.setUserId(userId);
+	}
+
+	/**
+	* Returns the user uuid of this host.
+	*
+	* @return the user uuid of this host
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public java.lang.String getUserUuid()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _host.getUserUuid();
+	}
+
+	/**
+	* Sets the user uuid of this host.
+	*
+	* @param userUuid the user uuid of this host
+	*/
+	@Override
+	public void setUserUuid(java.lang.String userUuid) {
+		_host.setUserUuid(userUuid);
+	}
+
+	/**
+	* Returns the user name of this host.
+	*
+	* @return the user name of this host
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _host.getUserName();
+	}
+
+	/**
+	* Sets the user name of this host.
+	*
+	* @param userName the user name of this host
+	*/
+	@Override
+	public void setUserName(java.lang.String userName) {
+		_host.setUserName(userName);
+	}
+
+	/**
+	* Returns the create date of this host.
+	*
+	* @return the create date of this host
+	*/
+	@Override
+	public java.util.Date getCreateDate() {
+		return _host.getCreateDate();
+	}
+
+	/**
+	* Sets the create date of this host.
+	*
+	* @param createDate the create date of this host
+	*/
+	@Override
+	public void setCreateDate(java.util.Date createDate) {
+		_host.setCreateDate(createDate);
+	}
+
+	/**
+	* Returns the modified date of this host.
+	*
+	* @return the modified date of this host
+	*/
+	@Override
+	public java.util.Date getModifiedDate() {
+		return _host.getModifiedDate();
+	}
+
+	/**
+	* Sets the modified date of this host.
+	*
+	* @param modifiedDate the modified date of this host
+	*/
+	@Override
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_host.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Returns the uuid of this host.
+	*
+	* @return the uuid of this host
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _host.getUuid();
+	}
+
+	/**
+	* Sets the uuid of this host.
+	*
+	* @param uuid the uuid of this host
+	*/
+	@Override
+	public void setUuid(java.lang.String uuid) {
+		_host.setUuid(uuid);
 	}
 
 	@Override

@@ -280,6 +280,13 @@ public class VideoLocalServiceWrapper implements VideoLocalService,
 	}
 
 	@Override
+	public de.uhh.l2g.plugins.model.Video getLatestVideoForLectureseries(
+		java.lang.Long lectureseriesId, int begin, int end) {
+		return _videoLocalService.getLatestVideoForLectureseries(lectureseriesId,
+			begin, end);
+	}
+
+	@Override
 	public int unlinkLectureseriesFromVideos(java.lang.Long lectureseriesId) {
 		return _videoLocalService.unlinkLectureseriesFromVideos(lectureseriesId);
 	}
@@ -314,6 +321,19 @@ public class VideoLocalServiceWrapper implements VideoLocalService,
 	}
 
 	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Video> getByProducerAndDownloadLink(
+		java.lang.Long producerId, int downloadLink)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _videoLocalService.getByProducerAndDownloadLink(producerId,
+			downloadLink);
+	}
+
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Video> getLatestVideos() {
+		return _videoLocalService.getLatestVideos();
+	}
+
+	@Override
 	public de.uhh.l2g.plugins.model.Video getVideo(java.lang.Long videoId) {
 		return _videoLocalService.getVideo(videoId);
 	}
@@ -321,6 +341,12 @@ public class VideoLocalServiceWrapper implements VideoLocalService,
 	@Override
 	public org.json.JSONObject getJSONVideo(java.lang.Long videoId) {
 		return _videoLocalService.getJSONVideo(videoId);
+	}
+
+	@Override
+	public void createLastVideoList()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_videoLocalService.createLastVideoList();
 	}
 
 	/**

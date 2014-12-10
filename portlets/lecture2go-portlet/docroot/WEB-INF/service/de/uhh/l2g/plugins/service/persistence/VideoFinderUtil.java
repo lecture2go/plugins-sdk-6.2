@@ -21,8 +21,18 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @author Iavor Sturm
  */
 public class VideoFinderUtil {
-	public static int unlinkLectureseriesFromVideos(long lectureseriesId) {
+	public static int unlinkLectureseriesFromVideos(
+		java.lang.Long lectureseriesId) {
 		return getFinder().unlinkLectureseriesFromVideos(lectureseriesId);
+	}
+
+	public static de.uhh.l2g.plugins.model.Video findLatestVideoForLectureseries(
+		java.lang.Long lectureseriesId) {
+		return getFinder().findLatestVideoForLectureseries(lectureseriesId);
+	}
+
+	public static java.util.List<de.uhh.l2g.plugins.model.Video> findLatestVideos() {
+		return getFinder().findLatestVideos();
 	}
 
 	public static VideoFinder getFinder() {

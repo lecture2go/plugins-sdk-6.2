@@ -271,6 +271,12 @@ public class VideoLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static de.uhh.l2g.plugins.model.Video getLatestVideoForLectureseries(
+		java.lang.Long lectureseriesId, int begin, int end) {
+		return getService()
+				   .getLatestVideoForLectureseries(lectureseriesId, begin, end);
+	}
+
 	public static int unlinkLectureseriesFromVideos(
 		java.lang.Long lectureseriesId) {
 		return getService().unlinkLectureseriesFromVideos(lectureseriesId);
@@ -301,6 +307,17 @@ public class VideoLocalServiceUtil {
 				   .getByProducerAndLectureseries(producerId, lectureseriesId);
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByProducerAndDownloadLink(
+		java.lang.Long producerId, int downloadLink)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getByProducerAndDownloadLink(producerId, downloadLink);
+	}
+
+	public static java.util.List<de.uhh.l2g.plugins.model.Video> getLatestVideos() {
+		return getService().getLatestVideos();
+	}
+
 	public static de.uhh.l2g.plugins.model.Video getVideo(
 		java.lang.Long videoId) {
 		return getService().getVideo(videoId);
@@ -308,6 +325,11 @@ public class VideoLocalServiceUtil {
 
 	public static org.json.JSONObject getJSONVideo(java.lang.Long videoId) {
 		return getService().getJSONVideo(videoId);
+	}
+
+	public static void createLastVideoList()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().createLastVideoList();
 	}
 
 	public static void clearService() {

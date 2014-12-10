@@ -202,6 +202,8 @@ AUI().use(
 
 function test() {
 	var tt = <%=VideoLocalServiceUtil.getJSONVideo(reqVideo.getVideoId()).toString()%>;
+	<%if(!reqVideo.getFilename().equals("")){%>
 	document.getElementById("fls").innerHTML = tmpl("template-download", tt);
+	<%}%>
 }
 </script>

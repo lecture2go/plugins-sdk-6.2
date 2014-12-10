@@ -302,6 +302,11 @@ public class LectureseriesLocalServiceWrapper
 			semester, facultyId, producerId);
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getAllLectureseriesWhithOpenaccessVideos() {
+		return _lectureseriesLocalService.getAllLectureseriesWhithOpenaccessVideos();
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

@@ -75,14 +75,14 @@ public interface LastvideolistModel extends BaseModel<Lastvideolist> {
 	 *
 	 * @return the video ID of this lastvideolist
 	 */
-	public int getVideoId();
+	public long getVideoId();
 
 	/**
 	 * Sets the video ID of this lastvideolist.
 	 *
 	 * @param videoId the video ID of this lastvideolist
 	 */
-	public void setVideoId(int videoId);
+	public void setVideoId(long videoId);
 
 	@Override
 	public boolean isNew();

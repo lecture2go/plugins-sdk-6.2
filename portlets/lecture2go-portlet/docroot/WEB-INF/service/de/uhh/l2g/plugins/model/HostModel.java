@@ -15,13 +15,17 @@
 package de.uhh.l2g.plugins.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.Serializable;
+
+import java.util.Date;
 
 /**
  * The base model interface for the Host service. Represents a row in the &quot;LG_Host&quot; database table, with each column mapped to a property of this class.
@@ -36,7 +40,7 @@ import java.io.Serializable;
  * @see de.uhh.l2g.plugins.model.impl.HostModelImpl
  * @generated
  */
-public interface HostModel extends BaseModel<Host> {
+public interface HostModel extends BaseModel<Host>, GroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -144,6 +148,150 @@ public interface HostModel extends BaseModel<Host> {
 	 * @param name the name of this host
 	 */
 	public void setName(String name);
+
+	/**
+	 * Returns the server template of this host.
+	 *
+	 * @return the server template of this host
+	 */
+	@AutoEscape
+	public String getServerTemplate();
+
+	/**
+	 * Sets the server template of this host.
+	 *
+	 * @param serverTemplate the server template of this host
+	 */
+	public void setServerTemplate(String serverTemplate);
+
+	/**
+	 * Returns the group ID of this host.
+	 *
+	 * @return the group ID of this host
+	 */
+	@Override
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this host.
+	 *
+	 * @param groupId the group ID of this host
+	 */
+	@Override
+	public void setGroupId(long groupId);
+
+	/**
+	 * Returns the company ID of this host.
+	 *
+	 * @return the company ID of this host
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this host.
+	 *
+	 * @param companyId the company ID of this host
+	 */
+	@Override
+	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the user ID of this host.
+	 *
+	 * @return the user ID of this host
+	 */
+	@Override
+	public long getUserId();
+
+	/**
+	 * Sets the user ID of this host.
+	 *
+	 * @param userId the user ID of this host
+	 */
+	@Override
+	public void setUserId(long userId);
+
+	/**
+	 * Returns the user uuid of this host.
+	 *
+	 * @return the user uuid of this host
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public String getUserUuid() throws SystemException;
+
+	/**
+	 * Sets the user uuid of this host.
+	 *
+	 * @param userUuid the user uuid of this host
+	 */
+	@Override
+	public void setUserUuid(String userUuid);
+
+	/**
+	 * Returns the user name of this host.
+	 *
+	 * @return the user name of this host
+	 */
+	@AutoEscape
+	@Override
+	public String getUserName();
+
+	/**
+	 * Sets the user name of this host.
+	 *
+	 * @param userName the user name of this host
+	 */
+	@Override
+	public void setUserName(String userName);
+
+	/**
+	 * Returns the create date of this host.
+	 *
+	 * @return the create date of this host
+	 */
+	@Override
+	public Date getCreateDate();
+
+	/**
+	 * Sets the create date of this host.
+	 *
+	 * @param createDate the create date of this host
+	 */
+	@Override
+	public void setCreateDate(Date createDate);
+
+	/**
+	 * Returns the modified date of this host.
+	 *
+	 * @return the modified date of this host
+	 */
+	@Override
+	public Date getModifiedDate();
+
+	/**
+	 * Sets the modified date of this host.
+	 *
+	 * @param modifiedDate the modified date of this host
+	 */
+	@Override
+	public void setModifiedDate(Date modifiedDate);
+
+	/**
+	 * Returns the uuid of this host.
+	 *
+	 * @return the uuid of this host
+	 */
+	@AutoEscape
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this host.
+	 *
+	 * @param uuid the uuid of this host
+	 */
+	public void setUuid(String uuid);
 
 	@Override
 	public boolean isNew();

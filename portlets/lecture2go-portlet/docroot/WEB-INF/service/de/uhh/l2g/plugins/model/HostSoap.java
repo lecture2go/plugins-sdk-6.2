@@ -17,6 +17,7 @@ package de.uhh.l2g.plugins.model;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,6 +36,14 @@ public class HostSoap implements Serializable {
 		soapModel.setPort(model.getPort());
 		soapModel.setServerRoot(model.getServerRoot());
 		soapModel.setName(model.getName());
+		soapModel.setServerTemplate(model.getServerTemplate());
+		soapModel.setGroupId(model.getGroupId());
+		soapModel.setCompanyId(model.getCompanyId());
+		soapModel.setUserId(model.getUserId());
+		soapModel.setUserName(model.getUserName());
+		soapModel.setCreateDate(model.getCreateDate());
+		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setUuid(model.getUuid());
 
 		return soapModel;
 	}
@@ -135,10 +144,82 @@ public class HostSoap implements Serializable {
 		_name = name;
 	}
 
+	public String getServerTemplate() {
+		return _serverTemplate;
+	}
+
+	public void setServerTemplate(String serverTemplate) {
+		_serverTemplate = serverTemplate;
+	}
+
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
+	public long getUserId() {
+		return _userId;
+	}
+
+	public void setUserId(long userId) {
+		_userId = userId;
+	}
+
+	public String getUserName() {
+		return _userName;
+	}
+
+	public void setUserName(String userName) {
+		_userName = userName;
+	}
+
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
+	}
+
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
+	}
+
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
+	}
+
 	private long _hostId;
 	private String _protocol;
 	private String _streamer;
 	private int _port;
 	private String _serverRoot;
 	private String _name;
+	private String _serverTemplate;
+	private long _groupId;
+	private long _companyId;
+	private long _userId;
+	private String _userName;
+	private Date _createDate;
+	private Date _modifiedDate;
+	private String _uuid;
 }

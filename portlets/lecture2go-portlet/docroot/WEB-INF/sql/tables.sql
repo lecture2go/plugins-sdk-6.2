@@ -10,7 +10,15 @@ create table LG_Host (
 	streamer VARCHAR(75) null,
 	port INTEGER,
 	serverRoot VARCHAR(75) null,
-	name VARCHAR(75) null
+	name VARCHAR(75) null,
+	serverTemplate VARCHAR(75) null,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	uuid_ VARCHAR(75) null
 );
 
 create table LG_Institution (
@@ -137,6 +145,17 @@ create table LG_Sys (
 	sysId INTEGER not null primary key,
 	version VARCHAR(75) null,
 	setupWizard INTEGER
+);
+
+create table LG_TestEntity (
+	testEntityId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	testField VARCHAR(75) null
 );
 
 create table LG_Upload (

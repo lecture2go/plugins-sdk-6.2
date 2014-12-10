@@ -18,5 +18,10 @@ package de.uhh.l2g.plugins.service.persistence;
  * @author Iavor Sturm
  */
 public interface VideoFinder {
-	public int unlinkLectureseriesFromVideos(long lectureseriesId);
+	public int unlinkLectureseriesFromVideos(java.lang.Long lectureseriesId);
+
+	public de.uhh.l2g.plugins.model.Video findLatestVideoForLectureseries(
+		java.lang.Long lectureseriesId);
+
+	public java.util.List<de.uhh.l2g.plugins.model.Video> findLatestVideos();
 }

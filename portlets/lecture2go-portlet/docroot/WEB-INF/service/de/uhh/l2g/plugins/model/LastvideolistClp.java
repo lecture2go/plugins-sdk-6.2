@@ -87,7 +87,7 @@ public class LastvideolistClp extends BaseModelImpl<Lastvideolist>
 			setLastvideolistId(lastvideolistId);
 		}
 
-		Integer videoId = (Integer)attributes.get("videoId");
+		Long videoId = (Long)attributes.get("videoId");
 
 		if (videoId != null) {
 			setVideoId(videoId);
@@ -118,19 +118,19 @@ public class LastvideolistClp extends BaseModelImpl<Lastvideolist>
 	}
 
 	@Override
-	public int getVideoId() {
+	public long getVideoId() {
 		return _videoId;
 	}
 
 	@Override
-	public void setVideoId(int videoId) {
+	public void setVideoId(long videoId) {
 		_videoId = videoId;
 
 		if (_lastvideolistRemoteModel != null) {
 			try {
 				Class<?> clazz = _lastvideolistRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setVideoId", int.class);
+				Method method = clazz.getMethod("setVideoId", long.class);
 
 				method.invoke(_lastvideolistRemoteModel, videoId);
 			}
@@ -294,6 +294,6 @@ public class LastvideolistClp extends BaseModelImpl<Lastvideolist>
 	}
 
 	private int _lastvideolistId;
-	private int _videoId;
+	private long _videoId;
 	private BaseModel<?> _lastvideolistRemoteModel;
 }

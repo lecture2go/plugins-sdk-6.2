@@ -15,6 +15,8 @@
 package de.uhh.l2g.plugins.service.impl;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -27,20 +29,24 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PropsUtil;
 
+import de.uhh.l2g.admin.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.NoSuchInstitutionException;
 import de.uhh.l2g.plugins.NoSuchProducerException;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
+import de.uhh.l2g.plugins.model.Lastvideolist;
+import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.Metadata;
 import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.impl.HostImpl;
 import de.uhh.l2g.plugins.model.impl.InstitutionImpl;
+import de.uhh.l2g.plugins.model.impl.LastvideolistImpl;
 import de.uhh.l2g.plugins.model.impl.MetadataImpl;
 import de.uhh.l2g.plugins.model.impl.ProducerImpl;
 import de.uhh.l2g.plugins.model.impl.VideoImpl;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
-import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
+import de.uhh.l2g.plugins.service.LastvideolistLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.VideoLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.VideoFinderUtil;
 import de.uhh.l2g.plugins.util.FFmpegManager;
@@ -71,6 +77,10 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	 * de.uhh.l2g.plugins.service.VideoLocalServiceUtil} to access the video
 	 * local service.
 	 */
+	public Video getLatestVideoForLectureseries(Long lectureseriesId, int begin, int end) {
+		return VideoFinderUtil.findLatestVideoForLectureseries(lectureseriesId);
+	}
+
 	public int unlinkLectureseriesFromVideos(Long lectureseriesId) {
 		return VideoFinderUtil.unlinkLectureseriesFromVideos(lectureseriesId);
 	}
@@ -94,82 +104,16 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		List<Video> vl = videoPersistence.findByProducerAndLectureseries(producerId, lectureseriesId);
 		return vl;
 	}
-//	
-//	private void deleteM4a(Video video) {
-//		// get the producers home directory
-//		String producerHomeDir = ProducerLocalServiceUtil.getProducer(video.getProducerId()).getHomeDir();
-//		Host host = HostLocalServiceUtil.getHost(video.getHostId());
-//		String preffix = "";
-//		if (video.getOpenAccess()==1) preffix = video.getPreffix();
-//		else preffix = video.getSPreffix();
-//		// delete this video from the filesystem
-//		File originalFile = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producerHomeDir + "/" + preffix + ".m4a");
-//		originalFile.delete();
-//		// delete symbolic link
-//		File symLinkM4a = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + video.getPreffix() + ".m4a");
-//		symLinkM4a.delete();
-//		//update RSS
-//		((ProzessManager)getUtilityBeanFactory().getBean("prozessManager")).RSS(video,"m4a", model);
-//	}
-//
-//	/**
-//	 * Delete m4v.
-//	 *
-//	 * @param model the model
-//	 */
-//	private void deleteM4v(ProducerVideoDataInputEditModel model) {
-//		// get the producers home directory
-//		String producerHomeDir = model.getProducer().getHomeDir();
-//		Host host = model.getHost();
-//		Video video = model.getVideo();
-//		String preffix = "";
-//		if (video.isOpenaccess()) preffix = video.getPreffix();
-//		else preffix = video.getSPreffix();
-//		// delete this video from the filesystem
-//		File originalFile = new File(L2goPropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producerHomeDir + "/" + preffix + ".m4v");
-//		originalFile.delete();
-//		// delete symbolic link
-//		File symLinkM4v = new File(L2goPropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + video.getPreffix() + ".m4v");
-//		symLinkM4v.delete();
-//		//update RSS
-//		((ProzessManager)getUtilityBeanFactory().getBean("prozessManager")).RSS(video,"m4v", model);
-//	}
-//
-//	/**
-//	 * Delete pdf.
-//	 *
-//	 * @param model the model
-//	 */
-//	private void deletePdf(ProducerVideoDataInputEditModel model) {
-//		// get the producers home directory
-//		String producerHomeDir = model.getProducer().getHomeDir();
-//		Host host = model.getHost();
-//		Video video = model.getVideo();
-//		String preffix = "";
-//		if (video.isOpenaccess()) preffix = video.getPreffix();
-//		else preffix = video.getSPreffix();
-//		// delete this video from the filesystem
-//		File originalFile = new File(L2goPropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producerHomeDir + "/" + preffix + ".pdf");
-//		originalFile.delete();
-//	}
-//
-//	/**
-//	 * Delete tar.
-//	 *
-//	 * @param model the model
-//	 */
-//	private void deleteTar(ProducerVideoDataInputEditModel model) {
-//		// get the producers home directory
-//		String producerHomeDir = model.getProducer().getHomeDir();
-//		Host host = model.getHost();
-//		Video video = model.getVideo();
-//		String preffix = "";
-//		if (video.isOpenaccess()) preffix = video.getPreffix();
-//		else preffix = video.getSPreffix();
-//		// delete this video from the filesystem
-//		File originalFile = new File(L2goPropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producerHomeDir + "/" + preffix + ".tar");
-//		originalFile.delete();
-//	}
+
+	public List<Video> getByProducerAndDownloadLink(Long producerId, int downloadLink) throws SystemException {
+		List<Video> vl = videoPersistence.findByProducerAndDownloadLink(producerId, downloadLink);
+		return vl;
+	}
+	
+	
+	public List<Video> getLatestVideos(){
+		return VideoFinderUtil.findLatestVideos();
+	}
 
 	@Override
 	public Video getVideo(Long videoId){
@@ -210,8 +154,10 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		if (video_shortname.length() > 45)
 			video_shortname = video_shortname.substring(0, 45) + "...";
 		objectVideo.setShortTitle(video_shortname);
-
-		objectVideo.setShortName(objectMetadata.getCreator().split(" ")[objectMetadata.getCreator().split(" ").length - 1]);
+		
+		try{
+			objectVideo.setShortName(objectMetadata.getCreator().split(" ")[objectMetadata.getCreator().split(" ").length - 1]);
+		}catch(NullPointerException npe){}
 
 		// images
 		String image = "";
@@ -261,10 +207,15 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		// extract time and date from the originalFileName
 		String[] parameter = objectVideo.getGenerationDate().split("\\_");
 		// check parameter 3 - this is the date
-		String l2gDate = parameter[0];
-		String l2gTime = parameter[1];
-		objectVideo.setDate(l2gDate.split("\\-")[2] + "." + l2gDate.split("\\-")[1] + "." + l2gDate.split("\\-")[0] + " - " + l2gTime.split("\\-")[0] + ":" + l2gTime.split("\\-")[1]);
-		objectVideo.setSimpleDate(l2gDate.split("\\-")[2] + "." + l2gDate.split("\\-")[1] + "." + l2gDate.split("\\-")[0]);
+		String l2gDate = "";
+		String l2gTime = ""; 
+		try{
+			l2gDate = parameter[0];
+			l2gTime = parameter[1];
+			objectVideo.setDate(l2gDate.split("\\-")[2] + "." + l2gDate.split("\\-")[1] + "." + l2gDate.split("\\-")[0] + " - " + l2gTime.split("\\-")[0] + ":" + l2gTime.split("\\-")[1]);
+			objectVideo.setSimpleDate(l2gDate.split("\\-")[2] + "." + l2gDate.split("\\-")[1] + "." + l2gDate.split("\\-")[0]);
+		}catch(ArrayIndexOutOfBoundsException ai){}
+		
 		// set preffix and filename
 		String preffix = "";
 		String filename = "";
@@ -433,5 +384,19 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		}
 		
 		return jsonObject;
+	}
+	
+	public void createLastVideoList() throws SystemException {
+		List<Video> vlist = this.getLatestVideos();
+		//refresh the whole video list in the table
+		lastvideolistPersistence.removeAll();
+		Iterator<Video> vIt = vlist.listIterator();
+		while(vIt.hasNext()){
+			Video v = vIt.next();
+			//save videos in table
+			Lastvideolist lastvideolist = new LastvideolistImpl();
+			lastvideolist.setVideoId(v.getVideoId());
+			LastvideolistLocalServiceUtil.addLastvideolist(lastvideolist);
+		}
 	}
 }
