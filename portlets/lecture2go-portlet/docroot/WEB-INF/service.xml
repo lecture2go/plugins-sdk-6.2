@@ -241,14 +241,20 @@
         <column name="date" type="Date"></column>
     </entity>
     <entity name="Segment" local-service="true" remote-service="false">
-        <column name="segmentId" type="int" primary="true" id-type="increment"></column>
-        <column name="videoId" type="int"></column>
+        <column name="segmentId" type="long" primary="true" id-type="increment"></column>
+        <column name="videoId" type="long"></column>
         <column name="start" type="String"></column>
         <column name="title" type="String"></column>
         <column name="description" type="String"></column>
         <column name="end" type="String"></column>
-        <column name="chapter" type="String"></column>
-        <column name="userId" type="int"></column>
+        <column name="chapter" type="int"></column>
+        <column name="userId" type="long"></column>
+        <finder name="Video" return-type="Collection">
+            <finder-column name="videoId"></finder-column>
+        </finder>
+        <finder name="User" return-type="Collection">
+            <finder-column name="userId"></finder-column>
+        </finder>
     </entity>
     <entity local-service="true" remote-service="false" name="Segment_User_Video">
         <column name="segmentId" type="long"></column>
@@ -312,6 +318,10 @@
             <finder-column name="producerId"></finder-column>
             <finder-column name="downloadLink"></finder-column>
         </finder>
+        <finder name="LectureseriesAndOpenaccess" return-type="Collection">
+            <finder-column name="lectureseriesId"></finder-column>
+            <finder-column name="openAccess"></finder-column>
+        </finder>
     </entity>
     <entity name="Video_Institution" local-service="true" remote-service="false">
         <column name="videoInstitutionId" type="long" primary="true" id-type="increment"></column>
@@ -325,7 +335,7 @@
         </finder>
     </entity>
     <entity name="Videohitlist" local-service="true" remote-service="false">
-        <column name="videohitlistId" type="int" primary="true" id-type="increment"></column>
+        <column name="videohitlistId" type="long" primary="true" id-type="increment"></column>
         <column name="hitsPerDay" type="int"></column>
         <column name="hitsPerWeek" type="int"></column>
         <column name="hitsPerMonth" type="int"></column>
@@ -347,4 +357,6 @@
         <exception>HostStreamer</exception>
         <exception>HostServerTemplate</exception>
     </exceptions>
+
+
 </service-builder>

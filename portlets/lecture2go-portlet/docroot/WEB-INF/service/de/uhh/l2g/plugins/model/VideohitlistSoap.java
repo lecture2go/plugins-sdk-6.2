@@ -78,19 +78,19 @@ public class VideohitlistSoap implements Serializable {
 	public VideohitlistSoap() {
 	}
 
-	public int getPrimaryKey() {
+	public long getPrimaryKey() {
 		return _videohitlistId;
 	}
 
-	public void setPrimaryKey(int pk) {
+	public void setPrimaryKey(long pk) {
 		setVideohitlistId(pk);
 	}
 
-	public int getVideohitlistId() {
+	public long getVideohitlistId() {
 		return _videohitlistId;
 	}
 
-	public void setVideohitlistId(int videohitlistId) {
+	public void setVideohitlistId(long videohitlistId) {
 		_videohitlistId = videohitlistId;
 	}
 
@@ -126,7 +126,7 @@ public class VideohitlistSoap implements Serializable {
 		_hitsPerYear = hitsPerYear;
 	}
 
-	private int _videohitlistId;
+	private long _videohitlistId;
 	private int _hitsPerDay;
 	private int _hitsPerWeek;
 	private int _hitsPerMonth;

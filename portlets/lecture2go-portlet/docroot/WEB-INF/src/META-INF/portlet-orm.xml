@@ -213,6 +213,7 @@
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
 	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.Segment_User_VideoModelImpl">
@@ -375,7 +376,11 @@
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.SegmentImpl" name="Segment">
 		<table name="LG_Segment" />
-		<attributes />
+		<attributes>
+			<transient name="image" />
+			<transient name="number" />
+			<transient name="seconds" />
+		</attributes>
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.Segment_User_VideoImpl" name="Segment_User_Video">
 		<table name="LG_Segment_User_Video" />

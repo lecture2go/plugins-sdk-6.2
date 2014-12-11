@@ -62,7 +62,7 @@ public class FFmpegManager {
 	 *             Signals that an I/O exception has occurred.
 	 */
 	public FFmpegManager(String filename) throws IOException {
-		ProcessBuilder pb = new ProcessBuilder(ffmgegLibPath, "-i", filename);
+		ProcessBuilder pb = new ProcessBuilder(PropsUtil.get("lecture2go.ffmpeg.bin"), "-i", filename);
 		Process p = pb.start();
 		InputStream errorStream = p.getErrorStream();
 		BufferedReader in = new BufferedReader(new InputStreamReader(errorStream));
@@ -145,7 +145,7 @@ public class FFmpegManager {
 	 * @throws SystemException 
 	 * @throws PortalException 
 	 */
-	public boolean createThumbnail(Video video, String time, String thumbnailLocation) throws PortalException, SystemException {
+	public static boolean createThumbnail(Video video, String time, String thumbnailLocation) throws PortalException, SystemException {
 		boolean ret = false;
 		Producer producer = ProducerLocalServiceUtil.getProducer(video.getProducerId());
 		Host host = HostLocalServiceUtil.getHost(video.getHostId());
@@ -153,10 +153,10 @@ public class FFmpegManager {
 		String command = "";
 		int sec = new Integer(time.split(":")[0]) * 60 * 60 + new Integer(time.split(":")[1]) * 60 + new Integer(time.split(":")[2]);
 		if (video.getOpenAccess()==1)
-			command = ffmgegLibPath + " -ss " + sec + " -i " + PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + video.getFilename() + " -f image2 -vframes 1 -filter:v scale='130:-1' " + thumbnailLocation + "/" + video.getVideoId() + "_"
+			command = PropsUtil.get("lecture2go.ffmpeg.bin") + " -ss " + sec + " -i " + PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + video.getFilename() + " -f image2 -vframes 1 -filter:v scale='130:-1' " + thumbnailLocation + "/" + video.getVideoId() + "_"
 					+ sec + ".jpg";
 		else
-			command = ffmgegLibPath + " -ss " + sec + " -i " + PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + video.getSurl() + " -f image2 -vframes 1 -filter:v scale='130:-1' " + thumbnailLocation + "/" + video.getVideoId()
+			command = PropsUtil.get("lecture2go.ffmpeg.bin") + " -ss " + sec + " -i " + PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + video.getSurl() + " -f image2 -vframes 1 -filter:v scale='130:-1' " + thumbnailLocation + "/" + video.getVideoId()
 					+ "_" + sec + ".jpg";
 		try {
 			runCmd.exec(command);
@@ -176,12 +176,12 @@ public class FFmpegManager {
 	 *            the thumbnail location
 	 * @return true, if successful
 	 */
-	public boolean createThumbnail(String fileLocation, String thumbnailLocation) {
+	public static boolean createThumbnail(String fileLocation, String thumbnailLocation) {
 		Runtime runCmd = Runtime.getRuntime();
 		String thumbPreffLoc = thumbnailLocation.split(".jpg")[0];
-		String command = ffmgegLibPath + " -ss 13 -i " + fileLocation + " -f image2 -vframes 1 " + thumbnailLocation;
-		String command1 = ffmgegLibPath + " -ss 13 -i " + fileLocation + " -f image2 -vframes 1 -filter:v scale='130:-1' " + thumbPreffLoc + "_s.jpg";
-		String command2 = ffmgegLibPath + " -ss 13 -i " + fileLocation + " -f image2 -vframes 1 -filter:v scale='300:-1' " + thumbPreffLoc + "_m.jpg";
+		String command = PropsUtil.get("lecture2go.ffmpeg.bin") + " -ss 13 -i " + fileLocation + " -f image2 -vframes 1 " + thumbnailLocation;
+		String command1 = PropsUtil.get("lecture2go.ffmpeg.bin") + " -ss 13 -i " + fileLocation + " -f image2 -vframes 1 -filter:v scale='130:-1' " + thumbPreffLoc + "_s.jpg";
+		String command2 = PropsUtil.get("lecture2go.ffmpeg.bin") + " -ss 13 -i " + fileLocation + " -f image2 -vframes 1 -filter:v scale='300:-1' " + thumbPreffLoc + "_m.jpg";
 		boolean ret = true;
 		try {
 			runCmd.exec(command);
@@ -358,28 +358,6 @@ public class FFmpegManager {
 	 */
 	public void setVideoCodec(String videoCodec) {
 		this.videoCodec = videoCodec;
-	}
-
-	/** The ffmgeg lib path. */
-	private String ffmgegLibPath = PropsUtil.get("lecture2go.ffmpeg.bin");
-
-	/**
-	 * Gets the ffmgeg lib path.
-	 *
-	 * @return the ffmgeg lib path
-	 */
-	public String getFfmgegLibPath() {
-		return ffmgegLibPath;
-	}
-
-	/**
-	 * Sets the ffmgeg lib path.
-	 *
-	 * @param ffmgegLibPath
-	 *            the new ffmgeg lib path
-	 */
-	public void setFfmgegLibPath(String ffmgegLibPath) {
-		this.ffmgegLibPath = ffmgegLibPath;
 	}
 
 	/**

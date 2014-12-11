@@ -50,12 +50,12 @@ public class VideohitlistClp extends BaseModelImpl<Videohitlist>
 	}
 
 	@Override
-	public int getPrimaryKey() {
+	public long getPrimaryKey() {
 		return _videohitlistId;
 	}
 
 	@Override
-	public void setPrimaryKey(int primaryKey) {
+	public void setPrimaryKey(long primaryKey) {
 		setVideohitlistId(primaryKey);
 	}
 
@@ -66,7 +66,7 @@ public class VideohitlistClp extends BaseModelImpl<Videohitlist>
 
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		setPrimaryKey(((Integer)primaryKeyObj).intValue());
+		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
 	@Override
@@ -84,7 +84,7 @@ public class VideohitlistClp extends BaseModelImpl<Videohitlist>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Integer videohitlistId = (Integer)attributes.get("videohitlistId");
+		Long videohitlistId = (Long)attributes.get("videohitlistId");
 
 		if (videohitlistId != null) {
 			setVideohitlistId(videohitlistId);
@@ -116,19 +116,19 @@ public class VideohitlistClp extends BaseModelImpl<Videohitlist>
 	}
 
 	@Override
-	public int getVideohitlistId() {
+	public long getVideohitlistId() {
 		return _videohitlistId;
 	}
 
 	@Override
-	public void setVideohitlistId(int videohitlistId) {
+	public void setVideohitlistId(long videohitlistId) {
 		_videohitlistId = videohitlistId;
 
 		if (_videohitlistRemoteModel != null) {
 			try {
 				Class<?> clazz = _videohitlistRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setVideohitlistId", int.class);
+				Method method = clazz.getMethod("setVideohitlistId", long.class);
 
 				method.invoke(_videohitlistRemoteModel, videohitlistId);
 			}
@@ -310,7 +310,7 @@ public class VideohitlistClp extends BaseModelImpl<Videohitlist>
 
 	@Override
 	public int compareTo(Videohitlist videohitlist) {
-		int primaryKey = videohitlist.getPrimaryKey();
+		long primaryKey = videohitlist.getPrimaryKey();
 
 		if (getPrimaryKey() < primaryKey) {
 			return -1;
@@ -335,7 +335,7 @@ public class VideohitlistClp extends BaseModelImpl<Videohitlist>
 
 		VideohitlistClp videohitlist = (VideohitlistClp)obj;
 
-		int primaryKey = videohitlist.getPrimaryKey();
+		long primaryKey = videohitlist.getPrimaryKey();
 
 		if (getPrimaryKey() == primaryKey) {
 			return true;
@@ -347,7 +347,7 @@ public class VideohitlistClp extends BaseModelImpl<Videohitlist>
 
 	@Override
 	public int hashCode() {
-		return getPrimaryKey();
+		return (int)getPrimaryKey();
 	}
 
 	@Override
@@ -403,7 +403,7 @@ public class VideohitlistClp extends BaseModelImpl<Videohitlist>
 		return sb.toString();
 	}
 
-	private int _videohitlistId;
+	private long _videohitlistId;
 	private int _hitsPerDay;
 	private int _hitsPerWeek;
 	private int _hitsPerMonth;

@@ -15,7 +15,6 @@
 package de.uhh.l2g.plugins.service.impl;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -29,13 +28,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PropsUtil;
 
-import de.uhh.l2g.admin.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.NoSuchInstitutionException;
 import de.uhh.l2g.plugins.NoSuchProducerException;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Lastvideolist;
-import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.Metadata;
 import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.model.Video;
@@ -109,7 +106,6 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		List<Video> vl = videoPersistence.findByProducerAndDownloadLink(producerId, downloadLink);
 		return vl;
 	}
-	
 	
 	public List<Video> getLatestVideos(){
 		return VideoFinderUtil.findLatestVideos();
@@ -191,7 +187,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				if (!ffmpegMan.thumbnailsExists(objectVideo)) {
 					// create thumbnail
 					String thumbnailLocation = PropsUtil.get("lecture2go.images.system.path") + "/" + image;
-					ffmpegMan.createThumbnail(videoPfad, thumbnailLocation);
+					FFmpegManager.createThumbnail(videoPfad, thumbnailLocation);
 				}
 				objectVideo.setImage(PropsUtil.get("lecture2go.web.root") + "/images/" + image);
 				objectVideo.setImageSmall(PropsUtil.get("lecture2go.web.root") + "/images/" + imageSmall);
@@ -398,5 +394,9 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			lastvideolist.setVideoId(v.getVideoId());
 			LastvideolistLocalServiceUtil.addLastvideolist(lastvideolist);
 		}
+	}
+
+	public List<Video> getByLectureseriesAndOpenaccess(Long lectureseriesId, int openAccess) throws SystemException{
+		return videoPersistence.findByLectureseriesAndOpenaccess(lectureseriesId, openAccess);
 	}
 }

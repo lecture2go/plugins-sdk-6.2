@@ -15,12 +15,18 @@
 package de.uhh.l2g.plugins.model.impl;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PortalUtil;
+
+import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 
 import de.uhh.l2g.plugins.model.Segment;
 import de.uhh.l2g.plugins.model.SegmentModel;
@@ -54,16 +60,16 @@ public class SegmentModelImpl extends BaseModelImpl<Segment>
 	 */
 	public static final String TABLE_NAME = "LG_Segment";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "segmentId", Types.INTEGER },
-			{ "videoId", Types.INTEGER },
+			{ "segmentId", Types.BIGINT },
+			{ "videoId", Types.BIGINT },
 			{ "start_", Types.VARCHAR },
 			{ "title", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "end_", Types.VARCHAR },
-			{ "chapter", Types.VARCHAR },
-			{ "userId", Types.INTEGER }
+			{ "chapter", Types.INTEGER },
+			{ "userId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Segment (segmentId INTEGER not null primary key,videoId INTEGER,start_ VARCHAR(75) null,title VARCHAR(75) null,description VARCHAR(75) null,end_ VARCHAR(75) null,chapter VARCHAR(75) null,userId INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Segment (segmentId LONG not null primary key,videoId LONG,start_ VARCHAR(75) null,title VARCHAR(75) null,description VARCHAR(75) null,end_ VARCHAR(75) null,chapter INTEGER,userId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Segment";
 	public static final String ORDER_BY_JPQL = " ORDER BY segment.segmentId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Segment.segmentId ASC";
@@ -76,7 +82,12 @@ public class SegmentModelImpl extends BaseModelImpl<Segment>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.finder.cache.enabled.de.uhh.l2g.plugins.model.Segment"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.Segment"),
+			true);
+	public static long USERID_COLUMN_BITMASK = 1L;
+	public static long VIDEOID_COLUMN_BITMASK = 2L;
+	public static long SEGMENTID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Segment"));
 
@@ -84,12 +95,12 @@ public class SegmentModelImpl extends BaseModelImpl<Segment>
 	}
 
 	@Override
-	public int getPrimaryKey() {
+	public long getPrimaryKey() {
 		return _segmentId;
 	}
 
 	@Override
-	public void setPrimaryKey(int primaryKey) {
+	public void setPrimaryKey(long primaryKey) {
 		setSegmentId(primaryKey);
 	}
 
@@ -100,7 +111,7 @@ public class SegmentModelImpl extends BaseModelImpl<Segment>
 
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		setPrimaryKey(((Integer)primaryKeyObj).intValue());
+		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
 	@Override
@@ -131,13 +142,13 @@ public class SegmentModelImpl extends BaseModelImpl<Segment>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Integer segmentId = (Integer)attributes.get("segmentId");
+		Long segmentId = (Long)attributes.get("segmentId");
 
 		if (segmentId != null) {
 			setSegmentId(segmentId);
 		}
 
-		Integer videoId = (Integer)attributes.get("videoId");
+		Long videoId = (Long)attributes.get("videoId");
 
 		if (videoId != null) {
 			setVideoId(videoId);
@@ -167,13 +178,13 @@ public class SegmentModelImpl extends BaseModelImpl<Segment>
 			setEnd(end);
 		}
 
-		String chapter = (String)attributes.get("chapter");
+		Integer chapter = (Integer)attributes.get("chapter");
 
 		if (chapter != null) {
 			setChapter(chapter);
 		}
 
-		Integer userId = (Integer)attributes.get("userId");
+		Long userId = (Long)attributes.get("userId");
 
 		if (userId != null) {
 			setUserId(userId);
@@ -181,23 +192,35 @@ public class SegmentModelImpl extends BaseModelImpl<Segment>
 	}
 
 	@Override
-	public int getSegmentId() {
+	public long getSegmentId() {
 		return _segmentId;
 	}
 
 	@Override
-	public void setSegmentId(int segmentId) {
+	public void setSegmentId(long segmentId) {
 		_segmentId = segmentId;
 	}
 
 	@Override
-	public int getVideoId() {
+	public long getVideoId() {
 		return _videoId;
 	}
 
 	@Override
-	public void setVideoId(int videoId) {
+	public void setVideoId(long videoId) {
+		_columnBitmask |= VIDEOID_COLUMN_BITMASK;
+
+		if (!_setOriginalVideoId) {
+			_setOriginalVideoId = true;
+
+			_originalVideoId = _videoId;
+		}
+
 		_videoId = videoId;
+	}
+
+	public long getOriginalVideoId() {
+		return _originalVideoId;
 	}
 
 	@Override
@@ -261,28 +284,62 @@ public class SegmentModelImpl extends BaseModelImpl<Segment>
 	}
 
 	@Override
-	public String getChapter() {
-		if (_chapter == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _chapter;
-		}
+	public int getChapter() {
+		return _chapter;
 	}
 
 	@Override
-	public void setChapter(String chapter) {
+	public void setChapter(int chapter) {
 		_chapter = chapter;
 	}
 
 	@Override
-	public int getUserId() {
+	public long getUserId() {
 		return _userId;
 	}
 
 	@Override
-	public void setUserId(int userId) {
+	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
+	}
+
+	@Override
+	public String getUserUuid() throws SystemException {
+		return PortalUtil.getUserValue(getUserId(), "uuid", _userUuid);
+	}
+
+	@Override
+	public void setUserUuid(String userUuid) {
+		_userUuid = userUuid;
+	}
+
+	public long getOriginalUserId() {
+		return _originalUserId;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+			Segment.class.getName(), getPrimaryKey());
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -315,7 +372,7 @@ public class SegmentModelImpl extends BaseModelImpl<Segment>
 
 	@Override
 	public int compareTo(Segment segment) {
-		int primaryKey = segment.getPrimaryKey();
+		long primaryKey = segment.getPrimaryKey();
 
 		if (getPrimaryKey() < primaryKey) {
 			return -1;
@@ -340,7 +397,7 @@ public class SegmentModelImpl extends BaseModelImpl<Segment>
 
 		Segment segment = (Segment)obj;
 
-		int primaryKey = segment.getPrimaryKey();
+		long primaryKey = segment.getPrimaryKey();
 
 		if (getPrimaryKey() == primaryKey) {
 			return true;
@@ -352,11 +409,22 @@ public class SegmentModelImpl extends BaseModelImpl<Segment>
 
 	@Override
 	public int hashCode() {
-		return getPrimaryKey();
+		return (int)getPrimaryKey();
 	}
 
 	@Override
 	public void resetOriginalValues() {
+		SegmentModelImpl segmentModelImpl = this;
+
+		segmentModelImpl._originalVideoId = segmentModelImpl._videoId;
+
+		segmentModelImpl._setOriginalVideoId = false;
+
+		segmentModelImpl._originalUserId = segmentModelImpl._userId;
+
+		segmentModelImpl._setOriginalUserId = false;
+
+		segmentModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -400,12 +468,6 @@ public class SegmentModelImpl extends BaseModelImpl<Segment>
 		}
 
 		segmentCacheModel.chapter = getChapter();
-
-		String chapter = segmentCacheModel.chapter;
-
-		if ((chapter != null) && (chapter.length() == 0)) {
-			segmentCacheModel.chapter = null;
-		}
 
 		segmentCacheModel.userId = getUserId();
 
@@ -487,13 +549,19 @@ public class SegmentModelImpl extends BaseModelImpl<Segment>
 	private static Class<?>[] _escapedModelInterfaces = new Class[] {
 			Segment.class
 		};
-	private int _segmentId;
-	private int _videoId;
+	private long _segmentId;
+	private long _videoId;
+	private long _originalVideoId;
+	private boolean _setOriginalVideoId;
 	private String _start;
 	private String _title;
 	private String _description;
 	private String _end;
-	private String _chapter;
-	private int _userId;
+	private int _chapter;
+	private long _userId;
+	private String _userUuid;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
+	private long _columnBitmask;
 	private Segment _escapedModel;
 }

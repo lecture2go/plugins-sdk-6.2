@@ -32,11 +32,11 @@ public class VideohitlistLocalServiceClpInvoker {
 
 		_methodName1 = "createVideohitlist";
 
-		_methodParameterTypes1 = new String[] { "int" };
+		_methodParameterTypes1 = new String[] { "long" };
 
 		_methodName2 = "deleteVideohitlist";
 
-		_methodParameterTypes2 = new String[] { "int" };
+		_methodParameterTypes2 = new String[] { "long" };
 
 		_methodName3 = "deleteVideohitlist";
 
@@ -82,11 +82,11 @@ public class VideohitlistLocalServiceClpInvoker {
 
 		_methodName10 = "fetchVideohitlist";
 
-		_methodParameterTypes10 = new String[] { "int" };
+		_methodParameterTypes10 = new String[] { "long" };
 
 		_methodName11 = "getVideohitlist";
 
-		_methodParameterTypes11 = new String[] { "int" };
+		_methodParameterTypes11 = new String[] { "long" };
 
 		_methodName12 = "getPersistedModel";
 
@@ -124,12 +124,12 @@ public class VideohitlistLocalServiceClpInvoker {
 
 		if (_methodName1.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes1, parameterTypes)) {
-			return VideohitlistLocalServiceUtil.createVideohitlist(((Integer)arguments[0]).intValue());
+			return VideohitlistLocalServiceUtil.createVideohitlist(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName2.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes2, parameterTypes)) {
-			return VideohitlistLocalServiceUtil.deleteVideohitlist(((Integer)arguments[0]).intValue());
+			return VideohitlistLocalServiceUtil.deleteVideohitlist(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName3.equals(name) &&
@@ -175,12 +175,12 @@ public class VideohitlistLocalServiceClpInvoker {
 
 		if (_methodName10.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes10, parameterTypes)) {
-			return VideohitlistLocalServiceUtil.fetchVideohitlist(((Integer)arguments[0]).intValue());
+			return VideohitlistLocalServiceUtil.fetchVideohitlist(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName11.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes11, parameterTypes)) {
-			return VideohitlistLocalServiceUtil.getVideohitlist(((Integer)arguments[0]).intValue());
+			return VideohitlistLocalServiceUtil.getVideohitlist(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName12.equals(name) &&

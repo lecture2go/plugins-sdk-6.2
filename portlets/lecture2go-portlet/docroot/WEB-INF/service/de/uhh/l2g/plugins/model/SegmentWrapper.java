@@ -62,13 +62,13 @@ public class SegmentWrapper implements Segment, ModelWrapper<Segment> {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Integer segmentId = (Integer)attributes.get("segmentId");
+		Long segmentId = (Long)attributes.get("segmentId");
 
 		if (segmentId != null) {
 			setSegmentId(segmentId);
 		}
 
-		Integer videoId = (Integer)attributes.get("videoId");
+		Long videoId = (Long)attributes.get("videoId");
 
 		if (videoId != null) {
 			setVideoId(videoId);
@@ -98,13 +98,13 @@ public class SegmentWrapper implements Segment, ModelWrapper<Segment> {
 			setEnd(end);
 		}
 
-		String chapter = (String)attributes.get("chapter");
+		Integer chapter = (Integer)attributes.get("chapter");
 
 		if (chapter != null) {
 			setChapter(chapter);
 		}
 
-		Integer userId = (Integer)attributes.get("userId");
+		Long userId = (Long)attributes.get("userId");
 
 		if (userId != null) {
 			setUserId(userId);
@@ -117,7 +117,7 @@ public class SegmentWrapper implements Segment, ModelWrapper<Segment> {
 	* @return the primary key of this segment
 	*/
 	@Override
-	public int getPrimaryKey() {
+	public long getPrimaryKey() {
 		return _segment.getPrimaryKey();
 	}
 
@@ -127,7 +127,7 @@ public class SegmentWrapper implements Segment, ModelWrapper<Segment> {
 	* @param primaryKey the primary key of this segment
 	*/
 	@Override
-	public void setPrimaryKey(int primaryKey) {
+	public void setPrimaryKey(long primaryKey) {
 		_segment.setPrimaryKey(primaryKey);
 	}
 
@@ -137,7 +137,7 @@ public class SegmentWrapper implements Segment, ModelWrapper<Segment> {
 	* @return the segment ID of this segment
 	*/
 	@Override
-	public int getSegmentId() {
+	public long getSegmentId() {
 		return _segment.getSegmentId();
 	}
 
@@ -147,7 +147,7 @@ public class SegmentWrapper implements Segment, ModelWrapper<Segment> {
 	* @param segmentId the segment ID of this segment
 	*/
 	@Override
-	public void setSegmentId(int segmentId) {
+	public void setSegmentId(long segmentId) {
 		_segment.setSegmentId(segmentId);
 	}
 
@@ -157,7 +157,7 @@ public class SegmentWrapper implements Segment, ModelWrapper<Segment> {
 	* @return the video ID of this segment
 	*/
 	@Override
-	public int getVideoId() {
+	public long getVideoId() {
 		return _segment.getVideoId();
 	}
 
@@ -167,7 +167,7 @@ public class SegmentWrapper implements Segment, ModelWrapper<Segment> {
 	* @param videoId the video ID of this segment
 	*/
 	@Override
-	public void setVideoId(int videoId) {
+	public void setVideoId(long videoId) {
 		_segment.setVideoId(videoId);
 	}
 
@@ -257,7 +257,7 @@ public class SegmentWrapper implements Segment, ModelWrapper<Segment> {
 	* @return the chapter of this segment
 	*/
 	@Override
-	public java.lang.String getChapter() {
+	public int getChapter() {
 		return _segment.getChapter();
 	}
 
@@ -267,7 +267,7 @@ public class SegmentWrapper implements Segment, ModelWrapper<Segment> {
 	* @param chapter the chapter of this segment
 	*/
 	@Override
-	public void setChapter(java.lang.String chapter) {
+	public void setChapter(int chapter) {
 		_segment.setChapter(chapter);
 	}
 
@@ -277,7 +277,7 @@ public class SegmentWrapper implements Segment, ModelWrapper<Segment> {
 	* @return the user ID of this segment
 	*/
 	@Override
-	public int getUserId() {
+	public long getUserId() {
 		return _segment.getUserId();
 	}
 
@@ -287,8 +287,30 @@ public class SegmentWrapper implements Segment, ModelWrapper<Segment> {
 	* @param userId the user ID of this segment
 	*/
 	@Override
-	public void setUserId(int userId) {
+	public void setUserId(long userId) {
 		_segment.setUserId(userId);
+	}
+
+	/**
+	* Returns the user uuid of this segment.
+	*
+	* @return the user uuid of this segment
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public java.lang.String getUserUuid()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _segment.getUserUuid();
+	}
+
+	/**
+	* Sets the user uuid of this segment.
+	*
+	* @param userUuid the user uuid of this segment
+	*/
+	@Override
+	public void setUserUuid(java.lang.String userUuid) {
+		_segment.setUserUuid(userUuid);
 	}
 
 	@Override
@@ -393,6 +415,41 @@ public class SegmentWrapper implements Segment, ModelWrapper<Segment> {
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_segment.persist();
+	}
+
+	@Override
+	public int getNumber() {
+		return _segment.getNumber();
+	}
+
+	@Override
+	public void setNumber(int number) {
+		_segment.setNumber(number);
+	}
+
+	@Override
+	public int getSeconds() {
+		return _segment.getSeconds();
+	}
+
+	@Override
+	public void setSeconds(int seconds) {
+		_segment.setSeconds(seconds);
+	}
+
+	@Override
+	public void setChapter(java.lang.Integer chapter) {
+		_segment.setChapter(chapter);
+	}
+
+	@Override
+	public java.lang.String getImage() {
+		return _segment.getImage();
+	}
+
+	@Override
+	public void setImage(java.lang.String image) {
+		_segment.setImage(image);
 	}
 
 	@Override

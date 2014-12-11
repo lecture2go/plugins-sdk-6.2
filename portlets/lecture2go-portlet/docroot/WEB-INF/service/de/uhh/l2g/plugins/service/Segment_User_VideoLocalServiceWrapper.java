@@ -289,6 +289,12 @@ public class Segment_User_VideoLocalServiceWrapper
 			parameterTypes, arguments);
 	}
 
+	@Override
+	public void deleteByVideoId(java.lang.Long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_segment_User_VideoLocalService.deleteByVideoId(videoId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

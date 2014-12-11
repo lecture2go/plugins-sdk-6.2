@@ -14,6 +14,8 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import com.liferay.portal.kernel.exception.SystemException;
+
 import de.uhh.l2g.plugins.service.base.Segment_User_VideoLocalServiceBaseImpl;
 
 /**
@@ -37,4 +39,9 @@ public class Segment_User_VideoLocalServiceImpl
 	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.Segment_User_VideoLocalServiceUtil} to access the segment_ user_ video local service.
 	 */
+	
+	public void deleteByVideoId(Long videoId) throws SystemException{
+		 segment_User_VideoPersistence.removeByVideo(videoId);
+	}
+	
 }

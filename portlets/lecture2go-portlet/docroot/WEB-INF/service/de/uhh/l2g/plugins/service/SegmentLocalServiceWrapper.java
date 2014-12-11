@@ -50,7 +50,7 @@ public class SegmentLocalServiceWrapper implements SegmentLocalService,
 	* @return the new segment
 	*/
 	@Override
-	public de.uhh.l2g.plugins.model.Segment createSegment(int segmentId) {
+	public de.uhh.l2g.plugins.model.Segment createSegment(long segmentId) {
 		return _segmentLocalService.createSegment(segmentId);
 	}
 
@@ -63,7 +63,7 @@ public class SegmentLocalServiceWrapper implements SegmentLocalService,
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public de.uhh.l2g.plugins.model.Segment deleteSegment(int segmentId)
+	public de.uhh.l2g.plugins.model.Segment deleteSegment(long segmentId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _segmentLocalService.deleteSegment(segmentId);
@@ -180,7 +180,7 @@ public class SegmentLocalServiceWrapper implements SegmentLocalService,
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Segment fetchSegment(int segmentId)
+	public de.uhh.l2g.plugins.model.Segment fetchSegment(long segmentId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _segmentLocalService.fetchSegment(segmentId);
 	}
@@ -194,7 +194,7 @@ public class SegmentLocalServiceWrapper implements SegmentLocalService,
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public de.uhh.l2g.plugins.model.Segment getSegment(int segmentId)
+	public de.uhh.l2g.plugins.model.Segment getSegment(long segmentId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _segmentLocalService.getSegment(segmentId);
@@ -278,6 +278,28 @@ public class SegmentLocalServiceWrapper implements SegmentLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable {
 		return _segmentLocalService.invokeMethod(name, parameterTypes, arguments);
+	}
+
+	@Override
+	public void deleteThumbhailsFromSegments(
+		java.util.List<de.uhh.l2g.plugins.model.Segment> segmentList)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_segmentLocalService.deleteThumbhailsFromSegments(segmentList);
+	}
+
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Segment> getSegmentsByVideoId(
+		java.lang.Long videoId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _segmentLocalService.getSegmentsByVideoId(videoId);
+	}
+
+	@Override
+	public void deleteByVideoId(java.lang.Long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_segmentLocalService.deleteByVideoId(videoId);
 	}
 
 	/**

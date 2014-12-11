@@ -53,8 +53,6 @@ import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
-import de.uhh.l2g.plugins.service.persistence.LectureseriesFinderUtil;
-import de.uhh.l2g.plugins.service.persistence.VideoFinderUtil;
 
 public class AdminVideoManagement extends MVCPortlet {
 
@@ -317,7 +315,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		MetadataLocalServiceUtil.deleteMetadata(video.getVideoId());
 		
 		//delete license
-		LicenseLocalServiceUtil.removeByVideoId(videoId);
+		LicenseLocalServiceUtil.deleteByVideoId(video.getVideoId());
 		
 		// delete video_lectureseries
 		Video_LectureseriesLocalServiceUtil.removeByVideoId(videoId);

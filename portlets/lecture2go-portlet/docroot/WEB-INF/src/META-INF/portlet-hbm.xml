@@ -173,16 +173,16 @@
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.SegmentImpl" table="LG_Segment">
 		<cache usage="read-write" />
-		<id name="segmentId" type="int">
+		<id name="segmentId" type="long">
 			<generator class="increment" />
 		</id>
-		<property name="videoId" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="videoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="start" type="com.liferay.portal.dao.orm.hibernate.StringType" column="start_" />
 		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="end" type="com.liferay.portal.dao.orm.hibernate.StringType" column="end_" />
-		<property name="chapter" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="chapter" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.Segment_User_VideoImpl" table="LG_Segment_User_Video">
 		<cache usage="read-write" />
@@ -256,7 +256,7 @@
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.VideohitlistImpl" table="LG_Videohitlist">
 		<cache usage="read-write" />
-		<id name="videohitlistId" type="int">
+		<id name="videohitlistId" type="long">
 			<generator class="increment" />
 		</id>
 		<property name="hitsPerDay" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />

@@ -15,6 +15,7 @@
 package de.uhh.l2g.plugins.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
@@ -48,42 +49,42 @@ public interface SegmentModel extends BaseModel<Segment> {
 	 *
 	 * @return the primary key of this segment
 	 */
-	public int getPrimaryKey();
+	public long getPrimaryKey();
 
 	/**
 	 * Sets the primary key of this segment.
 	 *
 	 * @param primaryKey the primary key of this segment
 	 */
-	public void setPrimaryKey(int primaryKey);
+	public void setPrimaryKey(long primaryKey);
 
 	/**
 	 * Returns the segment ID of this segment.
 	 *
 	 * @return the segment ID of this segment
 	 */
-	public int getSegmentId();
+	public long getSegmentId();
 
 	/**
 	 * Sets the segment ID of this segment.
 	 *
 	 * @param segmentId the segment ID of this segment
 	 */
-	public void setSegmentId(int segmentId);
+	public void setSegmentId(long segmentId);
 
 	/**
 	 * Returns the video ID of this segment.
 	 *
 	 * @return the video ID of this segment
 	 */
-	public int getVideoId();
+	public long getVideoId();
 
 	/**
 	 * Sets the video ID of this segment.
 	 *
 	 * @param videoId the video ID of this segment
 	 */
-	public void setVideoId(int videoId);
+	public void setVideoId(long videoId);
 
 	/**
 	 * Returns the start of this segment.
@@ -150,29 +151,43 @@ public interface SegmentModel extends BaseModel<Segment> {
 	 *
 	 * @return the chapter of this segment
 	 */
-	@AutoEscape
-	public String getChapter();
+	public int getChapter();
 
 	/**
 	 * Sets the chapter of this segment.
 	 *
 	 * @param chapter the chapter of this segment
 	 */
-	public void setChapter(String chapter);
+	public void setChapter(int chapter);
 
 	/**
 	 * Returns the user ID of this segment.
 	 *
 	 * @return the user ID of this segment
 	 */
-	public int getUserId();
+	public long getUserId();
 
 	/**
 	 * Sets the user ID of this segment.
 	 *
 	 * @param userId the user ID of this segment
 	 */
-	public void setUserId(int userId);
+	public void setUserId(long userId);
+
+	/**
+	 * Returns the user uuid of this segment.
+	 *
+	 * @return the user uuid of this segment
+	 * @throws SystemException if a system exception occurred
+	 */
+	public String getUserUuid() throws SystemException;
+
+	/**
+	 * Sets the user uuid of this segment.
+	 *
+	 * @param userUuid the user uuid of this segment
+	 */
+	public void setUserUuid(String userUuid);
 
 	@Override
 	public boolean isNew();

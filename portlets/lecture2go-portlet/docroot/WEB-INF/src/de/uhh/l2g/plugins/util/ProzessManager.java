@@ -36,35 +36,29 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import javax.portlet.ActionRequest;
-
-import org.springframework.beans.factory.xml.XmlBeanFactory;
-
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
 
 import de.uhh.l2g.plugins.model.Host;
+import de.uhh.l2g.plugins.model.Metadata;
 import de.uhh.l2g.plugins.model.Producer;
+import de.uhh.l2g.plugins.model.Segment;
 import de.uhh.l2g.plugins.model.Video;
+import de.uhh.l2g.plugins.model.impl.HostImpl;
+import de.uhh.l2g.plugins.model.impl.MetadataImpl;
+import de.uhh.l2g.plugins.model.impl.ProducerImpl;
+import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
+import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
+import de.uhh.l2g.plugins.service.LicenseLocalServiceUtil;
+import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
+import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
+import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Segment_User_VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
+import de.uhh.l2g.plugins.service.VideohitlistLocalServiceUtil;
 
-/**
- * The Class ProzessManager.
- */
 public class ProzessManager {
-	/**
-	 * Deactivate download.
-	 *
-	 * @param model
-	 *            the model
-	 * @param video
-	 *            the video
-	 * @param host
-	 *            the host
-	 * @param producer
-	 *            the producer
-	 */
 	
 	Htaccess HTACCESS = new Htaccess();
 	
@@ -84,19 +78,6 @@ public class ProzessManager {
 		HTACCESS.makeHtaccess(url, VideoLocalServiceUtil.getByProducerAndDownloadLink(producer.getProducerId(), 0));
 	}
 
-	/**
-	 * Activate download.
-	 *
-	 * @param model
-	 *            the model
-	 * @param video
-	 *            the video
-	 * @param host
-	 *            the host
-	 * @param producer
-	 *            the producer
-	 * @throws SystemException 
-	 */
 	public void activateDownload(Video video, Host host, Producer producer) throws SystemException {
 		video.setDownloadLink(1);
 		VideoLocalServiceUtil.updateVideo(video);
@@ -113,20 +94,7 @@ public class ProzessManager {
 		HTACCESS.makeHtaccess(url, VideoLocalServiceUtil.getByProducerAndDownloadLink(producer.getProducerId(), 0));
 	}
 
-	/**
-	 * Activate openaccess.
-	 *
-	 * @param model
-	 *            the model
-	 * @param video
-	 *            the video
-	 * @param host
-	 *            the host
-	 * @param producer
-	 *            the producer
-	 * @throws SystemException 
-	 */
-	public void activateOpenaccess(Video video, Host host, Producer producer) throws SystemException {
+	public void activateOpenaccess(Video video, Host host, Producer producer) throws SystemException, PortalException {
 		// first rename the file from the filesystem first
 		String path = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir();
 		String videoPreffix = video.getPreffix();
@@ -180,19 +148,7 @@ public class ProzessManager {
 		VideoLocalServiceUtil.createLastVideoList();
 	}
 
-	/**
-	 * Deactivate openaccess.
-	 *
-	 * @param video
-	 *            the video
-	 * @param model
-	 *            the model
-	 * @param host
-	 *            the host
-	 * @param producer
-	 *            the producer
-	 */
-	public void deactivateOpenaccess(Video video, Host host, Producer producer) {
+	public void deactivateOpenaccess(Video video, Host host, Producer producer) throws PortalException, SystemException {
 		// then update the filesystem
 		String path = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir();
 		String videoPreffix = video.getPreffix();
@@ -209,10 +165,14 @@ public class ProzessManager {
 		// wait for a wile!
 		timeout();
 		if (fMp4.isFile() || fMp3.isFile()) {
-			// first update the video in the database and create secure name
-			((VideoDao) getDaoBeanFactory().getBean("videoDao")).deactivateOpenaccess(video.getId());
-			Video v = ((VideoDao) getDaoBeanFactory().getBean("videoDao")).getById(video.getId()).iterator().next();
-			String vidSPreffix = v.getSPreffix();
+			// first update the video in the database and, set openaccess
+			video.setOpenAccess(0);
+			//generate secure file name
+			String secureUrl = Security.createSecureFileName() + "." + video.getContainerFormat();
+			video.setSecureUrl(secureUrl);
+			VideoLocalServiceUtil.updateVideo(video);
+			
+			String vidSPreffix = video.getSPreffix();
 			// then rename all system files
 			fJpg.renameTo(new File(PropsUtil.get("lecture2go.images.system.path") + "/" + vidSPreffix + ".jpg"));
 			fJpgm.renameTo(new File(PropsUtil.get("lecture2go.images.system.path") + "/" + vidSPreffix + "_m.jpg"));
@@ -242,23 +202,19 @@ public class ProzessManager {
 		} catch (Exception e) {
 		}
 		// delete video from videohitlist
-		((VideoDao) getDaoBeanFactory().getBean("videoDao")).deleteVideoFromVideoHitListById(video.getId());
+		VideohitlistLocalServiceUtil.deleteVideohitlist(video.getVideoId());
+		
 		String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/";
-		HTACCESS.makeHtaccess(url, ((VideoDao) getDaoBeanFactory().getBean("videoDao")).getLockedByProducerId(producer.getId()));
+		HTACCESS.makeHtaccess(url, VideoLocalServiceUtil.getByProducerAndDownloadLink(producer.getProducerId(), 0));
+
 		// refresh last video list
-		((VideoDao) getDaoBeanFactory().getBean("videoDao")).createLastVideoList(0, 30, 0, "all");
+		VideoLocalServiceUtil.createLastVideoList();
 	}
 
-	/**
-	 * Delete thumbnails.
-	 *
-	 * @param video
-	 *            the video
-	 */
 	public void deleteThumbnails(Video video) {
 		try {
 			String videoPreffix = "";
-			if (video.isOpenaccess())
+			if (video.getOpenAccess()==1)
 				videoPreffix = video.getPreffix();
 			else
 				videoPreffix = video.getSPreffix();
@@ -272,40 +228,33 @@ public class ProzessManager {
 		}
 	}
 
-	/**
-	 * Delete.
-	 *
-	 * @param model
-	 *            the model
-	 * @param video
-	 *            the video
-	 * @param host
-	 *            the host
-	 * @param producer
-	 *            the producer
-	 * @param request
-	 *            the request
-	 */
-	public void delete(ProducerMetaDataModel model, Video video, Host host, Producer producer, ActionRequest request) {
-		model.setAction("loeschen");
-		int metadataId = video.getMetadataId();
+	public void delete(Video video) throws PortalException, SystemException {
+		Host host = new HostImpl();
+		host = HostLocalServiceUtil.getHost(video.getHostId());
+		
+		Producer producer = new ProducerImpl();
+		producer = ProducerLocalServiceUtil.getProducer(video.getProducerId());
+		
+		Metadata metadata = new MetadataImpl();
+		metadata = MetadataLocalServiceUtil.getMetadata(video.getMetadataId());
+		
 		// delete all segment images from repository location first!
-		List<Mark> segmentList = ((SegmentDao) getDaoBeanFactory().getBean("segmentDao")).getSegmentsByVideoId(video.getId());
-		((SegmentDao) getDaoBeanFactory().getBean("segmentDao")).deleteThumbhailsFromSegments(segmentList);
+		List<Segment> segmentList = SegmentLocalServiceUtil.getSegmentsByVideoId(video.getVideoId());
+		SegmentLocalServiceUtil.deleteThumbhailsFromSegments(segmentList);
+		
 		// delete all segment data from table
-		((SegmentDao) getDaoBeanFactory().getBean("segmentDao")).deleteByVideoId(video.getId());
+		SegmentLocalServiceUtil.deleteByVideoId(video.getVideoId());
+		Segment_User_VideoLocalServiceUtil.deleteByVideoId(video.getVideoId());
+		
 		// delete license
-		((LicenseDao) getDaoBeanFactory().getBean("licenseDao")).deleteByIdVideoId(video.getId());
-		// delete all data contents
-		((MetadataDao) getDaoBeanFactory().getBean("metadataDao")).deleteById(metadataId);
-		((VideoDao) getDaoBeanFactory().getBean("videoDao")).deleteById(video.getId());
+		LicenseLocalServiceUtil.deleteByVideoId(video.getVideoId());
+
 		// delete video from videohitlist
-		((VideoDao) getDaoBeanFactory().getBean("videoDao")).deleteVideoFromVideoHitListById(video.getId());
+		VideohitlistLocalServiceUtil.deleteVideohitlist(video.getVideoId());
 		String videoPreffix = "";
-		if (video.isOpenaccess())
-			videoPreffix = video.getPreffix();
-		else
-			videoPreffix = video.getSPreffix();
+		if (video.getOpenAccess()==1) videoPreffix = video.getPreffix();
+		else videoPreffix = video.getSPreffix();
+		
 		try {
 			// delete all video contents
 			if (video.getFilename() != null) {
@@ -334,8 +283,7 @@ public class ProzessManager {
 			symLinkM4a.delete();
 			symLinkMp3.delete();
 			symLinkJpg.delete();
-		} catch (NullPointerException npe) {
-		}
+		} catch (NullPointerException npe) {}
 		// set RSS
 		try {
 			RSS(video, "mp4");
@@ -346,61 +294,50 @@ public class ProzessManager {
 			e.printStackTrace();
 		}
 		// update uploads for producer
-		((ProducerDao) getDaoBeanFactory().getBean("producerDao")).updateNumberOfProductionsByUserId(producer.getId());
+		int n = 0;
+		try {
+			n = VideoLocalServiceUtil.getByProducer(producer.getProducerId()).size();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		
+		// delete video and meta data contents
+		MetadataLocalServiceUtil.deleteMetadata(metadata);
+		VideoLocalServiceUtil.deleteVideo(video.getVideoId());
+		
+		producer.setNumberOfProductions(n);
 	}
 
-	/**
-	 * Rss.
-	 *
-	 * @param video
-	 *            the video
-	 * @param type
-	 *            the type
-	 * @param model
-	 *            the model
-	 */
-	public void RSS(Video video, String type) {
+	public void RSS(Video video, String type) throws PortalException, SystemException {
 		// RSS generate for this lecture
+		RSSManager rssMan = new RSSManager();
+		String feedName = "";
+		rssMan.setTitle(LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId()).getName());
 		try {
-			List<Video> videoList = ((VideoDao) getDaoBeanFactory().getBean("videoDao")).getOpenAccessVideosByLectureseriesNumberAndFillWP(video.getLectureseriesId(), "DESC");
-			String feedName = "";
-			if (type.equals("mp4"))
-				feedName = "" + video.getLectureseriesId() + ".mp4.xml";
-			if (type.equals("mp3"))
-				feedName = "" + video.getLectureseriesId() + ".mp3.xml";
-			if (type.equals("m4a"))
-				feedName = "" + video.getLectureseriesId() + ".m4a.xml";
-			if (type.equals("m4v"))
-				feedName = "" + video.getLectureseriesId() + ".m4v.xml";
-			getRssManager().setRssFilename(feedName);
-			getRssManager().setTitle(video.getObjectLectureseries().getName());
-			if (type.equals("mp4"))
-				getRssManager().createRssFile(videoList, "mp4");
-			if (type.equals("mp3"))
-				getRssManager().createRssFile(videoList, "mp3");
-			if (type.equals("m4a"))
-				getRssManager().createRssFile(videoList, "m4a");
-			if (type.equals("m4v"))
-				getRssManager().createRssFile(videoList, "m4v");
+			List<Video> videoList = VideoLocalServiceUtil.getByLectureseriesAndOpenaccess(video.getLectureseriesId(), video.getOpenAccess());
+			
+			if (type.equals("mp4")) feedName = "" + video.getLectureseriesId() + ".mp4.xml";
+			if (type.equals("mp3")) feedName = "" + video.getLectureseriesId() + ".mp3.xml";
+			if (type.equals("m4a"))	feedName = "" + video.getLectureseriesId() + ".m4a.xml";
+			if (type.equals("m4v"))	feedName = "" + video.getLectureseriesId() + ".m4v.xml";
+			rssMan.setRssFilename(feedName);
+			
+			if (type.equals("mp4"))	rssMan.createRssFile(videoList, "mp4");
+			if (type.equals("mp3")) rssMan.createRssFile(videoList, "mp3");
+			if (type.equals("m4a"))	rssMan.createRssFile(videoList, "m4a");
+			if (type.equals("m4v"))	rssMan.createRssFile(videoList, "m4v");
 		} catch (Exception e) {
 			try {
-				if (type.equals("mp4"))
-					getRssManager().createRssFile(null, "mp4");
-				if (type.equals("mp3"))
-					getRssManager().createRssFile(null, "mp3");
-				if (type.equals("m4a"))
-					getRssManager().createRssFile(null, "m4a");
-				if (type.equals("m4v"))
-					getRssManager().createRssFile(null, "m4v");
+				if (type.equals("mp4"))	rssMan.createRssFile(null, "mp4");
+				if (type.equals("mp3"))	rssMan.createRssFile(null, "mp3");
+				if (type.equals("m4a"))	rssMan.createRssFile(null, "m4a");
+				if (type.equals("m4v"))	rssMan.createRssFile(null, "m4v");
 			} catch (IOException ie) {
 			}
 		}
 		// RSS end
 	}
 
-	/**
-	 * Timeout.
-	 */
 	private void timeout() {
 		double a = 0;
 		for (int i = 0; i <= 10000000; i++) {
@@ -409,18 +346,6 @@ public class ProzessManager {
 		}
 	}
 
-
-
-	/**
-	 * Adds the new media directory for producer.
-	 *
-	 * @param host
-	 *            the host
-	 * @param producer
-	 *            the producer
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
-	 */
 	public void addNewMediaDirectoryForProducer(Host host, Producer producer) throws IOException {
 		File folder = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/");
 		if (!folder.exists()) {

@@ -332,6 +332,13 @@ public class VideoLocalServiceUtil {
 		getService().createLastVideoList();
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByLectureseriesAndOpenaccess(
+		java.lang.Long lectureseriesId, int openAccess)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getByLectureseriesAndOpenaccess(lectureseriesId, openAccess);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

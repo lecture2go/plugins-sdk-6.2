@@ -60,7 +60,7 @@ public class VideohitlistWrapper implements Videohitlist,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Integer videohitlistId = (Integer)attributes.get("videohitlistId");
+		Long videohitlistId = (Long)attributes.get("videohitlistId");
 
 		if (videohitlistId != null) {
 			setVideohitlistId(videohitlistId);
@@ -97,7 +97,7 @@ public class VideohitlistWrapper implements Videohitlist,
 	* @return the primary key of this videohitlist
 	*/
 	@Override
-	public int getPrimaryKey() {
+	public long getPrimaryKey() {
 		return _videohitlist.getPrimaryKey();
 	}
 
@@ -107,7 +107,7 @@ public class VideohitlistWrapper implements Videohitlist,
 	* @param primaryKey the primary key of this videohitlist
 	*/
 	@Override
-	public void setPrimaryKey(int primaryKey) {
+	public void setPrimaryKey(long primaryKey) {
 		_videohitlist.setPrimaryKey(primaryKey);
 	}
 
@@ -117,7 +117,7 @@ public class VideohitlistWrapper implements Videohitlist,
 	* @return the videohitlist ID of this videohitlist
 	*/
 	@Override
-	public int getVideohitlistId() {
+	public long getVideohitlistId() {
 		return _videohitlist.getVideohitlistId();
 	}
 
@@ -127,7 +127,7 @@ public class VideohitlistWrapper implements Videohitlist,
 	* @param videohitlistId the videohitlist ID of this videohitlist
 	*/
 	@Override
-	public void setVideohitlistId(int videohitlistId) {
+	public void setVideohitlistId(long videohitlistId) {
 		_videohitlist.setVideohitlistId(videohitlistId);
 	}
 

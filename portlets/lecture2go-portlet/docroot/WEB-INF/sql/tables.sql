@@ -124,14 +124,14 @@ create table LG_Producer_Lectureseries (
 );
 
 create table LG_Segment (
-	segmentId INTEGER not null primary key,
-	videoId INTEGER,
+	segmentId LONG not null primary key,
+	videoId LONG,
 	start_ VARCHAR(75) null,
 	title VARCHAR(75) null,
 	description VARCHAR(75) null,
 	end_ VARCHAR(75) null,
-	chapter VARCHAR(75) null,
-	userId INTEGER
+	chapter INTEGER,
+	userId LONG
 );
 
 create table LG_Segment_User_Video (
@@ -204,7 +204,7 @@ create table LG_Video_Lectureseries (
 );
 
 create table LG_Videohitlist (
-	videohitlistId INTEGER not null primary key,
+	videohitlistId LONG not null primary key,
 	hitsPerDay INTEGER,
 	hitsPerWeek INTEGER,
 	hitsPerMonth INTEGER,

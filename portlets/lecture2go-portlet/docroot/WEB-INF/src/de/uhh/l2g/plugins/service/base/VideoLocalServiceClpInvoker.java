@@ -153,6 +153,10 @@ public class VideoLocalServiceClpInvoker {
 		_methodName132 = "createLastVideoList";
 
 		_methodParameterTypes132 = new String[] {  };
+
+		_methodName133 = "getByLectureseriesAndOpenaccess";
+
+		_methodParameterTypes133 = new String[] { "java.lang.Long", "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -317,6 +321,12 @@ public class VideoLocalServiceClpInvoker {
 			return null;
 		}
 
+		if (_methodName133.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes133, parameterTypes)) {
+			return VideoLocalServiceUtil.getByLectureseriesAndOpenaccess((java.lang.Long)arguments[0],
+				((Integer)arguments[1]).intValue());
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -378,4 +388,6 @@ public class VideoLocalServiceClpInvoker {
 	private String[] _methodParameterTypes131;
 	private String _methodName132;
 	private String[] _methodParameterTypes132;
+	private String _methodName133;
+	private String[] _methodParameterTypes133;
 }

@@ -250,6 +250,6 @@ public interface LicenseLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchLicenseException;
 
-	public boolean removeByVideoId(java.lang.Long videoId)
+	public boolean deleteByVideoId(java.lang.Long videoId)
 		throws de.uhh.l2g.plugins.NoSuchLicenseException;
 }

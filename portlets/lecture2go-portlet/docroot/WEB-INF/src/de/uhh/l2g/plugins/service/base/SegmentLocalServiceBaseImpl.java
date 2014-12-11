@@ -106,7 +106,7 @@ public abstract class SegmentLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the new segment
 	 */
 	@Override
-	public Segment createSegment(int segmentId) {
+	public Segment createSegment(long segmentId) {
 		return segmentPersistence.create(segmentId);
 	}
 
@@ -120,7 +120,7 @@ public abstract class SegmentLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Segment deleteSegment(int segmentId)
+	public Segment deleteSegment(long segmentId)
 		throws PortalException, SystemException {
 		return segmentPersistence.remove(segmentId);
 	}
@@ -230,7 +230,7 @@ public abstract class SegmentLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	@Override
-	public Segment fetchSegment(int segmentId) throws SystemException {
+	public Segment fetchSegment(long segmentId) throws SystemException {
 		return segmentPersistence.fetchByPrimaryKey(segmentId);
 	}
 
@@ -243,7 +243,7 @@ public abstract class SegmentLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Segment getSegment(int segmentId)
+	public Segment getSegment(long segmentId)
 		throws PortalException, SystemException {
 		return segmentPersistence.findByPrimaryKey(segmentId);
 	}

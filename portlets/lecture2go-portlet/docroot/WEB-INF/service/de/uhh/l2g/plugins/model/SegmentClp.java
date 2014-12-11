@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
+import com.liferay.portal.util.PortalUtil;
 
 import de.uhh.l2g.plugins.service.ClpSerializer;
 import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
@@ -49,12 +50,12 @@ public class SegmentClp extends BaseModelImpl<Segment> implements Segment {
 	}
 
 	@Override
-	public int getPrimaryKey() {
+	public long getPrimaryKey() {
 		return _segmentId;
 	}
 
 	@Override
-	public void setPrimaryKey(int primaryKey) {
+	public void setPrimaryKey(long primaryKey) {
 		setSegmentId(primaryKey);
 	}
 
@@ -65,7 +66,7 @@ public class SegmentClp extends BaseModelImpl<Segment> implements Segment {
 
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		setPrimaryKey(((Integer)primaryKeyObj).intValue());
+		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
 	@Override
@@ -86,13 +87,13 @@ public class SegmentClp extends BaseModelImpl<Segment> implements Segment {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Integer segmentId = (Integer)attributes.get("segmentId");
+		Long segmentId = (Long)attributes.get("segmentId");
 
 		if (segmentId != null) {
 			setSegmentId(segmentId);
 		}
 
-		Integer videoId = (Integer)attributes.get("videoId");
+		Long videoId = (Long)attributes.get("videoId");
 
 		if (videoId != null) {
 			setVideoId(videoId);
@@ -122,13 +123,13 @@ public class SegmentClp extends BaseModelImpl<Segment> implements Segment {
 			setEnd(end);
 		}
 
-		String chapter = (String)attributes.get("chapter");
+		Integer chapter = (Integer)attributes.get("chapter");
 
 		if (chapter != null) {
 			setChapter(chapter);
 		}
 
-		Integer userId = (Integer)attributes.get("userId");
+		Long userId = (Long)attributes.get("userId");
 
 		if (userId != null) {
 			setUserId(userId);
@@ -136,19 +137,19 @@ public class SegmentClp extends BaseModelImpl<Segment> implements Segment {
 	}
 
 	@Override
-	public int getSegmentId() {
+	public long getSegmentId() {
 		return _segmentId;
 	}
 
 	@Override
-	public void setSegmentId(int segmentId) {
+	public void setSegmentId(long segmentId) {
 		_segmentId = segmentId;
 
 		if (_segmentRemoteModel != null) {
 			try {
 				Class<?> clazz = _segmentRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setSegmentId", int.class);
+				Method method = clazz.getMethod("setSegmentId", long.class);
 
 				method.invoke(_segmentRemoteModel, segmentId);
 			}
@@ -159,19 +160,19 @@ public class SegmentClp extends BaseModelImpl<Segment> implements Segment {
 	}
 
 	@Override
-	public int getVideoId() {
+	public long getVideoId() {
 		return _videoId;
 	}
 
 	@Override
-	public void setVideoId(int videoId) {
+	public void setVideoId(long videoId) {
 		_videoId = videoId;
 
 		if (_segmentRemoteModel != null) {
 			try {
 				Class<?> clazz = _segmentRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setVideoId", int.class);
+				Method method = clazz.getMethod("setVideoId", long.class);
 
 				method.invoke(_segmentRemoteModel, videoId);
 			}
@@ -274,19 +275,19 @@ public class SegmentClp extends BaseModelImpl<Segment> implements Segment {
 	}
 
 	@Override
-	public String getChapter() {
+	public int getChapter() {
 		return _chapter;
 	}
 
 	@Override
-	public void setChapter(String chapter) {
+	public void setChapter(int chapter) {
 		_chapter = chapter;
 
 		if (_segmentRemoteModel != null) {
 			try {
 				Class<?> clazz = _segmentRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setChapter", String.class);
+				Method method = clazz.getMethod("setChapter", int.class);
 
 				method.invoke(_segmentRemoteModel, chapter);
 			}
@@ -297,25 +298,156 @@ public class SegmentClp extends BaseModelImpl<Segment> implements Segment {
 	}
 
 	@Override
-	public int getUserId() {
+	public long getUserId() {
 		return _userId;
 	}
 
 	@Override
-	public void setUserId(int userId) {
+	public void setUserId(long userId) {
 		_userId = userId;
 
 		if (_segmentRemoteModel != null) {
 			try {
 				Class<?> clazz = _segmentRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setUserId", int.class);
+				Method method = clazz.getMethod("setUserId", long.class);
 
 				method.invoke(_segmentRemoteModel, userId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
 			}
+		}
+	}
+
+	@Override
+	public String getUserUuid() throws SystemException {
+		return PortalUtil.getUserValue(getUserId(), "uuid", _userUuid);
+	}
+
+	@Override
+	public void setUserUuid(String userUuid) {
+		_userUuid = userUuid;
+	}
+
+	@Override
+	public void setChapter(java.lang.Integer chapter) {
+		try {
+			String methodName = "setChapter";
+
+			Class<?>[] parameterTypes = new Class<?>[] { java.lang.Integer.class };
+
+			Object[] parameterValues = new Object[] { chapter };
+
+			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public void setNumber(int number) {
+		try {
+			String methodName = "setNumber";
+
+			Class<?>[] parameterTypes = new Class<?>[] { int.class };
+
+			Object[] parameterValues = new Object[] { number };
+
+			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public java.lang.String getImage() {
+		try {
+			String methodName = "getImage";
+
+			Class<?>[] parameterTypes = new Class<?>[] {  };
+
+			Object[] parameterValues = new Object[] {  };
+
+			java.lang.String returnObj = (java.lang.String)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public int getSeconds() {
+		try {
+			String methodName = "getSeconds";
+
+			Class<?>[] parameterTypes = new Class<?>[] {  };
+
+			Object[] parameterValues = new Object[] {  };
+
+			Integer returnObj = (Integer)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public void setImage(java.lang.String image) {
+		try {
+			String methodName = "setImage";
+
+			Class<?>[] parameterTypes = new Class<?>[] { java.lang.String.class };
+
+			Object[] parameterValues = new Object[] { image };
+
+			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public int getNumber() {
+		try {
+			String methodName = "getNumber";
+
+			Class<?>[] parameterTypes = new Class<?>[] {  };
+
+			Object[] parameterValues = new Object[] {  };
+
+			Integer returnObj = (Integer)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public void setSeconds(int seconds) {
+		try {
+			String methodName = "setSeconds";
+
+			Class<?>[] parameterTypes = new Class<?>[] { int.class };
+
+			Object[] parameterValues = new Object[] { seconds };
+
+			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
 		}
 	}
 
@@ -402,7 +534,7 @@ public class SegmentClp extends BaseModelImpl<Segment> implements Segment {
 
 	@Override
 	public int compareTo(Segment segment) {
-		int primaryKey = segment.getPrimaryKey();
+		long primaryKey = segment.getPrimaryKey();
 
 		if (getPrimaryKey() < primaryKey) {
 			return -1;
@@ -427,7 +559,7 @@ public class SegmentClp extends BaseModelImpl<Segment> implements Segment {
 
 		SegmentClp segment = (SegmentClp)obj;
 
-		int primaryKey = segment.getPrimaryKey();
+		long primaryKey = segment.getPrimaryKey();
 
 		if (getPrimaryKey() == primaryKey) {
 			return true;
@@ -439,7 +571,7 @@ public class SegmentClp extends BaseModelImpl<Segment> implements Segment {
 
 	@Override
 	public int hashCode() {
-		return getPrimaryKey();
+		return (int)getPrimaryKey();
 	}
 
 	@Override
@@ -513,13 +645,14 @@ public class SegmentClp extends BaseModelImpl<Segment> implements Segment {
 		return sb.toString();
 	}
 
-	private int _segmentId;
-	private int _videoId;
+	private long _segmentId;
+	private long _videoId;
 	private String _start;
 	private String _title;
 	private String _description;
 	private String _end;
-	private String _chapter;
-	private int _userId;
+	private int _chapter;
+	private long _userId;
+	private String _userUuid;
 	private BaseModel<?> _segmentRemoteModel;
 }
