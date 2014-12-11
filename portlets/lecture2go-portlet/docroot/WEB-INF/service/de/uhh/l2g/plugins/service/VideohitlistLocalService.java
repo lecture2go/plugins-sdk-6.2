@@ -63,7 +63,7 @@ public interface VideohitlistLocalService extends BaseLocalService,
 	* @return the new videohitlist
 	*/
 	public de.uhh.l2g.plugins.model.Videohitlist createVideohitlist(
-		int videohitlistId);
+		long videohitlistId);
 
 	/**
 	* Deletes the videohitlist with the primary key from the database. Also notifies the appropriate model listeners.
@@ -74,7 +74,7 @@ public interface VideohitlistLocalService extends BaseLocalService,
 	* @throws SystemException if a system exception occurred
 	*/
 	public de.uhh.l2g.plugins.model.Videohitlist deleteVideohitlist(
-		int videohitlistId)
+		long videohitlistId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -168,7 +168,7 @@ public interface VideohitlistLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public de.uhh.l2g.plugins.model.Videohitlist fetchVideohitlist(
-		int videohitlistId)
+		long videohitlistId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -181,7 +181,7 @@ public interface VideohitlistLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public de.uhh.l2g.plugins.model.Videohitlist getVideohitlist(
-		int videohitlistId)
+		long videohitlistId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

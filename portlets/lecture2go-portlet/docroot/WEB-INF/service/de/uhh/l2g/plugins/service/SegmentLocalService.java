@@ -62,7 +62,7 @@ public interface SegmentLocalService extends BaseLocalService,
 	* @param segmentId the primary key for the new segment
 	* @return the new segment
 	*/
-	public de.uhh.l2g.plugins.model.Segment createSegment(int segmentId);
+	public de.uhh.l2g.plugins.model.Segment createSegment(long segmentId);
 
 	/**
 	* Deletes the segment with the primary key from the database. Also notifies the appropriate model listeners.
@@ -72,7 +72,7 @@ public interface SegmentLocalService extends BaseLocalService,
 	* @throws PortalException if a segment with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.Segment deleteSegment(int segmentId)
+	public de.uhh.l2g.plugins.model.Segment deleteSegment(long segmentId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -165,7 +165,7 @@ public interface SegmentLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public de.uhh.l2g.plugins.model.Segment fetchSegment(int segmentId)
+	public de.uhh.l2g.plugins.model.Segment fetchSegment(long segmentId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -177,7 +177,7 @@ public interface SegmentLocalService extends BaseLocalService,
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public de.uhh.l2g.plugins.model.Segment getSegment(int segmentId)
+	public de.uhh.l2g.plugins.model.Segment getSegment(long segmentId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -244,4 +244,18 @@ public interface SegmentLocalService extends BaseLocalService,
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
+
+	public void deleteThumbhailsFromSegments(
+		java.util.List<de.uhh.l2g.plugins.model.Segment> segmentList)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<de.uhh.l2g.plugins.model.Segment> getSegmentsByVideoId(
+		java.lang.Long videoId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteByVideoId(java.lang.Long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

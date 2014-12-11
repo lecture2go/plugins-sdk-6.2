@@ -110,6 +110,325 @@ public class SegmentUtil {
 	}
 
 	/**
+	* Returns all the segments where videoId = &#63;.
+	*
+	* @param videoId the video ID
+	* @return the matching segments
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<de.uhh.l2g.plugins.model.Segment> findByVideo(
+		long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByVideo(videoId);
+	}
+
+	/**
+	* Returns a range of all the segments where videoId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.SegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param videoId the video ID
+	* @param start the lower bound of the range of segments
+	* @param end the upper bound of the range of segments (not inclusive)
+	* @return the range of matching segments
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<de.uhh.l2g.plugins.model.Segment> findByVideo(
+		long videoId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByVideo(videoId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the segments where videoId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.SegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param videoId the video ID
+	* @param start the lower bound of the range of segments
+	* @param end the upper bound of the range of segments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching segments
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<de.uhh.l2g.plugins.model.Segment> findByVideo(
+		long videoId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByVideo(videoId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first segment in the ordered set where videoId = &#63;.
+	*
+	* @param videoId the video ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching segment
+	* @throws de.uhh.l2g.plugins.NoSuchSegmentException if a matching segment could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Segment findByVideo_First(
+		long videoId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchSegmentException {
+		return getPersistence().findByVideo_First(videoId, orderByComparator);
+	}
+
+	/**
+	* Returns the first segment in the ordered set where videoId = &#63;.
+	*
+	* @param videoId the video ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching segment, or <code>null</code> if a matching segment could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Segment fetchByVideo_First(
+		long videoId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByVideo_First(videoId, orderByComparator);
+	}
+
+	/**
+	* Returns the last segment in the ordered set where videoId = &#63;.
+	*
+	* @param videoId the video ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching segment
+	* @throws de.uhh.l2g.plugins.NoSuchSegmentException if a matching segment could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Segment findByVideo_Last(
+		long videoId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchSegmentException {
+		return getPersistence().findByVideo_Last(videoId, orderByComparator);
+	}
+
+	/**
+	* Returns the last segment in the ordered set where videoId = &#63;.
+	*
+	* @param videoId the video ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching segment, or <code>null</code> if a matching segment could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Segment fetchByVideo_Last(
+		long videoId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByVideo_Last(videoId, orderByComparator);
+	}
+
+	/**
+	* Returns the segments before and after the current segment in the ordered set where videoId = &#63;.
+	*
+	* @param segmentId the primary key of the current segment
+	* @param videoId the video ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next segment
+	* @throws de.uhh.l2g.plugins.NoSuchSegmentException if a segment with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Segment[] findByVideo_PrevAndNext(
+		long segmentId, long videoId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchSegmentException {
+		return getPersistence()
+				   .findByVideo_PrevAndNext(segmentId, videoId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the segments where videoId = &#63; from the database.
+	*
+	* @param videoId the video ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByVideo(long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByVideo(videoId);
+	}
+
+	/**
+	* Returns the number of segments where videoId = &#63;.
+	*
+	* @param videoId the video ID
+	* @return the number of matching segments
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByVideo(long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByVideo(videoId);
+	}
+
+	/**
+	* Returns all the segments where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @return the matching segments
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<de.uhh.l2g.plugins.model.Segment> findByUser(
+		long userId) throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByUser(userId);
+	}
+
+	/**
+	* Returns a range of all the segments where userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.SegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param start the lower bound of the range of segments
+	* @param end the upper bound of the range of segments (not inclusive)
+	* @return the range of matching segments
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<de.uhh.l2g.plugins.model.Segment> findByUser(
+		long userId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByUser(userId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the segments where userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.SegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param start the lower bound of the range of segments
+	* @param end the upper bound of the range of segments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching segments
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<de.uhh.l2g.plugins.model.Segment> findByUser(
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByUser(userId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first segment in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching segment
+	* @throws de.uhh.l2g.plugins.NoSuchSegmentException if a matching segment could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Segment findByUser_First(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchSegmentException {
+		return getPersistence().findByUser_First(userId, orderByComparator);
+	}
+
+	/**
+	* Returns the first segment in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching segment, or <code>null</code> if a matching segment could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Segment fetchByUser_First(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByUser_First(userId, orderByComparator);
+	}
+
+	/**
+	* Returns the last segment in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching segment
+	* @throws de.uhh.l2g.plugins.NoSuchSegmentException if a matching segment could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Segment findByUser_Last(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchSegmentException {
+		return getPersistence().findByUser_Last(userId, orderByComparator);
+	}
+
+	/**
+	* Returns the last segment in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching segment, or <code>null</code> if a matching segment could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Segment fetchByUser_Last(
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByUser_Last(userId, orderByComparator);
+	}
+
+	/**
+	* Returns the segments before and after the current segment in the ordered set where userId = &#63;.
+	*
+	* @param segmentId the primary key of the current segment
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next segment
+	* @throws de.uhh.l2g.plugins.NoSuchSegmentException if a segment with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Segment[] findByUser_PrevAndNext(
+		long segmentId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchSegmentException {
+		return getPersistence()
+				   .findByUser_PrevAndNext(segmentId, userId, orderByComparator);
+	}
+
+	/**
+	* Removes all the segments where userId = &#63; from the database.
+	*
+	* @param userId the user ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByUser(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByUser(userId);
+	}
+
+	/**
+	* Returns the number of segments where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @return the number of matching segments
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByUser(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByUser(userId);
+	}
+
+	/**
 	* Caches the segment in the entity cache if it is enabled.
 	*
 	* @param segment the segment
@@ -134,7 +453,7 @@ public class SegmentUtil {
 	* @param segmentId the primary key for the new segment
 	* @return the new segment
 	*/
-	public static de.uhh.l2g.plugins.model.Segment create(int segmentId) {
+	public static de.uhh.l2g.plugins.model.Segment create(long segmentId) {
 		return getPersistence().create(segmentId);
 	}
 
@@ -146,7 +465,7 @@ public class SegmentUtil {
 	* @throws de.uhh.l2g.plugins.NoSuchSegmentException if a segment with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Segment remove(int segmentId)
+	public static de.uhh.l2g.plugins.model.Segment remove(long segmentId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchSegmentException {
 		return getPersistence().remove(segmentId);
@@ -167,7 +486,7 @@ public class SegmentUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static de.uhh.l2g.plugins.model.Segment findByPrimaryKey(
-		int segmentId)
+		long segmentId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchSegmentException {
 		return getPersistence().findByPrimaryKey(segmentId);
@@ -181,7 +500,7 @@ public class SegmentUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static de.uhh.l2g.plugins.model.Segment fetchByPrimaryKey(
-		int segmentId)
+		long segmentId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().fetchByPrimaryKey(segmentId);
 	}

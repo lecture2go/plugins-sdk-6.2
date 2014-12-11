@@ -113,6 +113,10 @@ public class Segment_User_VideoLocalServiceClpInvoker {
 		_methodName117 = "setBeanIdentifier";
 
 		_methodParameterTypes117 = new String[] { "java.lang.String" };
+
+		_methodName122 = "deleteByVideoId";
+
+		_methodParameterTypes122 = new String[] { "java.lang.Long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -216,6 +220,13 @@ public class Segment_User_VideoLocalServiceClpInvoker {
 			return null;
 		}
 
+		if (_methodName122.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
+			Segment_User_VideoLocalServiceUtil.deleteByVideoId((java.lang.Long)arguments[0]);
+
+			return null;
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -255,4 +266,6 @@ public class Segment_User_VideoLocalServiceClpInvoker {
 	private String[] _methodParameterTypes116;
 	private String _methodName117;
 	private String[] _methodParameterTypes117;
+	private String _methodName122;
+	private String[] _methodParameterTypes122;
 }

@@ -171,7 +171,7 @@ public class VideohitlistPersistenceImpl extends BasePersistenceImpl<Videohitlis
 	 * @return the new videohitlist
 	 */
 	@Override
-	public Videohitlist create(int videohitlistId) {
+	public Videohitlist create(long videohitlistId) {
 		Videohitlist videohitlist = new VideohitlistImpl();
 
 		videohitlist.setNew(true);
@@ -189,7 +189,7 @@ public class VideohitlistPersistenceImpl extends BasePersistenceImpl<Videohitlis
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Videohitlist remove(int videohitlistId)
+	public Videohitlist remove(long videohitlistId)
 		throws NoSuchVideohitlistException, SystemException {
 		return remove((Serializable)videohitlistId);
 	}
@@ -362,7 +362,7 @@ public class VideohitlistPersistenceImpl extends BasePersistenceImpl<Videohitlis
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Videohitlist findByPrimaryKey(int videohitlistId)
+	public Videohitlist findByPrimaryKey(long videohitlistId)
 		throws NoSuchVideohitlistException, SystemException {
 		return findByPrimaryKey((Serializable)videohitlistId);
 	}
@@ -423,7 +423,7 @@ public class VideohitlistPersistenceImpl extends BasePersistenceImpl<Videohitlis
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Videohitlist fetchByPrimaryKey(int videohitlistId)
+	public Videohitlist fetchByPrimaryKey(long videohitlistId)
 		throws SystemException {
 		return fetchByPrimaryKey((Serializable)videohitlistId);
 	}

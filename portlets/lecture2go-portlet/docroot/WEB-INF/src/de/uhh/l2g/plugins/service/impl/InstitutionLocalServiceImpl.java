@@ -14,7 +14,6 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +21,6 @@ import java.util.Map;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 
 import de.uhh.l2g.plugins.HostNameException;
@@ -37,10 +35,14 @@ import de.uhh.l2g.plugins.service.persistence.InstitutionFinderUtil;
  * The implementation of the institution local service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link de.uhh.l2g.plugins.service.InstitutionLocalService} interface.
+ * All custom service methods should be put in this class. Whenever methods are
+ * added, rerun ServiceBuilder to copy their definitions into the
+ * {@link de.uhh.l2g.plugins.service.InstitutionLocalService} interface.
  *
  * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
+ * This is a local service. Methods of this service will not have security
+ * checks based on the propagated JAAS credentials because this service can only
+ * be accessed from within the same VM.
  * </p>
  *
  * @author Iavor Sturm
@@ -50,21 +52,23 @@ import de.uhh.l2g.plugins.service.persistence.InstitutionFinderUtil;
 public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil} to access the institution local service.
+	 * 
+	 * Never reference this interface directly. Always use {@link
+	 * de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil} to access the
+	 * institution local service.
 	 */
-	
-	public Institution getById(long institutionId) throws SystemException{
+
+	public Institution getById(long institutionId) throws SystemException {
 		return institutionPersistence.fetchByPrimaryKey(institutionId);
 	}
-	
+
 	public List<Institution> getByParentId(long parentId, String type) throws SystemException {
 		return institutionPersistence.findByParent(parentId);
 	}
-	
+
 	public Map<String, String> getByParent(long parentId) throws SystemException {
-		Map<String,String> institutions = new LinkedHashMap<String, String>();
-		List <Institution> fList = institutionPersistence.findByParent(parentId);
+		Map<String, String> institutions = new LinkedHashMap<String, String>();
+		List<Institution> fList = institutionPersistence.findByParent(parentId);
 
 		for (Institution faculty : fList) {
 			String id = "" + faculty.getInstitutionId();
@@ -83,18 +87,18 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 	}
 
 	public Map<String, String> getAllSortedAsTree(int begin, int end) throws SystemException {
-		Map<String,String> allFaculties = new LinkedHashMap<String, String>();
-		List <Institution> einListAll = InstitutionFinderUtil.findAllSortedAsTree(begin, end);
+		Map<String, String> allFaculties = new LinkedHashMap<String, String>();
+		List<Institution> einListAll = InstitutionFinderUtil.findAllSortedAsTree(begin, end);
 
 		for (Institution faculty : einListAll) {
 			String id = "" + faculty.getInstitutionId();
 			String name = _indentFromPath(faculty.getPath(), "/") + faculty.getName();
 			allFaculties.put(id, name);
 		}
-		
+
 		return allFaculties;
 	}
-	
+
 	private String _indentFromPath(String path, String sep) {
 		String s = "";
 		for (int i = 1; i <= path.split(sep).length - 1; i++) {
@@ -102,47 +106,30 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		}
 		return s;
 	}
-	
-	
-	protected void validate (String name, String streamer, String serverTemplate) throws PortalException {
-	    
+
+	protected void validate(String name, String streamer, String serverTemplate) throws PortalException {
+
 		if (Validator.isNull(name)) {
-	       throw new HostNameException();
-		 }
-		
-	     if (Validator.isNull(streamer) || !Validator.isDomain(streamer) ) {
-	       throw new HostStreamerException();
-	     }     
-	     
-	     if (Validator.isNull(serverTemplate)) {
-	       throw new HostServerTemplateException();
-	     }
+			throw new HostNameException();
+		}
+
+		if (Validator.isNull(streamer) || !Validator.isDomain(streamer)) {
+			throw new HostStreamerException();
+		}
+
+		if (Validator.isNull(serverTemplate)) {
+			throw new HostServerTemplateException();
+		}
 	}
-	
-	public Host addInstitution(long userId, String name, String streamer, String serverTemplate,
-			String protocol, String serverRoot, int port,
-			ServiceContext serviceContext) throws SystemException, PortalException {
-		
-		long groupId = serviceContext.getScopeGroupId();
 
-		User user = userPersistence.findByPrimaryKey(userId);
+	public Host addInstitution(long userId, String name, String streamer, String serverTemplate, String protocol, String serverRoot, int port, ServiceContext serviceContext) throws SystemException, PortalException {
 
-		Date now = new Date();
-
-		validate(name,streamer,serverTemplate);
-		
+		validate(name, streamer, serverTemplate);
 
 		long hostId = counterLocalService.increment();
 
 		Host host = hostPersistence.create(hostId);
-		
-		host.setUuid(serviceContext.getUuid());
-		host.setUserId(userId);
-		host.setGroupId(groupId);
-		host.setCompanyId(user.getCompanyId());
-		host.setUserName(user.getFullName());
-		host.setCreateDate(serviceContext.getCreateDate(now));
-		host.setModifiedDate(serviceContext.getModifiedDate(now));
+
 		host.setName(name);
 		host.setServerTemplate(serverTemplate);
 		host.setStreamer(streamer);
@@ -155,5 +142,5 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 
 		return host;
 	}
-	
+
 }

@@ -271,18 +271,6 @@ public class HostLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.Host> getHosts(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getHosts(groupId);
-	}
-
-	public static java.util.List<de.uhh.l2g.plugins.model.Host> getHosts(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getHosts(groupId, start, end);
-	}
-
 	public static java.util.List<de.uhh.l2g.plugins.model.Host> getByInstitution(
 		long institutionId)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -290,8 +278,7 @@ public class HostLocalServiceUtil {
 	}
 
 	public static de.uhh.l2g.plugins.model.Host getByHostId(long hostId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getByHostId(hostId);
 	}
 

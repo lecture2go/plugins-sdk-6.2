@@ -33,11 +33,11 @@ public class VideohitlistLocalServiceClp implements VideohitlistLocalService {
 
 		_methodName1 = "createVideohitlist";
 
-		_methodParameterTypes1 = new String[] { "int" };
+		_methodParameterTypes1 = new String[] { "long" };
 
 		_methodName2 = "deleteVideohitlist";
 
-		_methodParameterTypes2 = new String[] { "int" };
+		_methodParameterTypes2 = new String[] { "long" };
 
 		_methodName3 = "deleteVideohitlist";
 
@@ -83,11 +83,11 @@ public class VideohitlistLocalServiceClp implements VideohitlistLocalService {
 
 		_methodName10 = "fetchVideohitlist";
 
-		_methodParameterTypes10 = new String[] { "int" };
+		_methodParameterTypes10 = new String[] { "long" };
 
 		_methodName11 = "getVideohitlist";
 
-		_methodParameterTypes11 = new String[] { "int" };
+		_methodParameterTypes11 = new String[] { "long" };
 
 		_methodName12 = "getPersistedModel";
 
@@ -148,7 +148,7 @@ public class VideohitlistLocalServiceClp implements VideohitlistLocalService {
 
 	@Override
 	public de.uhh.l2g.plugins.model.Videohitlist createVideohitlist(
-		int videohitlistId) {
+		long videohitlistId) {
 		Object returnObj = null;
 
 		try {
@@ -172,7 +172,7 @@ public class VideohitlistLocalServiceClp implements VideohitlistLocalService {
 
 	@Override
 	public de.uhh.l2g.plugins.model.Videohitlist deleteVideohitlist(
-		int videohitlistId)
+		long videohitlistId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -433,7 +433,7 @@ public class VideohitlistLocalServiceClp implements VideohitlistLocalService {
 
 	@Override
 	public de.uhh.l2g.plugins.model.Videohitlist fetchVideohitlist(
-		int videohitlistId)
+		long videohitlistId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
@@ -462,7 +462,7 @@ public class VideohitlistLocalServiceClp implements VideohitlistLocalService {
 
 	@Override
 	public de.uhh.l2g.plugins.model.Videohitlist getVideohitlist(
-		int videohitlistId)
+		long videohitlistId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;

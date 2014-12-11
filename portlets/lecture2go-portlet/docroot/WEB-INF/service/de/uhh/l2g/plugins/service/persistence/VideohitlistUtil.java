@@ -137,7 +137,7 @@ public class VideohitlistUtil {
 	* @return the new videohitlist
 	*/
 	public static de.uhh.l2g.plugins.model.Videohitlist create(
-		int videohitlistId) {
+		long videohitlistId) {
 		return getPersistence().create(videohitlistId);
 	}
 
@@ -150,7 +150,7 @@ public class VideohitlistUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static de.uhh.l2g.plugins.model.Videohitlist remove(
-		int videohitlistId)
+		long videohitlistId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchVideohitlistException {
 		return getPersistence().remove(videohitlistId);
@@ -171,7 +171,7 @@ public class VideohitlistUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static de.uhh.l2g.plugins.model.Videohitlist findByPrimaryKey(
-		int videohitlistId)
+		long videohitlistId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchVideohitlistException {
 		return getPersistence().findByPrimaryKey(videohitlistId);
@@ -185,7 +185,7 @@ public class VideohitlistUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static de.uhh.l2g.plugins.model.Videohitlist fetchByPrimaryKey(
-		int videohitlistId)
+		long videohitlistId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().fetchByPrimaryKey(videohitlistId);
 	}

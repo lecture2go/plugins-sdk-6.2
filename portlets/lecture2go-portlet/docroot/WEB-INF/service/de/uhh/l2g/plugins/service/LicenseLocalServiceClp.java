@@ -114,7 +114,7 @@ public class LicenseLocalServiceClp implements LicenseLocalService {
 
 		_methodParameterTypes19 = new String[] { "java.lang.Long" };
 
-		_methodName20 = "removeByVideoId";
+		_methodName20 = "deleteByVideoId";
 
 		_methodParameterTypes20 = new String[] { "java.lang.Long" };
 	}
@@ -700,7 +700,7 @@ public class LicenseLocalServiceClp implements LicenseLocalService {
 	}
 
 	@Override
-	public boolean removeByVideoId(java.lang.Long videoId)
+	public boolean deleteByVideoId(java.lang.Long videoId)
 		throws de.uhh.l2g.plugins.NoSuchLicenseException {
 		Object returnObj = null;
 

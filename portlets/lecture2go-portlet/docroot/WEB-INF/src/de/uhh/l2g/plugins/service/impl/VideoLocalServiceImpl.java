@@ -250,10 +250,8 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		try {
 			institudion = institutionPersistence.findByPrimaryKey(objectVideo.getRootInstitutionId());
 		} catch (NoSuchInstitutionException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SystemException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
@@ -398,5 +396,9 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			lastvideolist.setVideoId(v.getVideoId());
 			LastvideolistLocalServiceUtil.addLastvideolist(lastvideolist);
 		}
+	}
+
+	public List<Video> getByLectureseriesAndOpenaccess(Long lectureseriesId, int openAccess) throws SystemException{
+		return videoPersistence.findByLectureseriesAndOpenaccess(lectureseriesId, openAccess);
 	}
 }

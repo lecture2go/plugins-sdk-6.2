@@ -59,7 +59,7 @@ public class VideohitlistLocalServiceUtil {
 	* @return the new videohitlist
 	*/
 	public static de.uhh.l2g.plugins.model.Videohitlist createVideohitlist(
-		int videohitlistId) {
+		long videohitlistId) {
 		return getService().createVideohitlist(videohitlistId);
 	}
 
@@ -72,7 +72,7 @@ public class VideohitlistLocalServiceUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static de.uhh.l2g.plugins.model.Videohitlist deleteVideohitlist(
-		int videohitlistId)
+		long videohitlistId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().deleteVideohitlist(videohitlistId);
@@ -182,7 +182,7 @@ public class VideohitlistLocalServiceUtil {
 	}
 
 	public static de.uhh.l2g.plugins.model.Videohitlist fetchVideohitlist(
-		int videohitlistId)
+		long videohitlistId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().fetchVideohitlist(videohitlistId);
 	}
@@ -196,7 +196,7 @@ public class VideohitlistLocalServiceUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static de.uhh.l2g.plugins.model.Videohitlist getVideohitlist(
-		int videohitlistId)
+		long videohitlistId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getVideohitlist(videohitlistId);

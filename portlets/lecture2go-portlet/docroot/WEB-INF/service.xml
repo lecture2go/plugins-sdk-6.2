@@ -49,7 +49,7 @@
         <column name="institutionId" type="long" primary="true" id-type="increment"></column>
         <column name="parentId" type="long"></column>
         <column name="name" type="String"></column>
-        <column name="type" type="String"></column>
+        <column name="typ" type="String"></column>
         <column name="www" type="String"></column>
         <column name="level" type="int"></column>
         <column name="sort" type="int"></column>
@@ -71,9 +71,9 @@
         <finder name="Sort" return-type="Collection">
             <finder-column name="sort"></finder-column>
         </finder>
-        <finder name="L_T" return-type="Collection">
+        <finder name="LevelAndType" return-type="Collection">
             <finder-column name="level"></finder-column>
-            <finder-column name="type"></finder-column>
+            <finder-column name="typ"></finder-column>
         </finder>
     </entity>
     <entity name="Lectureseries_Institution" local-service="true" remote-service="false">
@@ -144,25 +144,16 @@
     	<!-- PK fields -->
 
     	<!-- Group instance -->
-        <column name="serverTemplate" type="String"></column>
-
-    	<column name="groupId" type="long"></column>
+    	<column name="serverTemplate" type="String"></column>
 
     	<!-- Audit fields -->
 
-    	<column name="companyId" type="long"></column>
-    	<column name="userId" type="long"></column>
-    	<column name="userName" type="String"></column>
-    	<column name="createDate" type="Date"></column>
-    	<column name="modifiedDate" type="Date"></column>
-        <column name="uuid" type="String"></column>
-        <finder name="GroupId" return-type="Collection">
-            <finder-column name="groupId"></finder-column>
-        </finder>
-        <finder name="G_H" return-type="Collection">
-            <finder-column name="groupId"></finder-column>
-            <finder-column name="hostId"></finder-column>
-        </finder>
+
+    	<!-- PK fields -->
+
+    	<!-- Group instance -->
+
+    	<!-- Audit fields -->
     </entity>
     <entity name="Institution_Host" local-service="true" remote-service="false">
         <column name="institutionHostId" type="long" primary="true" id-type="increment"></column>
@@ -242,14 +233,20 @@
         <column name="date" type="Date"></column>
     </entity>
     <entity name="Segment" local-service="true" remote-service="false">
-        <column name="segmentId" type="int" primary="true" id-type="increment"></column>
-        <column name="videoId" type="int"></column>
+        <column name="segmentId" type="long" primary="true" id-type="increment"></column>
+        <column name="videoId" type="long"></column>
         <column name="start" type="String"></column>
         <column name="title" type="String"></column>
         <column name="description" type="String"></column>
         <column name="end" type="String"></column>
-        <column name="chapter" type="String"></column>
-        <column name="userId" type="int"></column>
+        <column name="chapter" type="int"></column>
+        <column name="userId" type="long"></column>
+        <finder name="Video" return-type="Collection">
+            <finder-column name="videoId"></finder-column>
+        </finder>
+        <finder name="User" return-type="Collection">
+            <finder-column name="userId"></finder-column>
+        </finder>
     </entity>
     <entity local-service="true" remote-service="false" name="Segment_User_Video">
         <column name="segmentId" type="long"></column>
@@ -313,6 +310,10 @@
             <finder-column name="producerId"></finder-column>
             <finder-column name="downloadLink"></finder-column>
         </finder>
+        <finder name="LectureseriesAndOpenaccess" return-type="Collection">
+            <finder-column name="lectureseriesId"></finder-column>
+            <finder-column name="openAccess"></finder-column>
+        </finder>
     </entity>
     <entity name="Video_Institution" local-service="true" remote-service="false">
         <column name="videoInstitutionId" type="long" primary="true" id-type="increment"></column>
@@ -326,7 +327,7 @@
         </finder>
     </entity>
     <entity name="Videohitlist" local-service="true" remote-service="false">
-        <column name="videohitlistId" type="int" primary="true" id-type="increment"></column>
+        <column name="videohitlistId" type="long" primary="true" id-type="increment"></column>
         <column name="hitsPerDay" type="int"></column>
         <column name="hitsPerWeek" type="int"></column>
         <column name="hitsPerMonth" type="int"></column>
@@ -349,4 +350,6 @@
         <exception>HostServerTemplate</exception>
         <exception>InstitutionName</exception>
     </exceptions>
+
+
 </service-builder>

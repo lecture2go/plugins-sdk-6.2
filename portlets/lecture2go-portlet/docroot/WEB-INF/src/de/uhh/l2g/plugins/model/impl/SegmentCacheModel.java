@@ -93,13 +93,7 @@ public class SegmentCacheModel implements CacheModel<Segment>, Externalizable {
 			segmentImpl.setEnd(end);
 		}
 
-		if (chapter == null) {
-			segmentImpl.setChapter(StringPool.BLANK);
-		}
-		else {
-			segmentImpl.setChapter(chapter);
-		}
-
+		segmentImpl.setChapter(chapter);
 		segmentImpl.setUserId(userId);
 
 		segmentImpl.resetOriginalValues();
@@ -109,21 +103,21 @@ public class SegmentCacheModel implements CacheModel<Segment>, Externalizable {
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		segmentId = objectInput.readInt();
-		videoId = objectInput.readInt();
+		segmentId = objectInput.readLong();
+		videoId = objectInput.readLong();
 		start = objectInput.readUTF();
 		title = objectInput.readUTF();
 		description = objectInput.readUTF();
 		end = objectInput.readUTF();
-		chapter = objectInput.readUTF();
-		userId = objectInput.readInt();
+		chapter = objectInput.readInt();
+		userId = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeInt(segmentId);
-		objectOutput.writeInt(videoId);
+		objectOutput.writeLong(segmentId);
+		objectOutput.writeLong(videoId);
 
 		if (start == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -153,22 +147,16 @@ public class SegmentCacheModel implements CacheModel<Segment>, Externalizable {
 			objectOutput.writeUTF(end);
 		}
 
-		if (chapter == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(chapter);
-		}
-
-		objectOutput.writeInt(userId);
+		objectOutput.writeInt(chapter);
+		objectOutput.writeLong(userId);
 	}
 
-	public int segmentId;
-	public int videoId;
+	public long segmentId;
+	public long videoId;
 	public String start;
 	public String title;
 	public String description;
 	public String end;
-	public String chapter;
-	public int userId;
+	public int chapter;
+	public long userId;
 }

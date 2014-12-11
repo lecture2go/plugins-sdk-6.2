@@ -14,13 +14,6 @@
 		<field name="serverRoot" type="String" />
 		<field name="name" type="String" />
 		<field name="serverTemplate" type="String" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="uuid" type="String" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Institution">
 		<field name="institutionId" type="long" />
@@ -115,14 +108,14 @@
 		<field name="producerId" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Segment">
-		<field name="segmentId" type="int" />
-		<field name="videoId" type="int" />
+		<field name="segmentId" type="long" />
+		<field name="videoId" type="long" />
 		<field name="start" type="String" />
 		<field name="title" type="String" />
 		<field name="description" type="String" />
 		<field name="end" type="String" />
-		<field name="chapter" type="String" />
-		<field name="userId" type="int" />
+		<field name="chapter" type="int" />
+		<field name="userId" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Segment_User_Video">
 		<field name="segmentId" type="long" />
@@ -177,7 +170,7 @@
 		<field name="lectureseriesId" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Videohitlist">
-		<field name="videohitlistId" type="int" />
+		<field name="videohitlistId" type="long" />
 		<field name="hitsPerDay" type="int" />
 		<field name="hitsPerWeek" type="int" />
 		<field name="hitsPerMonth" type="int" />

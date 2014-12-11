@@ -69,7 +69,7 @@ public class VideohitlistCacheModel implements CacheModel<Videohitlist>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		videohitlistId = objectInput.readInt();
+		videohitlistId = objectInput.readLong();
 		hitsPerDay = objectInput.readInt();
 		hitsPerWeek = objectInput.readInt();
 		hitsPerMonth = objectInput.readInt();
@@ -79,14 +79,14 @@ public class VideohitlistCacheModel implements CacheModel<Videohitlist>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeInt(videohitlistId);
+		objectOutput.writeLong(videohitlistId);
 		objectOutput.writeInt(hitsPerDay);
 		objectOutput.writeInt(hitsPerWeek);
 		objectOutput.writeInt(hitsPerMonth);
 		objectOutput.writeInt(hitsPerYear);
 	}
 
-	public int videohitlistId;
+	public long videohitlistId;
 	public int hitsPerDay;
 	public int hitsPerWeek;
 	public int hitsPerMonth;

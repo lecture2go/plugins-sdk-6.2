@@ -81,27 +81,27 @@ public class SegmentSoap implements Serializable {
 	public SegmentSoap() {
 	}
 
-	public int getPrimaryKey() {
+	public long getPrimaryKey() {
 		return _segmentId;
 	}
 
-	public void setPrimaryKey(int pk) {
+	public void setPrimaryKey(long pk) {
 		setSegmentId(pk);
 	}
 
-	public int getSegmentId() {
+	public long getSegmentId() {
 		return _segmentId;
 	}
 
-	public void setSegmentId(int segmentId) {
+	public void setSegmentId(long segmentId) {
 		_segmentId = segmentId;
 	}
 
-	public int getVideoId() {
+	public long getVideoId() {
 		return _videoId;
 	}
 
-	public void setVideoId(int videoId) {
+	public void setVideoId(long videoId) {
 		_videoId = videoId;
 	}
 
@@ -137,28 +137,28 @@ public class SegmentSoap implements Serializable {
 		_end = end;
 	}
 
-	public String getChapter() {
+	public int getChapter() {
 		return _chapter;
 	}
 
-	public void setChapter(String chapter) {
+	public void setChapter(int chapter) {
 		_chapter = chapter;
 	}
 
-	public int getUserId() {
+	public long getUserId() {
 		return _userId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(long userId) {
 		_userId = userId;
 	}
 
-	private int _segmentId;
-	private int _videoId;
+	private long _segmentId;
+	private long _videoId;
 	private String _start;
 	private String _title;
 	private String _description;
 	private String _end;
-	private String _chapter;
-	private int _userId;
+	private int _chapter;
+	private long _userId;
 }

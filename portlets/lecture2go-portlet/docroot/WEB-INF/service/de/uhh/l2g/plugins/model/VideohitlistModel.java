@@ -47,28 +47,28 @@ public interface VideohitlistModel extends BaseModel<Videohitlist> {
 	 *
 	 * @return the primary key of this videohitlist
 	 */
-	public int getPrimaryKey();
+	public long getPrimaryKey();
 
 	/**
 	 * Sets the primary key of this videohitlist.
 	 *
 	 * @param primaryKey the primary key of this videohitlist
 	 */
-	public void setPrimaryKey(int primaryKey);
+	public void setPrimaryKey(long primaryKey);
 
 	/**
 	 * Returns the videohitlist ID of this videohitlist.
 	 *
 	 * @return the videohitlist ID of this videohitlist
 	 */
-	public int getVideohitlistId();
+	public long getVideohitlistId();
 
 	/**
 	 * Sets the videohitlist ID of this videohitlist.
 	 *
 	 * @param videohitlistId the videohitlist ID of this videohitlist
 	 */
-	public void setVideohitlistId(int videohitlistId);
+	public void setVideohitlistId(long videohitlistId);
 
 	/**
 	 * Returns the hits per day of this videohitlist.

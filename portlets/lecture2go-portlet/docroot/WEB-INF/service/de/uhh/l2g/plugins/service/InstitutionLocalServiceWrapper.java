@@ -288,6 +288,12 @@ public class InstitutionLocalServiceWrapper implements InstitutionLocalService,
 	}
 
 	@Override
+	public de.uhh.l2g.plugins.model.Institution getById(long institutionId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _institutionLocalService.getById(institutionId);
+	}
+
+	@Override
 	public java.util.List<de.uhh.l2g.plugins.model.Institution> getByParentId(
 		long parentId, java.lang.String type)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -320,6 +326,18 @@ public class InstitutionLocalServiceWrapper implements InstitutionLocalService,
 		int begin, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _institutionLocalService.getAllSortedAsTree(begin, end);
+	}
+
+	@Override
+	public de.uhh.l2g.plugins.model.Host addInstitution(long userId,
+		java.lang.String name, java.lang.String streamer,
+		java.lang.String serverTemplate, java.lang.String protocol,
+		java.lang.String serverRoot, int port,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _institutionLocalService.addInstitution(userId, name, streamer,
+			serverTemplate, protocol, serverRoot, port, serviceContext);
 	}
 
 	/**

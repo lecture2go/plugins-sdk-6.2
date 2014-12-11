@@ -108,7 +108,7 @@ public abstract class VideohitlistLocalServiceBaseImpl
 	 * @return the new videohitlist
 	 */
 	@Override
-	public Videohitlist createVideohitlist(int videohitlistId) {
+	public Videohitlist createVideohitlist(long videohitlistId) {
 		return videohitlistPersistence.create(videohitlistId);
 	}
 
@@ -122,7 +122,7 @@ public abstract class VideohitlistLocalServiceBaseImpl
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Videohitlist deleteVideohitlist(int videohitlistId)
+	public Videohitlist deleteVideohitlist(long videohitlistId)
 		throws PortalException, SystemException {
 		return videohitlistPersistence.remove(videohitlistId);
 	}
@@ -235,7 +235,7 @@ public abstract class VideohitlistLocalServiceBaseImpl
 	}
 
 	@Override
-	public Videohitlist fetchVideohitlist(int videohitlistId)
+	public Videohitlist fetchVideohitlist(long videohitlistId)
 		throws SystemException {
 		return videohitlistPersistence.fetchByPrimaryKey(videohitlistId);
 	}
@@ -249,7 +249,7 @@ public abstract class VideohitlistLocalServiceBaseImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Videohitlist getVideohitlist(int videohitlistId)
+	public Videohitlist getVideohitlist(long videohitlistId)
 		throws PortalException, SystemException {
 		return videohitlistPersistence.findByPrimaryKey(videohitlistId);
 	}

@@ -58,7 +58,7 @@ public interface VideohitlistPersistence extends BasePersistence<Videohitlist> {
 	* @param videohitlistId the primary key for the new videohitlist
 	* @return the new videohitlist
 	*/
-	public de.uhh.l2g.plugins.model.Videohitlist create(int videohitlistId);
+	public de.uhh.l2g.plugins.model.Videohitlist create(long videohitlistId);
 
 	/**
 	* Removes the videohitlist with the primary key from the database. Also notifies the appropriate model listeners.
@@ -68,7 +68,7 @@ public interface VideohitlistPersistence extends BasePersistence<Videohitlist> {
 	* @throws de.uhh.l2g.plugins.NoSuchVideohitlistException if a videohitlist with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.Videohitlist remove(int videohitlistId)
+	public de.uhh.l2g.plugins.model.Videohitlist remove(long videohitlistId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchVideohitlistException;
 
@@ -85,7 +85,7 @@ public interface VideohitlistPersistence extends BasePersistence<Videohitlist> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public de.uhh.l2g.plugins.model.Videohitlist findByPrimaryKey(
-		int videohitlistId)
+		long videohitlistId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchVideohitlistException;
 
@@ -97,7 +97,7 @@ public interface VideohitlistPersistence extends BasePersistence<Videohitlist> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public de.uhh.l2g.plugins.model.Videohitlist fetchByPrimaryKey(
-		int videohitlistId)
+		long videohitlistId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

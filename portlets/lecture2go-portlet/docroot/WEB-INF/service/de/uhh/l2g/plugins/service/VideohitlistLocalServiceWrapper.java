@@ -52,7 +52,7 @@ public class VideohitlistLocalServiceWrapper implements VideohitlistLocalService
 	*/
 	@Override
 	public de.uhh.l2g.plugins.model.Videohitlist createVideohitlist(
-		int videohitlistId) {
+		long videohitlistId) {
 		return _videohitlistLocalService.createVideohitlist(videohitlistId);
 	}
 
@@ -66,7 +66,7 @@ public class VideohitlistLocalServiceWrapper implements VideohitlistLocalService
 	*/
 	@Override
 	public de.uhh.l2g.plugins.model.Videohitlist deleteVideohitlist(
-		int videohitlistId)
+		long videohitlistId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _videohitlistLocalService.deleteVideohitlist(videohitlistId);
@@ -185,7 +185,7 @@ public class VideohitlistLocalServiceWrapper implements VideohitlistLocalService
 
 	@Override
 	public de.uhh.l2g.plugins.model.Videohitlist fetchVideohitlist(
-		int videohitlistId)
+		long videohitlistId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _videohitlistLocalService.fetchVideohitlist(videohitlistId);
 	}
@@ -200,7 +200,7 @@ public class VideohitlistLocalServiceWrapper implements VideohitlistLocalService
 	*/
 	@Override
 	public de.uhh.l2g.plugins.model.Videohitlist getVideohitlist(
-		int videohitlistId)
+		long videohitlistId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _videohitlistLocalService.getVideohitlist(videohitlistId);

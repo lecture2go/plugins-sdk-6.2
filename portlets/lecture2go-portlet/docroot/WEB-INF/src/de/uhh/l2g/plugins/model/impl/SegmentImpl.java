@@ -23,12 +23,84 @@ package de.uhh.l2g.plugins.model.impl;
  *
  * @author Iavor Sturm
  */
+@SuppressWarnings("serial")
 public class SegmentImpl extends SegmentBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a segment model instance should use the {@link de.uhh.l2g.plugins.model.Segment} interface instead.
 	 */
+	
+	private String image;
+	
+	private int number;
+	
+	private int seconds;
+	
+	private String title;
+	
+	private String description;
+	
+	private Integer chapter;
+	
+	
+	public int getNumber() {
+		return number;
+	}
+
+	public void setNumber(int number) {
+		this.number = number;
+	}
+
+	public int getSeconds() {
+		return seconds;
+	}
+
+	public void setSeconds(int seconds) {
+		this.seconds = seconds;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public int getChapter() {
+		return chapter;
+	}
+
+	public void setChapter(Integer chapter) {
+		this.chapter = chapter;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 	public SegmentImpl() {
+	}
+
+	public SegmentImpl(Long segmentId, Long userId, String start, String end, Long videoId, String image) {
+		this.setSegmentId(segmentId);
+		this.setUserId(userId);
+		this.setStart(start);
+		this.setEnd(end);
+		this.setVideoId(videoId);
+		this.setImage(image);
 	}
 }

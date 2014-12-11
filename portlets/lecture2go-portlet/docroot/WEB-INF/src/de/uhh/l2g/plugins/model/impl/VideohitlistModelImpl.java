@@ -20,6 +20,10 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 
 import de.uhh.l2g.plugins.model.Videohitlist;
 import de.uhh.l2g.plugins.model.VideohitlistModel;
@@ -53,13 +57,13 @@ public class VideohitlistModelImpl extends BaseModelImpl<Videohitlist>
 	 */
 	public static final String TABLE_NAME = "LG_Videohitlist";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "videohitlistId", Types.INTEGER },
+			{ "videohitlistId", Types.BIGINT },
 			{ "hitsPerDay", Types.INTEGER },
 			{ "hitsPerWeek", Types.INTEGER },
 			{ "hitsPerMonth", Types.INTEGER },
 			{ "hitsPerYear", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Videohitlist (videohitlistId INTEGER not null primary key,hitsPerDay INTEGER,hitsPerWeek INTEGER,hitsPerMonth INTEGER,hitsPerYear INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Videohitlist (videohitlistId LONG not null primary key,hitsPerDay INTEGER,hitsPerWeek INTEGER,hitsPerMonth INTEGER,hitsPerYear INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Videohitlist";
 	public static final String ORDER_BY_JPQL = " ORDER BY videohitlist.videohitlistId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Videohitlist.videohitlistId ASC";
@@ -80,12 +84,12 @@ public class VideohitlistModelImpl extends BaseModelImpl<Videohitlist>
 	}
 
 	@Override
-	public int getPrimaryKey() {
+	public long getPrimaryKey() {
 		return _videohitlistId;
 	}
 
 	@Override
-	public void setPrimaryKey(int primaryKey) {
+	public void setPrimaryKey(long primaryKey) {
 		setVideohitlistId(primaryKey);
 	}
 
@@ -96,7 +100,7 @@ public class VideohitlistModelImpl extends BaseModelImpl<Videohitlist>
 
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		setPrimaryKey(((Integer)primaryKeyObj).intValue());
+		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
 	@Override
@@ -124,7 +128,7 @@ public class VideohitlistModelImpl extends BaseModelImpl<Videohitlist>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Integer videohitlistId = (Integer)attributes.get("videohitlistId");
+		Long videohitlistId = (Long)attributes.get("videohitlistId");
 
 		if (videohitlistId != null) {
 			setVideohitlistId(videohitlistId);
@@ -156,12 +160,12 @@ public class VideohitlistModelImpl extends BaseModelImpl<Videohitlist>
 	}
 
 	@Override
-	public int getVideohitlistId() {
+	public long getVideohitlistId() {
 		return _videohitlistId;
 	}
 
 	@Override
-	public void setVideohitlistId(int videohitlistId) {
+	public void setVideohitlistId(long videohitlistId) {
 		_videohitlistId = videohitlistId;
 	}
 
@@ -206,6 +210,19 @@ public class VideohitlistModelImpl extends BaseModelImpl<Videohitlist>
 	}
 
 	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+			Videohitlist.class.getName(), getPrimaryKey());
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
 	public Videohitlist toEscapedModel() {
 		if (_escapedModel == null) {
 			_escapedModel = (Videohitlist)ProxyUtil.newProxyInstance(_classLoader,
@@ -232,7 +249,7 @@ public class VideohitlistModelImpl extends BaseModelImpl<Videohitlist>
 
 	@Override
 	public int compareTo(Videohitlist videohitlist) {
-		int primaryKey = videohitlist.getPrimaryKey();
+		long primaryKey = videohitlist.getPrimaryKey();
 
 		if (getPrimaryKey() < primaryKey) {
 			return -1;
@@ -257,7 +274,7 @@ public class VideohitlistModelImpl extends BaseModelImpl<Videohitlist>
 
 		Videohitlist videohitlist = (Videohitlist)obj;
 
-		int primaryKey = videohitlist.getPrimaryKey();
+		long primaryKey = videohitlist.getPrimaryKey();
 
 		if (getPrimaryKey() == primaryKey) {
 			return true;
@@ -269,7 +286,7 @@ public class VideohitlistModelImpl extends BaseModelImpl<Videohitlist>
 
 	@Override
 	public int hashCode() {
-		return getPrimaryKey();
+		return (int)getPrimaryKey();
 	}
 
 	@Override
@@ -350,7 +367,7 @@ public class VideohitlistModelImpl extends BaseModelImpl<Videohitlist>
 	private static Class<?>[] _escapedModelInterfaces = new Class[] {
 			Videohitlist.class
 		};
-	private int _videohitlistId;
+	private long _videohitlistId;
 	private int _hitsPerDay;
 	private int _hitsPerWeek;
 	private int _hitsPerMonth;

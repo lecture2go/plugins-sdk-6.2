@@ -14,20 +14,17 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 
 import de.uhh.l2g.plugins.HostNameException;
 import de.uhh.l2g.plugins.HostServerTemplateException;
 import de.uhh.l2g.plugins.HostStreamerException;
 import de.uhh.l2g.plugins.model.Host;
-import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.service.base.HostLocalServiceBaseImpl;
 
 /**
@@ -51,15 +48,6 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.HostLocalServiceUtil} to access the host local service.
 	 */
 	
-	public List<Host> getHosts (long groupId) throws SystemException {
-	    return hostPersistence.findByGroupId(groupId);
-	}
-	
-	public List<Host> getHosts (long groupId, int start, int end)
-			   throws SystemException {
-			    return hostPersistence.findByGroupId(groupId, start, end);
-	}
-
 
 	public List<Host> getByInstitution(long institutionId) throws SystemException {
 		// TODO Auto-generated method stub
@@ -89,12 +77,6 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 			String protocol, String serverRoot, int port,
 			ServiceContext serviceContext) throws SystemException, PortalException {
 		
-		long groupId = serviceContext.getScopeGroupId();
-
-		User user = userPersistence.findByPrimaryKey(userId);
-
-		Date now = new Date();
-
 		validate(name,streamer,serverTemplate);
 		
 
@@ -102,13 +84,6 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 
 		Host host = hostPersistence.create(hostId);
 		
-		host.setUuid(serviceContext.getUuid());
-		host.setUserId(userId);
-		host.setGroupId(groupId);
-		host.setCompanyId(user.getCompanyId());
-		host.setUserName(user.getFullName());
-		host.setCreateDate(serviceContext.getCreateDate(now));
-		host.setModifiedDate(serviceContext.getModifiedDate(now));
 		host.setName(name);
 		host.setServerTemplate(serverTemplate);
 		host.setStreamer(streamer);

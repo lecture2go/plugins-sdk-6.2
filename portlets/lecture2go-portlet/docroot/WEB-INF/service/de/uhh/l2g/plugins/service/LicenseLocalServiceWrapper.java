@@ -288,9 +288,9 @@ public class LicenseLocalServiceWrapper implements LicenseLocalService,
 	}
 
 	@Override
-	public boolean removeByVideoId(java.lang.Long videoId)
+	public boolean deleteByVideoId(java.lang.Long videoId)
 		throws de.uhh.l2g.plugins.NoSuchLicenseException {
-		return _licenseLocalService.removeByVideoId(videoId);
+		return _licenseLocalService.deleteByVideoId(videoId);
 	}
 
 	/**

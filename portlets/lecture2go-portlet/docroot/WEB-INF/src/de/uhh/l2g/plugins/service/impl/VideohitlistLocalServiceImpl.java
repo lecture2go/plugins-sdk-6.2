@@ -37,4 +37,5 @@ public class VideohitlistLocalServiceImpl
 	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.VideohitlistLocalServiceUtil} to access the videohitlist local service.
 	 */
+	
 }

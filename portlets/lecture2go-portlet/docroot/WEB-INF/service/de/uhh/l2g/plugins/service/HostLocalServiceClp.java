@@ -108,25 +108,17 @@ public class HostLocalServiceClp implements HostLocalService {
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
 
-		_methodName19 = "getHosts";
+		_methodName19 = "getByInstitution";
 
 		_methodParameterTypes19 = new String[] { "long" };
 
-		_methodName20 = "getHosts";
+		_methodName20 = "getByHostId";
 
-		_methodParameterTypes20 = new String[] { "long", "int", "int" };
+		_methodParameterTypes20 = new String[] { "long" };
 
-		_methodName21 = "getByInstitution";
+		_methodName21 = "addHost";
 
-		_methodParameterTypes21 = new String[] { "long" };
-
-		_methodName22 = "getByHostId";
-
-		_methodParameterTypes22 = new String[] { "long" };
-
-		_methodName23 = "addHost";
-
-		_methodParameterTypes23 = new String[] {
+		_methodParameterTypes21 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"int", "com.liferay.portal.service.ServiceContext"
@@ -679,72 +671,14 @@ public class HostLocalServiceClp implements HostLocalService {
 	}
 
 	@Override
-	public java.util.List<de.uhh.l2g.plugins.model.Host> getHosts(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName19,
-					_methodParameterTypes19, new Object[] { groupId });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.util.List<de.uhh.l2g.plugins.model.Host>)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public java.util.List<de.uhh.l2g.plugins.model.Host> getHosts(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName20,
-					_methodParameterTypes20,
-					new Object[] { groupId, start, end });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.util.List<de.uhh.l2g.plugins.model.Host>)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
 	public java.util.List<de.uhh.l2g.plugins.model.Host> getByInstitution(
 		long institutionId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName21,
-					_methodParameterTypes21, new Object[] { institutionId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName19,
+					_methodParameterTypes19, new Object[] { institutionId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -767,20 +701,15 @@ public class HostLocalServiceClp implements HostLocalService {
 
 	@Override
 	public de.uhh.l2g.plugins.model.Host getByHostId(long hostId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName22,
-					_methodParameterTypes22, new Object[] { hostId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20, new Object[] { hostId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
-				throw (com.liferay.portal.kernel.exception.PortalException)t;
-			}
 
 			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
 				throw (com.liferay.portal.kernel.exception.SystemException)t;
@@ -809,8 +738,8 @@ public class HostLocalServiceClp implements HostLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName23,
-					_methodParameterTypes23,
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21,
 					new Object[] {
 						userId,
 						
@@ -895,8 +824,4 @@ public class HostLocalServiceClp implements HostLocalService {
 	private String[] _methodParameterTypes20;
 	private String _methodName21;
 	private String[] _methodParameterTypes21;
-	private String _methodName22;
-	private String[] _methodParameterTypes22;
-	private String _methodName23;
-	private String[] _methodParameterTypes23;
 }

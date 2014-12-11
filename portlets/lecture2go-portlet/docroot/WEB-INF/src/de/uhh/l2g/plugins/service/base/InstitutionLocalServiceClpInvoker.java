@@ -114,25 +114,37 @@ public class InstitutionLocalServiceClpInvoker {
 
 		_methodParameterTypes117 = new String[] { "java.lang.String" };
 
-		_methodName122 = "getByParentId";
+		_methodName122 = "getById";
 
-		_methodParameterTypes122 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes122 = new String[] { "long" };
 
-		_methodName123 = "getByParent";
+		_methodName123 = "getByParentId";
 
-		_methodParameterTypes123 = new String[] { "long" };
+		_methodParameterTypes123 = new String[] { "long", "java.lang.String" };
 
-		_methodName124 = "getByLevel";
+		_methodName124 = "getByParent";
 
-		_methodParameterTypes124 = new String[] { "int" };
+		_methodParameterTypes124 = new String[] { "long" };
 
-		_methodName125 = "getByLectureseriesId";
+		_methodName125 = "getByLevel";
 
-		_methodParameterTypes125 = new String[] { "long", "int", "int" };
+		_methodParameterTypes125 = new String[] { "int" };
 
-		_methodName126 = "getAllSortedAsTree";
+		_methodName126 = "getByLectureseriesId";
 
-		_methodParameterTypes126 = new String[] { "int", "int" };
+		_methodParameterTypes126 = new String[] { "long", "int", "int" };
+
+		_methodName127 = "getAllSortedAsTree";
+
+		_methodParameterTypes127 = new String[] { "int", "int" };
+
+		_methodName130 = "addInstitution";
+
+		_methodParameterTypes130 = new String[] {
+				"long", "java.lang.String", "java.lang.String",
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"int", "com.liferay.portal.service.ServiceContext"
+			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -238,31 +250,46 @@ public class InstitutionLocalServiceClpInvoker {
 
 		if (_methodName122.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
-			return InstitutionLocalServiceUtil.getByParentId(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1]);
+			return InstitutionLocalServiceUtil.getById(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName123.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
-			return InstitutionLocalServiceUtil.getByParent(((Long)arguments[0]).longValue());
+			return InstitutionLocalServiceUtil.getByParentId(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1]);
 		}
 
 		if (_methodName124.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
-			return InstitutionLocalServiceUtil.getByLevel(((Integer)arguments[0]).intValue());
+			return InstitutionLocalServiceUtil.getByParent(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName125.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
+			return InstitutionLocalServiceUtil.getByLevel(((Integer)arguments[0]).intValue());
+		}
+
+		if (_methodName126.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
 			return InstitutionLocalServiceUtil.getByLectureseriesId(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				((Integer)arguments[2]).intValue());
 		}
 
-		if (_methodName126.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
+		if (_methodName127.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
 			return InstitutionLocalServiceUtil.getAllSortedAsTree(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
+		}
+
+		if (_methodName130.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes130, parameterTypes)) {
+			return InstitutionLocalServiceUtil.addInstitution(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
+				(java.lang.String)arguments[3], (java.lang.String)arguments[4],
+				(java.lang.String)arguments[5],
+				((Integer)arguments[6]).intValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[7]);
 		}
 
 		throw new UnsupportedOperationException();
@@ -314,4 +341,8 @@ public class InstitutionLocalServiceClpInvoker {
 	private String[] _methodParameterTypes125;
 	private String _methodName126;
 	private String[] _methodParameterTypes126;
+	private String _methodName127;
+	private String[] _methodParameterTypes127;
+	private String _methodName130;
+	private String[] _methodParameterTypes130;
 }
