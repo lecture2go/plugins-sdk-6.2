@@ -91,14 +91,14 @@ public class LastvideolistSoap implements Serializable {
 		_lastvideolistId = lastvideolistId;
 	}
 
-	public int getVideoId() {
+	public long getVideoId() {
 		return _videoId;
 	}
 
-	public void setVideoId(int videoId) {
+	public void setVideoId(long videoId) {
 		_videoId = videoId;
 	}
 
 	private int _lastvideolistId;
-	private int _videoId;
+	private long _videoId;
 }

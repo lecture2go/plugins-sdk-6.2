@@ -244,6 +244,10 @@ public interface VideoLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public de.uhh.l2g.plugins.model.Video getLatestVideoForLectureseries(
+		java.lang.Long lectureseriesId, int begin, int end);
+
 	public int unlinkLectureseriesFromVideos(java.lang.Long lectureseriesId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -267,8 +271,19 @@ public interface VideoLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<de.uhh.l2g.plugins.model.Video> getByProducerAndDownloadLink(
+		java.lang.Long producerId, int downloadLink)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<de.uhh.l2g.plugins.model.Video> getLatestVideos();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public de.uhh.l2g.plugins.model.Video getVideo(java.lang.Long videoId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.json.JSONObject getJSONVideo(java.lang.Long videoId);
+
+	public void createLastVideoList()
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

@@ -37,8 +37,7 @@ import de.uhh.l2g.plugins.service.persistence.LectureseriesFinderUtil;
  * @see de.uhh.l2g.plugins.service.base.LectureseriesLocalServiceBaseImpl
  * @see de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil
  */
-public class LectureseriesLocalServiceImpl
-	extends LectureseriesLocalServiceBaseImpl {
+public class LectureseriesLocalServiceImpl extends LectureseriesLocalServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -59,5 +58,9 @@ public class LectureseriesLocalServiceImpl
 			l = new ArrayList<Lectureseries>();
 		}
 		return l;
+	}
+	
+	public List<Lectureseries> getAllLectureseriesWhithOpenaccessVideos(){
+		return LectureseriesFinderUtil.findAllLectureseriesWhithOpenaccessVideos();
 	}
 }

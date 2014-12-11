@@ -203,7 +203,7 @@
     </entity>
     <entity name="Lastvideolist" local-service="true" remote-service="false">
         <column name="lastvideolistId" type="int" primary="true" id-type="increment"></column>
-        <column name="videoId" type="int"></column>
+        <column name="videoId" type="long"></column>
     </entity>
     <entity name="License" local-service="true" remote-service="false">
         <column name="licenseId" type="long" primary="true" id-type="increment"></column>
@@ -308,6 +308,10 @@
         <finder name="ProducerAndLectureseries" return-type="Collection">
             <finder-column name="producerId"></finder-column>
             <finder-column name="lectureseriesId"></finder-column>
+        </finder>
+        <finder return-type="Collection" name="ProducerAndDownloadLink">
+            <finder-column name="producerId"></finder-column>
+            <finder-column name="downloadLink"></finder-column>
         </finder>
     </entity>
     <entity name="Video_Institution" local-service="true" remote-service="false">

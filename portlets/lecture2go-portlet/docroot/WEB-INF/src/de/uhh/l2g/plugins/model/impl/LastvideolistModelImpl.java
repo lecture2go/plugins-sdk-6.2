@@ -54,9 +54,9 @@ public class LastvideolistModelImpl extends BaseModelImpl<Lastvideolist>
 	public static final String TABLE_NAME = "LG_Lastvideolist";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "lastvideolistId", Types.INTEGER },
-			{ "videoId", Types.INTEGER }
+			{ "videoId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Lastvideolist (lastvideolistId INTEGER not null primary key,videoId INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Lastvideolist (lastvideolistId INTEGER not null primary key,videoId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Lastvideolist";
 	public static final String ORDER_BY_JPQL = " ORDER BY lastvideolist.lastvideolistId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Lastvideolist.lastvideolistId ASC";
@@ -124,7 +124,7 @@ public class LastvideolistModelImpl extends BaseModelImpl<Lastvideolist>
 			setLastvideolistId(lastvideolistId);
 		}
 
-		Integer videoId = (Integer)attributes.get("videoId");
+		Long videoId = (Long)attributes.get("videoId");
 
 		if (videoId != null) {
 			setVideoId(videoId);
@@ -142,12 +142,12 @@ public class LastvideolistModelImpl extends BaseModelImpl<Lastvideolist>
 	}
 
 	@Override
-	public int getVideoId() {
+	public long getVideoId() {
 		return _videoId;
 	}
 
 	@Override
-	public void setVideoId(int videoId) {
+	public void setVideoId(long videoId) {
 		_videoId = videoId;
 	}
 
@@ -270,6 +270,6 @@ public class LastvideolistModelImpl extends BaseModelImpl<Lastvideolist>
 			Lastvideolist.class
 		};
 	private int _lastvideolistId;
-	private int _videoId;
+	private long _videoId;
 	private Lastvideolist _escapedModel;
 }

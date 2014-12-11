@@ -29,12 +29,29 @@
 		]]>
     </sql> 
 
+    <sql id="de.uhh.l2g.plugins.service.persistence.LectureseriesFinder.findAllLectureseriesWithOpenAccessVideos">
+		<![CDATA[
+			SELECT number_, eventType, eventCategory, l.name, shortDesc, semesterName, language, facultyName, instructorsString, l.lectureseriesId, password_, approved, longDesc 
+			FROM lg_lectureseries l, lg_video v, lg_video_institution vi, lg_institution i 
+			WHERE ( l.lectureseriesId=v.lectureseriesId AND v.openAccess=1 AND v.videoId=vi.videoId AND vi.institutionId=i.institutionId) 
+			GROUP BY l.lectureseriesId
+		]]>
+    </sql> 
+
     <sql id="de.uhh.l2g.plugins.service.persistence.ProducerFinder.findProducerIds">
 		<![CDATA[
 			SELECT p.producerId 
 			FROM lg_producer_lectureseries AS pc 
 			INNER JOIN lg_producer AS p ON pc.producerId = p.producerId 
 			WHERE pc.lectureseriesId = ?
+		]]>
+    </sql> 
+
+    <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.findLatestVideoForlectureseries">
+		<![CDATA[
+			SELECT videoId FROM lg_video  
+			WHERE (generationDate=(SELECT MAX(generationDate) FROM lg_video WHERE lectureseriesId=? AND openAccess=1) AND lectureseriesId=? AND openAccess=1)  
+			ORDER BY videoId ASC
 		]]>
     </sql> 
     

@@ -53,6 +53,8 @@ import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
+import de.uhh.l2g.plugins.service.persistence.LectureseriesFinderUtil;
+import de.uhh.l2g.plugins.service.persistence.VideoFinderUtil;
 
 public class AdminVideoManagement extends MVCPortlet {
 
@@ -60,10 +62,15 @@ public class AdminVideoManagement extends MVCPortlet {
 	
 	@SuppressWarnings("unused")
 	public void viewVideo(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
+		
+		List<Lectureseries> ls  = LectureseriesLocalServiceUtil.getAllLectureseriesWhithOpenaccessVideos();
+		Video video = VideoLocalServiceUtil.getLatestVideoForLectureseries(new Long(3890), 0, 10);
+		List<Video> vl = VideoLocalServiceUtil.getLatestVideos();
+		
 		//permissions
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
 		PermissionChecker permissionChecker = themeDisplay.getPermissionChecker();
-
+		
 		//user 
 		String uId = request.getRemoteUser();
 		Long userId = new Long(uId);
@@ -71,18 +78,18 @@ public class AdminVideoManagement extends MVCPortlet {
 		
 		// requested producer id
 		Long reqPproducerId = (long)0;
-		try{reqPproducerId = new Long(request.getParameterMap().get("producerId")[0]);}catch(Exception e){}
+		try{reqPproducerId = new Long(request.getParameterMap().get("producerI	d")[0]);}catch(Exception e){}
 		
 		// requested lecture series id
 		Long reqLectureseriesId = (long)0;
 		try{reqLectureseriesId = new Long(request.getParameterMap().get("lectureseriesId")[0]);}catch(Exception e){}
-				
+			
 		// requested video
 		Long reqVideoId = new Long(0);
 		try{reqVideoId = new Long(request.getParameterMap().get("videoId")[0]);}catch(Exception e){}
 		Video reqVideo = new VideoImpl(); 
 		try{reqVideo = VideoLocalServiceUtil.getVideo(reqVideoId);}catch(Exception e){}
-
+		
 		//requested producer
 		Producer reqProducer = new ProducerImpl();
 		try{
@@ -93,7 +100,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			}
 		}catch(Exception e){}
 		request.setAttribute("reqProducer", reqProducer);
-
+		
 		// requested lecture series object
 		Lectureseries reqLectureseries = new LectureseriesImpl();
 		try{
@@ -126,7 +133,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			else reqLectureseriesList = LectureseriesLocalServiceUtil.getFilteredBySemesterFacultyProducer(1, "", (long) 0, reqPproducerId);
 		}catch(Exception e){}
 		request.setAttribute("reqLectureseriesList", reqLectureseriesList);
-
+		
 		//requested license
 		License reqLicense = new LicenseImpl();
 		try{reqLicense = LicenseLocalServiceUtil.getByVideoId(reqVideo.getVideoId());}catch(Exception e){}

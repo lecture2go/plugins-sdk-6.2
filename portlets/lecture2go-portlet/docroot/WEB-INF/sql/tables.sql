@@ -39,7 +39,7 @@ create table LG_Institution_Host (
 
 create table LG_Lastvideolist (
 	lastvideolistId INTEGER not null primary key,
-	videoId INTEGER
+	videoId LONG
 );
 
 create table LG_Lectureseries (

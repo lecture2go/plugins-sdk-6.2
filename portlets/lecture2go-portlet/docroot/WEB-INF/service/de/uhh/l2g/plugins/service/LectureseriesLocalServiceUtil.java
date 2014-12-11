@@ -288,6 +288,10 @@ public class LectureseriesLocalServiceUtil {
 			facultyId, producerId);
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getAllLectureseriesWhithOpenaccessVideos() {
+		return getService().getAllLectureseriesWhithOpenaccessVideos();
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

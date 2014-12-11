@@ -63,7 +63,7 @@ public class LastvideolistWrapper implements Lastvideolist,
 			setLastvideolistId(lastvideolistId);
 		}
 
-		Integer videoId = (Integer)attributes.get("videoId");
+		Long videoId = (Long)attributes.get("videoId");
 
 		if (videoId != null) {
 			setVideoId(videoId);
@@ -116,7 +116,7 @@ public class LastvideolistWrapper implements Lastvideolist,
 	* @return the video ID of this lastvideolist
 	*/
 	@Override
-	public int getVideoId() {
+	public long getVideoId() {
 		return _lastvideolist.getVideoId();
 	}
 
@@ -126,7 +126,7 @@ public class LastvideolistWrapper implements Lastvideolist,
 	* @param videoId the video ID of this lastvideolist
 	*/
 	@Override
-	public void setVideoId(int videoId) {
+	public void setVideoId(long videoId) {
 		_lastvideolist.setVideoId(videoId);
 	}
 
