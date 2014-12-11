@@ -13,6 +13,7 @@ import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Role;
@@ -20,6 +21,8 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.util.bridges.mvc.MVCPortlet;
@@ -33,8 +36,21 @@ import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 
-public class AdminUserManagement extends MVCPortlet {
-
+public class AdminInstitutionManagement extends MVCPortlet {
+	
+	
+	
+	public void addEntry(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
+		
+		//ServiceContext serviceContext = ServiceContextFactory.getInstance(AdminInstitutionManagement.class.getInstitution(), request);
+		
+	    String userName = ParamUtil.getString(request, "institution");
+	    String email = ParamUtil.getString(request, "streamingserver");
+		
+	}
+	
+	
+	
 	public void viewRole(ActionRequest request, ActionResponse response) throws SystemException, PortalException {
 		// logged in user
 		User remoteUser = UserLocalServiceUtil.getUser(new Long(request.getRemoteUser()));
@@ -107,7 +123,7 @@ public class AdminUserManagement extends MVCPortlet {
 			}
 				
 			cfL = notAssignedInstitutions;	
-			pfL = allFacil;//all institutions for producer drop down menu
+			pfL = allFacil;//all  institutions for producer drop down menu
 		}
 		
 		//l2go coordinator is logged in
@@ -117,7 +133,7 @@ public class AdminUserManagement extends MVCPortlet {
 			try{
 				loggedInCoord = CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId());
 				cfL.add(InstitutionLocalServiceUtil.getInstitution(loggedInCoord.getInstitutionId()));//institutions for coordinator
-				//coordinator and requested producer belong to different institutions
+				//coordinator and requested producer belong to different instititutions
 				if(loggedInCoord.getInstitutionId()==reqProd.getInstitutionId())pfL=cfL;
 				else {
 					if(reqProd.getInstitutionId()!=0) pfL.add(InstitutionLocalServiceUtil.getInstitution(reqProd.getInstitutionId()));

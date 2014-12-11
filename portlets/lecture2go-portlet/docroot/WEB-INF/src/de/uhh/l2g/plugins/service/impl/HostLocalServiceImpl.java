@@ -66,10 +66,8 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 		return null;
 	}
 
-	@Override
-	public Host getByHostId(long hostId) throws PortalException,
-			SystemException {
-		return (Host) hostPersistence.findByHostId(hostId);
+	public Host getByHostId(long hostId) throws SystemException{
+		return hostPersistence.fetchByPrimaryKey(hostId);
 	}
 	
 	protected void validate (String name, String streamer, String serverTemplate) throws PortalException {

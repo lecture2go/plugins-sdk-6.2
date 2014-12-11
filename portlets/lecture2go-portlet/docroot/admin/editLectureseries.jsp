@@ -28,17 +28,17 @@
 		lLongDesc=reqLectureseries.getLongDesc();
 	}catch(NullPointerException npe){}
 	
-	Long facilityId = new Long(0);
+	Long institutionId = new Long(0);
 	try{
-		facilityId = InstitutionLocalServiceUtil.getByLectureseriesId(lId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS).iterator().next().getInstitutionId();
+		institutionId = InstitutionLocalServiceUtil.getByLectureseriesId(lId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS).iterator().next().getInstitutionId();
 	}catch(Exception npe){}
 
-	Map<String,String> facilities = new LinkedHashMap<String, String>();
+	Map<String,String> institutions = new LinkedHashMap<String, String>();
 	if(permissionAdmin){
-		facilities = InstitutionLocalServiceUtil.getAllSortedAsTree(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+		institutions = InstitutionLocalServiceUtil.getAllSortedAsTree(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 		permissionCoordinator = false;
 	}
-	if(permissionCoordinator)facilities = InstitutionLocalServiceUtil.getByParent(CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getInstitutionId());
+	if(permissionCoordinator)institutions = InstitutionLocalServiceUtil.getByParent(CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getInstitutionId());
 
 	Locale[] languages = LanguageUtil.getAvailableLocales();
 	String[] availableLanguageIds = LocaleUtil.toLanguageIds(languages);
@@ -93,12 +93,12 @@
 				%>
 			</aui:select>
 			
-			<aui:select size="1" name="facilityId" label="facility" required="true">
-				<aui:option value="">select-facility</aui:option>
-				<%for (Map.Entry<String, String> f : facilities.entrySet()) {
+			<aui:select size="1" name="institutionId" label="institution" required="true">
+				<aui:option value="">select-institution</aui:option>
+				<%for (Map.Entry<String, String> f : institutions.entrySet()) {
 				boolean dis=true; 
 				if(f.getValue().startsWith("----") || permissionCoordinator)dis=false;
-				if(f.getKey().equals(facilityId.toString())){
+				if(f.getKey().equals(institutionId.toString())){
 					%><aui:option value='<%=f.getKey()%>' selected="true" disabled="<%=dis%>"><%=f.getValue()%></aui:option>
 				<%}else{%><aui:option value='<%=f.getKey()%>' disabled="<%=dis%>"><%=f.getValue()%></aui:option><%}	
 				}%>
@@ -113,7 +113,7 @@
 					<div id='<%=f.getInstitutionId()%>'> 
 						<%=f.getName()+"&nbsp;&nbsp;&nbsp;" %> 
 						<a style='cursor:pointer;' onClick='document.getElementById("<%=f.getInstitutionId()%>").remove();'><b>X</b></a>
-						<aui:input type="hidden" name="facilities" id="facilities" value="<%=f.getInstitutionId()%>"/>
+						<aui:input type="hidden" name="institutions" id="institutions" value="<%=f.getInstitutionId()%>"/>
 					</div>
 					<%
 				}
@@ -206,7 +206,7 @@ function(A) {
     var contProduc = A.one('.prodCont');
     var contFacil = A.one('.facilCont');
     var producerId = A.one('#<portlet:namespace/>producerId');
-    var facilityId = A.one('#<portlet:namespace/>facilityId');
+    var institutionId = A.one('#<portlet:namespace/>institutionId');
     var addSemester = A.one('#<portlet:namespace/>addSemester');
     var newSemester = A.one('#<portlet:namespace/>newSemester');
     var allSemesters = A.one('#<portlet:namespace/>allSemesters');
@@ -222,13 +222,13 @@ function(A) {
       	}
     );
 
-    facilityId.on(
+    institutionId.on(
       	'change',
       	function(A) {
-  			if(facilityId.get('value')>0){
-  	   	 		var n = facilityId.get(facilityId.get('selectedIndex')).get('value');
-  	    		var t = facilityId.get(facilityId.get('selectedIndex')).get('text')+"&nbsp;&nbsp;&nbsp;";
-  	    		contFacil.append("<div id='"+n+"'> "+t+" <a style='cursor:pointer;' onClick='document.getElementById(&quot;"+n+"&quot;).remove();'><b>X</b></a><input id='<portlet:namespace></portlet:namespace>facilities' name='<portlet:namespace></portlet:namespace>facilities' value='"+n+"' type='hidden'/></div>");
+  			if(institutionId.get('value')>0){
+  	   	 		var n = institutionId.get(institutionId.get('selectedIndex')).get('value');
+  	    		var t = institutionId.get(institutionId.get('selectedIndex')).get('text')+"&nbsp;&nbsp;&nbsp;";
+  	    		contFacil.append("<div id='"+n+"'> "+t+" <a style='cursor:pointer;' onClick='document.getElementById(&quot;"+n+"&quot;).remove();'><b>X</b></a><input id='<portlet:namespace></portlet:namespace>institutions' name='<portlet:namespace></portlet:namespace>institutions' value='"+n+"' type='hidden'/></div>");
   			}
       	}
     );

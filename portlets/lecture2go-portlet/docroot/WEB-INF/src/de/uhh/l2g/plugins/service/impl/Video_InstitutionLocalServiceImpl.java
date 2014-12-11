@@ -57,10 +57,10 @@ public class Video_InstitutionLocalServiceImpl
 		return ret;
 	}
 
-	public boolean removeByInstitutionId(Long facilityId) {
+	public boolean removeByInstitutionId(Long institutionId) {
 		boolean ret = false;
 		try {
-			Video_InstitutionUtil.removeByInstitution(facilityId);
+			Video_InstitutionUtil.removeByInstitution(institutionId);
 		} catch (SystemException e) {
 			ret = true;
 			e.printStackTrace();

@@ -49,7 +49,7 @@
         <column name="institutionId" type="long" primary="true" id-type="increment"></column>
         <column name="parentId" type="long"></column>
         <column name="name" type="String"></column>
-        <column name="typ" type="String"></column>
+        <column name="type" type="String"></column>
         <column name="www" type="String"></column>
         <column name="level" type="int"></column>
         <column name="sort" type="int"></column>
@@ -70,6 +70,10 @@
         </finder>
         <finder name="Sort" return-type="Collection">
             <finder-column name="sort"></finder-column>
+        </finder>
+        <finder name="L_T" return-type="Collection">
+            <finder-column name="level"></finder-column>
+            <finder-column name="type"></finder-column>
         </finder>
     </entity>
     <entity name="Lectureseries_Institution" local-service="true" remote-service="false">
@@ -157,9 +161,6 @@
         </finder>
         <finder name="G_H" return-type="Collection">
             <finder-column name="groupId"></finder-column>
-            <finder-column name="hostId"></finder-column>
-        </finder>
-        <finder name="HostId" return-type="Collection">
             <finder-column name="hostId"></finder-column>
         </finder>
     </entity>
@@ -342,5 +343,6 @@
         <exception>HostName</exception>
         <exception>HostStreamer</exception>
         <exception>HostServerTemplate</exception>
+        <exception>InstitutionName</exception>
     </exceptions>
 </service-builder>

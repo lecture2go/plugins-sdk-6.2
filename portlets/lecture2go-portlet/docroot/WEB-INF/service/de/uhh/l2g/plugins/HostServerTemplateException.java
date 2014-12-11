@@ -14,26 +14,26 @@
 
 package de.uhh.l2g.plugins;
 
-import com.liferay.portal.NoSuchModelException;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Iavor Sturm
  */
-public class NoSuchLectureseries_FacilityException extends NoSuchModelException {
+public class HostServerTemplateException extends PortalException {
 
-	public NoSuchLectureseries_FacilityException() {
+	public HostServerTemplateException() {
 		super();
 	}
 
-	public NoSuchLectureseries_FacilityException(String msg) {
+	public HostServerTemplateException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchLectureseries_FacilityException(String msg, Throwable cause) {
+	public HostServerTemplateException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSuchLectureseries_FacilityException(Throwable cause) {
+	public HostServerTemplateException(Throwable cause) {
 		super(cause);
 	}
 

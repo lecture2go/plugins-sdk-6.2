@@ -75,8 +75,8 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		return VideoFinderUtil.unlinkLectureseriesFromVideos(lectureseriesId);
 	}
 
-	public List<Video> getByInstitution(Long facilityId) throws SystemException {
-		List<Video> vl = videoPersistence.findByInstitution(facilityId);
+	public List<Video> getByInstitution(Long institutionId) throws SystemException {
+		List<Video> vl = videoPersistence.findByInstitution(institutionId);
 		return vl;
 	}
 
