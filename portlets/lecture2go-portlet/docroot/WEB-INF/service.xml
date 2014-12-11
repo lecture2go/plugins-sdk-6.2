@@ -142,16 +142,7 @@
     	<!-- Group instance -->
         <column name="serverTemplate" type="String"></column>
 
-    	<column name="groupId" type="long"></column>
-
     	<!-- Audit fields -->
-
-    	<column name="companyId" type="long"></column>
-    	<column name="userId" type="long"></column>
-    	<column name="userName" type="String"></column>
-    	<column name="createDate" type="Date"></column>
-    	<column name="modifiedDate" type="Date"></column>
-        <column name="uuid" type="String"></column>
         <finder name="GroupId" return-type="Collection">
             <finder-column name="groupId"></finder-column>
         </finder>
