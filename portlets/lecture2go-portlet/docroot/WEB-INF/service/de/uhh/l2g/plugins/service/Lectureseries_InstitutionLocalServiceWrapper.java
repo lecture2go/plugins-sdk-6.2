@@ -296,14 +296,14 @@ public class Lectureseries_InstitutionLocalServiceWrapper
 	}
 
 	@Override
-	public boolean removeByacilityId(java.lang.Long facilityId) {
-		return _lectureseries_InstitutionLocalService.removeByacilityId(facilityId);
+	public boolean removeByacilityId(java.lang.Long institutionId) {
+		return _lectureseries_InstitutionLocalService.removeByacilityId(institutionId);
 	}
 
 	@Override
-	public boolean facilityAssignedToLectureseries(
+	public boolean institutionAssignedToLectureseries(
 		de.uhh.l2g.plugins.model.Lectureseries_Institution lf) {
-		return _lectureseries_InstitutionLocalService.facilityAssignedToLectureseries(lf);
+		return _lectureseries_InstitutionLocalService.institutionAssignedToLectureseries(lf);
 	}
 
 	/**

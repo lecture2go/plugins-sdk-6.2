@@ -6,6 +6,7 @@ create index IX_35EC15AF on LG_Host (groupId, hostId);
 create index IX_59DDB869 on LG_Host (hostId);
 
 create index IX_49E78C5A on LG_Institution (level);
+create index IX_C5BF45E1 on LG_Institution (level, typ);
 create index IX_582427D9 on LG_Institution (name);
 create index IX_40A7A033 on LG_Institution (parentId);
 create index IX_61742A2C on LG_Institution (sort);

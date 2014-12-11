@@ -11,14 +11,7 @@ create table LG_Host (
 	port INTEGER,
 	serverRoot VARCHAR(75) null,
 	name VARCHAR(75) null,
-	serverTemplate VARCHAR(75) null,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	uuid_ VARCHAR(75) null
+	serverTemplate VARCHAR(75) null
 );
 
 create table LG_Institution (

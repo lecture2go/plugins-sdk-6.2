@@ -22,7 +22,7 @@
 	<classpathentry kind="lib" path="/liferay-portal-6.2-ce-ga2/tomcat-7.0.42/webapps/ROOT/WEB-INF/lib/commons-fileupload.jar"/>
 	<classpathentry kind="lib" path="/liferay-portal-6.2-ce-ga2/tomcat-7.0.42/webapps/ROOT/WEB-INF/lib/ant.jar"/>
 	<classpathentry kind="lib" path="/liferay-portal-6.2-ce-ga2/tomcat-7.0.42/webapps/ROOT/WEB-INF/lib/commons-collections.jar"/>
-	<classpathentry kind="lib" path="docroot/admin/streamerList.jsp"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/plugins-sdk-6.2"/>
+	<classpathentry kind="lib" path="/Users/isturm/Documents/workspace-for-liferay-6.2.0/liferay-portal-6.2-ce-ga2/tomcat-7.0.42/lib/jasper.jar"/>
 	<classpathentry kind="output" path="docroot/WEB-INF/classes"/>
 </classpath>

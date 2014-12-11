@@ -295,8 +295,8 @@ public class Video_InstitutionLocalServiceWrapper
 	}
 
 	@Override
-	public boolean removeByInstitutionId(java.lang.Long facilityId) {
-		return _video_InstitutionLocalService.removeByInstitutionId(facilityId);
+	public boolean removeByInstitutionId(java.lang.Long institutionId) {
+		return _video_InstitutionLocalService.removeByInstitutionId(institutionId);
 	}
 
 	@Override

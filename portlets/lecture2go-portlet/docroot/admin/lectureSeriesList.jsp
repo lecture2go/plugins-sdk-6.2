@@ -3,33 +3,33 @@
 <portlet:renderURL var="addLectureseriesURL"><portlet:param name="jspPage" value="/admin/editLectureseries.jsp" /></portlet:renderURL>
 
 <%
-	Map<String,String> facilities = new LinkedHashMap<String, String>();
+	Map<String,String> institutions = new LinkedHashMap<String, String>();
 	List<Producer> producers = new ArrayList<Producer>();
 	
 	List<Lectureseries> tempLectureseriesList = new ArrayList();
 	List<String> semesters = LectureseriesLocalServiceUtil.getAllSemesters(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 	
-	Long facilityId = ServletRequestUtils.getLongParameter(request, "facilityId", 0);
+	Long institutionId = ServletRequestUtils.getLongParameter(request, "institutionId", 0);
 	
 	Long producerId = ServletRequestUtils.getLongParameter(request, "producerId", 0);
 	String semesterId = ServletRequestUtils.getStringParameter(request, "semesterId", "");
 	Integer statusId = ServletRequestUtils.getIntParameter(request, "statusId", 0);
 	
 	PortletURL portletURL = renderResponse.createRenderURL();
-	portletURL.setParameter("facilityId", facilityId+"");
+	portletURL.setParameter("institutionId", institutionId+"");
 	portletURL.setParameter("producerId", producerId+"");
 	portletURL.setParameter("semesterId", semesterId+"");
 	portletURL.setParameter("statusId", statusId+"");
 
 	if(permissionAdmin){
-		facilities = InstitutionLocalServiceUtil.getAllSortedAsTree(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+		institutions = InstitutionLocalServiceUtil.getAllSortedAsTree(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 		producers = ProducerLocalServiceUtil.getAllProducers(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 		permissionCoordinator = false;
 	}
 	
 	if(permissionCoordinator){
-		if(facilityId==0)facilityId = CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getInstitutionId();
-		facilities = InstitutionLocalServiceUtil.getByParent(CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getInstitutionId());
+		if(institutionId==0)institutionId = CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getInstitutionId();
+		institutions = InstitutionLocalServiceUtil.getByParent(CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getInstitutionId());
 		producers = ProducerLocalServiceUtil.getProducersByInstitutionId(CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getInstitutionId());
 	}	
 %>
@@ -44,10 +44,10 @@
 							<portlet:param name="statusId" value="<%=statusId.toString()%>"/>
 						</portlet:renderURL>
 						<aui:form action="<%= sortByInstitution.toString() %>" method="post">
-							<aui:select name="facilityId" label="select-facility" onChange="submit();">
-								<aui:option value="">select-facility</aui:option>
-								<%for (Map.Entry<String, String> f : facilities.entrySet()) {
-										if(f.getKey().equals(facilityId.toString())){
+							<aui:select name="institutionId" label="select-institution" onChange="submit();">
+								<aui:option value="">select-institution</aui:option>
+								<%for (Map.Entry<String, String> f : institutions.entrySet()) {
+										if(f.getKey().equals(institutionId.toString())){
 											%>
 											<aui:option value='<%=f.getKey()%>' selected="true"><%=f.getValue()%></aui:option>
 											<%}else{%>
@@ -60,7 +60,7 @@
 				<aui:column>
 						<portlet:renderURL var="sortByProducer">
 							<portlet:param name="jspPage" value="/admin/lectureSeriesList.jsp" />
-							<portlet:param name="facilityId" value="<%=facilityId.toString()%>"/>
+							<portlet:param name="institutionId" value="<%=institutionId.toString()%>"/>
 							<portlet:param name="semesterId" value="<%=semesterId.toString()%>"/>
 							<portlet:param name="statusId" value="<%=statusId.toString()%>"/>
 						</portlet:renderURL>
@@ -81,7 +81,7 @@
 				<aui:column>
 						<portlet:renderURL var="sortBySemester">
 							<portlet:param name="jspPage" value="/admin/lectureSeriesList.jsp" />
-							<portlet:param name="facilityId" value="<%=facilityId.toString()%>"/>
+							<portlet:param name="institutionId" value="<%=institutionId.toString()%>"/>
 							<portlet:param name="statusId" value="<%=statusId.toString()%>"/>
 							<portlet:param name="producerId" value="<%=producerId.toString()%>"/>
 						</portlet:renderURL>
@@ -102,7 +102,7 @@
 				<aui:column>
 						<portlet:renderURL var="sortByStatus">
 							<portlet:param name="jspPage" value="/admin/lectureSeriesList.jsp" />
-							<portlet:param name="facilityId" value="<%=facilityId.toString()%>"/>
+							<portlet:param name="institutionId" value="<%=institutionId.toString()%>"/>
 							<portlet:param name="producerId" value="<%=producerId.toString()%>"/>
 							<portlet:param name="semesterId" value="<%=semesterId.toString()%>"/>
 						</portlet:renderURL>
@@ -133,7 +133,7 @@
 <liferay-ui:search-container emptyResultsMessage="no-lectureseries-found" delta="10" iteratorURL="<%= portletURL %>">
 	<liferay-ui:search-container-results>
 		<%
-			tempLectureseriesList = LectureseriesLocalServiceUtil.getFilteredBySemesterFacultyProducer(statusId, semesterId, new Long(facilityId), new Long(producerId));
+			tempLectureseriesList = LectureseriesLocalServiceUtil.getFilteredBySemesterFacultyProducer(statusId, semesterId, new Long(institutionId), new Long(producerId));
 			results = ListUtil.subList(tempLectureseriesList, searchContainer.getStart(), searchContainer.getEnd());
 			total = tempLectureseriesList.size();
 			pageContext.setAttribute("results", results);
@@ -144,7 +144,7 @@
 	<liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.Lectureseries" keyProperty="lectureseriesId" modelVar="lectser">
 		<portlet:actionURL name="viewLectureseries" var="editURL">
 			<portlet:param name="lectureseriesId" value="<%= String.valueOf(lectser.getLectureseriesId())%>" />
-			<portlet:param name="facilityId" value="<%=facilityId.toString()%>"/>
+			<portlet:param name="institutionId" value="<%=institutionId.toString()%>"/>
 			<portlet:param name="producerId" value="<%=producerId.toString()%>"/>
 			<portlet:param name="semesterId" value="<%=semesterId.toString()%>"/>		
 			<portlet:param name="statusId" value="<%=statusId.toString()%>"/>

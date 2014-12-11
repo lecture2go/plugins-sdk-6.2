@@ -283,9 +283,9 @@ public class VideoLocalServiceUtil {
 	}
 
 	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByInstitution(
-		java.lang.Long facilityId)
+		java.lang.Long institutionId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getByInstitution(facilityId);
+		return getService().getByInstitution(institutionId);
 	}
 
 	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByProducer(

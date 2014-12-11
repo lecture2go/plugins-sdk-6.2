@@ -245,23 +245,13 @@ public interface HostLocalService extends BaseLocalService, InvokableLocalServic
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<de.uhh.l2g.plugins.model.Host> getHosts(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<de.uhh.l2g.plugins.model.Host> getHosts(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<de.uhh.l2g.plugins.model.Host> getByInstitution(
 		long institutionId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public de.uhh.l2g.plugins.model.Host getByHostId(long hostId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public de.uhh.l2g.plugins.model.Host addHost(long userId,
 		java.lang.String name, java.lang.String streamer,

@@ -287,13 +287,13 @@ public class Lectureseries_InstitutionLocalServiceUtil {
 		return getService().removeByLectureseriesId(lectureseriesId);
 	}
 
-	public static boolean removeByacilityId(java.lang.Long facilityId) {
-		return getService().removeByacilityId(facilityId);
+	public static boolean removeByacilityId(java.lang.Long institutionId) {
+		return getService().removeByacilityId(institutionId);
 	}
 
-	public static boolean facilityAssignedToLectureseries(
+	public static boolean institutionAssignedToLectureseries(
 		de.uhh.l2g.plugins.model.Lectureseries_Institution lf) {
-		return getService().facilityAssignedToLectureseries(lf);
+		return getService().institutionAssignedToLectureseries(lf);
 	}
 
 	public static void clearService() {

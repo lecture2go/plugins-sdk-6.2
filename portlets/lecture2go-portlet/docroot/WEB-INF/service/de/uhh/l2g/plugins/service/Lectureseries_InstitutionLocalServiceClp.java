@@ -124,7 +124,7 @@ public class Lectureseries_InstitutionLocalServiceClp
 
 		_methodParameterTypes20 = new String[] { "java.lang.Long" };
 
-		_methodName21 = "facilityAssignedToLectureseries";
+		_methodName21 = "institutionAssignedToLectureseries";
 
 		_methodParameterTypes21 = new String[] {
 				"de.uhh.l2g.plugins.model.Lectureseries_Institution"
@@ -716,13 +716,13 @@ public class Lectureseries_InstitutionLocalServiceClp
 	}
 
 	@Override
-	public boolean removeByacilityId(java.lang.Long facilityId) {
+	public boolean removeByacilityId(java.lang.Long institutionId) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName20,
 					_methodParameterTypes20,
-					new Object[] { ClpSerializer.translateInput(facilityId) });
+					new Object[] { ClpSerializer.translateInput(institutionId) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -740,7 +740,7 @@ public class Lectureseries_InstitutionLocalServiceClp
 	}
 
 	@Override
-	public boolean facilityAssignedToLectureseries(
+	public boolean institutionAssignedToLectureseries(
 		de.uhh.l2g.plugins.model.Lectureseries_Institution lf) {
 		Object returnObj = null;
 

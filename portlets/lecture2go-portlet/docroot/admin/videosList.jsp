@@ -20,9 +20,9 @@
 		producerId = ServletRequestUtils.getLongParameter(request, "producerId", 0);
 		portletURL.setParameter("coordinatorId", coordinatorId+"");		
 		if(coordinatorId>0){
-			Long facilityId = CoordinatorLocalServiceUtil.getCoordinator(coordinatorId).getInstitutionId();
-			producers = ProducerLocalServiceUtil.getProducersByInstitutionId(facilityId);
-			if(producerId==0)tempVideosList = VideoLocalServiceUtil.getByInstitution(facilityId);
+			Long institutionId = CoordinatorLocalServiceUtil.getCoordinator(coordinatorId).getInstitutionId();
+			producers = ProducerLocalServiceUtil.getProducersByInstitutionId(institutionId);
+			if(producerId==0)tempVideosList = VideoLocalServiceUtil.getByInstitution(institutionId);
 			else {
 				lectureseries = LectureseriesLocalServiceUtil.getFilteredBySemesterFacultyProducer(1, "", new Long(0), producerId);
 				if(lectureseriesId==0) tempVideosList = VideoLocalServiceUtil.getByProducer(producerId);
@@ -37,14 +37,14 @@
 			producerId = ServletRequestUtils.getLongParameter(request, "producerId", 0);
 			portletURL.setParameter("coordinatorId", coordinatorId+"");
 			portletURL.setParameter("producerId", producerId+"");
-			Long facilityId = CoordinatorLocalServiceUtil.getCoordinator(coordinatorId).getInstitutionId();
-			producers = ProducerLocalServiceUtil.getProducersByInstitutionId(facilityId);
+			Long institutionId = CoordinatorLocalServiceUtil.getCoordinator(coordinatorId).getInstitutionId();
+			producers = ProducerLocalServiceUtil.getProducersByInstitutionId(institutionId);
 			if(producerId>0){
 				lectureseries = LectureseriesLocalServiceUtil.getFilteredBySemesterFacultyProducer(1, "", new Long(0), producerId);
 				if(lectureseriesId==0)tempVideosList = VideoLocalServiceUtil.getByProducer(producerId);
 				else tempVideosList = VideoLocalServiceUtil.getByProducerAndLectureseries(producerId, lectureseriesId);
 			}else{
-				tempVideosList = VideoLocalServiceUtil.getByInstitution(facilityId);
+				tempVideosList = VideoLocalServiceUtil.getByInstitution(institutionId);
 			}
 		}else{
 			if(permissionProducer){

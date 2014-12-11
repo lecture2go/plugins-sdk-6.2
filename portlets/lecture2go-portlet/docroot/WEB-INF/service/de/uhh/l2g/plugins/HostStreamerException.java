@@ -14,26 +14,26 @@
 
 package de.uhh.l2g.plugins;
 
-import com.liferay.portal.NoSuchModelException;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Iavor Sturm
  */
-public class NoSuchVideo_FacilityException extends NoSuchModelException {
+public class HostStreamerException extends PortalException {
 
-	public NoSuchVideo_FacilityException() {
+	public HostStreamerException() {
 		super();
 	}
 
-	public NoSuchVideo_FacilityException(String msg) {
+	public HostStreamerException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchVideo_FacilityException(String msg, Throwable cause) {
+	public HostStreamerException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSuchVideo_FacilityException(Throwable cause) {
+	public HostStreamerException(Throwable cause) {
 		super(cause);
 	}
 

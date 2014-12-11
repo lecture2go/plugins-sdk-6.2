@@ -56,10 +56,10 @@ public class Lectureseries_InstitutionLocalServiceImpl
 		return ret;
 	}
 
-	public boolean removeByacilityId(Long facilityId){
+	public boolean removeByacilityId(Long institutionId){
 		boolean ret = false;
 		try {
-			Lectureseries_InstitutionUtil.removeByInstitutionId(facilityId);
+			Lectureseries_InstitutionUtil.removeByInstitutionId(institutionId);
 		} catch (SystemException e) {
 			ret = true;
 			e.printStackTrace();
@@ -67,7 +67,7 @@ public class Lectureseries_InstitutionLocalServiceImpl
 		return ret;
 	}
 	
-	public boolean facilityAssignedToLectureseries(Lectureseries_Institution lf){
+	public boolean institutionAssignedToLectureseries(Lectureseries_Institution lf){
 		boolean ret = false;
 				List<Lectureseries_Institution> lfL = new ArrayList();
 				try {

@@ -141,8 +141,8 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			   query += "FROM lg_lectureseries AS c ";
 
 		if (facultyId > 0) {
-			query += "INNER JOIN lg_lectureseries_facility AS ce ON ( c.lectureseriesId = ce.lectureseriesId ) ";
-			query += "INNER JOIN lg_facility AS e ON ( ce.facilityId = e.facilityId ) ";
+			query += "INNER JOIN lg_lectureseries_institution AS ce ON ( c.lectureseriesId = ce.lectureseriesId ) ";
+			query += "INNER JOIN lg_institution AS e ON ( ce.institutionId = e.institutionId ) ";
 		}
 
 		if (producerId > 0) {
@@ -166,8 +166,8 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 
 			if (facultyId > 0) {
 				query += i > 0 ? "AND " : "";
-				query += "ce.facilityId IN ";
-				query += "(select facilityId from lg_facility AS ein WHERE ein.parentId = "+facultyId+" OR ein.facilityId = "+facultyId+") ";
+				query += "ce.institutionId IN ";
+				query += "(select institutionId from lg_institution AS ein WHERE ein.parentId = "+facultyId+" OR ein.institutionId = "+facultyId+") ";
 				i++;
 			}
 

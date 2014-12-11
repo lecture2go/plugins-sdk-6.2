@@ -115,25 +115,37 @@ public class InstitutionLocalServiceClp implements InstitutionLocalService {
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
 
-		_methodName19 = "getByParentId";
+		_methodName19 = "getById";
 
-		_methodParameterTypes19 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes19 = new String[] { "long" };
 
-		_methodName20 = "getByParent";
+		_methodName20 = "getByParentId";
 
-		_methodParameterTypes20 = new String[] { "long" };
+		_methodParameterTypes20 = new String[] { "long", "java.lang.String" };
 
-		_methodName21 = "getByLevel";
+		_methodName21 = "getByParent";
 
-		_methodParameterTypes21 = new String[] { "int" };
+		_methodParameterTypes21 = new String[] { "long" };
 
-		_methodName22 = "getByLectureseriesId";
+		_methodName22 = "getByLevel";
 
-		_methodParameterTypes22 = new String[] { "long", "int", "int" };
+		_methodParameterTypes22 = new String[] { "int" };
 
-		_methodName23 = "getAllSortedAsTree";
+		_methodName23 = "getByLectureseriesId";
 
-		_methodParameterTypes23 = new String[] { "int", "int" };
+		_methodParameterTypes23 = new String[] { "long", "int", "int" };
+
+		_methodName24 = "getAllSortedAsTree";
+
+		_methodParameterTypes24 = new String[] { "int", "int" };
+
+		_methodName25 = "addInstitution";
+
+		_methodParameterTypes25 = new String[] {
+				"long", "java.lang.String", "java.lang.String",
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"int", "com.liferay.portal.service.ServiceContext"
+			};
 	}
 
 	@Override
@@ -687,14 +699,42 @@ public class InstitutionLocalServiceClp implements InstitutionLocalService {
 	}
 
 	@Override
+	public de.uhh.l2g.plugins.model.Institution getById(long institutionId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName19,
+					_methodParameterTypes19, new Object[] { institutionId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (de.uhh.l2g.plugins.model.Institution)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public java.util.List<de.uhh.l2g.plugins.model.Institution> getByParentId(
 		long parentId, java.lang.String type)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName19,
-					_methodParameterTypes19,
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20,
 					new Object[] { parentId, ClpSerializer.translateInput(type) });
 		}
 		catch (Throwable t) {
@@ -723,8 +763,8 @@ public class InstitutionLocalServiceClp implements InstitutionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName20,
-					_methodParameterTypes20, new Object[] { parentId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21, new Object[] { parentId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -751,8 +791,8 @@ public class InstitutionLocalServiceClp implements InstitutionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName21,
-					_methodParameterTypes21, new Object[] { level });
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22, new Object[] { level });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -780,8 +820,8 @@ public class InstitutionLocalServiceClp implements InstitutionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName22,
-					_methodParameterTypes22,
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23,
 					new Object[] { lectureseriesId, begin, end });
 		}
 		catch (Throwable t) {
@@ -810,8 +850,8 @@ public class InstitutionLocalServiceClp implements InstitutionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName23,
-					_methodParameterTypes23, new Object[] { begin, end });
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24, new Object[] { begin, end });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -830,6 +870,60 @@ public class InstitutionLocalServiceClp implements InstitutionLocalService {
 		}
 
 		return (java.util.Map<java.lang.String, java.lang.String>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public de.uhh.l2g.plugins.model.Host addInstitution(long userId,
+		java.lang.String name, java.lang.String streamer,
+		java.lang.String serverTemplate, java.lang.String protocol,
+		java.lang.String serverRoot, int port,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
+					new Object[] {
+						userId,
+						
+					ClpSerializer.translateInput(name),
+						
+					ClpSerializer.translateInput(streamer),
+						
+					ClpSerializer.translateInput(serverTemplate),
+						
+					ClpSerializer.translateInput(protocol),
+						
+					ClpSerializer.translateInput(serverRoot),
+						
+					port,
+						
+					ClpSerializer.translateInput(serviceContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (de.uhh.l2g.plugins.model.Host)ClpSerializer.translateOutput(returnObj);
 	}
 
 	private InvokableLocalService _invokableLocalService;
@@ -879,4 +973,8 @@ public class InstitutionLocalServiceClp implements InstitutionLocalService {
 	private String[] _methodParameterTypes22;
 	private String _methodName23;
 	private String[] _methodParameterTypes23;
+	private String _methodName24;
+	private String[] _methodParameterTypes24;
+	private String _methodName25;
+	private String[] _methodParameterTypes25;
 }

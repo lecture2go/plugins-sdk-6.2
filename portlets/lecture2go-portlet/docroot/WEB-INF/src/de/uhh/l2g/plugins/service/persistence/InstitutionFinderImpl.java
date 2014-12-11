@@ -38,7 +38,7 @@ public class InstitutionFinderImpl extends BasePersistenceImpl<Institution> impl
 			qPos.add(lectureseriesId);
 			@SuppressWarnings("unchecked")
 			List <Object[]> fl =  (List<Object[]>) QueryUtil.list(q, getDialect(), begin, end);
-			return assembleFacilities(fl);
+			return assembleInstitutions(fl);
 		} catch (Exception e) {
 			try {
 				throw new SystemException(e);
@@ -68,7 +68,7 @@ public class InstitutionFinderImpl extends BasePersistenceImpl<Institution> impl
 			q.setCacheable(false);
 			@SuppressWarnings("unchecked")
 			List <Object[]> fl =  (List<Object[]>) QueryUtil.list(q, getDialect(), begin, end);
-			return assembleFacilitiesWithPath(fl);
+			return assembleInstitutionsWithPath(fl);
 		} catch (Exception e) {
 			try {
 				throw new SystemException(e);
@@ -81,7 +81,7 @@ public class InstitutionFinderImpl extends BasePersistenceImpl<Institution> impl
 		return null;
 	}
 	
-	private List<Institution> assembleFacilitiesWithPath(List<Object[]> objectList){
+	private List<Institution> assembleInstitutionsWithPath(List<Object[]> objectList){
 		List<Institution> fl = new ArrayList<Institution>();
 		for (Object[] institution: objectList){
 			InstitutionImpl f = new InstitutionImpl();
@@ -99,7 +99,7 @@ public class InstitutionFinderImpl extends BasePersistenceImpl<Institution> impl
 		return fl;
 	}
 
-	private List<Institution> assembleFacilities(List<Object[]> objectList){
+	private List<Institution> assembleInstitutions(List<Object[]> objectList){
 		List<Institution> fl = new ArrayList<Institution>();
 		for (Object[] institution: objectList){
 			InstitutionImpl f = new InstitutionImpl();

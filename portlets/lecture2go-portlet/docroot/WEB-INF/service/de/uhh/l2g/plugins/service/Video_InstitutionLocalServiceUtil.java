@@ -279,8 +279,8 @@ public class Video_InstitutionLocalServiceUtil {
 		return getService().removeByVideoId(videoId);
 	}
 
-	public static boolean removeByInstitutionId(java.lang.Long facilityId) {
-		return getService().removeByInstitutionId(facilityId);
+	public static boolean removeByInstitutionId(java.lang.Long institutionId) {
+		return getService().removeByInstitutionId(institutionId);
 	}
 
 	public static java.util.List<de.uhh.l2g.plugins.model.Video_Institution> getByVideo(

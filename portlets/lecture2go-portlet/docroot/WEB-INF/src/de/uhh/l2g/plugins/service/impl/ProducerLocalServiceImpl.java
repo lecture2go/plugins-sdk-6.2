@@ -67,8 +67,8 @@ public class ProducerLocalServiceImpl extends ProducerLocalServiceBaseImpl {
 	}
 	
 	
-	public List<Producer> getProducersByInstitutionId(long facilityId) throws SystemException{
-		List<Producer> prods = producerPersistence.findByInstitution(facilityId);
+	public List<Producer> getProducersByInstitutionId(long institutionId) throws SystemException{
+		List<Producer> prods = producerPersistence.findByInstitution(institutionId);
 		return fillProps(prods);
 	}
 

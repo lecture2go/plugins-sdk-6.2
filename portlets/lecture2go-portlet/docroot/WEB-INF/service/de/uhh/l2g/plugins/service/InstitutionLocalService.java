@@ -250,6 +250,10 @@ public interface InstitutionLocalService extends BaseLocalService,
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public de.uhh.l2g.plugins.model.Institution getById(long institutionId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<de.uhh.l2g.plugins.model.Institution> getByParentId(
 		long parentId, java.lang.String type)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -272,4 +276,12 @@ public interface InstitutionLocalService extends BaseLocalService,
 	public java.util.Map<java.lang.String, java.lang.String> getAllSortedAsTree(
 		int begin, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public de.uhh.l2g.plugins.model.Host addInstitution(long userId,
+		java.lang.String name, java.lang.String streamer,
+		java.lang.String serverTemplate, java.lang.String protocol,
+		java.lang.String serverRoot, int port,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

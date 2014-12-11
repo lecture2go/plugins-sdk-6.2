@@ -122,7 +122,7 @@ public class Lectureseries_InstitutionLocalServiceClpInvoker {
 
 		_methodParameterTypes123 = new String[] { "java.lang.Long" };
 
-		_methodName124 = "facilityAssignedToLectureseries";
+		_methodName124 = "institutionAssignedToLectureseries";
 
 		_methodParameterTypes124 = new String[] {
 				"de.uhh.l2g.plugins.model.Lectureseries_Institution"
@@ -242,7 +242,7 @@ public class Lectureseries_InstitutionLocalServiceClpInvoker {
 
 		if (_methodName124.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
-			return Lectureseries_InstitutionLocalServiceUtil.facilityAssignedToLectureseries((de.uhh.l2g.plugins.model.Lectureseries_Institution)arguments[0]);
+			return Lectureseries_InstitutionLocalServiceUtil.institutionAssignedToLectureseries((de.uhh.l2g.plugins.model.Lectureseries_Institution)arguments[0]);
 		}
 
 		throw new UnsupportedOperationException();

@@ -275,9 +275,9 @@ public class ProducerLocalServiceUtil {
 	}
 
 	public static java.util.List<de.uhh.l2g.plugins.model.Producer> getProducersByInstitutionId(
-		long facilityId)
+		long institutionId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getProducersByInstitutionId(facilityId);
+		return getService().getProducersByInstitutionId(institutionId);
 	}
 
 	public static java.util.List<de.uhh.l2g.plugins.model.Producer> getAllProducers(

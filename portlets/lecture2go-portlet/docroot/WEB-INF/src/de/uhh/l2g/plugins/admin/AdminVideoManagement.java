@@ -187,7 +187,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		LicenseLocalServiceUtil.addLicense(license);
 		request.setAttribute("reqLicense", license);
 
-		//update lg_video_facility table
+		//update lg_video_institution table
 		Video_Institution vf = new Video_InstitutionImpl();
 		vf.setVideoId(video.getVideoId());
 		vf.setInstitutionId(reqProducer.getInstitutionId());
@@ -320,7 +320,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		// delete video_lectureseries
 		Video_LectureseriesLocalServiceUtil.removeByVideoId(videoId);
 		
-		// delete video_facility
+		// delete video_institution
 		Video_InstitutionLocalServiceUtil.removeByVideoId(videoId);
 		
 		//forward to list

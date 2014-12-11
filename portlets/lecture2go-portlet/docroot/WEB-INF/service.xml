@@ -71,6 +71,10 @@
         <finder name="Sort" return-type="Collection">
             <finder-column name="sort"></finder-column>
         </finder>
+        <finder name="LevelAndType" return-type="Collection">
+            <finder-column name="level"></finder-column>
+            <finder-column name="typ"></finder-column>
+        </finder>
     </entity>
     <entity name="Lectureseries_Institution" local-service="true" remote-service="false">
         <column name="lectureseriesInstitutionId" type="long" primary="true" id-type="increment"></column>
@@ -140,19 +144,16 @@
     	<!-- PK fields -->
 
     	<!-- Group instance -->
-        <column name="serverTemplate" type="String"></column>
+    	<column name="serverTemplate" type="String"></column>
 
     	<!-- Audit fields -->
-        <finder name="GroupId" return-type="Collection">
-            <finder-column name="groupId"></finder-column>
-        </finder>
-        <finder name="G_H" return-type="Collection">
-            <finder-column name="groupId"></finder-column>
-            <finder-column name="hostId"></finder-column>
-        </finder>
-        <finder name="HostId" return-type="Collection">
-            <finder-column name="hostId"></finder-column>
-        </finder>
+
+
+    	<!-- PK fields -->
+
+    	<!-- Group instance -->
+
+    	<!-- Audit fields -->
     </entity>
     <entity name="Institution_Host" local-service="true" remote-service="false">
         <column name="institutionHostId" type="long" primary="true" id-type="increment"></column>
@@ -347,6 +348,7 @@
         <exception>HostName</exception>
         <exception>HostStreamer</exception>
         <exception>HostServerTemplate</exception>
+        <exception>InstitutionName</exception>
     </exceptions>
 
 

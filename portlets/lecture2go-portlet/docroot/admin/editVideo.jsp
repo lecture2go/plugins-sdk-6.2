@@ -11,12 +11,12 @@
 <%
 	String actionURL = "";
 	
-	Map<String,String> facilities = new LinkedHashMap<String, String>();
+	Map<String,String> institutions = new LinkedHashMap<String, String>();
 	if(permissionAdmin){
-		facilities = InstitutionLocalServiceUtil.getAllSortedAsTree(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+		institutions = InstitutionLocalServiceUtil.getAllSortedAsTree(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 		permissionCoordinator = false;
 	}
-	if(permissionCoordinator)facilities = InstitutionLocalServiceUtil.getByParent(CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getInstitutionId());
+	if(permissionCoordinator)institutions = InstitutionLocalServiceUtil.getByParent(CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getInstitutionId());
 
 	Locale[] languages = LanguageUtil.getAvailableLocales();
 	String[] availableLanguageIds = LocaleUtil.toLanguageIds(languages);

@@ -50,25 +50,25 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 
 		response.setRenderParameter("jspPage", "/admin/editLectureseries.jsp");
 
-		//facilities for coordinator or administrator
+		//institutions for coordinator or administrator
 		//l2go administrator is logged in
 		boolean permissionAdmin = permissionChecker.hasPermission(remoteUser.getGroupId(), User.class.getName(), remoteUser.getPrimaryKey(), "ADD_L2GOADMIN");
 		//l2go coordinator is logged in
 		boolean permissionCoordinator = permissionChecker.hasPermission(remoteUser.getGroupId(), User.class.getName(), remoteUser.getPrimaryKey(), "ADD_L2GOPRODUCER");
 
-		Map<String,String> facilities = new LinkedHashMap<String, String>();
+		Map<String,String> institutions = new LinkedHashMap<String, String>();
 		List<Producer> producers = new ArrayList<Producer>();
 		
 		if(permissionAdmin){
-			facilities = InstitutionLocalServiceUtil.getAllSortedAsTree(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+			institutions = InstitutionLocalServiceUtil.getAllSortedAsTree(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 			producers = ProducerLocalServiceUtil.getAllProducers(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 			permissionCoordinator = false;
 		}
 		if(permissionCoordinator){
-			facilities = InstitutionLocalServiceUtil.getByParent(CoordinatorLocalServiceUtil.getCoordinator(userId).getInstitutionId());
+			institutions = InstitutionLocalServiceUtil.getByParent(CoordinatorLocalServiceUtil.getCoordinator(userId).getInstitutionId());
 			producers = ProducerLocalServiceUtil.getProducersByInstitutionId(CoordinatorLocalServiceUtil.getCoordinator(userId).getInstitutionId());
 		}
-		request.setAttribute("facilities", facilities);
+		request.setAttribute("institutions", institutions);
 		request.setAttribute("producers", producers);
 	}
 	
@@ -78,7 +78,7 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		try {
 			LectureseriesLocalServiceUtil.deleteLectureseries(lId);
 			//dependencies
-			Lectureseries_InstitutionLocalServiceUtil.removeByLectureseriesId(lId);//facility
+			Lectureseries_InstitutionLocalServiceUtil.removeByLectureseriesId(lId);//institution
 			Producer_LectureseriesLocalServiceUtil.removeByLectureseriesId(lId);//producer
 			VideoLocalServiceUtil.unlinkLectureseriesFromVideos(lId);//video
 			Video_LectureseriesLocalServiceUtil.removeByLectureseriesId(lId);//video links to lecture series
@@ -92,7 +92,7 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 	public void editLectureseries(ActionRequest request, ActionResponse response) throws NumberFormatException, PortalException, SystemException{
 		Long lId = new Long(request.getParameter("lectureseriesId"));
 		String[] producers = request.getParameterValues("producers");
-		String[] facilities = request.getParameterValues("facilities");
+		String[] institutions = request.getParameterValues("institutions");
 		String s = request.getParameter("longDesc");
 		
 		//update object
@@ -113,15 +113,15 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		//update database
 		LectureseriesLocalServiceUtil.updateLectureseries(lectureseries);
 		
-		//update facility link
+		//update institution link
 		//delete old entries first
 		Lectureseries_InstitutionLocalServiceUtil.removeByLectureseriesId(lectureseries.getLectureseriesId());
-		//new links to facility
-		for(int i=0;i<facilities.length;i++){
+		//new links to institution
+		for(int i=0;i<institutions.length;i++){
 			Lectureseries_InstitutionImpl lf = new Lectureseries_InstitutionImpl();
 			lf.setLectureseriesId(lId);
-			lf.setInstitutionId(new Long(facilities[i]));
-			if(!Lectureseries_InstitutionLocalServiceUtil.facilityAssignedToLectureseries(lf))
+			lf.setInstitutionId(new Long(institutions[i]));
+			if(!Lectureseries_InstitutionLocalServiceUtil.institutionAssignedToLectureseries(lf))
 				Lectureseries_InstitutionLocalServiceUtil.addLectureseries_Institution(lf);
 		}
 		
@@ -142,7 +142,7 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 	public void addLectureseries(ActionRequest request, ActionResponse response) throws SystemException, PortalException {
 		String s = request.getParameter("longDesc");
 		String[] producers = request.getParameterValues("producers");
-		String[] facilities = request.getParameterValues("facilities");
+		String[] institutions = request.getParameterValues("institutions");
 
 		//build lecture series object
 		LectureseriesImpl lectureseries = new LectureseriesImpl();
@@ -162,11 +162,11 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		//save object to database
 		Long lId = LectureseriesLocalServiceUtil.addLectureseries(lectureseries).getLectureseriesId();
 		
-		//link to facility
-		for(int i=0;i<facilities.length;i++){
+		//link to institution
+		for(int i=0;i<institutions.length;i++){
 			Lectureseries_InstitutionImpl lf = new Lectureseries_InstitutionImpl();
 			lf.setLectureseriesId(lId);
-			lf.setInstitutionId(new Long(facilities[i]));
+			lf.setInstitutionId(new Long(institutions[i]));
 			Lectureseries_InstitutionLocalServiceUtil.addLectureseries_Institution(lf);
 		}
 
@@ -177,7 +177,7 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			pl.setLectureseriesId(lId);
 			Producer_LectureseriesLocalServiceUtil.addProducer_Lectureseries(pl);
 		}
-		request.setAttribute("facilities", facilities);
+		request.setAttribute("institutions", institutions);
 		request.setAttribute("producers", producers);
 	}
 
