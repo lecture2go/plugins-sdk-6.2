@@ -14,6 +14,8 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import com.liferay.portal.kernel.exception.SystemException;
+
 import de.uhh.l2g.plugins.service.base.UploadLocalServiceBaseImpl;
 
 /**
@@ -36,4 +38,8 @@ public class UploadLocalServiceImpl extends UploadLocalServiceBaseImpl {
 	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.UploadLocalServiceUtil} to access the upload local service.
 	 */
+
+	public void deleteByVideoId(Long videoId) throws SystemException{
+		uploadPersistence.removeByVideo(videoId);
+	}
 }

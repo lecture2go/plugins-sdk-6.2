@@ -58,12 +58,13 @@ public class VideohitlistModelImpl extends BaseModelImpl<Videohitlist>
 	public static final String TABLE_NAME = "LG_Videohitlist";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "videohitlistId", Types.BIGINT },
-			{ "hitsPerDay", Types.INTEGER },
-			{ "hitsPerWeek", Types.INTEGER },
-			{ "hitsPerMonth", Types.INTEGER },
-			{ "hitsPerYear", Types.INTEGER }
+			{ "hitsPerDay", Types.BIGINT },
+			{ "hitsPerWeek", Types.BIGINT },
+			{ "hitsPerMonth", Types.BIGINT },
+			{ "hitsPerYear", Types.BIGINT },
+			{ "videoId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Videohitlist (videohitlistId LONG not null primary key,hitsPerDay INTEGER,hitsPerWeek INTEGER,hitsPerMonth INTEGER,hitsPerYear INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Videohitlist (videohitlistId LONG not null primary key,hitsPerDay LONG,hitsPerWeek LONG,hitsPerMonth LONG,hitsPerYear LONG,videoId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Videohitlist";
 	public static final String ORDER_BY_JPQL = " ORDER BY videohitlist.videohitlistId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Videohitlist.videohitlistId ASC";
@@ -122,6 +123,7 @@ public class VideohitlistModelImpl extends BaseModelImpl<Videohitlist>
 		attributes.put("hitsPerWeek", getHitsPerWeek());
 		attributes.put("hitsPerMonth", getHitsPerMonth());
 		attributes.put("hitsPerYear", getHitsPerYear());
+		attributes.put("videoId", getVideoId());
 
 		return attributes;
 	}
@@ -134,28 +136,34 @@ public class VideohitlistModelImpl extends BaseModelImpl<Videohitlist>
 			setVideohitlistId(videohitlistId);
 		}
 
-		Integer hitsPerDay = (Integer)attributes.get("hitsPerDay");
+		Long hitsPerDay = (Long)attributes.get("hitsPerDay");
 
 		if (hitsPerDay != null) {
 			setHitsPerDay(hitsPerDay);
 		}
 
-		Integer hitsPerWeek = (Integer)attributes.get("hitsPerWeek");
+		Long hitsPerWeek = (Long)attributes.get("hitsPerWeek");
 
 		if (hitsPerWeek != null) {
 			setHitsPerWeek(hitsPerWeek);
 		}
 
-		Integer hitsPerMonth = (Integer)attributes.get("hitsPerMonth");
+		Long hitsPerMonth = (Long)attributes.get("hitsPerMonth");
 
 		if (hitsPerMonth != null) {
 			setHitsPerMonth(hitsPerMonth);
 		}
 
-		Integer hitsPerYear = (Integer)attributes.get("hitsPerYear");
+		Long hitsPerYear = (Long)attributes.get("hitsPerYear");
 
 		if (hitsPerYear != null) {
 			setHitsPerYear(hitsPerYear);
+		}
+
+		Long videoId = (Long)attributes.get("videoId");
+
+		if (videoId != null) {
+			setVideoId(videoId);
 		}
 	}
 
@@ -170,43 +178,53 @@ public class VideohitlistModelImpl extends BaseModelImpl<Videohitlist>
 	}
 
 	@Override
-	public int getHitsPerDay() {
+	public long getHitsPerDay() {
 		return _hitsPerDay;
 	}
 
 	@Override
-	public void setHitsPerDay(int hitsPerDay) {
+	public void setHitsPerDay(long hitsPerDay) {
 		_hitsPerDay = hitsPerDay;
 	}
 
 	@Override
-	public int getHitsPerWeek() {
+	public long getHitsPerWeek() {
 		return _hitsPerWeek;
 	}
 
 	@Override
-	public void setHitsPerWeek(int hitsPerWeek) {
+	public void setHitsPerWeek(long hitsPerWeek) {
 		_hitsPerWeek = hitsPerWeek;
 	}
 
 	@Override
-	public int getHitsPerMonth() {
+	public long getHitsPerMonth() {
 		return _hitsPerMonth;
 	}
 
 	@Override
-	public void setHitsPerMonth(int hitsPerMonth) {
+	public void setHitsPerMonth(long hitsPerMonth) {
 		_hitsPerMonth = hitsPerMonth;
 	}
 
 	@Override
-	public int getHitsPerYear() {
+	public long getHitsPerYear() {
 		return _hitsPerYear;
 	}
 
 	@Override
-	public void setHitsPerYear(int hitsPerYear) {
+	public void setHitsPerYear(long hitsPerYear) {
 		_hitsPerYear = hitsPerYear;
+	}
+
+	@Override
+	public long getVideoId() {
+		return _videoId;
+	}
+
+	@Override
+	public void setVideoId(long videoId) {
+		_videoId = videoId;
 	}
 
 	@Override
@@ -241,6 +259,7 @@ public class VideohitlistModelImpl extends BaseModelImpl<Videohitlist>
 		videohitlistImpl.setHitsPerWeek(getHitsPerWeek());
 		videohitlistImpl.setHitsPerMonth(getHitsPerMonth());
 		videohitlistImpl.setHitsPerYear(getHitsPerYear());
+		videohitlistImpl.setVideoId(getVideoId());
 
 		videohitlistImpl.resetOriginalValues();
 
@@ -307,12 +326,14 @@ public class VideohitlistModelImpl extends BaseModelImpl<Videohitlist>
 
 		videohitlistCacheModel.hitsPerYear = getHitsPerYear();
 
+		videohitlistCacheModel.videoId = getVideoId();
+
 		return videohitlistCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{videohitlistId=");
 		sb.append(getVideohitlistId());
@@ -324,6 +345,8 @@ public class VideohitlistModelImpl extends BaseModelImpl<Videohitlist>
 		sb.append(getHitsPerMonth());
 		sb.append(", hitsPerYear=");
 		sb.append(getHitsPerYear());
+		sb.append(", videoId=");
+		sb.append(getVideoId());
 		sb.append("}");
 
 		return sb.toString();
@@ -331,7 +354,7 @@ public class VideohitlistModelImpl extends BaseModelImpl<Videohitlist>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Videohitlist");
@@ -357,6 +380,10 @@ public class VideohitlistModelImpl extends BaseModelImpl<Videohitlist>
 			"<column><column-name>hitsPerYear</column-name><column-value><![CDATA[");
 		sb.append(getHitsPerYear());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>videoId</column-name><column-value><![CDATA[");
+		sb.append(getVideoId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -368,9 +395,10 @@ public class VideohitlistModelImpl extends BaseModelImpl<Videohitlist>
 			Videohitlist.class
 		};
 	private long _videohitlistId;
-	private int _hitsPerDay;
-	private int _hitsPerWeek;
-	private int _hitsPerMonth;
-	private int _hitsPerYear;
+	private long _hitsPerDay;
+	private long _hitsPerWeek;
+	private long _hitsPerMonth;
+	private long _hitsPerYear;
+	private long _videoId;
 	private Videohitlist _escapedModel;
 }

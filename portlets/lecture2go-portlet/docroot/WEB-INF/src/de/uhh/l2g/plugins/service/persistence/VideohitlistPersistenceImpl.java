@@ -324,6 +324,7 @@ public class VideohitlistPersistenceImpl extends BasePersistenceImpl<Videohitlis
 		videohitlistImpl.setHitsPerWeek(videohitlist.getHitsPerWeek());
 		videohitlistImpl.setHitsPerMonth(videohitlist.getHitsPerMonth());
 		videohitlistImpl.setHitsPerYear(videohitlist.getHitsPerYear());
+		videohitlistImpl.setVideoId(videohitlist.getVideoId());
 
 		return videohitlistImpl;
 	}

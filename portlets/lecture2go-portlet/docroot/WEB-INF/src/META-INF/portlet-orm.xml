@@ -295,6 +295,7 @@
 			<basic name="hitsPerWeek" />
 			<basic name="hitsPerMonth" />
 			<basic name="hitsPerYear" />
+			<basic name="videoId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

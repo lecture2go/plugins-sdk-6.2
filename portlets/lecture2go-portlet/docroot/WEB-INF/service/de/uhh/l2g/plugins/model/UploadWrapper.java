@@ -90,7 +90,7 @@ public class UploadWrapper implements Upload, ModelWrapper<Upload> {
 			setStatus(status);
 		}
 
-		Integer videoId = (Integer)attributes.get("videoId");
+		Long videoId = (Long)attributes.get("videoId");
 
 		if (videoId != null) {
 			setVideoId(videoId);
@@ -245,7 +245,7 @@ public class UploadWrapper implements Upload, ModelWrapper<Upload> {
 	* @return the video ID of this upload
 	*/
 	@Override
-	public int getVideoId() {
+	public long getVideoId() {
 		return _upload.getVideoId();
 	}
 
@@ -255,7 +255,7 @@ public class UploadWrapper implements Upload, ModelWrapper<Upload> {
 	* @param videoId the video ID of this upload
 	*/
 	@Override
-	public void setVideoId(int videoId) {
+	public void setVideoId(long videoId) {
 		_upload.setVideoId(videoId);
 	}
 

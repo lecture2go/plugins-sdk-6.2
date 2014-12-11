@@ -157,7 +157,7 @@ create table LG_Upload (
 	contentLength LONG,
 	timestamp LONG,
 	status INTEGER,
-	videoId INTEGER
+	videoId LONG
 );
 
 create table LG_Video (
@@ -177,7 +177,7 @@ create table LG_Video (
 	downloadLink INTEGER,
 	metadataId LONG,
 	surl VARCHAR(75) null,
-	hits INTEGER,
+	hits LONG,
 	uploadDate DATE null,
 	permittedToSegment INTEGER,
 	rootInstitutionId LONG,
@@ -198,8 +198,9 @@ create table LG_Video_Lectureseries (
 
 create table LG_Videohitlist (
 	videohitlistId LONG not null primary key,
-	hitsPerDay INTEGER,
-	hitsPerWeek INTEGER,
-	hitsPerMonth INTEGER,
-	hitsPerYear INTEGER
+	hitsPerDay LONG,
+	hitsPerWeek LONG,
+	hitsPerMonth LONG,
+	hitsPerYear LONG,
+	videoId LONG
 );

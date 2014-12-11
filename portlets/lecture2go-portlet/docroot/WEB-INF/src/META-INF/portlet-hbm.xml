@@ -203,7 +203,7 @@
 		<property name="contentLength" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="timestamp" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="videoId" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="videoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.VideoImpl" table="LG_Video">
 		<cache usage="read-write" />
@@ -225,7 +225,7 @@
 		<property name="downloadLink" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="metadataId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="surl" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="hits" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="hits" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="uploadDate" type="org.hibernate.type.TimestampType" />
 		<property name="permittedToSegment" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="rootInstitutionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -252,9 +252,10 @@
 		<id name="videohitlistId" type="long">
 			<generator class="increment" />
 		</id>
-		<property name="hitsPerDay" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="hitsPerWeek" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="hitsPerMonth" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="hitsPerYear" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="hitsPerDay" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="hitsPerWeek" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="hitsPerMonth" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="hitsPerYear" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="videoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 </hibernate-mapping>

@@ -35,7 +35,7 @@ public class VideohitlistCacheModel implements CacheModel<Videohitlist>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{videohitlistId=");
 		sb.append(videohitlistId);
@@ -47,6 +47,8 @@ public class VideohitlistCacheModel implements CacheModel<Videohitlist>,
 		sb.append(hitsPerMonth);
 		sb.append(", hitsPerYear=");
 		sb.append(hitsPerYear);
+		sb.append(", videoId=");
+		sb.append(videoId);
 		sb.append("}");
 
 		return sb.toString();
@@ -61,6 +63,7 @@ public class VideohitlistCacheModel implements CacheModel<Videohitlist>,
 		videohitlistImpl.setHitsPerWeek(hitsPerWeek);
 		videohitlistImpl.setHitsPerMonth(hitsPerMonth);
 		videohitlistImpl.setHitsPerYear(hitsPerYear);
+		videohitlistImpl.setVideoId(videoId);
 
 		videohitlistImpl.resetOriginalValues();
 
@@ -70,25 +73,28 @@ public class VideohitlistCacheModel implements CacheModel<Videohitlist>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		videohitlistId = objectInput.readLong();
-		hitsPerDay = objectInput.readInt();
-		hitsPerWeek = objectInput.readInt();
-		hitsPerMonth = objectInput.readInt();
-		hitsPerYear = objectInput.readInt();
+		hitsPerDay = objectInput.readLong();
+		hitsPerWeek = objectInput.readLong();
+		hitsPerMonth = objectInput.readLong();
+		hitsPerYear = objectInput.readLong();
+		videoId = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(videohitlistId);
-		objectOutput.writeInt(hitsPerDay);
-		objectOutput.writeInt(hitsPerWeek);
-		objectOutput.writeInt(hitsPerMonth);
-		objectOutput.writeInt(hitsPerYear);
+		objectOutput.writeLong(hitsPerDay);
+		objectOutput.writeLong(hitsPerWeek);
+		objectOutput.writeLong(hitsPerMonth);
+		objectOutput.writeLong(hitsPerYear);
+		objectOutput.writeLong(videoId);
 	}
 
 	public long videohitlistId;
-	public int hitsPerDay;
-	public int hitsPerWeek;
-	public int hitsPerMonth;
-	public int hitsPerYear;
+	public long hitsPerDay;
+	public long hitsPerWeek;
+	public long hitsPerMonth;
+	public long hitsPerYear;
+	public long videoId;
 }

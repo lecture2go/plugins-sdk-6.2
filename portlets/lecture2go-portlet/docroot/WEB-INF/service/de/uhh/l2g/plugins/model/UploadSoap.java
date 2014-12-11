@@ -127,11 +127,11 @@ public class UploadSoap implements Serializable {
 		_status = status;
 	}
 
-	public int getVideoId() {
+	public long getVideoId() {
 		return _videoId;
 	}
 
-	public void setVideoId(int videoId) {
+	public void setVideoId(long videoId) {
 		_videoId = videoId;
 	}
 
@@ -140,5 +140,5 @@ public class UploadSoap implements Serializable {
 	private long _contentLength;
 	private long _timestamp;
 	private int _status;
-	private int _videoId;
+	private long _videoId;
 }

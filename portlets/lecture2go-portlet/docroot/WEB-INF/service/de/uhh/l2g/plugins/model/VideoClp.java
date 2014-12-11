@@ -196,7 +196,7 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 			setSurl(surl);
 		}
 
-		Integer hits = (Integer)attributes.get("hits");
+		Long hits = (Long)attributes.get("hits");
 
 		if (hits != null) {
 			setHits(hits);
@@ -599,19 +599,19 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 	}
 
 	@Override
-	public int getHits() {
+	public long getHits() {
 		return _hits;
 	}
 
 	@Override
-	public void setHits(int hits) {
+	public void setHits(long hits) {
 		_hits = hits;
 
 		if (_videoRemoteModel != null) {
 			try {
 				Class<?> clazz = _videoRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setHits", int.class);
+				Method method = clazz.getMethod("setHits", long.class);
 
 				method.invoke(_videoRemoteModel, hits);
 			}
@@ -1754,7 +1754,7 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 	private int _downloadLink;
 	private long _metadataId;
 	private String _surl;
-	private int _hits;
+	private long _hits;
 	private Date _uploadDate;
 	private int _permittedToSegment;
 	private long _rootInstitutionId;

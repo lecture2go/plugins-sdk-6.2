@@ -231,11 +231,11 @@ public class VideoSoap implements Serializable {
 		_surl = surl;
 	}
 
-	public int getHits() {
+	public long getHits() {
 		return _hits;
 	}
 
-	public void setHits(int hits) {
+	public void setHits(long hits) {
 		_hits = hits;
 	}
 
@@ -287,7 +287,7 @@ public class VideoSoap implements Serializable {
 	private int _downloadLink;
 	private long _metadataId;
 	private String _surl;
-	private int _hits;
+	private long _hits;
 	private Date _uploadDate;
 	private int _permittedToSegment;
 	private long _rootInstitutionId;

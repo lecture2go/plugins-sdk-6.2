@@ -74,13 +74,13 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 			{ "downloadLink", Types.INTEGER },
 			{ "metadataId", Types.BIGINT },
 			{ "surl", Types.VARCHAR },
-			{ "hits", Types.INTEGER },
+			{ "hits", Types.BIGINT },
 			{ "uploadDate", Types.TIMESTAMP },
 			{ "permittedToSegment", Types.INTEGER },
 			{ "rootInstitutionId", Types.BIGINT },
 			{ "citation2go", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Video (videoId LONG not null primary key,title VARCHAR(75) null,tags VARCHAR(75) null,lectureseriesId LONG,producerId LONG,containerFormat VARCHAR(75) null,filename VARCHAR(75) null,resolution VARCHAR(75) null,duration VARCHAR(75) null,hostId LONG,fileSize VARCHAR(75) null,generationDate VARCHAR(75) null,openAccess INTEGER,downloadLink INTEGER,metadataId LONG,surl VARCHAR(75) null,hits INTEGER,uploadDate DATE null,permittedToSegment INTEGER,rootInstitutionId LONG,citation2go INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Video (videoId LONG not null primary key,title VARCHAR(75) null,tags VARCHAR(75) null,lectureseriesId LONG,producerId LONG,containerFormat VARCHAR(75) null,filename VARCHAR(75) null,resolution VARCHAR(75) null,duration VARCHAR(75) null,hostId LONG,fileSize VARCHAR(75) null,generationDate VARCHAR(75) null,openAccess INTEGER,downloadLink INTEGER,metadataId LONG,surl VARCHAR(75) null,hits LONG,uploadDate DATE null,permittedToSegment INTEGER,rootInstitutionId LONG,citation2go INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Video";
 	public static final String ORDER_BY_JPQL = " ORDER BY video.videoId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Video.videoId ASC";
@@ -265,7 +265,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 			setSurl(surl);
 		}
 
-		Integer hits = (Integer)attributes.get("hits");
+		Long hits = (Long)attributes.get("hits");
 
 		if (hits != null) {
 			setHits(hits);
@@ -551,12 +551,12 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	}
 
 	@Override
-	public int getHits() {
+	public long getHits() {
 		return _hits;
 	}
 
 	@Override
-	public void setHits(int hits) {
+	public void setHits(long hits) {
 		_hits = hits;
 	}
 
@@ -1024,7 +1024,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	private boolean _setOriginalDownloadLink;
 	private long _metadataId;
 	private String _surl;
-	private int _hits;
+	private long _hits;
 	private Date _uploadDate;
 	private int _permittedToSegment;
 	private long _rootInstitutionId;

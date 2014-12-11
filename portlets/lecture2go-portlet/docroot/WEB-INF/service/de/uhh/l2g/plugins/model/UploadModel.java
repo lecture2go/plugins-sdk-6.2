@@ -147,14 +147,14 @@ public interface UploadModel extends BaseModel<Upload> {
 	 *
 	 * @return the video ID of this upload
 	 */
-	public int getVideoId();
+	public long getVideoId();
 
 	/**
 	 * Sets the video ID of this upload.
 	 *
 	 * @param videoId the video ID of this upload
 	 */
-	public void setVideoId(int videoId);
+	public void setVideoId(long videoId);
 
 	@Override
 	public boolean isNew();

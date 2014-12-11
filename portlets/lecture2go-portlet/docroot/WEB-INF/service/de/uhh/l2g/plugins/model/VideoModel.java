@@ -297,14 +297,14 @@ public interface VideoModel extends BaseModel<Video> {
 	 *
 	 * @return the hits of this video
 	 */
-	public int getHits();
+	public long getHits();
 
 	/**
 	 * Sets the hits of this video.
 	 *
 	 * @param hits the hits of this video
 	 */
-	public void setHits(int hits);
+	public void setHits(long hits);
 
 	/**
 	 * Returns the upload date of this video.

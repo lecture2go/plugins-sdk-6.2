@@ -54,6 +54,7 @@ public class VideohitlistWrapper implements Videohitlist,
 		attributes.put("hitsPerWeek", getHitsPerWeek());
 		attributes.put("hitsPerMonth", getHitsPerMonth());
 		attributes.put("hitsPerYear", getHitsPerYear());
+		attributes.put("videoId", getVideoId());
 
 		return attributes;
 	}
@@ -66,28 +67,34 @@ public class VideohitlistWrapper implements Videohitlist,
 			setVideohitlistId(videohitlistId);
 		}
 
-		Integer hitsPerDay = (Integer)attributes.get("hitsPerDay");
+		Long hitsPerDay = (Long)attributes.get("hitsPerDay");
 
 		if (hitsPerDay != null) {
 			setHitsPerDay(hitsPerDay);
 		}
 
-		Integer hitsPerWeek = (Integer)attributes.get("hitsPerWeek");
+		Long hitsPerWeek = (Long)attributes.get("hitsPerWeek");
 
 		if (hitsPerWeek != null) {
 			setHitsPerWeek(hitsPerWeek);
 		}
 
-		Integer hitsPerMonth = (Integer)attributes.get("hitsPerMonth");
+		Long hitsPerMonth = (Long)attributes.get("hitsPerMonth");
 
 		if (hitsPerMonth != null) {
 			setHitsPerMonth(hitsPerMonth);
 		}
 
-		Integer hitsPerYear = (Integer)attributes.get("hitsPerYear");
+		Long hitsPerYear = (Long)attributes.get("hitsPerYear");
 
 		if (hitsPerYear != null) {
 			setHitsPerYear(hitsPerYear);
+		}
+
+		Long videoId = (Long)attributes.get("videoId");
+
+		if (videoId != null) {
+			setVideoId(videoId);
 		}
 	}
 
@@ -137,7 +144,7 @@ public class VideohitlistWrapper implements Videohitlist,
 	* @return the hits per day of this videohitlist
 	*/
 	@Override
-	public int getHitsPerDay() {
+	public long getHitsPerDay() {
 		return _videohitlist.getHitsPerDay();
 	}
 
@@ -147,7 +154,7 @@ public class VideohitlistWrapper implements Videohitlist,
 	* @param hitsPerDay the hits per day of this videohitlist
 	*/
 	@Override
-	public void setHitsPerDay(int hitsPerDay) {
+	public void setHitsPerDay(long hitsPerDay) {
 		_videohitlist.setHitsPerDay(hitsPerDay);
 	}
 
@@ -157,7 +164,7 @@ public class VideohitlistWrapper implements Videohitlist,
 	* @return the hits per week of this videohitlist
 	*/
 	@Override
-	public int getHitsPerWeek() {
+	public long getHitsPerWeek() {
 		return _videohitlist.getHitsPerWeek();
 	}
 
@@ -167,7 +174,7 @@ public class VideohitlistWrapper implements Videohitlist,
 	* @param hitsPerWeek the hits per week of this videohitlist
 	*/
 	@Override
-	public void setHitsPerWeek(int hitsPerWeek) {
+	public void setHitsPerWeek(long hitsPerWeek) {
 		_videohitlist.setHitsPerWeek(hitsPerWeek);
 	}
 
@@ -177,7 +184,7 @@ public class VideohitlistWrapper implements Videohitlist,
 	* @return the hits per month of this videohitlist
 	*/
 	@Override
-	public int getHitsPerMonth() {
+	public long getHitsPerMonth() {
 		return _videohitlist.getHitsPerMonth();
 	}
 
@@ -187,7 +194,7 @@ public class VideohitlistWrapper implements Videohitlist,
 	* @param hitsPerMonth the hits per month of this videohitlist
 	*/
 	@Override
-	public void setHitsPerMonth(int hitsPerMonth) {
+	public void setHitsPerMonth(long hitsPerMonth) {
 		_videohitlist.setHitsPerMonth(hitsPerMonth);
 	}
 
@@ -197,7 +204,7 @@ public class VideohitlistWrapper implements Videohitlist,
 	* @return the hits per year of this videohitlist
 	*/
 	@Override
-	public int getHitsPerYear() {
+	public long getHitsPerYear() {
 		return _videohitlist.getHitsPerYear();
 	}
 
@@ -207,8 +214,28 @@ public class VideohitlistWrapper implements Videohitlist,
 	* @param hitsPerYear the hits per year of this videohitlist
 	*/
 	@Override
-	public void setHitsPerYear(int hitsPerYear) {
+	public void setHitsPerYear(long hitsPerYear) {
 		_videohitlist.setHitsPerYear(hitsPerYear);
+	}
+
+	/**
+	* Returns the video ID of this videohitlist.
+	*
+	* @return the video ID of this videohitlist
+	*/
+	@Override
+	public long getVideoId() {
+		return _videohitlist.getVideoId();
+	}
+
+	/**
+	* Sets the video ID of this videohitlist.
+	*
+	* @param videoId the video ID of this videohitlist
+	*/
+	@Override
+	public void setVideoId(long videoId) {
+		_videohitlist.setVideoId(videoId);
 	}
 
 	@Override
