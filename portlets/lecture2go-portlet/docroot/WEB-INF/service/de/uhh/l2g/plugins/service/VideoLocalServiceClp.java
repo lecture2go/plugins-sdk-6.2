@@ -757,14 +757,14 @@ public class VideoLocalServiceClp implements VideoLocalService {
 
 	@Override
 	public java.util.List<de.uhh.l2g.plugins.model.Video> getByInstitution(
-		java.lang.Long facilityId)
+		java.lang.Long institutionId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName21,
 					_methodParameterTypes21,
-					new Object[] { ClpSerializer.translateInput(facilityId) });
+					new Object[] { ClpSerializer.translateInput(institutionId) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);

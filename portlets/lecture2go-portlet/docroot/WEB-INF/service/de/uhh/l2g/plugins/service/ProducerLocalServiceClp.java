@@ -683,13 +683,13 @@ public class ProducerLocalServiceClp implements ProducerLocalService {
 
 	@Override
 	public java.util.List<de.uhh.l2g.plugins.model.Producer> getProducersByInstitutionId(
-		long facilityId)
+		long institutionId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName19,
-					_methodParameterTypes19, new Object[] { facilityId });
+					_methodParameterTypes19, new Object[] { institutionId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);

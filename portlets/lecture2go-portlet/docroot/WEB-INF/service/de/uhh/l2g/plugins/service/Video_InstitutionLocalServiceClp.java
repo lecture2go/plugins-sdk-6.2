@@ -711,13 +711,13 @@ public class Video_InstitutionLocalServiceClp
 	}
 
 	@Override
-	public boolean removeByInstitutionId(java.lang.Long facilityId) {
+	public boolean removeByInstitutionId(java.lang.Long institutionId) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName20,
 					_methodParameterTypes20,
-					new Object[] { ClpSerializer.translateInput(facilityId) });
+					new Object[] { ClpSerializer.translateInput(institutionId) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);

@@ -284,9 +284,9 @@ public class ProducerLocalServiceWrapper implements ProducerLocalService,
 
 	@Override
 	public java.util.List<de.uhh.l2g.plugins.model.Producer> getProducersByInstitutionId(
-		long facilityId)
+		long institutionId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _producerLocalService.getProducersByInstitutionId(facilityId);
+		return _producerLocalService.getProducersByInstitutionId(institutionId);
 	}
 
 	@Override

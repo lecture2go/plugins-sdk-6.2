@@ -251,7 +251,7 @@ public interface Video_InstitutionLocalService extends BaseLocalService,
 
 	public boolean removeByVideoId(java.lang.Long videoId);
 
-	public boolean removeByInstitutionId(java.lang.Long facilityId);
+	public boolean removeByInstitutionId(java.lang.Long institutionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<de.uhh.l2g.plugins.model.Video_Institution> getByVideo(
