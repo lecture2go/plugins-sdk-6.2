@@ -65,6 +65,7 @@
 <%@ page import="de.uhh.l2g.plugins.service.VideoLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.service.LicenseLocalServiceUtil"%>
+<%@ page import="de.uhh.l2g.plugins.service.SegmentLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.NoSuchMetadataException"%>
 <%@ page import="de.uhh.l2g.plugins.service.MetadataLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.model.Producer"%>
@@ -82,7 +83,7 @@
 <%@ page import="de.uhh.l2g.plugins.model.impl.LicenseImpl"%>
 
 <%@ page import="de.uhh.l2g.plugins.util.Lecture2GoRoleChecker"%>
-<%@page import="com.sun.xml.internal.rngom.ast.builder.Include"%>
+<%@ page import="com.sun.xml.internal.rngom.ast.builder.Include"%>
 
 <portlet:defineObjects />
 <liferay-theme:defineObjects/>

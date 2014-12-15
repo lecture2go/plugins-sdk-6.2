@@ -65,7 +65,7 @@ public class ProzessManager {
 	
 	Htaccess HTACCESS = new Htaccess();
 	
-	public void deactivateDownload(Video video, Host host, Producer producer) throws SystemException {
+	public void deactivateDownload(Video video, Host host, Producer producer) throws SystemException, PortalException {
 		video.setDownloadLink(0);
 		VideoLocalServiceUtil.updateVideo(video);
 		// set RSS
@@ -81,7 +81,7 @@ public class ProzessManager {
 		HTACCESS.makeHtaccess(url, VideoLocalServiceUtil.getByProducerAndDownloadLink(producer.getProducerId(), 0));
 	}
 
-	public void activateDownload(Video video, Host host, Producer producer) throws SystemException {
+	public void activateDownload(Video video, Host host, Producer producer) throws SystemException, PortalException {
 		video.setDownloadLink(1);
 		VideoLocalServiceUtil.updateVideo(video);
 		// set RSS
