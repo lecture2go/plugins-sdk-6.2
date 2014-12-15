@@ -172,7 +172,7 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 			setSurl(surl);
 		}
 
-		Integer hits = (Integer)attributes.get("hits");
+		Long hits = (Long)attributes.get("hits");
 
 		if (hits != null) {
 			setHits(hits);
@@ -550,7 +550,7 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 	* @return the hits of this video
 	*/
 	@Override
-	public int getHits() {
+	public long getHits() {
 		return _video.getHits();
 	}
 
@@ -560,7 +560,7 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 	* @param hits the hits of this video
 	*/
 	@Override
-	public void setHits(int hits) {
+	public void setHits(long hits) {
 		_video.setHits(hits);
 	}
 

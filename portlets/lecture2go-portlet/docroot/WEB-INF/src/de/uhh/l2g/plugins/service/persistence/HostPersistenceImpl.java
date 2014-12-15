@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
@@ -47,7 +46,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 /**
  * The persistence implementation for the host service.
@@ -168,15 +166,15 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	/**
 	 * Creates a new host with the primary key. Does not add the host to the database.
 	 *
-	 * @param hostPK the primary key for the new host
+	 * @param hostId the primary key for the new host
 	 * @return the new host
 	 */
 	@Override
-	public Host create(HostPK hostPK) {
+	public Host create(long hostId) {
 		Host host = new HostImpl();
 
 		host.setNew(true);
-		host.setPrimaryKey(hostPK);
+		host.setPrimaryKey(hostId);
 
 		return host;
 	}
@@ -184,15 +182,14 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	/**
 	 * Removes the host with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param hostPK the primary key of the host
+	 * @param hostId the primary key of the host
 	 * @return the host that was removed
 	 * @throws de.uhh.l2g.plugins.NoSuchHostException if a host with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Host remove(HostPK hostPK)
-		throws NoSuchHostException, SystemException {
-		return remove((Serializable)hostPK);
+	public Host remove(long hostId) throws NoSuchHostException, SystemException {
+		return remove((Serializable)hostId);
 	}
 
 	/**
@@ -323,14 +320,6 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 		hostImpl.setServerRoot(host.getServerRoot());
 		hostImpl.setName(host.getName());
 		hostImpl.setServerTemplate(host.getServerTemplate());
-		hostImpl.setHostId(host.getHostId());
-		hostImpl.setGroupId(host.getGroupId());
-		hostImpl.setCompanyId(host.getCompanyId());
-		hostImpl.setUserId(host.getUserId());
-		hostImpl.setUserName(host.getUserName());
-		hostImpl.setCreateDate(host.getCreateDate());
-		hostImpl.setModifiedDate(host.getModifiedDate());
-		hostImpl.setUuid(host.getUuid());
 
 		return hostImpl;
 	}
@@ -363,15 +352,15 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	/**
 	 * Returns the host with the primary key or throws a {@link de.uhh.l2g.plugins.NoSuchHostException} if it could not be found.
 	 *
-	 * @param hostPK the primary key of the host
+	 * @param hostId the primary key of the host
 	 * @return the host
 	 * @throws de.uhh.l2g.plugins.NoSuchHostException if a host with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Host findByPrimaryKey(HostPK hostPK)
+	public Host findByPrimaryKey(long hostId)
 		throws NoSuchHostException, SystemException {
-		return findByPrimaryKey((Serializable)hostPK);
+		return findByPrimaryKey((Serializable)hostId);
 	}
 
 	/**
@@ -424,13 +413,13 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	/**
 	 * Returns the host with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param hostPK the primary key of the host
+	 * @param hostId the primary key of the host
 	 * @return the host, or <code>null</code> if a host with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Host fetchByPrimaryKey(HostPK hostPK) throws SystemException {
-		return fetchByPrimaryKey((Serializable)hostPK);
+	public Host fetchByPrimaryKey(long hostId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)hostId);
 	}
 
 	/**
@@ -605,11 +594,6 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 		return count.intValue();
 	}
 
-	@Override
-	protected Set<String> getBadColumnNames() {
-		return _badColumnNames;
-	}
-
 	/**
 	 * Initializes the host persistence.
 	 */
@@ -649,9 +633,6 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = GetterUtil.getBoolean(PropsUtil.get(
 				PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
 	private static Log _log = LogFactoryUtil.getLog(HostPersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid"
-			});
 	private static Host _nullHost = new HostImpl() {
 			@Override
 			public Object clone() {

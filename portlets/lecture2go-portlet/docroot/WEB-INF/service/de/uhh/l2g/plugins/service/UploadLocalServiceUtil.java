@@ -271,6 +271,11 @@ public class UploadLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static void deleteByVideoId(java.lang.Long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteByVideoId(videoId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

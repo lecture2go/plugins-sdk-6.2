@@ -148,39 +148,4 @@
         </security-role-ref>
     </portlet>
 
-    <portlet>
-    	<portlet-name>lg-admin-streamer-management</portlet-name>
-    	<display-name>L2Go Streamer Management</display-name>
-    	<portlet-class>de.uhh.l2g.plugins.admin.AdminStreamerManagement</portlet-class>
-    	<init-param>
-    		<name>view-template</name>
-    		<value>/admin/streamerList.jsp</value>
-    	</init-param>
-        <init-param>
-            <name>add-process-action-success-action</name>
-            <value>false</value>
-        </init-param>
-    	<expiration-cache>0</expiration-cache>
-    	<supports>
-    		<mime-type>text/html</mime-type>
-    		<portlet-mode>view</portlet-mode>
-    	</supports>
-    	<portlet-info>
-    		<title>L2Go Streamer Management</title>
-    		<short-title>L2Go Streamer Management</short-title>
-    		<keywords>L2Go Streamer Management</keywords>
-    	</portlet-info>
-    	<security-role-ref>
-    		<role-name>administrator</role-name>
-    	</security-role-ref>
-    	<security-role-ref>
-    		<role-name>guest</role-name>
-    	</security-role-ref>
-    	<security-role-ref>
-    		<role-name>power-user</role-name>
-    	</security-role-ref>
-    	<security-role-ref>
-    		<role-name>user</role-name>
-    	</security-role-ref>
-    </portlet>
 </portlet-app>

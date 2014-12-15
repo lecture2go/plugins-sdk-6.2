@@ -154,24 +154,6 @@
     	<!-- Group instance -->
 
     	<!-- Audit fields -->
-
-
-    	<!-- PK fields -->
-
-    	<column name="hostId" type="long" primary="true"></column>
-
-    	<!-- Group instance -->
-
-    	<column name="groupId" type="long"></column>
-
-    	<!-- Audit fields -->
-
-    	<column name="companyId" type="long"></column>
-    	<column name="userId" type="long"></column>
-    	<column name="userName" type="String"></column>
-    	<column name="createDate" type="Date"></column>
-    	<column name="modifiedDate" type="Date"></column>
-        <column name="uuid" type="String"></column>
     </entity>
     <entity name="Institution_Host" local-service="true" remote-service="false">
         <column name="institutionHostId" type="long" primary="true" id-type="increment"></column>
@@ -287,7 +269,10 @@
         <column name="contentLength" type="long"></column>
         <column name="timestamp" type="long"></column>
         <column name="status" type="int"></column>
-        <column name="videoId" type="int"></column>
+        <column name="videoId" type="long"></column>
+        <finder name="Video" return-type="Collection">
+            <finder-column name="videoId"></finder-column>
+        </finder>
     </entity>
     <entity name="Video" local-service="true" remote-service="false">
         <column name="videoId" type="long" primary="true" id-type="increment"></column>
@@ -306,7 +291,7 @@
         <column name="downloadLink" type="int"></column>
         <column name="metadataId" type="long"></column>
         <column name="surl" type="String"></column>
-        <column name="hits" type="int"></column>
+        <column name="hits" type="long"></column>
         <column name="uploadDate" type="Date"></column>
         <column name="permittedToSegment" type="int"></column>
         <column name="rootInstitutionId" type="long"></column>
@@ -346,10 +331,11 @@
     </entity>
     <entity name="Videohitlist" local-service="true" remote-service="false">
         <column name="videohitlistId" type="long" primary="true" id-type="increment"></column>
-        <column name="hitsPerDay" type="int"></column>
-        <column name="hitsPerWeek" type="int"></column>
-        <column name="hitsPerMonth" type="int"></column>
-        <column name="hitsPerYear" type="int"></column>
+        <column name="hitsPerDay" type="long"></column>
+        <column name="hitsPerWeek" type="long"></column>
+        <column name="hitsPerMonth" type="long"></column>
+        <column name="hitsPerYear" type="long"></column>
+        <column name="videoId" type="long"></column>
     </entity>
     <entity name="Video_Lectureseries" local-service="true" remote-service="false">
         <column name="videoLectureseriesId" type="long" primary="true" id-type="increment"></column>

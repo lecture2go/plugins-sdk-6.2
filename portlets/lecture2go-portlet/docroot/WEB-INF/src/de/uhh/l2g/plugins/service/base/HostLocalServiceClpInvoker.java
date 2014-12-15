@@ -30,15 +30,11 @@ public class HostLocalServiceClpInvoker {
 
 		_methodName1 = "createHost";
 
-		_methodParameterTypes1 = new String[] {
-				"de.uhh.l2g.plugins.service.persistence.HostPK"
-			};
+		_methodParameterTypes1 = new String[] { "long" };
 
 		_methodName2 = "deleteHost";
 
-		_methodParameterTypes2 = new String[] {
-				"de.uhh.l2g.plugins.service.persistence.HostPK"
-			};
+		_methodParameterTypes2 = new String[] { "long" };
 
 		_methodName3 = "deleteHost";
 
@@ -82,15 +78,11 @@ public class HostLocalServiceClpInvoker {
 
 		_methodName10 = "fetchHost";
 
-		_methodParameterTypes10 = new String[] {
-				"de.uhh.l2g.plugins.service.persistence.HostPK"
-			};
+		_methodParameterTypes10 = new String[] { "long" };
 
 		_methodName11 = "getHost";
 
-		_methodParameterTypes11 = new String[] {
-				"de.uhh.l2g.plugins.service.persistence.HostPK"
-			};
+		_methodParameterTypes11 = new String[] { "long" };
 
 		_methodName12 = "getPersistedModel";
 
@@ -142,12 +134,12 @@ public class HostLocalServiceClpInvoker {
 
 		if (_methodName1.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes1, parameterTypes)) {
-			return HostLocalServiceUtil.createHost((de.uhh.l2g.plugins.service.persistence.HostPK)arguments[0]);
+			return HostLocalServiceUtil.createHost(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName2.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes2, parameterTypes)) {
-			return HostLocalServiceUtil.deleteHost((de.uhh.l2g.plugins.service.persistence.HostPK)arguments[0]);
+			return HostLocalServiceUtil.deleteHost(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName3.equals(name) &&
@@ -193,12 +185,12 @@ public class HostLocalServiceClpInvoker {
 
 		if (_methodName10.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes10, parameterTypes)) {
-			return HostLocalServiceUtil.fetchHost((de.uhh.l2g.plugins.service.persistence.HostPK)arguments[0]);
+			return HostLocalServiceUtil.fetchHost(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName11.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes11, parameterTypes)) {
-			return HostLocalServiceUtil.getHost((de.uhh.l2g.plugins.service.persistence.HostPK)arguments[0]);
+			return HostLocalServiceUtil.getHost(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName12.equals(name) &&

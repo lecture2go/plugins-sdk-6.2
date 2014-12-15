@@ -54,20 +54,20 @@ public interface HostPersistence extends BasePersistence<Host> {
 	/**
 	* Creates a new host with the primary key. Does not add the host to the database.
 	*
-	* @param hostPK the primary key for the new host
+	* @param hostId the primary key for the new host
 	* @return the new host
 	*/
-	public de.uhh.l2g.plugins.model.Host create(HostPK hostPK);
+	public de.uhh.l2g.plugins.model.Host create(long hostId);
 
 	/**
 	* Removes the host with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param hostPK the primary key of the host
+	* @param hostId the primary key of the host
 	* @return the host that was removed
 	* @throws de.uhh.l2g.plugins.NoSuchHostException if a host with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.Host remove(HostPK hostPK)
+	public de.uhh.l2g.plugins.model.Host remove(long hostId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchHostException;
 
@@ -78,23 +78,23 @@ public interface HostPersistence extends BasePersistence<Host> {
 	/**
 	* Returns the host with the primary key or throws a {@link de.uhh.l2g.plugins.NoSuchHostException} if it could not be found.
 	*
-	* @param hostPK the primary key of the host
+	* @param hostId the primary key of the host
 	* @return the host
 	* @throws de.uhh.l2g.plugins.NoSuchHostException if a host with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.Host findByPrimaryKey(HostPK hostPK)
+	public de.uhh.l2g.plugins.model.Host findByPrimaryKey(long hostId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchHostException;
 
 	/**
 	* Returns the host with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param hostPK the primary key of the host
+	* @param hostId the primary key of the host
 	* @return the host, or <code>null</code> if a host with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.Host fetchByPrimaryKey(HostPK hostPK)
+	public de.uhh.l2g.plugins.model.Host fetchByPrimaryKey(long hostId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

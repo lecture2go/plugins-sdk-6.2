@@ -55,7 +55,10 @@ import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Segment_User_VideoLocalServiceUtil;
+import de.uhh.l2g.plugins.service.UploadLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideohitlistLocalServiceUtil;
 
 public class ProzessManager {
@@ -67,10 +70,10 @@ public class ProzessManager {
 		VideoLocalServiceUtil.updateVideo(video);
 		// set RSS
 		try {
-			RSS(video, "mp4");
-			RSS(video, "mp3");
-			RSS(video, "m4v");
-			RSS(video, "m4a");
+			generateRSS(video, "mp4");
+			generateRSS(video, "mp3");
+			generateRSS(video, "m4v");
+			generateRSS(video, "m4a");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -83,10 +86,10 @@ public class ProzessManager {
 		VideoLocalServiceUtil.updateVideo(video);
 		// set RSS
 		try {
-			RSS(video, "mp4");
-			RSS(video, "mp3");
-			RSS(video, "m4v");
-			RSS(video, "m4a");
+			generateRSS(video, "mp4");
+			generateRSS(video, "mp3");
+			generateRSS(video, "m4v");
+			generateRSS(video, "m4a");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -131,17 +134,17 @@ public class ProzessManager {
 		}
 		// set RSS
 		try {
-			RSS(video, "mp4");
-			RSS(video, "mp3");
-			RSS(video, "m4v");
-			RSS(video, "m4a");
+			generateRSS(video, "mp4");
+			generateRSS(video, "mp3");
+			generateRSS(video, "m4v");
+			generateRSS(video, "m4a");
 		} catch (Exception e) {
 		}
 		// rss reload
-		RSS(video, "mp4");
-		RSS(video, "mp3");
-		RSS(video, "m4v");
-		RSS(video, "m4a");
+		generateRSS(video, "mp4");
+		generateRSS(video, "mp3");
+		generateRSS(video, "m4v");
+		generateRSS(video, "m4a");
 		String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/";
 		HTACCESS.makeHtaccess(url, VideoLocalServiceUtil.getByProducerAndDownloadLink(producer.getProducerId(), 0));
 		// refresh last video list
@@ -195,10 +198,10 @@ public class ProzessManager {
 		symLinkMp3.delete();
 		// set RSS
 		try {
-			RSS(video, "mp4");
-			RSS(video, "mp3");
-			RSS(video, "m4v");
-			RSS(video, "m4a");
+			generateRSS(video, "mp4");
+			generateRSS(video, "mp3");
+			generateRSS(video, "m4v");
+			generateRSS(video, "m4a");
 		} catch (Exception e) {
 		}
 		// delete video from videohitlist
@@ -228,7 +231,7 @@ public class ProzessManager {
 		}
 	}
 
-	public void delete(Video video) throws PortalException, SystemException {
+	public void deleteVideo(Video video) throws PortalException, SystemException {
 		Host host = new HostImpl();
 		host = HostLocalServiceUtil.getHost(video.getHostId());
 		
@@ -237,8 +240,14 @@ public class ProzessManager {
 		
 		Metadata metadata = new MetadataImpl();
 		metadata = MetadataLocalServiceUtil.getMetadata(video.getMetadataId());
-		
-		// delete all segment images from repository location first!
+
+		// delete video_lectureseries
+		Video_LectureseriesLocalServiceUtil.removeByVideoId(video.getVideoId());
+				
+		// delete video_institution
+		Video_InstitutionLocalServiceUtil.removeByVideoId(video.getVideoId());
+				
+		// delete all segment images from repository location
 		List<Segment> segmentList = SegmentLocalServiceUtil.getSegmentsByVideoId(video.getVideoId());
 		SegmentLocalServiceUtil.deleteThumbhailsFromSegments(segmentList);
 		
@@ -249,8 +258,19 @@ public class ProzessManager {
 		// delete license
 		LicenseLocalServiceUtil.deleteByVideoId(video.getVideoId());
 
+		//delete upload info
+		UploadLocalServiceUtil.deleteByVideoId(video.getVideoId());
+		
 		// delete video from videohitlist
 		VideohitlistLocalServiceUtil.deleteVideohitlist(video.getVideoId());
+		
+		// delete meta data which belongs to video 
+		MetadataLocalServiceUtil.deleteMetadata(metadata);
+		
+		// delete video 
+		VideoLocalServiceUtil.deleteVideo(video);
+		
+		//delete physical files 
 		String videoPreffix = "";
 		if (video.getOpenAccess()==1) videoPreffix = video.getPreffix();
 		else videoPreffix = video.getSPreffix();
@@ -284,15 +304,17 @@ public class ProzessManager {
 			symLinkMp3.delete();
 			symLinkJpg.delete();
 		} catch (NullPointerException npe) {}
-		// set RSS
+		
+		// update RSS
 		try {
-			RSS(video, "mp4");
-			RSS(video, "mp3");
-			RSS(video, "m4v");
-			RSS(video, "m4a");
+			generateRSS(video, "mp4");
+			generateRSS(video, "mp3");
+			generateRSS(video, "m4v");
+			generateRSS(video, "m4a");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		// update uploads for producer
 		int n = 0;
 		try {
@@ -300,15 +322,11 @@ public class ProzessManager {
 		} catch (SystemException e) {
 			e.printStackTrace();
 		}
-		
-		// delete video and meta data contents
-		MetadataLocalServiceUtil.deleteMetadata(metadata);
-		VideoLocalServiceUtil.deleteVideo(video.getVideoId());
-		
 		producer.setNumberOfProductions(n);
+		ProducerLocalServiceUtil.updateProducer(producer);
 	}
 
-	public void RSS(Video video, String type) throws PortalException, SystemException {
+	public void generateRSS(Video video, String type) throws PortalException, SystemException {
 		// RSS generate for this lecture
 		RSSManager rssMan = new RSSManager();
 		String feedName = "";

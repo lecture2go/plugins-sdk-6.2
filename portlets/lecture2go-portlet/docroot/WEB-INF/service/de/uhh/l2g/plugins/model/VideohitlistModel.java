@@ -75,56 +75,70 @@ public interface VideohitlistModel extends BaseModel<Videohitlist> {
 	 *
 	 * @return the hits per day of this videohitlist
 	 */
-	public int getHitsPerDay();
+	public long getHitsPerDay();
 
 	/**
 	 * Sets the hits per day of this videohitlist.
 	 *
 	 * @param hitsPerDay the hits per day of this videohitlist
 	 */
-	public void setHitsPerDay(int hitsPerDay);
+	public void setHitsPerDay(long hitsPerDay);
 
 	/**
 	 * Returns the hits per week of this videohitlist.
 	 *
 	 * @return the hits per week of this videohitlist
 	 */
-	public int getHitsPerWeek();
+	public long getHitsPerWeek();
 
 	/**
 	 * Sets the hits per week of this videohitlist.
 	 *
 	 * @param hitsPerWeek the hits per week of this videohitlist
 	 */
-	public void setHitsPerWeek(int hitsPerWeek);
+	public void setHitsPerWeek(long hitsPerWeek);
 
 	/**
 	 * Returns the hits per month of this videohitlist.
 	 *
 	 * @return the hits per month of this videohitlist
 	 */
-	public int getHitsPerMonth();
+	public long getHitsPerMonth();
 
 	/**
 	 * Sets the hits per month of this videohitlist.
 	 *
 	 * @param hitsPerMonth the hits per month of this videohitlist
 	 */
-	public void setHitsPerMonth(int hitsPerMonth);
+	public void setHitsPerMonth(long hitsPerMonth);
 
 	/**
 	 * Returns the hits per year of this videohitlist.
 	 *
 	 * @return the hits per year of this videohitlist
 	 */
-	public int getHitsPerYear();
+	public long getHitsPerYear();
 
 	/**
 	 * Sets the hits per year of this videohitlist.
 	 *
 	 * @param hitsPerYear the hits per year of this videohitlist
 	 */
-	public void setHitsPerYear(int hitsPerYear);
+	public void setHitsPerYear(long hitsPerYear);
+
+	/**
+	 * Returns the video ID of this videohitlist.
+	 *
+	 * @return the video ID of this videohitlist
+	 */
+	public long getVideoId();
+
+	/**
+	 * Sets the video ID of this videohitlist.
+	 *
+	 * @param videoId the video ID of this videohitlist
+	 */
+	public void setVideoId(long videoId);
 
 	@Override
 	public boolean isNew();

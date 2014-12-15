@@ -78,6 +78,7 @@ public class VideohitlistClp extends BaseModelImpl<Videohitlist>
 		attributes.put("hitsPerWeek", getHitsPerWeek());
 		attributes.put("hitsPerMonth", getHitsPerMonth());
 		attributes.put("hitsPerYear", getHitsPerYear());
+		attributes.put("videoId", getVideoId());
 
 		return attributes;
 	}
@@ -90,28 +91,34 @@ public class VideohitlistClp extends BaseModelImpl<Videohitlist>
 			setVideohitlistId(videohitlistId);
 		}
 
-		Integer hitsPerDay = (Integer)attributes.get("hitsPerDay");
+		Long hitsPerDay = (Long)attributes.get("hitsPerDay");
 
 		if (hitsPerDay != null) {
 			setHitsPerDay(hitsPerDay);
 		}
 
-		Integer hitsPerWeek = (Integer)attributes.get("hitsPerWeek");
+		Long hitsPerWeek = (Long)attributes.get("hitsPerWeek");
 
 		if (hitsPerWeek != null) {
 			setHitsPerWeek(hitsPerWeek);
 		}
 
-		Integer hitsPerMonth = (Integer)attributes.get("hitsPerMonth");
+		Long hitsPerMonth = (Long)attributes.get("hitsPerMonth");
 
 		if (hitsPerMonth != null) {
 			setHitsPerMonth(hitsPerMonth);
 		}
 
-		Integer hitsPerYear = (Integer)attributes.get("hitsPerYear");
+		Long hitsPerYear = (Long)attributes.get("hitsPerYear");
 
 		if (hitsPerYear != null) {
 			setHitsPerYear(hitsPerYear);
+		}
+
+		Long videoId = (Long)attributes.get("videoId");
+
+		if (videoId != null) {
+			setVideoId(videoId);
 		}
 	}
 
@@ -139,19 +146,19 @@ public class VideohitlistClp extends BaseModelImpl<Videohitlist>
 	}
 
 	@Override
-	public int getHitsPerDay() {
+	public long getHitsPerDay() {
 		return _hitsPerDay;
 	}
 
 	@Override
-	public void setHitsPerDay(int hitsPerDay) {
+	public void setHitsPerDay(long hitsPerDay) {
 		_hitsPerDay = hitsPerDay;
 
 		if (_videohitlistRemoteModel != null) {
 			try {
 				Class<?> clazz = _videohitlistRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setHitsPerDay", int.class);
+				Method method = clazz.getMethod("setHitsPerDay", long.class);
 
 				method.invoke(_videohitlistRemoteModel, hitsPerDay);
 			}
@@ -162,19 +169,19 @@ public class VideohitlistClp extends BaseModelImpl<Videohitlist>
 	}
 
 	@Override
-	public int getHitsPerWeek() {
+	public long getHitsPerWeek() {
 		return _hitsPerWeek;
 	}
 
 	@Override
-	public void setHitsPerWeek(int hitsPerWeek) {
+	public void setHitsPerWeek(long hitsPerWeek) {
 		_hitsPerWeek = hitsPerWeek;
 
 		if (_videohitlistRemoteModel != null) {
 			try {
 				Class<?> clazz = _videohitlistRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setHitsPerWeek", int.class);
+				Method method = clazz.getMethod("setHitsPerWeek", long.class);
 
 				method.invoke(_videohitlistRemoteModel, hitsPerWeek);
 			}
@@ -185,19 +192,19 @@ public class VideohitlistClp extends BaseModelImpl<Videohitlist>
 	}
 
 	@Override
-	public int getHitsPerMonth() {
+	public long getHitsPerMonth() {
 		return _hitsPerMonth;
 	}
 
 	@Override
-	public void setHitsPerMonth(int hitsPerMonth) {
+	public void setHitsPerMonth(long hitsPerMonth) {
 		_hitsPerMonth = hitsPerMonth;
 
 		if (_videohitlistRemoteModel != null) {
 			try {
 				Class<?> clazz = _videohitlistRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setHitsPerMonth", int.class);
+				Method method = clazz.getMethod("setHitsPerMonth", long.class);
 
 				method.invoke(_videohitlistRemoteModel, hitsPerMonth);
 			}
@@ -208,21 +215,44 @@ public class VideohitlistClp extends BaseModelImpl<Videohitlist>
 	}
 
 	@Override
-	public int getHitsPerYear() {
+	public long getHitsPerYear() {
 		return _hitsPerYear;
 	}
 
 	@Override
-	public void setHitsPerYear(int hitsPerYear) {
+	public void setHitsPerYear(long hitsPerYear) {
 		_hitsPerYear = hitsPerYear;
 
 		if (_videohitlistRemoteModel != null) {
 			try {
 				Class<?> clazz = _videohitlistRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setHitsPerYear", int.class);
+				Method method = clazz.getMethod("setHitsPerYear", long.class);
 
 				method.invoke(_videohitlistRemoteModel, hitsPerYear);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public long getVideoId() {
+		return _videoId;
+	}
+
+	@Override
+	public void setVideoId(long videoId) {
+		_videoId = videoId;
+
+		if (_videohitlistRemoteModel != null) {
+			try {
+				Class<?> clazz = _videohitlistRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setVideoId", long.class);
+
+				method.invoke(_videohitlistRemoteModel, videoId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -304,6 +334,7 @@ public class VideohitlistClp extends BaseModelImpl<Videohitlist>
 		clone.setHitsPerWeek(getHitsPerWeek());
 		clone.setHitsPerMonth(getHitsPerMonth());
 		clone.setHitsPerYear(getHitsPerYear());
+		clone.setVideoId(getVideoId());
 
 		return clone;
 	}
@@ -352,7 +383,7 @@ public class VideohitlistClp extends BaseModelImpl<Videohitlist>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{videohitlistId=");
 		sb.append(getVideohitlistId());
@@ -364,6 +395,8 @@ public class VideohitlistClp extends BaseModelImpl<Videohitlist>
 		sb.append(getHitsPerMonth());
 		sb.append(", hitsPerYear=");
 		sb.append(getHitsPerYear());
+		sb.append(", videoId=");
+		sb.append(getVideoId());
 		sb.append("}");
 
 		return sb.toString();
@@ -371,7 +404,7 @@ public class VideohitlistClp extends BaseModelImpl<Videohitlist>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Videohitlist");
@@ -397,6 +430,10 @@ public class VideohitlistClp extends BaseModelImpl<Videohitlist>
 			"<column><column-name>hitsPerYear</column-name><column-value><![CDATA[");
 		sb.append(getHitsPerYear());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>videoId</column-name><column-value><![CDATA[");
+		sb.append(getVideoId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -404,9 +441,10 @@ public class VideohitlistClp extends BaseModelImpl<Videohitlist>
 	}
 
 	private long _videohitlistId;
-	private int _hitsPerDay;
-	private int _hitsPerWeek;
-	private int _hitsPerMonth;
-	private int _hitsPerYear;
+	private long _hitsPerDay;
+	private long _hitsPerWeek;
+	private long _hitsPerMonth;
+	private long _hitsPerYear;
+	private long _videoId;
 	private BaseModel<?> _videohitlistRemoteModel;
 }

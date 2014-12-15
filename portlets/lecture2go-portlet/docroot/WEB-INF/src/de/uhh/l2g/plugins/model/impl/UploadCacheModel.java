@@ -76,7 +76,7 @@ public class UploadCacheModel implements CacheModel<Upload>, Externalizable {
 		contentLength = objectInput.readLong();
 		timestamp = objectInput.readLong();
 		status = objectInput.readInt();
-		videoId = objectInput.readInt();
+		videoId = objectInput.readLong();
 	}
 
 	@Override
@@ -87,7 +87,7 @@ public class UploadCacheModel implements CacheModel<Upload>, Externalizable {
 		objectOutput.writeLong(contentLength);
 		objectOutput.writeLong(timestamp);
 		objectOutput.writeInt(status);
-		objectOutput.writeInt(videoId);
+		objectOutput.writeLong(videoId);
 	}
 
 	public long uploadId;
@@ -95,5 +95,5 @@ public class UploadCacheModel implements CacheModel<Upload>, Externalizable {
 	public long contentLength;
 	public long timestamp;
 	public int status;
-	public int videoId;
+	public long videoId;
 }

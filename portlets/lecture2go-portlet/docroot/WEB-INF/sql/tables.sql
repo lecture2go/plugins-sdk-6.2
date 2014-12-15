@@ -5,22 +5,13 @@ create table LG_Coordinator (
 );
 
 create table LG_Host (
-	hostId LONG not null,
+	hostId LONG not null primary key,
 	protocol VARCHAR(75) null,
 	streamer VARCHAR(75) null,
 	port INTEGER,
 	serverRoot VARCHAR(75) null,
 	name VARCHAR(75) null,
-	serverTemplate VARCHAR(75) null,
-	hostId LONG not null,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	uuid_ VARCHAR(75) null,
-	primary key (hostId, hostId)
+	serverTemplate VARCHAR(75) null
 );
 
 create table LG_Institution (
@@ -166,7 +157,7 @@ create table LG_Upload (
 	contentLength LONG,
 	timestamp LONG,
 	status INTEGER,
-	videoId INTEGER
+	videoId LONG
 );
 
 create table LG_Video (
@@ -186,7 +177,7 @@ create table LG_Video (
 	downloadLink INTEGER,
 	metadataId LONG,
 	surl VARCHAR(75) null,
-	hits INTEGER,
+	hits LONG,
 	uploadDate DATE null,
 	permittedToSegment INTEGER,
 	rootInstitutionId LONG,
@@ -207,8 +198,9 @@ create table LG_Video_Lectureseries (
 
 create table LG_Videohitlist (
 	videohitlistId LONG not null primary key,
-	hitsPerDay INTEGER,
-	hitsPerWeek INTEGER,
-	hitsPerMonth INTEGER,
-	hitsPerYear INTEGER
+	hitsPerDay LONG,
+	hitsPerWeek LONG,
+	hitsPerMonth LONG,
+	hitsPerYear LONG,
+	videoId LONG
 );

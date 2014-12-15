@@ -200,7 +200,7 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 		downloadLink = objectInput.readInt();
 		metadataId = objectInput.readLong();
 		surl = objectInput.readUTF();
-		hits = objectInput.readInt();
+		hits = objectInput.readLong();
 		uploadDate = objectInput.readLong();
 		permittedToSegment = objectInput.readInt();
 		rootInstitutionId = objectInput.readLong();
@@ -284,7 +284,7 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 			objectOutput.writeUTF(surl);
 		}
 
-		objectOutput.writeInt(hits);
+		objectOutput.writeLong(hits);
 		objectOutput.writeLong(uploadDate);
 		objectOutput.writeInt(permittedToSegment);
 		objectOutput.writeLong(rootInstitutionId);
@@ -307,7 +307,7 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 	public int downloadLink;
 	public long metadataId;
 	public String surl;
-	public int hits;
+	public long hits;
 	public long uploadDate;
 	public int permittedToSegment;
 	public long rootInstitutionId;

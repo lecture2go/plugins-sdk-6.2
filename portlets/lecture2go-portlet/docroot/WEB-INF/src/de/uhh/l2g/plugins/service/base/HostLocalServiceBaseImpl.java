@@ -34,7 +34,6 @@ import com.liferay.portal.service.persistence.UserPersistence;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.service.HostLocalService;
 import de.uhh.l2g.plugins.service.persistence.CoordinatorPersistence;
-import de.uhh.l2g.plugins.service.persistence.HostPK;
 import de.uhh.l2g.plugins.service.persistence.HostPersistence;
 import de.uhh.l2g.plugins.service.persistence.InstitutionFinder;
 import de.uhh.l2g.plugins.service.persistence.InstitutionPersistence;
@@ -103,27 +102,26 @@ public abstract class HostLocalServiceBaseImpl extends BaseLocalServiceImpl
 	/**
 	 * Creates a new host with the primary key. Does not add the host to the database.
 	 *
-	 * @param hostPK the primary key for the new host
+	 * @param hostId the primary key for the new host
 	 * @return the new host
 	 */
 	@Override
-	public Host createHost(HostPK hostPK) {
-		return hostPersistence.create(hostPK);
+	public Host createHost(long hostId) {
+		return hostPersistence.create(hostId);
 	}
 
 	/**
 	 * Deletes the host with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param hostPK the primary key of the host
+	 * @param hostId the primary key of the host
 	 * @return the host that was removed
 	 * @throws PortalException if a host with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Host deleteHost(HostPK hostPK)
-		throws PortalException, SystemException {
-		return hostPersistence.remove(hostPK);
+	public Host deleteHost(long hostId) throws PortalException, SystemException {
+		return hostPersistence.remove(hostId);
 	}
 
 	/**
@@ -231,21 +229,21 @@ public abstract class HostLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	@Override
-	public Host fetchHost(HostPK hostPK) throws SystemException {
-		return hostPersistence.fetchByPrimaryKey(hostPK);
+	public Host fetchHost(long hostId) throws SystemException {
+		return hostPersistence.fetchByPrimaryKey(hostId);
 	}
 
 	/**
 	 * Returns the host with the primary key.
 	 *
-	 * @param hostPK the primary key of the host
+	 * @param hostId the primary key of the host
 	 * @return the host
 	 * @throws PortalException if a host with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Host getHost(HostPK hostPK) throws PortalException, SystemException {
-		return hostPersistence.findByPrimaryKey(hostPK);
+	public Host getHost(long hostId) throws PortalException, SystemException {
+		return hostPersistence.findByPrimaryKey(hostId);
 	}
 
 	@Override

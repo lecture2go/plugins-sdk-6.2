@@ -18,9 +18,7 @@
 		</attributes>
 	</mapped-superclass>
 	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.HostModelImpl">
-		<id-class class="de.uhh.l2g.plugins.service.persistence.HostPK" />
 		<attributes>
-			<id name="hostId" />
 			<id name="hostId" />
 			<basic name="protocol" />
 			<basic name="streamer" />
@@ -28,23 +26,9 @@
 			<basic name="serverRoot" />
 			<basic name="name" />
 			<basic name="serverTemplate" />
-			<basic name="groupId" />
-			<basic name="companyId" />
-			<basic name="userId" />
-			<basic name="userName" />
-			<basic name="createDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="modifiedDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="uuid">
-				<column name="UUID_" />
-			</basic>
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
-			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
 	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.InstitutionModelImpl">
@@ -311,6 +295,7 @@
 			<basic name="hitsPerWeek" />
 			<basic name="hitsPerMonth" />
 			<basic name="hitsPerYear" />
+			<basic name="videoId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

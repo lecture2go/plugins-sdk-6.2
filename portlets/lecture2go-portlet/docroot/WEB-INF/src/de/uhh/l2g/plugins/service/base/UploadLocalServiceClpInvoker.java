@@ -107,6 +107,10 @@ public class UploadLocalServiceClpInvoker {
 		_methodName117 = "setBeanIdentifier";
 
 		_methodParameterTypes117 = new String[] { "java.lang.String" };
+
+		_methodName122 = "deleteByVideoId";
+
+		_methodParameterTypes122 = new String[] { "java.lang.Long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -210,6 +214,13 @@ public class UploadLocalServiceClpInvoker {
 			return null;
 		}
 
+		if (_methodName122.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
+			UploadLocalServiceUtil.deleteByVideoId((java.lang.Long)arguments[0]);
+
+			return null;
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -249,4 +260,6 @@ public class UploadLocalServiceClpInvoker {
 	private String[] _methodParameterTypes116;
 	private String _methodName117;
 	private String[] _methodParameterTypes117;
+	private String _methodName122;
+	private String[] _methodParameterTypes122;
 }

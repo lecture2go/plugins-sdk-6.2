@@ -14,14 +14,6 @@
 		<field name="serverRoot" type="String" />
 		<field name="name" type="String" />
 		<field name="serverTemplate" type="String" />
-		<field name="hostId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="uuid" type="String" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Institution">
 		<field name="institutionId" type="long" />
@@ -142,7 +134,7 @@
 		<field name="contentLength" type="long" />
 		<field name="timestamp" type="long" />
 		<field name="status" type="int" />
-		<field name="videoId" type="int" />
+		<field name="videoId" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Video">
 		<field name="videoId" type="long" />
@@ -161,7 +153,7 @@
 		<field name="downloadLink" type="int" />
 		<field name="metadataId" type="long" />
 		<field name="surl" type="String" />
-		<field name="hits" type="int" />
+		<field name="hits" type="long" />
 		<field name="uploadDate" type="Date" />
 		<field name="permittedToSegment" type="int" />
 		<field name="rootInstitutionId" type="long" />
@@ -179,9 +171,10 @@
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Videohitlist">
 		<field name="videohitlistId" type="long" />
-		<field name="hitsPerDay" type="int" />
-		<field name="hitsPerWeek" type="int" />
-		<field name="hitsPerMonth" type="int" />
-		<field name="hitsPerYear" type="int" />
+		<field name="hitsPerDay" type="long" />
+		<field name="hitsPerWeek" type="long" />
+		<field name="hitsPerMonth" type="long" />
+		<field name="hitsPerYear" type="long" />
+		<field name="videoId" type="long" />
 	</model>
 </model-hints>

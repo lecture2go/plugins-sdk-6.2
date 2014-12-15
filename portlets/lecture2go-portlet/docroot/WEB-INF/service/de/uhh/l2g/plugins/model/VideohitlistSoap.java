@@ -34,6 +34,7 @@ public class VideohitlistSoap implements Serializable {
 		soapModel.setHitsPerWeek(model.getHitsPerWeek());
 		soapModel.setHitsPerMonth(model.getHitsPerMonth());
 		soapModel.setHitsPerYear(model.getHitsPerYear());
+		soapModel.setVideoId(model.getVideoId());
 
 		return soapModel;
 	}
@@ -94,41 +95,50 @@ public class VideohitlistSoap implements Serializable {
 		_videohitlistId = videohitlistId;
 	}
 
-	public int getHitsPerDay() {
+	public long getHitsPerDay() {
 		return _hitsPerDay;
 	}
 
-	public void setHitsPerDay(int hitsPerDay) {
+	public void setHitsPerDay(long hitsPerDay) {
 		_hitsPerDay = hitsPerDay;
 	}
 
-	public int getHitsPerWeek() {
+	public long getHitsPerWeek() {
 		return _hitsPerWeek;
 	}
 
-	public void setHitsPerWeek(int hitsPerWeek) {
+	public void setHitsPerWeek(long hitsPerWeek) {
 		_hitsPerWeek = hitsPerWeek;
 	}
 
-	public int getHitsPerMonth() {
+	public long getHitsPerMonth() {
 		return _hitsPerMonth;
 	}
 
-	public void setHitsPerMonth(int hitsPerMonth) {
+	public void setHitsPerMonth(long hitsPerMonth) {
 		_hitsPerMonth = hitsPerMonth;
 	}
 
-	public int getHitsPerYear() {
+	public long getHitsPerYear() {
 		return _hitsPerYear;
 	}
 
-	public void setHitsPerYear(int hitsPerYear) {
+	public void setHitsPerYear(long hitsPerYear) {
 		_hitsPerYear = hitsPerYear;
 	}
 
+	public long getVideoId() {
+		return _videoId;
+	}
+
+	public void setVideoId(long videoId) {
+		_videoId = videoId;
+	}
+
 	private long _videohitlistId;
-	private int _hitsPerDay;
-	private int _hitsPerWeek;
-	private int _hitsPerMonth;
-	private int _hitsPerYear;
+	private long _hitsPerDay;
+	private long _hitsPerWeek;
+	private long _hitsPerMonth;
+	private long _hitsPerYear;
+	private long _videoId;
 }

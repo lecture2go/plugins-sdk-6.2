@@ -280,6 +280,12 @@ public class UploadLocalServiceWrapper implements UploadLocalService,
 		return _uploadLocalService.invokeMethod(name, parameterTypes, arguments);
 	}
 
+	@Override
+	public void deleteByVideoId(java.lang.Long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_uploadLocalService.deleteByVideoId(videoId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

@@ -32,23 +32,15 @@
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.HostImpl" table="LG_Host">
 		<cache usage="read-write" />
-		<composite-id name="primaryKey" class="de.uhh.l2g.plugins.service.persistence.HostPK">
-			<key-property name="hostId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-			<key-property name="hostId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		</composite-id>
+		<id name="hostId" type="long">
+			<generator class="increment" />
+		</id>
 		<property name="protocol" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="streamer" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="port" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="serverRoot" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="serverTemplate" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="createDate" type="org.hibernate.type.TimestampType" />
-		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.InstitutionImpl" table="LG_Institution">
 		<cache usage="read-write" />
@@ -211,7 +203,7 @@
 		<property name="contentLength" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="timestamp" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="videoId" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="videoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.VideoImpl" table="LG_Video">
 		<cache usage="read-write" />
@@ -233,7 +225,7 @@
 		<property name="downloadLink" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="metadataId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="surl" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="hits" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="hits" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="uploadDate" type="org.hibernate.type.TimestampType" />
 		<property name="permittedToSegment" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="rootInstitutionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -260,9 +252,10 @@
 		<id name="videohitlistId" type="long">
 			<generator class="increment" />
 		</id>
-		<property name="hitsPerDay" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="hitsPerWeek" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="hitsPerMonth" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="hitsPerYear" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="hitsPerDay" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="hitsPerWeek" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="hitsPerMonth" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="hitsPerYear" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="videoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 </hibernate-mapping>

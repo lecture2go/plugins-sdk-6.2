@@ -64,9 +64,9 @@ public class UploadModelImpl extends BaseModelImpl<Upload>
 			{ "contentLength", Types.BIGINT },
 			{ "timestamp", Types.BIGINT },
 			{ "status", Types.INTEGER },
-			{ "videoId", Types.INTEGER }
+			{ "videoId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Upload (uploadId LONG not null primary key,userId LONG,contentLength LONG,timestamp LONG,status INTEGER,videoId INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Upload (uploadId LONG not null primary key,userId LONG,contentLength LONG,timestamp LONG,status INTEGER,videoId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Upload";
 	public static final String ORDER_BY_JPQL = " ORDER BY upload.uploadId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Upload.uploadId ASC";
@@ -79,7 +79,11 @@ public class UploadModelImpl extends BaseModelImpl<Upload>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.finder.cache.enabled.de.uhh.l2g.plugins.model.Upload"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.Upload"),
+			true);
+	public static long VIDEOID_COLUMN_BITMASK = 1L;
+	public static long UPLOADID_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Upload"));
 
@@ -162,7 +166,7 @@ public class UploadModelImpl extends BaseModelImpl<Upload>
 			setStatus(status);
 		}
 
-		Integer videoId = (Integer)attributes.get("videoId");
+		Long videoId = (Long)attributes.get("videoId");
 
 		if (videoId != null) {
 			setVideoId(videoId);
@@ -230,13 +234,29 @@ public class UploadModelImpl extends BaseModelImpl<Upload>
 	}
 
 	@Override
-	public int getVideoId() {
+	public long getVideoId() {
 		return _videoId;
 	}
 
 	@Override
-	public void setVideoId(int videoId) {
+	public void setVideoId(long videoId) {
+		_columnBitmask |= VIDEOID_COLUMN_BITMASK;
+
+		if (!_setOriginalVideoId) {
+			_setOriginalVideoId = true;
+
+			_originalVideoId = _videoId;
+		}
+
 		_videoId = videoId;
+	}
+
+	public long getOriginalVideoId() {
+		return _originalVideoId;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -322,6 +342,13 @@ public class UploadModelImpl extends BaseModelImpl<Upload>
 
 	@Override
 	public void resetOriginalValues() {
+		UploadModelImpl uploadModelImpl = this;
+
+		uploadModelImpl._originalVideoId = uploadModelImpl._videoId;
+
+		uploadModelImpl._setOriginalVideoId = false;
+
+		uploadModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -410,6 +437,9 @@ public class UploadModelImpl extends BaseModelImpl<Upload>
 	private long _contentLength;
 	private long _timestamp;
 	private int _status;
-	private int _videoId;
+	private long _videoId;
+	private long _originalVideoId;
+	private boolean _setOriginalVideoId;
+	private long _columnBitmask;
 	private Upload _escapedModel;
 }

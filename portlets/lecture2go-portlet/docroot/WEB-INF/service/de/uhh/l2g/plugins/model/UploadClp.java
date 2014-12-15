@@ -115,7 +115,7 @@ public class UploadClp extends BaseModelImpl<Upload> implements Upload {
 			setStatus(status);
 		}
 
-		Integer videoId = (Integer)attributes.get("videoId");
+		Long videoId = (Long)attributes.get("videoId");
 
 		if (videoId != null) {
 			setVideoId(videoId);
@@ -248,19 +248,19 @@ public class UploadClp extends BaseModelImpl<Upload> implements Upload {
 	}
 
 	@Override
-	public int getVideoId() {
+	public long getVideoId() {
 		return _videoId;
 	}
 
 	@Override
-	public void setVideoId(int videoId) {
+	public void setVideoId(long videoId) {
 		_videoId = videoId;
 
 		if (_uploadRemoteModel != null) {
 			try {
 				Class<?> clazz = _uploadRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setVideoId", int.class);
+				Method method = clazz.getMethod("setVideoId", long.class);
 
 				method.invoke(_uploadRemoteModel, videoId);
 			}
@@ -456,6 +456,6 @@ public class UploadClp extends BaseModelImpl<Upload> implements Upload {
 	private long _contentLength;
 	private long _timestamp;
 	private int _status;
-	private int _videoId;
+	private long _videoId;
 	private BaseModel<?> _uploadRemoteModel;
 }
