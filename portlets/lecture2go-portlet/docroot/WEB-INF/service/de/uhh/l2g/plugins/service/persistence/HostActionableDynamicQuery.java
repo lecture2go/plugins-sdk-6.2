@@ -32,6 +32,6 @@ public abstract class HostActionableDynamicQuery
 
 		setClassLoader(de.uhh.l2g.plugins.service.ClpSerializer.class.getClassLoader());
 
-		setPrimaryKeyPropertyName("hostId");
+		setPrimaryKeyPropertyName("primaryKey.hostId");
 	}
 }

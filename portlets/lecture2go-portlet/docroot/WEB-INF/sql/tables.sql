@@ -5,13 +5,22 @@ create table LG_Coordinator (
 );
 
 create table LG_Host (
-	hostId LONG not null primary key,
+	hostId LONG not null,
 	protocol VARCHAR(75) null,
 	streamer VARCHAR(75) null,
 	port INTEGER,
 	serverRoot VARCHAR(75) null,
 	name VARCHAR(75) null,
-	serverTemplate VARCHAR(75) null
+	serverTemplate VARCHAR(75) null,
+	hostId LONG not null,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	uuid_ VARCHAR(75) null,
+	primary key (hostId, hostId)
 );
 
 create table LG_Institution (

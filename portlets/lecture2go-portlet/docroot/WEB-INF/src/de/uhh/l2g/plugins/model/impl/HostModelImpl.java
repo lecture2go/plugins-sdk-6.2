@@ -15,24 +15,24 @@
 package de.uhh.l2g.plugins.model.impl;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
-import com.liferay.portal.service.ServiceContext;
-
-import com.liferay.portlet.expando.model.ExpandoBridge;
-import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
+import com.liferay.portal.util.PortalUtil;
 
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.HostModel;
+import de.uhh.l2g.plugins.service.persistence.HostPK;
 
 import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -63,12 +63,20 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 			{ "port", Types.INTEGER },
 			{ "serverRoot", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
-			{ "serverTemplate", Types.VARCHAR }
+			{ "serverTemplate", Types.VARCHAR },
+			{ "hostId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "uuid_", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Host (hostId LONG not null primary key,protocol VARCHAR(75) null,streamer VARCHAR(75) null,port INTEGER,serverRoot VARCHAR(75) null,name VARCHAR(75) null,serverTemplate VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Host (hostId LONG not null,protocol VARCHAR(75) null,streamer VARCHAR(75) null,port INTEGER,serverRoot VARCHAR(75) null,name VARCHAR(75) null,serverTemplate VARCHAR(75) null,hostId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,uuid_ VARCHAR(75) null,primary key (hostId, hostId))";
 	public static final String TABLE_SQL_DROP = "drop table LG_Host";
-	public static final String ORDER_BY_JPQL = " ORDER BY host.hostId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY LG_Host.hostId ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY host.id.hostId ASC, host.id.hostId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY LG_Host.hostId ASC, LG_Host.hostId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -86,23 +94,24 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 	}
 
 	@Override
-	public long getPrimaryKey() {
-		return _hostId;
+	public HostPK getPrimaryKey() {
+		return new HostPK(_hostId, _hostId);
 	}
 
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		setHostId(primaryKey);
+	public void setPrimaryKey(HostPK primaryKey) {
+		setHostId(primaryKey.hostId);
+		setHostId(primaryKey.hostId);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _hostId;
+		return new HostPK(_hostId, _hostId);
 	}
 
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		setPrimaryKey(((Long)primaryKeyObj).longValue());
+		setPrimaryKey((HostPK)primaryKeyObj);
 	}
 
 	@Override
@@ -126,6 +135,14 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 		attributes.put("serverRoot", getServerRoot());
 		attributes.put("name", getName());
 		attributes.put("serverTemplate", getServerTemplate());
+		attributes.put("hostId", getHostId());
+		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
+		attributes.put("createDate", getCreateDate());
+		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("uuid", getUuid());
 
 		return attributes;
 	}
@@ -172,6 +189,54 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 
 		if (serverTemplate != null) {
 			setServerTemplate(serverTemplate);
+		}
+
+		Long hostId = (Long)attributes.get("hostId");
+
+		if (hostId != null) {
+			setHostId(hostId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
+		}
+
+		Date createDate = (Date)attributes.get("createDate");
+
+		if (createDate != null) {
+			setCreateDate(createDate);
+		}
+
+		Date modifiedDate = (Date)attributes.get("modifiedDate");
+
+		if (modifiedDate != null) {
+			setModifiedDate(modifiedDate);
+		}
+
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
 		}
 	}
 
@@ -271,16 +336,103 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 	}
 
 	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
-			Host.class.getName(), getPrimaryKey());
+	public long getHostId() {
+		return _hostId;
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		ExpandoBridge expandoBridge = getExpandoBridge();
+	public void setHostId(long hostId) {
+		_hostId = hostId;
+	}
 
-		expandoBridge.setAttributes(serviceContext);
+	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
+	@Override
+	public long getUserId() {
+		return _userId;
+	}
+
+	@Override
+	public void setUserId(long userId) {
+		_userId = userId;
+	}
+
+	@Override
+	public String getUserUuid() throws SystemException {
+		return PortalUtil.getUserValue(getUserId(), "uuid", _userUuid);
+	}
+
+	@Override
+	public void setUserUuid(String userUuid) {
+		_userUuid = userUuid;
+	}
+
+	@Override
+	public String getUserName() {
+		if (_userName == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _userName;
+		}
+	}
+
+	@Override
+	public void setUserName(String userName) {
+		_userName = userName;
+	}
+
+	@Override
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	@Override
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
+	}
+
+	@Override
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
+	}
+
+	@Override
+	public String getUuid() {
+		if (_uuid == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		_uuid = uuid;
 	}
 
 	@Override
@@ -304,6 +456,14 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 		hostImpl.setServerRoot(getServerRoot());
 		hostImpl.setName(getName());
 		hostImpl.setServerTemplate(getServerTemplate());
+		hostImpl.setHostId(getHostId());
+		hostImpl.setGroupId(getGroupId());
+		hostImpl.setCompanyId(getCompanyId());
+		hostImpl.setUserId(getUserId());
+		hostImpl.setUserName(getUserName());
+		hostImpl.setCreateDate(getCreateDate());
+		hostImpl.setModifiedDate(getModifiedDate());
+		hostImpl.setUuid(getUuid());
 
 		hostImpl.resetOriginalValues();
 
@@ -312,17 +472,9 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 
 	@Override
 	public int compareTo(Host host) {
-		long primaryKey = host.getPrimaryKey();
+		HostPK primaryKey = host.getPrimaryKey();
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
-		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
-		}
-		else {
-			return 0;
-		}
+		return getPrimaryKey().compareTo(primaryKey);
 	}
 
 	@Override
@@ -337,9 +489,9 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 
 		Host host = (Host)obj;
 
-		long primaryKey = host.getPrimaryKey();
+		HostPK primaryKey = host.getPrimaryKey();
 
-		if (getPrimaryKey() == primaryKey) {
+		if (getPrimaryKey().equals(primaryKey)) {
 			return true;
 		}
 		else {
@@ -349,7 +501,7 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 
 	@Override
 	public int hashCode() {
-		return (int)getPrimaryKey();
+		return getPrimaryKey().hashCode();
 	}
 
 	@Override
@@ -404,12 +556,54 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 			hostCacheModel.serverTemplate = null;
 		}
 
+		hostCacheModel.hostId = getHostId();
+
+		hostCacheModel.groupId = getGroupId();
+
+		hostCacheModel.companyId = getCompanyId();
+
+		hostCacheModel.userId = getUserId();
+
+		hostCacheModel.userName = getUserName();
+
+		String userName = hostCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			hostCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			hostCacheModel.createDate = createDate.getTime();
+		}
+		else {
+			hostCacheModel.createDate = Long.MIN_VALUE;
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			hostCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			hostCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
+
+		hostCacheModel.uuid = getUuid();
+
+		String uuid = hostCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			hostCacheModel.uuid = null;
+		}
+
 		return hostCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{hostId=");
 		sb.append(getHostId());
@@ -425,6 +619,22 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 		sb.append(getName());
 		sb.append(", serverTemplate=");
 		sb.append(getServerTemplate());
+		sb.append(", hostId=");
+		sb.append(getHostId());
+		sb.append(", groupId=");
+		sb.append(getGroupId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
+		sb.append(", userId=");
+		sb.append(getUserId());
+		sb.append(", userName=");
+		sb.append(getUserName());
+		sb.append(", createDate=");
+		sb.append(getCreateDate());
+		sb.append(", modifiedDate=");
+		sb.append(getModifiedDate());
+		sb.append(", uuid=");
+		sb.append(getUuid());
 		sb.append("}");
 
 		return sb.toString();
@@ -432,7 +642,7 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Host");
@@ -466,6 +676,38 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 			"<column><column-name>serverTemplate</column-name><column-value><![CDATA[");
 		sb.append(getServerTemplate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>hostId</column-name><column-value><![CDATA[");
+		sb.append(getHostId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>groupId</column-name><column-value><![CDATA[");
+		sb.append(getGroupId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>userId</column-name><column-value><![CDATA[");
+		sb.append(getUserId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>userName</column-name><column-value><![CDATA[");
+		sb.append(getUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>createDate</column-name><column-value><![CDATA[");
+		sb.append(getCreateDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
+		sb.append(getModifiedDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>uuid</column-name><column-value><![CDATA[");
+		sb.append(getUuid());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -481,5 +723,14 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 	private String _serverRoot;
 	private String _name;
 	private String _serverTemplate;
+	private long _hostId;
+	private long _groupId;
+	private long _companyId;
+	private long _userId;
+	private String _userUuid;
+	private String _userName;
+	private Date _createDate;
+	private Date _modifiedDate;
+	private String _uuid;
 	private Host _escapedModel;
 }

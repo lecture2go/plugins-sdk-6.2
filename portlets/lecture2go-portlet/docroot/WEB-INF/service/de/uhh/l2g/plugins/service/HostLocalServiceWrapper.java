@@ -46,27 +46,29 @@ public class HostLocalServiceWrapper implements HostLocalService,
 	/**
 	* Creates a new host with the primary key. Does not add the host to the database.
 	*
-	* @param hostId the primary key for the new host
+	* @param hostPK the primary key for the new host
 	* @return the new host
 	*/
 	@Override
-	public de.uhh.l2g.plugins.model.Host createHost(long hostId) {
-		return _hostLocalService.createHost(hostId);
+	public de.uhh.l2g.plugins.model.Host createHost(
+		de.uhh.l2g.plugins.service.persistence.HostPK hostPK) {
+		return _hostLocalService.createHost(hostPK);
 	}
 
 	/**
 	* Deletes the host with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param hostId the primary key of the host
+	* @param hostPK the primary key of the host
 	* @return the host that was removed
 	* @throws PortalException if a host with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public de.uhh.l2g.plugins.model.Host deleteHost(long hostId)
+	public de.uhh.l2g.plugins.model.Host deleteHost(
+		de.uhh.l2g.plugins.service.persistence.HostPK hostPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _hostLocalService.deleteHost(hostId);
+		return _hostLocalService.deleteHost(hostPK);
 	}
 
 	/**
@@ -180,24 +182,26 @@ public class HostLocalServiceWrapper implements HostLocalService,
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Host fetchHost(long hostId)
+	public de.uhh.l2g.plugins.model.Host fetchHost(
+		de.uhh.l2g.plugins.service.persistence.HostPK hostPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _hostLocalService.fetchHost(hostId);
+		return _hostLocalService.fetchHost(hostPK);
 	}
 
 	/**
 	* Returns the host with the primary key.
 	*
-	* @param hostId the primary key of the host
+	* @param hostPK the primary key of the host
 	* @return the host
 	* @throws PortalException if a host with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public de.uhh.l2g.plugins.model.Host getHost(long hostId)
+	public de.uhh.l2g.plugins.model.Host getHost(
+		de.uhh.l2g.plugins.service.persistence.HostPK hostPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _hostLocalService.getHost(hostId);
+		return _hostLocalService.getHost(hostPK);
 	}
 
 	@Override

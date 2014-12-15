@@ -30,11 +30,15 @@ public class HostLocalServiceClp implements HostLocalService {
 
 		_methodName1 = "createHost";
 
-		_methodParameterTypes1 = new String[] { "long" };
+		_methodParameterTypes1 = new String[] {
+				"de.uhh.l2g.plugins.service.persistence.HostPK"
+			};
 
 		_methodName2 = "deleteHost";
 
-		_methodParameterTypes2 = new String[] { "long" };
+		_methodParameterTypes2 = new String[] {
+				"de.uhh.l2g.plugins.service.persistence.HostPK"
+			};
 
 		_methodName3 = "deleteHost";
 
@@ -78,11 +82,15 @@ public class HostLocalServiceClp implements HostLocalService {
 
 		_methodName10 = "fetchHost";
 
-		_methodParameterTypes10 = new String[] { "long" };
+		_methodParameterTypes10 = new String[] {
+				"de.uhh.l2g.plugins.service.persistence.HostPK"
+			};
 
 		_methodName11 = "getHost";
 
-		_methodParameterTypes11 = new String[] { "long" };
+		_methodParameterTypes11 = new String[] {
+				"de.uhh.l2g.plugins.service.persistence.HostPK"
+			};
 
 		_methodName12 = "getPersistedModel";
 
@@ -156,12 +164,14 @@ public class HostLocalServiceClp implements HostLocalService {
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Host createHost(long hostId) {
+	public de.uhh.l2g.plugins.model.Host createHost(
+		de.uhh.l2g.plugins.service.persistence.HostPK hostPK) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName1,
-					_methodParameterTypes1, new Object[] { hostId });
+					_methodParameterTypes1,
+					new Object[] { ClpSerializer.translateInput(hostPK) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -179,14 +189,16 @@ public class HostLocalServiceClp implements HostLocalService {
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Host deleteHost(long hostId)
+	public de.uhh.l2g.plugins.model.Host deleteHost(
+		de.uhh.l2g.plugins.service.persistence.HostPK hostPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName2,
-					_methodParameterTypes2, new Object[] { hostId });
+					_methodParameterTypes2,
+					new Object[] { ClpSerializer.translateInput(hostPK) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -439,13 +451,15 @@ public class HostLocalServiceClp implements HostLocalService {
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Host fetchHost(long hostId)
+	public de.uhh.l2g.plugins.model.Host fetchHost(
+		de.uhh.l2g.plugins.service.persistence.HostPK hostPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName10,
-					_methodParameterTypes10, new Object[] { hostId });
+					_methodParameterTypes10,
+					new Object[] { ClpSerializer.translateInput(hostPK) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -467,14 +481,16 @@ public class HostLocalServiceClp implements HostLocalService {
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Host getHost(long hostId)
+	public de.uhh.l2g.plugins.model.Host getHost(
+		de.uhh.l2g.plugins.service.persistence.HostPK hostPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName11,
-					_methodParameterTypes11, new Object[] { hostId });
+					_methodParameterTypes11,
+					new Object[] { ClpSerializer.translateInput(hostPK) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);

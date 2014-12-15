@@ -55,25 +55,27 @@ public class HostLocalServiceUtil {
 	/**
 	* Creates a new host with the primary key. Does not add the host to the database.
 	*
-	* @param hostId the primary key for the new host
+	* @param hostPK the primary key for the new host
 	* @return the new host
 	*/
-	public static de.uhh.l2g.plugins.model.Host createHost(long hostId) {
-		return getService().createHost(hostId);
+	public static de.uhh.l2g.plugins.model.Host createHost(
+		de.uhh.l2g.plugins.service.persistence.HostPK hostPK) {
+		return getService().createHost(hostPK);
 	}
 
 	/**
 	* Deletes the host with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param hostId the primary key of the host
+	* @param hostPK the primary key of the host
 	* @return the host that was removed
 	* @throws PortalException if a host with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Host deleteHost(long hostId)
+	public static de.uhh.l2g.plugins.model.Host deleteHost(
+		de.uhh.l2g.plugins.service.persistence.HostPK hostPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().deleteHost(hostId);
+		return getService().deleteHost(hostPK);
 	}
 
 	/**
@@ -179,23 +181,25 @@ public class HostLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static de.uhh.l2g.plugins.model.Host fetchHost(long hostId)
+	public static de.uhh.l2g.plugins.model.Host fetchHost(
+		de.uhh.l2g.plugins.service.persistence.HostPK hostPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchHost(hostId);
+		return getService().fetchHost(hostPK);
 	}
 
 	/**
 	* Returns the host with the primary key.
 	*
-	* @param hostId the primary key of the host
+	* @param hostPK the primary key of the host
 	* @return the host
 	* @throws PortalException if a host with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Host getHost(long hostId)
+	public static de.uhh.l2g.plugins.model.Host getHost(
+		de.uhh.l2g.plugins.service.persistence.HostPK hostPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getHost(hostId);
+		return getService().getHost(hostPK);
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
