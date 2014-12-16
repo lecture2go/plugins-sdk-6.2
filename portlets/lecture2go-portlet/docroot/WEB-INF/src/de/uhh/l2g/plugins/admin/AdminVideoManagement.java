@@ -32,6 +32,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
+import de.uhh.l2g.plugins.NoSuchLicenseException;
 import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.License;
 import de.uhh.l2g.plugins.model.Metadata;
@@ -198,32 +199,49 @@ public class AdminVideoManagement extends MVCPortlet {
 	
 	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws PortletException, IOException {
 		String resourceID = resourceRequest.getResourceID();
+		Long videoId = ParamUtil.getLong(resourceRequest, "videoId");
+		Video video = VideoLocalServiceUtil.getVideo(videoId);
+		Long lectureseriesId = video.getLectureseriesId();
+		Metadata metadata = new MetadataImpl();
+		try {
+			Long metadataId = video.getMetadataId();
+			metadata = MetadataLocalServiceUtil.getMetadata(metadataId);
+		} catch (PortalException e) {
+			e.printStackTrace();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		License license = new LicenseImpl();
+		try {
+			license = LicenseLocalServiceUtil.getByVideoId(video.getVideoId());
+		} catch (NoSuchLicenseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (SystemException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		if(resourceID.equals("updateMeatadata")){
-	 	   	String lectureseriesId = ParamUtil.getString(resourceRequest, "lectureseriesId");
-	 	    String metadataId = ParamUtil.getString(resourceRequest, "metadataId");
-	 	    String videoId = ParamUtil.getString(resourceRequest, "videoId");
-	 	  
-		String title = ParamUtil.getString(resourceRequest, "title");
+	 	    String title = ParamUtil.getString(resourceRequest, "title");
 			String language = ParamUtil.getString(resourceRequest, "language");
 			String tags = ParamUtil.getString(resourceRequest, "tags");
 			String creator = ParamUtil.getString(resourceRequest, "creator");
 			String rightsHolder = ParamUtil.getString(resourceRequest, "rightsHolder");
 			String publisher = ParamUtil.getString(resourceRequest, "publisher");
-	 	   	
 			//update data base
 			try {
-				Video video = VideoLocalServiceUtil.getVideo(new Long(videoId));
 				video.setTitle(title);
 				video.setTags(tags);
-				video.setLectureseriesId(new Long(lectureseriesId));
+				video.setLectureseriesId(lectureseriesId);
 				VideoLocalServiceUtil.updateVideo(video);
 			} catch (NumberFormatException e) {
+				System.out.println(e);
 			} catch (SystemException e) {
+				System.out.println(e);
 			}
 			//metadata
 			try {
-				Metadata metadata = MetadataLocalServiceUtil.getMetadata(new Long(metadataId));
 				metadata.setTitle(title);
 				metadata.setCreator(creator);
 				metadata.setRightsHolder(rightsHolder);
@@ -231,8 +249,42 @@ public class AdminVideoManagement extends MVCPortlet {
 				metadata.setLanguage(language);
 				MetadataLocalServiceUtil.updateMetadata(metadata);
 			} catch (NumberFormatException e) {
-			} catch (PortalException e) {
+				System.out.println(e);
 			} catch (SystemException e) {
+				System.out.println(e);
+			}
+			JSONObject json = JSONFactoryUtil.createJSONObject();
+			writeJSON(resourceRequest, resourceResponse, json);
+		}
+		
+		if(resourceID.equals("updateLicense")){
+			String licens = ParamUtil.getString(resourceRequest, "license");
+			//reset first
+			license.setCcbyncsa(0);
+			license.setL2go(0);
+			//save next
+			if(licens.equals("uhhl2go"))license.setL2go(1);
+			if(licens.equals("ccbyncsa"))license.setCcbyncsa(1);
+			try {
+				LicenseLocalServiceUtil.updateLicense(license);
+				logger.info("LICENSE_UPDATE_SUCCESS");
+			} catch (SystemException e) {
+				e.printStackTrace();
+				logger.info("LICENSE_UPDATE_FAILED");
+			}
+			JSONObject json = JSONFactoryUtil.createJSONObject();
+			writeJSON(resourceRequest, resourceResponse, json);
+		}
+		
+		if(resourceID.equals("updateDescription")){
+			String description = ParamUtil.getString(resourceRequest, "description");
+			metadata.setDescription(description);
+			try {
+				MetadataLocalServiceUtil.updateMetadata(metadata);
+				logger.info("DESCRIPTION_UPDATE_SUCCESS");
+			} catch (SystemException e) {
+				e.printStackTrace();
+				logger.info("DESCRIPTION_UPDATE_FAILED");
 			}
 			JSONObject json = JSONFactoryUtil.createJSONObject();
 			writeJSON(resourceRequest, resourceResponse, json);

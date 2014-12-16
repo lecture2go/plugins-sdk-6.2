@@ -153,10 +153,26 @@
 		<portlet:actionURL name="viewVideo" var="viewURL">
 			<portlet:param name="videoId" value="<%= String.valueOf(video.getVideoId())%>" />
 		</portlet:actionURL>
+		
 		<liferay-ui:search-container-column-text name="name">
+			<img src="<%=VideoLocalServiceUtil.getVideo(new Long(video.getVideoId())).getImageSmall()%>"/>
+		</liferay-ui:search-container-column-text> 
+		
+		<liferay-ui:search-container-column-text name="">
+			<%
+				Lectureseries ls = new LectureseriesImpl();
+				if(video.getLectureseriesId()>0)ls = LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId());
+				String lName="";
+				if(!ls.getNumber().equals(""))lName+=ls.getNumber()+" :";
+				if(!ls.getName().equals(""))lName+=ls.getName();
+			%>
 			<aui:a  href="<%=viewURL.toString()%>"><%=video.getTitle()%></aui:a>
+			<%if(!lName.equals("")){%>
+				<br/>
+				<%=lName%>
+			<%}%>
 		</liferay-ui:search-container-column-text>
-		<liferay-ui:search-container-column-jsp path="/admin/editVideoButton.jsp"/>
+		<liferay-ui:search-container-column-jsp path="/admin/editVideoButtons.jsp"/>
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator />

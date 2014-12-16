@@ -35,10 +35,6 @@
 	<portlet:param name="videoId" value='<%=""+reqVideo.getVideoId()%>' />
 </portlet:actionURL>
 
-<portlet:actionURL name="removeVideo" var="removeURL">
-	<portlet:param name="videoId" value='<%=""+reqVideo.getVideoId()%>' />
-</portlet:actionURL>
-
 <portlet:actionURL name="addVideo" var="addURL">
 	<portlet:param name="videoId" value='<%=""+0%>' />
 </portlet:actionURL>
@@ -108,39 +104,25 @@
 			creative-commons <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank"> details </a>
 			<br/><br/>
 			<aui:field-wrapper label="description">
-			    <liferay-ui:input-editor name="longDesc" toolbarSet="liferay-article" initMethod="initEditor" width="250" onChangeMethod="setLongDesc" />
+			    <liferay-ui:input-editor name="longDesc" toolbarSet="liferay-article" initMethod="initEditor" width="250" onChangeMethod="updateDescription" />
 			    <script type="text/javascript">
 			        function <portlet:namespace />initEditor() { return "<%= UnicodeFormatter.toString(reqMetadata.getDescription()) %>"; }
 			    </script>
 			</aui:field-wrapper>
 			<aui:button-row>
 				<aui:button type="cancel" value="go to overview" onClick="<%=cancelURL.toString()%>" />
-				<%if (reqVideo.getVideoId()>0) {%>
-					<liferay-ui:icon-menu cssClass="right">
-						<liferay-ui:icon image="delete" message="Remove" url="<%=removeURL.toString()%>" />
-					</liferay-ui:icon-menu>
-				<%}%>
 			</aui:button-row>
 			
-			<aui:input name="producerId" type="hidden" value="<%=reqProducer.getProducerId()%>"/>
-			<aui:input name="licenseId" type="hidden" value="<%=reqLicense.getLicenseId()%>"/>
 			<aui:input name="videoId" type="hidden" value="<%=reqVideo.getVideoId()%>"/>
-			<aui:input name="metadataId" type="hidden" value="<%=reqMetadata.getMetadataId()%>"/>
-			<aui:input name="lectureseriesId" type="hidden" value="<%=reqLectureseries.getLectureseriesId()%>"/>
 		</aui:form>
 	</aui:layout>
 </aui:fieldset>
 
 <liferay-portlet:resourceURL id="updateMeatadata" var="updateURL" />
+<liferay-portlet:resourceURL id="updateDescription" var="updateDescriptionURL" />
+<liferay-portlet:resourceURL id="updateLicense" var="updateLicenseURL" />
 
 <script type="text/javascript">
-var longDesc;
-
-function <portlet:namespace/>setLongDesc(data){
-	this.longDesc = data;
-	//update desc
-}
-
 function updateMetadata(){
 	AUI().use('aui-io-request', 'aui-node',
 		function(A){
@@ -151,15 +133,12 @@ function updateMetadata(){
 			 	data: {
 				 	   	<portlet:namespace/>lectureseriesId: A.one('#<portlet:namespace/>lectureseriesId').get('value'),
 				 	   	<portlet:namespace/>videoId: A.one('#<portlet:namespace/>videoId').get('value'),
-				 	   	<portlet:namespace/>metadataId: A.one('#<portlet:namespace/>metadataId').get('value'),
-				 	   	<portlet:namespace/>licenseId: A.one('#<portlet:namespace/>licenseId').get('value'),
 				 	   	<portlet:namespace/>language: A.one('#<portlet:namespace/>language').get('value'),
 				 	   	<portlet:namespace/>title: A.one('#<portlet:namespace/>title').get('value'),
 				 	   	<portlet:namespace/>tags: A.one('#<portlet:namespace/>tags').get('value'),
 				 	   	<portlet:namespace/>creator: A.one('#<portlet:namespace/>creator').get('value'),
 				 	   	<portlet:namespace/>rightsHolder: A.one('#<portlet:namespace/>rightsHolder').get('value'),
 				 	   	<portlet:namespace/>publisher: A.one('#<portlet:namespace/>publisher').get('value'),
-				 	   	<portlet:namespace/>producerId: A.one('#<portlet:namespace/>producerId').get('value'),
 				 	   	<portlet:namespace/>lectureseriesId: A.one('#<portlet:namespace/>lectureseriesId').get('value'),
 			 	},
 			 	//get server response
@@ -167,6 +146,50 @@ function updateMetadata(){
 					   success: function() {
 					     var jsonResponse = this.get('responseData');
 					     //alert(jsonResponse.key1);
+					   }
+				}
+			});	
+		}
+	);
+}
+
+function updateLicense(data){
+	AUI().use('aui-io-request', 'aui-node',
+		function(A){
+			A.io.request('<%=updateLicenseURL%>', {
+		 	dataType: 'json',
+		 	method: 'POST',
+			 	//send data to server
+			 	data: {
+				 	   	<portlet:namespace/>license: data,
+				 	   	<portlet:namespace/>videoId: A.one('#<portlet:namespace/>videoId').get('value'),
+			 	},
+			 	//get server response
+				on: {
+					   success: function() {
+					     var jsonResponse = this.get('responseData');
+					   }
+				}
+			});	
+		}
+	);
+}
+
+function <portlet:namespace/>updateDescription(data){
+	AUI().use('aui-io-request', 'aui-node',
+		function(A){
+			A.io.request('<%=updateDescriptionURL%>', {
+		 	dataType: 'json',
+		 	method: 'POST',
+			 	//send data to server
+			 	data: {
+				 	   	<portlet:namespace/>description: data,
+				 	   	<portlet:namespace/>videoId: A.one('#<portlet:namespace/>videoId').get('value'),
+			 	},
+			 	//get server response
+				on: {
+					   success: function() {
+					     var jsonResponse = this.get('responseData');
 					   }
 				}
 			});	
@@ -194,8 +217,8 @@ AUI().use(
 			    creator.on('keyup',function(A){updateMetadata()});
 			    rightsHolder.on('keyup',function(A){updateMetadata()});
 			    publisher.on('keyup',function(A){updateMetadata()});
-			    license1.on('change',function(A){updateMetadata()});
-			    license2.on('change',function(A){updateMetadata()});
+			    license1.on('change',function(A){updateLicense(license1.get('value'))});
+			    license2.on('change',function(A){updateLicense(license2.get('value'))});
 			    test();
 		}
 );
