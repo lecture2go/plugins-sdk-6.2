@@ -221,7 +221,7 @@ public class CoordinatorWrapper implements Coordinator,
 	}
 
 	@Override
-	public int compareTo(de.uhh.l2g.plugins.model.Coordinator coordinator) {
+	public int compareTo(Coordinator coordinator) {
 		return _coordinator.compareTo(coordinator);
 	}
 
@@ -231,17 +231,17 @@ public class CoordinatorWrapper implements Coordinator,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.model.Coordinator> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<Coordinator> toCacheModel() {
 		return _coordinator.toCacheModel();
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Coordinator toEscapedModel() {
+	public Coordinator toEscapedModel() {
 		return new CoordinatorWrapper(_coordinator.toEscapedModel());
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Coordinator toUnescapedModel() {
+	public Coordinator toUnescapedModel() {
 		return new CoordinatorWrapper(_coordinator.toUnescapedModel());
 	}
 

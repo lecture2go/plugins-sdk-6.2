@@ -270,8 +270,7 @@ public class Segment_User_VideoWrapper implements Segment_User_Video,
 	}
 
 	@Override
-	public int compareTo(
-		de.uhh.l2g.plugins.model.Segment_User_Video segment_User_Video) {
+	public int compareTo(Segment_User_Video segment_User_Video) {
 		return _segment_User_Video.compareTo(segment_User_Video);
 	}
 
@@ -281,17 +280,17 @@ public class Segment_User_VideoWrapper implements Segment_User_Video,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.model.Segment_User_Video> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<Segment_User_Video> toCacheModel() {
 		return _segment_User_Video.toCacheModel();
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Segment_User_Video toEscapedModel() {
+	public Segment_User_Video toEscapedModel() {
 		return new Segment_User_VideoWrapper(_segment_User_Video.toEscapedModel());
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Segment_User_Video toUnescapedModel() {
+	public Segment_User_Video toUnescapedModel() {
 		return new Segment_User_VideoWrapper(_segment_User_Video.toUnescapedModel());
 	}
 

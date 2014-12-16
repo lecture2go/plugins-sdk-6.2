@@ -221,8 +221,7 @@ public class Institution_HostWrapper implements Institution_Host,
 	}
 
 	@Override
-	public int compareTo(
-		de.uhh.l2g.plugins.model.Institution_Host institution_Host) {
+	public int compareTo(Institution_Host institution_Host) {
 		return _institution_Host.compareTo(institution_Host);
 	}
 
@@ -232,17 +231,17 @@ public class Institution_HostWrapper implements Institution_Host,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.model.Institution_Host> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<Institution_Host> toCacheModel() {
 		return _institution_Host.toCacheModel();
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Institution_Host toEscapedModel() {
+	public Institution_Host toEscapedModel() {
 		return new Institution_HostWrapper(_institution_Host.toEscapedModel());
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Institution_Host toUnescapedModel() {
+	public Institution_Host toUnescapedModel() {
 		return new Institution_HostWrapper(_institution_Host.toUnescapedModel());
 	}
 
