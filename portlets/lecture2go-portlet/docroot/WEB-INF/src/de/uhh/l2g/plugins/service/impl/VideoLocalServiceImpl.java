@@ -262,7 +262,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		}
 		try {
 			if (webhome.contains("localhost"))
-				webhome += "/web/lecture2go";
+				webhome += "/web/vod";
 			if (institudion.getTyp().equals("tree1"))
 				objectVideo.setUrl(webhome + "/l2go/-/v/" + objectVideo.getVideoId());
 		} catch (NoSuchElementException nseex) {
@@ -319,12 +319,12 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			}
 		}
 
-		if(video.getMp3File().isFile()){
+		if(video.getMp3File().isFile() && video.getContainerFormat().equals("mp4")){
 			JSONObject jsonoMp3 = new JSONObject();
 			try {
-				jsonoMp3.put("size", "");
+				jsonoMp3.put("size", video.getMp3File().getTotalSpace());
 				jsonoMp3.put("type", "mp3");
-				jsonoMp3.put("name", video.getM4aFile().getName());
+				jsonoMp3.put("name", video.getMp3File().getName());
 				jsonoMp3.put("url", video.getUrl());
 				jsonoMp3.put("thumbnailUrl", "/lecture2go-portlet/img/mp3On.png");
 				jsonoMp3.put("deleteUrl", "#");
@@ -340,7 +340,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			JSONObject jsonoM4a = new JSONObject();
 			try {
 				jsonoM4a.put("name", video.getM4aFile().getName());
-				jsonoM4a.put("size", "");
+				jsonoM4a.put("size",  video.getM4aFile().getTotalSpace());
 				jsonoM4a.put("type", "m4a");
 				jsonoM4a.put("url", video.getUrl());
 				jsonoM4a.put("thumbnailUrl", "/lecture2go-portlet/img/m4aOn.png");
@@ -357,7 +357,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			JSONObject jsonoM4v = new JSONObject();
 			try {
 				jsonoM4v.put("name", video.getM4vFile().getName());
-				jsonoM4v.put("size", "");
+				jsonoM4v.put("size", video.getM4vFile().getTotalSpace());
 				jsonoM4v.put("type", "m4v");
 				jsonoM4v.put("url", video.getUrl());
 				jsonoM4v.put("thumbnailUrl", "/lecture2go-portlet/img/iPodOn.png");
@@ -374,7 +374,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			JSONObject pdf = new JSONObject();
 			try {
 				pdf.put("name", video.getPdfFile().getName());
-				pdf.put("size", "");
+				pdf.put("size", video.getM4vFile().getTotalSpace());
 				pdf.put("type", "pdf");
 				pdf.put("url", video.getUrl());
 				pdf.put("thumbnailUrl", "/lecture2go-portlet/img/pdfOn.png");

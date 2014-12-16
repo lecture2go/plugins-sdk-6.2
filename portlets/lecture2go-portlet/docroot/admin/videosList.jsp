@@ -29,6 +29,7 @@
 				else tempVideosList = VideoLocalServiceUtil.getByProducerAndLectureseries(producerId, lectureseriesId);
 			}
 		}else{
+			producerId = new Long(0);
 			tempVideosList = VideoLocalServiceUtil.getVideos(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 		}
 	}else{
@@ -103,7 +104,7 @@
 							</aui:form>		
 					</aui:column>
 				<%}%>	
-				<%if( ((permissionAdmin || permissionCoordinator) && producerId>0) || permissionProducer ){%>		
+				<%if( ((permissionAdmin || permissionCoordinator) && producerId>0  && coordinatorId>0) || permissionProducer ){%>		
 					<aui:column>
 							<portlet:renderURL var="sortByLectureseries">
 								<portlet:param name="jspPage" value="/admin/videosList.jsp" />
@@ -150,56 +151,58 @@
 	</liferay-ui:search-container-results>
 
 	<liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.Video" keyProperty="videoId" modelVar="video">
+		<% Video vid = VideoLocalServiceUtil.getVideo(new Long(video.getVideoId())); %>
 		<portlet:actionURL name="viewVideo" var="viewURL">
 			<portlet:param name="videoId" value="<%= String.valueOf(video.getVideoId())%>" />
 		</portlet:actionURL>
 		
 		<liferay-ui:search-container-column-text name="" >
-			<img src="<%=VideoLocalServiceUtil.getVideo(new Long(video.getVideoId())).getImageSmall()%>" style="width: 130px; height: 73px;"/>
+			<aui:a  href="<%=vid.getUrl()%>" target="blank">
+				<img src="<%=vid.getImageSmall()%>" style="width: 130px; height: 73px;"/>
+			</aui:a>
 		</liferay-ui:search-container-column-text> 
 		
 		<liferay-ui:search-container-column-text name="">
 			<%
 				Lectureseries ls = new LectureseriesImpl();
-				if(video.getLectureseriesId()>0)ls = LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId());
+				if(vid.getLectureseriesId()>0)ls = LectureseriesLocalServiceUtil.getLectureseries(vid.getLectureseriesId());
 				String lName="";
 				if(!ls.getNumber().equals(""))lName+=ls.getNumber()+" :";
 				if(!ls.getName().equals(""))lName+=ls.getName();
+				String vName = vid.getTitle();
+				if(vName.trim().equals(""))vName ="VIDEO NOT TITLED";
 			%>
-			<aui:a  href="<%=viewURL.toString()%>"><%=video.getTitle()%></aui:a>
+			<aui:a  href="<%=vid.getUrl()%>" target="blank"><%=vName%></aui:a>
 			<%if(!lName.equals("")){%>
 				<br/>
 				<%=lName%>
 			<%}%>
 			<br/>
-			Hits: <%=video.getHits()%>
-			<br/>
-			Formats: <%=video.getHits()%>
-
-			<c:if test="${video.date}">
-			<em>${recordingon} ${video.date} ${time}</em>
-			&nbsp;&nbsp;&nbsp;
-			</c:if>
-			<c:if test="${video.mp4File!=null}">
-			${videomp4} &nbsp;&nbsp;&nbsp;
-			</c:if>
-			<c:if test="${video.mp3File!=null}">
-			${audiomp3}&nbsp;&nbsp;&nbsp;
-			</c:if>
-			<c:if test="${video.m4aFile!=null}">
-			${audiom4a} &nbsp;&nbsp;&nbsp;
-			</c:if>
-			<c:if test="${video.m4vFile!=null}">
-			${iPodm4v} &nbsp;&nbsp;&nbsp;
-			</c:if>
-			<c:if test="${video.pdfFile!=null}">
-			${textpdf} &nbsp;&nbsp;&nbsp;
-			</c:if>
-			<br/>
-			<c:if test="${video.uploadDate!=null}">
-				<em>${uploadedon} ${video.uploadDate}</em>&nbsp;&nbsp;&nbsp;<em>${video.hits} ${views}</em>
-			</c:if>
-
+			<%
+			if(!vid.getFilename().equals("")){
+				if(vid.getMp4File().isFile()){%>
+					mp4 &nbsp;
+				<%}
+				
+				if(vid.getMp3File().isFile()){%>
+					mp3 &nbsp;
+				<%}
+				
+				if(vid.getM4aFile().isFile()){%>
+					m4a &nbsp;
+				<%}
+				
+				if(vid.getM4vFile().isFile()){%>
+					m4v &nbsp;
+				<%}
+				
+				if(vid.getPdfFile().isFile()){%>
+					pdf &nbsp;
+				<%}%>
+				<br/>
+				<em>hits: <%=vid.getHits()%>   &nbsp;&nbsp;  date: <%=vid.getDate()%></em>
+				<br/>
+			<%}%>
 		</liferay-ui:search-container-column-text>
 		<liferay-ui:search-container-column-jsp path="/admin/editVideoButtons.jsp"/>
 	</liferay-ui:search-container-row>

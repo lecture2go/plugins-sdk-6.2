@@ -215,10 +215,8 @@ public class AdminVideoManagement extends MVCPortlet {
 		try {
 			license = LicenseLocalServiceUtil.getByVideoId(video.getVideoId());
 		} catch (NoSuchLicenseException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (SystemException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
