@@ -154,8 +154,8 @@
 			<portlet:param name="videoId" value="<%= String.valueOf(video.getVideoId())%>" />
 		</portlet:actionURL>
 		
-		<liferay-ui:search-container-column-text name="name">
-			<img src="<%=VideoLocalServiceUtil.getVideo(new Long(video.getVideoId())).getImageSmall()%>"/>
+		<liferay-ui:search-container-column-text name="" >
+			<img src="<%=VideoLocalServiceUtil.getVideo(new Long(video.getVideoId())).getImageSmall()%>" style="width: 130px; height: 73px;"/>
 		</liferay-ui:search-container-column-text> 
 		
 		<liferay-ui:search-container-column-text name="">
@@ -171,6 +171,35 @@
 				<br/>
 				<%=lName%>
 			<%}%>
+			<br/>
+			Hits: <%=video.getHits()%>
+			<br/>
+			Formats: <%=video.getHits()%>
+
+			<c:if test="${video.date}">
+			<em>${recordingon} ${video.date} ${time}</em>
+			&nbsp;&nbsp;&nbsp;
+			</c:if>
+			<c:if test="${video.mp4File!=null}">
+			${videomp4} &nbsp;&nbsp;&nbsp;
+			</c:if>
+			<c:if test="${video.mp3File!=null}">
+			${audiomp3}&nbsp;&nbsp;&nbsp;
+			</c:if>
+			<c:if test="${video.m4aFile!=null}">
+			${audiom4a} &nbsp;&nbsp;&nbsp;
+			</c:if>
+			<c:if test="${video.m4vFile!=null}">
+			${iPodm4v} &nbsp;&nbsp;&nbsp;
+			</c:if>
+			<c:if test="${video.pdfFile!=null}">
+			${textpdf} &nbsp;&nbsp;&nbsp;
+			</c:if>
+			<br/>
+			<c:if test="${video.uploadDate!=null}">
+				<em>${uploadedon} ${video.uploadDate}</em>&nbsp;&nbsp;&nbsp;<em>${video.hits} ${views}</em>
+			</c:if>
+
 		</liferay-ui:search-container-column-text>
 		<liferay-ui:search-container-column-jsp path="/admin/editVideoButtons.jsp"/>
 	</liferay-ui:search-container-row>

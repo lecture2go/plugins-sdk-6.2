@@ -1,4 +1,3 @@
-<%@page import="de.uhh.l2g.plugins.service.VideoLocalServiceUtil"%>
 <div class="container">
     <!-- The file upload form used as target for the file upload widget -->
     <form id="fileupload" action="" method="POST" enctype="multipart/form-data">
@@ -73,7 +72,7 @@
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr>
    	    <td>
-            <span class="preview"><img src="{%=file.thumbnailUrl%}"  width="130" ></span>
+            <span class="preview"><img src="{%=file.thumbnailUrl%}"  style="width: 130px; height: 73px;" ></span>
         </td>
         <td> 
             <p class="name">{%=file.name%}</p>

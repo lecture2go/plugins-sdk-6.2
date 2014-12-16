@@ -177,11 +177,17 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		}
 		// thumbnails
 		// set thumbnail
+		// if nothing file
+		if (objectVideo.getContainerFormat().equals("") && objectVideo.getFilename().equals("")) {
+			objectVideo.setImage("/lecture2go-portlet/img/novideo.jpg");
+			objectVideo.setImageSmall("/lecture2go-portlet/img/novideo.jpg");
+			objectVideo.setImageMedium("/lecture2go-portlet/img/novideo.jpg");
+		}		
 		// if audio file
 		if (objectVideo.getContainerFormat().equals("mp3")) {
-			objectVideo.setImage(PropsUtil.get("lecture2go.web.root") + PropsUtil.get("lecture2go.theme.root.path") + "/images/l2go/audio_only_big.png");
-			objectVideo.setImageSmall(PropsUtil.get("lecture2go.web.root") + PropsUtil.get("lecture2go.theme.root.path") + "/images/l2go/audio_only_small.png");
-			objectVideo.setImageMedium(PropsUtil.get("lecture2go.web.root") + PropsUtil.get("lecture2go.theme.root.path") + "/images/l2go/audio_only_medium.png");
+			objectVideo.setImage("/lecture2go-portlet/img/audio_only_big.png");
+			objectVideo.setImageSmall("/lecture2go-portlet/img/audio_only_small.png");
+			objectVideo.setImageMedium("/lecture2go-portlet/img/audio_only_medium.png");
 		}
 		// is video
 		if (objectVideo.getContainerFormat().equals("mp4")) {
@@ -197,7 +203,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				objectVideo.setImageSmall(PropsUtil.get("lecture2go.web.root") + "/images/" + imageSmall);
 				objectVideo.setImageMedium(PropsUtil.get("lecture2go.web.root") + "/images/" + imageMedium);
 			} else {
-				String img = PropsUtil.get("lecture2go.web.root") + PropsUtil.get("lecture2go.theme.root.path") + "/images/l2go/noimage.jpg";
+				String img = "/lecture2go-portlet/img/noimage.jpg";
 				objectVideo.setImage(img);
 				objectVideo.setImageSmall(img);
 				objectVideo.setImageMedium(img);
