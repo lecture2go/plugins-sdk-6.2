@@ -44,7 +44,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 
 import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.Video;
-
+ 
 /**
  * The Class Htaccess.
  */
@@ -53,46 +53,29 @@ public class Htaccess {
 	/** The Constant fileExtentions. */
 	final static String[] fileExtentions = { ".pdf", ".mp3", ".m4v", ".mp4", ".m4a", ".tar" };
   
-	/** The file ht users. */
-	private String fileHtUsers = PropsUtil.get("lecture2go.security.folder") + "/" + ".htusers"; 
-
-	/**
-	 * Gets the file ht users.
-	 *
-	 * @return the file ht users
-	 */
-	public String getFileHtUsers() {
-		return fileHtUsers;
-	}
-
-	/**
-	 * Sets the file ht users.
-	 *
-	 * @param fileHtUsers the new file ht users
-	 */
-	public void setFileHtUsers(String fileHtUsers) {
-		this.fileHtUsers = fileHtUsers;
-	}
-
-	/**
-	 * Instantiates a new htaccess.
-	 */
-	public Htaccess() {
-
-	}
-
+	final static String HTUSERS_DIR = PropsUtil.get("lecture2go.security.folder");
+	final static String HTUSERS_FILE = PropsUtil.get("lecture2go.security.folder") + "/" + ".htusers";
 	/**
 	 * Write pw.
 	 *
 	 * @param data the data
 	 */
-	public void writePW(List<Lectureseries> data) {
+	public static void writePW(List<Lectureseries> data) {
 
 		BufferedWriter bufferedWriter = null;
-
+		File secFileDir = new File(HTUSERS_DIR);
+		
+		if(!secFileDir.isFile())
+			try {
+				secFileDir.mkdirs();
+				new File(HTUSERS_FILE).createNewFile(); 
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		
 		try {
 			// Construct the BufferedWriter object
-			bufferedWriter = new BufferedWriter(new FileWriter(fileHtUsers));
+			bufferedWriter = new BufferedWriter(new FileWriter(HTUSERS_FILE));
 
 			// Start writing to the output stream
 			for (Lectureseries lectureseries : data) {
@@ -127,7 +110,7 @@ public class Htaccess {
 	 * @param url the url
 	 * @param lockedVideos the locked videos
 	 */
-	public void makeHtaccess(String url, List<Video> lockedVideos) {
+	public static void makeHtaccess(String url, List<Video> lockedVideos) {
 
 		// Datei erstellen fuerr den ersten Run und wieder loeschen
 		File file = new File(url + ".htaccess");
@@ -151,7 +134,7 @@ public class Htaccess {
 			bw.newLine();
 			// bw.write("AuthUserFile "+model.getRepositoryPfad().concat(
 			// "/security/.htusers"));
-			bw.write("AuthUserFile " + fileHtUsers);
+			bw.write("AuthUserFile " + HTUSERS_FILE);
 
 			bw.newLine();
 			bw.write("");

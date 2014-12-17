@@ -18,6 +18,8 @@ package de.uhh.l2g.plugins.service.persistence;
  * @author Iavor Sturm
  */
 public interface LectureseriesFinder {
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findAllLectureseriesWhithPassword();
+
 	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findAllLectureseriesWhithOpenaccessVideos();
 
 	public java.util.List<java.lang.String> findAllSemesters(int begin, int end);

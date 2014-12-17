@@ -128,6 +128,10 @@ public class LectureseriesLocalServiceClpInvoker {
 		_methodName124 = "getAllLectureseriesWhithOpenaccessVideos";
 
 		_methodParameterTypes124 = new String[] {  };
+
+		_methodName125 = "getAllLectureseriesWhithPassword";
+
+		_methodParameterTypes125 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -249,6 +253,11 @@ public class LectureseriesLocalServiceClpInvoker {
 			return LectureseriesLocalServiceUtil.getAllLectureseriesWhithOpenaccessVideos();
 		}
 
+		if (_methodName125.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
+			return LectureseriesLocalServiceUtil.getAllLectureseriesWhithPassword();
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -294,4 +303,6 @@ public class LectureseriesLocalServiceClpInvoker {
 	private String[] _methodParameterTypes123;
 	private String _methodName124;
 	private String[] _methodParameterTypes124;
+	private String _methodName125;
+	private String[] _methodParameterTypes125;
 }

@@ -25,6 +25,7 @@ create index IX_F43BC8 on LG_Lectureseries (facultyName);
 create index IX_4F65B8A3 on LG_Lectureseries (language);
 create index IX_DB929396 on LG_Lectureseries (name);
 create index IX_225A0AF on LG_Lectureseries (number_);
+create index IX_3714125D on LG_Lectureseries (password_);
 create index IX_2E421DEE on LG_Lectureseries (semesterName);
 
 create index IX_719B09B3 on LG_Lectureseries_Institution (institutionId);

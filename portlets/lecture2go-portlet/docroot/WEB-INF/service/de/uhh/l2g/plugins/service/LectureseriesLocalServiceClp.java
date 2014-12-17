@@ -129,6 +129,10 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 		_methodName21 = "getAllLectureseriesWhithOpenaccessVideos";
 
 		_methodParameterTypes21 = new String[] {  };
+
+		_methodName22 = "getAllLectureseriesWhithPassword";
+
+		_methodParameterTypes22 = new String[] {  };
 	}
 
 	@Override
@@ -766,6 +770,29 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 		return (java.util.List<de.uhh.l2g.plugins.model.Lectureseries>)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getAllLectureseriesWhithPassword() {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22, new Object[] {  });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<de.uhh.l2g.plugins.model.Lectureseries>)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -809,4 +836,6 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 	private String[] _methodParameterTypes20;
 	private String _methodName21;
 	private String[] _methodParameterTypes21;
+	private String _methodName22;
+	private String[] _methodParameterTypes22;
 }

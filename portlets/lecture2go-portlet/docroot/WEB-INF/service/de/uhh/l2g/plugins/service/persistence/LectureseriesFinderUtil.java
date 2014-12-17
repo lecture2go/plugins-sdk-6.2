@@ -21,6 +21,10 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @author Iavor Sturm
  */
 public class LectureseriesFinderUtil {
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findAllLectureseriesWhithPassword() {
+		return getFinder().findAllLectureseriesWhithPassword();
+	}
+
 	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findAllLectureseriesWhithOpenaccessVideos() {
 		return getFinder().findAllLectureseriesWhithOpenaccessVideos();
 	}

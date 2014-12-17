@@ -38,6 +38,14 @@
 		]]>
     </sql> 
 
+    <sql id="de.uhh.l2g.plugins.service.persistence.LectureseriesFinder.findAllLectureseriesWithPassword">
+		<![CDATA[
+			SELECT number_, eventType, eventCategory, l.name, shortDesc, semesterName, language, facultyName, instructorsString, l.lectureseriesId, password_, approved, longDesc 
+			FROM lg_lectureseries l 
+			WHERE l.password_>""
+		]]>
+    </sql> 
+
     <sql id="de.uhh.l2g.plugins.service.persistence.ProducerFinder.findProducerIds">
 		<![CDATA[
 			SELECT p.producerId 

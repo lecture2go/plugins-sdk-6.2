@@ -292,6 +292,10 @@ public class LectureseriesLocalServiceUtil {
 		return getService().getAllLectureseriesWhithOpenaccessVideos();
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getAllLectureseriesWhithPassword() {
+		return getService().getAllLectureseriesWhithPassword();
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

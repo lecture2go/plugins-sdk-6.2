@@ -54,6 +54,8 @@ import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
+import de.uhh.l2g.plugins.util.ProzessManager;
+import de.uhh.l2g.plugins.util.Security;
 
 public class AdminVideoManagement extends MVCPortlet {
 
@@ -63,7 +65,6 @@ public class AdminVideoManagement extends MVCPortlet {
 	public void viewVideo(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
 		
 		List<Lectureseries> ls  = LectureseriesLocalServiceUtil.getAllLectureseriesWhithOpenaccessVideos();
-		Video video = VideoLocalServiceUtil.getLatestVideoForLectureseries(new Long(3890), 0, 10);
 		List<Video> vl = VideoLocalServiceUtil.getLatestVideos();
 		
 		//permissions
@@ -201,7 +202,6 @@ public class AdminVideoManagement extends MVCPortlet {
 		String resourceID = resourceRequest.getResourceID();
 		Long videoId = ParamUtil.getLong(resourceRequest, "videoId");
 		Video video = VideoLocalServiceUtil.getVideo(videoId);
-		Long lectureseriesId = video.getLectureseriesId();
 		Metadata metadata = new MetadataImpl();
 		try {
 			Long metadataId = video.getMetadataId();
@@ -227,11 +227,12 @@ public class AdminVideoManagement extends MVCPortlet {
 			String creator = ParamUtil.getString(resourceRequest, "creator");
 			String rightsHolder = ParamUtil.getString(resourceRequest, "rightsHolder");
 			String publisher = ParamUtil.getString(resourceRequest, "publisher");
+			Long lId = ParamUtil.getLong(resourceRequest, "lectureseriesId");
 			//update data base
 			try {
 				video.setTitle(title);
 				video.setTags(tags);
-				video.setLectureseriesId(lectureseriesId);
+				video.setLectureseriesId(lId);
 				VideoLocalServiceUtil.updateVideo(video);
 			} catch (NumberFormatException e) {
 				System.out.println(e);
@@ -338,4 +339,56 @@ public class AdminVideoManagement extends MVCPortlet {
 		return sb.toString();
 	}
 	
+	public void removeVideo(){
+		
+	}
+	
+	public void lockVideo(ActionRequest request, ActionResponse response) throws PortalException, SystemException{
+		Video video = new VideoImpl();
+		Long reqVideoId = new Long(0);
+		try{reqVideoId = new Long(request.getParameterMap().get("videoId")[0]);}catch(Exception e){}
+		video = VideoLocalServiceUtil.getVideo(reqVideoId);
+		ProzessManager pm = new ProzessManager();	
+//		String sUrl = Security.createSecureFileName() + "." + video.getContainerFormat();
+//		video.setSurl(sUrl);
+//		//first data base update
+//		VideoLocalServiceUtil.updateVideo(video);
+//		//then physically update
+		pm.deactivateOpenaccess(video);
+	}
+	
+	public void unlockVideo(ActionRequest request, ActionResponse response) throws PortalException, SystemException{
+		Video video = new VideoImpl();
+		Long reqVideoId = new Long(0);
+		try{reqVideoId = new Long(request.getParameterMap().get("videoId")[0]);}catch(Exception e){}
+		video = VideoLocalServiceUtil.getVideo(reqVideoId);
+		ProzessManager pm = new ProzessManager();	
+//		video.setSurl("");
+//		//first data base update
+//		VideoLocalServiceUtil.updateVideo(video);
+//		//then physically update
+		pm.activateOpenaccess(video);
+	}
+	
+	public void activateDownload(ActionRequest request, ActionResponse response) throws SystemException, PortalException{
+		Video video = new VideoImpl();
+		Long reqVideoId = new Long(0);
+		try{reqVideoId = new Long(request.getParameterMap().get("videoId")[0]);}catch(Exception e){}
+		video = VideoLocalServiceUtil.getVideo(reqVideoId);
+		ProzessManager pm = new ProzessManager();
+		pm.activateDownload(video);
+	}
+	
+	public void deactivateDownload(ActionRequest request, ActionResponse response) throws SystemException, PortalException{
+		Video video = new VideoImpl();
+		Long reqVideoId = new Long(0);
+		try{reqVideoId = new Long(request.getParameterMap().get("videoId")[0]);}catch(Exception e){}
+		video = VideoLocalServiceUtil.getVideo(reqVideoId);
+		ProzessManager pm = new ProzessManager();
+		pm.deactivateDownload(video);
+	}
+	
+	public void segmentateVideo(ActionRequest request, ActionResponse response){
+		
+	}
 }

@@ -219,17 +219,14 @@ public class RSSManager {
 	 */
 	public void createRssFile(List<Video> videoList, String type) throws IOException, PortalException, SystemException {
 		try {
-			Video vid = videoList.iterator().next();
 			String imageLink = PropsUtil.get("lecture2go.web.home") + PropsUtil.get("lecture2go.theme.root.path") + "/" + "images" + "/" + "l2go" + "/" + "itunesu" + "/" + "logo.jpg";
 
 			Date date = new Date();
 			String[] dateString = date.toString().split(" ");
 			String pubDate = dateString[0] + " , " + dateString[2] + " " + dateString[1] + " " + dateString[5] + " " + dateString[3] + " +2000";
 
-			String image = PropsUtil.get("lecture2go.theme.root.path") + "/" + "images" + "/" + "l2go" + "/" + "itunesu" + "/" + vid.getLectureseriesId() + ".jpg";
-			File imageF = new File(image);
-
-			if (imageF.isFile()) imageLink = PropsUtil.get("lecture2go.web.home") + "/" + PropsUtil.get("lecture2go.theme.root.path") + "/images/l2go/itunesu/" + vid.getLectureseriesId() + ".jpg";
+			File imageF = new File(PropsUtil.get("lecture2go.web.home")+"/lecture2go-portlet/img/l2go_logo_transp.png");
+			if (imageF.isFile()) imageLink = PropsUtil.get("lecture2go.web.home")+"/lecture2go-portlet/img/l2go_logo_transp.png";
 
 			String text = "<?xml version='1.0' encoding='ISO-8859-1'?> \n";
 			text += "<rss xmlns:itunes='http://www.itunes.com/dtds/podcast-1.0.dtd' xmlns:itunesu='http://www.itunesu.com/feed' version='2.0'>  \n";
@@ -249,7 +246,7 @@ public class RSSManager {
 			text += "<image> \n";
 			text += "<title>" + imageTitle + "</title> \n";
 			text += "<link>" + imageLink + "</link> \n";
-			text += "<url>" + PropsUtil.get("lecture2go.web.home")+"/"+PropsUtil.get("lecture2go.theme.root.path")+"/images/l2go/l2go_logo_transp.png" + "</url> \n";
+			text += "<url>" + PropsUtil.get("lecture2go.web.home")+"/lecture2go-portlet/img/l2go_logo_transp.png" + "</url> \n";
 			text += "</image> \n \n";
 
 			try {
@@ -373,8 +370,11 @@ public class RSSManager {
 
 			text += "</channel>\n";
 			text += "</rss> \n";
-
-			String dateiName = System.getProperty("catalina.base") + "/" + "webapps" + "/" + "rss" + "/" + rssFilename;
+			
+			File rrsDirectory = new File(System.getProperty("catalina.base") + "/" + "webapps" + "/" + "rss" + "/" );
+			if(!rrsDirectory.exists())rrsDirectory.mkdir();
+			
+			String dateiName = rrsDirectory + "/" + rssFilename;
 			FileOutputStream schreibeStrom = new FileOutputStream(dateiName);
 
 			for (int i = 0; i < text.length(); i++) {

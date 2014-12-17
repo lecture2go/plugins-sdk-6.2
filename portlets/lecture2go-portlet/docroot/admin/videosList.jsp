@@ -155,11 +155,14 @@
 		<portlet:actionURL name="viewVideo" var="viewURL">
 			<portlet:param name="videoId" value="<%= String.valueOf(video.getVideoId())%>" />
 		</portlet:actionURL>
-		
 		<liferay-ui:search-container-column-text name="" >
-			<aui:a  href="<%=vid.getUrl()%>" target="blank">
+			<%if(!vid.getFilename().equals("")){%>
+				<aui:a  href="<%=vid.getUrl()%>" target="blank">
+					<img src="<%=vid.getImageSmall()%>" style="width: 130px; height: 73px;"/>
+				</aui:a>
+			<%}else{%>
 				<img src="<%=vid.getImageSmall()%>" style="width: 130px; height: 73px;"/>
-			</aui:a>
+			<%}%>
 		</liferay-ui:search-container-column-text> 
 		
 		<liferay-ui:search-container-column-text name="">
@@ -170,9 +173,11 @@
 				if(!ls.getNumber().equals(""))lName+=ls.getNumber()+" :";
 				if(!ls.getName().equals(""))lName+=ls.getName();
 				String vName = vid.getTitle();
-				if(vName.trim().equals(""))vName ="VIDEO NOT TITLED";
+				if(vName.trim().equals(""))vName ="NOT TITLED";
 			%>
-			<aui:a  href="<%=vid.getUrl()%>" target="blank"><%=vName%></aui:a>
+			<%
+			if(!vid.getFilename().equals("")){%><aui:a  href="<%=vid.getUrl()%>" target="blank"><%=vName%></aui:a><%}
+			else{%> <%=vName%> <%}%>
 			<%if(!lName.equals("")){%>
 				<br/>
 				<%=lName%>

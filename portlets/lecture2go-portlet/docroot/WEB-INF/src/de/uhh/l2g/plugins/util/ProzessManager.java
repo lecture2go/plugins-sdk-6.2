@@ -65,7 +65,10 @@ public class ProzessManager {
 	
 	Htaccess HTACCESS = new Htaccess();
 	
-	public void deactivateDownload(Video video, Host host, Producer producer) throws SystemException, PortalException {
+	public void deactivateDownload(Video video) throws SystemException, PortalException {
+		Host host = HostLocalServiceUtil.getHost(video.getHostId());
+		Producer producer = ProducerLocalServiceUtil.getProducer(video.getProducerId());
+		
 		video.setDownloadLink(0);
 		VideoLocalServiceUtil.updateVideo(video);
 		// set RSS
@@ -81,7 +84,10 @@ public class ProzessManager {
 		HTACCESS.makeHtaccess(url, VideoLocalServiceUtil.getByProducerAndDownloadLink(producer.getProducerId(), 0));
 	}
 
-	public void activateDownload(Video video, Host host, Producer producer) throws SystemException, PortalException {
+	public void activateDownload(Video video) throws SystemException, PortalException {
+		Host host = HostLocalServiceUtil.getHost(video.getHostId());
+		Producer producer = ProducerLocalServiceUtil.getProducer(video.getProducerId());
+		
 		video.setDownloadLink(1);
 		VideoLocalServiceUtil.updateVideo(video);
 		// set RSS
@@ -97,7 +103,10 @@ public class ProzessManager {
 		HTACCESS.makeHtaccess(url, VideoLocalServiceUtil.getByProducerAndDownloadLink(producer.getProducerId(), 0));
 	}
 
-	public void activateOpenaccess(Video video, Host host, Producer producer) throws SystemException, PortalException {
+	public void activateOpenaccess(Video video) throws SystemException, PortalException {
+		Host host = HostLocalServiceUtil.getHost(video.getHostId());
+		Producer producer = ProducerLocalServiceUtil.getProducer(video.getProducerId());
+		
 		// first rename the file from the filesystem first
 		String path = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir();
 		String videoPreffix = video.getPreffix();
@@ -128,6 +137,7 @@ public class ProzessManager {
 				fTar.renameTo(new File(path + "/" + videoPreffix + ".tar"));
 				// then update the video in the database
 				video.setOpenAccess(1);
+				video.setSurl("");
 				VideoLocalServiceUtil.updateVideo(video);
 			}
 		} catch (Exception e) {
@@ -151,7 +161,10 @@ public class ProzessManager {
 		VideoLocalServiceUtil.createLastVideoList();
 	}
 
-	public void deactivateOpenaccess(Video video, Host host, Producer producer) throws PortalException, SystemException {
+	public void deactivateOpenaccess(Video video) throws PortalException, SystemException {
+		Host host = HostLocalServiceUtil.getHost(video.getHostId());
+		Producer producer = ProducerLocalServiceUtil.getProducer(video.getProducerId());
+		
 		// then update the filesystem
 		String path = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir();
 		String videoPreffix = video.getPreffix();
@@ -172,7 +185,7 @@ public class ProzessManager {
 			video.setOpenAccess(0);
 			//generate secure file name
 			String secureUrl = Security.createSecureFileName() + "." + video.getContainerFormat();
-			video.setSecureUrl(secureUrl);
+			video.setSurl(secureUrl);
 			VideoLocalServiceUtil.updateVideo(video);
 			
 			String vidSPreffix = video.getSPreffix();

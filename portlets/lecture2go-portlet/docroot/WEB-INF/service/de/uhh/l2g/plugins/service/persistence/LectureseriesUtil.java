@@ -1412,6 +1412,168 @@ public class LectureseriesUtil {
 	}
 
 	/**
+	* Returns all the lectureserieses where password = &#63;.
+	*
+	* @param password the password
+	* @return the matching lectureserieses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findByPassword(
+		java.lang.String password)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByPassword(password);
+	}
+
+	/**
+	* Returns a range of all the lectureserieses where password = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.LectureseriesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param password the password
+	* @param start the lower bound of the range of lectureserieses
+	* @param end the upper bound of the range of lectureserieses (not inclusive)
+	* @return the range of matching lectureserieses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findByPassword(
+		java.lang.String password, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByPassword(password, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the lectureserieses where password = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.LectureseriesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param password the password
+	* @param start the lower bound of the range of lectureserieses
+	* @param end the upper bound of the range of lectureserieses (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching lectureserieses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findByPassword(
+		java.lang.String password, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByPassword(password, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first lectureseries in the ordered set where password = &#63;.
+	*
+	* @param password the password
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching lectureseries
+	* @throws de.uhh.l2g.plugins.NoSuchLectureseriesException if a matching lectureseries could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Lectureseries findByPassword_First(
+		java.lang.String password,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchLectureseriesException {
+		return getPersistence().findByPassword_First(password, orderByComparator);
+	}
+
+	/**
+	* Returns the first lectureseries in the ordered set where password = &#63;.
+	*
+	* @param password the password
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Lectureseries fetchByPassword_First(
+		java.lang.String password,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByPassword_First(password, orderByComparator);
+	}
+
+	/**
+	* Returns the last lectureseries in the ordered set where password = &#63;.
+	*
+	* @param password the password
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching lectureseries
+	* @throws de.uhh.l2g.plugins.NoSuchLectureseriesException if a matching lectureseries could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Lectureseries findByPassword_Last(
+		java.lang.String password,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchLectureseriesException {
+		return getPersistence().findByPassword_Last(password, orderByComparator);
+	}
+
+	/**
+	* Returns the last lectureseries in the ordered set where password = &#63;.
+	*
+	* @param password the password
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Lectureseries fetchByPassword_Last(
+		java.lang.String password,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByPassword_Last(password, orderByComparator);
+	}
+
+	/**
+	* Returns the lectureserieses before and after the current lectureseries in the ordered set where password = &#63;.
+	*
+	* @param lectureseriesId the primary key of the current lectureseries
+	* @param password the password
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next lectureseries
+	* @throws de.uhh.l2g.plugins.NoSuchLectureseriesException if a lectureseries with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Lectureseries[] findByPassword_PrevAndNext(
+		long lectureseriesId, java.lang.String password,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchLectureseriesException {
+		return getPersistence()
+				   .findByPassword_PrevAndNext(lectureseriesId, password,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the lectureserieses where password = &#63; from the database.
+	*
+	* @param password the password
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByPassword(java.lang.String password)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByPassword(password);
+	}
+
+	/**
+	* Returns the number of lectureserieses where password = &#63;.
+	*
+	* @param password the password
+	* @return the number of matching lectureserieses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByPassword(java.lang.String password)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByPassword(password);
+	}
+
+	/**
 	* Caches the lectureseries in the entity cache if it is enabled.
 	*
 	* @param lectureseries the lectureseries

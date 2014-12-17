@@ -95,7 +95,8 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 	public static long LANGUAGE_COLUMN_BITMASK = 16L;
 	public static long NAME_COLUMN_BITMASK = 32L;
 	public static long NUMBER_COLUMN_BITMASK = 64L;
-	public static long SEMESTERNAME_COLUMN_BITMASK = 128L;
+	public static long PASSWORD_COLUMN_BITMASK = 128L;
+	public static long SEMESTERNAME_COLUMN_BITMASK = 256L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Lectureseries"));
 
@@ -461,7 +462,17 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 
 	@Override
 	public void setPassword(String password) {
+		_columnBitmask |= PASSWORD_COLUMN_BITMASK;
+
+		if (_originalPassword == null) {
+			_originalPassword = _password;
+		}
+
 		_password = password;
+	}
+
+	public String getOriginalPassword() {
+		return GetterUtil.getString(_originalPassword);
 	}
 
 	@Override
@@ -608,6 +619,8 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 		lectureseriesModelImpl._originalLanguage = lectureseriesModelImpl._language;
 
 		lectureseriesModelImpl._originalFacultyName = lectureseriesModelImpl._facultyName;
+
+		lectureseriesModelImpl._originalPassword = lectureseriesModelImpl._password;
 
 		lectureseriesModelImpl._originalApproved = lectureseriesModelImpl._approved;
 
@@ -838,6 +851,7 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 	private String _instructorsString;
 	private long _lectureseriesId;
 	private String _password;
+	private String _originalPassword;
 	private int _approved;
 	private int _originalApproved;
 	private boolean _setOriginalApproved;

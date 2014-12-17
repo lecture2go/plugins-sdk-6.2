@@ -4340,6 +4340,543 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 	}
 
 	private static final String _FINDER_COLUMN_APPROVED_APPROVED_2 = "lectureseries.approved = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_PASSWORD = new FinderPath(LectureseriesModelImpl.ENTITY_CACHE_ENABLED,
+			LectureseriesModelImpl.FINDER_CACHE_ENABLED,
+			LectureseriesImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByPassword",
+			new String[] {
+				String.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PASSWORD =
+		new FinderPath(LectureseriesModelImpl.ENTITY_CACHE_ENABLED,
+			LectureseriesModelImpl.FINDER_CACHE_ENABLED,
+			LectureseriesImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByPassword", new String[] { String.class.getName() },
+			LectureseriesModelImpl.PASSWORD_COLUMN_BITMASK |
+			LectureseriesModelImpl.NAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_PASSWORD = new FinderPath(LectureseriesModelImpl.ENTITY_CACHE_ENABLED,
+			LectureseriesModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPassword",
+			new String[] { String.class.getName() });
+
+	/**
+	 * Returns all the lectureserieses where password = &#63;.
+	 *
+	 * @param password the password
+	 * @return the matching lectureserieses
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Lectureseries> findByPassword(String password)
+		throws SystemException {
+		return findByPassword(password, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the lectureserieses where password = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.LectureseriesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param password the password
+	 * @param start the lower bound of the range of lectureserieses
+	 * @param end the upper bound of the range of lectureserieses (not inclusive)
+	 * @return the range of matching lectureserieses
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Lectureseries> findByPassword(String password, int start,
+		int end) throws SystemException {
+		return findByPassword(password, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the lectureserieses where password = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.LectureseriesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param password the password
+	 * @param start the lower bound of the range of lectureserieses
+	 * @param end the upper bound of the range of lectureserieses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching lectureserieses
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Lectureseries> findByPassword(String password, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PASSWORD;
+			finderArgs = new Object[] { password };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_PASSWORD;
+			finderArgs = new Object[] { password, start, end, orderByComparator };
+		}
+
+		List<Lectureseries> list = (List<Lectureseries>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (Lectureseries lectureseries : list) {
+				if (!Validator.equals(password, lectureseries.getPassword())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_LECTURESERIES_WHERE);
+
+			boolean bindPassword = false;
+
+			if (password == null) {
+				query.append(_FINDER_COLUMN_PASSWORD_PASSWORD_1);
+			}
+			else if (password.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_PASSWORD_PASSWORD_3);
+			}
+			else {
+				bindPassword = true;
+
+				query.append(_FINDER_COLUMN_PASSWORD_PASSWORD_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(LectureseriesModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindPassword) {
+					qPos.add(password);
+				}
+
+				if (!pagination) {
+					list = (List<Lectureseries>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<Lectureseries>(list);
+				}
+				else {
+					list = (List<Lectureseries>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first lectureseries in the ordered set where password = &#63;.
+	 *
+	 * @param password the password
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching lectureseries
+	 * @throws de.uhh.l2g.plugins.NoSuchLectureseriesException if a matching lectureseries could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Lectureseries findByPassword_First(String password,
+		OrderByComparator orderByComparator)
+		throws NoSuchLectureseriesException, SystemException {
+		Lectureseries lectureseries = fetchByPassword_First(password,
+				orderByComparator);
+
+		if (lectureseries != null) {
+			return lectureseries;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("password=");
+		msg.append(password);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchLectureseriesException(msg.toString());
+	}
+
+	/**
+	 * Returns the first lectureseries in the ordered set where password = &#63;.
+	 *
+	 * @param password the password
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Lectureseries fetchByPassword_First(String password,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<Lectureseries> list = findByPassword(password, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last lectureseries in the ordered set where password = &#63;.
+	 *
+	 * @param password the password
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching lectureseries
+	 * @throws de.uhh.l2g.plugins.NoSuchLectureseriesException if a matching lectureseries could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Lectureseries findByPassword_Last(String password,
+		OrderByComparator orderByComparator)
+		throws NoSuchLectureseriesException, SystemException {
+		Lectureseries lectureseries = fetchByPassword_Last(password,
+				orderByComparator);
+
+		if (lectureseries != null) {
+			return lectureseries;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("password=");
+		msg.append(password);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchLectureseriesException(msg.toString());
+	}
+
+	/**
+	 * Returns the last lectureseries in the ordered set where password = &#63;.
+	 *
+	 * @param password the password
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Lectureseries fetchByPassword_Last(String password,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByPassword(password);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Lectureseries> list = findByPassword(password, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the lectureserieses before and after the current lectureseries in the ordered set where password = &#63;.
+	 *
+	 * @param lectureseriesId the primary key of the current lectureseries
+	 * @param password the password
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next lectureseries
+	 * @throws de.uhh.l2g.plugins.NoSuchLectureseriesException if a lectureseries with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Lectureseries[] findByPassword_PrevAndNext(long lectureseriesId,
+		String password, OrderByComparator orderByComparator)
+		throws NoSuchLectureseriesException, SystemException {
+		Lectureseries lectureseries = findByPrimaryKey(lectureseriesId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Lectureseries[] array = new LectureseriesImpl[3];
+
+			array[0] = getByPassword_PrevAndNext(session, lectureseries,
+					password, orderByComparator, true);
+
+			array[1] = lectureseries;
+
+			array[2] = getByPassword_PrevAndNext(session, lectureseries,
+					password, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Lectureseries getByPassword_PrevAndNext(Session session,
+		Lectureseries lectureseries, String password,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_LECTURESERIES_WHERE);
+
+		boolean bindPassword = false;
+
+		if (password == null) {
+			query.append(_FINDER_COLUMN_PASSWORD_PASSWORD_1);
+		}
+		else if (password.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_PASSWORD_PASSWORD_3);
+		}
+		else {
+			bindPassword = true;
+
+			query.append(_FINDER_COLUMN_PASSWORD_PASSWORD_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(LectureseriesModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (bindPassword) {
+			qPos.add(password);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(lectureseries);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<Lectureseries> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the lectureserieses where password = &#63; from the database.
+	 *
+	 * @param password the password
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByPassword(String password) throws SystemException {
+		for (Lectureseries lectureseries : findByPassword(password,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(lectureseries);
+		}
+	}
+
+	/**
+	 * Returns the number of lectureserieses where password = &#63;.
+	 *
+	 * @param password the password
+	 * @return the number of matching lectureserieses
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByPassword(String password) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_PASSWORD;
+
+		Object[] finderArgs = new Object[] { password };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_LECTURESERIES_WHERE);
+
+			boolean bindPassword = false;
+
+			if (password == null) {
+				query.append(_FINDER_COLUMN_PASSWORD_PASSWORD_1);
+			}
+			else if (password.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_PASSWORD_PASSWORD_3);
+			}
+			else {
+				bindPassword = true;
+
+				query.append(_FINDER_COLUMN_PASSWORD_PASSWORD_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindPassword) {
+					qPos.add(password);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_PASSWORD_PASSWORD_1 = "lectureseries.password IS NULL";
+	private static final String _FINDER_COLUMN_PASSWORD_PASSWORD_2 = "lectureseries.password = ?";
+	private static final String _FINDER_COLUMN_PASSWORD_PASSWORD_3 = "(lectureseries.password IS NULL OR lectureseries.password = '')";
 
 	public LectureseriesPersistenceImpl() {
 		setModelClass(Lectureseries.class);
@@ -4700,6 +5237,23 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_APPROVED, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_APPROVED,
+					args);
+			}
+
+			if ((lectureseriesModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PASSWORD.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						lectureseriesModelImpl.getOriginalPassword()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PASSWORD, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PASSWORD,
+					args);
+
+				args = new Object[] { lectureseriesModelImpl.getPassword() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PASSWORD, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PASSWORD,
 					args);
 			}
 		}

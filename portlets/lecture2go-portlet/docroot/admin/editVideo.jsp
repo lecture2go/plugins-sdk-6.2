@@ -7,7 +7,6 @@
 <jsp:useBean id="reqVideo" type="de.uhh.l2g.plugins.model.Video" scope="request" />
 <jsp:useBean id="reqMetadata" type="de.uhh.l2g.plugins.model.Metadata" scope="request" />
 
-
 <%
 	String actionURL = "";
 	
@@ -58,7 +57,7 @@
 <aui:fieldset helpMessage="test" column="true" label="video-metadata" >
 	<aui:layout>
 		<aui:form action="<%=actionURL%>" commandName="model" name="metadata">
-			<aui:select size="1" name="lectureseriesId" label="lectureseries" required="true">
+			<aui:select size="1" name="lectureseriesId" label="lectureseries">
 				<aui:option value="">select-lecture-series</aui:option>
 					<%for (int i = 0; i < reqLectureseriesList.size(); i++) {
 						if(reqLectureseriesList.get(i).getLectureseriesId()==reqVideo.getLectureseriesId()){%>
@@ -202,6 +201,7 @@ AUI().use(
 		'aui-node',
 		function(A) {
 				// Select the node(s) using a css selector string
+			    var lectureseries = A.one('#<portlet:namespace/>lectureseriesId');
 			    var language = A.one('#<portlet:namespace/>language');
 			    var title = A.one('#<portlet:namespace/>title');
 			    var tags = A.one('#<portlet:namespace/>tags');
@@ -211,6 +211,7 @@ AUI().use(
 			    var license1 = A.one('#<portlet:namespace/>ccbyncsa');
 			    var license2 = A.one('#<portlet:namespace/>uhhl2go');
 			    
+			    lectureseries.on('change',function(A){updateMetadata()});
 			    title.on('keyup',function(A){updateMetadata()});
 				language.on('change',function(A){updateMetadata()});
 			    tags.on('keyup',function(A){updateMetadata()});

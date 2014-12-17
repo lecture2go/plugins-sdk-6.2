@@ -63,4 +63,8 @@ public class LectureseriesLocalServiceImpl extends LectureseriesLocalServiceBase
 	public List<Lectureseries> getAllLectureseriesWhithOpenaccessVideos(){
 		return LectureseriesFinderUtil.findAllLectureseriesWhithOpenaccessVideos();
 	}
+	
+	public List<Lectureseries> getAllLectureseriesWhithPassword(){
+		return LectureseriesFinderUtil.findAllLectureseriesWhithPassword();
+	}
 }

@@ -30,6 +30,8 @@ import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Producer_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
+import de.uhh.l2g.plugins.service.persistence.LectureseriesFinderUtil;
+import de.uhh.l2g.plugins.util.Htaccess;
 
 public class AdminLectureSeriesManagement extends MVCPortlet {
 	
@@ -87,6 +89,8 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		} catch (SystemException e) {
 			e.printStackTrace();
 		}
+		//refresh htaccess authentication files 
+		Htaccess.writePW(LectureseriesLocalServiceUtil.getAllLectureseriesWhithPassword());
 	}
 
 	public void editLectureseries(ActionRequest request, ActionResponse response) throws NumberFormatException, PortalException, SystemException{
@@ -112,6 +116,8 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		
 		//update database
 		LectureseriesLocalServiceUtil.updateLectureseries(lectureseries);
+		//refresh htaccess authentication files 
+		Htaccess.writePW(LectureseriesLocalServiceUtil.getAllLectureseriesWhithPassword());
 		
 		//update institution link
 		//delete old entries first
@@ -161,6 +167,8 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		
 		//save object to database
 		Long lId = LectureseriesLocalServiceUtil.addLectureseries(lectureseries).getLectureseriesId();
+		//refresh htaccess authentication files 
+		Htaccess.writePW(LectureseriesLocalServiceUtil.getAllLectureseriesWhithPassword());
 		
 		//link to institution
 		for(int i=0;i<institutions.length;i++){

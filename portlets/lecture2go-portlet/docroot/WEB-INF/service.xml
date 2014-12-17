@@ -44,6 +44,9 @@
         <finder name="Approved" return-type="Collection">
             <finder-column name="approved"></finder-column>
         </finder>
+        <finder name="Password" return-type="Collection" unique="false">
+            <finder-column name="password"></finder-column>
+        </finder>
     </entity>
     <entity name="Institution" local-service="true" remote-service="false">
         <column name="institutionId" type="long" primary="true" id-type="increment"></column>

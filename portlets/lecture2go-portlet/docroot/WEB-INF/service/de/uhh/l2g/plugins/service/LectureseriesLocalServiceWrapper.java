@@ -307,6 +307,11 @@ public class LectureseriesLocalServiceWrapper
 		return _lectureseriesLocalService.getAllLectureseriesWhithOpenaccessVideos();
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getAllLectureseriesWhithPassword() {
+		return _lectureseriesLocalService.getAllLectureseriesWhithPassword();
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
