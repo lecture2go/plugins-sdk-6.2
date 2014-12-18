@@ -62,6 +62,12 @@ public class AdminVideoManagement extends MVCPortlet {
 	private final static Logger logger = Logger.getLogger(AdminVideoManagement.class.getName());
 	
 	@SuppressWarnings("unused")
+	public void addSegment(ActionRequest request, ActionResponse response){
+		int i = 0;
+		i++;
+		response.setRenderParameter("jspPage", "/admin/includeAddSegment.jsp");
+	}
+	
 	public void viewVideo(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
 		
 		List<Lectureseries> ls  = LectureseriesLocalServiceUtil.getAllLectureseriesWhithOpenaccessVideos();
