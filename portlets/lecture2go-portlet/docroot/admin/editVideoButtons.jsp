@@ -30,7 +30,7 @@
 	<portlet:param name="videoId" value="<%= primKey%>" />
 </portlet:actionURL>
 
-<portlet:actionURL name="segmentateVideo" var="segmentURL">
+<portlet:actionURL name="addSegment" var="segmentURL">
 	<portlet:param name="videoId" value="<%= primKey%>" />
 </portlet:actionURL>
 
