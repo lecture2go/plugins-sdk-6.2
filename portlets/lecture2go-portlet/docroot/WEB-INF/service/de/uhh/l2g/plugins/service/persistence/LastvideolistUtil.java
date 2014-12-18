@@ -111,6 +111,167 @@ public class LastvideolistUtil {
 	}
 
 	/**
+	* Returns all the lastvideolists where videoId = &#63;.
+	*
+	* @param videoId the video ID
+	* @return the matching lastvideolists
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<de.uhh.l2g.plugins.model.Lastvideolist> findByVideo(
+		long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByVideo(videoId);
+	}
+
+	/**
+	* Returns a range of all the lastvideolists where videoId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.LastvideolistModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param videoId the video ID
+	* @param start the lower bound of the range of lastvideolists
+	* @param end the upper bound of the range of lastvideolists (not inclusive)
+	* @return the range of matching lastvideolists
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<de.uhh.l2g.plugins.model.Lastvideolist> findByVideo(
+		long videoId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByVideo(videoId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the lastvideolists where videoId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.LastvideolistModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param videoId the video ID
+	* @param start the lower bound of the range of lastvideolists
+	* @param end the upper bound of the range of lastvideolists (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching lastvideolists
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<de.uhh.l2g.plugins.model.Lastvideolist> findByVideo(
+		long videoId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByVideo(videoId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first lastvideolist in the ordered set where videoId = &#63;.
+	*
+	* @param videoId the video ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching lastvideolist
+	* @throws de.uhh.l2g.plugins.NoSuchLastvideolistException if a matching lastvideolist could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Lastvideolist findByVideo_First(
+		long videoId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchLastvideolistException {
+		return getPersistence().findByVideo_First(videoId, orderByComparator);
+	}
+
+	/**
+	* Returns the first lastvideolist in the ordered set where videoId = &#63;.
+	*
+	* @param videoId the video ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching lastvideolist, or <code>null</code> if a matching lastvideolist could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Lastvideolist fetchByVideo_First(
+		long videoId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByVideo_First(videoId, orderByComparator);
+	}
+
+	/**
+	* Returns the last lastvideolist in the ordered set where videoId = &#63;.
+	*
+	* @param videoId the video ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching lastvideolist
+	* @throws de.uhh.l2g.plugins.NoSuchLastvideolistException if a matching lastvideolist could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Lastvideolist findByVideo_Last(
+		long videoId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchLastvideolistException {
+		return getPersistence().findByVideo_Last(videoId, orderByComparator);
+	}
+
+	/**
+	* Returns the last lastvideolist in the ordered set where videoId = &#63;.
+	*
+	* @param videoId the video ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching lastvideolist, or <code>null</code> if a matching lastvideolist could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Lastvideolist fetchByVideo_Last(
+		long videoId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByVideo_Last(videoId, orderByComparator);
+	}
+
+	/**
+	* Returns the lastvideolists before and after the current lastvideolist in the ordered set where videoId = &#63;.
+	*
+	* @param lastvideolistId the primary key of the current lastvideolist
+	* @param videoId the video ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next lastvideolist
+	* @throws de.uhh.l2g.plugins.NoSuchLastvideolistException if a lastvideolist with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Lastvideolist[] findByVideo_PrevAndNext(
+		int lastvideolistId, long videoId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchLastvideolistException {
+		return getPersistence()
+				   .findByVideo_PrevAndNext(lastvideolistId, videoId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the lastvideolists where videoId = &#63; from the database.
+	*
+	* @param videoId the video ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByVideo(long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByVideo(videoId);
+	}
+
+	/**
+	* Returns the number of lastvideolists where videoId = &#63;.
+	*
+	* @param videoId the video ID
+	* @return the number of matching lastvideolists
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByVideo(long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByVideo(videoId);
+	}
+
+	/**
 	* Caches the lastvideolist in the entity cache if it is enabled.
 	*
 	* @param lastvideolist the lastvideolist

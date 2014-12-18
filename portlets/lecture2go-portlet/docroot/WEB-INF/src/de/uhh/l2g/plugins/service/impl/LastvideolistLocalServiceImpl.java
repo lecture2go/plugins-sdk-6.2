@@ -14,6 +14,11 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import java.util.List;
+
+import com.liferay.portal.kernel.exception.SystemException;
+
+import de.uhh.l2g.plugins.model.Lastvideolist;
 import de.uhh.l2g.plugins.service.base.LastvideolistLocalServiceBaseImpl;
 
 /**
@@ -37,4 +42,12 @@ public class LastvideolistLocalServiceImpl
 	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.LastvideolistLocalServiceUtil} to access the lastvideolist local service.
 	 */
+	
+	public void deleteByVideoId(Long videoId) {
+		try {
+			lastvideolistPersistence.removeByVideo(videoId);
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+	}
 }

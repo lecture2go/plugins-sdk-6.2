@@ -278,8 +278,7 @@ public class LicenseLocalServiceUtil {
 		return getService().getByVideoId(videoId);
 	}
 
-	public static boolean deleteByVideoId(java.lang.Long videoId)
-		throws de.uhh.l2g.plugins.NoSuchLicenseException {
+	public static boolean deleteByVideoId(java.lang.Long videoId) {
 		return getService().deleteByVideoId(videoId);
 	}
 

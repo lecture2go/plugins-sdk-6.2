@@ -268,8 +268,11 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		} catch (NoSuchElementException nseex) {
 		}
 		// SURL
-		if (objectVideo.getOpenAccess() != 1)
+		if (objectVideo.getOpenAccess() != 1){
 			objectVideo.setSecureUrl(webhome + "/lecture/-/sv/" + objectVideo.getSPreffix());
+		}else{
+			objectVideo.setSecureUrl("");
+		}
 		// Streaming-URL
 		String streamUrl = "";
 		String streamIosUrl = "";
@@ -305,10 +308,19 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		if(video.getMp4File().isFile()){
 			JSONObject jsonoMp4 = new JSONObject();
 			try {
-				jsonoMp4.put("name", video.getFilename());
+				String name="";
+				String url="";
+				if(video.getOpenAccess()==1){
+					name=video.getFilename();
+					url=video.getUrl();
+				}else{
+					name=video.getSurl();
+					url=video.getSurl();
+				}
+				jsonoMp4.put("name", name);
 				jsonoMp4.put("size", video.getFileSize());
 				jsonoMp4.put("type", video.getContainerFormat());
-				jsonoMp4.put("url", video.getUrl());
+				jsonoMp4.put("url", url);
 				jsonoMp4.put("thumbnailUrl", video.getImageMedium());
 				jsonoMp4.put("deleteUrl", "#");
 				jsonoMp4.put("deleteType", "DELETE");

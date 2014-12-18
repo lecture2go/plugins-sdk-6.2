@@ -69,7 +69,11 @@ public class LastvideolistModelImpl extends BaseModelImpl<Lastvideolist>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.finder.cache.enabled.de.uhh.l2g.plugins.model.Lastvideolist"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.Lastvideolist"),
+			true);
+	public static long VIDEOID_COLUMN_BITMASK = 1L;
+	public static long LASTVIDEOLISTID_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Lastvideolist"));
 
@@ -148,7 +152,23 @@ public class LastvideolistModelImpl extends BaseModelImpl<Lastvideolist>
 
 	@Override
 	public void setVideoId(long videoId) {
+		_columnBitmask |= VIDEOID_COLUMN_BITMASK;
+
+		if (!_setOriginalVideoId) {
+			_setOriginalVideoId = true;
+
+			_originalVideoId = _videoId;
+		}
+
 		_videoId = videoId;
+	}
+
+	public long getOriginalVideoId() {
+		return _originalVideoId;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -217,6 +237,13 @@ public class LastvideolistModelImpl extends BaseModelImpl<Lastvideolist>
 
 	@Override
 	public void resetOriginalValues() {
+		LastvideolistModelImpl lastvideolistModelImpl = this;
+
+		lastvideolistModelImpl._originalVideoId = lastvideolistModelImpl._videoId;
+
+		lastvideolistModelImpl._setOriginalVideoId = false;
+
+		lastvideolistModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -271,5 +298,8 @@ public class LastvideolistModelImpl extends BaseModelImpl<Lastvideolist>
 		};
 	private int _lastvideolistId;
 	private long _videoId;
+	private long _originalVideoId;
+	private boolean _setOriginalVideoId;
+	private long _columnBitmask;
 	private Lastvideolist _escapedModel;
 }

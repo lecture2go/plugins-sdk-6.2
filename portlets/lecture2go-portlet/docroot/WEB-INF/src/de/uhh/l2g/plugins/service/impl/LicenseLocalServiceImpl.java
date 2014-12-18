@@ -48,12 +48,14 @@ public class LicenseLocalServiceImpl extends LicenseLocalServiceBaseImpl {
 		return l;
 	}
 	
-	public boolean deleteByVideoId(Long videoId) throws NoSuchLicenseException {
+	public boolean deleteByVideoId(Long videoId) {
 		boolean ret = false;
 		try {
 			LicenseUtil.removeByVideo(videoId);
 		} catch (SystemException e) {
 			ret = true;
+			e.printStackTrace();
+		} catch (NoSuchLicenseException e) {
 			e.printStackTrace();
 		}
 		return ret;

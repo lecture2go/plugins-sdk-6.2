@@ -700,8 +700,7 @@ public class LicenseLocalServiceClp implements LicenseLocalService {
 	}
 
 	@Override
-	public boolean deleteByVideoId(java.lang.Long videoId)
-		throws de.uhh.l2g.plugins.NoSuchLicenseException {
+	public boolean deleteByVideoId(java.lang.Long videoId) {
 		Object returnObj = null;
 
 		try {
@@ -711,10 +710,6 @@ public class LicenseLocalServiceClp implements LicenseLocalService {
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof de.uhh.l2g.plugins.NoSuchLicenseException) {
-				throw (de.uhh.l2g.plugins.NoSuchLicenseException)t;
-			}
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
