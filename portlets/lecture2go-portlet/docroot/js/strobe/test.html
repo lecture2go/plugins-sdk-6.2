@@ -1,0 +1,316 @@
+	<script type="text/javascript" src="http://134.100.2.93:8080/jquery/1.4.2/jquery.min.js"/></script>	
+	<script type="text/javascript" src="http://134.100.2.93:8080/swfobject/2.2/swfobject.js"></script>	
+
+  	<script type="text/javascript" src="http://134.100.2.93:8080/strobemediaplayer/lib/ParsedQueryString.js"></script>
+  	<script type="text/javascript" src="http://134.100.2.93:8080/strobemediaplayer/jsdemo.js"></script>	
+		
+    <script type="text/javascript">
+
+    		// Collect query parameters in an object that we can
+    		// forward to SWFObject:
+    		
+    		var pqs = new ParsedQueryString();
+    		var parameterNames = pqs.params(false);
+    		var parameters =
+				{	src:"rtmp://fms.rrz.uni-hamburg.de/vod/mp4:44l2guvia029/wwwstud_humbert_2011-05-03_18-09.mp4"	   		
+	   			,	autoPlay: true	   		
+				,	controlBarAutoHide: false
+				,	poster: "images/poster.png"
+				,   javascriptCallbackFunction: "onJavaScriptBridgeCreated"
+    			};
+    				
+    		for (var i=0; i<parameterNames.length; i++)
+    		{
+    			var parameterName = parameterNames[i];
+    			parameters[parameterName]
+    				=	pqs.param(parameterName)
+    				||	parameters[parameterName];
+    		}    	
+			
+			// Embed the player SWF:
+    		swfobject.embedSWF
+				( "http://134.100.2.93:8080/strobemediaplayer/StrobeMediaPlayback.swf"
+				, "strobeMediaPlayback"
+				, 508 
+				, 275 
+				, "10.1.0" 
+				, "expressInstall.swf" 
+				, parameters
+				, { allowFullScreen: "true", wmode: "opaque" }
+				, { name: "strobeMediaPlayback" }				
+			);		
+
+			org.strobemediaplayback.InteractiveCC = function(player, captionArea, subtitleArea)
+			{
+				this.player = player;	
+				this.captionArea = captionArea;
+				this.subtitleArea = subtitleArea;
+				this.oldSelected = null;
+				this.timer = null;
+				this.refreshTimer = null;
+				this.refreshArea = true;
+			
+				this.bindCaptionArea(this.captionArea);	
+			};
+			
+			org.strobemediaplayback.prependTimeStamp = function (divId)
+			{
+				$(divId).find('iavst').each(
+						function(){		
+							$(this).prepend( $(this).attr("begin") + " ");
+						}
+					);
+			};
+			
+			org.strobemediaplayback.timeToSec = function (t)
+			{
+				var s=t.split(':');
+				return parseInt(s[2],10) + 60.0 * parseInt(s[1],10) + 3600.0* parseInt(s[0],10);
+			};
+
+			org.strobemediaplayback.secondsToHms = function (d) 
+			{
+					d = Number(d);
+					var h = Math.floor(d / 3600);
+					var m = Math.floor(d % 3600 / 60);
+					var s = Math.floor(d % 3600 % 60);
+					return ((h < 10 ? "0" : "") + h + ":"+ (m < 10 ? "0" : "") + m + ":"+ (s < 10 ? "0" : "") + s);
+			};
+			
+			org.strobemediaplayback.InteractiveCC.prototype = 
+		 	{
+				bindCaptionArea: function(newCaptionArea)
+				{
+					var oldThis = this;
+					this.captionArea.unbind();
+					this.captionArea.find('iavst')
+					.each(
+						function()
+						{		
+								$(this).unbind();
+						}
+					);
+					
+					this.captionArea = newCaptionArea;
+					this.captionArea.bind('mouseout', this, this.onExitArea);
+					this.captionArea.bind('mouseover', this, this.onEnterArea);
+					
+					this.captionArea.find('iavst')
+					.each(
+						function()
+						{		
+								$(this).bind('click', oldThis, oldThis.onJump);
+								$(this).bind('mouseover', oldThis, oldThis.onOver);	
+								$(this).bind('mouseout', oldThis, oldThis.onOut);	
+						}
+					);	
+				},
+				
+				getCurrentSub: function(currentPos) 
+				{
+					var lastSubtitleTime = "";
+					this.captionArea.find('iavst')
+							.each(
+								function()
+								{		
+										var subtitleTime = org.strobemediaplayback.timeToSec($(this).attr("begin"));
+										if (currentPos >= subtitleTime)
+										{
+											lastSubtitleTime=$(this).attr("begin");
+										}
+								}
+							);
+					
+					return lastSubtitleTime;
+				},
+
+				onCurrentTimeChange: function (currentTime, duration)
+				{				
+					var oldThis= this;
+					var newSelected = this.getCurrentSub(currentTime);
+					
+					if (newSelected!=this.oldSelected)
+					{
+						clearTimeout(this.timer);
+						$('iavst[begin="'+this.oldSelected+'"]', this.captionArea).removeClass('ccc');
+						this.oldSelected = newSelected;
+						
+						$('iavst[begin="'+this.oldSelected+'"]', this.captionArea).addClass('ccc');
+						
+						
+						var cc = $('iavst[begin="'+this.oldSelected+'"]', this.captionArea).html();
+						cc = cc.substring(cc.indexOf(" "));
+					
+						this.subtitleArea.html(cc);
+						var subtitleEnd = $('iavst[begin="'+this.oldSelected+'"]', this.captionArea).attr("end");
+						var subtitleBegin = $('iavst[begin="'+this.oldSelected+'"]', this.captionArea).attr("begin");
+						if (subtitleEnd!=undefined && subtitleEnd != "")
+						{
+							this.timer = setTimeout( function()
+								{
+									oldThis.subtitleArea.empty();
+								},
+								1000.0*(org.strobemediaplayback.timeToSec(subtitleEnd)-currentTime)
+							);
+						}
+						
+						if (this.refreshArea)
+						{
+							this.captionArea.scrollTo($('iavst[begin="'+this.oldSelected+'"]', this.captionArea), {duration: 600, over:{top:-10}} );
+						}
+						
+					}
+				},
+				
+				////
+				onJump: function (event)
+				{			
+					var player = event.data.player;
+					var jumpPos = $(event.currentTarget).attr("begin");
+					var subtitleEnd = $(event.currentTarget).attr("end");
+
+					var nrSec = org.strobemediaplayback.timeToSec(jumpPos);
+					if (player.getState() != "ready" && player.canSeekTo(nrSec))
+							{
+								clearTimeout(event.data.timer);
+								$("iavst[begin='"+jumpPos+"']", event.data.captionArea).addClass('ccc');
+								if (event.data.oldSelected != "" && event.data.oldSelected != jumpPos) 
+								{
+									$('iavst[begin="'+ event.data.oldSelected +'"]', event.data.captionArea).removeClass('ccc');
+									event.data.subtitleArea.empty();
+								}
+								event.data.oldSelected = jumpPos;
+								var cc = $('iavst[begin="'+event.data.oldSelected+'"]', event.data.captionArea).html();
+								cc = cc.substring(cc.indexOf(" "));
+								event.data.subtitleArea.html(cc);
+								player.seek(nrSec);
+								if ( subtitleEnd!=undefined && subtitleEnd != "")
+									{
+										
+										event.data.timer = setTimeout( function()
+											{
+												event.data.subtitleArea.empty();
+											},
+											1000.0 * (org.strobemediaplayback.timeToSec(subtitleEnd) - org.strobemediaplayback.timeToSec(jumpPos))
+										);
+									}
+							}	
+							else
+							{
+								return false;
+							}		
+					//$("#debug2").append("<br />seek=" + nrSec);
+				},
+				
+				onOver: function (event)
+				{
+					$(event.currentTarget).addClass('hovercc');
+					
+				},
+				
+				onOut: function (event)
+				{
+					$(event.currentTarget).removeClass('hovercc');
+				},
+				
+				onEnterArea: function (event)
+				{
+					clearTimeout(event.data.refreshTimer);
+					event.data.refreshArea = false;
+				},
+				
+				onExitArea: function (event)
+				{
+					event.data.refreshTimer = setTimeout( function()
+						{
+							event.data.refreshArea = true;
+						},
+						2000
+					)
+				}
+
+			}
+			var player = null;
+			function onJavaScriptBridgeCreated(id)
+			{			
+				if (player == null) 
+				{
+					player = document.getElementById(id);
+					
+					org.strobemediaplayback.players[id] = new org.strobemediaplayback.StrobeMediaPlaybackJSUI(player, $("#" + id + "ControlBar"));
+					
+					org.strobemediaplayback.bindListeners(player, org.strobemediaplayback.players[id], "org.strobemediaplayback.players['" + id + "']");
+					
+					org.strobemediaplayback.players[id].cc = new org.strobemediaplayback.InteractiveCC(player, $("#dsCC"), $("#subtext"));
+					org.strobemediaplayback.bindListeners(player, org.strobemediaplayback.players[id].cc, "org.strobemediaplayback.players['" + id + "'].cc");
+				}				
+			}
+     </script>
+
+  	<style type="text/css">
+		<!--
+		.Verdana {
+			font-family: Verdana, Geneva, sans-serif;
+		}
+		.ccc
+		{
+			color:red;
+			font-weight:bold;
+		}
+		.hovercc
+		{
+			background-color: #f0f0f0;
+		}
+		-->
+	</style>
+	
+<table id="info" cellpadding="5" border="1" width="100%"> 
+  <tr>
+    <td valign="top">
+		<div id="strobeMediaPlayback">
+	      <br/><br/><br/> Zum Anzeigen der Videos den Flash Player <a href="http://www.macromedia.com/go/getflashplayer"> downloaden</a> und/oder <em>javascript</em> aktivieren! <br/><br/><br/>
+	    </div>
+    </td>
+    </tr>
+</table>
+
+<br/>
+		<div id="dsCC">
+			<iavst begin='00:00:15' end='00:00:18'>At the left we can see...</iavst><br/>
+			<iavst begin='00:00:18' end='00:00:20'>At the right we can see the...</iavst><br/>
+			<iavst begin='00:00:20' end='00:00:22'>...the head-snarlers</iavst><br/>
+			<iavst begin='00:00:22' end='00:00:24'>Everything is safe.  Perfectly safe.</iavst><br/>
+			<iavst begin='00:00:24' end='00:00:27'>Emo?</iavst><br/>
+			<iavst begin='00:00:28' end='00:00:30'>Watch out!</iavst><br/>
+			<iavst begin='00:00:47' end='00:00:48'>Are you hurt?</iavst><br/>
+			<iavst begin='00:00:52' end='00:00:54'>I don't think so.  You?</iavst><br/>
+		</div>
+<br/>
+
+<center>
+	<table width="95%" border="0">
+		<tr>
+			<td width="40%" align="left">
+				<c:if test="${model.video.duration!=''}">
+					<!-- meta begin -->
+					<em class="white"><span style="font-size: 8px;">Duration:&nbsp;</span></em><em class="orange"><span style="font-size: 8px;">${model.video.durationMin} Min.</span></em>
+					<c:if test="${model.video.downloadAllawed==true}">
+					<em class="white"><span style="font-size: 8px;">| MP4: </span></em><em class="orange"><span style="font-size: 8px;">${model.video.fileSizeMB} MB</span></em>
+					</c:if>
+					<!-- meta end -->
+				</c:if>
+			</td>
+			<td  width="42%">&nbsp;</td>
+			<td  width="10%"  align="right">
+				<c:if test="${model.video.hits>1}">
+					<em class="orange"><span style="font-size: 8px;">${model.video.hits}</span></em>
+				</c:if>
+			</td>
+			<td  width="8%" align="left">
+				<c:if test="${model.video.hits>1}">
+					<em class="white"><span style="font-size: 8px;">&nbsp; Aufrufe</span></em>
+				</c:if>
+			</td>
+		</tr>
+	</table>
+</center>
