@@ -63,9 +63,14 @@ public class AdminVideoManagement extends MVCPortlet {
 	
 	@SuppressWarnings("unused")
 	public void addSegment(ActionRequest request, ActionResponse response){
-		int i = 0;
-		i++;
-		response.setRenderParameter("jspPage", "/admin/includeAddSegment.jsp");
+		Video reqVideo = new VideoImpl();
+		Long reqVideoId = new Long(0);
+		try{reqVideoId = new Long(request.getParameterMap().get("videoId")[0]);}catch(Exception e){}
+		reqVideo = VideoLocalServiceUtil.getVideo(reqVideoId);
+
+		response.setRenderParameter("jspPage", "/admin/segments.jsp");
+		request.setAttribute("reqVideo", reqVideo);
+		
 	}
 	
 	public void viewVideo(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
@@ -318,7 +323,23 @@ public class AdminVideoManagement extends MVCPortlet {
 				logger.info( "Error in adding modem");
 			}			
 		}
-
+		
+		if(resourceID.equals("toggleSegmentation")){
+			String segmentation = ParamUtil.getString(resourceRequest, "segmentationPermittedCheckbox");
+			int sAllowed = new Integer(segmentation);
+			if(sAllowed==0)video.setPermittedToSegment(0);
+			else video.setPermittedToSegment(1);
+			
+			try {
+				VideoLocalServiceUtil.updateVideo(video);
+			} catch (SystemException e) {
+				e.printStackTrace();
+			}
+			
+			JSONObject json = JSONFactoryUtil.createJSONObject();
+			writeJSON(resourceRequest, resourceResponse, json);
+		}
+		
 	}
 
 	public String getFileAsString(File file) {
@@ -398,7 +419,4 @@ public class AdminVideoManagement extends MVCPortlet {
 		pm.deactivateDownload(video);
 	}
 	
-	public void segmentateVideo(ActionRequest request, ActionResponse response){
-		
-	}
 }

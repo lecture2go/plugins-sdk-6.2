@@ -15,7 +15,6 @@
 package de.uhh.l2g.plugins.service.impl;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -29,13 +28,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PropsUtil;
 
-import de.uhh.l2g.admin.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.NoSuchInstitutionException;
 import de.uhh.l2g.plugins.NoSuchProducerException;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Lastvideolist;
-import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.Metadata;
 import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.model.Video;
@@ -159,7 +156,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			objectVideo.setShortName(objectMetadata.getCreator().split(" ")[objectMetadata.getCreator().split(" ").length - 1]);
 		}catch(NullPointerException npe){}
 
-		// images
+		// thumbnails
 		String image = "";
 		String imageSmall = "";
 		String imageMedium = "";
@@ -175,9 +172,9 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			imageSmall = objectVideo.getSPreffix() + "_s.jpg";
 			imageMedium = objectVideo.getSPreffix() + "_m.jpg";
 		}
-		// thumbnails
+
 		// set thumbnail
-		// if nothing file
+		// if no file
 		if (objectVideo.getContainerFormat().equals("") && objectVideo.getFilename().equals("")) {
 			objectVideo.setImage("/lecture2go-portlet/img/novideo.jpg");
 			objectVideo.setImageSmall("/lecture2go-portlet/img/novideo.jpg");
@@ -193,11 +190,10 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		if (objectVideo.getContainerFormat().equals("mp4")) {
 			File videoFile = new File(videoPfad);
 			if (videoFile.isFile()) {
-				FFmpegManager ffmpegMan = new FFmpegManager();
-				if (!ffmpegMan.thumbnailsExists(objectVideo)) {
+				if (!FFmpegManager.thumbnailsExists(objectVideo)) {
 					// create thumbnail
 					String thumbnailLocation = PropsUtil.get("lecture2go.images.system.path") + "/" + image;
-					ffmpegMan.createThumbnail(videoPfad, thumbnailLocation);
+					FFmpegManager.createThumbnail(videoPfad, thumbnailLocation);
 				}
 				objectVideo.setImage(PropsUtil.get("lecture2go.web.root") + "/images/" + image);
 				objectVideo.setImageSmall(PropsUtil.get("lecture2go.web.root") + "/images/" + imageSmall);
