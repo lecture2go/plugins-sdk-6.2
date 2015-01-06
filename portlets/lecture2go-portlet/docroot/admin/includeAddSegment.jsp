@@ -1,2 +1,0 @@
-<%@include file="/init.jsp"%>
-

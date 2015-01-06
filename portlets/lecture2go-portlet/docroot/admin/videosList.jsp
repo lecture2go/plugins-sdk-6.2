@@ -2,7 +2,7 @@
 
 <%
 	PortletURL portletURL = renderResponse.createRenderURL();
-	List<Video> tempVideosList = new ArrayList();
+	List<Video> tempVideosList = new ArrayList<Video>();
 	List<Coordinator> coordinators = new ArrayList<Coordinator>();
 	List<Producer> producers = new ArrayList<Producer>();
 	List<Lectureseries> lectureseries = new ArrayList<Lectureseries>();
