@@ -1,0 +1,316 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <title>Strobe Media Playback</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" />	
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.min.js"></script>	
+	<script type="text/javascript" src="http://flesler-plugins.googlecode.com/files/jquery.scrollTo-1.4.2-min.js"></script>
+	
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>	
+	<link type="text/css" href="jsdemo.css" rel="stylesheet" />
+
+  	<script type="text/javascript" src="lib/ParsedQueryString.js"></script>
+  	<script type="text/javascript" src="jsdemo.js"></script>
+		
+    <script type="text/javascript">
+    
+    		// Collect query parameters in an object that we can
+    		// forward to SWFObject:
+    		
+    		var pqs = new ParsedQueryString();
+    		var parameterNames = pqs.params(false);
+    		var parameters =
+				{	src:"http://mpdev.rrz.uni-hamburg.de/vod/sample.mp4/manifest.f4m"	   		
+	   			,	autoPlay: true	   		
+				,	controlBarAutoHide: false
+				,	poster: "images/poster.png"
+				,   javascriptCallbackFunction: "onJavaScriptBridgeCreated"
+    			};
+    				
+    		for (var i=0; i<parameterNames.length; i++)
+    		{
+    			var parameterName = parameterNames[i];
+    			parameters[parameterName]
+    				=	pqs.param(parameterName)
+    				||	parameters[parameterName];
+    		}    	
+			
+			// Embed the player SWF:
+    		swfobject.embedSWF
+				( "StrobeMediaPlayback.swf"
+				, "strobeMediaPlayback"
+				, 640 
+				, 480 
+				, "10.1.0" 
+				, "expressInstall.swf" 
+				, parameters
+				, { allowFullScreen: "true", wmode: "opaque" }
+				, { name: "strobeMediaPlayback" }				
+			);		
+
+			org.strobemediaplayback.InteractiveCC = function(player, captionArea, subtitleArea)
+			{
+				this.player = player;	
+				this.captionArea = captionArea;
+				this.subtitleArea = subtitleArea;
+				this.oldSelected = null;
+				this.timer = null;
+				this.refreshTimer = null;
+				this.refreshArea = true;
+			
+				this.bindCaptionArea(this.captionArea);	
+			};
+			
+			org.strobemediaplayback.prependTimeStamp = function (divId)
+			{
+				$(divId).find('p')
+					.each(
+						function()
+						{		
+								$(this).prepend( $(this).attr("begin") + " ");
+						}
+					);
+			};
+			
+			org.strobemediaplayback.timeToSec = function (t)
+			{
+				var s=t.split(':');
+				return parseInt(s[2],10) + 60.0 * parseInt(s[1],10) + 3600.0* parseInt(s[0],10);
+			};
+
+			org.strobemediaplayback.secondsToHms = function (d) 
+			{
+					d = Number(d);
+					var h = Math.floor(d / 3600);
+					var m = Math.floor(d % 3600 / 60);
+					var s = Math.floor(d % 3600 % 60);
+					return ((h < 10 ? "0" : "") + h + ":"+ (m < 10 ? "0" : "") + m + ":"+ (s < 10 ? "0" : "") + s);
+			};
+			
+			org.strobemediaplayback.InteractiveCC.prototype = 
+		 	{
+				bindCaptionArea: function(newCaptionArea)
+				{
+					var oldThis = this;
+					this.captionArea.unbind();
+					this.captionArea.find('p')
+					.each(
+						function()
+						{		
+								$(this).unbind();
+						}
+					);
+					
+					this.captionArea = newCaptionArea;
+					this.captionArea.bind('mouseout', this, this.onExitArea);
+					this.captionArea.bind('mouseover', this, this.onEnterArea);
+					
+					this.captionArea.find('p')
+					.each(
+						function()
+						{		
+								$(this).bind('click', oldThis, oldThis.onJump);
+								$(this).bind('mouseover', oldThis, oldThis.onOver);	
+								$(this).bind('mouseout', oldThis, oldThis.onOut);	
+						}
+					);	
+				},
+				
+				getCurrentSub: function(currentPos) 
+				{
+					var lastSubtitleTime = "";
+					this.captionArea.find('p')
+							.each(
+								function()
+								{		
+										var subtitleTime = org.strobemediaplayback.timeToSec($(this).attr("begin"));
+										if (currentPos >= subtitleTime)
+										{
+											lastSubtitleTime=$(this).attr("begin");
+										}
+								}
+							);
+					
+					return lastSubtitleTime;
+				},
+
+				onCurrentTimeChange: function (currentTime, duration)
+				{				
+					var oldThis= this;
+					var newSelected = this.getCurrentSub(currentTime);
+					
+					if (newSelected!=this.oldSelected)
+					{
+						clearTimeout(this.timer);
+						$('p[begin="'+this.oldSelected+'"]', this.captionArea).removeClass('ccc');
+						this.oldSelected = newSelected;
+						
+						$('p[begin="'+this.oldSelected+'"]', this.captionArea).addClass('ccc');
+						
+						
+						var cc = $('p[begin="'+this.oldSelected+'"]', this.captionArea).html();
+						cc = cc.substring(cc.indexOf(" "));
+					
+						this.subtitleArea.html(cc);
+						var subtitleEnd = $('p[begin="'+this.oldSelected+'"]', this.captionArea).attr("end");
+						var subtitleBegin = $('p[begin="'+this.oldSelected+'"]', this.captionArea).attr("begin");
+						if (subtitleEnd!=undefined && subtitleEnd != "")
+						{
+							this.timer = setTimeout( function()
+								{
+									oldThis.subtitleArea.empty();
+								},
+								1000.0*(org.strobemediaplayback.timeToSec(subtitleEnd)-currentTime)
+							);
+						}
+						
+						if (this.refreshArea)
+						{
+							this.captionArea.scrollTo($('p[begin="'+this.oldSelected+'"]', this.captionArea), {duration: 600, over:{top:-10}} );
+						}
+						
+					}
+				},
+				
+				////
+				onJump: function (event)
+				{					
+					var player = event.data.player;
+					var jumpPos = $(event.currentTarget).attr("begin");
+					var subtitleEnd = $(event.currentTarget).attr("end");
+
+					var nrSec = org.strobemediaplayback.timeToSec(jumpPos);
+					if (player.getState() != "ready" && player.canSeekTo(nrSec))
+							{
+								clearTimeout(event.data.timer);
+								$("p[begin='"+jumpPos+"']", event.data.captionArea).addClass('ccc');
+								if (event.data.oldSelected != "" && event.data.oldSelected != jumpPos) 
+								{
+									$('p[begin="'+ event.data.oldSelected +'"]', event.data.captionArea).removeClass('ccc');
+									event.data.subtitleArea.empty();
+								}
+								event.data.oldSelected = jumpPos;
+								var cc = $('p[begin="'+event.data.oldSelected+'"]', event.data.captionArea).html();
+								cc = cc.substring(cc.indexOf(" "));
+								event.data.subtitleArea.html(cc);
+								player.seek(nrSec);
+								if ( subtitleEnd!=undefined && subtitleEnd != "")
+									{
+										
+										event.data.timer = setTimeout( function()
+											{
+												event.data.subtitleArea.empty();
+											},
+											1000.0 * (org.strobemediaplayback.timeToSec(subtitleEnd) - org.strobemediaplayback.timeToSec(jumpPos))
+										);
+									}
+							}	
+							else
+							{
+								return false;
+							}		
+					//$("#debug2").append("<br />seek=" + nrSec);
+				},
+				
+				onOver: function (event)
+				{
+					$(event.currentTarget).addClass('hovercc');
+					
+				},
+				
+				onOut: function (event)
+				{
+					$(event.currentTarget).removeClass('hovercc');
+				},
+				
+				onEnterArea: function (event)
+				{
+					clearTimeout(event.data.refreshTimer);
+					event.data.refreshArea = false;
+				},
+				
+				onExitArea: function (event)
+				{
+					event.data.refreshTimer = setTimeout( function()
+						{
+							event.data.refreshArea = true;
+						},
+						2000
+					)
+				}
+
+			}
+			var player = null;
+			function onJavaScriptBridgeCreated(id)
+			{			
+				if (player == null) 
+				{
+					player = document.getElementById(id);
+					
+					org.strobemediaplayback.players[id] = new org.strobemediaplayback.StrobeMediaPlaybackJSUI(player, $("#" + id + "ControlBar"));
+					
+					org.strobemediaplayback.bindListeners(player, org.strobemediaplayback.players[id], "org.strobemediaplayback.players['" + id + "']");
+					
+					org.strobemediaplayback.players[id].cc = new org.strobemediaplayback.InteractiveCC(player, $("#dsCC"), $("#subtext"));
+					org.strobemediaplayback.bindListeners(player, org.strobemediaplayback.players[id].cc, "org.strobemediaplayback.players['" + id + "'].cc");
+				}				
+			}
+     </script>
+     
+     
+  	<style type="text/css">
+	<!--
+	.Verdana {
+		font-family: Verdana, Geneva, sans-serif;
+	}
+	.ccc
+	{
+		color:red;
+		font-weight:bold;
+	}
+	.hovercc
+	{
+		background-color: #f0f0f0;
+	}
+
+
+	-->
+	</style>
+ 	</head>
+	<body>
+
+<table width="100%" border="0" cellspacing="5">
+  <tr>
+    <td width=660>
+		<div id="strobeMediaPlayback">
+	      <p>Alternative content</p>
+	    </div>
+    </td>
+    </tr>
+    <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+    <tr>
+	<td align="left">		
+		<div id="dsCC">
+			<p begin='00:00:15' end='00:00:18'>At the left we can see...</p>
+			<p begin='00:00:18' end='00:00:20'>At the right we can see the...</p>
+			<p begin='00:00:20' end='00:00:22'>...the head-snarlers</p>
+			<p begin='00:00:22' end='00:00:24'>Everything is safe.  Perfectly safe.</p>
+			<p begin='00:00:24' end='00:00:27'>Emo?</p>
+			<p begin='00:00:28' end='00:00:30'>Watch out!</p>
+			<p begin='00:00:47' end='00:00:48'>Are you hurt?</p>
+			<p begin='00:00:52' end='00:00:54'>I don't think so.  You?</p>
+			<p begin='00:00:55' end='00:00:57'>I'm Ok.</p>
+			<p begin='00:00:57' end='00:01:01'>Get up.  Emo, it's not safe here.</p>
+			<p begin='00:01:02' end='00:01:03'>Let's go.</p>
+			<p begin='00:01:03' end='00:01:05'>What's next?</p>
+			<p begin='00:01:05' end='00:01:09'>You'll see!</p>
+			<p begin='00:01:12' end='00:01:14'>(howling wind)</p>
+		</div>
+	</td>
+  </tr>
+</table>
+
+  </body>
+</html>
