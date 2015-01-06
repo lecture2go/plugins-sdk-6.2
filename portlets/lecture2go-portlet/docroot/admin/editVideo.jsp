@@ -101,15 +101,18 @@
 			<%if(reqLicense.getCcbyncsa()==1){%><aui:input name="license" id="ccbyncsa" value="ccbyncsa" checked="true" type="radio" /><%}%>
 			<%if(reqLicense.getCcbyncsa()==0){%><aui:input name="license" id="ccbyncsa" value="ccbyncsa" type="radio"/><%}%>
 			creative-commons <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank"> details </a>
+			
 			<br/><br/>
+			
 			<aui:field-wrapper label="description">
 			    <liferay-ui:input-editor name="longDesc" toolbarSet="liferay-article" initMethod="initEditor" width="250" onChangeMethod="updateDescription" />
 			    <script type="text/javascript">
 			        function <portlet:namespace />initEditor() { return "<%= UnicodeFormatter.toString(reqMetadata.getDescription()) %>"; }
 			    </script>
 			</aui:field-wrapper>
+			
 			<aui:button-row>
-				<aui:button type="cancel" value="save" onClick="<%=cancelURL.toString()%>" />
+				<aui:button type="cancel" value="back" onClick="<%=cancelURL.toString()%>" />
 			</aui:button-row>
 			
 			<aui:input name="videoId" type="hidden" value="<%=reqVideo.getVideoId()%>"/>
@@ -195,7 +198,6 @@ function <portlet:namespace/>updateDescription(data){
 		}
 	);
 }
-
 
 AUI().use(
 		'aui-node',
