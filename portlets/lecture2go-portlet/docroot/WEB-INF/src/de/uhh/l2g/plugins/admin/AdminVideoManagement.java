@@ -340,6 +340,31 @@ public class AdminVideoManagement extends MVCPortlet {
 			writeJSON(resourceRequest, resourceResponse, json);
 		}
 		
+		if(resourceID.equals("addSegment")){
+			String chortTitle = ParamUtil.getString(resourceRequest, "chortTitle");
+			String timeStart = ParamUtil.getString(resourceRequest, "timeStart");
+			String timeEnd = ParamUtil.getString(resourceRequest, "timeEnd");
+			String text = ParamUtil.getString(resourceRequest, "text");
+			String chapter = ParamUtil.getString(resourceRequest, "chapter");
+			String comment = ParamUtil.getString(resourceRequest, "comment");
+			
+			if(!chortTitle.trim().equals("")&&!timeStart.trim().equals("")&&!timeEnd.trim().equals("")){
+				//save chapter
+				if(chapter.equals("1")&&comment.equals("0")){
+					int i =0;
+					i++;
+				}
+				
+				//save comment
+				if(comment.equals("1")&&chapter.equals("0")){
+					int i =0;
+					i++;					
+				}
+				JSONObject json = JSONFactoryUtil.createJSONObject();
+				writeJSON(resourceRequest, resourceResponse, json);
+			}
+		}
+		
 	}
 
 	public String getFileAsString(File file) {
