@@ -38,7 +38,6 @@ import de.uhh.l2g.plugins.model.OfficeClp;
 import de.uhh.l2g.plugins.model.ProducerClp;
 import de.uhh.l2g.plugins.model.Producer_LectureseriesClp;
 import de.uhh.l2g.plugins.model.SegmentClp;
-import de.uhh.l2g.plugins.model.Segment_User_VideoClp;
 import de.uhh.l2g.plugins.model.SysClp;
 import de.uhh.l2g.plugins.model.UploadClp;
 import de.uhh.l2g.plugins.model.VideoClp;
@@ -172,10 +171,6 @@ public class ClpSerializer {
 
 		if (oldModelClassName.equals(SegmentClp.class.getName())) {
 			return translateInputSegment(oldModel);
-		}
-
-		if (oldModelClassName.equals(Segment_User_VideoClp.class.getName())) {
-			return translateInputSegment_User_Video(oldModel);
 		}
 
 		if (oldModelClassName.equals(SysClp.class.getName())) {
@@ -349,16 +344,6 @@ public class ClpSerializer {
 		return newModel;
 	}
 
-	public static Object translateInputSegment_User_Video(BaseModel<?> oldModel) {
-		Segment_User_VideoClp oldClpModel = (Segment_User_VideoClp)oldModel;
-
-		BaseModel<?> newModel = oldClpModel.getSegment_User_VideoRemoteModel();
-
-		newModel.setModelAttributes(oldClpModel.getModelAttributes());
-
-		return newModel;
-	}
-
 	public static Object translateInputSys(BaseModel<?> oldModel) {
 		SysClp oldClpModel = (SysClp)oldModel;
 
@@ -498,11 +483,6 @@ public class ClpSerializer {
 		if (oldModelClassName.equals(
 					"de.uhh.l2g.plugins.model.impl.SegmentImpl")) {
 			return translateOutputSegment(oldModel);
-		}
-
-		if (oldModelClassName.equals(
-					"de.uhh.l2g.plugins.model.impl.Segment_User_VideoImpl")) {
-			return translateOutputSegment_User_Video(oldModel);
 		}
 
 		if (oldModelClassName.equals("de.uhh.l2g.plugins.model.impl.SysImpl")) {
@@ -683,11 +663,6 @@ public class ClpSerializer {
 			return new de.uhh.l2g.plugins.NoSuchSegmentException();
 		}
 
-		if (className.equals(
-					"de.uhh.l2g.plugins.NoSuchSegment_User_VideoException")) {
-			return new de.uhh.l2g.plugins.NoSuchSegment_User_VideoException();
-		}
-
 		if (className.equals("de.uhh.l2g.plugins.NoSuchSysException")) {
 			return new de.uhh.l2g.plugins.NoSuchSysException();
 		}
@@ -845,17 +820,6 @@ public class ClpSerializer {
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
 		newModel.setSegmentRemoteModel(oldModel);
-
-		return newModel;
-	}
-
-	public static Object translateOutputSegment_User_Video(
-		BaseModel<?> oldModel) {
-		Segment_User_VideoClp newModel = new Segment_User_VideoClp();
-
-		newModel.setModelAttributes(oldModel.getModelAttributes());
-
-		newModel.setSegment_User_VideoRemoteModel(oldModel);
 
 		return newModel;
 	}

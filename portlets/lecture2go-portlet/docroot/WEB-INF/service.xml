@@ -254,21 +254,6 @@
             <finder-column name="userId"></finder-column>
         </finder>
     </entity>
-    <entity local-service="true" remote-service="false" name="Segment_User_Video">
-        <column name="segmentId" type="long"></column>
-        <column name="userId" type="long"></column>
-        <column name="videoId" type="long"></column>
-        <column name="segmentUserVideoId" type="long" primary="true" id-type="increment"></column>
-        <finder name="Segment" return-type="Collection">
-            <finder-column name="segmentId"></finder-column>
-        </finder>
-        <finder name="User" return-type="Collection">
-            <finder-column name="userId"></finder-column>
-        </finder>
-        <finder name="Video" return-type="Collection">
-            <finder-column name="videoId"></finder-column>
-        </finder>
-    </entity>
     <entity name="Upload" local-service="true" remote-service="false">
         <column name="uploadId" type="long" primary="true" id-type="increment"></column>
         <column name="userId" type="long"></column>

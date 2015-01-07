@@ -331,22 +331,6 @@ public class SegmentClp extends BaseModelImpl<Segment> implements Segment {
 	}
 
 	@Override
-	public void setChapter(java.lang.Integer chapter) {
-		try {
-			String methodName = "setChapter";
-
-			Class<?>[] parameterTypes = new Class<?>[] { java.lang.Integer.class };
-
-			Object[] parameterValues = new Object[] { chapter };
-
-			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
-		}
-		catch (Exception e) {
-			throw new UnsupportedOperationException(e);
-		}
-	}
-
-	@Override
 	public void setNumber(int number) {
 		try {
 			String methodName = "setNumber";
@@ -382,6 +366,22 @@ public class SegmentClp extends BaseModelImpl<Segment> implements Segment {
 	}
 
 	@Override
+	public void setImage(java.lang.String image) {
+		try {
+			String methodName = "setImage";
+
+			Class<?>[] parameterTypes = new Class<?>[] { java.lang.String.class };
+
+			Object[] parameterValues = new Object[] { image };
+
+			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
 	public int getSeconds() {
 		try {
 			String methodName = "getSeconds";
@@ -394,22 +394,6 @@ public class SegmentClp extends BaseModelImpl<Segment> implements Segment {
 					parameterTypes, parameterValues);
 
 			return returnObj;
-		}
-		catch (Exception e) {
-			throw new UnsupportedOperationException(e);
-		}
-	}
-
-	@Override
-	public void setImage(java.lang.String image) {
-		try {
-			String methodName = "setImage";
-
-			Class<?>[] parameterTypes = new Class<?>[] { java.lang.String.class };
-
-			Object[] parameterValues = new Object[] { image };
-
-			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
 		}
 		catch (Exception e) {
 			throw new UnsupportedOperationException(e);

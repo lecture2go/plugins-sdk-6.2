@@ -49,7 +49,6 @@ import de.uhh.l2g.plugins.service.persistence.ProducerFinder;
 import de.uhh.l2g.plugins.service.persistence.ProducerPersistence;
 import de.uhh.l2g.plugins.service.persistence.Producer_LectureseriesPersistence;
 import de.uhh.l2g.plugins.service.persistence.SegmentPersistence;
-import de.uhh.l2g.plugins.service.persistence.Segment_User_VideoPersistence;
 import de.uhh.l2g.plugins.service.persistence.SysPersistence;
 import de.uhh.l2g.plugins.service.persistence.UploadPersistence;
 import de.uhh.l2g.plugins.service.persistence.VideoFinder;
@@ -846,44 +845,6 @@ public abstract class VideohitlistLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the segment_ user_ video local service.
-	 *
-	 * @return the segment_ user_ video local service
-	 */
-	public de.uhh.l2g.plugins.service.Segment_User_VideoLocalService getSegment_User_VideoLocalService() {
-		return segment_User_VideoLocalService;
-	}
-
-	/**
-	 * Sets the segment_ user_ video local service.
-	 *
-	 * @param segment_User_VideoLocalService the segment_ user_ video local service
-	 */
-	public void setSegment_User_VideoLocalService(
-		de.uhh.l2g.plugins.service.Segment_User_VideoLocalService segment_User_VideoLocalService) {
-		this.segment_User_VideoLocalService = segment_User_VideoLocalService;
-	}
-
-	/**
-	 * Returns the segment_ user_ video persistence.
-	 *
-	 * @return the segment_ user_ video persistence
-	 */
-	public Segment_User_VideoPersistence getSegment_User_VideoPersistence() {
-		return segment_User_VideoPersistence;
-	}
-
-	/**
-	 * Sets the segment_ user_ video persistence.
-	 *
-	 * @param segment_User_VideoPersistence the segment_ user_ video persistence
-	 */
-	public void setSegment_User_VideoPersistence(
-		Segment_User_VideoPersistence segment_User_VideoPersistence) {
-		this.segment_User_VideoPersistence = segment_User_VideoPersistence;
-	}
-
-	/**
 	 * Returns the sys local service.
 	 *
 	 * @return the sys local service
@@ -1360,10 +1321,6 @@ public abstract class VideohitlistLocalServiceBaseImpl
 	protected de.uhh.l2g.plugins.service.SegmentLocalService segmentLocalService;
 	@BeanReference(type = SegmentPersistence.class)
 	protected SegmentPersistence segmentPersistence;
-	@BeanReference(type = de.uhh.l2g.plugins.service.Segment_User_VideoLocalService.class)
-	protected de.uhh.l2g.plugins.service.Segment_User_VideoLocalService segment_User_VideoLocalService;
-	@BeanReference(type = Segment_User_VideoPersistence.class)
-	protected Segment_User_VideoPersistence segment_User_VideoPersistence;
 	@BeanReference(type = de.uhh.l2g.plugins.service.SysLocalService.class)
 	protected de.uhh.l2g.plugins.service.SysLocalService sysLocalService;
 	@BeanReference(type = SysPersistence.class)

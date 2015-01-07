@@ -17,6 +17,8 @@ import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.springframework.web.util.HtmlUtils;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -37,6 +39,7 @@ import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.License;
 import de.uhh.l2g.plugins.model.Metadata;
 import de.uhh.l2g.plugins.model.Producer;
+import de.uhh.l2g.plugins.model.Segment;
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.Video_Institution;
 import de.uhh.l2g.plugins.model.Video_Lectureseries;
@@ -44,6 +47,7 @@ import de.uhh.l2g.plugins.model.impl.LectureseriesImpl;
 import de.uhh.l2g.plugins.model.impl.LicenseImpl;
 import de.uhh.l2g.plugins.model.impl.MetadataImpl;
 import de.uhh.l2g.plugins.model.impl.ProducerImpl;
+import de.uhh.l2g.plugins.model.impl.SegmentImpl;
 import de.uhh.l2g.plugins.model.impl.VideoImpl;
 import de.uhh.l2g.plugins.model.impl.Video_InstitutionImpl;
 import de.uhh.l2g.plugins.model.impl.Video_LectureseriesImpl;
@@ -51,6 +55,7 @@ import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LicenseLocalServiceUtil;
 import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
+import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
@@ -210,6 +215,8 @@ public class AdminVideoManagement extends MVCPortlet {
 	}
 	
 	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws PortletException, IOException {
+		String userID = resourceRequest.getRemoteUser();
+		Long userId = new Long(userID);
 		String resourceID = resourceRequest.getResourceID();
 		Long videoId = ParamUtil.getLong(resourceRequest, "videoId");
 		Video video = VideoLocalServiceUtil.getVideo(videoId);
@@ -341,27 +348,34 @@ public class AdminVideoManagement extends MVCPortlet {
 		}
 		
 		if(resourceID.equals("addSegment")){
-			String chortTitle = ParamUtil.getString(resourceRequest, "chortTitle");
+			String shortTitle = ParamUtil.getString(resourceRequest, "chortTitle");
 			String timeStart = ParamUtil.getString(resourceRequest, "timeStart");
 			String timeEnd = ParamUtil.getString(resourceRequest, "timeEnd");
 			String text = ParamUtil.getString(resourceRequest, "text");
 			String chapter = ParamUtil.getString(resourceRequest, "chapter");
 			String comment = ParamUtil.getString(resourceRequest, "comment");
+
+			int chap = 0;
+			if(chapter.equals("1")&&comment.equals("0"))chap = 1;
 			
-			if(!chortTitle.trim().equals("")&&!timeStart.trim().equals("")&&!timeEnd.trim().equals("")){
-				//save chapter
-				if(chapter.equals("1")&&comment.equals("0")){
-					int i =0;
-					i++;
+			if(!shortTitle.trim().equals("") && !timeStart.trim().equals("") && !timeEnd.trim().equals("")){
+				Segment segment = new SegmentImpl();
+				segment.setVideoId(videoId);
+				segment.setTitle(shortTitle);
+				segment.setStart(timeStart);
+				segment.setEnd(timeEnd);
+				segment.setChapter(chap);
+				segment.setDescription(text);
+				segment.setUserId(userId);
+				try {
+					//save
+					SegmentLocalServiceUtil.addSegment(segment);
+					//and return response
+					JSONObject json = JSONFactoryUtil.createJSONObject();
+					writeJSON(resourceRequest, resourceResponse, json);
+				} catch (SystemException e) {
+					e.printStackTrace();
 				}
-				
-				//save comment
-				if(comment.equals("1")&&chapter.equals("0")){
-					int i =0;
-					i++;					
-				}
-				JSONObject json = JSONFactoryUtil.createJSONObject();
-				writeJSON(resourceRequest, resourceResponse, json);
 			}
 		}
 		

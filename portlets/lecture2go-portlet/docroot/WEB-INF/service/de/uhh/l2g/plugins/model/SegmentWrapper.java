@@ -418,16 +418,6 @@ public class SegmentWrapper implements Segment, ModelWrapper<Segment> {
 	}
 
 	@Override
-	public int getNumber() {
-		return _segment.getNumber();
-	}
-
-	@Override
-	public void setNumber(int number) {
-		_segment.setNumber(number);
-	}
-
-	@Override
 	public int getSeconds() {
 		return _segment.getSeconds();
 	}
@@ -438,8 +428,13 @@ public class SegmentWrapper implements Segment, ModelWrapper<Segment> {
 	}
 
 	@Override
-	public void setChapter(java.lang.Integer chapter) {
-		_segment.setChapter(chapter);
+	public int getNumber() {
+		return _segment.getNumber();
+	}
+
+	@Override
+	public void setNumber(int number) {
+		_segment.setNumber(number);
 	}
 
 	@Override
