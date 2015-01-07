@@ -70,6 +70,7 @@
 						 	   	<portlet:namespace/>text: A.one('#<portlet:namespace/>text').get('value'),
 						 	   	<portlet:namespace/>chapter: A.one('#<portlet:namespace/>chapter').get('checked'),
 						 	   	<portlet:namespace/>comment: A.one('#<portlet:namespace/>comment').get('checked'),
+						 	   	<portlet:namespace/>videoId: A.one('#<portlet:namespace/>videoId').get('value'),
 					 	},
 					 	//get server response
 						on: {

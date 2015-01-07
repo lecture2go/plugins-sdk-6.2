@@ -117,12 +117,6 @@
 		<field name="chapter" type="int" />
 		<field name="userId" type="long" />
 	</model>
-	<model name="de.uhh.l2g.plugins.model.Segment_User_Video">
-		<field name="segmentId" type="long" />
-		<field name="userId" type="long" />
-		<field name="videoId" type="long" />
-		<field name="segmentUserVideoId" type="long" />
-	</model>
 	<model name="de.uhh.l2g.plugins.model.Sys">
 		<field name="sysId" type="int" />
 		<field name="version" type="String" />

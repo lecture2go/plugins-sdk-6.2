@@ -15,7 +15,6 @@
 	<import class="de.uhh.l2g.plugins.model.Producer" />
 	<import class="de.uhh.l2g.plugins.model.Producer_Lectureseries" />
 	<import class="de.uhh.l2g.plugins.model.Segment" />
-	<import class="de.uhh.l2g.plugins.model.Segment_User_Video" />
 	<import class="de.uhh.l2g.plugins.model.Sys" />
 	<import class="de.uhh.l2g.plugins.model.Upload" />
 	<import class="de.uhh.l2g.plugins.model.Video" />
@@ -176,15 +175,6 @@
 		<property name="end" type="com.liferay.portal.dao.orm.hibernate.StringType" column="end_" />
 		<property name="chapter" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-	</class>
-	<class name="de.uhh.l2g.plugins.model.impl.Segment_User_VideoImpl" table="LG_Segment_User_Video">
-		<cache usage="read-write" />
-		<id name="segmentUserVideoId" type="long">
-			<generator class="increment" />
-		</id>
-		<property name="segmentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="videoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.SysImpl" table="LG_Sys">
 		<cache usage="read-write" />

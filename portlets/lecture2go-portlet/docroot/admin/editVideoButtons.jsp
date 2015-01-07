@@ -31,7 +31,7 @@
 </portlet:actionURL>
 
 <portlet:actionURL name="addSegment" var="segmentURL">
-	<portlet:param name="videoId" value="<%= primKey%>" />
+		<portlet:param name="videoId" value="<%= primKey%>" />
 </portlet:actionURL>
 
 <liferay-ui:icon-menu>

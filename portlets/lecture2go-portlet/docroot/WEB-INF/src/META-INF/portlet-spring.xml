@@ -30,8 +30,6 @@
 	<bean id="de.uhh.l2g.plugins.service.persistence.Producer_LectureseriesPersistence" class="de.uhh.l2g.plugins.service.persistence.Producer_LectureseriesPersistenceImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.SegmentLocalService" class="de.uhh.l2g.plugins.service.impl.SegmentLocalServiceImpl" />
 	<bean id="de.uhh.l2g.plugins.service.persistence.SegmentPersistence" class="de.uhh.l2g.plugins.service.persistence.SegmentPersistenceImpl" parent="basePersistence" />
-	<bean id="de.uhh.l2g.plugins.service.Segment_User_VideoLocalService" class="de.uhh.l2g.plugins.service.impl.Segment_User_VideoLocalServiceImpl" />
-	<bean id="de.uhh.l2g.plugins.service.persistence.Segment_User_VideoPersistence" class="de.uhh.l2g.plugins.service.persistence.Segment_User_VideoPersistenceImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.SysLocalService" class="de.uhh.l2g.plugins.service.impl.SysLocalServiceImpl" />
 	<bean id="de.uhh.l2g.plugins.service.persistence.SysPersistence" class="de.uhh.l2g.plugins.service.persistence.SysPersistenceImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.UploadLocalService" class="de.uhh.l2g.plugins.service.impl.UploadLocalServiceImpl" />

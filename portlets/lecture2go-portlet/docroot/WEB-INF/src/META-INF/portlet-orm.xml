@@ -202,18 +202,6 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.Segment_User_VideoModelImpl">
-		<attributes>
-			<id name="segmentUserVideoId" />
-			<basic name="segmentId" />
-			<basic name="userId" />
-			<basic name="videoId" />
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-			<transient name="userUuid" />
-		</attributes>
-	</mapped-superclass>
 	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.SysModelImpl">
 		<attributes>
 			<id name="sysId" />
@@ -368,10 +356,6 @@
 			<transient name="number" />
 			<transient name="seconds" />
 		</attributes>
-	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.Segment_User_VideoImpl" name="Segment_User_Video">
-		<table name="LG_Segment_User_Video" />
-		<attributes />
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.SysImpl" name="Sys">
 		<table name="LG_Sys" />
