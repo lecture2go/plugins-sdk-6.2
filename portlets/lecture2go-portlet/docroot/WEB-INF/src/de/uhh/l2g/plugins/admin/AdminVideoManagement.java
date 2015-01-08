@@ -1,6 +1,7 @@
 package de.uhh.l2g.plugins.admin;
 
 import java.io.BufferedInputStream;
+import java.io.Console;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.logging.Logger;
 
 import javax.portlet.ActionRequest;
@@ -17,8 +19,10 @@ import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.json.JSONArray;
 import org.springframework.web.util.HtmlUtils;
 
+import com.google.gson.Gson;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -376,6 +380,66 @@ public class AdminVideoManagement extends MVCPortlet {
 				} catch (SystemException e) {
 					e.printStackTrace();
 				}
+			}
+		}
+
+		if(resourceID.equals("test")){
+			String vId = ParamUtil.getString(resourceRequest, "videoId");
+			Long vID = new Long(vId);
+			com.liferay.portal.kernel.json.JSONArray ja = JSONFactoryUtil.createJSONArray();
+			//get segments for video and convert to json array
+			try {
+				List<Segment> sl= SegmentLocalServiceUtil.getSegmentsByVideoId(vID);
+				ListIterator<Segment> sIt = sl.listIterator();
+				while(sIt.hasNext()){
+					Segment s = sIt.next();
+					JSONObject jo = JSONFactoryUtil.createJSONObject();
+					jo.put("chapter", s.getChapter());
+					jo.put("description", s.getDescription());
+					jo.put("end", s.getEnd());
+					jo.put("image", s.getImage());
+					jo.put("number", s.getNumber());
+					jo.put("segmentId", s.getPrimaryKey());
+					jo.put("seconds", s.getSeconds());
+					jo.put("start", s.getStart());
+					jo.put("title", s.getTitle());
+					jo.put("userId", s.getUserId());
+					jo.put("videoId", s.getVideoId());
+					ja.put(jo);
+				}
+				
+			} catch (PortalException e) {
+				e.printStackTrace();
+			} catch (SystemException e) {
+				e.printStackTrace();
+			}
+			
+			writeJSON(resourceRequest, resourceResponse, ja);
+		}
+		
+		if(resourceID.equals("deleteSegment")){
+			String sId = ParamUtil.getString(resourceRequest, "segmentId");
+			Long sID = new Long(sId);
+			//delete requested segment
+			try {
+				Segment s = SegmentLocalServiceUtil.deleteSegment(sID);
+				JSONObject jo = JSONFactoryUtil.createJSONObject();
+				jo.put("chapter", s.getChapter());
+				jo.put("description", s.getDescription());
+				jo.put("end", s.getEnd());
+				jo.put("image", s.getImage());
+				jo.put("number", s.getNumber());
+				jo.put("segmentId", s.getPrimaryKey());
+				jo.put("seconds", s.getSeconds());
+				jo.put("start", s.getStart());
+				jo.put("title", s.getTitle());
+				jo.put("userId", s.getUserId());
+				jo.put("videoId", s.getVideoId());
+				writeJSON(resourceRequest, resourceResponse, jo);
+			} catch (SystemException e) {
+				e.printStackTrace();
+			} catch (PortalException e) {
+				e.printStackTrace();
 			}
 		}
 		

@@ -85,21 +85,21 @@ public class SegmentLocalServiceImpl extends SegmentLocalServiceBaseImpl {
 				objectSegment.setNumber(counter);
 			}
 
-			// generate thumbs
+			// generate thumbs	
 			// for audio 
 			if (objectVideo.getContainerFormat().equals("mp3")){
 				objectSegment.setImage(PropsUtil.get("lecture2go.web.root") + PropsUtil.get("lecture2go.theme.root.path") + "/images/l2go/audio_only_small.png");
 			}
 			// for video
 			if (objectVideo.getContainerFormat().equals("mp4")){
-				if (thumbNail.isFile()) objectSegment.setImage("/" + "images" + "/" + objectVideo.getVideoId() + "_" + sec + ".jpg");
+				if (thumbNail.isFile()) objectSegment.setImage(PropsUtil.get("lecture2go.web.root")+"/" + "images" + "/" + objectVideo.getVideoId() + "_" + sec + ".jpg");
 				else {
 					FFmpegManager.createThumbnail(objectVideo, strt, PropsUtil.get("lecture2go.images.system.path"));
 					if (!thumbNail.isFile()) objectSegment.setImage(PropsUtil.get("lecture2go.theme.root.path") + "/" +"images" + "/" + "l2go" + "/" + "noimage.jpg");
 				}				
 			}
 		}
-		return null;
+		return sl;
 	}
 	
 	
