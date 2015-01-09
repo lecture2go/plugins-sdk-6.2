@@ -71,8 +71,8 @@ public class SegmentModelImpl extends BaseModelImpl<Segment>
 		};
 	public static final String TABLE_SQL_CREATE = "create table LG_Segment (segmentId LONG not null primary key,videoId LONG,start_ VARCHAR(75) null,title VARCHAR(75) null,description VARCHAR(75) null,end_ VARCHAR(75) null,chapter INTEGER,userId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Segment";
-	public static final String ORDER_BY_JPQL = " ORDER BY segment.segmentId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY LG_Segment.segmentId ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY segment.start ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY LG_Segment.start_ ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -87,7 +87,7 @@ public class SegmentModelImpl extends BaseModelImpl<Segment>
 			true);
 	public static long USERID_COLUMN_BITMASK = 1L;
 	public static long VIDEOID_COLUMN_BITMASK = 2L;
-	public static long SEGMENTID_COLUMN_BITMASK = 4L;
+	public static long START_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Segment"));
 
@@ -235,6 +235,8 @@ public class SegmentModelImpl extends BaseModelImpl<Segment>
 
 	@Override
 	public void setStart(String start) {
+		_columnBitmask = -1L;
+
 		_start = start;
 	}
 
@@ -372,17 +374,15 @@ public class SegmentModelImpl extends BaseModelImpl<Segment>
 
 	@Override
 	public int compareTo(Segment segment) {
-		long primaryKey = segment.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		value = getStart().compareToIgnoreCase(segment.getStart());
+
+		if (value != 0) {
+			return value;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
-		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	@Override

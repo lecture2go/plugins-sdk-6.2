@@ -289,6 +289,14 @@ public class SegmentLocalServiceWrapper implements SegmentLocalService,
 	}
 
 	@Override
+	public void deleteThumbhailsFromSegment(
+		de.uhh.l2g.plugins.model.Segment segment)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_segmentLocalService.deleteThumbhailsFromSegment(segment);
+	}
+
+	@Override
 	public java.util.List<de.uhh.l2g.plugins.model.Segment> getSegmentsByVideoId(
 		java.lang.Long videoId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -297,9 +305,46 @@ public class SegmentLocalServiceWrapper implements SegmentLocalService,
 	}
 
 	@Override
+	public de.uhh.l2g.plugins.model.Segment getSegmentById(
+		java.lang.Long segmentId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _segmentLocalService.getSegmentById(segmentId);
+	}
+
+	@Override
 	public void deleteByVideoId(java.lang.Long videoId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_segmentLocalService.deleteByVideoId(videoId);
+	}
+
+	/**
+	* Adds the segment to the database and generates thumb nail. Also notifies the appropriate model listeners.
+	*
+	* @param segment the segment
+	* @return the segment that was added
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public de.uhh.l2g.plugins.model.Segment createSegment(
+		de.uhh.l2g.plugins.model.Segment segment)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _segmentLocalService.createSegment(segment);
+	}
+
+	@Override
+	public de.uhh.l2g.plugins.model.Segment removeSegment(
+		java.lang.Long segmentId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _segmentLocalService.removeSegment(segmentId);
+	}
+
+	@Override
+	public de.uhh.l2g.plugins.model.Segment getPreviusSegment(
+		de.uhh.l2g.plugins.model.Segment segment) {
+		return _segmentLocalService.getPreviusSegment(segment);
 	}
 
 	/**

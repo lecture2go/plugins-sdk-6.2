@@ -518,17 +518,15 @@ public class SegmentClp extends BaseModelImpl<Segment> implements Segment {
 
 	@Override
 	public int compareTo(Segment segment) {
-		long primaryKey = segment.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		value = getStart().compareToIgnoreCase(segment.getStart());
+
+		if (value != 0) {
+			return value;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
-		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	@Override

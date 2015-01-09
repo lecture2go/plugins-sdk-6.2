@@ -76,8 +76,9 @@
 					 	//get server response
 						on: {
 							   success: function() {
-							     var jsonResponse = this.get('responseData');
-							     //alert(jsonResponse.key1);
+							     var segment = this.get('responseData');
+							        //console.log(jsonResponse);
+							        drawRow(segment);	
 							   }
 						}
 					});	
@@ -93,10 +94,10 @@
 		    dataType: "json",
 		    data: {
 		 	   	<portlet:namespace/>segmentId: segmentId,
+		 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>",
 		    },
 		    success: function(data, textStatus, jqXHR) {
 		        // since we are using jQuery, you don't need to parse response
-		        console.log(data.segmentId);
 		        $("#"+data.segmentId).remove();
 		    }
 		});	
@@ -178,7 +179,7 @@
 	    if(segment.chapter==1){
 	    	newRow="<div class='chaptertile' id='"+segment.segmentId+"'>"+
 			"<a><iavst begin='"+segment.start+"' end='"+segment.end+"'><img class='imgsmall' title='watch this chapter' src='"+segment.image+"'></iavst></a>"+
-			"<span class='fs10' class='gray'>chapter "+segment.number+"</span> - <span style='font-size:8px;'>"+segment.start+"</span><br/>"+
+			"<span style='font-size:8px;'>"+segment.start +" - "+segment.end+"</span><br/>"+
 			"<a><iavst class='white' begin='"+segment.start+"' end='"+segment.end+"'><span style='font-size:11px;'>"+segment.title+"</span></iavst></a>";
 		}else{
 			newRow="<div class='commenttile' id='"+segment.segmentId+"'>"+
@@ -197,6 +198,7 @@
 			newRow=newRow+"<input type='image' src='/lecture2go-portlet/img/delete.png' alt='delete' onclick='deleteSegment("+segment.segmentId+")' >";
 		}
 		newRow=newRow+"</div>";
-	    row.append($(newRow));
+		setTimeout(function() {row.append($(newRow)).fadeIn("slow")},1000);
+	    
 	}
 </script>

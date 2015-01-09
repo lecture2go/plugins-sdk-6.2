@@ -58,7 +58,7 @@
 			<liferay-ui:icon src="/lecture2go-portlet/img/dl_inaktiv.png" message="" url="<%=activateDowonloadURL.toString()%>" />
 		</liferay-ui:icon-menu>	
 	<%}	
-	if (SegmentLocalServiceUtil.getSegmentsByVideoId(v.getVideoId())!=null){%>
+	if (SegmentLocalServiceUtil.getSegmentsByVideoId(v.getVideoId()).size()>0){%>
 		<liferay-ui:icon-menu cssClass="right">
 			<liferay-ui:icon src="/lecture2go-portlet/img/segmentOn.png" message="" url="<%=segmentURL.toString()%>" />
 		</liferay-ui:icon-menu>

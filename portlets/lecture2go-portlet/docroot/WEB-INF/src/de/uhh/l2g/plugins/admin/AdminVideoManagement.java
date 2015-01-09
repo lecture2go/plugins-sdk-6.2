@@ -351,7 +351,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			writeJSON(resourceRequest, resourceResponse, json);
 		}
 		
-		if(resourceID.equals("addSegment")){
+		if (resourceID.equals("addSegment")) {
 			String shortTitle = ParamUtil.getString(resourceRequest, "chortTitle");
 			String timeStart = ParamUtil.getString(resourceRequest, "timeStart");
 			String timeEnd = ParamUtil.getString(resourceRequest, "timeEnd");
@@ -360,9 +360,10 @@ public class AdminVideoManagement extends MVCPortlet {
 			String comment = ParamUtil.getString(resourceRequest, "comment");
 
 			int chap = 0;
-			if(chapter.equals("1")&&comment.equals("0"))chap = 1;
-			
-			if(!shortTitle.trim().equals("") && !timeStart.trim().equals("") && !timeEnd.trim().equals("")){
+			if (chapter.equals("1") && comment.equals("0"))
+				chap = 1;
+
+			if (!shortTitle.trim().equals("") && !timeStart.trim().equals("") && !timeEnd.trim().equals("")) {
 				Segment segment = new SegmentImpl();
 				segment.setVideoId(videoId);
 				segment.setTitle(shortTitle);
@@ -372,12 +373,27 @@ public class AdminVideoManagement extends MVCPortlet {
 				segment.setDescription(text);
 				segment.setUserId(userId);
 				try {
-					//save
-					SegmentLocalServiceUtil.addSegment(segment);
-					//and return response
-					JSONObject json = JSONFactoryUtil.createJSONObject();
-					writeJSON(resourceRequest, resourceResponse, json);
+					// save
+					Segment s = SegmentLocalServiceUtil.createSegment(segment);
+					Segment previusS = SegmentLocalServiceUtil.getPreviusSegment(s);
+					
+					JSONObject jo = JSONFactoryUtil.createJSONObject();
+					jo.put("chapter", s.getChapter());
+					jo.put("description", s.getDescription());
+					jo.put("end", s.getEnd());
+					jo.put("image", s.getImage());
+					jo.put("number", s.getNumber());
+					jo.put("segmentId", s.getPrimaryKey());
+					jo.put("seconds", s.getSeconds());
+					jo.put("start", s.getStart());
+					jo.put("title", s.getTitle());
+					jo.put("userId", s.getUserId());
+					jo.put("videoId", s.getVideoId());
+					// and return response
+					writeJSON(resourceRequest, resourceResponse, jo);
 				} catch (SystemException e) {
+					e.printStackTrace();
+				} catch (PortalException e) {
 					e.printStackTrace();
 				}
 			}
@@ -422,7 +438,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			Long sID = new Long(sId);
 			//delete requested segment
 			try {
-				Segment s = SegmentLocalServiceUtil.deleteSegment(sID);
+				Segment s = SegmentLocalServiceUtil.removeSegment(sID);
 				JSONObject jo = JSONFactoryUtil.createJSONObject();
 				jo.put("chapter", s.getChapter());
 				jo.put("description", s.getDescription());

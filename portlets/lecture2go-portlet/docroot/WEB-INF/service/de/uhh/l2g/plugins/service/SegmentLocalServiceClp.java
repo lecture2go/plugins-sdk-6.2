@@ -114,13 +114,39 @@ public class SegmentLocalServiceClp implements SegmentLocalService {
 
 		_methodParameterTypes19 = new String[] { "java.util.List" };
 
-		_methodName20 = "getSegmentsByVideoId";
+		_methodName20 = "deleteThumbhailsFromSegment";
 
-		_methodParameterTypes20 = new String[] { "java.lang.Long" };
+		_methodParameterTypes20 = new String[] {
+				"de.uhh.l2g.plugins.model.Segment"
+			};
 
-		_methodName21 = "deleteByVideoId";
+		_methodName21 = "getSegmentsByVideoId";
 
 		_methodParameterTypes21 = new String[] { "java.lang.Long" };
+
+		_methodName22 = "getSegmentById";
+
+		_methodParameterTypes22 = new String[] { "java.lang.Long" };
+
+		_methodName23 = "deleteByVideoId";
+
+		_methodParameterTypes23 = new String[] { "java.lang.Long" };
+
+		_methodName24 = "createSegment";
+
+		_methodParameterTypes24 = new String[] {
+				"de.uhh.l2g.plugins.model.Segment"
+			};
+
+		_methodName25 = "removeSegment";
+
+		_methodParameterTypes25 = new String[] { "java.lang.Long" };
+
+		_methodName26 = "getPreviusSegment";
+
+		_methodParameterTypes26 = new String[] {
+				"de.uhh.l2g.plugins.model.Segment"
+			};
 	}
 
 	@Override
@@ -701,6 +727,37 @@ public class SegmentLocalServiceClp implements SegmentLocalService {
 	}
 
 	@Override
+	public void deleteThumbhailsFromSegment(
+		de.uhh.l2g.plugins.model.Segment segment)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			_invokableLocalService.invokeMethod(_methodName20,
+				_methodParameterTypes20,
+				new Object[] { ClpSerializer.translateInput(segment) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
 	public java.util.List<de.uhh.l2g.plugins.model.Segment> getSegmentsByVideoId(
 		java.lang.Long videoId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -708,8 +765,8 @@ public class SegmentLocalServiceClp implements SegmentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName20,
-					_methodParameterTypes20,
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21,
 					new Object[] { ClpSerializer.translateInput(videoId) });
 		}
 		catch (Throwable t) {
@@ -736,11 +793,46 @@ public class SegmentLocalServiceClp implements SegmentLocalService {
 	}
 
 	@Override
+	public de.uhh.l2g.plugins.model.Segment getSegmentById(
+		java.lang.Long segmentId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22,
+					new Object[] { ClpSerializer.translateInput(segmentId) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (de.uhh.l2g.plugins.model.Segment)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public void deleteByVideoId(java.lang.Long videoId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			_invokableLocalService.invokeMethod(_methodName21,
-				_methodParameterTypes21,
+			_invokableLocalService.invokeMethod(_methodName23,
+				_methodParameterTypes23,
 				new Object[] { ClpSerializer.translateInput(videoId) });
 		}
 		catch (Throwable t) {
@@ -758,6 +850,101 @@ public class SegmentLocalServiceClp implements SegmentLocalService {
 					" is not a valid exception");
 			}
 		}
+	}
+
+	@Override
+	public de.uhh.l2g.plugins.model.Segment createSegment(
+		de.uhh.l2g.plugins.model.Segment segment)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24,
+					new Object[] { ClpSerializer.translateInput(segment) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (de.uhh.l2g.plugins.model.Segment)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public de.uhh.l2g.plugins.model.Segment removeSegment(
+		java.lang.Long segmentId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
+					new Object[] { ClpSerializer.translateInput(segmentId) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (de.uhh.l2g.plugins.model.Segment)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public de.uhh.l2g.plugins.model.Segment getPreviusSegment(
+		de.uhh.l2g.plugins.model.Segment segment) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
+					new Object[] { ClpSerializer.translateInput(segment) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (de.uhh.l2g.plugins.model.Segment)ClpSerializer.translateOutput(returnObj);
 	}
 
 	private InvokableLocalService _invokableLocalService;
@@ -803,4 +990,14 @@ public class SegmentLocalServiceClp implements SegmentLocalService {
 	private String[] _methodParameterTypes20;
 	private String _methodName21;
 	private String[] _methodParameterTypes21;
+	private String _methodName22;
+	private String[] _methodParameterTypes22;
+	private String _methodName23;
+	private String[] _methodParameterTypes23;
+	private String _methodName24;
+	private String[] _methodParameterTypes24;
+	private String _methodName25;
+	private String[] _methodParameterTypes25;
+	private String _methodName26;
+	private String[] _methodParameterTypes26;
 }

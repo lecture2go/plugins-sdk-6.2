@@ -247,6 +247,9 @@
         <column name="end" type="String"></column>
         <column name="chapter" type="int"></column>
         <column name="userId" type="long"></column>
+        <order by="asc">
+            <order-column name="start" order-by="asc" case-sensitive="false"></order-column>
+        </order>
         <finder name="Video" return-type="Collection">
             <finder-column name="videoId"></finder-column>
         </finder>
