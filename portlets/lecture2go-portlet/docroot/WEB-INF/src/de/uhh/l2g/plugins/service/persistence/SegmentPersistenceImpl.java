@@ -97,7 +97,8 @@ public class SegmentPersistenceImpl extends BasePersistenceImpl<Segment>
 			SegmentModelImpl.FINDER_CACHE_ENABLED, SegmentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByVideo",
 			new String[] { Long.class.getName() },
-			SegmentModelImpl.VIDEOID_COLUMN_BITMASK);
+			SegmentModelImpl.VIDEOID_COLUMN_BITMASK |
+			SegmentModelImpl.START_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_VIDEO = new FinderPath(SegmentModelImpl.ENTITY_CACHE_ENABLED,
 			SegmentModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByVideo",
@@ -581,7 +582,8 @@ public class SegmentPersistenceImpl extends BasePersistenceImpl<Segment>
 			SegmentModelImpl.FINDER_CACHE_ENABLED, SegmentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUser",
 			new String[] { Long.class.getName() },
-			SegmentModelImpl.USERID_COLUMN_BITMASK);
+			SegmentModelImpl.USERID_COLUMN_BITMASK |
+			SegmentModelImpl.START_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_USER = new FinderPath(SegmentModelImpl.ENTITY_CACHE_ENABLED,
 			SegmentModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUser",

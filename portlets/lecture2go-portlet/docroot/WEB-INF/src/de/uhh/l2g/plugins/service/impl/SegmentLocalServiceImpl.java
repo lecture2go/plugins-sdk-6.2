@@ -15,8 +15,10 @@
 package de.uhh.l2g.plugins.service.impl;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -24,9 +26,12 @@ import com.liferay.portal.kernel.util.PropsUtil;
 
 import de.uhh.l2g.plugins.model.Segment;
 import de.uhh.l2g.plugins.model.Video;
+import de.uhh.l2g.plugins.model.impl.SegmentImpl;
+import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.SegmentLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.util.FFmpegManager;
+import de.uhh.l2g.plugins.util.ProzessManager;
 
 /**
  * The implementation of the segment local service.
@@ -62,6 +67,16 @@ public class SegmentLocalServiceImpl extends SegmentLocalServiceBaseImpl {
 		}
 	}
 	
+	public void deleteThumbhailsFromSegment(Segment segment) throws PortalException, SystemException {
+		Video objectVideo = VideoLocalServiceUtil.getVideo(segment.getVideoId());
+		try {
+			int sec = new Integer(segment.getStart().split(":")[0]) * 60 * 60 + new Integer(segment.getStart().split(":")[1]) * 60 + new Integer(segment.getStart().split(":")[2]);
+			File thumbNail = new File(PropsUtil.get("lecture2go.images.system.path") + "/" + objectVideo.getVideoId() + "_" + sec + ".jpg");
+			if (thumbNail.isFile())thumbNail.delete();
+		} catch (ArrayIndexOutOfBoundsException e) {
+		}
+	}
+	
 	
 	public List<Segment> getSegmentsByVideoId(Long videoId) throws SystemException, PortalException {
 		List<Segment> sl = segmentPersistence.findByVideo(videoId);
@@ -91,19 +106,80 @@ public class SegmentLocalServiceImpl extends SegmentLocalServiceBaseImpl {
 				objectSegment.setImage(PropsUtil.get("lecture2go.web.root") + PropsUtil.get("lecture2go.theme.root.path") + "/images/l2go/audio_only_small.png");
 			}
 			// for video
-			if (objectVideo.getContainerFormat().equals("mp4")){
-				if (thumbNail.isFile()) objectSegment.setImage(PropsUtil.get("lecture2go.web.root")+"/" + "images" + "/" + objectVideo.getVideoId() + "_" + sec + ".jpg");
-				else {
-					FFmpegManager.createThumbnail(objectVideo, strt, PropsUtil.get("lecture2go.images.system.path"));
-					if (!thumbNail.isFile()) objectSegment.setImage(PropsUtil.get("lecture2go.theme.root.path") + "/" +"images" + "/" + "l2go" + "/" + "noimage.jpg");
-				}				
+			if (objectVideo.getContainerFormat().equals("mp4")) {
+				if (!thumbNail.isFile())FFmpegManager.createThumbnail(objectVideo, strt, PropsUtil.get("lecture2go.images.system.path"));
+				objectSegment.setImage(PropsUtil.get("lecture2go.web.root")+"/" + "images" + "/" + objectVideo.getVideoId() + "_" + sec + ".jpg");
 			}
 		}
 		return sl;
 	}
 	
+	public Segment getSegmentById(Long segmentId) throws SystemException, PortalException {
+		Segment objectSegment = segmentPersistence.findByPrimaryKey(segmentId);
+
+		Video objectVideo = VideoLocalServiceUtil.getVideo(objectSegment.getVideoId());
+
+		int sec = new Integer(objectSegment.getStart().split(":")[0]) * 60 * 60 + new Integer(objectSegment.getStart().split(":")[1]) * 60 + new Integer(objectSegment.getStart().split(":")[2]);
+		objectSegment.setSeconds(sec);
+		
+		String thumbNailString = PropsUtil.get("lecture2go.images.system.path") + "/" + objectVideo.getVideoId() + "_" + sec + ".jpg";
+		File thumbNail = new File(thumbNailString);
+		String strt = objectSegment.getStart();
+
+		// generate thumbs
+		// for audio
+		if (objectVideo.getContainerFormat().equals("mp3")) {
+			objectSegment.setImage(PropsUtil.get("lecture2go.web.root") + PropsUtil.get("lecture2go.theme.root.path") + "/images/l2go/audio_only_small.png");
+		}
+		// for video
+		if (objectVideo.getContainerFormat().equals("mp4")) {
+			if (!thumbNail.isFile())FFmpegManager.createThumbnail(objectVideo, strt, PropsUtil.get("lecture2go.images.system.path"));
+			objectSegment.setImage(PropsUtil.get("lecture2go.web.root")+"/" + "images" + "/" + objectVideo.getVideoId() + "_" + sec + ".jpg");
+		}
+		return objectSegment;
+	}
 	
-	public void deleteByVideoId(Long videoId) throws SystemException{
+	public void deleteByVideoId(Long videoId) throws SystemException {
 		 segmentPersistence.removeByVideo(videoId);
 	}
+	
+	/**
+	 * Adds the segment to the database and generates thumb nail. Also notifies the appropriate model listeners.
+	 *
+	 * @param segment the segment
+	 * @return the segment that was added
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Segment createSegment(Segment segment) throws SystemException, PortalException{
+		Segment s = SegmentLocalServiceUtil.addSegment(segment);
+		Segment sNew = getSegmentById(s.getPrimaryKey());
+		return sNew;
+	}
+	
+	public Segment removeSegment(Long segmentId) throws SystemException, PortalException{
+		Segment s = SegmentLocalServiceUtil.deleteSegment(segmentId);
+		//delete thumb nails
+		deleteThumbhailsFromSegment(s);
+		return s;
+	}
+	
+	public Segment getPreviusSegment(Segment segment){
+		List<Segment> sl = new ArrayList<Segment>();
+		int previousSegmentIndex = 0;
+		try {
+			sl = segmentPersistence.findByVideo(segment.getVideoId());
+			ListIterator<Segment> lis = sl.listIterator();
+			while(lis.hasNext()){
+				Segment s = lis.next();
+				if(s.getSegmentId()==segment.getSegmentId()){
+					if(lis.hasPrevious())previousSegmentIndex=lis.previousIndex();
+				}
+			}
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		Segment previousSegment = sl.get(previousSegmentIndex);
+		return previousSegment;
+	}
+	
 }
