@@ -224,7 +224,7 @@ public class FFmpegManager {
 	 *            the video
 	 * @return true, if successful
 	 */
-	public boolean thumbnailsExists(Video video) {
+	public static boolean thumbnailsExists(Video video) {
 		boolean ret = true;
 		String preffix = "";
 		if (video.getOpenAccess()==1)
