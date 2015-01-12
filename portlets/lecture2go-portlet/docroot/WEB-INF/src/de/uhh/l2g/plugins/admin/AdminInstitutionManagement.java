@@ -13,6 +13,7 @@ import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -35,6 +36,7 @@ import de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
+import de.uhh.l2g.plugins.service.persistence.InstitutionPersistence;
 
 public class AdminInstitutionManagement extends MVCPortlet {
 	
@@ -42,10 +44,24 @@ public class AdminInstitutionManagement extends MVCPortlet {
 	
 	public void addInstitutionEntry(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
 		
-		//ServiceContext serviceContext = ServiceContextFactory.getInstance(Institution.class.getInstitution(), request);
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(Institution.class.getName(), request);
 		
-	    String userName = ParamUtil.getString(request, "institution");
-	    String email = ParamUtil.getString(request, "streamingserver");
+	    String name = ParamUtil.getString(request, "institution");
+	    String streamer = ParamUtil.getString(request, "streamingserver");
+
+	    try {
+	        InstitutionLocalServiceUtil.addInstitution(serviceContext.getUserId(),
+	                name, streamer, serviceContext);
+
+	        SessionMessages.add(request, "institutionAdded");
+
+	    } catch (Exception e) {
+	        SessionErrors.add(request, e.getClass().getName());
+
+	        response.setRenderParameter("mvcPath",
+	            "/admin/institutionList.jsp");
+	    }
+
 		
 	}
 	

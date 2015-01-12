@@ -143,8 +143,7 @@ public class InstitutionLocalServiceClp implements InstitutionLocalService {
 
 		_methodParameterTypes25 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
-				"java.lang.String", "java.lang.String", "java.lang.String",
-				"int", "com.liferay.portal.service.ServiceContext"
+				"com.liferay.portal.service.ServiceContext"
 			};
 	}
 
@@ -873,10 +872,8 @@ public class InstitutionLocalServiceClp implements InstitutionLocalService {
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Host addInstitution(long userId,
+	public de.uhh.l2g.plugins.model.Institution addInstitution(long userId,
 		java.lang.String name, java.lang.String streamer,
-		java.lang.String serverTemplate, java.lang.String protocol,
-		java.lang.String serverRoot, int port,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -891,14 +888,6 @@ public class InstitutionLocalServiceClp implements InstitutionLocalService {
 					ClpSerializer.translateInput(name),
 						
 					ClpSerializer.translateInput(streamer),
-						
-					ClpSerializer.translateInput(serverTemplate),
-						
-					ClpSerializer.translateInput(protocol),
-						
-					ClpSerializer.translateInput(serverRoot),
-						
-					port,
 						
 					ClpSerializer.translateInput(serviceContext)
 					});
@@ -923,7 +912,7 @@ public class InstitutionLocalServiceClp implements InstitutionLocalService {
 			}
 		}
 
-		return (de.uhh.l2g.plugins.model.Host)ClpSerializer.translateOutput(returnObj);
+		return (de.uhh.l2g.plugins.model.Institution)ClpSerializer.translateOutput(returnObj);
 	}
 
 	private InvokableLocalService _invokableLocalService;

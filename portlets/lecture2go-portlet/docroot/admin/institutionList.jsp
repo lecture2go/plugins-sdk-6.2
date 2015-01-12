@@ -10,7 +10,7 @@
 		<aui:fieldset>
 
             <aui:input name="Institution"></aui:input>
-            <aui:input name="Streaming Server"></aui:input>
+            <aui:input name="StreamingServer"></aui:input>
 
         </aui:fieldset>
         
