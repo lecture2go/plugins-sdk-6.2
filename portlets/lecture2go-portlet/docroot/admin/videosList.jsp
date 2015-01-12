@@ -151,13 +151,18 @@
 	</liferay-ui:search-container-results>
 
 	<liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.Video" keyProperty="videoId" modelVar="video">
-		<% Video vid = VideoLocalServiceUtil.getVideo(new Long(video.getVideoId())); %>
+		<% 
+			Video vid = VideoLocalServiceUtil.getVideo(new Long(video.getVideoId())); 
+			String url = "";
+			if(vid.getOpenAccess()==1)url=vid.getUrl();
+			else url=vid.getSecureUrl();
+		%>
 		<portlet:actionURL name="viewVideo" var="viewURL">
 			<portlet:param name="videoId" value="<%= String.valueOf(video.getVideoId())%>" />
 		</portlet:actionURL>
 		<liferay-ui:search-container-column-text name="" >
 			<%if(!vid.getFilename().equals("")){%>
-				<aui:a  href="<%=vid.getUrl()%>" target="blank">
+				<aui:a  href="<%=url%>" target="blank">
 					<img src="<%=vid.getImageSmall()%>" style="width: 130px; height: 73px;"/>
 				</aui:a>
 			<%}else{%>
@@ -174,9 +179,8 @@
 				if(!ls.getName().equals(""))lName+=ls.getName();
 				String vName = vid.getTitle();
 				if(vName.trim().equals(""))vName ="NOT TITLED";
-			%>
-			<%
-			if(!vid.getFilename().equals("")){%><aui:a  href="<%=vid.getUrl()%>" target="blank"><%=vName%></aui:a><%}
+			
+			if(!vid.getFilename().equals("")){%><aui:a  href="<%=url%>" target="blank"><%=vName%></aui:a><%}
 			else{%> <%=vName%> <%}%>
 			<%if(!lName.equals("")){%>
 				<br/>

@@ -49,6 +49,7 @@ import de.uhh.l2g.plugins.model.impl.HostImpl;
 import de.uhh.l2g.plugins.model.impl.MetadataImpl;
 import de.uhh.l2g.plugins.model.impl.ProducerImpl;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
+import de.uhh.l2g.plugins.service.LastvideolistLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LicenseLocalServiceUtil;
 import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
@@ -244,15 +245,33 @@ public class ProzessManager {
 		}
 	}
 
-	public void deleteVideo(Video video) throws PortalException, SystemException {
+	public void deleteVideo(Video video){
 		Host host = new HostImpl();
-		host = HostLocalServiceUtil.getHost(video.getHostId());
+		try {
+			host = HostLocalServiceUtil.getHost(video.getHostId());
+		} catch (PortalException e1) {
+			e1.printStackTrace();
+		} catch (SystemException e1) {
+			e1.printStackTrace();
+		}
 		
 		Producer producer = new ProducerImpl();
-		producer = ProducerLocalServiceUtil.getProducer(video.getProducerId());
+		try {
+			producer = ProducerLocalServiceUtil.getProducer(video.getProducerId());
+		} catch (PortalException e1) {
+			e1.printStackTrace();
+		} catch (SystemException e1) {
+			e1.printStackTrace();
+		}
 		
 		Metadata metadata = new MetadataImpl();
-		metadata = MetadataLocalServiceUtil.getMetadata(video.getMetadataId());
+		try {
+			metadata = MetadataLocalServiceUtil.getMetadata(video.getMetadataId());
+		} catch (PortalException e1) {
+			e1.printStackTrace();
+		} catch (SystemException e1) {
+			e1.printStackTrace();
+		}
 
 		// delete video_lectureseries
 		Video_LectureseriesLocalServiceUtil.removeByVideoId(video.getVideoId());
@@ -261,27 +280,60 @@ public class ProzessManager {
 		Video_InstitutionLocalServiceUtil.removeByVideoId(video.getVideoId());
 				
 		// delete all segment images from repository location
-		List<Segment> segmentList = SegmentLocalServiceUtil.getSegmentsByVideoId(video.getVideoId());
-		SegmentLocalServiceUtil.deleteThumbhailsFromSegments(segmentList);
+		try{
+			List<Segment> segmentList = SegmentLocalServiceUtil.getSegmentsByVideoId(video.getVideoId());
+			SegmentLocalServiceUtil.deleteThumbhailsFromSegments(segmentList);
+		}catch (PortalException e) {
+			e.printStackTrace();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e){
+			e.printStackTrace();
+		}
 		
 		// delete all segment data from table
-		SegmentLocalServiceUtil.deleteByVideoId(video.getVideoId());
-		Segment_User_VideoLocalServiceUtil.deleteByVideoId(video.getVideoId());
+		try {
+			SegmentLocalServiceUtil.deleteByVideoId(video.getVideoId());
+		} catch (SystemException e1) {
+			e1.printStackTrace();
+		}
+		try {
+			Segment_User_VideoLocalServiceUtil.deleteByVideoId(video.getVideoId());
+		} catch (SystemException e1) {
+			e1.printStackTrace();
+		}
 		
-		// delete license
 		LicenseLocalServiceUtil.deleteByVideoId(video.getVideoId());
 
 		//delete upload info
-		UploadLocalServiceUtil.deleteByVideoId(video.getVideoId());
+		try {
+			UploadLocalServiceUtil.deleteByVideoId(video.getVideoId());
+		} catch (SystemException e1) {
+			e1.printStackTrace();
+		}
 		
 		// delete video from videohitlist
-		VideohitlistLocalServiceUtil.deleteVideohitlist(video.getVideoId());
+		try {
+			VideohitlistLocalServiceUtil.deleteVideohitlist(video.getVideoId());
+		} catch (PortalException e1) {
+			e1.printStackTrace();
+		} catch (SystemException e1) {
+			e1.printStackTrace();
+		}
 		
 		// delete meta data which belongs to video 
-		MetadataLocalServiceUtil.deleteMetadata(metadata);
+		try {
+			MetadataLocalServiceUtil.deleteMetadata(metadata);
+		} catch (SystemException e1) {
+			e1.printStackTrace();
+		}
 		
-		// delete video 
-		VideoLocalServiceUtil.deleteVideo(video);
+		// delete video itself
+		try {
+			VideoLocalServiceUtil.deleteVideo(video);
+		} catch (SystemException e1) {
+			e1.printStackTrace();
+		}
 		
 		//delete physical files 
 		String videoPreffix = "";
@@ -328,6 +380,9 @@ public class ProzessManager {
 			e.printStackTrace();
 		}
 		
+		// update last video list
+		LastvideolistLocalServiceUtil.deleteByVideoId(video.getVideoId());
+		
 		// update uploads for producer
 		int n = 0;
 		try {
@@ -336,7 +391,19 @@ public class ProzessManager {
 			e.printStackTrace();
 		}
 		producer.setNumberOfProductions(n);
-		ProducerLocalServiceUtil.updateProducer(producer);
+		try {
+			ProducerLocalServiceUtil.updateProducer(producer);
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		
+		//Update htaccess
+		String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/";
+		try {
+			HTACCESS.makeHtaccess(url, VideoLocalServiceUtil.getByProducerAndDownloadLink(producer.getProducerId(), 0));
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void generateRSS(Video video, String type) throws PortalException, SystemException {

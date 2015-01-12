@@ -53,12 +53,12 @@ public class Video_LectureseriesLocalServiceImpl
 	
 	public boolean removeByVideoId(Long videoId) {
 		boolean ret = false;
-		try {
-			Video_LectureseriesUtil.removeByVideo(videoId);
-		} catch (SystemException e) {
-			ret = true;
-			e.printStackTrace();
-		}
+			try {
+				Video_LectureseriesUtil.removeByVideo(videoId);
+				ret = true;
+			} catch (SystemException e) {
+				e.printStackTrace();
+			}
 		return ret;
 	}
 	

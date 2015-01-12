@@ -339,35 +339,39 @@ public class AdminVideoManagement extends MVCPortlet {
 		return sb.toString();
 	}
 	
-	public void removeVideo(){
-		
-	}
-	
-	public void lockVideo(ActionRequest request, ActionResponse response) throws PortalException, SystemException{
+	public void removeVideo(ActionRequest request, ActionResponse response){
 		Video video = new VideoImpl();
 		Long reqVideoId = new Long(0);
 		try{reqVideoId = new Long(request.getParameterMap().get("videoId")[0]);}catch(Exception e){}
 		video = VideoLocalServiceUtil.getVideo(reqVideoId);
 		ProzessManager pm = new ProzessManager();	
-//		String sUrl = Security.createSecureFileName() + "." + video.getContainerFormat();
-//		video.setSurl(sUrl);
-//		//first data base update
-//		VideoLocalServiceUtil.updateVideo(video);
-//		//then physically update
-		pm.deactivateOpenaccess(video);
+		pm.deleteVideo(video);
 	}
 	
-	public void unlockVideo(ActionRequest request, ActionResponse response) throws PortalException, SystemException{
+	public void lockVideo(ActionRequest request, ActionResponse response){
 		Video video = new VideoImpl();
 		Long reqVideoId = new Long(0);
 		try{reqVideoId = new Long(request.getParameterMap().get("videoId")[0]);}catch(Exception e){}
 		video = VideoLocalServiceUtil.getVideo(reqVideoId);
 		ProzessManager pm = new ProzessManager();	
-//		video.setSurl("");
-//		//first data base update
-//		VideoLocalServiceUtil.updateVideo(video);
-//		//then physically update
-		pm.activateOpenaccess(video);
+		try {
+			pm.deactivateOpenaccess(video);
+		} catch (PortalException e) {
+		} catch (SystemException e) {
+		}
+	}
+	
+	public void unlockVideo(ActionRequest request, ActionResponse response){
+		Video video = new VideoImpl();
+		Long reqVideoId = new Long(0);
+		try{reqVideoId = new Long(request.getParameterMap().get("videoId")[0]);}catch(Exception e){}
+		video = VideoLocalServiceUtil.getVideo(reqVideoId);
+		ProzessManager pm = new ProzessManager();	
+		try {
+			pm.activateOpenaccess(video);
+		} catch (SystemException e) {
+		} catch (PortalException e) {
+		}
 	}
 	
 	public void activateDownload(ActionRequest request, ActionResponse response) throws SystemException, PortalException{

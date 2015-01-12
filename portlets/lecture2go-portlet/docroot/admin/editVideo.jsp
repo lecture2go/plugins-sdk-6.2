@@ -68,7 +68,7 @@
 					}%>
 			</aui:select>
 			
-			<aui:select size="1" name="language" label="language" required="true">
+			<aui:select size="1" name="language" label="language" required="false">
 				<aui:option value="">select-language</aui:option>
 				<%for (int i=0; i<languages.length; i++){
 					if (languages[i].getLanguage().equals(reqMetadata.getLanguage())) {%>
@@ -79,15 +79,15 @@
 				}%>				
 			</aui:select>
 			
-			<aui:input id="title" name="title" label="title" required="true" value="<%=reqVideo.getTitle()%>" />
+			<aui:input id="title" name="title" label="title" required="false" value="<%=reqVideo.getTitle()%>" />
 
 			<aui:input name="tags" label="tags" required="false" value="<%=reqVideo.getTags()%>"/>
 
-			<aui:input name="creator" label="creator" required="true" value="<%=reqMetadata.getCreator()%>"/>
+			<aui:input name="creator" label="creator" required="false" value="<%=reqMetadata.getCreator()%>"/>
 
-			<aui:input name="rightsHolder" label="rightsHolder" required="true" value="<%=reqMetadata.getRightsHolder()%>"/>
+			<aui:input name="rightsHolder" label="rightsHolder" required="false" value="<%=reqMetadata.getRightsHolder()%>"/>
 			
-			<aui:input name="publisher" label="publisher" required="true" value="<%=reqMetadata.getPublisher()%>"/>
+			<aui:input name="publisher" label="publisher" required="false" value="<%=reqMetadata.getPublisher()%>"/>
 	
 			license
 			<br/>
@@ -109,7 +109,7 @@
 			    </script>
 			</aui:field-wrapper>
 			<aui:button-row>
-				<aui:button type="cancel" value="go to overview" onClick="<%=cancelURL.toString()%>" />
+				<aui:button type="cancel" value="save" onClick="<%=cancelURL.toString()%>" />
 			</aui:button-row>
 			
 			<aui:input name="videoId" type="hidden" value="<%=reqVideo.getVideoId()%>"/>
@@ -212,14 +212,15 @@ AUI().use(
 			    var license2 = A.one('#<portlet:namespace/>uhhl2go');
 			    
 			    lectureseries.on('change',function(A){updateMetadata()});
-			    title.on('keyup',function(A){updateMetadata()});
 				language.on('change',function(A){updateMetadata()});
-			    tags.on('keyup',function(A){updateMetadata()});
-			    creator.on('keyup',function(A){updateMetadata()});
-			    rightsHolder.on('keyup',function(A){updateMetadata()});
-			    publisher.on('keyup',function(A){updateMetadata()});
-			    license1.on('change',function(A){updateLicense(license1.get('value'))});
 			    license2.on('change',function(A){updateLicense(license2.get('value'))});
+			    license1.on('change',function(A){updateLicense(license1.get('value'))});
+
+				title.on('change',function(A){updateMetadata()});
+			    tags.on('change',function(A){updateMetadata()});
+			    creator.on('change',function(A){updateMetadata()});
+			    rightsHolder.on('change',function(A){updateMetadata()});
+			    publisher.on('change',function(A){updateMetadata()});
 			    test();
 		}
 );

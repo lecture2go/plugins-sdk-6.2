@@ -198,6 +198,9 @@
     <entity name="Lastvideolist" local-service="true" remote-service="false">
         <column name="lastvideolistId" type="int" primary="true" id-type="increment"></column>
         <column name="videoId" type="long"></column>
+        <finder name="Video" return-type="Collection">
+            <finder-column name="videoId"></finder-column>
+        </finder>
     </entity>
     <entity name="License" local-service="true" remote-service="false">
         <column name="licenseId" type="long" primary="true" id-type="increment"></column>

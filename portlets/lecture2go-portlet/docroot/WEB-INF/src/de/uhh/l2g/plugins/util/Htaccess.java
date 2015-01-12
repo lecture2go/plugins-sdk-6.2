@@ -123,8 +123,6 @@ public class Htaccess {
 		BufferedWriter bw = null;
 		try {
 			bw = new BufferedWriter(new FileWriter(file));
-			{
-			}
 
 			bw.write("# .htaccess-Datei zum Schutz der Files");
 			bw.newLine();
@@ -141,28 +139,18 @@ public class Htaccess {
 
 			for (Video video : lockedVideos) {
 				if (video != null) {
-					String videoUrl = "";
-					String videoUrlS = "";
 					Long lectureseriesId = video.getLectureseriesId();
 
-					if (video.getFilename() != null) {
-						videoUrl = video.getFilename().substring(0, video.getFilename().lastIndexOf(46));
-					}
-
-					if (video.getSecureUrl() != null) {
-						videoUrlS = video.getSecureUrl().substring(0, video.getSecureUrl().lastIndexOf(46));
-					}
-
-					if (videoUrl.length() > 10) {
+					if (video.getFilename().length() > 10) {
 						for (String extention : fileExtentions) {
-							bw.write("<Files " + videoUrl + extention + ">");
+							bw.write("<Files " + video.getPreffix() + extention + ">");
 							bw.newLine();
 							bw.write("Require user " + lectureseriesId);
 							bw.newLine();
 							bw.write("</Files>");
 							bw.newLine();
 
-							bw.write("<Files " + videoUrlS + extention + ">");
+							bw.write("<Files " + video.getSPreffix() + extention + ">");
 							bw.newLine();
 							bw.write("Require user " + lectureseriesId);
 							bw.newLine();
