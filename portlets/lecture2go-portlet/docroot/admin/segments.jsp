@@ -77,8 +77,9 @@
 						on: {
 							   success: function() {
 							     var segment = this.get('responseData');
-							        //console.log(jsonResponse);
-							        drawRow(segment);	
+							        setTimeout(function() {
+							        	drawRow(segment);
+							        }, 2000)
 							   }
 						}
 					});	
@@ -144,13 +145,14 @@
 </script>
 
 
-<div id="iframe"></div>
+<div id="iframe">
+<div id ="0"/>
+</div>
 
 <br/>
 
 <liferay-portlet:resourceURL id="test" var="testURL" />
 <script type="text/javascript">
-	// ignore this first line (its fidle mock) and it will return what ever you pass as json:... parameter... consider to change it to your ajax call
 	$.ajax({
 	    url: '<%=testURL%>',
 	    method: 'POST',
@@ -165,17 +167,13 @@
 	});	
 	
 	function drawSegmentRow(data) {
+		console.log(data);
 		for (var i = 0; i < data.length; i++) {
-	        drawRow(data[i]);	
+			drawRow(data[i]);
 	    }
 	}
 	
 	function drawRow(segment) {
-	    var row = $("<div />")
-	    $("#iframe").append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it
-	   
-	    var newRow="";
-	    
 	    if(segment.chapter==1){
 	    	newRow="<div class='chaptertile' id='"+segment.segmentId+"'>"+
 			"<a><iavst begin='"+segment.start+"' end='"+segment.end+"'><img class='imgsmall' title='watch this chapter' src='"+segment.image+"'></iavst></a>"+
@@ -183,7 +181,6 @@
 			"<a><iavst class='white' begin='"+segment.start+"' end='"+segment.end+"'><span style='font-size:11px;'>"+segment.title+"</span></iavst></a>";
 		}else{
 			newRow="<div class='commenttile' id='"+segment.segmentId+"'>"+
-    		"<div>"+
     		"<b id='pf1_XXX'>"+
     		"<input type='image' height='10' width='10' src='/lecture2go-portlet/img/commentOff.png' title='comment on' alt='comment on' id='showrXXX'/>"+
     		"</b>"+
@@ -191,14 +188,18 @@
     		"<input type='image' height='10' width='10' src='/lecture2go-portlet/img/commentOn.png' title=' comment off' alt='comment off' id='hidrYYY'/>"+
     		"</b>"+
     		"<span class='fs8'>"+segment.start+"</span>"+
-    		"<a><iavst class='white' begin='"+segment.start+"' end='"+segment.end+"'><span style='font-size:11px;'>"+segment.title+"</span></iavst></a>"+
-    		"</div>";
+    		"<a><iavst class='white' begin='"+segment.start+"' end='"+segment.end+"'><span style='font-size:11px;'>"+segment.title+"</span></iavst></a>";
 		}
 		if(segment.userId==<%=remoteUser.getUserId()%>){
 			newRow=newRow+"<input type='image' src='/lecture2go-portlet/img/delete.png' alt='delete' onclick='deleteSegment("+segment.segmentId+")' >";
 		}
 		newRow=newRow+"</div>";
-		setTimeout(function() {row.append($(newRow)).fadeIn("slow")},1000);
-	    
+		
+		if(segment.previousSegmentId == -1){
+			$("#0").append(newRow);
+		}else{
+			$(newRow).insertAfter("#"+ segment.previousSegmentId);
+		}
 	}
+	
 </script>

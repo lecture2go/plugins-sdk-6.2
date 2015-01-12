@@ -420,6 +420,41 @@ public class SegmentClp extends BaseModelImpl<Segment> implements Segment {
 	}
 
 	@Override
+	public long getPreviusSegmentId() {
+		try {
+			String methodName = "getPreviusSegmentId";
+
+			Class<?>[] parameterTypes = new Class<?>[] {  };
+
+			Object[] parameterValues = new Object[] {  };
+
+			Long returnObj = (Long)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public void setPreviusSegmentId(long previusSegmentId) {
+		try {
+			String methodName = "setPreviusSegmentId";
+
+			Class<?>[] parameterTypes = new Class<?>[] { long.class };
+
+			Object[] parameterValues = new Object[] { previusSegmentId };
+
+			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
 	public void setSeconds(int seconds) {
 		try {
 			String methodName = "setSeconds";

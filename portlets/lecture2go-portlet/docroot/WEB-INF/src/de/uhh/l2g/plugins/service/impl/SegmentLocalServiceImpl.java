@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PropsUtil;
 
+import de.uhh.l2g.plugins.NoSuchSegmentException;
 import de.uhh.l2g.plugins.model.Segment;
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.impl.SegmentImpl;
@@ -82,50 +83,29 @@ public class SegmentLocalServiceImpl extends SegmentLocalServiceBaseImpl {
 		List<Segment> sl = segmentPersistence.findByVideo(videoId);
 		
 		Iterator<Segment> it = sl.iterator();
-		Integer counter = 0;
 		
 		while (it.hasNext()) {
-			Segment objectSegment = it.next();
-			Video objectVideo = VideoLocalServiceUtil.getVideo(objectSegment.getVideoId());
-			
-			int sec = new Integer(objectSegment.getStart().split(":")[0]) * 60 * 60 + new Integer(objectSegment.getStart().split(":")[1]) * 60 + new Integer(objectSegment.getStart().split(":")[2]);
-			objectSegment.setSeconds(sec);
-
-			File thumbNail = new File(PropsUtil.get("lecture2go.images.system.path") + "/" + objectVideo.getVideoId() + "_" + sec + ".jpg");
-			String strt = objectSegment.getStart();
-
-			// count chapters
-			if (objectSegment.getChapter()==1) {
-				counter++;
-				objectSegment.setNumber(counter);
-			}
-
-			// generate thumbs	
-			// for audio 
-			if (objectVideo.getContainerFormat().equals("mp3")){
-				objectSegment.setImage(PropsUtil.get("lecture2go.web.root") + PropsUtil.get("lecture2go.theme.root.path") + "/images/l2go/audio_only_small.png");
-			}
-			// for video
-			if (objectVideo.getContainerFormat().equals("mp4")) {
-				if (!thumbNail.isFile())FFmpegManager.createThumbnail(objectVideo, strt, PropsUtil.get("lecture2go.images.system.path"));
-				objectSegment.setImage(PropsUtil.get("lecture2go.web.root")+"/" + "images" + "/" + objectVideo.getVideoId() + "_" + sec + ".jpg");
-			}
+			Segment objSeg = it.next();
+			fillWithProperties(objSeg);
 		}
 		return sl;
 	}
 	
 	public Segment getSegmentById(Long segmentId) throws SystemException, PortalException {
 		Segment objectSegment = segmentPersistence.findByPrimaryKey(segmentId);
-
+		return fillWithProperties(objectSegment);
+	}
+	
+	public Segment fillWithProperties(Segment objectSegment) throws SystemException, PortalException {
 		Video objectVideo = VideoLocalServiceUtil.getVideo(objectSegment.getVideoId());
-
+		//
 		int sec = new Integer(objectSegment.getStart().split(":")[0]) * 60 * 60 + new Integer(objectSegment.getStart().split(":")[1]) * 60 + new Integer(objectSegment.getStart().split(":")[2]);
 		objectSegment.setSeconds(sec);
 		
 		String thumbNailString = PropsUtil.get("lecture2go.images.system.path") + "/" + objectVideo.getVideoId() + "_" + sec + ".jpg";
 		File thumbNail = new File(thumbNailString);
 		String strt = objectSegment.getStart();
-
+		
 		// generate thumbs
 		// for audio
 		if (objectVideo.getContainerFormat().equals("mp3")) {
@@ -163,7 +143,7 @@ public class SegmentLocalServiceImpl extends SegmentLocalServiceBaseImpl {
 		return s;
 	}
 	
-	public Segment getPreviusSegment(Segment segment){
+	public Segment getPreviusSegment(Segment segment) throws SystemException, PortalException{
 		List<Segment> sl = new ArrayList<Segment>();
 		int previousSegmentIndex = 0;
 		try {
@@ -171,15 +151,33 @@ public class SegmentLocalServiceImpl extends SegmentLocalServiceBaseImpl {
 			ListIterator<Segment> lis = sl.listIterator();
 			while(lis.hasNext()){
 				Segment s = lis.next();
-				if(s.getSegmentId()==segment.getSegmentId()){
-					if(lis.hasPrevious())previousSegmentIndex=lis.previousIndex();
-				}
+				if(s.getSegmentId()==segment.getSegmentId())previousSegmentIndex=lis.previousIndex();
 			}
 		} catch (SystemException e) {
 			e.printStackTrace();
 		}
-		Segment previousSegment = sl.get(previousSegmentIndex);
-		return previousSegment;
+		int ps = previousSegmentIndex-1;
+		Segment previousSegment = sl.get(ps);
+		if(!previousSegment.equals("-1"))return fillWithProperties(previousSegment);
+		else return new SegmentImpl();
+	}
+	
+	public Long getPreviusSegmentId(Long segmentId) throws SystemException, PortalException{
+		Segment s = new SegmentImpl();
+		try {
+			s = getSegmentById(segmentId);
+		} catch (SystemException e) {
+			e.printStackTrace();
+		} catch (PortalException e) {
+			e.printStackTrace();
+		} 
+		Long prevSegId = new Long(0);
+		try{
+			prevSegId = getPreviusSegment(s).getSegmentId();
+		}catch(ArrayIndexOutOfBoundsException e){
+			prevSegId = new Long(-1);
+		}
+		return prevSegId;
 	}
 	
 }

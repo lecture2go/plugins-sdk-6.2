@@ -418,6 +418,16 @@ public class SegmentWrapper implements Segment, ModelWrapper<Segment> {
 	}
 
 	@Override
+	public long getPreviusSegmentId() {
+		return _segment.getPreviusSegmentId();
+	}
+
+	@Override
+	public void setPreviusSegmentId(long previusSegmentId) {
+		_segment.setPreviusSegmentId(previusSegmentId);
+	}
+
+	@Override
 	public int getSeconds() {
 		return _segment.getSeconds();
 	}

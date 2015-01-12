@@ -31,6 +31,10 @@ public interface Segment extends SegmentModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link de.uhh.l2g.plugins.model.impl.SegmentImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public long getPreviusSegmentId();
+
+	public void setPreviusSegmentId(long previusSegmentId);
+
 	public int getSeconds();
 
 	public void setSeconds(int seconds);

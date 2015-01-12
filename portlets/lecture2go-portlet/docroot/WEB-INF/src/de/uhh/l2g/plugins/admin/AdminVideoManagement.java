@@ -1,7 +1,6 @@
 package de.uhh.l2g.plugins.admin;
 
 import java.io.BufferedInputStream;
-import java.io.Console;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,10 +18,6 @@ import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
-import org.json.JSONArray;
-import org.springframework.web.util.HtmlUtils;
-
-import com.google.gson.Gson;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -30,11 +25,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.User;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
@@ -64,13 +54,11 @@ import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.util.ProzessManager;
-import de.uhh.l2g.plugins.util.Security;
 
 public class AdminVideoManagement extends MVCPortlet {
 
 	private final static Logger logger = Logger.getLogger(AdminVideoManagement.class.getName());
 	
-	@SuppressWarnings("unused")
 	public void addSegment(ActionRequest request, ActionResponse response){
 		Video reqVideo = new VideoImpl();
 		Long reqVideoId = new Long(0);
@@ -83,18 +71,6 @@ public class AdminVideoManagement extends MVCPortlet {
 	}
 	
 	public void viewVideo(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
-		
-		List<Lectureseries> ls  = LectureseriesLocalServiceUtil.getAllLectureseriesWhithOpenaccessVideos();
-		List<Video> vl = VideoLocalServiceUtil.getLatestVideos();
-		
-		//permissions
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
-		PermissionChecker permissionChecker = themeDisplay.getPermissionChecker();
-		
-		//user 
-		String uId = request.getRemoteUser();
-		Long userId = new Long(uId);
-		User remoteUser = UserLocalServiceUtil.getUserById(userId);
 		
 		// requested producer id
 		Long reqPproducerId = (long)0;
@@ -375,7 +351,6 @@ public class AdminVideoManagement extends MVCPortlet {
 				try {
 					// save
 					Segment s = SegmentLocalServiceUtil.createSegment(segment);
-					Segment previusS = SegmentLocalServiceUtil.getPreviusSegment(s);
 					
 					JSONObject jo = JSONFactoryUtil.createJSONObject();
 					jo.put("chapter", s.getChapter());
@@ -389,6 +364,8 @@ public class AdminVideoManagement extends MVCPortlet {
 					jo.put("title", s.getTitle());
 					jo.put("userId", s.getUserId());
 					jo.put("videoId", s.getVideoId());
+					jo.put("previousSegmentId", SegmentLocalServiceUtil.getPreviusSegmentId(s.getSegmentId()));
+					
 					// and return response
 					writeJSON(resourceRequest, resourceResponse, jo);
 				} catch (SystemException e) {
@@ -421,6 +398,7 @@ public class AdminVideoManagement extends MVCPortlet {
 					jo.put("title", s.getTitle());
 					jo.put("userId", s.getUserId());
 					jo.put("videoId", s.getVideoId());
+					jo.put("previousSegmentId", SegmentLocalServiceUtil.getPreviusSegmentId(s.getSegmentId()));
 					ja.put(jo);
 				}
 				
