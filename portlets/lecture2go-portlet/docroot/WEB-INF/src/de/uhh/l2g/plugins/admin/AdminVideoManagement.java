@@ -22,7 +22,7 @@ import javax.portlet.ResourceResponse;
 import org.json.JSONArray;
 import org.springframework.web.util.HtmlUtils;
 
-import com.google.gson.Gson;
+//import com.google.gson.Gson;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
