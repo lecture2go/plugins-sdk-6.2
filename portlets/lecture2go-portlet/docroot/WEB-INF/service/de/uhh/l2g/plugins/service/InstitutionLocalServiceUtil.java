@@ -311,12 +311,11 @@ public class InstitutionLocalServiceUtil {
 	}
 
 	public static de.uhh.l2g.plugins.model.Institution addInstitution(
-		long userId, java.lang.String name, java.lang.String streamer,
+		java.lang.String name, java.lang.String streamer,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .addInstitution(userId, name, streamer, serviceContext);
+		return getService().addInstitution(name, streamer, serviceContext);
 	}
 
 	public static void clearService() {

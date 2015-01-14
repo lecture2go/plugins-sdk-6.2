@@ -329,12 +329,12 @@ public class InstitutionLocalServiceWrapper implements InstitutionLocalService,
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Institution addInstitution(long userId,
+	public de.uhh.l2g.plugins.model.Institution addInstitution(
 		java.lang.String name, java.lang.String streamer,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _institutionLocalService.addInstitution(userId, name, streamer,
+		return _institutionLocalService.addInstitution(name, streamer,
 			serviceContext);
 	}
 

@@ -115,19 +115,17 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 
 	}
 
-	public Institution addInstitution(long userId, String name, String streamer,
-			ServiceContext serviceContext) throws SystemException, PortalException {
+	public Institution addInstitution(String name, String streamer, ServiceContext serviceContext) throws SystemException, PortalException {
 
 		validate(name);
 
-		long institutionId = counterLocalService.increment();
+		long institutionId = counterLocalService.increment(Institution.class.getName());
 
 		Institution institution = institutionPersistence.create(institutionId);
+		//Institution_Host institution_host = institutionHostPersitence.create()
 
 		institution.setName(name);
-				
-		institution.setExpandoBridgeAttributes(serviceContext);
-
+		//institution.setStreamer(streamer);
 		institutionPersistence.update(institution);
 
 		return institution;
