@@ -63,7 +63,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		Video reqVideo = new VideoImpl();
 		Long reqVideoId = new Long(0);
 		try{reqVideoId = new Long(request.getParameterMap().get("videoId")[0]);}catch(Exception e){}
-		reqVideo = VideoLocalServiceUtil.getVideo(reqVideoId);
+		reqVideo = VideoLocalServiceUtil.getFullVideo(reqVideoId);
 
 		response.setRenderParameter("jspPage", "/admin/segments.jsp");
 		request.setAttribute("reqVideo", reqVideo);
@@ -199,7 +199,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		Long userId = new Long(userID);
 		String resourceID = resourceRequest.getResourceID();
 		Long videoId = ParamUtil.getLong(resourceRequest, "videoId");
-		Video video = VideoLocalServiceUtil.getVideo(videoId);
+		Video video = VideoLocalServiceUtil.getFullVideo(videoId);
 		Metadata metadata = new MetadataImpl();
 		try {
 			Long metadataId = video.getMetadataId();
@@ -376,7 +376,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			}
 		}
 
-		if(resourceID.equals("test")){
+		if(resourceID.equals("showSegments")){
 			String vId = ParamUtil.getString(resourceRequest, "videoId");
 			Long vID = new Long(vId);
 			com.liferay.portal.kernel.json.JSONArray ja = JSONFactoryUtil.createJSONArray();
@@ -467,7 +467,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		Video video = new VideoImpl();
 		Long reqVideoId = new Long(0);
 		try{reqVideoId = new Long(request.getParameterMap().get("videoId")[0]);}catch(Exception e){}
-		video = VideoLocalServiceUtil.getVideo(reqVideoId);
+		video = VideoLocalServiceUtil.getFullVideo(reqVideoId);
 		ProzessManager pm = new ProzessManager();	
 		pm.deleteVideo(video);
 	}
@@ -476,7 +476,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		Video video = new VideoImpl();
 		Long reqVideoId = new Long(0);
 		try{reqVideoId = new Long(request.getParameterMap().get("videoId")[0]);}catch(Exception e){}
-		video = VideoLocalServiceUtil.getVideo(reqVideoId);
+		video = VideoLocalServiceUtil.getFullVideo(reqVideoId);
 		ProzessManager pm = new ProzessManager();	
 		try {
 			pm.deactivateOpenaccess(video);
@@ -489,7 +489,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		Video video = new VideoImpl();
 		Long reqVideoId = new Long(0);
 		try{reqVideoId = new Long(request.getParameterMap().get("videoId")[0]);}catch(Exception e){}
-		video = VideoLocalServiceUtil.getVideo(reqVideoId);
+		video = VideoLocalServiceUtil.getFullVideo(reqVideoId);
 		ProzessManager pm = new ProzessManager();	
 		try {
 			pm.activateOpenaccess(video);

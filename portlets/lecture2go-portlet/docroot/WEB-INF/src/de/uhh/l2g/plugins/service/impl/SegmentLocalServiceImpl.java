@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PropsUtil;
 
-import de.uhh.l2g.plugins.NoSuchSegmentException;
 import de.uhh.l2g.plugins.model.Segment;
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.impl.SegmentImpl;
@@ -32,7 +31,6 @@ import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.SegmentLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.util.FFmpegManager;
-import de.uhh.l2g.plugins.util.ProzessManager;
 
 /**
  * The implementation of the segment local service.

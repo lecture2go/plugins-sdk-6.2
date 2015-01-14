@@ -52,7 +52,100 @@
 	</aui:layout>
 </aui:fieldset>
 
+<div id="iframe">
+	<div id ="0"></div>
+</div>
+
+<br/>
+
+   <liferay-ui:panel title="1" collapsible="true">content 1</liferay-ui:panel>
+
+<br/>
+
+<liferay-portlet:resourceURL id="showSegments" var="segmentsURL" />
 <script type="text/javascript">
+	$.ajax({
+	    url: '<%=segmentsURL%>',
+	    method: 'POST',
+	    dataType: "json",
+	    data: {
+	 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>",
+	    },
+	    success: function(data, textStatus, jqXHR) {
+	        // since we are using jQuery, you don't need to parse response
+	        drawSegmentRow(data);
+	    }
+	});	
+
+	function deleteSegment(segmentId){	
+		$.ajax({
+		    url: '<%=deleteSegmentURL.toString()%>',
+		    method: 'POST',
+		    dataType: "json",
+		    data: {
+		 	   	<portlet:namespace/>segmentId: segmentId,
+		 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>",
+		    },
+		    success: function(data, textStatus, jqXHR) {
+		        // since we are using jQuery, you don't need to parse response
+		        $("#"+data.segmentId).remove();
+		    }
+		});	
+	}
+
+	
+	function drawSegmentRow(data) {
+		for (var i = 0; i < data.length; i++) {
+			drawRow(data[i]);
+	    }
+	}
+	
+	function drawRow(segment) {
+	    if(segment.chapter==1){
+	    	newRow='<div class="chaptertile" id="'+segment.segmentId+'">'+
+			'<a><iavst begin="'+segment.start+'" end="'+segment.end+'"><img class="imgsmall" title="watch this chapter" src="'+segment.image+'"></iavst></a>'+
+			'<span style="font-size:8px;">'+segment.start +' - '+segment.end+'</span><br/>'+
+			'<a><iavst class="white" begin="'+segment.start+'" end="'+segment.end+'"><span style="font-size:11px;">'+segment.title+'</span></iavst></a>';
+		}else{
+			newRow='<div class="commenttile" id="'+segment.segmentId+'">'+
+    		'<b id="pf1_XXX">'+
+    		'<input type="image" height="10" width="10" src="/lecture2go-portlet/img/commentOff.png" title="comment on" alt="comment on" id="showrXXX"/>'+
+    		'</b>'+
+    		'<b id="pf2_YYY">'+
+    		'<input type="image" height="10" width="10" src="/lecture2go-portlet/img/commentOn.png" title=" comment off" alt="comment off" id="hidrYYY"/>'+
+    		'</b>'+
+    		'<span class="fs8">'+segment.start+'</span>'+
+    		'<a><iavst class="white" begin="'+segment.start+'" end="'+segment.end+'"><span style="font-size:11px;">'+segment.title+'</span></iavst></a>';
+		}
+		if(segment.userId==<%=remoteUser.getUserId()%>){
+			newRow=newRow+'<input type="image" src="/lecture2go-portlet/img/delete.png" alt="delete" onclick="deleteSegment('+segment.segmentId+')" >';
+		}
+		newRow=newRow+'</div>';
+		
+		if(segment.previousSegmentId == -1){
+			$("#0").append(newRow);
+		}else{
+			$(newRow).insertAfter("#"+ segment.previousSegmentId);
+		}
+	}
+	
+	AUI().use(
+			'aui-node',
+			function(A) {
+				// Select the node(s) using a css selector string
+				A.one('#ignore').hide();
+				var text = A.one('#iav');
+				text.hide();
+				var chapter = A.one('#<portlet:namespace/>chapter');
+				var comment = A.one('#<portlet:namespace/>comment');
+				var segmentationPermitted = A.one('#<portlet:namespace/>segmentationPermittedCheckbox');
+				
+				chapter.on('click',function(A){text.hide()});
+				comment.on('click',function(A){text.show()});
+				segmentationPermitted.on('click',function(A){toggleSegmentationPermitted(segmentationPermitted.get('checked'))});
+			}
+	);
+	
 	function addSegment(){
 		AUI().use('aui-io-request', 'aui-node',
 			function(A){
@@ -87,39 +180,6 @@
 			}
 		);
 	}
-
-	function deleteSegment(segmentId){	
-		$.ajax({
-		    url: '<%=deleteSegmentURL.toString()%>',
-		    method: 'POST',
-		    dataType: "json",
-		    data: {
-		 	   	<portlet:namespace/>segmentId: segmentId,
-		 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>",
-		    },
-		    success: function(data, textStatus, jqXHR) {
-		        // since we are using jQuery, you don't need to parse response
-		        $("#"+data.segmentId).remove();
-		    }
-		});	
-	}
-
-	AUI().use(
-			'aui-node',
-			function(A) {
-				// Select the node(s) using a css selector string
-				A.one('#ignore').hide();
-				var text = A.one('#iav');
-				text.hide();
-				var chapter = A.one('#<portlet:namespace/>chapter');
-				var comment = A.one('#<portlet:namespace/>comment');
-				var segmentationPermitted = A.one('#<portlet:namespace/>segmentationPermittedCheckbox');
-				
-				chapter.on('click',function(A){text.hide()});
-				comment.on('click',function(A){text.show()});
-				segmentationPermitted.on('click',function(A){toggleSegmentationPermitted(segmentationPermitted.get('checked'))});
-			}
-	);
 	
 	function toggleSegmentationPermitted(data){
 		AUI().use('aui-io-request', 'aui-node',
@@ -142,64 +202,4 @@
 			}
 		);
 	}
-</script>
-
-
-<div id="iframe">
-<div id ="0"/>
-</div>
-
-<br/>
-
-<liferay-portlet:resourceURL id="test" var="testURL" />
-<script type="text/javascript">
-	$.ajax({
-	    url: '<%=testURL%>',
-	    method: 'POST',
-	    dataType: "json",
-	    data: {
-	 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>",
-	    },
-	    success: function(data, textStatus, jqXHR) {
-	        // since we are using jQuery, you don't need to parse response
-	        drawSegmentRow(data);
-	    }
-	});	
-	
-	function drawSegmentRow(data) {
-		console.log(data);
-		for (var i = 0; i < data.length; i++) {
-			drawRow(data[i]);
-	    }
-	}
-	
-	function drawRow(segment) {
-	    if(segment.chapter==1){
-	    	newRow="<div class='chaptertile' id='"+segment.segmentId+"'>"+
-			"<a><iavst begin='"+segment.start+"' end='"+segment.end+"'><img class='imgsmall' title='watch this chapter' src='"+segment.image+"'></iavst></a>"+
-			"<span style='font-size:8px;'>"+segment.start +" - "+segment.end+"</span><br/>"+
-			"<a><iavst class='white' begin='"+segment.start+"' end='"+segment.end+"'><span style='font-size:11px;'>"+segment.title+"</span></iavst></a>";
-		}else{
-			newRow="<div class='commenttile' id='"+segment.segmentId+"'>"+
-    		"<b id='pf1_XXX'>"+
-    		"<input type='image' height='10' width='10' src='/lecture2go-portlet/img/commentOff.png' title='comment on' alt='comment on' id='showrXXX'/>"+
-    		"</b>"+
-    		"<b id='pf2_YYY'>"+
-    		"<input type='image' height='10' width='10' src='/lecture2go-portlet/img/commentOn.png' title=' comment off' alt='comment off' id='hidrYYY'/>"+
-    		"</b>"+
-    		"<span class='fs8'>"+segment.start+"</span>"+
-    		"<a><iavst class='white' begin='"+segment.start+"' end='"+segment.end+"'><span style='font-size:11px;'>"+segment.title+"</span></iavst></a>";
-		}
-		if(segment.userId==<%=remoteUser.getUserId()%>){
-			newRow=newRow+"<input type='image' src='/lecture2go-portlet/img/delete.png' alt='delete' onclick='deleteSegment("+segment.segmentId+")' >";
-		}
-		newRow=newRow+"</div>";
-		
-		if(segment.previousSegmentId == -1){
-			$("#0").append(newRow);
-		}else{
-			$(newRow).insertAfter("#"+ segment.previousSegmentId);
-		}
-	}
-	
 </script>
