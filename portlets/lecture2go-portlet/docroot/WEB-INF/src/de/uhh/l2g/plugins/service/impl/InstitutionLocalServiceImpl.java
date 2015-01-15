@@ -107,30 +107,40 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		return s;
 	}
 
-	protected void validate(String name) throws PortalException {
+	protected void validate(String name, String streamer, String serverTemplate) throws PortalException {
 
 		if (Validator.isNull(name)) {
 			throw new HostNameException();
 		}
 
+		if (Validator.isNull(streamer) || !Validator.isDomain(streamer)) {
+			throw new HostStreamerException();
+		}
+
+		if (Validator.isNull(serverTemplate)) {
+			throw new HostServerTemplateException();
+		}
 	}
 
-	public Institution addInstitution(long userId, String name, String streamer,
-			ServiceContext serviceContext) throws SystemException, PortalException {
+	public Host addInstitution(long userId, String name, String streamer, String serverTemplate, String protocol, String serverRoot, int port, ServiceContext serviceContext) throws SystemException, PortalException {
 
-		validate(name);
+		validate(name, streamer, serverTemplate);
 
-		long institutionId = counterLocalService.increment();
+		long hostId = counterLocalService.increment();
 
-		Institution institution = institutionPersistence.create(institutionId);
+		Host host = hostPersistence.create(hostId);
 
-		institution.setName(name);
-				
-		institution.setExpandoBridgeAttributes(serviceContext);
+		host.setName(name);
+		host.setServerTemplate(serverTemplate);
+		host.setStreamer(streamer);
+		host.setProtocol(protocol);
+		host.setServerRoot(serverRoot);
+		host.setPort(port);
+		host.setExpandoBridgeAttributes(serviceContext);
 
-		institutionPersistence.update(institution);
+		hostPersistence.update(host);
 
-		return institution;
+		return host;
 	}
 
 }

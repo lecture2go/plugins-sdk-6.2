@@ -313,6 +313,14 @@ public class SegmentLocalServiceWrapper implements SegmentLocalService,
 	}
 
 	@Override
+	public de.uhh.l2g.plugins.model.Segment fillWithProperties(
+		de.uhh.l2g.plugins.model.Segment objectSegment)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _segmentLocalService.fillWithProperties(objectSegment);
+	}
+
+	@Override
 	public void deleteByVideoId(java.lang.Long videoId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_segmentLocalService.deleteByVideoId(videoId);
@@ -343,8 +351,17 @@ public class SegmentLocalServiceWrapper implements SegmentLocalService,
 
 	@Override
 	public de.uhh.l2g.plugins.model.Segment getPreviusSegment(
-		de.uhh.l2g.plugins.model.Segment segment) {
+		de.uhh.l2g.plugins.model.Segment segment)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _segmentLocalService.getPreviusSegment(segment);
+	}
+
+	@Override
+	public java.lang.Long getPreviusSegmentId(java.lang.Long segmentId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _segmentLocalService.getPreviusSegmentId(segmentId);
 	}
 
 	/**

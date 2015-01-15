@@ -318,9 +318,9 @@ public class VideoLocalServiceUtil {
 		return getService().getLatestVideos();
 	}
 
-	public static de.uhh.l2g.plugins.model.Video getVideo(
+	public static de.uhh.l2g.plugins.model.Video getFullVideo(
 		java.lang.Long videoId) {
-		return getService().getVideo(videoId);
+		return getService().getFullVideo(videoId);
 	}
 
 	public static org.json.JSONObject getJSONVideo(java.lang.Long videoId) {

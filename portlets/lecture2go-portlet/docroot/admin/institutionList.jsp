@@ -2,15 +2,14 @@
 <liferay-ui:error key="host-or-institution-error" message="host-or-institution-error"/>
 
 <portlet:renderURL var="viewURL"><portlet:param name="jspPage" value="/admin/institutionList.jsp" /></portlet:renderURL>
-<portlet:actionURL name="addInstitutionEntry" var="addInstitutionEntryURL"></portlet:actionURL>
+<portlet:actionURL name="addEntry" var="addEntryURL"></portlet:actionURL>
 
-
-<aui:form action="<%= addInstitutionEntryURL %>" name="<portlet:namespace />fm">
+<aui:form action="<%= addEntryURL %>" name="<portlet:namespace />fm">
 
 		<aui:fieldset>
 
             <aui:input name="Institution"></aui:input>
-            <aui:input name="StreamingServer"></aui:input>
+            <aui:input name="Streaming Server"></aui:input>
 
         </aui:fieldset>
         

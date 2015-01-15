@@ -60,6 +60,7 @@ import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
+import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 
 

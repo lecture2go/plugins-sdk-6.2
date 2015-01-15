@@ -142,7 +142,8 @@ public class InstitutionLocalServiceClpInvoker {
 
 		_methodParameterTypes126 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
-				"com.liferay.portal.service.ServiceContext"
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"int", "com.liferay.portal.service.ServiceContext"
 			};
 	}
 
@@ -285,7 +286,10 @@ public class InstitutionLocalServiceClpInvoker {
 				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
 			return InstitutionLocalServiceUtil.addInstitution(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
-				(com.liferay.portal.service.ServiceContext)arguments[3]);
+				(java.lang.String)arguments[3], (java.lang.String)arguments[4],
+				(java.lang.String)arguments[5],
+				((Integer)arguments[6]).intValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[7]);
 		}
 
 		throw new UnsupportedOperationException();

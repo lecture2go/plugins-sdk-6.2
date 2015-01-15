@@ -334,8 +334,8 @@ public class VideoLocalServiceWrapper implements VideoLocalService,
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Video getVideo(java.lang.Long videoId) {
-		return _videoLocalService.getVideo(videoId);
+	public de.uhh.l2g.plugins.model.Video getFullVideo(java.lang.Long videoId) {
+		return _videoLocalService.getFullVideo(videoId);
 	}
 
 	@Override

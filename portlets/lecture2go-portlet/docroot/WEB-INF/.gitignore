@@ -455,8 +455,6 @@
 /classes/
 /classes/
 /classes/
-<<<<<<< HEAD
-=======
 /classes/
 /classes/
 /classes/
@@ -517,4 +515,4 @@
 /classes/
 /classes/
 /classes/
->>>>>>> refs/remotes/origin/master
+/.gitignore
