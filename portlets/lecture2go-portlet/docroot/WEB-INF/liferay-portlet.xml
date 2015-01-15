@@ -6,16 +6,16 @@
 		<portlet-name>lg-admin-video-management</portlet-name>
 		<instanceable>false</instanceable>
 		<private-request-attributes>false</private-request-attributes>
-		
+
 		<header-portlet-javascript>/js/jquery-1.11.1.min.js</header-portlet-javascript>
-		
-		<header-portlet-javascript>/js/strobe/swfobject.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/jquery-ui-1.10.3.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/strobe/jquery.scrollTo-1.4.2-min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/strobe/swfobject.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/strobe/lib/ParsedQueryString.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/strobe/jsdemo.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/strobe/jquery.strobemediaplayback.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/strobe/jquery.strobemediaplaybackchrome.js</header-portlet-javascript>
-		
+
 		<header-portlet-javascript>/js/upload/js/vendor/jquery.ui.widget.js</header-portlet-javascript>
 		<header-portlet-javascript>http://blueimp.github.io/JavaScript-Templates/js/tmpl.min.js</header-portlet-javascript>
 		<header-portlet-javascript>http://blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js</header-portlet-javascript>
