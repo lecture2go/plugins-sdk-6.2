@@ -254,7 +254,7 @@ public class RSSManager {
 				ListIterator<Video> it = videoList.listIterator();
 				while (it.hasNext()) {
 					String link = null;
-					Video v = it.next();
+					Video v = VideoLocalServiceUtil.getFullVideo(it.next().getVideoId());//gets the full object
 					Host objectHost = HostLocalServiceUtil.getHost(v.getHostId());
 					Producer objectProducer = ProducerLocalServiceUtil.getProducer(v.getProducerId());
 					Metadata objectMetadata = MetadataLocalServiceUtil.getMetadata(v.getMetadataId());
@@ -365,7 +365,6 @@ public class RSSManager {
 					text += "</item>\n\n";
 				}
 			} catch (NullPointerException npe) {
-				// nothing to be done
 			}
 
 			text += "</channel>\n";

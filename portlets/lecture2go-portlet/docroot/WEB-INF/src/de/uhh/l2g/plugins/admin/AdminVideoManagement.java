@@ -64,18 +64,25 @@ import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.util.ProzessManager;
-import de.uhh.l2g.plugins.util.Security;
 
 public class AdminVideoManagement extends MVCPortlet {
 
 	private final static Logger logger = Logger.getLogger(AdminVideoManagement.class.getName());
 	
+<<<<<<< HEAD
 	@SuppressWarnings("unused")
 	public void addSegment(ActionRequest request, ActionResponse response){
 		Video reqVideo = new VideoImpl();
 		Long reqVideoId = new Long(0);
 		try{reqVideoId = new Long(request.getParameterMap().get("videoId")[0]);}catch(Exception e){}
 		reqVideo = VideoLocalServiceUtil.getVideo(reqVideoId);
+=======
+	public void addSegment(ActionRequest request, ActionResponse response){
+		Video reqVideo = new VideoImpl();
+		Long reqVideoId = new Long(0);
+		try{reqVideoId = new Long(request.getParameterMap().get("videoId")[0]);}catch(Exception e){}
+		reqVideo = VideoLocalServiceUtil.getFullVideo(reqVideoId);
+>>>>>>> refs/remotes/origin/master
 
 		response.setRenderParameter("jspPage", "/admin/segments.jsp");
 		request.setAttribute("reqVideo", reqVideo);
@@ -83,18 +90,6 @@ public class AdminVideoManagement extends MVCPortlet {
 	}
 	
 	public void viewVideo(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
-		
-		List<Lectureseries> ls  = LectureseriesLocalServiceUtil.getAllLectureseriesWhithOpenaccessVideos();
-		List<Video> vl = VideoLocalServiceUtil.getLatestVideos();
-		
-		//permissions
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
-		PermissionChecker permissionChecker = themeDisplay.getPermissionChecker();
-		
-		//user 
-		String uId = request.getRemoteUser();
-		Long userId = new Long(uId);
-		User remoteUser = UserLocalServiceUtil.getUserById(userId);
 		
 		// requested producer id
 		Long reqPproducerId = (long)0;
@@ -223,7 +218,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		Long userId = new Long(userID);
 		String resourceID = resourceRequest.getResourceID();
 		Long videoId = ParamUtil.getLong(resourceRequest, "videoId");
-		Video video = VideoLocalServiceUtil.getVideo(videoId);
+		Video video = VideoLocalServiceUtil.getFullVideo(videoId);
 		Metadata metadata = new MetadataImpl();
 		try {
 			Long metadataId = video.getMetadataId();
@@ -375,6 +370,7 @@ public class AdminVideoManagement extends MVCPortlet {
 				try {
 					// save
 					Segment s = SegmentLocalServiceUtil.createSegment(segment);
+<<<<<<< HEAD
 					Segment previusS = SegmentLocalServiceUtil.getPreviusSegment(s);
 					
 					JSONObject jo = JSONFactoryUtil.createJSONObject();
@@ -421,6 +417,56 @@ public class AdminVideoManagement extends MVCPortlet {
 					jo.put("title", s.getTitle());
 					jo.put("userId", s.getUserId());
 					jo.put("videoId", s.getVideoId());
+=======
+					
+					JSONObject jo = JSONFactoryUtil.createJSONObject();
+					jo.put("chapter", s.getChapter());
+					jo.put("description", s.getDescription());
+					jo.put("end", s.getEnd());
+					jo.put("image", s.getImage());
+					jo.put("number", s.getNumber());
+					jo.put("segmentId", s.getPrimaryKey());
+					jo.put("seconds", s.getSeconds());
+					jo.put("start", s.getStart());
+					jo.put("title", s.getTitle());
+					jo.put("userId", s.getUserId());
+					jo.put("videoId", s.getVideoId());
+					jo.put("previousSegmentId", SegmentLocalServiceUtil.getPreviusSegmentId(s.getSegmentId()));
+					
+					// and return response
+					writeJSON(resourceRequest, resourceResponse, jo);
+				} catch (SystemException e) {
+					e.printStackTrace();
+				} catch (PortalException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		if(resourceID.equals("showSegments")){
+			String vId = ParamUtil.getString(resourceRequest, "videoId");
+			Long vID = new Long(vId);
+			com.liferay.portal.kernel.json.JSONArray ja = JSONFactoryUtil.createJSONArray();
+			//get segments for video and convert to json array
+			try {
+				List<Segment> sl= SegmentLocalServiceUtil.getSegmentsByVideoId(vID);
+				ListIterator<Segment> sIt = sl.listIterator();
+				while(sIt.hasNext()){
+					Segment s = sIt.next();
+					JSONObject jo = JSONFactoryUtil.createJSONObject();
+					jo.put("chapter", s.getChapter());
+					jo.put("description", s.getDescription());
+					jo.put("end", s.getEnd());
+					jo.put("image", s.getImage());
+					jo.put("number", s.getNumber());
+					jo.put("segmentId", s.getPrimaryKey());
+					jo.put("seconds", s.getSeconds());
+					jo.put("start", s.getStart());
+					jo.put("title", s.getTitle());
+					jo.put("userId", s.getUserId());
+					jo.put("videoId", s.getVideoId());
+					jo.put("previousSegmentId", SegmentLocalServiceUtil.getPreviusSegmentId(s.getSegmentId()));
+>>>>>>> refs/remotes/origin/master
 					ja.put(jo);
 				}
 				
@@ -489,7 +535,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		Video video = new VideoImpl();
 		Long reqVideoId = new Long(0);
 		try{reqVideoId = new Long(request.getParameterMap().get("videoId")[0]);}catch(Exception e){}
-		video = VideoLocalServiceUtil.getVideo(reqVideoId);
+		video = VideoLocalServiceUtil.getFullVideo(reqVideoId);
 		ProzessManager pm = new ProzessManager();	
 		pm.deleteVideo(video);
 	}
@@ -498,7 +544,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		Video video = new VideoImpl();
 		Long reqVideoId = new Long(0);
 		try{reqVideoId = new Long(request.getParameterMap().get("videoId")[0]);}catch(Exception e){}
-		video = VideoLocalServiceUtil.getVideo(reqVideoId);
+		video = VideoLocalServiceUtil.getFullVideo(reqVideoId);
 		ProzessManager pm = new ProzessManager();	
 		try {
 			pm.deactivateOpenaccess(video);
@@ -511,7 +557,11 @@ public class AdminVideoManagement extends MVCPortlet {
 		Video video = new VideoImpl();
 		Long reqVideoId = new Long(0);
 		try{reqVideoId = new Long(request.getParameterMap().get("videoId")[0]);}catch(Exception e){}
+<<<<<<< HEAD
 		video = VideoLocalServiceUtil.getVideo(reqVideoId);
+=======
+		video = VideoLocalServiceUtil.getFullVideo(reqVideoId);
+>>>>>>> refs/remotes/origin/master
 		ProzessManager pm = new ProzessManager();	
 		try {
 			pm.activateOpenaccess(video);
