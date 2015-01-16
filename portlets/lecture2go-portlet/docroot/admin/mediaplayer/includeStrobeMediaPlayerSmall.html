@@ -6,10 +6,10 @@
     		var pqs = new ParsedQueryString();
     		var parameterNames = pqs.params(false);
     		var parameters =
-				{	src:""	   	   		
+				{	src:"${model.video.streamUrl}"	   	   		
 	   			,	autoPlay: false	   		
 				,	controlBarAutoHide: true
-				,	poster: ""
+				,	poster: "${model.video.image}"
 				,   javascriptCallbackFunction: "onJavaScriptBridgeCreated"
     			};
     				

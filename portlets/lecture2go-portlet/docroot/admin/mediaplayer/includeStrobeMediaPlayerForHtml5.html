@@ -4,14 +4,14 @@
 			// Flash Player 10.0 
             function(context, options){
                 if (context.flashPlayerVersion.major == 10 && context.flashPlayerVersion.minor == 0) {
-                    context.setOption(options, "src", "");
+                    context.setOption(options, "src", "${model.video.streamUrl}");
                 }
             }, 
 			
 			// Android Tablet or Phone
             function(context, options){
                 if (context.isAndroid && (context.isTablet || context.isPhone)) {
-                    context.setOption(options, "src", "");
+                    context.setOption(options, "src", "${model.video.streamAndroidUrl}");
                 }
             }, 
 			
@@ -19,27 +19,27 @@
             function(context, options){
                 context.isFirefox = context.userAgent.match(/Firefox/i) != null;
                 if (context.isFirefox && options.useHTML5) {
-                    context.setOption(options, "src", "");
+                    context.setOption(options, "src", "${model.video.streamAndroidUrl}");
                 }else {
-                    context.setOption(options, "src", "");//dont works - theora ogg required
+                    context.setOption(options, "src", "${model.videoDownload}");//dont works - theora ogg required
                 }
             }, 
 			
 			// is iOS
             function(context, options){
                 if (context.isiPad || context.isiPhone) {
-                    context.setOption(options, "src", "");
+                    context.setOption(options, "src", "${model.video.streamIosUrl}");
                 }
             });
             
             var options = {
-                src: "",
+                src: "${model.video.streamIosUrl}",
                 width: "647",
                 height: "372",
                 javascriptControls: true,				
                 autoPlay: false,
                 controlBarMode: "floating",
-                poster: "",
+                poster: "${model.video.image}",
                 playButtonOverlay: true,
                 loop: true
 				//, favorFlashOverHtml5Video: false

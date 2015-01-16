@@ -49,8 +49,7 @@
 			
 			org.strobemediaplayback.prependTimeStamp = function (divId)
 			{
-				$(divId).find('iavst')
-					.each(
+				$(divId).find('iavst').each(
 						function()
 						{		
 								$(this).prepend( $(this).attr("begin") + " ");
@@ -156,7 +155,7 @@
 					//do this onse
 					if(this.i==0){
 						//alert ("i -->"+this.i);
-						var l2gt = org.strobemediaplayback.timeToSec("00:00:00");
+						var l2gt = org.strobemediaplayback.timeToSec("${model.timeStart}");
 						//alert ("l2gt -->"+l2gt);
 						if (currentTime < l2gt)player.seek(l2gt);
 						//check for success onse again
@@ -197,10 +196,10 @@
 						
 					}
 				},
-				
+
 				////
 				onJump: function (event)
-				{					
+				{			
 					var player = event.data.player;
 					var jumpPos = $(event.currentTarget).attr("begin");
 					var subtitleEnd = $(event.currentTarget).attr("end");
@@ -222,7 +221,6 @@
 								player.seek(nrSec);
 								if ( subtitleEnd!=undefined && subtitleEnd != "")
 									{
-										
 										event.data.timer = setTimeout( function()
 											{
 												event.data.subtitleArea.empty();
@@ -277,9 +275,9 @@
 					
 					org.strobemediaplayback.bindListeners(player, org.strobemediaplayback.players[id], "org.strobemediaplayback.players['" + id + "']");
 					
-					org.strobemediaplayback.players[id].cc = new org.strobemediaplayback.InteractiveCC(player, $("#iframe"), $("#subtext"));
+					org.strobemediaplayback.players[id].cc = new org.strobemediaplayback.InteractiveCC(player, $("#dsCC"), $("#subtext"));
 					org.strobemediaplayback.bindListeners(player, org.strobemediaplayback.players[id].cc, "org.strobemediaplayback.players['" + id + "'].cc");
-				}				
+				}	
 			}
      </script>
 
