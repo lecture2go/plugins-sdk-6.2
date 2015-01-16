@@ -2,14 +2,14 @@
 <liferay-ui:error key="host-or-institution-error" message="host-or-institution-error"/>
 
 <portlet:renderURL var="viewURL"><portlet:param name="jspPage" value="/admin/institutionList.jsp" /></portlet:renderURL>
-<portlet:actionURL name="addEntry" var="addEntryURL"></portlet:actionURL>
+<portlet:actionURL name="addInstitutionEntry" var="addInstitutionEntryURL"></portlet:actionURL>
 
-<aui:form action="<%= addEntryURL %>" name="<portlet:namespace />fm">
+
+<aui:form action="<%= addInstitutionEntryURL %>" name="<portlet:namespace />fm">
 
 		<aui:fieldset>
-
-            <aui:input name="Institution"></aui:input>
-            <aui:input name="Streaming Server"></aui:input>
+			<aui:input name="institution" label="Institution" required="true"/>
+            <aui:input name="serverselect" label="Streaming Server"></aui:input>
 
         </aui:fieldset>
         
@@ -21,10 +21,10 @@
 		    	title="Advanced Streaming Server Options">
 		
 		 	    <aui:fieldset>
-					<aui:input name="Entry Name"></aui:input>
-		 	        <aui:input name="Streaming Server Domain or IP"></aui:input>
-		 	        <aui:input name="HTTP Protocol"></aui:input>
-		 	        <aui:input name="Server Template"></aui:input>  
+					<aui:input name="Entry Name" label="name"></aui:input>
+		 	        <aui:input name="Streaming Server Domain or IP" label="ip"></aui:input>
+		 	        <aui:input name="HTTP Protocol" label="protocol"></aui:input>
+		 	        <aui:input name="Server Template" label="template"></aui:input>  
 		 	        <aui:button value="Refresh" type="button" onClick="<%= viewURL.toString() %>"></aui:button>          
 		 	    </aui:fieldset>
 

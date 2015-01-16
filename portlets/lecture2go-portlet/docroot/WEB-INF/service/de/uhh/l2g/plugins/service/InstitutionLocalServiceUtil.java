@@ -310,16 +310,12 @@ public class InstitutionLocalServiceUtil {
 		return getService().getAllSortedAsTree(begin, end);
 	}
 
-	public static de.uhh.l2g.plugins.model.Host addInstitution(long userId,
+	public static de.uhh.l2g.plugins.model.Institution addInstitution(
 		java.lang.String name, java.lang.String streamer,
-		java.lang.String serverTemplate, java.lang.String protocol,
-		java.lang.String serverRoot, int port,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .addInstitution(userId, name, streamer, serverTemplate,
-			protocol, serverRoot, port, serviceContext);
+		return getService().addInstitution(name, streamer, serviceContext);
 	}
 
 	public static void clearService() {
