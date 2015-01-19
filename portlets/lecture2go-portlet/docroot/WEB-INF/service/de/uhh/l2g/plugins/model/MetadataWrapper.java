@@ -681,7 +681,7 @@ public class MetadataWrapper implements Metadata, ModelWrapper<Metadata> {
 	}
 
 	@Override
-	public int compareTo(de.uhh.l2g.plugins.model.Metadata metadata) {
+	public int compareTo(Metadata metadata) {
 		return _metadata.compareTo(metadata);
 	}
 
@@ -691,17 +691,17 @@ public class MetadataWrapper implements Metadata, ModelWrapper<Metadata> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.model.Metadata> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<Metadata> toCacheModel() {
 		return _metadata.toCacheModel();
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Metadata toEscapedModel() {
+	public Metadata toEscapedModel() {
 		return new MetadataWrapper(_metadata.toEscapedModel());
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Metadata toUnescapedModel() {
+	public Metadata toUnescapedModel() {
 		return new MetadataWrapper(_metadata.toUnescapedModel());
 	}
 
