@@ -29,4 +29,5 @@
 /ivy.xml.MD5
 /README.markdown
 /README.md
-/bin1/
+/.classpath
+/.project
