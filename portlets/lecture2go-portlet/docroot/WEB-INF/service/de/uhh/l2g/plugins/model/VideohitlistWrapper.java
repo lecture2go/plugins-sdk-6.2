@@ -302,7 +302,7 @@ public class VideohitlistWrapper implements Videohitlist,
 	}
 
 	@Override
-	public int compareTo(Videohitlist videohitlist) {
+	public int compareTo(de.uhh.l2g.plugins.model.Videohitlist videohitlist) {
 		return _videohitlist.compareTo(videohitlist);
 	}
 
@@ -312,17 +312,17 @@ public class VideohitlistWrapper implements Videohitlist,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<Videohitlist> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.model.Videohitlist> toCacheModel() {
 		return _videohitlist.toCacheModel();
 	}
 
 	@Override
-	public Videohitlist toEscapedModel() {
+	public de.uhh.l2g.plugins.model.Videohitlist toEscapedModel() {
 		return new VideohitlistWrapper(_videohitlist.toEscapedModel());
 	}
 
 	@Override
-	public Videohitlist toUnescapedModel() {
+	public de.uhh.l2g.plugins.model.Videohitlist toUnescapedModel() {
 		return new VideohitlistWrapper(_videohitlist.toUnescapedModel());
 	}
 
