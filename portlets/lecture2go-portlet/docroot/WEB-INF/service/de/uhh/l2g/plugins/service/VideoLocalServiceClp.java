@@ -142,7 +142,7 @@ public class VideoLocalServiceClp implements VideoLocalService {
 
 		_methodParameterTypes26 = new String[] {  };
 
-		_methodName27 = "getVideo";
+		_methodName27 = "getFullVideo";
 
 		_methodParameterTypes27 = new String[] { "java.lang.Long" };
 
@@ -941,7 +941,7 @@ public class VideoLocalServiceClp implements VideoLocalService {
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Video getVideo(java.lang.Long videoId) {
+	public de.uhh.l2g.plugins.model.Video getFullVideo(java.lang.Long videoId) {
 		Object returnObj = null;
 
 		try {

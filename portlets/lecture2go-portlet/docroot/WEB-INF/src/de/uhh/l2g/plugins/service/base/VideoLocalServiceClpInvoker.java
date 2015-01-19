@@ -142,7 +142,7 @@ public class VideoLocalServiceClpInvoker {
 
 		_methodParameterTypes125 = new String[] {  };
 
-		_methodName126 = "getVideo";
+		_methodName126 = "getFullVideo";
 
 		_methodParameterTypes126 = new String[] { "java.lang.Long" };
 
@@ -306,7 +306,7 @@ public class VideoLocalServiceClpInvoker {
 
 		if (_methodName126.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
-			return VideoLocalServiceUtil.getVideo((java.lang.Long)arguments[0]);
+			return VideoLocalServiceUtil.getFullVideo((java.lang.Long)arguments[0]);
 		}
 
 		if (_methodName127.equals(name) &&

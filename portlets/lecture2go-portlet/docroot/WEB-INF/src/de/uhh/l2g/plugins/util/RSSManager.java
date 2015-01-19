@@ -60,6 +60,7 @@ import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
+import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 
 
@@ -254,7 +255,7 @@ public class RSSManager {
 				ListIterator<Video> it = videoList.listIterator();
 				while (it.hasNext()) {
 					String link = null;
-					Video v = it.next();
+					Video v = VideoLocalServiceUtil.getFullVideo(it.next().getVideoId());//gets the full object
 					Host objectHost = HostLocalServiceUtil.getHost(v.getHostId());
 					Producer objectProducer = ProducerLocalServiceUtil.getProducer(v.getProducerId());
 					Metadata objectMetadata = MetadataLocalServiceUtil.getMetadata(v.getMetadataId());
@@ -365,7 +366,6 @@ public class RSSManager {
 					text += "</item>\n\n";
 				}
 			} catch (NullPointerException npe) {
-				// nothing to be done
 			}
 
 			text += "</channel>\n";

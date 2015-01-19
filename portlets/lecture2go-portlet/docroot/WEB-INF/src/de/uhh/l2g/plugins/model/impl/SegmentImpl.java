@@ -31,6 +31,16 @@ public class SegmentImpl extends SegmentBaseImpl {
 	 * Never reference this class directly. All methods that expect a segment model instance should use the {@link de.uhh.l2g.plugins.model.Segment} interface instead.
 	 */
 
+	private long previusSegmentId;
+	
+	public long getPreviusSegmentId() {
+		return previusSegmentId;
+	}
+
+	public void setPreviusSegmentId(long previusSegmentId) {
+		this.previusSegmentId = previusSegmentId;
+	}
+
 	private int seconds;
 	
 	private int number;

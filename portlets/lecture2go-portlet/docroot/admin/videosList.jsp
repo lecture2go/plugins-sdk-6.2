@@ -152,7 +152,7 @@
 
 	<liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.Video" keyProperty="videoId" modelVar="video">
 		<% 
-			Video vid = VideoLocalServiceUtil.getVideo(new Long(video.getVideoId())); 
+			Video vid = VideoLocalServiceUtil.getFullVideo(video.getVideoId()); 
 			String url = "";
 			if(vid.getOpenAccess()==1)url=vid.getUrl();
 			else url=vid.getSecureUrl();

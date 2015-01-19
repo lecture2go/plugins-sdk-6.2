@@ -412,7 +412,7 @@ public class ProzessManager {
 		String feedName = "";
 		rssMan.setTitle(LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId()).getName());
 		try {
-			List<Video> videoList = VideoLocalServiceUtil.getByLectureseriesAndOpenaccess(video.getLectureseriesId(), video.getOpenAccess());
+			List<Video> videoList = VideoLocalServiceUtil.getByLectureseriesAndOpenaccess(video.getLectureseriesId(), 1);
 			
 			if (type.equals("mp4")) feedName = "" + video.getLectureseriesId() + ".mp4.xml";
 			if (type.equals("mp3")) feedName = "" + video.getLectureseriesId() + ".mp3.xml";

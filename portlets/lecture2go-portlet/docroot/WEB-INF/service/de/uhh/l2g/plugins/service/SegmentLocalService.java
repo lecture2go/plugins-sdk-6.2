@@ -267,6 +267,11 @@ public interface SegmentLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public de.uhh.l2g.plugins.model.Segment fillWithProperties(
+		de.uhh.l2g.plugins.model.Segment objectSegment)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public void deleteByVideoId(java.lang.Long videoId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -289,5 +294,12 @@ public interface SegmentLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public de.uhh.l2g.plugins.model.Segment getPreviusSegment(
-		de.uhh.l2g.plugins.model.Segment segment);
+		de.uhh.l2g.plugins.model.Segment segment)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.Long getPreviusSegmentId(java.lang.Long segmentId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

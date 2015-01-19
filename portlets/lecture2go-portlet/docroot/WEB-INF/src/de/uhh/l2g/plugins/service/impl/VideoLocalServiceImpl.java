@@ -113,7 +113,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	}
 
 	@Override
-	public Video getVideo(Long videoId){
+	public Video getFullVideo(Long videoId){
 		Video objectVideo = new VideoImpl();
 		try {
 			objectVideo = videoPersistence.findByPrimaryKey(videoId);
@@ -297,7 +297,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	}
 	
 	public JSONObject getJSONVideo(Long videoId){
-		Video video = getVideo(videoId);
+		Video video = getFullVideo(videoId);
 		JSONArray json = new JSONArray();
 		JSONObject jsonObject = new JSONObject();
 		

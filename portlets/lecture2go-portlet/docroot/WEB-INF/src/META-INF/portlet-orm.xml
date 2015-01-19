@@ -354,6 +354,7 @@
 		<attributes>
 			<transient name="image" />
 			<transient name="number" />
+			<transient name="previusSegmentId" />
 			<transient name="seconds" />
 		</attributes>
 	</entity>

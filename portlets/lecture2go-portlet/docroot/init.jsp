@@ -69,6 +69,7 @@
 <%@ page import="de.uhh.l2g.plugins.NoSuchMetadataException"%>
 <%@ page import="de.uhh.l2g.plugins.service.MetadataLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.model.Producer"%>
+<%@ page import="de.uhh.l2g.plugins.model.Segment"%>
 <%@ page import="de.uhh.l2g.plugins.model.Institution"%>
 <%@ page import="de.uhh.l2g.plugins.model.Lectureseries"%>
 <%@ page import="de.uhh.l2g.plugins.model.Producer_Lectureseries"%>
