@@ -96,6 +96,64 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		
 	}
 	
+	public void addStreamingServerEntry(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
 	
+	
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				Institution.class.getName(), request);
+	
+		String name = ParamUtil.getString(request, "institution");
+		String streamer = ParamUtil.getString(request, "serverselect");
+
+		try {
+			InstitutionLocalServiceUtil.addInstitution(
+					name, streamer, serviceContext);
+
+			SessionMessages.add(request, "entryAdded");
+
+			// response.setRenderParameter("institutionId",
+			//      Long.toString(institutionId));
+
+		} catch (Exception e) {
+        SessionErrors.add(request, e.getClass().getName());
+
+        PortalUtil.copyRequestParameters(request, response);
+
+         response.setRenderParameter("mvcPath",
+              "/admin/institutionList.jsp");
+       }
+
+	
+	}
+
+public void viewStreamingServerList(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
+	
+	
+	ServiceContext serviceContext = ServiceContextFactory.getInstance(
+	         Institution.class.getName(), request);
+	
+    String name = ParamUtil.getString(request, "institution");
+    String streamer = ParamUtil.getString(request, "serverselect");
+
+    try {
+         InstitutionLocalServiceUtil.addInstitution(
+              name, streamer, serviceContext);
+
+         SessionMessages.add(request, "entryAdded");
+
+        // response.setRenderParameter("institutionId",
+        //      Long.toString(institutionId));
+
+       } catch (Exception e) {
+         SessionErrors.add(request, e.getClass().getName());
+
+                            PortalUtil.copyRequestParameters(request, response);
+
+         response.setRenderParameter("mvcPath",
+              "/admin/institutionList.jsp");
+       }
+
+	
+}
 
 }

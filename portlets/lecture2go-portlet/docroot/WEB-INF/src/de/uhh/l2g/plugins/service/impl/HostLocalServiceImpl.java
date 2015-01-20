@@ -19,12 +19,14 @@ import java.util.List;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 
 import de.uhh.l2g.plugins.HostNameException;
 import de.uhh.l2g.plugins.HostServerTemplateException;
 import de.uhh.l2g.plugins.HostStreamerException;
 import de.uhh.l2g.plugins.model.Host;
+import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.service.base.HostLocalServiceBaseImpl;
 
 /**
@@ -58,6 +60,10 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 		return hostPersistence.fetchByPrimaryKey(hostId);
 	}
 	
+	public List<Host> getByGroupId(long groupId) throws SystemException{
+		return hostPersistence.findByGroupId(groupId);
+	}
+	
 	protected void validate (String name, String streamer, String serverTemplate) throws PortalException {
 	    
 		if (Validator.isNull(name)) {
@@ -73,9 +79,14 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 	     }
 	}
 	
-	public Host addHost(long userId, String name, String streamer, String serverTemplate,
+	public Host addHost(String name, String streamer, String serverTemplate,
 			String protocol, String serverRoot, int port,
 			ServiceContext serviceContext) throws SystemException, PortalException {
+		
+		long groupId = serviceContext.getScopeGroupId();
+		long userId = serviceContext.getUserId();
+
+		User user = userPersistence.findByPrimaryKey(userId);
 		
 		validate(name,streamer,serverTemplate);
 		
@@ -93,6 +104,9 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 		host.setExpandoBridgeAttributes(serviceContext);
 
 		hostPersistence.update(host);
+		
+		resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
+			       Host.class.getName(), hostId, false, true, true);
 
 		return host;
 	}

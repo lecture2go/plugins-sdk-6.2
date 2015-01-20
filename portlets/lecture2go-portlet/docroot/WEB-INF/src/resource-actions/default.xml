@@ -23,6 +23,30 @@
       </guest-unsupported>
     </permissions>
   </portlet-resource>
+  
+    <portlet-resource>
+    <portlet-name>lg-admin-institution-management</portlet-name>
+    <permissions>
+      <supports>
+        <action-key>DELETE</action-key>
+        <action-key>PERMISSIONS</action-key>
+        <action-key>UPDATE</action-key>
+        <action-key>VIEW</action-key>
+      </supports>
+      <site-member-defaults>
+        <action-key>VIEW</action-key>
+      </site-member-defaults>
+      <guest-defaults>
+        
+      </guest-defaults>
+
+      <guest-unsupported>
+      	<action-key>DELETE</action-key>
+        <action-key>PERMISSIONS</action-key>
+        <action-key>UPDATE</action-key>
+      </guest-unsupported>
+    </permissions>
+  </portlet-resource>
 
   <model-resource>
     <model-name>
@@ -53,5 +77,83 @@
       </guest-unsupported>
     </permissions>
   </model-resource>
+
+
+  <model-resource>
+    <model-name>com.liferay.portal.model</model-name>
+    <portlet-ref>
+        <portlet-name>lg-admin-institution-management</portlet-name>
+    </portlet-ref>
+    <permissions>
+        <supports>
+            <action-key>ADD_INSTITUTION_ENTRY</action-key>
+            <action-key>ADD_HOST_ENTRY</action-key>
+        </supports>
+        <site-member-defaults>
+            <action-key>ADD_INSTITUTION_ENTRY</action-key>
+            <action-key>ADD_HOST_ENTRY</action-key>
+        </site-member-defaults>
+        <guest-defaults>
+        </guest-defaults>
+        <guest-unsupported>
+            <action-key>ADD_INSTITUTION_ENTRY</action-key>
+            <action-key>ADD_HOST_ENTRY</action-key>
+        </guest-unsupported>
+    </permissions>
+</model-resource>
+
+   <model-resource>
+    <model-name>
+      com.liferay.portal.model.Institution
+    </model-name>
+    <portlet-ref>
+      <portlet-name>lg-admin-institution-management</portlet-name>
+    </portlet-ref>
+    <permissions>
+      <supports>
+      	<action-key>ADD_INSTITUTION_ENTRY</action-key>
+        <action-key>DELETE</action-key>
+        <action-key>PERMISSIONS</action-key>
+        <action-key>UPDATE</action-key>
+        <action-key>VIEW</action-key>
+      </supports>
+      <site-member-defaults>
+        <action-key>VIEW</action-key>
+      </site-member-defaults>
+      <guest-defaults>
+      </guest-defaults>
+      <guest-unsupported>
+        <action-key>DELETE</action-key>
+        <action-key>PERMISSIONS</action-key>
+        <action-key>UPDATE</action-key>
+      </guest-unsupported>
+    </permissions>
+  </model-resource>
+  
+
+<model-resource>
+    <model-name>com.liferay.portal.model.Host</model-name>
+    <portlet-ref>
+        <portlet-name>lg-admin-institution-management</portlet-name>
+    </portlet-ref>
+    <permissions>
+        <supports>
+            <action-key>DELETE</action-key>
+            <action-key>PERMISSIONS</action-key>
+            <action-key>UPDATE</action-key>
+            <action-key>VIEW</action-key>
+        </supports>
+        <site-member-defaults>
+       		 <action-key>VIEW</action-key>
+        </site-member-defaults>
+        <guest-defaults>
+        </guest-defaults>
+        <guest-unsupported>
+            <action-key>UPDATE</action-key>
+            <action-key>PERMISSIONS</action-key>
+            <action-key>DELETE</action-key>
+        </guest-unsupported>
+    </permissions>
+</model-resource>
   
 </resource-action-mapping>

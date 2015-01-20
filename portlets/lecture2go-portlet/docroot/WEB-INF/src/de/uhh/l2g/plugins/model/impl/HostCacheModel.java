@@ -35,7 +35,7 @@ import java.io.ObjectOutput;
 public class HostCacheModel implements CacheModel<Host>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{hostId=");
 		sb.append(hostId);
@@ -51,6 +51,8 @@ public class HostCacheModel implements CacheModel<Host>, Externalizable {
 		sb.append(name);
 		sb.append(", serverTemplate=");
 		sb.append(serverTemplate);
+		sb.append(", groupId=");
+		sb.append(groupId);
 		sb.append("}");
 
 		return sb.toString();
@@ -99,6 +101,8 @@ public class HostCacheModel implements CacheModel<Host>, Externalizable {
 			hostImpl.setServerTemplate(serverTemplate);
 		}
 
+		hostImpl.setGroupId(groupId);
+
 		hostImpl.resetOriginalValues();
 
 		return hostImpl;
@@ -113,6 +117,7 @@ public class HostCacheModel implements CacheModel<Host>, Externalizable {
 		serverRoot = objectInput.readUTF();
 		name = objectInput.readUTF();
 		serverTemplate = objectInput.readUTF();
+		groupId = objectInput.readLong();
 	}
 
 	@Override
@@ -156,6 +161,8 @@ public class HostCacheModel implements CacheModel<Host>, Externalizable {
 		else {
 			objectOutput.writeUTF(serverTemplate);
 		}
+
+		objectOutput.writeLong(groupId);
 	}
 
 	public long hostId;
@@ -165,4 +172,5 @@ public class HostCacheModel implements CacheModel<Host>, Externalizable {
 	public String serverRoot;
 	public String name;
 	public String serverTemplate;
+	public long groupId;
 }

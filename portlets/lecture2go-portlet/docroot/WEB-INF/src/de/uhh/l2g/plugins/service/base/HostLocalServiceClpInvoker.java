@@ -116,12 +116,16 @@ public class HostLocalServiceClpInvoker {
 
 		_methodParameterTypes119 = new String[] { "long" };
 
-		_methodName121 = "addHost";
+		_methodName120 = "getByGroupId";
 
-		_methodParameterTypes121 = new String[] {
-				"long", "java.lang.String", "java.lang.String",
+		_methodParameterTypes120 = new String[] { "long" };
+
+		_methodName122 = "addHost";
+
+		_methodParameterTypes122 = new String[] {
 				"java.lang.String", "java.lang.String", "java.lang.String",
-				"int", "com.liferay.portal.service.ServiceContext"
+				"java.lang.String", "java.lang.String", "int",
+				"com.liferay.portal.service.ServiceContext"
 			};
 	}
 
@@ -236,14 +240,18 @@ public class HostLocalServiceClpInvoker {
 			return HostLocalServiceUtil.getByHostId(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName121.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes121, parameterTypes)) {
-			return HostLocalServiceUtil.addHost(((Long)arguments[0]).longValue(),
+		if (_methodName120.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes120, parameterTypes)) {
+			return HostLocalServiceUtil.getByGroupId(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName122.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
+			return HostLocalServiceUtil.addHost((java.lang.String)arguments[0],
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				(java.lang.String)arguments[3], (java.lang.String)arguments[4],
-				(java.lang.String)arguments[5],
-				((Integer)arguments[6]).intValue(),
-				(com.liferay.portal.service.ServiceContext)arguments[7]);
+				((Integer)arguments[5]).intValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[6]);
 		}
 
 		throw new UnsupportedOperationException();
@@ -289,6 +297,8 @@ public class HostLocalServiceClpInvoker {
 	private String[] _methodParameterTypes118;
 	private String _methodName119;
 	private String[] _methodParameterTypes119;
-	private String _methodName121;
-	private String[] _methodParameterTypes121;
+	private String _methodName120;
+	private String[] _methodParameterTypes120;
+	private String _methodName122;
+	private String[] _methodParameterTypes122;
 }

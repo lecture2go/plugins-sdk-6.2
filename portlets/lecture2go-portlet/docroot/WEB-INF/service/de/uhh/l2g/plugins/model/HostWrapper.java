@@ -55,6 +55,7 @@ public class HostWrapper implements Host, ModelWrapper<Host> {
 		attributes.put("serverRoot", getServerRoot());
 		attributes.put("name", getName());
 		attributes.put("serverTemplate", getServerTemplate());
+		attributes.put("groupId", getGroupId());
 
 		return attributes;
 	}
@@ -101,6 +102,12 @@ public class HostWrapper implements Host, ModelWrapper<Host> {
 
 		if (serverTemplate != null) {
 			setServerTemplate(serverTemplate);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 	}
 
@@ -262,6 +269,26 @@ public class HostWrapper implements Host, ModelWrapper<Host> {
 	@Override
 	public void setServerTemplate(java.lang.String serverTemplate) {
 		_host.setServerTemplate(serverTemplate);
+	}
+
+	/**
+	* Returns the group ID of this host.
+	*
+	* @return the group ID of this host
+	*/
+	@Override
+	public long getGroupId() {
+		return _host.getGroupId();
+	}
+
+	/**
+	* Sets the group ID of this host.
+	*
+	* @param groupId the group ID of this host
+	*/
+	@Override
+	public void setGroupId(long groupId) {
+		_host.setGroupId(groupId);
 	}
 
 	@Override

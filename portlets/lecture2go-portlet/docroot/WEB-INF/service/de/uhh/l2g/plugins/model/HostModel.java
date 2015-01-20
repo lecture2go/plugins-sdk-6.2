@@ -160,6 +160,20 @@ public interface HostModel extends BaseModel<Host> {
 	 */
 	public void setServerTemplate(String serverTemplate);
 
+	/**
+	 * Returns the group ID of this host.
+	 *
+	 * @return the group ID of this host
+	 */
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this host.
+	 *
+	 * @param groupId the group ID of this host
+	 */
+	public void setGroupId(long groupId);
+
 	@Override
 	public boolean isNew();
 

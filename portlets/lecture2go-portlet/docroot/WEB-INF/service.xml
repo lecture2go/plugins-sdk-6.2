@@ -49,35 +49,48 @@
         </finder>
     </entity>
     <entity name="Institution" local-service="true" remote-service="false">
-        <column name="institutionId" type="long" primary="true" id-type="increment"></column>
-        <column name="parentId" type="long"></column>
-        <column name="name" type="String"></column>
-        <column name="typ" type="String"></column>
-        <column name="www" type="String"></column>
-        <column name="level" type="int"></column>
-        <column name="sort" type="int"></column>
-        <finder name="Parent" return-type="Collection">
-            <finder-column name="parentId"></finder-column>
+    	<column name="institutionId" type="long" primary="true"
+    		id-type="increment">
+    	</column>
+    	<column name="parentId" type="long"></column>
+    	<column name="name" type="String"></column>
+    	<column name="typ" type="String"></column>
+    	<column name="www" type="String"></column>
+    	<column name="level" type="int"></column>
+    	<column name="sort" type="int"></column>
+    	<column name="groupId" type="long"></column>
+    	<finder name="Parent" return-type="Collection">
+    		<finder-column name="parentId"></finder-column>
+    	</finder>
+    	<finder name="Name" return-type="Collection">
+    		<finder-column name="name"></finder-column>
+    	</finder>
+    	<finder name="Typ" return-type="Collection">
+    		<finder-column name="typ"></finder-column>
+    	</finder>
+    	<finder name="Www" return-type="Collection">
+    		<finder-column name="www"></finder-column>
+    	</finder>
+    	<finder name="level" return-type="Collection">
+    		<finder-column name="level"></finder-column>
+    	</finder>
+    	<finder name="Sort" return-type="Collection">
+    		<finder-column name="sort"></finder-column>
+    	</finder>
+    	<finder name="LevelAndType" return-type="Collection">
+    		<finder-column name="level"></finder-column>
+    		<finder-column name="typ"></finder-column>
+    	</finder>
+        <finder name="GroupId" return-type="Collection">
+            <finder-column name="groupId"></finder-column>
         </finder>
-        <finder name="Name" return-type="Collection">
-            <finder-column name="name"></finder-column>
-        </finder>
-        <finder name="Typ" return-type="Collection">
-            <finder-column name="typ"></finder-column>
-        </finder>
-        <finder name="Www" return-type="Collection">
-            <finder-column name="www"></finder-column>
-        </finder>
-        <finder name="level" return-type="Collection">
-            <finder-column name="level"></finder-column>
-        </finder>
-        <finder name="Sort" return-type="Collection">
-            <finder-column name="sort"></finder-column>
-        </finder>
-        <finder name="LevelAndType" return-type="Collection">
-            <finder-column name="level"></finder-column>
-            <finder-column name="typ"></finder-column>
-        </finder>
+
+    	<!-- PK fields -->
+
+    	<!-- Group instance -->
+		
+
+    	<!-- Audit fields -->
     </entity>
     <entity name="Lectureseries_Institution" local-service="true" remote-service="false">
         <column name="lectureseriesInstitutionId" type="long" primary="true" id-type="increment"></column>
@@ -157,6 +170,18 @@
     	<!-- Group instance -->
 
     	<!-- Audit fields -->
+
+
+    	<!-- PK fields -->
+
+    	<!-- Group instance -->
+
+    	<column name="groupId" type="long"></column>
+
+    	<!-- Audit fields -->
+        <finder name="GroupId" return-type="Collection">
+            <finder-column name="groupId"></finder-column>
+        </finder>
     </entity>
     <entity name="Institution_Host" local-service="true" remote-service="false">
         <column name="institutionHostId" type="long" primary="true" id-type="increment"></column>

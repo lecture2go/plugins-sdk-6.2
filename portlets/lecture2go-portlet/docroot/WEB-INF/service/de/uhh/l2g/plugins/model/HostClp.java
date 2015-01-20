@@ -79,6 +79,7 @@ public class HostClp extends BaseModelImpl<Host> implements Host {
 		attributes.put("serverRoot", getServerRoot());
 		attributes.put("name", getName());
 		attributes.put("serverTemplate", getServerTemplate());
+		attributes.put("groupId", getGroupId());
 
 		return attributes;
 	}
@@ -125,6 +126,12 @@ public class HostClp extends BaseModelImpl<Host> implements Host {
 
 		if (serverTemplate != null) {
 			setServerTemplate(serverTemplate);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 	}
 
@@ -290,6 +297,29 @@ public class HostClp extends BaseModelImpl<Host> implements Host {
 		}
 	}
 
+	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+
+		if (_hostRemoteModel != null) {
+			try {
+				Class<?> clazz = _hostRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setGroupId", long.class);
+
+				method.invoke(_hostRemoteModel, groupId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
 	public BaseModel<?> getHostRemoteModel() {
 		return _hostRemoteModel;
 	}
@@ -366,6 +396,7 @@ public class HostClp extends BaseModelImpl<Host> implements Host {
 		clone.setServerRoot(getServerRoot());
 		clone.setName(getName());
 		clone.setServerTemplate(getServerTemplate());
+		clone.setGroupId(getGroupId());
 
 		return clone;
 	}
@@ -414,7 +445,7 @@ public class HostClp extends BaseModelImpl<Host> implements Host {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{hostId=");
 		sb.append(getHostId());
@@ -430,6 +461,8 @@ public class HostClp extends BaseModelImpl<Host> implements Host {
 		sb.append(getName());
 		sb.append(", serverTemplate=");
 		sb.append(getServerTemplate());
+		sb.append(", groupId=");
+		sb.append(getGroupId());
 		sb.append("}");
 
 		return sb.toString();
@@ -437,7 +470,7 @@ public class HostClp extends BaseModelImpl<Host> implements Host {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Host");
@@ -471,6 +504,10 @@ public class HostClp extends BaseModelImpl<Host> implements Host {
 			"<column><column-name>serverTemplate</column-name><column-value><![CDATA[");
 		sb.append(getServerTemplate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>groupId</column-name><column-value><![CDATA[");
+		sb.append(getGroupId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -484,5 +521,6 @@ public class HostClp extends BaseModelImpl<Host> implements Host {
 	private String _serverRoot;
 	private String _name;
 	private String _serverTemplate;
+	private long _groupId;
 	private BaseModel<?> _hostRemoteModel;
 }

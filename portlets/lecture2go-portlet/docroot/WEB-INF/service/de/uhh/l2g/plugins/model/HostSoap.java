@@ -36,6 +36,7 @@ public class HostSoap implements Serializable {
 		soapModel.setServerRoot(model.getServerRoot());
 		soapModel.setName(model.getName());
 		soapModel.setServerTemplate(model.getServerTemplate());
+		soapModel.setGroupId(model.getGroupId());
 
 		return soapModel;
 	}
@@ -144,6 +145,14 @@ public class HostSoap implements Serializable {
 		_serverTemplate = serverTemplate;
 	}
 
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
 	private long _hostId;
 	private String _protocol;
 	private String _streamer;
@@ -151,4 +160,5 @@ public class HostSoap implements Serializable {
 	private String _serverRoot;
 	private String _name;
 	private String _serverTemplate;
+	private long _groupId;
 }

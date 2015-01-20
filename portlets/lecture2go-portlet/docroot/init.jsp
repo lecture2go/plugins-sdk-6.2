@@ -84,6 +84,9 @@
 <%@ page import="de.uhh.l2g.plugins.model.impl.LicenseImpl"%>
 
 <%@ page import="de.uhh.l2g.plugins.util.Lecture2GoRoleChecker"%>
+<%@ page import="de.uhh.l2g.plugins.permission.L2GModelPermission" %>
+<%@ page import="de.uhh.l2g.plugins.permission.InstitutionPermission" %>
+<%@ page import="de.uhh.l2g.plugins.permission.HostPermission" %>
 <%@ page import="com.sun.xml.internal.rngom.ast.builder.Include"%>
 
 <portlet:defineObjects />

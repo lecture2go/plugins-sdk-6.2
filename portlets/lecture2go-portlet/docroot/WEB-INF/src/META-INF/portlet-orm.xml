@@ -26,6 +26,7 @@
 			<basic name="serverRoot" />
 			<basic name="name" />
 			<basic name="serverTemplate" />
+			<basic name="groupId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -40,6 +41,7 @@
 			<basic name="www" />
 			<basic name="level" />
 			<basic name="sort" />
+			<basic name="groupId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
