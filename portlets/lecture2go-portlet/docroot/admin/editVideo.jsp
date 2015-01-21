@@ -1,3 +1,4 @@
+<%@page import="de.uhh.l2g.plugins.service.HostLocalServiceUtil"%>
 <%@include file="/init.jsp"%>
 
 <jsp:useBean id="reqLectureseriesList" type="java.util.List<de.uhh.l2g.plugins.model.Lectureseries>" scope="request" />
@@ -49,10 +50,16 @@
 <portlet:resourceURL id="uploadMe" var="uploadMe" />
  
 <aui:fieldset helpMessage="test" column="true" label="video-file" >
-	<%@include file="/admin/includeJQueryUpload.jsp" %>
+	<div>
+		<input type="hidden" id="twitter" name="twitter" value="<%=reqProducer.getHomeDir()%>"/>
+		<input id="fileupload" type="file" name="files[]" data-url="/servlet-file-upload/upload?cors=true" multiple>
+		<br/>
+		<div id="progress" class="progress">
+	    	<div class="bar" style="width: 0%;"></div>
+		</div>
+		<table id="uploaded-files" class="table"></table>
+	</div>
 </aui:fieldset>
-
-<br/>
 
 <aui:fieldset helpMessage="test" column="true" label="video-metadata" >
 	<aui:layout>

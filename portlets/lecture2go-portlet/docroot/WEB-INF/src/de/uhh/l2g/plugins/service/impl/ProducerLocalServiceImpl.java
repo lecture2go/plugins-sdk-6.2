@@ -19,10 +19,12 @@ import java.util.List;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
 import de.uhh.l2g.plugins.model.Producer;
+import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.ProducerLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.ProducerFinderUtil;
@@ -84,6 +86,7 @@ public class ProducerLocalServiceImpl extends ProducerLocalServiceBaseImpl {
 		p.setLastName(u.getLastName());
 		p.setLastLoginDate(u.getLastLoginDate());
 		p.setEmailAddress(u.getEmailAddress());
+		p.setHomeDir(PropsUtil.get("lecture2go.media.repository")+"/"+HostLocalServiceUtil.getByHostId(p.getHostId()).getName()+"/"+p.getHomeDir());
 		return p;
 	}
 	
