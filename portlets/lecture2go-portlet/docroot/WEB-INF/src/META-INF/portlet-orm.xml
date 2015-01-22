@@ -24,8 +24,8 @@
 			<basic name="streamer" />
 			<basic name="port" />
 			<basic name="serverRoot" />
-			<basic name="name" />
 			<basic name="serverTemplate" />
+			<basic name="name" />
 			<basic name="groupId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />

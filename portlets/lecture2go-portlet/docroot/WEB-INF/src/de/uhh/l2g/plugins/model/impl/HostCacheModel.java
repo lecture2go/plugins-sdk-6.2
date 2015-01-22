@@ -47,10 +47,10 @@ public class HostCacheModel implements CacheModel<Host>, Externalizable {
 		sb.append(port);
 		sb.append(", serverRoot=");
 		sb.append(serverRoot);
-		sb.append(", name=");
-		sb.append(name);
 		sb.append(", serverTemplate=");
 		sb.append(serverTemplate);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append("}");
@@ -87,18 +87,18 @@ public class HostCacheModel implements CacheModel<Host>, Externalizable {
 			hostImpl.setServerRoot(serverRoot);
 		}
 
-		if (name == null) {
-			hostImpl.setName(StringPool.BLANK);
-		}
-		else {
-			hostImpl.setName(name);
-		}
-
 		if (serverTemplate == null) {
 			hostImpl.setServerTemplate(StringPool.BLANK);
 		}
 		else {
 			hostImpl.setServerTemplate(serverTemplate);
+		}
+
+		if (name == null) {
+			hostImpl.setName(StringPool.BLANK);
+		}
+		else {
+			hostImpl.setName(name);
 		}
 
 		hostImpl.setGroupId(groupId);
@@ -115,8 +115,8 @@ public class HostCacheModel implements CacheModel<Host>, Externalizable {
 		streamer = objectInput.readUTF();
 		port = objectInput.readInt();
 		serverRoot = objectInput.readUTF();
-		name = objectInput.readUTF();
 		serverTemplate = objectInput.readUTF();
+		name = objectInput.readUTF();
 		groupId = objectInput.readLong();
 	}
 
@@ -148,18 +148,18 @@ public class HostCacheModel implements CacheModel<Host>, Externalizable {
 			objectOutput.writeUTF(serverRoot);
 		}
 
-		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(name);
-		}
-
 		if (serverTemplate == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
 			objectOutput.writeUTF(serverTemplate);
+		}
+
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
 		}
 
 		objectOutput.writeLong(groupId);
@@ -170,7 +170,7 @@ public class HostCacheModel implements CacheModel<Host>, Externalizable {
 	public String streamer;
 	public int port;
 	public String serverRoot;
-	public String name;
 	public String serverTemplate;
+	public String name;
 	public long groupId;
 }

@@ -10,8 +10,8 @@ create table LG_Host (
 	streamer VARCHAR(75) null,
 	port INTEGER,
 	serverRoot VARCHAR(75) null,
-	name VARCHAR(75) null,
 	serverTemplate VARCHAR(75) null,
+	name VARCHAR(75) null,
 	groupId LONG
 );
 

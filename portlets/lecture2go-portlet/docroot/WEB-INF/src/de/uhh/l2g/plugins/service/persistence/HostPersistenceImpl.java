@@ -824,8 +824,8 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 		hostImpl.setStreamer(host.getStreamer());
 		hostImpl.setPort(host.getPort());
 		hostImpl.setServerRoot(host.getServerRoot());
-		hostImpl.setName(host.getName());
 		hostImpl.setServerTemplate(host.getServerTemplate());
+		hostImpl.setName(host.getName());
 		hostImpl.setGroupId(host.getGroupId());
 
 		return hostImpl;

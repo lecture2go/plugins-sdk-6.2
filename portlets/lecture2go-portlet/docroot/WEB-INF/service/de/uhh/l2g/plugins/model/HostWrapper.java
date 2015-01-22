@@ -53,8 +53,8 @@ public class HostWrapper implements Host, ModelWrapper<Host> {
 		attributes.put("streamer", getStreamer());
 		attributes.put("port", getPort());
 		attributes.put("serverRoot", getServerRoot());
-		attributes.put("name", getName());
 		attributes.put("serverTemplate", getServerTemplate());
+		attributes.put("name", getName());
 		attributes.put("groupId", getGroupId());
 
 		return attributes;
@@ -92,16 +92,16 @@ public class HostWrapper implements Host, ModelWrapper<Host> {
 			setServerRoot(serverRoot);
 		}
 
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
 		String serverTemplate = (String)attributes.get("serverTemplate");
 
 		if (serverTemplate != null) {
 			setServerTemplate(serverTemplate);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -232,26 +232,6 @@ public class HostWrapper implements Host, ModelWrapper<Host> {
 	}
 
 	/**
-	* Returns the name of this host.
-	*
-	* @return the name of this host
-	*/
-	@Override
-	public java.lang.String getName() {
-		return _host.getName();
-	}
-
-	/**
-	* Sets the name of this host.
-	*
-	* @param name the name of this host
-	*/
-	@Override
-	public void setName(java.lang.String name) {
-		_host.setName(name);
-	}
-
-	/**
 	* Returns the server template of this host.
 	*
 	* @return the server template of this host
@@ -269,6 +249,26 @@ public class HostWrapper implements Host, ModelWrapper<Host> {
 	@Override
 	public void setServerTemplate(java.lang.String serverTemplate) {
 		_host.setServerTemplate(serverTemplate);
+	}
+
+	/**
+	* Returns the name of this host.
+	*
+	* @return the name of this host
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _host.getName();
+	}
+
+	/**
+	* Sets the name of this host.
+	*
+	* @param name the name of this host
+	*/
+	@Override
+	public void setName(java.lang.String name) {
+		_host.setName(name);
 	}
 
 	/**

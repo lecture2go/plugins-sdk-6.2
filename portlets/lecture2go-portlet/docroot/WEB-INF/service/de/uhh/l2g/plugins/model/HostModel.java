@@ -131,21 +131,6 @@ public interface HostModel extends BaseModel<Host> {
 	public void setServerRoot(String serverRoot);
 
 	/**
-	 * Returns the name of this host.
-	 *
-	 * @return the name of this host
-	 */
-	@AutoEscape
-	public String getName();
-
-	/**
-	 * Sets the name of this host.
-	 *
-	 * @param name the name of this host
-	 */
-	public void setName(String name);
-
-	/**
 	 * Returns the server template of this host.
 	 *
 	 * @return the server template of this host
@@ -159,6 +144,21 @@ public interface HostModel extends BaseModel<Host> {
 	 * @param serverTemplate the server template of this host
 	 */
 	public void setServerTemplate(String serverTemplate);
+
+	/**
+	 * Returns the name of this host.
+	 *
+	 * @return the name of this host
+	 */
+	@AutoEscape
+	public String getName();
+
+	/**
+	 * Sets the name of this host.
+	 *
+	 * @param name the name of this host
+	 */
+	public void setName(String name);
 
 	/**
 	 * Returns the group ID of this host.

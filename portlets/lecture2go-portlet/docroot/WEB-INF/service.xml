@@ -154,34 +154,24 @@
     	<column name="streamer" type="String"></column>
     	<column name="port" type="int"></column>
     	<column name="serverRoot" type="String"></column>
-    	<column name="name" type="String"></column>
-
-
-    	<!-- PK fields -->
-
-    	<!-- Group instance -->
     	<column name="serverTemplate" type="String"></column>
-
-    	<!-- Audit fields -->
-
-
-    	<!-- PK fields -->
-
-    	<!-- Group instance -->
-
-    	<!-- Audit fields -->
-
-
-    	<!-- PK fields -->
-
-    	<!-- Group instance -->
-
-    	<column name="groupId" type="long"></column>
-
-    	<!-- Audit fields -->
-        <finder name="GroupId" return-type="Collection">
+    	<column name="name" type="String"></column>
+		<column name="groupId" type="long"></column>
+		<finder name="GroupId" return-type="Collection">
             <finder-column name="groupId"></finder-column>
         </finder>
+    	<!-- PK fields -->
+
+    	<!-- Group instance -->
+
+    	<!-- Audit fields -->
+
+
+    	<!-- PK fields -->
+
+    	<!-- Group instance -->
+
+    	<!-- Audit fields -->
     </entity>
     <entity name="Institution_Host" local-service="true" remote-service="false">
         <column name="institutionHostId" type="long" primary="true" id-type="increment"></column>
