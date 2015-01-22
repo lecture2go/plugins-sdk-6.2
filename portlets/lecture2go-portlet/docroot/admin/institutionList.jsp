@@ -1,5 +1,4 @@
 <%@include file="/init.jsp"%>
-
 <liferay-ui:error key="host-or-institution-error" message="host-or-institution-error"/>
 
 <portlet:renderURL var="viewURL"><portlet:param name="jspPage" value="/admin/institutionList.jsp" /></portlet:renderURL>
