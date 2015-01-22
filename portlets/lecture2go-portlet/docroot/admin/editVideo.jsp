@@ -47,12 +47,12 @@
 	else {actionURL = addURL.toString();}
 %>
 
-<portlet:resourceURL id="uploadMe" var="uploadMe" />
  
 <aui:fieldset helpMessage="test" column="true" label="video-file" >
 	<div>
 		<input type="hidden" id="twitter" name="twitter" value="<%=reqProducer.getHomeDir()%>"/>
-		<input id="fileupload" type="file" name="files[]" data-url="/servlet-file-upload/upload?cors=true" multiple>
+		<input id="fileupload" type="file" name="files[]" data-url="/servlet-file-upload/upload" multiple>
+		<input type="button" id="upload" value="upload"/>
 		<br/>
 		<div id="progress" class="progress">
 	    	<div class="bar" style="width: 0%;"></div>

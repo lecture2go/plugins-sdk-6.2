@@ -10,9 +10,15 @@
 		<header-portlet-css>/css/upload/dropzone.css</header-portlet-css>
 		<header-portlet-css>/css/upload/mystyle.css</header-portlet-css>
 		<header-portlet-css>/css/upload/style.css</header-portlet-css>
+
+		<header-portal-javascript>/lecture2go-portlet/js/jquery-1.11.1.min.js</header-portal-javascript>
+		<header-portal-javascript>/lecture2go-portlet/js/jquery-ui-1.10.3.min.js</header-portal-javascript>
+				
+		<header-portal-javascript>/servlet-file-upload/js/myuploadfunction.js</header-portal-javascript>
+		<header-portal-javascript>/lecture2go-portlet/js/upload/vendor/jquery.ui.widget.js</header-portal-javascript>
+		<header-portal-javascript>/lecture2go-portlet/js/upload/jquery.fileupload.js</header-portal-javascript>
+		<header-portal-javascript>/lecture2go-portlet/js/upload/jquery.iframe-transport.js</header-portal-javascript>
 		
-		<header-portlet-javascript>/js/jquery-1.11.1.min.js</header-portlet-javascript>
-		<header-portlet-javascript>/js/jquery-ui-1.10.3.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/strobe/jquery.scrollTo-1.4.2-min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/strobe/swfobject.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/strobe/lib/ParsedQueryString.js</header-portlet-javascript>
@@ -20,10 +26,7 @@
 		<header-portlet-javascript>/js/strobe/jquery.strobemediaplayback.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/strobe/jquery.strobemediaplaybackchrome.js</header-portlet-javascript>
 
-		<header-portlet-javascript>/js/upload/vendor/jquery.ui.widget.js</header-portlet-javascript>
-		<header-portlet-javascript>/js/upload/jquery.fileupload.js</header-portlet-javascript>
-		<header-portlet-javascript>/js/upload/myuploadfunction.js</header-portlet-javascript>
-		<header-portlet-javascript>/js/upload/jquery.iframe-transport.js</header-portlet-javascript>
+		
 	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>
