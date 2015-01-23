@@ -50,7 +50,6 @@
  
 <aui:fieldset helpMessage="test" column="true" label="video-file" >
 	<div>
-		<input type="hidden" id="twitter" name="twitter" value="<%=reqProducer.getHomeDir()%>"/>
 		<input id="fileupload" type="file" name="files[]" data-url="/servlet-file-upload/upload" multiple>
 		<input type="button" id="upload" value="upload"/>
 		<br/>
@@ -130,8 +129,66 @@
 <liferay-portlet:resourceURL id="updateMeatadata" var="updateURL" />
 <liferay-portlet:resourceURL id="updateDescription" var="updateDescriptionURL" />
 <liferay-portlet:resourceURL id="updateLicense" var="updateLicenseURL" />
+<liferay-portlet:resourceURL id="updateVideoFileName" var="updateVideoFileNameURL" />
 
 <script type="text/javascript">
+$(function () {
+    $('#fileupload').fileupload({
+        dataType: 'json',
+        done: function (e, data) {
+        	$("tr:has(td)").remove();
+            $.each(data.result, function (index, file) {
+                $("#uploaded-files").append(
+                		$('<tr/>')
+                		.append($('<td/>').text(file.fileName))
+                		.append($('<td/>').text(file.fileSize))
+                		.append($('<td/>').text(file.fileType))
+                		.append($('<td/>').html("<a href='upload?f="+index+"'>Click</a>"))
+
+                		)//end $("#uploaded-files").append()
+                		updateVideoFileName(file);
+            }); 
+        },
+        progressall: function (e, data) {
+	        var progress = parseInt(data.loaded / data.total * 100, 10);
+	        $('#progress .bar').css('width',progress + '%');
+   		},
+		dropZone: $('#dropzone')
+    }).bind('fileuploadsubmit', function (e, data) {
+        // The example input, doesn't have to be part of the upload form:
+        data.formData = {
+        		repository: "<%=reqProducer.getHomeDir()%>",
+        		openaccess: "<%=reqVideo.getOpenAccess()%>"
+        };        
+    });
+   
+});
+
+function updateVideoFileName(file){
+	AUI().use('aui-io-request', 'aui-node',
+		function(A){
+			A.io.request('<%=updateVideoFileNameURL%>', {
+		 	dataType: 'json',
+		 	method: 'POST',
+			 	//send data to server
+			 	data: {
+				 	   	<portlet:namespace/>videoId: A.one('#<portlet:namespace/>videoId').get('value'),
+				 	   	<portlet:namespace/>fileName: file.fileName,
+				 	   	<portlet:namespace/>secureFileName: file.secureFileName,
+				 	   	<portlet:namespace/>generationDate: file.generationDate,
+			 	},
+			 	//get server response
+				on: {
+					   success: function() {
+					     var jsonResponse = this.get('responseData');
+					     //alert(jsonResponse.key1);
+					   }
+				}
+			});	
+		}
+	);
+}
+
 function updateMetadata(){
 	AUI().use('aui-io-request', 'aui-node',
 		function(A){
@@ -230,14 +287,14 @@ AUI().use(
 			    creator.on('change',function(A){updateMetadata()});
 			    rightsHolder.on('change',function(A){updateMetadata()});
 			    publisher.on('change',function(A){updateMetadata()});
-			    test();
+			    //test();
 		}
 );
 
 function test() {
 	var tt = <%=VideoLocalServiceUtil.getJSONVideo(reqVideo.getVideoId()).toString()%>;
 	<%if(!reqVideo.getFilename().equals("")){%>
-	document.getElementById("fls").innerHTML = tmpl("template-download", tt);
+		document.getElementById("fls").innerHTML = tmpl("template-download", tt);
 	<%}%>
 }
 </script>

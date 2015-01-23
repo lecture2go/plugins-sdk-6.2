@@ -1,12 +1,6 @@
 package de.uhh.l2g.plugins.admin;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -22,10 +16,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import de.uhh.l2g.plugins.NoSuchLicenseException;
@@ -53,6 +44,7 @@ import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
+import de.uhh.l2g.plugins.util.FFmpegManager;
 import de.uhh.l2g.plugins.util.ProzessManager;
 
 public class AdminVideoManagement extends MVCPortlet {
@@ -200,6 +192,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		String resourceID = resourceRequest.getResourceID();
 		Long videoId = ParamUtil.getLong(resourceRequest, "videoId");
 		Video video = VideoLocalServiceUtil.getFullVideo(videoId);
+		
 		Metadata metadata = new MetadataImpl();
 		try {
 			Long metadataId = video.getMetadataId();
@@ -216,6 +209,31 @@ public class AdminVideoManagement extends MVCPortlet {
 			e1.printStackTrace();
 		} catch (SystemException e1) {
 			e1.printStackTrace();
+		}
+		
+		if(resourceID.equals("updateVideoFileName")){
+			String fileName = ParamUtil.getString(resourceRequest, "fileName");
+			String secureFileName = ParamUtil.getString(resourceRequest, "secureFileName");
+			String generationDate = ParamUtil.getString(resourceRequest, "generationDate");
+			String containerFormat = fileName.split("\\.")[fileName.split("\\.").length-1];
+			//update data base
+			try {
+				video.setFilename(fileName);
+				video.setSurl(secureFileName);
+				video.setContainerFormat(containerFormat);
+				video.setGenerationDate(generationDate);
+				VideoLocalServiceUtil.updateVideo(video);
+				FFmpegManager.updateFfmpegMetadata(video);
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (SystemException e) {
+				e.printStackTrace();
+			} catch (PortalException e) {
+				e.printStackTrace();
+			}
+			
+			JSONObject json = JSONFactoryUtil.createJSONObject();
+			writeJSON(resourceRequest, resourceResponse, json);
 		}
 		
 		if(resourceID.equals("updateMeatadata")){
@@ -285,30 +303,6 @@ public class AdminVideoManagement extends MVCPortlet {
 			}
 			JSONObject json = JSONFactoryUtil.createJSONObject();
 			writeJSON(resourceRequest, resourceResponse, json);
-		}
-		
-		if(resourceID.equals("uploadMe")){
-			try {
-				UploadPortletRequest uploadrequest = PortalUtil.getUploadPortletRequest(resourceRequest);
-				InputStream inputStream = uploadrequest.getFileAsStream("fileToUpload");
-
-				if(Validator.isNotNull(inputStream)){
-					File file = uploadrequest.getFile("fileToUpload");
-					String uploadString = getFileAsString(file);
-		
-					if (Validator.isNotNull(uploadString)) {
-						resourceResponse.getWriter().write( "validated_successfully");
-						File newFile = new File("/Users/isturm/Desktop/l2gomedia/"+file.getName());
-						file.renameTo(newFile);
-						logger.info("VALIDATED_SUCCESSFULLY");
-					}else{
-						resourceResponse.getWriter().write("failed");
-						logger.info("VALIDATION_FAILED");
-					}
-				}
-			} catch (Exception e) {
-				logger.info( "Error in adding modem");
-			}			
 		}
 		
 		if(resourceID.equals("toggleSegmentation")){
@@ -439,30 +433,6 @@ public class AdminVideoManagement extends MVCPortlet {
 		
 	}
 
-	public String getFileAsString(File file) {
-		FileInputStream fis = null;
-		BufferedInputStream bis = null;
-		DataInputStream dis = null;
-		StringBuffer sb = new StringBuffer();
-		try {
-			fis = new FileInputStream(file);
-			bis = new BufferedInputStream(fis);
-			dis = new DataInputStream(bis);
-	
-			while (dis.available() != 0) {
-				sb.append(dis.readLine() + "\n");
-			}
-			fis.close();
-			bis.close();
-			dis.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return sb.toString();
-	}
-	
 	public void removeVideo(ActionRequest request, ActionResponse response){
 		Video video = new VideoImpl();
 		Long reqVideoId = new Long(0);

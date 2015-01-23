@@ -369,7 +369,7 @@ public class FFmpegManager {
 	 * @throws SystemException 
 	 * @throws PortalException 
 	 */
-	public void updateFfmpegMetadata(Video video) throws IOException, PortalException, SystemException {
+	public static void updateFfmpegMetadata(Video video) throws IOException, PortalException, SystemException {
 		Host host = HostLocalServiceUtil.getHost(video.getHostId());
 		Producer producer = ProducerLocalServiceUtil.getProducer(video.getProducerId());
 		// FFMPEG
@@ -388,7 +388,8 @@ public class FFmpegManager {
 			
 			//update video object
 			VideoLocalServiceUtil.updateVideo(video);
-		} catch (NullPointerException npe) {
+		} catch (NullPointerException e) {
+			e.printStackTrace();
 		}
 	}
 }
