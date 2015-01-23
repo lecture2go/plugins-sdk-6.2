@@ -7,10 +7,6 @@
 		<instanceable>false</instanceable>
 		<private-request-attributes>false</private-request-attributes>
 
-		<header-portlet-css>/css/upload/dropzone.css</header-portlet-css>
-		<header-portlet-css>/css/upload/mystyle.css</header-portlet-css>
-		<header-portlet-css>/css/upload/style.css</header-portlet-css>
-
 		<header-portlet-javascript>/js/jquery-1.11.1.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/upload/vendor/jquery.ui.widget.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/upload/jquery.fileupload.js</header-portlet-javascript>
