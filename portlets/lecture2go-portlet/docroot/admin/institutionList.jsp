@@ -9,7 +9,7 @@
 
 		<aui:fieldset>
 			<aui:input name="institution" label="Institution" required="true"/>
-            <aui:input name="serverselect" label="Streaming Server"></aui:input>
+            <aui:input name="serverselect" label="Select Streaming Server"></aui:input>
 
         </aui:fieldset>
         
