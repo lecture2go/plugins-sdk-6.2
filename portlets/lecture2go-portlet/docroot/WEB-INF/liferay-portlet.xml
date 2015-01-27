@@ -8,18 +8,17 @@
 		<private-request-attributes>false</private-request-attributes>
 
 		<header-portlet-javascript>/js/jquery-1.11.1.min.js</header-portlet-javascript>
-		<header-portlet-javascript>/js/upload/vendor/jquery.ui.widget.js</header-portlet-javascript>
-		<header-portlet-javascript>/js/upload/jquery.fileupload.js</header-portlet-javascript>
-		<header-portlet-javascript>/js/upload/jquery.iframe-transport.js</header-portlet-javascript>
-		
-		<header-portlet-javascript>/js/strobe/jquery.scrollTo-1.4.2-min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/jquery-ui-1.10.3.custom.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/strobe/swfobject.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/strobe/jquery.scrollTo-1.4.2-min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/strobe/lib/ParsedQueryString.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/strobe/jsdemo.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/strobe/jquery.strobemediaplayback.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/strobe/jquery.strobemediaplaybackchrome.js</header-portlet-javascript>
 
-		
+		<header-portlet-javascript>/js/upload/vendor/jquery.ui.widget.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/upload/jquery.fileupload.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/upload/jquery.iframe-transport.js</header-portlet-javascript>
 	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>

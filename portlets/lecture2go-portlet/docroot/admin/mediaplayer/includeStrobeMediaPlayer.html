@@ -275,7 +275,7 @@
 					
 					org.strobemediaplayback.bindListeners(player, org.strobemediaplayback.players[id], "org.strobemediaplayback.players['" + id + "']");
 					
-					org.strobemediaplayback.players[id].cc = new org.strobemediaplayback.InteractiveCC(player, $("#dsCC"), $("#subtext"));
+					org.strobemediaplayback.players[id].cc = new org.strobemediaplayback.InteractiveCC(player, $("#iframe"), $("#subtext"));
 					org.strobemediaplayback.bindListeners(player, org.strobemediaplayback.players[id].cc, "org.strobemediaplayback.players['" + id + "'].cc");
 				}	
 			}
