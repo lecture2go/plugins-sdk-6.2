@@ -1,5 +1,6 @@
 package de.uhh.l2g.plugins.admin;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import de.uhh.l2g.plugins.NoSuchLicenseException;
@@ -36,6 +38,7 @@ import de.uhh.l2g.plugins.model.impl.SegmentImpl;
 import de.uhh.l2g.plugins.model.impl.VideoImpl;
 import de.uhh.l2g.plugins.model.impl.Video_InstitutionImpl;
 import de.uhh.l2g.plugins.model.impl.Video_LectureseriesImpl;
+import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LicenseLocalServiceUtil;
 import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
@@ -224,6 +227,38 @@ public class AdminVideoManagement extends MVCPortlet {
 				video.setGenerationDate(generationDate);
 				VideoLocalServiceUtil.updateVideo(video);
 				FFmpegManager.updateFfmpegMetadata(video);
+				//update thumbs
+				String image="";
+				String fileLocation="";
+				if(video.getOpenAccess()==1){
+					image = video.getPreffix()+".jpg";
+					fileLocation = ProducerLocalServiceUtil.getProdUcer(video.getProducerId()).getHomeDir() + "/" + video.getFilename();
+				}else{
+					image = video.getSPreffix()+".jpg";
+					fileLocation = ProducerLocalServiceUtil.getProdUcer(video.getProducerId()).getHomeDir() + "/" + video.getSurl();
+				}
+				String thumbnailLocation = PropsUtil.get("lecture2go.images.system.path") + "/" + image;
+				//delete old thumbs
+				String thumbPreffLoc = thumbnailLocation.split(".jpg")[0];
+				File f1 = new File(thumbnailLocation);
+				File f2 = new File(thumbPreffLoc + "_s.jpg");
+				File f3 = new File(thumbPreffLoc + "_m.jpg");
+				f1.delete();
+				f2.delete();
+				f3.delete();
+				//and and thumbs for segments
+				// delete all segment images from repository location
+				try{
+					List<Segment> segmentList = SegmentLocalServiceUtil.getSegmentsByVideoId(video.getVideoId());
+					SegmentLocalServiceUtil.deleteThumbhailsFromSegments(segmentList);
+				}catch (PortalException e) {
+					e.printStackTrace();
+				} catch (SystemException e) {
+					e.printStackTrace();
+				} catch (NullPointerException e){
+					e.printStackTrace();
+				}				
+				FFmpegManager.createThumbnail(fileLocation, thumbnailLocation);
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			} catch (SystemException e) {

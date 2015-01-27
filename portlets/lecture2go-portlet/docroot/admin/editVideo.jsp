@@ -135,6 +135,21 @@
 $(function () {
     $('#fileupload').fileupload({
         dataType: 'json',
+        add: function(e, data) {
+            var uploadErrors = [];
+            var acceptFileTypes = /(mp4|m4v|m4a|mp3|ogg|flv|webm|pdf)$/i;//file types
+            if(data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
+                uploadErrors.push('not an accepted file type');
+            }
+            if(data.originalFiles[0]['size'].length && data.originalFiles[0]['size'] > 2147483648) {
+                uploadErrors.push('max file size 2 GB');
+            }
+            if(uploadErrors.length > 0) {
+                alert(uploadErrors.join("\n"));
+            } else {
+                data.submit();
+            }
+    	},
         done: function (e, data) {
         	$("tr:has(td)").remove();
             $.each(data.result, function (index, file) {
@@ -146,7 +161,9 @@ $(function () {
                 		.append($('<td/>').html("<a href='upload?f="+index+"'>Click</a>"))
 
                 		)//end $("#uploaded-files").append()
-                		updateVideoFileName(file);
+                		if(file.fileName.indexOf("mp4") > -1){
+                			updateVideoFileName(file);
+                		}
             }); 
         },
         progressall: function (e, data) {
@@ -158,7 +175,10 @@ $(function () {
         // The example input, doesn't have to be part of the upload form:
         data.formData = {
         		repository: "<%=reqProducer.getHomeDir()%>",
-        		openaccess: "<%=reqVideo.getOpenAccess()%>"
+        		openaccess: "<%=reqVideo.getOpenAccess()%>",
+        		lectureseriesNumber: "<%=reqLectureseries.getNumber()%>",
+        		fileName: "<%=VideoLocalServiceUtil.getVideo(reqVideo.getVideoId()).getFilename()%>",
+        		secureFileName: "<%=VideoLocalServiceUtil.getVideo(reqVideo.getVideoId()).getSurl()%>",
         };        
     });
    
