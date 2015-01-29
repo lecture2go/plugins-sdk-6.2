@@ -49,6 +49,7 @@ import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.util.FFmpegManager;
 import de.uhh.l2g.plugins.util.ProzessManager;
+import de.uhh.l2g.plugins.util.Security;
 
 public class AdminVideoManagement extends MVCPortlet {
 
@@ -77,8 +78,8 @@ public class AdminVideoManagement extends MVCPortlet {
 			
 		// requested video
 		Long reqVideoId = new Long(0);
-		try{reqVideoId = new Long(request.getParameterMap().get("videoId")[0]);}catch(Exception e){}
 		Video reqVideo = new VideoImpl(); 
+		try{reqVideoId = new Long(request.getParameterMap().get("videoId")[0]);}catch(Exception e){}
 		try{reqVideo = VideoLocalServiceUtil.getVideo(reqVideoId);}catch(Exception e){}
 		
 		//requested producer
@@ -159,6 +160,8 @@ public class AdminVideoManagement extends MVCPortlet {
 		newVideo.setHostId(reqProducer.getHostId());
 		newVideo.setMetadataId(reqMetadata.getMetadataId());
 		newVideo.setRootInstitutionId(reqProducer.getInstitutionId());
+		newVideo.setOpenAccess(0);
+		newVideo.setSurl(Security.createSecureFileName()+".xx");
 		//save it
 		Video video = VideoLocalServiceUtil.addVideo(newVideo);
 		request.setAttribute("reqVideo", newVideo);
@@ -305,6 +308,20 @@ public class AdminVideoManagement extends MVCPortlet {
 			}
 			JSONObject json = JSONFactoryUtil.createJSONObject();
 			writeJSON(resourceRequest, resourceResponse, json);
+		}
+
+		if(resourceID.equals("videoFileNameExists")){
+			String filename = ParamUtil.getString(resourceRequest, "fileName");
+			JSONObject jo = JSONFactoryUtil.createJSONObject();
+			try {
+				List<Video> vl = VideoLocalServiceUtil.getByFilename(filename); 
+				if(vl.size()>0)jo.put("exist", "1");
+				else jo.put("exist", "0");
+			} catch (SystemException e) {
+				e.printStackTrace();
+				jo.put("exist", "0");
+			}
+			writeJSON(resourceRequest, resourceResponse, jo);
 		}
 		
 		if(resourceID.equals("updateLicense")){

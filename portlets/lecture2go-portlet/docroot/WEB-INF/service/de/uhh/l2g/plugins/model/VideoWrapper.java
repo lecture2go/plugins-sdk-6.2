@@ -869,6 +869,36 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 	}
 
 	@Override
+	public java.io.File getFlvFile() {
+		return _video.getFlvFile();
+	}
+
+	@Override
+	public void setFlvFile(java.io.File flvFile) {
+		_video.setFlvFile(flvFile);
+	}
+
+	@Override
+	public java.io.File getOggFile() {
+		return _video.getOggFile();
+	}
+
+	@Override
+	public void setOggFile(java.io.File oggFile) {
+		_video.setOggFile(oggFile);
+	}
+
+	@Override
+	public java.io.File getWebmFile() {
+		return _video.getWebmFile();
+	}
+
+	@Override
+	public void setWebmFile(java.io.File webmFile) {
+		_video.setWebmFile(webmFile);
+	}
+
+	@Override
 	public java.lang.String getDate() {
 		return _video.getDate();
 	}

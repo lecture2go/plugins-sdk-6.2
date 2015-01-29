@@ -55,6 +55,7 @@ create index IX_F1DC7249 on LG_Segment_User_Video (videoId);
 
 create index IX_88EAD11B on LG_Upload (videoId);
 
+create index IX_D1B2A998 on LG_Video (filename);
 create index IX_3B4515A3 on LG_Video (lectureseriesId);
 create index IX_AAE2F865 on LG_Video (lectureseriesId, openAccess);
 create index IX_35558E9E on LG_Video (producerId);

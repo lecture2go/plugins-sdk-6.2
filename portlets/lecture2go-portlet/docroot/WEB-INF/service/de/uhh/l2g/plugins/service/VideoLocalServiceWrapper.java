@@ -299,6 +299,13 @@ public class VideoLocalServiceWrapper implements VideoLocalService,
 	}
 
 	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Video> getByFilename(
+		java.lang.String filename)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _videoLocalService.getByFilename(filename);
+	}
+
+	@Override
 	public java.util.List<de.uhh.l2g.plugins.model.Video> getByProducer(
 		java.lang.Long producerId)
 		throws com.liferay.portal.kernel.exception.SystemException {

@@ -256,6 +256,11 @@ public interface VideoLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<de.uhh.l2g.plugins.model.Video> getByFilename(
+		java.lang.String filename)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<de.uhh.l2g.plugins.model.Video> getByProducer(
 		java.lang.Long producerId)
 		throws com.liferay.portal.kernel.exception.SystemException;

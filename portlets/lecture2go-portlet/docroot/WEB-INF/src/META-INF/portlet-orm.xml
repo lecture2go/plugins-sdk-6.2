@@ -371,6 +371,7 @@
 		<attributes>
 			<transient name="bitrate" />
 			<transient name="date" />
+			<transient name="flvFile" />
 			<transient name="hasChapters" />
 			<transient name="hasComments" />
 			<transient name="image" />
@@ -380,6 +381,7 @@
 			<transient name="m4vFile" />
 			<transient name="mp3File" />
 			<transient name="mp4File" />
+			<transient name="oggFile" />
 			<transient name="pdfFile" />
 			<transient name="secureUrl" />
 			<transient name="shortName" />
@@ -389,6 +391,7 @@
 			<transient name="streamIosUrl" />
 			<transient name="streamUrl" />
 			<transient name="url" />
+			<transient name="webmFile" />
 		</attributes>
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.Video_InstitutionImpl" name="Video_Institution">

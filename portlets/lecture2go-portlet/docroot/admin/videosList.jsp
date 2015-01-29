@@ -205,6 +205,18 @@
 					m4v &nbsp;
 				<%}
 				
+				if(vid.getFlvFile().isFile()){%>
+					flv &nbsp;
+				<%}
+				
+				if(vid.getOggFile().isFile()){%>
+					ogg &nbsp;
+				<%}
+				
+				if(vid.getWebmFile().isFile()){%>
+					webm &nbsp;
+				<%}
+				
 				if(vid.getPdfFile().isFile()){%>
 					pdf &nbsp;
 				<%}%>

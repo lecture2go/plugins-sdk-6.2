@@ -299,18 +299,6 @@ public class ProzessManager {
 			e.printStackTrace();
 		}
 		
-		// delete all segment data from table
-		try {
-			SegmentLocalServiceUtil.deleteByVideoId(video.getVideoId());
-		} catch (SystemException e1) {
-			e1.printStackTrace();
-		}
-		try {
-			Segment_User_VideoLocalServiceUtil.deleteByVideoId(video.getVideoId());
-		} catch (SystemException e1) {
-			e1.printStackTrace();
-		}
-		
 		LicenseLocalServiceUtil.deleteByVideoId(video.getVideoId());
 
 		//delete upload info
@@ -356,6 +344,9 @@ public class ProzessManager {
 				File mp4vFile = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".m4v");
 				File pdfFile = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".pdf");
 				File mp4File = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".mp4");
+				File oggFile = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".ogg");
+				File flvFile = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".flv");
+				File webmFile = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".webm");
 				File tarFile = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".tar");
 				mp3File.delete();
 				m4aFile.delete();
@@ -363,6 +354,9 @@ public class ProzessManager {
 				pdfFile.delete();
 				mp4File.delete();
 				tarFile.delete();
+				oggFile.delete();
+				flvFile.delete();
+				webmFile.delete();
 				deleteThumbnails(video);
 			}
 			// delete all symbolic links
@@ -371,11 +365,17 @@ public class ProzessManager {
 			File symLinkM4a = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".m4a");
 			File symLinkMp3 = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".mp3");
 			File symLinkJpg = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".jpg");
+			File symLinkOgg = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".ogg");
+			File symLinkFlv = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".flv");
+			File symLinkWebm = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".webm");
 			symLinkMp4.delete();
 			symLinkM4v.delete();
 			symLinkM4a.delete();
 			symLinkMp3.delete();
 			symLinkJpg.delete();
+			symLinkOgg.delete();
+			symLinkFlv.delete();
+			symLinkWebm.delete();
 		} catch (NullPointerException npe) {}
 		
 		// update RSS

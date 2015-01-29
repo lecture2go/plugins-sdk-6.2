@@ -154,8 +154,35 @@ public class VideoImpl extends VideoBaseImpl {
 	private File mp3File;
 	private File m4vFile;
 	private File m4aFile;
+	private File flvFile;
+	private File oggFile;
+	private File webmFile;
 	
 	
+	public File getFlvFile() {
+		return flvFile;
+	}
+
+	public void setFlvFile(File flvFile) {
+		this.flvFile = flvFile;
+	}
+
+	public File getOggFile() {
+		return oggFile;
+	}
+
+	public void setOggFile(File oggFile) {
+		this.oggFile = oggFile;
+	}
+
+	public File getWebmFile() {
+		return webmFile;
+	}
+
+	public void setWebmFile(File webmFile) {
+		this.webmFile = webmFile;
+	}
+
 	public String getDate() {
 		return date;
 	}

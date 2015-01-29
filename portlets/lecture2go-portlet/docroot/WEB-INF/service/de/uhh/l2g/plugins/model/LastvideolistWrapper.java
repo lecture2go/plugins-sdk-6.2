@@ -194,7 +194,7 @@ public class LastvideolistWrapper implements Lastvideolist,
 	}
 
 	@Override
-	public int compareTo(Lastvideolist lastvideolist) {
+	public int compareTo(de.uhh.l2g.plugins.model.Lastvideolist lastvideolist) {
 		return _lastvideolist.compareTo(lastvideolist);
 	}
 
@@ -204,17 +204,17 @@ public class LastvideolistWrapper implements Lastvideolist,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<Lastvideolist> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.model.Lastvideolist> toCacheModel() {
 		return _lastvideolist.toCacheModel();
 	}
 
 	@Override
-	public Lastvideolist toEscapedModel() {
+	public de.uhh.l2g.plugins.model.Lastvideolist toEscapedModel() {
 		return new LastvideolistWrapper(_lastvideolist.toEscapedModel());
 	}
 
 	@Override
-	public Lastvideolist toUnescapedModel() {
+	public de.uhh.l2g.plugins.model.Lastvideolist toUnescapedModel() {
 		return new LastvideolistWrapper(_lastvideolist.toUnescapedModel());
 	}
 

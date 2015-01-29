@@ -41,7 +41,7 @@ import de.uhh.l2g.plugins.service.persistence.InstitutionPersistence;
 
 public class AdminInstitutionManagement extends MVCPortlet {
 	
-	
+	   
 	
 	public void viewInstitutionList(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
 		

@@ -97,11 +97,12 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.Video"),
 			true);
 	public static long DOWNLOADLINK_COLUMN_BITMASK = 1L;
-	public static long LECTURESERIESID_COLUMN_BITMASK = 2L;
-	public static long OPENACCESS_COLUMN_BITMASK = 4L;
-	public static long PRODUCERID_COLUMN_BITMASK = 8L;
-	public static long ROOTINSTITUTIONID_COLUMN_BITMASK = 16L;
-	public static long VIDEOID_COLUMN_BITMASK = 32L;
+	public static long FILENAME_COLUMN_BITMASK = 2L;
+	public static long LECTURESERIESID_COLUMN_BITMASK = 4L;
+	public static long OPENACCESS_COLUMN_BITMASK = 8L;
+	public static long PRODUCERID_COLUMN_BITMASK = 16L;
+	public static long ROOTINSTITUTIONID_COLUMN_BITMASK = 32L;
+	public static long VIDEOID_COLUMN_BITMASK = 64L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Video"));
 
@@ -408,7 +409,17 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 
 	@Override
 	public void setFilename(String filename) {
+		_columnBitmask |= FILENAME_COLUMN_BITMASK;
+
+		if (_originalFilename == null) {
+			_originalFilename = _filename;
+		}
+
 		_filename = filename;
+	}
+
+	public String getOriginalFilename() {
+		return GetterUtil.getString(_originalFilename);
 	}
 
 	@Override
@@ -724,6 +735,8 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 
 		videoModelImpl._setOriginalProducerId = false;
 
+		videoModelImpl._originalFilename = videoModelImpl._filename;
+
 		videoModelImpl._originalOpenAccess = videoModelImpl._openAccess;
 
 		videoModelImpl._setOriginalOpenAccess = false;
@@ -1011,6 +1024,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	private boolean _setOriginalProducerId;
 	private String _containerFormat;
 	private String _filename;
+	private String _originalFilename;
 	private String _resolution;
 	private String _duration;
 	private long _hostId;

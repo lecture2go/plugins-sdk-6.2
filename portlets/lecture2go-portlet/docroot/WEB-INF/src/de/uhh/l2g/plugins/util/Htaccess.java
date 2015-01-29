@@ -51,7 +51,7 @@ import de.uhh.l2g.plugins.model.Video;
 public class Htaccess {
 
 	/** The Constant fileExtentions. */
-	final static String[] fileExtentions = { ".pdf", ".mp3", ".m4v", ".mp4", ".m4a", ".tar" };
+	final static String[] fileExtentions = { ".pdf", ".mp3", ".m4v", ".mp4", ".m4a", ".tar", ".ogg", ".webm", ".flv" };
   
 	final static String HTUSERS_DIR = PropsUtil.get("lecture2go.security.folder");
 	final static String HTUSERS_FILE = PropsUtil.get("lecture2go.security.folder") + "/" + ".htusers";

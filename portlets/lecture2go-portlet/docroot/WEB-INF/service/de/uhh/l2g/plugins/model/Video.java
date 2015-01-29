@@ -79,6 +79,18 @@ public interface Video extends VideoModel, PersistedModel {
 
 	public void setM4aFile(java.io.File m4aFile);
 
+	public java.io.File getFlvFile();
+
+	public void setFlvFile(java.io.File flvFile);
+
+	public java.io.File getOggFile();
+
+	public void setOggFile(java.io.File oggFile);
+
+	public java.io.File getWebmFile();
+
+	public void setWebmFile(java.io.File webmFile);
+
 	public java.lang.String getDate();
 
 	public void setDate(java.lang.String date);

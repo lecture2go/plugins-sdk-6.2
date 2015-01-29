@@ -86,6 +86,11 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		List<Video> vl = videoPersistence.findByInstitution(institutionId);
 		return vl;
 	}
+	
+	public List<Video> getByFilename(String filename) throws SystemException {
+		List<Video> vl = videoPersistence.findByFilename(filename);
+		return vl;
+	}
 
 	public List<Video> getByProducer(Long producerId) throws SystemException {
 		List<Video> vl = videoPersistence.findByProducer(producerId);
@@ -237,12 +242,18 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			File m4vFile = new File(homedirPath + ".m4v");
 			File pdfFile = new File(homedirPath + ".pdf");
 			File m4aFile = new File(homedirPath + ".m4a");
+			File fvlFile = new File(homedirPath + ".flv");
+			File oggFile = new File(homedirPath + ".ogg");
+			File webmFile = new File(homedirPath + ".webm");
 			//
 			objectVideo.setMp4File(mp4File);
 			objectVideo.setMp3File(mp3File);
 			objectVideo.setM4vFile(m4vFile);
 			objectVideo.setPdfFile(pdfFile);
 			objectVideo.setM4aFile(m4aFile);
+			objectVideo.setFlvFile(fvlFile);
+			objectVideo.setOggFile(oggFile);
+			objectVideo.setWebmFile(webmFile);
 		} catch (Exception e) {
 			//
 		}

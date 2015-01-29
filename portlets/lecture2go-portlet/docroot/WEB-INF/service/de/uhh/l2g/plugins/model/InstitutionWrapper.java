@@ -329,7 +329,7 @@ public class InstitutionWrapper implements Institution,
 	}
 
 	@Override
-	public int compareTo(Institution institution) {
+	public int compareTo(de.uhh.l2g.plugins.model.Institution institution) {
 		return _institution.compareTo(institution);
 	}
 
@@ -339,17 +339,17 @@ public class InstitutionWrapper implements Institution,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<Institution> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.model.Institution> toCacheModel() {
 		return _institution.toCacheModel();
 	}
 
 	@Override
-	public Institution toEscapedModel() {
+	public de.uhh.l2g.plugins.model.Institution toEscapedModel() {
 		return new InstitutionWrapper(_institution.toEscapedModel());
 	}
 
 	@Override
-	public Institution toUnescapedModel() {
+	public de.uhh.l2g.plugins.model.Institution toUnescapedModel() {
 		return new InstitutionWrapper(_institution.toUnescapedModel());
 	}
 

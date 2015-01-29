@@ -288,6 +288,12 @@ public class VideoLocalServiceUtil {
 		return getService().getByInstitution(institutionId);
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByFilename(
+		java.lang.String filename)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getByFilename(filename);
+	}
+
 	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByProducer(
 		java.lang.Long producerId)
 		throws com.liferay.portal.kernel.exception.SystemException {

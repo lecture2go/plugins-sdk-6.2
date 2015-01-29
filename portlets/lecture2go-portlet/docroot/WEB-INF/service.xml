@@ -311,6 +311,9 @@
             <finder-column name="lectureseriesId"></finder-column>
             <finder-column name="openAccess"></finder-column>
         </finder>
+        <finder name="Filename" return-type="Collection">
+            <finder-column name="filename"></finder-column>
+        </finder>
     </entity>
     <entity name="Video_Institution" local-service="true" remote-service="false">
         <column name="videoInstitutionId" type="long" primary="true" id-type="increment"></column>
