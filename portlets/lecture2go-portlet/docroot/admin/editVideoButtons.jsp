@@ -34,41 +34,41 @@
 		<portlet:param name="videoId" value="<%= primKey%>" />
 </portlet:actionURL>
 
-<liferay-ui:icon-menu>
-	<liferay-ui:icon image="edit" message="" url="<%= editURL.toString() %>" />
-</liferay-ui:icon-menu>   
-
+<a href="<%=editURL.toString()%>">
+   <span class="icon-large icon-pencil"></span>
+</a>
+		
 <%if(v.getFilename().length()>0){
 	if (v.getOpenAccess()==1){%>
-		<liferay-ui:icon-menu cssClass="right">
-			<liferay-ui:icon src="/lecture2go-portlet/img/unlock_button.png" message="" url="<%=lockURL.toString()%>" />
-		</liferay-ui:icon-menu>
+		<a href="<%=lockURL.toString()%>">
+		   <span class="icon-large icon-unlock"></span>
+		</a>
 	<%}else{%>
-		<liferay-ui:icon-menu cssClass="right">
-			<liferay-ui:icon src="/lecture2go-portlet/img/lock_button.png" message="" url="<%=unlockURL.toString()%>" />
-		</liferay-ui:icon-menu>	
+		 <a href="<%=unlockURL.toString()%>">
+		    <span class="icon-large icon-lock"></span>
+		 </a>
 	<%}	
 	
 	if (v.getDownloadLink()==1){%>
-		<liferay-ui:icon-menu cssClass="right">
-			<liferay-ui:icon src="/lecture2go-portlet/img/dl_aktiv.png" message="" url="<%=deactivateDowonloadURL.toString()%>" />
-		</liferay-ui:icon-menu>
+		 <a href="<%=deactivateDowonloadURL.toString()%>">
+		    <span class="icon-large icon-download-alt"></span>
+		 </a>
 	<%}else{%>
-		<liferay-ui:icon-menu cssClass="right">
-			<liferay-ui:icon src="/lecture2go-portlet/img/dl_inaktiv.png" message="" url="<%=activateDowonloadURL.toString()%>" />
-		</liferay-ui:icon-menu>	
+		 <a href="<%=activateDowonloadURL.toString()%>">
+		    <span class="icon-large icon-download"></span>
+		 </a>		
 	<%}	
 	if (SegmentLocalServiceUtil.getSegmentsByVideoId(v.getVideoId()).size()>0){%>
-		<liferay-ui:icon-menu cssClass="right">
-			<liferay-ui:icon src="/lecture2go-portlet/img/segmentOn.png" message="" url="<%=segmentURL.toString()%>" />
-		</liferay-ui:icon-menu>
+		 <a href="<%=segmentURL.toString()%>">
+		    <span class="icon-large icon-comment"></span>
+		 </a>			
 	<%}else{%>
-		<liferay-ui:icon-menu cssClass="right">
-			<liferay-ui:icon src="/lecture2go-portlet/img/segmentOff.png" message="" url="<%=segmentURL.toString()%>" />
-		</liferay-ui:icon-menu>	
+		<a href="<%=segmentURL.toString()%>">
+		   <span class="icon-large icon-align-justify"></span>
+		</a>	
 	<%}	
 }%>
 
-<liferay-ui:icon-menu cssClass="right">
-	<liferay-ui:icon src="/lecture2go-portlet/img/delete.png" message="" url="<%=removeURL.toString()%>" />
-</liferay-ui:icon-menu>
+<a href="<%=removeURL.toString()%>">
+	<span class="icon-large icon-remove"></span>
+</a>

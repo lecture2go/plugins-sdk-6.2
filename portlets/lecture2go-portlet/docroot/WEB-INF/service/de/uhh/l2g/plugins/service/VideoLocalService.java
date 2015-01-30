@@ -287,7 +287,7 @@ public interface VideoLocalService extends BaseLocalService,
 	public de.uhh.l2g.plugins.model.Video getFullVideo(java.lang.Long videoId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.json.JSONObject getJSONVideo(java.lang.Long videoId);
+	public org.json.JSONArray getJSONVideo(java.lang.Long videoId);
 
 	public void createLastVideoList()
 		throws com.liferay.portal.kernel.exception.SystemException;

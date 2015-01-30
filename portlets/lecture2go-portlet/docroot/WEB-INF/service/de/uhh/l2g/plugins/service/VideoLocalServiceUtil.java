@@ -329,7 +329,7 @@ public class VideoLocalServiceUtil {
 		return getService().getFullVideo(videoId);
 	}
 
-	public static org.json.JSONObject getJSONVideo(java.lang.Long videoId) {
+	public static org.json.JSONArray getJSONVideo(java.lang.Long videoId) {
 		return getService().getJSONVideo(videoId);
 	}
 

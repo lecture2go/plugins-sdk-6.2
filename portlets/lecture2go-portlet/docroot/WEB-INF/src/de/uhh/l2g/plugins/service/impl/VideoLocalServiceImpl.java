@@ -307,10 +307,9 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		return objectVideo;
 	}
 	
-	public JSONObject getJSONVideo(Long videoId){
+	public JSONArray getJSONVideo(Long videoId){
 		Video video = getFullVideo(videoId);
 		JSONArray json = new JSONArray();
-		JSONObject jsonObject = new JSONObject();
 		
 		if(video.getMp4File().isFile()){
 			JSONObject jsonoMp4 = new JSONObject();
@@ -332,7 +331,6 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				jsonoMp4.put("deleteUrl", "#");
 				jsonoMp4.put("deleteType", "DELETE");
 				json.put(jsonoMp4);
-				jsonObject.put("files", json);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -349,7 +347,6 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				jsonoMp3.put("deleteUrl", "#");
 				jsonoMp3.put("deleteType", "DELETE");
 				json.put(jsonoMp3);
-				jsonObject.put("files", json);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -366,7 +363,6 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				jsonoM4a.put("deleteUrl", "#");
 				jsonoM4a.put("deleteType", "DELETE");
 				json.put(jsonoM4a);
-				jsonObject.put("files", json);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			} 
@@ -383,7 +379,6 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				jsonoM4v.put("deleteUrl", "#");
 				jsonoM4v.put("deleteType", "DELETE");
 				json.put(jsonoM4v);
-				jsonObject.put("files", json);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -400,13 +395,12 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				pdf.put("deleteUrl", "#");
 				pdf.put("deleteType", "DELETE");
 				json.put(pdf);
-				jsonObject.put("files", json);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 		}
 		
-		return jsonObject;
+		return json;
 	}
 	
 	public void createLastVideoList() throws SystemException {

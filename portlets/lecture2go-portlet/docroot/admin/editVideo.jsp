@@ -338,14 +338,25 @@ AUI().use(
 			    creator.on('change',function(A){updateMetadata()});
 			    rightsHolder.on('change',function(A){updateMetadata()});
 			    publisher.on('change',function(A){updateMetadata()});
-			    //test();
 		}
 );
 
-function test() {
-	var tt = <%=VideoLocalServiceUtil.getJSONVideo(reqVideo.getVideoId()).toString()%>;
-	<%if(!reqVideo.getFilename().equals("")){%>
-		document.getElementById("fls").innerHTML = tmpl("template-download", tt);
-	<%}%>
-}
+</script>
+
+<!-- Template -->
+<script type="text/html" id="template">
+   	<tr>
+    	<td data-content="name"></td>
+    	<td>
+			<a src="" class="icon-large icon-remove"></a>
+		</td>
+   	</tr>
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        var vars = <%=VideoLocalServiceUtil.getJSONVideo(reqVideo.getVideoId()).toString()%>;
+        console.log(vars);
+        $(".table").loadTemplate("#template", vars);
+    });
 </script>

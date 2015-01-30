@@ -346,7 +346,7 @@ public class VideoLocalServiceWrapper implements VideoLocalService,
 	}
 
 	@Override
-	public org.json.JSONObject getJSONVideo(java.lang.Long videoId) {
+	public org.json.JSONArray getJSONVideo(java.lang.Long videoId) {
 		return _videoLocalService.getJSONVideo(videoId);
 	}
 
