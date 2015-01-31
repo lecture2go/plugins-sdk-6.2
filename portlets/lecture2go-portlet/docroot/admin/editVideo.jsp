@@ -131,6 +131,7 @@
 <liferay-portlet:resourceURL id="updateLicense" var="updateLicenseURL" />
 <liferay-portlet:resourceURL id="updateVideoFileName" var="updateVideoFileNameURL" />
 <liferay-portlet:resourceURL id="videoFileNameExists" var="videoFileNameExistsURL" />
+<liferay-portlet:resourceURL id="deleteFile" var="deleteFileURL" />
 
 <script type="text/javascript">
 var firstUpload = 0;
@@ -270,7 +271,7 @@ function updateMetadata(){
 	);
 }
 
-function updateLicense(data){
+function updateLicense(data){	
 	AUI().use('aui-io-request', 'aui-node',
 		function(A){
 			A.io.request('<%=updateLicenseURL%>', {
@@ -314,6 +315,22 @@ function <portlet:namespace/>updateDescription(data){
 	);
 }
 
+function deleteFile(fileName){	
+	$.ajax({
+	    url: '<%=deleteFileURL.toString()%>',
+	    method: 'POST',
+	    dataType: "json",
+	    data: {
+	 	   	<portlet:namespace/>fileName: fileName,
+	 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>",
+	    },
+	    success: function(data, textStatus, jqXHR) {
+	        // since we are using jQuery, you don't need to parse response
+	        $("#"+data.fileId).remove();
+	    }
+	});	
+}
+
 AUI().use(
 		'aui-node',
 		function(A) {
@@ -344,11 +361,11 @@ AUI().use(
 </script>
 
 <!-- Template -->
-<script type="text/html" id="template">
-   	<tr>
-    	<td data-content="name"></td>
+<script type="text/x-jquery-tmpl" id="template">
+   	<tr data-id="name">
+    	<td><%="${name}"%></td>
     	<td>
-			<a src="" class="icon-large icon-remove"></a>
+			<a class="icon-large icon-remove" onclick="deleteFile(<%="${name}"%>)"></a>
 		</td>
    	</tr>
 </script>
@@ -356,7 +373,7 @@ AUI().use(
 <script type="text/javascript">
     $(function () {
         var vars = <%=VideoLocalServiceUtil.getJSONVideo(reqVideo.getVideoId()).toString()%>;
-        console.log(vars);
-        $(".table").loadTemplate("#template", vars);
+        $.template( "filesTemplate", $("#template") );
+        $.tmpl( "filesTemplate", vars ).appendTo( ".table" );
     });
 </script>
