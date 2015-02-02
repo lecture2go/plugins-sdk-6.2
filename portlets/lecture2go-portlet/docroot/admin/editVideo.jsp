@@ -164,21 +164,11 @@ $(function () {
             }
         },
         done: function (e, data) {
-        	$("tr:has(td)").remove();
-            $.each(data.result, function (index, file) {
-                $("#uploaded-files").append(
-                		$('<tr/>')
-                		.append($('<td/>').text(file.fileName))
-                		.append($('<td/>').text(file.fileSize))
-                		.append($('<td/>').text(file.fileType))
-                		.append($('<td/>').html("<a href='upload?f="+index+"'>Click</a>"))
-
-                		)//end $("#uploaded-files").append()
-                		if(file.fileName.indexOf("mp4") > -1 || file.fileName.indexOf("mp3") > -1){
-                			updateVideoFileName(file);
-                		}
-               			firstUpload=0;
-            }); 
+           console.log(data.jqXHR.responseJSON);
+           var vars = data.jqXHR.responseJSON;
+           $.template( "filesTemplate", $("#template") );
+           $("#"+vars[0].id).remove();   
+           $.tmpl( "filesTemplate", vars ).appendTo( ".table" );
         },
         progressall: function (e, data) {
 	        var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -324,9 +314,11 @@ function deleteFile(fileName){
 	 	   	<portlet:namespace/>fileName: fileName,
 	 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>",
 	    },
-	    success: function(data, textStatus, jqXHR) {
+	    success: function(data) {
 	        // since we are using jQuery, you don't need to parse response
-	        $("#"+data.fileId).remove();
+	        console.log(data.fileId);
+	        var id = "#"+data.fileId;
+	        $(id).remove();
 	    }
 	});	
 }
@@ -362,10 +354,10 @@ AUI().use(
 
 <!-- Template -->
 <script type="text/x-jquery-tmpl" id="template">
-   	<tr data-id="name">
+   	<tr id="<%="${id}"%>">
     	<td><%="${name}"%></td>
     	<td>
-			<a class="icon-large icon-remove" onclick="deleteFile(<%="${name}"%>)"></a>
+			<a class="icon-large icon-remove" onclick="deleteFile('<%="${name}"%>');"></a>
 		</td>
    	</tr>
 </script>

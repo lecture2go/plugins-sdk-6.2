@@ -483,6 +483,28 @@ public class AdminVideoManagement extends MVCPortlet {
 			}
 		}
 		
+		if(resourceID.equals("deleteFile")){
+			String fileName = ParamUtil.getString(resourceRequest, "fileName");
+
+			//delete file
+			String fPath="";
+			try {
+				fPath = ProducerLocalServiceUtil.getProdUcer(video.getProducerId()).getHomeDir()+"/"+fileName;
+			} catch (PortalException e) {
+				e.printStackTrace();
+			} catch (SystemException e) {
+				e.printStackTrace();
+			}
+			File f = new File(fPath);
+			JSONObject jo = JSONFactoryUtil.createJSONObject();
+			if(f.delete()){
+				jo.put("fileId", fileName.replace(".", ""));
+			}else{
+				jo.put("fileId", "");
+			}
+			writeJSON(resourceRequest, resourceResponse, jo);
+		}
+		
 	}
 
 	public void removeVideo(ActionRequest request, ActionResponse response){
