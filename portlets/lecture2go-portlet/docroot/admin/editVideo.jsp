@@ -149,7 +149,7 @@ $(function () {
             if(data.originalFiles[0]['size'].length && data.originalFiles[0]['size'] > 2147483648) {
                 uploadErrors.push('max file size 2 GB');
             }
-          	//check for first uplode
+          	//check for first upload
         	if(firstUpload==1){
         		if(data.originalFiles[0]['type'].indexOf('mp4')==-1 && data.originalFiles[0]['type'].indexOf('mp3')==-1){
         			uploadErrors.push('first upload has to be a mp3 or mp4 media file');   
@@ -164,11 +164,15 @@ $(function () {
             }
         },
         done: function (e, data) {
-           console.log(data.jqXHR.responseJSON);
            var vars = data.jqXHR.responseJSON;
+           console.log(vars[0].fileName);
            $.template( "filesTemplate", $("#template") );
            $("#"+vars[0].id).remove();   
            $.tmpl( "filesTemplate", vars ).appendTo( ".table" );
+           if(vars[0].fileName.indexOf("mp4") > -1 || vars[0].fileName.indexOf("mp3") > -1){
+           		updateVideoFileName(vars[0]);
+           }
+           firstUpload=0;
         },
         progressall: function (e, data) {
 	        var progress = parseInt(data.loaded / data.total * 100, 10);
