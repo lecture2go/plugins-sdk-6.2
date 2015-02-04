@@ -316,14 +316,14 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			try {
 				String name="";
 				if(video.getOpenAccess()==1){
-					name=video.getFilename();
+					name=video.getPreffix()+".mp4";
 				}else{
-					name=video.getSurl();
+					name=video.getSPreffix()+".mp4";
 				}
 				jsonoMp4.put("name", name);
 				jsonoMp4.put("id", name.replace(".", ""));
 				jsonoMp4.put("size", video.getFileSize());
-				jsonoMp4.put("type", video.getContainerFormat());
+				jsonoMp4.put("type", "mp4");
 				json.put(jsonoMp4);
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -396,31 +396,30 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		}
 		
 		if(video.getOggFile().isFile()){
-			JSONObject pdf = new JSONObject();
+			JSONObject ogg = new JSONObject();
 			try {
-				pdf.put("name", video.getOggFile().getName());
-				pdf.put("id", video.getOggFile().getName().replace(".", ""));
-				pdf.put("size", video.getOggFile().getTotalSpace());
-				pdf.put("type", "ogg");
-				json.put(pdf);
+				ogg.put("name", video.getOggFile().getName());
+				ogg.put("id", video.getOggFile().getName().replace(".", ""));
+				ogg.put("size", video.getOggFile().getTotalSpace());
+				ogg.put("type", "ogg");
+				json.put(ogg);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 		}
 		
 		if(video.getWebmFile().isFile()){
-			JSONObject pdf = new JSONObject();
+			JSONObject webm = new JSONObject();
 			try {
-				pdf.put("name", video.getWebmFile().getName());
-				pdf.put("id", video.getWebmFile().getName().replace(".", ""));
-				pdf.put("size", video.getWebmFile().getTotalSpace());
-				pdf.put("type", "pdf");
-				json.put(pdf);
+				webm.put("name", video.getWebmFile().getName());
+				webm.put("id", video.getWebmFile().getName().replace(".", ""));
+				webm.put("size", video.getWebmFile().getTotalSpace());
+				webm.put("type", "webm");
+				json.put(webm);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 		}
-		
 		return json;
 	}
 	

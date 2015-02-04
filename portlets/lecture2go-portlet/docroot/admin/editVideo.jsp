@@ -132,10 +132,10 @@
 <liferay-portlet:resourceURL id="updateVideoFileName" var="updateVideoFileNameURL" />
 <liferay-portlet:resourceURL id="videoFileNameExists" var="videoFileNameExistsURL" />
 <liferay-portlet:resourceURL id="deleteFile" var="deleteFileURL" />
+<liferay-portlet:resourceURL id="isFirstUpload" var="isFirstUploadURL" />
+<liferay-portlet:resourceURL id="defaultContainer" var="defaultContainerURL" />
 
 <script type="text/javascript">
-var firstUpload = 0;
-<%if(reqVideo.getFilename().length()==0){%>firstUpload=1;<%}%>
 $(function () {
     $('#fileupload').fileupload({
         dataType: 'json',
@@ -150,7 +150,7 @@ $(function () {
                 uploadErrors.push('max file size 2 GB');
             }
           	//check for first upload
-        	if(firstUpload==1){
+        	if(isFirstUpload()==1){
         		if(data.originalFiles[0]['type'].indexOf('mp4')==-1 && data.originalFiles[0]['type'].indexOf('mp3')==-1){
         			uploadErrors.push('first upload has to be a mp3 or mp4 media file');   
         		}else{
@@ -165,14 +165,28 @@ $(function () {
         },
         done: function (e, data) {
            var vars = data.jqXHR.responseJSON;
-           console.log(vars[0].fileName);
            $.template( "filesTemplate", $("#template") );
            $("#"+vars[0].id).remove();   
            $.tmpl( "filesTemplate", vars ).appendTo( ".table" );
-           if(vars[0].fileName.indexOf("mp4") > -1 || vars[0].fileName.indexOf("mp3") > -1){
-           		updateVideoFileName(vars[0]);
+           if(isFirstUpload()==1){//update
+        	   	var f1 = "mp4";
+           		var f2 = "mp3";
+           		var f3 = vars[0].fileName;
+           		if(f3.indexOf(f1) > -1){
+	           		updateVideoFileName(vars[0]);
+           		}
+           		if(f3.indexOf(f2) > -1){
+	           		updateVideoFileName(vars[0]);
+           		}
+           }else{
+				//update only for mp3 and mp4, but without changing the container
+				var f1 = vars[0].fileName;
+				var f2 = defaultContainer();
+				var f3 = "mp4";
+				if(f1.indexOf(f2) > -1 || f1.indexOf(f3) > -1){
+	           		updateVideoFileName(vars[0]);
+				}
            }
-           firstUpload=0;
         },
         progressall: function (e, data) {
 	        var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -191,6 +205,42 @@ $(function () {
     });
    
 });
+
+function defaultContainer(){
+	var ret;
+	$.ajax({
+		  type: "POST",
+		  url: "<%=defaultContainerURL%>",
+		  dataType: 'json',
+		  data: {
+		 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>",
+		  },
+		  global: false,
+		  async:false,
+		  success: function(data) {
+		    ret = data.containerFormat;
+		  }
+	})
+	return ret;
+}
+
+function isFirstUpload(){
+	var ret = 0;
+	$.ajax({
+		  type: "POST",
+		  url: "<%=isFirstUploadURL%>",
+		  dataType: 'json',
+		  data: {
+		 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>",
+		  },
+		  global: false,
+		  async:false,
+		  success: function(data) {
+		    ret = data.firstUpload;
+		  }
+	})
+	return ret;
+}
 
 function videoFileNameExistsInDatabase (fileName){
 	var ret = 0;
@@ -309,7 +359,8 @@ function <portlet:namespace/>updateDescription(data){
 	);
 }
 
-function deleteFile(fileName){	
+function deleteFile(fileName){
+	confirm("really? you want to remove this file? ");
 	$.ajax({
 	    url: '<%=deleteFileURL.toString()%>',
 	    method: 'POST',
@@ -320,9 +371,12 @@ function deleteFile(fileName){
 	    },
 	    success: function(data) {
 	        // since we are using jQuery, you don't need to parse response
-	        console.log(data.fileId);
-	        var id = "#"+data.fileId;
-	        $(id).remove();
+	        console.log(data);
+	        for (var i = 0; i < data.length; i++) {
+	            var obj = data[i];
+		        var id = "#"+obj.fileId;
+		        $(id).remove();
+	        }
 	    }
 	});	
 }

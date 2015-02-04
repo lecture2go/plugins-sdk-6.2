@@ -13,6 +13,9 @@ import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -482,27 +485,73 @@ public class AdminVideoManagement extends MVCPortlet {
 				e.printStackTrace();
 			}
 		}
+
+		if(resourceID.equals("isFirstUpload")){
+			JSONObject jo = JSONFactoryUtil.createJSONObject();
+			if(video.getFilename().isEmpty())jo.put("firstUpload", "1");
+			else jo.put("firstUpload", "0");
+			writeJSON(resourceRequest, resourceResponse, jo);
+		}
+		
+		if(resourceID.equals("defaultContainer")){
+			JSONObject jo = JSONFactoryUtil.createJSONObject();
+			jo.put("containerFormat", video.getContainerFormat());
+			writeJSON(resourceRequest, resourceResponse, jo);
+		}
 		
 		if(resourceID.equals("deleteFile")){
 			String fileName = ParamUtil.getString(resourceRequest, "fileName");
+			String mainContainerFormat = "";
 
 			//delete file
 			String fPath="";
 			try {
-				fPath = ProducerLocalServiceUtil.getProdUcer(video.getProducerId()).getHomeDir()+"/"+fileName;
+				fPath = ProducerLocalServiceUtil.getProdUcer(video.getProducerId()).getHomeDir()+"/";
+				mainContainerFormat = VideoLocalServiceUtil.getVideo(videoId).getContainerFormat();
 			} catch (PortalException e) {
 				e.printStackTrace();
 			} catch (SystemException e) {
 				e.printStackTrace();
 			}
-			File f = new File(fPath);
-			JSONObject jo = JSONFactoryUtil.createJSONObject();
-			if(f.delete()){
-				jo.put("fileId", fileName.replace(".", ""));
+			JSONArray jarr = new JSONArray();
+			//delete all
+			
+			if(fileName.endsWith(mainContainerFormat)){
+				//delete all file on disc 
+				//but not from DB
+				JSONArray jVids = VideoLocalServiceUtil.getJSONVideo(video.getVideoId());
+				for (int i = 0; i < jVids.length(); i++) {
+					try {
+						org.json.JSONObject o = jVids.getJSONObject(i);
+						String fs = (String) o.get("name");
+						File f = new File(fPath+fs);
+						if(f.delete()){
+							o.put("fileId", fs.replace(".", ""));
+						}else{
+							o.put("fileId", "");
+						}
+						jarr.put(o);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+				ProzessManager pm = new ProzessManager();
+				pm.deleteFilesImagesFromVideo(video);
 			}else{
-				jo.put("fileId", "");
+				org.json.JSONObject o = new org.json.JSONObject();
+					try {
+						File f = new File(fPath+fileName);
+						if(f.delete()){
+							o.put("fileId", fileName.replace(".", ""));
+						}else{
+							o.put("fileId", "");
+						}
+						jarr.put(o);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
 			}
-			writeJSON(resourceRequest, resourceResponse, jo);
+			writeJSON(resourceRequest, resourceResponse, jarr);
 		}
 		
 	}

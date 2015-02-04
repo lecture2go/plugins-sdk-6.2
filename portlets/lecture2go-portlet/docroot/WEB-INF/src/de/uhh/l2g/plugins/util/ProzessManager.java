@@ -34,6 +34,7 @@ package de.uhh.l2g.plugins.util;
  ***************************************************************************/
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -253,7 +254,7 @@ public class ProzessManager {
 		}
 	}
 
-	public void deleteVideo(Video video){
+	public boolean deleteVideo(Video video){
 		Host host = new HostImpl();
 		try {
 			host = HostLocalServiceUtil.getHost(video.getHostId());
@@ -297,6 +298,13 @@ public class ProzessManager {
 			e.printStackTrace();
 		} catch (NullPointerException e){
 			e.printStackTrace();
+		}
+		
+		//and all segments
+		try {
+			SegmentLocalServiceUtil.deleteByVideoId(video.getVideoId());
+		} catch (SystemException e2) {
+			e2.printStackTrace();
 		}
 		
 		LicenseLocalServiceUtil.deleteByVideoId(video.getVideoId());
@@ -412,6 +420,132 @@ public class ProzessManager {
 		} catch (SystemException e) {
 			e.printStackTrace();
 		}
+		return true;
+	}
+	
+	public boolean deleteFilesImagesFromVideo(Video video){
+		Host host = new HostImpl();
+		try {
+			host = HostLocalServiceUtil.getHost(video.getHostId());
+		} catch (PortalException e1) {
+			e1.printStackTrace();
+		} catch (SystemException e1) {
+			e1.printStackTrace();
+		}
+		
+		Producer producer = new ProducerImpl();
+		try {
+			producer = ProducerLocalServiceUtil.getProducer(video.getProducerId());
+		} catch (PortalException e1) {
+			e1.printStackTrace();
+		} catch (SystemException e1) {
+			e1.printStackTrace();
+		}
+		
+		
+		// delete all segments and images from repository location
+		try{
+			List<Segment> segmentList = SegmentLocalServiceUtil.getSegmentsByVideoId(video.getVideoId());
+			SegmentLocalServiceUtil.deleteThumbhailsFromSegments(segmentList);
+			
+		}catch (PortalException e) {
+			e.printStackTrace();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e){
+			e.printStackTrace();
+		}
+		//and all segments
+		try {
+			SegmentLocalServiceUtil.deleteByVideoId(video.getVideoId());
+		} catch (SystemException e2) {
+			e2.printStackTrace();
+		}
+		
+		//delete physical files 
+		String videoPreffix = "";
+		if (video.getOpenAccess()==1) videoPreffix = video.getPreffix();
+		else videoPreffix = video.getSPreffix();
+		
+		try {
+			// delete all video contents
+			if (video.getFilename() != null) {
+				File mp3File = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".mp3");
+				File m4aFile = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".m4a");
+				File mp4vFile = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".m4v");
+				File pdfFile = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".pdf");
+				File mp4File = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".mp4");
+				File oggFile = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".ogg");
+				File flvFile = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".flv");
+				File webmFile = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".webm");
+				File tarFile = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".tar");
+				mp3File.delete();
+				m4aFile.delete();
+				mp4vFile.delete();
+				pdfFile.delete();
+				mp4File.delete();
+				tarFile.delete();
+				oggFile.delete();
+				flvFile.delete();
+				webmFile.delete();
+				deleteThumbnails(video);
+			}
+			
+			// delete all symbolic links
+			File symLinkMp4 = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".mp4");
+			File symLinkM4v = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".m4v");
+			File symLinkM4a = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".m4a");
+			File symLinkMp3 = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".mp3");
+			File symLinkJpg = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".jpg");
+			File symLinkOgg = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".ogg");
+			File symLinkFlv = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".flv");
+			File symLinkWebm = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".webm");
+			symLinkMp4.delete();
+			symLinkM4v.delete();
+			symLinkM4a.delete();
+			symLinkMp3.delete();
+			symLinkJpg.delete();
+			symLinkOgg.delete();
+			symLinkFlv.delete();
+			symLinkWebm.delete();
+		} catch (NullPointerException npe) {}
+		
+		// update RSS
+		try {
+			generateRSS(video, "mp4");
+			generateRSS(video, "mp3");
+			generateRSS(video, "m4v");
+			generateRSS(video, "m4a");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		//Update htaccess
+		String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/";
+		try {
+			HTACCESS.makeHtaccess(url, VideoLocalServiceUtil.getByProducerAndDownloadLink(producer.getProducerId(), 0));
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		
+		// set empty parameter to video itself
+		try {
+			video.setFilename("");
+			video.setContainerFormat("");
+			video.setDate("");
+			video.setGenerationDate("");
+			video.setSurl(Security.createSecureFileName()+".xx");
+			video.setUploadDate(null);
+			video.setDownloadLink(0);
+			video.setOpenAccess(0);
+			video.setResolution("");
+			video.setDuration("");
+			video.setFileSize("");
+			VideoLocalServiceUtil.updateVideo(video);
+		} catch (SystemException e1) {
+			e1.printStackTrace();
+		}
+		return true;
 	}
 
 	public void generateRSS(Video video, String type) throws PortalException, SystemException {
