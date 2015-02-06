@@ -13,6 +13,8 @@
 <%@ page import="javax.portlet.PortletPreferences"%>
 <%@ page import="com.liferay.util.PwdGenerator"%>
 
+
+<%@ page import="java.util.Enumeration"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.Map"%>
 <%@ page import="java.util.List"%>
@@ -83,9 +85,12 @@
 <%@ page import="de.uhh.l2g.plugins.model.impl.VideoImpl"%>
 <%@ page import="de.uhh.l2g.plugins.model.impl.ProducerImpl"%>
 <%@ page import="de.uhh.l2g.plugins.model.impl.LicenseImpl"%>
+<%@ page import="de.uhh.l2g.plugins.util.Security"%>
+<%@ page import="de.uhh.l2g.plugins.service.HostLocalServiceUtil"%>
 
 <%@ page import="de.uhh.l2g.plugins.util.Lecture2GoRoleChecker"%>
 <%@ page import="com.sun.xml.internal.rngom.ast.builder.Include"%>
+
 
 <portlet:defineObjects />
 <liferay-theme:defineObjects/>

@@ -64,13 +64,13 @@ public class AdminVideoManagement extends MVCPortlet {
 		try{reqVideoId = new Long(request.getParameterMap().get("videoId")[0]);}catch(Exception e){}
 		reqVideo = VideoLocalServiceUtil.getFullVideo(reqVideoId);
 
-		response.setRenderParameter("jspPage", "/admin/segments.jsp");
 		request.setAttribute("reqVideo", reqVideo);
-		
+		String backURL = request.getParameter("backURL");
+		request.setAttribute("backURL", backURL);
+		response.setRenderParameter("jspPage", "/admin/segments.jsp");
 	}
 	
 	public void viewVideo(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
-		
 		// requested producer id
 		Long reqPproducerId = (long)0;
 		try{reqPproducerId = new Long(request.getParameterMap().get("producerI	d")[0]);}catch(Exception e){}
@@ -134,6 +134,9 @@ public class AdminVideoManagement extends MVCPortlet {
 		try{reqLicense = LicenseLocalServiceUtil.getByVideoId(reqVideo.getVideoId());}catch(Exception e){}
 		request.setAttribute("reqLicense", reqLicense);
 		
+		String backURL = request.getParameter("backURL");
+		request.setAttribute("backURL", backURL);
+
 		request.setAttribute("reqVideo", reqVideo);
 		response.setRenderParameter("jspPage", "/admin/editVideo.jsp");
 	}
@@ -191,7 +194,8 @@ public class AdminVideoManagement extends MVCPortlet {
 		vf.setVideoId(video.getVideoId());
 		vf.setInstitutionId(reqProducer.getInstitutionId());
 		Video_InstitutionLocalServiceUtil.addVideo_Institution(vf);
-		
+		String backURL = request.getParameter("backURL");
+		request.setAttribute("backURL", backURL);
 		response.setRenderParameter("jspPage", "/admin/editVideo.jsp");
 	}
 	
@@ -563,6 +567,12 @@ public class AdminVideoManagement extends MVCPortlet {
 		video = VideoLocalServiceUtil.getFullVideo(reqVideoId);
 		ProzessManager pm = new ProzessManager();	
 		pm.deleteVideo(video);
+		String backURL = request.getParameter("backURL");
+		try {
+			response.sendRedirect(backURL);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void lockVideo(ActionRequest request, ActionResponse response){
@@ -575,6 +585,12 @@ public class AdminVideoManagement extends MVCPortlet {
 			pm.deactivateOpenaccess(video);
 		} catch (PortalException e) {
 		} catch (SystemException e) {
+		}
+		String backURL = request.getParameter("backURL");
+		try {
+			response.sendRedirect(backURL);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -589,6 +605,12 @@ public class AdminVideoManagement extends MVCPortlet {
 		} catch (SystemException e) {
 		} catch (PortalException e) {
 		}
+		String backURL = request.getParameter("backURL");
+		try {
+			response.sendRedirect(backURL);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void activateDownload(ActionRequest request, ActionResponse response) throws SystemException, PortalException{
@@ -598,6 +620,12 @@ public class AdminVideoManagement extends MVCPortlet {
 		video = VideoLocalServiceUtil.getVideo(reqVideoId);
 		ProzessManager pm = new ProzessManager();
 		pm.activateDownload(video);
+		String backURL = request.getParameter("backURL");
+		try {
+			response.sendRedirect(backURL);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void deactivateDownload(ActionRequest request, ActionResponse response) throws SystemException, PortalException{
@@ -607,6 +635,12 @@ public class AdminVideoManagement extends MVCPortlet {
 		video = VideoLocalServiceUtil.getVideo(reqVideoId);
 		ProzessManager pm = new ProzessManager();
 		pm.deactivateDownload(video);
+		String backURL = request.getParameter("backURL");
+		try {
+			response.sendRedirect(backURL);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

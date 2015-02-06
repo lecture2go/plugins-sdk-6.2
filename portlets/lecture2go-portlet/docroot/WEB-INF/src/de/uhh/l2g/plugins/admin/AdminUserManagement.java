@@ -142,7 +142,8 @@ public class AdminUserManagement extends MVCPortlet {
 		for (int i = 0; i < reqUser.getRoles().size(); i++)
 			if(reqUser.getRoles().get(i).getName().equals("L2Go Admin")) isL2goAdmin = true;
 		request.setAttribute("isL2goAdmin", isL2goAdmin);
-		
+		String backURL = request.getParameter("backURL");		
+		request.setAttribute("backURL", backURL);
 		response.setRenderParameter("jspPage", "/admin/editL2GoRole.jsp");
 	}
 	
@@ -200,6 +201,12 @@ public class AdminUserManagement extends MVCPortlet {
 				deleteL2GoRole("L2Go Admin", u);
 		}catch(NullPointerException npe){}
 		// l2go admin request --- end
+		String backURL = request.getParameter("backURL");
+		try {
+			response.sendRedirect(backURL);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void deleteL2GoRole(String n, User u) throws PortalException, SystemException{

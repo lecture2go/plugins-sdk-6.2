@@ -1,7 +1,5 @@
 <%@include file="/init.jsp"%>
 
-<portlet:renderURL var="addLectureseriesURL"><portlet:param name="jspPage" value="/admin/editLectureseries.jsp" /></portlet:renderURL>
-
 <%
 	Map<String,String> institutions = new LinkedHashMap<String, String>();
 	List<Producer> producers = new ArrayList<Producer>();
@@ -34,6 +32,11 @@
 	}	
 %>
 
+<portlet:renderURL var="addLectureseriesURL">
+	<portlet:param name="jspPage" value="/admin/editLectureseries.jsp" />
+	<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>
+</portlet:renderURL>
+
 <aui:fieldset helpMessage="choose-filter" column="true">
 		<aui:layout>
  			<aui:column>
@@ -64,7 +67,7 @@
 							<portlet:param name="semesterId" value="<%=semesterId.toString()%>"/>
 							<portlet:param name="statusId" value="<%=statusId.toString()%>"/>
 						</portlet:renderURL>
-						<aui:form action="<%= sortByProducer.toString() %>" method="post">
+						<aui:form action="<%=sortByProducer.toString() %>" method="post">
 							<aui:select name="producerId" label="select-producer" onChange="submit();">
 								<aui:option value="">select-producer</aui:option>
 								<%for (int i = 0; i < producers.size(); i++) {
@@ -125,7 +128,7 @@
 		</aui:layout>
 		<aui:layout>
 			<aui:row>
-				<aui:button value="add-new-lectureseries" onClick="<%=addLectureseriesURL%>"/>
+				<aui:button value="add-new-lectureseries" href="<%=addLectureseriesURL%>"/>
 			</aui:row>
 		</aui:layout>
 </aui:fieldset>
@@ -144,15 +147,16 @@
 	<liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.Lectureseries" keyProperty="lectureseriesId" modelVar="lectser">
 		<portlet:actionURL name="viewLectureseries" var="editURL">
 			<portlet:param name="lectureseriesId" value="<%= String.valueOf(lectser.getLectureseriesId())%>" />
-			<portlet:param name="institutionId" value="<%=institutionId.toString()%>"/>
-			<portlet:param name="producerId" value="<%=producerId.toString()%>"/>
-			<portlet:param name="semesterId" value="<%=semesterId.toString()%>"/>		
-			<portlet:param name="statusId" value="<%=statusId.toString()%>"/>
+			<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>
 		</portlet:actionURL>
 		<liferay-ui:search-container-column-text name="name">
 			<aui:a  href="<%=editURL.toString()%>"><%=lectser.getName()%></aui:a>
 		</liferay-ui:search-container-column-text>
-		<liferay-ui:search-container-column-jsp path="/admin/editLectureseriesButton.jsp"/>
+		<liferay-ui:search-container-column-text>
+			<a href="<%=editURL.toString()%>">
+   				<span class="icon-large icon-pencil"></span>
+			</a>
+		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator />

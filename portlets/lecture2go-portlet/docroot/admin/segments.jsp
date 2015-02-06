@@ -10,6 +10,9 @@
 <liferay-portlet:resourceURL id="addSegment" var="addSegmentURL" />
 <liferay-portlet:resourceURL id="deleteSegment" var="deleteSegmentURL" />
 
+<%
+String backURL = request.getAttribute("backURL").toString();
+%>
 
 <aui:fieldset helpMessage="test" column="true" label='<%=reqVideo.getTitle()%>'>
 	<aui:layout>
@@ -46,7 +49,7 @@
 			</aui:button-row>
 			
 			<aui:button-row>
-				<aui:button type="cancel" value="back" onClick="<%=cancelURL.toString()%>" />
+				<aui:button type="cancel" value="cancel" href="<%=backURL%>"/>
 			</aui:button-row>
 		</aui:form>
 	</aui:layout>

@@ -1,5 +1,3 @@
-<%@page import="de.uhh.l2g.plugins.util.Security"%>
-<%@page import="de.uhh.l2g.plugins.service.HostLocalServiceUtil"%>
 <%@include file="/init.jsp"%>
 
 <jsp:useBean id="reqLectureseriesList" type="java.util.List<de.uhh.l2g.plugins.model.Lectureseries>" scope="request" />
@@ -8,6 +6,15 @@
 <jsp:useBean id="reqProducer" type="de.uhh.l2g.plugins.model.Producer" scope="request" />
 <jsp:useBean id="reqVideo" type="de.uhh.l2g.plugins.model.Video" scope="request" />
 <jsp:useBean id="reqMetadata" type="de.uhh.l2g.plugins.model.Metadata" scope="request" />
+
+<liferay-portlet:resourceURL id="updateMeatadata" var="updateURL" />
+<liferay-portlet:resourceURL id="updateDescription" var="updateDescriptionURL" />
+<liferay-portlet:resourceURL id="updateLicense" var="updateLicenseURL" />
+<liferay-portlet:resourceURL id="updateVideoFileName" var="updateVideoFileNameURL" />
+<liferay-portlet:resourceURL id="videoFileNameExists" var="videoFileNameExistsURL" />
+<liferay-portlet:resourceURL id="deleteFile" var="deleteFileURL" />
+<liferay-portlet:resourceURL id="isFirstUpload" var="isFirstUploadURL" />
+<liferay-portlet:resourceURL id="defaultContainer" var="defaultContainerURL" />
 
 <%
 	String actionURL = "";
@@ -26,28 +33,8 @@
 	List<String> semesters = LectureseriesLocalServiceUtil.getAllSemesters(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 
 	String uploadProgressId = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
+	String backURL = request.getAttribute("backURL").toString();
 %>
-
-<portlet:renderURL var="cancelURL">
-	<portlet:param name="jspPage" value="/admin/videosList.jsp" />
-</portlet:renderURL>
-
-<portlet:actionURL name="editVideo" var="editURL">
-	<portlet:param name="videoId" value='<%=""+reqVideo.getVideoId()%>' />
-</portlet:actionURL>
-
-<portlet:actionURL name="addVideo" var="addURL">
-	<portlet:param name="videoId" value='<%=""+0%>' />
-</portlet:actionURL>
-
-<portlet:actionURL var="editCaseURL" name="uploadCase">
-	<portlet:param name="jspPage" value="/admin/editVideo.jsp" />
-</portlet:actionURL>
-<%
-	if(reqVideo.getVideoId() >0) {actionURL=editURL.toString();}
-	else {actionURL = addURL.toString();}
-%>
-
  
 <aui:fieldset helpMessage="test" column="true" label="video-file" >
 	<div>
@@ -118,22 +105,13 @@
 			</aui:field-wrapper>
 			
 			<aui:button-row>
-				<aui:button type="cancel" value="back" onClick="<%=cancelURL.toString()%>" />
+				<aui:button type="cancel" value="cancel" href="<%=backURL%>"/>
 			</aui:button-row>
 			
 			<aui:input name="videoId" type="hidden" value="<%=reqVideo.getVideoId()%>"/>
 		</aui:form>
 	</aui:layout>
 </aui:fieldset>
-
-<liferay-portlet:resourceURL id="updateMeatadata" var="updateURL" />
-<liferay-portlet:resourceURL id="updateDescription" var="updateDescriptionURL" />
-<liferay-portlet:resourceURL id="updateLicense" var="updateLicenseURL" />
-<liferay-portlet:resourceURL id="updateVideoFileName" var="updateVideoFileNameURL" />
-<liferay-portlet:resourceURL id="videoFileNameExists" var="videoFileNameExistsURL" />
-<liferay-portlet:resourceURL id="deleteFile" var="deleteFileURL" />
-<liferay-portlet:resourceURL id="isFirstUpload" var="isFirstUploadURL" />
-<liferay-portlet:resourceURL id="defaultContainer" var="defaultContainerURL" />
 
 <script type="text/javascript">
 $(function () {
@@ -143,21 +121,21 @@ $(function () {
             var uploadErrors = [];
             var acceptFileTypes = /(mp4|m4v|m4a|mp3|ogg|flv|webm|pdf)$/i;//file types
 			
-            if(data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
+            if (data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
                 uploadErrors.push('not an accepted file type');
             }
-            if(data.originalFiles[0]['size'].length && data.originalFiles[0]['size'] > 2147483648) {
+            if (data.originalFiles[0]['size'].length && data.originalFiles[0]['size'] > 2147483648) {
                 uploadErrors.push('max file size 2 GB');
             }
           	//check for first upload
-        	if(isFirstUpload()==1){
-        		if(data.originalFiles[0]['type'].indexOf('mp4')==-1 && data.originalFiles[0]['type'].indexOf('mp3')==-1){
+        	if (isFirstUpload()==1) {
+        		if (!fileUploadAllowed(data.originalFiles)){
         			uploadErrors.push('first upload has to be a mp3 or mp4 media file');   
-        		}else{
+        		} else {
         			if(videoFileNameExistsInDatabase(data.originalFiles[0]['name'])==1) uploadErrors.push('file exists in DB, please rename');  
         		}
         	}
-            if(uploadErrors.length > 0) {
+            if (uploadErrors.length > 0) {
                 alert(uploadErrors.join("\n"));
             } else {
                 data.submit();
@@ -205,6 +183,17 @@ $(function () {
     });
    
 });
+
+function fileUploadAllowed(data){
+	var ret = false;
+    var acceptFileTypes = /(mp4|mp3)$/i;//file types
+    data.forEach(function(entry) {
+    	if(acceptFileTypes.test(entry['type'])){
+        	ret = true;
+        }
+    });
+    return ret;
+}
 
 function defaultContainer(){
 	var ret;

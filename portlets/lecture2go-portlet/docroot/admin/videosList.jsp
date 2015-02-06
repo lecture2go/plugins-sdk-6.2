@@ -1,24 +1,24 @@
 <%@include file="/init.jsp"%>
 
 <%
-	PortletURL portletURL = renderResponse.createRenderURL();
 	List<Video> tempVideosList = new ArrayList<Video>();
 	List<Coordinator> coordinators = new ArrayList<Coordinator>();
 	List<Producer> producers = new ArrayList<Producer>();
 	List<Lectureseries> lectureseries = new ArrayList<Lectureseries>();
+	
+	PortletURL portletURL = renderResponse.createRenderURL();
+	portletURL.setParameter("coordinatorId", ServletRequestUtils.getLongParameter(request, "coordinatorId", 0)+"");
+	portletURL.setParameter("producerId", ServletRequestUtils.getLongParameter(request, "producerId", 0)+"");
+	portletURL.setParameter("lectureseriesId", ServletRequestUtils.getLongParameter(request, "lectureseriesId", 0)+"");
 
 	Long coordinatorId = new Long(0);
 	Long producerId = new Long(0);
 
 	Long lectureseriesId = ServletRequestUtils.getLongParameter(request, "lectureseriesId", 0);
-	portletURL.setParameter("lectureseriesId", lectureseriesId+"");
-
 	if(permissionAdmin){
 		coordinators = CoordinatorLocalServiceUtil.getAllCoordinators(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 		coordinatorId = ServletRequestUtils.getLongParameter(request, "coordinatorId", 0);
-		portletURL.setParameter("coordinatorId", coordinatorId+"");
 		producerId = ServletRequestUtils.getLongParameter(request, "producerId", 0);
-		portletURL.setParameter("coordinatorId", coordinatorId+"");		
 		if(coordinatorId>0){
 			Long institutionId = CoordinatorLocalServiceUtil.getCoordinator(coordinatorId).getInstitutionId();
 			producers = ProducerLocalServiceUtil.getProducersByInstitutionId(institutionId);
@@ -36,8 +36,6 @@
 		if(permissionCoordinator){
 			coordinatorId = remoteUser.getUserId();
 			producerId = ServletRequestUtils.getLongParameter(request, "producerId", 0);
-			portletURL.setParameter("coordinatorId", coordinatorId+"");
-			portletURL.setParameter("producerId", producerId+"");
 			Long institutionId = CoordinatorLocalServiceUtil.getCoordinator(coordinatorId).getInstitutionId();
 			producers = ProducerLocalServiceUtil.getProducersByInstitutionId(institutionId);
 			if(producerId>0){
@@ -50,7 +48,6 @@
 		}else{
 			if(permissionProducer){
 				producerId = remoteUser.getUserId();
-				portletURL.setParameter("producerId", producerId+"");
 				if(lectureseriesId>0) tempVideosList = VideoLocalServiceUtil.getByProducerAndLectureseries(producerId, lectureseriesId);
 				else tempVideosList = VideoLocalServiceUtil.getByProducer(producerId);
 				lectureseries = LectureseriesLocalServiceUtil.getFilteredBySemesterFacultyProducer(1, "", new Long(0), producerId);
@@ -133,6 +130,7 @@
 						<portlet:param name="jspPage" value="/admin/editVideo.jsp" />
 						<portlet:param name="lectureseriesId" value='<%=lectureseriesId+""%>'/>
 						<portlet:param name="producerId" value='<%=producerId+""%>'/>
+						<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>	
 					</portlet:actionURL>				
 					<aui:button value="add-new-video" onClick="<%=addVideoURL%>"/>
 				</aui:row>
@@ -140,7 +138,7 @@
 		</aui:layout>
 </aui:fieldset>
 
-<liferay-ui:search-container emptyResultsMessage="no-videos-found" delta="10" iteratorURL="<%= portletURL %>">
+<liferay-ui:search-container emptyResultsMessage="no-videos-found" delta="10"  iteratorURL="<%= portletURL %>">
 	<liferay-ui:search-container-results>
 		<%
 			results = ListUtil.subList(tempVideosList, searchContainer.getStart(), searchContainer.getEnd());
@@ -160,16 +158,6 @@
 		<portlet:actionURL name="viewVideo" var="viewURL">
 			<portlet:param name="videoId" value="<%= String.valueOf(video.getVideoId())%>" />
 		</portlet:actionURL>
-		<liferay-ui:search-container-column-text name="" >
-			<%if(!vid.getFilename().equals("")){%>
-				<aui:a  href="<%=url%>" target="blank">
-					<img src="<%=vid.getImageSmall()%>" style="width: 130px; height: 73px;"/>
-				</aui:a>
-			<%}else{%>
-				<img src="<%=vid.getImageSmall()%>" style="width: 130px; height: 73px;"/>
-			<%}%>
-		</liferay-ui:search-container-column-text> 
-		
 		<liferay-ui:search-container-column-text name="">
 			<%
 				Lectureseries ls = new LectureseriesImpl();
@@ -225,7 +213,85 @@
 				<br/>
 			<%}%>
 		</liferay-ui:search-container-column-text>
-		<liferay-ui:search-container-column-jsp path="/admin/editVideoButtons.jsp"/>
+		<liferay-ui:search-container-column-text>
+				<%
+					String primKey = String.valueOf(vid.getPrimaryKey());
+				%>
+
+				<portlet:actionURL name="viewVideo" var="editURL">
+					<portlet:param name="videoId" value="<%= primKey%>" />
+					<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>
+				</portlet:actionURL>
+				
+				<portlet:actionURL name="removeVideo" var="removeURL">
+					<portlet:param name="videoId" value="<%= primKey%>" />
+					<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>	
+				</portlet:actionURL>
+				
+				<portlet:actionURL name="lockVideo" var="lockURL">
+					<portlet:param name="videoId" value="<%= primKey%>" />
+					<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>	
+				</portlet:actionURL>
+				
+				<portlet:actionURL name="unlockVideo" var="unlockURL">
+					<portlet:param name="videoId" value="<%= primKey%>" />
+					<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>	
+				</portlet:actionURL>
+				
+				<portlet:actionURL name="activateDownload" var="activateDowonloadURL">
+					<portlet:param name="videoId" value="<%= primKey%>" />
+					<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>	
+				</portlet:actionURL>
+				
+				<portlet:actionURL name="deactivateDownload" var="deactivateDowonloadURL">
+					<portlet:param name="videoId" value="<%= primKey%>" />
+					<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>	
+				</portlet:actionURL>
+				
+				<portlet:actionURL name="addSegment" var="segmentURL">
+					<portlet:param name="videoId" value="<%= primKey%>" />
+					<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>		
+				</portlet:actionURL>
+				
+				<a href="<%=editURL.toString()%>">
+				   <span class="icon-large icon-pencil"></span>
+				</a>
+						
+				<%if(vid.getFilename().length()>0){
+					if (vid.getOpenAccess()==1){%>
+						<a href="<%=lockURL.toString()%>">
+						   <span class="icon-large icon-unlock"></span>
+						</a>
+					<%}else{%>
+						 <a href="<%=unlockURL.toString()%>">
+						    <span class="icon-large icon-lock"></span>
+						 </a>
+					<%}	
+					
+					if (vid.getDownloadLink()==1){%>
+						 <a href="<%=deactivateDowonloadURL.toString()%>">
+						    <span class="icon-large icon-download-alt"></span>
+						 </a>
+					<%}else{%>
+						 <a href="<%=activateDowonloadURL.toString()%>">
+						    <span class="icon-large icon-download"></span>
+						 </a>		
+					<%}	
+					if (SegmentLocalServiceUtil.getSegmentsByVideoId(vid.getVideoId()).size()>0){%>
+						 <a href="<%=segmentURL.toString()%>">
+						    <span class="icon-large icon-comment"></span>
+						 </a>			
+					<%}else{%>
+						<a href="<%=segmentURL.toString()%>">
+						   <span class="icon-large icon-align-justify"></span>
+						</a>	
+					<%}	
+				}%>
+				
+				<a href="<%=removeURL.toString()%>">
+					<span class="icon-large icon-remove"></span>
+				</a>		
+		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator />

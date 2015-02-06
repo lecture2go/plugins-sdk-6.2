@@ -9,13 +9,17 @@
 <jsp:useBean id="isStudent" type="java.lang.Boolean" scope="request" />
 <jsp:useBean id="isL2goAdmin" type="java.lang.Boolean" scope="request" />
 
-<portlet:renderURL var="cancelURL"><portlet:param name="jspPage" value="/admin/userList.jsp" /></portlet:renderURL>
-<portlet:actionURL name="editRole" var="editURL"><portlet:param name="userId" value='<%=""+reqUser.getUserId()%>'/></portlet:actionURL>
 
 <%
 	long groupId = themeDisplay.getLayout().getGroupId();
 	String name = User.class.getName();
+	String backURL = request.getAttribute("backURL").toString();
 %>
+
+<portlet:actionURL name="editRole" var="editURL">
+	<portlet:param name="userId" value='<%=""+reqUser.getUserId()%>'/>
+	<portlet:param name="backURL" value='<%=backURL%>' />
+</portlet:actionURL>
 
 <aui:form action="<%= editURL.toString() %>" method="post">
 	<aui:fieldset helpMessage="test" column="true" label='<%="l2go-roles-for "+reqUser.getFullName()%>'>
@@ -74,7 +78,7 @@
 			</c:if>
 			<aui:button-row>
 	      		<aui:button type="submit"/>
-	      		<aui:button type="cancel" value="cancel" onClick="<%= cancelURL.toString() %>" />
+	      		<aui:button type="cancel" value="cancel" href="<%=backURL%>"/>
 	    	</aui:button-row>	
 		</aui:layout>
 	</aui:fieldset>

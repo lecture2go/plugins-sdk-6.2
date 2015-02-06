@@ -34,44 +34,48 @@
 	}catch(Exception npe){}
 
 	Map<String,String> institutions = new LinkedHashMap<String, String>();
+	List<Producer> producers = new ArrayList<Producer>();
+
 	if(permissionAdmin){
 		institutions = InstitutionLocalServiceUtil.getAllSortedAsTree(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+		producers = ProducerLocalServiceUtil.getAllProducers(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 		permissionCoordinator = false;
 	}
-	if(permissionCoordinator)institutions = InstitutionLocalServiceUtil.getByParent(CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getInstitutionId());
+	
+	if(permissionCoordinator){
+		if(institutionId==0)institutionId = CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getInstitutionId();
+		institutions = InstitutionLocalServiceUtil.getByParent(CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getInstitutionId());
+		producers = ProducerLocalServiceUtil.getProducersByInstitutionId(CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getInstitutionId());
+	}
 
 	Locale[] languages = LanguageUtil.getAvailableLocales();
 	String[] availableLanguageIds = LocaleUtil.toLanguageIds(languages);
 	String languageId="";
 
-    List<Producer> producers = ProducerLocalServiceUtil.getAllProducers(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);	
 	List<Long> pIds = ProducerLocalServiceUtil.getAllProducerIds(lId);
 	List<String> semesters = LectureseriesLocalServiceUtil.getAllSemesters(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
-	
+	String backURL = request.getAttribute("backURL").toString();
 %>
-
-<portlet:renderURL var="cancelURL">
-	<portlet:param name="jspPage" value="/admin/lectureSeriesList.jsp" />
-</portlet:renderURL>
 
 <portlet:actionURL name="editLectureseries" var="editURL">
 	<portlet:param name="lectureseriesId" value='<%=""+lId%>' />
+	<portlet:param name="backURL" value='<%=backURL%>' />
 </portlet:actionURL>
 
 <portlet:actionURL name="removeLectureseries" var="removeURL">
 	<portlet:param name="lectureseriesId" value='<%=""+lId%>' />
+	<portlet:param name="backURL" value='<%=backURL%>' />
 </portlet:actionURL>
 
 <portlet:actionURL name="addLectureseries" var="addURL">
 	<portlet:param name="lectureseriesId" value='<%=""+lId%>' />
+	<portlet:param name="backURL" value='<%=backURL%>' />
 </portlet:actionURL>
 
 <%
 	if(lId >0) {actionURL=editURL.toString();}
 	else {actionURL = addURL.toString();}
 %>
-
-<aui:input name="teste" type="hidden"/>
 
 <aui:form action="<%=actionURL%>" commandName="model">
 	<aui:fieldset helpMessage="test" column="true" label='<%=lName%>'>
@@ -186,11 +190,11 @@
 			
 			<aui:button-row>
 				<aui:button type="submit" onclick="<portlet:namespace />extractCodeFromEditor()"/>
-				<aui:button type="submit" value="cancel" onClick="<%=cancelURL.toString()%>" />
+				<aui:button type="cancel" value="cancel" href="<%=backURL%>"/>
 				<%if (lId>0) {%>
-				<liferay-ui:icon-menu cssClass="right">
-					<liferay-ui:icon image="delete" message="Remove" url="<%=removeURL.toString()%>" />
-				</liferay-ui:icon-menu>
+				<a href="<%=removeURL.toString()%>">
+					<span class="icon-large icon-remove"></span>
+				</a>
 				<%}%>
 			</aui:button-row>
 		</aui:layout>

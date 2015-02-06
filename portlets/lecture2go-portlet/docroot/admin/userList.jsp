@@ -11,6 +11,9 @@
 	Integer roleId = 0;
 	try{tempUserList=UserLocalServiceUtil.getRoleUsers(new Integer(request.getParameter("roleId")));}
 	catch(NumberFormatException nfe){tempUserList=UserLocalServiceUtil.getUsers(1, UserLocalServiceUtil.getUsersCount());}
+	
+	PortletURL portletURL = renderResponse.createRenderURL();
+	portletURL.setParameter("roleId", request.getParameter("roleId")+"");
 %>
 
 <portlet:renderURL var="allRoles"><portlet:param name="jspPage" value="/admin/userList.jsp" /></portlet:renderURL>
@@ -36,7 +39,7 @@
 	</aui:select>
 </aui:form>
 
-<liferay-ui:search-container emptyResultsMessage="no-l2go-roles-found" delta="10">
+<liferay-ui:search-container emptyResultsMessage="no-l2go-roles-found" delta="10" iteratorURL="<%= portletURL %>">
 	<liferay-ui:search-container-results>
 		<%
 			results = ListUtil.subList(tempUserList, searchContainer.getStart(), searchContainer.getEnd());
@@ -49,6 +52,7 @@
 	<liferay-ui:search-container-row className="com.liferay.portal.model.User" keyProperty="userId" modelVar="usr">
 		<portlet:actionURL name="viewRole" var="editURL">
 			<portlet:param name="userId" value="<%= String.valueOf(usr.getUserId())%>" />
+			<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>
 		</portlet:actionURL>
 		<liferay-ui:search-container-column-text name="name">
 			<aui:a  href="<%=editURL.toString()%>"><%=usr.getFullName()%></aui:a>
@@ -69,10 +73,13 @@
 					n+=" for "+ fN;
 				}
 				n+="<br/>";
-				out.println(n);					
 			}%>
 		</liferay-ui:search-container-column-text>
-		<liferay-ui:search-container-column-jsp path="/admin/editL2GoRolesButton.jsp"/>
+		<liferay-ui:search-container-column-text>
+			<a href="<%=editURL.toString()%>">
+   				<span class="icon-large icon-pencil"></span>
+			</a>
+		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator />
