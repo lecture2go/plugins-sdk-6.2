@@ -63,20 +63,23 @@
 			String n = "";
 			for (int i = 0; i < roles.size(); i++) {
 				//check for l2g role
-				if(roles.get(i).getName().contains("L2Go Coordinator")){
+				String rn = roles.get(i).getName();
+				if(rn.contains("L2Go Coordinator")){
 					long fId = new Long(0);
 					try{ fId=CoordinatorLocalServiceUtil.getCoordinator(usr.getUserId()).getInstitutionId(); }catch (Exception e){}
 					String fN = InstitutionLocalServiceUtil.getInstitution(fId).getName();
 					n+="coordinator-for "+ fN+"<br/>";
 				}
-				if(roles.get(i).getName().contains("L2Go Producer")){
+				if(rn.contains("L2Go Producer")){
 					long fId = new Long(0);
 					try{fId = ProducerLocalServiceUtil.getProducer(usr.getUserId()).getInstitutionId();}catch (Exception e){}
 					String fN = InstitutionLocalServiceUtil.getInstitution(fId).getName();
 					n+="producer-for "+ fN+"<br/>";
 				}
-				%>
-			<%}%>
+				if(!rn.contains("L2Go Producer") && !rn.contains("L2Go Coordinator")){
+					n+=rn+"<br/>";
+				}
+			}%>
 		<%=n%>
 		</liferay-ui:search-container-column-text>
 		<liferay-ui:search-container-column-text>

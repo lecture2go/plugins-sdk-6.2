@@ -43,7 +43,7 @@
 				if(lectureseriesId==0)tempVideosList = VideoLocalServiceUtil.getByProducer(producerId);
 				else tempVideosList = VideoLocalServiceUtil.getByProducerAndLectureseries(producerId, lectureseriesId);
 			}else{
-				//
+				tempVideosList = VideoLocalServiceUtil.getByInstitution(institutionId);
 			}
 		}else{
 			if(permissionProducer){

@@ -188,6 +188,7 @@ function fileUploadAllowed(data){
 	var ret = false;
     var acceptFileTypes = /(mp4|mp3)$/i;//file types
     data.forEach(function(entry) {
+    	console.log(entry['type']);
     	if(acceptFileTypes.test(entry['type'])){
         	ret = true;
         }

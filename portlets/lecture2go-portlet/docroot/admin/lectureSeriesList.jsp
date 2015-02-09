@@ -151,6 +151,17 @@
 		</portlet:actionURL>
 		<liferay-ui:search-container-column-text name="name">
 			<aui:a  href="<%=editURL.toString()%>"><%=lectser.getName()%></aui:a>
+			<br/>
+			<%
+				List<Long> pIds = ProducerLocalServiceUtil.getAllProducerIds(lectser.getLectureseriesId());
+				String prds = "";
+				for (int i = 0; i < pIds.size(); i++) {
+					Long pLid = new Long(pIds.get(i)+"");
+					Producer p = ProducerLocalServiceUtil.getProdUcer(pLid);
+					prds+=p.getFirstName()+" "+ p.getLastName()+" <br/>";
+				}
+ 			%>
+ 			<%=prds %>
 		</liferay-ui:search-container-column-text>
 		<liferay-ui:search-container-column-text>
 			<a href="<%=editURL.toString()%>">
