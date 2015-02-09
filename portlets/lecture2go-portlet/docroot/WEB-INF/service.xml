@@ -290,6 +290,9 @@
         <column name="permittedToSegment" type="int"></column>
         <column name="rootInstitutionId" type="long"></column>
         <column name="citation2go" type="int"></column>
+        <order by="desc">
+            <order-column name="videoId" order-by="desc"></order-column>
+        </order>
         <finder name="Institution" return-type="Collection">
             <finder-column name="rootInstitutionId"></finder-column>
         </finder>

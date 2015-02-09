@@ -1654,17 +1654,25 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 
 	@Override
 	public int compareTo(Video video) {
-		long primaryKey = video.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		if (getVideoId() < video.getVideoId()) {
+			value = -1;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
+		else if (getVideoId() > video.getVideoId()) {
+			value = 1;
 		}
 		else {
-			return 0;
+			value = 0;
 		}
+
+		value = value * -1;
+
+		if (value != 0) {
+			return value;
+		}
+
+		return 0;
 	}
 
 	@Override

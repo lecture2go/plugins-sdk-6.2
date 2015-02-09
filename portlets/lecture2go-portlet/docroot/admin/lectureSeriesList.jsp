@@ -132,7 +132,7 @@
 			</aui:row>
 		</aui:layout>
 </aui:fieldset>
-
+				
 <liferay-ui:search-container emptyResultsMessage="no-lectureseries-found" delta="10" iteratorURL="<%= portletURL %>">
 	<liferay-ui:search-container-results>
 		<%
@@ -155,6 +155,15 @@
 		<liferay-ui:search-container-column-text>
 			<a href="<%=editURL.toString()%>">
    				<span class="icon-large icon-pencil"></span>
+			</a>
+			
+			<portlet:actionURL name="removeLectureseries" var="removeURL">
+				<portlet:param name="lectureseriesId" value='<%=""+lectser.getLectureseriesId()%>' />
+				<portlet:param name="backURL" value='<%=String.valueOf(portletURL)%>' />
+			</portlet:actionURL>
+			
+			<a href="<%=removeURL.toString()%>">
+				<span class="icon-large icon-remove"></span>
 			</a>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>

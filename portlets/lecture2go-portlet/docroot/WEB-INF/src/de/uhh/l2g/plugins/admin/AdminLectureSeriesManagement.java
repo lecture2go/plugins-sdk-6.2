@@ -34,13 +34,13 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		Lectureseries reqLectureseries = LectureseriesLocalServiceUtil.getLectureseries(reqLectureseriesId);
 		request.setAttribute("reqLectureseries", reqLectureseries);
 
-		response.setRenderParameter("jspPage", "/admin/editLectureseries.jsp");
-
 		Map<String,String> institutions = new LinkedHashMap<String, String>();
 		List<Producer> producers = new ArrayList<Producer>();
 		request.setAttribute("institutions", institutions);
 		request.setAttribute("producers", producers);
 		request.setAttribute("backURL", backURL);
+
+		response.setRenderParameter("jspPage", "/admin/editLectureseries.jsp");
 	}
 	
 	public void removeLectureseries(ActionRequest request, ActionResponse response) {
@@ -169,11 +169,7 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		}
 		request.setAttribute("institutions", institutions);
 		request.setAttribute("producers", producers);
-		try {
-			response.sendRedirect(backURL);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}		
+		request.setAttribute("backURL", backURL);
 	}
 
 }

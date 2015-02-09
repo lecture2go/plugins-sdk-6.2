@@ -82,8 +82,8 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		};
 	public static final String TABLE_SQL_CREATE = "create table LG_Video (videoId LONG not null primary key,title VARCHAR(75) null,tags VARCHAR(75) null,lectureseriesId LONG,producerId LONG,containerFormat VARCHAR(75) null,filename VARCHAR(75) null,resolution VARCHAR(75) null,duration VARCHAR(75) null,hostId LONG,fileSize VARCHAR(75) null,generationDate VARCHAR(75) null,openAccess INTEGER,downloadLink INTEGER,metadataId LONG,surl VARCHAR(75) null,hits LONG,uploadDate DATE null,permittedToSegment INTEGER,rootInstitutionId LONG,citation2go INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Video";
-	public static final String ORDER_BY_JPQL = " ORDER BY video.videoId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY LG_Video.videoId ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY video.videoId DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY LG_Video.videoId DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -305,6 +305,8 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 
 	@Override
 	public void setVideoId(long videoId) {
+		_columnBitmask = -1L;
+
 		_videoId = videoId;
 	}
 
@@ -683,17 +685,25 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 
 	@Override
 	public int compareTo(Video video) {
-		long primaryKey = video.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		if (getVideoId() < video.getVideoId()) {
+			value = -1;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
+		else if (getVideoId() > video.getVideoId()) {
+			value = 1;
 		}
 		else {
-			return 0;
+			value = 0;
 		}
+
+		value = value * -1;
+
+		if (value != 0) {
+			return value;
+		}
+
+		return 0;
 	}
 
 	@Override

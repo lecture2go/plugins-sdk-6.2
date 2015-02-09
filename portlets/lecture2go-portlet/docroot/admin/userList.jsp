@@ -1,3 +1,4 @@
+<%@page import="java.io.PrintWriter"%>
 <%@include file="/init.jsp"%>
 <liferay-ui:error key="host-or-institution-error" message="host-or-institution-error"/>
 <%
@@ -57,28 +58,43 @@
 		<liferay-ui:search-container-column-text name="name">
 			<aui:a  href="<%=editURL.toString()%>"><%=usr.getFullName()%></aui:a>
 			<br/>
-			<%for (int i = 0; i < usr.getRoles().size(); i++) {
-				String n = usr.getRoles().get(i).getName();
+			<%
+			List<Role> roles = usr.getRoles();
+			String n = "";
+			for (int i = 0; i < roles.size(); i++) {
 				//check for l2g role
-				if(n.contains("L2Go Coordinator")){
+				if(roles.get(i).getName().contains("L2Go Coordinator")){
 					long fId = new Long(0);
 					try{ fId=CoordinatorLocalServiceUtil.getCoordinator(usr.getUserId()).getInstitutionId(); }catch (Exception e){}
 					String fN = InstitutionLocalServiceUtil.getInstitution(fId).getName();
-					n+=" for "+ fN;
+					n+="coordinator-for "+ fN+"<br/>";
 				}
-				if(n.contains("L2Go Producer")){
+				if(roles.get(i).getName().contains("L2Go Producer")){
 					long fId = new Long(0);
 					try{fId = ProducerLocalServiceUtil.getProducer(usr.getUserId()).getInstitutionId();}catch (Exception e){}
 					String fN = InstitutionLocalServiceUtil.getInstitution(fId).getName();
-					n+=" for "+ fN;
+					n+="producer-for "+ fN+"<br/>";
 				}
-				n+="<br/>";
-			}%>
+				%>
+			<%}%>
+		<%=n%>
 		</liferay-ui:search-container-column-text>
 		<liferay-ui:search-container-column-text>
-			<a href="<%=editURL.toString()%>">
-   				<span class="icon-large icon-pencil"></span>
-			</a>
+		<%if(permissionAdmin){
+			%>
+			 <a href="<%=editURL.toString()%>">
+	   		 	<span class="icon-large icon-pencil"></span>
+			 </a>			
+			<%
+		}else{
+			if(new Lecture2GoRoleChecker().isProducer(usr) || new Lecture2GoRoleChecker().isStudent(usr)){
+			 %>
+			 <a href="<%=editURL.toString()%>">
+	   		 	<span class="icon-large icon-pencil"></span>
+			 </a>
+			 <%
+			}
+		 }%>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 

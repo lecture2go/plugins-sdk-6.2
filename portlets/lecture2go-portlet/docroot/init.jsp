@@ -103,9 +103,9 @@ boolean permissionAdmin = permissionChecker.hasPermission(remoteUser.getGroupId(
 //l2go coordinator is logged in
 boolean permissionCoordinator = permissionChecker.hasPermission(remoteUser.getGroupId(), User.class.getName(), remoteUser.getPrimaryKey(), "ADD_L2GOPRODUCER");
 //l2go producer is logged in
-boolean permissionProducer = Lecture2GoRoleChecker.isProducer(remoteUser);
+boolean permissionProducer = new Lecture2GoRoleChecker().isProducer(remoteUser);
 //l2go student is logged in
-boolean permissionStudent = Lecture2GoRoleChecker.isStudent(remoteUser);
+boolean permissionStudent = new Lecture2GoRoleChecker().isStudent(remoteUser);
 
 if(permissionAdmin){
 	permissionCoordinator=false;

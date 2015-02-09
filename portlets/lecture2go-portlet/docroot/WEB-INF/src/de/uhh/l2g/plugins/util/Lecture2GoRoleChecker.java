@@ -10,12 +10,12 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 
 public class Lecture2GoRoleChecker extends RoleLocalServiceUtil {
 	
-	private static boolean producer = false;
-	private static boolean coordinator = false;
-	private static boolean l2gAdmin = false;
-	private static boolean student = false;
+	private  boolean producer = false;
+	private  boolean coordinator = false;
+	private  boolean l2gAdmin = false;
+	private  boolean student = false;
 	
-	public static boolean isProducer(User user) {
+	public  boolean isProducer(User user) {
 		List<Role> rL = new ArrayList<Role>();
 		try {
 			rL = user.getRoles();
@@ -25,7 +25,7 @@ public class Lecture2GoRoleChecker extends RoleLocalServiceUtil {
 		for (Role role : rL) if(role.getName().equals("L2Go Producer"))producer=true;
 		return producer;
 	}
-	public static boolean isCoordinator(User user) {
+	public  boolean isCoordinator(User user) {
 		List<Role> rL = new ArrayList<Role>();
 		try {
 			rL = user.getRoles();
@@ -35,7 +35,7 @@ public class Lecture2GoRoleChecker extends RoleLocalServiceUtil {
 		for (Role role : rL) if(role.getName().equals("L2Go Coordinator"))coordinator=true;
 		return coordinator;
 	}
-	public static boolean isL2gAdmin(User user) {
+	public  boolean isL2gAdmin(User user) {
 		List<Role> rL = new ArrayList<Role>();
 		try {
 			rL = user.getRoles();
@@ -45,7 +45,7 @@ public class Lecture2GoRoleChecker extends RoleLocalServiceUtil {
 		for (Role role : rL) if(role.getName().equals("L2Go Admin"))l2gAdmin=true;
 		return l2gAdmin;
 	}
-	public static boolean isStudent(User user) {
+	public  boolean isStudent(User user) {
 		List<Role> rL = new ArrayList<Role>();
 		try {
 			rL = user.getRoles();

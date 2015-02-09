@@ -52,17 +52,25 @@
 	String[] availableLanguageIds = LocaleUtil.toLanguageIds(languages);
 	String languageId="";
 
-	List<Long> pIds = ProducerLocalServiceUtil.getAllProducerIds(lId);
+	List<Long> pIds = new ArrayList<Long>();
+	try{
+		pIds = ProducerLocalServiceUtil.getAllProducerIds(lId);
+	}catch (NullPointerException e){}
+	
 	List<String> semesters = LectureseriesLocalServiceUtil.getAllSemesters(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
-	String backURL = request.getAttribute("backURL").toString();
+	
+	String backURL = "";
+	try{
+		backURL = request.getAttribute("backURL").toString();
+	}catch(Exception e){
+		%>
+			<portlet:renderURL var="back"><portlet:param name="jspPage" value="/admin/lectureSeriesList.jsp" /></portlet:renderURL>
+		<%
+		backURL=back.toString();
+	}
 %>
 
 <portlet:actionURL name="editLectureseries" var="editURL">
-	<portlet:param name="lectureseriesId" value='<%=""+lId%>' />
-	<portlet:param name="backURL" value='<%=backURL%>' />
-</portlet:actionURL>
-
-<portlet:actionURL name="removeLectureseries" var="removeURL">
 	<portlet:param name="lectureseriesId" value='<%=""+lId%>' />
 	<portlet:param name="backURL" value='<%=backURL%>' />
 </portlet:actionURL>
@@ -191,11 +199,6 @@
 			<aui:button-row>
 				<aui:button type="submit" onclick="<portlet:namespace />extractCodeFromEditor()"/>
 				<aui:button type="cancel" value="cancel" href="<%=backURL%>"/>
-				<%if (lId>0) {%>
-				<a href="<%=removeURL.toString()%>">
-					<span class="icon-large icon-remove"></span>
-				</a>
-				<%}%>
 			</aui:button-row>
 		</aui:layout>
 	</aui:fieldset>

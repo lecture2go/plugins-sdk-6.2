@@ -43,7 +43,7 @@
 				if(lectureseriesId==0)tempVideosList = VideoLocalServiceUtil.getByProducer(producerId);
 				else tempVideosList = VideoLocalServiceUtil.getByProducerAndLectureseries(producerId, lectureseriesId);
 			}else{
-				tempVideosList = VideoLocalServiceUtil.getByInstitution(institutionId);
+				//
 			}
 		}else{
 			if(permissionProducer){
@@ -123,20 +123,18 @@
 					</aui:column>	
 				<%}%>
 		</aui:layout>
-		<aui:layout>
-			<%if(producerId>0){%>	
-				<aui:row>
-					<portlet:actionURL name="addVideo" var="addVideoURL">
-						<portlet:param name="jspPage" value="/admin/editVideo.jsp" />
-						<portlet:param name="lectureseriesId" value='<%=lectureseriesId+""%>'/>
-						<portlet:param name="producerId" value='<%=producerId+""%>'/>
-						<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>	
-					</portlet:actionURL>				
-					<aui:button value="add-new-video" onClick="<%=addVideoURL%>"/>
-				</aui:row>
-			<%}%>
-		</aui:layout>
 </aui:fieldset>
+
+<%if(producerId>0){%>	
+	<portlet:actionURL name="addVideo" var="addVideoURL">
+		<portlet:param name="lectureseriesId" value='<%=lectureseriesId+""%>'/>
+			<portlet:param name="producerId" value='<%=producerId+""%>'/>
+			<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>	
+		</portlet:actionURL>	
+		<a href="<%=addVideoURL.toString()%>">
+		    add-video <span class="icon-large icon-plus-sign"/>
+		</a>
+<%}%>
 
 <liferay-ui:search-container emptyResultsMessage="no-videos-found" delta="10"  iteratorURL="<%= portletURL %>">
 	<liferay-ui:search-container-results>

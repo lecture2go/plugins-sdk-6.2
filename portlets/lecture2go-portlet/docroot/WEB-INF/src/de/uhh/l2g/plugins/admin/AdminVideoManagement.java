@@ -41,7 +41,6 @@ import de.uhh.l2g.plugins.model.impl.SegmentImpl;
 import de.uhh.l2g.plugins.model.impl.VideoImpl;
 import de.uhh.l2g.plugins.model.impl.Video_InstitutionImpl;
 import de.uhh.l2g.plugins.model.impl.Video_LectureseriesImpl;
-import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LicenseLocalServiceUtil;
 import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
@@ -73,7 +72,7 @@ public class AdminVideoManagement extends MVCPortlet {
 	public void viewVideo(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
 		// requested producer id
 		Long reqPproducerId = (long)0;
-		try{reqPproducerId = new Long(request.getParameterMap().get("producerI	d")[0]);}catch(Exception e){}
+		try{reqPproducerId = new Long(request.getParameterMap().get("producerId")[0]);}catch(Exception e){}
 		
 		// requested lecture series id
 		Long reqLectureseriesId = (long)0;
