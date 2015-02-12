@@ -25,6 +25,8 @@
 <%@ page import="java.lang.String"%>
 
 <%@ page import="javax.portlet.PortletURL"%>
+<%@ page import="javax.portlet.PortletException"%>
+<%@ page import="org.apache.jasper.JasperException"%>
 
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil"%>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil"%>
@@ -89,7 +91,6 @@
 <%@ page import="de.uhh.l2g.plugins.service.HostLocalServiceUtil"%>
 
 <%@ page import="de.uhh.l2g.plugins.util.Lecture2GoRoleChecker"%>
-<%@ page import="com.sun.xml.internal.rngom.ast.builder.Include"%>
 
 
 <portlet:defineObjects />

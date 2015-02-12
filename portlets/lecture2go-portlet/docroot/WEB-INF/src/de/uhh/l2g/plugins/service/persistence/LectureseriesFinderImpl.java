@@ -174,16 +174,16 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 	private String sqlFilterForLectureseries(Integer approved, String semester, Long facultyId, Long producerId) {
 		// build query
 		String query = "SELECT c.number_, c.eventType, c.eventCategory, c.name, c.shortDesc, c.longDesc, c.semesterName, c.language, c.facultyName, c.instructorsString, c.lectureseriesId, c.password_, c.approved ";
-			   query += "FROM lg_lectureseries AS c ";
+			   query += "FROM LG_Lectureseries AS c ";
 
 		if (facultyId > 0) {
-			query += "INNER JOIN lg_lectureseries_institution AS ce ON ( c.lectureseriesId = ce.lectureseriesId ) ";
-			query += "INNER JOIN lg_institution AS e ON ( ce.institutionId = e.institutionId ) ";
+			query += "INNER JOIN LG_Lectureseries_Institution AS ce ON ( c.lectureseriesId = ce.lectureseriesId ) ";
+			query += "INNER JOIN LG_Institution AS e ON ( ce.institutionId = e.institutionId ) ";
 		}
 
 		if (producerId > 0) {
-			query += "INNER JOIN lg_producer_lectureseries AS pc ON ( c.lectureseriesId = pc.lectureseriesId ) ";
-			query += "INNER JOIN lg_producer AS p ON ( pc.producerId = p.producerId ) ";
+			query += "INNER JOIN LG_Producer_Lectureseries AS pc ON ( c.lectureseriesId = pc.lectureseriesId ) ";
+			query += "INNER JOIN LG_Producer AS p ON ( pc.producerId = p.producerId ) ";
 		}
 
 		if ((!"".equals(semester) && semester != null) || (approved==1 || approved==0) || facultyId > 0 || producerId > 0) {
@@ -203,7 +203,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			if (facultyId > 0) {
 				query += i > 0 ? "AND " : "";
 				query += "ce.institutionId IN ";
-				query += "(select institutionId from lg_institution AS ein WHERE ein.parentId = "+facultyId+" OR ein.institutionId = "+facultyId+") ";
+				query += "(select institutionId from LG_Institution AS ein WHERE ein.parentId = "+facultyId+" OR ein.institutionId = "+facultyId+") ";
 				i++;
 			}
 

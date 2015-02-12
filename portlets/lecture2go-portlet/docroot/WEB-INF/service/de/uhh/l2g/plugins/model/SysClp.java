@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -282,6 +282,10 @@ public class SysClp extends BaseModelImpl<Sys> implements Sys {
 		}
 	}
 
+	public Class<?> getClpSerializerClass() {
+		return _clpSerializerClass;
+	}
+
 	@Override
 	public int hashCode() {
 		return getPrimaryKey();
@@ -332,4 +336,5 @@ public class SysClp extends BaseModelImpl<Sys> implements Sys {
 	private String _version;
 	private int _setupWizard;
 	private BaseModel<?> _sysRemoteModel;
+	private Class<?> _clpSerializerClass = de.uhh.l2g.plugins.service.ClpSerializer.class;
 }

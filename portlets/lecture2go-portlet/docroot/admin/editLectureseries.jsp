@@ -118,17 +118,20 @@
 		
 			<div class="facilCont">
 				<%
-				List<Institution> fs = InstitutionLocalServiceUtil.getByLectureseriesId(lId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
-				for(int i=0;i<fs.size();i++){
-					Institution f = fs.get(i);
-					%>
-					<div id='<%=f.getInstitutionId()%>'> 
-						<%=f.getName()+"&nbsp;&nbsp;&nbsp;" %> 
-						<a style='cursor:pointer;' onClick='document.getElementById("<%=f.getInstitutionId()%>").remove();'><b>X</b></a>
-						<aui:input type="hidden" name="institutions" id="institutions" value="<%=f.getInstitutionId()%>"/>
-					</div>
-					<%
-				}
+				List<Institution> fs = new ArrayList<Institution>();
+				try{
+					fs = InstitutionLocalServiceUtil.getByLectureseriesId(lId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+					for(int i=0;i<fs.size();i++){
+						Institution f = fs.get(i);
+						%>
+						<div id='<%=f.getInstitutionId()%>'> 
+							<%=f.getName()+"&nbsp;&nbsp;&nbsp;" %> 
+							<a style='cursor:pointer;' onClick='document.getElementById("<%=f.getInstitutionId()%>").remove();'><b>X</b></a>
+							<aui:input type="hidden" name="institutions" id="institutions" value="<%=f.getInstitutionId()%>"/>
+						</div>
+						<%
+					}					
+				}catch(Exception e){}
 				%>				
 			</div>
 				
@@ -146,16 +149,19 @@
 			</aui:select>
 
 			<div class="prodCont">
-				<%for(int i=0;i<pIds.size();i++){
-					Producer p = ProducerLocalServiceUtil.getProdUcer(new Long(pIds.get(i)+""));
-					%>
-					<div id='<%=p.getProducerId()%>'> 
-						<%=p.getLastName() +", "+p.getFirstName()+"&nbsp;&nbsp;&nbsp;" %> 
-						<a style='cursor:pointer;' onClick='document.getElementById("<%=p.getProducerId()%>").remove();'><b>X</b></a>
-						<aui:input type="hidden" name="producers" id="producers" value="<%=p.getProducerId()%>"/>
-					</div>
-					<%
-				}%>				
+				<%
+				try{
+					for(int i=0;i<pIds.size();i++){
+						Producer p = ProducerLocalServiceUtil.getProdUcer(new Long(pIds.get(i)+""));
+						%>
+						<div id='<%=p.getProducerId()%>'> 
+							<%=p.getLastName() +", "+p.getFirstName()+"&nbsp;&nbsp;&nbsp;" %> 
+							<a style='cursor:pointer;' onClick='document.getElementById("<%=p.getProducerId()%>").remove();'><b>X</b></a>
+							<aui:input type="hidden" name="producers" id="producers" value="<%=p.getProducerId()%>"/>
+						</div>
+						<%
+					}
+				}catch(Exception e){}%>				
 			</div>	
 							
 			<aui:input name="shortDesc" label="short-description"  value="<%=lShortDesc%>"/>

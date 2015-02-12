@@ -132,6 +132,27 @@ public class FFmpegManager {
 	public FFmpegManager() {
 	}
 
+	private static boolean createImageRepositoryFolder(){
+		boolean ret = false;
+		String imgRep = PropsUtil.get("lecture2go.images.system.path");
+		File imgRepFolder = new File(imgRep);
+		if(!imgRepFolder.exists()){
+			if(imgRepFolder.mkdir()){
+				ret = true;
+			}
+		}
+		return ret;
+	}
+	
+	private static boolean imageRepositoryFolderExists(){
+		boolean ret = false;
+		String imgRep = PropsUtil.get("lecture2go.images.system.path");
+		File imgRepFolder = new File(imgRep);
+		if(imgRepFolder.exists()){
+			ret = true;
+		}
+		return ret;
+	}
 	/**
 	 * Creates the thumbnail.
 	 *
@@ -147,22 +168,24 @@ public class FFmpegManager {
 	 */
 	public static boolean createThumbnail(Video video, String time, String thumbnailLocation) throws PortalException, SystemException {
 		boolean ret = false;
-		Producer producer = ProducerLocalServiceUtil.getProducer(video.getProducerId());
-		Host host = HostLocalServiceUtil.getHost(video.getHostId());
-		Runtime runCmd = Runtime.getRuntime();
-		String command = "";
-		int sec = new Integer(time.split(":")[0]) * 60 * 60 + new Integer(time.split(":")[1]) * 60 + new Integer(time.split(":")[2]);
-		if (video.getOpenAccess()==1)
-			command = PropsUtil.get("lecture2go.ffmpeg.bin") + " -ss " + sec + " -i " + PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + video.getFilename() + " -f image2 -vframes 1 -filter:v scale='130:-1' " + thumbnailLocation + "/" + video.getVideoId() + "_"
-					+ sec + ".jpg";
-		else
-			command = PropsUtil.get("lecture2go.ffmpeg.bin") + " -ss " + sec + " -i " + PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + video.getSurl() + " -f image2 -vframes 1 -filter:v scale='130:-1' " + thumbnailLocation + "/" + video.getVideoId()
-					+ "_" + sec + ".jpg";
-		try {
-			runCmd.exec(command);
-			ret = true;
-		} catch (IOException e) {
-			ret = false;
+		if(!imageRepositoryFolderExists()) createImageRepositoryFolder();
+		
+		if(imageRepositoryFolderExists()){
+			Producer producer = ProducerLocalServiceUtil.getProducer(video.getProducerId());
+			Host host = HostLocalServiceUtil.getHost(video.getHostId());
+			Runtime runCmd = Runtime.getRuntime();
+			String command = "";
+			int sec = new Integer(time.split(":")[0]) * 60 * 60 + new Integer(time.split(":")[1]) * 60 + new Integer(time.split(":")[2]);
+			if (video.getOpenAccess()==1)
+				command = PropsUtil.get("lecture2go.ffmpeg.bin") + " -ss " + sec + " -i " + PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + video.getFilename() + " -f image2 -vframes 1 -filter:v scale='130:-1' " + thumbnailLocation + "/" + video.getVideoId() + "_"+ sec + ".jpg";
+			else
+				command = PropsUtil.get("lecture2go.ffmpeg.bin") + " -ss " + sec + " -i " + PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + video.getSurl() + " -f image2 -vframes 1 -filter:v scale='130:-1' " + thumbnailLocation + "/" + video.getVideoId()+ "_" + sec + ".jpg";
+			try {
+				runCmd.exec(command);
+				ret = true;
+			} catch (IOException e) {
+				ret = false;
+			}			
 		}
 		return ret;
 	}
@@ -183,52 +206,57 @@ public class FFmpegManager {
 		String command1 = PropsUtil.get("lecture2go.ffmpeg.bin") + " -ss 13 -i " + fileLocation + " -f image2 -vframes 1 -filter:v scale='130:-1' " + thumbPreffLoc + "_s.jpg";
 		String command2 = PropsUtil.get("lecture2go.ffmpeg.bin") + " -ss 13 -i " + fileLocation + " -f image2 -vframes 1 -filter:v scale='300:-1' " + thumbPreffLoc + "_m.jpg";
 		boolean ret = true;
-		try {
-			File f = new File(thumbnailLocation);
-			int i =0;
-			while (i<100){
-				i++;
-				if(!f.isFile())runCmd.exec(command);
-				else break;
-			}
-			if (!f.isFile())
-				ret = false;
-		} catch (IOException e) {
-			ret = false;
-		}
-		try {
-			File f = new File(thumbPreffLoc + "_s.jpg");
-			int i =0;
-			while (i<100){
-				i++;
-				if(!f.isFile())runCmd.exec(command1);
-				else break;
-			}
-			if (!f.isFile())
-				ret = false;
-		} catch (IOException e) {
-			ret = false;
-		}
-		try {
-			File f = new File(thumbPreffLoc + "_m.jpg");
-			int i =0;
-			while (i<100){
-				i++;
-				if(!f.isFile())runCmd.exec(command2);
-				else break;
-			}
-			if (!f.isFile())
-				ret = false;
-		} catch (IOException e) {
-			ret = false;
-		}
-		// because of memory limit should close the ffmpeg processes
-		if (ret)
+		if(!imageRepositoryFolderExists()) createImageRepositoryFolder();
+		
+		if(imageRepositoryFolderExists()){
 			try {
-				runCmd.exec("/usr/bin/killall -9 ffmpeg");
+				File f = new File(thumbnailLocation);
+				int i =0;
+				while (i<100){
+					i++;
+					if(!f.isFile())runCmd.exec(command);
+					else break;
+				}
+				if (!f.isFile())
+					ret = false;
 			} catch (IOException e) {
-				e.printStackTrace();
+				ret = false;
 			}
+			try {
+				File f = new File(thumbPreffLoc + "_s.jpg");
+				int i =0;
+				while (i<100){
+					i++;
+					if(!f.isFile())runCmd.exec(command1);
+					else break;
+				}
+				if (!f.isFile())
+					ret = false;
+			} catch (IOException e) {
+				ret = false;
+			}
+			try {
+				File f = new File(thumbPreffLoc + "_m.jpg");
+				int i =0;
+				while (i<100){
+					i++;
+					if(!f.isFile())runCmd.exec(command2);
+					else break;
+				}
+				if (!f.isFile())
+					ret = false;
+			} catch (IOException e) {
+				ret = false;
+			}
+			// because of memory limit should close the ffmpeg processes
+			if (ret){
+				try {
+					runCmd.exec("/usr/bin/killall -9 ffmpeg");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}			
+			}			
+		}
 		return ret;
 	}
 

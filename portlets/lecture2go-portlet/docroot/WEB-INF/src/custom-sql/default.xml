@@ -8,31 +8,31 @@
 			CONCAT(myGrandparent.institutionId, '/', myParent.institutionId, '/', myNode.institutionId), 
 			CONCAT('', myParent.institutionId, '/', myNode.institutionId)), 
 			CONCAT( myNode.institutionId, '')) AS path 
-			FROM lg_institution AS myNode 
-			LEFT JOIN lg_institution AS myParent ON myNode.parentId = myParent.institutionId
-			LEFT JOIN lg_institution AS myGrandparent ON myParent.parentId = myGrandparent.institutionId 
+			FROM LG_Institution AS myNode 
+			LEFT JOIN LG_Institution AS myParent ON myNode.parentId = myParent.institutionId
+			LEFT JOIN LG_Institution AS myGrandparent ON myParent.parentId = myGrandparent.institutionId 
 			ORDER BY path ASC
 		]]>
     </sql>
     
     <sql id="de.uhh.l2g.plugins.service.persistence.InstitutionFinder.findByLectureseriesId">
 		<![CDATA[
-			SELECT lg_institution.institutionId, lg_institution.parentId, lg_institution.name, lg_institution.typ, lg_institution.www, lg_institution.level, lg_institution.sort 
-			FROM lg_institution, lg_lectureseries_institution 
-			WHERE (lg_lectureseries_institution.lectureseriesId=? AND lg_institution.institutionId=lg_lectureseries_institution.institutionId)
+			SELECT LG_Institution.institutionId, LG_Institution.parentId, LG_Institution.name, LG_Institution.typ, LG_Institution.www, LG_Institution.level, LG_Institution.sort 
+			FROM LG_Institution, LG_Lectureseries_Institution 
+			WHERE (LG_Lectureseries_Institution.lectureseriesId=? AND LG_Institution.institutionId=LG_Lectureseries_Institution.institutionId)
 		]]>
     </sql> 
 
     <sql id="de.uhh.l2g.plugins.service.persistence.LectureseriesFinder.findAllSemesters">
 		<![CDATA[
-			SELECT semesterName FROM lg_lectureseries WHERE semesterName!='' GROUP BY semesterName
+			SELECT semesterName FROM LG_Lectureseries WHERE semesterName!='' GROUP BY semesterName
 		]]>
     </sql> 
 
     <sql id="de.uhh.l2g.plugins.service.persistence.LectureseriesFinder.findAllLectureseriesWithOpenAccessVideos">
 		<![CDATA[
 			SELECT number_, eventType, eventCategory, l.name, shortDesc, semesterName, language, facultyName, instructorsString, l.lectureseriesId, password_, approved, longDesc 
-			FROM lg_lectureseries l, lg_video v, lg_video_institution vi, lg_institution i 
+			FROM LG_Lectureseries l, LG_Video v, LG_Video_Institution vi, LG_Institution i 
 			WHERE ( l.lectureseriesId=v.lectureseriesId AND v.openAccess=1 AND v.videoId=vi.videoId AND vi.institutionId=i.institutionId) 
 			GROUP BY l.lectureseriesId
 		]]>
@@ -41,7 +41,7 @@
     <sql id="de.uhh.l2g.plugins.service.persistence.LectureseriesFinder.findAllLectureseriesWithPassword">
 		<![CDATA[
 			SELECT number_, eventType, eventCategory, l.name, shortDesc, semesterName, language, facultyName, instructorsString, l.lectureseriesId, password_, approved, longDesc 
-			FROM lg_lectureseries l 
+			FROM LG_Lectureseries l 
 			WHERE l.password_>""
 		]]>
     </sql> 
@@ -49,23 +49,23 @@
     <sql id="de.uhh.l2g.plugins.service.persistence.ProducerFinder.findProducerIds">
 		<![CDATA[
 			SELECT p.producerId 
-			FROM lg_producer_lectureseries AS pc 
-			INNER JOIN lg_producer AS p ON pc.producerId = p.producerId 
+			FROM  LG_Producer_Lectureseries AS pc  
+			INNER JOIN LG_Producer AS p ON pc.producerId = p.producerId 
 			WHERE pc.lectureseriesId = ?
 		]]>
     </sql> 
 
     <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.findLatestVideoForlectureseries">
 		<![CDATA[
-			SELECT videoId FROM lg_video  
-			WHERE (generationDate=(SELECT MAX(generationDate) FROM lg_video WHERE lectureseriesId=? AND openAccess=1) AND lectureseriesId=? AND openAccess=1)  
+			SELECT videoId FROM LG_Video  
+			WHERE (generationDate=(SELECT MAX(generationDate) FROM LG_Video WHERE lectureseriesId=? AND openAccess=1) AND lectureseriesId=? AND openAccess=1)  
 			ORDER BY videoId ASC
 		]]>
     </sql> 
     
     <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.resetLectureseriesForVideos">
 		<![CDATA[
-			UPDATE lg_video SET lectureseriesId=0 WHERE lectureseriesId=?
+			UPDATE LG_Video SET lectureseriesId=0 WHERE lectureseriesId=?
 		]]>
     </sql> 
     

@@ -153,13 +153,17 @@
 			<aui:a  href="<%=editURL.toString()%>"><%=lectser.getName()%></aui:a>
 			<br/>
 			<%
-				List<Long> pIds = ProducerLocalServiceUtil.getAllProducerIds(lectser.getLectureseriesId());
-				String prds = "";
-				for (int i = 0; i < pIds.size(); i++) {
-					Long pLid = new Long(pIds.get(i)+"");
-					Producer p = ProducerLocalServiceUtil.getProdUcer(pLid);
-					prds+=p.getFirstName()+" "+ p.getLastName()+" <br/>";
-				}
+			List<Long> pIds = new ArrayList<Long>();
+			String prds = "";
+				try{
+					pIds = ProducerLocalServiceUtil.getAllProducerIds(lectser.getLectureseriesId());
+					for (int i = 0; i < pIds.size(); i++) {
+						Long pLid = new Long(pIds.get(i)+"");
+						Producer p = new ProducerImpl();
+						p=ProducerLocalServiceUtil.getProdUcer(pLid);
+						prds+=p.getFirstName()+" "+ p.getLastName()+" <br/>";
+					}
+				}catch(Exception e){}
  			%>
  			<%=prds %>
 		</liferay-ui:search-container-column-text>
