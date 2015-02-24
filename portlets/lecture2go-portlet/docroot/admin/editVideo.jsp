@@ -98,13 +98,14 @@
 			<br/><br/>
 			
 			<aui:field-wrapper label="description">
-			    <liferay-ui:input-editor name="longDesc" toolbarSet="liferay-article" initMethod="initEditor" width="250" onChangeMethod="updateDescription" />
+			    <liferay-ui:input-editor name="longDesc" toolbarSet="liferay-article" initMethod="initEditor" width="250" onChangeMethod="setDescriptionData" />
 			    <script type="text/javascript">
 			        function <portlet:namespace />initEditor() { return "<%= UnicodeFormatter.toString(reqMetadata.getDescription()) %>"; }
 			    </script>
 			</aui:field-wrapper>
 			
 			<aui:button-row>
+				<aui:button value="save" onclick="applyAllMetadataChanges()"/>
 				<aui:button type="cancel" value="cancel" href="<%=backURL%>"/>
 			</aui:button-row>
 			
@@ -327,6 +328,41 @@ function updateLicense(data){
 	);
 }
 
+var descData;
+function <portlet:namespace/>setDescriptionData(data){
+	descData = data;
+}
+
+function applyAllMetadataChanges(){
+	alert("testeee");
+	AUI().use(
+			'aui-node',
+			function(A) {
+					// Select the node(s) using a css selector string
+				    var lectureseries = A.one('#<portlet:namespace/>lectureseriesId');
+				    var language = A.one('#<portlet:namespace/>language');
+				    var title = A.one('#<portlet:namespace/>title');
+				    var tags = A.one('#<portlet:namespace/>tags');
+				    var creator = A.one('#<portlet:namespace/>creator');
+				    var rightsHolder = A.one('#<portlet:namespace/>rightsHolder');
+				    var publisher = A.one('#<portlet:namespace/>publisher');
+				    var license1 = A.one('#<portlet:namespace/>ccbyncsa');
+				    var license2 = A.one('#<portlet:namespace/>uhhl2go');
+				    
+				    lectureseries.on('change',function(A){updateMetadata()});
+					language.on('change',function(A){updateMetadata()});
+				    license2.on('change',function(A){updateLicense(license2.get('value'))});
+				    license1.on('change',function(A){updateLicense(license1.get('value'))});
+
+					title.on('change',function(A){updateMetadata()});
+				    tags.on('change',function(A){updateMetadata()});
+				    creator.on('change',function(A){updateMetadata()});
+				    rightsHolder.on('change',function(A){updateMetadata()});
+				    publisher.on('change',function(A){updateMetadata()});
+			}
+	);
+}
+
 function <portlet:namespace/>updateDescription(data){
 	AUI().use('aui-io-request', 'aui-node',
 		function(A){
@@ -370,33 +406,6 @@ function deleteFile(fileName){
 	    }
 	});	
 }
-
-AUI().use(
-		'aui-node',
-		function(A) {
-				// Select the node(s) using a css selector string
-			    var lectureseries = A.one('#<portlet:namespace/>lectureseriesId');
-			    var language = A.one('#<portlet:namespace/>language');
-			    var title = A.one('#<portlet:namespace/>title');
-			    var tags = A.one('#<portlet:namespace/>tags');
-			    var creator = A.one('#<portlet:namespace/>creator');
-			    var rightsHolder = A.one('#<portlet:namespace/>rightsHolder');
-			    var publisher = A.one('#<portlet:namespace/>publisher');
-			    var license1 = A.one('#<portlet:namespace/>ccbyncsa');
-			    var license2 = A.one('#<portlet:namespace/>uhhl2go');
-			    
-			    lectureseries.on('change',function(A){updateMetadata()});
-				language.on('change',function(A){updateMetadata()});
-			    license2.on('change',function(A){updateLicense(license2.get('value'))});
-			    license1.on('change',function(A){updateLicense(license1.get('value'))});
-
-				title.on('change',function(A){updateMetadata()});
-			    tags.on('change',function(A){updateMetadata()});
-			    creator.on('change',function(A){updateMetadata()});
-			    rightsHolder.on('change',function(A){updateMetadata()});
-			    publisher.on('change',function(A){updateMetadata()});
-		}
-);
 
 </script>
 
