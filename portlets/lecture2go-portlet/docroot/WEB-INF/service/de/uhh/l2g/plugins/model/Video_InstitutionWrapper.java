@@ -221,8 +221,7 @@ public class Video_InstitutionWrapper implements Video_Institution,
 	}
 
 	@Override
-	public int compareTo(
-		de.uhh.l2g.plugins.model.Video_Institution video_Institution) {
+	public int compareTo(Video_Institution video_Institution) {
 		return _video_Institution.compareTo(video_Institution);
 	}
 
@@ -232,17 +231,17 @@ public class Video_InstitutionWrapper implements Video_Institution,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.model.Video_Institution> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<Video_Institution> toCacheModel() {
 		return _video_Institution.toCacheModel();
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Video_Institution toEscapedModel() {
+	public Video_Institution toEscapedModel() {
 		return new Video_InstitutionWrapper(_video_Institution.toEscapedModel());
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Video_Institution toUnescapedModel() {
+	public Video_Institution toUnescapedModel() {
 		return new Video_InstitutionWrapper(_video_Institution.toUnescapedModel());
 	}
 

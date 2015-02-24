@@ -274,7 +274,7 @@ public class OfficeWrapper implements Office, ModelWrapper<Office> {
 	}
 
 	@Override
-	public int compareTo(de.uhh.l2g.plugins.model.Office office) {
+	public int compareTo(Office office) {
 		return _office.compareTo(office);
 	}
 
@@ -284,17 +284,17 @@ public class OfficeWrapper implements Office, ModelWrapper<Office> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.model.Office> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<Office> toCacheModel() {
 		return _office.toCacheModel();
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Office toEscapedModel() {
+	public Office toEscapedModel() {
 		return new OfficeWrapper(_office.toEscapedModel());
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Office toUnescapedModel() {
+	public Office toUnescapedModel() {
 		return new OfficeWrapper(_office.toUnescapedModel());
 	}
 

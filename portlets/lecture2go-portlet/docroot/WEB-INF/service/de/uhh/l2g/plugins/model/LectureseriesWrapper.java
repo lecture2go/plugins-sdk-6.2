@@ -491,7 +491,7 @@ public class LectureseriesWrapper implements Lectureseries,
 	}
 
 	@Override
-	public int compareTo(de.uhh.l2g.plugins.model.Lectureseries lectureseries) {
+	public int compareTo(Lectureseries lectureseries) {
 		return _lectureseries.compareTo(lectureseries);
 	}
 
@@ -501,17 +501,17 @@ public class LectureseriesWrapper implements Lectureseries,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.model.Lectureseries> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<Lectureseries> toCacheModel() {
 		return _lectureseries.toCacheModel();
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Lectureseries toEscapedModel() {
+	public Lectureseries toEscapedModel() {
 		return new LectureseriesWrapper(_lectureseries.toEscapedModel());
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Lectureseries toUnescapedModel() {
+	public Lectureseries toUnescapedModel() {
 		return new LectureseriesWrapper(_lectureseries.toUnescapedModel());
 	}
 
