@@ -6,6 +6,42 @@
 	version="2.0">
 	
 	<portlet>
+     	<portlet-name>lg-open-access-videos</portlet-name>
+     	<display-name>Open Access Videos</display-name>
+     	<portlet-class>de.uhh.l2g.plugins.guest.OpenAccessVideos</portlet-class>
+	    <init-param>
+	      	<name>view-template</name>
+	      	<value>/guest/videosList.jsp</value>
+	    </init-param>
+	    <init-param>
+	      	<name>add-process-action-success-action</name>
+	      	<value>false</value>
+	    </init-param>
+	    <expiration-cache>0</expiration-cache>
+	    <supports>
+	      	<mime-type>text/html</mime-type>
+	    </supports>
+	    <resource-bundle>content.Language</resource-bundle>
+	    <portlet-info>
+	      	<title>Open Access Videos</title>
+	      	<short-title>Open Access Video Catalog</short-title>
+	      	<keywords>Open Access Videos</keywords>
+	    </portlet-info>
+	    <security-role-ref>
+	      	<role-name>administrator</role-name>
+	    </security-role-ref>
+	    <security-role-ref>
+	     	<role-name>guest</role-name>
+	    </security-role-ref>
+	    <security-role-ref>
+	      	<role-name>power-user</role-name>
+	    </security-role-ref>
+	    <security-role-ref>
+	      	<role-name>user</role-name>
+	    </security-role-ref>
+    </portlet>
+	
+	<portlet>
      	<portlet-name>lg-admin-video-management</portlet-name>
      	<display-name>L2Go Video Management</display-name>
      	<portlet-class>de.uhh.l2g.plugins.admin.AdminVideoManagement</portlet-class>

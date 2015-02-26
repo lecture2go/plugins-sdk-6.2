@@ -97,31 +97,39 @@
 <liferay-theme:defineObjects/>
 
 <%
-//check lecture2go user permissions
-User remoteUser = UserLocalServiceUtil.getUser(new Long (request.getRemoteUser()));
-//l2go administrator is logged in
-boolean permissionAdmin = permissionChecker.hasPermission(remoteUser.getGroupId(), User.class.getName(), remoteUser.getPrimaryKey(), "ADD_L2GOADMIN");
-//l2go coordinator is logged in
-boolean permissionCoordinator = permissionChecker.hasPermission(remoteUser.getGroupId(), User.class.getName(), remoteUser.getPrimaryKey(), "ADD_L2GOPRODUCER");
-//l2go producer is logged in
-boolean permissionProducer = new Lecture2GoRoleChecker().isProducer(remoteUser);
-//l2go student is logged in
-boolean permissionStudent = new Lecture2GoRoleChecker().isStudent(remoteUser);
+	//check lecture2go user permissions
+	User remoteUser = UserLocalServiceUtil.createUser(0);
+	//l2go administrator is logged in
+	boolean permissionAdmin = false;
+	//l2go coordinator is logged in
+	boolean permissionCoordinator = false;
+	//l2go producer is logged in
+	boolean permissionProducer = false;
+	//l2go student is logged in
+	boolean permissionStudent = false;
 
-if(permissionAdmin){
-	permissionCoordinator=false;
-	permissionProducer=false;
-	permissionStudent=false;
-}else{
-	if(permissionCoordinator){
+try{
+	remoteUser = UserLocalServiceUtil.getUser(new Long (request.getRemoteUser()));
+	permissionAdmin = permissionChecker.hasPermission(remoteUser.getGroupId(), User.class.getName(), remoteUser.getPrimaryKey(), "ADD_L2GOADMIN");
+	permissionCoordinator = permissionChecker.hasPermission(remoteUser.getGroupId(), User.class.getName(), remoteUser.getPrimaryKey(), "ADD_L2GOPRODUCER");
+	permissionProducer = new Lecture2GoRoleChecker().isProducer(remoteUser);
+	permissionStudent = new Lecture2GoRoleChecker().isStudent(remoteUser);
+	if(permissionAdmin){
+		permissionCoordinator=false;
 		permissionProducer=false;
-		permissionStudent=false;		
+		permissionStudent=false;
 	}else{
-		if(permissionProducer){
-			permissionStudent=false;
+		if(permissionCoordinator){
+			permissionProducer=false;
+			permissionStudent=false;		
+		}else{
+			if(permissionProducer){
+				permissionStudent=false;
+			}
 		}
 	}
+	PortletPreferences prefs = renderRequest.getPreferences();	
+}catch(Exception e){
+	//
 }
-
-PortletPreferences prefs = renderRequest.getPreferences();
 %>
