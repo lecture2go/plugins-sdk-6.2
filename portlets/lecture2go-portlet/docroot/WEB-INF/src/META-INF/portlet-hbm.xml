@@ -85,6 +85,9 @@
 		<property name="password" type="com.liferay.portal.dao.orm.hibernate.StringType" column="password_" />
 		<property name="approved" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="longDesc" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="latestOpenAccessVideoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="latestVideoUploadDate" type="org.hibernate.type.TimestampType" />
+		<property name="latestVideoGenerationDate" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.Lectureseries_InstitutionImpl" table="LG_Lectureseries_Institution">
 		<cache usage="read-write" />
@@ -236,6 +239,7 @@
 		</id>
 		<property name="videoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="lectureseriesId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="openAccess" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.VideohitlistImpl" table="LG_Videohitlist">
 		<cache usage="read-write" />

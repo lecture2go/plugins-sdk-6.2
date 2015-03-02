@@ -48,7 +48,10 @@ create table LG_Lectureseries (
 	lectureseriesId LONG not null primary key,
 	password_ VARCHAR(75) null,
 	approved INTEGER,
-	longDesc VARCHAR(75) null
+	longDesc VARCHAR(75) null,
+	latestOpenAccessVideoId LONG,
+	latestVideoUploadDate DATE null,
+	latestVideoGenerationDate VARCHAR(75) null
 );
 
 create table LG_Lectureseries_Institution (
@@ -193,7 +196,8 @@ create table LG_Video_Institution (
 create table LG_Video_Lectureseries (
 	videoLectureseriesId LONG not null primary key,
 	videoId LONG,
-	lectureseriesId LONG
+	lectureseriesId LONG,
+	openAccess INTEGER
 );
 
 create table LG_Videohitlist (

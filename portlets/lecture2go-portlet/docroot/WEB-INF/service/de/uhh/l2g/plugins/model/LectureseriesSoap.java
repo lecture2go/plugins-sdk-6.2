@@ -17,6 +17,7 @@ package de.uhh.l2g.plugins.model;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -42,6 +43,9 @@ public class LectureseriesSoap implements Serializable {
 		soapModel.setPassword(model.getPassword());
 		soapModel.setApproved(model.getApproved());
 		soapModel.setLongDesc(model.getLongDesc());
+		soapModel.setLatestOpenAccessVideoId(model.getLatestOpenAccessVideoId());
+		soapModel.setLatestVideoUploadDate(model.getLatestVideoUploadDate());
+		soapModel.setLatestVideoGenerationDate(model.getLatestVideoGenerationDate());
 
 		return soapModel;
 	}
@@ -198,6 +202,30 @@ public class LectureseriesSoap implements Serializable {
 		_longDesc = longDesc;
 	}
 
+	public long getLatestOpenAccessVideoId() {
+		return _latestOpenAccessVideoId;
+	}
+
+	public void setLatestOpenAccessVideoId(long latestOpenAccessVideoId) {
+		_latestOpenAccessVideoId = latestOpenAccessVideoId;
+	}
+
+	public Date getLatestVideoUploadDate() {
+		return _latestVideoUploadDate;
+	}
+
+	public void setLatestVideoUploadDate(Date latestVideoUploadDate) {
+		_latestVideoUploadDate = latestVideoUploadDate;
+	}
+
+	public String getLatestVideoGenerationDate() {
+		return _latestVideoGenerationDate;
+	}
+
+	public void setLatestVideoGenerationDate(String latestVideoGenerationDate) {
+		_latestVideoGenerationDate = latestVideoGenerationDate;
+	}
+
 	private String _number;
 	private String _eventType;
 	private String _eventCategory;
@@ -211,4 +239,7 @@ public class LectureseriesSoap implements Serializable {
 	private String _password;
 	private int _approved;
 	private String _longDesc;
+	private long _latestOpenAccessVideoId;
+	private Date _latestVideoUploadDate;
+	private String _latestVideoGenerationDate;
 }

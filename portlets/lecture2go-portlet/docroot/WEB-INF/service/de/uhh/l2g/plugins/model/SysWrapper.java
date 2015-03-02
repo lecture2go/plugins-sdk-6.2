@@ -220,7 +220,7 @@ public class SysWrapper implements Sys, ModelWrapper<Sys> {
 	}
 
 	@Override
-	public int compareTo(Sys sys) {
+	public int compareTo(de.uhh.l2g.plugins.model.Sys sys) {
 		return _sys.compareTo(sys);
 	}
 
@@ -230,17 +230,17 @@ public class SysWrapper implements Sys, ModelWrapper<Sys> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<Sys> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.model.Sys> toCacheModel() {
 		return _sys.toCacheModel();
 	}
 
 	@Override
-	public Sys toEscapedModel() {
+	public de.uhh.l2g.plugins.model.Sys toEscapedModel() {
 		return new SysWrapper(_sys.toEscapedModel());
 	}
 
 	@Override
-	public Sys toUnescapedModel() {
+	public de.uhh.l2g.plugins.model.Sys toUnescapedModel() {
 		return new SysWrapper(_sys.toUnescapedModel());
 	}
 

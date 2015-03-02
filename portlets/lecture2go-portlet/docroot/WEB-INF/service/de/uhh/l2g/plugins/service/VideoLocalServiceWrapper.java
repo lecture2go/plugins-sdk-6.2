@@ -280,10 +280,9 @@ public class VideoLocalServiceWrapper implements VideoLocalService,
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Video getLatestVideoForLectureseries(
-		java.lang.Long lectureseriesId, int begin, int end) {
-		return _videoLocalService.getLatestVideoForLectureseries(lectureseriesId,
-			begin, end);
+	public de.uhh.l2g.plugins.model.Video getLatestOpenAccessVideoForLectureseries(
+		java.lang.Long lectureseriesId) {
+		return _videoLocalService.getLatestOpenAccessVideoForLectureseries(lectureseriesId);
 	}
 
 	@Override
@@ -292,10 +291,10 @@ public class VideoLocalServiceWrapper implements VideoLocalService,
 	}
 
 	@Override
-	public java.util.List<de.uhh.l2g.plugins.model.Video> getByInstitution(
-		java.lang.Long institutionId)
+	public java.util.List<de.uhh.l2g.plugins.model.Video> getByRootInstitution(
+		java.lang.Long rootInstitutionId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _videoLocalService.getByInstitution(institutionId);
+		return _videoLocalService.getByRootInstitution(rootInstitutionId);
 	}
 
 	@Override

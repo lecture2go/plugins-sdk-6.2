@@ -14,8 +14,15 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+
 import com.liferay.portal.kernel.exception.SystemException;
 
+import de.uhh.l2g.plugins.model.Video;
+import de.uhh.l2g.plugins.model.Video_Lectureseries;
+import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.Video_LectureseriesLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.Video_LectureseriesUtil;
 
@@ -60,6 +67,18 @@ public class Video_LectureseriesLocalServiceImpl
 				e.printStackTrace();
 			}
 		return ret;
+	}
+	
+	public List<Video_Lectureseries> updateOpenAccessByVideo(Video video) throws SystemException{
+		List<Video_Lectureseries> vl = new ArrayList<Video_Lectureseries>();
+		vl = video_LectureseriesPersistence.findByVideo(video.getVideoId());
+		ListIterator<Video_Lectureseries> i = vl.listIterator();
+		while(i.hasNext()){
+			Video_Lectureseries v_l = i.next();
+			v_l.setOpenAccess(video.getOpenAccess());
+			Video_LectureseriesLocalServiceUtil.updateVideo_Lectureseries(v_l);
+		}
+		return vl; 
 	}
 	
 }

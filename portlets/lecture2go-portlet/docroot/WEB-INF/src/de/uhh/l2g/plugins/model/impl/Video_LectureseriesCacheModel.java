@@ -35,7 +35,7 @@ public class Video_LectureseriesCacheModel implements CacheModel<Video_Lecturese
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{videoLectureseriesId=");
 		sb.append(videoLectureseriesId);
@@ -43,6 +43,8 @@ public class Video_LectureseriesCacheModel implements CacheModel<Video_Lecturese
 		sb.append(videoId);
 		sb.append(", lectureseriesId=");
 		sb.append(lectureseriesId);
+		sb.append(", openAccess=");
+		sb.append(openAccess);
 		sb.append("}");
 
 		return sb.toString();
@@ -55,6 +57,7 @@ public class Video_LectureseriesCacheModel implements CacheModel<Video_Lecturese
 		video_LectureseriesImpl.setVideoLectureseriesId(videoLectureseriesId);
 		video_LectureseriesImpl.setVideoId(videoId);
 		video_LectureseriesImpl.setLectureseriesId(lectureseriesId);
+		video_LectureseriesImpl.setOpenAccess(openAccess);
 
 		video_LectureseriesImpl.resetOriginalValues();
 
@@ -66,6 +69,7 @@ public class Video_LectureseriesCacheModel implements CacheModel<Video_Lecturese
 		videoLectureseriesId = objectInput.readLong();
 		videoId = objectInput.readLong();
 		lectureseriesId = objectInput.readLong();
+		openAccess = objectInput.readInt();
 	}
 
 	@Override
@@ -74,9 +78,11 @@ public class Video_LectureseriesCacheModel implements CacheModel<Video_Lecturese
 		objectOutput.writeLong(videoLectureseriesId);
 		objectOutput.writeLong(videoId);
 		objectOutput.writeLong(lectureseriesId);
+		objectOutput.writeInt(openAccess);
 	}
 
 	public long videoLectureseriesId;
 	public long videoId;
 	public long lectureseriesId;
+	public int openAccess;
 }

@@ -78,4 +78,9 @@ public class Lectureseries_InstitutionLocalServiceImpl
 		if (lfL.size()>0) ret=true;
 		return ret;
 	}
+	
+	public List<Lectureseries_Institution> getByLectureseries(long lectureseriesId) throws SystemException{
+		return lectureseries_InstitutionPersistence.findByLectureseriesId(lectureseriesId);
+	}
+	
 }

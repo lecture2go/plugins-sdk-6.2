@@ -17,6 +17,9 @@
         <column name="password" type="String"></column>
         <column name="approved" type="int"></column>
         <column name="longDesc" type="String"></column>
+        <column name="latestOpenAccessVideoId" type="long"></column>
+        <column name="latestVideoUploadDate" type="Date"></column>
+        <column name="latestVideoGenerationDate" type="String"></column>
         <order by="asc">
             <order-column name="name" order-by="asc"></order-column>
         </order>
@@ -46,6 +49,15 @@
         </finder>
         <finder name="Password" return-type="Collection" unique="false">
             <finder-column name="password"></finder-column>
+        </finder>
+        <finder name="LatestOpenAccessVideo" return-type="Collection">
+            <finder-column name="latestOpenAccessVideoId"></finder-column>
+        </finder>
+        <finder name="LatestVideoUploadDate" return-type="Collection">
+            <finder-column name="latestVideoUploadDate"></finder-column>
+        </finder>
+        <finder name="LatestVideoGenerationDate" return-type="Collection">
+            <finder-column name="latestVideoGenerationDate"></finder-column>
         </finder>
     </entity>
     <entity name="Institution" local-service="true" remote-service="false">
@@ -292,10 +304,8 @@
         <column name="citation2go" type="int"></column>
         <order by="desc">
             <order-column name="videoId" order-by="desc"></order-column>
+            <order-column name="uploadDate" order-by="desc"></order-column>
         </order>
-        <finder name="Institution" return-type="Collection">
-            <finder-column name="rootInstitutionId"></finder-column>
-        </finder>
         <finder name="Producer" return-type="Collection">
             <finder-column name="producerId"></finder-column>
         </finder>
@@ -317,6 +327,12 @@
         <finder name="Filename" return-type="Collection">
             <finder-column name="filename"></finder-column>
         </finder>
+        <finder name="UploadDate" return-type="Collection">
+            <finder-column name="uploadDate"></finder-column>
+        </finder>
+        <finder name="RootInstitution" return-type="Collection">
+            <finder-column name="rootInstitutionId"></finder-column>
+        </finder>
     </entity>
     <entity name="Video_Institution" local-service="true" remote-service="false">
         <column name="videoInstitutionId" type="long" primary="true" id-type="increment"></column>
@@ -336,11 +352,15 @@
         <column name="hitsPerMonth" type="long"></column>
         <column name="hitsPerYear" type="long"></column>
         <column name="videoId" type="long"></column>
+        <finder name="Video" return-type="Collection">
+            <finder-column name="videoId"></finder-column>
+        </finder>
     </entity>
     <entity name="Video_Lectureseries" local-service="true" remote-service="false">
         <column name="videoLectureseriesId" type="long" primary="true" id-type="increment"></column>
         <column name="videoId" type="long"></column>
         <column name="lectureseriesId" type="long"></column>
+        <column name="openAccess" type="int"></column>
         <finder name="Video" return-type="Collection">
             <finder-column name="videoId"></finder-column>
         </finder>

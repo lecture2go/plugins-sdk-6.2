@@ -28,6 +28,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.Method;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -86,6 +87,10 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 		attributes.put("password", getPassword());
 		attributes.put("approved", getApproved());
 		attributes.put("longDesc", getLongDesc());
+		attributes.put("latestOpenAccessVideoId", getLatestOpenAccessVideoId());
+		attributes.put("latestVideoUploadDate", getLatestVideoUploadDate());
+		attributes.put("latestVideoGenerationDate",
+			getLatestVideoGenerationDate());
 
 		return attributes;
 	}
@@ -168,6 +173,27 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 
 		if (longDesc != null) {
 			setLongDesc(longDesc);
+		}
+
+		Long latestOpenAccessVideoId = (Long)attributes.get(
+				"latestOpenAccessVideoId");
+
+		if (latestOpenAccessVideoId != null) {
+			setLatestOpenAccessVideoId(latestOpenAccessVideoId);
+		}
+
+		Date latestVideoUploadDate = (Date)attributes.get(
+				"latestVideoUploadDate");
+
+		if (latestVideoUploadDate != null) {
+			setLatestVideoUploadDate(latestVideoUploadDate);
+		}
+
+		String latestVideoGenerationDate = (String)attributes.get(
+				"latestVideoGenerationDate");
+
+		if (latestVideoGenerationDate != null) {
+			setLatestVideoGenerationDate(latestVideoGenerationDate);
 		}
 	}
 
@@ -471,6 +497,79 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 		}
 	}
 
+	@Override
+	public long getLatestOpenAccessVideoId() {
+		return _latestOpenAccessVideoId;
+	}
+
+	@Override
+	public void setLatestOpenAccessVideoId(long latestOpenAccessVideoId) {
+		_latestOpenAccessVideoId = latestOpenAccessVideoId;
+
+		if (_lectureseriesRemoteModel != null) {
+			try {
+				Class<?> clazz = _lectureseriesRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setLatestOpenAccessVideoId",
+						long.class);
+
+				method.invoke(_lectureseriesRemoteModel, latestOpenAccessVideoId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public Date getLatestVideoUploadDate() {
+		return _latestVideoUploadDate;
+	}
+
+	@Override
+	public void setLatestVideoUploadDate(Date latestVideoUploadDate) {
+		_latestVideoUploadDate = latestVideoUploadDate;
+
+		if (_lectureseriesRemoteModel != null) {
+			try {
+				Class<?> clazz = _lectureseriesRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setLatestVideoUploadDate",
+						Date.class);
+
+				method.invoke(_lectureseriesRemoteModel, latestVideoUploadDate);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getLatestVideoGenerationDate() {
+		return _latestVideoGenerationDate;
+	}
+
+	@Override
+	public void setLatestVideoGenerationDate(String latestVideoGenerationDate) {
+		_latestVideoGenerationDate = latestVideoGenerationDate;
+
+		if (_lectureseriesRemoteModel != null) {
+			try {
+				Class<?> clazz = _lectureseriesRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setLatestVideoGenerationDate",
+						String.class);
+
+				method.invoke(_lectureseriesRemoteModel,
+					latestVideoGenerationDate);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
 	public BaseModel<?> getLectureseriesRemoteModel() {
 		return _lectureseriesRemoteModel;
 	}
@@ -554,6 +653,9 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 		clone.setPassword(getPassword());
 		clone.setApproved(getApproved());
 		clone.setLongDesc(getLongDesc());
+		clone.setLatestOpenAccessVideoId(getLatestOpenAccessVideoId());
+		clone.setLatestVideoUploadDate(getLatestVideoUploadDate());
+		clone.setLatestVideoGenerationDate(getLatestVideoGenerationDate());
 
 		return clone;
 	}
@@ -604,7 +706,7 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{number=");
 		sb.append(getNumber());
@@ -632,6 +734,12 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 		sb.append(getApproved());
 		sb.append(", longDesc=");
 		sb.append(getLongDesc());
+		sb.append(", latestOpenAccessVideoId=");
+		sb.append(getLatestOpenAccessVideoId());
+		sb.append(", latestVideoUploadDate=");
+		sb.append(getLatestVideoUploadDate());
+		sb.append(", latestVideoGenerationDate=");
+		sb.append(getLatestVideoGenerationDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -639,7 +747,7 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(52);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Lectureseries");
@@ -697,6 +805,18 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 			"<column><column-name>longDesc</column-name><column-value><![CDATA[");
 		sb.append(getLongDesc());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>latestOpenAccessVideoId</column-name><column-value><![CDATA[");
+		sb.append(getLatestOpenAccessVideoId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>latestVideoUploadDate</column-name><column-value><![CDATA[");
+		sb.append(getLatestVideoUploadDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>latestVideoGenerationDate</column-name><column-value><![CDATA[");
+		sb.append(getLatestVideoGenerationDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -716,6 +836,9 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 	private String _password;
 	private int _approved;
 	private String _longDesc;
+	private long _latestOpenAccessVideoId;
+	private Date _latestVideoUploadDate;
+	private String _latestVideoGenerationDate;
 	private BaseModel<?> _lectureseriesRemoteModel;
 	private Class<?> _clpSerializerClass = de.uhh.l2g.plugins.service.ClpSerializer.class;
 }

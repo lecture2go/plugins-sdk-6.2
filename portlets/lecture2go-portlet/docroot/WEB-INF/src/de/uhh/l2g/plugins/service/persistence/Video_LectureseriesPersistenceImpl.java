@@ -1371,6 +1371,7 @@ public class Video_LectureseriesPersistenceImpl extends BasePersistenceImpl<Vide
 		video_LectureseriesImpl.setVideoLectureseriesId(video_Lectureseries.getVideoLectureseriesId());
 		video_LectureseriesImpl.setVideoId(video_Lectureseries.getVideoId());
 		video_LectureseriesImpl.setLectureseriesId(video_Lectureseries.getLectureseriesId());
+		video_LectureseriesImpl.setOpenAccess(video_Lectureseries.getOpenAccess());
 
 		return video_LectureseriesImpl;
 	}

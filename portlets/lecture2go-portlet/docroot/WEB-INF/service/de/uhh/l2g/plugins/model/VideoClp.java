@@ -16,6 +16,7 @@ package de.uhh.l2g.plugins.model;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.BaseModel;
@@ -1665,6 +1666,14 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 		else {
 			value = 0;
 		}
+
+		value = value * -1;
+
+		if (value != 0) {
+			return value;
+		}
+
+		value = DateUtil.compareTo(getUploadDate(), video.getUploadDate());
 
 		value = value * -1;
 

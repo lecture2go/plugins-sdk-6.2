@@ -268,4 +268,17 @@ public interface LectureseriesLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getAllLectureseriesWhithPassword();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getAllForVideo(
+		de.uhh.l2g.plugins.model.Video video);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getByLatestVideoId(
+		java.lang.Long latestVideoId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void updateOpenAccess(de.uhh.l2g.plugins.model.Video video,
+		de.uhh.l2g.plugins.model.Lectureseries lectureseries)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

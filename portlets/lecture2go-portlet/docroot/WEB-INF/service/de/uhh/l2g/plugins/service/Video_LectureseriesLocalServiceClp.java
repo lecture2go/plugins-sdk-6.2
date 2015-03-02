@@ -123,6 +123,10 @@ public class Video_LectureseriesLocalServiceClp
 		_methodName20 = "removeByVideoId";
 
 		_methodParameterTypes20 = new String[] { "java.lang.Long" };
+
+		_methodName21 = "updateOpenAccessByVideo";
+
+		_methodParameterTypes21 = new String[] { "de.uhh.l2g.plugins.model.Video" };
 	}
 
 	@Override
@@ -733,6 +737,36 @@ public class Video_LectureseriesLocalServiceClp
 		return ((Boolean)returnObj).booleanValue();
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> updateOpenAccessByVideo(
+		de.uhh.l2g.plugins.model.Video video)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21,
+					new Object[] { ClpSerializer.translateInput(video) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries>)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -774,4 +808,6 @@ public class Video_LectureseriesLocalServiceClp
 	private String[] _methodParameterTypes19;
 	private String _methodName20;
 	private String[] _methodParameterTypes20;
+	private String _methodName21;
+	private String[] _methodParameterTypes21;
 }

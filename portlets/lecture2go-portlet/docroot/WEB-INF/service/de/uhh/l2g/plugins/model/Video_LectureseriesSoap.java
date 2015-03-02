@@ -32,6 +32,7 @@ public class Video_LectureseriesSoap implements Serializable {
 		soapModel.setVideoLectureseriesId(model.getVideoLectureseriesId());
 		soapModel.setVideoId(model.getVideoId());
 		soapModel.setLectureseriesId(model.getLectureseriesId());
+		soapModel.setOpenAccess(model.getOpenAccess());
 
 		return soapModel;
 	}
@@ -111,7 +112,16 @@ public class Video_LectureseriesSoap implements Serializable {
 		_lectureseriesId = lectureseriesId;
 	}
 
+	public int getOpenAccess() {
+		return _openAccess;
+	}
+
+	public void setOpenAccess(int openAccess) {
+		_openAccess = openAccess;
+	}
+
 	private long _videoLectureseriesId;
 	private long _videoId;
 	private long _lectureseriesId;
+	private int _openAccess;
 }

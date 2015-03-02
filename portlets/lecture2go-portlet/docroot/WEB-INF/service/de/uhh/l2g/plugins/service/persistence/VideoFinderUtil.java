@@ -26,9 +26,10 @@ public class VideoFinderUtil {
 		return getFinder().unlinkLectureseriesFromVideos(lectureseriesId);
 	}
 
-	public static de.uhh.l2g.plugins.model.Video findLatestVideoForLectureseries(
+	public static de.uhh.l2g.plugins.model.Video findLatestOpenAccessVideoForLectureseries(
 		java.lang.Long lectureseriesId) {
-		return getFinder().findLatestVideoForLectureseries(lectureseriesId);
+		return getFinder()
+				   .findLatestOpenAccessVideoForLectureseries(lectureseriesId);
 	}
 
 	public static java.util.List<de.uhh.l2g.plugins.model.Video> findLatestVideos() {

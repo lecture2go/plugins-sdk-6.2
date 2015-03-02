@@ -1280,6 +1280,424 @@ public interface LectureseriesPersistence extends BasePersistence<Lectureseries>
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns all the lectureserieses where latestOpenAccessVideoId = &#63;.
+	*
+	* @param latestOpenAccessVideoId the latest open access video ID
+	* @return the matching lectureserieses
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findByLatestOpenAccessVideo(
+		long latestOpenAccessVideoId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the lectureserieses where latestOpenAccessVideoId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.LectureseriesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param latestOpenAccessVideoId the latest open access video ID
+	* @param start the lower bound of the range of lectureserieses
+	* @param end the upper bound of the range of lectureserieses (not inclusive)
+	* @return the range of matching lectureserieses
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findByLatestOpenAccessVideo(
+		long latestOpenAccessVideoId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the lectureserieses where latestOpenAccessVideoId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.LectureseriesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param latestOpenAccessVideoId the latest open access video ID
+	* @param start the lower bound of the range of lectureserieses
+	* @param end the upper bound of the range of lectureserieses (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching lectureserieses
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findByLatestOpenAccessVideo(
+		long latestOpenAccessVideoId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first lectureseries in the ordered set where latestOpenAccessVideoId = &#63;.
+	*
+	* @param latestOpenAccessVideoId the latest open access video ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching lectureseries
+	* @throws de.uhh.l2g.plugins.NoSuchLectureseriesException if a matching lectureseries could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.Lectureseries findByLatestOpenAccessVideo_First(
+		long latestOpenAccessVideoId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchLectureseriesException;
+
+	/**
+	* Returns the first lectureseries in the ordered set where latestOpenAccessVideoId = &#63;.
+	*
+	* @param latestOpenAccessVideoId the latest open access video ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.Lectureseries fetchByLatestOpenAccessVideo_First(
+		long latestOpenAccessVideoId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last lectureseries in the ordered set where latestOpenAccessVideoId = &#63;.
+	*
+	* @param latestOpenAccessVideoId the latest open access video ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching lectureseries
+	* @throws de.uhh.l2g.plugins.NoSuchLectureseriesException if a matching lectureseries could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.Lectureseries findByLatestOpenAccessVideo_Last(
+		long latestOpenAccessVideoId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchLectureseriesException;
+
+	/**
+	* Returns the last lectureseries in the ordered set where latestOpenAccessVideoId = &#63;.
+	*
+	* @param latestOpenAccessVideoId the latest open access video ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.Lectureseries fetchByLatestOpenAccessVideo_Last(
+		long latestOpenAccessVideoId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the lectureserieses before and after the current lectureseries in the ordered set where latestOpenAccessVideoId = &#63;.
+	*
+	* @param lectureseriesId the primary key of the current lectureseries
+	* @param latestOpenAccessVideoId the latest open access video ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next lectureseries
+	* @throws de.uhh.l2g.plugins.NoSuchLectureseriesException if a lectureseries with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.Lectureseries[] findByLatestOpenAccessVideo_PrevAndNext(
+		long lectureseriesId, long latestOpenAccessVideoId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchLectureseriesException;
+
+	/**
+	* Removes all the lectureserieses where latestOpenAccessVideoId = &#63; from the database.
+	*
+	* @param latestOpenAccessVideoId the latest open access video ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByLatestOpenAccessVideo(long latestOpenAccessVideoId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of lectureserieses where latestOpenAccessVideoId = &#63;.
+	*
+	* @param latestOpenAccessVideoId the latest open access video ID
+	* @return the number of matching lectureserieses
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByLatestOpenAccessVideo(long latestOpenAccessVideoId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns all the lectureserieses where latestVideoUploadDate = &#63;.
+	*
+	* @param latestVideoUploadDate the latest video upload date
+	* @return the matching lectureserieses
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findByLatestVideoUploadDate(
+		java.util.Date latestVideoUploadDate)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the lectureserieses where latestVideoUploadDate = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.LectureseriesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param latestVideoUploadDate the latest video upload date
+	* @param start the lower bound of the range of lectureserieses
+	* @param end the upper bound of the range of lectureserieses (not inclusive)
+	* @return the range of matching lectureserieses
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findByLatestVideoUploadDate(
+		java.util.Date latestVideoUploadDate, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the lectureserieses where latestVideoUploadDate = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.LectureseriesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param latestVideoUploadDate the latest video upload date
+	* @param start the lower bound of the range of lectureserieses
+	* @param end the upper bound of the range of lectureserieses (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching lectureserieses
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findByLatestVideoUploadDate(
+		java.util.Date latestVideoUploadDate, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first lectureseries in the ordered set where latestVideoUploadDate = &#63;.
+	*
+	* @param latestVideoUploadDate the latest video upload date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching lectureseries
+	* @throws de.uhh.l2g.plugins.NoSuchLectureseriesException if a matching lectureseries could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.Lectureseries findByLatestVideoUploadDate_First(
+		java.util.Date latestVideoUploadDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchLectureseriesException;
+
+	/**
+	* Returns the first lectureseries in the ordered set where latestVideoUploadDate = &#63;.
+	*
+	* @param latestVideoUploadDate the latest video upload date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.Lectureseries fetchByLatestVideoUploadDate_First(
+		java.util.Date latestVideoUploadDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last lectureseries in the ordered set where latestVideoUploadDate = &#63;.
+	*
+	* @param latestVideoUploadDate the latest video upload date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching lectureseries
+	* @throws de.uhh.l2g.plugins.NoSuchLectureseriesException if a matching lectureseries could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.Lectureseries findByLatestVideoUploadDate_Last(
+		java.util.Date latestVideoUploadDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchLectureseriesException;
+
+	/**
+	* Returns the last lectureseries in the ordered set where latestVideoUploadDate = &#63;.
+	*
+	* @param latestVideoUploadDate the latest video upload date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.Lectureseries fetchByLatestVideoUploadDate_Last(
+		java.util.Date latestVideoUploadDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the lectureserieses before and after the current lectureseries in the ordered set where latestVideoUploadDate = &#63;.
+	*
+	* @param lectureseriesId the primary key of the current lectureseries
+	* @param latestVideoUploadDate the latest video upload date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next lectureseries
+	* @throws de.uhh.l2g.plugins.NoSuchLectureseriesException if a lectureseries with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.Lectureseries[] findByLatestVideoUploadDate_PrevAndNext(
+		long lectureseriesId, java.util.Date latestVideoUploadDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchLectureseriesException;
+
+	/**
+	* Removes all the lectureserieses where latestVideoUploadDate = &#63; from the database.
+	*
+	* @param latestVideoUploadDate the latest video upload date
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByLatestVideoUploadDate(
+		java.util.Date latestVideoUploadDate)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of lectureserieses where latestVideoUploadDate = &#63;.
+	*
+	* @param latestVideoUploadDate the latest video upload date
+	* @return the number of matching lectureserieses
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByLatestVideoUploadDate(
+		java.util.Date latestVideoUploadDate)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns all the lectureserieses where latestVideoGenerationDate = &#63;.
+	*
+	* @param latestVideoGenerationDate the latest video generation date
+	* @return the matching lectureserieses
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findByLatestVideoGenerationDate(
+		java.lang.String latestVideoGenerationDate)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the lectureserieses where latestVideoGenerationDate = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.LectureseriesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param latestVideoGenerationDate the latest video generation date
+	* @param start the lower bound of the range of lectureserieses
+	* @param end the upper bound of the range of lectureserieses (not inclusive)
+	* @return the range of matching lectureserieses
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findByLatestVideoGenerationDate(
+		java.lang.String latestVideoGenerationDate, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the lectureserieses where latestVideoGenerationDate = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.LectureseriesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param latestVideoGenerationDate the latest video generation date
+	* @param start the lower bound of the range of lectureserieses
+	* @param end the upper bound of the range of lectureserieses (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching lectureserieses
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findByLatestVideoGenerationDate(
+		java.lang.String latestVideoGenerationDate, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first lectureseries in the ordered set where latestVideoGenerationDate = &#63;.
+	*
+	* @param latestVideoGenerationDate the latest video generation date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching lectureseries
+	* @throws de.uhh.l2g.plugins.NoSuchLectureseriesException if a matching lectureseries could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.Lectureseries findByLatestVideoGenerationDate_First(
+		java.lang.String latestVideoGenerationDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchLectureseriesException;
+
+	/**
+	* Returns the first lectureseries in the ordered set where latestVideoGenerationDate = &#63;.
+	*
+	* @param latestVideoGenerationDate the latest video generation date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.Lectureseries fetchByLatestVideoGenerationDate_First(
+		java.lang.String latestVideoGenerationDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last lectureseries in the ordered set where latestVideoGenerationDate = &#63;.
+	*
+	* @param latestVideoGenerationDate the latest video generation date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching lectureseries
+	* @throws de.uhh.l2g.plugins.NoSuchLectureseriesException if a matching lectureseries could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.Lectureseries findByLatestVideoGenerationDate_Last(
+		java.lang.String latestVideoGenerationDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchLectureseriesException;
+
+	/**
+	* Returns the last lectureseries in the ordered set where latestVideoGenerationDate = &#63;.
+	*
+	* @param latestVideoGenerationDate the latest video generation date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.Lectureseries fetchByLatestVideoGenerationDate_Last(
+		java.lang.String latestVideoGenerationDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the lectureserieses before and after the current lectureseries in the ordered set where latestVideoGenerationDate = &#63;.
+	*
+	* @param lectureseriesId the primary key of the current lectureseries
+	* @param latestVideoGenerationDate the latest video generation date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next lectureseries
+	* @throws de.uhh.l2g.plugins.NoSuchLectureseriesException if a lectureseries with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.Lectureseries[] findByLatestVideoGenerationDate_PrevAndNext(
+		long lectureseriesId, java.lang.String latestVideoGenerationDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchLectureseriesException;
+
+	/**
+	* Removes all the lectureserieses where latestVideoGenerationDate = &#63; from the database.
+	*
+	* @param latestVideoGenerationDate the latest video generation date
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByLatestVideoGenerationDate(
+		java.lang.String latestVideoGenerationDate)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of lectureserieses where latestVideoGenerationDate = &#63;.
+	*
+	* @param latestVideoGenerationDate the latest video generation date
+	* @return the number of matching lectureserieses
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByLatestVideoGenerationDate(
+		java.lang.String latestVideoGenerationDate)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Caches the lectureseries in the entity cache if it is enabled.
 	*
 	* @param lectureseries the lectureseries

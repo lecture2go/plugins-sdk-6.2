@@ -14,6 +14,9 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import com.liferay.portal.kernel.exception.SystemException;
+
+import de.uhh.l2g.plugins.model.Videohitlist;
 import de.uhh.l2g.plugins.service.base.VideohitlistLocalServiceBaseImpl;
 
 /**
@@ -38,4 +41,7 @@ public class VideohitlistLocalServiceImpl
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.VideohitlistLocalServiceUtil} to access the videohitlist local service.
 	 */
 	
+	public void deleteByVideoId(Long videoId) throws SystemException{
+		videohitlistPersistence.removeByVideo(videoId);
+	}
 }

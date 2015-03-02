@@ -328,7 +328,7 @@ public class ProducerWrapper implements Producer, ModelWrapper<Producer> {
 	}
 
 	@Override
-	public int compareTo(Producer producer) {
+	public int compareTo(de.uhh.l2g.plugins.model.Producer producer) {
 		return _producer.compareTo(producer);
 	}
 
@@ -338,17 +338,17 @@ public class ProducerWrapper implements Producer, ModelWrapper<Producer> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<Producer> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.model.Producer> toCacheModel() {
 		return _producer.toCacheModel();
 	}
 
 	@Override
-	public Producer toEscapedModel() {
+	public de.uhh.l2g.plugins.model.Producer toEscapedModel() {
 		return new ProducerWrapper(_producer.toEscapedModel());
 	}
 
 	@Override
-	public Producer toUnescapedModel() {
+	public de.uhh.l2g.plugins.model.Producer toUnescapedModel() {
 		return new ProducerWrapper(_producer.toUnescapedModel());
 	}
 

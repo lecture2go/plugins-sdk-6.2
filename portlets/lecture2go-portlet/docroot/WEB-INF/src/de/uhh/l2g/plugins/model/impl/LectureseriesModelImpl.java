@@ -33,6 +33,7 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,9 +71,12 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 			{ "lectureseriesId", Types.BIGINT },
 			{ "password_", Types.VARCHAR },
 			{ "approved", Types.INTEGER },
-			{ "longDesc", Types.VARCHAR }
+			{ "longDesc", Types.VARCHAR },
+			{ "latestOpenAccessVideoId", Types.BIGINT },
+			{ "latestVideoUploadDate", Types.TIMESTAMP },
+			{ "latestVideoGenerationDate", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Lectureseries (number_ VARCHAR(75) null,eventType VARCHAR(75) null,eventCategory VARCHAR(75) null,name VARCHAR(75) null,shortDesc VARCHAR(75) null,semesterName VARCHAR(75) null,language VARCHAR(75) null,facultyName VARCHAR(75) null,instructorsString VARCHAR(75) null,lectureseriesId LONG not null primary key,password_ VARCHAR(75) null,approved INTEGER,longDesc VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Lectureseries (number_ VARCHAR(75) null,eventType VARCHAR(75) null,eventCategory VARCHAR(75) null,name VARCHAR(75) null,shortDesc VARCHAR(75) null,semesterName VARCHAR(75) null,language VARCHAR(75) null,facultyName VARCHAR(75) null,instructorsString VARCHAR(75) null,lectureseriesId LONG not null primary key,password_ VARCHAR(75) null,approved INTEGER,longDesc VARCHAR(75) null,latestOpenAccessVideoId LONG,latestVideoUploadDate DATE null,latestVideoGenerationDate VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Lectureseries";
 	public static final String ORDER_BY_JPQL = " ORDER BY lectureseries.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Lectureseries.name ASC";
@@ -93,10 +97,13 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 	public static long EVENTTYPE_COLUMN_BITMASK = 4L;
 	public static long FACULTYNAME_COLUMN_BITMASK = 8L;
 	public static long LANGUAGE_COLUMN_BITMASK = 16L;
-	public static long NAME_COLUMN_BITMASK = 32L;
-	public static long NUMBER_COLUMN_BITMASK = 64L;
-	public static long PASSWORD_COLUMN_BITMASK = 128L;
-	public static long SEMESTERNAME_COLUMN_BITMASK = 256L;
+	public static long LATESTOPENACCESSVIDEOID_COLUMN_BITMASK = 32L;
+	public static long LATESTVIDEOGENERATIONDATE_COLUMN_BITMASK = 64L;
+	public static long LATESTVIDEOUPLOADDATE_COLUMN_BITMASK = 128L;
+	public static long NAME_COLUMN_BITMASK = 256L;
+	public static long NUMBER_COLUMN_BITMASK = 512L;
+	public static long PASSWORD_COLUMN_BITMASK = 1024L;
+	public static long SEMESTERNAME_COLUMN_BITMASK = 2048L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Lectureseries"));
 
@@ -150,6 +157,10 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 		attributes.put("password", getPassword());
 		attributes.put("approved", getApproved());
 		attributes.put("longDesc", getLongDesc());
+		attributes.put("latestOpenAccessVideoId", getLatestOpenAccessVideoId());
+		attributes.put("latestVideoUploadDate", getLatestVideoUploadDate());
+		attributes.put("latestVideoGenerationDate",
+			getLatestVideoGenerationDate());
 
 		return attributes;
 	}
@@ -232,6 +243,27 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 
 		if (longDesc != null) {
 			setLongDesc(longDesc);
+		}
+
+		Long latestOpenAccessVideoId = (Long)attributes.get(
+				"latestOpenAccessVideoId");
+
+		if (latestOpenAccessVideoId != null) {
+			setLatestOpenAccessVideoId(latestOpenAccessVideoId);
+		}
+
+		Date latestVideoUploadDate = (Date)attributes.get(
+				"latestVideoUploadDate");
+
+		if (latestVideoUploadDate != null) {
+			setLatestVideoUploadDate(latestVideoUploadDate);
+		}
+
+		String latestVideoGenerationDate = (String)attributes.get(
+				"latestVideoGenerationDate");
+
+		if (latestVideoGenerationDate != null) {
+			setLatestVideoGenerationDate(latestVideoGenerationDate);
 		}
 	}
 
@@ -512,6 +544,73 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 		_longDesc = longDesc;
 	}
 
+	@Override
+	public long getLatestOpenAccessVideoId() {
+		return _latestOpenAccessVideoId;
+	}
+
+	@Override
+	public void setLatestOpenAccessVideoId(long latestOpenAccessVideoId) {
+		_columnBitmask |= LATESTOPENACCESSVIDEOID_COLUMN_BITMASK;
+
+		if (!_setOriginalLatestOpenAccessVideoId) {
+			_setOriginalLatestOpenAccessVideoId = true;
+
+			_originalLatestOpenAccessVideoId = _latestOpenAccessVideoId;
+		}
+
+		_latestOpenAccessVideoId = latestOpenAccessVideoId;
+	}
+
+	public long getOriginalLatestOpenAccessVideoId() {
+		return _originalLatestOpenAccessVideoId;
+	}
+
+	@Override
+	public Date getLatestVideoUploadDate() {
+		return _latestVideoUploadDate;
+	}
+
+	@Override
+	public void setLatestVideoUploadDate(Date latestVideoUploadDate) {
+		_columnBitmask |= LATESTVIDEOUPLOADDATE_COLUMN_BITMASK;
+
+		if (_originalLatestVideoUploadDate == null) {
+			_originalLatestVideoUploadDate = _latestVideoUploadDate;
+		}
+
+		_latestVideoUploadDate = latestVideoUploadDate;
+	}
+
+	public Date getOriginalLatestVideoUploadDate() {
+		return _originalLatestVideoUploadDate;
+	}
+
+	@Override
+	public String getLatestVideoGenerationDate() {
+		if (_latestVideoGenerationDate == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _latestVideoGenerationDate;
+		}
+	}
+
+	@Override
+	public void setLatestVideoGenerationDate(String latestVideoGenerationDate) {
+		_columnBitmask |= LATESTVIDEOGENERATIONDATE_COLUMN_BITMASK;
+
+		if (_originalLatestVideoGenerationDate == null) {
+			_originalLatestVideoGenerationDate = _latestVideoGenerationDate;
+		}
+
+		_latestVideoGenerationDate = latestVideoGenerationDate;
+	}
+
+	public String getOriginalLatestVideoGenerationDate() {
+		return GetterUtil.getString(_originalLatestVideoGenerationDate);
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -556,6 +655,9 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 		lectureseriesImpl.setPassword(getPassword());
 		lectureseriesImpl.setApproved(getApproved());
 		lectureseriesImpl.setLongDesc(getLongDesc());
+		lectureseriesImpl.setLatestOpenAccessVideoId(getLatestOpenAccessVideoId());
+		lectureseriesImpl.setLatestVideoUploadDate(getLatestVideoUploadDate());
+		lectureseriesImpl.setLatestVideoGenerationDate(getLatestVideoGenerationDate());
 
 		lectureseriesImpl.resetOriginalValues();
 
@@ -625,6 +727,14 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 		lectureseriesModelImpl._originalApproved = lectureseriesModelImpl._approved;
 
 		lectureseriesModelImpl._setOriginalApproved = false;
+
+		lectureseriesModelImpl._originalLatestOpenAccessVideoId = lectureseriesModelImpl._latestOpenAccessVideoId;
+
+		lectureseriesModelImpl._setOriginalLatestOpenAccessVideoId = false;
+
+		lectureseriesModelImpl._originalLatestVideoUploadDate = lectureseriesModelImpl._latestVideoUploadDate;
+
+		lectureseriesModelImpl._originalLatestVideoGenerationDate = lectureseriesModelImpl._latestVideoGenerationDate;
 
 		lectureseriesModelImpl._columnBitmask = 0;
 	}
@@ -725,12 +835,32 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 			lectureseriesCacheModel.longDesc = null;
 		}
 
+		lectureseriesCacheModel.latestOpenAccessVideoId = getLatestOpenAccessVideoId();
+
+		Date latestVideoUploadDate = getLatestVideoUploadDate();
+
+		if (latestVideoUploadDate != null) {
+			lectureseriesCacheModel.latestVideoUploadDate = latestVideoUploadDate.getTime();
+		}
+		else {
+			lectureseriesCacheModel.latestVideoUploadDate = Long.MIN_VALUE;
+		}
+
+		lectureseriesCacheModel.latestVideoGenerationDate = getLatestVideoGenerationDate();
+
+		String latestVideoGenerationDate = lectureseriesCacheModel.latestVideoGenerationDate;
+
+		if ((latestVideoGenerationDate != null) &&
+				(latestVideoGenerationDate.length() == 0)) {
+			lectureseriesCacheModel.latestVideoGenerationDate = null;
+		}
+
 		return lectureseriesCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{number=");
 		sb.append(getNumber());
@@ -758,6 +888,12 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 		sb.append(getApproved());
 		sb.append(", longDesc=");
 		sb.append(getLongDesc());
+		sb.append(", latestOpenAccessVideoId=");
+		sb.append(getLatestOpenAccessVideoId());
+		sb.append(", latestVideoUploadDate=");
+		sb.append(getLatestVideoUploadDate());
+		sb.append(", latestVideoGenerationDate=");
+		sb.append(getLatestVideoGenerationDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -765,7 +901,7 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(52);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Lectureseries");
@@ -823,6 +959,18 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 			"<column><column-name>longDesc</column-name><column-value><![CDATA[");
 		sb.append(getLongDesc());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>latestOpenAccessVideoId</column-name><column-value><![CDATA[");
+		sb.append(getLatestOpenAccessVideoId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>latestVideoUploadDate</column-name><column-value><![CDATA[");
+		sb.append(getLatestVideoUploadDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>latestVideoGenerationDate</column-name><column-value><![CDATA[");
+		sb.append(getLatestVideoGenerationDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -856,6 +1004,13 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 	private int _originalApproved;
 	private boolean _setOriginalApproved;
 	private String _longDesc;
+	private long _latestOpenAccessVideoId;
+	private long _originalLatestOpenAccessVideoId;
+	private boolean _setOriginalLatestOpenAccessVideoId;
+	private Date _latestVideoUploadDate;
+	private Date _originalLatestVideoUploadDate;
+	private String _latestVideoGenerationDate;
+	private String _originalLatestVideoGenerationDate;
 	private long _columnBitmask;
 	private Lectureseries _escapedModel;
 }

@@ -296,6 +296,23 @@ public class LectureseriesLocalServiceUtil {
 		return getService().getAllLectureseriesWhithPassword();
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getAllForVideo(
+		de.uhh.l2g.plugins.model.Video video) {
+		return getService().getAllForVideo(video);
+	}
+
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getByLatestVideoId(
+		java.lang.Long latestVideoId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getByLatestVideoId(latestVideoId);
+	}
+
+	public static void updateOpenAccess(de.uhh.l2g.plugins.model.Video video,
+		de.uhh.l2g.plugins.model.Lectureseries lectureseries)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().updateOpenAccess(video, lectureseries);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

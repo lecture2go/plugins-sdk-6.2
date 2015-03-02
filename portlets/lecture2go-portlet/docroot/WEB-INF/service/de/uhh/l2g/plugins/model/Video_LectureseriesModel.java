@@ -98,6 +98,20 @@ public interface Video_LectureseriesModel extends BaseModel<Video_Lectureseries>
 	 */
 	public void setLectureseriesId(long lectureseriesId);
 
+	/**
+	 * Returns the open access of this video_ lectureseries.
+	 *
+	 * @return the open access of this video_ lectureseries
+	 */
+	public int getOpenAccess();
+
+	/**
+	 * Sets the open access of this video_ lectureseries.
+	 *
+	 * @param openAccess the open access of this video_ lectureseries
+	 */
+	public void setOpenAccess(int openAccess);
+
 	@Override
 	public boolean isNew();
 

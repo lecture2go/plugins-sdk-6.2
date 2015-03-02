@@ -300,6 +300,13 @@ public class Video_LectureseriesLocalServiceWrapper
 		return _video_LectureseriesLocalService.removeByVideoId(videoId);
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> updateOpenAccessByVideo(
+		de.uhh.l2g.plugins.model.Video video)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _video_LectureseriesLocalService.updateOpenAccessByVideo(video);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

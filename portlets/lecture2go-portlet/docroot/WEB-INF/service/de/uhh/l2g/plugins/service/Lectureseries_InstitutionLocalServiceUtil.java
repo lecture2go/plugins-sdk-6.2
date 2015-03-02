@@ -296,6 +296,12 @@ public class Lectureseries_InstitutionLocalServiceUtil {
 		return getService().institutionAssignedToLectureseries(lf);
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Institution> getByLectureseries(
+		long lectureseriesId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getByLectureseries(lectureseriesId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

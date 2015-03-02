@@ -20,7 +20,7 @@ package de.uhh.l2g.plugins.service.persistence;
 public interface VideoFinder {
 	public int unlinkLectureseriesFromVideos(java.lang.Long lectureseriesId);
 
-	public de.uhh.l2g.plugins.model.Video findLatestVideoForLectureseries(
+	public de.uhh.l2g.plugins.model.Video findLatestOpenAccessVideoForLectureseries(
 		java.lang.Long lectureseriesId);
 
 	public java.util.List<de.uhh.l2g.plugins.model.Video> findLatestVideos();

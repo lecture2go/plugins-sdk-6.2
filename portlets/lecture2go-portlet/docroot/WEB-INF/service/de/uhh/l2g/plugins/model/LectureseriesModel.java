@@ -23,6 +23,8 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.Serializable;
 
+import java.util.Date;
+
 /**
  * The base model interface for the Lectureseries service. Represents a row in the &quot;LG_Lectureseries&quot; database table, with each column mapped to a property of this class.
  *
@@ -249,6 +251,49 @@ public interface LectureseriesModel extends BaseModel<Lectureseries> {
 	 * @param longDesc the long desc of this lectureseries
 	 */
 	public void setLongDesc(String longDesc);
+
+	/**
+	 * Returns the latest open access video ID of this lectureseries.
+	 *
+	 * @return the latest open access video ID of this lectureseries
+	 */
+	public long getLatestOpenAccessVideoId();
+
+	/**
+	 * Sets the latest open access video ID of this lectureseries.
+	 *
+	 * @param latestOpenAccessVideoId the latest open access video ID of this lectureseries
+	 */
+	public void setLatestOpenAccessVideoId(long latestOpenAccessVideoId);
+
+	/**
+	 * Returns the latest video upload date of this lectureseries.
+	 *
+	 * @return the latest video upload date of this lectureseries
+	 */
+	public Date getLatestVideoUploadDate();
+
+	/**
+	 * Sets the latest video upload date of this lectureseries.
+	 *
+	 * @param latestVideoUploadDate the latest video upload date of this lectureseries
+	 */
+	public void setLatestVideoUploadDate(Date latestVideoUploadDate);
+
+	/**
+	 * Returns the latest video generation date of this lectureseries.
+	 *
+	 * @return the latest video generation date of this lectureseries
+	 */
+	@AutoEscape
+	public String getLatestVideoGenerationDate();
+
+	/**
+	 * Sets the latest video generation date of this lectureseries.
+	 *
+	 * @param latestVideoGenerationDate the latest video generation date of this lectureseries
+	 */
+	public void setLatestVideoGenerationDate(String latestVideoGenerationDate);
 
 	@Override
 	public boolean isNew();

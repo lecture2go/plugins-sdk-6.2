@@ -271,10 +271,10 @@ public class VideoLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static de.uhh.l2g.plugins.model.Video getLatestVideoForLectureseries(
-		java.lang.Long lectureseriesId, int begin, int end) {
+	public static de.uhh.l2g.plugins.model.Video getLatestOpenAccessVideoForLectureseries(
+		java.lang.Long lectureseriesId) {
 		return getService()
-				   .getLatestVideoForLectureseries(lectureseriesId, begin, end);
+				   .getLatestOpenAccessVideoForLectureseries(lectureseriesId);
 	}
 
 	public static int unlinkLectureseriesFromVideos(
@@ -282,10 +282,10 @@ public class VideoLocalServiceUtil {
 		return getService().unlinkLectureseriesFromVideos(lectureseriesId);
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByInstitution(
-		java.lang.Long institutionId)
+	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByRootInstitution(
+		java.lang.Long rootInstitutionId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getByInstitution(institutionId);
+		return getService().getByRootInstitution(rootInstitutionId);
 	}
 
 	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByFilename(

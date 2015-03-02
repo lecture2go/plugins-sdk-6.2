@@ -47,6 +47,9 @@
 		<field name="password" type="String" />
 		<field name="approved" type="int" />
 		<field name="longDesc" type="String" />
+		<field name="latestOpenAccessVideoId" type="long" />
+		<field name="latestVideoUploadDate" type="Date" />
+		<field name="latestVideoGenerationDate" type="String" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Lectureseries_Institution">
 		<field name="lectureseriesInstitutionId" type="long" />
@@ -162,6 +165,7 @@
 		<field name="videoLectureseriesId" type="long" />
 		<field name="videoId" type="long" />
 		<field name="lectureseriesId" type="long" />
+		<field name="openAccess" type="int" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Videohitlist">
 		<field name="videohitlistId" type="long" />

@@ -377,7 +377,7 @@ public class SegmentWrapper implements Segment, ModelWrapper<Segment> {
 	}
 
 	@Override
-	public int compareTo(Segment segment) {
+	public int compareTo(de.uhh.l2g.plugins.model.Segment segment) {
 		return _segment.compareTo(segment);
 	}
 
@@ -387,17 +387,17 @@ public class SegmentWrapper implements Segment, ModelWrapper<Segment> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<Segment> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.model.Segment> toCacheModel() {
 		return _segment.toCacheModel();
 	}
 
 	@Override
-	public Segment toEscapedModel() {
+	public de.uhh.l2g.plugins.model.Segment toEscapedModel() {
 		return new SegmentWrapper(_segment.toEscapedModel());
 	}
 
 	@Override
-	public Segment toUnescapedModel() {
+	public de.uhh.l2g.plugins.model.Segment toUnescapedModel() {
 		return new SegmentWrapper(_segment.toUnescapedModel());
 	}
 

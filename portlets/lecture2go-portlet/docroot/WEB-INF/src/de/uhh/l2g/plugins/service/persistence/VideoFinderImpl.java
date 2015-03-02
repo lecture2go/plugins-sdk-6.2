@@ -16,6 +16,7 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.Video;
+import de.uhh.l2g.plugins.model.impl.VideoImpl;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.util.VideoGenerationDateComparator;
@@ -23,7 +24,7 @@ import de.uhh.l2g.plugins.util.VideoGenerationDateComparator;
 public class VideoFinderImpl extends BasePersistenceImpl<Video> implements VideoFinder {
 
 	public static final String RESET_LECTURESERIES_FOR_VIDEOS = VideoFinder.class.getName() + ".resetLectureseriesForVideos";
-	public static final String FIND_LATES_VIDEO_FOR_LECTURESERIES = VideoFinder.class.getName() + ".findLatestVideoForlectureseries";
+	public static final String FIND_LATES_OPEN_ACCESS_VIDEO_FOR_LECTURESERIES = VideoFinder.class.getName() + ".findLatestOpenAccessVideoForlectureseries";
 
 	public int unlinkLectureseriesFromVideos(Long lectureseriesId) {
 		Session session = null;
@@ -48,11 +49,12 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 		return 0;
 	}
 	
-	public Video findLatestVideoForLectureseries(Long lectureseriesId) {
+	public Video findLatestOpenAccessVideoForLectureseries(Long lectureseriesId) {
 		Session session = null;
+		Video video = new VideoImpl();
 		try {
 			session = openSession();
-			String sql = CustomSQLUtil.get(FIND_LATES_VIDEO_FOR_LECTURESERIES);
+			String sql = CustomSQLUtil.get(FIND_LATES_OPEN_ACCESS_VIDEO_FOR_LECTURESERIES);
 			SQLQuery q = session.createSQLQuery(sql);
 			q.setCacheable(false);
 			q.addScalar("videoId", Type.LONG);
@@ -61,7 +63,8 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 			qPos.add(lectureseriesId);
 			@SuppressWarnings("unchecked")
 			List <Long> vl =  (List<Long>) QueryUtil.list(q, getDialect(), com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
-			return VideoLocalServiceUtil.getVideo(vl.get(0));
+			video = VideoLocalServiceUtil.getVideo(vl.get(0));
+			return video;
 		} catch (Exception e) {
 			try {
 				throw new SystemException(e);
@@ -71,7 +74,7 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 		} finally {
 			closeSession(session);
 		}
-		return null;
+		return video;
 	}
 	
 	//TODO optimize to big data
@@ -82,7 +85,7 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 		Iterator<Lectureseries> it = ll.iterator();
 		while (it.hasNext()){
 			Lectureseries l = (Lectureseries) it.next();
-			Video v = findLatestVideoForLectureseries(l.getLectureseriesId());
+			Video v = findLatestOpenAccessVideoForLectureseries(l.getLectureseriesId());
 			vl.add(v);
 		}
 		Comparator<Video> comparator = new VideoGenerationDateComparator();

@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import java.util.Date;
+
 /**
  * The cache model class for representing Lectureseries in entity cache.
  *
@@ -36,7 +38,7 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{number=");
 		sb.append(number);
@@ -64,6 +66,12 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 		sb.append(approved);
 		sb.append(", longDesc=");
 		sb.append(longDesc);
+		sb.append(", latestOpenAccessVideoId=");
+		sb.append(latestOpenAccessVideoId);
+		sb.append(", latestVideoUploadDate=");
+		sb.append(latestVideoUploadDate);
+		sb.append(", latestVideoGenerationDate=");
+		sb.append(latestVideoGenerationDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -154,6 +162,23 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 			lectureseriesImpl.setLongDesc(longDesc);
 		}
 
+		lectureseriesImpl.setLatestOpenAccessVideoId(latestOpenAccessVideoId);
+
+		if (latestVideoUploadDate == Long.MIN_VALUE) {
+			lectureseriesImpl.setLatestVideoUploadDate(null);
+		}
+		else {
+			lectureseriesImpl.setLatestVideoUploadDate(new Date(
+					latestVideoUploadDate));
+		}
+
+		if (latestVideoGenerationDate == null) {
+			lectureseriesImpl.setLatestVideoGenerationDate(StringPool.BLANK);
+		}
+		else {
+			lectureseriesImpl.setLatestVideoGenerationDate(latestVideoGenerationDate);
+		}
+
 		lectureseriesImpl.resetOriginalValues();
 
 		return lectureseriesImpl;
@@ -174,6 +199,9 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 		password = objectInput.readUTF();
 		approved = objectInput.readInt();
 		longDesc = objectInput.readUTF();
+		latestOpenAccessVideoId = objectInput.readLong();
+		latestVideoUploadDate = objectInput.readLong();
+		latestVideoGenerationDate = objectInput.readUTF();
 	}
 
 	@Override
@@ -259,6 +287,16 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 		else {
 			objectOutput.writeUTF(longDesc);
 		}
+
+		objectOutput.writeLong(latestOpenAccessVideoId);
+		objectOutput.writeLong(latestVideoUploadDate);
+
+		if (latestVideoGenerationDate == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(latestVideoGenerationDate);
+		}
 	}
 
 	public String number;
@@ -274,4 +312,7 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 	public String password;
 	public int approved;
 	public String longDesc;
+	public long latestOpenAccessVideoId;
+	public long latestVideoUploadDate;
+	public String latestVideoGenerationDate;
 }

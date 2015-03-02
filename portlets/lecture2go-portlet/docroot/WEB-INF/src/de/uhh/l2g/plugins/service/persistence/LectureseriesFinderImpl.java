@@ -3,6 +3,7 @@ package de.uhh.l2g.plugins.service.persistence;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
@@ -12,6 +13,7 @@ import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import de.uhh.l2g.plugins.model.Lectureseries;
+import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.impl.LectureseriesImpl;
 
 public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> implements LectureseriesFinder {
@@ -19,6 +21,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 	public static final String FIND_ALL_SEMESTERS = LectureseriesFinder.class.getName() + ".findAllSemesters";
 	public static final String FIND_ALL_LECTURESERIES_WITH_OPENACCESS_VIDEOS = LectureseriesFinder.class.getName() + ".findAllLectureseriesWithOpenAccessVideos";
 	public static final String FIND_ALL_LECTURESERIES_WITH_PASSWORD = LectureseriesFinder.class.getName() + ".findAllLectureseriesWithPassword";
+	public static final String FIND_ALL_LECTURESERIES_FOR_VIDEO = LectureseriesFinder.class.getName() + ".findAllLectureseriesForVideo";
 
 	public List<Lectureseries> findAllLectureseriesWhithPassword(){
 		Session session = null;
@@ -39,7 +42,46 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			q.addScalar("password_", Type.STRING);
 			q.addScalar("approved", Type.STRING);
 			q.addScalar("longDesc", Type.STRING);
+			q.addScalar("latestOpenAccessVideoId", Type.LONG);
 			q.setCacheable(false);			
+			@SuppressWarnings("unchecked")
+			List <Object[]> ls =  (List <Object[]>) QueryUtil.list(q, getDialect(), com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+			return assembleLectureseries(ls);
+		} catch (Exception e) {
+			try {
+				throw new SystemException(e);
+			} catch (SystemException se) {
+				se.printStackTrace();
+			}
+		} finally {
+			closeSession(session);
+		}
+		return null;		
+	}
+	
+	public List<Lectureseries> findAllLectureseriesForVideo(Video video){
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(FIND_ALL_LECTURESERIES_FOR_VIDEO);
+			SQLQuery q = session.createSQLQuery(sql);
+			q.addScalar("number_", Type.STRING);
+			q.addScalar("eventType", Type.STRING);
+			q.addScalar("eventCategory", Type.STRING);
+			q.addScalar("name", Type.STRING);
+			q.addScalar("shortDesc", Type.STRING);
+			q.addScalar("semesterName", Type.STRING);
+			q.addScalar("language", Type.STRING);
+			q.addScalar("facultyName", Type.STRING);
+			q.addScalar("instructorsString", Type.STRING);
+			q.addScalar("lectureseriesId", Type.STRING);
+			q.addScalar("password_", Type.STRING);
+			q.addScalar("approved", Type.STRING);
+			q.addScalar("longDesc", Type.STRING);
+			q.addScalar("latestOpenAccessVideoId", Type.LONG);
+			QueryPos qPos = QueryPos.getInstance(q);
+			qPos.add(video.getVideoId());
+			q.setCacheable(false);	
 			@SuppressWarnings("unchecked")
 			List <Object[]> ls =  (List <Object[]>) QueryUtil.list(q, getDialect(), com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 			return assembleLectureseries(ls);
@@ -74,6 +116,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			q.addScalar("password_", Type.STRING);
 			q.addScalar("approved", Type.STRING);
 			q.addScalar("longDesc", Type.STRING);
+			q.addScalar("latestOpenAccessVideoId", Type.LONG);
 			q.setCacheable(false);			
 			@SuppressWarnings("unchecked")
 			List <Object[]> ls =  (List <Object[]>) QueryUtil.list(q, getDialect(), com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
@@ -132,6 +175,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			q.addScalar("password_", Type.STRING);
 			q.addScalar("approved", Type.STRING);
 			q.addScalar("longDesc", Type.STRING);
+			q.addScalar("latestOpenAccessVideoId", Type.LONG);
 			q.setCacheable(false);
 			@SuppressWarnings("unchecked")
 			List <Object[]> l =  (List<Object[]>) QueryUtil.list(q, getDialect(),com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
@@ -165,7 +209,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			l.setPassword((String) lectser[10]);
 			l.setApproved(new Integer((String) lectser[11]));
 			l.setLongDesc((String) lectser[12]);
-			
+			l.setLatestOpenAccessVideoId((Long) lectser[13]);
 			ll.add(l);
 		}
 		return ll;
@@ -173,7 +217,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 	
 	private String sqlFilterForLectureseries(Integer approved, String semester, Long facultyId, Long producerId) {
 		// build query
-		String query = "SELECT c.number_, c.eventType, c.eventCategory, c.name, c.shortDesc, c.longDesc, c.semesterName, c.language, c.facultyName, c.instructorsString, c.lectureseriesId, c.password_, c.approved ";
+		String query = "SELECT c.number_, c.eventType, c.eventCategory, c.name, c.shortDesc, c.longDesc, c.semesterName, c.language, c.facultyName, c.instructorsString, c.lectureseriesId, c.password_, c.approved, c.longDesc, c.latestOpenAccessVideoId ";
 			   query += "FROM LG_Lectureseries AS c ";
 
 		if (facultyId > 0) {

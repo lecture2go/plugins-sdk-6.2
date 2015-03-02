@@ -16,10 +16,16 @@ package de.uhh.l2g.plugins.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 import com.liferay.portal.kernel.exception.SystemException;
 
 import de.uhh.l2g.plugins.model.Lectureseries;
+import de.uhh.l2g.plugins.model.Video;
+import de.uhh.l2g.plugins.model.Video_Lectureseries;
+import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
+import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.LectureseriesLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.LectureseriesFinderUtil;
 
@@ -67,4 +73,39 @@ public class LectureseriesLocalServiceImpl extends LectureseriesLocalServiceBase
 	public List<Lectureseries> getAllLectureseriesWhithPassword(){
 		return LectureseriesFinderUtil.findAllLectureseriesWhithPassword();
 	}
+	
+	public List<Lectureseries> getAllForVideo(Video video){
+		return LectureseriesFinderUtil.findAllLectureseriesForVideo(video);
+	}
+	
+	public List<Lectureseries> getByLatestVideoId(Long latestVideoId) throws SystemException{
+		return lectureseriesPersistence.findByLatestOpenAccessVideo(latestVideoId);
+	} 
+	
+	
+	public void updateOpenAccess(Video video, Lectureseries lectureseries) throws SystemException{
+		// video lecture series table by video
+		Video_LectureseriesLocalServiceUtil.updateOpenAccessByVideo(video);
+		
+		//lecture series
+		Video latestOpenAccessVideo = VideoLocalServiceUtil.getLatestOpenAccessVideoForLectureseries(lectureseries.getLectureseriesId());
+		lectureseries.setLatestOpenAccessVideoId(latestOpenAccessVideo.getVideoId());
+		lectureseries.setLatestVideoUploadDate(latestOpenAccessVideo.getUploadDate());
+		lectureseries.setLatestVideoGenerationDate(latestOpenAccessVideo.getGenerationDate());
+		LectureseriesLocalServiceUtil.updateLectureseries(lectureseries);
+		
+		// update old entries in the lecture series table for video
+		List<Lectureseries> ls = new ArrayList<Lectureseries>();
+		ls = LectureseriesLocalServiceUtil.getByLatestVideoId(video.getVideoId());
+		ListIterator<Lectureseries> it = ls.listIterator();
+		while(it.hasNext()){
+			Lectureseries l = it.next();
+			Video ov = VideoLocalServiceUtil.getLatestOpenAccessVideoForLectureseries(l.getLectureseriesId());
+			l.setLatestOpenAccessVideoId(ov.getVideoId());
+			lectureseries.setLatestVideoUploadDate(ov.getUploadDate());
+			lectureseries.setLatestVideoGenerationDate(ov.getGenerationDate());			
+			LectureseriesLocalServiceUtil.updateLectureseries(l);
+		}
+	}
+	
 }

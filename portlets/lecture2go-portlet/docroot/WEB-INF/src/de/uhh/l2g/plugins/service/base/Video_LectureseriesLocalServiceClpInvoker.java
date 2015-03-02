@@ -121,6 +121,10 @@ public class Video_LectureseriesLocalServiceClpInvoker {
 		_methodName119 = "removeByVideoId";
 
 		_methodParameterTypes119 = new String[] { "java.lang.Long" };
+
+		_methodName120 = "updateOpenAccessByVideo";
+
+		_methodParameterTypes120 = new String[] { "de.uhh.l2g.plugins.model.Video" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -234,6 +238,11 @@ public class Video_LectureseriesLocalServiceClpInvoker {
 			return Video_LectureseriesLocalServiceUtil.removeByVideoId((java.lang.Long)arguments[0]);
 		}
 
+		if (_methodName120.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes120, parameterTypes)) {
+			return Video_LectureseriesLocalServiceUtil.updateOpenAccessByVideo((de.uhh.l2g.plugins.model.Video)arguments[0]);
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -277,4 +286,6 @@ public class Video_LectureseriesLocalServiceClpInvoker {
 	private String[] _methodParameterTypes118;
 	private String _methodName119;
 	private String[] _methodParameterTypes119;
+	private String _methodName120;
+	private String[] _methodParameterTypes120;
 }

@@ -306,6 +306,13 @@ public class Lectureseries_InstitutionLocalServiceWrapper
 		return _lectureseries_InstitutionLocalService.institutionAssignedToLectureseries(lf);
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Institution> getByLectureseries(
+		long lectureseriesId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _lectureseries_InstitutionLocalService.getByLectureseries(lectureseriesId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

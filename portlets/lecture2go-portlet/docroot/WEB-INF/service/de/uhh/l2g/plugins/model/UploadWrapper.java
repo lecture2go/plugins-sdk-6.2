@@ -323,7 +323,7 @@ public class UploadWrapper implements Upload, ModelWrapper<Upload> {
 	}
 
 	@Override
-	public int compareTo(Upload upload) {
+	public int compareTo(de.uhh.l2g.plugins.model.Upload upload) {
 		return _upload.compareTo(upload);
 	}
 
@@ -333,17 +333,17 @@ public class UploadWrapper implements Upload, ModelWrapper<Upload> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<Upload> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.model.Upload> toCacheModel() {
 		return _upload.toCacheModel();
 	}
 
 	@Override
-	public Upload toEscapedModel() {
+	public de.uhh.l2g.plugins.model.Upload toEscapedModel() {
 		return new UploadWrapper(_upload.toEscapedModel());
 	}
 
 	@Override
-	public Upload toUnescapedModel() {
+	public de.uhh.l2g.plugins.model.Upload toUnescapedModel() {
 		return new UploadWrapper(_upload.toUnescapedModel());
 	}
 

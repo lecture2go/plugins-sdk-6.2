@@ -25,6 +25,11 @@ public class LectureseriesFinderUtil {
 		return getFinder().findAllLectureseriesWhithPassword();
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findAllLectureseriesForVideo(
+		de.uhh.l2g.plugins.model.Video video) {
+		return getFinder().findAllLectureseriesForVideo(video);
+	}
+
 	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findAllLectureseriesWhithOpenaccessVideos() {
 		return getFinder().findAllLectureseriesWhithOpenaccessVideos();
 	}

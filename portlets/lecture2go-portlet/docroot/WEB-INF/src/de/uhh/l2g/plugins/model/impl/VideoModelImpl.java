@@ -15,6 +15,7 @@
 package de.uhh.l2g.plugins.model.impl;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -82,8 +83,8 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		};
 	public static final String TABLE_SQL_CREATE = "create table LG_Video (videoId LONG not null primary key,title VARCHAR(75) null,tags VARCHAR(75) null,lectureseriesId LONG,producerId LONG,containerFormat VARCHAR(75) null,filename VARCHAR(75) null,resolution VARCHAR(75) null,duration VARCHAR(75) null,hostId LONG,fileSize VARCHAR(75) null,generationDate VARCHAR(75) null,openAccess INTEGER,downloadLink INTEGER,metadataId LONG,surl VARCHAR(75) null,hits LONG,uploadDate DATE null,permittedToSegment INTEGER,rootInstitutionId LONG,citation2go INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Video";
-	public static final String ORDER_BY_JPQL = " ORDER BY video.videoId DESC";
-	public static final String ORDER_BY_SQL = " ORDER BY LG_Video.videoId DESC";
+	public static final String ORDER_BY_JPQL = " ORDER BY video.videoId DESC, video.uploadDate DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY LG_Video.videoId DESC, LG_Video.uploadDate DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -102,7 +103,8 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	public static long OPENACCESS_COLUMN_BITMASK = 8L;
 	public static long PRODUCERID_COLUMN_BITMASK = 16L;
 	public static long ROOTINSTITUTIONID_COLUMN_BITMASK = 32L;
-	public static long VIDEOID_COLUMN_BITMASK = 64L;
+	public static long UPLOADDATE_COLUMN_BITMASK = 64L;
+	public static long VIDEOID_COLUMN_BITMASK = 128L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Video"));
 
@@ -580,7 +582,17 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 
 	@Override
 	public void setUploadDate(Date uploadDate) {
+		_columnBitmask = -1L;
+
+		if (_originalUploadDate == null) {
+			_originalUploadDate = _uploadDate;
+		}
+
 		_uploadDate = uploadDate;
+	}
+
+	public Date getOriginalUploadDate() {
+		return _originalUploadDate;
 	}
 
 	@Override
@@ -703,6 +715,14 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 			return value;
 		}
 
+		value = DateUtil.compareTo(getUploadDate(), video.getUploadDate());
+
+		value = value * -1;
+
+		if (value != 0) {
+			return value;
+		}
+
 		return 0;
 	}
 
@@ -754,6 +774,8 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		videoModelImpl._originalDownloadLink = videoModelImpl._downloadLink;
 
 		videoModelImpl._setOriginalDownloadLink = false;
+
+		videoModelImpl._originalUploadDate = videoModelImpl._uploadDate;
 
 		videoModelImpl._originalRootInstitutionId = videoModelImpl._rootInstitutionId;
 
@@ -1050,6 +1072,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	private String _surl;
 	private long _hits;
 	private Date _uploadDate;
+	private Date _originalUploadDate;
 	private int _permittedToSegment;
 	private long _rootInstitutionId;
 	private long _originalRootInstitutionId;

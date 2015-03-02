@@ -108,15 +108,15 @@ public class VideoLocalServiceClpInvoker {
 
 		_methodParameterTypes113 = new String[] { "java.lang.String" };
 
-		_methodName118 = "getLatestVideoForLectureseries";
+		_methodName118 = "getLatestOpenAccessVideoForLectureseries";
 
-		_methodParameterTypes118 = new String[] { "java.lang.Long", "int", "int" };
+		_methodParameterTypes118 = new String[] { "java.lang.Long" };
 
 		_methodName119 = "unlinkLectureseriesFromVideos";
 
 		_methodParameterTypes119 = new String[] { "java.lang.Long" };
 
-		_methodName120 = "getByInstitution";
+		_methodName120 = "getByRootInstitution";
 
 		_methodParameterTypes120 = new String[] { "java.lang.Long" };
 
@@ -266,9 +266,7 @@ public class VideoLocalServiceClpInvoker {
 
 		if (_methodName118.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
-			return VideoLocalServiceUtil.getLatestVideoForLectureseries((java.lang.Long)arguments[0],
-				((Integer)arguments[1]).intValue(),
-				((Integer)arguments[2]).intValue());
+			return VideoLocalServiceUtil.getLatestOpenAccessVideoForLectureseries((java.lang.Long)arguments[0]);
 		}
 
 		if (_methodName119.equals(name) &&
@@ -278,7 +276,7 @@ public class VideoLocalServiceClpInvoker {
 
 		if (_methodName120.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes120, parameterTypes)) {
-			return VideoLocalServiceUtil.getByInstitution((java.lang.Long)arguments[0]);
+			return VideoLocalServiceUtil.getByRootInstitution((java.lang.Long)arguments[0]);
 		}
 
 		if (_methodName121.equals(name) &&

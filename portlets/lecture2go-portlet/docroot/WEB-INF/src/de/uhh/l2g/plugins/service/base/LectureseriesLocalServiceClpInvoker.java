@@ -132,6 +132,21 @@ public class LectureseriesLocalServiceClpInvoker {
 		_methodName121 = "getAllLectureseriesWhithPassword";
 
 		_methodParameterTypes121 = new String[] {  };
+
+		_methodName122 = "getAllForVideo";
+
+		_methodParameterTypes122 = new String[] { "de.uhh.l2g.plugins.model.Video" };
+
+		_methodName123 = "getByLatestVideoId";
+
+		_methodParameterTypes123 = new String[] { "java.lang.Long" };
+
+		_methodName124 = "updateOpenAccess";
+
+		_methodParameterTypes124 = new String[] {
+				"de.uhh.l2g.plugins.model.Video",
+				"de.uhh.l2g.plugins.model.Lectureseries"
+			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -258,6 +273,24 @@ public class LectureseriesLocalServiceClpInvoker {
 			return LectureseriesLocalServiceUtil.getAllLectureseriesWhithPassword();
 		}
 
+		if (_methodName122.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
+			return LectureseriesLocalServiceUtil.getAllForVideo((de.uhh.l2g.plugins.model.Video)arguments[0]);
+		}
+
+		if (_methodName123.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
+			return LectureseriesLocalServiceUtil.getByLatestVideoId((java.lang.Long)arguments[0]);
+		}
+
+		if (_methodName124.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
+			LectureseriesLocalServiceUtil.updateOpenAccess((de.uhh.l2g.plugins.model.Video)arguments[0],
+				(de.uhh.l2g.plugins.model.Lectureseries)arguments[1]);
+
+			return null;
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -305,4 +338,10 @@ public class LectureseriesLocalServiceClpInvoker {
 	private String[] _methodParameterTypes120;
 	private String _methodName121;
 	private String[] _methodParameterTypes121;
+	private String _methodName122;
+	private String[] _methodParameterTypes122;
+	private String _methodName123;
+	private String[] _methodParameterTypes123;
+	private String _methodName124;
+	private String[] _methodParameterTypes124;
 }

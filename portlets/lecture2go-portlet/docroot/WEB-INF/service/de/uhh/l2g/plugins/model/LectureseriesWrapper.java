@@ -17,6 +17,7 @@ package de.uhh.l2g.plugins.model;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,6 +63,10 @@ public class LectureseriesWrapper implements Lectureseries,
 		attributes.put("password", getPassword());
 		attributes.put("approved", getApproved());
 		attributes.put("longDesc", getLongDesc());
+		attributes.put("latestOpenAccessVideoId", getLatestOpenAccessVideoId());
+		attributes.put("latestVideoUploadDate", getLatestVideoUploadDate());
+		attributes.put("latestVideoGenerationDate",
+			getLatestVideoGenerationDate());
 
 		return attributes;
 	}
@@ -144,6 +149,27 @@ public class LectureseriesWrapper implements Lectureseries,
 
 		if (longDesc != null) {
 			setLongDesc(longDesc);
+		}
+
+		Long latestOpenAccessVideoId = (Long)attributes.get(
+				"latestOpenAccessVideoId");
+
+		if (latestOpenAccessVideoId != null) {
+			setLatestOpenAccessVideoId(latestOpenAccessVideoId);
+		}
+
+		Date latestVideoUploadDate = (Date)attributes.get(
+				"latestVideoUploadDate");
+
+		if (latestVideoUploadDate != null) {
+			setLatestVideoUploadDate(latestVideoUploadDate);
+		}
+
+		String latestVideoGenerationDate = (String)attributes.get(
+				"latestVideoGenerationDate");
+
+		if (latestVideoGenerationDate != null) {
+			setLatestVideoGenerationDate(latestVideoGenerationDate);
 		}
 	}
 
@@ -427,6 +453,67 @@ public class LectureseriesWrapper implements Lectureseries,
 		_lectureseries.setLongDesc(longDesc);
 	}
 
+	/**
+	* Returns the latest open access video ID of this lectureseries.
+	*
+	* @return the latest open access video ID of this lectureseries
+	*/
+	@Override
+	public long getLatestOpenAccessVideoId() {
+		return _lectureseries.getLatestOpenAccessVideoId();
+	}
+
+	/**
+	* Sets the latest open access video ID of this lectureseries.
+	*
+	* @param latestOpenAccessVideoId the latest open access video ID of this lectureseries
+	*/
+	@Override
+	public void setLatestOpenAccessVideoId(long latestOpenAccessVideoId) {
+		_lectureseries.setLatestOpenAccessVideoId(latestOpenAccessVideoId);
+	}
+
+	/**
+	* Returns the latest video upload date of this lectureseries.
+	*
+	* @return the latest video upload date of this lectureseries
+	*/
+	@Override
+	public java.util.Date getLatestVideoUploadDate() {
+		return _lectureseries.getLatestVideoUploadDate();
+	}
+
+	/**
+	* Sets the latest video upload date of this lectureseries.
+	*
+	* @param latestVideoUploadDate the latest video upload date of this lectureseries
+	*/
+	@Override
+	public void setLatestVideoUploadDate(java.util.Date latestVideoUploadDate) {
+		_lectureseries.setLatestVideoUploadDate(latestVideoUploadDate);
+	}
+
+	/**
+	* Returns the latest video generation date of this lectureseries.
+	*
+	* @return the latest video generation date of this lectureseries
+	*/
+	@Override
+	public java.lang.String getLatestVideoGenerationDate() {
+		return _lectureseries.getLatestVideoGenerationDate();
+	}
+
+	/**
+	* Sets the latest video generation date of this lectureseries.
+	*
+	* @param latestVideoGenerationDate the latest video generation date of this lectureseries
+	*/
+	@Override
+	public void setLatestVideoGenerationDate(
+		java.lang.String latestVideoGenerationDate) {
+		_lectureseries.setLatestVideoGenerationDate(latestVideoGenerationDate);
+	}
+
 	@Override
 	public boolean isNew() {
 		return _lectureseries.isNew();
@@ -491,7 +578,7 @@ public class LectureseriesWrapper implements Lectureseries,
 	}
 
 	@Override
-	public int compareTo(Lectureseries lectureseries) {
+	public int compareTo(de.uhh.l2g.plugins.model.Lectureseries lectureseries) {
 		return _lectureseries.compareTo(lectureseries);
 	}
 
@@ -501,17 +588,17 @@ public class LectureseriesWrapper implements Lectureseries,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<Lectureseries> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.model.Lectureseries> toCacheModel() {
 		return _lectureseries.toCacheModel();
 	}
 
 	@Override
-	public Lectureseries toEscapedModel() {
+	public de.uhh.l2g.plugins.model.Lectureseries toEscapedModel() {
 		return new LectureseriesWrapper(_lectureseries.toEscapedModel());
 	}
 
 	@Override
-	public Lectureseries toUnescapedModel() {
+	public de.uhh.l2g.plugins.model.Lectureseries toUnescapedModel() {
 		return new LectureseriesWrapper(_lectureseries.toUnescapedModel());
 	}
 

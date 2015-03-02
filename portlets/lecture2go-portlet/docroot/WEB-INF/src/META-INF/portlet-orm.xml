@@ -83,6 +83,11 @@
 			</basic>
 			<basic name="approved" />
 			<basic name="longDesc" />
+			<basic name="latestOpenAccessVideoId" />
+			<basic name="latestVideoUploadDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="latestVideoGenerationDate" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -271,6 +276,7 @@
 			<id name="videoLectureseriesId" />
 			<basic name="videoId" />
 			<basic name="lectureseriesId" />
+			<basic name="openAccess" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

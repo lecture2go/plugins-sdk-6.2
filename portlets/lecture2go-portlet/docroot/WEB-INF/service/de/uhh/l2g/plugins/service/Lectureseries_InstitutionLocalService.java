@@ -260,4 +260,9 @@ public interface Lectureseries_InstitutionLocalService extends BaseLocalService,
 
 	public boolean institutionAssignedToLectureseries(
 		de.uhh.l2g.plugins.model.Lectureseries_Institution lf);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Institution> getByLectureseries(
+		long lectureseriesId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

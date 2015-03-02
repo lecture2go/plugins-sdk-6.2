@@ -52,6 +52,7 @@ public class Video_LectureseriesWrapper implements Video_Lectureseries,
 		attributes.put("videoLectureseriesId", getVideoLectureseriesId());
 		attributes.put("videoId", getVideoId());
 		attributes.put("lectureseriesId", getLectureseriesId());
+		attributes.put("openAccess", getOpenAccess());
 
 		return attributes;
 	}
@@ -74,6 +75,12 @@ public class Video_LectureseriesWrapper implements Video_Lectureseries,
 
 		if (lectureseriesId != null) {
 			setLectureseriesId(lectureseriesId);
+		}
+
+		Integer openAccess = (Integer)attributes.get("openAccess");
+
+		if (openAccess != null) {
+			setOpenAccess(openAccess);
 		}
 	}
 
@@ -157,6 +164,26 @@ public class Video_LectureseriesWrapper implements Video_Lectureseries,
 		_video_Lectureseries.setLectureseriesId(lectureseriesId);
 	}
 
+	/**
+	* Returns the open access of this video_ lectureseries.
+	*
+	* @return the open access of this video_ lectureseries
+	*/
+	@Override
+	public int getOpenAccess() {
+		return _video_Lectureseries.getOpenAccess();
+	}
+
+	/**
+	* Sets the open access of this video_ lectureseries.
+	*
+	* @param openAccess the open access of this video_ lectureseries
+	*/
+	@Override
+	public void setOpenAccess(int openAccess) {
+		_video_Lectureseries.setOpenAccess(openAccess);
+	}
+
 	@Override
 	public boolean isNew() {
 		return _video_Lectureseries.isNew();
@@ -221,7 +248,8 @@ public class Video_LectureseriesWrapper implements Video_Lectureseries,
 	}
 
 	@Override
-	public int compareTo(Video_Lectureseries video_Lectureseries) {
+	public int compareTo(
+		de.uhh.l2g.plugins.model.Video_Lectureseries video_Lectureseries) {
 		return _video_Lectureseries.compareTo(video_Lectureseries);
 	}
 
@@ -231,17 +259,17 @@ public class Video_LectureseriesWrapper implements Video_Lectureseries,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<Video_Lectureseries> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.model.Video_Lectureseries> toCacheModel() {
 		return _video_Lectureseries.toCacheModel();
 	}
 
 	@Override
-	public Video_Lectureseries toEscapedModel() {
+	public de.uhh.l2g.plugins.model.Video_Lectureseries toEscapedModel() {
 		return new Video_LectureseriesWrapper(_video_Lectureseries.toEscapedModel());
 	}
 
 	@Override
-	public Video_Lectureseries toUnescapedModel() {
+	public de.uhh.l2g.plugins.model.Video_Lectureseries toUnescapedModel() {
 		return new Video_LectureseriesWrapper(_video_Lectureseries.toUnescapedModel());
 	}
 

@@ -77,7 +77,11 @@ public class VideohitlistModelImpl extends BaseModelImpl<Videohitlist>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.finder.cache.enabled.de.uhh.l2g.plugins.model.Videohitlist"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.Videohitlist"),
+			true);
+	public static long VIDEOID_COLUMN_BITMASK = 1L;
+	public static long VIDEOHITLISTID_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Videohitlist"));
 
@@ -224,7 +228,23 @@ public class VideohitlistModelImpl extends BaseModelImpl<Videohitlist>
 
 	@Override
 	public void setVideoId(long videoId) {
+		_columnBitmask |= VIDEOID_COLUMN_BITMASK;
+
+		if (!_setOriginalVideoId) {
+			_setOriginalVideoId = true;
+
+			_originalVideoId = _videoId;
+		}
+
 		_videoId = videoId;
+	}
+
+	public long getOriginalVideoId() {
+		return _originalVideoId;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -310,6 +330,13 @@ public class VideohitlistModelImpl extends BaseModelImpl<Videohitlist>
 
 	@Override
 	public void resetOriginalValues() {
+		VideohitlistModelImpl videohitlistModelImpl = this;
+
+		videohitlistModelImpl._originalVideoId = videohitlistModelImpl._videoId;
+
+		videohitlistModelImpl._setOriginalVideoId = false;
+
+		videohitlistModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -400,5 +427,8 @@ public class VideohitlistModelImpl extends BaseModelImpl<Videohitlist>
 	private long _hitsPerMonth;
 	private long _hitsPerYear;
 	private long _videoId;
+	private long _originalVideoId;
+	private boolean _setOriginalVideoId;
+	private long _columnBitmask;
 	private Videohitlist _escapedModel;
 }

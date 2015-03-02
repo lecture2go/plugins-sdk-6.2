@@ -59,9 +59,10 @@ public class Video_LectureseriesModelImpl extends BaseModelImpl<Video_Lectureser
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "videoLectureseriesId", Types.BIGINT },
 			{ "videoId", Types.BIGINT },
-			{ "lectureseriesId", Types.BIGINT }
+			{ "lectureseriesId", Types.BIGINT },
+			{ "openAccess", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Video_Lectureseries (videoLectureseriesId LONG not null primary key,videoId LONG,lectureseriesId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Video_Lectureseries (videoLectureseriesId LONG not null primary key,videoId LONG,lectureseriesId LONG,openAccess INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Video_Lectureseries";
 	public static final String ORDER_BY_JPQL = " ORDER BY video_Lectureseries.videoLectureseriesId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Video_Lectureseries.videoLectureseriesId ASC";
@@ -123,6 +124,7 @@ public class Video_LectureseriesModelImpl extends BaseModelImpl<Video_Lectureser
 		attributes.put("videoLectureseriesId", getVideoLectureseriesId());
 		attributes.put("videoId", getVideoId());
 		attributes.put("lectureseriesId", getLectureseriesId());
+		attributes.put("openAccess", getOpenAccess());
 
 		return attributes;
 	}
@@ -145,6 +147,12 @@ public class Video_LectureseriesModelImpl extends BaseModelImpl<Video_Lectureser
 
 		if (lectureseriesId != null) {
 			setLectureseriesId(lectureseriesId);
+		}
+
+		Integer openAccess = (Integer)attributes.get("openAccess");
+
+		if (openAccess != null) {
+			setOpenAccess(openAccess);
 		}
 	}
 
@@ -202,6 +210,16 @@ public class Video_LectureseriesModelImpl extends BaseModelImpl<Video_Lectureser
 		return _originalLectureseriesId;
 	}
 
+	@Override
+	public int getOpenAccess() {
+		return _openAccess;
+	}
+
+	@Override
+	public void setOpenAccess(int openAccess) {
+		_openAccess = openAccess;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -236,6 +254,7 @@ public class Video_LectureseriesModelImpl extends BaseModelImpl<Video_Lectureser
 		video_LectureseriesImpl.setVideoLectureseriesId(getVideoLectureseriesId());
 		video_LectureseriesImpl.setVideoId(getVideoId());
 		video_LectureseriesImpl.setLectureseriesId(getLectureseriesId());
+		video_LectureseriesImpl.setOpenAccess(getOpenAccess());
 
 		video_LectureseriesImpl.resetOriginalValues();
 
@@ -309,12 +328,14 @@ public class Video_LectureseriesModelImpl extends BaseModelImpl<Video_Lectureser
 
 		video_LectureseriesCacheModel.lectureseriesId = getLectureseriesId();
 
+		video_LectureseriesCacheModel.openAccess = getOpenAccess();
+
 		return video_LectureseriesCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{videoLectureseriesId=");
 		sb.append(getVideoLectureseriesId());
@@ -322,6 +343,8 @@ public class Video_LectureseriesModelImpl extends BaseModelImpl<Video_Lectureser
 		sb.append(getVideoId());
 		sb.append(", lectureseriesId=");
 		sb.append(getLectureseriesId());
+		sb.append(", openAccess=");
+		sb.append(getOpenAccess());
 		sb.append("}");
 
 		return sb.toString();
@@ -329,7 +352,7 @@ public class Video_LectureseriesModelImpl extends BaseModelImpl<Video_Lectureser
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Video_Lectureseries");
@@ -346,6 +369,10 @@ public class Video_LectureseriesModelImpl extends BaseModelImpl<Video_Lectureser
 		sb.append(
 			"<column><column-name>lectureseriesId</column-name><column-value><![CDATA[");
 		sb.append(getLectureseriesId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>openAccess</column-name><column-value><![CDATA[");
+		sb.append(getOpenAccess());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -364,6 +391,7 @@ public class Video_LectureseriesModelImpl extends BaseModelImpl<Video_Lectureser
 	private long _lectureseriesId;
 	private long _originalLectureseriesId;
 	private boolean _setOriginalLectureseriesId;
+	private int _openAccess;
 	private long _columnBitmask;
 	private Video_Lectureseries _escapedModel;
 }

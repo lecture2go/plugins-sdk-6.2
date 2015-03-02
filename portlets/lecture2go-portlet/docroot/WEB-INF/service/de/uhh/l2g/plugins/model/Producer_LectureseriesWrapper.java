@@ -223,7 +223,8 @@ public class Producer_LectureseriesWrapper implements Producer_Lectureseries,
 	}
 
 	@Override
-	public int compareTo(Producer_Lectureseries producer_Lectureseries) {
+	public int compareTo(
+		de.uhh.l2g.plugins.model.Producer_Lectureseries producer_Lectureseries) {
 		return _producer_Lectureseries.compareTo(producer_Lectureseries);
 	}
 
@@ -233,17 +234,17 @@ public class Producer_LectureseriesWrapper implements Producer_Lectureseries,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<Producer_Lectureseries> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.model.Producer_Lectureseries> toCacheModel() {
 		return _producer_Lectureseries.toCacheModel();
 	}
 
 	@Override
-	public Producer_Lectureseries toEscapedModel() {
+	public de.uhh.l2g.plugins.model.Producer_Lectureseries toEscapedModel() {
 		return new Producer_LectureseriesWrapper(_producer_Lectureseries.toEscapedModel());
 	}
 
 	@Override
-	public Producer_Lectureseries toUnescapedModel() {
+	public de.uhh.l2g.plugins.model.Producer_Lectureseries toUnescapedModel() {
 		return new Producer_LectureseriesWrapper(_producer_Lectureseries.toUnescapedModel());
 	}
 

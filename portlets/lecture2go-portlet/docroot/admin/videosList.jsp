@@ -22,13 +22,13 @@
 		if(coordinatorId>0){
 			Long institutionId = CoordinatorLocalServiceUtil.getCoordinator(coordinatorId).getInstitutionId();
 			producers = ProducerLocalServiceUtil.getProducersByInstitutionId(institutionId);
-			if(producerId==0)tempVideosList = VideoLocalServiceUtil.getByInstitution(institutionId);
+			if(producerId==0)tempVideosList = VideoLocalServiceUtil.getByRootInstitution(institutionId);
 			else {
 				lectureseries = LectureseriesLocalServiceUtil.getFilteredBySemesterFacultyProducer(1, "", new Long(0), producerId);
 				if(lectureseriesId==0) tempVideosList = VideoLocalServiceUtil.getByProducer(producerId);
 				else tempVideosList = VideoLocalServiceUtil.getByProducerAndLectureseries(producerId, lectureseriesId);
 			}
-		}else{
+		}else{ 
 			producerId = new Long(0);
 			tempVideosList = VideoLocalServiceUtil.getVideos(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 		}
@@ -43,7 +43,7 @@
 				if(lectureseriesId==0)tempVideosList = VideoLocalServiceUtil.getByProducer(producerId);
 				else tempVideosList = VideoLocalServiceUtil.getByProducerAndLectureseries(producerId, lectureseriesId);
 			}else{
-				tempVideosList = VideoLocalServiceUtil.getByInstitution(institutionId);
+				tempVideosList = VideoLocalServiceUtil.getByRootInstitution(institutionId);
 			}
 		}else{
 			if(permissionProducer){

@@ -108,15 +108,15 @@ public class VideoLocalServiceClp implements VideoLocalService {
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
 
-		_methodName19 = "getLatestVideoForLectureseries";
+		_methodName19 = "getLatestOpenAccessVideoForLectureseries";
 
-		_methodParameterTypes19 = new String[] { "java.lang.Long", "int", "int" };
+		_methodParameterTypes19 = new String[] { "java.lang.Long" };
 
 		_methodName20 = "unlinkLectureseriesFromVideos";
 
 		_methodParameterTypes20 = new String[] { "java.lang.Long" };
 
-		_methodName21 = "getByInstitution";
+		_methodName21 = "getByRootInstitution";
 
 		_methodParameterTypes21 = new String[] { "java.lang.Long" };
 
@@ -709,20 +709,14 @@ public class VideoLocalServiceClp implements VideoLocalService {
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Video getLatestVideoForLectureseries(
-		java.lang.Long lectureseriesId, int begin, int end) {
+	public de.uhh.l2g.plugins.model.Video getLatestOpenAccessVideoForLectureseries(
+		java.lang.Long lectureseriesId) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName19,
 					_methodParameterTypes19,
-					new Object[] {
-						ClpSerializer.translateInput(lectureseriesId),
-						
-					begin,
-						
-					end
-					});
+					new Object[] { ClpSerializer.translateInput(lectureseriesId) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -764,15 +758,16 @@ public class VideoLocalServiceClp implements VideoLocalService {
 	}
 
 	@Override
-	public java.util.List<de.uhh.l2g.plugins.model.Video> getByInstitution(
-		java.lang.Long institutionId)
+	public java.util.List<de.uhh.l2g.plugins.model.Video> getByRootInstitution(
+		java.lang.Long rootInstitutionId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName21,
 					_methodParameterTypes21,
-					new Object[] { ClpSerializer.translateInput(institutionId) });
+					new Object[] { ClpSerializer.translateInput(
+							rootInstitutionId) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);

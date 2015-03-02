@@ -312,6 +312,26 @@ public class LectureseriesLocalServiceWrapper
 		return _lectureseriesLocalService.getAllLectureseriesWhithPassword();
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getAllForVideo(
+		de.uhh.l2g.plugins.model.Video video) {
+		return _lectureseriesLocalService.getAllForVideo(video);
+	}
+
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getByLatestVideoId(
+		java.lang.Long latestVideoId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _lectureseriesLocalService.getByLatestVideoId(latestVideoId);
+	}
+
+	@Override
+	public void updateOpenAccess(de.uhh.l2g.plugins.model.Video video,
+		de.uhh.l2g.plugins.model.Lectureseries lectureseries)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_lectureseriesLocalService.updateOpenAccess(video, lectureseries);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

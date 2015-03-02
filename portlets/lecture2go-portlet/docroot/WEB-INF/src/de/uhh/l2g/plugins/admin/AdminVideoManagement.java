@@ -3,6 +3,7 @@ package de.uhh.l2g.plugins.admin;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.logging.Logger;
@@ -12,6 +13,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.swing.text.html.HTMLDocument.Iterator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,6 +28,7 @@ import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import de.uhh.l2g.plugins.NoSuchLicenseException;
 import de.uhh.l2g.plugins.model.Lectureseries;
+import de.uhh.l2g.plugins.model.Lectureseries_Institution;
 import de.uhh.l2g.plugins.model.License;
 import de.uhh.l2g.plugins.model.Metadata;
 import de.uhh.l2g.plugins.model.Producer;
@@ -42,6 +45,8 @@ import de.uhh.l2g.plugins.model.impl.VideoImpl;
 import de.uhh.l2g.plugins.model.impl.Video_InstitutionImpl;
 import de.uhh.l2g.plugins.model.impl.Video_LectureseriesImpl;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Lectureseries_InstitutionLocalService;
+import de.uhh.l2g.plugins.service.Lectureseries_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LicenseLocalServiceUtil;
 import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
@@ -175,6 +180,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		Video_Lectureseries vl = new Video_LectureseriesImpl();
 		vl.setLectureseriesId(lectureseriesId);
 		vl.setVideoId(newVideo.getVideoId());
+		vl.setOpenAccess(newVideo.getOpenAccess()); 
 		Video_LectureseriesLocalServiceUtil.addVideo_Lectureseries(vl);
 		
 		// requested lecture series list
@@ -189,10 +195,16 @@ public class AdminVideoManagement extends MVCPortlet {
 		request.setAttribute("reqLicense", license);
 
 		//update lg_video_institution table
-		Video_Institution vf = new Video_InstitutionImpl();
-		vf.setVideoId(video.getVideoId());
-		vf.setInstitutionId(reqProducer.getInstitutionId());
-		Video_InstitutionLocalServiceUtil.addVideo_Institution(vf);
+		if(lectureseriesId>0){
+			List<Lectureseries_Institution> li = Lectureseries_InstitutionLocalServiceUtil.getByLectureseries(lectureseriesId);
+			ListIterator<Lectureseries_Institution> i = li.listIterator();
+			while(i.hasNext()){
+				Video_Institution vi = new Video_InstitutionImpl();
+				vi.setVideoId(video.getVideoId());
+				vi.setInstitutionId(i.next().getInstitutionId());
+				Video_InstitutionLocalServiceUtil.addVideo_Institution(vi);
+			}
+		}
 		String backURL = request.getParameter("backURL");
 		request.setAttribute("backURL", backURL);
 		response.setRenderParameter("jspPage", "/admin/editVideo.jsp");
@@ -234,6 +246,7 @@ public class AdminVideoManagement extends MVCPortlet {
 				video.setSurl(secureFileName);
 				video.setContainerFormat(containerFormat);
 				video.setGenerationDate(generationDate);
+				video.setUploadDate(new Date());
 				VideoLocalServiceUtil.updateVideo(video);
 				FFmpegManager.updateFfmpegMetadata(video);
 				//update thumbs
@@ -288,16 +301,43 @@ public class AdminVideoManagement extends MVCPortlet {
 			String rightsHolder = ParamUtil.getString(resourceRequest, "rightsHolder");
 			String publisher = ParamUtil.getString(resourceRequest, "publisher");
 			Long lId = ParamUtil.getLong(resourceRequest, "lectureseriesId");
+			Lectureseries l = new LectureseriesImpl();
 			//update data base
 			try {
 				video.setTitle(title);
 				video.setTags(tags);
 				video.setLectureseriesId(lId);
+				if(lId>0){
+					l = LectureseriesLocalServiceUtil.getLectureseries(lId);
+					//update lg_video_institution table
+					Video_InstitutionLocalServiceUtil.removeByVideoId(video.getVideoId());
+					List<Lectureseries_Institution> li = Lectureseries_InstitutionLocalServiceUtil.getByLectureseries(lId);
+					ListIterator<Lectureseries_Institution> i = li.listIterator();
+					while(i.hasNext()){
+						Video_Institution vi = new Video_InstitutionImpl();
+						vi.setVideoId(video.getVideoId());
+						vi.setInstitutionId(i.next().getInstitutionId());
+						Video_InstitutionLocalServiceUtil.addVideo_Institution(vi);
+					}
+					//update lg_video_lectureseries 
+					Video_Lectureseries vl = new Video_LectureseriesImpl();
+					vl.setVideoId(video.getVideoId());
+					vl.setLectureseriesId(lId);
+					vl.setOpenAccess(video.getOpenAccess());
+					Video_LectureseriesLocalServiceUtil.removeByVideoId(video.getVideoId());//delete old entries
+					Video_LectureseriesLocalServiceUtil.addVideo_Lectureseries(vl);//add new
+					LectureseriesLocalServiceUtil.updateLectureseries(l);
+				}
+				// update video
 				VideoLocalServiceUtil.updateVideo(video);
+				// refresh open access for lecture series
+				LectureseriesLocalServiceUtil.updateOpenAccess(video, l); 
 			} catch (NumberFormatException e) {
 				System.out.println(e);
 			} catch (SystemException e) {
 				System.out.println(e);
+			} catch (PortalException e) {
+				e.printStackTrace();
 			}
 			//metadata
 			try {
@@ -559,7 +599,8 @@ public class AdminVideoManagement extends MVCPortlet {
 		
 	}
 
-	public void removeVideo(ActionRequest request, ActionResponse response){
+	
+	public void removeVideo(ActionRequest request, ActionResponse response) throws PortalException, SystemException{
 		Video video = new VideoImpl();
 		Long reqVideoId = new Long(0);
 		try{reqVideoId = new Long(request.getParameterMap().get("videoId")[0]);}catch(Exception e){}
@@ -580,6 +621,8 @@ public class AdminVideoManagement extends MVCPortlet {
 		try{reqVideoId = new Long(request.getParameterMap().get("videoId")[0]);}catch(Exception e){}
 		video = VideoLocalServiceUtil.getFullVideo(reqVideoId);
 		ProzessManager pm = new ProzessManager();	
+		//deactivate open access
+		//and refresh lecture series with this video
 		try {
 			pm.deactivateOpenaccess(video);
 		} catch (PortalException e) {
@@ -598,6 +641,8 @@ public class AdminVideoManagement extends MVCPortlet {
 		Long reqVideoId = new Long(0);
 		try{reqVideoId = new Long(request.getParameterMap().get("videoId")[0]);}catch(Exception e){}
 		video = VideoLocalServiceUtil.getFullVideo(reqVideoId);
+		//activate open access
+		//and refresh lecture series with this video
 		ProzessManager pm = new ProzessManager();	
 		try {
 			pm.activateOpenaccess(video);
