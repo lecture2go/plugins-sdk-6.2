@@ -17,6 +17,7 @@ package de.uhh.l2g.plugins.service.messaging;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 
+import de.uhh.l2g.plugins.service.CategoryLocalServiceUtil;
 import de.uhh.l2g.plugins.service.ClpSerializer;
 import de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
@@ -24,6 +25,7 @@ import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LastvideolistLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Lectureseries_CategoryLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Lectureseries_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LicenseLocalServiceUtil;
 import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
@@ -34,9 +36,11 @@ import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
 import de.uhh.l2g.plugins.service.SysLocalServiceUtil;
 import de.uhh.l2g.plugins.service.UploadLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideohitlistLocalServiceUtil;
+import de.uhh.l2g.plugins.service.YearLocalServiceUtil;
 
 /**
  * @author Iavor Sturm
@@ -53,6 +57,8 @@ public class ClpMessageListener extends BaseMessageListener {
 
 		if (command.equals("undeploy") &&
 				servletContextName.equals(getServletContextName())) {
+			CategoryLocalServiceUtil.clearService();
+
 			CoordinatorLocalServiceUtil.clearService();
 
 			HostLocalServiceUtil.clearService();
@@ -64,6 +70,8 @@ public class ClpMessageListener extends BaseMessageListener {
 			LastvideolistLocalServiceUtil.clearService();
 
 			LectureseriesLocalServiceUtil.clearService();
+
+			Lectureseries_CategoryLocalServiceUtil.clearService();
 
 			Lectureseries_InstitutionLocalServiceUtil.clearService();
 
@@ -85,11 +93,15 @@ public class ClpMessageListener extends BaseMessageListener {
 
 			VideoLocalServiceUtil.clearService();
 
+			Video_CategoryLocalServiceUtil.clearService();
+
 			Video_InstitutionLocalServiceUtil.clearService();
 
 			Video_LectureseriesLocalServiceUtil.clearService();
 
 			VideohitlistLocalServiceUtil.clearService();
+
+			YearLocalServiceUtil.clearService();
 		}
 	}
 }

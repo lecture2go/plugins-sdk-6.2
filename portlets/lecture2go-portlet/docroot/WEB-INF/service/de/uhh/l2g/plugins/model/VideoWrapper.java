@@ -70,6 +70,7 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 		attributes.put("permittedToSegment", getPermittedToSegment());
 		attributes.put("rootInstitutionId", getRootInstitutionId());
 		attributes.put("citation2go", getCitation2go());
+		attributes.put("yearId", getYearId());
 
 		return attributes;
 	}
@@ -201,6 +202,12 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 
 		if (citation2go != null) {
 			setCitation2go(citation2go);
+		}
+
+		Long yearId = (Long)attributes.get("yearId");
+
+		if (yearId != null) {
+			setYearId(yearId);
 		}
 	}
 
@@ -642,6 +649,26 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 	@Override
 	public void setCitation2go(int citation2go) {
 		_video.setCitation2go(citation2go);
+	}
+
+	/**
+	* Returns the year ID of this video.
+	*
+	* @return the year ID of this video
+	*/
+	@Override
+	public long getYearId() {
+		return _video.getYearId();
+	}
+
+	/**
+	* Sets the year ID of this video.
+	*
+	* @param yearId the year ID of this video
+	*/
+	@Override
+	public void setYearId(long yearId) {
+		_video.setYearId(yearId);
 	}
 
 	@Override

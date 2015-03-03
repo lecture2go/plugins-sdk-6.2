@@ -135,19 +135,18 @@ public interface LectureseriesModel extends BaseModel<Lectureseries> {
 	public void setShortDesc(String shortDesc);
 
 	/**
-	 * Returns the semester name of this lectureseries.
+	 * Returns the year ID of this lectureseries.
 	 *
-	 * @return the semester name of this lectureseries
+	 * @return the year ID of this lectureseries
 	 */
-	@AutoEscape
-	public String getSemesterName();
+	public long getYearId();
 
 	/**
-	 * Sets the semester name of this lectureseries.
+	 * Sets the year ID of this lectureseries.
 	 *
-	 * @param semesterName the semester name of this lectureseries
+	 * @param yearId the year ID of this lectureseries
 	 */
-	public void setSemesterName(String semesterName);
+	public void setYearId(long yearId);
 
 	/**
 	 * Returns the language of this lectureseries.

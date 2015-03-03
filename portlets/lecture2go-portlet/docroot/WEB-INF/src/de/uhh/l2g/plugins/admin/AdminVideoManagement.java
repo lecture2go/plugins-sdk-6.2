@@ -128,8 +128,8 @@ public class AdminVideoManagement extends MVCPortlet {
 		// requested lecture series list
 		List<Lectureseries> reqLectureseriesList = new ArrayList<Lectureseries>();
 		try{
-			if(reqVideo.getVideoId()>0)reqLectureseriesList = LectureseriesLocalServiceUtil.getFilteredBySemesterFacultyProducer(1, "", (long) 0, reqVideo.getProducerId());
-			else reqLectureseriesList = LectureseriesLocalServiceUtil.getFilteredBySemesterFacultyProducer(1, "", (long) 0, reqPproducerId);
+			if(reqVideo.getVideoId()>0)reqLectureseriesList = LectureseriesLocalServiceUtil.getFilteredBySemesterFacultyProducer(1, (long) 0, (long) 0, reqVideo.getProducerId());
+			else reqLectureseriesList = LectureseriesLocalServiceUtil.getFilteredBySemesterFacultyProducer(1, (long) 0, (long) 0, reqPproducerId);
 		}catch(Exception e){}
 		request.setAttribute("reqLectureseriesList", reqLectureseriesList);
 		
@@ -185,7 +185,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		
 		// requested lecture series list
 		List<Lectureseries> reqLectureseriesList = new ArrayList<Lectureseries>();
-		try{reqLectureseriesList = LectureseriesLocalServiceUtil.getFilteredBySemesterFacultyProducer(1, "", (long) 0, producerId);}catch(Exception e){}
+		try{reqLectureseriesList = LectureseriesLocalServiceUtil.getFilteredBySemesterFacultyProducer(1, (long) 0, (long) 0, producerId);}catch(Exception e){}
 		request.setAttribute("reqLectureseriesList", reqLectureseriesList);
 		
 		//licence

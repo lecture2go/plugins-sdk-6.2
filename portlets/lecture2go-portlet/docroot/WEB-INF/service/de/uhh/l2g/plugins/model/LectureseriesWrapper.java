@@ -55,7 +55,7 @@ public class LectureseriesWrapper implements Lectureseries,
 		attributes.put("eventCategory", getEventCategory());
 		attributes.put("name", getName());
 		attributes.put("shortDesc", getShortDesc());
-		attributes.put("semesterName", getSemesterName());
+		attributes.put("yearId", getYearId());
 		attributes.put("language", getLanguage());
 		attributes.put("facultyName", getFacultyName());
 		attributes.put("instructorsString", getInstructorsString());
@@ -103,10 +103,10 @@ public class LectureseriesWrapper implements Lectureseries,
 			setShortDesc(shortDesc);
 		}
 
-		String semesterName = (String)attributes.get("semesterName");
+		Long yearId = (Long)attributes.get("yearId");
 
-		if (semesterName != null) {
-			setSemesterName(semesterName);
+		if (yearId != null) {
+			setYearId(yearId);
 		}
 
 		String language = (String)attributes.get("language");
@@ -294,23 +294,23 @@ public class LectureseriesWrapper implements Lectureseries,
 	}
 
 	/**
-	* Returns the semester name of this lectureseries.
+	* Returns the year ID of this lectureseries.
 	*
-	* @return the semester name of this lectureseries
+	* @return the year ID of this lectureseries
 	*/
 	@Override
-	public java.lang.String getSemesterName() {
-		return _lectureseries.getSemesterName();
+	public long getYearId() {
+		return _lectureseries.getYearId();
 	}
 
 	/**
-	* Sets the semester name of this lectureseries.
+	* Sets the year ID of this lectureseries.
 	*
-	* @param semesterName the semester name of this lectureseries
+	* @param yearId the year ID of this lectureseries
 	*/
 	@Override
-	public void setSemesterName(java.lang.String semesterName) {
-		_lectureseries.setSemesterName(semesterName);
+	public void setYearId(long yearId) {
+		_lectureseries.setYearId(yearId);
 	}
 
 	/**

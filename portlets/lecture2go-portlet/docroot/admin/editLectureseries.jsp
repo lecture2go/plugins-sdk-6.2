@@ -6,7 +6,7 @@
 	String lNumber = "";
 	String lLanguage = "";
 	String lEventType = "";
-	String lSemesterName = "";
+	Long lSemester = new Long(0);
 	String lShortDesc = "";
 	String lInstructors = "";
 	String lPassword = "";
@@ -21,7 +21,7 @@
 		lNumber=reqLectureseries.getNumber();
 		lLanguage=reqLectureseries.getLanguage();
 		lEventType=reqLectureseries.getEventType();
-		lSemesterName=reqLectureseries.getSemesterName();
+		lSemester=reqLectureseries.getYearId();
 		lShortDesc=reqLectureseries.getShortDesc();
 		lInstructors=reqLectureseries.getInstructorsString();
 		lPassword=reqLectureseries.getPassword();
@@ -57,7 +57,7 @@
 		pIds = ProducerLocalServiceUtil.getAllProducerIds(lId);
 	}catch (NullPointerException e){}
 	
-	List<String> semesters = LectureseriesLocalServiceUtil.getAllSemesters(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+	List<Year> semesters = YearLocalServiceUtil.getAllSemesters(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 	
 	String backURL = "";
 	try{
@@ -169,10 +169,10 @@
 			<aui:select id="allSemesters" size="1" name="semesterName" label="semester">
 				<aui:option value="">select-semester</aui:option>
 				<%for (int i = 0; i < semesters.size(); i++) {
-					if (semesters.get(i).equals(lSemesterName)) {%>
-						<aui:option value='<%=semesters.get(i)%>' selected="true"><%=semesters.get(i)%></aui:option>
+					if (lSemester.equals(semesters.get(i).getYearId()+"")) {%>
+						<aui:option value='<%=semesters.get(i).getYearId()%>' selected="true"><%=semesters.get(i).getPrefix()+"&nbsp;"+semesters.get(i).getName()%></aui:option>
 					<%} else {%>
-						<aui:option value='<%=semesters.get(i)%>'><%=semesters.get(i)%></aui:option>
+						<aui:option value='<%=semesters.get(i).getYearId()%>'><%=semesters.get(i).getPrefix()+"&nbsp;"+semesters.get(i).getName()%></aui:option>
 					<%}
 				}%>
 			</aui:select>

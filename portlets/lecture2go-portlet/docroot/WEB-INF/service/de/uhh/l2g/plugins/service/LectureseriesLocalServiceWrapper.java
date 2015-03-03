@@ -289,14 +289,8 @@ public class LectureseriesLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<java.lang.String> getAllSemesters(int begin, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _lectureseriesLocalService.getAllSemesters(begin, end);
-	}
-
-	@Override
 	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getFilteredBySemesterFacultyProducer(
-		java.lang.Integer approved, java.lang.String semester,
+		java.lang.Integer approved, java.lang.Long semester,
 		java.lang.Long facultyId, java.lang.Long producerId) {
 		return _lectureseriesLocalService.getFilteredBySemesterFacultyProducer(approved,
 			semester, facultyId, producerId);

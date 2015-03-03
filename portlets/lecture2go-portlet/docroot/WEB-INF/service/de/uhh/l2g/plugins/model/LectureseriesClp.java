@@ -79,7 +79,7 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 		attributes.put("eventCategory", getEventCategory());
 		attributes.put("name", getName());
 		attributes.put("shortDesc", getShortDesc());
-		attributes.put("semesterName", getSemesterName());
+		attributes.put("yearId", getYearId());
 		attributes.put("language", getLanguage());
 		attributes.put("facultyName", getFacultyName());
 		attributes.put("instructorsString", getInstructorsString());
@@ -127,10 +127,10 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 			setShortDesc(shortDesc);
 		}
 
-		String semesterName = (String)attributes.get("semesterName");
+		Long yearId = (Long)attributes.get("yearId");
 
-		if (semesterName != null) {
-			setSemesterName(semesterName);
+		if (yearId != null) {
+			setYearId(yearId);
 		}
 
 		String language = (String)attributes.get("language");
@@ -313,21 +313,21 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 	}
 
 	@Override
-	public String getSemesterName() {
-		return _semesterName;
+	public long getYearId() {
+		return _yearId;
 	}
 
 	@Override
-	public void setSemesterName(String semesterName) {
-		_semesterName = semesterName;
+	public void setYearId(long yearId) {
+		_yearId = yearId;
 
 		if (_lectureseriesRemoteModel != null) {
 			try {
 				Class<?> clazz = _lectureseriesRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setSemesterName", String.class);
+				Method method = clazz.getMethod("setYearId", long.class);
 
-				method.invoke(_lectureseriesRemoteModel, semesterName);
+				method.invoke(_lectureseriesRemoteModel, yearId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -645,7 +645,7 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 		clone.setEventCategory(getEventCategory());
 		clone.setName(getName());
 		clone.setShortDesc(getShortDesc());
-		clone.setSemesterName(getSemesterName());
+		clone.setYearId(getYearId());
 		clone.setLanguage(getLanguage());
 		clone.setFacultyName(getFacultyName());
 		clone.setInstructorsString(getInstructorsString());
@@ -718,8 +718,8 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 		sb.append(getName());
 		sb.append(", shortDesc=");
 		sb.append(getShortDesc());
-		sb.append(", semesterName=");
-		sb.append(getSemesterName());
+		sb.append(", yearId=");
+		sb.append(getYearId());
 		sb.append(", language=");
 		sb.append(getLanguage());
 		sb.append(", facultyName=");
@@ -774,8 +774,8 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 		sb.append(getShortDesc());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>semesterName</column-name><column-value><![CDATA[");
-		sb.append(getSemesterName());
+			"<column><column-name>yearId</column-name><column-value><![CDATA[");
+		sb.append(getYearId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>language</column-name><column-value><![CDATA[");
@@ -828,7 +828,7 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 	private String _eventCategory;
 	private String _name;
 	private String _shortDesc;
-	private String _semesterName;
+	private long _yearId;
 	private String _language;
 	private String _facultyName;
 	private String _instructorsString;

@@ -95,6 +95,7 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 		attributes.put("permittedToSegment", getPermittedToSegment());
 		attributes.put("rootInstitutionId", getRootInstitutionId());
 		attributes.put("citation2go", getCitation2go());
+		attributes.put("yearId", getYearId());
 
 		return attributes;
 	}
@@ -226,6 +227,12 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 
 		if (citation2go != null) {
 			setCitation2go(citation2go);
+		}
+
+		Long yearId = (Long)attributes.get("yearId");
+
+		if (yearId != null) {
+			setYearId(yearId);
 		}
 	}
 
@@ -709,6 +716,29 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 				Method method = clazz.getMethod("setCitation2go", int.class);
 
 				method.invoke(_videoRemoteModel, citation2go);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public long getYearId() {
+		return _yearId;
+	}
+
+	@Override
+	public void setYearId(long yearId) {
+		_yearId = yearId;
+
+		if (_videoRemoteModel != null) {
+			try {
+				Class<?> clazz = _videoRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setYearId", long.class);
+
+				method.invoke(_videoRemoteModel, yearId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -1649,6 +1679,7 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 		clone.setPermittedToSegment(getPermittedToSegment());
 		clone.setRootInstitutionId(getRootInstitutionId());
 		clone.setCitation2go(getCitation2go());
+		clone.setYearId(getYearId());
 
 		return clone;
 	}
@@ -1717,7 +1748,7 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{videoId=");
 		sb.append(getVideoId());
@@ -1761,6 +1792,8 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 		sb.append(getRootInstitutionId());
 		sb.append(", citation2go=");
 		sb.append(getCitation2go());
+		sb.append(", yearId=");
+		sb.append(getYearId());
 		sb.append("}");
 
 		return sb.toString();
@@ -1768,7 +1801,7 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(67);
+		StringBundler sb = new StringBundler(70);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Video");
@@ -1858,6 +1891,10 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 			"<column><column-name>citation2go</column-name><column-value><![CDATA[");
 		sb.append(getCitation2go());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>yearId</column-name><column-value><![CDATA[");
+		sb.append(getYearId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1885,6 +1922,7 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 	private int _permittedToSegment;
 	private long _rootInstitutionId;
 	private int _citation2go;
+	private long _yearId;
 	private BaseModel<?> _videoRemoteModel;
 	private Class<?> _clpSerializerClass = de.uhh.l2g.plugins.service.ClpSerializer.class;
 }

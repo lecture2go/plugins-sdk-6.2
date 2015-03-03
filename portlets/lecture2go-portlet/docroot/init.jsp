@@ -73,6 +73,7 @@
 <%@ page import="de.uhh.l2g.plugins.service.SegmentLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.NoSuchMetadataException"%>
 <%@ page import="de.uhh.l2g.plugins.service.MetadataLocalServiceUtil"%>
+<%@ page import="de.uhh.l2g.plugins.model.Year"%>
 <%@ page import="de.uhh.l2g.plugins.model.Producer"%>
 <%@ page import="de.uhh.l2g.plugins.model.Segment"%>
 <%@ page import="de.uhh.l2g.plugins.model.Institution"%>
@@ -89,6 +90,7 @@
 <%@ page import="de.uhh.l2g.plugins.model.impl.LicenseImpl"%>
 <%@ page import="de.uhh.l2g.plugins.util.Security"%>
 <%@ page import="de.uhh.l2g.plugins.service.HostLocalServiceUtil"%>
+<%@ page import="de.uhh.l2g.plugins.service.YearLocalServiceUtil"%>
 
 <%@ page import="de.uhh.l2g.plugins.util.Lecture2GoRoleChecker"%>
 

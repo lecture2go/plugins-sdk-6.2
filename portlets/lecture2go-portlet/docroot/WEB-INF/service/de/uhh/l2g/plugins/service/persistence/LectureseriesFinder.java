@@ -25,9 +25,7 @@ public interface LectureseriesFinder {
 
 	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findAllLectureseriesWhithOpenaccessVideos();
 
-	public java.util.List<java.lang.String> findAllSemesters(int begin, int end);
-
 	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findeFilteredByApprovedSemesterFacultyProducer(
-		java.lang.Integer approved, java.lang.String semester,
+		java.lang.Integer approved, java.lang.Long yearId,
 		java.lang.Long facultyId, java.lang.Long producerId);
 }

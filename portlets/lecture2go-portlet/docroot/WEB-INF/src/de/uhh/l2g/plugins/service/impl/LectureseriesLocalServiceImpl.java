@@ -50,13 +50,7 @@ public class LectureseriesLocalServiceImpl extends LectureseriesLocalServiceBase
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil} to access the lectureseries local service.
 	 */
 	
-	public List<String> getAllSemesters(int begin, int end) throws SystemException {
-		List <String> sl = new ArrayList<String>();
-		sl = LectureseriesFinderUtil.findAllSemesters(begin, end);
-		return sl;
-	}
-	
-	public List<Lectureseries> getFilteredBySemesterFacultyProducer(Integer approved, String semester, Long facultyId, Long producerId) {
+	public List<Lectureseries> getFilteredBySemesterFacultyProducer(Integer approved, Long semester, Long facultyId, Long producerId) {
 		List<Lectureseries> l = LectureseriesFinderUtil.findeFilteredByApprovedSemesterFacultyProducer(approved, semester, facultyId, producerId);
 		try{
 			l.isEmpty();//check

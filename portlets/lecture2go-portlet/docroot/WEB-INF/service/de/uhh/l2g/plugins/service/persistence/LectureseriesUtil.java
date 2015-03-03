@@ -111,168 +111,162 @@ public class LectureseriesUtil {
 	}
 
 	/**
-	* Returns all the lectureserieses where semesterName = &#63;.
+	* Returns all the lectureserieses where yearId = &#63;.
 	*
-	* @param semesterName the semester name
+	* @param yearId the year ID
 	* @return the matching lectureserieses
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findBySemester(
-		java.lang.String semesterName)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findBySemester(semesterName);
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findByYear(
+		long yearId) throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByYear(yearId);
 	}
 
 	/**
-	* Returns a range of all the lectureserieses where semesterName = &#63;.
+	* Returns a range of all the lectureserieses where yearId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.LectureseriesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param semesterName the semester name
+	* @param yearId the year ID
 	* @param start the lower bound of the range of lectureserieses
 	* @param end the upper bound of the range of lectureserieses (not inclusive)
 	* @return the range of matching lectureserieses
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findBySemester(
-		java.lang.String semesterName, int start, int end)
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findByYear(
+		long yearId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findBySemester(semesterName, start, end);
+		return getPersistence().findByYear(yearId, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the lectureserieses where semesterName = &#63;.
+	* Returns an ordered range of all the lectureserieses where yearId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.LectureseriesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param semesterName the semester name
+	* @param yearId the year ID
 	* @param start the lower bound of the range of lectureserieses
 	* @param end the upper bound of the range of lectureserieses (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching lectureserieses
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findBySemester(
-		java.lang.String semesterName, int start, int end,
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findByYear(
+		long yearId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findBySemester(semesterName, start, end, orderByComparator);
+		return getPersistence().findByYear(yearId, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns the first lectureseries in the ordered set where semesterName = &#63;.
+	* Returns the first lectureseries in the ordered set where yearId = &#63;.
 	*
-	* @param semesterName the semester name
+	* @param yearId the year ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching lectureseries
 	* @throws de.uhh.l2g.plugins.NoSuchLectureseriesException if a matching lectureseries could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Lectureseries findBySemester_First(
-		java.lang.String semesterName,
+	public static de.uhh.l2g.plugins.model.Lectureseries findByYear_First(
+		long yearId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchLectureseriesException {
-		return getPersistence()
-				   .findBySemester_First(semesterName, orderByComparator);
+		return getPersistence().findByYear_First(yearId, orderByComparator);
 	}
 
 	/**
-	* Returns the first lectureseries in the ordered set where semesterName = &#63;.
+	* Returns the first lectureseries in the ordered set where yearId = &#63;.
 	*
-	* @param semesterName the semester name
+	* @param yearId the year ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Lectureseries fetchBySemester_First(
-		java.lang.String semesterName,
+	public static de.uhh.l2g.plugins.model.Lectureseries fetchByYear_First(
+		long yearId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .fetchBySemester_First(semesterName, orderByComparator);
+		return getPersistence().fetchByYear_First(yearId, orderByComparator);
 	}
 
 	/**
-	* Returns the last lectureseries in the ordered set where semesterName = &#63;.
+	* Returns the last lectureseries in the ordered set where yearId = &#63;.
 	*
-	* @param semesterName the semester name
+	* @param yearId the year ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching lectureseries
 	* @throws de.uhh.l2g.plugins.NoSuchLectureseriesException if a matching lectureseries could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Lectureseries findBySemester_Last(
-		java.lang.String semesterName,
+	public static de.uhh.l2g.plugins.model.Lectureseries findByYear_Last(
+		long yearId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchLectureseriesException {
-		return getPersistence()
-				   .findBySemester_Last(semesterName, orderByComparator);
+		return getPersistence().findByYear_Last(yearId, orderByComparator);
 	}
 
 	/**
-	* Returns the last lectureseries in the ordered set where semesterName = &#63;.
+	* Returns the last lectureseries in the ordered set where yearId = &#63;.
 	*
-	* @param semesterName the semester name
+	* @param yearId the year ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Lectureseries fetchBySemester_Last(
-		java.lang.String semesterName,
+	public static de.uhh.l2g.plugins.model.Lectureseries fetchByYear_Last(
+		long yearId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .fetchBySemester_Last(semesterName, orderByComparator);
+		return getPersistence().fetchByYear_Last(yearId, orderByComparator);
 	}
 
 	/**
-	* Returns the lectureserieses before and after the current lectureseries in the ordered set where semesterName = &#63;.
+	* Returns the lectureserieses before and after the current lectureseries in the ordered set where yearId = &#63;.
 	*
 	* @param lectureseriesId the primary key of the current lectureseries
-	* @param semesterName the semester name
+	* @param yearId the year ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next lectureseries
 	* @throws de.uhh.l2g.plugins.NoSuchLectureseriesException if a lectureseries with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Lectureseries[] findBySemester_PrevAndNext(
-		long lectureseriesId, java.lang.String semesterName,
+	public static de.uhh.l2g.plugins.model.Lectureseries[] findByYear_PrevAndNext(
+		long lectureseriesId, long yearId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchLectureseriesException {
 		return getPersistence()
-				   .findBySemester_PrevAndNext(lectureseriesId, semesterName,
+				   .findByYear_PrevAndNext(lectureseriesId, yearId,
 			orderByComparator);
 	}
 
 	/**
-	* Removes all the lectureserieses where semesterName = &#63; from the database.
+	* Removes all the lectureserieses where yearId = &#63; from the database.
 	*
-	* @param semesterName the semester name
+	* @param yearId the year ID
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeBySemester(java.lang.String semesterName)
+	public static void removeByYear(long yearId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeBySemester(semesterName);
+		getPersistence().removeByYear(yearId);
 	}
 
 	/**
-	* Returns the number of lectureserieses where semesterName = &#63;.
+	* Returns the number of lectureserieses where yearId = &#63;.
 	*
-	* @param semesterName the semester name
+	* @param yearId the year ID
 	* @return the number of matching lectureserieses
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countBySemester(java.lang.String semesterName)
+	public static int countByYear(long yearId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countBySemester(semesterName);
+		return getPersistence().countByYear(yearId);
 	}
 
 	/**

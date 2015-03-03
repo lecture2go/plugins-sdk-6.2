@@ -33,6 +33,7 @@ import com.liferay.portal.service.persistence.UserPersistence;
 
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.service.VideoLocalService;
+import de.uhh.l2g.plugins.service.persistence.CategoryPersistence;
 import de.uhh.l2g.plugins.service.persistence.CoordinatorPersistence;
 import de.uhh.l2g.plugins.service.persistence.HostPersistence;
 import de.uhh.l2g.plugins.service.persistence.InstitutionFinder;
@@ -41,6 +42,7 @@ import de.uhh.l2g.plugins.service.persistence.Institution_HostPersistence;
 import de.uhh.l2g.plugins.service.persistence.LastvideolistPersistence;
 import de.uhh.l2g.plugins.service.persistence.LectureseriesFinder;
 import de.uhh.l2g.plugins.service.persistence.LectureseriesPersistence;
+import de.uhh.l2g.plugins.service.persistence.Lectureseries_CategoryPersistence;
 import de.uhh.l2g.plugins.service.persistence.Lectureseries_InstitutionPersistence;
 import de.uhh.l2g.plugins.service.persistence.LicensePersistence;
 import de.uhh.l2g.plugins.service.persistence.MetadataPersistence;
@@ -53,9 +55,11 @@ import de.uhh.l2g.plugins.service.persistence.SysPersistence;
 import de.uhh.l2g.plugins.service.persistence.UploadPersistence;
 import de.uhh.l2g.plugins.service.persistence.VideoFinder;
 import de.uhh.l2g.plugins.service.persistence.VideoPersistence;
+import de.uhh.l2g.plugins.service.persistence.Video_CategoryPersistence;
 import de.uhh.l2g.plugins.service.persistence.Video_InstitutionPersistence;
 import de.uhh.l2g.plugins.service.persistence.Video_LectureseriesPersistence;
 import de.uhh.l2g.plugins.service.persistence.VideohitlistPersistence;
+import de.uhh.l2g.plugins.service.persistence.YearPersistence;
 
 import java.io.Serializable;
 
@@ -291,6 +295,43 @@ public abstract class VideoLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public Video updateVideo(Video video) throws SystemException {
 		return videoPersistence.update(video);
+	}
+
+	/**
+	 * Returns the category local service.
+	 *
+	 * @return the category local service
+	 */
+	public de.uhh.l2g.plugins.service.CategoryLocalService getCategoryLocalService() {
+		return categoryLocalService;
+	}
+
+	/**
+	 * Sets the category local service.
+	 *
+	 * @param categoryLocalService the category local service
+	 */
+	public void setCategoryLocalService(
+		de.uhh.l2g.plugins.service.CategoryLocalService categoryLocalService) {
+		this.categoryLocalService = categoryLocalService;
+	}
+
+	/**
+	 * Returns the category persistence.
+	 *
+	 * @return the category persistence
+	 */
+	public CategoryPersistence getCategoryPersistence() {
+		return categoryPersistence;
+	}
+
+	/**
+	 * Sets the category persistence.
+	 *
+	 * @param categoryPersistence the category persistence
+	 */
+	public void setCategoryPersistence(CategoryPersistence categoryPersistence) {
+		this.categoryPersistence = categoryPersistence;
 	}
 
 	/**
@@ -554,6 +595,44 @@ public abstract class VideoLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setLectureseriesFinder(LectureseriesFinder lectureseriesFinder) {
 		this.lectureseriesFinder = lectureseriesFinder;
+	}
+
+	/**
+	 * Returns the lectureseries_ category local service.
+	 *
+	 * @return the lectureseries_ category local service
+	 */
+	public de.uhh.l2g.plugins.service.Lectureseries_CategoryLocalService getLectureseries_CategoryLocalService() {
+		return lectureseries_CategoryLocalService;
+	}
+
+	/**
+	 * Sets the lectureseries_ category local service.
+	 *
+	 * @param lectureseries_CategoryLocalService the lectureseries_ category local service
+	 */
+	public void setLectureseries_CategoryLocalService(
+		de.uhh.l2g.plugins.service.Lectureseries_CategoryLocalService lectureseries_CategoryLocalService) {
+		this.lectureseries_CategoryLocalService = lectureseries_CategoryLocalService;
+	}
+
+	/**
+	 * Returns the lectureseries_ category persistence.
+	 *
+	 * @return the lectureseries_ category persistence
+	 */
+	public Lectureseries_CategoryPersistence getLectureseries_CategoryPersistence() {
+		return lectureseries_CategoryPersistence;
+	}
+
+	/**
+	 * Sets the lectureseries_ category persistence.
+	 *
+	 * @param lectureseries_CategoryPersistence the lectureseries_ category persistence
+	 */
+	public void setLectureseries_CategoryPersistence(
+		Lectureseries_CategoryPersistence lectureseries_CategoryPersistence) {
+		this.lectureseries_CategoryPersistence = lectureseries_CategoryPersistence;
 	}
 
 	/**
@@ -965,6 +1044,44 @@ public abstract class VideoLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the video_ category local service.
+	 *
+	 * @return the video_ category local service
+	 */
+	public de.uhh.l2g.plugins.service.Video_CategoryLocalService getVideo_CategoryLocalService() {
+		return video_CategoryLocalService;
+	}
+
+	/**
+	 * Sets the video_ category local service.
+	 *
+	 * @param video_CategoryLocalService the video_ category local service
+	 */
+	public void setVideo_CategoryLocalService(
+		de.uhh.l2g.plugins.service.Video_CategoryLocalService video_CategoryLocalService) {
+		this.video_CategoryLocalService = video_CategoryLocalService;
+	}
+
+	/**
+	 * Returns the video_ category persistence.
+	 *
+	 * @return the video_ category persistence
+	 */
+	public Video_CategoryPersistence getVideo_CategoryPersistence() {
+		return video_CategoryPersistence;
+	}
+
+	/**
+	 * Sets the video_ category persistence.
+	 *
+	 * @param video_CategoryPersistence the video_ category persistence
+	 */
+	public void setVideo_CategoryPersistence(
+		Video_CategoryPersistence video_CategoryPersistence) {
+		this.video_CategoryPersistence = video_CategoryPersistence;
+	}
+
+	/**
 	 * Returns the video_ institution local service.
 	 *
 	 * @return the video_ institution local service
@@ -1076,6 +1193,43 @@ public abstract class VideoLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public void setVideohitlistPersistence(
 		VideohitlistPersistence videohitlistPersistence) {
 		this.videohitlistPersistence = videohitlistPersistence;
+	}
+
+	/**
+	 * Returns the year local service.
+	 *
+	 * @return the year local service
+	 */
+	public de.uhh.l2g.plugins.service.YearLocalService getYearLocalService() {
+		return yearLocalService;
+	}
+
+	/**
+	 * Sets the year local service.
+	 *
+	 * @param yearLocalService the year local service
+	 */
+	public void setYearLocalService(
+		de.uhh.l2g.plugins.service.YearLocalService yearLocalService) {
+		this.yearLocalService = yearLocalService;
+	}
+
+	/**
+	 * Returns the year persistence.
+	 *
+	 * @return the year persistence
+	 */
+	public YearPersistence getYearPersistence() {
+		return yearPersistence;
+	}
+
+	/**
+	 * Sets the year persistence.
+	 *
+	 * @param yearPersistence the year persistence
+	 */
+	public void setYearPersistence(YearPersistence yearPersistence) {
+		this.yearPersistence = yearPersistence;
 	}
 
 	/**
@@ -1254,6 +1408,10 @@ public abstract class VideoLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
+	@BeanReference(type = de.uhh.l2g.plugins.service.CategoryLocalService.class)
+	protected de.uhh.l2g.plugins.service.CategoryLocalService categoryLocalService;
+	@BeanReference(type = CategoryPersistence.class)
+	protected CategoryPersistence categoryPersistence;
 	@BeanReference(type = de.uhh.l2g.plugins.service.CoordinatorLocalService.class)
 	protected de.uhh.l2g.plugins.service.CoordinatorLocalService coordinatorLocalService;
 	@BeanReference(type = CoordinatorPersistence.class)
@@ -1282,6 +1440,10 @@ public abstract class VideoLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected LectureseriesPersistence lectureseriesPersistence;
 	@BeanReference(type = LectureseriesFinder.class)
 	protected LectureseriesFinder lectureseriesFinder;
+	@BeanReference(type = de.uhh.l2g.plugins.service.Lectureseries_CategoryLocalService.class)
+	protected de.uhh.l2g.plugins.service.Lectureseries_CategoryLocalService lectureseries_CategoryLocalService;
+	@BeanReference(type = Lectureseries_CategoryPersistence.class)
+	protected Lectureseries_CategoryPersistence lectureseries_CategoryPersistence;
 	@BeanReference(type = de.uhh.l2g.plugins.service.Lectureseries_InstitutionLocalService.class)
 	protected de.uhh.l2g.plugins.service.Lectureseries_InstitutionLocalService lectureseries_InstitutionLocalService;
 	@BeanReference(type = Lectureseries_InstitutionPersistence.class)
@@ -1326,6 +1488,10 @@ public abstract class VideoLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected VideoPersistence videoPersistence;
 	@BeanReference(type = VideoFinder.class)
 	protected VideoFinder videoFinder;
+	@BeanReference(type = de.uhh.l2g.plugins.service.Video_CategoryLocalService.class)
+	protected de.uhh.l2g.plugins.service.Video_CategoryLocalService video_CategoryLocalService;
+	@BeanReference(type = Video_CategoryPersistence.class)
+	protected Video_CategoryPersistence video_CategoryPersistence;
 	@BeanReference(type = de.uhh.l2g.plugins.service.Video_InstitutionLocalService.class)
 	protected de.uhh.l2g.plugins.service.Video_InstitutionLocalService video_InstitutionLocalService;
 	@BeanReference(type = Video_InstitutionPersistence.class)
@@ -1338,6 +1504,10 @@ public abstract class VideoLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected de.uhh.l2g.plugins.service.VideohitlistLocalService videohitlistLocalService;
 	@BeanReference(type = VideohitlistPersistence.class)
 	protected VideohitlistPersistence videohitlistPersistence;
+	@BeanReference(type = de.uhh.l2g.plugins.service.YearLocalService.class)
+	protected de.uhh.l2g.plugins.service.YearLocalService yearLocalService;
+	@BeanReference(type = YearPersistence.class)
+	protected YearPersistence yearPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)

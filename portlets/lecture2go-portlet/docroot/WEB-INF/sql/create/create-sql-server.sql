@@ -5,6 +5,14 @@ go
 
 use lportal;
 
+create table LG_Category (
+	categoryId bigint not null primary key,
+	parentId bigint,
+	languageId nvarchar(75) null,
+	name nvarchar(75) null,
+	translation nvarchar(75) null
+);
+
 create table LG_Coordinator (
 	coordinatorId bigint not null primary key,
 	institutionId bigint,
@@ -48,14 +56,23 @@ create table LG_Lectureseries (
 	eventCategory nvarchar(75) null,
 	name nvarchar(75) null,
 	shortDesc nvarchar(75) null,
-	semesterName nvarchar(75) null,
+	yearId bigint,
 	language nvarchar(75) null,
 	facultyName nvarchar(75) null,
 	instructorsString nvarchar(75) null,
 	lectureseriesId bigint not null primary key,
 	password_ nvarchar(75) null,
 	approved int,
-	longDesc nvarchar(75) null
+	longDesc nvarchar(75) null,
+	latestOpenAccessVideoId bigint,
+	latestVideoUploadDate datetime null,
+	latestVideoGenerationDate nvarchar(75) null
+);
+
+create table LG_Lectureseries_Category (
+	lectureseriesCategoryId bigint not null primary key,
+	categoryId bigint,
+	lectureseriesId bigint
 );
 
 create table LG_Lectureseries_Institution (
@@ -164,7 +181,7 @@ create table LG_Upload (
 	contentLength bigint,
 	timestamp bigint,
 	status int,
-	videoId int
+	videoId bigint
 );
 
 create table LG_Video (
@@ -184,11 +201,18 @@ create table LG_Video (
 	downloadLink int,
 	metadataId bigint,
 	surl nvarchar(75) null,
-	hits int,
+	hits bigint,
 	uploadDate datetime null,
 	permittedToSegment int,
 	rootInstitutionId bigint,
-	citation2go int
+	citation2go int,
+	yearId bigint
+);
+
+create table LG_Video_Category (
+	videoCategoryId bigint not null primary key,
+	videoId bigint,
+	categoryId bigint
 );
 
 create table LG_Video_Institution (
@@ -200,17 +224,27 @@ create table LG_Video_Institution (
 create table LG_Video_Lectureseries (
 	videoLectureseriesId bigint not null primary key,
 	videoId bigint,
-	lectureseriesId bigint
+	lectureseriesId bigint,
+	openAccess int
 );
 
 create table LG_Videohitlist (
 	videohitlistId bigint not null primary key,
-	hitsPerDay int,
-	hitsPerWeek int,
-	hitsPerMonth int,
-	hitsPerYear int
+	hitsPerDay bigint,
+	hitsPerWeek bigint,
+	hitsPerMonth bigint,
+	hitsPerYear bigint,
+	videoId bigint
 );
 
+create table LG_Year (
+	yearId bigint not null primary key,
+	prefix nvarchar(75) null,
+	name nvarchar(75) null
+);
+
+
+create index IX_8FA32867 on LG_Category (name);
 
 create index IX_4EE19791 on LG_Coordinator (institutionId);
 create index IX_8439EBD on LG_Coordinator (officeId);
@@ -237,9 +271,19 @@ create index IX_9D792271 on LG_Lectureseries (eventCategory);
 create index IX_EBC55E2D on LG_Lectureseries (eventType);
 create index IX_F43BC8 on LG_Lectureseries (facultyName);
 create index IX_4F65B8A3 on LG_Lectureseries (language);
+create index IX_183A42D8 on LG_Lectureseries (latestGenerationDate);
+create index IX_714473BA on LG_Lectureseries (latestOpenAccessVideoId);
+create index IX_7DCCF0F3 on LG_Lectureseries (latestVideoGenerationDate);
+create index IX_5EDF7468 on LG_Lectureseries (latestVideoId);
+create index IX_31FBA89C on LG_Lectureseries (latestVideoUploadDate);
 create index IX_DB929396 on LG_Lectureseries (name);
 create index IX_225A0AF on LG_Lectureseries (number_);
+create index IX_3714125D on LG_Lectureseries (password_);
 create index IX_2E421DEE on LG_Lectureseries (semesterName);
+create index IX_77CE15C3 on LG_Lectureseries (yearId);
+
+create index IX_EE7F24BF on LG_Lectureseries_Category (categoryId);
+create index IX_E459C00E on LG_Lectureseries_Category (lectureseriesId);
 
 create index IX_719B09B3 on LG_Lectureseries_Institution (institutionId);
 create index IX_C80ED770 on LG_Lectureseries_Institution (lectureseriesId);
@@ -266,17 +310,29 @@ create index IX_87A17CC1 on LG_Segment_User_Video (segmentId);
 create index IX_165E5A37 on LG_Segment_User_Video (userId);
 create index IX_F1DC7249 on LG_Segment_User_Video (videoId);
 
+create index IX_88EAD11B on LG_Upload (videoId);
+
+create index IX_D1B2A998 on LG_Video (filename);
 create index IX_3B4515A3 on LG_Video (lectureseriesId);
 create index IX_AAE2F865 on LG_Video (lectureseriesId, openAccess);
 create index IX_35558E9E on LG_Video (producerId);
 create index IX_2B61D434 on LG_Video (producerId, downloadLink);
 create index IX_99A86BC2 on LG_Video (producerId, lectureseriesId);
 create index IX_55AEC6E4 on LG_Video (rootInstitutionId);
+create index IX_923BA320 on LG_Video (uploadDate);
+
+create index IX_793FA2F9 on LG_Video_Category (categoryId);
+create index IX_3334541A on LG_Video_Category (videoId);
 
 create index IX_39AE746D on LG_Video_Institution (institutionId);
 create index IX_4467AFB0 on LG_Video_Institution (videoId);
 
 create index IX_12087ECD on LG_Video_Lectureseries (lectureseriesId);
 create index IX_F35885D3 on LG_Video_Lectureseries (videoId);
+
+create index IX_BBE4D526 on LG_Videohitlist (videoId);
+
+create index IX_D6EE16A6 on LG_Year (name);
+create index IX_1954A2AD on LG_Year (prefix);
 
 

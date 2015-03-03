@@ -1,3 +1,11 @@
+create table LG_Category (
+	categoryId int64 not null primary key,
+	parentId int64,
+	languageId varchar(75),
+	name varchar(75),
+	translation varchar(75)
+);
+
 create table LG_Coordinator (
 	coordinatorId int64 not null primary key,
 	institutionId int64,
@@ -41,14 +49,23 @@ create table LG_Lectureseries (
 	eventCategory varchar(75),
 	name varchar(75),
 	shortDesc varchar(75),
-	semesterName varchar(75),
+	yearId int64,
 	language varchar(75),
 	facultyName varchar(75),
 	instructorsString varchar(75),
 	lectureseriesId int64 not null primary key,
 	password_ varchar(75),
 	approved integer,
-	longDesc varchar(75)
+	longDesc varchar(75),
+	latestOpenAccessVideoId int64,
+	latestVideoUploadDate timestamp,
+	latestVideoGenerationDate varchar(75)
+);
+
+create table LG_Lectureseries_Category (
+	lectureseriesCategoryId int64 not null primary key,
+	categoryId int64,
+	lectureseriesId int64
 );
 
 create table LG_Lectureseries_Institution (
@@ -157,7 +174,7 @@ create table LG_Upload (
 	contentLength int64,
 	timestamp int64,
 	status integer,
-	videoId integer
+	videoId int64
 );
 
 create table LG_Video (
@@ -177,11 +194,18 @@ create table LG_Video (
 	downloadLink integer,
 	metadataId int64,
 	surl varchar(75),
-	hits integer,
+	hits int64,
 	uploadDate timestamp,
 	permittedToSegment integer,
 	rootInstitutionId int64,
-	citation2go integer
+	citation2go integer,
+	yearId int64
+);
+
+create table LG_Video_Category (
+	videoCategoryId int64 not null primary key,
+	videoId int64,
+	categoryId int64
 );
 
 create table LG_Video_Institution (
@@ -193,13 +217,21 @@ create table LG_Video_Institution (
 create table LG_Video_Lectureseries (
 	videoLectureseriesId int64 not null primary key,
 	videoId int64,
-	lectureseriesId int64
+	lectureseriesId int64,
+	openAccess integer
 );
 
 create table LG_Videohitlist (
 	videohitlistId int64 not null primary key,
-	hitsPerDay integer,
-	hitsPerWeek integer,
-	hitsPerMonth integer,
-	hitsPerYear integer
+	hitsPerDay int64,
+	hitsPerWeek int64,
+	hitsPerMonth int64,
+	hitsPerYear int64,
+	videoId int64
+);
+
+create table LG_Year (
+	yearId int64 not null primary key,
+	prefix varchar(75),
+	name varchar(75)
 );

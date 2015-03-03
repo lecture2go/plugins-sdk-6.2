@@ -64,7 +64,7 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 			{ "eventCategory", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
 			{ "shortDesc", Types.VARCHAR },
-			{ "semesterName", Types.VARCHAR },
+			{ "yearId", Types.BIGINT },
 			{ "language", Types.VARCHAR },
 			{ "facultyName", Types.VARCHAR },
 			{ "instructorsString", Types.VARCHAR },
@@ -76,7 +76,7 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 			{ "latestVideoUploadDate", Types.TIMESTAMP },
 			{ "latestVideoGenerationDate", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Lectureseries (number_ VARCHAR(75) null,eventType VARCHAR(75) null,eventCategory VARCHAR(75) null,name VARCHAR(75) null,shortDesc VARCHAR(75) null,semesterName VARCHAR(75) null,language VARCHAR(75) null,facultyName VARCHAR(75) null,instructorsString VARCHAR(75) null,lectureseriesId LONG not null primary key,password_ VARCHAR(75) null,approved INTEGER,longDesc VARCHAR(75) null,latestOpenAccessVideoId LONG,latestVideoUploadDate DATE null,latestVideoGenerationDate VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Lectureseries (number_ VARCHAR(75) null,eventType VARCHAR(75) null,eventCategory VARCHAR(75) null,name VARCHAR(75) null,shortDesc VARCHAR(75) null,yearId LONG,language VARCHAR(75) null,facultyName VARCHAR(75) null,instructorsString VARCHAR(75) null,lectureseriesId LONG not null primary key,password_ VARCHAR(75) null,approved INTEGER,longDesc VARCHAR(75) null,latestOpenAccessVideoId LONG,latestVideoUploadDate DATE null,latestVideoGenerationDate VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Lectureseries";
 	public static final String ORDER_BY_JPQL = " ORDER BY lectureseries.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Lectureseries.name ASC";
@@ -103,7 +103,7 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 	public static long NAME_COLUMN_BITMASK = 256L;
 	public static long NUMBER_COLUMN_BITMASK = 512L;
 	public static long PASSWORD_COLUMN_BITMASK = 1024L;
-	public static long SEMESTERNAME_COLUMN_BITMASK = 2048L;
+	public static long YEARID_COLUMN_BITMASK = 2048L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Lectureseries"));
 
@@ -149,7 +149,7 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 		attributes.put("eventCategory", getEventCategory());
 		attributes.put("name", getName());
 		attributes.put("shortDesc", getShortDesc());
-		attributes.put("semesterName", getSemesterName());
+		attributes.put("yearId", getYearId());
 		attributes.put("language", getLanguage());
 		attributes.put("facultyName", getFacultyName());
 		attributes.put("instructorsString", getInstructorsString());
@@ -197,10 +197,10 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 			setShortDesc(shortDesc);
 		}
 
-		String semesterName = (String)attributes.get("semesterName");
+		Long yearId = (Long)attributes.get("yearId");
 
-		if (semesterName != null) {
-			setSemesterName(semesterName);
+		if (yearId != null) {
+			setYearId(yearId);
 		}
 
 		String language = (String)attributes.get("language");
@@ -383,28 +383,25 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 	}
 
 	@Override
-	public String getSemesterName() {
-		if (_semesterName == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _semesterName;
-		}
+	public long getYearId() {
+		return _yearId;
 	}
 
 	@Override
-	public void setSemesterName(String semesterName) {
-		_columnBitmask |= SEMESTERNAME_COLUMN_BITMASK;
+	public void setYearId(long yearId) {
+		_columnBitmask |= YEARID_COLUMN_BITMASK;
 
-		if (_originalSemesterName == null) {
-			_originalSemesterName = _semesterName;
+		if (!_setOriginalYearId) {
+			_setOriginalYearId = true;
+
+			_originalYearId = _yearId;
 		}
 
-		_semesterName = semesterName;
+		_yearId = yearId;
 	}
 
-	public String getOriginalSemesterName() {
-		return GetterUtil.getString(_originalSemesterName);
+	public long getOriginalYearId() {
+		return _originalYearId;
 	}
 
 	@Override
@@ -647,7 +644,7 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 		lectureseriesImpl.setEventCategory(getEventCategory());
 		lectureseriesImpl.setName(getName());
 		lectureseriesImpl.setShortDesc(getShortDesc());
-		lectureseriesImpl.setSemesterName(getSemesterName());
+		lectureseriesImpl.setYearId(getYearId());
 		lectureseriesImpl.setLanguage(getLanguage());
 		lectureseriesImpl.setFacultyName(getFacultyName());
 		lectureseriesImpl.setInstructorsString(getInstructorsString());
@@ -716,7 +713,9 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 
 		lectureseriesModelImpl._originalName = lectureseriesModelImpl._name;
 
-		lectureseriesModelImpl._originalSemesterName = lectureseriesModelImpl._semesterName;
+		lectureseriesModelImpl._originalYearId = lectureseriesModelImpl._yearId;
+
+		lectureseriesModelImpl._setOriginalYearId = false;
 
 		lectureseriesModelImpl._originalLanguage = lectureseriesModelImpl._language;
 
@@ -783,13 +782,7 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 			lectureseriesCacheModel.shortDesc = null;
 		}
 
-		lectureseriesCacheModel.semesterName = getSemesterName();
-
-		String semesterName = lectureseriesCacheModel.semesterName;
-
-		if ((semesterName != null) && (semesterName.length() == 0)) {
-			lectureseriesCacheModel.semesterName = null;
-		}
+		lectureseriesCacheModel.yearId = getYearId();
 
 		lectureseriesCacheModel.language = getLanguage();
 
@@ -872,8 +865,8 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 		sb.append(getName());
 		sb.append(", shortDesc=");
 		sb.append(getShortDesc());
-		sb.append(", semesterName=");
-		sb.append(getSemesterName());
+		sb.append(", yearId=");
+		sb.append(getYearId());
 		sb.append(", language=");
 		sb.append(getLanguage());
 		sb.append(", facultyName=");
@@ -928,8 +921,8 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 		sb.append(getShortDesc());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>semesterName</column-name><column-value><![CDATA[");
-		sb.append(getSemesterName());
+			"<column><column-name>yearId</column-name><column-value><![CDATA[");
+		sb.append(getYearId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>language</column-name><column-value><![CDATA[");
@@ -990,8 +983,9 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 	private String _name;
 	private String _originalName;
 	private String _shortDesc;
-	private String _semesterName;
-	private String _originalSemesterName;
+	private long _yearId;
+	private long _originalYearId;
+	private boolean _setOriginalYearId;
 	private String _language;
 	private String _originalLanguage;
 	private String _facultyName;

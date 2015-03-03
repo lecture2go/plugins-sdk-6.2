@@ -37,7 +37,7 @@ import java.util.Date;
 public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{videoId=");
 		sb.append(videoId);
@@ -81,6 +81,8 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 		sb.append(rootInstitutionId);
 		sb.append(", citation2go=");
 		sb.append(citation2go);
+		sb.append(", yearId=");
+		sb.append(yearId);
 		sb.append("}");
 
 		return sb.toString();
@@ -176,6 +178,7 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 		videoImpl.setPermittedToSegment(permittedToSegment);
 		videoImpl.setRootInstitutionId(rootInstitutionId);
 		videoImpl.setCitation2go(citation2go);
+		videoImpl.setYearId(yearId);
 
 		videoImpl.resetOriginalValues();
 
@@ -205,6 +208,7 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 		permittedToSegment = objectInput.readInt();
 		rootInstitutionId = objectInput.readLong();
 		citation2go = objectInput.readInt();
+		yearId = objectInput.readLong();
 	}
 
 	@Override
@@ -289,6 +293,7 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 		objectOutput.writeInt(permittedToSegment);
 		objectOutput.writeLong(rootInstitutionId);
 		objectOutput.writeInt(citation2go);
+		objectOutput.writeLong(yearId);
 	}
 
 	public long videoId;
@@ -312,4 +317,5 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 	public int permittedToSegment;
 	public long rootInstitutionId;
 	public int citation2go;
+	public long yearId;
 }

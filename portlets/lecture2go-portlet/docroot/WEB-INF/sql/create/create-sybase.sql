@@ -7,6 +7,15 @@ go
 
 use lportal
 
+create table LG_Category (
+	categoryId decimal(20,0) not null primary key,
+	parentId decimal(20,0),
+	languageId varchar(75) null,
+	name varchar(75) null,
+	translation varchar(75) null
+)
+go
+
 create table LG_Coordinator (
 	coordinatorId decimal(20,0) not null primary key,
 	institutionId decimal(20,0),
@@ -55,14 +64,24 @@ create table LG_Lectureseries (
 	eventCategory varchar(75) null,
 	name varchar(75) null,
 	shortDesc varchar(75) null,
-	semesterName varchar(75) null,
+	yearId decimal(20,0),
 	language varchar(75) null,
 	facultyName varchar(75) null,
 	instructorsString varchar(75) null,
 	lectureseriesId decimal(20,0) not null primary key,
 	password_ varchar(75) null,
 	approved int,
-	longDesc varchar(75) null
+	longDesc varchar(75) null,
+	latestOpenAccessVideoId decimal(20,0),
+	latestVideoUploadDate datetime null,
+	latestVideoGenerationDate varchar(75) null
+)
+go
+
+create table LG_Lectureseries_Category (
+	lectureseriesCategoryId decimal(20,0) not null primary key,
+	categoryId decimal(20,0),
+	lectureseriesId decimal(20,0)
 )
 go
 
@@ -182,7 +201,7 @@ create table LG_Upload (
 	contentLength decimal(20,0),
 	timestamp decimal(20,0),
 	status int,
-	videoId int
+	videoId decimal(20,0)
 )
 go
 
@@ -203,11 +222,19 @@ create table LG_Video (
 	downloadLink int,
 	metadataId decimal(20,0),
 	surl varchar(75) null,
-	hits int,
+	hits decimal(20,0),
 	uploadDate datetime null,
 	permittedToSegment int,
 	rootInstitutionId decimal(20,0),
-	citation2go int
+	citation2go int,
+	yearId decimal(20,0)
+)
+go
+
+create table LG_Video_Category (
+	videoCategoryId decimal(20,0) not null primary key,
+	videoId decimal(20,0),
+	categoryId decimal(20,0)
 )
 go
 
@@ -221,16 +248,25 @@ go
 create table LG_Video_Lectureseries (
 	videoLectureseriesId decimal(20,0) not null primary key,
 	videoId decimal(20,0),
-	lectureseriesId decimal(20,0)
+	lectureseriesId decimal(20,0),
+	openAccess int
 )
 go
 
 create table LG_Videohitlist (
 	videohitlistId decimal(20,0) not null primary key,
-	hitsPerDay int,
-	hitsPerWeek int,
-	hitsPerMonth int,
-	hitsPerYear int
+	hitsPerDay decimal(20,0),
+	hitsPerWeek decimal(20,0),
+	hitsPerMonth decimal(20,0),
+	hitsPerYear decimal(20,0),
+	videoId decimal(20,0)
+)
+go
+
+create table LG_Year (
+	yearId decimal(20,0) not null primary key,
+	prefix varchar(75) null,
+	name varchar(75) null
 )
 go
 

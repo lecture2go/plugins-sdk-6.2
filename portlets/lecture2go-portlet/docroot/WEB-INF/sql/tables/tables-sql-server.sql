@@ -1,3 +1,11 @@
+create table LG_Category (
+	categoryId bigint not null primary key,
+	parentId bigint,
+	languageId nvarchar(75) null,
+	name nvarchar(75) null,
+	translation nvarchar(75) null
+);
+
 create table LG_Coordinator (
 	coordinatorId bigint not null primary key,
 	institutionId bigint,
@@ -41,14 +49,23 @@ create table LG_Lectureseries (
 	eventCategory nvarchar(75) null,
 	name nvarchar(75) null,
 	shortDesc nvarchar(75) null,
-	semesterName nvarchar(75) null,
+	yearId bigint,
 	language nvarchar(75) null,
 	facultyName nvarchar(75) null,
 	instructorsString nvarchar(75) null,
 	lectureseriesId bigint not null primary key,
 	password_ nvarchar(75) null,
 	approved int,
-	longDesc nvarchar(75) null
+	longDesc nvarchar(75) null,
+	latestOpenAccessVideoId bigint,
+	latestVideoUploadDate datetime null,
+	latestVideoGenerationDate nvarchar(75) null
+);
+
+create table LG_Lectureseries_Category (
+	lectureseriesCategoryId bigint not null primary key,
+	categoryId bigint,
+	lectureseriesId bigint
 );
 
 create table LG_Lectureseries_Institution (
@@ -157,7 +174,7 @@ create table LG_Upload (
 	contentLength bigint,
 	timestamp bigint,
 	status int,
-	videoId int
+	videoId bigint
 );
 
 create table LG_Video (
@@ -177,11 +194,18 @@ create table LG_Video (
 	downloadLink int,
 	metadataId bigint,
 	surl nvarchar(75) null,
-	hits int,
+	hits bigint,
 	uploadDate datetime null,
 	permittedToSegment int,
 	rootInstitutionId bigint,
-	citation2go int
+	citation2go int,
+	yearId bigint
+);
+
+create table LG_Video_Category (
+	videoCategoryId bigint not null primary key,
+	videoId bigint,
+	categoryId bigint
 );
 
 create table LG_Video_Institution (
@@ -193,13 +217,21 @@ create table LG_Video_Institution (
 create table LG_Video_Lectureseries (
 	videoLectureseriesId bigint not null primary key,
 	videoId bigint,
-	lectureseriesId bigint
+	lectureseriesId bigint,
+	openAccess int
 );
 
 create table LG_Videohitlist (
 	videohitlistId bigint not null primary key,
-	hitsPerDay int,
-	hitsPerWeek int,
-	hitsPerMonth int,
-	hitsPerYear int
+	hitsPerDay bigint,
+	hitsPerWeek bigint,
+	hitsPerMonth bigint,
+	hitsPerYear bigint,
+	videoId bigint
+);
+
+create table LG_Year (
+	yearId bigint not null primary key,
+	prefix nvarchar(75) null,
+	name nvarchar(75) null
 );

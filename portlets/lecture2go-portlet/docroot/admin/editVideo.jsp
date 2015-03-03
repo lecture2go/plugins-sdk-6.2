@@ -30,8 +30,6 @@
 	String[] availableLanguageIds = LocaleUtil.toLanguageIds(languages);
 	String languageId="";
 
-	List<String> semesters = LectureseriesLocalServiceUtil.getAllSemesters(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
-
 	String uploadProgressId = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
 	String backURL = request.getAttribute("backURL").toString();
 %>

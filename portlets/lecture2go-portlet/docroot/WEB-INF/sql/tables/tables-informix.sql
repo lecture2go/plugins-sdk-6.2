@@ -1,3 +1,13 @@
+create table LG_Category (
+	categoryId int8 not null primary key,
+	parentId int8,
+	languageId varchar(75),
+	name varchar(75),
+	translation varchar(75)
+)
+extent size 16 next size 16
+lock mode row;
+
 create table LG_Coordinator (
 	coordinatorId int8 not null primary key,
 	institutionId int8,
@@ -51,14 +61,25 @@ create table LG_Lectureseries (
 	eventCategory varchar(75),
 	name varchar(75),
 	shortDesc varchar(75),
-	semesterName varchar(75),
+	yearId int8,
 	language varchar(75),
 	facultyName varchar(75),
 	instructorsString varchar(75),
 	lectureseriesId int8 not null primary key,
 	password_ varchar(75),
 	approved int,
-	longDesc varchar(75)
+	longDesc varchar(75),
+	latestOpenAccessVideoId int8,
+	latestVideoUploadDate datetime YEAR TO FRACTION,
+	latestVideoGenerationDate varchar(75)
+)
+extent size 16 next size 16
+lock mode row;
+
+create table LG_Lectureseries_Category (
+	lectureseriesCategoryId int8 not null primary key,
+	categoryId int8,
+	lectureseriesId int8
 )
 extent size 16 next size 16
 lock mode row;
@@ -189,7 +210,7 @@ create table LG_Upload (
 	contentLength int8,
 	timestamp int8,
 	status int,
-	videoId int
+	videoId int8
 )
 extent size 16 next size 16
 lock mode row;
@@ -211,11 +232,20 @@ create table LG_Video (
 	downloadLink int,
 	metadataId int8,
 	surl varchar(75),
-	hits int,
+	hits int8,
 	uploadDate datetime YEAR TO FRACTION,
 	permittedToSegment int,
 	rootInstitutionId int8,
-	citation2go int
+	citation2go int,
+	yearId int8
+)
+extent size 16 next size 16
+lock mode row;
+
+create table LG_Video_Category (
+	videoCategoryId int8 not null primary key,
+	videoId int8,
+	categoryId int8
 )
 extent size 16 next size 16
 lock mode row;
@@ -231,17 +261,27 @@ lock mode row;
 create table LG_Video_Lectureseries (
 	videoLectureseriesId int8 not null primary key,
 	videoId int8,
-	lectureseriesId int8
+	lectureseriesId int8,
+	openAccess int
 )
 extent size 16 next size 16
 lock mode row;
 
 create table LG_Videohitlist (
 	videohitlistId int8 not null primary key,
-	hitsPerDay int,
-	hitsPerWeek int,
-	hitsPerMonth int,
-	hitsPerYear int
+	hitsPerDay int8,
+	hitsPerWeek int8,
+	hitsPerMonth int8,
+	hitsPerYear int8,
+	videoId int8
+)
+extent size 16 next size 16
+lock mode row;
+
+create table LG_Year (
+	yearId int8 not null primary key,
+	prefix varchar(75),
+	name varchar(75)
 )
 extent size 16 next size 16
 lock mode row;

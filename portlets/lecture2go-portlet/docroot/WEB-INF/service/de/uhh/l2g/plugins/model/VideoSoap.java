@@ -51,6 +51,7 @@ public class VideoSoap implements Serializable {
 		soapModel.setPermittedToSegment(model.getPermittedToSegment());
 		soapModel.setRootInstitutionId(model.getRootInstitutionId());
 		soapModel.setCitation2go(model.getCitation2go());
+		soapModel.setYearId(model.getYearId());
 
 		return soapModel;
 	}
@@ -271,6 +272,14 @@ public class VideoSoap implements Serializable {
 		_citation2go = citation2go;
 	}
 
+	public long getYearId() {
+		return _yearId;
+	}
+
+	public void setYearId(long yearId) {
+		_yearId = yearId;
+	}
+
 	private long _videoId;
 	private String _title;
 	private String _tags;
@@ -292,4 +301,5 @@ public class VideoSoap implements Serializable {
 	private int _permittedToSegment;
 	private long _rootInstitutionId;
 	private int _citation2go;
+	private long _yearId;
 }

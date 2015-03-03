@@ -133,41 +133,18 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 		return null;		
 	}
 	
-	public List<String> findAllSemesters(int begin, int end) {
+	public List<Lectureseries> findeFilteredByApprovedSemesterFacultyProducer(Integer approved, Long yearId, Long facultyId, Long producerId) {
 		Session session = null;
 		try {
 			session = openSession();
-			String sql = CustomSQLUtil.get(FIND_ALL_SEMESTERS);
-			SQLQuery q = session.createSQLQuery(sql);
-			q.addScalar("semesterName", Type.STRING);
-			q.setCacheable(false);
-			@SuppressWarnings("unchecked")
-			List <String> sl =  (List<String>) QueryUtil.list(q, getDialect(), begin, end);
-			return sl;
-		} catch (Exception e) {
-			try {
-				throw new SystemException(e);
-			} catch (SystemException se) {
-				se.printStackTrace();
-			}
-		} finally {
-			closeSession(session);
-		}
-		return null;
-	}
-
-	public List<Lectureseries> findeFilteredByApprovedSemesterFacultyProducer(Integer approved, String semester, Long facultyId, Long producerId) {
-		Session session = null;
-		try {
-			session = openSession();
-			String sql = sqlFilterForLectureseries(approved, semester, facultyId, producerId);
+			String sql = sqlFilterForLectureseries(approved, yearId, facultyId, producerId);
 			SQLQuery q = session.createSQLQuery(sql);
 			q.addScalar("number_", Type.STRING);
 			q.addScalar("eventType", Type.STRING);
 			q.addScalar("eventCategory", Type.STRING);
 			q.addScalar("name", Type.STRING);
 			q.addScalar("shortDesc", Type.STRING);
-			q.addScalar("semesterName", Type.STRING);
+			q.addScalar("yearId", Type.LONG);
 			q.addScalar("language", Type.STRING);
 			q.addScalar("facultyName", Type.STRING);
 			q.addScalar("instructorsString", Type.STRING);
@@ -201,7 +178,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			l.setEventCategory((String) lectser[2]);
 			l.setName((String) lectser[3]);
 			l.setShortDesc((String) lectser[4]);
-			l.setSemesterName((String) lectser[5]);
+			l.setYearId((Long) lectser[5]);
 			l.setLanguage((String) lectser[6]);
 			l.setFacultyName((String) lectser[7]);
 			l.setInstructorsString((String) lectser[8]);
@@ -215,9 +192,9 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 		return ll;
 	}
 	
-	private String sqlFilterForLectureseries(Integer approved, String semester, Long facultyId, Long producerId) {
+	private String sqlFilterForLectureseries(Integer approved, Long yearId, Long facultyId, Long producerId) {
 		// build query
-		String query = "SELECT c.number_, c.eventType, c.eventCategory, c.name, c.shortDesc, c.longDesc, c.semesterName, c.language, c.facultyName, c.instructorsString, c.lectureseriesId, c.password_, c.approved, c.longDesc, c.latestOpenAccessVideoId ";
+		String query = "SELECT c.number_, c.eventType, c.eventCategory, c.name, c.shortDesc, c.longDesc, c.yearId, c.language, c.facultyName, c.instructorsString, c.lectureseriesId, c.password_, c.approved, c.longDesc, c.latestOpenAccessVideoId ";
 			   query += "FROM LG_Lectureseries AS c ";
 
 		if (facultyId > 0) {
@@ -230,11 +207,11 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			query += "INNER JOIN LG_Producer AS p ON ( pc.producerId = p.producerId ) ";
 		}
 
-		if ((!"".equals(semester) && semester != null) || (approved==1 || approved==0) || facultyId > 0 || producerId > 0) {
+		if ((!"".equals(yearId) && yearId != null) || (approved==1 || approved==0) || facultyId > 0 || producerId > 0) {
 			query += "WHERE ";
 			int i = 0;
-			if (!"".equals(semester) && semester != null) {
-				query += "c.semesterName = \""+semester + "\" ";
+			if (!"".equals(yearId) && yearId != null) {
+				query += "c.yearId = \""+yearId + "\" ";
 				i++;
 			}
 

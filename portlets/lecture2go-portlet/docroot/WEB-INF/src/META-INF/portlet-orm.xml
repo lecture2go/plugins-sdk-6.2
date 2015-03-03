@@ -7,6 +7,18 @@
 			<access>PROPERTY</access>
 		</persistence-unit-defaults>
 	</persistence-unit-metadata>
+	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.CategoryModelImpl">
+		<attributes>
+			<id name="categoryId" />
+			<basic name="parentId" />
+			<basic name="languageId" />
+			<basic name="name" />
+			<basic name="translation" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.CoordinatorModelImpl">
 		<attributes>
 			<id name="coordinatorId" />
@@ -74,7 +86,7 @@
 			<basic name="eventCategory" />
 			<basic name="name" />
 			<basic name="shortDesc" />
-			<basic name="semesterName" />
+			<basic name="yearId" />
 			<basic name="language" />
 			<basic name="facultyName" />
 			<basic name="instructorsString" />
@@ -88,6 +100,16 @@
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="latestVideoGenerationDate" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.Lectureseries_CategoryModelImpl">
+		<attributes>
+			<id name="lectureseriesCategoryId" />
+			<basic name="categoryId" />
+			<basic name="lectureseriesId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -256,6 +278,17 @@
 			<basic name="permittedToSegment" />
 			<basic name="rootInstitutionId" />
 			<basic name="citation2go" />
+			<basic name="yearId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.Video_CategoryModelImpl">
+		<attributes>
+			<id name="videoCategoryId" />
+			<basic name="videoId" />
+			<basic name="categoryId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -295,6 +328,23 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.YearModelImpl">
+		<attributes>
+			<id name="yearId" />
+			<basic name="parentId" />
+			<basic name="languageId" />
+			<basic name="prefix" />
+			<basic name="name" />
+			<basic name="translation" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<entity class="de.uhh.l2g.plugins.model.impl.CategoryImpl" name="Category">
+		<table name="LG_Category" />
+		<attributes />
+	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.CoordinatorImpl" name="Coordinator">
 		<table name="LG_Coordinator" />
 		<attributes>
@@ -324,6 +374,10 @@
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.LectureseriesImpl" name="Lectureseries">
 		<table name="LG_Lectureseries" />
+		<attributes />
+	</entity>
+	<entity class="de.uhh.l2g.plugins.model.impl.Lectureseries_CategoryImpl" name="Lectureseries_Category">
+		<table name="LG_Lectureseries_Category" />
 		<attributes />
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.Lectureseries_InstitutionImpl" name="Lectureseries_Institution">
@@ -400,6 +454,10 @@
 			<transient name="webmFile" />
 		</attributes>
 	</entity>
+	<entity class="de.uhh.l2g.plugins.model.impl.Video_CategoryImpl" name="Video_Category">
+		<table name="LG_Video_Category" />
+		<attributes />
+	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.Video_InstitutionImpl" name="Video_Institution">
 		<table name="LG_Video_Institution" />
 		<attributes />
@@ -410,6 +468,10 @@
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.VideohitlistImpl" name="Videohitlist">
 		<table name="LG_Videohitlist" />
+		<attributes />
+	</entity>
+	<entity class="de.uhh.l2g.plugins.model.impl.YearImpl" name="Year">
+		<table name="LG_Year" />
 		<attributes />
 	</entity>
 </entity-mappings>

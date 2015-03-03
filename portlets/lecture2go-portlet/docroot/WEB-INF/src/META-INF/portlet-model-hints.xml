@@ -1,6 +1,13 @@
 <?xml version="1.0"?>
 
 <model-hints>
+	<model name="de.uhh.l2g.plugins.model.Category">
+		<field name="categoryId" type="long" />
+		<field name="parentId" type="long" />
+		<field name="languageId" type="String" />
+		<field name="name" type="String" />
+		<field name="translation" type="String" />
+	</model>
 	<model name="de.uhh.l2g.plugins.model.Coordinator">
 		<field name="coordinatorId" type="long" />
 		<field name="institutionId" type="long" />
@@ -39,7 +46,7 @@
 		<field name="eventCategory" type="String" />
 		<field name="name" type="String" />
 		<field name="shortDesc" type="String" />
-		<field name="semesterName" type="String" />
+		<field name="yearId" type="long" />
 		<field name="language" type="String" />
 		<field name="facultyName" type="String" />
 		<field name="instructorsString" type="String" />
@@ -50,6 +57,11 @@
 		<field name="latestOpenAccessVideoId" type="long" />
 		<field name="latestVideoUploadDate" type="Date" />
 		<field name="latestVideoGenerationDate" type="String" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Lectureseries_Category">
+		<field name="lectureseriesCategoryId" type="long" />
+		<field name="categoryId" type="long" />
+		<field name="lectureseriesId" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Lectureseries_Institution">
 		<field name="lectureseriesInstitutionId" type="long" />
@@ -155,6 +167,12 @@
 		<field name="permittedToSegment" type="int" />
 		<field name="rootInstitutionId" type="long" />
 		<field name="citation2go" type="int" />
+		<field name="yearId" type="long" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Video_Category">
+		<field name="videoCategoryId" type="long" />
+		<field name="videoId" type="long" />
+		<field name="categoryId" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Video_Institution">
 		<field name="videoInstitutionId" type="long" />
@@ -174,5 +192,13 @@
 		<field name="hitsPerMonth" type="long" />
 		<field name="hitsPerYear" type="long" />
 		<field name="videoId" type="long" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Year">
+		<field name="yearId" type="long" />
+		<field name="parentId" type="long" />
+		<field name="languageId" type="String" />
+		<field name="prefix" type="String" />
+		<field name="name" type="String" />
+		<field name="translation" type="String" />
 	</model>
 </model-hints>

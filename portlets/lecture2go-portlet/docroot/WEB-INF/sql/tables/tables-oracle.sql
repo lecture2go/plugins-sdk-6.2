@@ -1,3 +1,11 @@
+create table LG_Category (
+	categoryId number(30,0) not null primary key,
+	parentId number(30,0),
+	languageId VARCHAR2(75 CHAR) null,
+	name VARCHAR2(75 CHAR) null,
+	translation VARCHAR2(75 CHAR) null
+);
+
 create table LG_Coordinator (
 	coordinatorId number(30,0) not null primary key,
 	institutionId number(30,0),
@@ -41,14 +49,23 @@ create table LG_Lectureseries (
 	eventCategory VARCHAR2(75 CHAR) null,
 	name VARCHAR2(75 CHAR) null,
 	shortDesc VARCHAR2(75 CHAR) null,
-	semesterName VARCHAR2(75 CHAR) null,
+	yearId number(30,0),
 	language VARCHAR2(75 CHAR) null,
 	facultyName VARCHAR2(75 CHAR) null,
 	instructorsString VARCHAR2(75 CHAR) null,
 	lectureseriesId number(30,0) not null primary key,
 	password_ VARCHAR2(75 CHAR) null,
 	approved number(30,0),
-	longDesc VARCHAR2(75 CHAR) null
+	longDesc VARCHAR2(75 CHAR) null,
+	latestOpenAccessVideoId number(30,0),
+	latestVideoUploadDate timestamp null,
+	latestVideoGenerationDate VARCHAR2(75 CHAR) null
+);
+
+create table LG_Lectureseries_Category (
+	lectureseriesCategoryId number(30,0) not null primary key,
+	categoryId number(30,0),
+	lectureseriesId number(30,0)
 );
 
 create table LG_Lectureseries_Institution (
@@ -181,7 +198,14 @@ create table LG_Video (
 	uploadDate timestamp null,
 	permittedToSegment number(30,0),
 	rootInstitutionId number(30,0),
-	citation2go number(30,0)
+	citation2go number(30,0),
+	yearId number(30,0)
+);
+
+create table LG_Video_Category (
+	videoCategoryId number(30,0) not null primary key,
+	videoId number(30,0),
+	categoryId number(30,0)
 );
 
 create table LG_Video_Institution (
@@ -193,7 +217,8 @@ create table LG_Video_Institution (
 create table LG_Video_Lectureseries (
 	videoLectureseriesId number(30,0) not null primary key,
 	videoId number(30,0),
-	lectureseriesId number(30,0)
+	lectureseriesId number(30,0),
+	openAccess number(30,0)
 );
 
 create table LG_Videohitlist (
@@ -201,5 +226,12 @@ create table LG_Videohitlist (
 	hitsPerDay number(30,0),
 	hitsPerWeek number(30,0),
 	hitsPerMonth number(30,0),
-	hitsPerYear number(30,0)
+	hitsPerYear number(30,0),
+	videoId number(30,0)
+);
+
+create table LG_Year (
+	yearId number(30,0) not null primary key,
+	prefix VARCHAR2(75 CHAR) null,
+	name VARCHAR2(75 CHAR) null
 );

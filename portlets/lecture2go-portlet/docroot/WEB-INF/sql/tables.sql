@@ -1,3 +1,11 @@
+create table LG_Category (
+	categoryId LONG not null primary key,
+	parentId LONG,
+	languageId VARCHAR(75) null,
+	name VARCHAR(75) null,
+	translation VARCHAR(75) null
+);
+
 create table LG_Coordinator (
 	coordinatorId LONG not null primary key,
 	institutionId LONG,
@@ -41,7 +49,7 @@ create table LG_Lectureseries (
 	eventCategory VARCHAR(75) null,
 	name VARCHAR(75) null,
 	shortDesc VARCHAR(75) null,
-	semesterName VARCHAR(75) null,
+	yearId LONG,
 	language VARCHAR(75) null,
 	facultyName VARCHAR(75) null,
 	instructorsString VARCHAR(75) null,
@@ -52,6 +60,12 @@ create table LG_Lectureseries (
 	latestOpenAccessVideoId LONG,
 	latestVideoUploadDate DATE null,
 	latestVideoGenerationDate VARCHAR(75) null
+);
+
+create table LG_Lectureseries_Category (
+	lectureseriesCategoryId LONG not null primary key,
+	categoryId LONG,
+	lectureseriesId LONG
 );
 
 create table LG_Lectureseries_Institution (
@@ -184,7 +198,14 @@ create table LG_Video (
 	uploadDate DATE null,
 	permittedToSegment INTEGER,
 	rootInstitutionId LONG,
-	citation2go INTEGER
+	citation2go INTEGER,
+	yearId LONG
+);
+
+create table LG_Video_Category (
+	videoCategoryId LONG not null primary key,
+	videoId LONG,
+	categoryId LONG
 );
 
 create table LG_Video_Institution (
@@ -207,4 +228,13 @@ create table LG_Videohitlist (
 	hitsPerMonth LONG,
 	hitsPerYear LONG,
 	videoId LONG
+);
+
+create table LG_Year (
+	yearId LONG not null primary key,
+	parentId LONG,
+	languageId VARCHAR(75) null,
+	prefix VARCHAR(75) null,
+	name VARCHAR(75) null,
+	translation VARCHAR(75) null
 );

@@ -4668,6 +4668,7 @@ public class VideoPersistenceImpl extends BasePersistenceImpl<Video>
 		videoImpl.setPermittedToSegment(video.getPermittedToSegment());
 		videoImpl.setRootInstitutionId(video.getRootInstitutionId());
 		videoImpl.setCitation2go(video.getCitation2go());
+		videoImpl.setYearId(video.getYearId());
 
 		return videoImpl;
 	}

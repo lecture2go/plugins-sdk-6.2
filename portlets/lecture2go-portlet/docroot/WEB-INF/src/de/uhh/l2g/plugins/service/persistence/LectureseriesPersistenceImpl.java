@@ -89,69 +89,67 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(LectureseriesModelImpl.ENTITY_CACHE_ENABLED,
 			LectureseriesModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_SEMESTER = new FinderPath(LectureseriesModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_YEAR = new FinderPath(LectureseriesModelImpl.ENTITY_CACHE_ENABLED,
 			LectureseriesModelImpl.FINDER_CACHE_ENABLED,
 			LectureseriesImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findBySemester",
+			"findByYear",
 			new String[] {
-				String.class.getName(),
+				Long.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SEMESTER =
-		new FinderPath(LectureseriesModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_YEAR = new FinderPath(LectureseriesModelImpl.ENTITY_CACHE_ENABLED,
 			LectureseriesModelImpl.FINDER_CACHE_ENABLED,
 			LectureseriesImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findBySemester", new String[] { String.class.getName() },
-			LectureseriesModelImpl.SEMESTERNAME_COLUMN_BITMASK |
+			"findByYear", new String[] { Long.class.getName() },
+			LectureseriesModelImpl.YEARID_COLUMN_BITMASK |
 			LectureseriesModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_SEMESTER = new FinderPath(LectureseriesModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_YEAR = new FinderPath(LectureseriesModelImpl.ENTITY_CACHE_ENABLED,
 			LectureseriesModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySemester",
-			new String[] { String.class.getName() });
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByYear",
+			new String[] { Long.class.getName() });
 
 	/**
-	 * Returns all the lectureserieses where semesterName = &#63;.
+	 * Returns all the lectureserieses where yearId = &#63;.
 	 *
-	 * @param semesterName the semester name
+	 * @param yearId the year ID
 	 * @return the matching lectureserieses
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Lectureseries> findBySemester(String semesterName)
+	public List<Lectureseries> findByYear(long yearId)
 		throws SystemException {
-		return findBySemester(semesterName, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return findByYear(yearId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the lectureserieses where semesterName = &#63;.
+	 * Returns a range of all the lectureserieses where yearId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.LectureseriesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param semesterName the semester name
+	 * @param yearId the year ID
 	 * @param start the lower bound of the range of lectureserieses
 	 * @param end the upper bound of the range of lectureserieses (not inclusive)
 	 * @return the range of matching lectureserieses
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Lectureseries> findBySemester(String semesterName, int start,
-		int end) throws SystemException {
-		return findBySemester(semesterName, start, end, null);
+	public List<Lectureseries> findByYear(long yearId, int start, int end)
+		throws SystemException {
+		return findByYear(yearId, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the lectureserieses where semesterName = &#63;.
+	 * Returns an ordered range of all the lectureserieses where yearId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.LectureseriesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param semesterName the semester name
+	 * @param yearId the year ID
 	 * @param start the lower bound of the range of lectureserieses
 	 * @param end the upper bound of the range of lectureserieses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -159,8 +157,8 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Lectureseries> findBySemester(String semesterName, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+	public List<Lectureseries> findByYear(long yearId, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -168,16 +166,12 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SEMESTER;
-			finderArgs = new Object[] { semesterName };
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_YEAR;
+			finderArgs = new Object[] { yearId };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_SEMESTER;
-			finderArgs = new Object[] {
-					semesterName,
-					
-					start, end, orderByComparator
-				};
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_YEAR;
+			finderArgs = new Object[] { yearId, start, end, orderByComparator };
 		}
 
 		List<Lectureseries> list = (List<Lectureseries>)FinderCacheUtil.getResult(finderPath,
@@ -185,8 +179,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 		if ((list != null) && !list.isEmpty()) {
 			for (Lectureseries lectureseries : list) {
-				if (!Validator.equals(semesterName,
-							lectureseries.getSemesterName())) {
+				if ((yearId != lectureseries.getYearId())) {
 					list = null;
 
 					break;
@@ -207,19 +200,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 			query.append(_SQL_SELECT_LECTURESERIES_WHERE);
 
-			boolean bindSemesterName = false;
-
-			if (semesterName == null) {
-				query.append(_FINDER_COLUMN_SEMESTER_SEMESTERNAME_1);
-			}
-			else if (semesterName.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_SEMESTER_SEMESTERNAME_3);
-			}
-			else {
-				bindSemesterName = true;
-
-				query.append(_FINDER_COLUMN_SEMESTER_SEMESTERNAME_2);
-			}
+			query.append(_FINDER_COLUMN_YEAR_YEARID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -241,9 +222,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (bindSemesterName) {
-					qPos.add(semesterName);
-				}
+				qPos.add(yearId);
 
 				if (!pagination) {
 					list = (List<Lectureseries>)QueryUtil.list(q, getDialect(),
@@ -276,19 +255,19 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 	}
 
 	/**
-	 * Returns the first lectureseries in the ordered set where semesterName = &#63;.
+	 * Returns the first lectureseries in the ordered set where yearId = &#63;.
 	 *
-	 * @param semesterName the semester name
+	 * @param yearId the year ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching lectureseries
 	 * @throws de.uhh.l2g.plugins.NoSuchLectureseriesException if a matching lectureseries could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Lectureseries findBySemester_First(String semesterName,
+	public Lectureseries findByYear_First(long yearId,
 		OrderByComparator orderByComparator)
 		throws NoSuchLectureseriesException, SystemException {
-		Lectureseries lectureseries = fetchBySemester_First(semesterName,
+		Lectureseries lectureseries = fetchByYear_First(yearId,
 				orderByComparator);
 
 		if (lectureseries != null) {
@@ -299,8 +278,8 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("semesterName=");
-		msg.append(semesterName);
+		msg.append("yearId=");
+		msg.append(yearId);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -308,18 +287,17 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 	}
 
 	/**
-	 * Returns the first lectureseries in the ordered set where semesterName = &#63;.
+	 * Returns the first lectureseries in the ordered set where yearId = &#63;.
 	 *
-	 * @param semesterName the semester name
+	 * @param yearId the year ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Lectureseries fetchBySemester_First(String semesterName,
+	public Lectureseries fetchByYear_First(long yearId,
 		OrderByComparator orderByComparator) throws SystemException {
-		List<Lectureseries> list = findBySemester(semesterName, 0, 1,
-				orderByComparator);
+		List<Lectureseries> list = findByYear(yearId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -329,20 +307,19 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 	}
 
 	/**
-	 * Returns the last lectureseries in the ordered set where semesterName = &#63;.
+	 * Returns the last lectureseries in the ordered set where yearId = &#63;.
 	 *
-	 * @param semesterName the semester name
+	 * @param yearId the year ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching lectureseries
 	 * @throws de.uhh.l2g.plugins.NoSuchLectureseriesException if a matching lectureseries could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Lectureseries findBySemester_Last(String semesterName,
+	public Lectureseries findByYear_Last(long yearId,
 		OrderByComparator orderByComparator)
 		throws NoSuchLectureseriesException, SystemException {
-		Lectureseries lectureseries = fetchBySemester_Last(semesterName,
-				orderByComparator);
+		Lectureseries lectureseries = fetchByYear_Last(yearId, orderByComparator);
 
 		if (lectureseries != null) {
 			return lectureseries;
@@ -352,8 +329,8 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("semesterName=");
-		msg.append(semesterName);
+		msg.append("yearId=");
+		msg.append(yearId);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -361,24 +338,24 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 	}
 
 	/**
-	 * Returns the last lectureseries in the ordered set where semesterName = &#63;.
+	 * Returns the last lectureseries in the ordered set where yearId = &#63;.
 	 *
-	 * @param semesterName the semester name
+	 * @param yearId the year ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Lectureseries fetchBySemester_Last(String semesterName,
+	public Lectureseries fetchByYear_Last(long yearId,
 		OrderByComparator orderByComparator) throws SystemException {
-		int count = countBySemester(semesterName);
+		int count = countByYear(yearId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<Lectureseries> list = findBySemester(semesterName, count - 1,
-				count, orderByComparator);
+		List<Lectureseries> list = findByYear(yearId, count - 1, count,
+				orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -388,18 +365,18 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 	}
 
 	/**
-	 * Returns the lectureserieses before and after the current lectureseries in the ordered set where semesterName = &#63;.
+	 * Returns the lectureserieses before and after the current lectureseries in the ordered set where yearId = &#63;.
 	 *
 	 * @param lectureseriesId the primary key of the current lectureseries
-	 * @param semesterName the semester name
+	 * @param yearId the year ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next lectureseries
 	 * @throws de.uhh.l2g.plugins.NoSuchLectureseriesException if a lectureseries with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Lectureseries[] findBySemester_PrevAndNext(long lectureseriesId,
-		String semesterName, OrderByComparator orderByComparator)
+	public Lectureseries[] findByYear_PrevAndNext(long lectureseriesId,
+		long yearId, OrderByComparator orderByComparator)
 		throws NoSuchLectureseriesException, SystemException {
 		Lectureseries lectureseries = findByPrimaryKey(lectureseriesId);
 
@@ -410,13 +387,13 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 			Lectureseries[] array = new LectureseriesImpl[3];
 
-			array[0] = getBySemester_PrevAndNext(session, lectureseries,
-					semesterName, orderByComparator, true);
+			array[0] = getByYear_PrevAndNext(session, lectureseries, yearId,
+					orderByComparator, true);
 
 			array[1] = lectureseries;
 
-			array[2] = getBySemester_PrevAndNext(session, lectureseries,
-					semesterName, orderByComparator, false);
+			array[2] = getByYear_PrevAndNext(session, lectureseries, yearId,
+					orderByComparator, false);
 
 			return array;
 		}
@@ -428,8 +405,8 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 		}
 	}
 
-	protected Lectureseries getBySemester_PrevAndNext(Session session,
-		Lectureseries lectureseries, String semesterName,
+	protected Lectureseries getByYear_PrevAndNext(Session session,
+		Lectureseries lectureseries, long yearId,
 		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -443,19 +420,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 		query.append(_SQL_SELECT_LECTURESERIES_WHERE);
 
-		boolean bindSemesterName = false;
-
-		if (semesterName == null) {
-			query.append(_FINDER_COLUMN_SEMESTER_SEMESTERNAME_1);
-		}
-		else if (semesterName.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_SEMESTER_SEMESTERNAME_3);
-		}
-		else {
-			bindSemesterName = true;
-
-			query.append(_FINDER_COLUMN_SEMESTER_SEMESTERNAME_2);
-		}
+		query.append(_FINDER_COLUMN_YEAR_YEARID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -525,9 +490,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		if (bindSemesterName) {
-			qPos.add(semesterName);
-		}
+		qPos.add(yearId);
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(lectureseries);
@@ -548,31 +511,31 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 	}
 
 	/**
-	 * Removes all the lectureserieses where semesterName = &#63; from the database.
+	 * Removes all the lectureserieses where yearId = &#63; from the database.
 	 *
-	 * @param semesterName the semester name
+	 * @param yearId the year ID
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeBySemester(String semesterName) throws SystemException {
-		for (Lectureseries lectureseries : findBySemester(semesterName,
+	public void removeByYear(long yearId) throws SystemException {
+		for (Lectureseries lectureseries : findByYear(yearId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(lectureseries);
 		}
 	}
 
 	/**
-	 * Returns the number of lectureserieses where semesterName = &#63;.
+	 * Returns the number of lectureserieses where yearId = &#63;.
 	 *
-	 * @param semesterName the semester name
+	 * @param yearId the year ID
 	 * @return the number of matching lectureserieses
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countBySemester(String semesterName) throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_SEMESTER;
+	public int countByYear(long yearId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_YEAR;
 
-		Object[] finderArgs = new Object[] { semesterName };
+		Object[] finderArgs = new Object[] { yearId };
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
@@ -582,19 +545,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 			query.append(_SQL_COUNT_LECTURESERIES_WHERE);
 
-			boolean bindSemesterName = false;
-
-			if (semesterName == null) {
-				query.append(_FINDER_COLUMN_SEMESTER_SEMESTERNAME_1);
-			}
-			else if (semesterName.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_SEMESTER_SEMESTERNAME_3);
-			}
-			else {
-				bindSemesterName = true;
-
-				query.append(_FINDER_COLUMN_SEMESTER_SEMESTERNAME_2);
-			}
+			query.append(_FINDER_COLUMN_YEAR_YEARID_2);
 
 			String sql = query.toString();
 
@@ -607,9 +558,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (bindSemesterName) {
-					qPos.add(semesterName);
-				}
+				qPos.add(yearId);
 
 				count = (Long)q.uniqueResult();
 
@@ -628,9 +577,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_SEMESTER_SEMESTERNAME_1 = "lectureseries.semesterName IS NULL";
-	private static final String _FINDER_COLUMN_SEMESTER_SEMESTERNAME_2 = "lectureseries.semesterName = ?";
-	private static final String _FINDER_COLUMN_SEMESTER_SEMESTERNAME_3 = "(lectureseries.semesterName IS NULL OR lectureseries.semesterName = '')";
+	private static final String _FINDER_COLUMN_YEAR_YEARID_2 = "lectureseries.yearId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_LANGUAGE = new FinderPath(LectureseriesModelImpl.ENTITY_CACHE_ENABLED,
 			LectureseriesModelImpl.FINDER_CACHE_ENABLED,
 			LectureseriesImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -6730,19 +6677,19 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 		else {
 			if ((lectureseriesModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SEMESTER.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_YEAR.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						lectureseriesModelImpl.getOriginalSemesterName()
+						lectureseriesModelImpl.getOriginalYearId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SEMESTER, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SEMESTER,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_YEAR, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_YEAR,
 					args);
 
-				args = new Object[] { lectureseriesModelImpl.getSemesterName() };
+				args = new Object[] { lectureseriesModelImpl.getYearId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SEMESTER, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SEMESTER,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_YEAR, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_YEAR,
 					args);
 			}
 
@@ -6968,7 +6915,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 		lectureseriesImpl.setEventCategory(lectureseries.getEventCategory());
 		lectureseriesImpl.setName(lectureseries.getName());
 		lectureseriesImpl.setShortDesc(lectureseries.getShortDesc());
-		lectureseriesImpl.setSemesterName(lectureseries.getSemesterName());
+		lectureseriesImpl.setYearId(lectureseries.getYearId());
 		lectureseriesImpl.setLanguage(lectureseries.getLanguage());
 		lectureseriesImpl.setFacultyName(lectureseries.getFacultyName());
 		lectureseriesImpl.setInstructorsString(lectureseries.getInstructorsString());

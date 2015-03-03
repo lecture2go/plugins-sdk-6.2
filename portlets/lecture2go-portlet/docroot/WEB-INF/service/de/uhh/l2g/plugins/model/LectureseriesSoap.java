@@ -35,7 +35,7 @@ public class LectureseriesSoap implements Serializable {
 		soapModel.setEventCategory(model.getEventCategory());
 		soapModel.setName(model.getName());
 		soapModel.setShortDesc(model.getShortDesc());
-		soapModel.setSemesterName(model.getSemesterName());
+		soapModel.setYearId(model.getYearId());
 		soapModel.setLanguage(model.getLanguage());
 		soapModel.setFacultyName(model.getFacultyName());
 		soapModel.setInstructorsString(model.getInstructorsString());
@@ -138,12 +138,12 @@ public class LectureseriesSoap implements Serializable {
 		_shortDesc = shortDesc;
 	}
 
-	public String getSemesterName() {
-		return _semesterName;
+	public long getYearId() {
+		return _yearId;
 	}
 
-	public void setSemesterName(String semesterName) {
-		_semesterName = semesterName;
+	public void setYearId(long yearId) {
+		_yearId = yearId;
 	}
 
 	public String getLanguage() {
@@ -231,7 +231,7 @@ public class LectureseriesSoap implements Serializable {
 	private String _eventCategory;
 	private String _name;
 	private String _shortDesc;
-	private String _semesterName;
+	private long _yearId;
 	private String _language;
 	private String _facultyName;
 	private String _instructorsString;

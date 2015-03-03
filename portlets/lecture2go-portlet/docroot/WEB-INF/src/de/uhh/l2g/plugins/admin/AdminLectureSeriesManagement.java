@@ -74,7 +74,8 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		String[] institutions = request.getParameterValues("institutions");
 		String s = request.getParameter("longDesc");
 		String backURL = request.getParameter("backURL");
-		
+		Long semesterId = new Long(request.getParameter("semesterId"));
+
 		//update object
 		Lectureseries lectureseries = LectureseriesLocalServiceUtil.getLectureseries(lId);
 		lectureseries.setApproved(1);
@@ -83,7 +84,7 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		lectureseries.setEventCategory(request.getParameter("eventCategory"));
 		lectureseries.setName(request.getParameter("name"));
 		lectureseries.setShortDesc(request.getParameter("shortDesc"));
-		lectureseries.setSemesterName(request.getParameter("semesterName"));
+		lectureseries.setYearId(semesterId);
 		lectureseries.setLanguage(request.getParameter("language"));
 		lectureseries.setFacultyName(request.getParameter("facultyName"));
 		lectureseries.setInstructorsString(request.getParameter("instructorsString"));
@@ -131,7 +132,8 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		String[] producers = request.getParameterValues("producers");
 		String[] institutions = request.getParameterValues("institutions");
 		String backURL = request.getParameter("backURL");
-
+		Long semesterId = new Long(request.getParameter("semesterId"));
+		
 		//build lecture series object
 		LectureseriesImpl lectureseries = new LectureseriesImpl();
 		lectureseries.setApproved(0);
@@ -140,7 +142,7 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		lectureseries.setEventCategory(request.getParameter("eventCategory"));
 		lectureseries.setName(request.getParameter("name"));
 		lectureseries.setShortDesc(request.getParameter("shortDesc"));
-		lectureseries.setSemesterName(request.getParameter("semesterName"));
+		lectureseries.setYearId(semesterId);
 		lectureseries.setLanguage(request.getParameter("language"));
 		lectureseries.setFacultyName(request.getParameter("facultyName"));
 		lectureseries.setInstructorsString(request.getParameter("instructorsString"));
