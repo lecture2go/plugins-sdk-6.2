@@ -43,7 +43,7 @@
 	<model name="de.uhh.l2g.plugins.model.Lectureseries">
 		<field name="number" type="String" />
 		<field name="eventType" type="String" />
-		<field name="eventCategory" type="String" />
+		<field name="categoryId" type="long" />
 		<field name="name" type="String" />
 		<field name="shortDesc" type="String" />
 		<field name="yearId" type="long" />

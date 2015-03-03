@@ -113,7 +113,10 @@ public class ProzessManager {
 	public void activateOpenaccess(Video video) throws SystemException, PortalException {
 		Host host = HostLocalServiceUtil.getHost(video.getHostId());
 		Producer producer = ProducerLocalServiceUtil.getProducer(video.getProducerId());
-		Lectureseries lectureseries = LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId());
+		Lectureseries lectureseries = new LectureseriesImpl();
+		try{
+			lectureseries= LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId());
+		}catch(Exception e){}
 
 		// first rename the file from the filesystem first
 		String path = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir();
@@ -178,7 +181,10 @@ public class ProzessManager {
 	public void deactivateOpenaccess(Video video) throws PortalException, SystemException {
 		Host host = HostLocalServiceUtil.getHost(video.getHostId());
 		Producer producer = ProducerLocalServiceUtil.getProducer(video.getProducerId());
-		Lectureseries lectureseries = LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId());
+		Lectureseries lectureseries = new LectureseriesImpl();
+		try{
+			lectureseries= LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId());
+		}catch(Exception e){}
 		
 		// then update the filesystem
 		String path = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir();

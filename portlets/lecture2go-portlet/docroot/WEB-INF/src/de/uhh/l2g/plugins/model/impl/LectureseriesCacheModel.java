@@ -44,8 +44,8 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 		sb.append(number);
 		sb.append(", eventType=");
 		sb.append(eventType);
-		sb.append(", eventCategory=");
-		sb.append(eventCategory);
+		sb.append(", categoryId=");
+		sb.append(categoryId);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", shortDesc=");
@@ -95,12 +95,7 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 			lectureseriesImpl.setEventType(eventType);
 		}
 
-		if (eventCategory == null) {
-			lectureseriesImpl.setEventCategory(StringPool.BLANK);
-		}
-		else {
-			lectureseriesImpl.setEventCategory(eventCategory);
-		}
+		lectureseriesImpl.setCategoryId(categoryId);
 
 		if (name == null) {
 			lectureseriesImpl.setName(StringPool.BLANK);
@@ -183,7 +178,7 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		number = objectInput.readUTF();
 		eventType = objectInput.readUTF();
-		eventCategory = objectInput.readUTF();
+		categoryId = objectInput.readLong();
 		name = objectInput.readUTF();
 		shortDesc = objectInput.readUTF();
 		yearId = objectInput.readLong();
@@ -216,12 +211,7 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 			objectOutput.writeUTF(eventType);
 		}
 
-		if (eventCategory == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(eventCategory);
-		}
+		objectOutput.writeLong(categoryId);
 
 		if (name == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -291,7 +281,7 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 
 	public String number;
 	public String eventType;
-	public String eventCategory;
+	public long categoryId;
 	public String name;
 	public String shortDesc;
 	public long yearId;

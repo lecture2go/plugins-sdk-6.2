@@ -131,7 +131,7 @@
 			<portlet:param name="producerId" value='<%=producerId+""%>'/>
 			<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>	
 		</portlet:actionURL>	
-		<a href="<%=addVideoURL.toString()%>">
+		<a href="<%=addVideoURL.toString()%>" target="_blank">
 		    add-video <span class="icon-large icon-plus-sign"/>
 		</a>
 <%}%>

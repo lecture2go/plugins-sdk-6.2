@@ -61,7 +61,7 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "number_", Types.VARCHAR },
 			{ "eventType", Types.VARCHAR },
-			{ "eventCategory", Types.VARCHAR },
+			{ "categoryId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "shortDesc", Types.VARCHAR },
 			{ "yearId", Types.BIGINT },
@@ -76,7 +76,7 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 			{ "latestVideoUploadDate", Types.TIMESTAMP },
 			{ "latestVideoGenerationDate", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Lectureseries (number_ VARCHAR(75) null,eventType VARCHAR(75) null,eventCategory VARCHAR(75) null,name VARCHAR(75) null,shortDesc VARCHAR(75) null,yearId LONG,language VARCHAR(75) null,facultyName VARCHAR(75) null,instructorsString VARCHAR(75) null,lectureseriesId LONG not null primary key,password_ VARCHAR(75) null,approved INTEGER,longDesc VARCHAR(75) null,latestOpenAccessVideoId LONG,latestVideoUploadDate DATE null,latestVideoGenerationDate VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Lectureseries (number_ VARCHAR(75) null,eventType VARCHAR(75) null,categoryId LONG,name VARCHAR(75) null,shortDesc VARCHAR(75) null,yearId LONG,language VARCHAR(75) null,facultyName VARCHAR(75) null,instructorsString VARCHAR(75) null,lectureseriesId LONG not null primary key,password_ VARCHAR(75) null,approved INTEGER,longDesc VARCHAR(75) null,latestOpenAccessVideoId LONG,latestVideoUploadDate DATE null,latestVideoGenerationDate VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Lectureseries";
 	public static final String ORDER_BY_JPQL = " ORDER BY lectureseries.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Lectureseries.name ASC";
@@ -93,7 +93,7 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.Lectureseries"),
 			true);
 	public static long APPROVED_COLUMN_BITMASK = 1L;
-	public static long EVENTCATEGORY_COLUMN_BITMASK = 2L;
+	public static long CATEGORYID_COLUMN_BITMASK = 2L;
 	public static long EVENTTYPE_COLUMN_BITMASK = 4L;
 	public static long FACULTYNAME_COLUMN_BITMASK = 8L;
 	public static long LANGUAGE_COLUMN_BITMASK = 16L;
@@ -146,7 +146,7 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 
 		attributes.put("number", getNumber());
 		attributes.put("eventType", getEventType());
-		attributes.put("eventCategory", getEventCategory());
+		attributes.put("categoryId", getCategoryId());
 		attributes.put("name", getName());
 		attributes.put("shortDesc", getShortDesc());
 		attributes.put("yearId", getYearId());
@@ -179,10 +179,10 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 			setEventType(eventType);
 		}
 
-		String eventCategory = (String)attributes.get("eventCategory");
+		Long categoryId = (Long)attributes.get("categoryId");
 
-		if (eventCategory != null) {
-			setEventCategory(eventCategory);
+		if (categoryId != null) {
+			setCategoryId(categoryId);
 		}
 
 		String name = (String)attributes.get("name");
@@ -318,28 +318,25 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 	}
 
 	@Override
-	public String getEventCategory() {
-		if (_eventCategory == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _eventCategory;
-		}
+	public long getCategoryId() {
+		return _categoryId;
 	}
 
 	@Override
-	public void setEventCategory(String eventCategory) {
-		_columnBitmask |= EVENTCATEGORY_COLUMN_BITMASK;
+	public void setCategoryId(long categoryId) {
+		_columnBitmask |= CATEGORYID_COLUMN_BITMASK;
 
-		if (_originalEventCategory == null) {
-			_originalEventCategory = _eventCategory;
+		if (!_setOriginalCategoryId) {
+			_setOriginalCategoryId = true;
+
+			_originalCategoryId = _categoryId;
 		}
 
-		_eventCategory = eventCategory;
+		_categoryId = categoryId;
 	}
 
-	public String getOriginalEventCategory() {
-		return GetterUtil.getString(_originalEventCategory);
+	public long getOriginalCategoryId() {
+		return _originalCategoryId;
 	}
 
 	@Override
@@ -641,7 +638,7 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 
 		lectureseriesImpl.setNumber(getNumber());
 		lectureseriesImpl.setEventType(getEventType());
-		lectureseriesImpl.setEventCategory(getEventCategory());
+		lectureseriesImpl.setCategoryId(getCategoryId());
 		lectureseriesImpl.setName(getName());
 		lectureseriesImpl.setShortDesc(getShortDesc());
 		lectureseriesImpl.setYearId(getYearId());
@@ -709,7 +706,9 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 
 		lectureseriesModelImpl._originalEventType = lectureseriesModelImpl._eventType;
 
-		lectureseriesModelImpl._originalEventCategory = lectureseriesModelImpl._eventCategory;
+		lectureseriesModelImpl._originalCategoryId = lectureseriesModelImpl._categoryId;
+
+		lectureseriesModelImpl._setOriginalCategoryId = false;
 
 		lectureseriesModelImpl._originalName = lectureseriesModelImpl._name;
 
@@ -758,13 +757,7 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 			lectureseriesCacheModel.eventType = null;
 		}
 
-		lectureseriesCacheModel.eventCategory = getEventCategory();
-
-		String eventCategory = lectureseriesCacheModel.eventCategory;
-
-		if ((eventCategory != null) && (eventCategory.length() == 0)) {
-			lectureseriesCacheModel.eventCategory = null;
-		}
+		lectureseriesCacheModel.categoryId = getCategoryId();
 
 		lectureseriesCacheModel.name = getName();
 
@@ -859,8 +852,8 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 		sb.append(getNumber());
 		sb.append(", eventType=");
 		sb.append(getEventType());
-		sb.append(", eventCategory=");
-		sb.append(getEventCategory());
+		sb.append(", categoryId=");
+		sb.append(getCategoryId());
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", shortDesc=");
@@ -909,8 +902,8 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 		sb.append(getEventType());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>eventCategory</column-name><column-value><![CDATA[");
-		sb.append(getEventCategory());
+			"<column><column-name>categoryId</column-name><column-value><![CDATA[");
+		sb.append(getCategoryId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
@@ -978,8 +971,9 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 	private String _originalNumber;
 	private String _eventType;
 	private String _originalEventType;
-	private String _eventCategory;
-	private String _originalEventCategory;
+	private long _categoryId;
+	private long _originalCategoryId;
+	private boolean _setOriginalCategoryId;
 	private String _name;
 	private String _originalName;
 	private String _shortDesc;

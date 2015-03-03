@@ -83,7 +83,7 @@
 				<column name="NUMBER_" />
 			</basic>
 			<basic name="eventType" />
-			<basic name="eventCategory" />
+			<basic name="categoryId" />
 			<basic name="name" />
 			<basic name="shortDesc" />
 			<basic name="yearId" />

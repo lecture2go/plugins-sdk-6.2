@@ -74,14 +74,20 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		String[] institutions = request.getParameterValues("institutions");
 		String s = request.getParameter("longDesc");
 		String backURL = request.getParameter("backURL");
-		Long semesterId = new Long(request.getParameter("semesterId"));
+		Long semesterId = new Long(0);
+		try{
+			semesterId = new Long(request.getParameter("semesterId"));
+		}catch(Exception e){}
+		Long categoryId = new Long(0);
+		try{
+			categoryId = new Long(request.getParameter("categoryId"));
+		}catch(Exception e){}
 
 		//update object
 		Lectureseries lectureseries = LectureseriesLocalServiceUtil.getLectureseries(lId);
 		lectureseries.setApproved(1);
 		lectureseries.setNumber(request.getParameter("number"));
-		lectureseries.setEventType(request.getParameter("eventType"));
-		lectureseries.setEventCategory(request.getParameter("eventCategory"));
+		lectureseries.setCategoryId(categoryId);
 		lectureseries.setName(request.getParameter("name"));
 		lectureseries.setShortDesc(request.getParameter("shortDesc"));
 		lectureseries.setYearId(semesterId);
@@ -132,14 +138,20 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		String[] producers = request.getParameterValues("producers");
 		String[] institutions = request.getParameterValues("institutions");
 		String backURL = request.getParameter("backURL");
-		Long semesterId = new Long(request.getParameter("semesterId"));
+		Long semesterId = new Long(0);
+		try{
+			semesterId = new Long(request.getParameter("semesterId"));
+		}catch(Exception e){}
+		Long categoryId = new Long(0);
+		try{
+			categoryId = new Long(request.getParameter("categoryId"));
+		}catch(Exception e){}
 		
 		//build lecture series object
 		LectureseriesImpl lectureseries = new LectureseriesImpl();
 		lectureseries.setApproved(0);
 		lectureseries.setNumber(request.getParameter("number"));
-		lectureseries.setEventType(request.getParameter("eventType"));
-		lectureseries.setEventCategory(request.getParameter("eventCategory"));
+		lectureseries.setCategoryId(categoryId);
 		lectureseries.setName(request.getParameter("name"));
 		lectureseries.setShortDesc(request.getParameter("shortDesc"));
 		lectureseries.setYearId(semesterId);

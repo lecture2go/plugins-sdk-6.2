@@ -31,10 +31,10 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			SQLQuery q = session.createSQLQuery(sql);
 			q.addScalar("number_", Type.STRING);
 			q.addScalar("eventType", Type.STRING);
-			q.addScalar("eventCategory", Type.STRING);
+			q.addScalar("categoryId", Type.LONG);
 			q.addScalar("name", Type.STRING);
 			q.addScalar("shortDesc", Type.STRING);
-			q.addScalar("semesterName", Type.STRING);
+			q.addScalar("yearId", Type.LONG);
 			q.addScalar("language", Type.STRING);
 			q.addScalar("facultyName", Type.STRING);
 			q.addScalar("instructorsString", Type.STRING);
@@ -67,10 +67,10 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			SQLQuery q = session.createSQLQuery(sql);
 			q.addScalar("number_", Type.STRING);
 			q.addScalar("eventType", Type.STRING);
-			q.addScalar("eventCategory", Type.STRING);
+			q.addScalar("categoryId", Type.LONG);
 			q.addScalar("name", Type.STRING);
 			q.addScalar("shortDesc", Type.STRING);
-			q.addScalar("semesterName", Type.STRING);
+			q.addScalar("yearId", Type.LONG);
 			q.addScalar("language", Type.STRING);
 			q.addScalar("facultyName", Type.STRING);
 			q.addScalar("instructorsString", Type.STRING);
@@ -105,10 +105,10 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			SQLQuery q = session.createSQLQuery(sql);
 			q.addScalar("number_", Type.STRING);
 			q.addScalar("eventType", Type.STRING);
-			q.addScalar("eventCategory", Type.STRING);
+			q.addScalar("categoryId", Type.LONG);
 			q.addScalar("name", Type.STRING);
 			q.addScalar("shortDesc", Type.STRING);
-			q.addScalar("semesterName", Type.STRING);
+			q.addScalar("yearId", Type.LONG);
 			q.addScalar("language", Type.STRING);
 			q.addScalar("facultyName", Type.STRING);
 			q.addScalar("instructorsString", Type.STRING);
@@ -133,7 +133,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 		return null;		
 	}
 	
-	public List<Lectureseries> findeFilteredByApprovedSemesterFacultyProducer(Integer approved, Long yearId, Long facultyId, Long producerId) {
+	public List<Lectureseries> findFilteredByApprovedSemesterFacultyProducer(Integer approved, Long yearId, Long facultyId, Long producerId) {
 		Session session = null;
 		try {
 			session = openSession();
@@ -141,7 +141,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			SQLQuery q = session.createSQLQuery(sql);
 			q.addScalar("number_", Type.STRING);
 			q.addScalar("eventType", Type.STRING);
-			q.addScalar("eventCategory", Type.STRING);
+			q.addScalar("categoryId", Type.LONG);
 			q.addScalar("name", Type.STRING);
 			q.addScalar("shortDesc", Type.STRING);
 			q.addScalar("yearId", Type.LONG);
@@ -175,7 +175,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			LectureseriesImpl l = new LectureseriesImpl();
 			l.setNumber((String) lectser[0]);
 			l.setEventType((String) lectser[1]);
-			l.setEventCategory((String) lectser[2]);
+			l.setCategoryId((Long) lectser[2]);
 			l.setName((String) lectser[3]);
 			l.setShortDesc((String) lectser[4]);
 			l.setYearId((Long) lectser[5]);
@@ -194,7 +194,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 	
 	private String sqlFilterForLectureseries(Integer approved, Long yearId, Long facultyId, Long producerId) {
 		// build query
-		String query = "SELECT c.number_, c.eventType, c.eventCategory, c.name, c.shortDesc, c.longDesc, c.yearId, c.language, c.facultyName, c.instructorsString, c.lectureseriesId, c.password_, c.approved, c.longDesc, c.latestOpenAccessVideoId ";
+		String query = "SELECT c.number_, c.eventType, c.categoryId, c.name, c.shortDesc, c.longDesc, c.yearId, c.language, c.facultyName, c.instructorsString, c.lectureseriesId, c.password_, c.approved, c.longDesc, c.latestOpenAccessVideoId ";
 			   query += "FROM LG_Lectureseries AS c ";
 
 		if (facultyId > 0) {
@@ -207,10 +207,10 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			query += "INNER JOIN LG_Producer AS p ON ( pc.producerId = p.producerId ) ";
 		}
 
-		if ((!"".equals(yearId) && yearId != null) || (approved==1 || approved==0) || facultyId > 0 || producerId > 0) {
+		if (yearId>0 || (approved==1 || approved==0) || facultyId > 0 || producerId > 0) {
 			query += "WHERE ";
 			int i = 0;
-			if (!"".equals(yearId) && yearId != null) {
+			if (yearId > 0) {
 				query += "c.yearId = \""+yearId + "\" ";
 				i++;
 			}

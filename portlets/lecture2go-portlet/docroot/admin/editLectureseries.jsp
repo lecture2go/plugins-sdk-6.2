@@ -5,7 +5,7 @@
 	String lName = "";
 	String lNumber = "";
 	String lLanguage = "";
-	String lEventType = "";
+	Long categoryId = new Long(0);
 	Long lSemester = new Long(0);
 	String lShortDesc = "";
 	String lInstructors = "";
@@ -20,7 +20,7 @@
 		lName=reqLectureseries.getName();
 		lNumber=reqLectureseries.getNumber();
 		lLanguage=reqLectureseries.getLanguage();
-		lEventType=reqLectureseries.getEventType();
+		categoryId=reqLectureseries.getCategoryId();
 		lSemester=reqLectureseries.getYearId();
 		lShortDesc=reqLectureseries.getShortDesc();
 		lInstructors=reqLectureseries.getInstructorsString();
@@ -57,7 +57,15 @@
 		pIds = ProducerLocalServiceUtil.getAllProducerIds(lId);
 	}catch (NullPointerException e){}
 	
-	List<Year> semesters = YearLocalServiceUtil.getAllSemesters(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+	List<Year> semesters = new ArrayList<Year>(); 
+	try{
+		semesters = YearLocalServiceUtil.getAllSemesters(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+	}catch(Exception e){}
+	
+	List<Category> categories = new ArrayList<Category>();
+	try{
+		categories = CategoryLocalServiceUtil.getAllCategories(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+	}catch(Exception e){}
 	
 	String backURL = "";
 	try{
@@ -93,16 +101,15 @@
 
 			<aui:input name="name" label="name" required="true" value="<%=lName%>"/>
 
-			<aui:select size="1" name="eventType" label="event-type" required="true">
+			<aui:select size="1" name="categoryId" label="event-type" required="true">
 				<aui:option value=""></aui:option>
-				<%
-				String[] l =  LanguageUtil.get(pageContext, "event-types-for-select").split(",");
-				for(int i=0; i<l.length; i++){
-					String type = l[i];
-					if(lEventType.equals(type)){%> <aui:option selected="true" value="<%=type%>"><%=type%></aui:option><%}
-					else{%> <aui:option value="<%=type%>"><%=type%></aui:option><%}
-				}
-				%>
+				<%for (int i = 0; i < categories.size(); i++) {
+					if (categoryId==categories.get(i).getCategoryId()) {%>
+						<aui:option value='<%=categories.get(i).getCategoryId()%>' selected="true"><%=categories.get(i).getName()%></aui:option>
+					<%} else {%>
+						<aui:option value='<%=categories.get(i).getCategoryId()%>'><%=categories.get(i).getName()%></aui:option>
+					<%}
+				}%>
 			</aui:select>
 			
 			<aui:select size="1" name="institutionId" label="institution" required="true">
@@ -166,27 +173,13 @@
 							
 			<aui:input name="shortDesc" label="short-description"  value="<%=lShortDesc%>"/>
 
-			<aui:select id="allSemesters" size="1" name="semesterName" label="semester">
+			<aui:select id="allSemesters" size="1" name="semesterId" label="semester">
 				<aui:option value="">select-semester</aui:option>
 				<%for (int i = 0; i < semesters.size(); i++) {
-					if (lSemester.equals(semesters.get(i).getYearId()+"")) {%>
+					if (lSemester==semesters.get(i).getYearId()) {%>
 						<aui:option value='<%=semesters.get(i).getYearId()%>' selected="true"><%=semesters.get(i).getPrefix()+"&nbsp;"+semesters.get(i).getName()%></aui:option>
 					<%} else {%>
 						<aui:option value='<%=semesters.get(i).getYearId()%>'><%=semesters.get(i).getPrefix()+"&nbsp;"+semesters.get(i).getName()%></aui:option>
-					<%}
-				}%>
-			</aui:select>
-			
-			<a id="<portlet:namespace/>addSemester" style="cursor:pointer;">add-new-semester</a>
-			<aui:input id="newSemester" name="semesterName" style="display:none;" label=""/>
-
-			<aui:select size="1" name="language" label="language" required="true">
-				<aui:option value="">select-language</aui:option>
-				<%for (int i=0; i<languages.length; i++){
-					if (languages[i].getLanguage().equals(lLanguage)) {%>
-						<aui:option value='<%=languages[i].getLanguage()%>' selected="true"><%=languages[i].getDisplayLanguage()%></aui:option>
-					<%} else {%>
-						<aui:option value='<%=languages[i].getLanguage()%>'><%=languages[i].getDisplayLanguage()%></aui:option>
 					<%}
 				}%>
 			</aui:select>
@@ -246,14 +239,6 @@ function(A) {
       	}
     );
     
-    addSemester.on(
-    		'click',
-    		function(A) {
-    			newSemester.show(); 
-    			allSemesters.set("disabled","disabled");
-    		}
-    );
-
   }
 );
 </script>

@@ -113,6 +113,10 @@ public class CategoryLocalServiceClpInvoker {
 		_methodName129 = "setBeanIdentifier";
 
 		_methodParameterTypes129 = new String[] { "java.lang.String" };
+
+		_methodName134 = "getAllCategories";
+
+		_methodParameterTypes134 = new String[] { "int", "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -216,6 +220,12 @@ public class CategoryLocalServiceClpInvoker {
 			return null;
 		}
 
+		if (_methodName134.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes134, parameterTypes)) {
+			return CategoryLocalServiceUtil.getAllCategories(((Integer)arguments[0]).intValue(),
+				((Integer)arguments[1]).intValue());
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -255,4 +265,6 @@ public class CategoryLocalServiceClpInvoker {
 	private String[] _methodParameterTypes128;
 	private String _methodName129;
 	private String[] _methodParameterTypes129;
+	private String _methodName134;
+	private String[] _methodParameterTypes134;
 }

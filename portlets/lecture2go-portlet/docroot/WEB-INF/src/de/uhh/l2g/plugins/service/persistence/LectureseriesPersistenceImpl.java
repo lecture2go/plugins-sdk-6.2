@@ -2189,7 +2189,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 			LectureseriesImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByCategory",
 			new String[] {
-				String.class.getName(),
+				Long.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
@@ -2198,55 +2198,55 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 		new FinderPath(LectureseriesModelImpl.ENTITY_CACHE_ENABLED,
 			LectureseriesModelImpl.FINDER_CACHE_ENABLED,
 			LectureseriesImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByCategory", new String[] { String.class.getName() },
-			LectureseriesModelImpl.EVENTCATEGORY_COLUMN_BITMASK |
+			"findByCategory", new String[] { Long.class.getName() },
+			LectureseriesModelImpl.CATEGORYID_COLUMN_BITMASK |
 			LectureseriesModelImpl.NAME_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_CATEGORY = new FinderPath(LectureseriesModelImpl.ENTITY_CACHE_ENABLED,
 			LectureseriesModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCategory",
-			new String[] { String.class.getName() });
+			new String[] { Long.class.getName() });
 
 	/**
-	 * Returns all the lectureserieses where eventCategory = &#63;.
+	 * Returns all the lectureserieses where categoryId = &#63;.
 	 *
-	 * @param eventCategory the event category
+	 * @param categoryId the category ID
 	 * @return the matching lectureserieses
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Lectureseries> findByCategory(String eventCategory)
+	public List<Lectureseries> findByCategory(long categoryId)
 		throws SystemException {
-		return findByCategory(eventCategory, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return findByCategory(categoryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
 	}
 
 	/**
-	 * Returns a range of all the lectureserieses where eventCategory = &#63;.
+	 * Returns a range of all the lectureserieses where categoryId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.LectureseriesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param eventCategory the event category
+	 * @param categoryId the category ID
 	 * @param start the lower bound of the range of lectureserieses
 	 * @param end the upper bound of the range of lectureserieses (not inclusive)
 	 * @return the range of matching lectureserieses
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Lectureseries> findByCategory(String eventCategory, int start,
+	public List<Lectureseries> findByCategory(long categoryId, int start,
 		int end) throws SystemException {
-		return findByCategory(eventCategory, start, end, null);
+		return findByCategory(categoryId, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the lectureserieses where eventCategory = &#63;.
+	 * Returns an ordered range of all the lectureserieses where categoryId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.LectureseriesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param eventCategory the event category
+	 * @param categoryId the category ID
 	 * @param start the lower bound of the range of lectureserieses
 	 * @param end the upper bound of the range of lectureserieses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -2254,7 +2254,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Lectureseries> findByCategory(String eventCategory, int start,
+	public List<Lectureseries> findByCategory(long categoryId, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2264,15 +2264,11 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 				(orderByComparator == null)) {
 			pagination = false;
 			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CATEGORY;
-			finderArgs = new Object[] { eventCategory };
+			finderArgs = new Object[] { categoryId };
 		}
 		else {
 			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_CATEGORY;
-			finderArgs = new Object[] {
-					eventCategory,
-					
-					start, end, orderByComparator
-				};
+			finderArgs = new Object[] { categoryId, start, end, orderByComparator };
 		}
 
 		List<Lectureseries> list = (List<Lectureseries>)FinderCacheUtil.getResult(finderPath,
@@ -2280,8 +2276,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 		if ((list != null) && !list.isEmpty()) {
 			for (Lectureseries lectureseries : list) {
-				if (!Validator.equals(eventCategory,
-							lectureseries.getEventCategory())) {
+				if ((categoryId != lectureseries.getCategoryId())) {
 					list = null;
 
 					break;
@@ -2302,19 +2297,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 			query.append(_SQL_SELECT_LECTURESERIES_WHERE);
 
-			boolean bindEventCategory = false;
-
-			if (eventCategory == null) {
-				query.append(_FINDER_COLUMN_CATEGORY_EVENTCATEGORY_1);
-			}
-			else if (eventCategory.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_CATEGORY_EVENTCATEGORY_3);
-			}
-			else {
-				bindEventCategory = true;
-
-				query.append(_FINDER_COLUMN_CATEGORY_EVENTCATEGORY_2);
-			}
+			query.append(_FINDER_COLUMN_CATEGORY_CATEGORYID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -2336,9 +2319,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (bindEventCategory) {
-					qPos.add(eventCategory);
-				}
+				qPos.add(categoryId);
 
 				if (!pagination) {
 					list = (List<Lectureseries>)QueryUtil.list(q, getDialect(),
@@ -2371,19 +2352,19 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 	}
 
 	/**
-	 * Returns the first lectureseries in the ordered set where eventCategory = &#63;.
+	 * Returns the first lectureseries in the ordered set where categoryId = &#63;.
 	 *
-	 * @param eventCategory the event category
+	 * @param categoryId the category ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching lectureseries
 	 * @throws de.uhh.l2g.plugins.NoSuchLectureseriesException if a matching lectureseries could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Lectureseries findByCategory_First(String eventCategory,
+	public Lectureseries findByCategory_First(long categoryId,
 		OrderByComparator orderByComparator)
 		throws NoSuchLectureseriesException, SystemException {
-		Lectureseries lectureseries = fetchByCategory_First(eventCategory,
+		Lectureseries lectureseries = fetchByCategory_First(categoryId,
 				orderByComparator);
 
 		if (lectureseries != null) {
@@ -2394,8 +2375,8 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("eventCategory=");
-		msg.append(eventCategory);
+		msg.append("categoryId=");
+		msg.append(categoryId);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -2403,17 +2384,17 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 	}
 
 	/**
-	 * Returns the first lectureseries in the ordered set where eventCategory = &#63;.
+	 * Returns the first lectureseries in the ordered set where categoryId = &#63;.
 	 *
-	 * @param eventCategory the event category
+	 * @param categoryId the category ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Lectureseries fetchByCategory_First(String eventCategory,
+	public Lectureseries fetchByCategory_First(long categoryId,
 		OrderByComparator orderByComparator) throws SystemException {
-		List<Lectureseries> list = findByCategory(eventCategory, 0, 1,
+		List<Lectureseries> list = findByCategory(categoryId, 0, 1,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2424,19 +2405,19 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 	}
 
 	/**
-	 * Returns the last lectureseries in the ordered set where eventCategory = &#63;.
+	 * Returns the last lectureseries in the ordered set where categoryId = &#63;.
 	 *
-	 * @param eventCategory the event category
+	 * @param categoryId the category ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching lectureseries
 	 * @throws de.uhh.l2g.plugins.NoSuchLectureseriesException if a matching lectureseries could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Lectureseries findByCategory_Last(String eventCategory,
+	public Lectureseries findByCategory_Last(long categoryId,
 		OrderByComparator orderByComparator)
 		throws NoSuchLectureseriesException, SystemException {
-		Lectureseries lectureseries = fetchByCategory_Last(eventCategory,
+		Lectureseries lectureseries = fetchByCategory_Last(categoryId,
 				orderByComparator);
 
 		if (lectureseries != null) {
@@ -2447,8 +2428,8 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("eventCategory=");
-		msg.append(eventCategory);
+		msg.append("categoryId=");
+		msg.append(categoryId);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -2456,24 +2437,24 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 	}
 
 	/**
-	 * Returns the last lectureseries in the ordered set where eventCategory = &#63;.
+	 * Returns the last lectureseries in the ordered set where categoryId = &#63;.
 	 *
-	 * @param eventCategory the event category
+	 * @param categoryId the category ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Lectureseries fetchByCategory_Last(String eventCategory,
+	public Lectureseries fetchByCategory_Last(long categoryId,
 		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByCategory(eventCategory);
+		int count = countByCategory(categoryId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<Lectureseries> list = findByCategory(eventCategory, count - 1,
-				count, orderByComparator);
+		List<Lectureseries> list = findByCategory(categoryId, count - 1, count,
+				orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2483,10 +2464,10 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 	}
 
 	/**
-	 * Returns the lectureserieses before and after the current lectureseries in the ordered set where eventCategory = &#63;.
+	 * Returns the lectureserieses before and after the current lectureseries in the ordered set where categoryId = &#63;.
 	 *
 	 * @param lectureseriesId the primary key of the current lectureseries
-	 * @param eventCategory the event category
+	 * @param categoryId the category ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next lectureseries
 	 * @throws de.uhh.l2g.plugins.NoSuchLectureseriesException if a lectureseries with the primary key could not be found
@@ -2494,7 +2475,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 	 */
 	@Override
 	public Lectureseries[] findByCategory_PrevAndNext(long lectureseriesId,
-		String eventCategory, OrderByComparator orderByComparator)
+		long categoryId, OrderByComparator orderByComparator)
 		throws NoSuchLectureseriesException, SystemException {
 		Lectureseries lectureseries = findByPrimaryKey(lectureseriesId);
 
@@ -2506,12 +2487,12 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 			Lectureseries[] array = new LectureseriesImpl[3];
 
 			array[0] = getByCategory_PrevAndNext(session, lectureseries,
-					eventCategory, orderByComparator, true);
+					categoryId, orderByComparator, true);
 
 			array[1] = lectureseries;
 
 			array[2] = getByCategory_PrevAndNext(session, lectureseries,
-					eventCategory, orderByComparator, false);
+					categoryId, orderByComparator, false);
 
 			return array;
 		}
@@ -2524,7 +2505,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 	}
 
 	protected Lectureseries getByCategory_PrevAndNext(Session session,
-		Lectureseries lectureseries, String eventCategory,
+		Lectureseries lectureseries, long categoryId,
 		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -2538,19 +2519,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 		query.append(_SQL_SELECT_LECTURESERIES_WHERE);
 
-		boolean bindEventCategory = false;
-
-		if (eventCategory == null) {
-			query.append(_FINDER_COLUMN_CATEGORY_EVENTCATEGORY_1);
-		}
-		else if (eventCategory.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_CATEGORY_EVENTCATEGORY_3);
-		}
-		else {
-			bindEventCategory = true;
-
-			query.append(_FINDER_COLUMN_CATEGORY_EVENTCATEGORY_2);
-		}
+		query.append(_FINDER_COLUMN_CATEGORY_CATEGORYID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -2620,9 +2589,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		if (bindEventCategory) {
-			qPos.add(eventCategory);
-		}
+		qPos.add(categoryId);
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(lectureseries);
@@ -2643,32 +2610,31 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 	}
 
 	/**
-	 * Removes all the lectureserieses where eventCategory = &#63; from the database.
+	 * Removes all the lectureserieses where categoryId = &#63; from the database.
 	 *
-	 * @param eventCategory the event category
+	 * @param categoryId the category ID
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByCategory(String eventCategory)
-		throws SystemException {
-		for (Lectureseries lectureseries : findByCategory(eventCategory,
+	public void removeByCategory(long categoryId) throws SystemException {
+		for (Lectureseries lectureseries : findByCategory(categoryId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(lectureseries);
 		}
 	}
 
 	/**
-	 * Returns the number of lectureserieses where eventCategory = &#63;.
+	 * Returns the number of lectureserieses where categoryId = &#63;.
 	 *
-	 * @param eventCategory the event category
+	 * @param categoryId the category ID
 	 * @return the number of matching lectureserieses
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByCategory(String eventCategory) throws SystemException {
+	public int countByCategory(long categoryId) throws SystemException {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_CATEGORY;
 
-		Object[] finderArgs = new Object[] { eventCategory };
+		Object[] finderArgs = new Object[] { categoryId };
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
@@ -2678,19 +2644,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 			query.append(_SQL_COUNT_LECTURESERIES_WHERE);
 
-			boolean bindEventCategory = false;
-
-			if (eventCategory == null) {
-				query.append(_FINDER_COLUMN_CATEGORY_EVENTCATEGORY_1);
-			}
-			else if (eventCategory.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_CATEGORY_EVENTCATEGORY_3);
-			}
-			else {
-				bindEventCategory = true;
-
-				query.append(_FINDER_COLUMN_CATEGORY_EVENTCATEGORY_2);
-			}
+			query.append(_FINDER_COLUMN_CATEGORY_CATEGORYID_2);
 
 			String sql = query.toString();
 
@@ -2703,9 +2657,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (bindEventCategory) {
-					qPos.add(eventCategory);
-				}
+				qPos.add(categoryId);
 
 				count = (Long)q.uniqueResult();
 
@@ -2724,9 +2676,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_CATEGORY_EVENTCATEGORY_1 = "lectureseries.eventCategory IS NULL";
-	private static final String _FINDER_COLUMN_CATEGORY_EVENTCATEGORY_2 = "lectureseries.eventCategory = ?";
-	private static final String _FINDER_COLUMN_CATEGORY_EVENTCATEGORY_3 = "(lectureseries.eventCategory IS NULL OR lectureseries.eventCategory = '')";
+	private static final String _FINDER_COLUMN_CATEGORY_CATEGORYID_2 = "lectureseries.categoryId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_NAME = new FinderPath(LectureseriesModelImpl.ENTITY_CACHE_ENABLED,
 			LectureseriesModelImpl.FINDER_CACHE_ENABLED,
 			LectureseriesImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -6747,14 +6697,14 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 			if ((lectureseriesModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CATEGORY.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						lectureseriesModelImpl.getOriginalEventCategory()
+						lectureseriesModelImpl.getOriginalCategoryId()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CATEGORY, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CATEGORY,
 					args);
 
-				args = new Object[] { lectureseriesModelImpl.getEventCategory() };
+				args = new Object[] { lectureseriesModelImpl.getCategoryId() };
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CATEGORY, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CATEGORY,
@@ -6912,7 +6862,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 		lectureseriesImpl.setNumber(lectureseries.getNumber());
 		lectureseriesImpl.setEventType(lectureseries.getEventType());
-		lectureseriesImpl.setEventCategory(lectureseries.getEventCategory());
+		lectureseriesImpl.setCategoryId(lectureseries.getCategoryId());
 		lectureseriesImpl.setName(lectureseries.getName());
 		lectureseriesImpl.setShortDesc(lectureseries.getShortDesc());
 		lectureseriesImpl.setYearId(lectureseries.getYearId());

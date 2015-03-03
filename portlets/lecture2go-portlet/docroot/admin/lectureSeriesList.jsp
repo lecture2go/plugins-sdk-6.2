@@ -92,7 +92,7 @@
 							<aui:select name="semesterId" label="select-semester" onChange="submit();">
 								<aui:option value="">select-semester</aui:option>
 								<%for (int i = 0; i < semesters.size(); i++) {
-										if(semesterId.equals(semesters.get(i).getYearId()+"")){
+										if(semesterId==semesters.get(i).getYearId()){
 											%>
 											<aui:option value='<%=semesters.get(i).getYearId()%>' selected="true"><%=semesters.get(i).getPrefix()+"&nbsp;"+semesters.get(i).getName()%></aui:option>
 											<%}else{%>

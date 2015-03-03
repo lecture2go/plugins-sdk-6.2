@@ -89,7 +89,7 @@
 		</id>
 		<property name="number" type="com.liferay.portal.dao.orm.hibernate.StringType" column="number_" />
 		<property name="eventType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="eventCategory" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="categoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="shortDesc" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="yearId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

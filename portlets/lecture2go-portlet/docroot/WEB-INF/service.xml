@@ -6,7 +6,7 @@
     <entity name="Lectureseries" local-service="true" remote-service="false">
         <column name="number" type="String"></column>
         <column name="eventType" type="String"></column>
-        <column name="eventCategory" type="String"></column>
+        <column name="categoryId" type="long"></column>
         <column name="name" type="String"></column>
         <column name="shortDesc" type="String"></column>
         <column name="yearId" type="long"></column>
@@ -36,7 +36,7 @@
             <finder-column name="eventType" case-sensitive="false"></finder-column>
         </finder>
         <finder name="Category" return-type="Collection">
-            <finder-column name="eventCategory"></finder-column>
+            <finder-column name="categoryId"></finder-column>
         </finder>
         <finder name="Name" return-type="Collection">
             <finder-column name="name"></finder-column>

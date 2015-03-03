@@ -46,7 +46,7 @@ create table LG_Lastvideolist (
 create table LG_Lectureseries (
 	number_ VARCHAR(75) null,
 	eventType VARCHAR(75) null,
-	eventCategory VARCHAR(75) null,
+	categoryId LONG,
 	name VARCHAR(75) null,
 	shortDesc VARCHAR(75) null,
 	yearId LONG,

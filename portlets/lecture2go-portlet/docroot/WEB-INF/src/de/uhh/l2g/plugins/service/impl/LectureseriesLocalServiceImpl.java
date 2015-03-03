@@ -51,7 +51,7 @@ public class LectureseriesLocalServiceImpl extends LectureseriesLocalServiceBase
 	 */
 	
 	public List<Lectureseries> getFilteredBySemesterFacultyProducer(Integer approved, Long semester, Long facultyId, Long producerId) {
-		List<Lectureseries> l = LectureseriesFinderUtil.findeFilteredByApprovedSemesterFacultyProducer(approved, semester, facultyId, producerId);
+		List<Lectureseries> l = LectureseriesFinderUtil.findFilteredByApprovedSemesterFacultyProducer(approved, semester, facultyId, producerId);
 		try{
 			l.isEmpty();//check
 		}catch(NullPointerException npe){
