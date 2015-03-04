@@ -23,8 +23,6 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.Serializable;
 
-import java.util.Date;
-
 /**
  * The base model interface for the Metadata service. Represents a row in the &quot;LG_Metadata&quot; database table, with each column mapped to a property of this class.
  *
@@ -72,36 +70,6 @@ public interface MetadataModel extends BaseModel<Metadata> {
 	 * @param metadataId the metadata ID of this metadata
 	 */
 	public void setMetadataId(long metadataId);
-
-	/**
-	 * Returns the u r l i d of this metadata.
-	 *
-	 * @return the u r l i d of this metadata
-	 */
-	@AutoEscape
-	public String getURLID();
-
-	/**
-	 * Sets the u r l i d of this metadata.
-	 *
-	 * @param URLID the u r l i d of this metadata
-	 */
-	public void setURLID(String URLID);
-
-	/**
-	 * Returns the format of this metadata.
-	 *
-	 * @return the format of this metadata
-	 */
-	@AutoEscape
-	public String getFormat();
-
-	/**
-	 * Sets the format of this metadata.
-	 *
-	 * @param format the format of this metadata
-	 */
-	public void setFormat(String format);
 
 	/**
 	 * Returns the type of this metadata.
@@ -164,21 +132,6 @@ public interface MetadataModel extends BaseModel<Metadata> {
 	public void setSubject(String subject);
 
 	/**
-	 * Returns the coverage of this metadata.
-	 *
-	 * @return the coverage of this metadata
-	 */
-	@AutoEscape
-	public String getCoverage();
-
-	/**
-	 * Sets the coverage of this metadata.
-	 *
-	 * @param coverage the coverage of this metadata
-	 */
-	public void setCoverage(String coverage);
-
-	/**
 	 * Returns the description of this metadata.
 	 *
 	 * @return the description of this metadata
@@ -194,21 +147,6 @@ public interface MetadataModel extends BaseModel<Metadata> {
 	public void setDescription(String description);
 
 	/**
-	 * Returns the creator of this metadata.
-	 *
-	 * @return the creator of this metadata
-	 */
-	@AutoEscape
-	public String getCreator();
-
-	/**
-	 * Sets the creator of this metadata.
-	 *
-	 * @param creator the creator of this metadata
-	 */
-	public void setCreator(String creator);
-
-	/**
 	 * Returns the publisher of this metadata.
 	 *
 	 * @return the publisher of this metadata
@@ -222,140 +160,6 @@ public interface MetadataModel extends BaseModel<Metadata> {
 	 * @param publisher the publisher of this metadata
 	 */
 	public void setPublisher(String publisher);
-
-	/**
-	 * Returns the contributor of this metadata.
-	 *
-	 * @return the contributor of this metadata
-	 */
-	@AutoEscape
-	public String getContributor();
-
-	/**
-	 * Sets the contributor of this metadata.
-	 *
-	 * @param contributor the contributor of this metadata
-	 */
-	public void setContributor(String contributor);
-
-	/**
-	 * Returns the rights holder of this metadata.
-	 *
-	 * @return the rights holder of this metadata
-	 */
-	@AutoEscape
-	public String getRightsHolder();
-
-	/**
-	 * Sets the rights holder of this metadata.
-	 *
-	 * @param rightsHolder the rights holder of this metadata
-	 */
-	public void setRightsHolder(String rightsHolder);
-
-	/**
-	 * Returns the rights of this metadata.
-	 *
-	 * @return the rights of this metadata
-	 */
-	@AutoEscape
-	public String getRights();
-
-	/**
-	 * Sets the rights of this metadata.
-	 *
-	 * @param rights the rights of this metadata
-	 */
-	public void setRights(String rights);
-
-	/**
-	 * Returns the provenance of this metadata.
-	 *
-	 * @return the provenance of this metadata
-	 */
-	@AutoEscape
-	public String getProvenance();
-
-	/**
-	 * Sets the provenance of this metadata.
-	 *
-	 * @param provenance the provenance of this metadata
-	 */
-	public void setProvenance(String provenance);
-
-	/**
-	 * Returns the source of this metadata.
-	 *
-	 * @return the source of this metadata
-	 */
-	@AutoEscape
-	public String getSource();
-
-	/**
-	 * Sets the source of this metadata.
-	 *
-	 * @param source the source of this metadata
-	 */
-	public void setSource(String source);
-
-	/**
-	 * Returns the relation of this metadata.
-	 *
-	 * @return the relation of this metadata
-	 */
-	@AutoEscape
-	public String getRelation();
-
-	/**
-	 * Sets the relation of this metadata.
-	 *
-	 * @param relation the relation of this metadata
-	 */
-	public void setRelation(String relation);
-
-	/**
-	 * Returns the audience of this metadata.
-	 *
-	 * @return the audience of this metadata
-	 */
-	@AutoEscape
-	public String getAudience();
-
-	/**
-	 * Sets the audience of this metadata.
-	 *
-	 * @param audience the audience of this metadata
-	 */
-	public void setAudience(String audience);
-
-	/**
-	 * Returns the instructional methods of this metadata.
-	 *
-	 * @return the instructional methods of this metadata
-	 */
-	@AutoEscape
-	public String getInstructionalMethods();
-
-	/**
-	 * Sets the instructional methods of this metadata.
-	 *
-	 * @param instructionalMethods the instructional methods of this metadata
-	 */
-	public void setInstructionalMethods(String instructionalMethods);
-
-	/**
-	 * Returns the date of this metadata.
-	 *
-	 * @return the date of this metadata
-	 */
-	public Date getDate();
-
-	/**
-	 * Sets the date of this metadata.
-	 *
-	 * @param date the date of this metadata
-	 */
-	public void setDate(Date date);
 
 	@Override
 	public boolean isNew();

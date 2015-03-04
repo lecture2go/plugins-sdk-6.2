@@ -334,8 +334,8 @@ public class RSSManager {
 					text += "<item>\n";
 					text += "<title>" + title + "</title>\n";
 
-					// here iTunes tags
-					String creator = objectMetadata.getCreator();
+					// TODO here iTunes tags
+					String creator = "";
 					creator = stringToIsoString(creator);
 
 					text += "<itunes:author>" + creator + "</itunes:author> \n";

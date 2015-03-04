@@ -38,7 +38,7 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{number=");
 		sb.append(number);
@@ -50,14 +50,12 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 		sb.append(name);
 		sb.append(", shortDesc=");
 		sb.append(shortDesc);
-		sb.append(", yearId=");
-		sb.append(yearId);
+		sb.append(", termId=");
+		sb.append(termId);
 		sb.append(", language=");
 		sb.append(language);
 		sb.append(", facultyName=");
 		sb.append(facultyName);
-		sb.append(", instructorsString=");
-		sb.append(instructorsString);
 		sb.append(", lectureseriesId=");
 		sb.append(lectureseriesId);
 		sb.append(", password=");
@@ -111,7 +109,7 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 			lectureseriesImpl.setShortDesc(shortDesc);
 		}
 
-		lectureseriesImpl.setYearId(yearId);
+		lectureseriesImpl.setTermId(termId);
 
 		if (language == null) {
 			lectureseriesImpl.setLanguage(StringPool.BLANK);
@@ -125,13 +123,6 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 		}
 		else {
 			lectureseriesImpl.setFacultyName(facultyName);
-		}
-
-		if (instructorsString == null) {
-			lectureseriesImpl.setInstructorsString(StringPool.BLANK);
-		}
-		else {
-			lectureseriesImpl.setInstructorsString(instructorsString);
 		}
 
 		lectureseriesImpl.setLectureseriesId(lectureseriesId);
@@ -181,10 +172,9 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 		categoryId = objectInput.readLong();
 		name = objectInput.readUTF();
 		shortDesc = objectInput.readUTF();
-		yearId = objectInput.readLong();
+		termId = objectInput.readLong();
 		language = objectInput.readUTF();
 		facultyName = objectInput.readUTF();
-		instructorsString = objectInput.readUTF();
 		lectureseriesId = objectInput.readLong();
 		password = objectInput.readUTF();
 		approved = objectInput.readInt();
@@ -227,7 +217,7 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 			objectOutput.writeUTF(shortDesc);
 		}
 
-		objectOutput.writeLong(yearId);
+		objectOutput.writeLong(termId);
 
 		if (language == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -241,13 +231,6 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 		}
 		else {
 			objectOutput.writeUTF(facultyName);
-		}
-
-		if (instructorsString == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(instructorsString);
 		}
 
 		objectOutput.writeLong(lectureseriesId);
@@ -284,10 +267,9 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 	public long categoryId;
 	public String name;
 	public String shortDesc;
-	public long yearId;
+	public long termId;
 	public String language;
 	public String facultyName;
-	public String instructorsString;
 	public long lectureseriesId;
 	public String password;
 	public int approved;

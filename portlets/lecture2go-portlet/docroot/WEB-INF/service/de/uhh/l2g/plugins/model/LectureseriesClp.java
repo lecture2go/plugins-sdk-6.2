@@ -76,13 +76,12 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 
 		attributes.put("number", getNumber());
 		attributes.put("eventType", getEventType());
-		attributes.put("eventCategory", getEventCategory());
+		attributes.put("categoryId", getCategoryId());
 		attributes.put("name", getName());
 		attributes.put("shortDesc", getShortDesc());
-		attributes.put("yearId", getYearId());
+		attributes.put("termId", getTermId());
 		attributes.put("language", getLanguage());
 		attributes.put("facultyName", getFacultyName());
-		attributes.put("instructorsString", getInstructorsString());
 		attributes.put("lectureseriesId", getLectureseriesId());
 		attributes.put("password", getPassword());
 		attributes.put("approved", getApproved());
@@ -109,10 +108,10 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 			setEventType(eventType);
 		}
 
-		String eventCategory = (String)attributes.get("eventCategory");
+		Long categoryId = (Long)attributes.get("categoryId");
 
-		if (eventCategory != null) {
-			setEventCategory(eventCategory);
+		if (categoryId != null) {
+			setCategoryId(categoryId);
 		}
 
 		String name = (String)attributes.get("name");
@@ -127,10 +126,10 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 			setShortDesc(shortDesc);
 		}
 
-		Long yearId = (Long)attributes.get("yearId");
+		Long termId = (Long)attributes.get("termId");
 
-		if (yearId != null) {
-			setYearId(yearId);
+		if (termId != null) {
+			setTermId(termId);
 		}
 
 		String language = (String)attributes.get("language");
@@ -143,12 +142,6 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 
 		if (facultyName != null) {
 			setFacultyName(facultyName);
-		}
-
-		String instructorsString = (String)attributes.get("instructorsString");
-
-		if (instructorsString != null) {
-			setInstructorsString(instructorsString);
 		}
 
 		Long lectureseriesId = (Long)attributes.get("lectureseriesId");
@@ -244,21 +237,21 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 	}
 
 	@Override
-	public String getEventCategory() {
-		return _eventCategory;
+	public long getCategoryId() {
+		return _categoryId;
 	}
 
 	@Override
-	public void setEventCategory(String eventCategory) {
-		_eventCategory = eventCategory;
+	public void setCategoryId(long categoryId) {
+		_categoryId = categoryId;
 
 		if (_lectureseriesRemoteModel != null) {
 			try {
 				Class<?> clazz = _lectureseriesRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setEventCategory", String.class);
+				Method method = clazz.getMethod("setCategoryId", long.class);
 
-				method.invoke(_lectureseriesRemoteModel, eventCategory);
+				method.invoke(_lectureseriesRemoteModel, categoryId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -313,21 +306,21 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 	}
 
 	@Override
-	public long getYearId() {
-		return _yearId;
+	public long getTermId() {
+		return _termId;
 	}
 
 	@Override
-	public void setYearId(long yearId) {
-		_yearId = yearId;
+	public void setTermId(long termId) {
+		_termId = termId;
 
 		if (_lectureseriesRemoteModel != null) {
 			try {
 				Class<?> clazz = _lectureseriesRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setYearId", long.class);
+				Method method = clazz.getMethod("setTermId", long.class);
 
-				method.invoke(_lectureseriesRemoteModel, yearId);
+				method.invoke(_lectureseriesRemoteModel, termId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -374,30 +367,6 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 				Method method = clazz.getMethod("setFacultyName", String.class);
 
 				method.invoke(_lectureseriesRemoteModel, facultyName);
-			}
-			catch (Exception e) {
-				throw new UnsupportedOperationException(e);
-			}
-		}
-	}
-
-	@Override
-	public String getInstructorsString() {
-		return _instructorsString;
-	}
-
-	@Override
-	public void setInstructorsString(String instructorsString) {
-		_instructorsString = instructorsString;
-
-		if (_lectureseriesRemoteModel != null) {
-			try {
-				Class<?> clazz = _lectureseriesRemoteModel.getClass();
-
-				Method method = clazz.getMethod("setInstructorsString",
-						String.class);
-
-				method.invoke(_lectureseriesRemoteModel, instructorsString);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -642,13 +611,12 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 
 		clone.setNumber(getNumber());
 		clone.setEventType(getEventType());
-		clone.setEventCategory(getEventCategory());
+		clone.setCategoryId(getCategoryId());
 		clone.setName(getName());
 		clone.setShortDesc(getShortDesc());
-		clone.setYearId(getYearId());
+		clone.setTermId(getTermId());
 		clone.setLanguage(getLanguage());
 		clone.setFacultyName(getFacultyName());
-		clone.setInstructorsString(getInstructorsString());
 		clone.setLectureseriesId(getLectureseriesId());
 		clone.setPassword(getPassword());
 		clone.setApproved(getApproved());
@@ -706,26 +674,24 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{number=");
 		sb.append(getNumber());
 		sb.append(", eventType=");
 		sb.append(getEventType());
-		sb.append(", eventCategory=");
-		sb.append(getEventCategory());
+		sb.append(", categoryId=");
+		sb.append(getCategoryId());
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", shortDesc=");
 		sb.append(getShortDesc());
-		sb.append(", yearId=");
-		sb.append(getYearId());
+		sb.append(", termId=");
+		sb.append(getTermId());
 		sb.append(", language=");
 		sb.append(getLanguage());
 		sb.append(", facultyName=");
 		sb.append(getFacultyName());
-		sb.append(", instructorsString=");
-		sb.append(getInstructorsString());
 		sb.append(", lectureseriesId=");
 		sb.append(getLectureseriesId());
 		sb.append(", password=");
@@ -747,7 +713,7 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Lectureseries");
@@ -762,8 +728,8 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 		sb.append(getEventType());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>eventCategory</column-name><column-value><![CDATA[");
-		sb.append(getEventCategory());
+			"<column><column-name>categoryId</column-name><column-value><![CDATA[");
+		sb.append(getCategoryId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
@@ -774,8 +740,8 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 		sb.append(getShortDesc());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>yearId</column-name><column-value><![CDATA[");
-		sb.append(getYearId());
+			"<column><column-name>termId</column-name><column-value><![CDATA[");
+		sb.append(getTermId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>language</column-name><column-value><![CDATA[");
@@ -784,10 +750,6 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 		sb.append(
 			"<column><column-name>facultyName</column-name><column-value><![CDATA[");
 		sb.append(getFacultyName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>instructorsString</column-name><column-value><![CDATA[");
-		sb.append(getInstructorsString());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>lectureseriesId</column-name><column-value><![CDATA[");
@@ -825,13 +787,12 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 
 	private String _number;
 	private String _eventType;
-	private String _eventCategory;
+	private long _categoryId;
 	private String _name;
 	private String _shortDesc;
-	private long _yearId;
+	private long _termId;
 	private String _language;
 	private String _facultyName;
-	private String _instructorsString;
 	private long _lectureseriesId;
 	private String _password;
 	private int _approved;

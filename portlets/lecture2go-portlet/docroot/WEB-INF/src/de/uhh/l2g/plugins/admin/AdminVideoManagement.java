@@ -117,8 +117,6 @@ public class AdminVideoManagement extends MVCPortlet {
 			if(reqVideo.getVideoId()>0)reqMetadata = (MetadataImpl)MetadataLocalServiceUtil.getMetadata(reqVideo.getMetadataId());
 			else{
 				reqMetadata.setDescription(reqLectureseries.getLongDesc());
-				reqMetadata.setCreator(reqProducer.getFirstName()+" "+reqProducer.getLastName());
-				reqMetadata.setRightsHolder(reqLectureseries.getInstructorsString());
 				reqMetadata.setPublisher(reqProducer.getFirstName()+" "+reqProducer.getLastName());
 				reqMetadata.setLanguage(reqLectureseries.getLanguage());
 			}
@@ -342,8 +340,6 @@ public class AdminVideoManagement extends MVCPortlet {
 			//metadata
 			try {
 				metadata.setTitle(title);
-				metadata.setCreator(creator);
-				metadata.setRightsHolder(rightsHolder);
 				metadata.setPublisher(publisher);
 				metadata.setLanguage(language);
 				MetadataLocalServiceUtil.updateMetadata(metadata);

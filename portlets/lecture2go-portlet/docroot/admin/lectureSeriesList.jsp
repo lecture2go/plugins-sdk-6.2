@@ -5,7 +5,7 @@
 	List<Producer> producers = new ArrayList<Producer>();
 	
 	List<Lectureseries> tempLectureseriesList = new ArrayList();
-	List<Year> semesters = YearLocalServiceUtil.getAllSemesters(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+	List<Term> semesters = TermLocalServiceUtil.getAllSemesters(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 	
 	Long institutionId = ServletRequestUtils.getLongParameter(request, "institutionId", 0);
 	
@@ -92,11 +92,11 @@
 							<aui:select name="semesterId" label="select-semester" onChange="submit();">
 								<aui:option value="">select-semester</aui:option>
 								<%for (int i = 0; i < semesters.size(); i++) {
-										if(semesterId==semesters.get(i).getYearId()){
+										if(semesterId==semesters.get(i).getTermId()){
 											%>
-											<aui:option value='<%=semesters.get(i).getYearId()%>' selected="true"><%=semesters.get(i).getPrefix()+"&nbsp;"+semesters.get(i).getName()%></aui:option>
+											<aui:option value='<%=semesters.get(i).getTermId()%>' selected="true"><%=semesters.get(i).getPrefix()+"&nbsp;"+semesters.get(i).getYear()%></aui:option>
 											<%}else{%>
-											<aui:option value='<%=semesters.get(i).getYearId()%>'><%=semesters.get(i).getPrefix()+"&nbsp;"+semesters.get(i).getName()%></aui:option>
+											<aui:option value='<%=semesters.get(i).getTermId()%>'><%=semesters.get(i).getPrefix()+"&nbsp;"+semesters.get(i).getYear()%></aui:option>
 											<%}					
 								}%>
 							</aui:select>

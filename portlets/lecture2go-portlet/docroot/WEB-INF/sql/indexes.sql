@@ -3,6 +3,10 @@ create index IX_8FA32867 on LG_Category (name);
 create index IX_4EE19791 on LG_Coordinator (institutionId);
 create index IX_8439EBD on LG_Coordinator (officeId);
 
+create index IX_D3B1627D on LG_Creator (firstName);
+create index IX_8BEDCA83 on LG_Creator (lastName);
+create index IX_2CE50242 on LG_Creator (middleName);
+
 create index IX_B56E8218 on LG_Host (groupId);
 create index IX_35EC15AF on LG_Host (groupId, hostId);
 create index IX_59DDB869 on LG_Host (hostId);
@@ -35,18 +39,29 @@ create index IX_DB929396 on LG_Lectureseries (name);
 create index IX_225A0AF on LG_Lectureseries (number_);
 create index IX_3714125D on LG_Lectureseries (password_);
 create index IX_2E421DEE on LG_Lectureseries (semesterName);
+create index IX_8D242272 on LG_Lectureseries (termId);
 create index IX_77CE15C3 on LG_Lectureseries (yearId);
 
 create index IX_EE7F24BF on LG_Lectureseries_Category (categoryId);
 create index IX_E459C00E on LG_Lectureseries_Category (lectureseriesId);
 
+create index IX_60A5A33 on LG_Lectureseries_Creator (creatorId);
+create index IX_B43D577C on LG_Lectureseries_Creator (lectureseriesId);
+
 create index IX_719B09B3 on LG_Lectureseries_Institution (institutionId);
 create index IX_C80ED770 on LG_Lectureseries_Institution (lectureseriesId);
 create index IX_4B074373 on LG_Lectureseries_Institution (lectureseriesId, institutionId);
 
+create index IX_A925E0D7 on LG_Lectureseries_Person (lectureseriesId);
+create index IX_6537F3ED on LG_Lectureseries_Person (personId);
+
 create index IX_C0376223 on LG_License (videoId);
 
 create index IX_41F2963D on LG_Office (institutionId);
+
+create index IX_368EB4AC on LG_Person (firstName);
+create index IX_6E15F674 on LG_Person (lastName);
+create index IX_25B1F5F3 on LG_Person (middleName);
 
 create index IX_4FD6C927 on LG_Producer (approved);
 create index IX_7DAEE222 on LG_Producer (homeDir);
@@ -64,6 +79,9 @@ create index IX_CBD5BF1 on LG_Segment (videoId);
 create index IX_87A17CC1 on LG_Segment_User_Video (segmentId);
 create index IX_165E5A37 on LG_Segment_User_Video (userId);
 create index IX_F1DC7249 on LG_Segment_User_Video (videoId);
+
+create index IX_4A54301C on LG_Term (prefix);
+create index IX_16F89D07 on LG_Term (year);
 
 create index IX_88EAD11B on LG_Upload (videoId);
 

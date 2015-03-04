@@ -74,10 +74,6 @@
 
 			<aui:input name="tags" label="tags" required="false" value="<%=reqVideo.getTags()%>"/>
 
-			<aui:input name="creator" label="creator" required="false" value="<%=reqMetadata.getCreator()%>"/>
-
-			<aui:input name="rightsHolder" label="rightsHolder" required="false" value="<%=reqMetadata.getRightsHolder()%>"/>
-			
 			<aui:input name="publisher" label="publisher" required="false" value="<%=reqMetadata.getPublisher()%>"/>
 	
 			license

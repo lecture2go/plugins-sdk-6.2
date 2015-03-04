@@ -70,7 +70,8 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 		attributes.put("permittedToSegment", getPermittedToSegment());
 		attributes.put("rootInstitutionId", getRootInstitutionId());
 		attributes.put("citation2go", getCitation2go());
-		attributes.put("yearId", getYearId());
+		attributes.put("termId", getTermId());
+		attributes.put("videoCreatorId", getVideoCreatorId());
 
 		return attributes;
 	}
@@ -204,10 +205,16 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 			setCitation2go(citation2go);
 		}
 
-		Long yearId = (Long)attributes.get("yearId");
+		Long termId = (Long)attributes.get("termId");
 
-		if (yearId != null) {
-			setYearId(yearId);
+		if (termId != null) {
+			setTermId(termId);
+		}
+
+		Long videoCreatorId = (Long)attributes.get("videoCreatorId");
+
+		if (videoCreatorId != null) {
+			setVideoCreatorId(videoCreatorId);
 		}
 	}
 
@@ -652,23 +659,43 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 	}
 
 	/**
-	* Returns the year ID of this video.
+	* Returns the term ID of this video.
 	*
-	* @return the year ID of this video
+	* @return the term ID of this video
 	*/
 	@Override
-	public long getYearId() {
-		return _video.getYearId();
+	public long getTermId() {
+		return _video.getTermId();
 	}
 
 	/**
-	* Sets the year ID of this video.
+	* Sets the term ID of this video.
 	*
-	* @param yearId the year ID of this video
+	* @param termId the term ID of this video
 	*/
 	@Override
-	public void setYearId(long yearId) {
-		_video.setYearId(yearId);
+	public void setTermId(long termId) {
+		_video.setTermId(termId);
+	}
+
+	/**
+	* Returns the video creator ID of this video.
+	*
+	* @return the video creator ID of this video
+	*/
+	@Override
+	public long getVideoCreatorId() {
+		return _video.getVideoCreatorId();
+	}
+
+	/**
+	* Sets the video creator ID of this video.
+	*
+	* @param videoCreatorId the video creator ID of this video
+	*/
+	@Override
+	public void setVideoCreatorId(long videoCreatorId) {
+		_video.setVideoCreatorId(videoCreatorId);
 	}
 
 	@Override

@@ -363,18 +363,32 @@ public interface VideoModel extends BaseModel<Video> {
 	public void setCitation2go(int citation2go);
 
 	/**
-	 * Returns the year ID of this video.
+	 * Returns the term ID of this video.
 	 *
-	 * @return the year ID of this video
+	 * @return the term ID of this video
 	 */
-	public long getYearId();
+	public long getTermId();
 
 	/**
-	 * Sets the year ID of this video.
+	 * Sets the term ID of this video.
 	 *
-	 * @param yearId the year ID of this video
+	 * @param termId the term ID of this video
 	 */
-	public void setYearId(long yearId);
+	public void setTermId(long termId);
+
+	/**
+	 * Returns the video creator ID of this video.
+	 *
+	 * @return the video creator ID of this video
+	 */
+	public long getVideoCreatorId();
+
+	/**
+	 * Sets the video creator ID of this video.
+	 *
+	 * @param videoCreatorId the video creator ID of this video
+	 */
+	public void setVideoCreatorId(long videoCreatorId);
 
 	@Override
 	public boolean isNew();

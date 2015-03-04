@@ -320,25 +320,12 @@ public class MetadataPersistenceImpl extends BasePersistenceImpl<Metadata>
 		metadataImpl.setPrimaryKey(metadata.getPrimaryKey());
 
 		metadataImpl.setMetadataId(metadata.getMetadataId());
-		metadataImpl.setURLID(metadata.getURLID());
-		metadataImpl.setFormat(metadata.getFormat());
 		metadataImpl.setType(metadata.getType());
 		metadataImpl.setLanguage(metadata.getLanguage());
 		metadataImpl.setTitle(metadata.getTitle());
 		metadataImpl.setSubject(metadata.getSubject());
-		metadataImpl.setCoverage(metadata.getCoverage());
 		metadataImpl.setDescription(metadata.getDescription());
-		metadataImpl.setCreator(metadata.getCreator());
 		metadataImpl.setPublisher(metadata.getPublisher());
-		metadataImpl.setContributor(metadata.getContributor());
-		metadataImpl.setRightsHolder(metadata.getRightsHolder());
-		metadataImpl.setRights(metadata.getRights());
-		metadataImpl.setProvenance(metadata.getProvenance());
-		metadataImpl.setSource(metadata.getSource());
-		metadataImpl.setRelation(metadata.getRelation());
-		metadataImpl.setAudience(metadata.getAudience());
-		metadataImpl.setInstructionalMethods(metadata.getInstructionalMethods());
-		metadataImpl.setDate(metadata.getDate());
 
 		return metadataImpl;
 	}
@@ -659,7 +646,7 @@ public class MetadataPersistenceImpl extends BasePersistenceImpl<Metadata>
 				PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
 	private static Log _log = LogFactoryUtil.getLog(MetadataPersistenceImpl.class);
 	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"type", "date"
+				"type"
 			});
 	private static Metadata _nullMetadata = new MetadataImpl() {
 			@Override

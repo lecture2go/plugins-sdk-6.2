@@ -33,7 +33,6 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,27 +59,14 @@ public class MetadataModelImpl extends BaseModelImpl<Metadata>
 	public static final String TABLE_NAME = "LG_Metadata";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "metadataId", Types.BIGINT },
-			{ "URLID", Types.VARCHAR },
-			{ "format", Types.VARCHAR },
 			{ "type_", Types.VARCHAR },
 			{ "language", Types.VARCHAR },
 			{ "title", Types.VARCHAR },
 			{ "subject", Types.VARCHAR },
-			{ "coverage", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
-			{ "creator", Types.VARCHAR },
-			{ "publisher", Types.VARCHAR },
-			{ "contributor", Types.VARCHAR },
-			{ "rightsHolder", Types.VARCHAR },
-			{ "rights", Types.VARCHAR },
-			{ "provenance", Types.VARCHAR },
-			{ "source", Types.VARCHAR },
-			{ "relation", Types.VARCHAR },
-			{ "audience", Types.VARCHAR },
-			{ "instructionalMethods", Types.VARCHAR },
-			{ "date_", Types.TIMESTAMP }
+			{ "publisher", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Metadata (metadataId LONG not null primary key,URLID VARCHAR(75) null,format VARCHAR(75) null,type_ VARCHAR(75) null,language VARCHAR(75) null,title VARCHAR(75) null,subject VARCHAR(75) null,coverage VARCHAR(75) null,description VARCHAR(75) null,creator VARCHAR(75) null,publisher VARCHAR(75) null,contributor VARCHAR(75) null,rightsHolder VARCHAR(75) null,rights VARCHAR(75) null,provenance VARCHAR(75) null,source VARCHAR(75) null,relation VARCHAR(75) null,audience VARCHAR(75) null,instructionalMethods VARCHAR(75) null,date_ DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Metadata (metadataId LONG not null primary key,type_ VARCHAR(75) null,language VARCHAR(75) null,title VARCHAR(75) null,subject VARCHAR(75) null,description VARCHAR(75) null,publisher VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Metadata";
 	public static final String ORDER_BY_JPQL = " ORDER BY metadata.metadataId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Metadata.metadataId ASC";
@@ -135,25 +121,12 @@ public class MetadataModelImpl extends BaseModelImpl<Metadata>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("metadataId", getMetadataId());
-		attributes.put("URLID", getURLID());
-		attributes.put("format", getFormat());
 		attributes.put("type", getType());
 		attributes.put("language", getLanguage());
 		attributes.put("title", getTitle());
 		attributes.put("subject", getSubject());
-		attributes.put("coverage", getCoverage());
 		attributes.put("description", getDescription());
-		attributes.put("creator", getCreator());
 		attributes.put("publisher", getPublisher());
-		attributes.put("contributor", getContributor());
-		attributes.put("rightsHolder", getRightsHolder());
-		attributes.put("rights", getRights());
-		attributes.put("provenance", getProvenance());
-		attributes.put("source", getSource());
-		attributes.put("relation", getRelation());
-		attributes.put("audience", getAudience());
-		attributes.put("instructionalMethods", getInstructionalMethods());
-		attributes.put("date", getDate());
 
 		return attributes;
 	}
@@ -164,18 +137,6 @@ public class MetadataModelImpl extends BaseModelImpl<Metadata>
 
 		if (metadataId != null) {
 			setMetadataId(metadataId);
-		}
-
-		String URLID = (String)attributes.get("URLID");
-
-		if (URLID != null) {
-			setURLID(URLID);
-		}
-
-		String format = (String)attributes.get("format");
-
-		if (format != null) {
-			setFormat(format);
 		}
 
 		String type = (String)attributes.get("type");
@@ -202,83 +163,16 @@ public class MetadataModelImpl extends BaseModelImpl<Metadata>
 			setSubject(subject);
 		}
 
-		String coverage = (String)attributes.get("coverage");
-
-		if (coverage != null) {
-			setCoverage(coverage);
-		}
-
 		String description = (String)attributes.get("description");
 
 		if (description != null) {
 			setDescription(description);
 		}
 
-		String creator = (String)attributes.get("creator");
-
-		if (creator != null) {
-			setCreator(creator);
-		}
-
 		String publisher = (String)attributes.get("publisher");
 
 		if (publisher != null) {
 			setPublisher(publisher);
-		}
-
-		String contributor = (String)attributes.get("contributor");
-
-		if (contributor != null) {
-			setContributor(contributor);
-		}
-
-		String rightsHolder = (String)attributes.get("rightsHolder");
-
-		if (rightsHolder != null) {
-			setRightsHolder(rightsHolder);
-		}
-
-		String rights = (String)attributes.get("rights");
-
-		if (rights != null) {
-			setRights(rights);
-		}
-
-		String provenance = (String)attributes.get("provenance");
-
-		if (provenance != null) {
-			setProvenance(provenance);
-		}
-
-		String source = (String)attributes.get("source");
-
-		if (source != null) {
-			setSource(source);
-		}
-
-		String relation = (String)attributes.get("relation");
-
-		if (relation != null) {
-			setRelation(relation);
-		}
-
-		String audience = (String)attributes.get("audience");
-
-		if (audience != null) {
-			setAudience(audience);
-		}
-
-		String instructionalMethods = (String)attributes.get(
-				"instructionalMethods");
-
-		if (instructionalMethods != null) {
-			setInstructionalMethods(instructionalMethods);
-		}
-
-		Date date = (Date)attributes.get("date");
-
-		if (date != null) {
-			setDate(date);
 		}
 	}
 
@@ -290,36 +184,6 @@ public class MetadataModelImpl extends BaseModelImpl<Metadata>
 	@Override
 	public void setMetadataId(long metadataId) {
 		_metadataId = metadataId;
-	}
-
-	@Override
-	public String getURLID() {
-		if (_URLID == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _URLID;
-		}
-	}
-
-	@Override
-	public void setURLID(String URLID) {
-		_URLID = URLID;
-	}
-
-	@Override
-	public String getFormat() {
-		if (_format == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _format;
-		}
-	}
-
-	@Override
-	public void setFormat(String format) {
-		_format = format;
 	}
 
 	@Override
@@ -383,21 +247,6 @@ public class MetadataModelImpl extends BaseModelImpl<Metadata>
 	}
 
 	@Override
-	public String getCoverage() {
-		if (_coverage == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _coverage;
-		}
-	}
-
-	@Override
-	public void setCoverage(String coverage) {
-		_coverage = coverage;
-	}
-
-	@Override
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;
@@ -413,21 +262,6 @@ public class MetadataModelImpl extends BaseModelImpl<Metadata>
 	}
 
 	@Override
-	public String getCreator() {
-		if (_creator == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _creator;
-		}
-	}
-
-	@Override
-	public void setCreator(String creator) {
-		_creator = creator;
-	}
-
-	@Override
 	public String getPublisher() {
 		if (_publisher == null) {
 			return StringPool.BLANK;
@@ -440,136 +274,6 @@ public class MetadataModelImpl extends BaseModelImpl<Metadata>
 	@Override
 	public void setPublisher(String publisher) {
 		_publisher = publisher;
-	}
-
-	@Override
-	public String getContributor() {
-		if (_contributor == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _contributor;
-		}
-	}
-
-	@Override
-	public void setContributor(String contributor) {
-		_contributor = contributor;
-	}
-
-	@Override
-	public String getRightsHolder() {
-		if (_rightsHolder == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _rightsHolder;
-		}
-	}
-
-	@Override
-	public void setRightsHolder(String rightsHolder) {
-		_rightsHolder = rightsHolder;
-	}
-
-	@Override
-	public String getRights() {
-		if (_rights == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _rights;
-		}
-	}
-
-	@Override
-	public void setRights(String rights) {
-		_rights = rights;
-	}
-
-	@Override
-	public String getProvenance() {
-		if (_provenance == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _provenance;
-		}
-	}
-
-	@Override
-	public void setProvenance(String provenance) {
-		_provenance = provenance;
-	}
-
-	@Override
-	public String getSource() {
-		if (_source == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _source;
-		}
-	}
-
-	@Override
-	public void setSource(String source) {
-		_source = source;
-	}
-
-	@Override
-	public String getRelation() {
-		if (_relation == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _relation;
-		}
-	}
-
-	@Override
-	public void setRelation(String relation) {
-		_relation = relation;
-	}
-
-	@Override
-	public String getAudience() {
-		if (_audience == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _audience;
-		}
-	}
-
-	@Override
-	public void setAudience(String audience) {
-		_audience = audience;
-	}
-
-	@Override
-	public String getInstructionalMethods() {
-		if (_instructionalMethods == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _instructionalMethods;
-		}
-	}
-
-	@Override
-	public void setInstructionalMethods(String instructionalMethods) {
-		_instructionalMethods = instructionalMethods;
-	}
-
-	@Override
-	public Date getDate() {
-		return _date;
-	}
-
-	@Override
-	public void setDate(Date date) {
-		_date = date;
 	}
 
 	@Override
@@ -600,25 +304,12 @@ public class MetadataModelImpl extends BaseModelImpl<Metadata>
 		MetadataImpl metadataImpl = new MetadataImpl();
 
 		metadataImpl.setMetadataId(getMetadataId());
-		metadataImpl.setURLID(getURLID());
-		metadataImpl.setFormat(getFormat());
 		metadataImpl.setType(getType());
 		metadataImpl.setLanguage(getLanguage());
 		metadataImpl.setTitle(getTitle());
 		metadataImpl.setSubject(getSubject());
-		metadataImpl.setCoverage(getCoverage());
 		metadataImpl.setDescription(getDescription());
-		metadataImpl.setCreator(getCreator());
 		metadataImpl.setPublisher(getPublisher());
-		metadataImpl.setContributor(getContributor());
-		metadataImpl.setRightsHolder(getRightsHolder());
-		metadataImpl.setRights(getRights());
-		metadataImpl.setProvenance(getProvenance());
-		metadataImpl.setSource(getSource());
-		metadataImpl.setRelation(getRelation());
-		metadataImpl.setAudience(getAudience());
-		metadataImpl.setInstructionalMethods(getInstructionalMethods());
-		metadataImpl.setDate(getDate());
 
 		metadataImpl.resetOriginalValues();
 
@@ -677,22 +368,6 @@ public class MetadataModelImpl extends BaseModelImpl<Metadata>
 
 		metadataCacheModel.metadataId = getMetadataId();
 
-		metadataCacheModel.URLID = getURLID();
-
-		String URLID = metadataCacheModel.URLID;
-
-		if ((URLID != null) && (URLID.length() == 0)) {
-			metadataCacheModel.URLID = null;
-		}
-
-		metadataCacheModel.format = getFormat();
-
-		String format = metadataCacheModel.format;
-
-		if ((format != null) && (format.length() == 0)) {
-			metadataCacheModel.format = null;
-		}
-
 		metadataCacheModel.type = getType();
 
 		String type = metadataCacheModel.type;
@@ -725,28 +400,12 @@ public class MetadataModelImpl extends BaseModelImpl<Metadata>
 			metadataCacheModel.subject = null;
 		}
 
-		metadataCacheModel.coverage = getCoverage();
-
-		String coverage = metadataCacheModel.coverage;
-
-		if ((coverage != null) && (coverage.length() == 0)) {
-			metadataCacheModel.coverage = null;
-		}
-
 		metadataCacheModel.description = getDescription();
 
 		String description = metadataCacheModel.description;
 
 		if ((description != null) && (description.length() == 0)) {
 			metadataCacheModel.description = null;
-		}
-
-		metadataCacheModel.creator = getCreator();
-
-		String creator = metadataCacheModel.creator;
-
-		if ((creator != null) && (creator.length() == 0)) {
-			metadataCacheModel.creator = null;
 		}
 
 		metadataCacheModel.publisher = getPublisher();
@@ -757,93 +416,15 @@ public class MetadataModelImpl extends BaseModelImpl<Metadata>
 			metadataCacheModel.publisher = null;
 		}
 
-		metadataCacheModel.contributor = getContributor();
-
-		String contributor = metadataCacheModel.contributor;
-
-		if ((contributor != null) && (contributor.length() == 0)) {
-			metadataCacheModel.contributor = null;
-		}
-
-		metadataCacheModel.rightsHolder = getRightsHolder();
-
-		String rightsHolder = metadataCacheModel.rightsHolder;
-
-		if ((rightsHolder != null) && (rightsHolder.length() == 0)) {
-			metadataCacheModel.rightsHolder = null;
-		}
-
-		metadataCacheModel.rights = getRights();
-
-		String rights = metadataCacheModel.rights;
-
-		if ((rights != null) && (rights.length() == 0)) {
-			metadataCacheModel.rights = null;
-		}
-
-		metadataCacheModel.provenance = getProvenance();
-
-		String provenance = metadataCacheModel.provenance;
-
-		if ((provenance != null) && (provenance.length() == 0)) {
-			metadataCacheModel.provenance = null;
-		}
-
-		metadataCacheModel.source = getSource();
-
-		String source = metadataCacheModel.source;
-
-		if ((source != null) && (source.length() == 0)) {
-			metadataCacheModel.source = null;
-		}
-
-		metadataCacheModel.relation = getRelation();
-
-		String relation = metadataCacheModel.relation;
-
-		if ((relation != null) && (relation.length() == 0)) {
-			metadataCacheModel.relation = null;
-		}
-
-		metadataCacheModel.audience = getAudience();
-
-		String audience = metadataCacheModel.audience;
-
-		if ((audience != null) && (audience.length() == 0)) {
-			metadataCacheModel.audience = null;
-		}
-
-		metadataCacheModel.instructionalMethods = getInstructionalMethods();
-
-		String instructionalMethods = metadataCacheModel.instructionalMethods;
-
-		if ((instructionalMethods != null) &&
-				(instructionalMethods.length() == 0)) {
-			metadataCacheModel.instructionalMethods = null;
-		}
-
-		Date date = getDate();
-
-		if (date != null) {
-			metadataCacheModel.date = date.getTime();
-		}
-		else {
-			metadataCacheModel.date = Long.MIN_VALUE;
-		}
-
 		return metadataCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{metadataId=");
 		sb.append(getMetadataId());
-		sb.append(", URLID=");
-		sb.append(getURLID());
-		sb.append(", format=");
-		sb.append(getFormat());
 		sb.append(", type=");
 		sb.append(getType());
 		sb.append(", language=");
@@ -852,32 +433,10 @@ public class MetadataModelImpl extends BaseModelImpl<Metadata>
 		sb.append(getTitle());
 		sb.append(", subject=");
 		sb.append(getSubject());
-		sb.append(", coverage=");
-		sb.append(getCoverage());
 		sb.append(", description=");
 		sb.append(getDescription());
-		sb.append(", creator=");
-		sb.append(getCreator());
 		sb.append(", publisher=");
 		sb.append(getPublisher());
-		sb.append(", contributor=");
-		sb.append(getContributor());
-		sb.append(", rightsHolder=");
-		sb.append(getRightsHolder());
-		sb.append(", rights=");
-		sb.append(getRights());
-		sb.append(", provenance=");
-		sb.append(getProvenance());
-		sb.append(", source=");
-		sb.append(getSource());
-		sb.append(", relation=");
-		sb.append(getRelation());
-		sb.append(", audience=");
-		sb.append(getAudience());
-		sb.append(", instructionalMethods=");
-		sb.append(getInstructionalMethods());
-		sb.append(", date=");
-		sb.append(getDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -885,7 +444,7 @@ public class MetadataModelImpl extends BaseModelImpl<Metadata>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(64);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Metadata");
@@ -894,14 +453,6 @@ public class MetadataModelImpl extends BaseModelImpl<Metadata>
 		sb.append(
 			"<column><column-name>metadataId</column-name><column-value><![CDATA[");
 		sb.append(getMetadataId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>URLID</column-name><column-value><![CDATA[");
-		sb.append(getURLID());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>format</column-name><column-value><![CDATA[");
-		sb.append(getFormat());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>type</column-name><column-value><![CDATA[");
@@ -920,56 +471,12 @@ public class MetadataModelImpl extends BaseModelImpl<Metadata>
 		sb.append(getSubject());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>coverage</column-name><column-value><![CDATA[");
-		sb.append(getCoverage());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>description</column-name><column-value><![CDATA[");
 		sb.append(getDescription());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>creator</column-name><column-value><![CDATA[");
-		sb.append(getCreator());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>publisher</column-name><column-value><![CDATA[");
 		sb.append(getPublisher());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>contributor</column-name><column-value><![CDATA[");
-		sb.append(getContributor());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>rightsHolder</column-name><column-value><![CDATA[");
-		sb.append(getRightsHolder());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>rights</column-name><column-value><![CDATA[");
-		sb.append(getRights());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>provenance</column-name><column-value><![CDATA[");
-		sb.append(getProvenance());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>source</column-name><column-value><![CDATA[");
-		sb.append(getSource());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>relation</column-name><column-value><![CDATA[");
-		sb.append(getRelation());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>audience</column-name><column-value><![CDATA[");
-		sb.append(getAudience());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>instructionalMethods</column-name><column-value><![CDATA[");
-		sb.append(getInstructionalMethods());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>date</column-name><column-value><![CDATA[");
-		sb.append(getDate());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -982,24 +489,11 @@ public class MetadataModelImpl extends BaseModelImpl<Metadata>
 			Metadata.class
 		};
 	private long _metadataId;
-	private String _URLID;
-	private String _format;
 	private String _type;
 	private String _language;
 	private String _title;
 	private String _subject;
-	private String _coverage;
 	private String _description;
-	private String _creator;
 	private String _publisher;
-	private String _contributor;
-	private String _rightsHolder;
-	private String _rights;
-	private String _provenance;
-	private String _source;
-	private String _relation;
-	private String _audience;
-	private String _instructionalMethods;
-	private Date _date;
 	private Metadata _escapedModel;
 }

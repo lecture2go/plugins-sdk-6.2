@@ -52,13 +52,12 @@ public class LectureseriesWrapper implements Lectureseries,
 
 		attributes.put("number", getNumber());
 		attributes.put("eventType", getEventType());
-		attributes.put("eventCategory", getEventCategory());
+		attributes.put("categoryId", getCategoryId());
 		attributes.put("name", getName());
 		attributes.put("shortDesc", getShortDesc());
-		attributes.put("yearId", getYearId());
+		attributes.put("termId", getTermId());
 		attributes.put("language", getLanguage());
 		attributes.put("facultyName", getFacultyName());
-		attributes.put("instructorsString", getInstructorsString());
 		attributes.put("lectureseriesId", getLectureseriesId());
 		attributes.put("password", getPassword());
 		attributes.put("approved", getApproved());
@@ -85,10 +84,10 @@ public class LectureseriesWrapper implements Lectureseries,
 			setEventType(eventType);
 		}
 
-		String eventCategory = (String)attributes.get("eventCategory");
+		Long categoryId = (Long)attributes.get("categoryId");
 
-		if (eventCategory != null) {
-			setEventCategory(eventCategory);
+		if (categoryId != null) {
+			setCategoryId(categoryId);
 		}
 
 		String name = (String)attributes.get("name");
@@ -103,10 +102,10 @@ public class LectureseriesWrapper implements Lectureseries,
 			setShortDesc(shortDesc);
 		}
 
-		Long yearId = (Long)attributes.get("yearId");
+		Long termId = (Long)attributes.get("termId");
 
-		if (yearId != null) {
-			setYearId(yearId);
+		if (termId != null) {
+			setTermId(termId);
 		}
 
 		String language = (String)attributes.get("language");
@@ -119,12 +118,6 @@ public class LectureseriesWrapper implements Lectureseries,
 
 		if (facultyName != null) {
 			setFacultyName(facultyName);
-		}
-
-		String instructorsString = (String)attributes.get("instructorsString");
-
-		if (instructorsString != null) {
-			setInstructorsString(instructorsString);
 		}
 
 		Long lectureseriesId = (Long)attributes.get("lectureseriesId");
@@ -234,23 +227,23 @@ public class LectureseriesWrapper implements Lectureseries,
 	}
 
 	/**
-	* Returns the event category of this lectureseries.
+	* Returns the category ID of this lectureseries.
 	*
-	* @return the event category of this lectureseries
+	* @return the category ID of this lectureseries
 	*/
 	@Override
-	public java.lang.String getEventCategory() {
-		return _lectureseries.getEventCategory();
+	public long getCategoryId() {
+		return _lectureseries.getCategoryId();
 	}
 
 	/**
-	* Sets the event category of this lectureseries.
+	* Sets the category ID of this lectureseries.
 	*
-	* @param eventCategory the event category of this lectureseries
+	* @param categoryId the category ID of this lectureseries
 	*/
 	@Override
-	public void setEventCategory(java.lang.String eventCategory) {
-		_lectureseries.setEventCategory(eventCategory);
+	public void setCategoryId(long categoryId) {
+		_lectureseries.setCategoryId(categoryId);
 	}
 
 	/**
@@ -294,23 +287,23 @@ public class LectureseriesWrapper implements Lectureseries,
 	}
 
 	/**
-	* Returns the year ID of this lectureseries.
+	* Returns the term ID of this lectureseries.
 	*
-	* @return the year ID of this lectureseries
+	* @return the term ID of this lectureseries
 	*/
 	@Override
-	public long getYearId() {
-		return _lectureseries.getYearId();
+	public long getTermId() {
+		return _lectureseries.getTermId();
 	}
 
 	/**
-	* Sets the year ID of this lectureseries.
+	* Sets the term ID of this lectureseries.
 	*
-	* @param yearId the year ID of this lectureseries
+	* @param termId the term ID of this lectureseries
 	*/
 	@Override
-	public void setYearId(long yearId) {
-		_lectureseries.setYearId(yearId);
+	public void setTermId(long termId) {
+		_lectureseries.setTermId(termId);
 	}
 
 	/**
@@ -351,26 +344,6 @@ public class LectureseriesWrapper implements Lectureseries,
 	@Override
 	public void setFacultyName(java.lang.String facultyName) {
 		_lectureseries.setFacultyName(facultyName);
-	}
-
-	/**
-	* Returns the instructors string of this lectureseries.
-	*
-	* @return the instructors string of this lectureseries
-	*/
-	@Override
-	public java.lang.String getInstructorsString() {
-		return _lectureseries.getInstructorsString();
-	}
-
-	/**
-	* Sets the instructors string of this lectureseries.
-	*
-	* @param instructorsString the instructors string of this lectureseries
-	*/
-	@Override
-	public void setInstructorsString(java.lang.String instructorsString) {
-		_lectureseries.setInstructorsString(instructorsString);
 	}
 
 	/**

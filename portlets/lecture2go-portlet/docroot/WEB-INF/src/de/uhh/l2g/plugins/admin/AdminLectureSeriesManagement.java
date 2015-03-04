@@ -90,10 +90,9 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		lectureseries.setCategoryId(categoryId);
 		lectureseries.setName(request.getParameter("name"));
 		lectureseries.setShortDesc(request.getParameter("shortDesc"));
-		lectureseries.setYearId(semesterId);
+		lectureseries.setTermId(semesterId);
 		lectureseries.setLanguage(request.getParameter("language"));
 		lectureseries.setFacultyName(request.getParameter("facultyName"));
-		lectureseries.setInstructorsString(request.getParameter("instructorsString"));
 		lectureseries.setPassword(request.getParameter("password"));
 		lectureseries.setLongDesc(s);	
 		
@@ -154,10 +153,9 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		lectureseries.setCategoryId(categoryId);
 		lectureseries.setName(request.getParameter("name"));
 		lectureseries.setShortDesc(request.getParameter("shortDesc"));
-		lectureseries.setYearId(semesterId);
+		lectureseries.setTermId(semesterId);
 		lectureseries.setLanguage(request.getParameter("language"));
 		lectureseries.setFacultyName(request.getParameter("facultyName"));
-		lectureseries.setInstructorsString(request.getParameter("instructorsString"));
 		lectureseries.setPassword(request.getParameter("password"));
 		lectureseries.setLongDesc(s);
 		

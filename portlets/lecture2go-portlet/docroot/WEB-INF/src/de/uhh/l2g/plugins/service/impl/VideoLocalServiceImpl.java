@@ -144,12 +144,6 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		} catch (SystemException e1) {
 			e1.printStackTrace();
 		}
-		Metadata objectMetadata = new MetadataImpl();
-		try {
-			objectMetadata = metadataPersistence.fetchByPrimaryKey(objectVideo.getMetadataId());
-		} catch (SystemException e1) {
-			e1.printStackTrace();
-		}
 
 		// prepare video short name
 		String video_shortname = objectVideo.getTitle();
@@ -157,10 +151,6 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			video_shortname = video_shortname.substring(0, 45) + "...";
 		objectVideo.setShortTitle(video_shortname);
 		
-		try{
-			objectVideo.setShortName(objectMetadata.getCreator().split(" ")[objectMetadata.getCreator().split(" ").length - 1]);
-		}catch(NullPointerException npe){}
-
 		// thumbnails
 		String image = "";
 		String imageSmall = "";

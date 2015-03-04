@@ -32,13 +32,12 @@ public class LectureseriesSoap implements Serializable {
 
 		soapModel.setNumber(model.getNumber());
 		soapModel.setEventType(model.getEventType());
-		soapModel.setEventCategory(model.getEventCategory());
+		soapModel.setCategoryId(model.getCategoryId());
 		soapModel.setName(model.getName());
 		soapModel.setShortDesc(model.getShortDesc());
-		soapModel.setYearId(model.getYearId());
+		soapModel.setTermId(model.getTermId());
 		soapModel.setLanguage(model.getLanguage());
 		soapModel.setFacultyName(model.getFacultyName());
-		soapModel.setInstructorsString(model.getInstructorsString());
 		soapModel.setLectureseriesId(model.getLectureseriesId());
 		soapModel.setPassword(model.getPassword());
 		soapModel.setApproved(model.getApproved());
@@ -114,12 +113,12 @@ public class LectureseriesSoap implements Serializable {
 		_eventType = eventType;
 	}
 
-	public String getEventCategory() {
-		return _eventCategory;
+	public long getCategoryId() {
+		return _categoryId;
 	}
 
-	public void setEventCategory(String eventCategory) {
-		_eventCategory = eventCategory;
+	public void setCategoryId(long categoryId) {
+		_categoryId = categoryId;
 	}
 
 	public String getName() {
@@ -138,12 +137,12 @@ public class LectureseriesSoap implements Serializable {
 		_shortDesc = shortDesc;
 	}
 
-	public long getYearId() {
-		return _yearId;
+	public long getTermId() {
+		return _termId;
 	}
 
-	public void setYearId(long yearId) {
-		_yearId = yearId;
+	public void setTermId(long termId) {
+		_termId = termId;
 	}
 
 	public String getLanguage() {
@@ -160,14 +159,6 @@ public class LectureseriesSoap implements Serializable {
 
 	public void setFacultyName(String facultyName) {
 		_facultyName = facultyName;
-	}
-
-	public String getInstructorsString() {
-		return _instructorsString;
-	}
-
-	public void setInstructorsString(String instructorsString) {
-		_instructorsString = instructorsString;
 	}
 
 	public long getLectureseriesId() {
@@ -228,13 +219,12 @@ public class LectureseriesSoap implements Serializable {
 
 	private String _number;
 	private String _eventType;
-	private String _eventCategory;
+	private long _categoryId;
 	private String _name;
 	private String _shortDesc;
-	private long _yearId;
+	private long _termId;
 	private String _language;
 	private String _facultyName;
-	private String _instructorsString;
 	private long _lectureseriesId;
 	private String _password;
 	private int _approved;

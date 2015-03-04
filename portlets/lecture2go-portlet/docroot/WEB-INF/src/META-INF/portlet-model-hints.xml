@@ -13,6 +13,14 @@
 		<field name="institutionId" type="long" />
 		<field name="officeId" type="long" />
 	</model>
+	<model name="de.uhh.l2g.plugins.model.Creator">
+		<field name="creatorId" type="long" />
+		<field name="firstName" type="String" />
+		<field name="lastName" type="String" />
+		<field name="middleName" type="String" />
+		<field name="jobTitle" type="String" />
+		<field name="gender" type="String" />
+	</model>
 	<model name="de.uhh.l2g.plugins.model.Host">
 		<field name="hostId" type="long" />
 		<field name="protocol" type="String" />
@@ -46,10 +54,9 @@
 		<field name="categoryId" type="long" />
 		<field name="name" type="String" />
 		<field name="shortDesc" type="String" />
-		<field name="yearId" type="long" />
+		<field name="termId" type="long" />
 		<field name="language" type="String" />
 		<field name="facultyName" type="String" />
-		<field name="instructorsString" type="String" />
 		<field name="lectureseriesId" type="long" />
 		<field name="password" type="String" />
 		<field name="approved" type="int" />
@@ -62,6 +69,11 @@
 		<field name="lectureseriesCategoryId" type="long" />
 		<field name="categoryId" type="long" />
 		<field name="lectureseriesId" type="long" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Lectureseries_Creator">
+		<field name="lectureseriesCreatorId" type="long" />
+		<field name="lectureseriesId" type="long" />
+		<field name="creatorId" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Lectureseries_Institution">
 		<field name="lectureseriesInstitutionId" type="long" />
@@ -81,25 +93,12 @@
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Metadata">
 		<field name="metadataId" type="long" />
-		<field name="URLID" type="String" />
-		<field name="format" type="String" />
 		<field name="type" type="String" />
 		<field name="language" type="String" />
 		<field name="title" type="String" />
 		<field name="subject" type="String" />
-		<field name="coverage" type="String" />
 		<field name="description" type="String" />
-		<field name="creator" type="String" />
 		<field name="publisher" type="String" />
-		<field name="contributor" type="String" />
-		<field name="rightsHolder" type="String" />
-		<field name="rights" type="String" />
-		<field name="provenance" type="String" />
-		<field name="source" type="String" />
-		<field name="relation" type="String" />
-		<field name="audience" type="String" />
-		<field name="instructionalMethods" type="String" />
-		<field name="date" type="Date" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Office">
 		<field name="officeId" type="long" />
@@ -137,6 +136,14 @@
 		<field name="version" type="String" />
 		<field name="setupWizard" type="int" />
 	</model>
+	<model name="de.uhh.l2g.plugins.model.Term">
+		<field name="termId" type="long" />
+		<field name="parentId" type="long" />
+		<field name="languageId" type="String" />
+		<field name="prefix" type="String" />
+		<field name="year" type="String" />
+		<field name="translation" type="String" />
+	</model>
 	<model name="de.uhh.l2g.plugins.model.Upload">
 		<field name="uploadId" type="long" />
 		<field name="userId" type="long" />
@@ -167,12 +174,17 @@
 		<field name="permittedToSegment" type="int" />
 		<field name="rootInstitutionId" type="long" />
 		<field name="citation2go" type="int" />
-		<field name="yearId" type="long" />
+		<field name="termId" type="long" />
+		<field name="videoCreatorId" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Video_Category">
 		<field name="videoCategoryId" type="long" />
 		<field name="videoId" type="long" />
 		<field name="categoryId" type="long" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Video_Creator">
+		<field name="videoCreatorId" type="long" />
+		<field name="creatorId" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Video_Institution">
 		<field name="videoInstitutionId" type="long" />
@@ -192,13 +204,5 @@
 		<field name="hitsPerMonth" type="long" />
 		<field name="hitsPerYear" type="long" />
 		<field name="videoId" type="long" />
-	</model>
-	<model name="de.uhh.l2g.plugins.model.Year">
-		<field name="yearId" type="long" />
-		<field name="parentId" type="long" />
-		<field name="languageId" type="String" />
-		<field name="prefix" type="String" />
-		<field name="name" type="String" />
-		<field name="translation" type="String" />
 	</model>
 </model-hints>

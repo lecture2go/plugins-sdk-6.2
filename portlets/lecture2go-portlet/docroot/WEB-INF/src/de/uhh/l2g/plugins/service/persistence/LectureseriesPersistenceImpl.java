@@ -89,67 +89,67 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(LectureseriesModelImpl.ENTITY_CACHE_ENABLED,
 			LectureseriesModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_YEAR = new FinderPath(LectureseriesModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_TERM = new FinderPath(LectureseriesModelImpl.ENTITY_CACHE_ENABLED,
 			LectureseriesModelImpl.FINDER_CACHE_ENABLED,
 			LectureseriesImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByYear",
+			"findByTerm",
 			new String[] {
 				Long.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_YEAR = new FinderPath(LectureseriesModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TERM = new FinderPath(LectureseriesModelImpl.ENTITY_CACHE_ENABLED,
 			LectureseriesModelImpl.FINDER_CACHE_ENABLED,
 			LectureseriesImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByYear", new String[] { Long.class.getName() },
-			LectureseriesModelImpl.YEARID_COLUMN_BITMASK |
+			"findByTerm", new String[] { Long.class.getName() },
+			LectureseriesModelImpl.TERMID_COLUMN_BITMASK |
 			LectureseriesModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_YEAR = new FinderPath(LectureseriesModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_TERM = new FinderPath(LectureseriesModelImpl.ENTITY_CACHE_ENABLED,
 			LectureseriesModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByYear",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTerm",
 			new String[] { Long.class.getName() });
 
 	/**
-	 * Returns all the lectureserieses where yearId = &#63;.
+	 * Returns all the lectureserieses where termId = &#63;.
 	 *
-	 * @param yearId the year ID
+	 * @param termId the term ID
 	 * @return the matching lectureserieses
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Lectureseries> findByYear(long yearId)
+	public List<Lectureseries> findByTerm(long termId)
 		throws SystemException {
-		return findByYear(yearId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		return findByTerm(termId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the lectureserieses where yearId = &#63;.
+	 * Returns a range of all the lectureserieses where termId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.LectureseriesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param yearId the year ID
+	 * @param termId the term ID
 	 * @param start the lower bound of the range of lectureserieses
 	 * @param end the upper bound of the range of lectureserieses (not inclusive)
 	 * @return the range of matching lectureserieses
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Lectureseries> findByYear(long yearId, int start, int end)
+	public List<Lectureseries> findByTerm(long termId, int start, int end)
 		throws SystemException {
-		return findByYear(yearId, start, end, null);
+		return findByTerm(termId, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the lectureserieses where yearId = &#63;.
+	 * Returns an ordered range of all the lectureserieses where termId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.LectureseriesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param yearId the year ID
+	 * @param termId the term ID
 	 * @param start the lower bound of the range of lectureserieses
 	 * @param end the upper bound of the range of lectureserieses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -157,7 +157,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Lectureseries> findByYear(long yearId, int start, int end,
+	public List<Lectureseries> findByTerm(long termId, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -166,12 +166,12 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_YEAR;
-			finderArgs = new Object[] { yearId };
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TERM;
+			finderArgs = new Object[] { termId };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_YEAR;
-			finderArgs = new Object[] { yearId, start, end, orderByComparator };
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_TERM;
+			finderArgs = new Object[] { termId, start, end, orderByComparator };
 		}
 
 		List<Lectureseries> list = (List<Lectureseries>)FinderCacheUtil.getResult(finderPath,
@@ -179,7 +179,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 		if ((list != null) && !list.isEmpty()) {
 			for (Lectureseries lectureseries : list) {
-				if ((yearId != lectureseries.getYearId())) {
+				if ((termId != lectureseries.getTermId())) {
 					list = null;
 
 					break;
@@ -200,7 +200,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 			query.append(_SQL_SELECT_LECTURESERIES_WHERE);
 
-			query.append(_FINDER_COLUMN_YEAR_YEARID_2);
+			query.append(_FINDER_COLUMN_TERM_TERMID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -222,7 +222,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(yearId);
+				qPos.add(termId);
 
 				if (!pagination) {
 					list = (List<Lectureseries>)QueryUtil.list(q, getDialect(),
@@ -255,19 +255,19 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 	}
 
 	/**
-	 * Returns the first lectureseries in the ordered set where yearId = &#63;.
+	 * Returns the first lectureseries in the ordered set where termId = &#63;.
 	 *
-	 * @param yearId the year ID
+	 * @param termId the term ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching lectureseries
 	 * @throws de.uhh.l2g.plugins.NoSuchLectureseriesException if a matching lectureseries could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Lectureseries findByYear_First(long yearId,
+	public Lectureseries findByTerm_First(long termId,
 		OrderByComparator orderByComparator)
 		throws NoSuchLectureseriesException, SystemException {
-		Lectureseries lectureseries = fetchByYear_First(yearId,
+		Lectureseries lectureseries = fetchByTerm_First(termId,
 				orderByComparator);
 
 		if (lectureseries != null) {
@@ -278,8 +278,8 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("yearId=");
-		msg.append(yearId);
+		msg.append("termId=");
+		msg.append(termId);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -287,17 +287,17 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 	}
 
 	/**
-	 * Returns the first lectureseries in the ordered set where yearId = &#63;.
+	 * Returns the first lectureseries in the ordered set where termId = &#63;.
 	 *
-	 * @param yearId the year ID
+	 * @param termId the term ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Lectureseries fetchByYear_First(long yearId,
+	public Lectureseries fetchByTerm_First(long termId,
 		OrderByComparator orderByComparator) throws SystemException {
-		List<Lectureseries> list = findByYear(yearId, 0, 1, orderByComparator);
+		List<Lectureseries> list = findByTerm(termId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -307,19 +307,19 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 	}
 
 	/**
-	 * Returns the last lectureseries in the ordered set where yearId = &#63;.
+	 * Returns the last lectureseries in the ordered set where termId = &#63;.
 	 *
-	 * @param yearId the year ID
+	 * @param termId the term ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching lectureseries
 	 * @throws de.uhh.l2g.plugins.NoSuchLectureseriesException if a matching lectureseries could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Lectureseries findByYear_Last(long yearId,
+	public Lectureseries findByTerm_Last(long termId,
 		OrderByComparator orderByComparator)
 		throws NoSuchLectureseriesException, SystemException {
-		Lectureseries lectureseries = fetchByYear_Last(yearId, orderByComparator);
+		Lectureseries lectureseries = fetchByTerm_Last(termId, orderByComparator);
 
 		if (lectureseries != null) {
 			return lectureseries;
@@ -329,8 +329,8 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("yearId=");
-		msg.append(yearId);
+		msg.append("termId=");
+		msg.append(termId);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -338,23 +338,23 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 	}
 
 	/**
-	 * Returns the last lectureseries in the ordered set where yearId = &#63;.
+	 * Returns the last lectureseries in the ordered set where termId = &#63;.
 	 *
-	 * @param yearId the year ID
+	 * @param termId the term ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Lectureseries fetchByYear_Last(long yearId,
+	public Lectureseries fetchByTerm_Last(long termId,
 		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByYear(yearId);
+		int count = countByTerm(termId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<Lectureseries> list = findByYear(yearId, count - 1, count,
+		List<Lectureseries> list = findByTerm(termId, count - 1, count,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -365,18 +365,18 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 	}
 
 	/**
-	 * Returns the lectureserieses before and after the current lectureseries in the ordered set where yearId = &#63;.
+	 * Returns the lectureserieses before and after the current lectureseries in the ordered set where termId = &#63;.
 	 *
 	 * @param lectureseriesId the primary key of the current lectureseries
-	 * @param yearId the year ID
+	 * @param termId the term ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next lectureseries
 	 * @throws de.uhh.l2g.plugins.NoSuchLectureseriesException if a lectureseries with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Lectureseries[] findByYear_PrevAndNext(long lectureseriesId,
-		long yearId, OrderByComparator orderByComparator)
+	public Lectureseries[] findByTerm_PrevAndNext(long lectureseriesId,
+		long termId, OrderByComparator orderByComparator)
 		throws NoSuchLectureseriesException, SystemException {
 		Lectureseries lectureseries = findByPrimaryKey(lectureseriesId);
 
@@ -387,12 +387,12 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 			Lectureseries[] array = new LectureseriesImpl[3];
 
-			array[0] = getByYear_PrevAndNext(session, lectureseries, yearId,
+			array[0] = getByTerm_PrevAndNext(session, lectureseries, termId,
 					orderByComparator, true);
 
 			array[1] = lectureseries;
 
-			array[2] = getByYear_PrevAndNext(session, lectureseries, yearId,
+			array[2] = getByTerm_PrevAndNext(session, lectureseries, termId,
 					orderByComparator, false);
 
 			return array;
@@ -405,8 +405,8 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 		}
 	}
 
-	protected Lectureseries getByYear_PrevAndNext(Session session,
-		Lectureseries lectureseries, long yearId,
+	protected Lectureseries getByTerm_PrevAndNext(Session session,
+		Lectureseries lectureseries, long termId,
 		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -420,7 +420,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 		query.append(_SQL_SELECT_LECTURESERIES_WHERE);
 
-		query.append(_FINDER_COLUMN_YEAR_YEARID_2);
+		query.append(_FINDER_COLUMN_TERM_TERMID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -490,7 +490,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		qPos.add(yearId);
+		qPos.add(termId);
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(lectureseries);
@@ -511,31 +511,31 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 	}
 
 	/**
-	 * Removes all the lectureserieses where yearId = &#63; from the database.
+	 * Removes all the lectureserieses where termId = &#63; from the database.
 	 *
-	 * @param yearId the year ID
+	 * @param termId the term ID
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByYear(long yearId) throws SystemException {
-		for (Lectureseries lectureseries : findByYear(yearId,
+	public void removeByTerm(long termId) throws SystemException {
+		for (Lectureseries lectureseries : findByTerm(termId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(lectureseries);
 		}
 	}
 
 	/**
-	 * Returns the number of lectureserieses where yearId = &#63;.
+	 * Returns the number of lectureserieses where termId = &#63;.
 	 *
-	 * @param yearId the year ID
+	 * @param termId the term ID
 	 * @return the number of matching lectureserieses
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByYear(long yearId) throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_YEAR;
+	public int countByTerm(long termId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_TERM;
 
-		Object[] finderArgs = new Object[] { yearId };
+		Object[] finderArgs = new Object[] { termId };
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
@@ -545,7 +545,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 			query.append(_SQL_COUNT_LECTURESERIES_WHERE);
 
-			query.append(_FINDER_COLUMN_YEAR_YEARID_2);
+			query.append(_FINDER_COLUMN_TERM_TERMID_2);
 
 			String sql = query.toString();
 
@@ -558,7 +558,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(yearId);
+				qPos.add(termId);
 
 				count = (Long)q.uniqueResult();
 
@@ -577,7 +577,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_YEAR_YEARID_2 = "lectureseries.yearId = ?";
+	private static final String _FINDER_COLUMN_TERM_TERMID_2 = "lectureseries.termId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_LANGUAGE = new FinderPath(LectureseriesModelImpl.ENTITY_CACHE_ENABLED,
 			LectureseriesModelImpl.FINDER_CACHE_ENABLED,
 			LectureseriesImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -6627,19 +6627,19 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 
 		else {
 			if ((lectureseriesModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_YEAR.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TERM.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						lectureseriesModelImpl.getOriginalYearId()
+						lectureseriesModelImpl.getOriginalTermId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_YEAR, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_YEAR,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TERM, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TERM,
 					args);
 
-				args = new Object[] { lectureseriesModelImpl.getYearId() };
+				args = new Object[] { lectureseriesModelImpl.getTermId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_YEAR, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_YEAR,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TERM, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TERM,
 					args);
 			}
 
@@ -6865,10 +6865,9 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 		lectureseriesImpl.setCategoryId(lectureseries.getCategoryId());
 		lectureseriesImpl.setName(lectureseries.getName());
 		lectureseriesImpl.setShortDesc(lectureseries.getShortDesc());
-		lectureseriesImpl.setYearId(lectureseries.getYearId());
+		lectureseriesImpl.setTermId(lectureseries.getTermId());
 		lectureseriesImpl.setLanguage(lectureseries.getLanguage());
 		lectureseriesImpl.setFacultyName(lectureseries.getFacultyName());
-		lectureseriesImpl.setInstructorsString(lectureseries.getInstructorsString());
 		lectureseriesImpl.setLectureseriesId(lectureseries.getLectureseriesId());
 		lectureseriesImpl.setPassword(lectureseries.getPassword());
 		lectureseriesImpl.setApproved(lectureseries.getApproved());

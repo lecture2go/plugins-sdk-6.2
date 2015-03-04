@@ -90,19 +90,18 @@ public interface LectureseriesModel extends BaseModel<Lectureseries> {
 	public void setEventType(String eventType);
 
 	/**
-	 * Returns the event category of this lectureseries.
+	 * Returns the category ID of this lectureseries.
 	 *
-	 * @return the event category of this lectureseries
+	 * @return the category ID of this lectureseries
 	 */
-	@AutoEscape
-	public String getEventCategory();
+	public long getCategoryId();
 
 	/**
-	 * Sets the event category of this lectureseries.
+	 * Sets the category ID of this lectureseries.
 	 *
-	 * @param eventCategory the event category of this lectureseries
+	 * @param categoryId the category ID of this lectureseries
 	 */
-	public void setEventCategory(String eventCategory);
+	public void setCategoryId(long categoryId);
 
 	/**
 	 * Returns the name of this lectureseries.
@@ -135,18 +134,18 @@ public interface LectureseriesModel extends BaseModel<Lectureseries> {
 	public void setShortDesc(String shortDesc);
 
 	/**
-	 * Returns the year ID of this lectureseries.
+	 * Returns the term ID of this lectureseries.
 	 *
-	 * @return the year ID of this lectureseries
+	 * @return the term ID of this lectureseries
 	 */
-	public long getYearId();
+	public long getTermId();
 
 	/**
-	 * Sets the year ID of this lectureseries.
+	 * Sets the term ID of this lectureseries.
 	 *
-	 * @param yearId the year ID of this lectureseries
+	 * @param termId the term ID of this lectureseries
 	 */
-	public void setYearId(long yearId);
+	public void setTermId(long termId);
 
 	/**
 	 * Returns the language of this lectureseries.
@@ -177,21 +176,6 @@ public interface LectureseriesModel extends BaseModel<Lectureseries> {
 	 * @param facultyName the faculty name of this lectureseries
 	 */
 	public void setFacultyName(String facultyName);
-
-	/**
-	 * Returns the instructors string of this lectureseries.
-	 *
-	 * @return the instructors string of this lectureseries
-	 */
-	@AutoEscape
-	public String getInstructorsString();
-
-	/**
-	 * Sets the instructors string of this lectureseries.
-	 *
-	 * @param instructorsString the instructors string of this lectureseries
-	 */
-	public void setInstructorsString(String instructorsString);
 
 	/**
 	 * Returns the lectureseries ID of this lectureseries.

@@ -21,9 +21,8 @@
 		lNumber=reqLectureseries.getNumber();
 		lLanguage=reqLectureseries.getLanguage();
 		categoryId=reqLectureseries.getCategoryId();
-		lSemester=reqLectureseries.getYearId();
+		lSemester=reqLectureseries.getTermId();
 		lShortDesc=reqLectureseries.getShortDesc();
-		lInstructors=reqLectureseries.getInstructorsString();
 		lPassword=reqLectureseries.getPassword();
 		lLongDesc=reqLectureseries.getLongDesc();
 	}catch(NullPointerException npe){}
@@ -57,11 +56,11 @@
 		pIds = ProducerLocalServiceUtil.getAllProducerIds(lId);
 	}catch (NullPointerException e){}
 	
-	List<Year> semesters = new ArrayList<Year>(); 
+	List<Term> semesters = new ArrayList<Term>(); 
 	try{
-		semesters = YearLocalServiceUtil.getAllSemesters(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+		semesters = TermLocalServiceUtil.getAllSemesters(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 	}catch(Exception e){}
-	
+	 
 	List<Category> categories = new ArrayList<Category>();
 	try{
 		categories = CategoryLocalServiceUtil.getAllCategories(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
@@ -176,16 +175,14 @@
 			<aui:select id="allSemesters" size="1" name="semesterId" label="semester">
 				<aui:option value="">select-semester</aui:option>
 				<%for (int i = 0; i < semesters.size(); i++) {
-					if (lSemester==semesters.get(i).getYearId()) {%>
-						<aui:option value='<%=semesters.get(i).getYearId()%>' selected="true"><%=semesters.get(i).getPrefix()+"&nbsp;"+semesters.get(i).getName()%></aui:option>
+					if (lSemester==semesters.get(i).getTermId()) {%>
+						<aui:option value='<%=semesters.get(i).getTermId()%>' selected="true"><%=semesters.get(i).getPrefix()+"&nbsp;"+semesters.get(i).getYear()%></aui:option>
 					<%} else {%>
-						<aui:option value='<%=semesters.get(i).getYearId()%>'><%=semesters.get(i).getPrefix()+"&nbsp;"+semesters.get(i).getName()%></aui:option>
+						<aui:option value='<%=semesters.get(i).getTermId()%>'><%=semesters.get(i).getPrefix()+"&nbsp;"+semesters.get(i).getYear()%></aui:option>
 					<%}
 				}%>
 			</aui:select>
-				
-			<aui:input name="instructorsString" label="instructors" value="<%=lInstructors%>"/>
-			
+
 			<aui:input name="password" label="password" value="<%=lPassword%>"/>
 			
 			<aui:field-wrapper label="description">

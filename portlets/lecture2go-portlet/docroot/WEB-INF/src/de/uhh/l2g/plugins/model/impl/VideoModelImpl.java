@@ -80,9 +80,10 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 			{ "permittedToSegment", Types.INTEGER },
 			{ "rootInstitutionId", Types.BIGINT },
 			{ "citation2go", Types.INTEGER },
-			{ "yearId", Types.BIGINT }
+			{ "termId", Types.BIGINT },
+			{ "videoCreatorId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Video (videoId LONG not null primary key,title VARCHAR(75) null,tags VARCHAR(75) null,lectureseriesId LONG,producerId LONG,containerFormat VARCHAR(75) null,filename VARCHAR(75) null,resolution VARCHAR(75) null,duration VARCHAR(75) null,hostId LONG,fileSize VARCHAR(75) null,generationDate VARCHAR(75) null,openAccess INTEGER,downloadLink INTEGER,metadataId LONG,surl VARCHAR(75) null,hits LONG,uploadDate DATE null,permittedToSegment INTEGER,rootInstitutionId LONG,citation2go INTEGER,yearId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Video (videoId LONG not null primary key,title VARCHAR(75) null,tags VARCHAR(75) null,lectureseriesId LONG,producerId LONG,containerFormat VARCHAR(75) null,filename VARCHAR(75) null,resolution VARCHAR(75) null,duration VARCHAR(75) null,hostId LONG,fileSize VARCHAR(75) null,generationDate VARCHAR(75) null,openAccess INTEGER,downloadLink INTEGER,metadataId LONG,surl VARCHAR(75) null,hits LONG,uploadDate DATE null,permittedToSegment INTEGER,rootInstitutionId LONG,citation2go INTEGER,termId LONG,videoCreatorId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Video";
 	public static final String ORDER_BY_JPQL = " ORDER BY video.videoId DESC, video.uploadDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Video.videoId DESC, LG_Video.uploadDate DESC";
@@ -167,7 +168,8 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		attributes.put("permittedToSegment", getPermittedToSegment());
 		attributes.put("rootInstitutionId", getRootInstitutionId());
 		attributes.put("citation2go", getCitation2go());
-		attributes.put("yearId", getYearId());
+		attributes.put("termId", getTermId());
+		attributes.put("videoCreatorId", getVideoCreatorId());
 
 		return attributes;
 	}
@@ -301,10 +303,16 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 			setCitation2go(citation2go);
 		}
 
-		Long yearId = (Long)attributes.get("yearId");
+		Long termId = (Long)attributes.get("termId");
 
-		if (yearId != null) {
-			setYearId(yearId);
+		if (termId != null) {
+			setTermId(termId);
+		}
+
+		Long videoCreatorId = (Long)attributes.get("videoCreatorId");
+
+		if (videoCreatorId != null) {
+			setVideoCreatorId(videoCreatorId);
 		}
 	}
 
@@ -646,13 +654,23 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	}
 
 	@Override
-	public long getYearId() {
-		return _yearId;
+	public long getTermId() {
+		return _termId;
 	}
 
 	@Override
-	public void setYearId(long yearId) {
-		_yearId = yearId;
+	public void setTermId(long termId) {
+		_termId = termId;
+	}
+
+	@Override
+	public long getVideoCreatorId() {
+		return _videoCreatorId;
+	}
+
+	@Override
+	public void setVideoCreatorId(long videoCreatorId) {
+		_videoCreatorId = videoCreatorId;
 	}
 
 	public long getColumnBitmask() {
@@ -707,7 +725,8 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		videoImpl.setPermittedToSegment(getPermittedToSegment());
 		videoImpl.setRootInstitutionId(getRootInstitutionId());
 		videoImpl.setCitation2go(getCitation2go());
-		videoImpl.setYearId(getYearId());
+		videoImpl.setTermId(getTermId());
+		videoImpl.setVideoCreatorId(getVideoCreatorId());
 
 		videoImpl.resetOriginalValues();
 
@@ -910,14 +929,16 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 
 		videoCacheModel.citation2go = getCitation2go();
 
-		videoCacheModel.yearId = getYearId();
+		videoCacheModel.termId = getTermId();
+
+		videoCacheModel.videoCreatorId = getVideoCreatorId();
 
 		return videoCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(47);
 
 		sb.append("{videoId=");
 		sb.append(getVideoId());
@@ -961,8 +982,10 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		sb.append(getRootInstitutionId());
 		sb.append(", citation2go=");
 		sb.append(getCitation2go());
-		sb.append(", yearId=");
-		sb.append(getYearId());
+		sb.append(", termId=");
+		sb.append(getTermId());
+		sb.append(", videoCreatorId=");
+		sb.append(getVideoCreatorId());
 		sb.append("}");
 
 		return sb.toString();
@@ -970,7 +993,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(70);
+		StringBundler sb = new StringBundler(73);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Video");
@@ -1061,8 +1084,12 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		sb.append(getCitation2go());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>yearId</column-name><column-value><![CDATA[");
-		sb.append(getYearId());
+			"<column><column-name>termId</column-name><column-value><![CDATA[");
+		sb.append(getTermId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>videoCreatorId</column-name><column-value><![CDATA[");
+		sb.append(getVideoCreatorId());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -1105,7 +1132,8 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	private long _originalRootInstitutionId;
 	private boolean _setOriginalRootInstitutionId;
 	private int _citation2go;
-	private long _yearId;
+	private long _termId;
+	private long _videoCreatorId;
 	private long _columnBitmask;
 	private Video _escapedModel;
 }

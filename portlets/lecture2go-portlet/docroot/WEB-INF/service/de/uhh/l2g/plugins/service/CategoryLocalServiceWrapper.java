@@ -282,6 +282,13 @@ public class CategoryLocalServiceWrapper implements CategoryLocalService,
 			arguments);
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Category> getAllCategories(
+		int begin, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _categoryLocalService.getAllCategories(begin, end);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

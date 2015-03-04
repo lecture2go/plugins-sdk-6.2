@@ -17,7 +17,6 @@ package de.uhh.l2g.plugins.model;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,25 +49,12 @@ public class MetadataWrapper implements Metadata, ModelWrapper<Metadata> {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("metadataId", getMetadataId());
-		attributes.put("URLID", getURLID());
-		attributes.put("format", getFormat());
 		attributes.put("type", getType());
 		attributes.put("language", getLanguage());
 		attributes.put("title", getTitle());
 		attributes.put("subject", getSubject());
-		attributes.put("coverage", getCoverage());
 		attributes.put("description", getDescription());
-		attributes.put("creator", getCreator());
 		attributes.put("publisher", getPublisher());
-		attributes.put("contributor", getContributor());
-		attributes.put("rightsHolder", getRightsHolder());
-		attributes.put("rights", getRights());
-		attributes.put("provenance", getProvenance());
-		attributes.put("source", getSource());
-		attributes.put("relation", getRelation());
-		attributes.put("audience", getAudience());
-		attributes.put("instructionalMethods", getInstructionalMethods());
-		attributes.put("date", getDate());
 
 		return attributes;
 	}
@@ -79,18 +65,6 @@ public class MetadataWrapper implements Metadata, ModelWrapper<Metadata> {
 
 		if (metadataId != null) {
 			setMetadataId(metadataId);
-		}
-
-		String URLID = (String)attributes.get("URLID");
-
-		if (URLID != null) {
-			setURLID(URLID);
-		}
-
-		String format = (String)attributes.get("format");
-
-		if (format != null) {
-			setFormat(format);
 		}
 
 		String type = (String)attributes.get("type");
@@ -117,83 +91,16 @@ public class MetadataWrapper implements Metadata, ModelWrapper<Metadata> {
 			setSubject(subject);
 		}
 
-		String coverage = (String)attributes.get("coverage");
-
-		if (coverage != null) {
-			setCoverage(coverage);
-		}
-
 		String description = (String)attributes.get("description");
 
 		if (description != null) {
 			setDescription(description);
 		}
 
-		String creator = (String)attributes.get("creator");
-
-		if (creator != null) {
-			setCreator(creator);
-		}
-
 		String publisher = (String)attributes.get("publisher");
 
 		if (publisher != null) {
 			setPublisher(publisher);
-		}
-
-		String contributor = (String)attributes.get("contributor");
-
-		if (contributor != null) {
-			setContributor(contributor);
-		}
-
-		String rightsHolder = (String)attributes.get("rightsHolder");
-
-		if (rightsHolder != null) {
-			setRightsHolder(rightsHolder);
-		}
-
-		String rights = (String)attributes.get("rights");
-
-		if (rights != null) {
-			setRights(rights);
-		}
-
-		String provenance = (String)attributes.get("provenance");
-
-		if (provenance != null) {
-			setProvenance(provenance);
-		}
-
-		String source = (String)attributes.get("source");
-
-		if (source != null) {
-			setSource(source);
-		}
-
-		String relation = (String)attributes.get("relation");
-
-		if (relation != null) {
-			setRelation(relation);
-		}
-
-		String audience = (String)attributes.get("audience");
-
-		if (audience != null) {
-			setAudience(audience);
-		}
-
-		String instructionalMethods = (String)attributes.get(
-				"instructionalMethods");
-
-		if (instructionalMethods != null) {
-			setInstructionalMethods(instructionalMethods);
-		}
-
-		Date date = (Date)attributes.get("date");
-
-		if (date != null) {
-			setDate(date);
 		}
 	}
 
@@ -235,46 +142,6 @@ public class MetadataWrapper implements Metadata, ModelWrapper<Metadata> {
 	@Override
 	public void setMetadataId(long metadataId) {
 		_metadata.setMetadataId(metadataId);
-	}
-
-	/**
-	* Returns the u r l i d of this metadata.
-	*
-	* @return the u r l i d of this metadata
-	*/
-	@Override
-	public java.lang.String getURLID() {
-		return _metadata.getURLID();
-	}
-
-	/**
-	* Sets the u r l i d of this metadata.
-	*
-	* @param URLID the u r l i d of this metadata
-	*/
-	@Override
-	public void setURLID(java.lang.String URLID) {
-		_metadata.setURLID(URLID);
-	}
-
-	/**
-	* Returns the format of this metadata.
-	*
-	* @return the format of this metadata
-	*/
-	@Override
-	public java.lang.String getFormat() {
-		return _metadata.getFormat();
-	}
-
-	/**
-	* Sets the format of this metadata.
-	*
-	* @param format the format of this metadata
-	*/
-	@Override
-	public void setFormat(java.lang.String format) {
-		_metadata.setFormat(format);
 	}
 
 	/**
@@ -358,26 +225,6 @@ public class MetadataWrapper implements Metadata, ModelWrapper<Metadata> {
 	}
 
 	/**
-	* Returns the coverage of this metadata.
-	*
-	* @return the coverage of this metadata
-	*/
-	@Override
-	public java.lang.String getCoverage() {
-		return _metadata.getCoverage();
-	}
-
-	/**
-	* Sets the coverage of this metadata.
-	*
-	* @param coverage the coverage of this metadata
-	*/
-	@Override
-	public void setCoverage(java.lang.String coverage) {
-		_metadata.setCoverage(coverage);
-	}
-
-	/**
 	* Returns the description of this metadata.
 	*
 	* @return the description of this metadata
@@ -398,26 +245,6 @@ public class MetadataWrapper implements Metadata, ModelWrapper<Metadata> {
 	}
 
 	/**
-	* Returns the creator of this metadata.
-	*
-	* @return the creator of this metadata
-	*/
-	@Override
-	public java.lang.String getCreator() {
-		return _metadata.getCreator();
-	}
-
-	/**
-	* Sets the creator of this metadata.
-	*
-	* @param creator the creator of this metadata
-	*/
-	@Override
-	public void setCreator(java.lang.String creator) {
-		_metadata.setCreator(creator);
-	}
-
-	/**
 	* Returns the publisher of this metadata.
 	*
 	* @return the publisher of this metadata
@@ -435,186 +262,6 @@ public class MetadataWrapper implements Metadata, ModelWrapper<Metadata> {
 	@Override
 	public void setPublisher(java.lang.String publisher) {
 		_metadata.setPublisher(publisher);
-	}
-
-	/**
-	* Returns the contributor of this metadata.
-	*
-	* @return the contributor of this metadata
-	*/
-	@Override
-	public java.lang.String getContributor() {
-		return _metadata.getContributor();
-	}
-
-	/**
-	* Sets the contributor of this metadata.
-	*
-	* @param contributor the contributor of this metadata
-	*/
-	@Override
-	public void setContributor(java.lang.String contributor) {
-		_metadata.setContributor(contributor);
-	}
-
-	/**
-	* Returns the rights holder of this metadata.
-	*
-	* @return the rights holder of this metadata
-	*/
-	@Override
-	public java.lang.String getRightsHolder() {
-		return _metadata.getRightsHolder();
-	}
-
-	/**
-	* Sets the rights holder of this metadata.
-	*
-	* @param rightsHolder the rights holder of this metadata
-	*/
-	@Override
-	public void setRightsHolder(java.lang.String rightsHolder) {
-		_metadata.setRightsHolder(rightsHolder);
-	}
-
-	/**
-	* Returns the rights of this metadata.
-	*
-	* @return the rights of this metadata
-	*/
-	@Override
-	public java.lang.String getRights() {
-		return _metadata.getRights();
-	}
-
-	/**
-	* Sets the rights of this metadata.
-	*
-	* @param rights the rights of this metadata
-	*/
-	@Override
-	public void setRights(java.lang.String rights) {
-		_metadata.setRights(rights);
-	}
-
-	/**
-	* Returns the provenance of this metadata.
-	*
-	* @return the provenance of this metadata
-	*/
-	@Override
-	public java.lang.String getProvenance() {
-		return _metadata.getProvenance();
-	}
-
-	/**
-	* Sets the provenance of this metadata.
-	*
-	* @param provenance the provenance of this metadata
-	*/
-	@Override
-	public void setProvenance(java.lang.String provenance) {
-		_metadata.setProvenance(provenance);
-	}
-
-	/**
-	* Returns the source of this metadata.
-	*
-	* @return the source of this metadata
-	*/
-	@Override
-	public java.lang.String getSource() {
-		return _metadata.getSource();
-	}
-
-	/**
-	* Sets the source of this metadata.
-	*
-	* @param source the source of this metadata
-	*/
-	@Override
-	public void setSource(java.lang.String source) {
-		_metadata.setSource(source);
-	}
-
-	/**
-	* Returns the relation of this metadata.
-	*
-	* @return the relation of this metadata
-	*/
-	@Override
-	public java.lang.String getRelation() {
-		return _metadata.getRelation();
-	}
-
-	/**
-	* Sets the relation of this metadata.
-	*
-	* @param relation the relation of this metadata
-	*/
-	@Override
-	public void setRelation(java.lang.String relation) {
-		_metadata.setRelation(relation);
-	}
-
-	/**
-	* Returns the audience of this metadata.
-	*
-	* @return the audience of this metadata
-	*/
-	@Override
-	public java.lang.String getAudience() {
-		return _metadata.getAudience();
-	}
-
-	/**
-	* Sets the audience of this metadata.
-	*
-	* @param audience the audience of this metadata
-	*/
-	@Override
-	public void setAudience(java.lang.String audience) {
-		_metadata.setAudience(audience);
-	}
-
-	/**
-	* Returns the instructional methods of this metadata.
-	*
-	* @return the instructional methods of this metadata
-	*/
-	@Override
-	public java.lang.String getInstructionalMethods() {
-		return _metadata.getInstructionalMethods();
-	}
-
-	/**
-	* Sets the instructional methods of this metadata.
-	*
-	* @param instructionalMethods the instructional methods of this metadata
-	*/
-	@Override
-	public void setInstructionalMethods(java.lang.String instructionalMethods) {
-		_metadata.setInstructionalMethods(instructionalMethods);
-	}
-
-	/**
-	* Returns the date of this metadata.
-	*
-	* @return the date of this metadata
-	*/
-	@Override
-	public java.util.Date getDate() {
-		return _metadata.getDate();
-	}
-
-	/**
-	* Sets the date of this metadata.
-	*
-	* @param date the date of this metadata
-	*/
-	@Override
-	public void setDate(java.util.Date date) {
-		_metadata.setDate(date);
 	}
 
 	@Override
