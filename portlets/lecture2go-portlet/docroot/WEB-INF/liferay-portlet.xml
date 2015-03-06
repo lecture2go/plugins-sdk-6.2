@@ -6,9 +6,7 @@
 		<portlet-name>lg-admin-video-management</portlet-name>
 		<instanceable>false</instanceable>
 		<private-request-attributes>false</private-request-attributes>
-		
-		<header-portlet-css>/css/main.css</header-portlet-css>	
-		
+
 		<header-portlet-javascript>/js/jquery-1.11.1.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/jquery.tmpl.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/jquery-ui-1.10.3.custom.min.js</header-portlet-javascript>
@@ -23,22 +21,15 @@
 		<header-portlet-javascript>/js/upload/vendor/jquery.ui.widget.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/upload/jquery.fileupload.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/upload/jquery.iframe-transport.js</header-portlet-javascript>
-
 	</portlet>
-	<role-mapper>
-		<role-name>administrator</role-name>
-		<role-link>Administrator</role-link>
-	</role-mapper>
-	<role-mapper>
-		<role-name>guest</role-name>
-		<role-link>Guest</role-link>
-	</role-mapper>
-	<role-mapper>
-		<role-name>power-user</role-name>
-		<role-link>Power User</role-link>
-	</role-mapper>
-	<role-mapper>
-		<role-name>user</role-name>
-		<role-link>User</role-link>
-	</role-mapper>
+	
+	<portlet>
+		<portlet-name>lg-admin-lecture-series-management</portlet-name>
+		<instanceable>false</instanceable>
+		<private-request-attributes>false</private-request-attributes>
+
+		<header-portlet-javascript>/js/jquery-1.11.1.min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/jquery.tmpl.min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/jquery-ui-1.10.3.custom.min.js</header-portlet-javascript>
+	</portlet>
 </liferay-portlet-app>

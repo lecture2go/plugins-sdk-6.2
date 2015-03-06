@@ -402,6 +402,7 @@ function deleteFile(fileName){
 <script type="text/javascript">
     $(function () {
         var vars = <%=VideoLocalServiceUtil.getJSONVideo(reqVideo.getVideoId()).toString()%>;
+        console.log(vars);
         $.template( "filesTemplate", $("#template") );
         $.tmpl( "filesTemplate", vars ).appendTo( ".table" );
     });

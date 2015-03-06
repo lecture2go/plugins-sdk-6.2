@@ -183,6 +183,10 @@
 				}%>
 			</aui:select>
 
+			<div id="creator"></div>
+			<br/>
+			<aui:button value="add-new-creator" id="addCreator"/>
+
 			<aui:input name="password" label="password" value="<%=lPassword%>"/>
 			
 			<aui:field-wrapper label="description">
@@ -200,7 +204,47 @@
 	</aui:fieldset>
 </aui:form>
 
+<!-- Template -->
+<script type="text/x-jquery-tmpl" id="creat">
+	<div id="creator<%="${counter}"%>">
+	<aui:select size="1" name="creatorTitles" label="">
+		<aui:option value=""></aui:option>
+		<%
+		String[] l =  LanguageUtil.get(pageContext, "creator-titles").split(",");
+		for(int i=0; i<l.length; i++){
+			String title = l[i];
+			%><aui:option value="<%=title%>"><%=title%></aui:option><%
+		}
+		%>
+	</aui:select>
+	<aui:input name="firstName" type="text"/>
+	<aui:input name="lastName" type="text"/>
+	<aui:input name="middleName" type="text"/>
+	<a class="icon-large icon-remove" onclick="remb('<%="${counter}"%>');"></a>
+	<br/><br/>
+</script>
+
 <script>
+$(function () {appendCreator(c);});
+
+function appendCreator(c){
+	$(function () {
+    	var vars = {'counter':c};
+    	console.log(vars);
+    	$.template( "filesTemplate", $("#creat") );
+    	$.tmpl( "filesTemplate", vars ).appendTo( "#creator" );
+	});
+};
+
+var c = 0;
+$( "#addCreator" ).on( "click", function() {
+	c++;
+	appendCreator(c);
+});
+
+function remb(c){
+	$("#creator"+c).remove();
+}
 
 AUI().use('aui-node',
   
@@ -210,7 +254,6 @@ function(A) {
     var contFacil = A.one('.facilCont');
     var producerId = A.one('#<portlet:namespace/>producerId');
     var institutionId = A.one('#<portlet:namespace/>institutionId');
-    var addSemester = A.one('#<portlet:namespace/>addSemester');
     var newSemester = A.one('#<portlet:namespace/>newSemester');
     var allSemesters = A.one('#<portlet:namespace/>allSemesters');
     
