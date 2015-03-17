@@ -477,6 +477,17 @@
     <entity name="Video_Creator" local-service="true" remote-service="false">
         <column name="videoCreatorId" type="long" primary="true" id-type="increment"></column>
         <column name="creatorId" type="long"></column>
+        <column name="videoId" type="long"></column>
+        <finder name="Video" return-type="Collection">
+            <finder-column name="videoId"></finder-column>
+        </finder>
+        <finder name="Creator" return-type="Collection">
+            <finder-column name="creatorId"></finder-column>
+        </finder>
+        <finder name="VideoCreator" return-type="Collection">
+            <finder-column name="videoId"></finder-column>
+            <finder-column name="creatorId"></finder-column>
+        </finder>
     </entity>
     <exceptions>
         <exception>HostName</exception>

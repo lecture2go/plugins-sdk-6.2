@@ -35,12 +35,14 @@ public class Video_CreatorCacheModel implements CacheModel<Video_Creator>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(7);
 
 		sb.append("{videoCreatorId=");
 		sb.append(videoCreatorId);
 		sb.append(", creatorId=");
 		sb.append(creatorId);
+		sb.append(", videoId=");
+		sb.append(videoId);
 		sb.append("}");
 
 		return sb.toString();
@@ -52,6 +54,7 @@ public class Video_CreatorCacheModel implements CacheModel<Video_Creator>,
 
 		video_CreatorImpl.setVideoCreatorId(videoCreatorId);
 		video_CreatorImpl.setCreatorId(creatorId);
+		video_CreatorImpl.setVideoId(videoId);
 
 		video_CreatorImpl.resetOriginalValues();
 
@@ -62,6 +65,7 @@ public class Video_CreatorCacheModel implements CacheModel<Video_Creator>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		videoCreatorId = objectInput.readLong();
 		creatorId = objectInput.readLong();
+		videoId = objectInput.readLong();
 	}
 
 	@Override
@@ -69,8 +73,10 @@ public class Video_CreatorCacheModel implements CacheModel<Video_Creator>,
 		throws IOException {
 		objectOutput.writeLong(videoCreatorId);
 		objectOutput.writeLong(creatorId);
+		objectOutput.writeLong(videoId);
 	}
 
 	public long videoCreatorId;
 	public long creatorId;
+	public long videoId;
 }

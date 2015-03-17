@@ -242,7 +242,8 @@ create table LG_Video_Category (
 
 create table LG_Video_Creator (
 	videoCreatorId LONG not null primary key,
-	creatorId LONG
+	creatorId LONG,
+	videoId LONG
 );
 
 create table LG_Video_Institution (

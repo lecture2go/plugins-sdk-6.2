@@ -319,6 +319,7 @@
 		<attributes>
 			<id name="videoCreatorId" />
 			<basic name="creatorId" />
+			<basic name="videoId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

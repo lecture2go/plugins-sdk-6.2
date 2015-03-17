@@ -281,14 +281,26 @@ public class CreatorLocalServiceWrapper implements CreatorLocalService,
 	}
 
 	@Override
-	public java.util.List<de.uhh.l2g.plugins.model.Creator> getCreatorsByLectureseries(
+	public java.util.List<de.uhh.l2g.plugins.model.Creator> getCreatorsByLectureseriesId(
 		java.lang.Long lectureseriesId) {
-		return _creatorLocalService.getCreatorsByLectureseries(lectureseriesId);
+		return _creatorLocalService.getCreatorsByLectureseriesId(lectureseriesId);
 	}
 
 	@Override
-	public org.json.JSONArray getJSONCreators(java.lang.Long lectureseriesId) {
-		return _creatorLocalService.getJSONCreators(lectureseriesId);
+	public java.util.List<de.uhh.l2g.plugins.model.Creator> getCreatorsByVideoId(
+		java.lang.Long videoId) {
+		return _creatorLocalService.getCreatorsByVideoId(videoId);
+	}
+
+	@Override
+	public org.json.JSONArray getJSONCreatorsByVideoId(java.lang.Long videoId) {
+		return _creatorLocalService.getJSONCreatorsByVideoId(videoId);
+	}
+
+	@Override
+	public org.json.JSONArray getJSONCreatorsByLectureseriesId(
+		java.lang.Long lectureseriesId) {
+		return _creatorLocalService.getJSONCreatorsByLectureseriesId(lectureseriesId);
 	}
 
 	@Override

@@ -257,7 +257,7 @@
 		<%
 			String vars ="";
 			try{
-				vars = CreatorLocalServiceUtil.getJSONCreators(reqLectureseries.getLectureseriesId()).toString();
+				vars = CreatorLocalServiceUtil.getJSONCreatorsByLectureseriesId(reqLectureseries.getLectureseriesId()).toString();
 			}catch(Exception e){}
 		%>
 		

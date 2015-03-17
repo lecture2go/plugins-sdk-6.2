@@ -44,6 +44,7 @@ import de.uhh.l2g.plugins.model.impl.SegmentImpl;
 import de.uhh.l2g.plugins.model.impl.VideoImpl;
 import de.uhh.l2g.plugins.model.impl.Video_InstitutionImpl;
 import de.uhh.l2g.plugins.model.impl.Video_LectureseriesImpl;
+import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Lectureseries_InstitutionLocalService;
 import de.uhh.l2g.plugins.service.Lectureseries_InstitutionLocalServiceUtil;
@@ -591,6 +592,25 @@ public class AdminVideoManagement extends MVCPortlet {
 					}
 			}
 			writeJSON(resourceRequest, resourceResponse, jarr);
+		}
+		
+		if(resourceID.equals("getJSONCreator")){
+			String creatorId = ParamUtil.getString(resourceRequest, "creatorId");
+			Long cId = new Long(0);
+			try{
+				cId = new Long(creatorId);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			JSONArray json = new JSONArray();
+			try {
+				json = CreatorLocalServiceUtil.getJSONCreator(cId);
+			} catch (PortalException e) {
+				e.printStackTrace();
+			} catch (SystemException e) {
+				e.printStackTrace();
+			}
+			writeJSON(resourceRequest, resourceResponse, json);			
 		}
 		
 	}

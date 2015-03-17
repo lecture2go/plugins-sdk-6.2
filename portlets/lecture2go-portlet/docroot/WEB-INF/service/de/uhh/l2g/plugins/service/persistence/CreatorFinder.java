@@ -20,4 +20,7 @@ package de.uhh.l2g.plugins.service.persistence;
 public interface CreatorFinder {
 	public java.util.List<de.uhh.l2g.plugins.model.Creator> findCreatorsByLectureseries(
 		long lectureseriesId);
+
+	public java.util.List<de.uhh.l2g.plugins.model.Creator> findCreatorsByVideo(
+		long videoId);
 }

@@ -49,13 +49,41 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.CreatorLocalServiceUtil} to access the creator local service.
 	 */
 
-	public List<Creator> getCreatorsByLectureseries(Long lectureseriesId){
+	public List<Creator> getCreatorsByLectureseriesId(Long lectureseriesId){
 		List<Creator> cl = CreatorFinderUtil.findCreatorsByLectureseries(lectureseriesId);
 		return cl;
 	}
 	
-	public JSONArray getJSONCreators(Long lectureseriesId){
-		List<Creator> cl = getCreatorsByLectureseries(lectureseriesId);
+	public List<Creator> getCreatorsByVideoId(Long videoId){
+		List<Creator> cl = CreatorFinderUtil.findCreatorsByVideo(videoId);
+		return cl;
+	}
+	
+	public JSONArray getJSONCreatorsByVideoId(Long videoId){
+		List<Creator> cl = getCreatorsByVideoId(videoId);
+		ListIterator<Creator> i = cl.listIterator();
+		JSONArray json = new JSONArray();
+		while(i.hasNext()){
+			Creator cr = i.next();
+			JSONObject c = new JSONObject();
+			try {
+				c.put("creatorId", cr.getCreatorId());
+				c.put("firstName", cr.getFirstName());
+				c.put("lastName", cr.getLastName());
+				c.put("middleName", cr.getMiddleName());
+				c.put("jobTitle", cr.getJobTitle());
+				c.put("gender", cr.getGender());
+				c.put("fullName", cr.getFullName());
+				json.put(c);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return json;
+	}
+	
+	public JSONArray getJSONCreatorsByLectureseriesId(Long lectureseriesId){
+		List<Creator> cl = getCreatorsByLectureseriesId(lectureseriesId);
 		ListIterator<Creator> i = cl.listIterator();
 		JSONArray json = new JSONArray();
 		while(i.hasNext()){

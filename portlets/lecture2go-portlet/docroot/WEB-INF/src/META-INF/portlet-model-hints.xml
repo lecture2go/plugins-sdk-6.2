@@ -186,6 +186,7 @@
 	<model name="de.uhh.l2g.plugins.model.Video_Creator">
 		<field name="videoCreatorId" type="long" />
 		<field name="creatorId" type="long" />
+		<field name="videoId" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Video_Institution">
 		<field name="videoInstitutionId" type="long" />

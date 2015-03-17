@@ -271,14 +271,24 @@ public class CreatorLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.Creator> getCreatorsByLectureseries(
+	public static java.util.List<de.uhh.l2g.plugins.model.Creator> getCreatorsByLectureseriesId(
 		java.lang.Long lectureseriesId) {
-		return getService().getCreatorsByLectureseries(lectureseriesId);
+		return getService().getCreatorsByLectureseriesId(lectureseriesId);
 	}
 
-	public static org.json.JSONArray getJSONCreators(
+	public static java.util.List<de.uhh.l2g.plugins.model.Creator> getCreatorsByVideoId(
+		java.lang.Long videoId) {
+		return getService().getCreatorsByVideoId(videoId);
+	}
+
+	public static org.json.JSONArray getJSONCreatorsByVideoId(
+		java.lang.Long videoId) {
+		return getService().getJSONCreatorsByVideoId(videoId);
+	}
+
+	public static org.json.JSONArray getJSONCreatorsByLectureseriesId(
 		java.lang.Long lectureseriesId) {
-		return getService().getJSONCreators(lectureseriesId);
+		return getService().getJSONCreatorsByLectureseriesId(lectureseriesId);
 	}
 
 	public static org.json.JSONArray getJSONCreator(java.lang.Long creatorId)

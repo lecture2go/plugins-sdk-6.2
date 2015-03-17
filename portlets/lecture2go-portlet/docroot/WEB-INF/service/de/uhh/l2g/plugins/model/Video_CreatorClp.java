@@ -75,6 +75,7 @@ public class Video_CreatorClp extends BaseModelImpl<Video_Creator>
 
 		attributes.put("videoCreatorId", getVideoCreatorId());
 		attributes.put("creatorId", getCreatorId());
+		attributes.put("videoId", getVideoId());
 
 		return attributes;
 	}
@@ -91,6 +92,12 @@ public class Video_CreatorClp extends BaseModelImpl<Video_Creator>
 
 		if (creatorId != null) {
 			setCreatorId(creatorId);
+		}
+
+		Long videoId = (Long)attributes.get("videoId");
+
+		if (videoId != null) {
+			setVideoId(videoId);
 		}
 	}
 
@@ -133,6 +140,29 @@ public class Video_CreatorClp extends BaseModelImpl<Video_Creator>
 				Method method = clazz.getMethod("setCreatorId", long.class);
 
 				method.invoke(_video_CreatorRemoteModel, creatorId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public long getVideoId() {
+		return _videoId;
+	}
+
+	@Override
+	public void setVideoId(long videoId) {
+		_videoId = videoId;
+
+		if (_video_CreatorRemoteModel != null) {
+			try {
+				Class<?> clazz = _video_CreatorRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setVideoId", long.class);
+
+				method.invoke(_video_CreatorRemoteModel, videoId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -212,6 +242,7 @@ public class Video_CreatorClp extends BaseModelImpl<Video_Creator>
 
 		clone.setVideoCreatorId(getVideoCreatorId());
 		clone.setCreatorId(getCreatorId());
+		clone.setVideoId(getVideoId());
 
 		return clone;
 	}
@@ -264,12 +295,14 @@ public class Video_CreatorClp extends BaseModelImpl<Video_Creator>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(7);
 
 		sb.append("{videoCreatorId=");
 		sb.append(getVideoCreatorId());
 		sb.append(", creatorId=");
 		sb.append(getCreatorId());
+		sb.append(", videoId=");
+		sb.append(getVideoId());
 		sb.append("}");
 
 		return sb.toString();
@@ -277,7 +310,7 @@ public class Video_CreatorClp extends BaseModelImpl<Video_Creator>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(10);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Video_Creator");
@@ -291,6 +324,10 @@ public class Video_CreatorClp extends BaseModelImpl<Video_Creator>
 			"<column><column-name>creatorId</column-name><column-value><![CDATA[");
 		sb.append(getCreatorId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>videoId</column-name><column-value><![CDATA[");
+		sb.append(getVideoId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -299,6 +336,7 @@ public class Video_CreatorClp extends BaseModelImpl<Video_Creator>
 
 	private long _videoCreatorId;
 	private long _creatorId;
+	private long _videoId;
 	private BaseModel<?> _video_CreatorRemoteModel;
 	private Class<?> _clpSerializerClass = de.uhh.l2g.plugins.service.ClpSerializer.class;
 }

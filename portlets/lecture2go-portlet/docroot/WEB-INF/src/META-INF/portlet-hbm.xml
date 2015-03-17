@@ -282,6 +282,7 @@
 			<generator class="increment" />
 		</id>
 		<property name="creatorId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="videoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.Video_InstitutionImpl" table="LG_Video_Institution">
 		<cache usage="read-write" />

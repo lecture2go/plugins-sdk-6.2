@@ -31,6 +31,7 @@ public class Video_CreatorSoap implements Serializable {
 
 		soapModel.setVideoCreatorId(model.getVideoCreatorId());
 		soapModel.setCreatorId(model.getCreatorId());
+		soapModel.setVideoId(model.getVideoId());
 
 		return soapModel;
 	}
@@ -99,6 +100,15 @@ public class Video_CreatorSoap implements Serializable {
 		_creatorId = creatorId;
 	}
 
+	public long getVideoId() {
+		return _videoId;
+	}
+
+	public void setVideoId(long videoId) {
+		_videoId = videoId;
+	}
+
 	private long _videoCreatorId;
 	private long _creatorId;
+	private long _videoId;
 }

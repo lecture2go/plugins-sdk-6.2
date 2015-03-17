@@ -58,9 +58,10 @@ public class Video_CreatorModelImpl extends BaseModelImpl<Video_Creator>
 	public static final String TABLE_NAME = "LG_Video_Creator";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "videoCreatorId", Types.BIGINT },
-			{ "creatorId", Types.BIGINT }
+			{ "creatorId", Types.BIGINT },
+			{ "videoId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Video_Creator (videoCreatorId LONG not null primary key,creatorId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Video_Creator (videoCreatorId LONG not null primary key,creatorId LONG,videoId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Video_Creator";
 	public static final String ORDER_BY_JPQL = " ORDER BY video_Creator.videoCreatorId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Video_Creator.videoCreatorId ASC";
@@ -73,7 +74,12 @@ public class Video_CreatorModelImpl extends BaseModelImpl<Video_Creator>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.finder.cache.enabled.de.uhh.l2g.plugins.model.Video_Creator"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.Video_Creator"),
+			true);
+	public static long CREATORID_COLUMN_BITMASK = 1L;
+	public static long VIDEOID_COLUMN_BITMASK = 2L;
+	public static long VIDEOCREATORID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Video_Creator"));
 
@@ -116,6 +122,7 @@ public class Video_CreatorModelImpl extends BaseModelImpl<Video_Creator>
 
 		attributes.put("videoCreatorId", getVideoCreatorId());
 		attributes.put("creatorId", getCreatorId());
+		attributes.put("videoId", getVideoId());
 
 		return attributes;
 	}
@@ -132,6 +139,12 @@ public class Video_CreatorModelImpl extends BaseModelImpl<Video_Creator>
 
 		if (creatorId != null) {
 			setCreatorId(creatorId);
+		}
+
+		Long videoId = (Long)attributes.get("videoId");
+
+		if (videoId != null) {
+			setVideoId(videoId);
 		}
 	}
 
@@ -152,7 +165,45 @@ public class Video_CreatorModelImpl extends BaseModelImpl<Video_Creator>
 
 	@Override
 	public void setCreatorId(long creatorId) {
+		_columnBitmask |= CREATORID_COLUMN_BITMASK;
+
+		if (!_setOriginalCreatorId) {
+			_setOriginalCreatorId = true;
+
+			_originalCreatorId = _creatorId;
+		}
+
 		_creatorId = creatorId;
+	}
+
+	public long getOriginalCreatorId() {
+		return _originalCreatorId;
+	}
+
+	@Override
+	public long getVideoId() {
+		return _videoId;
+	}
+
+	@Override
+	public void setVideoId(long videoId) {
+		_columnBitmask |= VIDEOID_COLUMN_BITMASK;
+
+		if (!_setOriginalVideoId) {
+			_setOriginalVideoId = true;
+
+			_originalVideoId = _videoId;
+		}
+
+		_videoId = videoId;
+	}
+
+	public long getOriginalVideoId() {
+		return _originalVideoId;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -184,6 +235,7 @@ public class Video_CreatorModelImpl extends BaseModelImpl<Video_Creator>
 
 		video_CreatorImpl.setVideoCreatorId(getVideoCreatorId());
 		video_CreatorImpl.setCreatorId(getCreatorId());
+		video_CreatorImpl.setVideoId(getVideoId());
 
 		video_CreatorImpl.resetOriginalValues();
 
@@ -234,6 +286,17 @@ public class Video_CreatorModelImpl extends BaseModelImpl<Video_Creator>
 
 	@Override
 	public void resetOriginalValues() {
+		Video_CreatorModelImpl video_CreatorModelImpl = this;
+
+		video_CreatorModelImpl._originalCreatorId = video_CreatorModelImpl._creatorId;
+
+		video_CreatorModelImpl._setOriginalCreatorId = false;
+
+		video_CreatorModelImpl._originalVideoId = video_CreatorModelImpl._videoId;
+
+		video_CreatorModelImpl._setOriginalVideoId = false;
+
+		video_CreatorModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -244,17 +307,21 @@ public class Video_CreatorModelImpl extends BaseModelImpl<Video_Creator>
 
 		video_CreatorCacheModel.creatorId = getCreatorId();
 
+		video_CreatorCacheModel.videoId = getVideoId();
+
 		return video_CreatorCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(7);
 
 		sb.append("{videoCreatorId=");
 		sb.append(getVideoCreatorId());
 		sb.append(", creatorId=");
 		sb.append(getCreatorId());
+		sb.append(", videoId=");
+		sb.append(getVideoId());
 		sb.append("}");
 
 		return sb.toString();
@@ -262,7 +329,7 @@ public class Video_CreatorModelImpl extends BaseModelImpl<Video_Creator>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(10);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Video_Creator");
@@ -276,6 +343,10 @@ public class Video_CreatorModelImpl extends BaseModelImpl<Video_Creator>
 			"<column><column-name>creatorId</column-name><column-value><![CDATA[");
 		sb.append(getCreatorId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>videoId</column-name><column-value><![CDATA[");
+		sb.append(getVideoId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -288,5 +359,11 @@ public class Video_CreatorModelImpl extends BaseModelImpl<Video_Creator>
 		};
 	private long _videoCreatorId;
 	private long _creatorId;
+	private long _originalCreatorId;
+	private boolean _setOriginalCreatorId;
+	private long _videoId;
+	private long _originalVideoId;
+	private boolean _setOriginalVideoId;
+	private long _columnBitmask;
 	private Video_Creator _escapedModel;
 }

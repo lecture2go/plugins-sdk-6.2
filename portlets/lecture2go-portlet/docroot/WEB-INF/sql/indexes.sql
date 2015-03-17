@@ -99,6 +99,10 @@ create index IX_923BA320 on LG_Video (uploadDate);
 create index IX_793FA2F9 on LG_Video_Category (categoryId);
 create index IX_3334541A on LG_Video_Category (videoId);
 
+create index IX_ED691EED on LG_Video_Creator (creatorId);
+create index IX_A28928BC on LG_Video_Creator (videoId);
+create index IX_F68D221B on LG_Video_Creator (videoId, creatorId);
+
 create index IX_39AE746D on LG_Video_Institution (institutionId);
 create index IX_4467AFB0 on LG_Video_Institution (videoId);
 

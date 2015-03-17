@@ -32,6 +32,8 @@
 
 	String uploadProgressId = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
 	String backURL = request.getAttribute("backURL").toString();
+	List<Creator> creators = new ArrayList<Creator>();
+	try{ creators = CreatorLocalServiceUtil.getCreators(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);}catch (NullPointerException e){}
 %>
  
 <aui:fieldset helpMessage="test" column="true" label="video-file" >
@@ -75,6 +77,20 @@
 			<aui:input name="tags" label="tags" required="false" value="<%=reqVideo.getTags()%>"/>
 
 			<aui:input name="publisher" label="publisher" required="false" value="<%=reqMetadata.getPublisher()%>"/>
+			
+			<aui:select size="1" name="crId" label="creators">
+				<aui:option value="">select-creator</aui:option>
+				<%for (int i = 0; i < creators.size(); i++) {
+					%><aui:option value='<%=creators.get(i).getCreatorId()%>'><%=creators.get(i).getJobTitle() + " "+creators.get(i).getLastName() + ", " + creators.get(i).getFirstName()%></aui:option><%
+				}%>	
+			</aui:select>	
+						
+			<div id="creators"></div>
+
+			<a id="addCreator">
+			    add-new-creator <span class="icon-large icon-plus-sign"></span>
+			</a>
+			<br/><br/>
 	
 			license
 			<br/>
@@ -283,8 +299,6 @@ function updateMetadata(){
 				 	   	<portlet:namespace/>language: A.one('#<portlet:namespace/>language').get('value'),
 				 	   	<portlet:namespace/>title: A.one('#<portlet:namespace/>title').get('value'),
 				 	   	<portlet:namespace/>tags: A.one('#<portlet:namespace/>tags').get('value'),
-				 	   	<portlet:namespace/>creator: A.one('#<portlet:namespace/>creator').get('value'),
-				 	   	<portlet:namespace/>rightsHolder: A.one('#<portlet:namespace/>rightsHolder').get('value'),
 				 	   	<portlet:namespace/>publisher: A.one('#<portlet:namespace/>publisher').get('value'),
 				 	   	<portlet:namespace/>lectureseriesId: A.one('#<portlet:namespace/>lectureseriesId').get('value'),
 			 	},
@@ -406,4 +420,114 @@ function deleteFile(fileName){
         $.template( "filesTemplate", $("#template") );
         $.tmpl( "filesTemplate", vars ).appendTo( ".table" );
     });
+</script>
+
+<!-- Template -->
+<script type="text/x-jquery-tmpl" id="newCreator">
+	<div id="nc<%="${counter}"%>">
+	<aui:input type="hidden" name="gender"/>
+	<aui:select size="1" name="jobTitle" label="">
+		<aui:option value=""></aui:option>
+		<%
+		String[] l =  LanguageUtil.get(pageContext, "creator-titles").split(",");
+		for(int i=0; i<l.length; i++){
+			String title = l[i];
+			%><aui:option value="<%=title%>"><%=title%></aui:option><%
+		}
+		%>
+	</aui:select>
+	<aui:input name="firstName" type="text"/>
+	<aui:input name="lastName" type="text"/>
+	<aui:input name="creatorId" value="0" type="hidden"/>
+	<a class="icon-large icon-remove" onclick="remb('<%="nc${counter}"%>');"></a>
+	<br/>
+	</div>
+</script>
+
+<!-- Template -->
+<script type="text/x-jquery-tmpl" id="created">
+   	<div id="<%="c${creatorId}"%>">
+    	<%="${fullName}"%> &nbsp; <a class="icon-large icon-remove" onclick="remb('<%="c${creatorId}"%>');"></a>
+		<aui:input type="hidden" name="gender"/>
+		<input type="hidden" name="<portlet:namespace/>jobTitle" value="<%="${jobTitle}"%>"/>
+		<input type="hidden" name="<portlet:namespace/>firstName" value="<%="${firstName}"%>"/>
+		<input type="hidden" name="<portlet:namespace/>lastName" value="<%="${lastName}"%>"/>
+		<input type="hidden" name="<portlet:namespace/>creatorId" value="<%="${creatorId}"%>"/>
+	</div>
+</script>
+
+<script type="text/javascript">
+		<%
+			String vars ="";
+			try{
+				vars = CreatorLocalServiceUtil.getJSONCreatorsByVideoId(reqVideo.getVideoId()).toString();
+			}catch(Exception e){}
+		%>
+		
+		$(function () {
+	        var vars = <%=vars%>;
+	        $.template( "filesTemplate", $("#created") );
+	        $.tmpl( "filesTemplate", vars ).appendTo( "#creators" );
+	    });
+</script>
+
+
+<liferay-portlet:resourceURL id="getJSONCreator" var="getJSONCreatorURL" />
+
+<script>
+function appendCreator(c){
+	$(function () {
+    	var vars = {'counter':c};
+    	$.template( "filesTemplate", $("#newCreator") );
+    	$.tmpl( "filesTemplate", vars ).appendTo( "#creators" );
+	});
+};
+
+var c = 0;
+$( "#addCreator" ).on( "click", function() {
+	c++;
+	appendCreator(c);
+});
+
+function remb(c){
+	$("#"+c).remove();
+}
+
+AUI().use('aui-node',
+  function(A){
+	// Select the node(s) using a css selector string
+    var crId = A.one('#<portlet:namespace/>crId');
+    crId.on(
+      	'change',
+      	function(A) {
+  			if(crId.get('value')>0){
+  		        var vars = getJSONCreator(crId.get('value'));
+  		        console.log(vars);
+  		        $.template( "filesTemplate", $("#created") );
+  		        $.tmpl( "filesTemplate", vars ).appendTo( "#creators" );
+  			}
+      	}
+    );
+  }
+);
+
+function getJSONCreator (data){
+	var ret;
+	$.ajax({
+		  type: "POST",
+		  url: "<%=getJSONCreatorURL%>",
+		  dataType: 'json',
+		  data: {
+		 	   	<portlet:namespace/>creatorId: data,
+		  },
+		  global: false,
+		  async:false,
+		  success: function(data) {
+		    ret = data;
+		  }
+	})
+	return ret;
+}
+
+
 </script>

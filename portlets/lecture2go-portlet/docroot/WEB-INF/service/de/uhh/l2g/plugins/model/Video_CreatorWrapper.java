@@ -51,6 +51,7 @@ public class Video_CreatorWrapper implements Video_Creator,
 
 		attributes.put("videoCreatorId", getVideoCreatorId());
 		attributes.put("creatorId", getCreatorId());
+		attributes.put("videoId", getVideoId());
 
 		return attributes;
 	}
@@ -67,6 +68,12 @@ public class Video_CreatorWrapper implements Video_Creator,
 
 		if (creatorId != null) {
 			setCreatorId(creatorId);
+		}
+
+		Long videoId = (Long)attributes.get("videoId");
+
+		if (videoId != null) {
+			setVideoId(videoId);
 		}
 	}
 
@@ -128,6 +135,26 @@ public class Video_CreatorWrapper implements Video_Creator,
 	@Override
 	public void setCreatorId(long creatorId) {
 		_video_Creator.setCreatorId(creatorId);
+	}
+
+	/**
+	* Returns the video ID of this video_ creator.
+	*
+	* @return the video ID of this video_ creator
+	*/
+	@Override
+	public long getVideoId() {
+		return _video_Creator.getVideoId();
+	}
+
+	/**
+	* Sets the video ID of this video_ creator.
+	*
+	* @param videoId the video ID of this video_ creator
+	*/
+	@Override
+	public void setVideoId(long videoId) {
+		_video_Creator.setVideoId(videoId);
 	}
 
 	@Override

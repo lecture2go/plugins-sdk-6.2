@@ -84,6 +84,20 @@ public interface Video_CreatorModel extends BaseModel<Video_Creator> {
 	 */
 	public void setCreatorId(long creatorId);
 
+	/**
+	 * Returns the video ID of this video_ creator.
+	 *
+	 * @return the video ID of this video_ creator
+	 */
+	public long getVideoId();
+
+	/**
+	 * Sets the video ID of this video_ creator.
+	 *
+	 * @param videoId the video ID of this video_ creator
+	 */
+	public void setVideoId(long videoId);
+
 	@Override
 	public boolean isNew();
 
