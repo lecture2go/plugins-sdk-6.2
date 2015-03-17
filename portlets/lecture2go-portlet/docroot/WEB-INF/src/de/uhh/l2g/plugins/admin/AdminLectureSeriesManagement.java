@@ -8,18 +8,33 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+
+import org.json.JSONArray;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
+import de.uhh.l2g.plugins.model.Creator;
 import de.uhh.l2g.plugins.model.Lectureseries;
+import de.uhh.l2g.plugins.model.Lectureseries_Creator;
 import de.uhh.l2g.plugins.model.Producer;
+import de.uhh.l2g.plugins.model.impl.CreatorImpl;
 import de.uhh.l2g.plugins.model.impl.LectureseriesImpl;
+import de.uhh.l2g.plugins.model.impl.Lectureseries_CreatorImpl;
 import de.uhh.l2g.plugins.model.impl.Lectureseries_InstitutionImpl;
 import de.uhh.l2g.plugins.model.impl.Producer_LectureseriesImpl;
+import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Lectureseries_CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Lectureseries_InstitutionLocalServiceUtil;
+import de.uhh.l2g.plugins.service.LicenseLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Producer_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
@@ -71,6 +86,7 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 	public void editLectureseries(ActionRequest request, ActionResponse response) throws NumberFormatException, PortalException, SystemException{
 		Long lId = new Long(request.getParameter("lectureseriesId"));
 		String[] producers = request.getParameterValues("producers");
+		
 		String[] institutions = request.getParameterValues("institutions");
 		String s = request.getParameter("longDesc");
 		String backURL = request.getParameter("backURL");
@@ -82,7 +98,7 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		try{
 			categoryId = new Long(request.getParameter("categoryId"));
 		}catch(Exception e){}
-
+		
 		//update object
 		Lectureseries lectureseries = LectureseriesLocalServiceUtil.getLectureseries(lId);
 		lectureseries.setApproved(1);
@@ -112,7 +128,41 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			if(!Lectureseries_InstitutionLocalServiceUtil.institutionAssignedToLectureseries(lf))
 				Lectureseries_InstitutionLocalServiceUtil.addLectureseries_Institution(lf);
 		}
-		
+
+		//new creators
+		String[] firstNames = request.getParameterValues("firstName");
+		String[] lastNames = request.getParameterValues("lastName");
+		String[] jobTitles = request.getParameterValues("jobTitle");
+		String[] genders = request.getParameterValues("gender");
+		String[] creatorIds = request.getParameterValues("creatorId");
+		Long cId = new Long(0);
+		//remove all creators for this lecture series first
+		Lectureseries_CreatorLocalServiceUtil.removeByLectureseriesId(lId);
+		//and add the new creators
+		try{
+			for(int i=0;i<creatorIds.length;i++){
+				if(creatorIds[i].equals("0")){
+					Creator c = new CreatorImpl();
+					c.setFirstName(firstNames[i]);
+					c.setLastName(lastNames[i]);
+					c.setJobTitle(jobTitles[i]);
+					c.setGender(genders[i]);
+					c.setFullName(jobTitles[i]+" "+firstNames[i]+" "+lastNames[i]);
+					List<Creator> cl = CreatorLocalServiceUtil.getByFullName(jobTitles[i]+" "+firstNames[i]+" "+lastNames[i]);
+					if(cl.size()==0)cId = CreatorLocalServiceUtil.addCreator(c).getCreatorId();
+					else cId = CreatorLocalServiceUtil.getByFullName(jobTitles[i]+" "+firstNames[i]+" "+lastNames[i]).iterator().next().getCreatorId();
+				}else{
+					cId = new Long(creatorIds[i]);
+				}
+				//add created creator to lecture series
+				Lectureseries_Creator lc = new Lectureseries_CreatorImpl();
+				lc.setLectureseriesId(lId);
+				lc.setCreatorId(cId);
+				if(Lectureseries_CreatorLocalServiceUtil.getByLectureseriesIdAndCreatorId(lId, cId).size()==0){
+					Lectureseries_CreatorLocalServiceUtil.addLectureseries_Creator(lc);
+				}
+			}
+		}catch (NullPointerException e){}
 		//update producer link
 		//delete old entries first
 		Producer_LectureseriesLocalServiceUtil.removeByLectureseriesId(lId);
@@ -172,6 +222,40 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			Lectureseries_InstitutionLocalServiceUtil.addLectureseries_Institution(lf);
 		}
 
+		//new creators
+		String[] firstNames = request.getParameterValues("firstName");
+		String[] lastNames = request.getParameterValues("lastName");
+		String[] jobTitles = request.getParameterValues("jobTitle");
+		String[] genders = request.getParameterValues("gender");
+		String[] creatorIds = request.getParameterValues("creatorId");
+		Long cId = new Long(0);
+		//remove all creators for this lecture series first
+		Lectureseries_CreatorLocalServiceUtil.removeByLectureseriesId(lId);
+		//and add the new creators
+		try{
+			for(int i=0;i<creatorIds.length;i++){
+				if(creatorIds[i].equals("0")){
+					Creator c = new CreatorImpl();
+					c.setFirstName(firstNames[i]);
+					c.setLastName(lastNames[i]);
+					c.setJobTitle(jobTitles[i]);
+					c.setGender(genders[i]);
+					c.setFullName(jobTitles[i]+" "+firstNames[i]+" "+lastNames[i]);
+					List<Creator> cl = CreatorLocalServiceUtil.getByFullName(jobTitles[i]+" "+firstNames[i]+" "+lastNames[i]);
+					if(cl.size()==0)cId = CreatorLocalServiceUtil.addCreator(c).getCreatorId();
+					else cId = CreatorLocalServiceUtil.getByFullName(jobTitles[i]+" "+firstNames[i]+" "+lastNames[i]).iterator().next().getCreatorId();
+				}else{
+					cId = new Long(creatorIds[i]);
+				}
+				//add created creator to lecture series
+				Lectureseries_Creator lc = new Lectureseries_CreatorImpl();
+				lc.setLectureseriesId(lId);
+				lc.setCreatorId(cId);
+				if(Lectureseries_CreatorLocalServiceUtil.getByLectureseriesIdAndCreatorId(lId, cId).size()==0){
+					Lectureseries_CreatorLocalServiceUtil.addLectureseries_Creator(lc);
+				}
+			}
+		}catch (NullPointerException e){}
 		//link to producer
 		for(int i=0;i<producers.length;i++){
 			Producer_LectureseriesImpl pl = new Producer_LectureseriesImpl();
@@ -182,6 +266,30 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		request.setAttribute("institutions", institutions);
 		request.setAttribute("producers", producers);
 		request.setAttribute("backURL", backURL);
+	}
+	
+	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws PortletException, IOException {
+		String resourceID = resourceRequest.getResourceID();
+		
+		if(resourceID.equals("getJSONCreator")){
+			String creatorId = ParamUtil.getString(resourceRequest, "creatorId");
+			Long cId = new Long(0);
+			try{
+				cId = new Long(creatorId);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			JSONArray json = new JSONArray();
+			try {
+				json = CreatorLocalServiceUtil.getJSONCreator(cId);
+			} catch (PortalException e) {
+				e.printStackTrace();
+			} catch (SystemException e) {
+				e.printStackTrace();
+			}
+			writeJSON(resourceRequest, resourceResponse, json);			
+		}
+
 	}
 
 }

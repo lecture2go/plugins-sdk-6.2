@@ -115,6 +115,24 @@ public class Lectureseries_CreatorLocalServiceClp
 		_methodName17 = "setBeanIdentifier";
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
+
+		_methodName19 = "removeByLectureseriesId";
+
+		_methodParameterTypes19 = new String[] { "java.lang.Long" };
+
+		_methodName20 = "getByCreatorId";
+
+		_methodParameterTypes20 = new String[] { "java.lang.Long" };
+
+		_methodName21 = "getByLectureseriesId";
+
+		_methodParameterTypes21 = new String[] { "java.lang.Long" };
+
+		_methodName22 = "getByLectureseriesIdAndCreatorId";
+
+		_methodParameterTypes22 = new String[] {
+				"java.lang.Long", "java.lang.Long"
+			};
 	}
 
 	@Override
@@ -677,6 +695,125 @@ public class Lectureseries_CreatorLocalServiceClp
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public void removeByLectureseriesId(java.lang.Long lectureseriesId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		try {
+			_invokableLocalService.invokeMethod(_methodName19,
+				_methodParameterTypes19,
+				new Object[] { ClpSerializer.translateInput(lectureseriesId) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Creator> getByCreatorId(
+		java.lang.Long creatorId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20,
+					new Object[] { ClpSerializer.translateInput(creatorId) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Creator>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Creator> getByLectureseriesId(
+		java.lang.Long lectureseriesId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21,
+					new Object[] { ClpSerializer.translateInput(lectureseriesId) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Creator>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Creator> getByLectureseriesIdAndCreatorId(
+		java.lang.Long lectureseriesId, java.lang.Long creatorId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22,
+					new Object[] {
+						ClpSerializer.translateInput(lectureseriesId),
+						
+					ClpSerializer.translateInput(creatorId)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Creator>)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -714,4 +851,12 @@ public class Lectureseries_CreatorLocalServiceClp
 	private String[] _methodParameterTypes16;
 	private String _methodName17;
 	private String[] _methodParameterTypes17;
+	private String _methodName19;
+	private String[] _methodParameterTypes19;
+	private String _methodName20;
+	private String[] _methodParameterTypes20;
+	private String _methodName21;
+	private String[] _methodParameterTypes21;
+	private String _methodName22;
+	private String[] _methodParameterTypes22;
 }

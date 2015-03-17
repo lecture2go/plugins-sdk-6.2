@@ -54,6 +54,7 @@ public class CreatorWrapper implements Creator, ModelWrapper<Creator> {
 		attributes.put("middleName", getMiddleName());
 		attributes.put("jobTitle", getJobTitle());
 		attributes.put("gender", getGender());
+		attributes.put("fullName", getFullName());
 
 		return attributes;
 	}
@@ -94,6 +95,12 @@ public class CreatorWrapper implements Creator, ModelWrapper<Creator> {
 
 		if (gender != null) {
 			setGender(gender);
+		}
+
+		String fullName = (String)attributes.get("fullName");
+
+		if (fullName != null) {
+			setFullName(fullName);
 		}
 	}
 
@@ -235,6 +242,26 @@ public class CreatorWrapper implements Creator, ModelWrapper<Creator> {
 	@Override
 	public void setGender(java.lang.String gender) {
 		_creator.setGender(gender);
+	}
+
+	/**
+	* Returns the full name of this creator.
+	*
+	* @return the full name of this creator
+	*/
+	@Override
+	public java.lang.String getFullName() {
+		return _creator.getFullName();
+	}
+
+	/**
+	* Sets the full name of this creator.
+	*
+	* @param fullName the full name of this creator
+	*/
+	@Override
+	public void setFullName(java.lang.String fullName) {
+		_creator.setFullName(fullName);
 	}
 
 	@Override

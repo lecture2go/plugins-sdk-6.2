@@ -249,4 +249,21 @@ public interface CreatorLocalService extends BaseLocalService,
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<de.uhh.l2g.plugins.model.Creator> getCreatorsByLectureseries(
+		java.lang.Long lectureseriesId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.json.JSONArray getJSONCreators(java.lang.Long lectureseriesId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.json.JSONArray getJSONCreator(java.lang.Long creatorId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<de.uhh.l2g.plugins.model.Creator> getByFullName(
+		java.lang.String fullName)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

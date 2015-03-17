@@ -280,6 +280,31 @@ public class CreatorLocalServiceWrapper implements CreatorLocalService,
 		return _creatorLocalService.invokeMethod(name, parameterTypes, arguments);
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Creator> getCreatorsByLectureseries(
+		java.lang.Long lectureseriesId) {
+		return _creatorLocalService.getCreatorsByLectureseries(lectureseriesId);
+	}
+
+	@Override
+	public org.json.JSONArray getJSONCreators(java.lang.Long lectureseriesId) {
+		return _creatorLocalService.getJSONCreators(lectureseriesId);
+	}
+
+	@Override
+	public org.json.JSONArray getJSONCreator(java.lang.Long creatorId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _creatorLocalService.getJSONCreator(creatorId);
+	}
+
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Creator> getByFullName(
+		java.lang.String fullName)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _creatorLocalService.getByFullName(fullName);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

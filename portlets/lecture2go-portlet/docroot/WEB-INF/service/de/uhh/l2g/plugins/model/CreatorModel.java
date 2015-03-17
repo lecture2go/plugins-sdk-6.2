@@ -146,6 +146,21 @@ public interface CreatorModel extends BaseModel<Creator> {
 	 */
 	public void setGender(String gender);
 
+	/**
+	 * Returns the full name of this creator.
+	 *
+	 * @return the full name of this creator
+	 */
+	@AutoEscape
+	public String getFullName();
+
+	/**
+	 * Sets the full name of this creator.
+	 *
+	 * @param fullName the full name of this creator
+	 */
+	public void setFullName(String fullName);
+
 	@Override
 	public boolean isNew();
 

@@ -7,6 +7,7 @@
 	<bean id="de.uhh.l2g.plugins.service.persistence.CoordinatorPersistence" class="de.uhh.l2g.plugins.service.persistence.CoordinatorPersistenceImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.CreatorLocalService" class="de.uhh.l2g.plugins.service.impl.CreatorLocalServiceImpl" />
 	<bean id="de.uhh.l2g.plugins.service.persistence.CreatorPersistence" class="de.uhh.l2g.plugins.service.persistence.CreatorPersistenceImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.CreatorFinder" class="de.uhh.l2g.plugins.service.persistence.CreatorFinderImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.HostLocalService" class="de.uhh.l2g.plugins.service.impl.HostLocalServiceImpl" />
 	<bean id="de.uhh.l2g.plugins.service.persistence.HostPersistence" class="de.uhh.l2g.plugins.service.persistence.HostPersistenceImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.InstitutionLocalService" class="de.uhh.l2g.plugins.service.impl.InstitutionLocalServiceImpl" />

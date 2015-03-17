@@ -63,12 +63,13 @@ public class CreatorModelImpl extends BaseModelImpl<Creator>
 			{ "lastName", Types.VARCHAR },
 			{ "middleName", Types.VARCHAR },
 			{ "jobTitle", Types.VARCHAR },
-			{ "gender", Types.VARCHAR }
+			{ "gender", Types.VARCHAR },
+			{ "fullName", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Creator (creatorId LONG not null primary key,firstName VARCHAR(75) null,lastName VARCHAR(75) null,middleName VARCHAR(75) null,jobTitle VARCHAR(75) null,gender VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Creator (creatorId LONG not null primary key,firstName VARCHAR(75) null,lastName VARCHAR(75) null,middleName VARCHAR(75) null,jobTitle VARCHAR(75) null,gender VARCHAR(75) null,fullName VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Creator";
-	public static final String ORDER_BY_JPQL = " ORDER BY creator.creatorId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY LG_Creator.creatorId ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY creator.lastName ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY LG_Creator.lastName ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -82,9 +83,9 @@ public class CreatorModelImpl extends BaseModelImpl<Creator>
 				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.Creator"),
 			true);
 	public static long FIRSTNAME_COLUMN_BITMASK = 1L;
-	public static long LASTNAME_COLUMN_BITMASK = 2L;
-	public static long MIDDLENAME_COLUMN_BITMASK = 4L;
-	public static long CREATORID_COLUMN_BITMASK = 8L;
+	public static long FULLNAME_COLUMN_BITMASK = 2L;
+	public static long LASTNAME_COLUMN_BITMASK = 4L;
+	public static long MIDDLENAME_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Creator"));
 
@@ -131,6 +132,7 @@ public class CreatorModelImpl extends BaseModelImpl<Creator>
 		attributes.put("middleName", getMiddleName());
 		attributes.put("jobTitle", getJobTitle());
 		attributes.put("gender", getGender());
+		attributes.put("fullName", getFullName());
 
 		return attributes;
 	}
@@ -171,6 +173,12 @@ public class CreatorModelImpl extends BaseModelImpl<Creator>
 
 		if (gender != null) {
 			setGender(gender);
+		}
+
+		String fullName = (String)attributes.get("fullName");
+
+		if (fullName != null) {
+			setFullName(fullName);
 		}
 	}
 
@@ -221,7 +229,7 @@ public class CreatorModelImpl extends BaseModelImpl<Creator>
 
 	@Override
 	public void setLastName(String lastName) {
-		_columnBitmask |= LASTNAME_COLUMN_BITMASK;
+		_columnBitmask = -1L;
 
 		if (_originalLastName == null) {
 			_originalLastName = _lastName;
@@ -289,6 +297,31 @@ public class CreatorModelImpl extends BaseModelImpl<Creator>
 		_gender = gender;
 	}
 
+	@Override
+	public String getFullName() {
+		if (_fullName == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _fullName;
+		}
+	}
+
+	@Override
+	public void setFullName(String fullName) {
+		_columnBitmask |= FULLNAME_COLUMN_BITMASK;
+
+		if (_originalFullName == null) {
+			_originalFullName = _fullName;
+		}
+
+		_fullName = fullName;
+	}
+
+	public String getOriginalFullName() {
+		return GetterUtil.getString(_originalFullName);
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -326,6 +359,7 @@ public class CreatorModelImpl extends BaseModelImpl<Creator>
 		creatorImpl.setMiddleName(getMiddleName());
 		creatorImpl.setJobTitle(getJobTitle());
 		creatorImpl.setGender(getGender());
+		creatorImpl.setFullName(getFullName());
 
 		creatorImpl.resetOriginalValues();
 
@@ -334,17 +368,15 @@ public class CreatorModelImpl extends BaseModelImpl<Creator>
 
 	@Override
 	public int compareTo(Creator creator) {
-		long primaryKey = creator.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		value = getLastName().compareTo(creator.getLastName());
+
+		if (value != 0) {
+			return value;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
-		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	@Override
@@ -383,6 +415,8 @@ public class CreatorModelImpl extends BaseModelImpl<Creator>
 		creatorModelImpl._originalLastName = creatorModelImpl._lastName;
 
 		creatorModelImpl._originalMiddleName = creatorModelImpl._middleName;
+
+		creatorModelImpl._originalFullName = creatorModelImpl._fullName;
 
 		creatorModelImpl._columnBitmask = 0;
 	}
@@ -433,12 +467,20 @@ public class CreatorModelImpl extends BaseModelImpl<Creator>
 			creatorCacheModel.gender = null;
 		}
 
+		creatorCacheModel.fullName = getFullName();
+
+		String fullName = creatorCacheModel.fullName;
+
+		if ((fullName != null) && (fullName.length() == 0)) {
+			creatorCacheModel.fullName = null;
+		}
+
 		return creatorCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{creatorId=");
 		sb.append(getCreatorId());
@@ -452,6 +494,8 @@ public class CreatorModelImpl extends BaseModelImpl<Creator>
 		sb.append(getJobTitle());
 		sb.append(", gender=");
 		sb.append(getGender());
+		sb.append(", fullName=");
+		sb.append(getFullName());
 		sb.append("}");
 
 		return sb.toString();
@@ -459,7 +503,7 @@ public class CreatorModelImpl extends BaseModelImpl<Creator>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Creator");
@@ -489,6 +533,10 @@ public class CreatorModelImpl extends BaseModelImpl<Creator>
 			"<column><column-name>gender</column-name><column-value><![CDATA[");
 		sb.append(getGender());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>fullName</column-name><column-value><![CDATA[");
+		sb.append(getFullName());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -508,6 +556,8 @@ public class CreatorModelImpl extends BaseModelImpl<Creator>
 	private String _originalMiddleName;
 	private String _jobTitle;
 	private String _gender;
+	private String _fullName;
+	private String _originalFullName;
 	private long _columnBitmask;
 	private Creator _escapedModel;
 }

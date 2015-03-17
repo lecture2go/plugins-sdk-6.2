@@ -4,6 +4,7 @@ create index IX_4EE19791 on LG_Coordinator (institutionId);
 create index IX_8439EBD on LG_Coordinator (officeId);
 
 create index IX_D3B1627D on LG_Creator (firstName);
+create index IX_E933BBBC on LG_Creator (fullName);
 create index IX_8BEDCA83 on LG_Creator (lastName);
 create index IX_2CE50242 on LG_Creator (middleName);
 
@@ -47,6 +48,7 @@ create index IX_E459C00E on LG_Lectureseries_Category (lectureseriesId);
 
 create index IX_60A5A33 on LG_Lectureseries_Creator (creatorId);
 create index IX_B43D577C on LG_Lectureseries_Creator (lectureseriesId);
+create index IX_3D4C3B5B on LG_Lectureseries_Creator (lectureseriesId, creatorId);
 
 create index IX_719B09B3 on LG_Lectureseries_Institution (institutionId);
 create index IX_C80ED770 on LG_Lectureseries_Institution (lectureseriesId);

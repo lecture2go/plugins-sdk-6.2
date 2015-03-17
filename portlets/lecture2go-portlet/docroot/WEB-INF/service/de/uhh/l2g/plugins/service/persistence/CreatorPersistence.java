@@ -452,6 +452,144 @@ public interface CreatorPersistence extends BasePersistence<Creator> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns all the creators where fullName = &#63;.
+	*
+	* @param fullName the full name
+	* @return the matching creators
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<de.uhh.l2g.plugins.model.Creator> findByFullName(
+		java.lang.String fullName)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the creators where fullName = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.CreatorModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param fullName the full name
+	* @param start the lower bound of the range of creators
+	* @param end the upper bound of the range of creators (not inclusive)
+	* @return the range of matching creators
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<de.uhh.l2g.plugins.model.Creator> findByFullName(
+		java.lang.String fullName, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the creators where fullName = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.CreatorModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param fullName the full name
+	* @param start the lower bound of the range of creators
+	* @param end the upper bound of the range of creators (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching creators
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<de.uhh.l2g.plugins.model.Creator> findByFullName(
+		java.lang.String fullName, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first creator in the ordered set where fullName = &#63;.
+	*
+	* @param fullName the full name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching creator
+	* @throws de.uhh.l2g.plugins.NoSuchCreatorException if a matching creator could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.Creator findByFullName_First(
+		java.lang.String fullName,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchCreatorException;
+
+	/**
+	* Returns the first creator in the ordered set where fullName = &#63;.
+	*
+	* @param fullName the full name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching creator, or <code>null</code> if a matching creator could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.Creator fetchByFullName_First(
+		java.lang.String fullName,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last creator in the ordered set where fullName = &#63;.
+	*
+	* @param fullName the full name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching creator
+	* @throws de.uhh.l2g.plugins.NoSuchCreatorException if a matching creator could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.Creator findByFullName_Last(
+		java.lang.String fullName,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchCreatorException;
+
+	/**
+	* Returns the last creator in the ordered set where fullName = &#63;.
+	*
+	* @param fullName the full name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching creator, or <code>null</code> if a matching creator could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.Creator fetchByFullName_Last(
+		java.lang.String fullName,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the creators before and after the current creator in the ordered set where fullName = &#63;.
+	*
+	* @param creatorId the primary key of the current creator
+	* @param fullName the full name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next creator
+	* @throws de.uhh.l2g.plugins.NoSuchCreatorException if a creator with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.Creator[] findByFullName_PrevAndNext(
+		long creatorId, java.lang.String fullName,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchCreatorException;
+
+	/**
+	* Removes all the creators where fullName = &#63; from the database.
+	*
+	* @param fullName the full name
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByFullName(java.lang.String fullName)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of creators where fullName = &#63;.
+	*
+	* @param fullName the full name
+	* @return the number of matching creators
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByFullName(java.lang.String fullName)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Caches the creator in the entity cache if it is enabled.
 	*
 	* @param creator the creator

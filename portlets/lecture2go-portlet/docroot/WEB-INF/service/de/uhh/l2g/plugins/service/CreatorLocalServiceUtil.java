@@ -271,6 +271,28 @@ public class CreatorLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.Creator> getCreatorsByLectureseries(
+		java.lang.Long lectureseriesId) {
+		return getService().getCreatorsByLectureseries(lectureseriesId);
+	}
+
+	public static org.json.JSONArray getJSONCreators(
+		java.lang.Long lectureseriesId) {
+		return getService().getJSONCreators(lectureseriesId);
+	}
+
+	public static org.json.JSONArray getJSONCreator(java.lang.Long creatorId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getJSONCreator(creatorId);
+	}
+
+	public static java.util.List<de.uhh.l2g.plugins.model.Creator> getByFullName(
+		java.lang.String fullName)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getByFullName(fullName);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

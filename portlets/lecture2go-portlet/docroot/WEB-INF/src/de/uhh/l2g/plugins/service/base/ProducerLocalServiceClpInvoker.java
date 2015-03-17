@@ -106,33 +106,33 @@ public class ProducerLocalServiceClpInvoker {
 				"de.uhh.l2g.plugins.model.Producer"
 			};
 
-		_methodName140 = "getBeanIdentifier";
+		_methodName142 = "getBeanIdentifier";
 
-		_methodParameterTypes140 = new String[] {  };
+		_methodParameterTypes142 = new String[] {  };
 
-		_methodName141 = "setBeanIdentifier";
+		_methodName143 = "setBeanIdentifier";
 
-		_methodParameterTypes141 = new String[] { "java.lang.String" };
+		_methodParameterTypes143 = new String[] { "java.lang.String" };
 
-		_methodName147 = "getProducersByInstitutionId";
+		_methodName149 = "getProducersByInstitutionId";
 
-		_methodParameterTypes147 = new String[] { "long" };
+		_methodParameterTypes149 = new String[] { "long" };
 
-		_methodName148 = "getAllProducers";
+		_methodName150 = "getAllProducers";
 
-		_methodParameterTypes148 = new String[] { "int", "int" };
+		_methodParameterTypes150 = new String[] { "int", "int" };
 
-		_methodName149 = "getProdUcer";
+		_methodName151 = "getProdUcer";
 
-		_methodParameterTypes149 = new String[] { "java.lang.Long" };
+		_methodParameterTypes151 = new String[] { "java.lang.Long" };
 
-		_methodName150 = "getAllProducerIds";
+		_methodName152 = "getAllProducerIds";
 
-		_methodParameterTypes150 = new String[] { "java.lang.Long" };
+		_methodParameterTypes152 = new String[] { "java.lang.Long" };
 
-		_methodName151 = "getProducerIds";
+		_methodName153 = "getProducerIds";
 
-		_methodParameterTypes151 = new String[] { "java.lang.Long", "int", "int" };
+		_methodParameterTypes153 = new String[] { "java.lang.Long", "int", "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -224,41 +224,41 @@ public class ProducerLocalServiceClpInvoker {
 			return ProducerLocalServiceUtil.updateProducer((de.uhh.l2g.plugins.model.Producer)arguments[0]);
 		}
 
-		if (_methodName140.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes140, parameterTypes)) {
+		if (_methodName142.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes142, parameterTypes)) {
 			return ProducerLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName141.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes141, parameterTypes)) {
+		if (_methodName143.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes143, parameterTypes)) {
 			ProducerLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName147.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes147, parameterTypes)) {
-			return ProducerLocalServiceUtil.getProducersByInstitutionId(((Long)arguments[0]).longValue());
-		}
-
-		if (_methodName148.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes148, parameterTypes)) {
-			return ProducerLocalServiceUtil.getAllProducers(((Integer)arguments[0]).intValue(),
-				((Integer)arguments[1]).intValue());
-		}
-
 		if (_methodName149.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes149, parameterTypes)) {
-			return ProducerLocalServiceUtil.getProdUcer((java.lang.Long)arguments[0]);
+			return ProducerLocalServiceUtil.getProducersByInstitutionId(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName150.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes150, parameterTypes)) {
-			return ProducerLocalServiceUtil.getAllProducerIds((java.lang.Long)arguments[0]);
+			return ProducerLocalServiceUtil.getAllProducers(((Integer)arguments[0]).intValue(),
+				((Integer)arguments[1]).intValue());
 		}
 
 		if (_methodName151.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes151, parameterTypes)) {
+			return ProducerLocalServiceUtil.getProdUcer((java.lang.Long)arguments[0]);
+		}
+
+		if (_methodName152.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes152, parameterTypes)) {
+			return ProducerLocalServiceUtil.getAllProducerIds((java.lang.Long)arguments[0]);
+		}
+
+		if (_methodName153.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes153, parameterTypes)) {
 			return ProducerLocalServiceUtil.getProducerIds((java.lang.Long)arguments[0],
 				((Integer)arguments[1]).intValue(),
 				((Integer)arguments[2]).intValue());
@@ -299,18 +299,18 @@ public class ProducerLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName140;
-	private String[] _methodParameterTypes140;
-	private String _methodName141;
-	private String[] _methodParameterTypes141;
-	private String _methodName147;
-	private String[] _methodParameterTypes147;
-	private String _methodName148;
-	private String[] _methodParameterTypes148;
+	private String _methodName142;
+	private String[] _methodParameterTypes142;
+	private String _methodName143;
+	private String[] _methodParameterTypes143;
 	private String _methodName149;
 	private String[] _methodParameterTypes149;
 	private String _methodName150;
 	private String[] _methodParameterTypes150;
 	private String _methodName151;
 	private String[] _methodParameterTypes151;
+	private String _methodName152;
+	private String[] _methodParameterTypes152;
+	private String _methodName153;
+	private String[] _methodParameterTypes153;
 }

@@ -18,7 +18,8 @@ create table LG_Creator (
 	lastName VARCHAR(75) null,
 	middleName VARCHAR(75) null,
 	jobTitle VARCHAR(75) null,
-	gender VARCHAR(75) null
+	gender VARCHAR(75) null,
+	fullName VARCHAR(75) null
 );
 
 create table LG_Host (

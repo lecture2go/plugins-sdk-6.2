@@ -102,13 +102,29 @@ public class CreatorLocalServiceClpInvoker {
 				"de.uhh.l2g.plugins.model.Creator"
 			};
 
-		_methodName140 = "getBeanIdentifier";
+		_methodName142 = "getBeanIdentifier";
 
-		_methodParameterTypes140 = new String[] {  };
+		_methodParameterTypes142 = new String[] {  };
 
-		_methodName141 = "setBeanIdentifier";
+		_methodName143 = "setBeanIdentifier";
 
-		_methodParameterTypes141 = new String[] { "java.lang.String" };
+		_methodParameterTypes143 = new String[] { "java.lang.String" };
+
+		_methodName148 = "getCreatorsByLectureseries";
+
+		_methodParameterTypes148 = new String[] { "java.lang.Long" };
+
+		_methodName149 = "getJSONCreators";
+
+		_methodParameterTypes149 = new String[] { "java.lang.Long" };
+
+		_methodName150 = "getJSONCreator";
+
+		_methodParameterTypes150 = new String[] { "java.lang.Long" };
+
+		_methodName151 = "getByFullName";
+
+		_methodParameterTypes151 = new String[] { "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -200,16 +216,36 @@ public class CreatorLocalServiceClpInvoker {
 			return CreatorLocalServiceUtil.updateCreator((de.uhh.l2g.plugins.model.Creator)arguments[0]);
 		}
 
-		if (_methodName140.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes140, parameterTypes)) {
+		if (_methodName142.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes142, parameterTypes)) {
 			return CreatorLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName141.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes141, parameterTypes)) {
+		if (_methodName143.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes143, parameterTypes)) {
 			CreatorLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
+		}
+
+		if (_methodName148.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes148, parameterTypes)) {
+			return CreatorLocalServiceUtil.getCreatorsByLectureseries((java.lang.Long)arguments[0]);
+		}
+
+		if (_methodName149.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes149, parameterTypes)) {
+			return CreatorLocalServiceUtil.getJSONCreators((java.lang.Long)arguments[0]);
+		}
+
+		if (_methodName150.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes150, parameterTypes)) {
+			return CreatorLocalServiceUtil.getJSONCreator((java.lang.Long)arguments[0]);
+		}
+
+		if (_methodName151.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes151, parameterTypes)) {
+			return CreatorLocalServiceUtil.getByFullName((java.lang.String)arguments[0]);
 		}
 
 		throw new UnsupportedOperationException();
@@ -247,8 +283,16 @@ public class CreatorLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName140;
-	private String[] _methodParameterTypes140;
-	private String _methodName141;
-	private String[] _methodParameterTypes141;
+	private String _methodName142;
+	private String[] _methodParameterTypes142;
+	private String _methodName143;
+	private String[] _methodParameterTypes143;
+	private String _methodName148;
+	private String[] _methodParameterTypes148;
+	private String _methodName149;
+	private String[] _methodParameterTypes149;
+	private String _methodName150;
+	private String[] _methodParameterTypes150;
+	private String _methodName151;
+	private String[] _methodParameterTypes151;
 }

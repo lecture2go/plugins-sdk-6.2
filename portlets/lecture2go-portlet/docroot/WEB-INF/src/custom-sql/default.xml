@@ -71,4 +71,9 @@
 		]]>
     </sql> 
     
+    <sql id="de.uhh.l2g.plugins.service.persistence.CreatorFinder.findCreatorsForLectureseries">
+		<![CDATA[
+			SELECT c.* FROM LG_CREATOR c, LG_Lectureseries_Creator lc WHERE c.creatorId=lc.creatorId AND lc.lectureseriesId = ?
+		]]>
+    </sql>     
 </custom-sql>

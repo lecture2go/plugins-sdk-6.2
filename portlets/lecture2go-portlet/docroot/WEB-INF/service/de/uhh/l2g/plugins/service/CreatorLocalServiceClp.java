@@ -109,6 +109,22 @@ public class CreatorLocalServiceClp implements CreatorLocalService {
 		_methodName17 = "setBeanIdentifier";
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
+
+		_methodName19 = "getCreatorsByLectureseries";
+
+		_methodParameterTypes19 = new String[] { "java.lang.Long" };
+
+		_methodName20 = "getJSONCreators";
+
+		_methodParameterTypes20 = new String[] { "java.lang.Long" };
+
+		_methodName21 = "getJSONCreator";
+
+		_methodParameterTypes21 = new String[] { "java.lang.Long" };
+
+		_methodName22 = "getByFullName";
+
+		_methodParameterTypes22 = new String[] { "java.lang.String" };
 	}
 
 	@Override
@@ -657,6 +673,119 @@ public class CreatorLocalServiceClp implements CreatorLocalService {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Creator> getCreatorsByLectureseries(
+		java.lang.Long lectureseriesId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName19,
+					_methodParameterTypes19,
+					new Object[] { ClpSerializer.translateInput(lectureseriesId) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<de.uhh.l2g.plugins.model.Creator>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public org.json.JSONArray getJSONCreators(java.lang.Long lectureseriesId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20,
+					new Object[] { ClpSerializer.translateInput(lectureseriesId) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.json.JSONArray)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public org.json.JSONArray getJSONCreator(java.lang.Long creatorId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21,
+					new Object[] { ClpSerializer.translateInput(creatorId) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.json.JSONArray)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Creator> getByFullName(
+		java.lang.String fullName)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22,
+					new Object[] { ClpSerializer.translateInput(fullName) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<de.uhh.l2g.plugins.model.Creator>)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -694,4 +823,12 @@ public class CreatorLocalServiceClp implements CreatorLocalService {
 	private String[] _methodParameterTypes16;
 	private String _methodName17;
 	private String[] _methodParameterTypes17;
+	private String _methodName19;
+	private String[] _methodParameterTypes19;
+	private String _methodName20;
+	private String[] _methodParameterTypes20;
+	private String _methodName21;
+	private String[] _methodParameterTypes21;
+	private String _methodName22;
+	private String[] _methodParameterTypes22;
 }

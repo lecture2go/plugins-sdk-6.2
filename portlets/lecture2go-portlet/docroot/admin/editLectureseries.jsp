@@ -13,7 +13,7 @@
 	String lLongDesc = "";
 	
 	Long lId=new Long(0);
-	Lectureseries reqLectureseries = LectureseriesLocalServiceUtil.createLectureseries(0);
+	Lectureseries reqLectureseries = new LectureseriesImpl();
 	try{ 
 		reqLectureseries = (Lectureseries)request.getAttribute("reqLectureseries");
 		lId=reqLectureseries.getLectureseriesId();
@@ -54,6 +54,11 @@
 	List<Long> pIds = new ArrayList<Long>();
 	try{
 		pIds = ProducerLocalServiceUtil.getAllProducerIds(lId);
+	}catch (NullPointerException e){}
+
+	List<Creator> creators = new ArrayList<Creator>();
+	try{
+		creators = CreatorLocalServiceUtil.getCreators(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 	}catch (NullPointerException e){}
 	
 	List<Term> semesters = new ArrayList<Term>(); 
@@ -132,7 +137,7 @@
 						%>
 						<div id='<%=f.getInstitutionId()%>'> 
 							<%=f.getName()+"&nbsp;&nbsp;&nbsp;" %> 
-							<a style='cursor:pointer;' onClick='document.getElementById("<%=f.getInstitutionId()%>").remove();'><b>X</b></a>
+							<a class="icon-large icon-remove" style='cursor:pointer;' onClick='document.getElementById("<%=f.getInstitutionId()%>").remove();'></a>
 							<aui:input type="hidden" name="institutions" id="institutions" value="<%=f.getInstitutionId()%>"/>
 						</div>
 						<%
@@ -162,7 +167,7 @@
 						%>
 						<div id='<%=p.getProducerId()%>'> 
 							<%=p.getLastName() +", "+p.getFirstName()+"&nbsp;&nbsp;&nbsp;" %> 
-							<a style='cursor:pointer;' onClick='document.getElementById("<%=p.getProducerId()%>").remove();'><b>X</b></a>
+							<a class="icon-large icon-remove"style='cursor:pointer;' onClick='document.getElementById("<%=p.getProducerId()%>").remove();'></a>
 							<aui:input type="hidden" name="producers" id="producers" value="<%=p.getProducerId()%>"/>
 						</div>
 						<%
@@ -183,10 +188,20 @@
 				}%>
 			</aui:select>
 
-			<div id="creator"></div>
-			<br/>
-			<aui:button value="add-new-creator" id="addCreator"/>
+			<aui:select size="1" name="crId" label="creators">
+				<aui:option value="">select-creator</aui:option>
+				<%for (int i = 0; i < creators.size(); i++) {
+					%><aui:option value='<%=creators.get(i).getCreatorId()%>'><%=creators.get(i).getJobTitle() + " "+creators.get(i).getLastName() + ", " + creators.get(i).getFirstName()%></aui:option><%
+				}%>	
+			</aui:select>	
+						
+			<div id="creators"></div>
 
+			<a id="addCreator">
+			    add-new-creator <span class="icon-large icon-plus-sign"></span>
+			</a>
+			<br/><br/>
+			
 			<aui:input name="password" label="password" value="<%=lPassword%>"/>
 			
 			<aui:field-wrapper label="description">
@@ -205,9 +220,10 @@
 </aui:form>
 
 <!-- Template -->
-<script type="text/x-jquery-tmpl" id="creat">
-	<div id="creator<%="${counter}"%>">
-	<aui:select size="1" name="creatorTitles" label="">
+<script type="text/x-jquery-tmpl" id="newCreator">
+	<div id="nc<%="${counter}"%>">
+	<aui:input type="hidden" name="gender"/>
+	<aui:select size="1" name="jobTitle" label="">
 		<aui:option value=""></aui:option>
 		<%
 		String[] l =  LanguageUtil.get(pageContext, "creator-titles").split(",");
@@ -219,20 +235,47 @@
 	</aui:select>
 	<aui:input name="firstName" type="text"/>
 	<aui:input name="lastName" type="text"/>
-	<aui:input name="middleName" type="text"/>
-	<a class="icon-large icon-remove" onclick="remb('<%="${counter}"%>');"></a>
-	<br/><br/>
+	<aui:input name="creatorId" value="0" type="hidden"/>
+	<a class="icon-large icon-remove" onclick="remb('<%="nc${counter}"%>');"></a>
+	<br/>
+	</div>
 </script>
 
-<script>
-$(function () {appendCreator(c);});
+<!-- Template -->
+<script type="text/x-jquery-tmpl" id="created">
+   	<div id="<%="c${creatorId}"%>">
+    	<%="${fullName}"%> &nbsp; <a class="icon-large icon-remove" onclick="remb('<%="c${creatorId}"%>');"></a>
+		<aui:input type="hidden" name="gender"/>
+		<input type="hidden" name="<portlet:namespace/>jobTitle" value="<%="${jobTitle}"%>"/>
+		<input type="hidden" name="<portlet:namespace/>firstName" value="<%="${firstName}"%>"/>
+		<input type="hidden" name="<portlet:namespace/>lastName" value="<%="${lastName}"%>"/>
+		<input type="hidden" name="<portlet:namespace/>creatorId" value="<%="${creatorId}"%>"/>
+	</div>
+</script>
 
+<script type="text/javascript">
+		<%
+			String vars ="";
+			try{
+				vars = CreatorLocalServiceUtil.getJSONCreators(reqLectureseries.getLectureseriesId()).toString();
+			}catch(Exception e){}
+		%>
+		
+		$(function () {
+	        var vars = <%=vars%>;
+	        $.template( "filesTemplate", $("#created") );
+	        $.tmpl( "filesTemplate", vars ).appendTo( "#creators" );
+	    });
+</script>
+
+<liferay-portlet:resourceURL id="getJSONCreator" var="getJSONCreatorURL" />
+
+<script>
 function appendCreator(c){
 	$(function () {
     	var vars = {'counter':c};
-    	console.log(vars);
-    	$.template( "filesTemplate", $("#creat") );
-    	$.tmpl( "filesTemplate", vars ).appendTo( "#creator" );
+    	$.template( "filesTemplate", $("#newCreator") );
+    	$.tmpl( "filesTemplate", vars ).appendTo( "#creators" );
 	});
 };
 
@@ -243,7 +286,7 @@ $( "#addCreator" ).on( "click", function() {
 });
 
 function remb(c){
-	$("#creator"+c).remove();
+	$("#"+c).remove();
 }
 
 AUI().use('aui-node',
@@ -253,6 +296,7 @@ function(A) {
     var contProduc = A.one('.prodCont');
     var contFacil = A.one('.facilCont');
     var producerId = A.one('#<portlet:namespace/>producerId');
+    var crId = A.one('#<portlet:namespace/>crId');
     var institutionId = A.one('#<portlet:namespace/>institutionId');
     var newSemester = A.one('#<portlet:namespace/>newSemester');
     var allSemesters = A.one('#<portlet:namespace/>allSemesters');
@@ -264,6 +308,18 @@ function(A) {
   	   	 		var n = producerId.get(producerId.get('selectedIndex')).get('value');
   	    		var t = producerId.get(producerId.get('selectedIndex')).get('text')+"&nbsp;&nbsp;&nbsp;";
   	  			contProduc.append("<div id='"+n+"'> "+t+" <a style='cursor:pointer;' onClick='document.getElementById(&quot;"+n+"&quot;).remove();'><b>X</b></a><input id='<portlet:namespace></portlet:namespace>producers' name='<portlet:namespace></portlet:namespace>producers' value='"+n+"' type='hidden'/></div>");
+  			}
+      	}
+    );
+    
+    crId.on(
+      	'change',
+      	function(A) {
+  			if(crId.get('value')>0){
+  		        var vars = getJSONCreator(crId.get('value'));
+  		        console.log(vars);
+  		        $.template( "filesTemplate", $("#created") );
+  		        $.tmpl( "filesTemplate", vars ).appendTo( "#creators" );
   			}
       	}
     );
@@ -281,4 +337,24 @@ function(A) {
     
   }
 );
+
+function getJSONCreator (data){
+	var ret;
+	$.ajax({
+		  type: "POST",
+		  url: "<%=getJSONCreatorURL%>",
+		  dataType: 'json',
+		  data: {
+		 	   	<portlet:namespace/>creatorId: data,
+		  },
+		  global: false,
+		  async:false,
+		  success: function(data) {
+		    ret = data;
+		  }
+	})
+	return ret;
+}
+
+
 </script>

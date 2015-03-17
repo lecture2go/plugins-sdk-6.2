@@ -78,6 +78,7 @@ public class CreatorClp extends BaseModelImpl<Creator> implements Creator {
 		attributes.put("middleName", getMiddleName());
 		attributes.put("jobTitle", getJobTitle());
 		attributes.put("gender", getGender());
+		attributes.put("fullName", getFullName());
 
 		return attributes;
 	}
@@ -118,6 +119,12 @@ public class CreatorClp extends BaseModelImpl<Creator> implements Creator {
 
 		if (gender != null) {
 			setGender(gender);
+		}
+
+		String fullName = (String)attributes.get("fullName");
+
+		if (fullName != null) {
+			setFullName(fullName);
 		}
 	}
 
@@ -259,6 +266,29 @@ public class CreatorClp extends BaseModelImpl<Creator> implements Creator {
 		}
 	}
 
+	@Override
+	public String getFullName() {
+		return _fullName;
+	}
+
+	@Override
+	public void setFullName(String fullName) {
+		_fullName = fullName;
+
+		if (_creatorRemoteModel != null) {
+			try {
+				Class<?> clazz = _creatorRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setFullName", String.class);
+
+				method.invoke(_creatorRemoteModel, fullName);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
 	public BaseModel<?> getCreatorRemoteModel() {
 		return _creatorRemoteModel;
 	}
@@ -334,23 +364,22 @@ public class CreatorClp extends BaseModelImpl<Creator> implements Creator {
 		clone.setMiddleName(getMiddleName());
 		clone.setJobTitle(getJobTitle());
 		clone.setGender(getGender());
+		clone.setFullName(getFullName());
 
 		return clone;
 	}
 
 	@Override
 	public int compareTo(Creator creator) {
-		long primaryKey = creator.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		value = getLastName().compareTo(creator.getLastName());
+
+		if (value != 0) {
+			return value;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
-		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	@Override
@@ -386,7 +415,7 @@ public class CreatorClp extends BaseModelImpl<Creator> implements Creator {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{creatorId=");
 		sb.append(getCreatorId());
@@ -400,6 +429,8 @@ public class CreatorClp extends BaseModelImpl<Creator> implements Creator {
 		sb.append(getJobTitle());
 		sb.append(", gender=");
 		sb.append(getGender());
+		sb.append(", fullName=");
+		sb.append(getFullName());
 		sb.append("}");
 
 		return sb.toString();
@@ -407,7 +438,7 @@ public class CreatorClp extends BaseModelImpl<Creator> implements Creator {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Creator");
@@ -437,6 +468,10 @@ public class CreatorClp extends BaseModelImpl<Creator> implements Creator {
 			"<column><column-name>gender</column-name><column-value><![CDATA[");
 		sb.append(getGender());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>fullName</column-name><column-value><![CDATA[");
+		sb.append(getFullName());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -449,6 +484,7 @@ public class CreatorClp extends BaseModelImpl<Creator> implements Creator {
 	private String _middleName;
 	private String _jobTitle;
 	private String _gender;
+	private String _fullName;
 	private BaseModel<?> _creatorRemoteModel;
 	private Class<?> _clpSerializerClass = de.uhh.l2g.plugins.service.ClpSerializer.class;
 }

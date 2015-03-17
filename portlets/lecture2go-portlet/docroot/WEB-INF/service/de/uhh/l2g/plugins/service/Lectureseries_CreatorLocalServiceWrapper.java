@@ -290,6 +290,34 @@ public class Lectureseries_CreatorLocalServiceWrapper
 			parameterTypes, arguments);
 	}
 
+	@Override
+	public void removeByLectureseriesId(java.lang.Long lectureseriesId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_lectureseries_CreatorLocalService.removeByLectureseriesId(lectureseriesId);
+	}
+
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Creator> getByCreatorId(
+		java.lang.Long creatorId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _lectureseries_CreatorLocalService.getByCreatorId(creatorId);
+	}
+
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Creator> getByLectureseriesId(
+		java.lang.Long lectureseriesId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _lectureseries_CreatorLocalService.getByLectureseriesId(lectureseriesId);
+	}
+
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Creator> getByLectureseriesIdAndCreatorId(
+		java.lang.Long lectureseriesId, java.lang.Long creatorId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _lectureseries_CreatorLocalService.getByLectureseriesIdAndCreatorId(lectureseriesId,
+			creatorId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

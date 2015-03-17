@@ -275,6 +275,30 @@ public class Lectureseries_CreatorLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static void removeByLectureseriesId(java.lang.Long lectureseriesId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().removeByLectureseriesId(lectureseriesId);
+	}
+
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Creator> getByCreatorId(
+		java.lang.Long creatorId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getByCreatorId(creatorId);
+	}
+
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Creator> getByLectureseriesId(
+		java.lang.Long lectureseriesId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getByLectureseriesId(lectureseriesId);
+	}
+
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Creator> getByLectureseriesIdAndCreatorId(
+		java.lang.Long lectureseriesId, java.lang.Long creatorId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getByLectureseriesIdAndCreatorId(lectureseriesId, creatorId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

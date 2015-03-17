@@ -20,6 +20,7 @@
 		<field name="middleName" type="String" />
 		<field name="jobTitle" type="String" />
 		<field name="gender" type="String" />
+		<field name="fullName" type="String" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Host">
 		<field name="hostId" type="long" />

@@ -35,7 +35,7 @@ import java.io.ObjectOutput;
 public class CreatorCacheModel implements CacheModel<Creator>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{creatorId=");
 		sb.append(creatorId);
@@ -49,6 +49,8 @@ public class CreatorCacheModel implements CacheModel<Creator>, Externalizable {
 		sb.append(jobTitle);
 		sb.append(", gender=");
 		sb.append(gender);
+		sb.append(", fullName=");
+		sb.append(fullName);
 		sb.append("}");
 
 		return sb.toString();
@@ -95,6 +97,13 @@ public class CreatorCacheModel implements CacheModel<Creator>, Externalizable {
 			creatorImpl.setGender(gender);
 		}
 
+		if (fullName == null) {
+			creatorImpl.setFullName(StringPool.BLANK);
+		}
+		else {
+			creatorImpl.setFullName(fullName);
+		}
+
 		creatorImpl.resetOriginalValues();
 
 		return creatorImpl;
@@ -108,6 +117,7 @@ public class CreatorCacheModel implements CacheModel<Creator>, Externalizable {
 		middleName = objectInput.readUTF();
 		jobTitle = objectInput.readUTF();
 		gender = objectInput.readUTF();
+		fullName = objectInput.readUTF();
 	}
 
 	@Override
@@ -149,6 +159,13 @@ public class CreatorCacheModel implements CacheModel<Creator>, Externalizable {
 		else {
 			objectOutput.writeUTF(gender);
 		}
+
+		if (fullName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(fullName);
+		}
 	}
 
 	public long creatorId;
@@ -157,4 +174,5 @@ public class CreatorCacheModel implements CacheModel<Creator>, Externalizable {
 	public String middleName;
 	public String jobTitle;
 	public String gender;
+	public String fullName;
 }

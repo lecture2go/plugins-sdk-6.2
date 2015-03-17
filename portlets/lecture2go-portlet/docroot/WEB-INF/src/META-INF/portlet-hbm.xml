@@ -41,7 +41,7 @@
 	<class name="de.uhh.l2g.plugins.model.impl.CoordinatorImpl" table="LG_Coordinator">
 		<cache usage="read-write" />
 		<id name="coordinatorId" type="long">
-			<generator class="assigned" />
+			<generator class="increment" />
 		</id>
 		<property name="institutionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="officeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -56,6 +56,7 @@
 		<property name="middleName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="jobTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="gender" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="fullName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.HostImpl" table="LG_Host">
 		<cache usage="read-write" />
@@ -127,7 +128,7 @@
 	<class name="de.uhh.l2g.plugins.model.impl.Lectureseries_CreatorImpl" table="LG_Lectureseries_Creator">
 		<cache usage="read-write" />
 		<id name="lectureseriesCreatorId" type="long">
-			<generator class="assigned" />
+			<generator class="increment" />
 		</id>
 		<property name="lectureseriesId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="creatorId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -179,7 +180,7 @@
 	<class name="de.uhh.l2g.plugins.model.impl.ProducerImpl" table="LG_Producer">
 		<cache usage="read-write" />
 		<id name="producerId" type="long">
-			<generator class="assigned" />
+			<generator class="increment" />
 		</id>
 		<property name="idNum" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="homeDir" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -278,7 +279,7 @@
 	<class name="de.uhh.l2g.plugins.model.impl.Video_CreatorImpl" table="LG_Video_Creator">
 		<cache usage="read-write" />
 		<id name="videoCreatorId" type="long">
-			<generator class="assigned" />
+			<generator class="increment" />
 		</id>
 		<property name="creatorId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>

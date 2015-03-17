@@ -253,4 +253,22 @@ public interface Lectureseries_CreatorLocalService extends BaseLocalService,
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
+
+	public void removeByLectureseriesId(java.lang.Long lectureseriesId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Creator> getByCreatorId(
+		java.lang.Long creatorId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Creator> getByLectureseriesId(
+		java.lang.Long lectureseriesId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Creator> getByLectureseriesIdAndCreatorId(
+		java.lang.Long lectureseriesId, java.lang.Long creatorId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

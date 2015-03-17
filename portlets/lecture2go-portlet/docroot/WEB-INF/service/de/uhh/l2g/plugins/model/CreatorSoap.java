@@ -35,6 +35,7 @@ public class CreatorSoap implements Serializable {
 		soapModel.setMiddleName(model.getMiddleName());
 		soapModel.setJobTitle(model.getJobTitle());
 		soapModel.setGender(model.getGender());
+		soapModel.setFullName(model.getFullName());
 
 		return soapModel;
 	}
@@ -135,10 +136,19 @@ public class CreatorSoap implements Serializable {
 		_gender = gender;
 	}
 
+	public String getFullName() {
+		return _fullName;
+	}
+
+	public void setFullName(String fullName) {
+		_fullName = fullName;
+	}
+
 	private long _creatorId;
 	private String _firstName;
 	private String _lastName;
 	private String _middleName;
 	private String _jobTitle;
 	private String _gender;
+	private String _fullName;
 }

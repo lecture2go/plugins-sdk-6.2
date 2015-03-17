@@ -35,6 +35,7 @@ import de.uhh.l2g.plugins.model.Institution_Host;
 import de.uhh.l2g.plugins.service.Institution_HostLocalService;
 import de.uhh.l2g.plugins.service.persistence.CategoryPersistence;
 import de.uhh.l2g.plugins.service.persistence.CoordinatorPersistence;
+import de.uhh.l2g.plugins.service.persistence.CreatorFinder;
 import de.uhh.l2g.plugins.service.persistence.CreatorPersistence;
 import de.uhh.l2g.plugins.service.persistence.HostPersistence;
 import de.uhh.l2g.plugins.service.persistence.InstitutionFinder;
@@ -419,6 +420,24 @@ public abstract class Institution_HostLocalServiceBaseImpl
 	 */
 	public void setCreatorPersistence(CreatorPersistence creatorPersistence) {
 		this.creatorPersistence = creatorPersistence;
+	}
+
+	/**
+	 * Returns the creator finder.
+	 *
+	 * @return the creator finder
+	 */
+	public CreatorFinder getCreatorFinder() {
+		return creatorFinder;
+	}
+
+	/**
+	 * Sets the creator finder.
+	 *
+	 * @param creatorFinder the creator finder
+	 */
+	public void setCreatorFinder(CreatorFinder creatorFinder) {
+		this.creatorFinder = creatorFinder;
 	}
 
 	/**
@@ -1545,6 +1564,8 @@ public abstract class Institution_HostLocalServiceBaseImpl
 	protected de.uhh.l2g.plugins.service.CreatorLocalService creatorLocalService;
 	@BeanReference(type = CreatorPersistence.class)
 	protected CreatorPersistence creatorPersistence;
+	@BeanReference(type = CreatorFinder.class)
+	protected CreatorFinder creatorFinder;
 	@BeanReference(type = de.uhh.l2g.plugins.service.HostLocalService.class)
 	protected de.uhh.l2g.plugins.service.HostLocalService hostLocalService;
 	@BeanReference(type = HostPersistence.class)
