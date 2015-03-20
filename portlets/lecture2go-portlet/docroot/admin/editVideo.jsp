@@ -431,7 +431,7 @@ function updateCreators(){
 		}
 		jsonArray[n]=parameters;
 	});
-	//set parameter to server for update
+	//set parameter to server for update 
 	$.ajax({
 		  type: "POST",
 		  url: "<%=updateCreatorsURL%>",
