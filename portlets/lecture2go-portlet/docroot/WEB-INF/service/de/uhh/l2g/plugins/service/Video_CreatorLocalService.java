@@ -253,4 +253,15 @@ public interface Video_CreatorLocalService extends BaseLocalService,
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
+
+	public void deleteByVideoId(java.lang.Long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteByCreatorId(java.lang.Long creatorId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<de.uhh.l2g.plugins.model.Video_Creator> getByVideoCreator(
+		java.lang.Long videoId, java.lang.Long creatorId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

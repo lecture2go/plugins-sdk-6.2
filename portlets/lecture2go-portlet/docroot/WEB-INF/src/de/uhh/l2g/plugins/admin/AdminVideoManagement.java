@@ -13,7 +13,6 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-import javax.swing.text.html.HTMLDocument.Iterator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,6 +26,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import de.uhh.l2g.plugins.NoSuchLicenseException;
+import de.uhh.l2g.plugins.model.Creator;
 import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.Lectureseries_Institution;
 import de.uhh.l2g.plugins.model.License;
@@ -34,25 +34,28 @@ import de.uhh.l2g.plugins.model.Metadata;
 import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.model.Segment;
 import de.uhh.l2g.plugins.model.Video;
+import de.uhh.l2g.plugins.model.Video_Creator;
 import de.uhh.l2g.plugins.model.Video_Institution;
 import de.uhh.l2g.plugins.model.Video_Lectureseries;
+import de.uhh.l2g.plugins.model.impl.CreatorImpl;
 import de.uhh.l2g.plugins.model.impl.LectureseriesImpl;
 import de.uhh.l2g.plugins.model.impl.LicenseImpl;
 import de.uhh.l2g.plugins.model.impl.MetadataImpl;
 import de.uhh.l2g.plugins.model.impl.ProducerImpl;
 import de.uhh.l2g.plugins.model.impl.SegmentImpl;
 import de.uhh.l2g.plugins.model.impl.VideoImpl;
+import de.uhh.l2g.plugins.model.impl.Video_CreatorImpl;
 import de.uhh.l2g.plugins.model.impl.Video_InstitutionImpl;
 import de.uhh.l2g.plugins.model.impl.Video_LectureseriesImpl;
 import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
-import de.uhh.l2g.plugins.service.Lectureseries_InstitutionLocalService;
 import de.uhh.l2g.plugins.service.Lectureseries_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LicenseLocalServiceUtil;
 import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Video_CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.util.FFmpegManager;
@@ -296,8 +299,6 @@ public class AdminVideoManagement extends MVCPortlet {
 	 	    String title = ParamUtil.getString(resourceRequest, "title");
 			String language = ParamUtil.getString(resourceRequest, "language");
 			String tags = ParamUtil.getString(resourceRequest, "tags");
-			String creator = ParamUtil.getString(resourceRequest, "creator");
-			String rightsHolder = ParamUtil.getString(resourceRequest, "rightsHolder");
 			String publisher = ParamUtil.getString(resourceRequest, "publisher");
 			Long lId = ParamUtil.getLong(resourceRequest, "lectureseriesId");
 			Lectureseries l = new LectureseriesImpl();
@@ -611,6 +612,62 @@ public class AdminVideoManagement extends MVCPortlet {
 				e.printStackTrace();
 			}
 			writeJSON(resourceRequest, resourceResponse, json);			
+		}
+		
+		if(resourceID.equals("updateCreators")){
+			String creators = ParamUtil.getString(resourceRequest, "creator");
+			try {
+				JSONArray creatorsArray = new JSONArray(creators);
+				JSONArray newCreatorsArray = new JSONArray();
+				//remove creators for video
+				try {
+					Video_CreatorLocalServiceUtil.deleteByVideoId(videoId);			
+					//and update with new creators from list
+					for (int i = 0; i< creatorsArray.length(); i++){
+						org.json.JSONObject creator =  creatorsArray.getJSONObject(i);
+						Long creatorId= creator.getLong("creatorId");
+						String firstName = creator.getString("firstName");
+						String lastName = creator.getString("lastName");
+						String middleName = creator.getString("middleName");
+						String jobTitle = creator.getString("jobTitle");
+						String gender = creator.getString("gender");
+						String fullName = creator.getString("fullName");
+						
+						Video_Creator vc = new Video_CreatorImpl();
+						Long newCreatorId = new Long(0);
+						//if creator exists in DB, just add to video
+						if(creatorId>new Long(0)){
+							newCreatorId = creatorId;
+						}else{ 
+							//if new creator doesn't exits in the creators DB (check by full name),
+							//create a new one in DB and add to video
+							List<Creator> cL = CreatorLocalServiceUtil.getByFullName(fullName);
+							if(cL.size()==0){
+								Creator c = new CreatorImpl();
+								c.setFirstName(firstName);
+								c.setLastName(lastName);
+								c.setMiddleName(middleName);
+								c.setJobTitle(jobTitle);
+								c.setGender(gender);
+								c.setFullName(fullName);
+								newCreatorId = CreatorLocalServiceUtil.addCreator(c).getCreatorId();
+							}else{
+								newCreatorId = cL.listIterator().next().getCreatorId();
+							}
+						}
+						vc.setCreatorId(newCreatorId);
+						vc.setVideoId(videoId);
+						List<Video_Creator> vcl = new ArrayList<Video_Creator>();
+						vcl = Video_CreatorLocalServiceUtil.getByVideoCreator(videoId, newCreatorId);
+						if(vcl.size()==0)Video_CreatorLocalServiceUtil.addVideo_Creator(vc);
+					}
+				} catch (SystemException e) {
+					e.printStackTrace();
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			writeJSON(resourceRequest, resourceResponse, CreatorLocalServiceUtil.getJSONCreatorsByVideoId(videoId));			
 		}
 		
 	}

@@ -275,6 +275,22 @@ public class Video_CreatorLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static void deleteByVideoId(java.lang.Long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteByVideoId(videoId);
+	}
+
+	public static void deleteByCreatorId(java.lang.Long creatorId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteByCreatorId(creatorId);
+	}
+
+	public static java.util.List<de.uhh.l2g.plugins.model.Video_Creator> getByVideoCreator(
+		java.lang.Long videoId, java.lang.Long creatorId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getByVideoCreator(videoId, creatorId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

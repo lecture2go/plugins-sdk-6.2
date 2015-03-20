@@ -288,6 +288,25 @@ public class Video_CreatorLocalServiceWrapper
 			arguments);
 	}
 
+	@Override
+	public void deleteByVideoId(java.lang.Long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_video_CreatorLocalService.deleteByVideoId(videoId);
+	}
+
+	@Override
+	public void deleteByCreatorId(java.lang.Long creatorId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_video_CreatorLocalService.deleteByCreatorId(creatorId);
+	}
+
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Video_Creator> getByVideoCreator(
+		java.lang.Long videoId, java.lang.Long creatorId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _video_CreatorLocalService.getByVideoCreator(videoId, creatorId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

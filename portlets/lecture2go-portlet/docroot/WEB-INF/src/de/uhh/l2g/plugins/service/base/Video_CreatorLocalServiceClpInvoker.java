@@ -113,6 +113,20 @@ public class Video_CreatorLocalServiceClpInvoker {
 		_methodName143 = "setBeanIdentifier";
 
 		_methodParameterTypes143 = new String[] { "java.lang.String" };
+
+		_methodName148 = "deleteByVideoId";
+
+		_methodParameterTypes148 = new String[] { "java.lang.Long" };
+
+		_methodName149 = "deleteByCreatorId";
+
+		_methodParameterTypes149 = new String[] { "java.lang.Long" };
+
+		_methodName150 = "getByVideoCreator";
+
+		_methodParameterTypes150 = new String[] {
+				"java.lang.Long", "java.lang.Long"
+			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -216,6 +230,26 @@ public class Video_CreatorLocalServiceClpInvoker {
 			return null;
 		}
 
+		if (_methodName148.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes148, parameterTypes)) {
+			Video_CreatorLocalServiceUtil.deleteByVideoId((java.lang.Long)arguments[0]);
+
+			return null;
+		}
+
+		if (_methodName149.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes149, parameterTypes)) {
+			Video_CreatorLocalServiceUtil.deleteByCreatorId((java.lang.Long)arguments[0]);
+
+			return null;
+		}
+
+		if (_methodName150.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes150, parameterTypes)) {
+			return Video_CreatorLocalServiceUtil.getByVideoCreator((java.lang.Long)arguments[0],
+				(java.lang.Long)arguments[1]);
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -255,4 +289,10 @@ public class Video_CreatorLocalServiceClpInvoker {
 	private String[] _methodParameterTypes142;
 	private String _methodName143;
 	private String[] _methodParameterTypes143;
+	private String _methodName148;
+	private String[] _methodParameterTypes148;
+	private String _methodName149;
+	private String[] _methodParameterTypes149;
+	private String _methodName150;
+	private String[] _methodParameterTypes150;
 }

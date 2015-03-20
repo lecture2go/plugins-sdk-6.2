@@ -15,6 +15,7 @@
 <liferay-portlet:resourceURL id="deleteFile" var="deleteFileURL" />
 <liferay-portlet:resourceURL id="isFirstUpload" var="isFirstUploadURL" />
 <liferay-portlet:resourceURL id="defaultContainer" var="defaultContainerURL" />
+<liferay-portlet:resourceURL id="updateCreators" var="updateCreatorsURL" />
 
 <%
 	String actionURL = "";
@@ -353,6 +354,7 @@ function applyAllMetadataChanges(){
 				    updateDescription(descData);
 				    updateLicense(license1.get('value'));
 				    updateLicense(license2.get('value'));
+				    updateCreators();
 			}
 	);
 }
@@ -400,7 +402,52 @@ function deleteFile(fileName){
 	    }
 	});	
 }
+</script>
 
+<script type="text/javascript">
+function updateCreators(){
+	var namespace="<portlet:namespace/>";
+	var jsonArray = [];
+	$('#creators').children().each(function(n){
+		var parameters = {};
+		var $div = $(this);
+		var id = $div.attr('id');
+		if(id.indexOf("nc")==-1){
+			parameters['creatorId'] = $div.find('input[name = '+namespace+'creatorId]').val();
+			parameters['firstName'] = $div.find('input[name = '+namespace+'firstName]').val();
+			parameters['lastName'] = $div.find('input[name = '+namespace+'lastName]').val();
+			parameters['middleName'] = "";
+			parameters['jobTitle'] = $div.find('input[name = '+namespace+'jobTitle]').val();
+			parameters['gender'] = "";
+			parameters['fullName'] = $div.find('input[name = '+namespace+'fullName]').val();
+		}else{
+			parameters['creatorId'] = "0";
+			parameters['firstName'] = $div.find('input[name = '+namespace+'firstName]').val().trim();
+			parameters['lastName'] = $div.find('input[name = '+namespace+'lastName]').val().trim();
+			parameters['middleName'] = "";
+			parameters['jobTitle'] = $div.find('#'+namespace+'jobTitle option:selected').val();
+			parameters['gender'] = "";
+			parameters['fullName'] = parameters['jobTitle']+" "+parameters['firstName']+" "+parameters['lastName'];		
+		}
+		jsonArray[n]=parameters;
+	});
+	//set parameter to server for update
+	$.ajax({
+		  type: "POST",
+		  url: "<%=updateCreatorsURL%>",
+		  dataType: 'json',
+		  data: {
+		 	   	<portlet:namespace/>creator: JSON.stringify(jsonArray),
+		 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>",
+		  },
+		  global: false,
+		  async:false,
+		  success: function(data) {
+		    console.log(data);
+		  }
+	})
+	
+}
 </script>
 
 <!-- Template -->
@@ -449,10 +496,11 @@ function deleteFile(fileName){
    	<div id="<%="c${creatorId}"%>">
     	<%="${fullName}"%> &nbsp; <a class="icon-large icon-remove" onclick="remb('<%="c${creatorId}"%>');"></a>
 		<aui:input type="hidden" name="gender"/>
-		<input type="hidden" name="<portlet:namespace/>jobTitle" value="<%="${jobTitle}"%>"/>
+		<input type="hidden" name="<portlet:namespace/>creatorId" value="<%="${creatorId}"%>"/>
 		<input type="hidden" name="<portlet:namespace/>firstName" value="<%="${firstName}"%>"/>
 		<input type="hidden" name="<portlet:namespace/>lastName" value="<%="${lastName}"%>"/>
-		<input type="hidden" name="<portlet:namespace/>creatorId" value="<%="${creatorId}"%>"/>
+		<input type="hidden" name="<portlet:namespace/>jobTitle" value="<%="${jobTitle}"%>"/>
+		<input type="hidden" name="<portlet:namespace/>fullName" value="<%="${fullName}"%>"/>
 	</div>
 </script>
 
@@ -470,7 +518,6 @@ function deleteFile(fileName){
 	        $.tmpl( "filesTemplate", vars ).appendTo( "#creators" );
 	    });
 </script>
-
 
 <liferay-portlet:resourceURL id="getJSONCreator" var="getJSONCreatorURL" />
 
@@ -528,6 +575,4 @@ function getJSONCreator (data){
 	})
 	return ret;
 }
-
-
 </script>
