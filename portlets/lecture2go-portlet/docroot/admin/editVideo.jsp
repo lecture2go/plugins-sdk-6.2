@@ -279,7 +279,6 @@ function updateVideoFileName(file){
 				on: {
 					   success: function() {
 					     var jsonResponse = this.get('responseData');
-					     //alert(jsonResponse.key1);
 					   }
 				}
 			});	
@@ -307,7 +306,6 @@ function updateMetadata(){
 				on: {
 					   success: function() {
 					     var jsonResponse = this.get('responseData');
-					     //alert(jsonResponse.key1);
 					   }
 				}
 			});	
@@ -392,7 +390,7 @@ function deleteFile(fileName){
 	 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>",
 	    },
 	    success: function(data) {
-	        // since we are using jQuery, you don't need to parse response
+	        //since we are using jQuery, you don't need to parse response
 	        console.log(data);
 	        for (var i = 0; i < data.length; i++) {
 	            var obj = data[i];
@@ -429,7 +427,9 @@ function updateCreators(){
 			parameters['gender'] = "";
 			parameters['fullName'] = parameters['jobTitle']+" "+parameters['firstName']+" "+parameters['lastName'];		
 		}
-		jsonArray[n]=parameters;
+		if(parameters['firstName'].length>0 && parameters['lastName'].length>0){
+			jsonArray[n]=parameters;
+		}
 	});
 	//set parameter to server for update 
 	$.ajax({
@@ -443,10 +443,13 @@ function updateCreators(){
 		  global: false,
 		  async:false,
 		  success: function(data) {
-		    console.log(data);
+		    //remove all creators 
+		    $( "#creators" ).empty();
+		    //and show new creators list
+	        $.template( "filesTemplate", $("#created") );
+	        $.tmpl( "filesTemplate", data ).appendTo( "#creators" );		    
 		  }
 	})
-	
 }
 </script>
 

@@ -69,7 +69,7 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 			try {
 				throw new SystemException(e);
 			} catch (SystemException se) {
-				se.printStackTrace();
+				//se.printStackTrace();
 			}
 		} finally {
 			closeSession(session);

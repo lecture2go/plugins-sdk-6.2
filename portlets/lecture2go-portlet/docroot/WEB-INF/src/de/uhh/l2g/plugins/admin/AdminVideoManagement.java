@@ -207,6 +207,23 @@ public class AdminVideoManagement extends MVCPortlet {
 				Video_InstitutionLocalServiceUtil.addVideo_Institution(vi);
 			}
 		}
+		
+		//creators
+		JSONArray creatorsArray = CreatorLocalServiceUtil.getJSONCreatorsByLectureseriesId(lectureseriesId);
+		for (int i = 0; i< creatorsArray.length(); i++){
+			org.json.JSONObject creator;
+			try {
+				creator = creatorsArray.getJSONObject(i);
+				Long creatorId= creator.getLong("creatorId");
+				Video_Creator vc = new Video_CreatorImpl();
+				vc.setCreatorId(creatorId);
+				vc.setVideoId(newVideo.getVideoId());
+				Video_CreatorLocalServiceUtil.addVideo_Creator(vc);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			
+		}		
 		String backURL = request.getParameter("backURL");
 		request.setAttribute("backURL", backURL);
 		response.setRenderParameter("jspPage", "/admin/editVideo.jsp");
@@ -618,7 +635,6 @@ public class AdminVideoManagement extends MVCPortlet {
 			String creators = ParamUtil.getString(resourceRequest, "creator");
 			try {
 				JSONArray creatorsArray = new JSONArray(creators);
-				JSONArray newCreatorsArray = new JSONArray();
 				//remove creators for video
 				try {
 					Video_CreatorLocalServiceUtil.deleteByVideoId(videoId);			

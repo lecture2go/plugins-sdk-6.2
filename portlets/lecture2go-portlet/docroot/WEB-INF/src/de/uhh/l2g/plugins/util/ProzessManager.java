@@ -64,6 +64,7 @@ import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Segment_User_VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.UploadLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Video_CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideohitlistLocalServiceUtil;
@@ -272,6 +273,7 @@ public class ProzessManager {
 		}
 	}
 
+	@SuppressWarnings("static-access")
 	public boolean deleteVideo(Video video) throws PortalException, SystemException{
 		Host host = new HostImpl();
 		Lectureseries lectureseries = new LectureseriesImpl();
@@ -447,6 +449,9 @@ public class ProzessManager {
 		
 		// refresh open access for lecture series
 		LectureseriesLocalServiceUtil.updateOpenAccess(video, lectureseries); 
+		
+		//delete creators from video
+		Video_CreatorLocalServiceUtil.deleteByVideoId(video.getVideoId());
 		
 		return true;
 	}
