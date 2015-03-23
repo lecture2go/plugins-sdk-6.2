@@ -28,6 +28,8 @@ import de.uhh.l2g.plugins.model.Coordinator;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Producer;
+import de.uhh.l2g.plugins.model.impl.CoordinatorImpl;
+import de.uhh.l2g.plugins.model.impl.ProducerImpl;
 import de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
@@ -95,8 +97,10 @@ public class AdminUserManagement extends MVCPortlet {
 			List<Institution> allFacil = InstitutionLocalServiceUtil.getByLevel(1);//all institutions for coordinator drop down menu
 			List<User> allCoord = UserLocalServiceUtil.getRoleUsers(RoleLocalServiceUtil.getRole(remoteUser.getCompanyId(), "L2Go Coordinator").getRoleId()); 
 			List<Institution> assignedInstitutions = new ArrayList<Institution>();		
-			for (int i = 0; i < allCoord.size(); i++)
+			try{
+				for (int i = 0; i < allCoord.size(); i++)
 				assignedInstitutions.add(InstitutionLocalServiceUtil.getInstitution(CoordinatorLocalServiceUtil.getCoordinator(allCoord.get(i).getUserId()).getInstitutionId()));
+			}catch(Exception e){}
 			List<Institution> notAssignedInstitutions = new ArrayList<Institution>();
 			for(int i = 0; i < allFacil.size(); i++){
 				boolean assigned = false;
@@ -238,8 +242,8 @@ public class AdminUserManagement extends MVCPortlet {
 	
 	private void handleCoordinatorRequest(ActionRequest request) throws NumberFormatException, PortalException, SystemException {
 		User u = UserLocalServiceUtil.getUser(new Long(request.getParameter("userId")));
-		Coordinator c = null;
-
+		
+		Coordinator c = new CoordinatorImpl();
 		try {
 			c = CoordinatorLocalServiceUtil.getCoordinator(new Long(u.getUserId()));
 		} catch (PortalException e) {
@@ -257,13 +261,11 @@ public class AdminUserManagement extends MVCPortlet {
 	
 	private void handleProducerRequest(ActionRequest request) throws NumberFormatException, PortalException, SystemException, IOException {
 		User u = UserLocalServiceUtil.getUser(new Long(request.getParameter("userId")));
-		Producer p = null;
+		Producer p = new ProducerImpl();
+		
 		//initialize producer
-		try {
-			p = ProducerLocalServiceUtil.getProducer(new Long(u.getUserId()));
-		} catch (PortalException e) {
-			p = ProducerLocalServiceUtil.createProducer(u.getUserId());
-		}
+		try {p = ProducerLocalServiceUtil.createProducer(u.getUserId());} catch (Exception e) {}
+		
 		// save role to l2go producer table
 		p.setProducerId(u.getUserId());
 		p.setInstitutionId(new Long(request.getParameter("pfId")));
@@ -310,7 +312,9 @@ public class AdminUserManagement extends MVCPortlet {
 				}
 				ret = true;
 			}
-		}	
+		}else{
+			ret = true;
+		}
 		return ret;
 	}
 	

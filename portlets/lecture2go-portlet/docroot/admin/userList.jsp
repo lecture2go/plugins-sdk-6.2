@@ -67,14 +67,20 @@
 				if(rn.contains("L2Go Coordinator")){
 					long fId = new Long(0);
 					try{ fId=CoordinatorLocalServiceUtil.getCoordinator(usr.getUserId()).getInstitutionId(); }catch (Exception e){}
-					String fN = InstitutionLocalServiceUtil.getInstitution(fId).getName();
-					n+="coordinator-for "+ fN+"<br/>";
+					String fN = "";
+					try{
+						fN= InstitutionLocalServiceUtil.getInstitution(fId).getName(); 
+						n+="coordinator-for "+ fN+"<br/>";
+					}catch (Exception e){}
 				}
 				if(rn.contains("L2Go Producer")){
 					long fId = new Long(0);
 					try{fId = ProducerLocalServiceUtil.getProducer(usr.getUserId()).getInstitutionId();}catch (Exception e){}
-					String fN = InstitutionLocalServiceUtil.getInstitution(fId).getName();
-					n+="producer-for "+ fN+"<br/>";
+					String fN = "";
+					try{
+						fN= InstitutionLocalServiceUtil.getInstitution(fId).getName(); 
+						n+="producer-for "+ fN+"<br/>";
+					}catch (Exception e){}
 				}
 				if(!rn.contains("L2Go Producer") && !rn.contains("L2Go Coordinator")){
 					n+=rn+"<br/>";

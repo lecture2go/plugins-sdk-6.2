@@ -106,7 +106,7 @@
         </finder>
     </entity>
     <entity name="Producer" local-service="true" remote-service="false">
-        <column name="producerId" type="long" primary="true" id-type="increment"></column>
+        <column name="producerId" type="long" primary="true"></column>
         <column name="idNum" type="String"></column>
         <column name="homeDir" type="String"></column>
         <column name="hostId" type="long"></column>
@@ -191,7 +191,7 @@
         </finder>
     </entity>
     <entity name="Coordinator" local-service="true" remote-service="false">
-        <column name="coordinatorId" type="long" primary="true" id-type="increment"></column>
+        <column name="coordinatorId" type="long" primary="true"></column>
         <column name="institutionId" type="long"></column>
         <column name="officeId" type="long"></column>
         <finder name="Institution" return-type="Collection">
