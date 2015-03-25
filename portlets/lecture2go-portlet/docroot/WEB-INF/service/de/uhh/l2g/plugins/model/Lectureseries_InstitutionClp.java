@@ -77,6 +77,7 @@ public class Lectureseries_InstitutionClp extends BaseModelImpl<Lectureseries_In
 			getLectureseriesInstitutionId());
 		attributes.put("lectureseriesId", getLectureseriesId());
 		attributes.put("institutionId", getInstitutionId());
+		attributes.put("institutionParentId", getInstitutionParentId());
 
 		return attributes;
 	}
@@ -100,6 +101,12 @@ public class Lectureseries_InstitutionClp extends BaseModelImpl<Lectureseries_In
 
 		if (institutionId != null) {
 			setInstitutionId(institutionId);
+		}
+
+		Long institutionParentId = (Long)attributes.get("institutionParentId");
+
+		if (institutionParentId != null) {
+			setInstitutionParentId(institutionParentId);
 		}
 	}
 
@@ -169,6 +176,31 @@ public class Lectureseries_InstitutionClp extends BaseModelImpl<Lectureseries_In
 
 				method.invoke(_lectureseries_InstitutionRemoteModel,
 					institutionId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public long getInstitutionParentId() {
+		return _institutionParentId;
+	}
+
+	@Override
+	public void setInstitutionParentId(long institutionParentId) {
+		_institutionParentId = institutionParentId;
+
+		if (_lectureseries_InstitutionRemoteModel != null) {
+			try {
+				Class<?> clazz = _lectureseries_InstitutionRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setInstitutionParentId",
+						long.class);
+
+				method.invoke(_lectureseries_InstitutionRemoteModel,
+					institutionParentId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -250,6 +282,7 @@ public class Lectureseries_InstitutionClp extends BaseModelImpl<Lectureseries_In
 		clone.setLectureseriesInstitutionId(getLectureseriesInstitutionId());
 		clone.setLectureseriesId(getLectureseriesId());
 		clone.setInstitutionId(getInstitutionId());
+		clone.setInstitutionParentId(getInstitutionParentId());
 
 		return clone;
 	}
@@ -302,7 +335,7 @@ public class Lectureseries_InstitutionClp extends BaseModelImpl<Lectureseries_In
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{lectureseriesInstitutionId=");
 		sb.append(getLectureseriesInstitutionId());
@@ -310,6 +343,8 @@ public class Lectureseries_InstitutionClp extends BaseModelImpl<Lectureseries_In
 		sb.append(getLectureseriesId());
 		sb.append(", institutionId=");
 		sb.append(getInstitutionId());
+		sb.append(", institutionParentId=");
+		sb.append(getInstitutionParentId());
 		sb.append("}");
 
 		return sb.toString();
@@ -317,7 +352,7 @@ public class Lectureseries_InstitutionClp extends BaseModelImpl<Lectureseries_In
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Lectureseries_Institution");
@@ -335,6 +370,10 @@ public class Lectureseries_InstitutionClp extends BaseModelImpl<Lectureseries_In
 			"<column><column-name>institutionId</column-name><column-value><![CDATA[");
 		sb.append(getInstitutionId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>institutionParentId</column-name><column-value><![CDATA[");
+		sb.append(getInstitutionParentId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -344,6 +383,7 @@ public class Lectureseries_InstitutionClp extends BaseModelImpl<Lectureseries_In
 	private long _lectureseriesInstitutionId;
 	private long _lectureseriesId;
 	private long _institutionId;
+	private long _institutionParentId;
 	private BaseModel<?> _lectureseries_InstitutionRemoteModel;
 	private Class<?> _clpSerializerClass = de.uhh.l2g.plugins.service.ClpSerializer.class;
 }

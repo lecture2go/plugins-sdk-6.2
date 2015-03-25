@@ -20,7 +20,9 @@ import java.util.ListIterator;
 
 import com.liferay.portal.kernel.exception.SystemException;
 
+import de.uhh.l2g.plugins.model.Creator;
 import de.uhh.l2g.plugins.model.Lectureseries;
+import de.uhh.l2g.plugins.model.Lectureseries_Creator;
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.Video_Lectureseries;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
@@ -100,6 +102,10 @@ public class LectureseriesLocalServiceImpl extends LectureseriesLocalServiceBase
 			lectureseries.setLatestVideoGenerationDate(ov.getGenerationDate());			
 			LectureseriesLocalServiceUtil.updateLectureseries(l);
 		}
+	}
+	
+	public List<Lectureseries> getFilteredByInstitutionParentInstitutionTermCategoryCreator(Long institutionId, Long parentInstitutionId, ArrayList<Long> termIds, List<Long> categoryIds, List<Lectureseries_Creator> creatorIds){
+		return LectureseriesFinderUtil.findFilteredByInstitutionParentInstitutionTermCategoryCreator(institutionId, parentInstitutionId, termIds, categoryIds, creatorIds);
 	}
 	
 }

@@ -143,6 +143,7 @@
 			<id name="lectureseriesInstitutionId" />
 			<basic name="lectureseriesId" />
 			<basic name="institutionId" />
+			<basic name="institutionParentId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

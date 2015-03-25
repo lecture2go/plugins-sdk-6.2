@@ -22,15 +22,19 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import de.uhh.l2g.plugins.model.Creator;
+import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.Lectureseries_Creator;
 import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.model.impl.CreatorImpl;
+import de.uhh.l2g.plugins.model.impl.InstitutionImpl;
 import de.uhh.l2g.plugins.model.impl.LectureseriesImpl;
 import de.uhh.l2g.plugins.model.impl.Lectureseries_CreatorImpl;
 import de.uhh.l2g.plugins.model.impl.Lectureseries_InstitutionImpl;
 import de.uhh.l2g.plugins.model.impl.Producer_LectureseriesImpl;
 import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
+import de.uhh.l2g.plugins.service.InstitutionLocalService;
+import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Lectureseries_CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Lectureseries_InstitutionLocalServiceUtil;
@@ -124,7 +128,10 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		for(int i=0;i<institutions.length;i++){
 			Lectureseries_InstitutionImpl lf = new Lectureseries_InstitutionImpl();
 			lf.setLectureseriesId(lId);
-			lf.setInstitutionId(new Long(institutions[i]));
+			Institution inst = new InstitutionImpl();
+			inst = InstitutionLocalServiceUtil.getById(new Long(institutions[i]));
+			lf.setInstitutionId(inst.getInstitutionId());
+			lf.setInstitutionParentId(inst.getParentId());
 			if(!Lectureseries_InstitutionLocalServiceUtil.institutionAssignedToLectureseries(lf))
 				Lectureseries_InstitutionLocalServiceUtil.addLectureseries_Institution(lf);
 		}
@@ -218,7 +225,10 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		for(int i=0;i<institutions.length;i++){
 			Lectureseries_InstitutionImpl lf = new Lectureseries_InstitutionImpl();
 			lf.setLectureseriesId(lId);
-			lf.setInstitutionId(new Long(institutions[i]));
+			Institution inst = new InstitutionImpl();
+			inst = InstitutionLocalServiceUtil.getById(new Long(institutions[i]));
+			lf.setInstitutionId(inst.getInstitutionId());
+			lf.setInstitutionParentId(inst.getParentId());
 			Lectureseries_InstitutionLocalServiceUtil.addLectureseries_Institution(lf);
 		}
 

@@ -344,6 +344,8 @@ public class AdminVideoManagement extends MVCPortlet {
 					Video_LectureseriesLocalServiceUtil.removeByVideoId(video.getVideoId());//delete old entries
 					Video_LectureseriesLocalServiceUtil.addVideo_Lectureseries(vl);//add new
 					LectureseriesLocalServiceUtil.updateLectureseries(l);
+					//update lectureseries
+					LectureseriesLocalServiceUtil.updateOpenAccess(video, l);
 				}
 				// update video
 				VideoLocalServiceUtil.updateVideo(video);

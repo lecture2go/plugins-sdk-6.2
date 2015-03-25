@@ -59,9 +59,10 @@ public class Lectureseries_InstitutionModelImpl extends BaseModelImpl<Lectureser
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "lectureseriesInstitutionId", Types.BIGINT },
 			{ "lectureseriesId", Types.BIGINT },
-			{ "institutionId", Types.BIGINT }
+			{ "institutionId", Types.BIGINT },
+			{ "institutionParentId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Lectureseries_Institution (lectureseriesInstitutionId LONG not null primary key,lectureseriesId LONG,institutionId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Lectureseries_Institution (lectureseriesInstitutionId LONG not null primary key,lectureseriesId LONG,institutionId LONG,institutionParentId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Lectureseries_Institution";
 	public static final String ORDER_BY_JPQL = " ORDER BY lectureseries_Institution.lectureseriesInstitutionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Lectureseries_Institution.lectureseriesInstitutionId ASC";
@@ -78,8 +79,9 @@ public class Lectureseries_InstitutionModelImpl extends BaseModelImpl<Lectureser
 				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.Lectureseries_Institution"),
 			true);
 	public static long INSTITUTIONID_COLUMN_BITMASK = 1L;
-	public static long LECTURESERIESID_COLUMN_BITMASK = 2L;
-	public static long LECTURESERIESINSTITUTIONID_COLUMN_BITMASK = 4L;
+	public static long INSTITUTIONPARENTID_COLUMN_BITMASK = 2L;
+	public static long LECTURESERIESID_COLUMN_BITMASK = 4L;
+	public static long LECTURESERIESINSTITUTIONID_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Lectureseries_Institution"));
 
@@ -124,6 +126,7 @@ public class Lectureseries_InstitutionModelImpl extends BaseModelImpl<Lectureser
 			getLectureseriesInstitutionId());
 		attributes.put("lectureseriesId", getLectureseriesId());
 		attributes.put("institutionId", getInstitutionId());
+		attributes.put("institutionParentId", getInstitutionParentId());
 
 		return attributes;
 	}
@@ -147,6 +150,12 @@ public class Lectureseries_InstitutionModelImpl extends BaseModelImpl<Lectureser
 
 		if (institutionId != null) {
 			setInstitutionId(institutionId);
+		}
+
+		Long institutionParentId = (Long)attributes.get("institutionParentId");
+
+		if (institutionParentId != null) {
+			setInstitutionParentId(institutionParentId);
 		}
 	}
 
@@ -204,6 +213,28 @@ public class Lectureseries_InstitutionModelImpl extends BaseModelImpl<Lectureser
 		return _originalInstitutionId;
 	}
 
+	@Override
+	public long getInstitutionParentId() {
+		return _institutionParentId;
+	}
+
+	@Override
+	public void setInstitutionParentId(long institutionParentId) {
+		_columnBitmask |= INSTITUTIONPARENTID_COLUMN_BITMASK;
+
+		if (!_setOriginalInstitutionParentId) {
+			_setOriginalInstitutionParentId = true;
+
+			_originalInstitutionParentId = _institutionParentId;
+		}
+
+		_institutionParentId = institutionParentId;
+	}
+
+	public long getOriginalInstitutionParentId() {
+		return _originalInstitutionParentId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -238,6 +269,7 @@ public class Lectureseries_InstitutionModelImpl extends BaseModelImpl<Lectureser
 		lectureseries_InstitutionImpl.setLectureseriesInstitutionId(getLectureseriesInstitutionId());
 		lectureseries_InstitutionImpl.setLectureseriesId(getLectureseriesId());
 		lectureseries_InstitutionImpl.setInstitutionId(getInstitutionId());
+		lectureseries_InstitutionImpl.setInstitutionParentId(getInstitutionParentId());
 
 		lectureseries_InstitutionImpl.resetOriginalValues();
 
@@ -298,6 +330,10 @@ public class Lectureseries_InstitutionModelImpl extends BaseModelImpl<Lectureser
 
 		lectureseries_InstitutionModelImpl._setOriginalInstitutionId = false;
 
+		lectureseries_InstitutionModelImpl._originalInstitutionParentId = lectureseries_InstitutionModelImpl._institutionParentId;
+
+		lectureseries_InstitutionModelImpl._setOriginalInstitutionParentId = false;
+
 		lectureseries_InstitutionModelImpl._columnBitmask = 0;
 	}
 
@@ -311,12 +347,14 @@ public class Lectureseries_InstitutionModelImpl extends BaseModelImpl<Lectureser
 
 		lectureseries_InstitutionCacheModel.institutionId = getInstitutionId();
 
+		lectureseries_InstitutionCacheModel.institutionParentId = getInstitutionParentId();
+
 		return lectureseries_InstitutionCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{lectureseriesInstitutionId=");
 		sb.append(getLectureseriesInstitutionId());
@@ -324,6 +362,8 @@ public class Lectureseries_InstitutionModelImpl extends BaseModelImpl<Lectureser
 		sb.append(getLectureseriesId());
 		sb.append(", institutionId=");
 		sb.append(getInstitutionId());
+		sb.append(", institutionParentId=");
+		sb.append(getInstitutionParentId());
 		sb.append("}");
 
 		return sb.toString();
@@ -331,7 +371,7 @@ public class Lectureseries_InstitutionModelImpl extends BaseModelImpl<Lectureser
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Lectureseries_Institution");
@@ -348,6 +388,10 @@ public class Lectureseries_InstitutionModelImpl extends BaseModelImpl<Lectureser
 		sb.append(
 			"<column><column-name>institutionId</column-name><column-value><![CDATA[");
 		sb.append(getInstitutionId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>institutionParentId</column-name><column-value><![CDATA[");
+		sb.append(getInstitutionParentId());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -366,6 +410,9 @@ public class Lectureseries_InstitutionModelImpl extends BaseModelImpl<Lectureser
 	private long _institutionId;
 	private long _originalInstitutionId;
 	private boolean _setOriginalInstitutionId;
+	private long _institutionParentId;
+	private long _originalInstitutionParentId;
+	private boolean _setOriginalInstitutionParentId;
 	private long _columnBitmask;
 	private Lectureseries_Institution _escapedModel;
 }

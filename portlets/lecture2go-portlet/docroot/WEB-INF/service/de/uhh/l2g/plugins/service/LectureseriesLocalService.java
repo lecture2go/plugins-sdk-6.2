@@ -277,4 +277,11 @@ public interface LectureseriesLocalService extends BaseLocalService,
 	public void updateOpenAccess(de.uhh.l2g.plugins.model.Video video,
 		de.uhh.l2g.plugins.model.Lectureseries lectureseries)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getFilteredByInstitutionParentInstitutionTermCategoryCreator(
+		java.lang.Long institutionId, java.lang.Long parentInstitutionId,
+		java.util.ArrayList<java.lang.Long> termIds,
+		java.util.List<java.lang.Long> categoryIds,
+		java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Creator> creatorIds);
 }

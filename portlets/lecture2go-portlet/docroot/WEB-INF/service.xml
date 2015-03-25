@@ -94,6 +94,7 @@
         <column name="lectureseriesInstitutionId" type="long" primary="true" id-type="increment"></column>
         <column name="lectureseriesId" type="long" primary="false"></column>
         <column name="institutionId" type="long" primary="false"></column>
+        <column name="institutionParentId" type="long"></column>
         <finder name="LectureseriesId" return-type="Collection">
             <finder-column name="lectureseriesId"></finder-column>
         </finder>
@@ -103,6 +104,9 @@
         <finder name="LectureseriesIdAndInstitutionId" return-type="Collection">
             <finder-column name="lectureseriesId"></finder-column>
             <finder-column name="institutionId"></finder-column>
+        </finder>
+        <finder name="InstitutionParentId" return-type="Collection">
+            <finder-column name="institutionParentId"></finder-column>
         </finder>
     </entity>
     <entity name="Producer" local-service="true" remote-service="false">

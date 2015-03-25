@@ -1,3 +1,7 @@
 <%@include file="/init.jsp"%>
 
-XXX XXX XX XX XXX XXXXXX
+<portlet:actionURL name="viewOpenAccessLectureSeries" var="viewOpenAccessLectureSeriesURL"></portlet:actionURL>
+
+<aui:form action="<%=viewOpenAccessLectureSeriesURL%>" commandName="model">
+	<aui:button type="submit" onclick="<portlet:namespace />extractCodeFromEditor()"/>
+</aui:form>

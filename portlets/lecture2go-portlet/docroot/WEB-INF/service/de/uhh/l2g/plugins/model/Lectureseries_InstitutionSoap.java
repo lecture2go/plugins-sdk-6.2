@@ -33,6 +33,7 @@ public class Lectureseries_InstitutionSoap implements Serializable {
 		soapModel.setLectureseriesInstitutionId(model.getLectureseriesInstitutionId());
 		soapModel.setLectureseriesId(model.getLectureseriesId());
 		soapModel.setInstitutionId(model.getInstitutionId());
+		soapModel.setInstitutionParentId(model.getInstitutionParentId());
 
 		return soapModel;
 	}
@@ -112,7 +113,16 @@ public class Lectureseries_InstitutionSoap implements Serializable {
 		_institutionId = institutionId;
 	}
 
+	public long getInstitutionParentId() {
+		return _institutionParentId;
+	}
+
+	public void setInstitutionParentId(long institutionParentId) {
+		_institutionParentId = institutionParentId;
+	}
+
 	private long _lectureseriesInstitutionId;
 	private long _lectureseriesId;
 	private long _institutionId;
+	private long _institutionParentId;
 }

@@ -55,6 +55,7 @@ public class Lectureseries_InstitutionWrapper
 			getLectureseriesInstitutionId());
 		attributes.put("lectureseriesId", getLectureseriesId());
 		attributes.put("institutionId", getInstitutionId());
+		attributes.put("institutionParentId", getInstitutionParentId());
 
 		return attributes;
 	}
@@ -78,6 +79,12 @@ public class Lectureseries_InstitutionWrapper
 
 		if (institutionId != null) {
 			setInstitutionId(institutionId);
+		}
+
+		Long institutionParentId = (Long)attributes.get("institutionParentId");
+
+		if (institutionParentId != null) {
+			setInstitutionParentId(institutionParentId);
 		}
 	}
 
@@ -159,6 +166,26 @@ public class Lectureseries_InstitutionWrapper
 	@Override
 	public void setInstitutionId(long institutionId) {
 		_lectureseries_Institution.setInstitutionId(institutionId);
+	}
+
+	/**
+	* Returns the institution parent ID of this lectureseries_ institution.
+	*
+	* @return the institution parent ID of this lectureseries_ institution
+	*/
+	@Override
+	public long getInstitutionParentId() {
+		return _lectureseries_Institution.getInstitutionParentId();
+	}
+
+	/**
+	* Sets the institution parent ID of this lectureseries_ institution.
+	*
+	* @param institutionParentId the institution parent ID of this lectureseries_ institution
+	*/
+	@Override
+	public void setInstitutionParentId(long institutionParentId) {
+		_lectureseries_Institution.setInstitutionParentId(institutionParentId);
 	}
 
 	@Override

@@ -86,7 +86,8 @@ create table LG_Lectureseries_Creator (
 create table LG_Lectureseries_Institution (
 	lectureseriesInstitutionId LONG not null primary key,
 	lectureseriesId LONG,
-	institutionId LONG
+	institutionId LONG,
+	institutionParentId LONG
 );
 
 create table LG_Lectureseries_Person (

@@ -80,6 +80,7 @@
 		<field name="lectureseriesInstitutionId" type="long" />
 		<field name="lectureseriesId" type="long" />
 		<field name="institutionId" type="long" />
+		<field name="institutionParentId" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.License">
 		<field name="licenseId" type="long" />

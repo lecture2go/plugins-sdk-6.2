@@ -35,7 +35,7 @@ public class Lectureseries_InstitutionCacheModel implements CacheModel<Lecturese
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{lectureseriesInstitutionId=");
 		sb.append(lectureseriesInstitutionId);
@@ -43,6 +43,8 @@ public class Lectureseries_InstitutionCacheModel implements CacheModel<Lecturese
 		sb.append(lectureseriesId);
 		sb.append(", institutionId=");
 		sb.append(institutionId);
+		sb.append(", institutionParentId=");
+		sb.append(institutionParentId);
 		sb.append("}");
 
 		return sb.toString();
@@ -55,6 +57,7 @@ public class Lectureseries_InstitutionCacheModel implements CacheModel<Lecturese
 		lectureseries_InstitutionImpl.setLectureseriesInstitutionId(lectureseriesInstitutionId);
 		lectureseries_InstitutionImpl.setLectureseriesId(lectureseriesId);
 		lectureseries_InstitutionImpl.setInstitutionId(institutionId);
+		lectureseries_InstitutionImpl.setInstitutionParentId(institutionParentId);
 
 		lectureseries_InstitutionImpl.resetOriginalValues();
 
@@ -66,6 +69,7 @@ public class Lectureseries_InstitutionCacheModel implements CacheModel<Lecturese
 		lectureseriesInstitutionId = objectInput.readLong();
 		lectureseriesId = objectInput.readLong();
 		institutionId = objectInput.readLong();
+		institutionParentId = objectInput.readLong();
 	}
 
 	@Override
@@ -74,9 +78,11 @@ public class Lectureseries_InstitutionCacheModel implements CacheModel<Lecturese
 		objectOutput.writeLong(lectureseriesInstitutionId);
 		objectOutput.writeLong(lectureseriesId);
 		objectOutput.writeLong(institutionId);
+		objectOutput.writeLong(institutionParentId);
 	}
 
 	public long lectureseriesInstitutionId;
 	public long lectureseriesId;
 	public long institutionId;
+	public long institutionParentId;
 }

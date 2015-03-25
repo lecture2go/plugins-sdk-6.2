@@ -51,6 +51,7 @@ create index IX_B43D577C on LG_Lectureseries_Creator (lectureseriesId);
 create index IX_3D4C3B5B on LG_Lectureseries_Creator (lectureseriesId, creatorId);
 
 create index IX_719B09B3 on LG_Lectureseries_Institution (institutionId);
+create index IX_A6D66CFD on LG_Lectureseries_Institution (institutionParentId);
 create index IX_C80ED770 on LG_Lectureseries_Institution (lectureseriesId);
 create index IX_4B074373 on LG_Lectureseries_Institution (lectureseriesId, institutionId);
 

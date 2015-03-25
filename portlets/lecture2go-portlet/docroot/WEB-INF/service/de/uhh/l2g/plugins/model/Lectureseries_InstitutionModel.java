@@ -98,6 +98,20 @@ public interface Lectureseries_InstitutionModel extends BaseModel<Lectureseries_
 	 */
 	public void setInstitutionId(long institutionId);
 
+	/**
+	 * Returns the institution parent ID of this lectureseries_ institution.
+	 *
+	 * @return the institution parent ID of this lectureseries_ institution
+	 */
+	public long getInstitutionParentId();
+
+	/**
+	 * Sets the institution parent ID of this lectureseries_ institution.
+	 *
+	 * @param institutionParentId the institution parent ID of this lectureseries_ institution
+	 */
+	public void setInstitutionParentId(long institutionParentId);
+
 	@Override
 	public boolean isNew();
 

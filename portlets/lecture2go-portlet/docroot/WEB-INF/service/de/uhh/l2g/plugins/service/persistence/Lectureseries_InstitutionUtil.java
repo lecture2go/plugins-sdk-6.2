@@ -642,6 +642,177 @@ public class Lectureseries_InstitutionUtil {
 	}
 
 	/**
+	* Returns all the lectureseries_ institutions where institutionParentId = &#63;.
+	*
+	* @param institutionParentId the institution parent ID
+	* @return the matching lectureseries_ institutions
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Institution> findByInstitutionParentId(
+		long institutionParentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByInstitutionParentId(institutionParentId);
+	}
+
+	/**
+	* Returns a range of all the lectureseries_ institutions where institutionParentId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.Lectureseries_InstitutionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param institutionParentId the institution parent ID
+	* @param start the lower bound of the range of lectureseries_ institutions
+	* @param end the upper bound of the range of lectureseries_ institutions (not inclusive)
+	* @return the range of matching lectureseries_ institutions
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Institution> findByInstitutionParentId(
+		long institutionParentId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByInstitutionParentId(institutionParentId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the lectureseries_ institutions where institutionParentId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.Lectureseries_InstitutionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param institutionParentId the institution parent ID
+	* @param start the lower bound of the range of lectureseries_ institutions
+	* @param end the upper bound of the range of lectureseries_ institutions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching lectureseries_ institutions
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Institution> findByInstitutionParentId(
+		long institutionParentId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByInstitutionParentId(institutionParentId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first lectureseries_ institution in the ordered set where institutionParentId = &#63;.
+	*
+	* @param institutionParentId the institution parent ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching lectureseries_ institution
+	* @throws de.uhh.l2g.plugins.NoSuchLectureseries_InstitutionException if a matching lectureseries_ institution could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Lectureseries_Institution findByInstitutionParentId_First(
+		long institutionParentId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchLectureseries_InstitutionException {
+		return getPersistence()
+				   .findByInstitutionParentId_First(institutionParentId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first lectureseries_ institution in the ordered set where institutionParentId = &#63;.
+	*
+	* @param institutionParentId the institution parent ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching lectureseries_ institution, or <code>null</code> if a matching lectureseries_ institution could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Lectureseries_Institution fetchByInstitutionParentId_First(
+		long institutionParentId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByInstitutionParentId_First(institutionParentId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last lectureseries_ institution in the ordered set where institutionParentId = &#63;.
+	*
+	* @param institutionParentId the institution parent ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching lectureseries_ institution
+	* @throws de.uhh.l2g.plugins.NoSuchLectureseries_InstitutionException if a matching lectureseries_ institution could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Lectureseries_Institution findByInstitutionParentId_Last(
+		long institutionParentId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchLectureseries_InstitutionException {
+		return getPersistence()
+				   .findByInstitutionParentId_Last(institutionParentId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last lectureseries_ institution in the ordered set where institutionParentId = &#63;.
+	*
+	* @param institutionParentId the institution parent ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching lectureseries_ institution, or <code>null</code> if a matching lectureseries_ institution could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Lectureseries_Institution fetchByInstitutionParentId_Last(
+		long institutionParentId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByInstitutionParentId_Last(institutionParentId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the lectureseries_ institutions before and after the current lectureseries_ institution in the ordered set where institutionParentId = &#63;.
+	*
+	* @param lectureseriesInstitutionId the primary key of the current lectureseries_ institution
+	* @param institutionParentId the institution parent ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next lectureseries_ institution
+	* @throws de.uhh.l2g.plugins.NoSuchLectureseries_InstitutionException if a lectureseries_ institution with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Lectureseries_Institution[] findByInstitutionParentId_PrevAndNext(
+		long lectureseriesInstitutionId, long institutionParentId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchLectureseries_InstitutionException {
+		return getPersistence()
+				   .findByInstitutionParentId_PrevAndNext(lectureseriesInstitutionId,
+			institutionParentId, orderByComparator);
+	}
+
+	/**
+	* Removes all the lectureseries_ institutions where institutionParentId = &#63; from the database.
+	*
+	* @param institutionParentId the institution parent ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByInstitutionParentId(long institutionParentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByInstitutionParentId(institutionParentId);
+	}
+
+	/**
+	* Returns the number of lectureseries_ institutions where institutionParentId = &#63;.
+	*
+	* @param institutionParentId the institution parent ID
+	* @return the number of matching lectureseries_ institutions
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByInstitutionParentId(long institutionParentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByInstitutionParentId(institutionParentId);
+	}
+
+	/**
 	* Caches the lectureseries_ institution in the entity cache if it is enabled.
 	*
 	* @param lectureseries_Institution the lectureseries_ institution

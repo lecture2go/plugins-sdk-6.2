@@ -144,6 +144,13 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 				"de.uhh.l2g.plugins.model.Video",
 				"de.uhh.l2g.plugins.model.Lectureseries"
 			};
+
+		_methodName25 = "getFilteredByInstitutionParentInstitutionTermCategoryCreator";
+
+		_methodParameterTypes25 = new String[] {
+				"java.lang.Long", "java.lang.Long", "java.util.ArrayList",
+				"java.util.List", "java.util.List"
+			};
 	}
 
 	@Override
@@ -861,6 +868,44 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 		}
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getFilteredByInstitutionParentInstitutionTermCategoryCreator(
+		java.lang.Long institutionId, java.lang.Long parentInstitutionId,
+		java.util.ArrayList<java.lang.Long> termIds,
+		java.util.List<java.lang.Long> categoryIds,
+		java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Creator> creatorIds) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
+					new Object[] {
+						ClpSerializer.translateInput(institutionId),
+						
+					ClpSerializer.translateInput(parentInstitutionId),
+						
+					ClpSerializer.translateInput(termIds),
+						
+					ClpSerializer.translateInput(categoryIds),
+						
+					ClpSerializer.translateInput(creatorIds)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<de.uhh.l2g.plugins.model.Lectureseries>)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -910,4 +955,6 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 	private String[] _methodParameterTypes23;
 	private String _methodName24;
 	private String[] _methodParameterTypes24;
+	private String _methodName25;
+	private String[] _methodParameterTypes25;
 }

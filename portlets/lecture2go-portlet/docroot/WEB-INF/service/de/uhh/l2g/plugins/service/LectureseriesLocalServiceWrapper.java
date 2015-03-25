@@ -326,6 +326,16 @@ public class LectureseriesLocalServiceWrapper
 		_lectureseriesLocalService.updateOpenAccess(video, lectureseries);
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getFilteredByInstitutionParentInstitutionTermCategoryCreator(
+		java.lang.Long institutionId, java.lang.Long parentInstitutionId,
+		java.util.ArrayList<java.lang.Long> termIds,
+		java.util.List<java.lang.Long> categoryIds,
+		java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Creator> creatorIds) {
+		return _lectureseriesLocalService.getFilteredByInstitutionParentInstitutionTermCategoryCreator(institutionId,
+			parentInstitutionId, termIds, categoryIds, creatorIds);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
