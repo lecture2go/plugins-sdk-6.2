@@ -308,14 +308,15 @@ public class LectureseriesLocalServiceUtil {
 		getService().updateOpenAccess(video, lectureseries);
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getFilteredByInstitutionParentInstitutionTermCategoryCreator(
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(
 		java.lang.Long institutionId, java.lang.Long parentInstitutionId,
 		java.util.ArrayList<java.lang.Long> termIds,
-		java.util.List<java.lang.Long> categoryIds,
-		java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Creator> creatorIds) {
+		java.util.ArrayList<java.lang.Long> categoryIds,
+		java.util.ArrayList<java.lang.Long> creatorIds,
+		java.lang.String searchString) {
 		return getService()
-				   .getFilteredByInstitutionParentInstitutionTermCategoryCreator(institutionId,
-			parentInstitutionId, termIds, categoryIds, creatorIds);
+				   .getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(institutionId,
+			parentInstitutionId, termIds, categoryIds, creatorIds, searchString);
 	}
 
 	public static void clearService() {

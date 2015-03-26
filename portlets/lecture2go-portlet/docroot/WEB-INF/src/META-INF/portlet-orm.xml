@@ -247,6 +247,17 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.TagcloudModelImpl">
+		<attributes>
+			<id name="tagcloudId" />
+			<basic name="isVideo" />
+			<basic name="isLectureseries" />
+			<basic name="tags" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.TermModelImpl">
 		<attributes>
 			<id name="termId" />
@@ -278,7 +289,6 @@
 		<attributes>
 			<id name="videoId" />
 			<basic name="title" />
-			<basic name="tags" />
 			<basic name="lectureseriesId" />
 			<basic name="producerId" />
 			<basic name="containerFormat" />
@@ -447,6 +457,10 @@
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.SysImpl" name="Sys">
 		<table name="LG_Sys" />
+		<attributes />
+	</entity>
+	<entity class="de.uhh.l2g.plugins.model.impl.TagcloudImpl" name="Tagcloud">
+		<table name="LG_Tagcloud" />
 		<attributes />
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.TermImpl" name="Term">

@@ -106,17 +106,21 @@ public class CategoryLocalServiceClpInvoker {
 				"de.uhh.l2g.plugins.model.Category"
 			};
 
-		_methodName142 = "getBeanIdentifier";
+		_methodName146 = "getBeanIdentifier";
 
-		_methodParameterTypes142 = new String[] {  };
+		_methodParameterTypes146 = new String[] {  };
 
-		_methodName143 = "setBeanIdentifier";
+		_methodName147 = "setBeanIdentifier";
 
-		_methodParameterTypes143 = new String[] { "java.lang.String" };
+		_methodParameterTypes147 = new String[] { "java.lang.String" };
 
-		_methodName148 = "getAllCategories";
+		_methodName152 = "getAllCategories";
 
-		_methodParameterTypes148 = new String[] { "int", "int" };
+		_methodParameterTypes152 = new String[] { "int", "int" };
+
+		_methodName153 = "getByName";
+
+		_methodParameterTypes153 = new String[] { "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -208,22 +212,27 @@ public class CategoryLocalServiceClpInvoker {
 			return CategoryLocalServiceUtil.updateCategory((de.uhh.l2g.plugins.model.Category)arguments[0]);
 		}
 
-		if (_methodName142.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes142, parameterTypes)) {
+		if (_methodName146.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes146, parameterTypes)) {
 			return CategoryLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName143.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes143, parameterTypes)) {
+		if (_methodName147.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes147, parameterTypes)) {
 			CategoryLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName148.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes148, parameterTypes)) {
+		if (_methodName152.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes152, parameterTypes)) {
 			return CategoryLocalServiceUtil.getAllCategories(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
+		}
+
+		if (_methodName153.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes153, parameterTypes)) {
+			return CategoryLocalServiceUtil.getByName((java.lang.String)arguments[0]);
 		}
 
 		throw new UnsupportedOperationException();
@@ -261,10 +270,12 @@ public class CategoryLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName142;
-	private String[] _methodParameterTypes142;
-	private String _methodName143;
-	private String[] _methodParameterTypes143;
-	private String _methodName148;
-	private String[] _methodParameterTypes148;
+	private String _methodName146;
+	private String[] _methodParameterTypes146;
+	private String _methodName147;
+	private String[] _methodParameterTypes147;
+	private String _methodName152;
+	private String[] _methodParameterTypes152;
+	private String _methodName153;
+	private String[] _methodParameterTypes153;
 }

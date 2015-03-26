@@ -16,8 +16,6 @@ import org.json.JSONArray;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
@@ -33,12 +31,10 @@ import de.uhh.l2g.plugins.model.impl.Lectureseries_CreatorImpl;
 import de.uhh.l2g.plugins.model.impl.Lectureseries_InstitutionImpl;
 import de.uhh.l2g.plugins.model.impl.Producer_LectureseriesImpl;
 import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
-import de.uhh.l2g.plugins.service.InstitutionLocalService;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Lectureseries_CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Lectureseries_InstitutionLocalServiceUtil;
-import de.uhh.l2g.plugins.service.LicenseLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Producer_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;

@@ -51,7 +51,6 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 
 		attributes.put("videoId", getVideoId());
 		attributes.put("title", getTitle());
-		attributes.put("tags", getTags());
 		attributes.put("lectureseriesId", getLectureseriesId());
 		attributes.put("producerId", getProducerId());
 		attributes.put("containerFormat", getContainerFormat());
@@ -88,12 +87,6 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 
 		if (title != null) {
 			setTitle(title);
-		}
-
-		String tags = (String)attributes.get("tags");
-
-		if (tags != null) {
-			setTags(tags);
 		}
 
 		Long lectureseriesId = (Long)attributes.get("lectureseriesId");
@@ -276,26 +269,6 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 	@Override
 	public void setTitle(java.lang.String title) {
 		_video.setTitle(title);
-	}
-
-	/**
-	* Returns the tags of this video.
-	*
-	* @return the tags of this video
-	*/
-	@Override
-	public java.lang.String getTags() {
-		return _video.getTags();
-	}
-
-	/**
-	* Sets the tags of this video.
-	*
-	* @param tags the tags of this video
-	*/
-	@Override
-	public void setTags(java.lang.String tags) {
-		_video.setTags(tags);
 	}
 
 	/**

@@ -34,14 +34,15 @@ public class LectureseriesFinderUtil {
 		return getFinder().findAllLectureseriesWhithOpenaccessVideos();
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreator(
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(
 		java.lang.Long institutionId, java.lang.Long parentInstitutionId,
 		java.util.ArrayList<java.lang.Long> termIds,
-		java.util.List<java.lang.Long> categoryIds,
-		java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Creator> creatorIds) {
+		java.util.ArrayList<java.lang.Long> categoryIds,
+		java.util.ArrayList<java.lang.Long> creatorIds,
+		java.lang.String searchString) {
 		return getFinder()
-				   .findFilteredByInstitutionParentInstitutionTermCategoryCreator(institutionId,
-			parentInstitutionId, termIds, categoryIds, creatorIds);
+				   .findFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(institutionId,
+			parentInstitutionId, termIds, categoryIds, creatorIds, searchString);
 	}
 
 	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findFilteredByApprovedSemesterFacultyProducer(

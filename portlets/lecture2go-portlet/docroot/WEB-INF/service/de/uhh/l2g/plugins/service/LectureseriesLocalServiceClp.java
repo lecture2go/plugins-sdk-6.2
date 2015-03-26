@@ -145,11 +145,11 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 				"de.uhh.l2g.plugins.model.Lectureseries"
 			};
 
-		_methodName25 = "getFilteredByInstitutionParentInstitutionTermCategoryCreator";
+		_methodName25 = "getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString";
 
 		_methodParameterTypes25 = new String[] {
 				"java.lang.Long", "java.lang.Long", "java.util.ArrayList",
-				"java.util.List", "java.util.List"
+				"java.util.ArrayList", "java.util.ArrayList", "java.lang.String"
 			};
 	}
 
@@ -869,11 +869,12 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 	}
 
 	@Override
-	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getFilteredByInstitutionParentInstitutionTermCategoryCreator(
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(
 		java.lang.Long institutionId, java.lang.Long parentInstitutionId,
 		java.util.ArrayList<java.lang.Long> termIds,
-		java.util.List<java.lang.Long> categoryIds,
-		java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Creator> creatorIds) {
+		java.util.ArrayList<java.lang.Long> categoryIds,
+		java.util.ArrayList<java.lang.Long> creatorIds,
+		java.lang.String searchString) {
 		Object returnObj = null;
 
 		try {
@@ -888,7 +889,9 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 						
 					ClpSerializer.translateInput(categoryIds),
 						
-					ClpSerializer.translateInput(creatorIds)
+					ClpSerializer.translateInput(creatorIds),
+						
+					ClpSerializer.translateInput(searchString)
 					});
 		}
 		catch (Throwable t) {

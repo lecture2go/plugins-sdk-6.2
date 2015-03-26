@@ -55,6 +55,7 @@ import de.uhh.l2g.plugins.service.persistence.ProducerPersistence;
 import de.uhh.l2g.plugins.service.persistence.Producer_LectureseriesPersistence;
 import de.uhh.l2g.plugins.service.persistence.SegmentPersistence;
 import de.uhh.l2g.plugins.service.persistence.SysPersistence;
+import de.uhh.l2g.plugins.service.persistence.TagcloudPersistence;
 import de.uhh.l2g.plugins.service.persistence.TermPersistence;
 import de.uhh.l2g.plugins.service.persistence.UploadPersistence;
 import de.uhh.l2g.plugins.service.persistence.VideoFinder;
@@ -1052,6 +1053,43 @@ public abstract class CategoryLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the tagcloud local service.
+	 *
+	 * @return the tagcloud local service
+	 */
+	public de.uhh.l2g.plugins.service.TagcloudLocalService getTagcloudLocalService() {
+		return tagcloudLocalService;
+	}
+
+	/**
+	 * Sets the tagcloud local service.
+	 *
+	 * @param tagcloudLocalService the tagcloud local service
+	 */
+	public void setTagcloudLocalService(
+		de.uhh.l2g.plugins.service.TagcloudLocalService tagcloudLocalService) {
+		this.tagcloudLocalService = tagcloudLocalService;
+	}
+
+	/**
+	 * Returns the tagcloud persistence.
+	 *
+	 * @return the tagcloud persistence
+	 */
+	public TagcloudPersistence getTagcloudPersistence() {
+		return tagcloudPersistence;
+	}
+
+	/**
+	 * Sets the tagcloud persistence.
+	 *
+	 * @param tagcloudPersistence the tagcloud persistence
+	 */
+	public void setTagcloudPersistence(TagcloudPersistence tagcloudPersistence) {
+		this.tagcloudPersistence = tagcloudPersistence;
+	}
+
+	/**
 	 * Returns the term local service.
 	 *
 	 * @return the term local service
@@ -1626,6 +1664,10 @@ public abstract class CategoryLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected de.uhh.l2g.plugins.service.SysLocalService sysLocalService;
 	@BeanReference(type = SysPersistence.class)
 	protected SysPersistence sysPersistence;
+	@BeanReference(type = de.uhh.l2g.plugins.service.TagcloudLocalService.class)
+	protected de.uhh.l2g.plugins.service.TagcloudLocalService tagcloudLocalService;
+	@BeanReference(type = TagcloudPersistence.class)
+	protected TagcloudPersistence tagcloudPersistence;
 	@BeanReference(type = de.uhh.l2g.plugins.service.TermLocalService.class)
 	protected de.uhh.l2g.plugins.service.TermLocalService termLocalService;
 	@BeanReference(type = TermPersistence.class)

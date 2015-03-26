@@ -75,7 +75,7 @@
 			
 			<aui:input id="title" name="title" label="title" required="false" value="<%=reqVideo.getTitle()%>" />
 
-			<aui:input name="tags" label="tags" required="false" value="<%=reqVideo.getTags()%>"/>
+			<aui:input name="tags" label="tags" required="false" value=""/>
 
 			<aui:input name="publisher" label="publisher" required="false" value="<%=reqMetadata.getPublisher()%>"/>
 			

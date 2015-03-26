@@ -43,6 +43,7 @@ import de.uhh.l2g.plugins.model.ProducerClp;
 import de.uhh.l2g.plugins.model.Producer_LectureseriesClp;
 import de.uhh.l2g.plugins.model.SegmentClp;
 import de.uhh.l2g.plugins.model.SysClp;
+import de.uhh.l2g.plugins.model.TagcloudClp;
 import de.uhh.l2g.plugins.model.TermClp;
 import de.uhh.l2g.plugins.model.UploadClp;
 import de.uhh.l2g.plugins.model.VideoClp;
@@ -198,6 +199,10 @@ public class ClpSerializer {
 
 		if (oldModelClassName.equals(SysClp.class.getName())) {
 			return translateInputSys(oldModel);
+		}
+
+		if (oldModelClassName.equals(TagcloudClp.class.getName())) {
+			return translateInputTagcloud(oldModel);
 		}
 
 		if (oldModelClassName.equals(TermClp.class.getName())) {
@@ -425,6 +430,16 @@ public class ClpSerializer {
 		SysClp oldClpModel = (SysClp)oldModel;
 
 		BaseModel<?> newModel = oldClpModel.getSysRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputTagcloud(BaseModel<?> oldModel) {
+		TagcloudClp oldClpModel = (TagcloudClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getTagcloudRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -1192,6 +1207,43 @@ public class ClpSerializer {
 			}
 		}
 
+		if (oldModelClassName.equals(
+					"de.uhh.l2g.plugins.model.impl.TagcloudImpl")) {
+			return translateOutputTagcloud(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
+
 		if (oldModelClassName.equals("de.uhh.l2g.plugins.model.impl.TermImpl")) {
 			return translateOutputTerm(oldModel);
 		}
@@ -1658,6 +1710,10 @@ public class ClpSerializer {
 			return new de.uhh.l2g.plugins.NoSuchSysException();
 		}
 
+		if (className.equals("de.uhh.l2g.plugins.NoSuchTagcloudException")) {
+			return new de.uhh.l2g.plugins.NoSuchTagcloudException();
+		}
+
 		if (className.equals("de.uhh.l2g.plugins.NoSuchTermException")) {
 			return new de.uhh.l2g.plugins.NoSuchTermException();
 		}
@@ -1875,6 +1931,16 @@ public class ClpSerializer {
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
 		newModel.setSysRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputTagcloud(BaseModel<?> oldModel) {
+		TagcloudClp newModel = new TagcloudClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setTagcloudRemoteModel(oldModel);
 
 		return newModel;
 	}

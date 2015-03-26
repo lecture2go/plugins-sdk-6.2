@@ -41,6 +41,8 @@
 	<bean id="de.uhh.l2g.plugins.service.persistence.SegmentPersistence" class="de.uhh.l2g.plugins.service.persistence.SegmentPersistenceImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.SysLocalService" class="de.uhh.l2g.plugins.service.impl.SysLocalServiceImpl" />
 	<bean id="de.uhh.l2g.plugins.service.persistence.SysPersistence" class="de.uhh.l2g.plugins.service.persistence.SysPersistenceImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.TagcloudLocalService" class="de.uhh.l2g.plugins.service.impl.TagcloudLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.TagcloudPersistence" class="de.uhh.l2g.plugins.service.persistence.TagcloudPersistenceImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.TermLocalService" class="de.uhh.l2g.plugins.service.impl.TermLocalServiceImpl" />
 	<bean id="de.uhh.l2g.plugins.service.persistence.TermPersistence" class="de.uhh.l2g.plugins.service.persistence.TermPersistenceImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.UploadLocalService" class="de.uhh.l2g.plugins.service.impl.UploadLocalServiceImpl" />

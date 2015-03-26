@@ -273,7 +273,6 @@
     <entity name="Video" local-service="true" remote-service="false">
         <column name="videoId" type="long" primary="true" id-type="increment"></column>
         <column name="title" type="String"></column>
-        <column name="tags" type="String"></column>
         <column name="lectureseriesId" type="long"></column>
         <column name="producerId" type="long"></column>
         <column name="containerFormat" type="String"></column>
@@ -491,6 +490,18 @@
         <finder name="VideoCreator" return-type="Collection">
             <finder-column name="videoId"></finder-column>
             <finder-column name="creatorId"></finder-column>
+        </finder>
+    </entity>
+    <entity name="Tagcloud" local-service="true" remote-service="false">
+        <column name="tagcloudId" type="long" primary="true" id-type="increment"></column>
+        <column name="isVideo" type="int"></column>
+        <column name="isLectureseries" type="int"></column>
+        <column name="tags" type="String"></column>
+        <finder name="IsVideo" return-type="Collection">
+            <finder-column name="isVideo"></finder-column>
+        </finder>
+        <finder name="IsLectureseries" return-type="Collection">
+            <finder-column name="isLectureseries"></finder-column>
         </finder>
     </entity>
     <exceptions>

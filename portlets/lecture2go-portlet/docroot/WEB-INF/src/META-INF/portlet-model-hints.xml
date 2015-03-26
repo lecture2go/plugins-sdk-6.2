@@ -138,6 +138,12 @@
 		<field name="version" type="String" />
 		<field name="setupWizard" type="int" />
 	</model>
+	<model name="de.uhh.l2g.plugins.model.Tagcloud">
+		<field name="tagcloudId" type="long" />
+		<field name="isVideo" type="int" />
+		<field name="isLectureseries" type="int" />
+		<field name="tags" type="String" />
+	</model>
 	<model name="de.uhh.l2g.plugins.model.Term">
 		<field name="termId" type="long" />
 		<field name="parentId" type="long" />
@@ -157,7 +163,6 @@
 	<model name="de.uhh.l2g.plugins.model.Video">
 		<field name="videoId" type="long" />
 		<field name="title" type="String" />
-		<field name="tags" type="String" />
 		<field name="lectureseriesId" type="long" />
 		<field name="producerId" type="long" />
 		<field name="containerFormat" type="String" />

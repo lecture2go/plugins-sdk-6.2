@@ -20,6 +20,7 @@
 	<import class="de.uhh.l2g.plugins.model.Producer_Lectureseries" />
 	<import class="de.uhh.l2g.plugins.model.Segment" />
 	<import class="de.uhh.l2g.plugins.model.Sys" />
+	<import class="de.uhh.l2g.plugins.model.Tagcloud" />
 	<import class="de.uhh.l2g.plugins.model.Term" />
 	<import class="de.uhh.l2g.plugins.model.Upload" />
 	<import class="de.uhh.l2g.plugins.model.Video" />
@@ -219,6 +220,15 @@
 		<property name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="setupWizard" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
+	<class name="de.uhh.l2g.plugins.model.impl.TagcloudImpl" table="LG_Tagcloud">
+		<cache usage="read-write" />
+		<id name="tagcloudId" type="long">
+			<generator class="increment" />
+		</id>
+		<property name="isVideo" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="isLectureseries" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="tags" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.TermImpl" table="LG_Term">
 		<cache usage="read-write" />
 		<id name="termId" type="long">
@@ -247,7 +257,6 @@
 			<generator class="increment" />
 		</id>
 		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="tags" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="lectureseriesId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="producerId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="containerFormat" type="com.liferay.portal.dao.orm.hibernate.StringType" />

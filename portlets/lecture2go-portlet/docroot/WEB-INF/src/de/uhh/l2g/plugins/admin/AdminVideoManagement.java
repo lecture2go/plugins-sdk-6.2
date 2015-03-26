@@ -322,7 +322,6 @@ public class AdminVideoManagement extends MVCPortlet {
 			//update data base
 			try {
 				video.setTitle(title);
-				video.setTags(tags);
 				video.setLectureseriesId(lId);
 				if(lId>0){
 					l = LectureseriesLocalServiceUtil.getLectureseries(lId);

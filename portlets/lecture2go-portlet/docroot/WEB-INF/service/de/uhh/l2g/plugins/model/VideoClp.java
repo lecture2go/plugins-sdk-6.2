@@ -76,7 +76,6 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 
 		attributes.put("videoId", getVideoId());
 		attributes.put("title", getTitle());
-		attributes.put("tags", getTags());
 		attributes.put("lectureseriesId", getLectureseriesId());
 		attributes.put("producerId", getProducerId());
 		attributes.put("containerFormat", getContainerFormat());
@@ -113,12 +112,6 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 
 		if (title != null) {
 			setTitle(title);
-		}
-
-		String tags = (String)attributes.get("tags");
-
-		if (tags != null) {
-			setTags(tags);
 		}
 
 		Long lectureseriesId = (Long)attributes.get("lectureseriesId");
@@ -282,29 +275,6 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 				Method method = clazz.getMethod("setTitle", String.class);
 
 				method.invoke(_videoRemoteModel, title);
-			}
-			catch (Exception e) {
-				throw new UnsupportedOperationException(e);
-			}
-		}
-	}
-
-	@Override
-	public String getTags() {
-		return _tags;
-	}
-
-	@Override
-	public void setTags(String tags) {
-		_tags = tags;
-
-		if (_videoRemoteModel != null) {
-			try {
-				Class<?> clazz = _videoRemoteModel.getClass();
-
-				Method method = clazz.getMethod("setTags", String.class);
-
-				method.invoke(_videoRemoteModel, tags);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -1690,7 +1660,6 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 
 		clone.setVideoId(getVideoId());
 		clone.setTitle(getTitle());
-		clone.setTags(getTags());
 		clone.setLectureseriesId(getLectureseriesId());
 		clone.setProducerId(getProducerId());
 		clone.setContainerFormat(getContainerFormat());
@@ -1779,14 +1748,12 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(47);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{videoId=");
 		sb.append(getVideoId());
 		sb.append(", title=");
 		sb.append(getTitle());
-		sb.append(", tags=");
-		sb.append(getTags());
 		sb.append(", lectureseriesId=");
 		sb.append(getLectureseriesId());
 		sb.append(", producerId=");
@@ -1834,7 +1801,7 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(73);
+		StringBundler sb = new StringBundler(70);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Video");
@@ -1847,10 +1814,6 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 		sb.append(
 			"<column><column-name>title</column-name><column-value><![CDATA[");
 		sb.append(getTitle());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>tags</column-name><column-value><![CDATA[");
-		sb.append(getTags());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>lectureseriesId</column-name><column-value><![CDATA[");
@@ -1940,7 +1903,6 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 
 	private long _videoId;
 	private String _title;
-	private String _tags;
 	private long _lectureseriesId;
 	private long _producerId;
 	private String _containerFormat;

@@ -4649,7 +4649,6 @@ public class VideoPersistenceImpl extends BasePersistenceImpl<Video>
 
 		videoImpl.setVideoId(video.getVideoId());
 		videoImpl.setTitle(video.getTitle());
-		videoImpl.setTags(video.getTags());
 		videoImpl.setLectureseriesId(video.getLectureseriesId());
 		videoImpl.setProducerId(video.getProducerId());
 		videoImpl.setContainerFormat(video.getContainerFormat());

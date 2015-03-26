@@ -89,21 +89,6 @@ public interface VideoModel extends BaseModel<Video> {
 	public void setTitle(String title);
 
 	/**
-	 * Returns the tags of this video.
-	 *
-	 * @return the tags of this video
-	 */
-	@AutoEscape
-	public String getTags();
-
-	/**
-	 * Sets the tags of this video.
-	 *
-	 * @param tags the tags of this video
-	 */
-	public void setTags(String tags);
-
-	/**
 	 * Returns the lectureseries ID of this video.
 	 *
 	 * @return the lectureseries ID of this video

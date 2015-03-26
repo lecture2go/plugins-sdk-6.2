@@ -327,13 +327,14 @@ public class LectureseriesLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getFilteredByInstitutionParentInstitutionTermCategoryCreator(
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(
 		java.lang.Long institutionId, java.lang.Long parentInstitutionId,
 		java.util.ArrayList<java.lang.Long> termIds,
-		java.util.List<java.lang.Long> categoryIds,
-		java.util.List<de.uhh.l2g.plugins.model.Lectureseries_Creator> creatorIds) {
-		return _lectureseriesLocalService.getFilteredByInstitutionParentInstitutionTermCategoryCreator(institutionId,
-			parentInstitutionId, termIds, categoryIds, creatorIds);
+		java.util.ArrayList<java.lang.Long> categoryIds,
+		java.util.ArrayList<java.lang.Long> creatorIds,
+		java.lang.String searchString) {
+		return _lectureseriesLocalService.getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(institutionId,
+			parentInstitutionId, termIds, categoryIds, creatorIds, searchString);
 	}
 
 	/**

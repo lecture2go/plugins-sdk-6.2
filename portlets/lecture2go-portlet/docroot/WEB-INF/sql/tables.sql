@@ -90,12 +90,6 @@ create table LG_Lectureseries_Institution (
 	institutionParentId LONG
 );
 
-create table LG_Lectureseries_Person (
-	lectureseriesPersonId LONG not null primary key,
-	lectureseriesId LONG,
-	personId LONG
-);
-
 create table LG_License (
 	licenseId LONG not null primary key,
 	videoId LONG,
@@ -118,26 +112,12 @@ create table LG_Metadata (
 	publisher VARCHAR(75) null
 );
 
-create table LG_Metadata_Person (
-	metadataPersonId LONG not null primary key,
-	metadataId LONG,
-	personId LONG
-);
-
 create table LG_Office (
 	officeId LONG not null primary key,
 	name VARCHAR(75) null,
 	www VARCHAR(75) null,
 	email VARCHAR(75) null,
 	institutionId LONG
-);
-
-create table LG_Person (
-	personId LONG not null primary key,
-	firstName VARCHAR(75) null,
-	lastName VARCHAR(75) null,
-	middleName VARCHAR(75) null,
-	jobTitle VARCHAR(75) null
 );
 
 create table LG_Producer (
@@ -167,17 +147,17 @@ create table LG_Segment (
 	userId LONG
 );
 
-create table LG_Segment_User_Video (
-	segmentId LONG,
-	userId LONG,
-	videoId LONG,
-	segmentUserVideoId LONG not null primary key
-);
-
 create table LG_Sys (
 	sysId INTEGER not null primary key,
 	version VARCHAR(75) null,
 	setupWizard INTEGER
+);
+
+create table LG_Tagcloud (
+	tagcloudId LONG not null primary key,
+	isVideo INTEGER,
+	isLectureseries INTEGER,
+	tags VARCHAR(75) null
 );
 
 create table LG_Term (
@@ -187,17 +167,6 @@ create table LG_Term (
 	prefix VARCHAR(75) null,
 	year VARCHAR(75) null,
 	translation VARCHAR(75) null
-);
-
-create table LG_TestEntity (
-	testEntityId LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	testField VARCHAR(75) null
 );
 
 create table LG_Upload (
@@ -212,7 +181,6 @@ create table LG_Upload (
 create table LG_Video (
 	videoId LONG not null primary key,
 	title VARCHAR(75) null,
-	tags VARCHAR(75) null,
 	lectureseriesId LONG,
 	producerId LONG,
 	containerFormat VARCHAR(75) null,
@@ -267,13 +235,4 @@ create table LG_Videohitlist (
 	hitsPerMonth LONG,
 	hitsPerYear LONG,
 	videoId LONG
-);
-
-create table LG_Year (
-	yearId LONG not null primary key,
-	parentId LONG,
-	languageId VARCHAR(75) null,
-	prefix VARCHAR(75) null,
-	name VARCHAR(75) null,
-	translation VARCHAR(75) null
 );

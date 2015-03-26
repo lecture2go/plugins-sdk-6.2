@@ -104,8 +104,8 @@ public class LectureseriesLocalServiceImpl extends LectureseriesLocalServiceBase
 		}
 	}
 	
-	public List<Lectureseries> getFilteredByInstitutionParentInstitutionTermCategoryCreator(Long institutionId, Long parentInstitutionId, ArrayList<Long> termIds, List<Long> categoryIds, List<Lectureseries_Creator> creatorIds){
-		return LectureseriesFinderUtil.findFilteredByInstitutionParentInstitutionTermCategoryCreator(institutionId, parentInstitutionId, termIds, categoryIds, creatorIds);
+	public List<Lectureseries> getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(Long institutionId, Long parentInstitutionId, ArrayList<Long> termIds, ArrayList<Long> categoryIds, ArrayList<Long> creatorIds, String searchString){
+		return LectureseriesFinderUtil.findFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(institutionId, parentInstitutionId, termIds, categoryIds, creatorIds, searchString);
 	}
 	
 }

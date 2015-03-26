@@ -13,9 +13,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
-import de.uhh.l2g.plugins.model.Creator;
 import de.uhh.l2g.plugins.model.Lectureseries;
-import de.uhh.l2g.plugins.model.Lectureseries_Creator;
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.impl.LectureseriesImpl;
 
@@ -133,11 +131,11 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 		return null;		
 	}
 	
-	public List<Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreator(Long institutionId, Long parentInstitutionId, ArrayList<Long> termIds, List<Long> categoryIds, List<Lectureseries_Creator> creatorIds) {
+	public List<Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(Long institutionId, Long parentInstitutionId, ArrayList<Long> termIds, ArrayList<Long> categoryIds, ArrayList<Long> creatorIds, String searchString) {
 		Session session = null;
 		try {
 			session = openSession();
-			String sql = sqlFilterForOpenAccessLectureseries(institutionId, parentInstitutionId, termIds, categoryIds, creatorIds);
+			String sql = sqlFilterForOpenAccessLectureseries(institutionId, parentInstitutionId, termIds, categoryIds, creatorIds, searchString);
 			SQLQuery q = session.createSQLQuery(sql);
 			q.addScalar("number_", Type.STRING);
 			q.addScalar("eventType", Type.STRING);
@@ -168,7 +166,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 		return null;
 	}
 	
-	private String sqlFilterForOpenAccessLectureseries(Long institutionId, Long institutionParentId, ArrayList<Long> termIds, List<Long> categoryIds, List<Lectureseries_Creator> creatorIds) {
+	private String sqlFilterForOpenAccessLectureseries(Long institutionId, Long institutionParentId, ArrayList<Long> termIds, List<Long> categoryIds, ArrayList<Long> creatorIds, String searchString) {
 		// build query
 		String query = "SELECT number_, eventType, categoryId, l.name, shortDesc, l.termId, language, facultyName, l.lectureseriesId, password_, approved, longDesc, latestOpenAccessVideoId ";
 			   query += "FROM LG_Lectureseries l ";
@@ -185,8 +183,12 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			query += "INNER JOIN LG_Lectureseries_Creator AS lc ON ( l.lectureseriesId = lc.lectureseriesId ) ";
 		}
 		
+		if (searchString.trim().length() > 0) {
+			query += "RIGHT JOIN LG_Video v ON v.lectureseriesId=l.lectureseriesId ";
+		}
+		
 
-		if (institutionId > 0 || institutionParentId > 0 || termIds.size() > 0 || categoryIds.size() > 0 || creatorIds.size() > 0) {
+		if (institutionId > 0 || institutionParentId > 0 || termIds.size() > 0 || categoryIds.size() > 0 || creatorIds.size() > 0 || searchString.trim().length() > 0) {
 			query += "WHERE ";
 			int i = 0;
 			if (termIds.size() > 0) {
@@ -202,11 +204,10 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 
 			if (creatorIds.size() > 0) {
 				query += i > 0 ? "AND " : "";
-				ListIterator<Lectureseries_Creator> it = creatorIds.listIterator();
 				query += "( ";
-				while(it.hasNext()){
-					Long creatorId = it.next().getCreatorId();
-					if(it.hasNext())query += "lc.creatorId="+creatorId+" OR ";
+				for(int j=0;j<creatorIds.size();j++){
+				Long creatorId = creatorIds.get(j);
+					if(creatorIds.size()<(j-1))query += "lc.creatorId="+creatorId+" OR ";
 					else query += "lc.creatorId="+creatorId+" ) ";
 				}
 				i++;				
@@ -233,6 +234,13 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			if (institutionParentId > 0) {
 				query += i > 0 ? "AND " : "";
 				query += "li.institutionParentId = "+institutionParentId + " ";
+				i++;
+			}
+
+			if (searchString.trim().length() > 0) {
+				searchString = "%"+searchString.trim()+"%";
+				query += i > 0 ? "AND " : "";
+				query += "( v.title LIKE '"+searchString+"' OR l.name LIKE '"+searchString+"' OR v.tags LIKE '"+searchString+"' OR l.number_ LIKE '"+searchString+"' )";
 				i++;
 			}
 			

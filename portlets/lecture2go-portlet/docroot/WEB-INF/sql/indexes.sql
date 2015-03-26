@@ -40,6 +40,7 @@ create index IX_DB929396 on LG_Lectureseries (name);
 create index IX_225A0AF on LG_Lectureseries (number_);
 create index IX_3714125D on LG_Lectureseries (password_);
 create index IX_2E421DEE on LG_Lectureseries (semesterName);
+create index IX_E5CD21A4 on LG_Lectureseries (tags);
 create index IX_8D242272 on LG_Lectureseries (termId);
 create index IX_77CE15C3 on LG_Lectureseries (yearId);
 
@@ -82,6 +83,13 @@ create index IX_CBD5BF1 on LG_Segment (videoId);
 create index IX_87A17CC1 on LG_Segment_User_Video (segmentId);
 create index IX_165E5A37 on LG_Segment_User_Video (userId);
 create index IX_F1DC7249 on LG_Segment_User_Video (videoId);
+
+create index IX_8CFBC36 on LG_Tagcloud (isLectureseries);
+create index IX_A59DF0BC on LG_Tagcloud (isVideo);
+
+create index IX_297D1038 on LG_Tags (isLectureseries);
+create index IX_AC9866BE on LG_Tags (isVideo);
+create index IX_B51AB490 on LG_Tags (tags);
 
 create index IX_4A54301C on LG_Term (prefix);
 create index IX_16F89D07 on LG_Term (year);

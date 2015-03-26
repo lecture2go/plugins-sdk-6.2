@@ -32,7 +32,6 @@ public class VideoSoap implements Serializable {
 
 		soapModel.setVideoId(model.getVideoId());
 		soapModel.setTitle(model.getTitle());
-		soapModel.setTags(model.getTags());
 		soapModel.setLectureseriesId(model.getLectureseriesId());
 		soapModel.setProducerId(model.getProducerId());
 		soapModel.setContainerFormat(model.getContainerFormat());
@@ -119,14 +118,6 @@ public class VideoSoap implements Serializable {
 
 	public void setTitle(String title) {
 		_title = title;
-	}
-
-	public String getTags() {
-		return _tags;
-	}
-
-	public void setTags(String tags) {
-		_tags = tags;
 	}
 
 	public long getLectureseriesId() {
@@ -291,7 +282,6 @@ public class VideoSoap implements Serializable {
 
 	private long _videoId;
 	private String _title;
-	private String _tags;
 	private long _lectureseriesId;
 	private long _producerId;
 	private String _containerFormat;

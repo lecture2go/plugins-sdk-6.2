@@ -47,4 +47,12 @@ public class CategoryLocalServiceImpl extends CategoryLocalServiceBaseImpl {
 		cl = categoryPersistence.findAll(begin, end);
 		return cl;
 	}
+	
+	public List<Category> getByName(String name) throws SystemException {
+		List<Category> cl = new ArrayList<Category>();
+		cl = categoryPersistence.findByName(name);
+		return cl;
+	}
+	
+	
 }
