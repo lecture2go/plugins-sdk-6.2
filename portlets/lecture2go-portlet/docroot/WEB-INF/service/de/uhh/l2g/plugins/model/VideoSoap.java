@@ -52,6 +52,7 @@ public class VideoSoap implements Serializable {
 		soapModel.setCitation2go(model.getCitation2go());
 		soapModel.setTermId(model.getTermId());
 		soapModel.setVideoCreatorId(model.getVideoCreatorId());
+		soapModel.setTags(model.getTags());
 
 		return soapModel;
 	}
@@ -280,6 +281,14 @@ public class VideoSoap implements Serializable {
 		_videoCreatorId = videoCreatorId;
 	}
 
+	public String getTags() {
+		return _tags;
+	}
+
+	public void setTags(String tags) {
+		_tags = tags;
+	}
+
 	private long _videoId;
 	private String _title;
 	private long _lectureseriesId;
@@ -302,4 +311,5 @@ public class VideoSoap implements Serializable {
 	private int _citation2go;
 	private long _termId;
 	private long _videoCreatorId;
+	private String _tags;
 }

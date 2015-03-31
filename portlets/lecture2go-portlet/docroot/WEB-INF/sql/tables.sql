@@ -155,9 +155,15 @@ create table LG_Sys (
 
 create table LG_Tagcloud (
 	tagcloudId LONG not null primary key,
-	isVideo INTEGER,
-	isLectureseries INTEGER,
+	objectClassType VARCHAR(75) null,
+	objectId LONG,
 	tags VARCHAR(75) null
+);
+
+create table LG_Tagcloud_Object (
+	tagcloudObjectId LONG not null primary key,
+	tagcloudId LONG,
+	objectId LONG
 );
 
 create table LG_Term (
@@ -200,7 +206,8 @@ create table LG_Video (
 	rootInstitutionId LONG,
 	citation2go INTEGER,
 	termId LONG,
-	videoCreatorId LONG
+	videoCreatorId LONG,
+	tags VARCHAR(75) null
 );
 
 create table LG_Video_Category (

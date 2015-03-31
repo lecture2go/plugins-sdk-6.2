@@ -274,6 +274,19 @@ public class TagcloudLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static void deleteByObjectId(long objectId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteByObjectId(objectId);
+	}
+
+	public static de.uhh.l2g.plugins.model.Tagcloud getByObjectIdAndObjectClassType(
+		long objectId, java.lang.String objectClassType)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchTagcloudException {
+		return getService()
+				   .getByObjectIdAndObjectClassType(objectId, objectClassType);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

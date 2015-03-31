@@ -30,8 +30,8 @@ public class TagcloudSoap implements Serializable {
 		TagcloudSoap soapModel = new TagcloudSoap();
 
 		soapModel.setTagcloudId(model.getTagcloudId());
-		soapModel.setIsVideo(model.getIsVideo());
-		soapModel.setIsLectureseries(model.getIsLectureseries());
+		soapModel.setObjectClassType(model.getObjectClassType());
+		soapModel.setObjectId(model.getObjectId());
 		soapModel.setTags(model.getTags());
 
 		return soapModel;
@@ -93,20 +93,20 @@ public class TagcloudSoap implements Serializable {
 		_tagcloudId = tagcloudId;
 	}
 
-	public int getIsVideo() {
-		return _isVideo;
+	public String getObjectClassType() {
+		return _objectClassType;
 	}
 
-	public void setIsVideo(int isVideo) {
-		_isVideo = isVideo;
+	public void setObjectClassType(String objectClassType) {
+		_objectClassType = objectClassType;
 	}
 
-	public int getIsLectureseries() {
-		return _isLectureseries;
+	public long getObjectId() {
+		return _objectId;
 	}
 
-	public void setIsLectureseries(int isLectureseries) {
-		_isLectureseries = isLectureseries;
+	public void setObjectId(long objectId) {
+		_objectId = objectId;
 	}
 
 	public String getTags() {
@@ -118,7 +118,7 @@ public class TagcloudSoap implements Serializable {
 	}
 
 	private long _tagcloudId;
-	private int _isVideo;
-	private int _isLectureseries;
+	private String _objectClassType;
+	private long _objectId;
 	private String _tags;
 }

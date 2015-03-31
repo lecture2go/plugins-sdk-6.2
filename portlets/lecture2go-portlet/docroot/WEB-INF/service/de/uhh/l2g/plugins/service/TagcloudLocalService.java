@@ -249,4 +249,13 @@ public interface TagcloudLocalService extends BaseLocalService,
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
+
+	public void deleteByObjectId(long objectId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public de.uhh.l2g.plugins.model.Tagcloud getByObjectIdAndObjectClassType(
+		long objectId, java.lang.String objectClassType)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchTagcloudException;
 }

@@ -39,10 +39,10 @@ public class TagcloudCacheModel implements CacheModel<Tagcloud>, Externalizable 
 
 		sb.append("{tagcloudId=");
 		sb.append(tagcloudId);
-		sb.append(", isVideo=");
-		sb.append(isVideo);
-		sb.append(", isLectureseries=");
-		sb.append(isLectureseries);
+		sb.append(", objectClassType=");
+		sb.append(objectClassType);
+		sb.append(", objectId=");
+		sb.append(objectId);
 		sb.append(", tags=");
 		sb.append(tags);
 		sb.append("}");
@@ -55,8 +55,15 @@ public class TagcloudCacheModel implements CacheModel<Tagcloud>, Externalizable 
 		TagcloudImpl tagcloudImpl = new TagcloudImpl();
 
 		tagcloudImpl.setTagcloudId(tagcloudId);
-		tagcloudImpl.setIsVideo(isVideo);
-		tagcloudImpl.setIsLectureseries(isLectureseries);
+
+		if (objectClassType == null) {
+			tagcloudImpl.setObjectClassType(StringPool.BLANK);
+		}
+		else {
+			tagcloudImpl.setObjectClassType(objectClassType);
+		}
+
+		tagcloudImpl.setObjectId(objectId);
 
 		if (tags == null) {
 			tagcloudImpl.setTags(StringPool.BLANK);
@@ -73,8 +80,8 @@ public class TagcloudCacheModel implements CacheModel<Tagcloud>, Externalizable 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		tagcloudId = objectInput.readLong();
-		isVideo = objectInput.readInt();
-		isLectureseries = objectInput.readInt();
+		objectClassType = objectInput.readUTF();
+		objectId = objectInput.readLong();
 		tags = objectInput.readUTF();
 	}
 
@@ -82,8 +89,15 @@ public class TagcloudCacheModel implements CacheModel<Tagcloud>, Externalizable 
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(tagcloudId);
-		objectOutput.writeInt(isVideo);
-		objectOutput.writeInt(isLectureseries);
+
+		if (objectClassType == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(objectClassType);
+		}
+
+		objectOutput.writeLong(objectId);
 
 		if (tags == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -94,7 +108,7 @@ public class TagcloudCacheModel implements CacheModel<Tagcloud>, Externalizable 
 	}
 
 	public long tagcloudId;
-	public int isVideo;
-	public int isLectureseries;
+	public String objectClassType;
+	public long objectId;
 	public String tags;
 }

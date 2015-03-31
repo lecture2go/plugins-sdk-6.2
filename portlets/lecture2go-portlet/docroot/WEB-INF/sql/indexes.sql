@@ -86,6 +86,10 @@ create index IX_F1DC7249 on LG_Segment_User_Video (videoId);
 
 create index IX_8CFBC36 on LG_Tagcloud (isLectureseries);
 create index IX_A59DF0BC on LG_Tagcloud (isVideo);
+create index IX_CA87A1E on LG_Tagcloud (objectClassType);
+create index IX_6D2C99CC on LG_Tagcloud (objectClassType, objectId);
+create index IX_385A2033 on LG_Tagcloud (objectId);
+create index IX_2FE55CF0 on LG_Tagcloud (type_);
 
 create index IX_297D1038 on LG_Tags (isLectureseries);
 create index IX_AC9866BE on LG_Tags (isVideo);

@@ -250,8 +250,8 @@
 	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.TagcloudModelImpl">
 		<attributes>
 			<id name="tagcloudId" />
-			<basic name="isVideo" />
-			<basic name="isLectureseries" />
+			<basic name="objectClassType" />
+			<basic name="objectId" />
 			<basic name="tags" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
@@ -311,6 +311,7 @@
 			<basic name="citation2go" />
 			<basic name="termId" />
 			<basic name="videoCreatorId" />
+			<basic name="tags" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

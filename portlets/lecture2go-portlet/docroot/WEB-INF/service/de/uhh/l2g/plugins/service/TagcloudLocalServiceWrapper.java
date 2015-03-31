@@ -282,6 +282,21 @@ public class TagcloudLocalServiceWrapper implements TagcloudLocalService,
 			arguments);
 	}
 
+	@Override
+	public void deleteByObjectId(long objectId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_tagcloudLocalService.deleteByObjectId(objectId);
+	}
+
+	@Override
+	public de.uhh.l2g.plugins.model.Tagcloud getByObjectIdAndObjectClassType(
+		long objectId, java.lang.String objectClassType)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchTagcloudException {
+		return _tagcloudLocalService.getByObjectIdAndObjectClassType(objectId,
+			objectClassType);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

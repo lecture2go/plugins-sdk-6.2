@@ -113,6 +113,14 @@ public class TagcloudLocalServiceClpInvoker {
 		_methodName147 = "setBeanIdentifier";
 
 		_methodParameterTypes147 = new String[] { "java.lang.String" };
+
+		_methodName152 = "deleteByObjectId";
+
+		_methodParameterTypes152 = new String[] { "long" };
+
+		_methodName153 = "getByObjectIdAndObjectClassType";
+
+		_methodParameterTypes153 = new String[] { "long", "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -216,6 +224,19 @@ public class TagcloudLocalServiceClpInvoker {
 			return null;
 		}
 
+		if (_methodName152.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes152, parameterTypes)) {
+			TagcloudLocalServiceUtil.deleteByObjectId(((Long)arguments[0]).longValue());
+
+			return null;
+		}
+
+		if (_methodName153.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes153, parameterTypes)) {
+			return TagcloudLocalServiceUtil.getByObjectIdAndObjectClassType(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1]);
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -255,4 +276,8 @@ public class TagcloudLocalServiceClpInvoker {
 	private String[] _methodParameterTypes146;
 	private String _methodName147;
 	private String[] _methodParameterTypes147;
+	private String _methodName152;
+	private String[] _methodParameterTypes152;
+	private String _methodName153;
+	private String[] _methodParameterTypes153;
 }

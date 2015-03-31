@@ -277,6 +277,12 @@ public class TermLocalServiceUtil {
 		return getService().getAllSemesters(begin, end);
 	}
 
+	public static de.uhh.l2g.plugins.model.Term getById(java.lang.Long termId)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getById(termId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

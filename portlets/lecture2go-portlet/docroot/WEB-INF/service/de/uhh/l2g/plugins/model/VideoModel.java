@@ -375,6 +375,21 @@ public interface VideoModel extends BaseModel<Video> {
 	 */
 	public void setVideoCreatorId(long videoCreatorId);
 
+	/**
+	 * Returns the tags of this video.
+	 *
+	 * @return the tags of this video
+	 */
+	@AutoEscape
+	public String getTags();
+
+	/**
+	 * Sets the tags of this video.
+	 *
+	 * @param tags the tags of this video
+	 */
+	public void setTags(String tags);
+
 	@Override
 	public boolean isNew();
 

@@ -75,7 +75,7 @@
 			
 			<aui:input id="title" name="title" label="title" required="false" value="<%=reqVideo.getTitle()%>" />
 
-			<aui:input name="tags" label="tags" required="false" value=""/>
+			<aui:input name="tags" label="tags" required="false" value="<%=reqVideo.getTags()%>"/>
 
 			<aui:input name="publisher" label="publisher" required="false" value="<%=reqMetadata.getPublisher()%>"/>
 			
@@ -348,11 +348,11 @@ function applyAllMetadataChanges(){
 				    var license1 = A.one('#<portlet:namespace/>ccbyncsa');
 				    var license2 = A.one('#<portlet:namespace/>uhhl2go');
 				    
-				    updateMetadata();
 				    updateDescription(descData);
 				    updateLicense(license1.get('value'));
 				    updateLicense(license2.get('value'));
 				    updateCreators();
+				    updateMetadata();//last place, important!
 			}
 	);
 }

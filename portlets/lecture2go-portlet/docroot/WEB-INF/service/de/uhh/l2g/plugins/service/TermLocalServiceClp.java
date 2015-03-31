@@ -111,6 +111,10 @@ public class TermLocalServiceClp implements TermLocalService {
 		_methodName19 = "getAllSemesters";
 
 		_methodParameterTypes19 = new String[] { "int", "int" };
+
+		_methodName20 = "getById";
+
+		_methodParameterTypes20 = new String[] { "java.lang.Long" };
 	}
 
 	@Override
@@ -687,6 +691,40 @@ public class TermLocalServiceClp implements TermLocalService {
 		return (java.util.List<de.uhh.l2g.plugins.model.Term>)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public de.uhh.l2g.plugins.model.Term getById(java.lang.Long termId)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20,
+					new Object[] { ClpSerializer.translateInput(termId) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.NoSuchModelException) {
+				throw (com.liferay.portal.NoSuchModelException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (de.uhh.l2g.plugins.model.Term)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -726,4 +764,6 @@ public class TermLocalServiceClp implements TermLocalService {
 	private String[] _methodParameterTypes17;
 	private String _methodName19;
 	private String[] _methodParameterTypes19;
+	private String _methodName20;
+	private String[] _methodParameterTypes20;
 }

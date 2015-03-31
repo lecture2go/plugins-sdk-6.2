@@ -4669,6 +4669,7 @@ public class VideoPersistenceImpl extends BasePersistenceImpl<Video>
 		videoImpl.setCitation2go(video.getCitation2go());
 		videoImpl.setTermId(video.getTermId());
 		videoImpl.setVideoCreatorId(video.getVideoCreatorId());
+		videoImpl.setTags(video.getTags());
 
 		return videoImpl;
 	}

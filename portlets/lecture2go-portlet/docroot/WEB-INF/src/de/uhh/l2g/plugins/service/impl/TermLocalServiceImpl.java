@@ -17,6 +17,7 @@ package de.uhh.l2g.plugins.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.SystemException;
 
 import de.uhh.l2g.plugins.model.Term;
@@ -47,5 +48,9 @@ public class TermLocalServiceImpl extends TermLocalServiceBaseImpl {
 		List<Term> sl = new ArrayList<Term>();
 		sl = termPersistence.findAll(begin, end);
 		return sl;
+	}
+	
+	public Term getById(Long termId) throws NoSuchModelException, SystemException{
+		return termPersistence.findByPrimaryKey(termId);
 	}
 }

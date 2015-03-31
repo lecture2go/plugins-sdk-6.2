@@ -14,6 +14,10 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import com.liferay.portal.kernel.exception.SystemException;
+
+import de.uhh.l2g.plugins.NoSuchTagcloudException;
+import de.uhh.l2g.plugins.model.Tagcloud;
 import de.uhh.l2g.plugins.service.base.TagcloudLocalServiceBaseImpl;
 
 /**
@@ -36,4 +40,12 @@ public class TagcloudLocalServiceImpl extends TagcloudLocalServiceBaseImpl {
 	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.TagcloudLocalServiceUtil} to access the tagcloud local service.
 	 */
+	
+	public void deleteByObjectId(long objectId) throws SystemException{
+		tagcloudPersistence.removeByObjectId(objectId);
+	}
+	
+	public Tagcloud getByObjectIdAndObjectClassType(long objectId, String objectClassType) throws SystemException, NoSuchTagcloudException{
+		return tagcloudPersistence.findByObjectClassTypeAndObjectId(objectClassType, objectId);
+	}
 }

@@ -49,8 +49,8 @@ public class TagcloudWrapper implements Tagcloud, ModelWrapper<Tagcloud> {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("tagcloudId", getTagcloudId());
-		attributes.put("isVideo", getIsVideo());
-		attributes.put("isLectureseries", getIsLectureseries());
+		attributes.put("objectClassType", getObjectClassType());
+		attributes.put("objectId", getObjectId());
 		attributes.put("tags", getTags());
 
 		return attributes;
@@ -64,16 +64,16 @@ public class TagcloudWrapper implements Tagcloud, ModelWrapper<Tagcloud> {
 			setTagcloudId(tagcloudId);
 		}
 
-		Integer isVideo = (Integer)attributes.get("isVideo");
+		String objectClassType = (String)attributes.get("objectClassType");
 
-		if (isVideo != null) {
-			setIsVideo(isVideo);
+		if (objectClassType != null) {
+			setObjectClassType(objectClassType);
 		}
 
-		Integer isLectureseries = (Integer)attributes.get("isLectureseries");
+		Long objectId = (Long)attributes.get("objectId");
 
-		if (isLectureseries != null) {
-			setIsLectureseries(isLectureseries);
+		if (objectId != null) {
+			setObjectId(objectId);
 		}
 
 		String tags = (String)attributes.get("tags");
@@ -124,43 +124,43 @@ public class TagcloudWrapper implements Tagcloud, ModelWrapper<Tagcloud> {
 	}
 
 	/**
-	* Returns the is video of this tagcloud.
+	* Returns the object class type of this tagcloud.
 	*
-	* @return the is video of this tagcloud
+	* @return the object class type of this tagcloud
 	*/
 	@Override
-	public int getIsVideo() {
-		return _tagcloud.getIsVideo();
+	public java.lang.String getObjectClassType() {
+		return _tagcloud.getObjectClassType();
 	}
 
 	/**
-	* Sets the is video of this tagcloud.
+	* Sets the object class type of this tagcloud.
 	*
-	* @param isVideo the is video of this tagcloud
+	* @param objectClassType the object class type of this tagcloud
 	*/
 	@Override
-	public void setIsVideo(int isVideo) {
-		_tagcloud.setIsVideo(isVideo);
+	public void setObjectClassType(java.lang.String objectClassType) {
+		_tagcloud.setObjectClassType(objectClassType);
 	}
 
 	/**
-	* Returns the is lectureseries of this tagcloud.
+	* Returns the object ID of this tagcloud.
 	*
-	* @return the is lectureseries of this tagcloud
+	* @return the object ID of this tagcloud
 	*/
 	@Override
-	public int getIsLectureseries() {
-		return _tagcloud.getIsLectureseries();
+	public long getObjectId() {
+		return _tagcloud.getObjectId();
 	}
 
 	/**
-	* Sets the is lectureseries of this tagcloud.
+	* Sets the object ID of this tagcloud.
 	*
-	* @param isLectureseries the is lectureseries of this tagcloud
+	* @param objectId the object ID of this tagcloud
 	*/
 	@Override
-	public void setIsLectureseries(int isLectureseries) {
-		_tagcloud.setIsLectureseries(isLectureseries);
+	public void setObjectId(long objectId) {
+		_tagcloud.setObjectId(objectId);
 	}
 
 	/**

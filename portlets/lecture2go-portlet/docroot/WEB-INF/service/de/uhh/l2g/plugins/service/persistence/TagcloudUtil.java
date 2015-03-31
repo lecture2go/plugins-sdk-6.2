@@ -110,334 +110,417 @@ public class TagcloudUtil {
 	}
 
 	/**
-	* Returns all the tagclouds where isVideo = &#63;.
+	* Returns all the tagclouds where objectClassType = &#63;.
 	*
-	* @param isVideo the is video
+	* @param objectClassType the object class type
 	* @return the matching tagclouds
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<de.uhh.l2g.plugins.model.Tagcloud> findByIsVideo(
-		int isVideo) throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByIsVideo(isVideo);
+	public static java.util.List<de.uhh.l2g.plugins.model.Tagcloud> findByObjectClassType(
+		java.lang.String objectClassType)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByObjectClassType(objectClassType);
 	}
 
 	/**
-	* Returns a range of all the tagclouds where isVideo = &#63;.
+	* Returns a range of all the tagclouds where objectClassType = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.TagcloudModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param isVideo the is video
+	* @param objectClassType the object class type
 	* @param start the lower bound of the range of tagclouds
 	* @param end the upper bound of the range of tagclouds (not inclusive)
 	* @return the range of matching tagclouds
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<de.uhh.l2g.plugins.model.Tagcloud> findByIsVideo(
-		int isVideo, int start, int end)
+	public static java.util.List<de.uhh.l2g.plugins.model.Tagcloud> findByObjectClassType(
+		java.lang.String objectClassType, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByIsVideo(isVideo, start, end);
+		return getPersistence()
+				   .findByObjectClassType(objectClassType, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the tagclouds where isVideo = &#63;.
+	* Returns an ordered range of all the tagclouds where objectClassType = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.TagcloudModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param isVideo the is video
+	* @param objectClassType the object class type
 	* @param start the lower bound of the range of tagclouds
 	* @param end the upper bound of the range of tagclouds (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching tagclouds
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<de.uhh.l2g.plugins.model.Tagcloud> findByIsVideo(
-		int isVideo, int start, int end,
+	public static java.util.List<de.uhh.l2g.plugins.model.Tagcloud> findByObjectClassType(
+		java.lang.String objectClassType, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByIsVideo(isVideo, start, end, orderByComparator);
+				   .findByObjectClassType(objectClassType, start, end,
+			orderByComparator);
 	}
 
 	/**
-	* Returns the first tagcloud in the ordered set where isVideo = &#63;.
+	* Returns the first tagcloud in the ordered set where objectClassType = &#63;.
 	*
-	* @param isVideo the is video
+	* @param objectClassType the object class type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching tagcloud
 	* @throws de.uhh.l2g.plugins.NoSuchTagcloudException if a matching tagcloud could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Tagcloud findByIsVideo_First(
-		int isVideo,
+	public static de.uhh.l2g.plugins.model.Tagcloud findByObjectClassType_First(
+		java.lang.String objectClassType,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchTagcloudException {
-		return getPersistence().findByIsVideo_First(isVideo, orderByComparator);
+		return getPersistence()
+				   .findByObjectClassType_First(objectClassType,
+			orderByComparator);
 	}
 
 	/**
-	* Returns the first tagcloud in the ordered set where isVideo = &#63;.
+	* Returns the first tagcloud in the ordered set where objectClassType = &#63;.
 	*
-	* @param isVideo the is video
+	* @param objectClassType the object class type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching tagcloud, or <code>null</code> if a matching tagcloud could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Tagcloud fetchByIsVideo_First(
-		int isVideo,
+	public static de.uhh.l2g.plugins.model.Tagcloud fetchByObjectClassType_First(
+		java.lang.String objectClassType,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByIsVideo_First(isVideo, orderByComparator);
+		return getPersistence()
+				   .fetchByObjectClassType_First(objectClassType,
+			orderByComparator);
 	}
 
 	/**
-	* Returns the last tagcloud in the ordered set where isVideo = &#63;.
+	* Returns the last tagcloud in the ordered set where objectClassType = &#63;.
 	*
-	* @param isVideo the is video
+	* @param objectClassType the object class type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching tagcloud
 	* @throws de.uhh.l2g.plugins.NoSuchTagcloudException if a matching tagcloud could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Tagcloud findByIsVideo_Last(
-		int isVideo,
+	public static de.uhh.l2g.plugins.model.Tagcloud findByObjectClassType_Last(
+		java.lang.String objectClassType,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchTagcloudException {
-		return getPersistence().findByIsVideo_Last(isVideo, orderByComparator);
+		return getPersistence()
+				   .findByObjectClassType_Last(objectClassType,
+			orderByComparator);
 	}
 
 	/**
-	* Returns the last tagcloud in the ordered set where isVideo = &#63;.
+	* Returns the last tagcloud in the ordered set where objectClassType = &#63;.
 	*
-	* @param isVideo the is video
+	* @param objectClassType the object class type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching tagcloud, or <code>null</code> if a matching tagcloud could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Tagcloud fetchByIsVideo_Last(
-		int isVideo,
+	public static de.uhh.l2g.plugins.model.Tagcloud fetchByObjectClassType_Last(
+		java.lang.String objectClassType,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByIsVideo_Last(isVideo, orderByComparator);
+		return getPersistence()
+				   .fetchByObjectClassType_Last(objectClassType,
+			orderByComparator);
 	}
 
 	/**
-	* Returns the tagclouds before and after the current tagcloud in the ordered set where isVideo = &#63;.
+	* Returns the tagclouds before and after the current tagcloud in the ordered set where objectClassType = &#63;.
 	*
 	* @param tagcloudId the primary key of the current tagcloud
-	* @param isVideo the is video
+	* @param objectClassType the object class type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next tagcloud
 	* @throws de.uhh.l2g.plugins.NoSuchTagcloudException if a tagcloud with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Tagcloud[] findByIsVideo_PrevAndNext(
-		long tagcloudId, int isVideo,
+	public static de.uhh.l2g.plugins.model.Tagcloud[] findByObjectClassType_PrevAndNext(
+		long tagcloudId, java.lang.String objectClassType,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchTagcloudException {
 		return getPersistence()
-				   .findByIsVideo_PrevAndNext(tagcloudId, isVideo,
-			orderByComparator);
+				   .findByObjectClassType_PrevAndNext(tagcloudId,
+			objectClassType, orderByComparator);
 	}
 
 	/**
-	* Removes all the tagclouds where isVideo = &#63; from the database.
+	* Removes all the tagclouds where objectClassType = &#63; from the database.
 	*
-	* @param isVideo the is video
+	* @param objectClassType the object class type
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByIsVideo(int isVideo)
+	public static void removeByObjectClassType(java.lang.String objectClassType)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByIsVideo(isVideo);
+		getPersistence().removeByObjectClassType(objectClassType);
 	}
 
 	/**
-	* Returns the number of tagclouds where isVideo = &#63;.
+	* Returns the number of tagclouds where objectClassType = &#63;.
 	*
-	* @param isVideo the is video
+	* @param objectClassType the object class type
 	* @return the number of matching tagclouds
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByIsVideo(int isVideo)
+	public static int countByObjectClassType(java.lang.String objectClassType)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByIsVideo(isVideo);
+		return getPersistence().countByObjectClassType(objectClassType);
 	}
 
 	/**
-	* Returns all the tagclouds where isLectureseries = &#63;.
+	* Returns all the tagclouds where objectId = &#63;.
 	*
-	* @param isLectureseries the is lectureseries
+	* @param objectId the object ID
 	* @return the matching tagclouds
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<de.uhh.l2g.plugins.model.Tagcloud> findByIsLectureseries(
-		int isLectureseries)
+	public static java.util.List<de.uhh.l2g.plugins.model.Tagcloud> findByObjectId(
+		long objectId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByIsLectureseries(isLectureseries);
+		return getPersistence().findByObjectId(objectId);
 	}
 
 	/**
-	* Returns a range of all the tagclouds where isLectureseries = &#63;.
+	* Returns a range of all the tagclouds where objectId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.TagcloudModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param isLectureseries the is lectureseries
+	* @param objectId the object ID
 	* @param start the lower bound of the range of tagclouds
 	* @param end the upper bound of the range of tagclouds (not inclusive)
 	* @return the range of matching tagclouds
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<de.uhh.l2g.plugins.model.Tagcloud> findByIsLectureseries(
-		int isLectureseries, int start, int end)
+	public static java.util.List<de.uhh.l2g.plugins.model.Tagcloud> findByObjectId(
+		long objectId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByIsLectureseries(isLectureseries, start, end);
+		return getPersistence().findByObjectId(objectId, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the tagclouds where isLectureseries = &#63;.
+	* Returns an ordered range of all the tagclouds where objectId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.TagcloudModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param isLectureseries the is lectureseries
+	* @param objectId the object ID
 	* @param start the lower bound of the range of tagclouds
 	* @param end the upper bound of the range of tagclouds (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching tagclouds
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<de.uhh.l2g.plugins.model.Tagcloud> findByIsLectureseries(
-		int isLectureseries, int start, int end,
+	public static java.util.List<de.uhh.l2g.plugins.model.Tagcloud> findByObjectId(
+		long objectId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByIsLectureseries(isLectureseries, start, end,
-			orderByComparator);
+				   .findByObjectId(objectId, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns the first tagcloud in the ordered set where isLectureseries = &#63;.
+	* Returns the first tagcloud in the ordered set where objectId = &#63;.
 	*
-	* @param isLectureseries the is lectureseries
+	* @param objectId the object ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching tagcloud
 	* @throws de.uhh.l2g.plugins.NoSuchTagcloudException if a matching tagcloud could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Tagcloud findByIsLectureseries_First(
-		int isLectureseries,
+	public static de.uhh.l2g.plugins.model.Tagcloud findByObjectId_First(
+		long objectId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchTagcloudException {
-		return getPersistence()
-				   .findByIsLectureseries_First(isLectureseries,
-			orderByComparator);
+		return getPersistence().findByObjectId_First(objectId, orderByComparator);
 	}
 
 	/**
-	* Returns the first tagcloud in the ordered set where isLectureseries = &#63;.
+	* Returns the first tagcloud in the ordered set where objectId = &#63;.
 	*
-	* @param isLectureseries the is lectureseries
+	* @param objectId the object ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching tagcloud, or <code>null</code> if a matching tagcloud could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Tagcloud fetchByIsLectureseries_First(
-		int isLectureseries,
+	public static de.uhh.l2g.plugins.model.Tagcloud fetchByObjectId_First(
+		long objectId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .fetchByIsLectureseries_First(isLectureseries,
-			orderByComparator);
+				   .fetchByObjectId_First(objectId, orderByComparator);
 	}
 
 	/**
-	* Returns the last tagcloud in the ordered set where isLectureseries = &#63;.
+	* Returns the last tagcloud in the ordered set where objectId = &#63;.
 	*
-	* @param isLectureseries the is lectureseries
+	* @param objectId the object ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching tagcloud
 	* @throws de.uhh.l2g.plugins.NoSuchTagcloudException if a matching tagcloud could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Tagcloud findByIsLectureseries_Last(
-		int isLectureseries,
+	public static de.uhh.l2g.plugins.model.Tagcloud findByObjectId_Last(
+		long objectId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchTagcloudException {
-		return getPersistence()
-				   .findByIsLectureseries_Last(isLectureseries,
-			orderByComparator);
+		return getPersistence().findByObjectId_Last(objectId, orderByComparator);
 	}
 
 	/**
-	* Returns the last tagcloud in the ordered set where isLectureseries = &#63;.
+	* Returns the last tagcloud in the ordered set where objectId = &#63;.
 	*
-	* @param isLectureseries the is lectureseries
+	* @param objectId the object ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching tagcloud, or <code>null</code> if a matching tagcloud could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Tagcloud fetchByIsLectureseries_Last(
-		int isLectureseries,
+	public static de.uhh.l2g.plugins.model.Tagcloud fetchByObjectId_Last(
+		long objectId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .fetchByIsLectureseries_Last(isLectureseries,
-			orderByComparator);
+		return getPersistence().fetchByObjectId_Last(objectId, orderByComparator);
 	}
 
 	/**
-	* Returns the tagclouds before and after the current tagcloud in the ordered set where isLectureseries = &#63;.
+	* Returns the tagclouds before and after the current tagcloud in the ordered set where objectId = &#63;.
 	*
 	* @param tagcloudId the primary key of the current tagcloud
-	* @param isLectureseries the is lectureseries
+	* @param objectId the object ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next tagcloud
 	* @throws de.uhh.l2g.plugins.NoSuchTagcloudException if a tagcloud with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Tagcloud[] findByIsLectureseries_PrevAndNext(
-		long tagcloudId, int isLectureseries,
+	public static de.uhh.l2g.plugins.model.Tagcloud[] findByObjectId_PrevAndNext(
+		long tagcloudId, long objectId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchTagcloudException {
 		return getPersistence()
-				   .findByIsLectureseries_PrevAndNext(tagcloudId,
-			isLectureseries, orderByComparator);
+				   .findByObjectId_PrevAndNext(tagcloudId, objectId,
+			orderByComparator);
 	}
 
 	/**
-	* Removes all the tagclouds where isLectureseries = &#63; from the database.
+	* Removes all the tagclouds where objectId = &#63; from the database.
 	*
-	* @param isLectureseries the is lectureseries
+	* @param objectId the object ID
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByIsLectureseries(int isLectureseries)
+	public static void removeByObjectId(long objectId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByIsLectureseries(isLectureseries);
+		getPersistence().removeByObjectId(objectId);
 	}
 
 	/**
-	* Returns the number of tagclouds where isLectureseries = &#63;.
+	* Returns the number of tagclouds where objectId = &#63;.
 	*
-	* @param isLectureseries the is lectureseries
+	* @param objectId the object ID
 	* @return the number of matching tagclouds
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByIsLectureseries(int isLectureseries)
+	public static int countByObjectId(long objectId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByIsLectureseries(isLectureseries);
+		return getPersistence().countByObjectId(objectId);
+	}
+
+	/**
+	* Returns the tagcloud where objectClassType = &#63; and objectId = &#63; or throws a {@link de.uhh.l2g.plugins.NoSuchTagcloudException} if it could not be found.
+	*
+	* @param objectClassType the object class type
+	* @param objectId the object ID
+	* @return the matching tagcloud
+	* @throws de.uhh.l2g.plugins.NoSuchTagcloudException if a matching tagcloud could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Tagcloud findByObjectClassTypeAndObjectId(
+		java.lang.String objectClassType, long objectId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchTagcloudException {
+		return getPersistence()
+				   .findByObjectClassTypeAndObjectId(objectClassType, objectId);
+	}
+
+	/**
+	* Returns the tagcloud where objectClassType = &#63; and objectId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param objectClassType the object class type
+	* @param objectId the object ID
+	* @return the matching tagcloud, or <code>null</code> if a matching tagcloud could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Tagcloud fetchByObjectClassTypeAndObjectId(
+		java.lang.String objectClassType, long objectId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByObjectClassTypeAndObjectId(objectClassType, objectId);
+	}
+
+	/**
+	* Returns the tagcloud where objectClassType = &#63; and objectId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param objectClassType the object class type
+	* @param objectId the object ID
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching tagcloud, or <code>null</code> if a matching tagcloud could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Tagcloud fetchByObjectClassTypeAndObjectId(
+		java.lang.String objectClassType, long objectId,
+		boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByObjectClassTypeAndObjectId(objectClassType,
+			objectId, retrieveFromCache);
+	}
+
+	/**
+	* Removes the tagcloud where objectClassType = &#63; and objectId = &#63; from the database.
+	*
+	* @param objectClassType the object class type
+	* @param objectId the object ID
+	* @return the tagcloud that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Tagcloud removeByObjectClassTypeAndObjectId(
+		java.lang.String objectClassType, long objectId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchTagcloudException {
+		return getPersistence()
+				   .removeByObjectClassTypeAndObjectId(objectClassType, objectId);
+	}
+
+	/**
+	* Returns the number of tagclouds where objectClassType = &#63; and objectId = &#63;.
+	*
+	* @param objectClassType the object class type
+	* @param objectId the object ID
+	* @return the number of matching tagclouds
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByObjectClassTypeAndObjectId(
+		java.lang.String objectClassType, long objectId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .countByObjectClassTypeAndObjectId(objectClassType, objectId);
 	}
 
 	/**

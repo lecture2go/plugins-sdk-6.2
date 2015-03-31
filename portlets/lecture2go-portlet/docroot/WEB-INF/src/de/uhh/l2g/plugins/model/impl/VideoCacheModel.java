@@ -37,7 +37,7 @@ import java.util.Date;
 public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(47);
 
 		sb.append("{videoId=");
 		sb.append(videoId);
@@ -83,6 +83,8 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 		sb.append(termId);
 		sb.append(", videoCreatorId=");
 		sb.append(videoCreatorId);
+		sb.append(", tags=");
+		sb.append(tags);
 		sb.append("}");
 
 		return sb.toString();
@@ -174,6 +176,13 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 		videoImpl.setTermId(termId);
 		videoImpl.setVideoCreatorId(videoCreatorId);
 
+		if (tags == null) {
+			videoImpl.setTags(StringPool.BLANK);
+		}
+		else {
+			videoImpl.setTags(tags);
+		}
+
 		videoImpl.resetOriginalValues();
 
 		return videoImpl;
@@ -203,6 +212,7 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 		citation2go = objectInput.readInt();
 		termId = objectInput.readLong();
 		videoCreatorId = objectInput.readLong();
+		tags = objectInput.readUTF();
 	}
 
 	@Override
@@ -282,6 +292,13 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 		objectOutput.writeInt(citation2go);
 		objectOutput.writeLong(termId);
 		objectOutput.writeLong(videoCreatorId);
+
+		if (tags == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(tags);
+		}
 	}
 
 	public long videoId;
@@ -306,4 +323,5 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 	public int citation2go;
 	public long termId;
 	public long videoCreatorId;
+	public String tags;
 }

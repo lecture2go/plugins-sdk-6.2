@@ -111,6 +111,10 @@ public class TermLocalServiceClpInvoker {
 		_methodName152 = "getAllSemesters";
 
 		_methodParameterTypes152 = new String[] { "int", "int" };
+
+		_methodName153 = "getById";
+
+		_methodParameterTypes153 = new String[] { "java.lang.Long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -220,6 +224,11 @@ public class TermLocalServiceClpInvoker {
 				((Integer)arguments[1]).intValue());
 		}
 
+		if (_methodName153.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes153, parameterTypes)) {
+			return TermLocalServiceUtil.getById((java.lang.Long)arguments[0]);
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -261,4 +270,6 @@ public class TermLocalServiceClpInvoker {
 	private String[] _methodParameterTypes147;
 	private String _methodName152;
 	private String[] _methodParameterTypes152;
+	private String _methodName153;
+	private String[] _methodParameterTypes153;
 }

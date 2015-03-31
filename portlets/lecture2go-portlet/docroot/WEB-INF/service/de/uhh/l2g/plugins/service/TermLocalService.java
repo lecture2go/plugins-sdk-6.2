@@ -253,4 +253,9 @@ public interface TermLocalService extends BaseLocalService, InvokableLocalServic
 	public java.util.List<de.uhh.l2g.plugins.model.Term> getAllSemesters(
 		int begin, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public de.uhh.l2g.plugins.model.Term getById(java.lang.Long termId)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

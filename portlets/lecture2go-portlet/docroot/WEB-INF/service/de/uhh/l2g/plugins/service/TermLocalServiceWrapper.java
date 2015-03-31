@@ -286,6 +286,13 @@ public class TermLocalServiceWrapper implements TermLocalService,
 		return _termLocalService.getAllSemesters(begin, end);
 	}
 
+	@Override
+	public de.uhh.l2g.plugins.model.Term getById(java.lang.Long termId)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _termLocalService.getById(termId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

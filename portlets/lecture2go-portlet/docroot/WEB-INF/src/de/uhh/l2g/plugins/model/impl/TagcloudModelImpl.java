@@ -59,11 +59,11 @@ public class TagcloudModelImpl extends BaseModelImpl<Tagcloud>
 	public static final String TABLE_NAME = "LG_Tagcloud";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "tagcloudId", Types.BIGINT },
-			{ "isVideo", Types.INTEGER },
-			{ "isLectureseries", Types.INTEGER },
+			{ "objectClassType", Types.VARCHAR },
+			{ "objectId", Types.BIGINT },
 			{ "tags", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Tagcloud (tagcloudId LONG not null primary key,isVideo INTEGER,isLectureseries INTEGER,tags VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Tagcloud (tagcloudId LONG not null primary key,objectClassType VARCHAR(75) null,objectId LONG,tags VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Tagcloud";
 	public static final String ORDER_BY_JPQL = " ORDER BY tagcloud.tagcloudId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Tagcloud.tagcloudId ASC";
@@ -79,8 +79,8 @@ public class TagcloudModelImpl extends BaseModelImpl<Tagcloud>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.Tagcloud"),
 			true);
-	public static long ISLECTURESERIES_COLUMN_BITMASK = 1L;
-	public static long ISVIDEO_COLUMN_BITMASK = 2L;
+	public static long OBJECTCLASSTYPE_COLUMN_BITMASK = 1L;
+	public static long OBJECTID_COLUMN_BITMASK = 2L;
 	public static long TAGCLOUDID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Tagcloud"));
@@ -123,8 +123,8 @@ public class TagcloudModelImpl extends BaseModelImpl<Tagcloud>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("tagcloudId", getTagcloudId());
-		attributes.put("isVideo", getIsVideo());
-		attributes.put("isLectureseries", getIsLectureseries());
+		attributes.put("objectClassType", getObjectClassType());
+		attributes.put("objectId", getObjectId());
 		attributes.put("tags", getTags());
 
 		return attributes;
@@ -138,16 +138,16 @@ public class TagcloudModelImpl extends BaseModelImpl<Tagcloud>
 			setTagcloudId(tagcloudId);
 		}
 
-		Integer isVideo = (Integer)attributes.get("isVideo");
+		String objectClassType = (String)attributes.get("objectClassType");
 
-		if (isVideo != null) {
-			setIsVideo(isVideo);
+		if (objectClassType != null) {
+			setObjectClassType(objectClassType);
 		}
 
-		Integer isLectureseries = (Integer)attributes.get("isLectureseries");
+		Long objectId = (Long)attributes.get("objectId");
 
-		if (isLectureseries != null) {
-			setIsLectureseries(isLectureseries);
+		if (objectId != null) {
+			setObjectId(objectId);
 		}
 
 		String tags = (String)attributes.get("tags");
@@ -168,47 +168,50 @@ public class TagcloudModelImpl extends BaseModelImpl<Tagcloud>
 	}
 
 	@Override
-	public int getIsVideo() {
-		return _isVideo;
+	public String getObjectClassType() {
+		if (_objectClassType == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _objectClassType;
+		}
 	}
 
 	@Override
-	public void setIsVideo(int isVideo) {
-		_columnBitmask |= ISVIDEO_COLUMN_BITMASK;
+	public void setObjectClassType(String objectClassType) {
+		_columnBitmask |= OBJECTCLASSTYPE_COLUMN_BITMASK;
 
-		if (!_setOriginalIsVideo) {
-			_setOriginalIsVideo = true;
-
-			_originalIsVideo = _isVideo;
+		if (_originalObjectClassType == null) {
+			_originalObjectClassType = _objectClassType;
 		}
 
-		_isVideo = isVideo;
+		_objectClassType = objectClassType;
 	}
 
-	public int getOriginalIsVideo() {
-		return _originalIsVideo;
-	}
-
-	@Override
-	public int getIsLectureseries() {
-		return _isLectureseries;
+	public String getOriginalObjectClassType() {
+		return GetterUtil.getString(_originalObjectClassType);
 	}
 
 	@Override
-	public void setIsLectureseries(int isLectureseries) {
-		_columnBitmask |= ISLECTURESERIES_COLUMN_BITMASK;
+	public long getObjectId() {
+		return _objectId;
+	}
 
-		if (!_setOriginalIsLectureseries) {
-			_setOriginalIsLectureseries = true;
+	@Override
+	public void setObjectId(long objectId) {
+		_columnBitmask |= OBJECTID_COLUMN_BITMASK;
 
-			_originalIsLectureseries = _isLectureseries;
+		if (!_setOriginalObjectId) {
+			_setOriginalObjectId = true;
+
+			_originalObjectId = _objectId;
 		}
 
-		_isLectureseries = isLectureseries;
+		_objectId = objectId;
 	}
 
-	public int getOriginalIsLectureseries() {
-		return _originalIsLectureseries;
+	public long getOriginalObjectId() {
+		return _originalObjectId;
 	}
 
 	@Override
@@ -258,8 +261,8 @@ public class TagcloudModelImpl extends BaseModelImpl<Tagcloud>
 		TagcloudImpl tagcloudImpl = new TagcloudImpl();
 
 		tagcloudImpl.setTagcloudId(getTagcloudId());
-		tagcloudImpl.setIsVideo(getIsVideo());
-		tagcloudImpl.setIsLectureseries(getIsLectureseries());
+		tagcloudImpl.setObjectClassType(getObjectClassType());
+		tagcloudImpl.setObjectId(getObjectId());
 		tagcloudImpl.setTags(getTags());
 
 		tagcloudImpl.resetOriginalValues();
@@ -313,13 +316,11 @@ public class TagcloudModelImpl extends BaseModelImpl<Tagcloud>
 	public void resetOriginalValues() {
 		TagcloudModelImpl tagcloudModelImpl = this;
 
-		tagcloudModelImpl._originalIsVideo = tagcloudModelImpl._isVideo;
+		tagcloudModelImpl._originalObjectClassType = tagcloudModelImpl._objectClassType;
 
-		tagcloudModelImpl._setOriginalIsVideo = false;
+		tagcloudModelImpl._originalObjectId = tagcloudModelImpl._objectId;
 
-		tagcloudModelImpl._originalIsLectureseries = tagcloudModelImpl._isLectureseries;
-
-		tagcloudModelImpl._setOriginalIsLectureseries = false;
+		tagcloudModelImpl._setOriginalObjectId = false;
 
 		tagcloudModelImpl._columnBitmask = 0;
 	}
@@ -330,9 +331,15 @@ public class TagcloudModelImpl extends BaseModelImpl<Tagcloud>
 
 		tagcloudCacheModel.tagcloudId = getTagcloudId();
 
-		tagcloudCacheModel.isVideo = getIsVideo();
+		tagcloudCacheModel.objectClassType = getObjectClassType();
 
-		tagcloudCacheModel.isLectureseries = getIsLectureseries();
+		String objectClassType = tagcloudCacheModel.objectClassType;
+
+		if ((objectClassType != null) && (objectClassType.length() == 0)) {
+			tagcloudCacheModel.objectClassType = null;
+		}
+
+		tagcloudCacheModel.objectId = getObjectId();
 
 		tagcloudCacheModel.tags = getTags();
 
@@ -351,10 +358,10 @@ public class TagcloudModelImpl extends BaseModelImpl<Tagcloud>
 
 		sb.append("{tagcloudId=");
 		sb.append(getTagcloudId());
-		sb.append(", isVideo=");
-		sb.append(getIsVideo());
-		sb.append(", isLectureseries=");
-		sb.append(getIsLectureseries());
+		sb.append(", objectClassType=");
+		sb.append(getObjectClassType());
+		sb.append(", objectId=");
+		sb.append(getObjectId());
 		sb.append(", tags=");
 		sb.append(getTags());
 		sb.append("}");
@@ -375,12 +382,12 @@ public class TagcloudModelImpl extends BaseModelImpl<Tagcloud>
 		sb.append(getTagcloudId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>isVideo</column-name><column-value><![CDATA[");
-		sb.append(getIsVideo());
+			"<column><column-name>objectClassType</column-name><column-value><![CDATA[");
+		sb.append(getObjectClassType());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>isLectureseries</column-name><column-value><![CDATA[");
-		sb.append(getIsLectureseries());
+			"<column><column-name>objectId</column-name><column-value><![CDATA[");
+		sb.append(getObjectId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>tags</column-name><column-value><![CDATA[");
@@ -397,12 +404,11 @@ public class TagcloudModelImpl extends BaseModelImpl<Tagcloud>
 			Tagcloud.class
 		};
 	private long _tagcloudId;
-	private int _isVideo;
-	private int _originalIsVideo;
-	private boolean _setOriginalIsVideo;
-	private int _isLectureseries;
-	private int _originalIsLectureseries;
-	private boolean _setOriginalIsLectureseries;
+	private String _objectClassType;
+	private String _originalObjectClassType;
+	private long _objectId;
+	private long _originalObjectId;
+	private boolean _setOriginalObjectId;
 	private String _tags;
 	private long _columnBitmask;
 	private Tagcloud _escapedModel;

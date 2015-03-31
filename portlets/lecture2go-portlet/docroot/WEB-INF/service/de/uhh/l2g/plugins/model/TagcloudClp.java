@@ -73,8 +73,8 @@ public class TagcloudClp extends BaseModelImpl<Tagcloud> implements Tagcloud {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("tagcloudId", getTagcloudId());
-		attributes.put("isVideo", getIsVideo());
-		attributes.put("isLectureseries", getIsLectureseries());
+		attributes.put("objectClassType", getObjectClassType());
+		attributes.put("objectId", getObjectId());
 		attributes.put("tags", getTags());
 
 		return attributes;
@@ -88,16 +88,16 @@ public class TagcloudClp extends BaseModelImpl<Tagcloud> implements Tagcloud {
 			setTagcloudId(tagcloudId);
 		}
 
-		Integer isVideo = (Integer)attributes.get("isVideo");
+		String objectClassType = (String)attributes.get("objectClassType");
 
-		if (isVideo != null) {
-			setIsVideo(isVideo);
+		if (objectClassType != null) {
+			setObjectClassType(objectClassType);
 		}
 
-		Integer isLectureseries = (Integer)attributes.get("isLectureseries");
+		Long objectId = (Long)attributes.get("objectId");
 
-		if (isLectureseries != null) {
-			setIsLectureseries(isLectureseries);
+		if (objectId != null) {
+			setObjectId(objectId);
 		}
 
 		String tags = (String)attributes.get("tags");
@@ -131,21 +131,22 @@ public class TagcloudClp extends BaseModelImpl<Tagcloud> implements Tagcloud {
 	}
 
 	@Override
-	public int getIsVideo() {
-		return _isVideo;
+	public String getObjectClassType() {
+		return _objectClassType;
 	}
 
 	@Override
-	public void setIsVideo(int isVideo) {
-		_isVideo = isVideo;
+	public void setObjectClassType(String objectClassType) {
+		_objectClassType = objectClassType;
 
 		if (_tagcloudRemoteModel != null) {
 			try {
 				Class<?> clazz = _tagcloudRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setIsVideo", int.class);
+				Method method = clazz.getMethod("setObjectClassType",
+						String.class);
 
-				method.invoke(_tagcloudRemoteModel, isVideo);
+				method.invoke(_tagcloudRemoteModel, objectClassType);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -154,21 +155,21 @@ public class TagcloudClp extends BaseModelImpl<Tagcloud> implements Tagcloud {
 	}
 
 	@Override
-	public int getIsLectureseries() {
-		return _isLectureseries;
+	public long getObjectId() {
+		return _objectId;
 	}
 
 	@Override
-	public void setIsLectureseries(int isLectureseries) {
-		_isLectureseries = isLectureseries;
+	public void setObjectId(long objectId) {
+		_objectId = objectId;
 
 		if (_tagcloudRemoteModel != null) {
 			try {
 				Class<?> clazz = _tagcloudRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setIsLectureseries", int.class);
+				Method method = clazz.getMethod("setObjectId", long.class);
 
-				method.invoke(_tagcloudRemoteModel, isLectureseries);
+				method.invoke(_tagcloudRemoteModel, objectId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -269,8 +270,8 @@ public class TagcloudClp extends BaseModelImpl<Tagcloud> implements Tagcloud {
 		TagcloudClp clone = new TagcloudClp();
 
 		clone.setTagcloudId(getTagcloudId());
-		clone.setIsVideo(getIsVideo());
-		clone.setIsLectureseries(getIsLectureseries());
+		clone.setObjectClassType(getObjectClassType());
+		clone.setObjectId(getObjectId());
 		clone.setTags(getTags());
 
 		return clone;
@@ -328,10 +329,10 @@ public class TagcloudClp extends BaseModelImpl<Tagcloud> implements Tagcloud {
 
 		sb.append("{tagcloudId=");
 		sb.append(getTagcloudId());
-		sb.append(", isVideo=");
-		sb.append(getIsVideo());
-		sb.append(", isLectureseries=");
-		sb.append(getIsLectureseries());
+		sb.append(", objectClassType=");
+		sb.append(getObjectClassType());
+		sb.append(", objectId=");
+		sb.append(getObjectId());
 		sb.append(", tags=");
 		sb.append(getTags());
 		sb.append("}");
@@ -352,12 +353,12 @@ public class TagcloudClp extends BaseModelImpl<Tagcloud> implements Tagcloud {
 		sb.append(getTagcloudId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>isVideo</column-name><column-value><![CDATA[");
-		sb.append(getIsVideo());
+			"<column><column-name>objectClassType</column-name><column-value><![CDATA[");
+		sb.append(getObjectClassType());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>isLectureseries</column-name><column-value><![CDATA[");
-		sb.append(getIsLectureseries());
+			"<column><column-name>objectId</column-name><column-value><![CDATA[");
+		sb.append(getObjectId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>tags</column-name><column-value><![CDATA[");
@@ -370,8 +371,8 @@ public class TagcloudClp extends BaseModelImpl<Tagcloud> implements Tagcloud {
 	}
 
 	private long _tagcloudId;
-	private int _isVideo;
-	private int _isLectureseries;
+	private String _objectClassType;
+	private long _objectId;
 	private String _tags;
 	private BaseModel<?> _tagcloudRemoteModel;
 	private Class<?> _clpSerializerClass = de.uhh.l2g.plugins.service.ClpSerializer.class;

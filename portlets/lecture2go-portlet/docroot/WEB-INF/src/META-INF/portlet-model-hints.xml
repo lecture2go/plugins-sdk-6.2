@@ -140,8 +140,8 @@
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Tagcloud">
 		<field name="tagcloudId" type="long" />
-		<field name="isVideo" type="int" />
-		<field name="isLectureseries" type="int" />
+		<field name="objectClassType" type="String" />
+		<field name="objectId" type="long" />
 		<field name="tags" type="String" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Term">
@@ -183,6 +183,7 @@
 		<field name="citation2go" type="int" />
 		<field name="termId" type="long" />
 		<field name="videoCreatorId" type="long" />
+		<field name="tags" type="String" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Video_Category">
 		<field name="videoCategoryId" type="long" />

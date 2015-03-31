@@ -80,9 +80,10 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 			{ "rootInstitutionId", Types.BIGINT },
 			{ "citation2go", Types.INTEGER },
 			{ "termId", Types.BIGINT },
-			{ "videoCreatorId", Types.BIGINT }
+			{ "videoCreatorId", Types.BIGINT },
+			{ "tags", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Video (videoId LONG not null primary key,title VARCHAR(75) null,lectureseriesId LONG,producerId LONG,containerFormat VARCHAR(75) null,filename VARCHAR(75) null,resolution VARCHAR(75) null,duration VARCHAR(75) null,hostId LONG,fileSize VARCHAR(75) null,generationDate VARCHAR(75) null,openAccess INTEGER,downloadLink INTEGER,metadataId LONG,surl VARCHAR(75) null,hits LONG,uploadDate DATE null,permittedToSegment INTEGER,rootInstitutionId LONG,citation2go INTEGER,termId LONG,videoCreatorId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Video (videoId LONG not null primary key,title VARCHAR(75) null,lectureseriesId LONG,producerId LONG,containerFormat VARCHAR(75) null,filename VARCHAR(75) null,resolution VARCHAR(75) null,duration VARCHAR(75) null,hostId LONG,fileSize VARCHAR(75) null,generationDate VARCHAR(75) null,openAccess INTEGER,downloadLink INTEGER,metadataId LONG,surl VARCHAR(75) null,hits LONG,uploadDate DATE null,permittedToSegment INTEGER,rootInstitutionId LONG,citation2go INTEGER,termId LONG,videoCreatorId LONG,tags VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Video";
 	public static final String ORDER_BY_JPQL = " ORDER BY video.videoId DESC, video.uploadDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Video.videoId DESC, LG_Video.uploadDate DESC";
@@ -168,6 +169,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		attributes.put("citation2go", getCitation2go());
 		attributes.put("termId", getTermId());
 		attributes.put("videoCreatorId", getVideoCreatorId());
+		attributes.put("tags", getTags());
 
 		return attributes;
 	}
@@ -305,6 +307,12 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 
 		if (videoCreatorId != null) {
 			setVideoCreatorId(videoCreatorId);
+		}
+
+		String tags = (String)attributes.get("tags");
+
+		if (tags != null) {
+			setTags(tags);
 		}
 	}
 
@@ -650,6 +658,21 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		_videoCreatorId = videoCreatorId;
 	}
 
+	@Override
+	public String getTags() {
+		if (_tags == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _tags;
+		}
+	}
+
+	@Override
+	public void setTags(String tags) {
+		_tags = tags;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -703,6 +726,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		videoImpl.setCitation2go(getCitation2go());
 		videoImpl.setTermId(getTermId());
 		videoImpl.setVideoCreatorId(getVideoCreatorId());
+		videoImpl.setTags(getTags());
 
 		videoImpl.resetOriginalValues();
 
@@ -901,12 +925,20 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 
 		videoCacheModel.videoCreatorId = getVideoCreatorId();
 
+		videoCacheModel.tags = getTags();
+
+		String tags = videoCacheModel.tags;
+
+		if ((tags != null) && (tags.length() == 0)) {
+			videoCacheModel.tags = null;
+		}
+
 		return videoCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(47);
 
 		sb.append("{videoId=");
 		sb.append(getVideoId());
@@ -952,6 +984,8 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		sb.append(getTermId());
 		sb.append(", videoCreatorId=");
 		sb.append(getVideoCreatorId());
+		sb.append(", tags=");
+		sb.append(getTags());
 		sb.append("}");
 
 		return sb.toString();
@@ -959,7 +993,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(70);
+		StringBundler sb = new StringBundler(73);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Video");
@@ -1053,6 +1087,10 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 			"<column><column-name>videoCreatorId</column-name><column-value><![CDATA[");
 		sb.append(getVideoCreatorId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>tags</column-name><column-value><![CDATA[");
+		sb.append(getTags());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1095,6 +1133,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	private int _citation2go;
 	private long _termId;
 	private long _videoCreatorId;
+	private String _tags;
 	private long _columnBitmask;
 	private Video _escapedModel;
 }

@@ -225,8 +225,8 @@
 		<id name="tagcloudId" type="long">
 			<generator class="increment" />
 		</id>
-		<property name="isVideo" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="isLectureseries" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="objectClassType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="objectId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="tags" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.TermImpl" table="LG_Term">
@@ -277,6 +277,7 @@
 		<property name="citation2go" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="termId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="videoCreatorId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="tags" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.Video_CategoryImpl" table="LG_Video_Category">
 		<cache usage="read-write" />

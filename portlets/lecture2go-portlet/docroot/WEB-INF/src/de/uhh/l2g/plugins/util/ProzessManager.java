@@ -48,6 +48,7 @@ import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.Metadata;
 import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.model.Segment;
+import de.uhh.l2g.plugins.model.Tagcloud;
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.Video_Lectureseries;
 import de.uhh.l2g.plugins.model.impl.HostImpl;
@@ -62,6 +63,7 @@ import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Segment_User_VideoLocalServiceUtil;
+import de.uhh.l2g.plugins.service.TagcloudLocalServiceUtil;
 import de.uhh.l2g.plugins.service.UploadLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_CreatorLocalServiceUtil;
@@ -280,7 +282,7 @@ public class ProzessManager {
 		
 		try {
 			lectureseries = LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId());
-		} catch (SystemException e3) {
+		} catch (Exception e3) {
 			e3.printStackTrace();
 		}
 
@@ -448,11 +450,13 @@ public class ProzessManager {
 		}
 		
 		// refresh open access for lecture series
-		LectureseriesLocalServiceUtil.updateOpenAccess(video, lectureseries); 
+		if(lectureseries.getLectureseriesId()>0)LectureseriesLocalServiceUtil.updateOpenAccess(video, lectureseries); 
 		
 		//delete creators from video
 		Video_CreatorLocalServiceUtil.deleteByVideoId(video.getVideoId());
 		
+		//delete tag cloud for this video
+		TagcloudLocalServiceUtil.deleteByObjectId(video.getVideoId());
 		return true;
 	}
 	

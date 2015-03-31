@@ -19,25 +19,34 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
+import de.uhh.l2g.plugins.model.Category;
 import de.uhh.l2g.plugins.model.Creator;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.Lectureseries_Creator;
 import de.uhh.l2g.plugins.model.Producer;
+import de.uhh.l2g.plugins.model.Tagcloud;
+import de.uhh.l2g.plugins.model.Term;
+import de.uhh.l2g.plugins.model.impl.CategoryImpl;
 import de.uhh.l2g.plugins.model.impl.CreatorImpl;
 import de.uhh.l2g.plugins.model.impl.InstitutionImpl;
 import de.uhh.l2g.plugins.model.impl.LectureseriesImpl;
 import de.uhh.l2g.plugins.model.impl.Lectureseries_CreatorImpl;
 import de.uhh.l2g.plugins.model.impl.Lectureseries_InstitutionImpl;
 import de.uhh.l2g.plugins.model.impl.Producer_LectureseriesImpl;
+import de.uhh.l2g.plugins.model.impl.TagcloudImpl;
+import de.uhh.l2g.plugins.service.CategoryLocalServiceUtil;
 import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Lectureseries_CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Lectureseries_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Producer_LectureseriesLocalServiceUtil;
+import de.uhh.l2g.plugins.service.TagcloudLocalServiceUtil;
+import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
+import de.uhh.l2g.plugins.service.impl.TermLocalServiceImpl;
 import de.uhh.l2g.plugins.util.Htaccess;
 
 public class AdminLectureSeriesManagement extends MVCPortlet {
@@ -69,6 +78,7 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			Producer_LectureseriesLocalServiceUtil.removeByLectureseriesId(lId);//producer
 			VideoLocalServiceUtil.unlinkLectureseriesFromVideos(lId);//video
 			Video_LectureseriesLocalServiceUtil.removeByLectureseriesId(lId);//video links to lecture series
+			TagcloudLocalServiceUtil.deleteByObjectId(lId);//tag cloud
 		} catch (PortalException e) {
 			e.printStackTrace();
 		} catch (SystemException e) {
@@ -84,6 +94,9 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 	}
 
 	public void editLectureseries(ActionRequest request, ActionResponse response) throws NumberFormatException, PortalException, SystemException{
+		//search tags
+		String tagCloudString = "";
+		
 		Long lId = new Long(request.getParameter("lectureseriesId"));
 		String[] producers = request.getParameterValues("producers");
 		
@@ -93,6 +106,8 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		Long semesterId = new Long(0);
 		try{
 			semesterId = new Long(request.getParameter("semesterId"));
+			Term t = TermLocalServiceUtil.getTerm(semesterId);
+			tagCloudString += t.getPrefix()+ " ### "+t.getYear()+" ### "+t.getPrefix()+" "+t.getYear()+" ### ";			
 		}catch(Exception e){}
 		Long categoryId = new Long(0);
 		try{
@@ -124,12 +139,16 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		for(int i=0;i<institutions.length;i++){
 			Lectureseries_InstitutionImpl lf = new Lectureseries_InstitutionImpl();
 			lf.setLectureseriesId(lId);
+			Institution parentInst = new InstitutionImpl();
 			Institution inst = new InstitutionImpl();
 			inst = InstitutionLocalServiceUtil.getById(new Long(institutions[i]));
+			parentInst = InstitutionLocalServiceUtil.getById(inst.getParentId());
 			lf.setInstitutionId(inst.getInstitutionId());
 			lf.setInstitutionParentId(inst.getParentId());
 			if(!Lectureseries_InstitutionLocalServiceUtil.institutionAssignedToLectureseries(lf))
 				Lectureseries_InstitutionLocalServiceUtil.addLectureseries_Institution(lf);
+			//
+			tagCloudString += inst.getName()+" ### "+parentInst.getName()+" ### ";
 		}
 
 		//new creators
@@ -164,6 +183,8 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 				if(Lectureseries_CreatorLocalServiceUtil.getByLectureseriesIdAndCreatorId(lId, cId).size()==0){
 					Lectureseries_CreatorLocalServiceUtil.addLectureseries_Creator(lc);
 				}
+				Creator cr = CreatorLocalServiceUtil.getCreator(cId);
+				tagCloudString += cr.getFirstName()+" ### "+cr.getLastName()+" ### "+cr.getFullName()+" ### ";
 			}
 		}catch (NullPointerException e){}
 		//update producer link
@@ -183,9 +204,30 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		//category
+		Category ctgr = new CategoryImpl();
+		try{ctgr = CategoryLocalServiceUtil.getCategory(lectureseries.getCategoryId());}catch(Exception e){}			
+		tagCloudString += ctgr.getName()+" ### "+ lectureseries.getName() +" ### "+ lectureseries.getNumber()+" ### ";
+		
+		//edit tag cloud
+		Tagcloud tagcloud = new TagcloudImpl();
+		try{
+			tagcloud = TagcloudLocalServiceUtil.getByObjectIdAndObjectClassType(lectureseries.getLectureseriesId(), lectureseries.getClass().getName());
+			tagcloud.setTags(tagCloudString);
+		}catch(de.uhh.l2g.plugins.NoSuchTagcloudException e){
+			tagcloud.setObjectId(lectureseries.getLectureseriesId());
+			tagcloud.setObjectClassType(lectureseries.getClass().getName());
+			tagcloud.setTags(tagCloudString);
+		}
+		TagcloudLocalServiceUtil.updateTagcloud(tagcloud);
+		//
 	}
 
 	public void addLectureseries(ActionRequest request, ActionResponse response) throws SystemException, PortalException {
+		//search tags
+		String tagCloudString = "";
+		
 		String s = request.getParameter("longDesc");
 		String[] producers = request.getParameterValues("producers");
 		String[] institutions = request.getParameterValues("institutions");
@@ -193,6 +235,8 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		Long semesterId = new Long(0);
 		try{
 			semesterId = new Long(request.getParameter("semesterId"));
+			Term t = TermLocalServiceUtil.getTerm(semesterId);
+			tagCloudString += t.getPrefix()+ " ### "+t.getYear()+" ### "+t.getPrefix()+" "+t.getYear()+" ### ";
 		}catch(Exception e){}
 		Long categoryId = new Long(0);
 		try{
@@ -213,7 +257,9 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		lectureseries.setLongDesc(s);
 		
 		//save object to database
-		Long lId = LectureseriesLocalServiceUtil.addLectureseries(lectureseries).getLectureseriesId();
+		Lectureseries newlect = LectureseriesLocalServiceUtil.addLectureseries(lectureseries);
+		Long lId = newlect.getLectureseriesId();
+
 		//refresh htaccess authentication files 
 		Htaccess.writePW(LectureseriesLocalServiceUtil.getAllLectureseriesWhithPassword());
 		
@@ -221,11 +267,15 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		for(int i=0;i<institutions.length;i++){
 			Lectureseries_InstitutionImpl lf = new Lectureseries_InstitutionImpl();
 			lf.setLectureseriesId(lId);
+			Institution parentInst = new InstitutionImpl();
 			Institution inst = new InstitutionImpl();
 			inst = InstitutionLocalServiceUtil.getById(new Long(institutions[i]));
+			parentInst = InstitutionLocalServiceUtil.getById(inst.getParentId());
+			
 			lf.setInstitutionId(inst.getInstitutionId());
 			lf.setInstitutionParentId(inst.getParentId());
 			Lectureseries_InstitutionLocalServiceUtil.addLectureseries_Institution(lf);
+			tagCloudString += inst.getName()+" ### "+parentInst.getName()+" ### ";
 		}
 
 		//new creators
@@ -260,6 +310,8 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 				if(Lectureseries_CreatorLocalServiceUtil.getByLectureseriesIdAndCreatorId(lId, cId).size()==0){
 					Lectureseries_CreatorLocalServiceUtil.addLectureseries_Creator(lc);
 				}
+				Creator cr = CreatorLocalServiceUtil.getCreator(cId);
+				tagCloudString += cr.getFirstName()+" ### "+cr.getLastName()+" ### "+cr.getFullName()+" ### ";
 			}
 		}catch (NullPointerException e){}
 		//link to producer
@@ -269,6 +321,18 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			pl.setLectureseriesId(lId);
 			Producer_LectureseriesLocalServiceUtil.addProducer_Lectureseries(pl);
 		}
+		
+		//Tag cloud
+		Tagcloud tagcloud = new TagcloudImpl();
+		Category ctgr = new CategoryImpl();
+		try{ctgr = CategoryLocalServiceUtil.getCategory(newlect.getCategoryId());}catch(Exception e){}			
+		tagCloudString += ctgr.getName()+" ### "+ newlect.getName() +" ### "+ newlect.getNumber()+" ### ";
+		tagcloud.setTags(tagCloudString);
+		tagcloud.setObjectClassType(newlect.getClass().getName());
+		tagcloud.setObjectId(newlect.getLectureseriesId());
+		TagcloudLocalServiceUtil.addTagcloud(tagcloud);
+		//
+		
 		request.setAttribute("institutions", institutions);
 		request.setAttribute("producers", producers);
 		request.setAttribute("backURL", backURL);

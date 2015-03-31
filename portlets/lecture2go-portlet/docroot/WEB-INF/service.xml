@@ -293,6 +293,7 @@
         <column name="citation2go" type="int"></column>
         <column name="termId" type="long"></column>
         <column name="videoCreatorId" type="long"></column>
+        <column name="tags" type="String"></column>
         <order by="desc">
             <order-column name="videoId" order-by="desc"></order-column>
             <order-column name="uploadDate" order-by="desc"></order-column>
@@ -494,14 +495,18 @@
     </entity>
     <entity name="Tagcloud" local-service="true" remote-service="false">
         <column name="tagcloudId" type="long" primary="true" id-type="increment"></column>
-        <column name="isVideo" type="int"></column>
-        <column name="isLectureseries" type="int"></column>
+        <column name="objectClassType" type="String"></column>
+        <column name="objectId" type="long"></column>
         <column name="tags" type="String"></column>
-        <finder name="IsVideo" return-type="Collection">
-            <finder-column name="isVideo"></finder-column>
+        <finder name="ObjectClassType" return-type="Collection">
+            <finder-column name="objectClassType"></finder-column>
         </finder>
-        <finder name="IsLectureseries" return-type="Collection">
-            <finder-column name="isLectureseries"></finder-column>
+        <finder name="ObjectId" return-type="Collection">
+            <finder-column name="objectId"></finder-column>
+        </finder>
+        <finder name="ObjectClassTypeAndObjectId" return-type="Tagcloud">
+            <finder-column name="objectClassType"></finder-column>
+            <finder-column name="objectId"></finder-column>
         </finder>
     </entity>
     <exceptions>

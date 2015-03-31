@@ -72,32 +72,33 @@ public interface TagcloudModel extends BaseModel<Tagcloud> {
 	public void setTagcloudId(long tagcloudId);
 
 	/**
-	 * Returns the is video of this tagcloud.
+	 * Returns the object class type of this tagcloud.
 	 *
-	 * @return the is video of this tagcloud
+	 * @return the object class type of this tagcloud
 	 */
-	public int getIsVideo();
+	@AutoEscape
+	public String getObjectClassType();
 
 	/**
-	 * Sets the is video of this tagcloud.
+	 * Sets the object class type of this tagcloud.
 	 *
-	 * @param isVideo the is video of this tagcloud
+	 * @param objectClassType the object class type of this tagcloud
 	 */
-	public void setIsVideo(int isVideo);
+	public void setObjectClassType(String objectClassType);
 
 	/**
-	 * Returns the is lectureseries of this tagcloud.
+	 * Returns the object ID of this tagcloud.
 	 *
-	 * @return the is lectureseries of this tagcloud
+	 * @return the object ID of this tagcloud
 	 */
-	public int getIsLectureseries();
+	public long getObjectId();
 
 	/**
-	 * Sets the is lectureseries of this tagcloud.
+	 * Sets the object ID of this tagcloud.
 	 *
-	 * @param isLectureseries the is lectureseries of this tagcloud
+	 * @param objectId the object ID of this tagcloud
 	 */
-	public void setIsLectureseries(int isLectureseries);
+	public void setObjectId(long objectId);
 
 	/**
 	 * Returns the tags of this tagcloud.

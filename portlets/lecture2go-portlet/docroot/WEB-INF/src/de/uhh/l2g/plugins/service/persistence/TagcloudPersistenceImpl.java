@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
@@ -82,554 +83,68 @@ public class TagcloudPersistenceImpl extends BasePersistenceImpl<Tagcloud>
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(TagcloudModelImpl.ENTITY_CACHE_ENABLED,
 			TagcloudModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_ISVIDEO = new FinderPath(TagcloudModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_OBJECTCLASSTYPE =
+		new FinderPath(TagcloudModelImpl.ENTITY_CACHE_ENABLED,
 			TagcloudModelImpl.FINDER_CACHE_ENABLED, TagcloudImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByIsVideo",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByObjectClassType",
 			new String[] {
-				Integer.class.getName(),
+				String.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ISVIDEO =
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_OBJECTCLASSTYPE =
 		new FinderPath(TagcloudModelImpl.ENTITY_CACHE_ENABLED,
 			TagcloudModelImpl.FINDER_CACHE_ENABLED, TagcloudImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByIsVideo",
-			new String[] { Integer.class.getName() },
-			TagcloudModelImpl.ISVIDEO_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_ISVIDEO = new FinderPath(TagcloudModelImpl.ENTITY_CACHE_ENABLED,
-			TagcloudModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByIsVideo",
-			new String[] { Integer.class.getName() });
-
-	/**
-	 * Returns all the tagclouds where isVideo = &#63;.
-	 *
-	 * @param isVideo the is video
-	 * @return the matching tagclouds
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public List<Tagcloud> findByIsVideo(int isVideo) throws SystemException {
-		return findByIsVideo(isVideo, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the tagclouds where isVideo = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.TagcloudModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param isVideo the is video
-	 * @param start the lower bound of the range of tagclouds
-	 * @param end the upper bound of the range of tagclouds (not inclusive)
-	 * @return the range of matching tagclouds
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public List<Tagcloud> findByIsVideo(int isVideo, int start, int end)
-		throws SystemException {
-		return findByIsVideo(isVideo, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the tagclouds where isVideo = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.TagcloudModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param isVideo the is video
-	 * @param start the lower bound of the range of tagclouds
-	 * @param end the upper bound of the range of tagclouds (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching tagclouds
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public List<Tagcloud> findByIsVideo(int isVideo, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
-		boolean pagination = true;
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ISVIDEO;
-			finderArgs = new Object[] { isVideo };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_ISVIDEO;
-			finderArgs = new Object[] { isVideo, start, end, orderByComparator };
-		}
-
-		List<Tagcloud> list = (List<Tagcloud>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
-
-		if ((list != null) && !list.isEmpty()) {
-			for (Tagcloud tagcloud : list) {
-				if ((isVideo != tagcloud.getIsVideo())) {
-					list = null;
-
-					break;
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
-			}
-			else {
-				query = new StringBundler(3);
-			}
-
-			query.append(_SQL_SELECT_TAGCLOUD_WHERE);
-
-			query.append(_FINDER_COLUMN_ISVIDEO_ISVIDEO_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(TagcloudModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(isVideo);
-
-				if (!pagination) {
-					list = (List<Tagcloud>)QueryUtil.list(q, getDialect(),
-							start, end, false);
-
-					Collections.sort(list);
-
-					list = new UnmodifiableList<Tagcloud>(list);
-				}
-				else {
-					list = (List<Tagcloud>)QueryUtil.list(q, getDialect(),
-							start, end);
-				}
-
-				cacheResult(list);
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first tagcloud in the ordered set where isVideo = &#63;.
-	 *
-	 * @param isVideo the is video
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching tagcloud
-	 * @throws de.uhh.l2g.plugins.NoSuchTagcloudException if a matching tagcloud could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public Tagcloud findByIsVideo_First(int isVideo,
-		OrderByComparator orderByComparator)
-		throws NoSuchTagcloudException, SystemException {
-		Tagcloud tagcloud = fetchByIsVideo_First(isVideo, orderByComparator);
-
-		if (tagcloud != null) {
-			return tagcloud;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("isVideo=");
-		msg.append(isVideo);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchTagcloudException(msg.toString());
-	}
-
-	/**
-	 * Returns the first tagcloud in the ordered set where isVideo = &#63;.
-	 *
-	 * @param isVideo the is video
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching tagcloud, or <code>null</code> if a matching tagcloud could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public Tagcloud fetchByIsVideo_First(int isVideo,
-		OrderByComparator orderByComparator) throws SystemException {
-		List<Tagcloud> list = findByIsVideo(isVideo, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last tagcloud in the ordered set where isVideo = &#63;.
-	 *
-	 * @param isVideo the is video
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching tagcloud
-	 * @throws de.uhh.l2g.plugins.NoSuchTagcloudException if a matching tagcloud could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public Tagcloud findByIsVideo_Last(int isVideo,
-		OrderByComparator orderByComparator)
-		throws NoSuchTagcloudException, SystemException {
-		Tagcloud tagcloud = fetchByIsVideo_Last(isVideo, orderByComparator);
-
-		if (tagcloud != null) {
-			return tagcloud;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("isVideo=");
-		msg.append(isVideo);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchTagcloudException(msg.toString());
-	}
-
-	/**
-	 * Returns the last tagcloud in the ordered set where isVideo = &#63;.
-	 *
-	 * @param isVideo the is video
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching tagcloud, or <code>null</code> if a matching tagcloud could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public Tagcloud fetchByIsVideo_Last(int isVideo,
-		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByIsVideo(isVideo);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Tagcloud> list = findByIsVideo(isVideo, count - 1, count,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the tagclouds before and after the current tagcloud in the ordered set where isVideo = &#63;.
-	 *
-	 * @param tagcloudId the primary key of the current tagcloud
-	 * @param isVideo the is video
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next tagcloud
-	 * @throws de.uhh.l2g.plugins.NoSuchTagcloudException if a tagcloud with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public Tagcloud[] findByIsVideo_PrevAndNext(long tagcloudId, int isVideo,
-		OrderByComparator orderByComparator)
-		throws NoSuchTagcloudException, SystemException {
-		Tagcloud tagcloud = findByPrimaryKey(tagcloudId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Tagcloud[] array = new TagcloudImpl[3];
-
-			array[0] = getByIsVideo_PrevAndNext(session, tagcloud, isVideo,
-					orderByComparator, true);
-
-			array[1] = tagcloud;
-
-			array[2] = getByIsVideo_PrevAndNext(session, tagcloud, isVideo,
-					orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected Tagcloud getByIsVideo_PrevAndNext(Session session,
-		Tagcloud tagcloud, int isVideo, OrderByComparator orderByComparator,
-		boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_TAGCLOUD_WHERE);
-
-		query.append(_FINDER_COLUMN_ISVIDEO_ISVIDEO_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			query.append(TagcloudModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(isVideo);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(tagcloud);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<Tagcloud> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the tagclouds where isVideo = &#63; from the database.
-	 *
-	 * @param isVideo the is video
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public void removeByIsVideo(int isVideo) throws SystemException {
-		for (Tagcloud tagcloud : findByIsVideo(isVideo, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
-			remove(tagcloud);
-		}
-	}
-
-	/**
-	 * Returns the number of tagclouds where isVideo = &#63;.
-	 *
-	 * @param isVideo the is video
-	 * @return the number of matching tagclouds
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public int countByIsVideo(int isVideo) throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_ISVIDEO;
-
-		Object[] finderArgs = new Object[] { isVideo };
-
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(2);
-
-			query.append(_SQL_COUNT_TAGCLOUD_WHERE);
-
-			query.append(_FINDER_COLUMN_ISVIDEO_ISVIDEO_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(isVideo);
-
-				count = (Long)q.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_ISVIDEO_ISVIDEO_2 = "tagcloud.isVideo = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_ISLECTURESERIES =
-		new FinderPath(TagcloudModelImpl.ENTITY_CACHE_ENABLED,
-			TagcloudModelImpl.FINDER_CACHE_ENABLED, TagcloudImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByIsLectureseries",
-			new String[] {
-				Integer.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ISLECTURESERIES =
-		new FinderPath(TagcloudModelImpl.ENTITY_CACHE_ENABLED,
-			TagcloudModelImpl.FINDER_CACHE_ENABLED, TagcloudImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByIsLectureseries",
-			new String[] { Integer.class.getName() },
-			TagcloudModelImpl.ISLECTURESERIES_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_ISLECTURESERIES = new FinderPath(TagcloudModelImpl.ENTITY_CACHE_ENABLED,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByObjectClassType",
+			new String[] { String.class.getName() },
+			TagcloudModelImpl.OBJECTCLASSTYPE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_OBJECTCLASSTYPE = new FinderPath(TagcloudModelImpl.ENTITY_CACHE_ENABLED,
 			TagcloudModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByIsLectureseries", new String[] { Integer.class.getName() });
+			"countByObjectClassType", new String[] { String.class.getName() });
 
 	/**
-	 * Returns all the tagclouds where isLectureseries = &#63;.
+	 * Returns all the tagclouds where objectClassType = &#63;.
 	 *
-	 * @param isLectureseries the is lectureseries
+	 * @param objectClassType the object class type
 	 * @return the matching tagclouds
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Tagcloud> findByIsLectureseries(int isLectureseries)
+	public List<Tagcloud> findByObjectClassType(String objectClassType)
 		throws SystemException {
-		return findByIsLectureseries(isLectureseries, QueryUtil.ALL_POS,
+		return findByObjectClassType(objectClassType, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the tagclouds where isLectureseries = &#63;.
+	 * Returns a range of all the tagclouds where objectClassType = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.TagcloudModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param isLectureseries the is lectureseries
+	 * @param objectClassType the object class type
 	 * @param start the lower bound of the range of tagclouds
 	 * @param end the upper bound of the range of tagclouds (not inclusive)
 	 * @return the range of matching tagclouds
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Tagcloud> findByIsLectureseries(int isLectureseries, int start,
-		int end) throws SystemException {
-		return findByIsLectureseries(isLectureseries, start, end, null);
+	public List<Tagcloud> findByObjectClassType(String objectClassType,
+		int start, int end) throws SystemException {
+		return findByObjectClassType(objectClassType, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the tagclouds where isLectureseries = &#63;.
+	 * Returns an ordered range of all the tagclouds where objectClassType = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.TagcloudModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param isLectureseries the is lectureseries
+	 * @param objectClassType the object class type
 	 * @param start the lower bound of the range of tagclouds
 	 * @param end the upper bound of the range of tagclouds (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -637,8 +152,9 @@ public class TagcloudPersistenceImpl extends BasePersistenceImpl<Tagcloud>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Tagcloud> findByIsLectureseries(int isLectureseries, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+	public List<Tagcloud> findByObjectClassType(String objectClassType,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -646,13 +162,13 @@ public class TagcloudPersistenceImpl extends BasePersistenceImpl<Tagcloud>
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ISLECTURESERIES;
-			finderArgs = new Object[] { isLectureseries };
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_OBJECTCLASSTYPE;
+			finderArgs = new Object[] { objectClassType };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_ISLECTURESERIES;
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_OBJECTCLASSTYPE;
 			finderArgs = new Object[] {
-					isLectureseries,
+					objectClassType,
 					
 					start, end, orderByComparator
 				};
@@ -663,7 +179,8 @@ public class TagcloudPersistenceImpl extends BasePersistenceImpl<Tagcloud>
 
 		if ((list != null) && !list.isEmpty()) {
 			for (Tagcloud tagcloud : list) {
-				if ((isLectureseries != tagcloud.getIsLectureseries())) {
+				if (!Validator.equals(objectClassType,
+							tagcloud.getObjectClassType())) {
 					list = null;
 
 					break;
@@ -684,7 +201,19 @@ public class TagcloudPersistenceImpl extends BasePersistenceImpl<Tagcloud>
 
 			query.append(_SQL_SELECT_TAGCLOUD_WHERE);
 
-			query.append(_FINDER_COLUMN_ISLECTURESERIES_ISLECTURESERIES_2);
+			boolean bindObjectClassType = false;
+
+			if (objectClassType == null) {
+				query.append(_FINDER_COLUMN_OBJECTCLASSTYPE_OBJECTCLASSTYPE_1);
+			}
+			else if (objectClassType.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_OBJECTCLASSTYPE_OBJECTCLASSTYPE_3);
+			}
+			else {
+				bindObjectClassType = true;
+
+				query.append(_FINDER_COLUMN_OBJECTCLASSTYPE_OBJECTCLASSTYPE_2);
+			}
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -706,7 +235,9 @@ public class TagcloudPersistenceImpl extends BasePersistenceImpl<Tagcloud>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(isLectureseries);
+				if (bindObjectClassType) {
+					qPos.add(objectClassType);
+				}
 
 				if (!pagination) {
 					list = (List<Tagcloud>)QueryUtil.list(q, getDialect(),
@@ -739,19 +270,19 @@ public class TagcloudPersistenceImpl extends BasePersistenceImpl<Tagcloud>
 	}
 
 	/**
-	 * Returns the first tagcloud in the ordered set where isLectureseries = &#63;.
+	 * Returns the first tagcloud in the ordered set where objectClassType = &#63;.
 	 *
-	 * @param isLectureseries the is lectureseries
+	 * @param objectClassType the object class type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching tagcloud
 	 * @throws de.uhh.l2g.plugins.NoSuchTagcloudException if a matching tagcloud could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Tagcloud findByIsLectureseries_First(int isLectureseries,
+	public Tagcloud findByObjectClassType_First(String objectClassType,
 		OrderByComparator orderByComparator)
 		throws NoSuchTagcloudException, SystemException {
-		Tagcloud tagcloud = fetchByIsLectureseries_First(isLectureseries,
+		Tagcloud tagcloud = fetchByObjectClassType_First(objectClassType,
 				orderByComparator);
 
 		if (tagcloud != null) {
@@ -762,8 +293,8 @@ public class TagcloudPersistenceImpl extends BasePersistenceImpl<Tagcloud>
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("isLectureseries=");
-		msg.append(isLectureseries);
+		msg.append("objectClassType=");
+		msg.append(objectClassType);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -771,17 +302,17 @@ public class TagcloudPersistenceImpl extends BasePersistenceImpl<Tagcloud>
 	}
 
 	/**
-	 * Returns the first tagcloud in the ordered set where isLectureseries = &#63;.
+	 * Returns the first tagcloud in the ordered set where objectClassType = &#63;.
 	 *
-	 * @param isLectureseries the is lectureseries
+	 * @param objectClassType the object class type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching tagcloud, or <code>null</code> if a matching tagcloud could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Tagcloud fetchByIsLectureseries_First(int isLectureseries,
+	public Tagcloud fetchByObjectClassType_First(String objectClassType,
 		OrderByComparator orderByComparator) throws SystemException {
-		List<Tagcloud> list = findByIsLectureseries(isLectureseries, 0, 1,
+		List<Tagcloud> list = findByObjectClassType(objectClassType, 0, 1,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -792,19 +323,19 @@ public class TagcloudPersistenceImpl extends BasePersistenceImpl<Tagcloud>
 	}
 
 	/**
-	 * Returns the last tagcloud in the ordered set where isLectureseries = &#63;.
+	 * Returns the last tagcloud in the ordered set where objectClassType = &#63;.
 	 *
-	 * @param isLectureseries the is lectureseries
+	 * @param objectClassType the object class type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching tagcloud
 	 * @throws de.uhh.l2g.plugins.NoSuchTagcloudException if a matching tagcloud could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Tagcloud findByIsLectureseries_Last(int isLectureseries,
+	public Tagcloud findByObjectClassType_Last(String objectClassType,
 		OrderByComparator orderByComparator)
 		throws NoSuchTagcloudException, SystemException {
-		Tagcloud tagcloud = fetchByIsLectureseries_Last(isLectureseries,
+		Tagcloud tagcloud = fetchByObjectClassType_Last(objectClassType,
 				orderByComparator);
 
 		if (tagcloud != null) {
@@ -815,8 +346,8 @@ public class TagcloudPersistenceImpl extends BasePersistenceImpl<Tagcloud>
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("isLectureseries=");
-		msg.append(isLectureseries);
+		msg.append("objectClassType=");
+		msg.append(objectClassType);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -824,23 +355,23 @@ public class TagcloudPersistenceImpl extends BasePersistenceImpl<Tagcloud>
 	}
 
 	/**
-	 * Returns the last tagcloud in the ordered set where isLectureseries = &#63;.
+	 * Returns the last tagcloud in the ordered set where objectClassType = &#63;.
 	 *
-	 * @param isLectureseries the is lectureseries
+	 * @param objectClassType the object class type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching tagcloud, or <code>null</code> if a matching tagcloud could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Tagcloud fetchByIsLectureseries_Last(int isLectureseries,
+	public Tagcloud fetchByObjectClassType_Last(String objectClassType,
 		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByIsLectureseries(isLectureseries);
+		int count = countByObjectClassType(objectClassType);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<Tagcloud> list = findByIsLectureseries(isLectureseries, count - 1,
+		List<Tagcloud> list = findByObjectClassType(objectClassType, count - 1,
 				count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -851,18 +382,18 @@ public class TagcloudPersistenceImpl extends BasePersistenceImpl<Tagcloud>
 	}
 
 	/**
-	 * Returns the tagclouds before and after the current tagcloud in the ordered set where isLectureseries = &#63;.
+	 * Returns the tagclouds before and after the current tagcloud in the ordered set where objectClassType = &#63;.
 	 *
 	 * @param tagcloudId the primary key of the current tagcloud
-	 * @param isLectureseries the is lectureseries
+	 * @param objectClassType the object class type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next tagcloud
 	 * @throws de.uhh.l2g.plugins.NoSuchTagcloudException if a tagcloud with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Tagcloud[] findByIsLectureseries_PrevAndNext(long tagcloudId,
-		int isLectureseries, OrderByComparator orderByComparator)
+	public Tagcloud[] findByObjectClassType_PrevAndNext(long tagcloudId,
+		String objectClassType, OrderByComparator orderByComparator)
 		throws NoSuchTagcloudException, SystemException {
 		Tagcloud tagcloud = findByPrimaryKey(tagcloudId);
 
@@ -873,13 +404,13 @@ public class TagcloudPersistenceImpl extends BasePersistenceImpl<Tagcloud>
 
 			Tagcloud[] array = new TagcloudImpl[3];
 
-			array[0] = getByIsLectureseries_PrevAndNext(session, tagcloud,
-					isLectureseries, orderByComparator, true);
+			array[0] = getByObjectClassType_PrevAndNext(session, tagcloud,
+					objectClassType, orderByComparator, true);
 
 			array[1] = tagcloud;
 
-			array[2] = getByIsLectureseries_PrevAndNext(session, tagcloud,
-					isLectureseries, orderByComparator, false);
+			array[2] = getByObjectClassType_PrevAndNext(session, tagcloud,
+					objectClassType, orderByComparator, false);
 
 			return array;
 		}
@@ -891,8 +422,8 @@ public class TagcloudPersistenceImpl extends BasePersistenceImpl<Tagcloud>
 		}
 	}
 
-	protected Tagcloud getByIsLectureseries_PrevAndNext(Session session,
-		Tagcloud tagcloud, int isLectureseries,
+	protected Tagcloud getByObjectClassType_PrevAndNext(Session session,
+		Tagcloud tagcloud, String objectClassType,
 		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -906,7 +437,19 @@ public class TagcloudPersistenceImpl extends BasePersistenceImpl<Tagcloud>
 
 		query.append(_SQL_SELECT_TAGCLOUD_WHERE);
 
-		query.append(_FINDER_COLUMN_ISLECTURESERIES_ISLECTURESERIES_2);
+		boolean bindObjectClassType = false;
+
+		if (objectClassType == null) {
+			query.append(_FINDER_COLUMN_OBJECTCLASSTYPE_OBJECTCLASSTYPE_1);
+		}
+		else if (objectClassType.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_OBJECTCLASSTYPE_OBJECTCLASSTYPE_3);
+		}
+		else {
+			bindObjectClassType = true;
+
+			query.append(_FINDER_COLUMN_OBJECTCLASSTYPE_OBJECTCLASSTYPE_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -976,7 +519,9 @@ public class TagcloudPersistenceImpl extends BasePersistenceImpl<Tagcloud>
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		qPos.add(isLectureseries);
+		if (bindObjectClassType) {
+			qPos.add(objectClassType);
+		}
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(tagcloud);
@@ -997,33 +542,33 @@ public class TagcloudPersistenceImpl extends BasePersistenceImpl<Tagcloud>
 	}
 
 	/**
-	 * Removes all the tagclouds where isLectureseries = &#63; from the database.
+	 * Removes all the tagclouds where objectClassType = &#63; from the database.
 	 *
-	 * @param isLectureseries the is lectureseries
+	 * @param objectClassType the object class type
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByIsLectureseries(int isLectureseries)
+	public void removeByObjectClassType(String objectClassType)
 		throws SystemException {
-		for (Tagcloud tagcloud : findByIsLectureseries(isLectureseries,
+		for (Tagcloud tagcloud : findByObjectClassType(objectClassType,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(tagcloud);
 		}
 	}
 
 	/**
-	 * Returns the number of tagclouds where isLectureseries = &#63;.
+	 * Returns the number of tagclouds where objectClassType = &#63;.
 	 *
-	 * @param isLectureseries the is lectureseries
+	 * @param objectClassType the object class type
 	 * @return the number of matching tagclouds
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByIsLectureseries(int isLectureseries)
+	public int countByObjectClassType(String objectClassType)
 		throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_ISLECTURESERIES;
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_OBJECTCLASSTYPE;
 
-		Object[] finderArgs = new Object[] { isLectureseries };
+		Object[] finderArgs = new Object[] { objectClassType };
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
@@ -1033,7 +578,19 @@ public class TagcloudPersistenceImpl extends BasePersistenceImpl<Tagcloud>
 
 			query.append(_SQL_COUNT_TAGCLOUD_WHERE);
 
-			query.append(_FINDER_COLUMN_ISLECTURESERIES_ISLECTURESERIES_2);
+			boolean bindObjectClassType = false;
+
+			if (objectClassType == null) {
+				query.append(_FINDER_COLUMN_OBJECTCLASSTYPE_OBJECTCLASSTYPE_1);
+			}
+			else if (objectClassType.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_OBJECTCLASSTYPE_OBJECTCLASSTYPE_3);
+			}
+			else {
+				bindObjectClassType = true;
+
+				query.append(_FINDER_COLUMN_OBJECTCLASSTYPE_OBJECTCLASSTYPE_2);
+			}
 
 			String sql = query.toString();
 
@@ -1046,7 +603,9 @@ public class TagcloudPersistenceImpl extends BasePersistenceImpl<Tagcloud>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(isLectureseries);
+				if (bindObjectClassType) {
+					qPos.add(objectClassType);
+				}
 
 				count = (Long)q.uniqueResult();
 
@@ -1065,8 +624,780 @@ public class TagcloudPersistenceImpl extends BasePersistenceImpl<Tagcloud>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_ISLECTURESERIES_ISLECTURESERIES_2 =
-		"tagcloud.isLectureseries = ?";
+	private static final String _FINDER_COLUMN_OBJECTCLASSTYPE_OBJECTCLASSTYPE_1 =
+		"tagcloud.objectClassType IS NULL";
+	private static final String _FINDER_COLUMN_OBJECTCLASSTYPE_OBJECTCLASSTYPE_2 =
+		"tagcloud.objectClassType = ?";
+	private static final String _FINDER_COLUMN_OBJECTCLASSTYPE_OBJECTCLASSTYPE_3 =
+		"(tagcloud.objectClassType IS NULL OR tagcloud.objectClassType = '')";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_OBJECTID = new FinderPath(TagcloudModelImpl.ENTITY_CACHE_ENABLED,
+			TagcloudModelImpl.FINDER_CACHE_ENABLED, TagcloudImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByObjectId",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_OBJECTID =
+		new FinderPath(TagcloudModelImpl.ENTITY_CACHE_ENABLED,
+			TagcloudModelImpl.FINDER_CACHE_ENABLED, TagcloudImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByObjectId",
+			new String[] { Long.class.getName() },
+			TagcloudModelImpl.OBJECTID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_OBJECTID = new FinderPath(TagcloudModelImpl.ENTITY_CACHE_ENABLED,
+			TagcloudModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByObjectId",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the tagclouds where objectId = &#63;.
+	 *
+	 * @param objectId the object ID
+	 * @return the matching tagclouds
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Tagcloud> findByObjectId(long objectId)
+		throws SystemException {
+		return findByObjectId(objectId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the tagclouds where objectId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.TagcloudModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param objectId the object ID
+	 * @param start the lower bound of the range of tagclouds
+	 * @param end the upper bound of the range of tagclouds (not inclusive)
+	 * @return the range of matching tagclouds
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Tagcloud> findByObjectId(long objectId, int start, int end)
+		throws SystemException {
+		return findByObjectId(objectId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the tagclouds where objectId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.TagcloudModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param objectId the object ID
+	 * @param start the lower bound of the range of tagclouds
+	 * @param end the upper bound of the range of tagclouds (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching tagclouds
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Tagcloud> findByObjectId(long objectId, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_OBJECTID;
+			finderArgs = new Object[] { objectId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_OBJECTID;
+			finderArgs = new Object[] { objectId, start, end, orderByComparator };
+		}
+
+		List<Tagcloud> list = (List<Tagcloud>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (Tagcloud tagcloud : list) {
+				if ((objectId != tagcloud.getObjectId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_TAGCLOUD_WHERE);
+
+			query.append(_FINDER_COLUMN_OBJECTID_OBJECTID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(TagcloudModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(objectId);
+
+				if (!pagination) {
+					list = (List<Tagcloud>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<Tagcloud>(list);
+				}
+				else {
+					list = (List<Tagcloud>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first tagcloud in the ordered set where objectId = &#63;.
+	 *
+	 * @param objectId the object ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching tagcloud
+	 * @throws de.uhh.l2g.plugins.NoSuchTagcloudException if a matching tagcloud could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Tagcloud findByObjectId_First(long objectId,
+		OrderByComparator orderByComparator)
+		throws NoSuchTagcloudException, SystemException {
+		Tagcloud tagcloud = fetchByObjectId_First(objectId, orderByComparator);
+
+		if (tagcloud != null) {
+			return tagcloud;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("objectId=");
+		msg.append(objectId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchTagcloudException(msg.toString());
+	}
+
+	/**
+	 * Returns the first tagcloud in the ordered set where objectId = &#63;.
+	 *
+	 * @param objectId the object ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching tagcloud, or <code>null</code> if a matching tagcloud could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Tagcloud fetchByObjectId_First(long objectId,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<Tagcloud> list = findByObjectId(objectId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last tagcloud in the ordered set where objectId = &#63;.
+	 *
+	 * @param objectId the object ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching tagcloud
+	 * @throws de.uhh.l2g.plugins.NoSuchTagcloudException if a matching tagcloud could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Tagcloud findByObjectId_Last(long objectId,
+		OrderByComparator orderByComparator)
+		throws NoSuchTagcloudException, SystemException {
+		Tagcloud tagcloud = fetchByObjectId_Last(objectId, orderByComparator);
+
+		if (tagcloud != null) {
+			return tagcloud;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("objectId=");
+		msg.append(objectId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchTagcloudException(msg.toString());
+	}
+
+	/**
+	 * Returns the last tagcloud in the ordered set where objectId = &#63;.
+	 *
+	 * @param objectId the object ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching tagcloud, or <code>null</code> if a matching tagcloud could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Tagcloud fetchByObjectId_Last(long objectId,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByObjectId(objectId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Tagcloud> list = findByObjectId(objectId, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the tagclouds before and after the current tagcloud in the ordered set where objectId = &#63;.
+	 *
+	 * @param tagcloudId the primary key of the current tagcloud
+	 * @param objectId the object ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next tagcloud
+	 * @throws de.uhh.l2g.plugins.NoSuchTagcloudException if a tagcloud with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Tagcloud[] findByObjectId_PrevAndNext(long tagcloudId,
+		long objectId, OrderByComparator orderByComparator)
+		throws NoSuchTagcloudException, SystemException {
+		Tagcloud tagcloud = findByPrimaryKey(tagcloudId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Tagcloud[] array = new TagcloudImpl[3];
+
+			array[0] = getByObjectId_PrevAndNext(session, tagcloud, objectId,
+					orderByComparator, true);
+
+			array[1] = tagcloud;
+
+			array[2] = getByObjectId_PrevAndNext(session, tagcloud, objectId,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Tagcloud getByObjectId_PrevAndNext(Session session,
+		Tagcloud tagcloud, long objectId, OrderByComparator orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_TAGCLOUD_WHERE);
+
+		query.append(_FINDER_COLUMN_OBJECTID_OBJECTID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(TagcloudModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(objectId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(tagcloud);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<Tagcloud> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the tagclouds where objectId = &#63; from the database.
+	 *
+	 * @param objectId the object ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByObjectId(long objectId) throws SystemException {
+		for (Tagcloud tagcloud : findByObjectId(objectId, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(tagcloud);
+		}
+	}
+
+	/**
+	 * Returns the number of tagclouds where objectId = &#63;.
+	 *
+	 * @param objectId the object ID
+	 * @return the number of matching tagclouds
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByObjectId(long objectId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_OBJECTID;
+
+		Object[] finderArgs = new Object[] { objectId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_TAGCLOUD_WHERE);
+
+			query.append(_FINDER_COLUMN_OBJECTID_OBJECTID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(objectId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_OBJECTID_OBJECTID_2 = "tagcloud.objectId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_OBJECTCLASSTYPEANDOBJECTID =
+		new FinderPath(TagcloudModelImpl.ENTITY_CACHE_ENABLED,
+			TagcloudModelImpl.FINDER_CACHE_ENABLED, TagcloudImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByObjectClassTypeAndObjectId",
+			new String[] { String.class.getName(), Long.class.getName() },
+			TagcloudModelImpl.OBJECTCLASSTYPE_COLUMN_BITMASK |
+			TagcloudModelImpl.OBJECTID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_OBJECTCLASSTYPEANDOBJECTID =
+		new FinderPath(TagcloudModelImpl.ENTITY_CACHE_ENABLED,
+			TagcloudModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByObjectClassTypeAndObjectId",
+			new String[] { String.class.getName(), Long.class.getName() });
+
+	/**
+	 * Returns the tagcloud where objectClassType = &#63; and objectId = &#63; or throws a {@link de.uhh.l2g.plugins.NoSuchTagcloudException} if it could not be found.
+	 *
+	 * @param objectClassType the object class type
+	 * @param objectId the object ID
+	 * @return the matching tagcloud
+	 * @throws de.uhh.l2g.plugins.NoSuchTagcloudException if a matching tagcloud could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Tagcloud findByObjectClassTypeAndObjectId(String objectClassType,
+		long objectId) throws NoSuchTagcloudException, SystemException {
+		Tagcloud tagcloud = fetchByObjectClassTypeAndObjectId(objectClassType,
+				objectId);
+
+		if (tagcloud == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("objectClassType=");
+			msg.append(objectClassType);
+
+			msg.append(", objectId=");
+			msg.append(objectId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchTagcloudException(msg.toString());
+		}
+
+		return tagcloud;
+	}
+
+	/**
+	 * Returns the tagcloud where objectClassType = &#63; and objectId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param objectClassType the object class type
+	 * @param objectId the object ID
+	 * @return the matching tagcloud, or <code>null</code> if a matching tagcloud could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Tagcloud fetchByObjectClassTypeAndObjectId(String objectClassType,
+		long objectId) throws SystemException {
+		return fetchByObjectClassTypeAndObjectId(objectClassType, objectId, true);
+	}
+
+	/**
+	 * Returns the tagcloud where objectClassType = &#63; and objectId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param objectClassType the object class type
+	 * @param objectId the object ID
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching tagcloud, or <code>null</code> if a matching tagcloud could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Tagcloud fetchByObjectClassTypeAndObjectId(String objectClassType,
+		long objectId, boolean retrieveFromCache) throws SystemException {
+		Object[] finderArgs = new Object[] { objectClassType, objectId };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_OBJECTCLASSTYPEANDOBJECTID,
+					finderArgs, this);
+		}
+
+		if (result instanceof Tagcloud) {
+			Tagcloud tagcloud = (Tagcloud)result;
+
+			if (!Validator.equals(objectClassType, tagcloud.getObjectClassType()) ||
+					(objectId != tagcloud.getObjectId())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_TAGCLOUD_WHERE);
+
+			boolean bindObjectClassType = false;
+
+			if (objectClassType == null) {
+				query.append(_FINDER_COLUMN_OBJECTCLASSTYPEANDOBJECTID_OBJECTCLASSTYPE_1);
+			}
+			else if (objectClassType.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_OBJECTCLASSTYPEANDOBJECTID_OBJECTCLASSTYPE_3);
+			}
+			else {
+				bindObjectClassType = true;
+
+				query.append(_FINDER_COLUMN_OBJECTCLASSTYPEANDOBJECTID_OBJECTCLASSTYPE_2);
+			}
+
+			query.append(_FINDER_COLUMN_OBJECTCLASSTYPEANDOBJECTID_OBJECTID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindObjectClassType) {
+					qPos.add(objectClassType);
+				}
+
+				qPos.add(objectId);
+
+				List<Tagcloud> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_OBJECTCLASSTYPEANDOBJECTID,
+						finderArgs, list);
+				}
+				else {
+					if ((list.size() > 1) && _log.isWarnEnabled()) {
+						_log.warn(
+							"TagcloudPersistenceImpl.fetchByObjectClassTypeAndObjectId(String, long, boolean) with parameters (" +
+							StringUtil.merge(finderArgs) +
+							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					}
+
+					Tagcloud tagcloud = list.get(0);
+
+					result = tagcloud;
+
+					cacheResult(tagcloud);
+
+					if ((tagcloud.getObjectClassType() == null) ||
+							!tagcloud.getObjectClassType()
+										 .equals(objectClassType) ||
+							(tagcloud.getObjectId() != objectId)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_OBJECTCLASSTYPEANDOBJECTID,
+							finderArgs, tagcloud);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_OBJECTCLASSTYPEANDOBJECTID,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (Tagcloud)result;
+		}
+	}
+
+	/**
+	 * Removes the tagcloud where objectClassType = &#63; and objectId = &#63; from the database.
+	 *
+	 * @param objectClassType the object class type
+	 * @param objectId the object ID
+	 * @return the tagcloud that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Tagcloud removeByObjectClassTypeAndObjectId(String objectClassType,
+		long objectId) throws NoSuchTagcloudException, SystemException {
+		Tagcloud tagcloud = findByObjectClassTypeAndObjectId(objectClassType,
+				objectId);
+
+		return remove(tagcloud);
+	}
+
+	/**
+	 * Returns the number of tagclouds where objectClassType = &#63; and objectId = &#63;.
+	 *
+	 * @param objectClassType the object class type
+	 * @param objectId the object ID
+	 * @return the number of matching tagclouds
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByObjectClassTypeAndObjectId(String objectClassType,
+		long objectId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_OBJECTCLASSTYPEANDOBJECTID;
+
+		Object[] finderArgs = new Object[] { objectClassType, objectId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_TAGCLOUD_WHERE);
+
+			boolean bindObjectClassType = false;
+
+			if (objectClassType == null) {
+				query.append(_FINDER_COLUMN_OBJECTCLASSTYPEANDOBJECTID_OBJECTCLASSTYPE_1);
+			}
+			else if (objectClassType.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_OBJECTCLASSTYPEANDOBJECTID_OBJECTCLASSTYPE_3);
+			}
+			else {
+				bindObjectClassType = true;
+
+				query.append(_FINDER_COLUMN_OBJECTCLASSTYPEANDOBJECTID_OBJECTCLASSTYPE_2);
+			}
+
+			query.append(_FINDER_COLUMN_OBJECTCLASSTYPEANDOBJECTID_OBJECTID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindObjectClassType) {
+					qPos.add(objectClassType);
+				}
+
+				qPos.add(objectId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_OBJECTCLASSTYPEANDOBJECTID_OBJECTCLASSTYPE_1 =
+		"tagcloud.objectClassType IS NULL AND ";
+	private static final String _FINDER_COLUMN_OBJECTCLASSTYPEANDOBJECTID_OBJECTCLASSTYPE_2 =
+		"tagcloud.objectClassType = ? AND ";
+	private static final String _FINDER_COLUMN_OBJECTCLASSTYPEANDOBJECTID_OBJECTCLASSTYPE_3 =
+		"(tagcloud.objectClassType IS NULL OR tagcloud.objectClassType = '') AND ";
+	private static final String _FINDER_COLUMN_OBJECTCLASSTYPEANDOBJECTID_OBJECTID_2 =
+		"tagcloud.objectId = ?";
 
 	public TagcloudPersistenceImpl() {
 		setModelClass(Tagcloud.class);
@@ -1081,6 +1412,10 @@ public class TagcloudPersistenceImpl extends BasePersistenceImpl<Tagcloud>
 	public void cacheResult(Tagcloud tagcloud) {
 		EntityCacheUtil.putResult(TagcloudModelImpl.ENTITY_CACHE_ENABLED,
 			TagcloudImpl.class, tagcloud.getPrimaryKey(), tagcloud);
+
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_OBJECTCLASSTYPEANDOBJECTID,
+			new Object[] { tagcloud.getObjectClassType(), tagcloud.getObjectId() },
+			tagcloud);
 
 		tagcloud.resetOriginalValues();
 	}
@@ -1138,6 +1473,8 @@ public class TagcloudPersistenceImpl extends BasePersistenceImpl<Tagcloud>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache(tagcloud);
 	}
 
 	@Override
@@ -1148,6 +1485,62 @@ public class TagcloudPersistenceImpl extends BasePersistenceImpl<Tagcloud>
 		for (Tagcloud tagcloud : tagclouds) {
 			EntityCacheUtil.removeResult(TagcloudModelImpl.ENTITY_CACHE_ENABLED,
 				TagcloudImpl.class, tagcloud.getPrimaryKey());
+
+			clearUniqueFindersCache(tagcloud);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(Tagcloud tagcloud) {
+		if (tagcloud.isNew()) {
+			Object[] args = new Object[] {
+					tagcloud.getObjectClassType(), tagcloud.getObjectId()
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_OBJECTCLASSTYPEANDOBJECTID,
+				args, Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_OBJECTCLASSTYPEANDOBJECTID,
+				args, tagcloud);
+		}
+		else {
+			TagcloudModelImpl tagcloudModelImpl = (TagcloudModelImpl)tagcloud;
+
+			if ((tagcloudModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_OBJECTCLASSTYPEANDOBJECTID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						tagcloud.getObjectClassType(), tagcloud.getObjectId()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_OBJECTCLASSTYPEANDOBJECTID,
+					args, Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_OBJECTCLASSTYPEANDOBJECTID,
+					args, tagcloud);
+			}
+		}
+	}
+
+	protected void clearUniqueFindersCache(Tagcloud tagcloud) {
+		TagcloudModelImpl tagcloudModelImpl = (TagcloudModelImpl)tagcloud;
+
+		Object[] args = new Object[] {
+				tagcloud.getObjectClassType(), tagcloud.getObjectId()
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_OBJECTCLASSTYPEANDOBJECTID,
+			args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_OBJECTCLASSTYPEANDOBJECTID,
+			args);
+
+		if ((tagcloudModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_OBJECTCLASSTYPEANDOBJECTID.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					tagcloudModelImpl.getOriginalObjectClassType(),
+					tagcloudModelImpl.getOriginalObjectId()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_OBJECTCLASSTYPEANDOBJECTID,
+				args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_OBJECTCLASSTYPEANDOBJECTID,
+				args);
 		}
 	}
 
@@ -1292,44 +1685,47 @@ public class TagcloudPersistenceImpl extends BasePersistenceImpl<Tagcloud>
 
 		else {
 			if ((tagcloudModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ISVIDEO.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_OBJECTCLASSTYPE.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						tagcloudModelImpl.getOriginalIsVideo()
+						tagcloudModelImpl.getOriginalObjectClassType()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ISVIDEO, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ISVIDEO,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_OBJECTCLASSTYPE,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_OBJECTCLASSTYPE,
 					args);
 
-				args = new Object[] { tagcloudModelImpl.getIsVideo() };
+				args = new Object[] { tagcloudModelImpl.getObjectClassType() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ISVIDEO, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ISVIDEO,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_OBJECTCLASSTYPE,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_OBJECTCLASSTYPE,
 					args);
 			}
 
 			if ((tagcloudModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ISLECTURESERIES.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_OBJECTID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						tagcloudModelImpl.getOriginalIsLectureseries()
+						tagcloudModelImpl.getOriginalObjectId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ISLECTURESERIES,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ISLECTURESERIES,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_OBJECTID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_OBJECTID,
 					args);
 
-				args = new Object[] { tagcloudModelImpl.getIsLectureseries() };
+				args = new Object[] { tagcloudModelImpl.getObjectId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ISLECTURESERIES,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ISLECTURESERIES,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_OBJECTID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_OBJECTID,
 					args);
 			}
 		}
 
 		EntityCacheUtil.putResult(TagcloudModelImpl.ENTITY_CACHE_ENABLED,
 			TagcloudImpl.class, tagcloud.getPrimaryKey(), tagcloud);
+
+		clearUniqueFindersCache(tagcloud);
+		cacheUniqueFindersCache(tagcloud);
 
 		return tagcloud;
 	}
@@ -1345,8 +1741,8 @@ public class TagcloudPersistenceImpl extends BasePersistenceImpl<Tagcloud>
 		tagcloudImpl.setPrimaryKey(tagcloud.getPrimaryKey());
 
 		tagcloudImpl.setTagcloudId(tagcloud.getTagcloudId());
-		tagcloudImpl.setIsVideo(tagcloud.getIsVideo());
-		tagcloudImpl.setIsLectureseries(tagcloud.getIsLectureseries());
+		tagcloudImpl.setObjectClassType(tagcloud.getObjectClassType());
+		tagcloudImpl.setObjectId(tagcloud.getObjectId());
 		tagcloudImpl.setTags(tagcloud.getTags());
 
 		return tagcloudImpl;
