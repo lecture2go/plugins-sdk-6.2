@@ -36,6 +36,7 @@ import de.uhh.l2g.plugins.model.Metadata;
 import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.model.Segment;
 import de.uhh.l2g.plugins.model.Tagcloud;
+import de.uhh.l2g.plugins.model.Term;
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.Video_Creator;
 import de.uhh.l2g.plugins.model.Video_Institution;
@@ -62,6 +63,7 @@ import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
 import de.uhh.l2g.plugins.service.TagcloudLocalServiceUtil;
+import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
@@ -346,6 +348,10 @@ public class AdminVideoManagement extends MVCPortlet {
 			String tags = ParamUtil.getString(resourceRequest, "tags");
 			String publisher = ParamUtil.getString(resourceRequest, "publisher");
 			Long lId = ParamUtil.getLong(resourceRequest, "lectureseriesId");
+			Long termId = ParamUtil.getLong(resourceRequest, "termId");
+			Long categoryId = ParamUtil.getLong(resourceRequest, "categoryId");
+			System.out.print(termId +"   ###   "+categoryId);
+			
 			Lectureseries oldLs = new LectureseriesImpl();
 			try {
 				oldLs = LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId());
@@ -365,6 +371,9 @@ public class AdminVideoManagement extends MVCPortlet {
 				video.setTags(tags);
 				if(lId>0){
 					newLect = LectureseriesLocalServiceUtil.getLectureseries(lId);
+					//
+					termId = newLect.getTermId();
+					categoryId = newLect.getCategoryId();
 					//update lg_video_institution table
 					Video_InstitutionLocalServiceUtil.removeByVideoId(video.getVideoId());
 					List<Lectureseries_Institution> li = Lectureseries_InstitutionLocalServiceUtil.getByLectureseries(lId);
@@ -386,9 +395,19 @@ public class AdminVideoManagement extends MVCPortlet {
 					//update lectureseries
 					LectureseriesLocalServiceUtil.updateOpenAccess(video, newLect);
 					//add lecture series parameter to tag cloud
+					//category
 					try{ctgr = CategoryLocalServiceUtil.getCategory(newLect.getCategoryId());}catch(Exception e){}			
 					tagCloudString += ctgr.getName()+" ### "+ newLect.getName() +" ### "+ newLect.getNumber()+" ### ";
+					//semester
+					Long semesterId = new Long(0);
+					try{
+						semesterId = new Long(newLect.getTermId());
+						Term t = TermLocalServiceUtil.getTerm(semesterId);
+						tagCloudString += t.getPrefix()+ " ### "+t.getYear()+" ### "+t.getPrefix()+" "+t.getYear()+" ### ";
+					}catch(Exception e){}
 				}
+				//
+				
 				//title to tag cloud
 				tagCloudString += video.getTitle()+" ### ";
 

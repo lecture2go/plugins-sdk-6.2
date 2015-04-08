@@ -275,6 +275,18 @@ public class Video_CategoryLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.Video_Category> getByVideo(
+		java.lang.Long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getByVideo(videoId);
+	}
+
+	public static java.util.List<de.uhh.l2g.plugins.model.Video_Category> getByCategory(
+		java.lang.Long categoryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getByCategory(categoryId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

@@ -46,7 +46,6 @@ import de.uhh.l2g.plugins.service.TagcloudLocalServiceUtil;
 import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
-import de.uhh.l2g.plugins.service.impl.TermLocalServiceImpl;
 import de.uhh.l2g.plugins.util.Htaccess;
 
 public class AdminLectureSeriesManagement extends MVCPortlet {
@@ -322,11 +321,13 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			Producer_LectureseriesLocalServiceUtil.addProducer_Lectureseries(pl);
 		}
 		
-		//Tag cloud
+		//category 
 		Tagcloud tagcloud = new TagcloudImpl();
 		Category ctgr = new CategoryImpl();
 		try{ctgr = CategoryLocalServiceUtil.getCategory(newlect.getCategoryId());}catch(Exception e){}			
 		tagCloudString += ctgr.getName()+" ### "+ newlect.getName() +" ### "+ newlect.getNumber()+" ### ";
+
+		//Tag cloud
 		tagcloud.setTags(tagCloudString);
 		tagcloud.setObjectClassType(newlect.getClass().getName());
 		tagcloud.setObjectId(newlect.getLectureseriesId());

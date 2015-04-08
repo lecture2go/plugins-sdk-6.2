@@ -160,12 +160,6 @@ create table LG_Tagcloud (
 	tags VARCHAR(75) null
 );
 
-create table LG_Tagcloud_Object (
-	tagcloudObjectId LONG not null primary key,
-	tagcloudId LONG,
-	objectId LONG
-);
-
 create table LG_Term (
 	termId LONG not null primary key,
 	parentId LONG,

@@ -16,6 +16,7 @@
 <liferay-portlet:resourceURL id="isFirstUpload" var="isFirstUploadURL" />
 <liferay-portlet:resourceURL id="defaultContainer" var="defaultContainerURL" />
 <liferay-portlet:resourceURL id="updateCreators" var="updateCreatorsURL" />
+<liferay-portlet:resourceURL id="getJSONCreator" var="getJSONCreatorURL" />
 
 <%
 	String actionURL = "";
@@ -34,7 +35,11 @@
 	String uploadProgressId = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
 	String backURL = request.getAttribute("backURL").toString();
 	List<Creator> creators = new ArrayList<Creator>();
-	try{ creators = CreatorLocalServiceUtil.getCreators(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);}catch (NullPointerException e){}
+	try{creators = CreatorLocalServiceUtil.getCreators(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);}catch (NullPointerException e){}
+	List<Term> semesters = new ArrayList<Term>(); 
+	try{semesters = TermLocalServiceUtil.getAllSemesters(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);}catch(Exception e){}
+	List<Category> categories = new ArrayList<Category>();
+	try{categories = CategoryLocalServiceUtil.getAllCategories(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);}catch(Exception e){}
 %>
  
 <aui:fieldset helpMessage="test" column="true" label="video-file" >
@@ -51,8 +56,8 @@
 <aui:fieldset helpMessage="test" column="true" label="video-metadata" >
 	<aui:layout>
 		<aui:form action="<%=actionURL%>" commandName="model" name="metadata">
-			<aui:select size="1" name="lectureseriesId" label="lectureseries">
-				<aui:option value="">select-lecture-series</aui:option>
+			<aui:select size="1" name="lectureseriesId" label="lectureseries" onChange="toggleLectureseries()">
+					<aui:option value="0">select-lecture-series</aui:option>
 					<%for (int i = 0; i < reqLectureseriesList.size(); i++) {
 						if(reqLectureseriesList.get(i).getLectureseriesId()==reqVideo.getLectureseriesId()){%>
 							<aui:option value='<%=reqLectureseriesList.get(i).getLectureseriesId()%>' selected="true"><%=reqLectureseriesList.get(i).getName()%></aui:option>
@@ -61,7 +66,35 @@
 						<%}					
 					}%>
 			</aui:select>
-			
+
+			<div id="options">
+				<aui:select id="termId" size="1" name="termId" label="term">
+					<aui:option value="">select-semester</aui:option>
+					<%for (int i = 0; i < semesters.size(); i++) {
+						if (reqVideo.getTermId()==semesters.get(i).getTermId()) {%>
+							<aui:option value='<%=semesters.get(i).getTermId()%>' selected="true"><%=semesters.get(i).getPrefix()+"&nbsp;"+semesters.get(i).getYear()%></aui:option>
+						<%} else {%>
+							<aui:option value='<%=semesters.get(i).getTermId()%>'><%=semesters.get(i).getPrefix()+"&nbsp;"+semesters.get(i).getYear()%></aui:option>
+						<%}
+					}%>
+				</aui:select>
+
+				<aui:select size="1" id="categoryId" name="categoryId" label="event-type" required="true">
+					<aui:option value=""></aui:option>
+					<%
+					Long cId = new Long(0);
+					try{cId = Video_CategoryLocalServiceUtil.getByVideo(reqVideo.getVideoId()).get(0).getCategoryId();}catch(Exception e){}
+					
+					for (int i = 0; i < categories.size(); i++) {
+						if (cId==categories.get(i).getCategoryId()) {%>
+							<aui:option value='<%=categories.get(i).getCategoryId()%>' selected="true"><%=categories.get(i).getName()%></aui:option>
+						<%} else {%>
+							<aui:option value='<%=categories.get(i).getCategoryId()%>'><%=categories.get(i).getName()%></aui:option>
+						<%}
+					}%>
+				</aui:select>
+			</div>
+
 			<aui:select size="1" name="language" label="language" required="false">
 				<aui:option value="">select-language</aui:option>
 				<%for (int i=0; i<languages.length; i++){
@@ -126,6 +159,25 @@
 </aui:fieldset>
 
 <script type="text/javascript">
+var $options = $( "#options" );
+
+$(function () {
+	var lsId = <%=reqLectureseries.getLectureseriesId()%>;
+	if(lsId>0){
+		$options.hide();
+	}
+});
+
+function toggleLectureseries(){
+	var $lId = $( "#<portlet:namespace/>lectureseriesId option:selected" ).val();
+	//
+	if($lId==0){
+		$options.show();
+	}else{
+		$options.hide();
+	}
+}
+
 $(function () {
     $('#fileupload').fileupload({
         dataType: 'json',
@@ -287,8 +339,15 @@ function updateVideoFileName(file){
 }
 
 function updateMetadata(){
+	
 	AUI().use('aui-io-request', 'aui-node',
 		function(A){
+			var termId=0;
+			var categoryId=0;
+			if (!$("#options").is(':hidden')) {
+				   termId = A.one('#<portlet:namespace/>termId').get('value');
+				   categoryId = A.one('#<portlet:namespace/>categoryId').get('value');
+			}
 			A.io.request('<%=updateURL%>', {
 		 	dataType: 'json',
 		 	method: 'POST',
@@ -301,6 +360,8 @@ function updateMetadata(){
 				 	   	<portlet:namespace/>tags: A.one('#<portlet:namespace/>tags').get('value'),
 				 	   	<portlet:namespace/>publisher: A.one('#<portlet:namespace/>publisher').get('value'),
 				 	   	<portlet:namespace/>lectureseriesId: A.one('#<portlet:namespace/>lectureseriesId').get('value'),
+				 	   	<portlet:namespace/>categoryId: categoryId,
+				 	   	<portlet:namespace/>termId: termId,
 			 	},
 			 	//get server response
 				on: {
@@ -400,9 +461,7 @@ function deleteFile(fileName){
 	    }
 	});	
 }
-</script>
 
-<script type="text/javascript">
 function updateCreators(){
 	var namespace="<portlet:namespace/>";
 	var jsonArray = [];
@@ -450,6 +509,60 @@ function updateCreators(){
 	        $.tmpl( "filesTemplate", data ).appendTo( "#creators" );		    
 		  }
 	})
+}
+
+function appendCreator(c){
+	$(function () {
+    	var vars = {'counter':c};
+    	$.template( "filesTemplate", $("#newCreator") );
+    	$.tmpl( "filesTemplate", vars ).appendTo( "#creators" );
+	});
+};
+
+var c = 0;
+$( "#addCreator" ).on( "click", function() {
+	c++;
+	appendCreator(c);
+});
+
+function remb(c){
+	$("#"+c).remove();
+}
+
+AUI().use('aui-node',
+  function(A){
+	// Select the node(s) using a css selector string
+    var crId = A.one('#<portlet:namespace/>crId');
+    crId.on(
+      	'change',
+      	function(A) {
+  			if(crId.get('value')>0){
+  		        var vars = getJSONCreator(crId.get('value'));
+  		        console.log(vars);
+  		        $.template( "filesTemplate", $("#created") );
+  		        $.tmpl( "filesTemplate", vars ).appendTo( "#creators" );
+  			}
+      	}
+    );
+  }
+);
+
+function getJSONCreator (data){
+	var ret;
+	$.ajax({
+		  type: "POST",
+		  url: "<%=getJSONCreatorURL%>",
+		  dataType: 'json',
+		  data: {
+		 	   	<portlet:namespace/>creatorId: data,
+		  },
+		  global: false,
+		  async:false,
+		  success: function(data) {
+		    ret = data;
+		  }
+	})
+	return ret;
 }
 </script>
 
@@ -520,62 +633,4 @@ function updateCreators(){
 	        $.template( "filesTemplate", $("#created") );
 	        $.tmpl( "filesTemplate", vars ).appendTo( "#creators" );
 	    });
-</script>
-
-<liferay-portlet:resourceURL id="getJSONCreator" var="getJSONCreatorURL" />
-
-<script>
-function appendCreator(c){
-	$(function () {
-    	var vars = {'counter':c};
-    	$.template( "filesTemplate", $("#newCreator") );
-    	$.tmpl( "filesTemplate", vars ).appendTo( "#creators" );
-	});
-};
-
-var c = 0;
-$( "#addCreator" ).on( "click", function() {
-	c++;
-	appendCreator(c);
-});
-
-function remb(c){
-	$("#"+c).remove();
-}
-
-AUI().use('aui-node',
-  function(A){
-	// Select the node(s) using a css selector string
-    var crId = A.one('#<portlet:namespace/>crId');
-    crId.on(
-      	'change',
-      	function(A) {
-  			if(crId.get('value')>0){
-  		        var vars = getJSONCreator(crId.get('value'));
-  		        console.log(vars);
-  		        $.template( "filesTemplate", $("#created") );
-  		        $.tmpl( "filesTemplate", vars ).appendTo( "#creators" );
-  			}
-      	}
-    );
-  }
-);
-
-function getJSONCreator (data){
-	var ret;
-	$.ajax({
-		  type: "POST",
-		  url: "<%=getJSONCreatorURL%>",
-		  dataType: 'json',
-		  data: {
-		 	   	<portlet:namespace/>creatorId: data,
-		  },
-		  global: false,
-		  async:false,
-		  success: function(data) {
-		    ret = data;
-		  }
-	})
-	return ret;
-}
 </script>

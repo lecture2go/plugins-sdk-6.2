@@ -14,6 +14,11 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import java.util.List;
+
+import com.liferay.portal.kernel.exception.SystemException;
+
+import de.uhh.l2g.plugins.model.Video_Category;
 import de.uhh.l2g.plugins.service.base.Video_CategoryLocalServiceBaseImpl;
 
 /**
@@ -37,4 +42,13 @@ public class Video_CategoryLocalServiceImpl
 	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil} to access the video_ category local service.
 	 */
+	
+	public List<Video_Category> getByVideo(Long videoId) throws SystemException{
+		return video_CategoryPersistence.findByVideo(videoId);
+	}
+	
+	public List<Video_Category> getByCategory(Long categoryId) throws SystemException{
+		return video_CategoryPersistence.findByCategory(categoryId);
+	}
+	
 }

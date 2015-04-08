@@ -68,6 +68,7 @@
 <%@ page import="de.uhh.l2g.plugins.service.Producer_LectureseriesLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.service.Lectureseries_InstitutionLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.service.VideoLocalServiceUtil"%>
+<%@ page import="de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.service.LicenseLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.service.SegmentLocalServiceUtil"%>
