@@ -166,7 +166,7 @@
 				String vName = vid.getTitle();
 				if(vName.trim().equals(""))vName ="NOT TITLED";
 			
-			if(!vid.getFilename().equals("")){%><aui:a  href="<%=url%>" target="blank"><%=vName%></aui:a><%}
+			if(!vid.getFilename().equals("")){%><aui:a  href="<%=url%>" target="blank"><i class="icon-small icon-link"></i>&nbsp;<%=vName%></aui:a><%}
 			else{%> <%=vName%> <%}%>
 			<%if(!lName.equals("")){%>
 				<br/>
