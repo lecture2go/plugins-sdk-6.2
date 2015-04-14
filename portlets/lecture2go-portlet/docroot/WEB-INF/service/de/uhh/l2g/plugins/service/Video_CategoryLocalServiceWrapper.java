@@ -302,6 +302,12 @@ public class Video_CategoryLocalServiceWrapper
 		return _video_CategoryLocalService.getByCategory(categoryId);
 	}
 
+	@Override
+	public void removeByVideo(java.lang.Long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_video_CategoryLocalService.removeByVideo(videoId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

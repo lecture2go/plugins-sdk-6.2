@@ -87,4 +87,14 @@ public class Video_InstitutionLocalServiceImpl
 		}
 		return vi;
 	}
+	
+	public List<Video_Institution> getByVideoAndInstitution(Long videoId, Long institutionId){
+		List<Video_Institution> vi = new ArrayList<Video_Institution>();
+		try {
+			vi = video_InstitutionPersistence.findByVideoInstitution(videoId, institutionId);
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return vi;
+	}
 }

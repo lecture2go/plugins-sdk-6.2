@@ -311,6 +311,13 @@ public class Video_InstitutionLocalServiceWrapper
 		return _video_InstitutionLocalService.getByInstitution(institutionId);
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Video_Institution> getByVideoAndInstitution(
+		java.lang.Long videoId, java.lang.Long institutionId) {
+		return _video_InstitutionLocalService.getByVideoAndInstitution(videoId,
+			institutionId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

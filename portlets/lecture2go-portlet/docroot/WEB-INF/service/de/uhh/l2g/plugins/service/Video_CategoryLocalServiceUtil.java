@@ -287,6 +287,11 @@ public class Video_CategoryLocalServiceUtil {
 		return getService().getByCategory(categoryId);
 	}
 
+	public static void removeByVideo(java.lang.Long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().removeByVideo(videoId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

@@ -293,6 +293,11 @@ public class Video_InstitutionLocalServiceUtil {
 		return getService().getByInstitution(institutionId);
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.Video_Institution> getByVideoAndInstitution(
+		java.lang.Long videoId, java.lang.Long institutionId) {
+		return getService().getByVideoAndInstitution(videoId, institutionId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

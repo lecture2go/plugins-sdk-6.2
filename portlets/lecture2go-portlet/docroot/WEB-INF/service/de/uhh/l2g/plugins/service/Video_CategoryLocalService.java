@@ -263,4 +263,7 @@ public interface Video_CategoryLocalService extends BaseLocalService,
 	public java.util.List<de.uhh.l2g.plugins.model.Video_Category> getByCategory(
 		java.lang.Long categoryId)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void removeByVideo(java.lang.Long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

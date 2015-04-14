@@ -35,8 +35,7 @@ import de.uhh.l2g.plugins.service.base.Video_CategoryLocalServiceBaseImpl;
  * @see de.uhh.l2g.plugins.service.base.Video_CategoryLocalServiceBaseImpl
  * @see de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil
  */
-public class Video_CategoryLocalServiceImpl
-	extends Video_CategoryLocalServiceBaseImpl {
+public class Video_CategoryLocalServiceImpl extends Video_CategoryLocalServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,6 +48,10 @@ public class Video_CategoryLocalServiceImpl
 	
 	public List<Video_Category> getByCategory(Long categoryId) throws SystemException{
 		return video_CategoryPersistence.findByCategory(categoryId);
+	}
+	
+	public void removeByVideo(Long videoId) throws SystemException{
+		video_CategoryPersistence.removeByVideo(videoId);
 	}
 	
 }

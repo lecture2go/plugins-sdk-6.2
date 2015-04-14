@@ -16,6 +16,7 @@
 <liferay-portlet:resourceURL id="isFirstUpload" var="isFirstUploadURL" />
 <liferay-portlet:resourceURL id="defaultContainer" var="defaultContainerURL" />
 <liferay-portlet:resourceURL id="updateCreators" var="updateCreatorsURL" />
+<liferay-portlet:resourceURL id="updateSubInstitutions" var="updateSubInstitutionsURL" />
 <liferay-portlet:resourceURL id="getJSONCreator" var="getJSONCreatorURL" />
 
 <%
@@ -40,6 +41,9 @@
 	try{semesters = TermLocalServiceUtil.getAllSemesters(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);}catch(Exception e){}
 	List<Category> categories = new ArrayList<Category>();
 	try{categories = CategoryLocalServiceUtil.getAllCategories(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);}catch(Exception e){}
+
+	Map<String,String> subInstitutions = new LinkedHashMap<String, String>();
+	subInstitutions = InstitutionLocalServiceUtil.getByParent(reqVideo.getRootInstitutionId());
 %>
  
 <aui:fieldset helpMessage="test" column="true" label="video-file" >
@@ -57,19 +61,56 @@
 	<aui:layout>
 		<aui:form action="<%=actionURL%>" commandName="model" name="metadata">
 			<aui:select size="1" name="lectureseriesId" label="lectureseries" onChange="toggleLectureseries()">
-					<aui:option value="0">select-lecture-series</aui:option>
-					<%for (int i = 0; i < reqLectureseriesList.size(); i++) {
-						if(reqLectureseriesList.get(i).getLectureseriesId()==reqVideo.getLectureseriesId()){%>
-							<aui:option value='<%=reqLectureseriesList.get(i).getLectureseriesId()%>' selected="true"><%=reqLectureseriesList.get(i).getName()%></aui:option>
-						<%}else{%>
-							<aui:option value='<%=reqLectureseriesList.get(i).getLectureseriesId()%>'><%=reqLectureseriesList.get(i).getName()%></aui:option>
-						<%}					
-					}%>
+				<aui:option value="0">select-lecture-series</aui:option>
+				<%for (int i = 0; i < reqLectureseriesList.size(); i++) {
+					if(reqLectureseriesList.get(i).getLectureseriesId()==reqVideo.getLectureseriesId()){%>
+						<aui:option value='<%=reqLectureseriesList.get(i).getLectureseriesId()%>' selected="true"><%=reqLectureseriesList.get(i).getName()%></aui:option>
+					<%}else{%>
+						<aui:option value='<%=reqLectureseriesList.get(i).getLectureseriesId()%>'><%=reqLectureseriesList.get(i).getName()%></aui:option>
+					<%}					
+				}%>
 			</aui:select>
-
+			
 			<div id="options">
+				<aui:select id="subInstitutionId" size="1" name="subInstitutionId" label="sub-institution">
+					<aui:option value="">select-sub-institution</aui:option>
+				<%
+				Long subInstitutionId = new Long(0);
+				try{subInstitutionId = Video_InstitutionLocalServiceUtil.getByVideo(reqVideo.getVideoId()).get(0).getInstitutionId();}catch (Exception e){}
+				
+				for (Map.Entry<String, String> f : subInstitutions.entrySet()) {
+				if(f.getKey().equals(subInstitutionId.toString())){
+					%><aui:option value='<%=f.getKey()%>' selected="true"><%=f.getValue()%></aui:option>
+					<%}else{%>
+					<aui:option value='<%=f.getKey()%>'><%=f.getValue()%></aui:option>
+					<%}
+				}%>
+				</aui:select>
+				
+				<div class="subInstitutions" >
+					<%
+					List<Video_Institution> subInst = new ArrayList<Video_Institution>();
+					subInst = Video_InstitutionLocalServiceUtil.getByVideo(reqVideo.getVideoId());
+					
+					try{
+						for (int i = 0; i < subInst.size(); i++) {
+							Institution inst = InstitutionLocalServiceUtil.getById(subInst.get(i).getInstitutionId());
+							%>
+							<div id='<%=inst.getInstitutionId()%>'> 
+								<%=inst.getName()+"&nbsp;&nbsp;&nbsp;" %> 
+								<a class="icon-large icon-remove" style='cursor:pointer;' onClick='document.getElementById("<%=inst.getInstitutionId()%>").remove();'></a>
+								<aui:input type="hidden" name="institutions" id="institutions" value="<%=inst.getInstitutionId()%>"/>
+							</div>
+							<%
+						}					
+					}catch(Exception e){
+						//
+					}
+					%>				
+				</div>	
+							
 				<aui:select id="termId" size="1" name="termId" label="term">
-					<aui:option value="">select-semester</aui:option>
+					<aui:option value="">select-term</aui:option>
 					<%for (int i = 0; i < semesters.size(); i++) {
 						if (reqVideo.getTermId()==semesters.get(i).getTermId()) {%>
 							<aui:option value='<%=semesters.get(i).getTermId()%>' selected="true"><%=semesters.get(i).getPrefix()+"&nbsp;"+semesters.get(i).getYear()%></aui:option>
@@ -80,7 +121,7 @@
 				</aui:select>
 
 				<aui:select size="1" id="categoryId" name="categoryId" label="event-type" required="true">
-					<aui:option value=""></aui:option>
+					<aui:option value="">select-category</aui:option>
 					<%
 					Long cId = new Long(0);
 					try{cId = Video_CategoryLocalServiceUtil.getByVideo(reqVideo.getVideoId()).get(0).getCategoryId();}catch(Exception e){}
@@ -339,7 +380,6 @@ function updateVideoFileName(file){
 }
 
 function updateMetadata(){
-	
 	AUI().use('aui-io-request', 'aui-node',
 		function(A){
 			var termId=0;
@@ -413,6 +453,7 @@ function applyAllMetadataChanges(){
 				    updateLicense(license1.get('value'));
 				    updateLicense(license2.get('value'));
 				    updateCreators();
+				    updateSubInstitutions();
 				    updateMetadata();//last place, important!
 			}
 	);
@@ -511,6 +552,33 @@ function updateCreators(){
 	})
 }
 
+function updateSubInstitutions(){
+	var namespace="<portlet:namespace/>";
+	var jsonArray = [];
+	$('.subInstitutions').children().each(function(n){
+		var parameters = {};
+		var $div = $(this);
+		var id = $div.attr('id');
+		parameters['institutionId'] = id;
+		jsonArray[n]=parameters;
+	});
+	//set parameter to server for update 
+	$.ajax({
+		  type: "POST",
+		  url: "<%=updateSubInstitutionsURL%>",
+		  dataType: 'json',
+		  data: {
+		 	   	<portlet:namespace/>subInstitution: JSON.stringify(jsonArray),
+		 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>",
+		  },
+		  global: false,
+		  async:false,
+		  success: function(data) {
+		    //		    
+		  }
+	})
+}
+
 function appendCreator(c){
 	$(function () {
     	var vars = {'counter':c};
@@ -533,6 +601,9 @@ AUI().use('aui-node',
   function(A){
 	// Select the node(s) using a css selector string
     var crId = A.one('#<portlet:namespace/>crId');
+    var subInstitutionId = A.one('#<portlet:namespace/>subInstitutionId');
+    var subInstitutions = A.one('.subInstitutions');
+
     crId.on(
       	'change',
       	function(A) {
@@ -544,6 +615,18 @@ AUI().use('aui-node',
   			}
       	}
     );
+    
+    subInstitutionId.on(
+          'change',
+          function(A) {
+      			if(subInstitutionId.get('value')>0){
+      	   	 		var n = subInstitutionId.get(subInstitutionId.get('selectedIndex')).get('value');
+      	    		var t = subInstitutionId.get(subInstitutionId.get('selectedIndex')).get('text')+"&nbsp;&nbsp;&nbsp;";
+      	    		subInstitutions.append("<div id='"+n+"'> "+t+" <a class='icon-large icon-remove style='cursor:pointer;' onClick='document.getElementById(&quot;"+n+"&quot;).remove();'/><input id='<portlet:namespace></portlet:namespace>institutions' name='<portlet:namespace></portlet:namespace>institutions' value='"+n+"' type='hidden'/></div>");
+      			}
+          }
+     );
+    
   }
 );
 

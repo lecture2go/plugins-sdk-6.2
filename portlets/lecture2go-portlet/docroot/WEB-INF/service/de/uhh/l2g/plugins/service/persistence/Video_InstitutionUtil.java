@@ -439,6 +439,187 @@ public class Video_InstitutionUtil {
 	}
 
 	/**
+	* Returns all the video_ institutions where videoId = &#63; and institutionId = &#63;.
+	*
+	* @param videoId the video ID
+	* @param institutionId the institution ID
+	* @return the matching video_ institutions
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<de.uhh.l2g.plugins.model.Video_Institution> findByVideoInstitution(
+		long videoId, long institutionId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByVideoInstitution(videoId, institutionId);
+	}
+
+	/**
+	* Returns a range of all the video_ institutions where videoId = &#63; and institutionId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.Video_InstitutionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param videoId the video ID
+	* @param institutionId the institution ID
+	* @param start the lower bound of the range of video_ institutions
+	* @param end the upper bound of the range of video_ institutions (not inclusive)
+	* @return the range of matching video_ institutions
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<de.uhh.l2g.plugins.model.Video_Institution> findByVideoInstitution(
+		long videoId, long institutionId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByVideoInstitution(videoId, institutionId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the video_ institutions where videoId = &#63; and institutionId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.Video_InstitutionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param videoId the video ID
+	* @param institutionId the institution ID
+	* @param start the lower bound of the range of video_ institutions
+	* @param end the upper bound of the range of video_ institutions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching video_ institutions
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<de.uhh.l2g.plugins.model.Video_Institution> findByVideoInstitution(
+		long videoId, long institutionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByVideoInstitution(videoId, institutionId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first video_ institution in the ordered set where videoId = &#63; and institutionId = &#63;.
+	*
+	* @param videoId the video ID
+	* @param institutionId the institution ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching video_ institution
+	* @throws de.uhh.l2g.plugins.NoSuchVideo_InstitutionException if a matching video_ institution could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Video_Institution findByVideoInstitution_First(
+		long videoId, long institutionId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchVideo_InstitutionException {
+		return getPersistence()
+				   .findByVideoInstitution_First(videoId, institutionId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first video_ institution in the ordered set where videoId = &#63; and institutionId = &#63;.
+	*
+	* @param videoId the video ID
+	* @param institutionId the institution ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching video_ institution, or <code>null</code> if a matching video_ institution could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Video_Institution fetchByVideoInstitution_First(
+		long videoId, long institutionId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByVideoInstitution_First(videoId, institutionId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last video_ institution in the ordered set where videoId = &#63; and institutionId = &#63;.
+	*
+	* @param videoId the video ID
+	* @param institutionId the institution ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching video_ institution
+	* @throws de.uhh.l2g.plugins.NoSuchVideo_InstitutionException if a matching video_ institution could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Video_Institution findByVideoInstitution_Last(
+		long videoId, long institutionId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchVideo_InstitutionException {
+		return getPersistence()
+				   .findByVideoInstitution_Last(videoId, institutionId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last video_ institution in the ordered set where videoId = &#63; and institutionId = &#63;.
+	*
+	* @param videoId the video ID
+	* @param institutionId the institution ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching video_ institution, or <code>null</code> if a matching video_ institution could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Video_Institution fetchByVideoInstitution_Last(
+		long videoId, long institutionId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByVideoInstitution_Last(videoId, institutionId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the video_ institutions before and after the current video_ institution in the ordered set where videoId = &#63; and institutionId = &#63;.
+	*
+	* @param videoInstitutionId the primary key of the current video_ institution
+	* @param videoId the video ID
+	* @param institutionId the institution ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next video_ institution
+	* @throws de.uhh.l2g.plugins.NoSuchVideo_InstitutionException if a video_ institution with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Video_Institution[] findByVideoInstitution_PrevAndNext(
+		long videoInstitutionId, long videoId, long institutionId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchVideo_InstitutionException {
+		return getPersistence()
+				   .findByVideoInstitution_PrevAndNext(videoInstitutionId,
+			videoId, institutionId, orderByComparator);
+	}
+
+	/**
+	* Removes all the video_ institutions where videoId = &#63; and institutionId = &#63; from the database.
+	*
+	* @param videoId the video ID
+	* @param institutionId the institution ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByVideoInstitution(long videoId, long institutionId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByVideoInstitution(videoId, institutionId);
+	}
+
+	/**
+	* Returns the number of video_ institutions where videoId = &#63; and institutionId = &#63;.
+	*
+	* @param videoId the video ID
+	* @param institutionId the institution ID
+	* @return the number of matching video_ institutions
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByVideoInstitution(long videoId, long institutionId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByVideoInstitution(videoId, institutionId);
+	}
+
+	/**
 	* Caches the video_ institution in the entity cache if it is enabled.
 	*
 	* @param video_Institution the video_ institution

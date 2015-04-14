@@ -131,6 +131,12 @@ public class Video_InstitutionLocalServiceClp
 		_methodName22 = "getByInstitution";
 
 		_methodParameterTypes22 = new String[] { "java.lang.Long" };
+
+		_methodName23 = "getByVideoAndInstitution";
+
+		_methodParameterTypes23 = new String[] {
+				"java.lang.Long", "java.lang.Long"
+			};
 	}
 
 	@Override
@@ -784,6 +790,35 @@ public class Video_InstitutionLocalServiceClp
 		return (java.util.List<de.uhh.l2g.plugins.model.Video_Institution>)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Video_Institution> getByVideoAndInstitution(
+		java.lang.Long videoId, java.lang.Long institutionId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23,
+					new Object[] {
+						ClpSerializer.translateInput(videoId),
+						
+					ClpSerializer.translateInput(institutionId)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<de.uhh.l2g.plugins.model.Video_Institution>)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -829,4 +864,6 @@ public class Video_InstitutionLocalServiceClp
 	private String[] _methodParameterTypes21;
 	private String _methodName22;
 	private String[] _methodParameterTypes22;
+	private String _methodName23;
+	private String[] _methodParameterTypes23;
 }

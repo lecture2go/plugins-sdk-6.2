@@ -336,6 +336,10 @@
         <finder name="Institution" return-type="Collection">
             <finder-column name="institutionId"></finder-column>
         </finder>
+        <finder name="VideoInstitution" return-type="Collection">
+            <finder-column name="videoId"></finder-column>
+            <finder-column name="institutionId"></finder-column>
+        </finder>
     </entity>
     <entity name="Videohitlist" local-service="true" remote-service="false">
         <column name="videohitlistId" type="long" primary="true" id-type="increment"></column>

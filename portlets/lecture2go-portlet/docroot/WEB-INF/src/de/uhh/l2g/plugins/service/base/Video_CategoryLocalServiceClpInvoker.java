@@ -121,6 +121,10 @@ public class Video_CategoryLocalServiceClpInvoker {
 		_methodName153 = "getByCategory";
 
 		_methodParameterTypes153 = new String[] { "java.lang.Long" };
+
+		_methodName154 = "removeByVideo";
+
+		_methodParameterTypes154 = new String[] { "java.lang.Long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -234,6 +238,13 @@ public class Video_CategoryLocalServiceClpInvoker {
 			return Video_CategoryLocalServiceUtil.getByCategory((java.lang.Long)arguments[0]);
 		}
 
+		if (_methodName154.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes154, parameterTypes)) {
+			Video_CategoryLocalServiceUtil.removeByVideo((java.lang.Long)arguments[0]);
+
+			return null;
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -277,4 +288,6 @@ public class Video_CategoryLocalServiceClpInvoker {
 	private String[] _methodParameterTypes152;
 	private String _methodName153;
 	private String[] _methodParameterTypes153;
+	private String _methodName154;
+	private String[] _methodParameterTypes154;
 }
