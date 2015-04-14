@@ -73,13 +73,13 @@
     
     <sql id="de.uhh.l2g.plugins.service.persistence.CreatorFinder.findCreatorsForLectureseries">
 		<![CDATA[
-			SELECT c.* FROM LG_CREATOR c, LG_Lectureseries_Creator lc WHERE c.creatorId=lc.creatorId AND lc.lectureseriesId = ?
+			SELECT c.* FROM LG_Creator c, LG_Lectureseries_Creator lc WHERE c.creatorId=lc.creatorId AND lc.lectureseriesId = ?
 		]]>
     </sql>     
     
     <sql id="de.uhh.l2g.plugins.service.persistence.CreatorFinder.findCreatorsForVideo">
 		<![CDATA[
-			SELECT c.* FROM LG_CREATOR c, LG_Video_Creator vc WHERE c.creatorId=vc.creatorId AND vc.videoId = ?
+			SELECT c.* FROM LG_Creator c, LG_Video_Creator vc WHERE c.creatorId=vc.creatorId AND vc.videoId = ?
 		]]>
     </sql>     
 </custom-sql>
