@@ -161,6 +161,13 @@ public class VideoLocalServiceClp implements VideoLocalService {
 		_methodName31 = "getByLectureseriesAndOpenaccess";
 
 		_methodParameterTypes31 = new String[] { "java.lang.Long", "int" };
+
+		_methodName32 = "getFilteredByInstitutionParentInstitutionTermCategoryCreator";
+
+		_methodParameterTypes32 = new String[] {
+				"java.lang.Long", "java.lang.Long", "java.util.ArrayList",
+				"java.util.ArrayList", "java.util.ArrayList"
+			};
 	}
 
 	@Override
@@ -1075,6 +1082,44 @@ public class VideoLocalServiceClp implements VideoLocalService {
 		return (java.util.List<de.uhh.l2g.plugins.model.Video>)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Video> getFilteredByInstitutionParentInstitutionTermCategoryCreator(
+		java.lang.Long institutionId, java.lang.Long parentInstitutionId,
+		java.util.ArrayList<java.lang.Long> termIds,
+		java.util.ArrayList<java.lang.Long> categoryIds,
+		java.util.ArrayList<java.lang.Long> creatorIds) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName32,
+					_methodParameterTypes32,
+					new Object[] {
+						ClpSerializer.translateInput(institutionId),
+						
+					ClpSerializer.translateInput(parentInstitutionId),
+						
+					ClpSerializer.translateInput(termIds),
+						
+					ClpSerializer.translateInput(categoryIds),
+						
+					ClpSerializer.translateInput(creatorIds)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<de.uhh.l2g.plugins.model.Video>)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -1138,4 +1183,6 @@ public class VideoLocalServiceClp implements VideoLocalService {
 	private String[] _methodParameterTypes30;
 	private String _methodName31;
 	private String[] _methodParameterTypes31;
+	private String _methodName32;
+	private String[] _methodParameterTypes32;
 }

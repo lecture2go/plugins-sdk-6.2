@@ -15,6 +15,7 @@
 package de.uhh.l2g.plugins.service.impl;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -33,13 +34,11 @@ import de.uhh.l2g.plugins.NoSuchProducerException;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Lastvideolist;
-import de.uhh.l2g.plugins.model.Metadata;
 import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.impl.HostImpl;
 import de.uhh.l2g.plugins.model.impl.InstitutionImpl;
 import de.uhh.l2g.plugins.model.impl.LastvideolistImpl;
-import de.uhh.l2g.plugins.model.impl.MetadataImpl;
 import de.uhh.l2g.plugins.model.impl.ProducerImpl;
 import de.uhh.l2g.plugins.model.impl.VideoImpl;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
@@ -429,5 +428,9 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 
 	public List<Video> getByLectureseriesAndOpenaccess(Long lectureseriesId, int openAccess) throws SystemException{
 		return videoPersistence.findByLectureseriesAndOpenaccess(lectureseriesId, openAccess);
+	}
+	
+	public List<Video> getFilteredByInstitutionParentInstitutionTermCategoryCreator (Long institutionId, Long parentInstitutionId, ArrayList<Long> termIds, ArrayList<Long> categoryIds, ArrayList<Long> creatorIds){
+		return VideoFinderUtil.findFilteredByInstitutionParentInstitutionTermCategoryCreator(institutionId, parentInstitutionId, termIds, categoryIds, creatorIds);
 	}
 }

@@ -148,7 +148,7 @@ public class LectureseriesLocalServiceClpInvoker {
 
 		_methodParameterTypes158 = new String[] {
 				"java.lang.Long", "java.lang.Long", "java.util.ArrayList",
-				"java.util.ArrayList", "java.util.ArrayList", "java.lang.String"
+				"java.util.ArrayList", "java.util.ArrayList"
 			};
 	}
 
@@ -294,8 +294,7 @@ public class LectureseriesLocalServiceClpInvoker {
 				(java.lang.Long)arguments[1],
 				(java.util.ArrayList<java.lang.Long>)arguments[2],
 				(java.util.ArrayList<java.lang.Long>)arguments[3],
-				(java.util.ArrayList<java.lang.Long>)arguments[4],
-				(java.lang.String)arguments[5]);
+				(java.util.ArrayList<java.lang.Long>)arguments[4]);
 		}
 
 		throw new UnsupportedOperationException();

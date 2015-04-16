@@ -149,7 +149,7 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 
 		_methodParameterTypes25 = new String[] {
 				"java.lang.Long", "java.lang.Long", "java.util.ArrayList",
-				"java.util.ArrayList", "java.util.ArrayList", "java.lang.String"
+				"java.util.ArrayList", "java.util.ArrayList"
 			};
 	}
 
@@ -873,8 +873,7 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 		java.lang.Long institutionId, java.lang.Long parentInstitutionId,
 		java.util.ArrayList<java.lang.Long> termIds,
 		java.util.ArrayList<java.lang.Long> categoryIds,
-		java.util.ArrayList<java.lang.Long> creatorIds,
-		java.lang.String searchString) {
+		java.util.ArrayList<java.lang.Long> creatorIds) {
 		Object returnObj = null;
 
 		try {
@@ -889,9 +888,7 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 						
 					ClpSerializer.translateInput(categoryIds),
 						
-					ClpSerializer.translateInput(creatorIds),
-						
-					ClpSerializer.translateInput(searchString)
+					ClpSerializer.translateInput(creatorIds)
 					});
 		}
 		catch (Throwable t) {

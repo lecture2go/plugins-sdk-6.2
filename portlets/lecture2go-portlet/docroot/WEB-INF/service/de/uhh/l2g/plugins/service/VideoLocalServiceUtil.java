@@ -345,6 +345,16 @@ public class VideoLocalServiceUtil {
 				   .getByLectureseriesAndOpenaccess(lectureseriesId, openAccess);
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.Video> getFilteredByInstitutionParentInstitutionTermCategoryCreator(
+		java.lang.Long institutionId, java.lang.Long parentInstitutionId,
+		java.util.ArrayList<java.lang.Long> termIds,
+		java.util.ArrayList<java.lang.Long> categoryIds,
+		java.util.ArrayList<java.lang.Long> creatorIds) {
+		return getService()
+				   .getFilteredByInstitutionParentInstitutionTermCategoryCreator(institutionId,
+			parentInstitutionId, termIds, categoryIds, creatorIds);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

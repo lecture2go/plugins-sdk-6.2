@@ -161,6 +161,13 @@ public class VideoLocalServiceClpInvoker {
 		_methodName164 = "getByLectureseriesAndOpenaccess";
 
 		_methodParameterTypes164 = new String[] { "java.lang.Long", "int" };
+
+		_methodName165 = "getFilteredByInstitutionParentInstitutionTermCategoryCreator";
+
+		_methodParameterTypes165 = new String[] {
+				"java.lang.Long", "java.lang.Long", "java.util.ArrayList",
+				"java.util.ArrayList", "java.util.ArrayList"
+			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -334,6 +341,15 @@ public class VideoLocalServiceClpInvoker {
 				((Integer)arguments[1]).intValue());
 		}
 
+		if (_methodName165.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes165, parameterTypes)) {
+			return VideoLocalServiceUtil.getFilteredByInstitutionParentInstitutionTermCategoryCreator((java.lang.Long)arguments[0],
+				(java.lang.Long)arguments[1],
+				(java.util.ArrayList<java.lang.Long>)arguments[2],
+				(java.util.ArrayList<java.lang.Long>)arguments[3],
+				(java.util.ArrayList<java.lang.Long>)arguments[4]);
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -399,4 +415,6 @@ public class VideoLocalServiceClpInvoker {
 	private String[] _methodParameterTypes163;
 	private String _methodName164;
 	private String[] _methodParameterTypes164;
+	private String _methodName165;
+	private String[] _methodParameterTypes165;
 }

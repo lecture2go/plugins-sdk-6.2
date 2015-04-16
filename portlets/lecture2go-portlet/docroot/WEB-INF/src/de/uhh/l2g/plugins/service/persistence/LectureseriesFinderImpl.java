@@ -131,11 +131,11 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 		return null;		
 	}
 	
-	public List<Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(Long institutionId, Long parentInstitutionId, ArrayList<Long> termIds, ArrayList<Long> categoryIds, ArrayList<Long> creatorIds, String searchString) {
+	public List<Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreator(Long institutionId, Long parentInstitutionId, ArrayList<Long> termIds, ArrayList<Long> categoryIds, ArrayList<Long> creatorIds) {
 		Session session = null;
 		try {
 			session = openSession();
-			String sql = sqlFilterForOpenAccessLectureseries(institutionId, parentInstitutionId, termIds, categoryIds, creatorIds, searchString);
+			String sql = sqlFilterForOpenAccessLectureseries(institutionId, parentInstitutionId, termIds, categoryIds, creatorIds);
 			SQLQuery q = session.createSQLQuery(sql);
 			q.addScalar("number_", Type.STRING);
 			q.addScalar("eventType", Type.STRING);
@@ -166,7 +166,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 		return null;
 	}
 	
-	private String sqlFilterForOpenAccessLectureseries(Long institutionId, Long institutionParentId, ArrayList<Long> termIds, List<Long> categoryIds, ArrayList<Long> creatorIds, String searchString) {
+	private String sqlFilterForOpenAccessLectureseries(Long institutionId, Long institutionParentId, ArrayList<Long> termIds, List<Long> categoryIds, ArrayList<Long> creatorIds) {
 		// build query
 		String query = "SELECT number_, eventType, categoryId, l.name, shortDesc, l.termId, language, facultyName, l.lectureseriesId, password_, approved, longDesc, latestOpenAccessVideoId ";
 			   query += "FROM LG_Lectureseries l ";
@@ -183,12 +183,8 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			query += "INNER JOIN LG_Lectureseries_Creator AS lc ON ( l.lectureseriesId = lc.lectureseriesId ) ";
 		}
 		
-		if (searchString.trim().length() > 0) {
-			query += "RIGHT JOIN LG_Video v ON v.lectureseriesId=l.lectureseriesId ";
-		}
-		
 
-		if (institutionId > 0 || institutionParentId > 0 || termIds.size() > 0 || categoryIds.size() > 0 || creatorIds.size() > 0 || searchString.trim().length() > 0) {
+		if (institutionId > 0 || institutionParentId > 0 || termIds.size() > 0 || categoryIds.size() > 0 || creatorIds.size() > 0) {
 			query += "WHERE ";
 			int i = 0;
 			if (termIds.size() > 0) {
@@ -237,13 +233,6 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 				i++;
 			}
 
-			if (searchString.trim().length() > 0) {
-				searchString = "%"+searchString.trim()+"%";
-				query += i > 0 ? "AND " : "";
-				query += "( v.title LIKE '"+searchString+"' OR l.name LIKE '"+searchString+"' OR v.tags LIKE '"+searchString+"' OR l.number_ LIKE '"+searchString+"' )";
-				i++;
-			}
-			
 			query += "GROUP BY l.lectureseriesId";
 		}
 	    return query;

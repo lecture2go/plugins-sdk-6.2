@@ -23,5 +23,11 @@ public interface VideoFinder {
 	public de.uhh.l2g.plugins.model.Video findLatestOpenAccessVideoForLectureseries(
 		java.lang.Long lectureseriesId);
 
+	public java.util.List<de.uhh.l2g.plugins.model.Video> findFilteredByInstitutionParentInstitutionTermCategoryCreator(
+		java.lang.Long institutionId, java.lang.Long parentInstitutionId,
+		java.util.ArrayList<java.lang.Long> termIds,
+		java.util.ArrayList<java.lang.Long> categoryIds,
+		java.util.ArrayList<java.lang.Long> creatorIds);
+
 	public java.util.List<de.uhh.l2g.plugins.model.Video> findLatestVideos();
 }

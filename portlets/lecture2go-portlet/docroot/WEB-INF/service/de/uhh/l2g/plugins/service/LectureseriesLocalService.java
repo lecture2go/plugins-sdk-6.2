@@ -283,6 +283,5 @@ public interface LectureseriesLocalService extends BaseLocalService,
 		java.lang.Long institutionId, java.lang.Long parentInstitutionId,
 		java.util.ArrayList<java.lang.Long> termIds,
 		java.util.ArrayList<java.lang.Long> categoryIds,
-		java.util.ArrayList<java.lang.Long> creatorIds,
-		java.lang.String searchString);
+		java.util.ArrayList<java.lang.Long> creatorIds);
 }

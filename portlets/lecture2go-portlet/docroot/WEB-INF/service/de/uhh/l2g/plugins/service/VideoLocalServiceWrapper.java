@@ -363,6 +363,16 @@ public class VideoLocalServiceWrapper implements VideoLocalService,
 			openAccess);
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Video> getFilteredByInstitutionParentInstitutionTermCategoryCreator(
+		java.lang.Long institutionId, java.lang.Long parentInstitutionId,
+		java.util.ArrayList<java.lang.Long> termIds,
+		java.util.ArrayList<java.lang.Long> categoryIds,
+		java.util.ArrayList<java.lang.Long> creatorIds) {
+		return _videoLocalService.getFilteredByInstitutionParentInstitutionTermCategoryCreator(institutionId,
+			parentInstitutionId, termIds, categoryIds, creatorIds);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

@@ -20,11 +20,8 @@ import java.util.ListIterator;
 
 import com.liferay.portal.kernel.exception.SystemException;
 
-import de.uhh.l2g.plugins.model.Creator;
 import de.uhh.l2g.plugins.model.Lectureseries;
-import de.uhh.l2g.plugins.model.Lectureseries_Creator;
 import de.uhh.l2g.plugins.model.Video;
-import de.uhh.l2g.plugins.model.Video_Lectureseries;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
@@ -104,8 +101,8 @@ public class LectureseriesLocalServiceImpl extends LectureseriesLocalServiceBase
 		}
 	}
 	
-	public List<Lectureseries> getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(Long institutionId, Long parentInstitutionId, ArrayList<Long> termIds, ArrayList<Long> categoryIds, ArrayList<Long> creatorIds, String searchString){
-		return LectureseriesFinderUtil.findFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(institutionId, parentInstitutionId, termIds, categoryIds, creatorIds, searchString);
+	public List<Lectureseries> getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(Long institutionId, Long parentInstitutionId, ArrayList<Long> termIds, ArrayList<Long> categoryIds, ArrayList<Long> creatorIds){
+		return LectureseriesFinderUtil.findFilteredByInstitutionParentInstitutionTermCategoryCreator(institutionId, parentInstitutionId, termIds, categoryIds, creatorIds);
 	}
 	
 }
