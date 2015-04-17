@@ -98,6 +98,20 @@ public interface Video_InstitutionModel extends BaseModel<Video_Institution> {
 	 */
 	public void setInstitutionId(long institutionId);
 
+	/**
+	 * Returns the institution parent ID of this video_ institution.
+	 *
+	 * @return the institution parent ID of this video_ institution
+	 */
+	public long getInstitutionParentId();
+
+	/**
+	 * Sets the institution parent ID of this video_ institution.
+	 *
+	 * @param institutionParentId the institution parent ID of this video_ institution
+	 */
+	public void setInstitutionParentId(long institutionParentId);
+
 	@Override
 	public boolean isNew();
 

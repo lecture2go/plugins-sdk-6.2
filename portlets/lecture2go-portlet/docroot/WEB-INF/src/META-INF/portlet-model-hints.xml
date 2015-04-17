@@ -199,6 +199,7 @@
 		<field name="videoInstitutionId" type="long" />
 		<field name="videoId" type="long" />
 		<field name="institutionId" type="long" />
+		<field name="institutionParentId" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Video_Lectureseries">
 		<field name="videoLectureseriesId" type="long" />

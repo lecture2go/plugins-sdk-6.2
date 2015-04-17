@@ -117,6 +117,7 @@ create index IX_A28928BC on LG_Video_Creator (videoId);
 create index IX_F68D221B on LG_Video_Creator (videoId, creatorId);
 
 create index IX_39AE746D on LG_Video_Institution (institutionId);
+create index IX_98796437 on LG_Video_Institution (institutionParentId);
 create index IX_4467AFB0 on LG_Video_Institution (videoId);
 create index IX_B5AE333 on LG_Video_Institution (videoId, institutionId);
 

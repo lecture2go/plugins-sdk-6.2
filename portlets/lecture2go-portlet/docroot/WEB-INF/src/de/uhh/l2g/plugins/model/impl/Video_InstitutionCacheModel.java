@@ -35,7 +35,7 @@ public class Video_InstitutionCacheModel implements CacheModel<Video_Institution
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{videoInstitutionId=");
 		sb.append(videoInstitutionId);
@@ -43,6 +43,8 @@ public class Video_InstitutionCacheModel implements CacheModel<Video_Institution
 		sb.append(videoId);
 		sb.append(", institutionId=");
 		sb.append(institutionId);
+		sb.append(", institutionParentId=");
+		sb.append(institutionParentId);
 		sb.append("}");
 
 		return sb.toString();
@@ -55,6 +57,7 @@ public class Video_InstitutionCacheModel implements CacheModel<Video_Institution
 		video_InstitutionImpl.setVideoInstitutionId(videoInstitutionId);
 		video_InstitutionImpl.setVideoId(videoId);
 		video_InstitutionImpl.setInstitutionId(institutionId);
+		video_InstitutionImpl.setInstitutionParentId(institutionParentId);
 
 		video_InstitutionImpl.resetOriginalValues();
 
@@ -66,6 +69,7 @@ public class Video_InstitutionCacheModel implements CacheModel<Video_Institution
 		videoInstitutionId = objectInput.readLong();
 		videoId = objectInput.readLong();
 		institutionId = objectInput.readLong();
+		institutionParentId = objectInput.readLong();
 	}
 
 	@Override
@@ -74,9 +78,11 @@ public class Video_InstitutionCacheModel implements CacheModel<Video_Institution
 		objectOutput.writeLong(videoInstitutionId);
 		objectOutput.writeLong(videoId);
 		objectOutput.writeLong(institutionId);
+		objectOutput.writeLong(institutionParentId);
 	}
 
 	public long videoInstitutionId;
 	public long videoId;
 	public long institutionId;
+	public long institutionParentId;
 }

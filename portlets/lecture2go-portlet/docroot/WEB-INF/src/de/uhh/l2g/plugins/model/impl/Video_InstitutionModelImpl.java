@@ -59,9 +59,10 @@ public class Video_InstitutionModelImpl extends BaseModelImpl<Video_Institution>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "videoInstitutionId", Types.BIGINT },
 			{ "videoId", Types.BIGINT },
-			{ "institutionId", Types.BIGINT }
+			{ "institutionId", Types.BIGINT },
+			{ "institutionParentId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Video_Institution (videoInstitutionId LONG not null primary key,videoId LONG,institutionId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Video_Institution (videoInstitutionId LONG not null primary key,videoId LONG,institutionId LONG,institutionParentId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Video_Institution";
 	public static final String ORDER_BY_JPQL = " ORDER BY video_Institution.videoInstitutionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Video_Institution.videoInstitutionId ASC";
@@ -78,8 +79,9 @@ public class Video_InstitutionModelImpl extends BaseModelImpl<Video_Institution>
 				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.Video_Institution"),
 			true);
 	public static long INSTITUTIONID_COLUMN_BITMASK = 1L;
-	public static long VIDEOID_COLUMN_BITMASK = 2L;
-	public static long VIDEOINSTITUTIONID_COLUMN_BITMASK = 4L;
+	public static long INSTITUTIONPARENTID_COLUMN_BITMASK = 2L;
+	public static long VIDEOID_COLUMN_BITMASK = 4L;
+	public static long VIDEOINSTITUTIONID_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Video_Institution"));
 
@@ -123,6 +125,7 @@ public class Video_InstitutionModelImpl extends BaseModelImpl<Video_Institution>
 		attributes.put("videoInstitutionId", getVideoInstitutionId());
 		attributes.put("videoId", getVideoId());
 		attributes.put("institutionId", getInstitutionId());
+		attributes.put("institutionParentId", getInstitutionParentId());
 
 		return attributes;
 	}
@@ -145,6 +148,12 @@ public class Video_InstitutionModelImpl extends BaseModelImpl<Video_Institution>
 
 		if (institutionId != null) {
 			setInstitutionId(institutionId);
+		}
+
+		Long institutionParentId = (Long)attributes.get("institutionParentId");
+
+		if (institutionParentId != null) {
+			setInstitutionParentId(institutionParentId);
 		}
 	}
 
@@ -202,6 +211,28 @@ public class Video_InstitutionModelImpl extends BaseModelImpl<Video_Institution>
 		return _originalInstitutionId;
 	}
 
+	@Override
+	public long getInstitutionParentId() {
+		return _institutionParentId;
+	}
+
+	@Override
+	public void setInstitutionParentId(long institutionParentId) {
+		_columnBitmask |= INSTITUTIONPARENTID_COLUMN_BITMASK;
+
+		if (!_setOriginalInstitutionParentId) {
+			_setOriginalInstitutionParentId = true;
+
+			_originalInstitutionParentId = _institutionParentId;
+		}
+
+		_institutionParentId = institutionParentId;
+	}
+
+	public long getOriginalInstitutionParentId() {
+		return _originalInstitutionParentId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -236,6 +267,7 @@ public class Video_InstitutionModelImpl extends BaseModelImpl<Video_Institution>
 		video_InstitutionImpl.setVideoInstitutionId(getVideoInstitutionId());
 		video_InstitutionImpl.setVideoId(getVideoId());
 		video_InstitutionImpl.setInstitutionId(getInstitutionId());
+		video_InstitutionImpl.setInstitutionParentId(getInstitutionParentId());
 
 		video_InstitutionImpl.resetOriginalValues();
 
@@ -296,6 +328,10 @@ public class Video_InstitutionModelImpl extends BaseModelImpl<Video_Institution>
 
 		video_InstitutionModelImpl._setOriginalInstitutionId = false;
 
+		video_InstitutionModelImpl._originalInstitutionParentId = video_InstitutionModelImpl._institutionParentId;
+
+		video_InstitutionModelImpl._setOriginalInstitutionParentId = false;
+
 		video_InstitutionModelImpl._columnBitmask = 0;
 	}
 
@@ -309,12 +345,14 @@ public class Video_InstitutionModelImpl extends BaseModelImpl<Video_Institution>
 
 		video_InstitutionCacheModel.institutionId = getInstitutionId();
 
+		video_InstitutionCacheModel.institutionParentId = getInstitutionParentId();
+
 		return video_InstitutionCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{videoInstitutionId=");
 		sb.append(getVideoInstitutionId());
@@ -322,6 +360,8 @@ public class Video_InstitutionModelImpl extends BaseModelImpl<Video_Institution>
 		sb.append(getVideoId());
 		sb.append(", institutionId=");
 		sb.append(getInstitutionId());
+		sb.append(", institutionParentId=");
+		sb.append(getInstitutionParentId());
 		sb.append("}");
 
 		return sb.toString();
@@ -329,7 +369,7 @@ public class Video_InstitutionModelImpl extends BaseModelImpl<Video_Institution>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Video_Institution");
@@ -346,6 +386,10 @@ public class Video_InstitutionModelImpl extends BaseModelImpl<Video_Institution>
 		sb.append(
 			"<column><column-name>institutionId</column-name><column-value><![CDATA[");
 		sb.append(getInstitutionId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>institutionParentId</column-name><column-value><![CDATA[");
+		sb.append(getInstitutionParentId());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -364,6 +408,9 @@ public class Video_InstitutionModelImpl extends BaseModelImpl<Video_Institution>
 	private long _institutionId;
 	private long _originalInstitutionId;
 	private boolean _setOriginalInstitutionId;
+	private long _institutionParentId;
+	private long _originalInstitutionParentId;
+	private boolean _setOriginalInstitutionParentId;
 	private long _columnBitmask;
 	private Video_Institution _escapedModel;
 }

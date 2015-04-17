@@ -52,6 +52,7 @@ public class Video_InstitutionWrapper implements Video_Institution,
 		attributes.put("videoInstitutionId", getVideoInstitutionId());
 		attributes.put("videoId", getVideoId());
 		attributes.put("institutionId", getInstitutionId());
+		attributes.put("institutionParentId", getInstitutionParentId());
 
 		return attributes;
 	}
@@ -74,6 +75,12 @@ public class Video_InstitutionWrapper implements Video_Institution,
 
 		if (institutionId != null) {
 			setInstitutionId(institutionId);
+		}
+
+		Long institutionParentId = (Long)attributes.get("institutionParentId");
+
+		if (institutionParentId != null) {
+			setInstitutionParentId(institutionParentId);
 		}
 	}
 
@@ -155,6 +162,26 @@ public class Video_InstitutionWrapper implements Video_Institution,
 	@Override
 	public void setInstitutionId(long institutionId) {
 		_video_Institution.setInstitutionId(institutionId);
+	}
+
+	/**
+	* Returns the institution parent ID of this video_ institution.
+	*
+	* @return the institution parent ID of this video_ institution
+	*/
+	@Override
+	public long getInstitutionParentId() {
+		return _video_Institution.getInstitutionParentId();
+	}
+
+	/**
+	* Sets the institution parent ID of this video_ institution.
+	*
+	* @param institutionParentId the institution parent ID of this video_ institution
+	*/
+	@Override
+	public void setInstitutionParentId(long institutionParentId) {
+		_video_Institution.setInstitutionParentId(institutionParentId);
 	}
 
 	@Override

@@ -76,6 +76,7 @@ public class Video_InstitutionClp extends BaseModelImpl<Video_Institution>
 		attributes.put("videoInstitutionId", getVideoInstitutionId());
 		attributes.put("videoId", getVideoId());
 		attributes.put("institutionId", getInstitutionId());
+		attributes.put("institutionParentId", getInstitutionParentId());
 
 		return attributes;
 	}
@@ -98,6 +99,12 @@ public class Video_InstitutionClp extends BaseModelImpl<Video_Institution>
 
 		if (institutionId != null) {
 			setInstitutionId(institutionId);
+		}
+
+		Long institutionParentId = (Long)attributes.get("institutionParentId");
+
+		if (institutionParentId != null) {
+			setInstitutionParentId(institutionParentId);
 		}
 	}
 
@@ -164,6 +171,30 @@ public class Video_InstitutionClp extends BaseModelImpl<Video_Institution>
 				Method method = clazz.getMethod("setInstitutionId", long.class);
 
 				method.invoke(_video_InstitutionRemoteModel, institutionId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public long getInstitutionParentId() {
+		return _institutionParentId;
+	}
+
+	@Override
+	public void setInstitutionParentId(long institutionParentId) {
+		_institutionParentId = institutionParentId;
+
+		if (_video_InstitutionRemoteModel != null) {
+			try {
+				Class<?> clazz = _video_InstitutionRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setInstitutionParentId",
+						long.class);
+
+				method.invoke(_video_InstitutionRemoteModel, institutionParentId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -245,6 +276,7 @@ public class Video_InstitutionClp extends BaseModelImpl<Video_Institution>
 		clone.setVideoInstitutionId(getVideoInstitutionId());
 		clone.setVideoId(getVideoId());
 		clone.setInstitutionId(getInstitutionId());
+		clone.setInstitutionParentId(getInstitutionParentId());
 
 		return clone;
 	}
@@ -297,7 +329,7 @@ public class Video_InstitutionClp extends BaseModelImpl<Video_Institution>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{videoInstitutionId=");
 		sb.append(getVideoInstitutionId());
@@ -305,6 +337,8 @@ public class Video_InstitutionClp extends BaseModelImpl<Video_Institution>
 		sb.append(getVideoId());
 		sb.append(", institutionId=");
 		sb.append(getInstitutionId());
+		sb.append(", institutionParentId=");
+		sb.append(getInstitutionParentId());
 		sb.append("}");
 
 		return sb.toString();
@@ -312,7 +346,7 @@ public class Video_InstitutionClp extends BaseModelImpl<Video_Institution>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Video_Institution");
@@ -330,6 +364,10 @@ public class Video_InstitutionClp extends BaseModelImpl<Video_Institution>
 			"<column><column-name>institutionId</column-name><column-value><![CDATA[");
 		sb.append(getInstitutionId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>institutionParentId</column-name><column-value><![CDATA[");
+		sb.append(getInstitutionParentId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -339,6 +377,7 @@ public class Video_InstitutionClp extends BaseModelImpl<Video_Institution>
 	private long _videoInstitutionId;
 	private long _videoId;
 	private long _institutionId;
+	private long _institutionParentId;
 	private BaseModel<?> _video_InstitutionRemoteModel;
 	private Class<?> _clpSerializerClass = de.uhh.l2g.plugins.service.ClpSerializer.class;
 }

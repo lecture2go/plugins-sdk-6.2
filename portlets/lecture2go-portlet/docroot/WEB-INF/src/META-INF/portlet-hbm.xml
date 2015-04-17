@@ -302,6 +302,7 @@
 		</id>
 		<property name="videoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="institutionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="institutionParentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.Video_LectureseriesImpl" table="LG_Video_Lectureseries">
 		<cache usage="read-write" />

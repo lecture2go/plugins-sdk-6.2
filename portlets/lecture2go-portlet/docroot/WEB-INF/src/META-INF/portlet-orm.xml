@@ -342,6 +342,7 @@
 			<id name="videoInstitutionId" />
 			<basic name="videoId" />
 			<basic name="institutionId" />
+			<basic name="institutionParentId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

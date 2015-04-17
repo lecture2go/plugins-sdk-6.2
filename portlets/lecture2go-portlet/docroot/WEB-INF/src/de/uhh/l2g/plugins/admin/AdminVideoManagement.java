@@ -44,6 +44,7 @@ import de.uhh.l2g.plugins.model.Video_Institution;
 import de.uhh.l2g.plugins.model.Video_Lectureseries;
 import de.uhh.l2g.plugins.model.impl.CategoryImpl;
 import de.uhh.l2g.plugins.model.impl.CreatorImpl;
+import de.uhh.l2g.plugins.model.impl.InstitutionImpl;
 import de.uhh.l2g.plugins.model.impl.LectureseriesImpl;
 import de.uhh.l2g.plugins.model.impl.LicenseImpl;
 import de.uhh.l2g.plugins.model.impl.MetadataImpl;
@@ -229,6 +230,7 @@ public class AdminVideoManagement extends MVCPortlet {
 				Video_Institution vi = new Video_InstitutionImpl();
 				vi.setVideoId(video.getVideoId());
 				vi.setInstitutionId(ins.getInstitutionId());
+				vi.setInstitutionParentId(ins.getParentId());
 				Video_InstitutionLocalServiceUtil.addVideo_Institution(vi);
 				tagCloudString += ins.getName()+" ### ";
 			}
@@ -381,11 +383,16 @@ public class AdminVideoManagement extends MVCPortlet {
 					//update lg_video_institution table
 					Video_InstitutionLocalServiceUtil.removeByVideoId(video.getVideoId());
 					List<Lectureseries_Institution> li = Lectureseries_InstitutionLocalServiceUtil.getByLectureseries(lId);
-					ListIterator<Lectureseries_Institution> i = li.listIterator();
-					while(i.hasNext()){
+					ListIterator<Lectureseries_Institution> l_i = li.listIterator();
+					//institutions for video
+					while(l_i.hasNext()){
+						Institution in = new InstitutionImpl();
+						Lectureseries_Institution lectinst = l_i.next();
+						in = InstitutionLocalServiceUtil.getInstitution(lectinst.getInstitutionId());
 						Video_Institution vi = new Video_InstitutionImpl();
 						vi.setVideoId(video.getVideoId());
-						vi.setInstitutionId(i.next().getInstitutionId());
+						vi.setInstitutionId(lectinst.getInstitutionId());
+						vi.setInstitutionParentId(in.getParentId());
 						Video_InstitutionLocalServiceUtil.addVideo_Institution(vi);
 					}
 					//update lg_video_lectureseries 
@@ -800,13 +807,19 @@ public class AdminVideoManagement extends MVCPortlet {
 					for (int i = 0; i< institutionsArray.length(); i++){
 						org.json.JSONObject institution =  institutionsArray.getJSONObject(i);
 						Long institutionId= institution.getLong("institutionId");
-						
+						Institution in = new InstitutionImpl();
+						try {
+							in = InstitutionLocalServiceUtil.getInstitution(institutionId);
+						} catch (PortalException e) {
+							e.printStackTrace();
+						}
 						List<Video_Institution> vil = new ArrayList<Video_Institution>();
 						vil = Video_InstitutionLocalServiceUtil.getByVideoAndInstitution(videoId, institutionId);
 						
 						Video_Institution vi = new Video_InstitutionImpl();
-						vi.setInstitutionId(institutionId);
+						vi.setInstitutionId(in.getInstitutionId());
 						vi.setVideoId(videoId);
+						vi.setInstitutionParentId(in.getParentId());
 						if(vil.size()==0)Video_InstitutionLocalServiceUtil.addVideo_Institution(vi);
 					}
 				} catch (SystemException e) {
