@@ -128,7 +128,11 @@
 		</aui:layout>
 		<aui:layout>
 			<aui:row>
-				<aui:button value="add-new-lectureseries" href="<%=addLectureseriesURL%>"/>
+				
+			<a href="<%=addLectureseriesURL.toString()%>">
+			    add-new-lectureseries <span class="icon-large icon-plus-sign"/>
+			</a>
+		
 			</aui:row>
 		</aui:layout>
 </aui:fieldset>
