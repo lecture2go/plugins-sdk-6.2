@@ -183,10 +183,6 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			query += "INNER JOIN LG_Lectureseries_Creator AS lc ON ( l.lectureseriesId = lc.lectureseriesId ) ";
 		}
 		
-		if (categoryIds.size() > 0) {
-			query += "INNER JOIN LG_Lectureseries_Category AS lcat ON ( l.lectureseriesId = lcat.lectureseriesId ) ";
-		}
-		
 		query += "WHERE latestOpenAccessVideoId>0 ";
 		
 		if (institutionId > 0 || institutionParentId > 0 || termIds.size() > 0 || categoryIds.size() > 0 || creatorIds.size() > 0) {
