@@ -180,7 +180,7 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 			   query += "FROM LG_Video v ";
 
 		if (institutionId > 0 || institutionParentId > 0) {
-			query += "INNER JOIN LG_Video_Institution AS vi ON ( v.videoId = vi.lectureseriesId ) ";
+			query += "INNER JOIN LG_Video_Institution AS vi ON ( v.videoId = vi.videoId ) ";
 		}
 	
 		if (termIds.size() > 0) {
@@ -195,11 +195,12 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 			query += "INNER JOIN LG_Video_Category AS vcat ON ( v.videoId = vcat.videoId ) ";
 		}
 		
-
+		query += "WHERE v.openAccess=1 ";
+		
 		if (institutionId > 0 || institutionParentId > 0 || termIds.size() > 0 || categoryIds.size() > 0 || creatorIds.size() > 0) {
-			query += "WHERE ";
 			int i = 0;
 			if (termIds.size() > 0) {
+				query += "AND ";
 				ListIterator<Long> it = termIds.listIterator();
 				query += "( ";
 				while(it.hasNext()){
@@ -220,7 +221,7 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 				}
 				i++;				
 			}
-
+			
 			if (categoryIds.size() > 0) {
 				query += i > 0 ? "AND " : "";
 				ListIterator<Long> it = categoryIds.listIterator();
@@ -245,12 +246,11 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 				i++;
 			}
 
-			query += "ORDER BY v.generationDate DESC";
+			query += "GROUP BY v.videoId ORDER BY v.uploadDate DESC";
 		}
 	    return query;
 	}
 	
-	//TODO optimize to big data
 	public List<Video> findLatestVideos(){
 		List<Lectureseries> ll = new ArrayList<Lectureseries>();
 		ll = LectureseriesLocalServiceUtil.getAllLectureseriesWhithOpenaccessVideos();

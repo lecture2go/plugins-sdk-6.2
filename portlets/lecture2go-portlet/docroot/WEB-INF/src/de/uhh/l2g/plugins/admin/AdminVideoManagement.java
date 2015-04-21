@@ -2,6 +2,7 @@ package de.uhh.l2g.plugins.admin;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -192,7 +193,11 @@ public class AdminVideoManagement extends MVCPortlet {
 		//video
 		Video newVideo = new VideoImpl();
 		newVideo.setProducerId(producerId);
-		newVideo.setLectureseriesId(lectureseriesId);
+		if(lectureseriesId>0)newVideo.setLectureseriesId(lectureseriesId);
+		else {
+			java.util.Date date= new java.util.Date();
+			newVideo.setLectureseriesId(-date.getTime());
+		}
 		newVideo.setHostId(reqProducer.getHostId());
 		newVideo.setMetadataId(reqMetadata.getMetadataId());
 		newVideo.setRootInstitutionId(reqProducer.getInstitutionId());
@@ -374,6 +379,11 @@ public class AdminVideoManagement extends MVCPortlet {
 			try {
 				video.setTitle(title);
 				video.setLectureseriesId(lId);
+				if(lId>0)video.setLectureseriesId(lId);
+				else {
+					java.util.Date date= new java.util.Date();
+					video.setLectureseriesId(-date.getTime());
+				}
 				video.setTags(tags);
 				if(lId>0){
 					newLect = LectureseriesLocalServiceUtil.getLectureseries(lId);
@@ -826,6 +836,23 @@ public class AdminVideoManagement extends MVCPortlet {
 					e.printStackTrace();
 				}
 			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			writeJSON(resourceRequest, resourceResponse, CreatorLocalServiceUtil.getJSONCreatorsByVideoId(videoId));			
+		}
+		
+		if(resourceID.equals("updateupdateOpenAccessForLectureseries")){
+			Lectureseries lect = new LectureseriesImpl();
+			try {
+				lect = LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId());
+			} catch (PortalException e) {
+				e.printStackTrace();
+			} catch (SystemException e) {
+				e.printStackTrace();
+			}
+			try {
+				LectureseriesLocalServiceUtil.updateOpenAccess(video, lect);
+			} catch (SystemException e) {
 				e.printStackTrace();
 			}
 			writeJSON(resourceRequest, resourceResponse, CreatorLocalServiceUtil.getJSONCreatorsByVideoId(videoId));			

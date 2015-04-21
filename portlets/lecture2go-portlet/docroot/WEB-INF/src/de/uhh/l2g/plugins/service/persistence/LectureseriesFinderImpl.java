@@ -168,13 +168,13 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 	
 	private String sqlFilterForOpenAccessLectureseries(Long institutionId, Long institutionParentId, ArrayList<Long> termIds, List<Long> categoryIds, ArrayList<Long> creatorIds) {
 		// build query
-		String query = "SELECT number_, eventType, categoryId, l.name, shortDesc, l.termId, language, facultyName, l.lectureseriesId, password_, approved, longDesc, latestOpenAccessVideoId ";
+		String query = "SELECT number_, eventType, l.categoryId, l.name, shortDesc, l.termId, language, facultyName, l.lectureseriesId, password_, approved, longDesc, latestOpenAccessVideoId ";
 			   query += "FROM LG_Lectureseries l ";
 
 		if (institutionId > 0 || institutionParentId > 0) {
 			query += "INNER JOIN LG_Lectureseries_Institution AS li ON ( l.lectureseriesId = li.lectureseriesId ) ";
 		}
-	
+
 		if (termIds.size() > 0) {
 			query += "INNER JOIN LG_Term AS t ON ( l.termId = t.termId ) ";
 		}
@@ -183,11 +183,16 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			query += "INNER JOIN LG_Lectureseries_Creator AS lc ON ( l.lectureseriesId = lc.lectureseriesId ) ";
 		}
 		
-
+		if (categoryIds.size() > 0) {
+			query += "INNER JOIN LG_Lectureseries_Category AS lcat ON ( l.lectureseriesId = lcat.lectureseriesId ) ";
+		}
+		
+		query += "WHERE latestOpenAccessVideoId>0 ";
+		
 		if (institutionId > 0 || institutionParentId > 0 || termIds.size() > 0 || categoryIds.size() > 0 || creatorIds.size() > 0) {
-			query += "WHERE ";
 			int i = 0;
 			if (termIds.size() > 0) {
+				query += "AND ";
 				ListIterator<Long> it = termIds.listIterator();
 				query += "( ";
 				while(it.hasNext()){
@@ -203,12 +208,12 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 				query += "( ";
 				for(int j=0;j<creatorIds.size();j++){
 				Long creatorId = creatorIds.get(j);
-					if(creatorIds.size()<(j-1))query += "lc.creatorId="+creatorId+" OR ";
+					if(j<(creatorIds.size()-1))query += "lc.creatorId="+creatorId+" OR ";
 					else query += "lc.creatorId="+creatorId+" ) ";
 				}
 				i++;				
 			}
-
+			
 			if (categoryIds.size() > 0) {
 				query += i > 0 ? "AND " : "";
 				ListIterator<Long> it = categoryIds.listIterator();
@@ -233,8 +238,9 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 				i++;
 			}
 
-			query += "GROUP BY l.lectureseriesId";
+			query += "GROUP BY l.lectureseriesId ORDER BY l.latestVideoUploadDate";
 		}
+		
 	    return query;
 	}
 

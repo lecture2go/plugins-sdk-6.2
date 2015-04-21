@@ -18,6 +18,7 @@
 <liferay-portlet:resourceURL id="updateCreators" var="updateCreatorsURL" />
 <liferay-portlet:resourceURL id="updateSubInstitutions" var="updateSubInstitutionsURL" />
 <liferay-portlet:resourceURL id="getJSONCreator" var="getJSONCreatorURL" />
+<liferay-portlet:resourceURL id="updateupdateOpenAccessForLectureseries" var="updateupdateOpenAccessForLectureseriesURL" />
 
 <%
 	String actionURL = "";
@@ -367,6 +368,27 @@ function updateVideoFileName(file){
 				 	   	<portlet:namespace/>fileName: file.fileName,
 				 	   	<portlet:namespace/>secureFileName: file.secureFileName,
 				 	   	<portlet:namespace/>generationDate: file.generationDate,
+			 	},
+			 	//get server response
+				on: {
+					   success: function() {
+					     var jsonResponse = this.get('responseData');
+					   }
+				}
+			});	
+		}
+	);
+}
+
+function updateupdateOpenAccessForLectureseries(){
+	AUI().use('aui-io-request', 'aui-node',
+		function(A){
+			A.io.request('<%=updateupdateOpenAccessForLectureseriesURL%>', {
+		 	dataType: 'json',
+		 	method: 'POST',
+			 	//send data to server
+			 	data: {
+			 	   	<portlet:namespace/>videoId: A.one('#<portlet:namespace/>videoId').get('value'),
 			 	},
 			 	//get server response
 				on: {
