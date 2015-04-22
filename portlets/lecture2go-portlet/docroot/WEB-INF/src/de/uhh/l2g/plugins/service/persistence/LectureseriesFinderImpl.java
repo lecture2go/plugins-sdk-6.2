@@ -168,74 +168,120 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 	
 	private String sqlFilterForOpenAccessLectureseries(Long institutionId, Long institutionParentId, ArrayList<Long> termIds, List<Long> categoryIds, ArrayList<Long> creatorIds) {
 		// build query
-		String query = "SELECT number_, eventType, l.categoryId, l.name, shortDesc, l.termId, language, facultyName, l.lectureseriesId, password_, approved, longDesc, latestOpenAccessVideoId ";
-			   query += "FROM LG_Lectureseries l ";
+		
+		String lQuery = "SELECT l.number_, l.eventType, l.categoryId, l.name, l.shortDesc, l.termId, l.language, l.facultyName, l.lectureseriesId, l.password_, l.approved, l.longDesc, l.latestOpenAccessVideoId, l.latestVideoUploadDate FROM LG_Lectureseries AS l ";
+		String vQuery = "SELECT \"00.000\" AS number_, NULL AS eventType, 0 AS categoryId, v.title AS name, v.title AS shortDesc, v.termId, \"\" AS language, \"\" AS facultyName, v.videoId AS lectureseriesId, NULL AS password_, 1 AS approved, v.title AS longDesc, v.lectureseriesId AS latestOpenAccessVideoId, v.uploadDate AS latestVideoUploadDate FROM LG_Video v ";
+
+		String query = "";
 
 		if (institutionId > 0 || institutionParentId > 0) {
-			query += "INNER JOIN LG_Lectureseries_Institution AS li ON ( l.lectureseriesId = li.lectureseriesId ) ";
+			lQuery += "INNER JOIN LG_Lectureseries_Institution AS li ON ( l.lectureseriesId = li.lectureseriesId ) ";
+			vQuery += "INNER JOIN LG_Video_Institution AS vi ON ( v.videoId = vi.videoId ) ";
 		}
 
 		if (termIds.size() > 0) {
-			query += "INNER JOIN LG_Term AS t ON ( l.termId = t.termId ) ";
+			lQuery += "INNER JOIN LG_Term AS t ON ( l.termId = t.termId ) ";
+			vQuery += "INNER JOIN LG_Term AS t ON ( v.termId = t.termId ) ";
 		}
 		
 		if (creatorIds.size() > 0) {
-			query += "INNER JOIN LG_Lectureseries_Creator AS lc ON ( l.lectureseriesId = lc.lectureseriesId ) ";
+			lQuery += "INNER JOIN LG_Lectureseries_Creator AS lc ON ( l.lectureseriesId = lc.lectureseriesId ) ";
+			vQuery += "INNER JOIN LG_Video_Creator AS vc ON ( v.videoId = vc.videoId ) ";
 		}
 		
-		query += "WHERE latestOpenAccessVideoId>0 ";
+		if (categoryIds.size() > 0) {
+			vQuery += "INNER JOIN LG_Video_Category AS vcat ON ( v.videoId = vcat.videoId ) ";
+		}
+		
+		lQuery += "WHERE l.latestOpenAccessVideoId>0 ";
+		vQuery += "WHERE v.lectureseriesId<0 ";
 		
 		if (institutionId > 0 || institutionParentId > 0 || termIds.size() > 0 || categoryIds.size() > 0 || creatorIds.size() > 0) {
 			int i = 0;
 			if (termIds.size() > 0) {
-				query += "AND ";
+				lQuery += "AND ";
+				vQuery += "AND ";
 				ListIterator<Long> it = termIds.listIterator();
-				query += "( ";
+				lQuery += "( ";
+				vQuery += "( ";
 				while(it.hasNext()){
 					Long termId = it.next();
-					if(it.hasNext())query += "t.termId="+termId+" OR ";
-					else query += "t.termId="+termId+" ) ";
+					if(it.hasNext()){
+						lQuery += "t.termId="+termId+" OR ";
+						vQuery += "t.termId="+termId+" OR ";
+					}
+					else{
+						lQuery += "t.termId="+termId+" ) ";
+						vQuery += "t.termId="+termId+" ) ";
+					}
 				}
 				i++;
 			}
 
 			if (creatorIds.size() > 0) {
-				query += i > 0 ? "AND " : "";
-				query += "( ";
+				lQuery += i > 0 ? "AND " : "";
+				vQuery += i > 0 ? "AND " : "";
+				lQuery += "( ";
+				vQuery += "( ";
 				for(int j=0;j<creatorIds.size();j++){
 				Long creatorId = creatorIds.get(j);
-					if(j<(creatorIds.size()-1))query += "lc.creatorId="+creatorId+" OR ";
-					else query += "lc.creatorId="+creatorId+" ) ";
+					if(j<(creatorIds.size()-1)){
+						lQuery += "lc.creatorId="+creatorId+" OR ";
+						vQuery += "vc.creatorId="+creatorId+" OR ";
+					}
+					else{
+						lQuery += "lc.creatorId="+creatorId+" ) ";
+						vQuery += "vc.creatorId="+creatorId+" ) ";
+					}
 				}
 				i++;				
 			}
 			
 			if (categoryIds.size() > 0) {
-				query += i > 0 ? "AND " : "";
+				lQuery += i > 0 ? "AND " : "";
+				vQuery += i > 0 ? "AND " : "";
 				ListIterator<Long> it = categoryIds.listIterator();
-				query += "( ";
+				lQuery += "( ";
+				vQuery += "( ";
 				while(it.hasNext()){
 					Long categoryId = it.next();
-					if(it.hasNext())query += "l.categoryId = "+categoryId + " OR ";
-					else query += "l.categoryId="+categoryId+" ) ";
+					if(it.hasNext()){
+						lQuery += "l.categoryId = "+categoryId + " OR ";
+						vQuery += "vcat.categoryId = "+categoryId + " OR ";
+					}
+					else{
+						lQuery += "l.categoryId="+categoryId+" ) ";
+						vQuery += "vcat.categoryId="+categoryId+" ) ";
+					}
 				}
 				i++;				
 			}
 
 			if (institutionId > 0) {
-				query += i > 0 ? "AND " : "";
-				query += "li.institutionId = "+institutionId + " ";
+				lQuery += i > 0 ? "AND " : "";
+				vQuery += i > 0 ? "AND " : "";
+				lQuery += "li.institutionId = "+institutionId + " ";
+				vQuery += "vi.institutionId = "+institutionId + " ";
 				i++;
 			}
 
 			if (institutionParentId > 0) {
-				query += i > 0 ? "AND " : "";
-				query += "li.institutionParentId = "+institutionParentId + " ";
+				lQuery += i > 0 ? "AND " : "";
+				vQuery += i > 0 ? "AND " : "";
+				lQuery += "li.institutionParentId = "+institutionParentId + " ";
+				vQuery += "vi.institutionParentId = "+institutionParentId + " ";
 				i++;
 			}
 
-			query += "GROUP BY l.lectureseriesId ORDER BY l.latestVideoUploadDate";
 		}
+
+		query = "SELECT * FROM ( ";
+		query+= lQuery;
+		query+= "UNION "; 
+		query+= vQuery;
+		query+= ") ";
+		query+= "AS a ";
+		query+= "ORDER BY a.latestVideoUploadDate";	
 		
 	    return query;
 	}

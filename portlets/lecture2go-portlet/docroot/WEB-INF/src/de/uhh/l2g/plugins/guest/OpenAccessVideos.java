@@ -37,8 +37,8 @@ public class OpenAccessVideos extends MVCPortlet {
 		List<Lectureseries> lectureseries = LectureseriesLocalServiceUtil.getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(institutionId, parentInstitutionId, termIds, categoryIds, creatorIds);
 		List<Video> videos = VideoLocalServiceUtil.getFilteredByInstitutionParentInstitutionTermCategoryCreator(institutionId, parentInstitutionId, termIds, categoryIds, creatorIds);
 		
-		request.setAttribute("lectureseries", lectureseries);
-		request.setAttribute("videos", videos);
+		request.setAttribute("reqLectureseries", lectureseries);
+		request.setAttribute("reqVideos", videos);
 		response.setRenderParameter("jspPage","/guest/videosList.jsp");
 	}
 	
