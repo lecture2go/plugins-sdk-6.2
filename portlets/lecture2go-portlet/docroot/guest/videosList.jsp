@@ -26,6 +26,7 @@
 
 		List<Lectureseries> tempLectureseriesList = new ArrayList();
 		PortletURL portletURL = renderResponse.createRenderURL();
+		// test comment
 %>
 
 <liferay-ui:search-container emptyResultsMessage="no-lectureseries-found" delta="10" iteratorURL="<%= portletURL %>">
