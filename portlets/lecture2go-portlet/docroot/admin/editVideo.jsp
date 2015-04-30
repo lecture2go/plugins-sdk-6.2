@@ -1,3 +1,4 @@
+<%@page import="java.util.Date"%>
 <%@include file="/init.jsp"%>
 
 <jsp:useBean id="reqLectureseriesList" type="java.util.List<de.uhh.l2g.plugins.model.Lectureseries>" scope="request" />
@@ -45,7 +46,13 @@
 
 	Map<String,String> subInstitutions = new LinkedHashMap<String, String>();
 	subInstitutions = InstitutionLocalServiceUtil.getByParent(reqVideo.getRootInstitutionId());
+	Date date = new Date();
+	String d = date.getDate()+"";
 %>
+ <liferay-ui:input-date 
+ 	dayParam="1" 
+ 	dayValue="1" 
+ /> 
  
 <aui:fieldset helpMessage="test" column="true" label="video-file" >
 	<div>
