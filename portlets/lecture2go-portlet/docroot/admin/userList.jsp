@@ -1,4 +1,3 @@
-<%@page import="java.io.PrintWriter"%>
 <%@include file="/init.jsp"%>
 <liferay-ui:error key="host-or-institution-error" message="host-or-institution-error"/>
 <%

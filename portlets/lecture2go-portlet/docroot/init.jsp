@@ -19,10 +19,13 @@
 <%@ page import="java.util.Map"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Calendar"%>
+<%@ page import="java.util.GregorianCalendar"%>
 <%@ page import="java.util.Collections"%>
 <%@ page import="java.util.Locale"%>
 <%@ page import="java.util.LinkedHashMap"%>
+<%@ page import="java.util.Date"%>
 <%@ page import="java.lang.String"%>
+<%@ page import="java.text.SimpleDateFormat"%>
 
 <%@ page import="javax.portlet.PortletURL"%>
 <%@ page import="javax.portlet.PortletException"%>
@@ -100,7 +103,7 @@
 <%@ page import="de.uhh.l2g.plugins.service.CreatorLocalServiceUtil"%>
 
 <%@ page import="de.uhh.l2g.plugins.util.Lecture2GoRoleChecker"%>
-
+<%@ page import="java.io.PrintWriter"%>
 
 <portlet:defineObjects />
 <liferay-theme:defineObjects/>

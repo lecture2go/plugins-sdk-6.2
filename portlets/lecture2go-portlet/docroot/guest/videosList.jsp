@@ -1,3 +1,4 @@
+<%@page import="java.util.ListIterator"%>
 <%@include file="/init.jsp"%>
 
 <portlet:actionURL name="viewOpenAccessLectureSeries" var="viewOpenAccessLectureSeriesURL"></portlet:actionURL>
@@ -28,7 +29,7 @@
 		PortletURL portletURL = renderResponse.createRenderURL();
 %>
 
-<liferay-ui:search-container emptyResultsMessage="no-lectureseries-found" delta="10" iteratorURL="<%= portletURL %>">
+<liferay-ui:search-container emptyResultsMessage="no-lectureseries-found" delta="5" iteratorURL="<%=portletURL %>">
 	<liferay-ui:search-container-results>
 		<%
 			tempLectureseriesList = reqLectureseries;
