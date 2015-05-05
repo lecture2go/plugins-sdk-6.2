@@ -48,7 +48,6 @@
 %>
 
 <script type="text/javascript">
-  $("#upload-form").hide();
   $(function(){
     if(isFirstUpload()==1){
     	$("#upload-form").hide();
@@ -88,7 +87,7 @@
 	</aui:fieldset>
 </div>
 
-<div id="upload-form">
+<div id="upload-form" style="visibility: false; ">
 	<aui:fieldset helpMessage="test" column="true" label="video-file" >
 		<aui:layout>
 			<div>
@@ -252,7 +251,7 @@ var $options = $( "#options" );
 $(function () {
 	var lsId = <%=reqLectureseries.getLectureseriesId()%>;
 	if(lsId>0){
-		$options.fadeOut(1000);
+		$options.hide();
 	}
 });
 
@@ -331,6 +330,7 @@ $(function () {
         		lectureseriesNumber: "<%=reqLectureseries.getNumber()%>",
         		fileName: "<%=VideoLocalServiceUtil.getVideo(reqVideo.getVideoId()).getFilename()%>",
         		secureFileName: "<%=VideoLocalServiceUtil.getVideo(reqVideo.getVideoId()).getSurl()%>",
+        		l2gDateTime: $("#l2gDateTime").val(),
         };        
     });
    
@@ -566,6 +566,11 @@ function deleteFile(fileName){
 	            var obj = data[i];
 		        var id = "#"+obj.fileId;
 		        $(id).remove();
+	        }
+	        //update view
+	        if (isFirstUpload()==1){
+	      	  	$('#date-time-form').fadeIn( 1000 );
+	    	  	$("#upload-form").fadeOut( 1000 ); 
 	        }
 	    }
 	});	
