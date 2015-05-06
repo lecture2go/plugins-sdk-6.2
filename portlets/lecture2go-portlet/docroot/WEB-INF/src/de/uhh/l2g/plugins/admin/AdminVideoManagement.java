@@ -491,6 +491,25 @@ public class AdminVideoManagement extends MVCPortlet {
 			writeJSON(resourceRequest, resourceResponse, json);
 		}
 
+		if(resourceID.equals("videoUpdateGenerationDate")){
+			String generationDate = ParamUtil.getString(resourceRequest, "generationDate");
+			JSONObject jo = JSONFactoryUtil.createJSONObject();
+			video.setGenerationDate(generationDate);
+			try {
+				VideoLocalServiceUtil.updateVideo(video);
+				jo.put("generationDate", generationDate);
+				writeJSON(resourceRequest, resourceResponse, jo);
+			} catch (SystemException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if(resourceID.equals("getGenerationDate")){
+			JSONObject jo = JSONFactoryUtil.createJSONObject();
+			jo.put("generationDate", video.getGenerationDate());
+			writeJSON(resourceRequest, resourceResponse, jo);
+		}
+		
 		if(resourceID.equals("videoFileNameExists")){
 			String filename = ParamUtil.getString(resourceRequest, "fileName");
 			JSONObject jo = JSONFactoryUtil.createJSONObject();
