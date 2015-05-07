@@ -31,7 +31,4 @@ public interface Term extends TermModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link de.uhh.l2g.plugins.model.impl.TermImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public java.lang.String getFullName();
-
-	public void setFullName(java.lang.String fullName);
 }

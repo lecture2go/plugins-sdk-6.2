@@ -342,16 +342,6 @@ public class TermWrapper implements Term, ModelWrapper<Term> {
 	}
 
 	@Override
-	public java.lang.String getFullName() {
-		return _term.getFullName();
-	}
-
-	@Override
-	public void setFullName(java.lang.String fullName) {
-		_term.setFullName(fullName);
-	}
-
-	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
