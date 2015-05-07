@@ -57,6 +57,7 @@
     }else{
   	  $("#date-time-form").hide();
 	  $("#upload-form").fadeIn(1000); 	
+	  $("#tm").text(getDateTime());
     }
     //
     $('#<portlet:namespace/>datetimepicker').datetimepicker({
@@ -65,7 +66,7 @@
     	lang:'en',
     	startDate:	new Date(),
     	value: new Date(),
-    	maxDate: new Date(),
+    	maxDate: '+1970/01/30',
     	minDate: false,
     	step:10
     });
@@ -73,9 +74,9 @@
 </script>
 
 	<div id="date-time-form">
-		<aui:fieldset helpMessage="test" column="true" label="video-file" >
+		<aui:fieldset helpMessage="test" column="true" label="video-file-upload" >
 			<aui:layout>
-				<aui:input id="datetimepicker" name="datetimepicker" label="chose-date-first"/>
+				<aui:input id="datetimepicker" name="datetimepicker" label="chose-date-time-bevor-upload"/>
 				<aui:button-row>
 					<aui:button id="apply-date-time" name="apply-date-time" value="apply-date-time" onClick="applyDateTime();"/>
 				</aui:button-row>
@@ -84,7 +85,7 @@
 	</div>
 	
 	<div id="upload-form">
-		<aui:fieldset helpMessage="test" column="true" label="video-file" >
+		<aui:fieldset helpMessage="test" column="true" label="video-file-upload" >
 			<aui:layout>
 				<div>
 					<input id="fileupload" type="file" name="files[]" data-url="/servlet-file-upload/upload" multiple/>
@@ -95,11 +96,14 @@
 					</div>
 					<table id="uploaded-files" class="table"></table>
 				</div>
+				
+				lecture2go-date <b id="tm"></b>
+				<br/><br/>
 			</aui:layout>
 		</aui:fieldset>
 	</div>
 	
-	<aui:fieldset helpMessage="test" column="true" label="video-metadata" >
+	<aui:fieldset column="false" label="" >
 		<aui:layout>
 			<aui:form action="<%=actionURL%>" commandName="model" name="metadata">
 				<aui:select size="1" name="lectureseriesId" label="lectureseries" onChange="toggleLectureseries()">
@@ -315,7 +319,11 @@ $(function () {
         },
         progressall: function (e, data) {
 	        var progress = parseInt(data.loaded / data.total * 100, 10);
-	        $('#progress .bar').css('width',progress + '%');
+	        if (progress==100){
+	        	setTimeout(function(){$('#progress .bar').css('width',0 + '%')}, 2000);
+	        }else{
+		        $('#progress .bar').css('width',progress + '%');
+	        }
    		},
 		dropZone: $('#dropzone')
     }).bind('fileuploadsubmit', function (e, data) {
@@ -546,30 +554,31 @@ function updateDescription(data){
 }
 
 function deleteFile(fileName){
-	confirm("really? you want to remove this file? ");
-	$.ajax({
-	    url: '<%=deleteFileURL.toString()%>',
-	    method: 'POST',
-	    dataType: "json",
-	    data: {
-	 	   	<portlet:namespace/>fileName: fileName,
-	 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>",
-	    },
-	    success: function(data) {
-	        //since we are using jQuery, you don't need to parse response
-	        console.log(data);
-	        for (var i = 0; i < data.length; i++) {
-	            var obj = data[i];
-		        var id = "#"+obj.fileId;
-		        $(id).remove();
-	        }
-	        //update view
-	        if (isFirstUpload()==1){
-	      	  	$('#date-time-form').fadeIn( 500 );
-	    	  	$("#upload-form").hide(); 
-	        }
-	    }
-	});	
+	if(confirm("really? you want to remove this file? ")){
+		$.ajax({
+		    url: '<%=deleteFileURL.toString()%>',
+		    method: 'POST',
+		    dataType: "json",
+		    data: {
+		 	   	<portlet:namespace/>fileName: fileName,
+		 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>",
+		    },
+		    success: function(data) {
+		        //since we are using jQuery, you don't need to parse response
+		        console.log(data);
+		        for (var i = 0; i < data.length; i++) {
+		            var obj = data[i];
+			        var id = "#"+obj.fileId;
+			        $(id).remove();
+		        }
+		        //update view
+		        if (isFirstUpload()==1){
+		      	  	$('#date-time-form').fadeIn( 500 );
+		    	  	$("#upload-form").hide(); 
+		        }
+		    }
+		});	
+	}
 }
 
 function updateCreators(){
@@ -637,7 +646,7 @@ function applyDateTime(){
 			  success: function(data) {
 				  $('#date-time-form').hide();
 				  $("#upload-form").fadeIn(500); 	
-				  $("#l2gDateTime").val(genDate);
+				  $("#tm").text(getDateTime());
 			  }
 	  })
 }
