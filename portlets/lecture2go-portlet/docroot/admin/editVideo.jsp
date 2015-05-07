@@ -52,11 +52,11 @@
 <script type="text/javascript">
   $(function(){
     if(isFirstUpload()==1 && getDateTime().length==0){
+   	  	$("#date-time-form").fadeIn(1000);
     	$("#upload-form").hide();
-   	  	$("#date-time-form").show();
     }else{
   	  $("#date-time-form").hide();
-	  $("#upload-form").show(); 	
+	  $("#upload-form").fadeIn(1000); 	
     }
     //
     $('#<portlet:namespace/>datetimepicker').datetimepicker({
