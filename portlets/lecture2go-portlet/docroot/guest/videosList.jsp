@@ -1,7 +1,4 @@
-<%@page import="java.util.ListIterator"%>
 <%@include file="/init.jsp"%>
-
-<portlet:actionURL name="viewOpenAccessLectureSeries" var="viewOpenAccessLectureSeriesURL"></portlet:actionURL>
 
 <%
 		//FILTER
@@ -42,10 +39,22 @@
 
 	<liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.Lectureseries" keyProperty="lectureseriesId" modelVar="lectser">
 		<liferay-ui:search-container-column-text>
-			<%=lectser.getName()%>
+			<%
+				String vId = "";
+				String lId = "";
+				if(lectser.getLatestOpenAccessVideoId()<0) vId = lectser.getLectureseriesId()+"";
+				else lId = lectser.getLectureseriesId()+"";
+			%>
+			<portlet:actionURL name="viewOpenAccessVideo" var="viewOpenAccessVideoURL">
+				<portlet:param name="videoId" value="<%=vId%>"/>
+				<portlet:param name="lectureseriesId" value="<%=lId%>"/>
+			</portlet:actionURL>
+			<a href="<%=viewOpenAccessVideoURL%>"><%=lectser.getName()%></a>
 			<br/>
-			<%if(lectser.getLatestOpenAccessVideoId()<0){%>video id = <%=lectser.getLectureseriesId()%><%}
-			else{%>lecture series id = <%=lectser.getLectureseriesId()%><%}%>
+			<%
+				if(lectser.getLatestOpenAccessVideoId()<0){%>video id = <%=lectser.getLectureseriesId()%><%}
+				else{%>lecture series id = <%=lectser.getLectureseriesId()%><%}
+			%>		
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 

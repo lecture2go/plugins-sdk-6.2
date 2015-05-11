@@ -467,7 +467,9 @@
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.TermImpl" name="Term">
 		<table name="LG_Term" />
-		<attributes />
+		<attributes>
+			<transient name="fullName" />
+		</attributes>
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.UploadImpl" name="Upload">
 		<table name="LG_Upload" />

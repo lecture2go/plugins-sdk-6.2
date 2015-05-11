@@ -2,7 +2,6 @@ package de.uhh.l2g.plugins.admin;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
