@@ -1043,6 +1043,16 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 	}
 
 	@Override
+	public java.lang.String getCreators() {
+		return _video.getCreators();
+	}
+
+	@Override
+	public void setCreators(java.lang.String creators) {
+		_video.setCreators(creators);
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;

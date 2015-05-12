@@ -126,4 +126,8 @@ public interface Video extends VideoModel, PersistedModel {
 	public java.lang.String getSPreffix();
 
 	public java.lang.String getPreffix();
+
+	public java.lang.String getCreators();
+
+	public void setCreators(java.lang.String creators);
 }

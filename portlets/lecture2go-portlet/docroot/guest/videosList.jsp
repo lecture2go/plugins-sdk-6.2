@@ -4,21 +4,21 @@
 		//FILTER
 		//terms array
 		ArrayList<Long> termIds = new ArrayList<Long>();
-		termIds.add(new Long(11));
-		termIds.add(new Long(7));
+		//termIds.add(new Long(11));
+		//termIds.add(new Long(7));
 		//category array
 		ArrayList<Long> categoryIds = new ArrayList<Long>();
-		categoryIds.add(new Long(1));
-		categoryIds.add(new Long(5));
+		//categoryIds.add(new Long(1));
+		//categoryIds.add(new Long(5));
 		//creator ids
 		ArrayList<Long> creatorIds =  new ArrayList<Long>();
-		creatorIds.add(new Long(1));
-		creatorIds.add(new Long(2));
+		//creatorIds.add(new Long(1));
+		//creatorIds.add(new Long(2));
 		//institution 
 		Long institutionId = new Long(0);
 		Long parentInstitutionId = new Long(0);
-		institutionId = new Long(74);
-		parentInstitutionId = new Long(3);
+		//institutionId = new Long(74);
+		//parentInstitutionId = new Long(3);
 		//return list
 		List<Lectureseries> reqLectureseries = LectureseriesLocalServiceUtil.getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(institutionId, parentInstitutionId, termIds, categoryIds, creatorIds);
 

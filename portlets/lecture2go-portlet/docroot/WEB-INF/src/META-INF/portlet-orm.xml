@@ -479,6 +479,7 @@
 		<table name="LG_Video" />
 		<attributes>
 			<transient name="bitrate" />
+			<transient name="creators" />
 			<transient name="date" />
 			<transient name="flvFile" />
 			<transient name="hasChapters" />

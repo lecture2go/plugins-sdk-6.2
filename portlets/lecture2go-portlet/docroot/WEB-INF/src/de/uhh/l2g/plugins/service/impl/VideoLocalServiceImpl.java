@@ -18,6 +18,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import org.json.JSONArray;
@@ -31,18 +32,22 @@ import com.liferay.portal.kernel.util.PropsUtil;
 
 import de.uhh.l2g.plugins.NoSuchInstitutionException;
 import de.uhh.l2g.plugins.NoSuchProducerException;
+import de.uhh.l2g.plugins.model.Creator;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Lastvideolist;
 import de.uhh.l2g.plugins.model.Producer;
+import de.uhh.l2g.plugins.model.Segment;
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.impl.HostImpl;
 import de.uhh.l2g.plugins.model.impl.InstitutionImpl;
 import de.uhh.l2g.plugins.model.impl.LastvideolistImpl;
 import de.uhh.l2g.plugins.model.impl.ProducerImpl;
 import de.uhh.l2g.plugins.model.impl.VideoImpl;
+import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LastvideolistLocalServiceUtil;
+import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.VideoLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.VideoFinderUtil;
 import de.uhh.l2g.plugins.util.FFmpegManager;
@@ -288,10 +293,22 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		objectVideo.setStreamIosUrl(streamIosUrl); // normal
 		objectVideo.setStreamAndroidUrl(streamAndroidUrl); // normal
 
-		// has chapters TODO Segmentation
-		// if(segmentDao.getChapterByVideoId(objectVideo.getId()).size()>0)objectVideo.setHasChapters(true);
-		// //has comments
-		// if(segmentDao.getCommentsByVideoId(objectVideo.getId()).size()>0)objectVideo.setHasComments(true);
+		List<Segment> sl = new ArrayList<Segment>();
+		try {
+			sl = SegmentLocalServiceUtil.getSegmentsByVideoId(videoId);
+			if(sl.size()>0)objectVideo.setHasChapters(true);
+		} catch (PortalException e) {
+		} catch (SystemException e) {
+		}
+		
+		//creators
+		List<Creator> cl = CreatorLocalServiceUtil.getCreatorsByVideoId(videoId);
+		String cS = "";
+		ListIterator<Creator> cli = cl.listIterator();
+		while(cli.hasNext()){
+			cS+=cli.next().getFullName()+"; ";
+		}
+		objectVideo.setCreators(cS);
 		
 		return objectVideo;
 	}
@@ -427,7 +444,14 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	}
 
 	public List<Video> getByLectureseriesAndOpenaccess(Long lectureseriesId, int openAccess) throws SystemException{
-		return videoPersistence.findByLectureseriesAndOpenaccess(lectureseriesId, openAccess);
+		List<Video> vl = videoPersistence.findByLectureseriesAndOpenaccess(lectureseriesId, openAccess);
+		List<Video> rvl = new ArrayList<Video>();
+		ListIterator<Video> vli = vl.listIterator();
+		while(vli.hasNext()){
+			Video objectVideo = getFullVideo(vli.next().getVideoId());
+			rvl.add(objectVideo);
+		}
+		return rvl;
 	}
 	
 	public List<Video> getFilteredByInstitutionParentInstitutionTermCategoryCreator (Long institutionId, Long parentInstitutionId, ArrayList<Long> termIds, ArrayList<Long> categoryIds, ArrayList<Long> creatorIds){

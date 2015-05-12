@@ -279,4 +279,14 @@ public class VideoImpl extends VideoBaseImpl {
 			}
 			return preffix;
 		}
+		
+		private String creators;
+
+		public String getCreators() {
+			return creators;
+		}
+
+		public void setCreators(String creators) {
+			this.creators = creators;
+		} 
 }
