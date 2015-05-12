@@ -122,9 +122,13 @@ public class Video_LectureseriesLocalServiceClpInvoker {
 
 		_methodParameterTypes153 = new String[] { "java.lang.Long" };
 
-		_methodName154 = "updateOpenAccessByVideo";
+		_methodName154 = "getByVideo";
 
-		_methodParameterTypes154 = new String[] { "de.uhh.l2g.plugins.model.Video" };
+		_methodParameterTypes154 = new String[] { "java.lang.Long" };
+
+		_methodName155 = "updateOpenAccessByVideo";
+
+		_methodParameterTypes155 = new String[] { "de.uhh.l2g.plugins.model.Video" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -240,6 +244,11 @@ public class Video_LectureseriesLocalServiceClpInvoker {
 
 		if (_methodName154.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes154, parameterTypes)) {
+			return Video_LectureseriesLocalServiceUtil.getByVideo((java.lang.Long)arguments[0]);
+		}
+
+		if (_methodName155.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes155, parameterTypes)) {
 			return Video_LectureseriesLocalServiceUtil.updateOpenAccessByVideo((de.uhh.l2g.plugins.model.Video)arguments[0]);
 		}
 
@@ -288,4 +297,6 @@ public class Video_LectureseriesLocalServiceClpInvoker {
 	private String[] _methodParameterTypes153;
 	private String _methodName154;
 	private String[] _methodParameterTypes154;
+	private String _methodName155;
+	private String[] _methodParameterTypes155;
 }

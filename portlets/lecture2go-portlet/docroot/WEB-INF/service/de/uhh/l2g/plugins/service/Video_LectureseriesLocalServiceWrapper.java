@@ -301,6 +301,13 @@ public class Video_LectureseriesLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> getByVideo(
+		java.lang.Long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _video_LectureseriesLocalService.getByVideo(videoId);
+	}
+
+	@Override
 	public java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> updateOpenAccessByVideo(
 		de.uhh.l2g.plugins.model.Video video)
 		throws com.liferay.portal.kernel.exception.SystemException {

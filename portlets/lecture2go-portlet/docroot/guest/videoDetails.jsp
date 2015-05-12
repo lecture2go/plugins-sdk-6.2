@@ -1,11 +1,32 @@
+<%@page import="de.uhh.l2g.plugins.model.Video_Lectureseries"%>
 <%@include file="/init.jsp"%>
 
 <jsp:useBean id="video" type="de.uhh.l2g.plugins.model.Video" scope="request" />
 <jsp:useBean id="relatedVideos" type="java.util.List<de.uhh.l2g.plugins.model.Video>" scope="request" />
 <jsp:useBean id="segments" type="java.util.List<de.uhh.l2g.plugins.model.Segment>" scope="request" />
-<jsp:useBean id="videoInstitutions" type="java.util.List<de.uhh.l2g.plugins.model.Video_Institution>" scope="request" />
+<jsp:useBean id="videoLectureseries" type="java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries>" scope="request" />
 <jsp:useBean id="lectureseries" type="de.uhh.l2g.plugins.model.Lectureseries" scope="request" />
 
+
+<div class="col-xs-10 col-md-10">
+    <div id="pfad">
+    	<%for(int i=0; i<videoLectureseries.size(); i++){
+    		Lectureseries lec = LectureseriesLocalServiceUtil.getLectureseries(videoLectureseries.get(i).getLectureseriesId());
+    		List<Institution> institutions = InstitutionLocalServiceUtil.getByLectureseriesId(lec.getLectureseriesId(), com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+    		for(int j=0; j<institutions.size(); j++){
+    			Institution insti = InstitutionLocalServiceUtil.getById(institutions.get(j).getInstitutionId());    			
+    			Institution pInst = InstitutionLocalServiceUtil.getById(institutions.get(j).getParentId());
+	    		%>
+		    	<A HREF="#" CLASS="apath"><%=insti.getName() %></A><span class="sep">&gt;</span> <A HREF="#" CLASS="apath"><%=pInst.getName() %></A> 
+		    	<%if(lec.getLectureseriesId()>0) {%>
+		    		<span class="sep">&gt;</span> <SPAN CLASS="paththispage"><%=lec.getName()%></SPAN>
+		    	<%}%>
+		    	<br/>
+    		<%}
+    	}%>
+    </div>
+</div>
+    
 <div class="col-md-7" style="margin-bottom:10px">
     <div id="main" >
       <h3 style="margin-top:10px; margin-bottom:2px">${video.title}</h3>
@@ -46,28 +67,30 @@
     </div>
 </div>
 
-<div id="additional" class="col-md-5">
-    <h4 style="margin-top:0px; float:left;">Veranstaltungsreihe</h4>
-	<a href="#"><img src="/lecture2go-portlet/img/rss.gif" style="margin-left:10px; margin-top:-4px;" /></a>
-	<br/><br/>
-	 <div class="list-group" style="margin: 5px;">
-		<c:forEach items="${relatedVideos}" var="vid">
-			<portlet:actionURL name="viewOpenAccessVideo" var="viewOpenAccessVideoURL">
-				<portlet:param name="videoId" value="${vid.videoId}"/>
-				<portlet:param name="lectureseriesId" value="${vid.lectureseriesId}"/>
-			</portlet:actionURL>		
-			<c:choose>
-			<c:when test="${video.videoId==vid.videoId}"><a href="#" class="list-group-item active" style="padding-left: 10px; padding-top: 5px; padding-bottom: 5px;"></c:when>
-			<c:otherwise><a href="<%=viewOpenAccessVideoURL%>" class="list-group-item" style="padding-left: 10px; padding-top: 5px; padding-bottom: 5px;"></c:otherwise>
-			</c:choose>	
-		        <img class="preview" src="${vid.imageSmall}">
-		        <h5 class="list-group-item-heading" style="margin-top:4px; margin-bottom:3px;">${vid.title}</h5>
-		        <h5 style="margin-top:0px; margin-bottom:3px; font-size:80%;">${vid.creators}</h5>
-		        <h5 style="margin-top:0px; margin-bottom:0px; font-size:80%;">${vid.date}</h5>			
-			</a>
-		</c:forEach>
+<c:if test="${relatedVideos.size()>1}">
+	<div id="additional" class="col-md-5">
+	    <h4 style="margin-top:0px; float:left;">Veranstaltungsreihe</h4>
+		<a href="#"><img src="/lecture2go-portlet/img/rss.gif" style="margin-left:10px; margin-top:-4px;" /></a>
+		<br/><br/>
+		 <div class="list-group" style="margin: 5px;">
+			<c:forEach items="${relatedVideos}" var="vid">
+				<portlet:actionURL name="viewOpenAccessVideo" var="viewOpenAccessVideoURL">
+					<portlet:param name="videoId" value="${vid.videoId}"/>
+					<portlet:param name="lectureseriesId" value="${vid.lectureseriesId}"/>
+				</portlet:actionURL>		
+				<c:choose>
+				<c:when test="${video.videoId==vid.videoId}"><a href="#" class="list-group-item active" style="padding-left: 10px; padding-top: 5px; padding-bottom: 5px;"></c:when>
+				<c:otherwise><a href="<%=viewOpenAccessVideoURL%>" class="list-group-item" style="padding-left: 10px; padding-top: 5px; padding-bottom: 5px;"></c:otherwise>
+				</c:choose>	
+			        <img class="preview" src="${vid.imageSmall}">
+			        <h5 class="list-group-item-heading" style="margin-top:4px; margin-bottom:3px;">${vid.title}</h5>
+			        <h5 style="margin-top:0px; margin-bottom:3px; font-size:80%;">${vid.creators}</h5>
+			        <h5 style="margin-top:0px; margin-bottom:0px; font-size:80%;">${vid.date}</h5>			
+				</a>
+			</c:forEach>
+		</div>
 	</div>
-</div>
+</c:if>
 
 <script>
 YUI().use(
