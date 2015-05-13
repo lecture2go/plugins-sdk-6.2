@@ -8,7 +8,7 @@
 <jsp:useBean id="videoInstitutions" type="java.util.List<de.uhh.l2g.plugins.model.Video_Institution>" scope="request" />
 <jsp:useBean id="videoMetadata" type="de.uhh.l2g.plugins.model.Metadata" scope="request" />
 <jsp:useBean id="lectureseries" type="de.uhh.l2g.plugins.model.Lectureseries" scope="request" />
-
+<jsp:useBean id="videoLicense" type="de.uhh.l2g.plugins.model.License" scope="request" />
 
 <div class="col-xs-10 col-md-10">
     <div id="pfad">
@@ -54,35 +54,38 @@
 	  <%}%>
 	  
 	  <p><br /></p>
-      <span id="togglerShare">
-        <button class="btn btn-primary headerShare toggler-header-collapsed"><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Teilen</button></a>
-      </span>
-      <span id="togglerDownload">
-        <button class="headerDownload btn btn-primary toggler-header-collapsed"><span class="glyphicon glyphicon-download" aria-hidden="true"></span> Download</button>
-      </span>
-
-      <button id="showModal" class="btn btn-primary"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Support</button>
 
       <span>
-        <a href="#"><img id="myTooltip" title="Creative Commons Lizenz. Für mehr Informationen klicken." src="/lecture2go-portlet/img/lizenz_cc.png" style="width:20px; opacity:0.5; float:right; margin-top:5px; margin-right:2px;"/></a>
+        <%if(videoLicense.getL2go()==1){%>
+        	<a href="#"><img id="myTooltip" title="lecture2Go-license-click-for-info" src="/lecture2go-portlet/img/l2go-lizenz-88x31.png" style="width:50px; opacity:0.5; float:right; margin-top:5px; margin-right:2px;"/></a>
+ 		<%}else{%>
+			<a href="#"><img id="myTooltip" title="cc-license-click-for-info" src="/lecture2go-portlet/img/lizenz_cc.png" style="width:20px; opacity:0.5; float:right; margin-top:5px; margin-right:2px;"/></a> 		
+ 		<%}%>       
       </span>
       <span class="label label-light" style="float:right; margin-top:6px; margin-right:5px;">${video.hits} views</span>
-
-      <div class="contentShare toggler-content-collapsed">
-        <h4>Teilen</h4>
-        <p>Lorem ipsum dolor sit amet</p>
-      </div>
-      
-      <div class="contentDownload toggler-content-collapsed">
-        <h4>Download</h4>
-        <p>Lorem ipsum dolor sit amet</p>
-      </div>
-      
-      <div class="contentSupport toggler-content-collapsed">
-        <h4>Kontakt</h4>
-        <p>Lorem ipsum dolor sit amet</p>
-      </div>
     </div>
+    <div id="meta">
+		<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+		    <li><a href="#download" data-toggle="tab">Download</a></li>
+		    <li><a href="#share" data-toggle="tab">Share</a></li>
+		    <li><a href="#support" data-toggle="tab">Support</a></li>
+		</ul>
+		    
+		<div id="my-tab-content" class="tab-content">
+		    <div class="tab-pane" id="download">
+		        <h1>Download</h1>
+		        <p>... ... ... ...</p>
+		    </div>
+		    <div class="tab-pane" id="share">
+		        <h1>Share</h1>
+		        <p>... ... ... ...</p>
+		    </div>
+		    <div class="tab-pane" id="support">
+		        <h1>Support</h1>
+		        <p>... ... ... ...</p>
+		    </div>
+		</div>    
+	</div>
 </div>
 
 <c:if test="${relatedVideos.size()>1}">
@@ -110,71 +113,8 @@
 	</div>
 </c:if>
 
-<script>
-YUI().use(
-  'aui-toggler',
-  function(Y) {
-    new Y.Toggler(
-      {
-        container: '#togglerShare',
-        content: '.contentShare',
-        expanded: false,
-        header: '.headerShare'
-      }
-    );
-  }
-);
-
-YUI().use(
-  'aui-toggler',
-  function(Y) {
-    new Y.Toggler(
-      {
-        container: '#togglerDownload',
-        content: '.contentDownload',
-        expanded: false,
-        header: '.headerDownload'
-      }
-    );
-  }
-);
-
-$("#hidenav").click(function() {
-  $( "#hide" ).toggleClass( "glyphicon-arrow-right glyphicon-arrow-left");
-  $( "#additional" ).toggleClass( "hide");
-  $( "#main" ).toggleClass( "col-md-7 col-md-12");
-
-});
-
-YUI().use(
-  'aui-tooltip',
-  function(Y) {
-    new Y.TooltipDelegate(
-      {
-        trigger: '#myTooltip',
-        position: 'top'
-      }
-    );
-  }
-);
-
-YUI().use(
-  'aui-modal',
-  function(Y) {
-     Y.one('#showModal').on(
-      'click', function() {
-        var modal = new Y.Modal(
-          {
-            bodyContent: 'Support Text',
-            centered: true,
-            headerContent: '<h4>Support</h4>',
-            modal: true,
-            render: '#modal',
-            width: 450
-          }
-        );
-      }
-    )
- }
-);
-</script>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#tabs').tab();
+    });
+</script>    

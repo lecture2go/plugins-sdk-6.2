@@ -12,15 +12,18 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import de.uhh.l2g.plugins.model.Lectureseries;
+import de.uhh.l2g.plugins.model.License;
 import de.uhh.l2g.plugins.model.Metadata;
 import de.uhh.l2g.plugins.model.Segment;
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.Video_Institution;
 import de.uhh.l2g.plugins.model.Video_Lectureseries;
 import de.uhh.l2g.plugins.model.impl.LectureseriesImpl;
+import de.uhh.l2g.plugins.model.impl.LicenseImpl;
 import de.uhh.l2g.plugins.model.impl.MetadataImpl;
 import de.uhh.l2g.plugins.model.impl.VideoImpl;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
+import de.uhh.l2g.plugins.service.LicenseLocalServiceUtil;
 import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
 import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
@@ -66,6 +69,12 @@ public class OpenAccessVideos extends MVCPortlet {
 	    Metadata m = new MetadataImpl();
 	    m = MetadataLocalServiceUtil.getMetadata(video.getMetadataId());
 	    
+	    //license for video
+	    
+	    License l = new LicenseImpl();
+	    l = LicenseLocalServiceUtil.getByVideoId(video.getVideoId());
+	    
+	    request.setAttribute("videoLicense",l);
 	    request.setAttribute("videoMetadata",m);
 	    request.setAttribute("videoInstitutions",vi);
 	    request.setAttribute("videoLectureseries",vl);
