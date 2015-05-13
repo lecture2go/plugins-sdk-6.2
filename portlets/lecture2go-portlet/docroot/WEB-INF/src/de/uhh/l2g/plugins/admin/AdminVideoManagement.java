@@ -382,6 +382,8 @@ public class AdminVideoManagement extends MVCPortlet {
 				else {
 					java.util.Date date= new java.util.Date();
 					video.setLectureseriesId(-date.getTime());
+					//update table video_lectureseries
+					Video_LectureseriesLocalServiceUtil.removeByVideoId(video.getVideoId());
 				}
 				video.setTags(tags);
 				if(lId>0){

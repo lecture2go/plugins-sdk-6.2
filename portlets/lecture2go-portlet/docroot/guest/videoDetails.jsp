@@ -5,25 +5,39 @@
 <jsp:useBean id="relatedVideos" type="java.util.List<de.uhh.l2g.plugins.model.Video>" scope="request" />
 <jsp:useBean id="segments" type="java.util.List<de.uhh.l2g.plugins.model.Segment>" scope="request" />
 <jsp:useBean id="videoLectureseries" type="java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries>" scope="request" />
+<jsp:useBean id="videoInstitutions" type="java.util.List<de.uhh.l2g.plugins.model.Video_Institution>" scope="request" />
+<jsp:useBean id="videoMetadata" type="de.uhh.l2g.plugins.model.Metadata" scope="request" />
 <jsp:useBean id="lectureseries" type="de.uhh.l2g.plugins.model.Lectureseries" scope="request" />
 
 
 <div class="col-xs-10 col-md-10">
     <div id="pfad">
-    	<%for(int i=0; i<videoLectureseries.size(); i++){
-    		Lectureseries lec = LectureseriesLocalServiceUtil.getLectureseries(videoLectureseries.get(i).getLectureseriesId());
-    		List<Institution> institutions = InstitutionLocalServiceUtil.getByLectureseriesId(lec.getLectureseriesId(), com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
-    		for(int j=0; j<institutions.size(); j++){
-    			Institution insti = InstitutionLocalServiceUtil.getById(institutions.get(j).getInstitutionId());    			
-    			Institution pInst = InstitutionLocalServiceUtil.getById(institutions.get(j).getParentId());
-	    		%>
-		    	<A HREF="#" CLASS="apath"><%=insti.getName() %></A><span class="sep">&gt;</span> <A HREF="#" CLASS="apath"><%=pInst.getName() %></A> 
-		    	<%if(lec.getLectureseriesId()>0) {%>
-		    		<span class="sep">&gt;</span> <SPAN CLASS="paththispage"><%=lec.getName()%></SPAN>
-		    	<%}%>
-		    	<br/>
-    		<%}
-    	}%>
+    	<%
+    	if(video.getLectureseriesId()>0){
+	    	for(int i=0; i<videoLectureseries.size(); i++){
+	    		Lectureseries lec = LectureseriesLocalServiceUtil.getLectureseries(videoLectureseries.get(i).getLectureseriesId());
+	    		List<Institution> institutions = InstitutionLocalServiceUtil.getByLectureseriesId(lec.getLectureseriesId(), com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+	    		for(int j=0; j<institutions.size(); j++){
+	    			Institution insti = InstitutionLocalServiceUtil.getById(institutions.get(j).getInstitutionId());    			
+	    			Institution pInst = InstitutionLocalServiceUtil.getById(institutions.get(j).getParentId());
+		    		%>
+			    	<A HREF="#" CLASS="apath"><%=pInst.getName() %></A><span class="sep">&gt;</span> <A HREF="#" CLASS="apath"><%=insti.getName() %></A> 
+			    	<%if(lec.getLectureseriesId()>0) {%>
+			    		<span class="sep">&gt;</span> <SPAN CLASS="paththispage"><%=lec.getName()%></SPAN>
+			    	<%}%>
+			    	<br/>
+	    		<%}
+	    	}
+    	}else{
+	    	for(int i=0; i<videoInstitutions.size(); i++){
+	    		Institution insti = InstitutionLocalServiceUtil.getById(videoInstitutions.get(i).getInstitutionId());    			
+	    		Institution pInst = InstitutionLocalServiceUtil.getById(videoInstitutions.get(i).getInstitutionParentId());
+		    	%>
+			    <A HREF="#" CLASS="apath"><%=insti.getName() %></A><span class="sep">&gt;</span> <A HREF="#" CLASS="apath"><%=pInst.getName() %></A>
+			    <br/> 
+	      <%}  		
+    	}
+    	%>
     </div>
 </div>
     
@@ -32,9 +46,13 @@
       <h3 style="margin-top:10px; margin-bottom:2px">${video.title}</h3>
       <h5 data-date="12.11.2013" style="margin-top:0px; margin-bottom:10px">${video.creators}</h5>
       <h5 style="margin-top:0px;">${lectureseries.name}</h5>
-
-      <p>${lectureseries.longDesc}</p>
-
+		
+	  <%if(videoMetadata.getDescription().trim().length()>0){ %>	
+	  	<p>${videoMetadata.description}</p>
+	  <%}else{%>
+      	<p>${lectureseries.longDesc}</p>
+	  <%}%>
+	  
 	  <p><br /></p>
       <span id="togglerShare">
         <button class="btn btn-primary headerShare toggler-header-collapsed"><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Teilen</button></a>
