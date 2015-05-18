@@ -1,4 +1,3 @@
-<%@page import="de.uhh.l2g.plugins.model.Video_Lectureseries"%>
 <%@include file="/init.jsp"%>
 
 <jsp:useBean id="video" type="de.uhh.l2g.plugins.model.Video" scope="request" />
@@ -73,16 +72,13 @@
 		    
 		<div id="my-tab-content" class="tab-content">
 		    <div class="tab-pane" id="download">
-		        <h1>Download</h1>
-		        <p>... ... ... ...</p>
+		        <p><%@ include file="/guest/includeDownload.jsp" %></p>
 		    </div>
 		    <div class="tab-pane" id="share">
-		        <h1>Share</h1>
-		        <p>... ... ... ...</p>
+		        <p><%@ include file="/guest/includeShare.jsp" %></p>
 		    </div>
 		    <div class="tab-pane" id="support">
-		        <h1>Support</h1>
-		        <p>... ... ... ...</p>
+		        <p><%@ include file="/guest/includeContact.jsp" %></p>
 		    </div>
 		</div>    
 	</div>

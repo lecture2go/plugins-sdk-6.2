@@ -62,6 +62,7 @@
 <%@ page import="org.springframework.web.bind.ServletRequestUtils"%>
 <%@ page import="org.springframework.web.portlet.bind.PortletRequestUtils"%>
 
+<%@ page import="de.uhh.l2g.plugins.model.Video_Lectureseries"%>
 <%@ page import="de.uhh.l2g.plugins.admin.AdminUserManagement"%>
 <%@ page import="de.uhh.l2g.plugins.service.ProducerLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil"%>
