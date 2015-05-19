@@ -34,10 +34,7 @@ package de.uhh.l2g.plugins.util;
  ***************************************************************************/
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.ListIterator;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -48,9 +45,7 @@ import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.Metadata;
 import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.model.Segment;
-import de.uhh.l2g.plugins.model.Tagcloud;
 import de.uhh.l2g.plugins.model.Video;
-import de.uhh.l2g.plugins.model.Video_Lectureseries;
 import de.uhh.l2g.plugins.model.impl.HostImpl;
 import de.uhh.l2g.plugins.model.impl.LectureseriesImpl;
 import de.uhh.l2g.plugins.model.impl.MetadataImpl;
@@ -62,7 +57,6 @@ import de.uhh.l2g.plugins.service.LicenseLocalServiceUtil;
 import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
-import de.uhh.l2g.plugins.service.Segment_User_VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.TagcloudLocalServiceUtil;
 import de.uhh.l2g.plugins.service.UploadLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
@@ -87,6 +81,9 @@ public class ProzessManager {
 			generateRSS(video, "mp3");
 			generateRSS(video, "m4v");
 			generateRSS(video, "m4a");
+			generateRSS(video, "ogg");
+			generateRSS(video, "flv");
+			generateRSS(video, "webm");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -106,6 +103,9 @@ public class ProzessManager {
 			generateRSS(video, "mp3");
 			generateRSS(video, "m4v");
 			generateRSS(video, "m4a");
+			generateRSS(video, "ogg");
+			generateRSS(video, "flv");
+			generateRSS(video, "webm");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -145,6 +145,7 @@ public class ProzessManager {
 				fJpg.renameTo(new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoPreffix + ".jpg"));
 				fJpgm.renameTo(new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoPreffix + "_m.jpg"));
 				fJpgs.renameTo(new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoPreffix + "_s.jpg"));
+				
 				fPdf.renameTo(new File(path + "/" + videoPreffix + ".pdf"));
 				fMp3.renameTo(new File(path + "/" + videoPreffix + ".mp3"));
 				fM4v.renameTo(new File(path + "/" + videoPreffix + ".m4v"));
@@ -153,26 +154,23 @@ public class ProzessManager {
 				fOgg.renameTo(new File(path + "/" + videoPreffix + ".ogg"));
 				fFlv.renameTo(new File(path + "/" + videoPreffix + ".flv"));
 				fWebm.renameTo(new File(path + "/" + videoPreffix + ".webm"));
+				
 				// then update the video in the database
 				video.setOpenAccess(1);
 				video.setSurl("");
 				VideoLocalServiceUtil.updateVideo(video);
 			}
-		} catch (Exception e) {
-		}
-		// set RSS
-		try {
-			generateRSS(video, "mp4");
-			generateRSS(video, "mp3");
-			generateRSS(video, "m4v");
-			generateRSS(video, "m4a");
-		} catch (Exception e) {
-		}
+		} catch (Exception e) {}
+		
 		// rss reload
 		generateRSS(video, "mp4");
 		generateRSS(video, "mp3");
 		generateRSS(video, "m4v");
 		generateRSS(video, "m4a");
+		generateRSS(video, "ogg");
+		generateRSS(video, "flv");
+		generateRSS(video, "webm");		
+		
 		String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/";
 		HTACCESS.makeHtaccess(url, VideoLocalServiceUtil.getByProducerAndDownloadLink(producer.getProducerId(), 0));
 		// refresh last video list
@@ -196,6 +194,7 @@ public class ProzessManager {
 		File fJpg = new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoPreffix + ".jpg");
 		File fJpgm = new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoPreffix + "_m.jpg");
 		File fJpgs = new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoPreffix + "_s.jpg");
+		
 		File fPdf = new File(path + "/" + videoPreffix + ".pdf");
 		File fMp3 = new File(path + "/" + videoPreffix + ".mp3");
 		File fM4v = new File(path + "/" + videoPreffix + ".m4v");
@@ -233,16 +232,27 @@ public class ProzessManager {
 		File symLinkM4v = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + video.getPreffix() + ".m4v");
 		File symLinkM4a = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + video.getPreffix() + ".m4a");
 		File symLinkMp3 = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + video.getPreffix() + ".mp3");
+		File symLinkPdf = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + video.getPreffix() + ".pdf");
+		File symLinkOgg = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + video.getPreffix() + ".ogg");
+		File symLinkFlv = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + video.getPreffix() + ".flv");
+		File symLinkWebm = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + video.getPreffix() + ".webm");
 		symLinkMp4.delete();
 		symLinkM4v.delete();
 		symLinkM4a.delete();
 		symLinkMp3.delete();
+		symLinkPdf.delete();
+		symLinkOgg.delete();
+		symLinkFlv.delete();
+		symLinkWebm.delete();
 		// set RSS
 		try {
 			generateRSS(video, "mp4");
 			generateRSS(video, "mp3");
 			generateRSS(video, "m4v");
 			generateRSS(video, "m4a");
+			generateRSS(video, "ogg");
+			generateRSS(video, "flf");
+			generateRSS(video, "webm");
 		} catch (Exception e) {
 		}
 		// delete video from videohitlist
@@ -404,6 +414,7 @@ public class ProzessManager {
 			File symLinkOgg = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".ogg");
 			File symLinkFlv = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".flv");
 			File symLinkWebm = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".webm");
+			File symLinkPdf = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".pdf");
 			symLinkMp4.delete();
 			symLinkM4v.delete();
 			symLinkM4a.delete();
@@ -412,6 +423,7 @@ public class ProzessManager {
 			symLinkOgg.delete();
 			symLinkFlv.delete();
 			symLinkWebm.delete();
+			symLinkPdf.delete();
 		} catch (NullPointerException npe) {}
 		
 		// update RSS
@@ -420,6 +432,9 @@ public class ProzessManager {
 			generateRSS(video, "mp3");
 			generateRSS(video, "m4v");
 			generateRSS(video, "m4a");
+			generateRSS(video, "ogg");
+			generateRSS(video, "flf");
+			generateRSS(video, "webm");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -479,7 +494,6 @@ public class ProzessManager {
 			e1.printStackTrace();
 		}
 		
-		
 		// delete all segments and images from repository location
 		try{
 			List<Segment> segmentList = SegmentLocalServiceUtil.getSegmentsByVideoId(video.getVideoId());
@@ -537,6 +551,7 @@ public class ProzessManager {
 			File symLinkOgg = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".ogg");
 			File symLinkFlv = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".flv");
 			File symLinkWebm = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".webm");
+			File symLinkPdf = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".pdf");
 			symLinkMp4.delete();
 			symLinkM4v.delete();
 			symLinkM4a.delete();
@@ -545,6 +560,7 @@ public class ProzessManager {
 			symLinkOgg.delete();
 			symLinkFlv.delete();
 			symLinkWebm.delete();
+			symLinkPdf.delete();
 		} catch (NullPointerException npe) {}
 		
 		// update RSS
@@ -553,6 +569,9 @@ public class ProzessManager {
 			generateRSS(video, "mp3");
 			generateRSS(video, "m4v");
 			generateRSS(video, "m4a");
+			generateRSS(video, "ogg");
+			generateRSS(video, "flf");
+			generateRSS(video, "webm");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -597,18 +616,28 @@ public class ProzessManager {
 			if (type.equals("mp3")) feedName = "" + video.getLectureseriesId() + ".mp3.xml";
 			if (type.equals("m4a"))	feedName = "" + video.getLectureseriesId() + ".m4a.xml";
 			if (type.equals("m4v"))	feedName = "" + video.getLectureseriesId() + ".m4v.xml";
-			rssMan.setRssFilename(feedName);
+			if (type.equals("ogg"))	feedName = "" + video.getLectureseriesId() + ".ogg.xml";
+			if (type.equals("flv"))	feedName = "" + video.getLectureseriesId() + ".flv.xml";
+			if (type.equals("webm")) feedName = "" + video.getLectureseriesId() + ".webm.xml";
 			
+			rssMan.setRssFilename(feedName);
+
 			if (type.equals("mp4"))	rssMan.createRssFile(videoList, "mp4");
 			if (type.equals("mp3")) rssMan.createRssFile(videoList, "mp3");
 			if (type.equals("m4a"))	rssMan.createRssFile(videoList, "m4a");
 			if (type.equals("m4v"))	rssMan.createRssFile(videoList, "m4v");
+			if (type.equals("ogg"))	rssMan.createRssFile(videoList, "ogg");
+			if (type.equals("flv"))	rssMan.createRssFile(videoList, "flv");
+			if (type.equals("webm"))	rssMan.createRssFile(videoList, "webm");
 		} catch (Exception e) {
 			try {
 				if (type.equals("mp4"))	rssMan.createRssFile(null, "mp4");
 				if (type.equals("mp3"))	rssMan.createRssFile(null, "mp3");
 				if (type.equals("m4a"))	rssMan.createRssFile(null, "m4a");
 				if (type.equals("m4v"))	rssMan.createRssFile(null, "m4v");
+				if (type.equals("ogg"))	rssMan.createRssFile(null, "ogg");
+				if (type.equals("flv"))	rssMan.createRssFile(null, "flv");
+				if (type.equals("webm"))	rssMan.createRssFile(null, "webm");
 			} catch (IOException ie) {
 			}
 		}

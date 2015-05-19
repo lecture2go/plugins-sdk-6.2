@@ -482,17 +482,30 @@
 			<transient name="creators" />
 			<transient name="date" />
 			<transient name="flvFile" />
+			<transient name="flvOpenAccessDownloadLink" />
+			<transient name="flvRssLink" />
 			<transient name="hasChapters" />
 			<transient name="hasComments" />
 			<transient name="image" />
 			<transient name="imageMedium" />
 			<transient name="imageSmall" />
 			<transient name="m4aFile" />
+			<transient name="m4aOpenAccessDownloadLink" />
+			<transient name="m4aRssLink" />
 			<transient name="m4vFile" />
+			<transient name="m4vOpenAccessDownloadLink" />
+			<transient name="m4vRssLink" />
 			<transient name="mp3File" />
+			<transient name="mp3OpenAccessDownloadLink" />
+			<transient name="mp3RssLink" />
 			<transient name="mp4File" />
+			<transient name="mp4OpenAccessDownloadLink" />
+			<transient name="mp4RssLink" />
 			<transient name="oggFile" />
+			<transient name="oggOpenAccessDownloadLink" />
+			<transient name="oggRssLink" />
 			<transient name="pdfFile" />
+			<transient name="pdfOpenAccessDownloadLink" />
 			<transient name="secureUrl" />
 			<transient name="shortName" />
 			<transient name="shortTitle" />
@@ -502,6 +515,8 @@
 			<transient name="streamUrl" />
 			<transient name="url" />
 			<transient name="webmFile" />
+			<transient name="webmOpenAccessDownloadLink" />
+			<transient name="webmRssLink" />
 		</attributes>
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.Video_CategoryImpl" name="Video_Category">

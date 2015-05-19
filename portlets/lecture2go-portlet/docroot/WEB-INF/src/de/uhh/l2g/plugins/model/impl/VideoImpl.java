@@ -31,6 +31,71 @@ public class VideoImpl extends VideoBaseImpl {
 	 *
 	 * Never reference this class directly. All methods that expect a video model instance should use the {@link de.uhh.l2g.plugins.model.Video} interface instead.
 	 */
+	
+	private String mp4RssLink;
+	private String mp3RssLink;
+	private String m4vRssLink;
+	private String m4aRssLink;
+	private String oggRssLink;
+	private String flvRssLink;
+	private String webmRssLink;
+	
+	public String getMp4RssLink() {
+		return mp4RssLink;
+	}
+
+	public void setMp4RssLink(String mp4RssLink) {
+		this.mp4RssLink = mp4RssLink;
+	}
+
+	public String getMp3RssLink() {
+		return mp3RssLink;
+	}
+
+	public void setMp3RssLink(String mp3RssLink) {
+		this.mp3RssLink = mp3RssLink;
+	}
+
+	public String getM4vRssLink() {
+		return m4vRssLink;
+	}
+
+	public void setM4vRssLink(String m4vRssLink) {
+		this.m4vRssLink = m4vRssLink;
+	}
+
+	public String getM4aRssLink() {
+		return m4aRssLink;
+	}
+
+	public void setM4aRssLink(String m4aRssLink) {
+		this.m4aRssLink = m4aRssLink;
+	}
+
+	public String getOggRssLink() {
+		return oggRssLink;
+	}
+
+	public void setOggRssLink(String oggRssLink) {
+		this.oggRssLink = oggRssLink;
+	}
+
+	public String getFlvRssLink() {
+		return flvRssLink;
+	}
+
+	public void setFlvRssLink(String flvRssLink) {
+		this.flvRssLink = flvRssLink;
+	}
+
+	public String getWebmRssLink() {
+		return webmRssLink;
+	}
+
+	public void setWebmRssLink(String webmRssLink) {
+		this.webmRssLink = webmRssLink;
+	}
+
 	private boolean hasChapters = false;
 	private boolean hasComments = false;
 	
@@ -149,6 +214,79 @@ public class VideoImpl extends VideoBaseImpl {
 
 	private String simpleDate = "";
 	
+	private String mp4OpenAccessDownloadLink;
+	private String pdfOpenAccessDownloadLink;
+	private String mp3OpenAccessDownloadLink;
+	private String m4vOpenAccessDownloadLink;
+	private String m4aOpenAccessDownloadLink;
+	private String flvOpenAccessDownloadLink;
+	private String oggOpenAccessDownloadLink;
+	private String webmOpenAccessDownloadLink;
+
+	public String getMp4OpenAccessDownloadLink() {
+		return mp4OpenAccessDownloadLink;
+	}
+
+	public void setMp4OpenAccessDownloadLink(String mp4OpenAccessDownloadLink) {
+		this.mp4OpenAccessDownloadLink = mp4OpenAccessDownloadLink;
+	}
+
+	public String getPdfOpenAccessDownloadLink() {
+		return pdfOpenAccessDownloadLink;
+	}
+
+	public void setPdfOpenAccessDownloadLink(String pdfOpenAccessDownloadLink) {
+		this.pdfOpenAccessDownloadLink = pdfOpenAccessDownloadLink;
+	}
+
+	public String getMp3OpenAccessDownloadLink() {
+		return mp3OpenAccessDownloadLink;
+	}
+
+	public void setMp3OpenAccessDownloadLink(String mp3OpenAccessDownloadLink) {
+		this.mp3OpenAccessDownloadLink = mp3OpenAccessDownloadLink;
+	}
+
+	public String getM4vOpenAccessDownloadLink() {
+		return m4vOpenAccessDownloadLink;
+	}
+
+	public void setM4vOpenAccessDownloadLink(String m4vOpenAccessDownloadLink) {
+		this.m4vOpenAccessDownloadLink = m4vOpenAccessDownloadLink;
+	}
+
+	public String getM4aOpenAccessDownloadLink() {
+		return m4aOpenAccessDownloadLink;
+	}
+
+	public void setM4aOpenAccessDownloadLink(String m4aOpenAccessDownloadLink) {
+		this.m4aOpenAccessDownloadLink = m4aOpenAccessDownloadLink;
+	}
+
+	public String getFlvOpenAccessDownloadLink() {
+		return flvOpenAccessDownloadLink;
+	}
+
+	public void setFlvOpenAccessDownloadLink(String flvOpenAccessDownloadLink) {
+		this.flvOpenAccessDownloadLink = flvOpenAccessDownloadLink;
+	}
+
+	public String getOggOpenAccessDownloadLink() {
+		return oggOpenAccessDownloadLink;
+	}
+
+	public void setOggOpenAccessDownloadLink(String oggOpenAccessDownloadLink) {
+		this.oggOpenAccessDownloadLink = oggOpenAccessDownloadLink;
+	}
+
+	public String getWebmOpenAccessDownloadLink() {
+		return webmOpenAccessDownloadLink;
+	}
+
+	public void setWebmOpenAccessDownloadLink(String webmOpenAccessDownloadLink) {
+		this.webmOpenAccessDownloadLink = webmOpenAccessDownloadLink;
+	}
+
 	private File mp4File;
 	private File pdfFile;
 	private File mp3File;

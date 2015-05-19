@@ -803,6 +803,76 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 	}
 
 	@Override
+	public java.lang.String getMp4RssLink() {
+		return _video.getMp4RssLink();
+	}
+
+	@Override
+	public void setMp4RssLink(java.lang.String mp4RssLink) {
+		_video.setMp4RssLink(mp4RssLink);
+	}
+
+	@Override
+	public java.lang.String getMp3RssLink() {
+		return _video.getMp3RssLink();
+	}
+
+	@Override
+	public void setMp3RssLink(java.lang.String mp3RssLink) {
+		_video.setMp3RssLink(mp3RssLink);
+	}
+
+	@Override
+	public java.lang.String getM4vRssLink() {
+		return _video.getM4vRssLink();
+	}
+
+	@Override
+	public void setM4vRssLink(java.lang.String m4vRssLink) {
+		_video.setM4vRssLink(m4vRssLink);
+	}
+
+	@Override
+	public java.lang.String getM4aRssLink() {
+		return _video.getM4aRssLink();
+	}
+
+	@Override
+	public void setM4aRssLink(java.lang.String m4aRssLink) {
+		_video.setM4aRssLink(m4aRssLink);
+	}
+
+	@Override
+	public java.lang.String getOggRssLink() {
+		return _video.getOggRssLink();
+	}
+
+	@Override
+	public void setOggRssLink(java.lang.String oggRssLink) {
+		_video.setOggRssLink(oggRssLink);
+	}
+
+	@Override
+	public java.lang.String getFlvRssLink() {
+		return _video.getFlvRssLink();
+	}
+
+	@Override
+	public void setFlvRssLink(java.lang.String flvRssLink) {
+		_video.setFlvRssLink(flvRssLink);
+	}
+
+	@Override
+	public java.lang.String getWebmRssLink() {
+		return _video.getWebmRssLink();
+	}
+
+	@Override
+	public void setWebmRssLink(java.lang.String webmRssLink) {
+		_video.setWebmRssLink(webmRssLink);
+	}
+
+	@Override
 	public boolean isHasChapters() {
 		return _video.isHasChapters();
 	}
@@ -920,6 +990,94 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 	@Override
 	public void setM4aFile(java.io.File m4aFile) {
 		_video.setM4aFile(m4aFile);
+	}
+
+	@Override
+	public java.lang.String getMp4OpenAccessDownloadLink() {
+		return _video.getMp4OpenAccessDownloadLink();
+	}
+
+	@Override
+	public void setMp4OpenAccessDownloadLink(
+		java.lang.String mp4OpenAccessDownloadLink) {
+		_video.setMp4OpenAccessDownloadLink(mp4OpenAccessDownloadLink);
+	}
+
+	@Override
+	public java.lang.String getPdfOpenAccessDownloadLink() {
+		return _video.getPdfOpenAccessDownloadLink();
+	}
+
+	@Override
+	public void setPdfOpenAccessDownloadLink(
+		java.lang.String pdfOpenAccessDownloadLink) {
+		_video.setPdfOpenAccessDownloadLink(pdfOpenAccessDownloadLink);
+	}
+
+	@Override
+	public java.lang.String getMp3OpenAccessDownloadLink() {
+		return _video.getMp3OpenAccessDownloadLink();
+	}
+
+	@Override
+	public void setMp3OpenAccessDownloadLink(
+		java.lang.String mp3OpenAccessDownloadLink) {
+		_video.setMp3OpenAccessDownloadLink(mp3OpenAccessDownloadLink);
+	}
+
+	@Override
+	public java.lang.String getM4vOpenAccessDownloadLink() {
+		return _video.getM4vOpenAccessDownloadLink();
+	}
+
+	@Override
+	public void setM4vOpenAccessDownloadLink(
+		java.lang.String m4vOpenAccessDownloadLink) {
+		_video.setM4vOpenAccessDownloadLink(m4vOpenAccessDownloadLink);
+	}
+
+	@Override
+	public java.lang.String getM4aOpenAccessDownloadLink() {
+		return _video.getM4aOpenAccessDownloadLink();
+	}
+
+	@Override
+	public void setM4aOpenAccessDownloadLink(
+		java.lang.String m4aOpenAccessDownloadLink) {
+		_video.setM4aOpenAccessDownloadLink(m4aOpenAccessDownloadLink);
+	}
+
+	@Override
+	public java.lang.String getFlvOpenAccessDownloadLink() {
+		return _video.getFlvOpenAccessDownloadLink();
+	}
+
+	@Override
+	public void setFlvOpenAccessDownloadLink(
+		java.lang.String flvOpenAccessDownloadLink) {
+		_video.setFlvOpenAccessDownloadLink(flvOpenAccessDownloadLink);
+	}
+
+	@Override
+	public java.lang.String getOggOpenAccessDownloadLink() {
+		return _video.getOggOpenAccessDownloadLink();
+	}
+
+	@Override
+	public void setOggOpenAccessDownloadLink(
+		java.lang.String oggOpenAccessDownloadLink) {
+		_video.setOggOpenAccessDownloadLink(oggOpenAccessDownloadLink);
+	}
+
+	@Override
+	public java.lang.String getWebmOpenAccessDownloadLink() {
+		return _video.getWebmOpenAccessDownloadLink();
+	}
+
+	@Override
+	public void setWebmOpenAccessDownloadLink(
+		java.lang.String webmOpenAccessDownloadLink) {
+		_video.setWebmOpenAccessDownloadLink(webmOpenAccessDownloadLink);
 	}
 
 	@Override

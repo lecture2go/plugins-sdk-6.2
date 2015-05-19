@@ -31,6 +31,34 @@ public interface Video extends VideoModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link de.uhh.l2g.plugins.model.impl.VideoImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public java.lang.String getMp4RssLink();
+
+	public void setMp4RssLink(java.lang.String mp4RssLink);
+
+	public java.lang.String getMp3RssLink();
+
+	public void setMp3RssLink(java.lang.String mp3RssLink);
+
+	public java.lang.String getM4vRssLink();
+
+	public void setM4vRssLink(java.lang.String m4vRssLink);
+
+	public java.lang.String getM4aRssLink();
+
+	public void setM4aRssLink(java.lang.String m4aRssLink);
+
+	public java.lang.String getOggRssLink();
+
+	public void setOggRssLink(java.lang.String oggRssLink);
+
+	public java.lang.String getFlvRssLink();
+
+	public void setFlvRssLink(java.lang.String flvRssLink);
+
+	public java.lang.String getWebmRssLink();
+
+	public void setWebmRssLink(java.lang.String webmRssLink);
+
 	public boolean isHasChapters();
 
 	public void setHasChapters(boolean hasChapters);
@@ -78,6 +106,46 @@ public interface Video extends VideoModel, PersistedModel {
 	public java.io.File getM4aFile();
 
 	public void setM4aFile(java.io.File m4aFile);
+
+	public java.lang.String getMp4OpenAccessDownloadLink();
+
+	public void setMp4OpenAccessDownloadLink(
+		java.lang.String mp4OpenAccessDownloadLink);
+
+	public java.lang.String getPdfOpenAccessDownloadLink();
+
+	public void setPdfOpenAccessDownloadLink(
+		java.lang.String pdfOpenAccessDownloadLink);
+
+	public java.lang.String getMp3OpenAccessDownloadLink();
+
+	public void setMp3OpenAccessDownloadLink(
+		java.lang.String mp3OpenAccessDownloadLink);
+
+	public java.lang.String getM4vOpenAccessDownloadLink();
+
+	public void setM4vOpenAccessDownloadLink(
+		java.lang.String m4vOpenAccessDownloadLink);
+
+	public java.lang.String getM4aOpenAccessDownloadLink();
+
+	public void setM4aOpenAccessDownloadLink(
+		java.lang.String m4aOpenAccessDownloadLink);
+
+	public java.lang.String getFlvOpenAccessDownloadLink();
+
+	public void setFlvOpenAccessDownloadLink(
+		java.lang.String flvOpenAccessDownloadLink);
+
+	public java.lang.String getOggOpenAccessDownloadLink();
+
+	public void setOggOpenAccessDownloadLink(
+		java.lang.String oggOpenAccessDownloadLink);
+
+	public java.lang.String getWebmOpenAccessDownloadLink();
+
+	public void setWebmOpenAccessDownloadLink(
+		java.lang.String webmOpenAccessDownloadLink);
 
 	public java.io.File getFlvFile();
 

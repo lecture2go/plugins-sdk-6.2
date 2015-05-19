@@ -310,6 +310,43 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		}
 		objectVideo.setCreators(cS);
 		
+		//get download Links 
+		String downMp3Link = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+objectVideo.getPreffix()+".mp3";
+		String downMp4Link = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+objectVideo.getPreffix()+".mp4";
+		String downM4vLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+objectVideo.getPreffix()+".m4v";
+		String downM4aLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+objectVideo.getPreffix()+".m4a";
+		String downWebmLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+objectVideo.getPreffix()+".webm";
+		String downPdfLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+objectVideo.getPreffix()+".pdf";
+		String downOggLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+objectVideo.getPreffix()+".ogg";
+		String downFlvLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+objectVideo.getPreffix()+".flv";
+		//
+		objectVideo.setMp4OpenAccessDownloadLink(downMp4Link);
+		objectVideo.setMp3OpenAccessDownloadLink(downMp3Link);
+		objectVideo.setM4vOpenAccessDownloadLink(downM4vLink);
+		objectVideo.setM4aOpenAccessDownloadLink(downM4aLink);
+		objectVideo.setWebmOpenAccessDownloadLink(downWebmLink);
+		objectVideo.setPdfOpenAccessDownloadLink(downPdfLink);
+		objectVideo.setOggOpenAccessDownloadLink(downOggLink);
+		objectVideo.setFlvOpenAccessDownloadLink(downFlvLink);
+		//rss links
+		if(objectVideo.getLectureseriesId()>0){
+			String rssMp3Link = PropsUtil.get("lecture2go.downloadserver.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".mp3.xml";
+			String rssMp4Link = PropsUtil.get("lecture2go.downloadserver.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".mp4.xml";
+			String rssM4vLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".m4v.xml";
+			String rssM4aLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".m4a.xml";
+			String rssWebmLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".webm.xml";
+			String rssOggLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".ogg.xml";
+			String rssFlvLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".flv.xml";		
+			//
+			objectVideo.setMp3RssLink(rssMp3Link);
+			objectVideo.setMp4RssLink(rssMp4Link);
+			objectVideo.setM4vRssLink(rssM4vLink);
+			objectVideo.setM4aRssLink(rssM4aLink);
+			objectVideo.setWebmRssLink(rssWebmLink);
+			objectVideo.setOggRssLink(rssOggLink);
+			objectVideo.setFlvRssLink(rssFlvLink);
+		}
+		
 		return objectVideo;
 	}
 	

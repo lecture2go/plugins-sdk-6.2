@@ -65,15 +65,19 @@
     </div>
     <div id="meta">
 		<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-		    <li><a href="#download" data-toggle="tab">Download</a></li>
+		    <c:if test="${video.downloadLink==1}">
+			    <li><a href="#download" data-toggle="tab">Download</a></li>
+		    </c:if>
 		    <li><a href="#share" data-toggle="tab">Share</a></li>
 		    <li><a href="#support" data-toggle="tab">Support</a></li>
 		</ul>
 		    
 		<div id="my-tab-content" class="tab-content">
-		    <div class="tab-pane" id="download">
-		        <p><%@ include file="/guest/includeDownload.jsp" %></p>
-		    </div>
+			<c:if test="${video.downloadLink==1}">
+				<div class="tab-pane" id="download">
+			        <p><%@ include file="/guest/includeDownload.jsp" %></p>
+			    </div>
+			</c:if>
 		    <div class="tab-pane" id="share">
 		        <p><%@ include file="/guest/includeShare.jsp" %></p>
 		    </div>
@@ -84,10 +88,10 @@
 	</div>
 </div>
 
-<c:if test="${relatedVideos.size()>1}">
+<c:if test="${relatedVideos.size()>0}">
 	<div id="additional" class="col-md-5">
-	    <h4 style="margin-top:0px; float:left;">Veranstaltungsreihe</h4>
-		<a href="#"><img src="/lecture2go-portlet/img/rss.gif" style="margin-left:10px; margin-top:-4px;" /></a>
+	    <h4 style="margin-top:0px; float:left;">Veranstaltungsreihe</h4> &nbsp;
+		<a target="_blank" class="icon-large icon-rss" href="${video.mp4RssLink}"></a>
 		<br/><br/>
 		 <div class="list-group" style="margin: 5px;">
 			<c:forEach items="${relatedVideos}" var="vid">
