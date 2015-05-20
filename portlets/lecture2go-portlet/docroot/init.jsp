@@ -25,6 +25,7 @@
 <%@ page import="java.util.Date"%>
 <%@ page import="java.lang.String"%>
 <%@ page import="java.text.SimpleDateFormat"%>
+<%@ page import="java.io.PrintWriter"%>
 
 <%@ page import="javax.portlet.PortletURL"%>
 <%@ page import="javax.portlet.PortletException"%>
@@ -61,6 +62,7 @@
 <%@ page import="org.springframework.scripting.config.LangNamespaceUtils"%>
 <%@ page import="org.springframework.web.bind.ServletRequestUtils"%>
 <%@ page import="org.springframework.web.portlet.bind.PortletRequestUtils"%>
+<%@ page import="org.json.JSONObject"%>
 
 <%@ page import="de.uhh.l2g.plugins.model.Video_Lectureseries"%>
 <%@ page import="de.uhh.l2g.plugins.admin.AdminUserManagement"%>
@@ -101,9 +103,8 @@
 <%@ page import="de.uhh.l2g.plugins.service.TermLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.service.CategoryLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.service.CreatorLocalServiceUtil"%>
-
 <%@ page import="de.uhh.l2g.plugins.util.Lecture2GoRoleChecker"%>
-<%@ page import="java.io.PrintWriter"%>
+<%@ page import="de.uhh.l2g.webservices.*"%>
 
 <portlet:defineObjects />
 <liferay-theme:defineObjects/>
