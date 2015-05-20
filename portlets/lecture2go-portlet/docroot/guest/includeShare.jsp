@@ -1,5 +1,4 @@
 <div id="metadata">
-
 	<!-- Facebook Twitter Google+ -->
 	<div class="sharetile">
 		<p class="tileheading">social-media</p>
@@ -15,6 +14,8 @@
 			}
 		});
 	</script>
+	
+	<br/>
 	
 	<form name="embedForm" id="embedForm">
 		<!-- citation2go allowed -->
@@ -47,21 +48,19 @@
 					<ul>
 						<li>
 							<label class="citation-label">url </label>
-							<input id="embed_code3" name="embed_code3" title="url-address-title" type="text" value="#"
-								onclick="document.embedForm.embed_code3.focus();document.embedForm.embed_code3.select();" readonly />
+							<input id="embed_code3" name="embed_code3" title="url-address-title" type="text" value="${video.url}" onclick="document.embedForm.embed_code3.focus();document.embedForm.embed_code3.select();" readonly />
 						</li>
 						<li>
 							<label class="citation-label">embed </label>
-							<input id="embed_code" name="embed_code" title="embed-title" type="text"
-								value="&lt;iframe src='/lecture2go-theme/js/strobe/embed.html?src=${video.streamUrl}&poster=${video.image}' class='strobemediaplayback-video-player' type='text/html' width='500' height='250'&gt; &lt;/iframe&gt;"
-								onclick="document.embedForm.embed_code.focus();document.embedForm.embed_code.select();" readonly />
+							<input id="embed_code" name="embed_code" title="embed-title" type="text" value="#" readonly />
 						</li>
 					</ul>
 				</div>
 			</div>
 	</form>
 
-	<div class="clear"></div>
+	<br/>
+	
 	<p class="smallitalic">embed-conditions</p>
 	<%@ include file="/guest/includeQR.jsp" %>
 </div>

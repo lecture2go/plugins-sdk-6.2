@@ -981,4 +981,22 @@
 	body.yui3-skin-sam .yui3-widget-mask {
 		@include opacity(0.8);
 	}
+	
+	/* ---------- Support form start ---------- */
+	#institution.appmon_support_form_row {
+	    display: none;
+	}
+	#system.appmon_support_form_row {
+	    display: none;
+	}
+	#role.appmon_support_form_row {
+	    display: none;
+	}
+	#gender.appmon_support_form_row {
+	    display: none;
+	}
+	#subject.appmon_support_form_row {
+	    display: none;
+	}
+	
 }

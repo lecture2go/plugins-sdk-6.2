@@ -45,5 +45,7 @@
 		<header-portlet-javascript>/js/jquery.tmpl.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/jquery-ui-1.10.3.custom.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/bootstrap.min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/jquery.socialshareprivacy.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/qrc.js</header-portlet-javascript>
 	</portlet>
 </liferay-portlet-app>
