@@ -43,8 +43,8 @@
         // Hier wird der JW-Player initialisiert
         // Interessant ist hierbei, dass es mehrere Quellen geben kann
         jwplayer('player1').setup({
-            width: "647",
-            height: "372",
+            width: "100%",
+            aspectratio: "16:9",
             sources: [
             	{ file: mobileStreamUrl },
             	{ file: desctopStreamUrl },
