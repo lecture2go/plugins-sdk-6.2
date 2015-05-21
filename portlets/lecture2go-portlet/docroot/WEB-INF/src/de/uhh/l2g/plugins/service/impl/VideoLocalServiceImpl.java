@@ -285,7 +285,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			url = objectHost.getProtocol() + "://" + objectHost.getStreamer() + "/vod/_definst_/mp3:" + objectVideo.getRootInstitutionId() + "l2g" + objectProducer.getHomeDir() + "/" + filename;
 		else
 			url = objectHost.getProtocol() + "://" + objectHost.getStreamer() + "/vod/_definst_/mp4:" + objectVideo.getRootInstitutionId() + "l2g" + objectProducer.getHomeDir() + "/" + filename;
-		streamUrl = url + "/manifest.f4m"; // normal
+		streamUrl = url; // normal
 		streamIosUrl = url + "/playlist.m3u8"; // iOS
 		streamAndroidUrl = url + "/playlist.m3u8"; // android
 

@@ -25,16 +25,13 @@
 					<div id="c2g">
 						<ul>
 							<li>
-								<label class="citation-label">citation-start</label>
-								<input type="text" id="clipStartTime" onclick="updateL2GoTimeForStart();" title="citation2go-set-start-point" name="citation2go-set-start-point" value="click" size="5" maxlength="7" readonly/>
+								<aui:input name="segmentBegin" label="citation-start" required="false" id="timeStart" readonly="true"/>
 							</li>
 							<li>
-								<label class="citation-label">citation-end</label>
-								<input type="text" id="clipEndTime" onclick="updateL2GoTimeForEnd();" title="citation2go-set-end-point" name="citation2go-set-end-point" value="click" size="5" maxlength="7" readonly/>
+								<aui:input name="segmentEnd" label="citation-end" required="false" id="timeEnd" readonly="true"/>
 							</li>
 							<li>
-								<label class="citation-label">url</label>
-								<input type="text" id="zitat" name="embed_code5" title="citation2go-title" value="" onclick="document.embedForm.embed_code5.focus();document.embedForm.embed_code5.select();" readonly />
+								<aui:input name="citation" label="citation" required="false" id="citation" readonly="true" onclick="document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_citation.focus(); document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_citation.select();"/>
 							</li>
 						</ul>
 					</div>
