@@ -239,6 +239,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			File fvlFile = new File(homedirPath + ".flv");
 			File oggFile = new File(homedirPath + ".ogg");
 			File webmFile = new File(homedirPath + ".webm");
+			String vttFile = new String(PropsUtil.get("lecture2go.chapters.web.root") +"/"+objectVideo.getVideoId()+".vtt");
 			//
 			objectVideo.setMp4File(mp4File);
 			objectVideo.setMp3File(mp3File);
@@ -248,6 +249,8 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			objectVideo.setFlvFile(fvlFile);
 			objectVideo.setOggFile(oggFile);
 			objectVideo.setWebmFile(webmFile);
+			objectVideo.setVttFile(vttFile); 
+			//test
 		} catch (Exception e) {
 			//
 		}

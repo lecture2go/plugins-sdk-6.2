@@ -32,6 +32,16 @@ public class VideoImpl extends VideoBaseImpl {
 	 * Never reference this class directly. All methods that expect a video model instance should use the {@link de.uhh.l2g.plugins.model.Video} interface instead.
 	 */
 	
+	private String vttFile;
+	
+	public String getVttFile() {
+		return vttFile;
+	}
+
+	public void setVttFile(String vttFile) {
+		this.vttFile = vttFile;
+	}
+
 	private String mp4RssLink;
 	private String mp3RssLink;
 	private String m4vRssLink;

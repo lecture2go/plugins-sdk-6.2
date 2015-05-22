@@ -1826,6 +1826,25 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 	}
 
 	@Override
+	public java.lang.String getVttFile() {
+		try {
+			String methodName = "getVttFile";
+
+			Class<?>[] parameterTypes = new Class<?>[] {  };
+
+			Object[] parameterValues = new Object[] {  };
+
+			java.lang.String returnObj = (java.lang.String)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
 	public java.lang.String getSecureUrl() {
 		try {
 			String methodName = "getSecureUrl";
@@ -2101,6 +2120,22 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 	}
 
 	@Override
+	public void setVttFile(java.lang.String vttFile) {
+		try {
+			String methodName = "setVttFile";
+
+			Class<?>[] parameterTypes = new Class<?>[] { java.lang.String.class };
+
+			Object[] parameterValues = new Object[] { vttFile };
+
+			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
 	public void setFlvFile(java.io.File flvFile) {
 		try {
 			String methodName = "setFlvFile";
@@ -2152,6 +2187,23 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 	}
 
 	@Override
+	public void setM4aOpenAccessDownloadLink(
+		java.lang.String m4aOpenAccessDownloadLink) {
+		try {
+			String methodName = "setM4aOpenAccessDownloadLink";
+
+			Class<?>[] parameterTypes = new Class<?>[] { java.lang.String.class };
+
+			Object[] parameterValues = new Object[] { m4aOpenAccessDownloadLink };
+
+			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
 	public java.lang.String getMp4RssLink() {
 		try {
 			String methodName = "getMp4RssLink";
@@ -2164,23 +2216,6 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 					parameterTypes, parameterValues);
 
 			return returnObj;
-		}
-		catch (Exception e) {
-			throw new UnsupportedOperationException(e);
-		}
-	}
-
-	@Override
-	public void setM4aOpenAccessDownloadLink(
-		java.lang.String m4aOpenAccessDownloadLink) {
-		try {
-			String methodName = "setM4aOpenAccessDownloadLink";
-
-			Class<?>[] parameterTypes = new Class<?>[] { java.lang.String.class };
-
-			Object[] parameterValues = new Object[] { m4aOpenAccessDownloadLink };
-
-			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
 		}
 		catch (Exception e) {
 			throw new UnsupportedOperationException(e);

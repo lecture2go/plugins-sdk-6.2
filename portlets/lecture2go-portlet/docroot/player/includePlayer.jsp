@@ -39,6 +39,7 @@
         var desctopStreamUrl ="${video.streamUrl}";
 		var mobileStreamUrl ="${video.streamAndroidUrl}";
 		var mp4OpenAccessDownloadLink ="${video.mp4OpenAccessDownloadLink}";
+		var vttFile ="${video.vttFile}";
 		
         // Hier wird der JW-Player initialisiert
         // Interessant ist hierbei, dass es mehrere Quellen geben kann
@@ -50,6 +51,10 @@
             	{ file: desctopStreamUrl },
 				{ file: mp4OpenAccessDownloadLink }
             ],
+            tracks: [{
+                file: vttFile,
+                kind:'chapters'
+            }],
             primary: "flash",
             androidhls: true,
 

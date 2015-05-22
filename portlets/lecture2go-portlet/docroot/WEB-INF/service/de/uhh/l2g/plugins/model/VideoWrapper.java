@@ -803,6 +803,16 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 	}
 
 	@Override
+	public java.lang.String getVttFile() {
+		return _video.getVttFile();
+	}
+
+	@Override
+	public void setVttFile(java.lang.String vttFile) {
+		_video.setVttFile(vttFile);
+	}
+
+	@Override
 	public java.lang.String getMp4RssLink() {
 		return _video.getMp4RssLink();
 	}
