@@ -45,14 +45,11 @@ body.portlet {
   cursor: pointer; }
 
 .portlet-title-text {
-  display: inline-block;
-  white-space: nowrap;
-  overflow: hidden;
-  -ms-text-overflow: ellipsis;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
-  max-width: 95%;
-  vertical-align: top; }
+  border-radius: 2px 2px 0 0;
+  color: #000;
+  font-size: 13px;
+  margin: 0;
+  padding: 7px 13px 6px; }
 
 .panel-page-content .portlet-title-text, .panel-page-body .portlet-title-text {
   cursor: auto; }

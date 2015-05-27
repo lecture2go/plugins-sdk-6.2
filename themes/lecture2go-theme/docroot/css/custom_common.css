@@ -8,16 +8,19 @@
 
 .aui {
 	body {
-		color: #555;
 		font-weight: 200;
+		background-color: #faf9f9;
+    	color: #4e4e4e;
+    	font-family: TheSansUHH,sans-serif;
+    	
 	}
 
 	a {
-		color: #009AE5;
+		color: #4e4e4e;
 		font-weight: 200;
 
 		&:hover {
-			color: #009AE5;
+			color: #c40017;
 		}
 
 		[class^="icon-"], [class*=" icon-"] {
@@ -27,6 +30,9 @@
 
 	.alert, .portlet-msg-alert, .portlet-msg-error, .portlet-msg-help, .portlet-msg-info, .portlet-msg-progress, .portlet-msg-success {
 		word-wrap: break-word;
+		color: #c40017;
+		background-color: #f5f5f5;
+		border: 1px solid #ddd;
 	}
 
 	.table {
@@ -157,7 +163,7 @@
 
 	.navbar .nav > li > a {
 		&:focus, &:hover {
-			color: #009AE5;
+			color: #c40017;
 		}
 	}
 
@@ -331,8 +337,8 @@
 						font-weight: 300;
 
 						&:focus, &:hover {
-							background: #2FA4F5;
-							@include filter-gradient(#2FA4F5, #2FA4F5, vertical);
+							background: #e9e9e9;
+							@include filter-gradient(#e9e9e9, #e9e9e9, vertical);
 						}
 
 						[class^="icon-"], [class*=" icon-"] {
@@ -425,7 +431,7 @@
 		}
 
 		.navbar-inner {
-			min-height: 47px;
+			min-height: 33px;
 		}
 	}
 
@@ -850,7 +856,7 @@
 
 	@each $prefix in $prefixes {
 		::#{$prefix}selection {
-			background: #2AAAE6 !important;
+			background: #2AAAE6;
 			color: #FFF;
 
 			@include text-shadow(-1px -1px rgba(0, 0, 0, 0.3));
@@ -975,4 +981,22 @@
 	body.yui3-skin-sam .yui3-widget-mask {
 		@include opacity(0.8);
 	}
+	
+	/* ---------- Support form start ---------- */
+	#institution.appmon_support_form_row {
+	    display: none;
+	}
+	#system.appmon_support_form_row {
+	    display: none;
+	}
+	#role.appmon_support_form_row {
+	    display: none;
+	}
+	#gender.appmon_support_form_row {
+	    display: none;
+	}
+	#subject.appmon_support_form_row {
+	    display: none;
+	}
+	
 }
