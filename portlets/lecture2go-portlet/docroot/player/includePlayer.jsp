@@ -39,7 +39,7 @@
         var desctopStreamUrl ="${video.streamUrl}";
 		var mobileStreamUrl ="${video.streamAndroidUrl}";
 		var mp4OpenAccessDownloadLink ="${video.mp4OpenAccessDownloadLink}";
-		var vttFile ="${video.vttFile}";
+		var vttFile ="${video.vttChapterFile}";
 		
         // Hier wird der JW-Player initialisiert
         // Interessant ist hierbei, dass es mehrere Quellen geben kann
@@ -84,7 +84,7 @@
                 }
             ];
             
-         	// Inputfelder für Start und Ende der Zitate / Kapitel speichern 
+         	// Inputfelder fuer Start und Ende der Zitate / Kapitel speichern 
             var $inputTimeStart = $("#<portlet:namespace></portlet:namespace>timeStart").val("");
             var $inputTimeEnd = $("#<portlet:namespace></portlet:namespace>timeEnd").val("");
             var $citation = $("#<portlet:namespace></portlet:namespace>citation").val("");

@@ -31,9 +31,13 @@ public interface Video extends VideoModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link de.uhh.l2g.plugins.model.impl.VideoImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public java.lang.String getVttFile();
+	public java.lang.String getVttChapterFile();
 
-	public void setVttFile(java.lang.String vttFile);
+	public void setVttChapterFile(java.lang.String vttChapterFile);
+
+	public java.lang.String getVttThumbsFilde();
+
+	public void setVttThumbsFilde(java.lang.String vttThumbsFilde);
 
 	public java.lang.String getMp4RssLink();
 
