@@ -49,12 +49,13 @@ public class HostWrapper implements Host, ModelWrapper<Host> {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("hostId", getHostId());
+		attributes.put("serverTemplateId", getServerTemplateId());
 		attributes.put("protocol", getProtocol());
 		attributes.put("streamer", getStreamer());
 		attributes.put("port", getPort());
 		attributes.put("serverRoot", getServerRoot());
 		attributes.put("name", getName());
-		attributes.put("serverTemplate", getServerTemplate());
+		attributes.put("groupId", getGroupId());
 
 		return attributes;
 	}
@@ -65,6 +66,12 @@ public class HostWrapper implements Host, ModelWrapper<Host> {
 
 		if (hostId != null) {
 			setHostId(hostId);
+		}
+
+		Long serverTemplateId = (Long)attributes.get("serverTemplateId");
+
+		if (serverTemplateId != null) {
+			setServerTemplateId(serverTemplateId);
 		}
 
 		String protocol = (String)attributes.get("protocol");
@@ -97,10 +104,10 @@ public class HostWrapper implements Host, ModelWrapper<Host> {
 			setName(name);
 		}
 
-		String serverTemplate = (String)attributes.get("serverTemplate");
+		Long groupId = (Long)attributes.get("groupId");
 
-		if (serverTemplate != null) {
-			setServerTemplate(serverTemplate);
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 	}
 
@@ -142,6 +149,26 @@ public class HostWrapper implements Host, ModelWrapper<Host> {
 	@Override
 	public void setHostId(long hostId) {
 		_host.setHostId(hostId);
+	}
+
+	/**
+	* Returns the server template ID of this host.
+	*
+	* @return the server template ID of this host
+	*/
+	@Override
+	public long getServerTemplateId() {
+		return _host.getServerTemplateId();
+	}
+
+	/**
+	* Sets the server template ID of this host.
+	*
+	* @param serverTemplateId the server template ID of this host
+	*/
+	@Override
+	public void setServerTemplateId(long serverTemplateId) {
+		_host.setServerTemplateId(serverTemplateId);
 	}
 
 	/**
@@ -245,23 +272,23 @@ public class HostWrapper implements Host, ModelWrapper<Host> {
 	}
 
 	/**
-	* Returns the server template of this host.
+	* Returns the group ID of this host.
 	*
-	* @return the server template of this host
+	* @return the group ID of this host
 	*/
 	@Override
-	public java.lang.String getServerTemplate() {
-		return _host.getServerTemplate();
+	public long getGroupId() {
+		return _host.getGroupId();
 	}
 
 	/**
-	* Sets the server template of this host.
+	* Sets the group ID of this host.
 	*
-	* @param serverTemplate the server template of this host
+	* @param groupId the group ID of this host
 	*/
 	@Override
-	public void setServerTemplate(java.lang.String serverTemplate) {
-		_host.setServerTemplate(serverTemplate);
+	public void setGroupId(long groupId) {
+		_host.setGroupId(groupId);
 	}
 
 	@Override

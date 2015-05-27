@@ -111,60 +111,157 @@ public class Institution_HostUtil {
 	}
 
 	/**
-	* Returns the institution_ host where institutionId = &#63; or throws a {@link de.uhh.l2g.plugins.NoSuchInstitution_HostException} if it could not be found.
+	* Returns all the institution_ hosts where institutionId = &#63;.
 	*
 	* @param institutionId the institution ID
-	* @return the matching institution_ host
-	* @throws de.uhh.l2g.plugins.NoSuchInstitution_HostException if a matching institution_ host could not be found
+	* @return the matching institution_ hosts
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Institution_Host findByinstitutionId(
+	public static java.util.List<de.uhh.l2g.plugins.model.Institution_Host> findByinstitutionId(
 		long institutionId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			de.uhh.l2g.plugins.NoSuchInstitution_HostException {
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().findByinstitutionId(institutionId);
 	}
 
 	/**
-	* Returns the institution_ host where institutionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns a range of all the institution_ hosts where institutionId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.Institution_HostModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
 	*
 	* @param institutionId the institution ID
-	* @return the matching institution_ host, or <code>null</code> if a matching institution_ host could not be found
+	* @param start the lower bound of the range of institution_ hosts
+	* @param end the upper bound of the range of institution_ hosts (not inclusive)
+	* @return the range of matching institution_ hosts
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Institution_Host fetchByinstitutionId(
-		long institutionId)
+	public static java.util.List<de.uhh.l2g.plugins.model.Institution_Host> findByinstitutionId(
+		long institutionId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByinstitutionId(institutionId);
+		return getPersistence().findByinstitutionId(institutionId, start, end);
 	}
 
 	/**
-	* Returns the institution_ host where institutionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns an ordered range of all the institution_ hosts where institutionId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.Institution_HostModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
 	*
 	* @param institutionId the institution ID
-	* @param retrieveFromCache whether to use the finder cache
-	* @return the matching institution_ host, or <code>null</code> if a matching institution_ host could not be found
+	* @param start the lower bound of the range of institution_ hosts
+	* @param end the upper bound of the range of institution_ hosts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching institution_ hosts
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Institution_Host fetchByinstitutionId(
-		long institutionId, boolean retrieveFromCache)
+	public static java.util.List<de.uhh.l2g.plugins.model.Institution_Host> findByinstitutionId(
+		long institutionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .fetchByinstitutionId(institutionId, retrieveFromCache);
+				   .findByinstitutionId(institutionId, start, end,
+			orderByComparator);
 	}
 
 	/**
-	* Removes the institution_ host where institutionId = &#63; from the database.
+	* Returns the first institution_ host in the ordered set where institutionId = &#63;.
 	*
 	* @param institutionId the institution ID
-	* @return the institution_ host that was removed
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching institution_ host
+	* @throws de.uhh.l2g.plugins.NoSuchInstitution_HostException if a matching institution_ host could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Institution_Host removeByinstitutionId(
-		long institutionId)
+	public static de.uhh.l2g.plugins.model.Institution_Host findByinstitutionId_First(
+		long institutionId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchInstitution_HostException {
-		return getPersistence().removeByinstitutionId(institutionId);
+		return getPersistence()
+				   .findByinstitutionId_First(institutionId, orderByComparator);
+	}
+
+	/**
+	* Returns the first institution_ host in the ordered set where institutionId = &#63;.
+	*
+	* @param institutionId the institution ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching institution_ host, or <code>null</code> if a matching institution_ host could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Institution_Host fetchByinstitutionId_First(
+		long institutionId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByinstitutionId_First(institutionId, orderByComparator);
+	}
+
+	/**
+	* Returns the last institution_ host in the ordered set where institutionId = &#63;.
+	*
+	* @param institutionId the institution ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching institution_ host
+	* @throws de.uhh.l2g.plugins.NoSuchInstitution_HostException if a matching institution_ host could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Institution_Host findByinstitutionId_Last(
+		long institutionId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchInstitution_HostException {
+		return getPersistence()
+				   .findByinstitutionId_Last(institutionId, orderByComparator);
+	}
+
+	/**
+	* Returns the last institution_ host in the ordered set where institutionId = &#63;.
+	*
+	* @param institutionId the institution ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching institution_ host, or <code>null</code> if a matching institution_ host could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Institution_Host fetchByinstitutionId_Last(
+		long institutionId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByinstitutionId_Last(institutionId, orderByComparator);
+	}
+
+	/**
+	* Returns the institution_ hosts before and after the current institution_ host in the ordered set where institutionId = &#63;.
+	*
+	* @param institutionHostId the primary key of the current institution_ host
+	* @param institutionId the institution ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next institution_ host
+	* @throws de.uhh.l2g.plugins.NoSuchInstitution_HostException if a institution_ host with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Institution_Host[] findByinstitutionId_PrevAndNext(
+		long institutionHostId, long institutionId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchInstitution_HostException {
+		return getPersistence()
+				   .findByinstitutionId_PrevAndNext(institutionHostId,
+			institutionId, orderByComparator);
+	}
+
+	/**
+	* Removes all the institution_ hosts where institutionId = &#63; from the database.
+	*
+	* @param institutionId the institution ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByinstitutionId(long institutionId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByinstitutionId(institutionId);
 	}
 
 	/**
@@ -180,58 +277,151 @@ public class Institution_HostUtil {
 	}
 
 	/**
-	* Returns the institution_ host where hostId = &#63; or throws a {@link de.uhh.l2g.plugins.NoSuchInstitution_HostException} if it could not be found.
+	* Returns all the institution_ hosts where hostId = &#63;.
 	*
 	* @param hostId the host ID
-	* @return the matching institution_ host
-	* @throws de.uhh.l2g.plugins.NoSuchInstitution_HostException if a matching institution_ host could not be found
+	* @return the matching institution_ hosts
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Institution_Host findByhostId(
-		long hostId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			de.uhh.l2g.plugins.NoSuchInstitution_HostException {
+	public static java.util.List<de.uhh.l2g.plugins.model.Institution_Host> findByhostId(
+		long hostId) throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().findByhostId(hostId);
 	}
 
 	/**
-	* Returns the institution_ host where hostId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns a range of all the institution_ hosts where hostId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.Institution_HostModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
 	*
 	* @param hostId the host ID
-	* @return the matching institution_ host, or <code>null</code> if a matching institution_ host could not be found
+	* @param start the lower bound of the range of institution_ hosts
+	* @param end the upper bound of the range of institution_ hosts (not inclusive)
+	* @return the range of matching institution_ hosts
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Institution_Host fetchByhostId(
-		long hostId) throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByhostId(hostId);
-	}
-
-	/**
-	* Returns the institution_ host where hostId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param hostId the host ID
-	* @param retrieveFromCache whether to use the finder cache
-	* @return the matching institution_ host, or <code>null</code> if a matching institution_ host could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static de.uhh.l2g.plugins.model.Institution_Host fetchByhostId(
-		long hostId, boolean retrieveFromCache)
+	public static java.util.List<de.uhh.l2g.plugins.model.Institution_Host> findByhostId(
+		long hostId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByhostId(hostId, retrieveFromCache);
+		return getPersistence().findByhostId(hostId, start, end);
 	}
 
 	/**
-	* Removes the institution_ host where hostId = &#63; from the database.
+	* Returns an ordered range of all the institution_ hosts where hostId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.Institution_HostModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
 	*
 	* @param hostId the host ID
-	* @return the institution_ host that was removed
+	* @param start the lower bound of the range of institution_ hosts
+	* @param end the upper bound of the range of institution_ hosts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching institution_ hosts
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Institution_Host removeByhostId(
-		long hostId)
+	public static java.util.List<de.uhh.l2g.plugins.model.Institution_Host> findByhostId(
+		long hostId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByhostId(hostId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first institution_ host in the ordered set where hostId = &#63;.
+	*
+	* @param hostId the host ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching institution_ host
+	* @throws de.uhh.l2g.plugins.NoSuchInstitution_HostException if a matching institution_ host could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Institution_Host findByhostId_First(
+		long hostId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchInstitution_HostException {
-		return getPersistence().removeByhostId(hostId);
+		return getPersistence().findByhostId_First(hostId, orderByComparator);
+	}
+
+	/**
+	* Returns the first institution_ host in the ordered set where hostId = &#63;.
+	*
+	* @param hostId the host ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching institution_ host, or <code>null</code> if a matching institution_ host could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Institution_Host fetchByhostId_First(
+		long hostId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByhostId_First(hostId, orderByComparator);
+	}
+
+	/**
+	* Returns the last institution_ host in the ordered set where hostId = &#63;.
+	*
+	* @param hostId the host ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching institution_ host
+	* @throws de.uhh.l2g.plugins.NoSuchInstitution_HostException if a matching institution_ host could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Institution_Host findByhostId_Last(
+		long hostId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchInstitution_HostException {
+		return getPersistence().findByhostId_Last(hostId, orderByComparator);
+	}
+
+	/**
+	* Returns the last institution_ host in the ordered set where hostId = &#63;.
+	*
+	* @param hostId the host ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching institution_ host, or <code>null</code> if a matching institution_ host could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Institution_Host fetchByhostId_Last(
+		long hostId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByhostId_Last(hostId, orderByComparator);
+	}
+
+	/**
+	* Returns the institution_ hosts before and after the current institution_ host in the ordered set where hostId = &#63;.
+	*
+	* @param institutionHostId the primary key of the current institution_ host
+	* @param hostId the host ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next institution_ host
+	* @throws de.uhh.l2g.plugins.NoSuchInstitution_HostException if a institution_ host with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Institution_Host[] findByhostId_PrevAndNext(
+		long institutionHostId, long hostId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchInstitution_HostException {
+		return getPersistence()
+				   .findByhostId_PrevAndNext(institutionHostId, hostId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the institution_ hosts where hostId = &#63; from the database.
+	*
+	* @param hostId the host ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByhostId(long hostId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByhostId(hostId);
 	}
 
 	/**
@@ -244,6 +434,255 @@ public class Institution_HostUtil {
 	public static int countByhostId(long hostId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().countByhostId(hostId);
+	}
+
+	/**
+	* Returns all the institution_ hosts where groupId = &#63; and hostId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param hostId the host ID
+	* @return the matching institution_ hosts
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<de.uhh.l2g.plugins.model.Institution_Host> findByG_H(
+		long groupId, long hostId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByG_H(groupId, hostId);
+	}
+
+	/**
+	* Returns a range of all the institution_ hosts where groupId = &#63; and hostId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.Institution_HostModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param hostId the host ID
+	* @param start the lower bound of the range of institution_ hosts
+	* @param end the upper bound of the range of institution_ hosts (not inclusive)
+	* @return the range of matching institution_ hosts
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<de.uhh.l2g.plugins.model.Institution_Host> findByG_H(
+		long groupId, long hostId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByG_H(groupId, hostId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the institution_ hosts where groupId = &#63; and hostId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.Institution_HostModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param hostId the host ID
+	* @param start the lower bound of the range of institution_ hosts
+	* @param end the upper bound of the range of institution_ hosts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching institution_ hosts
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<de.uhh.l2g.plugins.model.Institution_Host> findByG_H(
+		long groupId, long hostId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByG_H(groupId, hostId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first institution_ host in the ordered set where groupId = &#63; and hostId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param hostId the host ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching institution_ host
+	* @throws de.uhh.l2g.plugins.NoSuchInstitution_HostException if a matching institution_ host could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Institution_Host findByG_H_First(
+		long groupId, long hostId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchInstitution_HostException {
+		return getPersistence()
+				   .findByG_H_First(groupId, hostId, orderByComparator);
+	}
+
+	/**
+	* Returns the first institution_ host in the ordered set where groupId = &#63; and hostId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param hostId the host ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching institution_ host, or <code>null</code> if a matching institution_ host could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Institution_Host fetchByG_H_First(
+		long groupId, long hostId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByG_H_First(groupId, hostId, orderByComparator);
+	}
+
+	/**
+	* Returns the last institution_ host in the ordered set where groupId = &#63; and hostId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param hostId the host ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching institution_ host
+	* @throws de.uhh.l2g.plugins.NoSuchInstitution_HostException if a matching institution_ host could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Institution_Host findByG_H_Last(
+		long groupId, long hostId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchInstitution_HostException {
+		return getPersistence()
+				   .findByG_H_Last(groupId, hostId, orderByComparator);
+	}
+
+	/**
+	* Returns the last institution_ host in the ordered set where groupId = &#63; and hostId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param hostId the host ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching institution_ host, or <code>null</code> if a matching institution_ host could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Institution_Host fetchByG_H_Last(
+		long groupId, long hostId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByG_H_Last(groupId, hostId, orderByComparator);
+	}
+
+	/**
+	* Returns the institution_ hosts before and after the current institution_ host in the ordered set where groupId = &#63; and hostId = &#63;.
+	*
+	* @param institutionHostId the primary key of the current institution_ host
+	* @param groupId the group ID
+	* @param hostId the host ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next institution_ host
+	* @throws de.uhh.l2g.plugins.NoSuchInstitution_HostException if a institution_ host with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Institution_Host[] findByG_H_PrevAndNext(
+		long institutionHostId, long groupId, long hostId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchInstitution_HostException {
+		return getPersistence()
+				   .findByG_H_PrevAndNext(institutionHostId, groupId, hostId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the institution_ hosts where groupId = &#63; and hostId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param hostId the host ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByG_H(long groupId, long hostId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByG_H(groupId, hostId);
+	}
+
+	/**
+	* Returns the number of institution_ hosts where groupId = &#63; and hostId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param hostId the host ID
+	* @return the number of matching institution_ hosts
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByG_H(long groupId, long hostId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByG_H(groupId, hostId);
+	}
+
+	/**
+	* Returns the institution_ host where groupId = &#63; and institutionId = &#63; or throws a {@link de.uhh.l2g.plugins.NoSuchInstitution_HostException} if it could not be found.
+	*
+	* @param groupId the group ID
+	* @param institutionId the institution ID
+	* @return the matching institution_ host
+	* @throws de.uhh.l2g.plugins.NoSuchInstitution_HostException if a matching institution_ host could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Institution_Host findByG_I(
+		long groupId, long institutionId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchInstitution_HostException {
+		return getPersistence().findByG_I(groupId, institutionId);
+	}
+
+	/**
+	* Returns the institution_ host where groupId = &#63; and institutionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param groupId the group ID
+	* @param institutionId the institution ID
+	* @return the matching institution_ host, or <code>null</code> if a matching institution_ host could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Institution_Host fetchByG_I(
+		long groupId, long institutionId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByG_I(groupId, institutionId);
+	}
+
+	/**
+	* Returns the institution_ host where groupId = &#63; and institutionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param groupId the group ID
+	* @param institutionId the institution ID
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching institution_ host, or <code>null</code> if a matching institution_ host could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Institution_Host fetchByG_I(
+		long groupId, long institutionId, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByG_I(groupId, institutionId, retrieveFromCache);
+	}
+
+	/**
+	* Removes the institution_ host where groupId = &#63; and institutionId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param institutionId the institution ID
+	* @return the institution_ host that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.model.Institution_Host removeByG_I(
+		long groupId, long institutionId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchInstitution_HostException {
+		return getPersistence().removeByG_I(groupId, institutionId);
+	}
+
+	/**
+	* Returns the number of institution_ hosts where groupId = &#63; and institutionId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param institutionId the institution ID
+	* @return the number of matching institution_ hosts
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByG_I(long groupId, long institutionId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByG_I(groupId, institutionId);
 	}
 
 	/**

@@ -2,6 +2,8 @@
 
 <resource-action-mapping>
 
+  <resource file="resource-actions/institutions.xml" />
+
   <portlet-resource>
     <portlet-name>lg-admin-user-management</portlet-name>
     <permissions>
@@ -23,6 +25,7 @@
       </guest-unsupported>
     </permissions>
   </portlet-resource>
+  
 
   <model-resource>
     <model-name>
@@ -53,5 +56,8 @@
       </guest-unsupported>
     </permissions>
   </model-resource>
+
+
+
   
 </resource-action-mapping>

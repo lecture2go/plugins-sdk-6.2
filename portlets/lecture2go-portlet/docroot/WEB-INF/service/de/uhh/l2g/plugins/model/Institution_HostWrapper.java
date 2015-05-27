@@ -52,6 +52,7 @@ public class Institution_HostWrapper implements Institution_Host,
 		attributes.put("institutionHostId", getInstitutionHostId());
 		attributes.put("institutionId", getInstitutionId());
 		attributes.put("hostId", getHostId());
+		attributes.put("groupId", getGroupId());
 
 		return attributes;
 	}
@@ -74,6 +75,12 @@ public class Institution_HostWrapper implements Institution_Host,
 
 		if (hostId != null) {
 			setHostId(hostId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 	}
 
@@ -155,6 +162,26 @@ public class Institution_HostWrapper implements Institution_Host,
 	@Override
 	public void setHostId(long hostId) {
 		_institution_Host.setHostId(hostId);
+	}
+
+	/**
+	* Returns the group ID of this institution_ host.
+	*
+	* @return the group ID of this institution_ host
+	*/
+	@Override
+	public long getGroupId() {
+		return _institution_Host.getGroupId();
+	}
+
+	/**
+	* Sets the group ID of this institution_ host.
+	*
+	* @param groupId the group ID of this institution_ host
+	*/
+	@Override
+	public void setGroupId(long groupId) {
+		_institution_Host.setGroupId(groupId);
 	}
 
 	@Override

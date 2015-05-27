@@ -271,7 +271,7 @@ public class HostLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.Host> getByInstitution(
+	public static de.uhh.l2g.plugins.model.Host getByInstitution(
 		long institutionId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getByInstitution(institutionId);
@@ -282,15 +282,32 @@ public class HostLocalServiceUtil {
 		return getService().getByHostId(hostId);
 	}
 
-	public static de.uhh.l2g.plugins.model.Host addHost(long userId,
-		java.lang.String name, java.lang.String streamer,
-		java.lang.String serverTemplate, java.lang.String protocol,
-		java.lang.String serverRoot, int port,
+	public static java.util.List<de.uhh.l2g.plugins.model.Host> getByGroupId(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getByGroupId(groupId);
+	}
+
+	public static java.util.List<de.uhh.l2g.plugins.model.Host> getByTemplateConfiguredAndGroupId(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getByTemplateConfiguredAndGroupId(groupId);
+	}
+
+	public static de.uhh.l2g.plugins.model.Host getByGroupIdAndHostId(
+		long groupId, long hostId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getByGroupIdAndHostId(groupId, hostId);
+	}
+
+	public static de.uhh.l2g.plugins.model.Host addHost(java.lang.String name,
+		java.lang.String streamLocation, long serverTemplateId,
+		java.lang.String protocol, java.lang.String serverRoot, int port,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .addHost(userId, name, streamer, serverTemplate, protocol,
+				   .addHost(name, streamLocation, serverTemplateId, protocol,
 			serverRoot, port, serviceContext);
 	}
 

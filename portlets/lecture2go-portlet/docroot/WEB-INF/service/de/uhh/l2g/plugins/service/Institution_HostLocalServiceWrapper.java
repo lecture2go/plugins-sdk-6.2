@@ -297,10 +297,31 @@ public class Institution_HostLocalServiceWrapper
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Host getByHostId(long hostId)
+	public de.uhh.l2g.plugins.model.Host getByGroupIdAndInstitutionId(
+		long groupId, long institutionId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _institution_HostLocalService.getByHostId(hostId);
+		return _institution_HostLocalService.getByGroupIdAndInstitutionId(groupId,
+			institutionId);
+	}
+
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Institution> getByGroupIdAndHostId(
+		long groupId, long hostId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _institution_HostLocalService.getByGroupIdAndHostId(groupId,
+			hostId);
+	}
+
+	@Override
+	public de.uhh.l2g.plugins.model.Institution_Host addEntry(
+		long institutionId, long hostId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _institution_HostLocalService.addEntry(institutionId, hostId,
+			serviceContext);
 	}
 
 	/**

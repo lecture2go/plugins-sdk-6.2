@@ -64,12 +64,13 @@ public class InstitutionModelImpl extends BaseModelImpl<Institution>
 			{ "typ", Types.VARCHAR },
 			{ "www", Types.VARCHAR },
 			{ "level", Types.INTEGER },
-			{ "sort", Types.INTEGER }
+			{ "sort", Types.INTEGER },
+			{ "groupId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Institution (institutionId LONG not null primary key,parentId LONG,name VARCHAR(75) null,typ VARCHAR(75) null,www VARCHAR(75) null,level INTEGER,sort INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Institution (institutionId LONG not null primary key,parentId LONG,name VARCHAR(75) null,typ VARCHAR(75) null,www VARCHAR(75) null,level INTEGER,sort INTEGER,groupId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Institution";
-	public static final String ORDER_BY_JPQL = " ORDER BY institution.institutionId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY LG_Institution.institutionId ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY institution.sort ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY LG_Institution.sort ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -82,13 +83,14 @@ public class InstitutionModelImpl extends BaseModelImpl<Institution>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.Institution"),
 			true);
-	public static long LEVEL_COLUMN_BITMASK = 1L;
-	public static long NAME_COLUMN_BITMASK = 2L;
-	public static long PARENTID_COLUMN_BITMASK = 4L;
-	public static long SORT_COLUMN_BITMASK = 8L;
-	public static long TYP_COLUMN_BITMASK = 16L;
-	public static long WWW_COLUMN_BITMASK = 32L;
-	public static long INSTITUTIONID_COLUMN_BITMASK = 64L;
+	public static long GROUPID_COLUMN_BITMASK = 1L;
+	public static long INSTITUTIONID_COLUMN_BITMASK = 2L;
+	public static long LEVEL_COLUMN_BITMASK = 4L;
+	public static long NAME_COLUMN_BITMASK = 8L;
+	public static long PARENTID_COLUMN_BITMASK = 16L;
+	public static long SORT_COLUMN_BITMASK = 32L;
+	public static long TYP_COLUMN_BITMASK = 64L;
+	public static long WWW_COLUMN_BITMASK = 128L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Institution"));
 
@@ -136,6 +138,7 @@ public class InstitutionModelImpl extends BaseModelImpl<Institution>
 		attributes.put("www", getWww());
 		attributes.put("level", getLevel());
 		attributes.put("sort", getSort());
+		attributes.put("groupId", getGroupId());
 
 		return attributes;
 	}
@@ -183,6 +186,12 @@ public class InstitutionModelImpl extends BaseModelImpl<Institution>
 		if (sort != null) {
 			setSort(sort);
 		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
+		}
 	}
 
 	@Override
@@ -192,7 +201,19 @@ public class InstitutionModelImpl extends BaseModelImpl<Institution>
 
 	@Override
 	public void setInstitutionId(long institutionId) {
+		_columnBitmask |= INSTITUTIONID_COLUMN_BITMASK;
+
+		if (!_setOriginalInstitutionId) {
+			_setOriginalInstitutionId = true;
+
+			_originalInstitutionId = _institutionId;
+		}
+
 		_institutionId = institutionId;
+	}
+
+	public long getOriginalInstitutionId() {
+		return _originalInstitutionId;
 	}
 
 	@Override
@@ -321,7 +342,7 @@ public class InstitutionModelImpl extends BaseModelImpl<Institution>
 
 	@Override
 	public void setSort(int sort) {
-		_columnBitmask |= SORT_COLUMN_BITMASK;
+		_columnBitmask = -1L;
 
 		if (!_setOriginalSort) {
 			_setOriginalSort = true;
@@ -334,6 +355,28 @@ public class InstitutionModelImpl extends BaseModelImpl<Institution>
 
 	public int getOriginalSort() {
 		return _originalSort;
+	}
+
+	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
+		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	public long getColumnBitmask() {
@@ -374,6 +417,7 @@ public class InstitutionModelImpl extends BaseModelImpl<Institution>
 		institutionImpl.setWww(getWww());
 		institutionImpl.setLevel(getLevel());
 		institutionImpl.setSort(getSort());
+		institutionImpl.setGroupId(getGroupId());
 
 		institutionImpl.resetOriginalValues();
 
@@ -382,17 +426,23 @@ public class InstitutionModelImpl extends BaseModelImpl<Institution>
 
 	@Override
 	public int compareTo(Institution institution) {
-		long primaryKey = institution.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		if (getSort() < institution.getSort()) {
+			value = -1;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
+		else if (getSort() > institution.getSort()) {
+			value = 1;
 		}
 		else {
-			return 0;
+			value = 0;
 		}
+
+		if (value != 0) {
+			return value;
+		}
+
+		return 0;
 	}
 
 	@Override
@@ -426,6 +476,10 @@ public class InstitutionModelImpl extends BaseModelImpl<Institution>
 	public void resetOriginalValues() {
 		InstitutionModelImpl institutionModelImpl = this;
 
+		institutionModelImpl._originalInstitutionId = institutionModelImpl._institutionId;
+
+		institutionModelImpl._setOriginalInstitutionId = false;
+
 		institutionModelImpl._originalParentId = institutionModelImpl._parentId;
 
 		institutionModelImpl._setOriginalParentId = false;
@@ -443,6 +497,10 @@ public class InstitutionModelImpl extends BaseModelImpl<Institution>
 		institutionModelImpl._originalSort = institutionModelImpl._sort;
 
 		institutionModelImpl._setOriginalSort = false;
+
+		institutionModelImpl._originalGroupId = institutionModelImpl._groupId;
+
+		institutionModelImpl._setOriginalGroupId = false;
 
 		institutionModelImpl._columnBitmask = 0;
 	}
@@ -483,12 +541,14 @@ public class InstitutionModelImpl extends BaseModelImpl<Institution>
 
 		institutionCacheModel.sort = getSort();
 
+		institutionCacheModel.groupId = getGroupId();
+
 		return institutionCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{institutionId=");
 		sb.append(getInstitutionId());
@@ -504,6 +564,8 @@ public class InstitutionModelImpl extends BaseModelImpl<Institution>
 		sb.append(getLevel());
 		sb.append(", sort=");
 		sb.append(getSort());
+		sb.append(", groupId=");
+		sb.append(getGroupId());
 		sb.append("}");
 
 		return sb.toString();
@@ -511,7 +573,7 @@ public class InstitutionModelImpl extends BaseModelImpl<Institution>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Institution");
@@ -545,6 +607,10 @@ public class InstitutionModelImpl extends BaseModelImpl<Institution>
 			"<column><column-name>sort</column-name><column-value><![CDATA[");
 		sb.append(getSort());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>groupId</column-name><column-value><![CDATA[");
+		sb.append(getGroupId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -556,6 +622,8 @@ public class InstitutionModelImpl extends BaseModelImpl<Institution>
 			Institution.class
 		};
 	private long _institutionId;
+	private long _originalInstitutionId;
+	private boolean _setOriginalInstitutionId;
 	private long _parentId;
 	private long _originalParentId;
 	private boolean _setOriginalParentId;
@@ -571,6 +639,9 @@ public class InstitutionModelImpl extends BaseModelImpl<Institution>
 	private int _sort;
 	private int _originalSort;
 	private boolean _setOriginalSort;
+	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _columnBitmask;
 	private Institution _escapedModel;
 }

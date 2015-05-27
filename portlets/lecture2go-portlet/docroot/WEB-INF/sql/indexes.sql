@@ -12,14 +12,26 @@ create index IX_B56E8218 on LG_Host (groupId);
 create index IX_35EC15AF on LG_Host (groupId, hostId);
 create index IX_59DDB869 on LG_Host (hostId);
 
+create index IX_78986E50 on LG_Institution (groupId);
+create index IX_2F011093 on LG_Institution (groupId, institutionId);
+create index IX_BB3A2F69 on LG_Institution (groupId, parentId);
+create index IX_4CF38EBB on LG_Institution (groupId, parentId, sort);
 create index IX_49E78C5A on LG_Institution (level);
+create index IX_982D2D90 on LG_Institution (level, groupId);
 create index IX_C5BF45E1 on LG_Institution (level, typ);
+create index IX_63B03BE9 on LG_Institution (level, typ, groupId);
 create index IX_582427D9 on LG_Institution (name);
+create index IX_755E10F1 on LG_Institution (name, groupId);
 create index IX_40A7A033 on LG_Institution (parentId);
 create index IX_61742A2C on LG_Institution (sort);
+create index IX_ACBFFBFE on LG_Institution (sort, groupId);
 create index IX_C968E6A1 on LG_Institution (typ);
+create index IX_8BEF7329 on LG_Institution (typ, groupId);
 create index IX_C9925EAD on LG_Institution (www);
+create index IX_8A5E489D on LG_Institution (www, groupId);
 
+create index IX_4EF42608 on LG_Institution_Host (groupId, hostId);
+create unique index IX_56E67D52 on LG_Institution_Host (groupId, institutionId);
 create index IX_C8262FF0 on LG_Institution_Host (hostId);
 create index IX_9018FE6A on LG_Institution_Host (institutionId);
 
@@ -83,6 +95,9 @@ create index IX_CBD5BF1 on LG_Segment (videoId);
 create index IX_87A17CC1 on LG_Segment_User_Video (segmentId);
 create index IX_165E5A37 on LG_Segment_User_Video (userId);
 create index IX_F1DC7249 on LG_Segment_User_Video (videoId);
+
+create index IX_A0EB34C3 on LG_ServerTemplate (groupId);
+create index IX_7A43E1D3 on LG_ServerTemplate (serverTemplateId);
 
 create index IX_8CFBC36 on LG_Tagcloud (isLectureseries);
 create index IX_A59DF0BC on LG_Tagcloud (isVideo);

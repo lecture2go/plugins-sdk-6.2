@@ -24,12 +24,13 @@
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Host">
 		<field name="hostId" type="long" />
+		<field name="serverTemplateId" type="long" />
 		<field name="protocol" type="String" />
 		<field name="streamer" type="String" />
 		<field name="port" type="int" />
 		<field name="serverRoot" type="String" />
 		<field name="name" type="String" />
-		<field name="serverTemplate" type="String" />
+		<field name="groupId" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Institution">
 		<field name="institutionId" type="long" />
@@ -39,11 +40,13 @@
 		<field name="www" type="String" />
 		<field name="level" type="int" />
 		<field name="sort" type="int" />
+		<field name="groupId" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Institution_Host">
 		<field name="institutionHostId" type="long" />
 		<field name="institutionId" type="long" />
 		<field name="hostId" type="long" />
+		<field name="groupId" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Lastvideolist">
 		<field name="lastvideolistId" type="int" />
@@ -132,6 +135,21 @@
 		<field name="end" type="String" />
 		<field name="chapter" type="int" />
 		<field name="userId" type="long" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.ServerTemplate">
+		<field name="serverTemplateId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="name" type="String" />
+		<field name="type" type="int" />
+		<field name="prefixURL" type="String" />
+		<field name="suffixURL" type="String" />
+		<field name="secExt" type="String" />
+		<field name="templateURL" type="String" />
+		<field name="prefixFile" type="String" />
+		<field name="suffixFile" type="String" />
+		<field name="templateFile" type="String" />
+		<field name="templateIOS" type="long" />
+		<field name="templateAndroid" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Sys">
 		<field name="sysId" type="int" />

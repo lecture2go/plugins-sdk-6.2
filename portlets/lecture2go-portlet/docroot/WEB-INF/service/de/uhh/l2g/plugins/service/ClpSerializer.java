@@ -42,6 +42,7 @@ import de.uhh.l2g.plugins.model.OfficeClp;
 import de.uhh.l2g.plugins.model.ProducerClp;
 import de.uhh.l2g.plugins.model.Producer_LectureseriesClp;
 import de.uhh.l2g.plugins.model.SegmentClp;
+import de.uhh.l2g.plugins.model.ServerTemplateClp;
 import de.uhh.l2g.plugins.model.SysClp;
 import de.uhh.l2g.plugins.model.TagcloudClp;
 import de.uhh.l2g.plugins.model.TermClp;
@@ -195,6 +196,10 @@ public class ClpSerializer {
 
 		if (oldModelClassName.equals(SegmentClp.class.getName())) {
 			return translateInputSegment(oldModel);
+		}
+
+		if (oldModelClassName.equals(ServerTemplateClp.class.getName())) {
+			return translateInputServerTemplate(oldModel);
 		}
 
 		if (oldModelClassName.equals(SysClp.class.getName())) {
@@ -420,6 +425,16 @@ public class ClpSerializer {
 		SegmentClp oldClpModel = (SegmentClp)oldModel;
 
 		BaseModel<?> newModel = oldClpModel.getSegmentRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputServerTemplate(BaseModel<?> oldModel) {
+		ServerTemplateClp oldClpModel = (ServerTemplateClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getServerTemplateRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -1171,6 +1186,43 @@ public class ClpSerializer {
 			}
 		}
 
+		if (oldModelClassName.equals(
+					"de.uhh.l2g.plugins.model.impl.ServerTemplateImpl")) {
+			return translateOutputServerTemplate(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
+
 		if (oldModelClassName.equals("de.uhh.l2g.plugins.model.impl.SysImpl")) {
 			return translateOutputSys(oldModel);
 		}
@@ -1633,6 +1685,23 @@ public class ClpSerializer {
 			return new de.uhh.l2g.plugins.InstitutionNameException();
 		}
 
+		if (className.equals("de.uhh.l2g.plugins.Institution_HostHostException")) {
+			return new de.uhh.l2g.plugins.Institution_HostHostException();
+		}
+
+		if (className.equals(
+					"de.uhh.l2g.plugins.Institution_HostInstitutionException")) {
+			return new de.uhh.l2g.plugins.Institution_HostInstitutionException();
+		}
+
+		if (className.equals("de.uhh.l2g.plugins.ServerTemplateNameException")) {
+			return new de.uhh.l2g.plugins.ServerTemplateNameException();
+		}
+
+		if (className.equals("de.uhh.l2g.plugins.ServerTemplateStringException")) {
+			return new de.uhh.l2g.plugins.ServerTemplateStringException();
+		}
+
 		if (className.equals("de.uhh.l2g.plugins.NoSuchCategoryException")) {
 			return new de.uhh.l2g.plugins.NoSuchCategoryException();
 		}
@@ -1704,6 +1773,10 @@ public class ClpSerializer {
 
 		if (className.equals("de.uhh.l2g.plugins.NoSuchSegmentException")) {
 			return new de.uhh.l2g.plugins.NoSuchSegmentException();
+		}
+
+		if (className.equals("de.uhh.l2g.plugins.NoSuchServerTemplateException")) {
+			return new de.uhh.l2g.plugins.NoSuchServerTemplateException();
 		}
 
 		if (className.equals("de.uhh.l2g.plugins.NoSuchSysException")) {
@@ -1921,6 +1994,16 @@ public class ClpSerializer {
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
 		newModel.setSegmentRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputServerTemplate(BaseModel<?> oldModel) {
+		ServerTemplateClp newModel = new ServerTemplateClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setServerTemplateRemoteModel(oldModel);
 
 		return newModel;
 	}

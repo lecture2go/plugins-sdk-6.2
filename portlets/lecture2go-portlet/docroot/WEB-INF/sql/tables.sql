@@ -24,12 +24,13 @@ create table LG_Creator (
 
 create table LG_Host (
 	hostId LONG not null primary key,
+	serverTemplateId LONG,
 	protocol VARCHAR(75) null,
 	streamer VARCHAR(75) null,
 	port INTEGER,
 	serverRoot VARCHAR(75) null,
 	name VARCHAR(75) null,
-	serverTemplate VARCHAR(75) null
+	groupId LONG
 );
 
 create table LG_Institution (
@@ -39,13 +40,15 @@ create table LG_Institution (
 	typ VARCHAR(75) null,
 	www VARCHAR(75) null,
 	level INTEGER,
-	sort INTEGER
+	sort INTEGER,
+	groupId LONG
 );
 
 create table LG_Institution_Host (
 	institutionHostId LONG not null primary key,
 	institutionId LONG,
-	hostId LONG
+	hostId LONG,
+	groupId LONG
 );
 
 create table LG_Lastvideolist (
@@ -145,6 +148,22 @@ create table LG_Segment (
 	end_ VARCHAR(75) null,
 	chapter INTEGER,
 	userId LONG
+);
+
+create table LG_ServerTemplate (
+	serverTemplateId LONG not null primary key,
+	groupId LONG,
+	name VARCHAR(75) null,
+	type_ INTEGER,
+	prefixURL VARCHAR(75) null,
+	suffixURL VARCHAR(75) null,
+	secExt VARCHAR(75) null,
+	templateURL VARCHAR(75) null,
+	prefixFile VARCHAR(75) null,
+	suffixFile VARCHAR(75) null,
+	templateFile VARCHAR(75) null,
+	templateIOS LONG,
+	templateAndroid LONG
 );
 
 create table LG_Sys (

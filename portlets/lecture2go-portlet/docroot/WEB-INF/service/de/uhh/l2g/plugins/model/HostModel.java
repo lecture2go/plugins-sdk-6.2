@@ -72,6 +72,20 @@ public interface HostModel extends BaseModel<Host> {
 	public void setHostId(long hostId);
 
 	/**
+	 * Returns the server template ID of this host.
+	 *
+	 * @return the server template ID of this host
+	 */
+	public long getServerTemplateId();
+
+	/**
+	 * Sets the server template ID of this host.
+	 *
+	 * @param serverTemplateId the server template ID of this host
+	 */
+	public void setServerTemplateId(long serverTemplateId);
+
+	/**
 	 * Returns the protocol of this host.
 	 *
 	 * @return the protocol of this host
@@ -146,19 +160,18 @@ public interface HostModel extends BaseModel<Host> {
 	public void setName(String name);
 
 	/**
-	 * Returns the server template of this host.
+	 * Returns the group ID of this host.
 	 *
-	 * @return the server template of this host
+	 * @return the group ID of this host
 	 */
-	@AutoEscape
-	public String getServerTemplate();
+	public long getGroupId();
 
 	/**
-	 * Sets the server template of this host.
+	 * Sets the group ID of this host.
 	 *
-	 * @param serverTemplate the server template of this host
+	 * @param groupId the group ID of this host
 	 */
-	public void setServerTemplate(String serverTemplate);
+	public void setGroupId(long groupId);
 
 	@Override
 	public boolean isNew();

@@ -32,6 +32,7 @@ public class Institution_HostSoap implements Serializable {
 		soapModel.setInstitutionHostId(model.getInstitutionHostId());
 		soapModel.setInstitutionId(model.getInstitutionId());
 		soapModel.setHostId(model.getHostId());
+		soapModel.setGroupId(model.getGroupId());
 
 		return soapModel;
 	}
@@ -110,7 +111,16 @@ public class Institution_HostSoap implements Serializable {
 		_hostId = hostId;
 	}
 
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
 	private long _institutionHostId;
 	private long _institutionId;
 	private long _hostId;
+	private long _groupId;
 }

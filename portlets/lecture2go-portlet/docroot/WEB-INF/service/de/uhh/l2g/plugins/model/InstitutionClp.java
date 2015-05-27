@@ -80,6 +80,7 @@ public class InstitutionClp extends BaseModelImpl<Institution>
 		attributes.put("www", getWww());
 		attributes.put("level", getLevel());
 		attributes.put("sort", getSort());
+		attributes.put("groupId", getGroupId());
 
 		return attributes;
 	}
@@ -126,6 +127,12 @@ public class InstitutionClp extends BaseModelImpl<Institution>
 
 		if (sort != null) {
 			setSort(sort);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 	}
 
@@ -291,6 +298,29 @@ public class InstitutionClp extends BaseModelImpl<Institution>
 	}
 
 	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+
+		if (_institutionRemoteModel != null) {
+			try {
+				Class<?> clazz = _institutionRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setGroupId", long.class);
+
+				method.invoke(_institutionRemoteModel, groupId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
 	public java.lang.String getPath() {
 		try {
 			String methodName = "getPath";
@@ -401,23 +431,30 @@ public class InstitutionClp extends BaseModelImpl<Institution>
 		clone.setWww(getWww());
 		clone.setLevel(getLevel());
 		clone.setSort(getSort());
+		clone.setGroupId(getGroupId());
 
 		return clone;
 	}
 
 	@Override
 	public int compareTo(Institution institution) {
-		long primaryKey = institution.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		if (getSort() < institution.getSort()) {
+			value = -1;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
+		else if (getSort() > institution.getSort()) {
+			value = 1;
 		}
 		else {
-			return 0;
+			value = 0;
 		}
+
+		if (value != 0) {
+			return value;
+		}
+
+		return 0;
 	}
 
 	@Override
@@ -453,7 +490,7 @@ public class InstitutionClp extends BaseModelImpl<Institution>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{institutionId=");
 		sb.append(getInstitutionId());
@@ -469,6 +506,8 @@ public class InstitutionClp extends BaseModelImpl<Institution>
 		sb.append(getLevel());
 		sb.append(", sort=");
 		sb.append(getSort());
+		sb.append(", groupId=");
+		sb.append(getGroupId());
 		sb.append("}");
 
 		return sb.toString();
@@ -476,7 +515,7 @@ public class InstitutionClp extends BaseModelImpl<Institution>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Institution");
@@ -510,6 +549,10 @@ public class InstitutionClp extends BaseModelImpl<Institution>
 			"<column><column-name>sort</column-name><column-value><![CDATA[");
 		sb.append(getSort());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>groupId</column-name><column-value><![CDATA[");
+		sb.append(getGroupId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -523,6 +566,7 @@ public class InstitutionClp extends BaseModelImpl<Institution>
 	private String _www;
 	private int _level;
 	private int _sort;
+	private long _groupId;
 	private BaseModel<?> _institutionRemoteModel;
 	private Class<?> _clpSerializerClass = de.uhh.l2g.plugins.service.ClpSerializer.class;
 }
