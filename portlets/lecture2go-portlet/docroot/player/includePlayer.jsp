@@ -36,9 +36,15 @@
         var frameStart = getUrlParameter('start');
         var frameEnd = getUrlParameter('end');
 		
+        var containerFormat = "${video.containerFormat}";
         var desctopStreamUrl ="${video.streamUrl}";
 		var mobileStreamUrl ="${video.streamAndroidUrl}";
-		var mp4OpenAccessDownloadLink ="${video.mp4OpenAccessDownloadLink}";
+		var openAccessDownloadLink ="";
+		if(containerFormat=="mp4"){
+			openAccessDownloadLink = "${video.mp4OpenAccessDownloadLink}";
+		}else{
+			openAccessDownloadLink = "${video.mp3OpenAccessDownloadLink}";
+		}
 		var vttFile ="${video.vttChapterFile}";
 		
         // Hier wird der JW-Player initialisiert
@@ -46,10 +52,11 @@
         jwplayer('player1').setup({
             width: "100%",
             aspectratio: "16:9",
+            image: "${video.image}",
             sources: [
             	{ file: mobileStreamUrl },
             	{ file: desctopStreamUrl },
-				{ file: mp4OpenAccessDownloadLink }
+				{ file: openAccessDownloadLink }
             ],
             tracks: [{
                 file: vttFile,
