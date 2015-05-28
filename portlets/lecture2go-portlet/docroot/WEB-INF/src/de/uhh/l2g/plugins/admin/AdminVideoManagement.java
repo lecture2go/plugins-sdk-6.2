@@ -623,7 +623,7 @@ public class AdminVideoManagement extends MVCPortlet {
 				}
 			}
 			//update chapter file (vtt)
-			updateVttFile(video);
+			updateVttChapterFile(video);
 		}
 
 		if(resourceID.equals("showSegments")){
@@ -686,7 +686,7 @@ public class AdminVideoManagement extends MVCPortlet {
 				e.printStackTrace();
 			}
 			//update chapter file (vtt)
-			updateVttFile(video);
+			updateVttChapterFile(video);
 		}
 
 		if(resourceID.equals("isFirstUpload")){
@@ -972,7 +972,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		}
 	}
 	
-	public void updateVttFile(Video video){
+	public void updateVttChapterFile(Video video){
 		File vttDirectory = new File(PropsUtil.get("lecture2go.chapters.system.path"));
 		String dateiName = vttDirectory + "/" + video.getVideoId()+".vtt";
 		//get all segments
@@ -990,7 +990,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			Segment seg = sLi.next();
 			text +="Chapter "+count+" \n";
 			text +=seg.getStart()+" --> "+seg.getEnd()+" \n";
-			if(seg.getChapter()==1)text +="<img src=\""+seg.getImage()+"\"/><br/>";
+			if(seg.getChapter()==1 && video.getContainerFormat().equals("mp4"))text +="<img src=\""+seg.getImage()+"\"/><br/>";
 			text +=seg.getTitle()+"<br/>"+seg.getDescription()+" \n\n";
 			count++;
 		}
