@@ -481,6 +481,8 @@
 			<transient name="bitrate" />
 			<transient name="creators" />
 			<transient name="date" />
+			<transient name="embedHtml5" />
+			<transient name="embedIframe" />
 			<transient name="flvFile" />
 			<transient name="flvOpenAccessDownloadLink" />
 			<transient name="flvRssLink" />
