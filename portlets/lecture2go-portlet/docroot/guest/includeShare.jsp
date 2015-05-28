@@ -38,7 +38,7 @@
 				</div>
 		</c:if>
 		<!-- citation2go allowed end-->
-
+		<!-- embed start -->
 			<div class="sharetile">
 				<p class="tileheading">links</p>
 				<div id="urls">
@@ -60,6 +60,7 @@
 					</ul>
 				</div>
 			</div>
+		<!-- embed end -->
 	</form>
 
 	<br/>
