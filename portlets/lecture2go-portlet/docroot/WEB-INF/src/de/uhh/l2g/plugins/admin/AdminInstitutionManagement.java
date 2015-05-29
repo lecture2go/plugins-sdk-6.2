@@ -49,6 +49,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 		    List<Institution> institutions = InstitutionLocalServiceUtil.getByGroupId(groupId);
 		    List<Host> host = HostLocalServiceUtil.getByTemplateConfiguredAndGroupId(groupId);
+
 		    List<StreamingServerTemplate> streamingServerTemplate = StreamingServerTemplateLocalServiceUtil.getByGroupId(groupId);
 
 		    System.out.println(institutionId+" "+groupId+" "+institutions.toString());

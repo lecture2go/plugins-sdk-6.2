@@ -190,6 +190,7 @@ public class InstitutionFinderImpl extends BasePersistenceImpl<Institution> impl
 	}
 	
 	
+
 	private List<Institution> assembleInstitutionsWithPath(List<Object[]> objectList){
 		List<Institution> fl = new ArrayList<Institution>();
 		for (Object[] institution: objectList){

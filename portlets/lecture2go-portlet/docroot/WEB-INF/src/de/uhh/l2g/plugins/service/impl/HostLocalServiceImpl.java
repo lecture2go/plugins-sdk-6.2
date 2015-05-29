@@ -105,6 +105,7 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
+
 		//validate(name,streamLocation,streamingServerTemplateId);
 
 

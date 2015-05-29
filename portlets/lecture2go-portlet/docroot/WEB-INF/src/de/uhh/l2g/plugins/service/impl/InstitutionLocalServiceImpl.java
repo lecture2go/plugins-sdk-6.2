@@ -202,6 +202,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		return validPosition;
 	}
 
+
 	public Institution addInstitution(String name, long hostId, long parentId, int sort, ServiceContext serviceContext) throws SystemException, PortalException {
 
 		long groupId = serviceContext.getScopeGroupId();
@@ -222,6 +223,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		institution.setParentId(parentId);
 		if (parentId > 0) institution.setLevel(parent.getLevel()+1);
 		else institution.setLevel(0);
+
 		institution.setSort(updateSort(institution,sort));
 
 		institution.setExpandoBridgeAttributes(serviceContext);

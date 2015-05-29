@@ -4,7 +4,7 @@
 <%@ page import="de.uhh.l2g.plugins.model.Host" %>
 <%@ page import="de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil" %>
 <%@ page import="de.uhh.l2g.plugins.service.HostLocalServiceUtil" %>
-<%@ page import="de.uhh.l2g.plugins.service.StreamingServerTemplateLocalServiceUtil" %>
+<%@ page import="de.uhh.l2g.plugins.service.ServerTemplateLocalServiceUtil" %>
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
@@ -14,6 +14,8 @@
 <liferay-ui:error key="host-or-institution-error" message="host-or-institution-error"/>
 
 <portlet:renderURL var="viewURL"><portlet:param name="jspPage" value="/admin/institutionList.jsp" /></portlet:renderURL>
+<liferay-portlet:renderURL varImpl="outerURL"><portlet:param name="jspPage" value="/admin/institutionList.jsp" /></liferay-portlet:renderURL>
+<liferay-portlet:renderURL varImpl="innerURL"><portlet:param name="jspPage" value="/admin/institutionList.jsp" /></liferay-portlet:renderURL>
 <liferay-portlet:renderURL varImpl="outerURL"><portlet:param name="jspPage" value="/admin/institutionList.jsp" /></liferay-portlet:renderURL>
 <liferay-portlet:renderURL varImpl="innerURL"><portlet:param name="jspPage" value="/admin/institutionList.jsp" /></liferay-portlet:renderURL>
 <portlet:actionURL name="addInstitution" var="addInstitutionURL"></portlet:actionURL>
@@ -74,13 +76,15 @@ for (int i = 0; i < institutions.size(); i++) {
 
 long parent = topLevel.getPrimaryKey();
 int maxOrder = 0;
-//if (institutionId > 1) {
-//	Institution selectedInstitution = InstitutionLocalServiceUtil.getById(institutionId);
-//	maxOrder = selectedInstitution.getSort();
-//}
-//else{
+
+if (institutionId > 0) {
+	Institution selectedInstitution = InstitutionLocalServiceUtil.getById(institutionId);
+	maxOrder = selectedInstitution.getSort();
+}
+else{
 	maxOrder = InstitutionLocalServiceUtil.getMaxSortByParentId(topLevel.getInstitutionId())+1;
-//	}
+	}
+
 %>
 
 <liferay-ui:panel title="Edit Institution Settings" collapsible="true" id="institutionSettings"
@@ -100,7 +104,7 @@ int maxOrder = 0;
             </aui:select>
             <aui:input name="order" label="Order" inlineField="true" value='<%= maxOrder %>'/>
             <aui:input name='institutionId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "institutionId") %>'/>
-            <aui:input name='parent' type='hidden' inlineField="true" value='<%= parent %>'/>
+             <aui:input name='parent' type='hidden' inlineField="true" value='<%= parent %>'/>
 			<aui:button type="submit" value="Add" ></aui:button>
 			<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button>
         </aui:fieldset>
