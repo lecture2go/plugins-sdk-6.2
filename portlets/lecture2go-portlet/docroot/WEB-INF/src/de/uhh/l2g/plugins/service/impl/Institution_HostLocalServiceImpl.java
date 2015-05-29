@@ -110,7 +110,7 @@ public class Institution_HostLocalServiceImpl
 
 		Institution_Host institution_Host = institution_HostPersistence.create(institution_HostId);
 
-		institution_Host.setGroupId(0);
+		institution_Host.setGroupId(groupId);
 		institution_Host.setInstitutionId(institutionId);
 		institution_Host.setHostId(hostId);
 

@@ -58,7 +58,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 			         Institution.class.getName(), renderRequest);
 
 			long groupId = serviceContext.getScopeGroupId();
-			groupId = 0;
+			//groupId = 0;
 
 			long institutionId = ParamUtil.getLong(renderRequest, "institutionId");
 			long hostId = ParamUtil.getLong(renderRequest, "hostId");
@@ -68,9 +68,9 @@ public class AdminInstitutionManagement extends MVCPortlet {
 			long defaultServerTemplateId = 0;
 
 
-		    List<Institution> institutions = InstitutionLocalServiceUtil.getByGroupId(0);
+		    List<Institution> institutions = InstitutionLocalServiceUtil.getByGroupId(groupId);
 		    List<Host> host = HostLocalServiceUtil.getByTemplateConfiguredAndGroupId(groupId);
-		    List<ServerTemplate> serverTemplate = ServerTemplateLocalServiceUtil.getByGroupId(0);
+		    List<ServerTemplate> serverTemplate = ServerTemplateLocalServiceUtil.getByGroupId(groupId);
 
 		    System.out.println(institutionId+" "+groupId+" "+institutions.toString());
 		    System.out.println(hostId+" "+groupId+" "+host.toString());
@@ -91,7 +91,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 		    //new Top Level Institution if empty
 		    if (institutions.size() == 0) {
-		    	Institution institution = InstitutionLocalServiceUtil.addInstitution("Main", 0 ,new Long(0), serviceContext);
+		    	Institution institution = InstitutionLocalServiceUtil.addInstitution("Main", 0 ,new Long(0), 0, serviceContext);
 		    	SessionMessages.add(renderRequest, "entryAdded");
 		    	institutionId = institution.getInstitutionId();
 		    }
@@ -124,15 +124,15 @@ public class AdminInstitutionManagement extends MVCPortlet {
 			String name = ParamUtil.getString(request, "institution");
 			long hostId = ParamUtil.getLong(request, "serverselect");
 			long parent = ParamUtil.getLong(request, "parent");
+			int sort = ParamUtil.getInteger(request, "order");
 
 
 	         InstitutionLocalServiceUtil.addInstitution(
-	              name, hostId, parent, serviceContext);
+	              name, hostId, parent, sort, serviceContext);
 
 	         SessionMessages.add(request, "entryAdded");
 
-	        // response.setRenderParameter("institutionId",
-	        //      Long.toString(institutionId));
+	        // response.setRenderParameter("institutionId", Long.toString(institutionId));
 
 	       } catch (Exception e) {
 	         SessionErrors.add(request, e.getClass().getName());
@@ -158,7 +158,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 			try {
 				InstitutionLocalServiceUtil.addInstitution(
-						name, hostId, parent, serviceContext);
+						name, hostId, parent, 0, serviceContext);
 
 				SessionMessages.add(request, "entryAdded");
 
@@ -187,7 +187,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 			try {
 				InstitutionLocalServiceUtil.addInstitution(
-						name, hostId, parent, serviceContext);
+						name, hostId, parent, 0, serviceContext);
 
 		         SessionMessages.add(request, "entryAdded");
 
@@ -219,7 +219,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 		try {
 			InstitutionLocalServiceUtil.addInstitution(
-					name, hostId, parent, serviceContext);
+					name, hostId, parent, 0, serviceContext);
 
 			SessionMessages.add(request, "entryAdded");
 
@@ -250,7 +250,7 @@ public void viewStreamingServerList(ActionRequest request, ActionResponse respon
 
 	try {
 		InstitutionLocalServiceUtil.addInstitution(
-				name, hostId, parent, serviceContext);
+				name, hostId, parent, 0, serviceContext);
 
          SessionMessages.add(request, "entryAdded");
 

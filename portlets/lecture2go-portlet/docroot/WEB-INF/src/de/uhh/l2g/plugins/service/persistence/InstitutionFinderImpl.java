@@ -1,6 +1,7 @@
 package de.uhh.l2g.plugins.service.persistence;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -19,7 +20,8 @@ public class InstitutionFinderImpl extends BasePersistenceImpl<Institution> impl
 
 	public static final String FIND_ALL_SORTED_AS_TREE = InstitutionFinder.class.getName() + ".findAllSortedAsTree";
 	public static final String FIND_FROM_LECTURESERIES = InstitutionFinder.class.getName() + ".findByLectureseriesId";
-	
+	public static final String FIND_MAX_SORT_BY_PARENT = InstitutionFinder.class.getName() + ".findMaxSortByParent";
+
 	public List<Institution> findByLectureseriesId(long lectureseriesId, int begin, int end) {
 		Session session = null;
 		try {
@@ -51,6 +53,8 @@ public class InstitutionFinderImpl extends BasePersistenceImpl<Institution> impl
 		return null;
 	}
 
+
+
 	public List<Institution> findAllSortedAsTree(int begin, int end) {
 		Session session = null;
 		try {
@@ -80,7 +84,40 @@ public class InstitutionFinderImpl extends BasePersistenceImpl<Institution> impl
 		}
 		return null;
 	}
-	
+
+	public int findMaxSortByParent(long parentId) {
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(FIND_MAX_SORT_BY_PARENT);
+			SQLQuery q = session.createSQLQuery(sql);
+			q.addScalar("maxsort", Type.INTEGER);
+			q.setCacheable(false);
+			QueryPos qPos = QueryPos.getInstance(q);
+			qPos.add(parentId);
+			Iterator<?> itr = q.list().iterator();
+
+	        if (itr.hasNext()) {
+	          Long count = (Long)itr.next();
+
+	          if (count != null) {
+	            return count.intValue();
+	          }
+	        }
+
+	        return 0;
+	      } catch (Exception e) {
+			try {
+				throw new SystemException(e);
+			} catch (SystemException se) {
+				se.printStackTrace();
+			}
+		} finally {
+			closeSession(session);
+		}
+		return 0;
+	}
+
 	private List<Institution> assembleInstitutionsWithPath(List<Object[]> objectList){
 		List<Institution> fl = new ArrayList<Institution>();
 		for (Object[] institution: objectList){

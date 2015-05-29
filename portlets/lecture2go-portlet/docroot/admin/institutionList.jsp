@@ -55,7 +55,7 @@ long institutionId = Long.valueOf((Long) renderRequest.getAttribute("institution
 long hostId = Long.valueOf((Long) renderRequest.getAttribute("hostId"));
 long serverTemplateId = Long.valueOf((Long) renderRequest.getAttribute("serverTemplateId"));
 
-long groupId = 0;
+long groupId = themeDisplay.getLayout().getGroupId();
 
 boolean deviceSpecificURLs = false;
 if (serverTemplateId > 0) deviceSpecificURLs = ServerTemplateLocalServiceUtil.getDeviceSpecificByServerTemplateId(serverTemplateId);
@@ -65,13 +65,24 @@ portletURL.setParameter("institutionId", institutionId+"");
 portletURL.setParameter("hostId", hostId+"");
 portletURL.setParameter("serverTemplateId", hostId+"");
 
-List<Institution> institutions = InstitutionLocalServiceUtil.getByGroupIdAndParent(0,1);
+List<Institution> institutions = InstitutionLocalServiceUtil.getByGroupIdAndParent(groupId,1);
 List<Host> hostList = HostLocalServiceUtil.getByTemplateConfiguredAndGroupId(groupId);
+Institution topLevel = InstitutionLocalServiceUtil.getTopLevelByGroupId(groupId);
 
 for (int i = 0; i < institutions.size(); i++) {
 	Institution curInstitution = (Institution) institutions.get(i);
 	long curId = curInstitution.getInstitutionId();
 }
+
+long parent = topLevel.getPrimaryKey();
+int maxOrder = 0;
+if (institutionId > 0) {
+	Institution selectedInstitution = InstitutionLocalServiceUtil.getById(institutionId);
+	maxOrder = selectedInstitution.getSort();
+}
+else{
+	maxOrder = InstitutionLocalServiceUtil.getMaxSortByParentId(topLevel.getInstitutionId())+1;
+	}
 %>
 
 <liferay-ui:panel title="Edit Institution Settings" collapsible="true" id="institutionSettings"
@@ -89,7 +100,9 @@ for (int i = 0; i < institutions.size(); i++) {
 					<aui:option label="<%= host.getName() %>" value="<%= host.getHostId() %>"></aui:option>
 			<% } %>
             </aui:select>
+            <aui:input name="order" label="Order" inlineField="true" value='<%= maxOrder %>'/>
             <aui:input name='institutionId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "institutionId") %>'/>
+             <aui:input name='parent' type='hidden' inlineField="true" value='<%= parent %>'/>
 			<aui:button type="submit" value="Add" ></aui:button>
 			<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button>
         </aui:fieldset>
@@ -170,7 +183,8 @@ for (int i = 0; i < institutions.size(); i++) {
 				persistState="<%= true %>">
 <aui:form action="<%= updateTopLevelInstitutionEntryURL %>" name="<portlet:namespace />fm">
 	<aui:fieldset>
-			<aui:input name="institution" label="Institution" required="true" inlineField="true"/>
+			<aui:input name="topLevelInstitution" label="Top Level Institution" required="true" inlineField="true" />
+			<aui:input name='topLevelInstitutionId' type='hidden' />
 			<aui:button type="submit"></aui:button>
 			<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button>
 	</aui:fieldset>
@@ -188,8 +202,8 @@ delta="20"
 iteratorURL="<%= outerURL %>"
 deltaConfigurable="true">
     <liferay-ui:search-container-results
-        results="<%=InstitutionLocalServiceUtil.getByGroupIdAndParent(new Long(0), new Long(1), searchContainer.getStart(), searchContainer.getEnd())%>"
-        total="<%=InstitutionLocalServiceUtil.getByGroupIdAndParentCount(new Long(0), new Long(1))%>" />
+        results="<%=InstitutionLocalServiceUtil.getByGroupIdAndParent(groupId, new Long(1), searchContainer.getStart(), searchContainer.getEnd())%>"
+        total="<%=InstitutionLocalServiceUtil.getByGroupIdAndParentCount(groupId, new Long(1))%>" />
 
     <liferay-ui:search-container-row
         className="de.uhh.l2g.plugins.model.Institution" modelVar="institution"
@@ -243,8 +257,8 @@ deltaConfigurable="true">
 
 
 				<liferay-ui:search-container-results
-        			results="<%=InstitutionLocalServiceUtil.getByGroupIdAndParent(new Long(0), institution_id, searchContainer.getStart(), searchContainer.getEnd())%>"
-        			total="<%=InstitutionLocalServiceUtil.getByGroupIdAndParentCount(new Long(0), institution_id)%>" />
+        			results="<%=InstitutionLocalServiceUtil.getByGroupIdAndParent(groupId, institution_id, searchContainer.getStart(), searchContainer.getEnd())%>"
+        			total="<%=InstitutionLocalServiceUtil.getByGroupIdAndParentCount(groupId, institution_id)%>" />
 
 				<liferay-ui:search-container-row
 				className="de.uhh.l2g.plugins.model.Institution" modelVar="subInstitution"

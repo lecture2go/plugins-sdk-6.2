@@ -75,7 +75,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 	}
 
 	public Institution getTopLevelByGroupId(long groupId) throws SystemException {
-		return (Institution) institutionPersistence.findByTopLevel(groupId);
+		return (Institution) institutionPersistence.fetchByTopLevel(groupId);
 	}
 
 	public List<Institution> getByGroupIdAndParent(long groupId, long parentId) throws SystemException {
@@ -127,6 +127,10 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		return allInstitutions;
 	}
 
+	public int getMaxSortByParentId(long parentId) throws SystemException {
+		return InstitutionFinderUtil.findMaxSortByParent(parentId);
+	}
+
 	private String _indentFromPath(String path, String sep) {
 		String s = "";
 		for (int i = 1; i <= path.split(sep).length - 1; i++) {
@@ -143,7 +147,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 
 	}
 
-	public Institution addInstitution(String name, long hostId, long parentId, ServiceContext serviceContext) throws SystemException, PortalException {
+	public Institution addInstitution(String name, long hostId, long parentId, int sort, ServiceContext serviceContext) throws SystemException, PortalException {
 
 		long groupId = serviceContext.getScopeGroupId();
 		long userId = serviceContext.getUserId();
@@ -159,10 +163,11 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		Institution parent = InstitutionLocalServiceUtil.getById(parentId);
 
 		institution.setName(name);
-		institution.setGroupId(0);
+		institution.setGroupId(groupId);
 		institution.setParentId(parentId);
 		if (parentId > 0) institution.setLevel(parent.getLevel()+1);
 		else institution.setLevel(0);
+		//institution.setSort(1);
 		institution.setExpandoBridgeAttributes(serviceContext);
 
 		Institution_HostLocalServiceUtil.addEntry(institutionId, hostId, serviceContext);

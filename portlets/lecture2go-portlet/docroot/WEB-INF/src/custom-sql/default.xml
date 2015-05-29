@@ -15,6 +15,12 @@
 		]]>
     </sql>
 
+        <sql id="de.uhh.l2g.plugins.service.persistence.InstitutionFinder.findMaxSortByParent">
+		<![CDATA[
+			SELECT MAX(sort) as maxsort FROM LG_Institution WHERE parentId = ?;
+		]]>
+    </sql>
+
         <sql id="de.uhh.l2g.plugins.service.persistence.HostFinder.findAllInstitutionsByHost">
 		<![CDATA[
 			SELECT myNode.institutionId, myNode.parentId, myNode.name, myNode.typ, myNode.www, myNode.level, myNode.sort,

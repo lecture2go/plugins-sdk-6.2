@@ -131,7 +131,7 @@
             <finder-column name="parentId"></finder-column>
             <finder-column name="sort"></finder-column>
         </finder>
-        <finder name="TopLevel" return-type="Collection" where="parentId = 0">
+        <finder name="TopLevel" return-type="Institution" where="parentId = 0">
             <finder-column name="groupId"></finder-column>
         </finder>
         <finder name="G_I" return-type="Institution">

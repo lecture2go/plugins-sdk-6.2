@@ -95,7 +95,7 @@ public class ServerTemplateLocalServiceImpl
 
 		ServerTemplate serverTemplate = serverTemplatePersistence.create(serverTemplateId);
 
-		serverTemplate.setGroupId(0);
+		serverTemplate.setGroupId(groupId);
 		serverTemplate.setName(name);
 		serverTemplate.setType(type);
 

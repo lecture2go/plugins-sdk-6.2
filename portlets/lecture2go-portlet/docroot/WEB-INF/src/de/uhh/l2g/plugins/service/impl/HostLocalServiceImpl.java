@@ -88,7 +88,7 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 	       throw new HostNameException();
 		 }
 
-	     if (Validator.isNull(streamer) || !Validator.isDomain(streamer) ) {
+	     if (Validator.isNull(streamer) || !Validator.isDomain(streamer) || !Validator.isHostName(streamer) ) {
 	       throw new HostStreamerException();
 	     }
 
@@ -106,7 +106,7 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		validate(name,streamLocation,serverTemplateId);
+		//validate(name,streamLocation,serverTemplateId);
 
 
 		long hostId = counterLocalService.increment();
@@ -114,6 +114,7 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 		Host host = hostPersistence.create(hostId);
 
 		host.setName(name);
+		host.setGroupId(groupId);
 		host.setServerTemplateId(serverTemplateId);
 		host.setStreamer(streamLocation);
 		host.setProtocol(protocol);
