@@ -247,6 +247,20 @@ public interface ServerTemplateModel extends BaseModel<ServerTemplate> {
 	 */
 	public void setTemplateAndroid(long templateAndroid);
 
+	/**
+	 * Returns the default server of this server template.
+	 *
+	 * @return the default server of this server template
+	 */
+	public int getDefaultServer();
+
+	/**
+	 * Sets the default server of this server template.
+	 *
+	 * @param defaultServer the default server of this server template
+	 */
+	public void setDefaultServer(int defaultServer);
+
 	@Override
 	public boolean isNew();
 

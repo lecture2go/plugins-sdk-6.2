@@ -163,7 +163,8 @@ create table LG_ServerTemplate (
 	suffixFile VARCHAR(75) null,
 	templateFile VARCHAR(75) null,
 	templateIOS LONG,
-	templateAndroid LONG
+	templateAndroid LONG,
+	defaultServer INTEGER
 );
 
 create table LG_Sys (

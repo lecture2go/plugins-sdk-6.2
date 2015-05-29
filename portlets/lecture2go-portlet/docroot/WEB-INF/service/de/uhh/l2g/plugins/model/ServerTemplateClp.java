@@ -86,6 +86,7 @@ public class ServerTemplateClp extends BaseModelImpl<ServerTemplate>
 		attributes.put("templateFile", getTemplateFile());
 		attributes.put("templateIOS", getTemplateIOS());
 		attributes.put("templateAndroid", getTemplateAndroid());
+		attributes.put("defaultServer", getDefaultServer());
 
 		return attributes;
 	}
@@ -168,6 +169,12 @@ public class ServerTemplateClp extends BaseModelImpl<ServerTemplate>
 
 		if (templateAndroid != null) {
 			setTemplateAndroid(templateAndroid);
+		}
+
+		Integer defaultServer = (Integer)attributes.get("defaultServer");
+
+		if (defaultServer != null) {
+			setDefaultServer(defaultServer);
 		}
 	}
 
@@ -471,6 +478,29 @@ public class ServerTemplateClp extends BaseModelImpl<ServerTemplate>
 		}
 	}
 
+	@Override
+	public int getDefaultServer() {
+		return _defaultServer;
+	}
+
+	@Override
+	public void setDefaultServer(int defaultServer) {
+		_defaultServer = defaultServer;
+
+		if (_serverTemplateRemoteModel != null) {
+			try {
+				Class<?> clazz = _serverTemplateRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setDefaultServer", int.class);
+
+				method.invoke(_serverTemplateRemoteModel, defaultServer);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
 	public BaseModel<?> getServerTemplateRemoteModel() {
 		return _serverTemplateRemoteModel;
 	}
@@ -555,6 +585,7 @@ public class ServerTemplateClp extends BaseModelImpl<ServerTemplate>
 		clone.setTemplateFile(getTemplateFile());
 		clone.setTemplateIOS(getTemplateIOS());
 		clone.setTemplateAndroid(getTemplateAndroid());
+		clone.setDefaultServer(getDefaultServer());
 
 		return clone;
 	}
@@ -607,7 +638,7 @@ public class ServerTemplateClp extends BaseModelImpl<ServerTemplate>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{serverTemplateId=");
 		sb.append(getServerTemplateId());
@@ -635,6 +666,8 @@ public class ServerTemplateClp extends BaseModelImpl<ServerTemplate>
 		sb.append(getTemplateIOS());
 		sb.append(", templateAndroid=");
 		sb.append(getTemplateAndroid());
+		sb.append(", defaultServer=");
+		sb.append(getDefaultServer());
 		sb.append("}");
 
 		return sb.toString();
@@ -642,7 +675,7 @@ public class ServerTemplateClp extends BaseModelImpl<ServerTemplate>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(46);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.ServerTemplate");
@@ -700,6 +733,10 @@ public class ServerTemplateClp extends BaseModelImpl<ServerTemplate>
 			"<column><column-name>templateAndroid</column-name><column-value><![CDATA[");
 		sb.append(getTemplateAndroid());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>defaultServer</column-name><column-value><![CDATA[");
+		sb.append(getDefaultServer());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -719,6 +756,7 @@ public class ServerTemplateClp extends BaseModelImpl<ServerTemplate>
 	private String _templateFile;
 	private long _templateIOS;
 	private long _templateAndroid;
+	private int _defaultServer;
 	private BaseModel<?> _serverTemplateRemoteModel;
 	private Class<?> _clpSerializerClass = de.uhh.l2g.plugins.service.ClpSerializer.class;
 }

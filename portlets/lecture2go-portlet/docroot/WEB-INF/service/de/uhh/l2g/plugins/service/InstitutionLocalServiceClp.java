@@ -163,10 +163,14 @@ public class InstitutionLocalServiceClp implements InstitutionLocalService {
 
 		_methodParameterTypes30 = new String[] { "int", "int" };
 
-		_methodName31 = "addInstitution";
+		_methodName31 = "getMaxSortByParentId";
 
-		_methodParameterTypes31 = new String[] {
-				"java.lang.String", "long", "long",
+		_methodParameterTypes31 = new String[] { "long" };
+
+		_methodName32 = "addInstitution";
+
+		_methodParameterTypes32 = new String[] {
+				"java.lang.String", "long", "long", "int",
 				"com.liferay.portal.service.ServiceContext"
 			};
 	}
@@ -1071,22 +1075,52 @@ public class InstitutionLocalServiceClp implements InstitutionLocalService {
 	}
 
 	@Override
+	public int getMaxSortByParentId(long parentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31, new Object[] { parentId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Integer)returnObj).intValue();
+	}
+
+	@Override
 	public de.uhh.l2g.plugins.model.Institution addInstitution(
-		java.lang.String name, long hostId, long parentId,
+		java.lang.String name, long hostId, long parentId, int sort,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName31,
-					_methodParameterTypes31,
+			returnObj = _invokableLocalService.invokeMethod(_methodName32,
+					_methodParameterTypes32,
 					new Object[] {
 						ClpSerializer.translateInput(name),
 						
 					hostId,
 						
 					parentId,
+						
+					sort,
 						
 					ClpSerializer.translateInput(serviceContext)
 					});
@@ -1177,4 +1211,6 @@ public class InstitutionLocalServiceClp implements InstitutionLocalService {
 	private String[] _methodParameterTypes30;
 	private String _methodName31;
 	private String[] _methodParameterTypes31;
+	private String _methodName32;
+	private String[] _methodParameterTypes32;
 }

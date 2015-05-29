@@ -345,13 +345,18 @@ public class InstitutionLocalServiceUtil {
 		return getService().getAllSortedAsTree(begin, end);
 	}
 
+	public static int getMaxSortByParentId(long parentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getMaxSortByParentId(parentId);
+	}
+
 	public static de.uhh.l2g.plugins.model.Institution addInstitution(
-		java.lang.String name, long hostId, long parentId,
+		java.lang.String name, long hostId, long parentId, int sort,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .addInstitution(name, hostId, parentId, serviceContext);
+				   .addInstitution(name, hostId, parentId, sort, serviceContext);
 	}
 
 	public static void clearService() {

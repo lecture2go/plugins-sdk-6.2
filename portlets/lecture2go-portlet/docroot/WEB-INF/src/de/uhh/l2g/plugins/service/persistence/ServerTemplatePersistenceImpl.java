@@ -936,6 +936,500 @@ public class ServerTemplatePersistenceImpl extends BasePersistenceImpl<ServerTem
 
 	private static final String _FINDER_COLUMN_DEVICESPECIFICURLS_SERVERTEMPLATEID_2 =
 		"serverTemplate.serverTemplateId = ? AND serverTemplate.type = 0 AND (serverTemplate.templateIOS > 0 OR serverTemplate.templateAndroid > 0)";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_DEFAULTSERVER =
+		new FinderPath(ServerTemplateModelImpl.ENTITY_CACHE_ENABLED,
+			ServerTemplateModelImpl.FINDER_CACHE_ENABLED,
+			ServerTemplateImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByDefaultServer",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_DEFAULTSERVER =
+		new FinderPath(ServerTemplateModelImpl.ENTITY_CACHE_ENABLED,
+			ServerTemplateModelImpl.FINDER_CACHE_ENABLED,
+			ServerTemplateImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByDefaultServer",
+			new String[] { Long.class.getName() },
+			ServerTemplateModelImpl.GROUPID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_DEFAULTSERVER = new FinderPath(ServerTemplateModelImpl.ENTITY_CACHE_ENABLED,
+			ServerTemplateModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByDefaultServer",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the server templates where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching server templates
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<ServerTemplate> findByDefaultServer(long groupId)
+		throws SystemException {
+		return findByDefaultServer(groupId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the server templates where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.ServerTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of server templates
+	 * @param end the upper bound of the range of server templates (not inclusive)
+	 * @return the range of matching server templates
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<ServerTemplate> findByDefaultServer(long groupId, int start,
+		int end) throws SystemException {
+		return findByDefaultServer(groupId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the server templates where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.ServerTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of server templates
+	 * @param end the upper bound of the range of server templates (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching server templates
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<ServerTemplate> findByDefaultServer(long groupId, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_DEFAULTSERVER;
+			finderArgs = new Object[] { groupId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_DEFAULTSERVER;
+			finderArgs = new Object[] { groupId, start, end, orderByComparator };
+		}
+
+		List<ServerTemplate> list = (List<ServerTemplate>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (ServerTemplate serverTemplate : list) {
+				if ((groupId != serverTemplate.getGroupId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_SERVERTEMPLATE_WHERE);
+
+			query.append(_FINDER_COLUMN_DEFAULTSERVER_GROUPID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(ServerTemplateModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (!pagination) {
+					list = (List<ServerTemplate>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<ServerTemplate>(list);
+				}
+				else {
+					list = (List<ServerTemplate>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first server template in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching server template
+	 * @throws de.uhh.l2g.plugins.NoSuchServerTemplateException if a matching server template could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ServerTemplate findByDefaultServer_First(long groupId,
+		OrderByComparator orderByComparator)
+		throws NoSuchServerTemplateException, SystemException {
+		ServerTemplate serverTemplate = fetchByDefaultServer_First(groupId,
+				orderByComparator);
+
+		if (serverTemplate != null) {
+			return serverTemplate;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchServerTemplateException(msg.toString());
+	}
+
+	/**
+	 * Returns the first server template in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching server template, or <code>null</code> if a matching server template could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ServerTemplate fetchByDefaultServer_First(long groupId,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<ServerTemplate> list = findByDefaultServer(groupId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last server template in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching server template
+	 * @throws de.uhh.l2g.plugins.NoSuchServerTemplateException if a matching server template could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ServerTemplate findByDefaultServer_Last(long groupId,
+		OrderByComparator orderByComparator)
+		throws NoSuchServerTemplateException, SystemException {
+		ServerTemplate serverTemplate = fetchByDefaultServer_Last(groupId,
+				orderByComparator);
+
+		if (serverTemplate != null) {
+			return serverTemplate;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchServerTemplateException(msg.toString());
+	}
+
+	/**
+	 * Returns the last server template in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching server template, or <code>null</code> if a matching server template could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ServerTemplate fetchByDefaultServer_Last(long groupId,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByDefaultServer(groupId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<ServerTemplate> list = findByDefaultServer(groupId, count - 1,
+				count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the server templates before and after the current server template in the ordered set where groupId = &#63;.
+	 *
+	 * @param serverTemplateId the primary key of the current server template
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next server template
+	 * @throws de.uhh.l2g.plugins.NoSuchServerTemplateException if a server template with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ServerTemplate[] findByDefaultServer_PrevAndNext(
+		long serverTemplateId, long groupId, OrderByComparator orderByComparator)
+		throws NoSuchServerTemplateException, SystemException {
+		ServerTemplate serverTemplate = findByPrimaryKey(serverTemplateId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			ServerTemplate[] array = new ServerTemplateImpl[3];
+
+			array[0] = getByDefaultServer_PrevAndNext(session, serverTemplate,
+					groupId, orderByComparator, true);
+
+			array[1] = serverTemplate;
+
+			array[2] = getByDefaultServer_PrevAndNext(session, serverTemplate,
+					groupId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected ServerTemplate getByDefaultServer_PrevAndNext(Session session,
+		ServerTemplate serverTemplate, long groupId,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_SERVERTEMPLATE_WHERE);
+
+		query.append(_FINDER_COLUMN_DEFAULTSERVER_GROUPID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(ServerTemplateModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(serverTemplate);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<ServerTemplate> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the server templates where groupId = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByDefaultServer(long groupId) throws SystemException {
+		for (ServerTemplate serverTemplate : findByDefaultServer(groupId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(serverTemplate);
+		}
+	}
+
+	/**
+	 * Returns the number of server templates where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the number of matching server templates
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByDefaultServer(long groupId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_DEFAULTSERVER;
+
+		Object[] finderArgs = new Object[] { groupId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_SERVERTEMPLATE_WHERE);
+
+			query.append(_FINDER_COLUMN_DEFAULTSERVER_GROUPID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_DEFAULTSERVER_GROUPID_2 = "serverTemplate.groupId = ? AND serverTemplate.defaultServer > 0";
 
 	public ServerTemplatePersistenceImpl() {
 		setModelClass(ServerTemplate.class);
@@ -1200,6 +1694,25 @@ public class ServerTemplatePersistenceImpl extends BasePersistenceImpl<ServerTem
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_DEVICESPECIFICURLS,
 					args);
 			}
+
+			if ((serverTemplateModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_DEFAULTSERVER.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						serverTemplateModelImpl.getOriginalGroupId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_DEFAULTSERVER,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_DEFAULTSERVER,
+					args);
+
+				args = new Object[] { serverTemplateModelImpl.getGroupId() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_DEFAULTSERVER,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_DEFAULTSERVER,
+					args);
+			}
 		}
 
 		EntityCacheUtil.putResult(ServerTemplateModelImpl.ENTITY_CACHE_ENABLED,
@@ -1232,6 +1745,7 @@ public class ServerTemplatePersistenceImpl extends BasePersistenceImpl<ServerTem
 		serverTemplateImpl.setTemplateFile(serverTemplate.getTemplateFile());
 		serverTemplateImpl.setTemplateIOS(serverTemplate.getTemplateIOS());
 		serverTemplateImpl.setTemplateAndroid(serverTemplate.getTemplateAndroid());
+		serverTemplateImpl.setDefaultServer(serverTemplate.getDefaultServer());
 
 		return serverTemplateImpl;
 	}

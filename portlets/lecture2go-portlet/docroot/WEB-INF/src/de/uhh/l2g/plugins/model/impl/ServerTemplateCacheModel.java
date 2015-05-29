@@ -36,7 +36,7 @@ public class ServerTemplateCacheModel implements CacheModel<ServerTemplate>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{serverTemplateId=");
 		sb.append(serverTemplateId);
@@ -64,6 +64,8 @@ public class ServerTemplateCacheModel implements CacheModel<ServerTemplate>,
 		sb.append(templateIOS);
 		sb.append(", templateAndroid=");
 		sb.append(templateAndroid);
+		sb.append(", defaultServer=");
+		sb.append(defaultServer);
 		sb.append("}");
 
 		return sb.toString();
@@ -136,6 +138,7 @@ public class ServerTemplateCacheModel implements CacheModel<ServerTemplate>,
 
 		serverTemplateImpl.setTemplateIOS(templateIOS);
 		serverTemplateImpl.setTemplateAndroid(templateAndroid);
+		serverTemplateImpl.setDefaultServer(defaultServer);
 
 		serverTemplateImpl.resetOriginalValues();
 
@@ -157,6 +160,7 @@ public class ServerTemplateCacheModel implements CacheModel<ServerTemplate>,
 		templateFile = objectInput.readUTF();
 		templateIOS = objectInput.readLong();
 		templateAndroid = objectInput.readLong();
+		defaultServer = objectInput.readInt();
 	}
 
 	@Override
@@ -225,6 +229,7 @@ public class ServerTemplateCacheModel implements CacheModel<ServerTemplate>,
 
 		objectOutput.writeLong(templateIOS);
 		objectOutput.writeLong(templateAndroid);
+		objectOutput.writeInt(defaultServer);
 	}
 
 	public long serverTemplateId;
@@ -240,4 +245,5 @@ public class ServerTemplateCacheModel implements CacheModel<ServerTemplate>,
 	public String templateFile;
 	public long templateIOS;
 	public long templateAndroid;
+	public int defaultServer;
 }

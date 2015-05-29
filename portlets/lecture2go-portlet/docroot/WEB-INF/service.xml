@@ -586,11 +586,15 @@
         <column name="templateFile" type="String"></column>
         <column name="templateIOS" type="long"></column>
         <column name="templateAndroid" type="long"></column>
+        <column name="defaultServer" type="int"></column>
         <finder name="GroupId" return-type="Collection" where="type &lt; 1" db-index="true">
             <finder-column name="groupId" case-sensitive="true"></finder-column>
         </finder>
         <finder name="DeviceSpecificURLs" return-type="Collection" where="type = 0 AND (templateIOS &gt; 0 OR templateAndroid &gt; 0)" db-index="true">
             <finder-column name="serverTemplateId"></finder-column>
+        </finder>
+        <finder name="DefaultServer" return-type="Collection" where="defaultServer &gt; 0">
+            <finder-column name="groupId"></finder-column>
         </finder>
     </entity>
     <exceptions>

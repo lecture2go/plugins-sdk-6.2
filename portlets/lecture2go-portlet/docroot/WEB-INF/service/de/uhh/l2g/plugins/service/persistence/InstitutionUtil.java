@@ -2813,152 +2813,59 @@ public class InstitutionUtil {
 	}
 
 	/**
-	* Returns all the institutions where groupId = &#63;.
+	* Returns the institution where groupId = &#63; or throws a {@link de.uhh.l2g.plugins.NoSuchInstitutionException} if it could not be found.
 	*
 	* @param groupId the group ID
-	* @return the matching institutions
+	* @return the matching institution
+	* @throws de.uhh.l2g.plugins.NoSuchInstitutionException if a matching institution could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<de.uhh.l2g.plugins.model.Institution> findByTopLevel(
+	public static de.uhh.l2g.plugins.model.Institution findByTopLevel(
 		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchInstitutionException {
 		return getPersistence().findByTopLevel(groupId);
 	}
 
 	/**
-	* Returns a range of all the institutions where groupId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.InstitutionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
+	* Returns the institution where groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param groupId the group ID
-	* @param start the lower bound of the range of institutions
-	* @param end the upper bound of the range of institutions (not inclusive)
-	* @return the range of matching institutions
+	* @return the matching institution, or <code>null</code> if a matching institution could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<de.uhh.l2g.plugins.model.Institution> findByTopLevel(
-		long groupId, int start, int end)
+	public static de.uhh.l2g.plugins.model.Institution fetchByTopLevel(
+		long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByTopLevel(groupId, start, end);
+		return getPersistence().fetchByTopLevel(groupId);
 	}
 
 	/**
-	* Returns an ordered range of all the institutions where groupId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.InstitutionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
+	* Returns the institution where groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param groupId the group ID
-	* @param start the lower bound of the range of institutions
-	* @param end the upper bound of the range of institutions (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching institutions
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching institution, or <code>null</code> if a matching institution could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<de.uhh.l2g.plugins.model.Institution> findByTopLevel(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+	public static de.uhh.l2g.plugins.model.Institution fetchByTopLevel(
+		long groupId, boolean retrieveFromCache)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByTopLevel(groupId, start, end, orderByComparator);
+		return getPersistence().fetchByTopLevel(groupId, retrieveFromCache);
 	}
 
 	/**
-	* Returns the first institution in the ordered set where groupId = &#63;.
+	* Removes the institution where groupId = &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching institution
-	* @throws de.uhh.l2g.plugins.NoSuchInstitutionException if a matching institution could not be found
+	* @return the institution that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static de.uhh.l2g.plugins.model.Institution findByTopLevel_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+	public static de.uhh.l2g.plugins.model.Institution removeByTopLevel(
+		long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchInstitutionException {
-		return getPersistence().findByTopLevel_First(groupId, orderByComparator);
-	}
-
-	/**
-	* Returns the first institution in the ordered set where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching institution, or <code>null</code> if a matching institution could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static de.uhh.l2g.plugins.model.Institution fetchByTopLevel_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByTopLevel_First(groupId, orderByComparator);
-	}
-
-	/**
-	* Returns the last institution in the ordered set where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching institution
-	* @throws de.uhh.l2g.plugins.NoSuchInstitutionException if a matching institution could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static de.uhh.l2g.plugins.model.Institution findByTopLevel_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			de.uhh.l2g.plugins.NoSuchInstitutionException {
-		return getPersistence().findByTopLevel_Last(groupId, orderByComparator);
-	}
-
-	/**
-	* Returns the last institution in the ordered set where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching institution, or <code>null</code> if a matching institution could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static de.uhh.l2g.plugins.model.Institution fetchByTopLevel_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByTopLevel_Last(groupId, orderByComparator);
-	}
-
-	/**
-	* Returns the institutions before and after the current institution in the ordered set where groupId = &#63;.
-	*
-	* @param institutionId the primary key of the current institution
-	* @param groupId the group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next institution
-	* @throws de.uhh.l2g.plugins.NoSuchInstitutionException if a institution with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static de.uhh.l2g.plugins.model.Institution[] findByTopLevel_PrevAndNext(
-		long institutionId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			de.uhh.l2g.plugins.NoSuchInstitutionException {
-		return getPersistence()
-				   .findByTopLevel_PrevAndNext(institutionId, groupId,
-			orderByComparator);
-	}
-
-	/**
-	* Removes all the institutions where groupId = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByTopLevel(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByTopLevel(groupId);
+		return getPersistence().removeByTopLevel(groupId);
 	}
 
 	/**

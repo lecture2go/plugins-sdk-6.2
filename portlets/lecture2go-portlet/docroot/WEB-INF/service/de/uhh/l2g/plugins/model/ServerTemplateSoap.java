@@ -42,6 +42,7 @@ public class ServerTemplateSoap implements Serializable {
 		soapModel.setTemplateFile(model.getTemplateFile());
 		soapModel.setTemplateIOS(model.getTemplateIOS());
 		soapModel.setTemplateAndroid(model.getTemplateAndroid());
+		soapModel.setDefaultServer(model.getDefaultServer());
 
 		return soapModel;
 	}
@@ -198,6 +199,14 @@ public class ServerTemplateSoap implements Serializable {
 		_templateAndroid = templateAndroid;
 	}
 
+	public int getDefaultServer() {
+		return _defaultServer;
+	}
+
+	public void setDefaultServer(int defaultServer) {
+		_defaultServer = defaultServer;
+	}
+
 	private long _serverTemplateId;
 	private long _groupId;
 	private String _name;
@@ -211,4 +220,5 @@ public class ServerTemplateSoap implements Serializable {
 	private String _templateFile;
 	private long _templateIOS;
 	private long _templateAndroid;
+	private int _defaultServer;
 }

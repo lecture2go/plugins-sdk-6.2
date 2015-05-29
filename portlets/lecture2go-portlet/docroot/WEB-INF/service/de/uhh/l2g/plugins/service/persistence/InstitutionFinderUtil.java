@@ -31,6 +31,10 @@ public class InstitutionFinderUtil {
 		return getFinder().findAllSortedAsTree(begin, end);
 	}
 
+	public static int findMaxSortByParent(long parentId) {
+		return getFinder().findMaxSortByParent(parentId);
+	}
+
 	public static InstitutionFinder getFinder() {
 		if (_finder == null) {
 			_finder = (InstitutionFinder)PortletBeanLocatorUtil.locate(de.uhh.l2g.plugins.service.ClpSerializer.getServletContextName(),

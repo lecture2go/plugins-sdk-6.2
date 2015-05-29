@@ -939,9 +939,9 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 	}
 
 	@Override
-	public java.lang.String getStreamUrl() {
+	public java.lang.String getM4vRssLink() {
 		try {
-			String methodName = "getStreamUrl";
+			String methodName = "getM4vRssLink";
 
 			Class<?>[] parameterTypes = new Class<?>[] {  };
 
@@ -974,9 +974,9 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 	}
 
 	@Override
-	public java.lang.String getM4vRssLink() {
+	public java.lang.String getStreamUrl() {
 		try {
-			String methodName = "getM4vRssLink";
+			String methodName = "getStreamUrl";
 
 			Class<?>[] parameterTypes = new Class<?>[] {  };
 
@@ -1026,9 +1026,63 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 	}
 
 	@Override
+	public void setVttChapterFile(java.lang.String vttChapterFile) {
+		try {
+			String methodName = "setVttChapterFile";
+
+			Class<?>[] parameterTypes = new Class<?>[] { java.lang.String.class };
+
+			Object[] parameterValues = new Object[] { vttChapterFile };
+
+			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public java.lang.String getVttThumbsFilde() {
+		try {
+			String methodName = "getVttThumbsFilde";
+
+			Class<?>[] parameterTypes = new Class<?>[] {  };
+
+			Object[] parameterValues = new Object[] {  };
+
+			java.lang.String returnObj = (java.lang.String)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
 	public java.lang.String getMp3OpenAccessDownloadLink() {
 		try {
 			String methodName = "getMp3OpenAccessDownloadLink";
+
+			Class<?>[] parameterTypes = new Class<?>[] {  };
+
+			Object[] parameterValues = new Object[] {  };
+
+			java.lang.String returnObj = (java.lang.String)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public java.lang.String getEmbedHtml5() {
+		try {
+			String methodName = "getEmbedHtml5";
 
 			Class<?>[] parameterTypes = new Class<?>[] {  };
 
@@ -1199,6 +1253,25 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 	}
 
 	@Override
+	public java.lang.String getVttChapterFile() {
+		try {
+			String methodName = "getVttChapterFile";
+
+			Class<?>[] parameterTypes = new Class<?>[] {  };
+
+			Object[] parameterValues = new Object[] {  };
+
+			java.lang.String returnObj = (java.lang.String)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
 	public void setPdfFile(java.io.File pdfFile) {
 		try {
 			String methodName = "setPdfFile";
@@ -1324,6 +1397,22 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 	}
 
 	@Override
+	public void setEmbedIframe(java.lang.String embedIframe) {
+		try {
+			String methodName = "setEmbedIframe";
+
+			Class<?>[] parameterTypes = new Class<?>[] { java.lang.String.class };
+
+			Object[] parameterValues = new Object[] { embedIframe };
+
+			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
 	public void setSecureUrl(java.lang.String secureUrl) {
 		try {
 			String methodName = "setSecureUrl";
@@ -1349,6 +1438,25 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 			Object[] parameterValues = new Object[] { m4vFile };
 
 			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public java.lang.String getEmbedIframe() {
+		try {
+			String methodName = "getEmbedIframe";
+
+			Class<?>[] parameterTypes = new Class<?>[] {  };
+
+			Object[] parameterValues = new Object[] {  };
+
+			java.lang.String returnObj = (java.lang.String)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
 		}
 		catch (Exception e) {
 			throw new UnsupportedOperationException(e);
@@ -1388,9 +1496,9 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 	}
 
 	@Override
-	public java.lang.String getOggRssLink() {
+	public java.lang.String getPdfOpenAccessDownloadLink() {
 		try {
-			String methodName = "getOggRssLink";
+			String methodName = "getPdfOpenAccessDownloadLink";
 
 			Class<?>[] parameterTypes = new Class<?>[] {  };
 
@@ -1407,9 +1515,9 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 	}
 
 	@Override
-	public java.lang.String getPdfOpenAccessDownloadLink() {
+	public java.lang.String getOggRssLink() {
 		try {
-			String methodName = "getPdfOpenAccessDownloadLink";
+			String methodName = "getOggRssLink";
 
 			Class<?>[] parameterTypes = new Class<?>[] {  };
 
@@ -1774,6 +1882,22 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 	}
 
 	@Override
+	public void setEmbedHtml5(java.lang.String embedHtml5) {
+		try {
+			String methodName = "setEmbedHtml5";
+
+			Class<?>[] parameterTypes = new Class<?>[] { java.lang.String.class };
+
+			Object[] parameterValues = new Object[] { embedHtml5 };
+
+			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
 	public java.lang.String getMp3RssLink() {
 		try {
 			String methodName = "getMp3RssLink";
@@ -1819,25 +1943,6 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 			Object[] parameterValues = new Object[] { hasChapters };
 
 			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
-		}
-		catch (Exception e) {
-			throw new UnsupportedOperationException(e);
-		}
-	}
-
-	@Override
-	public java.lang.String getVttFile() {
-		try {
-			String methodName = "getVttFile";
-
-			Class<?>[] parameterTypes = new Class<?>[] {  };
-
-			Object[] parameterValues = new Object[] {  };
-
-			java.lang.String returnObj = (java.lang.String)invokeOnRemoteModel(methodName,
-					parameterTypes, parameterValues);
-
-			return returnObj;
 		}
 		catch (Exception e) {
 			throw new UnsupportedOperationException(e);
@@ -1957,6 +2062,23 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 	}
 
 	@Override
+	public void setM4vOpenAccessDownloadLink(
+		java.lang.String m4vOpenAccessDownloadLink) {
+		try {
+			String methodName = "setM4vOpenAccessDownloadLink";
+
+			Class<?>[] parameterTypes = new Class<?>[] { java.lang.String.class };
+
+			Object[] parameterValues = new Object[] { m4vOpenAccessDownloadLink };
+
+			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
 	public void setM4aRssLink(java.lang.String m4aRssLink) {
 		try {
 			String methodName = "setM4aRssLink";
@@ -1973,14 +2095,13 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 	}
 
 	@Override
-	public void setM4vOpenAccessDownloadLink(
-		java.lang.String m4vOpenAccessDownloadLink) {
+	public void setVttThumbsFilde(java.lang.String vttThumbsFilde) {
 		try {
-			String methodName = "setM4vOpenAccessDownloadLink";
+			String methodName = "setVttThumbsFilde";
 
 			Class<?>[] parameterTypes = new Class<?>[] { java.lang.String.class };
 
-			Object[] parameterValues = new Object[] { m4vOpenAccessDownloadLink };
+			Object[] parameterValues = new Object[] { vttThumbsFilde };
 
 			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
 		}
@@ -2113,22 +2234,6 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 					parameterTypes, parameterValues);
 
 			return returnObj;
-		}
-		catch (Exception e) {
-			throw new UnsupportedOperationException(e);
-		}
-	}
-
-	@Override
-	public void setVttFile(java.lang.String vttFile) {
-		try {
-			String methodName = "setVttFile";
-
-			Class<?>[] parameterTypes = new Class<?>[] { java.lang.String.class };
-
-			Object[] parameterValues = new Object[] { vttFile };
-
-			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
 		}
 		catch (Exception e) {
 			throw new UnsupportedOperationException(e);

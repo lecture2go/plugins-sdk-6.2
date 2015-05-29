@@ -257,6 +257,7 @@
 			<basic name="templateFile" />
 			<basic name="templateIOS" />
 			<basic name="templateAndroid" />
+			<basic name="defaultServer" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -510,6 +511,8 @@
 			<transient name="bitrate" />
 			<transient name="creators" />
 			<transient name="date" />
+			<transient name="embedHtml5" />
+			<transient name="embedIframe" />
 			<transient name="flvFile" />
 			<transient name="flvOpenAccessDownloadLink" />
 			<transient name="flvRssLink" />
@@ -543,7 +546,8 @@
 			<transient name="streamIosUrl" />
 			<transient name="streamUrl" />
 			<transient name="url" />
-			<transient name="vttFile" />
+			<transient name="vttChapterFile" />
+			<transient name="vttThumbsFilde" />
 			<transient name="webmFile" />
 			<transient name="webmOpenAccessDownloadLink" />
 			<transient name="webmRssLink" />

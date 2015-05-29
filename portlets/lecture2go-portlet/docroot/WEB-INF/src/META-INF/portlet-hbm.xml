@@ -233,6 +233,7 @@
 		<property name="templateFile" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="templateIOS" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="templateAndroid" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="defaultServer" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.SysImpl" table="LG_Sys">
 		<cache usage="read-write" />

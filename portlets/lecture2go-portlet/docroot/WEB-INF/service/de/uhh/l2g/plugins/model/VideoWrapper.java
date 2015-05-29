@@ -803,13 +803,43 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 	}
 
 	@Override
-	public java.lang.String getVttFile() {
-		return _video.getVttFile();
+	public java.lang.String getEmbedIframe() {
+		return _video.getEmbedIframe();
 	}
 
 	@Override
-	public void setVttFile(java.lang.String vttFile) {
-		_video.setVttFile(vttFile);
+	public void setEmbedIframe(java.lang.String embedIframe) {
+		_video.setEmbedIframe(embedIframe);
+	}
+
+	@Override
+	public java.lang.String getEmbedHtml5() {
+		return _video.getEmbedHtml5();
+	}
+
+	@Override
+	public void setEmbedHtml5(java.lang.String embedHtml5) {
+		_video.setEmbedHtml5(embedHtml5);
+	}
+
+	@Override
+	public java.lang.String getVttChapterFile() {
+		return _video.getVttChapterFile();
+	}
+
+	@Override
+	public void setVttChapterFile(java.lang.String vttChapterFile) {
+		_video.setVttChapterFile(vttChapterFile);
+	}
+
+	@Override
+	public java.lang.String getVttThumbsFilde() {
+		return _video.getVttThumbsFilde();
+	}
+
+	@Override
+	public void setVttThumbsFilde(java.lang.String vttThumbsFilde) {
+		_video.setVttThumbsFilde(vttThumbsFilde);
 	}
 
 	@Override

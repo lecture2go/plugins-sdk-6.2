@@ -62,6 +62,7 @@ public class ServerTemplateWrapper implements ServerTemplate,
 		attributes.put("templateFile", getTemplateFile());
 		attributes.put("templateIOS", getTemplateIOS());
 		attributes.put("templateAndroid", getTemplateAndroid());
+		attributes.put("defaultServer", getDefaultServer());
 
 		return attributes;
 	}
@@ -144,6 +145,12 @@ public class ServerTemplateWrapper implements ServerTemplate,
 
 		if (templateAndroid != null) {
 			setTemplateAndroid(templateAndroid);
+		}
+
+		Integer defaultServer = (Integer)attributes.get("defaultServer");
+
+		if (defaultServer != null) {
+			setDefaultServer(defaultServer);
 		}
 	}
 
@@ -425,6 +432,26 @@ public class ServerTemplateWrapper implements ServerTemplate,
 	@Override
 	public void setTemplateAndroid(long templateAndroid) {
 		_serverTemplate.setTemplateAndroid(templateAndroid);
+	}
+
+	/**
+	* Returns the default server of this server template.
+	*
+	* @return the default server of this server template
+	*/
+	@Override
+	public int getDefaultServer() {
+		return _serverTemplate.getDefaultServer();
+	}
+
+	/**
+	* Sets the default server of this server template.
+	*
+	* @param defaultServer the default server of this server template
+	*/
+	@Override
+	public void setDefaultServer(int defaultServer) {
+		_serverTemplate.setDefaultServer(defaultServer);
 	}
 
 	@Override

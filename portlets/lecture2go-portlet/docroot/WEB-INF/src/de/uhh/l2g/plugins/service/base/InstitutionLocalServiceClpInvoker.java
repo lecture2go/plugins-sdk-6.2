@@ -162,10 +162,14 @@ public class InstitutionLocalServiceClpInvoker {
 
 		_methodParameterTypes167 = new String[] { "int", "int" };
 
-		_methodName170 = "addInstitution";
+		_methodName168 = "getMaxSortByParentId";
 
-		_methodParameterTypes170 = new String[] {
-				"java.lang.String", "long", "long",
+		_methodParameterTypes168 = new String[] { "long" };
+
+		_methodName171 = "addInstitution";
+
+		_methodParameterTypes171 = new String[] {
+				"java.lang.String", "long", "long", "int",
 				"com.liferay.portal.service.ServiceContext"
 			};
 	}
@@ -341,12 +345,18 @@ public class InstitutionLocalServiceClpInvoker {
 				((Integer)arguments[1]).intValue());
 		}
 
-		if (_methodName170.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes170, parameterTypes)) {
+		if (_methodName168.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes168, parameterTypes)) {
+			return InstitutionLocalServiceUtil.getMaxSortByParentId(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName171.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes171, parameterTypes)) {
 			return InstitutionLocalServiceUtil.addInstitution((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(),
-				(com.liferay.portal.service.ServiceContext)arguments[3]);
+				((Integer)arguments[3]).intValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[4]);
 		}
 
 		throw new UnsupportedOperationException();
@@ -412,6 +422,8 @@ public class InstitutionLocalServiceClpInvoker {
 	private String[] _methodParameterTypes166;
 	private String _methodName167;
 	private String[] _methodParameterTypes167;
-	private String _methodName170;
-	private String[] _methodParameterTypes170;
+	private String _methodName168;
+	private String[] _methodParameterTypes168;
+	private String _methodName171;
+	private String[] _methodParameterTypes171;
 }

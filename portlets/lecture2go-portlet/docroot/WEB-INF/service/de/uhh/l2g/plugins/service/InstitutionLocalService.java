@@ -311,8 +311,12 @@ public interface InstitutionLocalService extends BaseLocalService,
 		int begin, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getMaxSortByParentId(long parentId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public de.uhh.l2g.plugins.model.Institution addInstitution(
-		java.lang.String name, long hostId, long parentId,
+		java.lang.String name, long hostId, long parentId, int sort,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

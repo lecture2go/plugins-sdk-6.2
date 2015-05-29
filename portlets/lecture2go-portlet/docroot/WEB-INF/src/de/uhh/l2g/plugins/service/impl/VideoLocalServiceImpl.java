@@ -239,7 +239,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			File fvlFile = new File(homedirPath + ".flv");
 			File oggFile = new File(homedirPath + ".ogg");
 			File webmFile = new File(homedirPath + ".webm");
-			String vttFile = new String(PropsUtil.get("lecture2go.chapters.web.root") +"/"+objectVideo.getVideoId()+".vtt");
+			String vttChapterFile = new String(PropsUtil.get("lecture2go.chapters.web.root") +"/"+objectVideo.getVideoId()+".vtt");
 			//
 			objectVideo.setMp4File(mp4File);
 			objectVideo.setMp3File(mp3File);
@@ -249,7 +249,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			objectVideo.setFlvFile(fvlFile);
 			objectVideo.setOggFile(oggFile);
 			objectVideo.setWebmFile(webmFile);
-			objectVideo.setVttFile(vttFile); 
+			objectVideo.setVttChapterFile(vttChapterFile);
 			//test
 		} catch (Exception e) {
 			//
@@ -349,6 +349,29 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			objectVideo.setOggRssLink(rssOggLink);
 			objectVideo.setFlvRssLink(rssFlvLink);
 		}
+		
+		//embed iframe
+		String embedIframe="&lt;iframe src='"+PropsUtil.get("lecture2go.web.root")+"/lecture2go-portlet/player/iframe/?v="+objectVideo.getVideoId()+"' width='647' height='373'&gt; &lt;/iframe&gt;";
+		objectVideo.setEmbedIframe(embedIframe);
+		
+		//embed html5
+		String embedHtml5="";
+		if(objectVideo.getDownloadLink()==1){
+			if(objectVideo.getContainerFormat().equals("mp4")){
+				if(objectVideo.getOpenAccess()==1){
+					embedHtml5="<video width='647' height='373' controls><source src='"+PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+objectVideo.getPreffix()+".mp4"+"' type='video/mp4'>Your browser does not support the video tag.</video>";
+				}else{
+					embedHtml5="<video width='647' height='373' controls><source src='"+PropsUtil.get("lecture2go.downloadserver.web.root")+"/videorep/"+objectHost.getName()+"/"+objectProducer.getHomeDir()+"/"+objectVideo.getSecureUrl()+"' type='video/mp4'>Your browser does not support the video tag.</video>";
+				}
+			}else{
+				if(objectVideo.getOpenAccess()==1){
+					embedHtml5="<audio controls><source src='"+PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+objectVideo.getPreffix()+".mp3"+"' type='audio/mpeg'>Your browser does not support the audio element.</audio>";
+				}else{
+					embedHtml5="<audio controls><source src='"+PropsUtil.get("lecture2go.downloadserver.web.root")+"/videorep/"+objectHost.getName()+"/"+objectProducer.getHomeDir()+"/"+objectVideo.getSecureUrl()+"' type='audio/mpeg'>Your browser does not support the audio element.</audio>";
+				}				
+			}
+		}
+		objectVideo.setEmbedHtml5(embedHtml5);
 		
 		return objectVideo;
 	}

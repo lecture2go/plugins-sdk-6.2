@@ -372,13 +372,19 @@ public class InstitutionLocalServiceWrapper implements InstitutionLocalService,
 	}
 
 	@Override
+	public int getMaxSortByParentId(long parentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _institutionLocalService.getMaxSortByParentId(parentId);
+	}
+
+	@Override
 	public de.uhh.l2g.plugins.model.Institution addInstitution(
-		java.lang.String name, long hostId, long parentId,
+		java.lang.String name, long hostId, long parentId, int sort,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _institutionLocalService.addInstitution(name, hostId, parentId,
-			serviceContext);
+			sort, serviceContext);
 	}
 
 	/**

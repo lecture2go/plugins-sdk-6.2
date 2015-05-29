@@ -150,6 +150,7 @@
 		<field name="templateFile" type="String" />
 		<field name="templateIOS" type="long" />
 		<field name="templateAndroid" type="long" />
+		<field name="defaultServer" type="int" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Sys">
 		<field name="sysId" type="int" />

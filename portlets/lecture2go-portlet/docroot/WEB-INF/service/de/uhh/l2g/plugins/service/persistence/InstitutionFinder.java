@@ -23,4 +23,6 @@ public interface InstitutionFinder {
 
 	public java.util.List<de.uhh.l2g.plugins.model.Institution> findAllSortedAsTree(
 		int begin, int end);
+
+	public int findMaxSortByParent(long parentId);
 }
