@@ -34,7 +34,7 @@ $dockbarOpenGradientEnd: #e9e9e9;
 .aui {
 	
 	#banner {
-		background: url("http://localhost:8080/lecture2go-theme/images/logo_l2go.png") no-repeat scroll right 0 top 0 rgba(0, 0, 0, 0);
+		background: url("/lecture2go-theme/images/logo_l2go.png") no-repeat scroll right 0 top 0 rgba(0, 0, 0, 0);
 		
 	}
 	
