@@ -608,7 +608,12 @@ public class ProzessManager {
 		// RSS generate for this lecture
 		RSSManager rssMan = new RSSManager();
 		String feedName = "";
-		rssMan.setTitle(LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId()).getName());
+		String title = "";
+		try{
+			title = LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId()).getName();
+		}catch(Exception e){}
+		
+		rssMan.setTitle(title);
 		try {
 			List<Video> videoList = VideoLocalServiceUtil.getByLectureseriesAndOpenaccess(video.getLectureseriesId(), 1);
 			
