@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE routes PUBLIC "-//Liferay//DTD Friendly URL Routes 6.1.0//EN" 
+"http://www.liferay.com/dtd/liferay-friendly-url-routes_6_1_0.dtd">
+
+<routes>
+    <route>
+        <pattern>/{objectType}/{objectId}</pattern>
+		<implicit-parameter name="p_p_id">lgopenaccessvideos_WAR_lecture2goportlet</implicit-parameter>
+		<implicit-parameter name="p_p_lifecycle">1</implicit-parameter>
+		<implicit-parameter name="p_p_state">normal</implicit-parameter>
+		<implicit-parameter name="p_p_mode">view</implicit-parameter>
+		<implicit-parameter name="p_p_col_id">column-1</implicit-parameter>
+		<implicit-parameter name="p_p_col_count">1</implicit-parameter>
+		<implicit-parameter name="javax.portlet.action">viewOpenAccessVideo</implicit-parameter>
+    </route>
+</routes>

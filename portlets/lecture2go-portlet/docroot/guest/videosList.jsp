@@ -40,14 +40,16 @@
 	<liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.Lectureseries" keyProperty="lectureseriesId" modelVar="lectser">
 		<liferay-ui:search-container-column-text>
 			<%
-				String vId = "";
-				String lId = "";
-				if(lectser.getLatestOpenAccessVideoId()<0) vId = lectser.getLectureseriesId()+"";
-				else lId = lectser.getLectureseriesId()+"";
+				String oId = "";
+				boolean isVideo = false;
+				
+				if(lectser.getLatestOpenAccessVideoId()<0) isVideo = true;
+				oId = lectser.getLectureseriesId()+"";
 			%>
 			<portlet:actionURL name="viewOpenAccessVideo" var="viewOpenAccessVideoURL">
-				<portlet:param name="videoId" value="<%=vId%>"/>
-				<portlet:param name="lectureseriesId" value="<%=lId%>"/>
+				<portlet:param name="objectId" value="<%=oId%>"/>
+				<%if(isVideo){%><portlet:param name="objectType" value="v"/><%}%>
+				<%if(!isVideo){%><portlet:param name="objectType" value="l"/><%}%>
 			</portlet:actionURL>
 			<a href="<%=viewOpenAccessVideoURL%>"><%=lectser.getName()%></a>
 			<br/>

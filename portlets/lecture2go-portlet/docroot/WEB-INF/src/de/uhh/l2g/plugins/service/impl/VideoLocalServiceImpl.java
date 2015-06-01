@@ -127,26 +127,26 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		try {
 			objectVideo = videoPersistence.findByPrimaryKey(videoId);
 		} catch (NoSuchModelException e1) {
-			e1.printStackTrace();
+//			e1.printStackTrace();
 		} catch (SystemException e1) {
-			e1.printStackTrace();
+//			e1.printStackTrace();
 		}
 		// add all properties to the video object
 		Host objectHost = new HostImpl();
 		try {
 			objectHost = HostLocalServiceUtil.getHost(objectVideo.getHostId());
 		} catch (PortalException e1) {
-			e1.printStackTrace();
+//			e1.printStackTrace();
 		} catch (SystemException e1) {
-			e1.printStackTrace();
+//			e1.printStackTrace();
 		}
 		Producer objectProducer = new ProducerImpl();
 		try {
 			objectProducer = producerPersistence.findByPrimaryKey(objectVideo.getProducerId());
 		} catch (NoSuchProducerException e1) {
-			e1.printStackTrace();
+//			e1.printStackTrace();
 		} catch (SystemException e1) {
-			e1.printStackTrace();
+//			e1.printStackTrace();
 		}
 
 		// prepare video short name
@@ -260,9 +260,9 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		try {
 			institudion = institutionPersistence.findByPrimaryKey(objectVideo.getRootInstitutionId());
 		} catch (NoSuchInstitutionException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		} catch (SystemException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		try {
 			if (webhome.contains("localhost"))
@@ -395,7 +395,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				jsonoMp4.put("type", "mp4");
 				json.put(jsonoMp4);
 			} catch (JSONException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 		}
 
@@ -408,7 +408,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				jsonoMp3.put("type", "mp3");
 				json.put(jsonoMp3);
 			} catch (JSONException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 		}
 		
@@ -421,7 +421,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				jsonoM4a.put("type", "m4a");
 				json.put(jsonoM4a);
 			} catch (JSONException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			} 
 		}
 
@@ -434,7 +434,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				jsonoM4v.put("type", "m4v");
 				json.put(jsonoM4v);
 			} catch (JSONException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 		}
 		
@@ -447,7 +447,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				pdf.put("type", "pdf");
 				json.put(pdf);
 			} catch (JSONException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 		}
 		
@@ -460,7 +460,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				flv.put("type", "flv");
 				json.put(flv);
 			} catch (JSONException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 		}
 		
@@ -473,7 +473,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				ogg.put("type", "ogg");
 				json.put(ogg);
 			} catch (JSONException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 		}
 		
@@ -486,7 +486,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				webm.put("type", "webm");
 				json.put(webm);
 			} catch (JSONException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 		}
 		return json;
