@@ -48,7 +48,7 @@ public class OpenAccessVideos extends MVCPortlet {
 	    	}catch(Exception e){}
 	    }else if(objectType.equals("v")){
 	    	video = VideoLocalServiceUtil.getFullVideo(objectId);
-	    	lectureseries = LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId());
+	    	try{lectureseries = LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId());}catch(Exception e){}
 	    }
 	    
 	    List<Video> relatedVideos = new ArrayList<Video>();
