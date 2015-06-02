@@ -158,8 +158,8 @@
 		 <div class="list-group" style="margin: 5px;">
 			<c:forEach items="${relatedVideos}" var="vid">
 				<portlet:actionURL name="viewOpenAccessVideo" var="viewOpenAccessVideoURL">
-					<portlet:param name="videoId" value="${vid.videoId}"/>
-					<portlet:param name="lectureseriesId" value="${vid.lectureseriesId}"/>
+					<portlet:param name="objectId" value="${vid.videoId}"/>
+					<portlet:param name="objectType" value="v"/>
 				</portlet:actionURL>		
 				<c:choose>
 				<c:when test="${video.videoId==vid.videoId}"><a href="#" class="list-group-item active" style="padding-left: 10px; padding-top: 5px; padding-bottom: 5px;"></c:when>
