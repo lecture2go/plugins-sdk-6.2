@@ -75,21 +75,15 @@ for (int i = 0; i < institutions.size(); i++) {
 }
 
 long parent = topLevel.getPrimaryKey();
-<<<<<<< Upstream, based on origin/master
-int maxOrder = 0;
 
-if (institutionId > 0) {
-=======
-int maxOrder = 20 ;
+int maxOrder = 0;
 if (institutionId > 1) {
->>>>>>> 3aef040 Institution Counter
 	Institution selectedInstitution = InstitutionLocalServiceUtil.getById(institutionId);
 	maxOrder = selectedInstitution.getSort();
 }
 else{
 	maxOrder = InstitutionLocalServiceUtil.getMaxSortByParentId(topLevel.getInstitutionId())+1;
 	}
-
 %>
 
 <liferay-ui:panel title="Edit Institution Settings" collapsible="true" id="institutionSettings"
