@@ -9,6 +9,7 @@
 <jsp:useBean id="lectureseries" type="de.uhh.l2g.plugins.model.Lectureseries" scope="request" />
 <jsp:useBean id="videoLicense" type="de.uhh.l2g.plugins.model.License" scope="request" />
 
+
 <div class="col-xs-10 col-md-10">
     <div id="pfad">
     	<%
@@ -20,7 +21,13 @@
 	    			Institution insti = InstitutionLocalServiceUtil.getById(institutions.get(j).getInstitutionId());    			
 	    			Institution pInst = InstitutionLocalServiceUtil.getById(institutions.get(j).getParentId());
 		    		%>
-			    	<A HREF="#" CLASS="apath"><%=pInst.getName() %></A><span class="sep">&gt;</span> <A HREF="#" CLASS="apath"><%=insti.getName() %></A> 
+		    		<portlet:renderURL var="backURL">
+						<portlet:param name="jspPage" value="/guest/videosList.jsp" />
+						<portlet:param name="institutionId" value="<%=insti.getInstitutionId()+\"\"%>"/>
+						<portlet:param name="parentInstitutionId" value="<%=pInst.getInstitutionId()+\"\"%>"/>
+					</portlet:renderURL>
+			    	<A HREF="<%=backURL%>" CLASS="apath"><%=pInst.getName() %></A><span class="sep">&gt;</span> 
+			    	<A HREF="<%=backURL%>" CLASS="apath"><%=insti.getName() %></A> 
 			    	<%if(lec.getLectureseriesId()>0) {%>
 			    		<span class="sep">&gt;</span> <SPAN CLASS="paththispage"><%=lec.getName()%></SPAN>
 			    	<%}%>
@@ -43,17 +50,22 @@
 <div class="col-md-7" style="margin-bottom:10px">
     <div id="main" >
       <h3 style="margin-top:10px; margin-bottom:2px">${video.title}</h3>
+	  <p>
+	      <div class="player">
+				<%@ include file="/player/includePlayer.jsp"%>
+		  </div>
+	  </p>	
       <h5 data-date="12.11.2013" style="margin-top:0px; margin-bottom:10px">${video.creators}</h5>
       <h5 style="margin-top:0px;">${lectureseries.name}</h5>
-		
 	  <%if(videoMetadata.getDescription().trim().length()>0){ %>	
 	  	<p>${videoMetadata.description}</p>
 	  <%}else{%>
       	<p>${lectureseries.longDesc}</p>
 	  <%}%>
 	  
-	  <p><br /></p>
-
+	  <p>
+	  </p>
+      
       <span>
         <%if(videoLicense.getL2go()==1){%>
         	<a href="#"><img id="myTooltip" title="lecture2Go-license-click-for-info" src="/lecture2go-portlet/img/l2go-lizenz-88x31.png" style="width:50px; opacity:0.5; float:right; margin-top:5px; margin-right:2px;"/></a>
@@ -153,8 +165,8 @@
 		 <div class="list-group" style="margin: 5px;">
 			<c:forEach items="${relatedVideos}" var="vid">
 				<portlet:actionURL name="viewOpenAccessVideo" var="viewOpenAccessVideoURL">
-					<portlet:param name="videoId" value="${vid.videoId}"/>
-					<portlet:param name="lectureseriesId" value="${vid.lectureseriesId}"/>
+					<portlet:param name="objectId" value="${vid.videoId}"/>
+					<portlet:param name="objectType" value="v"/>
 				</portlet:actionURL>		
 				<c:choose>
 				<c:when test="${video.videoId==vid.videoId}"><a href="#" class="list-group-item active" style="padding-left: 10px; padding-top: 5px; padding-bottom: 5px;"></c:when>

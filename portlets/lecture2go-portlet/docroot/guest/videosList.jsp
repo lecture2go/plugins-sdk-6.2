@@ -1,3 +1,5 @@
+<%@page import="com.liferay.portal.kernel.servlet.ServletRequestUtil"%>
+<%@page import="com.liferay.portal.service.persistence.PortletUtil"%>
 <%@include file="/init.jsp"%>
 
 <%
@@ -14,16 +16,24 @@
 		ArrayList<Long> creatorIds =  new ArrayList<Long>();
 		//creatorIds.add(new Long(1));
 		//creatorIds.add(new Long(2));
+		
 		//institution 
-		Long institutionId = new Long(0);
-		Long parentInstitutionId = new Long(0);
+		Long institutionId = ServletRequestUtils.getLongParameter(request, "institutionId", 0);
+		String test = ServletRequestUtils.getStringParameter(request, "institutionId", "");
+
+		System.out.print(test);
+		//parentInstitutionId
+		Long parentInstitutionId = ServletRequestUtils.getLongParameter(request, "parentInstitutionId", 0);
+		
 		//institutionId = new Long(74);
 		//parentInstitutionId = new Long(3);
 		//return list
 		List<Lectureseries> reqLectureseries = LectureseriesLocalServiceUtil.getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(institutionId, parentInstitutionId, termIds, categoryIds, creatorIds);
 
 		List<Lectureseries> tempLectureseriesList = new ArrayList();
+		
 		PortletURL portletURL = renderResponse.createRenderURL();
+		
 %>
 
 <liferay-ui:search-container emptyResultsMessage="no-lectureseries-found" delta="5" iteratorURL="<%=portletURL %>">
@@ -40,14 +50,16 @@
 	<liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.Lectureseries" keyProperty="lectureseriesId" modelVar="lectser">
 		<liferay-ui:search-container-column-text>
 			<%
-				String vId = "";
-				String lId = "";
-				if(lectser.getLatestOpenAccessVideoId()<0) vId = lectser.getLectureseriesId()+"";
-				else lId = lectser.getLectureseriesId()+"";
+				String oId = "";
+				boolean isVideo = false;
+				
+				if(lectser.getLatestOpenAccessVideoId()<0) isVideo = true;
+				oId = lectser.getLectureseriesId()+"";
 			%>
 			<portlet:actionURL name="viewOpenAccessVideo" var="viewOpenAccessVideoURL">
-				<portlet:param name="videoId" value="<%=vId%>"/>
-				<portlet:param name="lectureseriesId" value="<%=lId%>"/>
+				<portlet:param name="objectId" value="<%=oId%>"/>
+				<%if(isVideo){%><portlet:param name="objectType" value="v"/><%}%>
+				<%if(!isVideo){%><portlet:param name="objectType" value="l"/><%}%>
 			</portlet:actionURL>
 			<a href="<%=viewOpenAccessVideoURL%>"><%=lectser.getName()%></a>
 			<br/>

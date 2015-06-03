@@ -33,25 +33,26 @@ import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 public class OpenAccessVideos extends MVCPortlet {
 	
 	public void viewOpenAccessVideo(ActionRequest request, ActionResponse response) throws SystemException, PortalException {
-	    Long videoId = ParamUtil.getLong(request, "videoId");
-	    Long lectureseriesId = ParamUtil.getLong(request, "lectureseriesId");
+	    Long objectId = ParamUtil.getLong(request, "objectId");
+	    String objectType = ParamUtil.getString(request, "objectType");
+	   
 	    Video video = new VideoImpl();
 	    //lecture series object
 	    Lectureseries lectureseries = new LectureseriesImpl();
-	    try{
-	    	lectureseries = LectureseriesLocalServiceUtil.getLectureseries(lectureseriesId);
-	    }catch(Exception e){}
+	    
+	    //Lecture series
+	    if(objectType.equals("l")){
+	    	try{
+	    		lectureseries = LectureseriesLocalServiceUtil.getLectureseries(objectId);
+	    		video = VideoLocalServiceUtil.getFullVideo(lectureseries.getLatestOpenAccessVideoId());
+	    	}catch(Exception e){}
+	    }else if(objectType.equals("v")){
+	    	video = VideoLocalServiceUtil.getFullVideo(objectId);
+	    	try{lectureseries = LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId());}catch(Exception e){}
+	    }
+	    
 	    List<Video> relatedVideos = new ArrayList<Video>();
-	    Long objectId = new Long(0);
-	    	video = VideoLocalServiceUtil.getFullVideo(videoId);
-	    	if(video.getVideoId()>0){
-	    		//video object
-	    		objectId = video.getVideoId();
-	    	}else{
-	    		objectId = lectureseries.getLatestOpenAccessVideoId();
-	    		video = VideoLocalServiceUtil.getFullVideo(objectId);
-	    	}
-    	//related videos by lectureseries id
+	    //related videos by lectureseries id
     	relatedVideos = VideoLocalServiceUtil.getByLectureseriesAndOpenaccess(lectureseries.getLectureseriesId(),1);
 	    
 	    //chapters and segments

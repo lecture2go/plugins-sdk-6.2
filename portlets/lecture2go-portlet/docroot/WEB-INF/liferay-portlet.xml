@@ -38,14 +38,20 @@
 	
 	<portlet>
 		<portlet-name>lg-open-access-videos</portlet-name>
+		
+		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
+		<friendly-url-mapping>object</friendly-url-mapping>
+		<friendly-url-routes>de/uhh/l2g/lg-open-access-videos-friendly-url-routes.xml</friendly-url-routes>
+		
 		<instanceable>false</instanceable>
 		<private-request-attributes>false</private-request-attributes>
 
-		<header-portlet-javascript>/js/jquery-1.11.1.min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/jquery-2.1.4.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/jquery.tmpl.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/jquery-ui-1.10.3.custom.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/bootstrap.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/jquery.socialshareprivacy.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/qrc.js</header-portlet-javascript>
+		<header-portlet-javascript>/player/jwplayer/jwplayer.js</header-portlet-javascript>
 	</portlet>
 </liferay-portlet-app>

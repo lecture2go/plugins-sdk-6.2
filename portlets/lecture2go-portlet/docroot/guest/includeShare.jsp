@@ -25,38 +25,42 @@
 					<div id="c2g">
 						<ul>
 							<li>
-								<label class="citation-label">citation-start</label>
-								<input type="text" id="clipStartTime" onclick="updateL2GoTimeForStart();" title="citation2go-set-start-point" name="citation2go-set-start-point" value="click" size="5" maxlength="7" readonly/>
+								<aui:input name="segmentBegin" label="citation-start" required="false" id="timeStart" readonly="true"/>
 							</li>
 							<li>
-								<label class="citation-label">citation-end</label>
-								<input type="text" id="clipEndTime" onclick="updateL2GoTimeForEnd();" title="citation2go-set-end-point" name="citation2go-set-end-point" value="click" size="5" maxlength="7" readonly/>
+								<aui:input name="segmentEnd" label="citation-end" required="false" id="timeEnd" readonly="true"/>
 							</li>
 							<li>
-								<label class="citation-label">url</label>
-								<input type="text" id="zitat" name="embed_code5" title="citation2go-title" value="" onclick="document.embedForm.embed_code5.focus();document.embedForm.embed_code5.select();" readonly />
+								<aui:input name="citation" label="citation" required="false" id="citation" readonly="true" onclick="document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_citation.focus(); document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_citation.select();"/>
 							</li>
 						</ul>
 					</div>
 				</div>
 		</c:if>
 		<!-- citation2go allowed end-->
-
+		<!-- embed start -->
 			<div class="sharetile">
 				<p class="tileheading">links</p>
 				<div id="urls">
 					<ul>
 						<li>
-							<label class="citation-label">url </label>
+							<label>url </label>
 							<input id="embed_code3" name="embed_code3" title="url-address-title" type="text" value="${video.url}" onclick="document.embedForm.embed_code3.focus();document.embedForm.embed_code3.select();" readonly />
 						</li>
 						<li>
-							<label class="citation-label">embed </label>
-							<input id="embed_code" name="embed_code" title="embed-title" type="text" value="#" readonly />
+							<label>embed-iframe </label>
+							<input id="embed_code" name="embed_code" title="embed-iframe-title" type="text" value="${video.embedIframe}" onclick="document.embedForm.embed_code.focus();document.embedForm.embed_code.select();" readonly />
 						</li>
+						<c:if test="${video.downloadLink==1}">
+							<li>
+								<label>embed-html5 </label>
+								<input id="embed_code1" name="embed_code1" title="embed-html5-title" type="text" value="${video.embedHtml5}" onclick="document.embedForm.embed_code1.focus();document.embedForm.embed_code1.select();" readonly />
+							</li>
+						</c:if>
 					</ul>
 				</div>
 			</div>
+		<!-- embed end -->
 	</form>
 
 	<br/>
