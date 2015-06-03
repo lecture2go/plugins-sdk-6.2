@@ -75,8 +75,8 @@ for (int i = 0; i < institutions.size(); i++) {
 }
 
 long parent = topLevel.getPrimaryKey();
-int maxOrder = 0;
-if (institutionId > 0) {
+int maxOrder = 20 ;
+if (institutionId > 1) {
 	Institution selectedInstitution = InstitutionLocalServiceUtil.getById(institutionId);
 	maxOrder = selectedInstitution.getSort();
 }
@@ -102,7 +102,7 @@ else{
             </aui:select>
             <aui:input name="order" label="Order" inlineField="true" value='<%= maxOrder %>'/>
             <aui:input name='institutionId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "institutionId") %>'/>
-             <aui:input name='parent' type='hidden' inlineField="true" value='<%= parent %>'/>
+            <aui:input name='parent' type='hidden' inlineField="true" value='<%= parent %>'/>
 			<aui:button type="submit" value="Add" ></aui:button>
 			<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button>
         </aui:fieldset>
@@ -215,6 +215,9 @@ deltaConfigurable="true">
  			long institution_id = institution_row.getInstitutionId();
  			String id_row = "Inst"+String.valueOf(institution_row.getInstitutionId());
  			String curParam_row = "curInner"+String.valueOf(institution_row.getInstitutionId());
+ 			long outerOrder = institution_row.getSort();
+ 			int subInstitutionMax = InstitutionLocalServiceUtil.getMaxSortByParentId(institution_id)+1;
+
 
  		%>
 
@@ -226,14 +229,16 @@ deltaConfigurable="true">
 
  		<aui:form action="<%= updateInstitutionEntryURL %>" name="<portlet:namespace />fm">
  			<aui:fieldset>
-				<aui:input name="institution" label="Institution Name" inlineField="true" value = "<%= institution.getName() %>" />
-				<aui:input name="streamer" label="Streamer" inlineField="true" value = "<%= institution.getTyp() %>" disabled="true"/>
+				<aui:input name="outerListInstitution" label="Institution Name" inlineField="true" value = "<%= institution.getName() %>" />
+				<aui:input name="outerListOrder" label="Order" inlineField="true" value='<%= outerOrder %>'/>
+				<aui:input name="outerListStreamer" label="Streamer" inlineField="true" value = "<%= institution.getTyp() %>" disabled="true"/>
 				<aui:button type="submit"></aui:button>
 			</aui:fieldset>
  		</aui:form>
  		<aui:form action="<%= addSubInstitutionEntryURL %>" name="<portlet:namespace />fm">
  			<aui:fieldset>
-				<aui:input name="subinstitution" label="SubInstitution Name" inlineField="true" />
+				<aui:input name="subInstitution" label="SubInstitution Name" inlineField="true" />
+				<aui:input name="subInstitutionOrder" label="Order" inlineField="true" value='<%= subInstitutionMax  %>'/>
 				<aui:button type="submit" value="Add"></aui:button>
 			</aui:fieldset>
  		</aui:form>
@@ -271,6 +276,7 @@ deltaConfigurable="true">
         			 <aui:form action="<%= updateSubInstitutionEntryURL %>" name="<portlet:namespace />fm">
  						<aui:fieldset>
 							<aui:input name="institution" label="Institution Name" inlineField="true" value = "<%= subInstitution.getName() %>" />
+							<aui:input name="innerListOrder" label="Order" inlineField="true" value='<%= subInstitution.getSort() %>'/>
 							<aui:button type="submit"></aui:button>
 						</aui:fieldset>
  						</aui:form>
