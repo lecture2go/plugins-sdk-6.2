@@ -102,7 +102,6 @@ public class AdminInstitutionManagement extends MVCPortlet {
 	        }
 
 		    //System.out.println(ServerTemplateLocalServiceUtil.getDefaultServersByGroupId(groupId));
-
 		    renderRequest.setAttribute("institutionId", institutionId);
 		    renderRequest.setAttribute("hostId", hostId);
 		    renderRequest.setAttribute("serverTemplateId", serverTemplateId);

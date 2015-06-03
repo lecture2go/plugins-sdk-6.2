@@ -87,6 +87,7 @@ public class InstitutionFinderImpl extends BasePersistenceImpl<Institution> impl
 
 	public int findMaxSortByParent(long parentId) {
 		Session session = null;
+		int out = 0;
 		try {
 			session = openSession();
 			String sql = CustomSQLUtil.get(FIND_MAX_SORT_BY_PARENT);
@@ -98,14 +99,14 @@ public class InstitutionFinderImpl extends BasePersistenceImpl<Institution> impl
 			Iterator<?> itr = q.list().iterator();
 
 	        if (itr.hasNext()) {
-	          Long count = (Long)itr.next();
+	          Integer count = (Integer)itr.next();
 
 	          if (count != null) {
 	            return count.intValue();
 	          }
 	        }
 
-	        return 0;
+	        return out;
 	      } catch (Exception e) {
 			try {
 				throw new SystemException(e);
@@ -115,7 +116,7 @@ public class InstitutionFinderImpl extends BasePersistenceImpl<Institution> impl
 		} finally {
 			closeSession(session);
 		}
-		return 0;
+		return out;
 	}
 
 	private List<Institution> assembleInstitutionsWithPath(List<Object[]> objectList){
