@@ -13,4 +13,4 @@
 		<implicit-parameter name="p_p_col_count">1</implicit-parameter>
 		<implicit-parameter name="javax.portlet.action">viewOpenAccessVideo</implicit-parameter>
     </route>
-</routes>
+</routes> 
