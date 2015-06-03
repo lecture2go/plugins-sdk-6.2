@@ -256,27 +256,34 @@
 	</liferay-ui:search-container-results>
 	
 	<liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.Lectureseries" keyProperty="lectureseriesId" modelVar="lectser">
-	
-	<liferay-ui:search-container-column-text>
-			<%
-				String oId = "";
-				boolean isVideo = false;
-				
-				if(lectser.getLatestOpenAccessVideoId()<0) isVideo = true;
+		<%
+			String oId = "";
+			boolean isVideo = false;
+			Video vidDummy = new VideoImpl();
+			if(lectser.getLatestOpenAccessVideoId()<0){
+				isVideo = true;
+				vidDummy = VideoLocalServiceUtil.getFullVideo(lectser.getLectureseriesId());
+			}else{
 				oId = lectser.getLectureseriesId()+"";
-			%>
-			<portlet:actionURL name="viewOpenAccessVideo" var="viewOpenAccessVideoURL">
-				<portlet:param name="objectId" value="<%=oId%>"/>
-				<%if(isVideo){%><portlet:param name="objectType" value="v"/><%}%>
-				<%if(!isVideo){%><portlet:param name="objectType" value="l"/><%}%>
-			</portlet:actionURL>
-			<a href="<%=viewOpenAccessVideoURL%>"><%=lectser.getName()%></a>
-			<br/>
-			<%
-				if(lectser.getLatestOpenAccessVideoId()<0){%>video id = <%=lectser.getLectureseriesId()%><%}
-				else{%>lecture series id = <%=lectser.getLectureseriesId()%><%}
-			%>		
+				vidDummy = VideoLocalServiceUtil.getFullVideo(lectser.getLatestOpenAccessVideoId());
+			}
+		%>
+		<liferay-ui:search-container-column-text>
+			<img alt="" src="<%=vidDummy.getImageSmall()%>">
 		</liferay-ui:search-container-column-text>
+		<liferay-ui:search-container-column-text>
+				<portlet:actionURL name="viewOpenAccessVideo" var="viewOpenAccessVideoURL">
+					<portlet:param name="objectId" value="<%=oId%>"/>
+					<%if(isVideo){%><portlet:param name="objectType" value="v"/><%}%>
+					<%if(!isVideo){%><portlet:param name="objectType" value="l"/><%}%>
+				</portlet:actionURL>
+				<a href="<%=viewOpenAccessVideoURL%>"><%=lectser.getName()%></a>
+				<br/>
+				<%
+					if(lectser.getLatestOpenAccessVideoId()<0){%>video id = <%=lectser.getLectureseriesId()%><%}
+					else{%>lecture series id = <%=lectser.getLectureseriesId()%><%}
+				%>		
+			</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
