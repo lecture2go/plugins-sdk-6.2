@@ -20,8 +20,11 @@ import java.util.List;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.SystemException;
 
+import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Term;
 import de.uhh.l2g.plugins.service.base.TermLocalServiceBaseImpl;
+import de.uhh.l2g.plugins.service.persistence.InstitutionFinderUtil;
+import de.uhh.l2g.plugins.service.persistence.TermFinderUtil;
 
 /**
  * The implementation of the term local service.
@@ -52,5 +55,9 @@ public class TermLocalServiceImpl extends TermLocalServiceBaseImpl {
 	
 	public Term getById(Long termId) throws NoSuchModelException, SystemException{
 		return termPersistence.findByPrimaryKey(termId);
+	}
+	
+	public List<Term> getTermsFromLectureseriesIdsAndVideoIds(ArrayList<Long> lectureseriesIds, ArrayList<Long> videoIds) {
+		return TermFinderUtil.findTermsByLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds);
 	}
 }

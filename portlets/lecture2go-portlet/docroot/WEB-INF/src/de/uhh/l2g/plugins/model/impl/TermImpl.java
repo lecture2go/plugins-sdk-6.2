@@ -29,6 +29,13 @@ public class TermImpl extends TermBaseImpl {
 	 *
 	 * Never reference this class directly. All methods that expect a term model instance should use the {@link de.uhh.l2g.plugins.model.Term} interface instead.
 	 */
-	public TermImpl() {
+
+	/**
+	 * @return the full termName (prefix + year)
+	 */
+	public String getTermName() {
+		return this.getPrefix() + " " + this.getYear();
+		
 	}
+	
 }

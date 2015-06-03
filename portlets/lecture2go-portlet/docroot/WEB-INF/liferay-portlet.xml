@@ -32,4 +32,14 @@
 		<header-portlet-javascript>/js/jquery.tmpl.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/jquery-ui-1.10.3.custom.min.js</header-portlet-javascript>
 	</portlet>
+	
+		<portlet>
+		<portlet-name>lg-open-access-videos</portlet-name>
+		<instanceable>false</instanceable>
+		<private-request-attributes>false</private-request-attributes>
+
+		<header-portlet-javascript>/js/jquery-1.11.1.min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/jquery.tmpl.min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/jquery-ui-1.10.3.custom.min.js</header-portlet-javascript>
+	</portlet>
 </liferay-portlet-app>

@@ -13,7 +13,7 @@
 <%@ page import="javax.portlet.PortletPreferences"%>
 <%@ page import="com.liferay.util.PwdGenerator"%>
 
-
+<%@ page import="java.util.Arrays"%>
 <%@ page import="java.util.Enumeration"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.Map"%>
@@ -22,7 +22,12 @@
 <%@ page import="java.util.Collections"%>
 <%@ page import="java.util.Locale"%>
 <%@ page import="java.util.LinkedHashMap"%>
+<%@ page import="java.util.HashSet"%>
 <%@ page import="java.lang.String"%>
+
+<%@ page import="org.apache.commons.beanutils.BeanToPropertyValueTransformer"%>
+<%@ page import="org.apache.commons.collections.CollectionUtils"%>
+
 
 <%@ page import="javax.portlet.PortletURL"%>
 <%@ page import="javax.portlet.PortletException"%>
@@ -59,6 +64,8 @@
 <%@ page import="org.springframework.scripting.config.LangNamespaceUtils"%>
 <%@ page import="org.springframework.web.bind.ServletRequestUtils"%>
 <%@ page import="org.springframework.web.portlet.bind.PortletRequestUtils"%>
+<%-- <%@ page import="org.springframework.util.CollectionUtils"%> --%>
+
 
 <%@ page import="de.uhh.l2g.plugins.admin.AdminUserManagement"%>
 <%@ page import="de.uhh.l2g.plugins.service.ProducerLocalServiceUtil"%>

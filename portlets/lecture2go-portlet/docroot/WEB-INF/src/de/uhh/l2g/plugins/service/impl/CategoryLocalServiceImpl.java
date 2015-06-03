@@ -17,10 +17,12 @@ package de.uhh.l2g.plugins.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.SystemException;
 
 import de.uhh.l2g.plugins.model.Category;
 import de.uhh.l2g.plugins.service.base.CategoryLocalServiceBaseImpl;
+import de.uhh.l2g.plugins.service.persistence.CategoryFinderUtil;
 
 /**
  * The implementation of the category local service.
@@ -52,6 +54,14 @@ public class CategoryLocalServiceImpl extends CategoryLocalServiceBaseImpl {
 		List<Category> cl = new ArrayList<Category>();
 		cl = categoryPersistence.findByName(name);
 		return cl;
+	}
+	
+	public Category getById(Long categoryId) throws NoSuchModelException, SystemException {
+		return categoryPersistence.findByPrimaryKey(categoryId);
+	}
+	
+	public List<Category> getCategoriesFromLectureseriesIdsAndVideoIds(ArrayList<Long> lectureseriesIds, ArrayList<Long> videoIds) {
+		return CategoryFinderUtil.findCategoriesByLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds);
 	}
 	
 }
