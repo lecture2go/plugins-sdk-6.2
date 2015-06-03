@@ -203,6 +203,39 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 	}
 
 
+	protected int updateSort(Institution inst, int newpos) throws SystemException{
+		int validPosition = 0;
+
+		System.out.println(inst.getSort());
+		int subElements = InstitutionLocalServiceUtil.getByGroupIdAndParentCount(inst.getGroupId(), inst.getParentId());
+
+		if (subElements < 1) validPosition = 1; // There is nothing to reorder and only one valid position
+		else{ // sort Elements newpos = 1 => shift all, newpos > max attach at back
+			List<Institution> subtree = InstitutionLocalServiceUtil.getByGroupIdAndParent(inst.getGroupId(), inst.getParentId());
+
+			int curPos = 1;
+			int increment = 0;
+			for (Institution subInstitution: subtree){
+				 if (newpos <= curPos){ //insert new Institution here
+					 validPosition = curPos;
+					 increment = 1;
+				 }
+				 subInstitution.setSort(curPos + increment);
+				 institutionPersistence.update(subInstitution);
+				 System.out.println(subInstitution.getInstitutionId() +" "+ subInstitution.getName()+ " " + curPos + " "+ increment);
+				 curPos++;
+
+			}
+			if (increment == 0) validPosition = curPos;
+
+		}
+
+
+		System.out.println(validPosition);
+
+		return validPosition;
+	}
+
 	public Institution addInstitution(String name, long hostId, long parentId, int sort, ServiceContext serviceContext) throws SystemException, PortalException {
 
 		long groupId = serviceContext.getScopeGroupId();
@@ -281,6 +314,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		        		institutionId);
 
 		        updateSort(institution, 0);
+
 		        institution = deleteInstitution(institutionId);
 
 		        return institution;

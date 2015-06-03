@@ -75,9 +75,14 @@ for (int i = 0; i < institutions.size(); i++) {
 }
 
 long parent = topLevel.getPrimaryKey();
+<<<<<<< Upstream, based on origin/master
 int maxOrder = 0;
 
 if (institutionId > 0) {
+=======
+int maxOrder = 20 ;
+if (institutionId > 1) {
+>>>>>>> 3aef040 Institution Counter
 	Institution selectedInstitution = InstitutionLocalServiceUtil.getById(institutionId);
 	maxOrder = selectedInstitution.getSort();
 }
@@ -104,7 +109,7 @@ else{
             </aui:select>
             <aui:input name="order" label="Order" inlineField="true" value='<%= maxOrder %>'/>
             <aui:input name='institutionId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "institutionId") %>'/>
-             <aui:input name='parent' type='hidden' inlineField="true" value='<%= parent %>'/>
+            <aui:input name='parent' type='hidden' inlineField="true" value='<%= parent %>'/>
 			<aui:button type="submit" value="Add" ></aui:button>
 			<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button>
         </aui:fieldset>
