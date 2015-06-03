@@ -31,6 +31,14 @@ public class InstitutionFinderUtil {
 		return getFinder().findAllSortedAsTree(begin, end);
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.Institution> findInstitutionsByLectureseriesIdsAndVideoIds(
+		java.util.ArrayList<java.lang.Long> lectureseriesIds,
+		java.util.ArrayList<java.lang.Long> videoIds) {
+		return getFinder()
+				   .findInstitutionsByLectureseriesIdsAndVideoIds(lectureseriesIds,
+			videoIds);
+	}
+
 	public static InstitutionFinder getFinder() {
 		if (_finder == null) {
 			_finder = (InstitutionFinder)PortletBeanLocatorUtil.locate(de.uhh.l2g.plugins.service.ClpSerializer.getServletContextName(),

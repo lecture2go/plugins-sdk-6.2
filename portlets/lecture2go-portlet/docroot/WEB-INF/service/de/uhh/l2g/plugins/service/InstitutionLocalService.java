@@ -282,6 +282,11 @@ public interface InstitutionLocalService extends BaseLocalService,
 		int begin, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<de.uhh.l2g.plugins.model.Institution> getInstitutionsFromLectureseriesIdsAndVideoIds(
+		java.util.ArrayList<java.lang.Long> lectureseriesIds,
+		java.util.ArrayList<java.lang.Long> videoIds);
+
 	public de.uhh.l2g.plugins.model.Institution addInstitution(
 		java.lang.String name, java.lang.String streamer,
 		com.liferay.portal.service.ServiceContext serviceContext)

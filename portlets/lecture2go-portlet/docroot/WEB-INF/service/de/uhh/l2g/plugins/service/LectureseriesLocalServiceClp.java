@@ -151,6 +151,13 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 				"java.lang.Long", "java.lang.Long", "java.util.ArrayList",
 				"java.util.ArrayList", "java.util.ArrayList"
 			};
+
+		_methodName26 = "getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString";
+
+		_methodParameterTypes26 = new String[] {
+				"java.lang.Long", "java.lang.Long", "java.lang.Long",
+				"java.lang.Long", "java.lang.Long"
+			};
 	}
 
 	@Override
@@ -906,6 +913,43 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 		return (java.util.List<de.uhh.l2g.plugins.model.Lectureseries>)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(
+		java.lang.Long institutionId, java.lang.Long parentInstitutionId,
+		java.lang.Long termId, java.lang.Long categoryId,
+		java.lang.Long creatorId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
+					new Object[] {
+						ClpSerializer.translateInput(institutionId),
+						
+					ClpSerializer.translateInput(parentInstitutionId),
+						
+					ClpSerializer.translateInput(termId),
+						
+					ClpSerializer.translateInput(categoryId),
+						
+					ClpSerializer.translateInput(creatorId)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<de.uhh.l2g.plugins.model.Lectureseries>)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -957,4 +1001,6 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 	private String[] _methodParameterTypes24;
 	private String _methodName25;
 	private String[] _methodParameterTypes25;
+	private String _methodName26;
+	private String[] _methodParameterTypes26;
 }

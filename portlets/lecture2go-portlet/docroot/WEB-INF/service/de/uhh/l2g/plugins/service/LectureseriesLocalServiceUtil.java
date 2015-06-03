@@ -318,6 +318,15 @@ public class LectureseriesLocalServiceUtil {
 			parentInstitutionId, termIds, categoryIds, creatorIds);
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(
+		java.lang.Long institutionId, java.lang.Long parentInstitutionId,
+		java.lang.Long termId, java.lang.Long categoryId,
+		java.lang.Long creatorId) {
+		return getService()
+				   .getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(institutionId,
+			parentInstitutionId, termId, categoryId, creatorId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

@@ -3,6 +3,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 	<bean id="de.uhh.l2g.plugins.service.CategoryLocalService" class="de.uhh.l2g.plugins.service.impl.CategoryLocalServiceImpl" />
 	<bean id="de.uhh.l2g.plugins.service.persistence.CategoryPersistence" class="de.uhh.l2g.plugins.service.persistence.CategoryPersistenceImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.CategoryFinder" class="de.uhh.l2g.plugins.service.persistence.CategoryFinderImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.CoordinatorLocalService" class="de.uhh.l2g.plugins.service.impl.CoordinatorLocalServiceImpl" />
 	<bean id="de.uhh.l2g.plugins.service.persistence.CoordinatorPersistence" class="de.uhh.l2g.plugins.service.persistence.CoordinatorPersistenceImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.CreatorLocalService" class="de.uhh.l2g.plugins.service.impl.CreatorLocalServiceImpl" />
@@ -45,6 +46,7 @@
 	<bean id="de.uhh.l2g.plugins.service.persistence.TagcloudPersistence" class="de.uhh.l2g.plugins.service.persistence.TagcloudPersistenceImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.TermLocalService" class="de.uhh.l2g.plugins.service.impl.TermLocalServiceImpl" />
 	<bean id="de.uhh.l2g.plugins.service.persistence.TermPersistence" class="de.uhh.l2g.plugins.service.persistence.TermPersistenceImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.TermFinder" class="de.uhh.l2g.plugins.service.persistence.TermFinderImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.UploadLocalService" class="de.uhh.l2g.plugins.service.impl.UploadLocalServiceImpl" />
 	<bean id="de.uhh.l2g.plugins.service.persistence.UploadPersistence" class="de.uhh.l2g.plugins.service.persistence.UploadPersistenceImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.VideoLocalService" class="de.uhh.l2g.plugins.service.impl.VideoLocalServiceImpl" />

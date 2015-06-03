@@ -13,16 +13,21 @@
 <%@ page import="javax.portlet.PortletPreferences"%>
 <%@ page import="com.liferay.util.PwdGenerator"%>
 
-
+<%@ page import="java.util.Arrays"%>
 <%@ page import="java.util.Enumeration"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.Map"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Calendar"%>
+<%@ page import="java.util.GregorianCalendar"%>
 <%@ page import="java.util.Collections"%>
 <%@ page import="java.util.Locale"%>
 <%@ page import="java.util.LinkedHashMap"%>
+<%@ page import="java.util.HashSet"%>
+<%@ page import="java.util.Date"%>
 <%@ page import="java.lang.String"%>
+<%@ page import="java.text.SimpleDateFormat"%>
+<%@ page import="java.io.PrintWriter"%>
 
 <%@ page import="javax.portlet.PortletURL"%>
 <%@ page import="javax.portlet.PortletException"%>
@@ -59,7 +64,9 @@
 <%@ page import="org.springframework.scripting.config.LangNamespaceUtils"%>
 <%@ page import="org.springframework.web.bind.ServletRequestUtils"%>
 <%@ page import="org.springframework.web.portlet.bind.PortletRequestUtils"%>
+<%@ page import="org.json.JSONObject"%>
 
+<%@ page import="de.uhh.l2g.plugins.model.Video_Lectureseries"%>
 <%@ page import="de.uhh.l2g.plugins.admin.AdminUserManagement"%>
 <%@ page import="de.uhh.l2g.plugins.service.ProducerLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil"%>
@@ -98,9 +105,8 @@
 <%@ page import="de.uhh.l2g.plugins.service.TermLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.service.CategoryLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.service.CreatorLocalServiceUtil"%>
-
 <%@ page import="de.uhh.l2g.plugins.util.Lecture2GoRoleChecker"%>
-
+<%@ page import="de.uhh.l2g.webservices.*"%>
 
 <portlet:defineObjects />
 <liferay-theme:defineObjects/>

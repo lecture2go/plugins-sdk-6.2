@@ -66,8 +66,8 @@ public class TermModelImpl extends BaseModelImpl<Term> implements TermModel {
 		};
 	public static final String TABLE_SQL_CREATE = "create table LG_Term (termId LONG not null primary key,parentId LONG,languageId VARCHAR(75) null,prefix VARCHAR(75) null,year VARCHAR(75) null,translation VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Term";
-	public static final String ORDER_BY_JPQL = " ORDER BY term.termId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY LG_Term.termId ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY term.year DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY LG_Term.year DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -82,7 +82,6 @@ public class TermModelImpl extends BaseModelImpl<Term> implements TermModel {
 			true);
 	public static long PREFIX_COLUMN_BITMASK = 1L;
 	public static long YEAR_COLUMN_BITMASK = 2L;
-	public static long TERMID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Term"));
 
@@ -244,7 +243,7 @@ public class TermModelImpl extends BaseModelImpl<Term> implements TermModel {
 
 	@Override
 	public void setYear(String year) {
-		_columnBitmask |= YEAR_COLUMN_BITMASK;
+		_columnBitmask = -1L;
 
 		if (_originalYear == null) {
 			_originalYear = _year;
@@ -317,17 +316,17 @@ public class TermModelImpl extends BaseModelImpl<Term> implements TermModel {
 
 	@Override
 	public int compareTo(Term term) {
-		long primaryKey = term.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		value = getYear().compareTo(term.getYear());
+
+		value = value * -1;
+
+		if (value != 0) {
+			return value;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
-		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	@Override

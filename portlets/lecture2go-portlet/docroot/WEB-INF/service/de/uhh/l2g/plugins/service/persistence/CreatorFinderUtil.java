@@ -31,6 +31,14 @@ public class CreatorFinderUtil {
 		return getFinder().findCreatorsByVideo(videoId);
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.Creator> findCreatorsByLectureseriesIdsAndVideoIds(
+		java.util.ArrayList<java.lang.Long> lectureseriesIds,
+		java.util.ArrayList<java.lang.Long> videoIds) {
+		return getFinder()
+				   .findCreatorsByLectureseriesIdsAndVideoIds(lectureseriesIds,
+			videoIds);
+	}
+
 	public static CreatorFinder getFinder() {
 		if (_finder == null) {
 			_finder = (CreatorFinder)PortletBeanLocatorUtil.locate(de.uhh.l2g.plugins.service.ClpSerializer.getServletContextName(),

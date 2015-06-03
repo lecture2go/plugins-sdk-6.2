@@ -329,6 +329,14 @@ public class InstitutionLocalServiceWrapper implements InstitutionLocalService,
 	}
 
 	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Institution> getInstitutionsFromLectureseriesIdsAndVideoIds(
+		java.util.ArrayList<java.lang.Long> lectureseriesIds,
+		java.util.ArrayList<java.lang.Long> videoIds) {
+		return _institutionLocalService.getInstitutionsFromLectureseriesIdsAndVideoIds(lectureseriesIds,
+			videoIds);
+	}
+
+	@Override
 	public de.uhh.l2g.plugins.model.Institution addInstitution(
 		java.lang.String name, java.lang.String streamer,
 		com.liferay.portal.service.ServiceContext serviceContext)

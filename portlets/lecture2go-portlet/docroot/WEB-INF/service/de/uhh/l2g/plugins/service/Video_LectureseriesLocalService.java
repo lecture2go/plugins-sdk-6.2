@@ -258,6 +258,11 @@ public interface Video_LectureseriesLocalService extends BaseLocalService,
 
 	public boolean removeByVideoId(java.lang.Long videoId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> getByVideo(
+		java.lang.Long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> updateOpenAccessByVideo(
 		de.uhh.l2g.plugins.model.Video video)
 		throws com.liferay.portal.kernel.exception.SystemException;

@@ -283,6 +283,14 @@ public class TermLocalServiceUtil {
 		return getService().getById(termId);
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.Term> getTermsFromLectureseriesIdsAndVideoIds(
+		java.util.ArrayList<java.lang.Long> lectureseriesIds,
+		java.util.ArrayList<java.lang.Long> videoIds) {
+		return getService()
+				   .getTermsFromLectureseriesIdsAndVideoIds(lectureseriesIds,
+			videoIds);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

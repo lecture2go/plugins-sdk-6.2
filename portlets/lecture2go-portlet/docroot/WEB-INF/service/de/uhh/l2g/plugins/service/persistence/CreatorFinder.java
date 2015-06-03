@@ -23,4 +23,8 @@ public interface CreatorFinder {
 
 	public java.util.List<de.uhh.l2g.plugins.model.Creator> findCreatorsByVideo(
 		long videoId);
+
+	public java.util.List<de.uhh.l2g.plugins.model.Creator> findCreatorsByLectureseriesIdsAndVideoIds(
+		java.util.ArrayList<java.lang.Long> lectureseriesIds,
+		java.util.ArrayList<java.lang.Long> videoIds);
 }

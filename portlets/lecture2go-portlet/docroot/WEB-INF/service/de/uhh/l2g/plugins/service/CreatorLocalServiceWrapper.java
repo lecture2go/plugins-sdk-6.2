@@ -317,6 +317,14 @@ public class CreatorLocalServiceWrapper implements CreatorLocalService,
 		return _creatorLocalService.getByFullName(fullName);
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Creator> getCreatorsFromLectureseriesIdsAndVideoIds(
+		java.util.ArrayList<java.lang.Long> lectureseriesIds,
+		java.util.ArrayList<java.lang.Long> videoIds) {
+		return _creatorLocalService.getCreatorsFromLectureseriesIdsAndVideoIds(lectureseriesIds,
+			videoIds);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

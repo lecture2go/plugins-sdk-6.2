@@ -286,6 +286,21 @@ public class CategoryLocalServiceUtil {
 		return getService().getByName(name);
 	}
 
+	public static de.uhh.l2g.plugins.model.Category getById(
+		java.lang.Long categoryId)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getById(categoryId);
+	}
+
+	public static java.util.List<de.uhh.l2g.plugins.model.Category> getCategoriesFromLectureseriesIdsAndVideoIds(
+		java.util.ArrayList<java.lang.Long> lectureseriesIds,
+		java.util.ArrayList<java.lang.Long> videoIds) {
+		return getService()
+				   .getCategoriesFromLectureseriesIdsAndVideoIds(lectureseriesIds,
+			videoIds);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

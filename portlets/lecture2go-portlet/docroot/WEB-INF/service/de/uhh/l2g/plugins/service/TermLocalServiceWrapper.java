@@ -293,6 +293,14 @@ public class TermLocalServiceWrapper implements TermLocalService,
 		return _termLocalService.getById(termId);
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Term> getTermsFromLectureseriesIdsAndVideoIds(
+		java.util.ArrayList<java.lang.Long> lectureseriesIds,
+		java.util.ArrayList<java.lang.Long> videoIds) {
+		return _termLocalService.getTermsFromLectureseriesIdsAndVideoIds(lectureseriesIds,
+			videoIds);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

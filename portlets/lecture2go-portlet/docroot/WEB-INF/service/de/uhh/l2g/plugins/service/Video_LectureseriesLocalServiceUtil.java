@@ -284,6 +284,12 @@ public class Video_LectureseriesLocalServiceUtil {
 		return getService().removeByVideoId(videoId);
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> getByVideo(
+		java.lang.Long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getByVideo(videoId);
+	}
+
 	public static java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> updateOpenAccessByVideo(
 		de.uhh.l2g.plugins.model.Video video)
 		throws com.liferay.portal.kernel.exception.SystemException {

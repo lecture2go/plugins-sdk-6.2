@@ -139,9 +139,15 @@ public class InstitutionLocalServiceClp implements InstitutionLocalService {
 
 		_methodParameterTypes24 = new String[] { "int", "int" };
 
-		_methodName25 = "addInstitution";
+		_methodName25 = "getInstitutionsFromLectureseriesIdsAndVideoIds";
 
 		_methodParameterTypes25 = new String[] {
+				"java.util.ArrayList", "java.util.ArrayList"
+			};
+
+		_methodName26 = "addInstitution";
+
+		_methodParameterTypes26 = new String[] {
 				"java.lang.String", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -872,6 +878,36 @@ public class InstitutionLocalServiceClp implements InstitutionLocalService {
 	}
 
 	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Institution> getInstitutionsFromLectureseriesIdsAndVideoIds(
+		java.util.ArrayList<java.lang.Long> lectureseriesIds,
+		java.util.ArrayList<java.lang.Long> videoIds) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
+					new Object[] {
+						ClpSerializer.translateInput(lectureseriesIds),
+						
+					ClpSerializer.translateInput(videoIds)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<de.uhh.l2g.plugins.model.Institution>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public de.uhh.l2g.plugins.model.Institution addInstitution(
 		java.lang.String name, java.lang.String streamer,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -880,8 +916,8 @@ public class InstitutionLocalServiceClp implements InstitutionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25,
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
 					new Object[] {
 						ClpSerializer.translateInput(name),
 						
@@ -964,4 +1000,6 @@ public class InstitutionLocalServiceClp implements InstitutionLocalService {
 	private String[] _methodParameterTypes24;
 	private String _methodName25;
 	private String[] _methodParameterTypes25;
+	private String _methodName26;
+	private String[] _methodParameterTypes26;
 }

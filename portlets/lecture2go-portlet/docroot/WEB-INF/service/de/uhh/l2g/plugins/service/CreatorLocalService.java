@@ -274,4 +274,9 @@ public interface CreatorLocalService extends BaseLocalService,
 	public java.util.List<de.uhh.l2g.plugins.model.Creator> getByFullName(
 		java.lang.String fullName)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<de.uhh.l2g.plugins.model.Creator> getCreatorsFromLectureseriesIdsAndVideoIds(
+		java.util.ArrayList<java.lang.Long> lectureseriesIds,
+		java.util.ArrayList<java.lang.Long> videoIds);
 }

@@ -284,4 +284,10 @@ public interface LectureseriesLocalService extends BaseLocalService,
 		java.util.ArrayList<java.lang.Long> termIds,
 		java.util.ArrayList<java.lang.Long> categoryIds,
 		java.util.ArrayList<java.lang.Long> creatorIds);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(
+		java.lang.Long institutionId, java.lang.Long parentInstitutionId,
+		java.lang.Long termId, java.lang.Long categoryId,
+		java.lang.Long creatorId);
 }

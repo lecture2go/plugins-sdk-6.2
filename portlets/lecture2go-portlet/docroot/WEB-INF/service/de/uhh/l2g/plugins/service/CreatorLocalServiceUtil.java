@@ -303,6 +303,14 @@ public class CreatorLocalServiceUtil {
 		return getService().getByFullName(fullName);
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.Creator> getCreatorsFromLectureseriesIdsAndVideoIds(
+		java.util.ArrayList<java.lang.Long> lectureseriesIds,
+		java.util.ArrayList<java.lang.Long> videoIds) {
+		return getService()
+				   .getCreatorsFromLectureseriesIdsAndVideoIds(lectureseriesIds,
+			videoIds);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

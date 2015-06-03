@@ -131,6 +131,32 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 		return null;		
 	}
 	
+	/**
+	 * Queries the database for data by single filter id's
+	 * @param institutionId
+	 * @param parentInstitutionId
+	 * @param termId
+	 * @param categoryId
+	 * @param creatorId
+	 * @return a list with lectureseries which fit to the given filters
+	 */
+	public List<Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreator(Long institutionId, Long parentInstitutionId, Long termId, Long categoryId, long creatorId) {
+		ArrayList<Long> termIds = new ArrayList<Long>();
+		ArrayList<Long> categoryIds = new ArrayList<Long>();
+		ArrayList<Long> creatorIds = new ArrayList<Long>();
+		if (termId != 0) {
+			termIds.add(termId);
+		}
+		if (categoryId != 0) {
+			categoryIds.add(categoryId);
+		}
+		if (creatorId != 0) {
+			creatorIds.add(creatorId);
+		}
+
+		return findFilteredByInstitutionParentInstitutionTermCategoryCreator(institutionId,parentInstitutionId,termIds,categoryIds,creatorIds);
+	}
+	
 	public List<Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreator(Long institutionId, Long parentInstitutionId, ArrayList<Long> termIds, ArrayList<Long> categoryIds, ArrayList<Long> creatorIds) {
 		Session session = null;
 		try {
@@ -194,7 +220,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 		}
 		
 		lQuery += "WHERE l.latestOpenAccessVideoId>0 ";
-		vQuery += "WHERE v.lectureseriesId<0 ";
+		vQuery += "WHERE v.lectureseriesId<0 AND v.openAccess=1 ";
 		
 		if (institutionId > 0 || institutionParentId > 0 || termIds.size() > 0 || categoryIds.size() > 0 || creatorIds.size() > 0) {
 			int i = 0;
@@ -219,8 +245,10 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			}
 
 			if (creatorIds.size() > 0) {
-				lQuery += i > 0 ? "AND " : "";
-				vQuery += i > 0 ? "AND " : "";
+//				lQuery += i > 0 ? "AND " : "";
+//				vQuery += i > 0 ? "AND " : "";
+				lQuery += "AND ";
+				vQuery += "AND ";
 				lQuery += "( ";
 				vQuery += "( ";
 				for(int j=0;j<creatorIds.size();j++){
@@ -238,8 +266,10 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			}
 			
 			if (categoryIds.size() > 0) {
-				lQuery += i > 0 ? "AND " : "";
-				vQuery += i > 0 ? "AND " : "";
+//				lQuery += i > 0 ? "AND " : "";
+//				vQuery += i > 0 ? "AND " : "";
+				lQuery += "AND ";
+				vQuery += "AND ";
 				ListIterator<Long> it = categoryIds.listIterator();
 				lQuery += "( ";
 				vQuery += "( ";
@@ -258,16 +288,20 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			}
 
 			if (institutionId > 0) {
-				lQuery += i > 0 ? "AND " : "";
-				vQuery += i > 0 ? "AND " : "";
+//				lQuery += i > 0 ? "AND " : "";
+//				vQuery += i > 0 ? "AND " : "";
+				lQuery += "AND ";
+				vQuery += "AND ";
 				lQuery += "li.institutionId = "+institutionId + " ";
 				vQuery += "vi.institutionId = "+institutionId + " ";
 				i++;
 			}
 
 			if (institutionParentId > 0) {
-				lQuery += i > 0 ? "AND " : "";
-				vQuery += i > 0 ? "AND " : "";
+//				lQuery += i > 0 ? "AND " : "";
+//				vQuery += i > 0 ? "AND " : "";
+				lQuery += "AND ";
+				vQuery += "AND ";
 				lQuery += "li.institutionParentId = "+institutionParentId + " ";
 				vQuery += "vi.institutionParentId = "+institutionParentId + " ";
 				i++;

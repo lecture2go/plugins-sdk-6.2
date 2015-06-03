@@ -133,6 +133,12 @@ public class CreatorLocalServiceClp implements CreatorLocalService {
 		_methodName24 = "getByFullName";
 
 		_methodParameterTypes24 = new String[] { "java.lang.String" };
+
+		_methodName25 = "getCreatorsFromLectureseriesIdsAndVideoIds";
+
+		_methodParameterTypes25 = new String[] {
+				"java.util.ArrayList", "java.util.ArrayList"
+			};
 	}
 
 	@Override
@@ -844,6 +850,36 @@ public class CreatorLocalServiceClp implements CreatorLocalService {
 		return (java.util.List<de.uhh.l2g.plugins.model.Creator>)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Creator> getCreatorsFromLectureseriesIdsAndVideoIds(
+		java.util.ArrayList<java.lang.Long> lectureseriesIds,
+		java.util.ArrayList<java.lang.Long> videoIds) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
+					new Object[] {
+						ClpSerializer.translateInput(lectureseriesIds),
+						
+					ClpSerializer.translateInput(videoIds)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<de.uhh.l2g.plugins.model.Creator>)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -893,4 +929,6 @@ public class CreatorLocalServiceClp implements CreatorLocalService {
 	private String[] _methodParameterTypes23;
 	private String _methodName24;
 	private String[] _methodParameterTypes24;
+	private String _methodName25;
+	private String[] _methodParameterTypes25;
 }

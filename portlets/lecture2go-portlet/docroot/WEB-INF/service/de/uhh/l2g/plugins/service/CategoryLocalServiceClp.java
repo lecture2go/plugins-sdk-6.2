@@ -121,6 +121,16 @@ public class CategoryLocalServiceClp implements CategoryLocalService {
 		_methodName20 = "getByName";
 
 		_methodParameterTypes20 = new String[] { "java.lang.String" };
+
+		_methodName21 = "getById";
+
+		_methodParameterTypes21 = new String[] { "java.lang.Long" };
+
+		_methodName22 = "getCategoriesFromLectureseriesIdsAndVideoIds";
+
+		_methodParameterTypes22 = new String[] {
+				"java.util.ArrayList", "java.util.ArrayList"
+			};
 	}
 
 	@Override
@@ -728,6 +738,70 @@ public class CategoryLocalServiceClp implements CategoryLocalService {
 		return (java.util.List<de.uhh.l2g.plugins.model.Category>)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public de.uhh.l2g.plugins.model.Category getById(java.lang.Long categoryId)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21,
+					new Object[] { ClpSerializer.translateInput(categoryId) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.NoSuchModelException) {
+				throw (com.liferay.portal.NoSuchModelException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (de.uhh.l2g.plugins.model.Category)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Category> getCategoriesFromLectureseriesIdsAndVideoIds(
+		java.util.ArrayList<java.lang.Long> lectureseriesIds,
+		java.util.ArrayList<java.lang.Long> videoIds) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22,
+					new Object[] {
+						ClpSerializer.translateInput(lectureseriesIds),
+						
+					ClpSerializer.translateInput(videoIds)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<de.uhh.l2g.plugins.model.Category>)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -769,4 +843,8 @@ public class CategoryLocalServiceClp implements CategoryLocalService {
 	private String[] _methodParameterTypes19;
 	private String _methodName20;
 	private String[] _methodParameterTypes20;
+	private String _methodName21;
+	private String[] _methodParameterTypes21;
+	private String _methodName22;
+	private String[] _methodParameterTypes22;
 }

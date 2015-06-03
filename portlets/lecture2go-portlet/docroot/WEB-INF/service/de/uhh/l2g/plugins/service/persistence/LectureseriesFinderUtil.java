@@ -36,6 +36,14 @@ public class LectureseriesFinderUtil {
 
 	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreator(
 		java.lang.Long institutionId, java.lang.Long parentInstitutionId,
+		java.lang.Long termId, java.lang.Long categoryId, long creatorId) {
+		return getFinder()
+				   .findFilteredByInstitutionParentInstitutionTermCategoryCreator(institutionId,
+			parentInstitutionId, termId, categoryId, creatorId);
+	}
+
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreator(
+		java.lang.Long institutionId, java.lang.Long parentInstitutionId,
 		java.util.ArrayList<java.lang.Long> termIds,
 		java.util.ArrayList<java.lang.Long> categoryIds,
 		java.util.ArrayList<java.lang.Long> creatorIds) {

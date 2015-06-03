@@ -296,6 +296,21 @@ public class CategoryLocalServiceWrapper implements CategoryLocalService,
 		return _categoryLocalService.getByName(name);
 	}
 
+	@Override
+	public de.uhh.l2g.plugins.model.Category getById(java.lang.Long categoryId)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _categoryLocalService.getById(categoryId);
+	}
+
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Category> getCategoriesFromLectureseriesIdsAndVideoIds(
+		java.util.ArrayList<java.lang.Long> lectureseriesIds,
+		java.util.ArrayList<java.lang.Long> videoIds) {
+		return _categoryLocalService.getCategoriesFromLectureseriesIdsAndVideoIds(lectureseriesIds,
+			videoIds);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

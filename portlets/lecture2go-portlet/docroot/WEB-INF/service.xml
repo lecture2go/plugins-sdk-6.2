@@ -382,6 +382,9 @@
         <column name="prefix" type="String"></column>
         <column name="year" type="String"></column>
         <column name="translation" type="String"></column>
+        <order by="desc">
+            <order-column name="year" order-by="desc"></order-column>
+        </order>
         <finder name="Prefix" return-type="Collection">
             <finder-column name="prefix"></finder-column>
         </finder>
