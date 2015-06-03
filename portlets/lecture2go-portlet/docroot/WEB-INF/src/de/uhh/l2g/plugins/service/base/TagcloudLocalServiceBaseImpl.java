@@ -33,6 +33,7 @@ import com.liferay.portal.service.persistence.UserPersistence;
 
 import de.uhh.l2g.plugins.model.Tagcloud;
 import de.uhh.l2g.plugins.service.TagcloudLocalService;
+import de.uhh.l2g.plugins.service.persistence.CategoryFinder;
 import de.uhh.l2g.plugins.service.persistence.CategoryPersistence;
 import de.uhh.l2g.plugins.service.persistence.CoordinatorPersistence;
 import de.uhh.l2g.plugins.service.persistence.CreatorFinder;
@@ -56,6 +57,7 @@ import de.uhh.l2g.plugins.service.persistence.Producer_LectureseriesPersistence;
 import de.uhh.l2g.plugins.service.persistence.SegmentPersistence;
 import de.uhh.l2g.plugins.service.persistence.SysPersistence;
 import de.uhh.l2g.plugins.service.persistence.TagcloudPersistence;
+import de.uhh.l2g.plugins.service.persistence.TermFinder;
 import de.uhh.l2g.plugins.service.persistence.TermPersistence;
 import de.uhh.l2g.plugins.service.persistence.UploadPersistence;
 import de.uhh.l2g.plugins.service.persistence.VideoFinder;
@@ -340,6 +342,24 @@ public abstract class TagcloudLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setCategoryPersistence(CategoryPersistence categoryPersistence) {
 		this.categoryPersistence = categoryPersistence;
+	}
+
+	/**
+	 * Returns the category finder.
+	 *
+	 * @return the category finder
+	 */
+	public CategoryFinder getCategoryFinder() {
+		return categoryFinder;
+	}
+
+	/**
+	 * Sets the category finder.
+	 *
+	 * @param categoryFinder the category finder
+	 */
+	public void setCategoryFinder(CategoryFinder categoryFinder) {
+		this.categoryFinder = categoryFinder;
 	}
 
 	/**
@@ -1127,6 +1147,24 @@ public abstract class TagcloudLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the term finder.
+	 *
+	 * @return the term finder
+	 */
+	public TermFinder getTermFinder() {
+		return termFinder;
+	}
+
+	/**
+	 * Sets the term finder.
+	 *
+	 * @param termFinder the term finder
+	 */
+	public void setTermFinder(TermFinder termFinder) {
+		this.termFinder = termFinder;
+	}
+
+	/**
 	 * Returns the upload local service.
 	 *
 	 * @return the upload local service
@@ -1588,6 +1626,8 @@ public abstract class TagcloudLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected de.uhh.l2g.plugins.service.CategoryLocalService categoryLocalService;
 	@BeanReference(type = CategoryPersistence.class)
 	protected CategoryPersistence categoryPersistence;
+	@BeanReference(type = CategoryFinder.class)
+	protected CategoryFinder categoryFinder;
 	@BeanReference(type = de.uhh.l2g.plugins.service.CoordinatorLocalService.class)
 	protected de.uhh.l2g.plugins.service.CoordinatorLocalService coordinatorLocalService;
 	@BeanReference(type = CoordinatorPersistence.class)
@@ -1672,6 +1712,8 @@ public abstract class TagcloudLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected de.uhh.l2g.plugins.service.TermLocalService termLocalService;
 	@BeanReference(type = TermPersistence.class)
 	protected TermPersistence termPersistence;
+	@BeanReference(type = TermFinder.class)
+	protected TermFinder termFinder;
 	@BeanReference(type = de.uhh.l2g.plugins.service.UploadLocalService.class)
 	protected de.uhh.l2g.plugins.service.UploadLocalService uploadLocalService;
 	@BeanReference(type = UploadPersistence.class)

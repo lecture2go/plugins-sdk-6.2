@@ -97,7 +97,8 @@ public class TermPersistenceImpl extends BasePersistenceImpl<Term>
 			TermModelImpl.FINDER_CACHE_ENABLED, TermImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPrefix",
 			new String[] { String.class.getName() },
-			TermModelImpl.PREFIX_COLUMN_BITMASK);
+			TermModelImpl.PREFIX_COLUMN_BITMASK |
+			TermModelImpl.YEAR_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_PREFIX = new FinderPath(TermModelImpl.ENTITY_CACHE_ENABLED,
 			TermModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPrefix",

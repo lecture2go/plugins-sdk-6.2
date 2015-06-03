@@ -13,6 +13,7 @@
 <%@ page import="javax.portlet.PortletPreferences"%>
 <%@ page import="com.liferay.util.PwdGenerator"%>
 
+<%@ page import="java.util.Arrays"%>
 <%@ page import="java.util.Enumeration"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.Map"%>
@@ -22,6 +23,7 @@
 <%@ page import="java.util.Collections"%>
 <%@ page import="java.util.Locale"%>
 <%@ page import="java.util.LinkedHashMap"%>
+<%@ page import="java.util.HashSet"%>
 <%@ page import="java.util.Date"%>
 <%@ page import="java.lang.String"%>
 <%@ page import="java.text.SimpleDateFormat"%>

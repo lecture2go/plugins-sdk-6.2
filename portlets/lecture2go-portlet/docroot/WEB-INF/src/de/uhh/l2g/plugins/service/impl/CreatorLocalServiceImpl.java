@@ -14,6 +14,7 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -24,8 +25,10 @@ import org.json.JSONObject;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
+import de.uhh.l2g.plugins.model.Category;
 import de.uhh.l2g.plugins.model.Creator;
 import de.uhh.l2g.plugins.service.base.CreatorLocalServiceBaseImpl;
+import de.uhh.l2g.plugins.service.persistence.CategoryFinderUtil;
 import de.uhh.l2g.plugins.service.persistence.CreatorFinderUtil;
 
 /**
@@ -126,5 +129,9 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 	
 	public List<Creator> getByFullName(String fullName) throws SystemException{
 		return creatorPersistence.findByFullName(fullName);
+	}
+	
+	public List<Creator> getCreatorsFromLectureseriesIdsAndVideoIds(ArrayList<Long> lectureseriesIds, ArrayList<Long> videoIds) {
+		return CreatorFinderUtil.findCreatorsByLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds);
 	}
 }
