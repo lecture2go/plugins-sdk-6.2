@@ -46,12 +46,13 @@
 	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.HostModelImpl">
 		<attributes>
 			<id name="hostId" />
+			<basic name="serverTemplateId" />
 			<basic name="protocol" />
 			<basic name="streamer" />
 			<basic name="port" />
 			<basic name="serverRoot" />
 			<basic name="name" />
-			<basic name="serverTemplate" />
+			<basic name="groupId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -66,6 +67,7 @@
 			<basic name="www" />
 			<basic name="level" />
 			<basic name="sort" />
+			<basic name="groupId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -76,6 +78,7 @@
 			<id name="institutionHostId" />
 			<basic name="institutionId" />
 			<basic name="hostId" />
+			<basic name="groupId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -235,6 +238,29 @@
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.ServerTemplateModelImpl">
+		<attributes>
+			<id name="serverTemplateId" />
+			<basic name="groupId" />
+			<basic name="name" />
+			<basic name="type">
+				<column name="TYPE_" />
+			</basic>
+			<basic name="prefixURL" />
+			<basic name="suffixURL" />
+			<basic name="secExt" />
+			<basic name="templateURL" />
+			<basic name="prefixFile" />
+			<basic name="suffixFile" />
+			<basic name="templateFile" />
+			<basic name="templateIOS" />
+			<basic name="templateAndroid" />
+			<basic name="defaultServer" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
 	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.SysModelImpl">
@@ -456,6 +482,10 @@
 			<transient name="previusSegmentId" />
 			<transient name="seconds" />
 		</attributes>
+	</entity>
+	<entity class="de.uhh.l2g.plugins.model.impl.ServerTemplateImpl" name="ServerTemplate">
+		<table name="LG_ServerTemplate" />
+		<attributes />
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.SysImpl" name="Sys">
 		<table name="LG_Sys" />

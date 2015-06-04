@@ -31,7 +31,23 @@ import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 
 public class OpenAccessVideos extends MVCPortlet {
-	
+
+	public void addFilter(ActionRequest request, ActionResponse response){
+		String jspPage = request.getParameter("jspPage");
+		Long institutionId = new Long(request.getParameter("institutionId"));
+		Long parentInstitutionId = new Long(request.getParameter("parentInstitutionId"));
+		Long termId = new Long(request.getParameter("termId"));
+		Long categoryId = new Long(request.getParameter("categoryId"));
+		Long creatorId = new Long(request.getParameter("creatorId"));
+
+		request.setAttribute("institutionId", institutionId);
+		request.setAttribute("parentInstitutionId", parentInstitutionId);
+		request.setAttribute("termId", termId);
+		request.setAttribute("categoryId", categoryId);
+		request.setAttribute("creatorId", creatorId);
+		response.setRenderParameter("jspPage", jspPage);
+	}
+
 	public void viewOpenAccessVideo(ActionRequest request, ActionResponse response) throws SystemException, PortalException {
 	    Long objectId = ParamUtil.getLong(request, "objectId");
 	    String objectType = ParamUtil.getString(request, "objectType");
