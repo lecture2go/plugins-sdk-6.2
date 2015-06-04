@@ -9,6 +9,7 @@
 <jsp:useBean id="lectureseries" type="de.uhh.l2g.plugins.model.Lectureseries" scope="request" />
 <jsp:useBean id="videoLicense" type="de.uhh.l2g.plugins.model.License" scope="request" />
 
+
 <div class="col-xs-10 col-md-10">
     <div id="pfad">
     	<%
@@ -20,7 +21,13 @@
 	    			Institution insti = InstitutionLocalServiceUtil.getById(institutions.get(j).getInstitutionId());    			
 	    			Institution pInst = InstitutionLocalServiceUtil.getById(institutions.get(j).getParentId());
 		    		%>
-			    	<A HREF="#" CLASS="apath"><%=pInst.getName() %></A><span class="sep">&gt;</span> <A HREF="#" CLASS="apath"><%=insti.getName() %></A> 
+		    		<portlet:renderURL var="backURL">
+						<portlet:param name="jspPage" value="/guest/videosList.jsp" />
+						<portlet:param name="institutionId" value="<%=insti.getInstitutionId()+\"\"%>"/>
+						<portlet:param name="parentInstitutionId" value="<%=pInst.getInstitutionId()+\"\"%>"/>
+					</portlet:renderURL>
+			    	<A HREF="<%=backURL%>" CLASS="apath"><%=pInst.getName() %></A><span class="sep">&gt;</span> 
+			    	<A HREF="<%=backURL%>" CLASS="apath"><%=insti.getName() %></A> 
 			    	<%if(lec.getLectureseriesId()>0) {%>
 			    		<span class="sep">&gt;</span> <SPAN CLASS="paththispage"><%=lec.getName()%></SPAN>
 			    	<%}%>
@@ -158,8 +165,8 @@
 		 <div class="list-group" style="margin: 5px;">
 			<c:forEach items="${relatedVideos}" var="vid">
 				<portlet:actionURL name="viewOpenAccessVideo" var="viewOpenAccessVideoURL">
-					<portlet:param name="videoId" value="${vid.videoId}"/>
-					<portlet:param name="lectureseriesId" value="${vid.lectureseriesId}"/>
+					<portlet:param name="objectId" value="${vid.videoId}"/>
+					<portlet:param name="objectType" value="v"/>
 				</portlet:actionURL>		
 				<c:choose>
 				<c:when test="${video.videoId==vid.videoId}"><a href="#" class="list-group-item active" style="padding-left: 10px; padding-top: 5px; padding-bottom: 5px;"></c:when>

@@ -39,6 +39,13 @@ public class TermImpl extends TermBaseImpl {
 		this.fullName = fullName;
 	}
 
-	public TermImpl() {
+
+	/**
+	 * @return the full termName (prefix + year)
+	 */
+	public String getTermName() {
+		return this.getPrefix() + " " + this.getYear();
+		
 	}
+	
 }

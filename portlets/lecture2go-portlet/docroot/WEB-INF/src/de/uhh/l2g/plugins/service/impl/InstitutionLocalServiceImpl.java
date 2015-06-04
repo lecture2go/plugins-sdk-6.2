@@ -14,6 +14,7 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -132,6 +133,10 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		return InstitutionFinderUtil.findMaxSortByParent(parentId);
 	}
 
+	public List<Institution> getInstitutionsFromLectureseriesIdsAndVideoIds(ArrayList<Long> lectureseriesIds, ArrayList<Long> videoIds) {
+		return InstitutionFinderUtil.findInstitutionsByLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds);
+	}
+	
 	private String _indentFromPath(String path, String sep) {
 		String s = "";
 		for (int i = 1; i <= path.split(sep).length - 1; i++) {
