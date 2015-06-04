@@ -20,8 +20,10 @@ import java.util.List;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.SystemException;
 
+import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Term;
 import de.uhh.l2g.plugins.service.base.TermLocalServiceBaseImpl;
+import de.uhh.l2g.plugins.service.persistence.InstitutionFinderUtil;
 import de.uhh.l2g.plugins.service.persistence.TermFinderUtil;
 
 /**

@@ -9,9 +9,9 @@
 <jsp:useBean id="lectureseries" type="de.uhh.l2g.plugins.model.Lectureseries" scope="request" />
 <jsp:useBean id="videoLicense" type="de.uhh.l2g.plugins.model.License" scope="request" />
 
+
 <jsp:useBean id="timeStart" type="java.lang.Long" scope="request" />
 <jsp:useBean id="timeEnd" type="java.lang.Long" scope="request" />
-
 <div class="col-xs-10 col-md-10">
     <div id="pfad">
     	<%
@@ -23,6 +23,7 @@
 	    			Institution insti = InstitutionLocalServiceUtil.getById(institutions.get(j).getInstitutionId());    			
 	    			Institution pInst = InstitutionLocalServiceUtil.getById(institutions.get(j).getParentId());
 		    		%>
+
 					<portlet:actionURL var="backURL1" name="addFilter">
 						<portlet:param name="jspPage" value="/guest/videosList.jsp" />
 						<portlet:param name="parentInstitutionId" value="<%=pInst.getInstitutionId()+\"\"%>"/>
@@ -42,6 +43,7 @@
 					
 			    	<A HREF="<%=backURL1%>" CLASS="apath"><%=pInst.getName() %></A> <span class="sep">&gt;</span> 
 			    	<A HREF="<%=backURL2%>" CLASS="apath"><%=insti.getName() %></A> 
+
 			    	<%if(lec.getLectureseriesId()>0) {%>
 			    		<span class="sep">&gt;</span> <SPAN CLASS="paththispage"><%=lec.getName()%></SPAN>
 			    	<%}%>
@@ -231,6 +233,7 @@ if(timeEnd==0 || timeEnd<timeStart || video.getCitation2go()==0){
 					</a>
 				</c:forEach>
 			</div>
+
 		</div>
 	</c:if>
 <%

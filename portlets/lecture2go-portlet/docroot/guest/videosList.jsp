@@ -12,6 +12,7 @@
 	Long categoryId 			= ServletRequestUtils.getLongParameter(request, "categoryId", 0);
 	Long creatorId 				= ServletRequestUtils.getLongParameter(request, "creatorId", 0);
 		
+
 	// filters are set if they have a value different than 0
 	boolean hasInstitutionFiltered 			= (institutionId != 0);
 	boolean hasParentInstitutionFiltered 	= (parentInstitutionId != 0);
@@ -78,6 +79,7 @@
 	} else {
 		presentCreators = CreatorLocalServiceUtil.getCreatorsFromLectureseriesIdsAndVideoIds(lectureseriesIds,videoIds);
 	}
+
 
 	List<Lectureseries> tempLectureseriesList = new ArrayList();
 	
@@ -228,6 +230,7 @@
 				<portlet:param name="categoryId" value="<%=categoryId.toString() %>"/>
 				<portlet:param name="creatorId" value='${hasCreatorFiltered ? "0" : creator.creatorId}'/>
 			</portlet:actionURL>
+
 			<li ${hasCreatorFiltered ? 'class="clicked"' : ''}><a href="${filterByCreator}">${creator.fullName}</a></li>
 		</c:forEach>
 		</ul>
