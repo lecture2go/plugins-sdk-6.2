@@ -1,14 +1,12 @@
 <%@include file="/init.jsp"%>
 
-<jsp:useBean id="parentInstitutionId" type="java.lang.Long" scope="request" />
-
 <%
 	// defines how many terms and creators are shown initially	
 	int maxTerms	= 4;
 	int maxCreators = 4;
 
 	// get all filter-requests
-	//Long parentInstitutionId 	= ServletRequestUtils.getLongParameter(request, "parentInstitutionId", 0);
+	Long parentInstitutionId 	= ServletRequestUtils.getLongParameter(request, "parentInstitutionId", 0);
 	Long institutionId 			= ServletRequestUtils.getLongParameter(request, "institutionId", 0);
 	Long termId 				= ServletRequestUtils.getLongParameter(request, "termId", 0);
 	Long categoryId 			= ServletRequestUtils.getLongParameter(request, "categoryId", 0);

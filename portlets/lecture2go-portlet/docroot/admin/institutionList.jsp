@@ -4,7 +4,7 @@
 <%@ page import="de.uhh.l2g.plugins.model.Host" %>
 <%@ page import="de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil" %>
 <%@ page import="de.uhh.l2g.plugins.service.HostLocalServiceUtil" %>
-<%@ page import="de.uhh.l2g.plugins.service.ServerTemplateLocalServiceUtil" %>
+<%@ page import="de.uhh.l2g.plugins.service.ServerTemplateLocalServiceUtil" %> 
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
@@ -247,7 +247,6 @@ deltaConfigurable="true">
 				id="<%= id_row %>"
 				persistState="<%= true %>"
 				title="<%= institution.getName() %>" >
-
 
 			<liferay-ui:search-container searchContainer="<%= searchSubInstitutionContainer %>"
 				curParam ="<%=curParam_row%>"
