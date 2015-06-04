@@ -263,6 +263,7 @@
 			if(lectser.getLatestOpenAccessVideoId()<0){
 				isVideo = true;
 				vidDummy = VideoLocalServiceUtil.getFullVideo(lectser.getLectureseriesId());
+				oId = vidDummy.getVideoId()+"";
 			}else{
 				oId = lectser.getLectureseriesId()+"";
 				vidDummy = VideoLocalServiceUtil.getFullVideo(lectser.getLatestOpenAccessVideoId());
