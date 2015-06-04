@@ -12,8 +12,6 @@
 	Long categoryId 			= ServletRequestUtils.getLongParameter(request, "categoryId", 0);
 	Long creatorId 				= ServletRequestUtils.getLongParameter(request, "creatorId", 0);
 		
-
-	
 	// filters are set if they have a value different than 0
 	boolean hasInstitutionFiltered 			= (institutionId != 0);
 	boolean hasParentInstitutionFiltered 	= (parentInstitutionId != 0);
@@ -80,7 +78,6 @@
 	} else {
 		presentCreators = CreatorLocalServiceUtil.getCreatorsFromLectureseriesIdsAndVideoIds(lectureseriesIds,videoIds);
 	}
-	
 
 	List<Lectureseries> tempLectureseriesList = new ArrayList();
 	
@@ -143,14 +140,14 @@
 	<liferay-ui:panel extended="true" title="Einrichtung">
 		<ul>
 		<c:forEach items="<%=presentParentInstitutions %>" var="parentInstitution">
-			<portlet:renderURL var="filterByParentInstitution">
+			<portlet:actionURL var="filterByParentInstitution" name="addFilter">
 				<portlet:param name="jspPage" value="/guest/videosList.jsp" />
 				<portlet:param name="parentInstitutionId" value='${hasParentInstitutionFiltered ? "0" : parentInstitution.institutionId}'/>
 				<portlet:param name="institutionId" value="<%=institutionId.toString() %>"/>				
 				<portlet:param name="termId" value="<%=termId.toString() %>"/>
 				<portlet:param name="categoryId" value="<%=categoryId.toString() %>"/>
 				<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>
-			</portlet:renderURL>
+			</portlet:actionURL>
 			<li ${hasParentInstitutionFiltered ? 'class="clicked"' : ''}><a href="${filterByParentInstitution}">${parentInstitution.name}</a></li>
 		</c:forEach>
 		</ul>
@@ -161,14 +158,14 @@
 	<liferay-ui:panel extended="true" title="Bereich">
 		<ul>
 		<c:forEach items="<%=presentInstitutions %>" var="institution">
-			<portlet:renderURL var="filterByInstitution">
+			<portlet:actionURL var="filterByInstitution" name="addFilter">
 				<portlet:param name="jspPage" value="/guest/videosList.jsp" />
 				<portlet:param name="parentInstitutionId" value="<%=parentInstitutionId.toString() %>"/>
 				<portlet:param name="institutionId" value='${hasInstitutionFiltered ? "0" : institution.institutionId}'/>
 				<portlet:param name="termId" value="<%=termId.toString() %>"/>
 				<portlet:param name="categoryId" value="<%=categoryId.toString() %>"/>
 				<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>
-			</portlet:renderURL>
+			</portlet:actionURL>
 			<li ${hasInstitutionFiltered ? 'class="clicked"' : ''}><a href="${filterByInstitution}">${institution.name}</a></li>
 		</c:forEach>
 		</ul>
@@ -179,14 +176,14 @@
 	<liferay-ui:panel extended="true" title="Semester">
 		<ul class="terms">
 		<c:forEach items="<%=presentTerms %>" var="term">
-			<portlet:renderURL var="filterByTerm">
+			<portlet:actionURL var="filterByTerm" name="addFilter">
 				<portlet:param name="jspPage" value="/guest/videosList.jsp" />
 				<portlet:param name="institutionId" value="<%=institutionId.toString() %>"/>
 				<portlet:param name="parentInstitutionId" value="<%=parentInstitutionId.toString() %>"/>	
 				<portlet:param name="termId" value='${hasTermFiltered ? "0" : term.termId}'/>
 				<portlet:param name="categoryId" value="<%=categoryId.toString() %>"/>
 				<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>	
-			</portlet:renderURL>
+			</portlet:actionURL>
 			<li ${hasTermFiltered ? 'class="clicked"' : ''}><a href="${filterByTerm}">${term.termName}</a></li>
 		</c:forEach>
 		</ul>
@@ -201,14 +198,14 @@
 	<liferay-ui:panel extended="true" title="Kategorie">
 		<ul>
 		<c:forEach items="<%=presentCategories %>" var="category">
-    		<portlet:renderURL var="filterByCategory">
+    		<portlet:actionURL var="filterByCategory" name="addFilter">
 				<portlet:param name="jspPage" value="/guest/videosList.jsp" />
 				<portlet:param name="institutionId" value="<%=institutionId.toString() %>"/>
 				<portlet:param name="parentInstitutionId" value="<%=parentInstitutionId.toString() %>"/>
 				<portlet:param name="termId" value="<%=termId.toString() %>"/>
 				<portlet:param name="categoryId" value='${hasCategoryFiltered ? "0" : category.categoryId}'/>
 				<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>	
-			</portlet:renderURL>
+			</portlet:actionURL>
 			<li ${hasCategoryFiltered ? 'class="clicked"' : ''}><a href="${filterByCategory}">${category.name}</a></li>
 		</c:forEach>
 		</ul>
@@ -223,14 +220,14 @@
 		</c:if>
 		<ul class="creators">
 		<c:forEach items="<%=presentCreators %>" var="creator">
-			<portlet:renderURL var="filterByCreator">
+			<portlet:actionURL var="filterByCreator" name="addFilter">
 				<portlet:param name="jspPage" value="/guest/videosList.jsp" />
 				<portlet:param name="institutionId" value="<%=institutionId.toString() %>"/>
 				<portlet:param name="parentInstitutionId" value="<%=parentInstitutionId.toString() %>"/>
 				<portlet:param name="termId" value="<%=termId.toString() %>"/>
 				<portlet:param name="categoryId" value="<%=categoryId.toString() %>"/>
 				<portlet:param name="creatorId" value='${hasCreatorFiltered ? "0" : creator.creatorId}'/>
-			</portlet:renderURL>
+			</portlet:actionURL>
 			<li ${hasCreatorFiltered ? 'class="clicked"' : ''}><a href="${filterByCreator}">${creator.fullName}</a></li>
 		</c:forEach>
 		</ul>
