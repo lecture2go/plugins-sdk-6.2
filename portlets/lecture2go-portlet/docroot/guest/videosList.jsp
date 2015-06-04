@@ -272,18 +272,18 @@
 			<img alt="" src="<%=vidDummy.getImageSmall()%>">
 		</liferay-ui:search-container-column-text>
 		<liferay-ui:search-container-column-text>
-				<portlet:actionURL name="viewOpenAccessVideo" var="viewOpenAccessVideoURL">
-					<portlet:param name="objectId" value="<%=oId%>"/>
-					<%if(isVideo){%><portlet:param name="objectType" value="v"/><%}%>
-					<%if(!isVideo){%><portlet:param name="objectType" value="l"/><%}%>
-				</portlet:actionURL>
-				<a href="<%=viewOpenAccessVideoURL%>"><%=lectser.getName()%></a>
-				<br/>
-				<%
-					if(lectser.getLatestOpenAccessVideoId()<0){%>video id = <%=lectser.getLectureseriesId()%><%}
-					else{%>lecture series id = <%=lectser.getLectureseriesId()%><%}
-				%>		
-			</liferay-ui:search-container-column-text>
+			<portlet:actionURL name="viewOpenAccessVideo" var="viewOpenAccessVideoURL">
+				<portlet:param name="objectId" value="<%=oId%>"/>
+				<%if(isVideo){%><portlet:param name="objectType" value="v"/><%}%>
+				<%if(!isVideo){%><portlet:param name="objectType" value="l"/><%}%>
+			</portlet:actionURL>
+			<a href="<%=viewOpenAccessVideoURL%>"><%=lectser.getName()%></a>
+			<br/>
+			<%
+				if(lectser.getLatestOpenAccessVideoId()<0){%>video id = <%=lectser.getLectureseriesId()%><%}
+				else{%>lecture series id = <%=lectser.getLectureseriesId()%><%}
+			%>		
+		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
