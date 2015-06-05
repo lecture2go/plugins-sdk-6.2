@@ -55,6 +55,7 @@ import de.uhh.l2g.plugins.service.persistence.ProducerFinder;
 import de.uhh.l2g.plugins.service.persistence.ProducerPersistence;
 import de.uhh.l2g.plugins.service.persistence.Producer_LectureseriesPersistence;
 import de.uhh.l2g.plugins.service.persistence.SegmentPersistence;
+import de.uhh.l2g.plugins.service.persistence.ServerTemplatePersistence;
 import de.uhh.l2g.plugins.service.persistence.SysPersistence;
 import de.uhh.l2g.plugins.service.persistence.TagcloudPersistence;
 import de.uhh.l2g.plugins.service.persistence.TermFinder;
@@ -1032,6 +1033,44 @@ public abstract class HostLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the server template local service.
+	 *
+	 * @return the server template local service
+	 */
+	public de.uhh.l2g.plugins.service.ServerTemplateLocalService getServerTemplateLocalService() {
+		return serverTemplateLocalService;
+	}
+
+	/**
+	 * Sets the server template local service.
+	 *
+	 * @param serverTemplateLocalService the server template local service
+	 */
+	public void setServerTemplateLocalService(
+		de.uhh.l2g.plugins.service.ServerTemplateLocalService serverTemplateLocalService) {
+		this.serverTemplateLocalService = serverTemplateLocalService;
+	}
+
+	/**
+	 * Returns the server template persistence.
+	 *
+	 * @return the server template persistence
+	 */
+	public ServerTemplatePersistence getServerTemplatePersistence() {
+		return serverTemplatePersistence;
+	}
+
+	/**
+	 * Sets the server template persistence.
+	 *
+	 * @param serverTemplatePersistence the server template persistence
+	 */
+	public void setServerTemplatePersistence(
+		ServerTemplatePersistence serverTemplatePersistence) {
+		this.serverTemplatePersistence = serverTemplatePersistence;
+	}
+
+	/**
 	 * Returns the sys local service.
 	 *
 	 * @return the sys local service
@@ -1696,6 +1735,10 @@ public abstract class HostLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected de.uhh.l2g.plugins.service.SegmentLocalService segmentLocalService;
 	@BeanReference(type = SegmentPersistence.class)
 	protected SegmentPersistence segmentPersistence;
+	@BeanReference(type = de.uhh.l2g.plugins.service.ServerTemplateLocalService.class)
+	protected de.uhh.l2g.plugins.service.ServerTemplateLocalService serverTemplateLocalService;
+	@BeanReference(type = ServerTemplatePersistence.class)
+	protected ServerTemplatePersistence serverTemplatePersistence;
 	@BeanReference(type = de.uhh.l2g.plugins.service.SysLocalService.class)
 	protected de.uhh.l2g.plugins.service.SysLocalService sysLocalService;
 	@BeanReference(type = SysPersistence.class)

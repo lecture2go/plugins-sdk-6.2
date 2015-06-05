@@ -40,11 +40,11 @@ public class OpenAccessVideos extends MVCPortlet {
 		Long categoryId = new Long(request.getParameter("categoryId"));
 		Long creatorId = new Long(request.getParameter("creatorId"));
 
-		request.setAttribute("institutionId", institutionId);
-		request.setAttribute("parentInstitutionId", parentInstitutionId);
-		request.setAttribute("termId", termId);
-		request.setAttribute("categoryId", categoryId);
-		request.setAttribute("creatorId", creatorId);
+		response.setRenderParameter("institutionId", institutionId+"");
+		response.setRenderParameter("parentInstitutionId", parentInstitutionId+"");
+		response.setRenderParameter("termId", termId+"");
+		response.setRenderParameter("categoryId", categoryId+"");
+		response.setRenderParameter("creatorId", creatorId+"");
 		response.setRenderParameter("jspPage", jspPage);
 	}
 

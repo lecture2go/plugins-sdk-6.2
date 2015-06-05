@@ -1,85 +1,131 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <custom-sql>
-    
+
     <sql id="de.uhh.l2g.plugins.service.persistence.InstitutionFinder.findAllSortedAsTree">
 		<![CDATA[
-			SELECT myNode.institutionId, myNode.parentId, myNode.name, myNode.typ, myNode.www, myNode.level, myNode.sort, 
-			IF(myParent.institutionId>=0, IF(myGrandparent.institutionId>=0, 
-			CONCAT(myGrandparent.institutionId, '/', myParent.institutionId, '/', myNode.institutionId), 
-			CONCAT('', myParent.institutionId, '/', myNode.institutionId)), 
-			CONCAT( myNode.institutionId, '')) AS path 
-			FROM LG_Institution AS myNode 
+			SELECT myNode.institutionId, myNode.parentId, myNode.name, myNode.typ, myNode.www, myNode.level, myNode.sort,
+			IF(myParent.institutionId>=0, IF(myGrandparent.institutionId>=0,
+			CONCAT(myGrandparent.institutionId, '/', myParent.institutionId, '/', myNode.institutionId),
+			CONCAT('', myParent.institutionId, '/', myNode.institutionId)),
+			CONCAT( myNode.institutionId, '')) AS path
+			FROM LG_Institution AS myNode
 			LEFT JOIN LG_Institution AS myParent ON myNode.parentId = myParent.institutionId
-			LEFT JOIN LG_Institution AS myGrandparent ON myParent.parentId = myGrandparent.institutionId 
+			LEFT JOIN LG_Institution AS myGrandparent ON myParent.parentId = myGrandparent.institutionId
 			ORDER BY path ASC
 		]]>
     </sql>
-    
+
+        <sql id="de.uhh.l2g.plugins.service.persistence.InstitutionFinder.findMaxSortByParent">
+		<![CDATA[
+			SELECT MAX(sort) as maxsort FROM LG_Institution WHERE parentId = ?;
+		]]>
+    </sql>
+
+        <sql id="de.uhh.l2g.plugins.service.persistence.HostFinder.findAllInstitutionsByHost">
+		<![CDATA[
+			SELECT myNode.institutionId, myNode.parentId, myNode.name, myNode.typ, myNode.www, myNode.level, myNode.sort,
+			IF(myParent.institutionId>=0, IF(myGrandparent.institutionId>=0,
+			CONCAT(myGrandparent.institutionId, '/', myParent.institutionId, '/', myNode.institutionId),
+			CONCAT('', myParent.institutionId, '/', myNode.institutionId)),
+			CONCAT( myNode.institutionId, '')) AS path
+			FROM LG_Institution AS myNode
+			LEFT JOIN LG_Institution AS myParent ON myNode.parentId = myParent.institutionId
+			LEFT JOIN LG_Institution AS myGrandparent ON myParent.parentId = myGrandparent.institutionId
+			ORDER BY path ASC
+		]]>
+    </sql>
+        <sql id="de.uhh.l2g.plugins.service.persistence.HostFinder.findHostByInstitution">
+		<![CDATA[
+			SELECT myNode.institutionId, myNode.parentId, myNode.name, myNode.typ, myNode.www, myNode.level, myNode.sort,
+			IF(myParent.institutionId>=0, IF(myGrandparent.institutionId>=0,
+			CONCAT(myGrandparent.institutionId, '/', myParent.institutionId, '/', myNode.institutionId),
+			CONCAT('', myParent.institutionId, '/', myNode.institutionId)),
+			CONCAT( myNode.institutionId, '')) AS path
+			FROM LG_Institution AS myNode
+			LEFT JOIN LG_Institution AS myParent ON myNode.parentId = myParent.institutionId
+			LEFT JOIN LG_Institution AS myGrandparent ON myParent.parentId = myGrandparent.institutionId
+			ORDER BY path ASC
+		]]>
+    </sql>
+        <sql id="de.uhh.l2g.plugins.service.persistence.HostFinder.findAllServerSettingsByInstitution">
+		<![CDATA[
+			SELECT myNode.institutionId, myNode.parentId, myNode.name, myNode.typ, myNode.www, myNode.level, myNode.sort,
+			IF(myParent.institutionId>=0, IF(myGrandparent.institutionId>=0,
+			CONCAT(myGrandparent.institutionId, '/', myParent.institutionId, '/', myNode.institutionId),
+			CONCAT('', myParent.institutionId, '/', myNode.institutionId)),
+			CONCAT( myNode.institutionId, '')) AS path
+			FROM LG_Institution AS myNode
+			LEFT JOIN LG_Institution AS myParent ON myNode.parentId = myParent.institutionId
+			LEFT JOIN LG_Institution AS myGrandparent ON myParent.parentId = myGrandparent.institutionId
+			ORDER BY path ASC
+		]]>
+    </sql>
+
     <sql id="de.uhh.l2g.plugins.service.persistence.InstitutionFinder.findByLectureseriesId">
 		<![CDATA[
-			SELECT LG_Institution.institutionId, LG_Institution.parentId, LG_Institution.name, LG_Institution.typ, LG_Institution.www, LG_Institution.level, LG_Institution.sort 
-			FROM LG_Institution, LG_Lectureseries_Institution 
+			SELECT LG_Institution.institutionId, LG_Institution.parentId, LG_Institution.name, LG_Institution.typ, LG_Institution.www, LG_Institution.level, LG_Institution.sort
+			FROM LG_Institution, LG_Lectureseries_Institution
 			WHERE (LG_Lectureseries_Institution.lectureseriesId=? AND LG_Institution.institutionId=LG_Lectureseries_Institution.institutionId)
 		]]>
-    </sql> 
+    </sql>
 
     <sql id="de.uhh.l2g.plugins.service.persistence.LectureseriesFinder.findAllLectureseriesWithOpenAccessVideos">
 		<![CDATA[
-			SELECT number_, eventType, categoryId, l.name, shortDesc, l.termId, language, facultyName, l.lectureseriesId, password_, approved, longDesc, latestOpenAccessVideoId 
-			FROM LG_Lectureseries l, LG_Video v, LG_Video_Institution vi, LG_Institution i 
-			WHERE ( l.lectureseriesId=v.lectureseriesId AND v.openAccess=1 AND v.videoId=vi.videoId AND vi.institutionId=i.institutionId) 
+			SELECT number_, eventType, categoryId, l.name, shortDesc, l.termId, language, facultyName, l.lectureseriesId, password_, approved, longDesc, latestOpenAccessVideoId
+			FROM LG_Lectureseries l, LG_Video v, LG_Video_Institution vi, LG_Institution i
+			WHERE ( l.lectureseriesId=v.lectureseriesId AND v.openAccess=1 AND v.videoId=vi.videoId AND vi.institutionId=i.institutionId)
 			GROUP BY l.lectureseriesId
 		]]>
-    </sql> 
+    </sql>
 
     <sql id="de.uhh.l2g.plugins.service.persistence.LectureseriesFinder.findAllLectureseriesWithPassword">
 		<![CDATA[
-			SELECT number_, eventType, categoryId, l.name, shortDesc, termId, language, facultyName, l.lectureseriesId, password_, approved, longDesc, latestOpenAccessVideoId 
-			FROM LG_Lectureseries l 
+			SELECT number_, eventType, categoryId, l.name, shortDesc, termId, language, facultyName, l.lectureseriesId, password_, approved, longDesc, latestOpenAccessVideoId
+			FROM LG_Lectureseries l
 			WHERE l.password_>""
 		]]>
-    </sql> 
+    </sql>
 
     <sql id="de.uhh.l2g.plugins.service.persistence.LectureseriesFinder.findAllLectureseriesForVideo">
 		<![CDATA[
-			SELECT number_, eventType, categoryId, l.name, shortDesc, termId, language, facultyName, l.lectureseriesId, password_, approved, longDesc, latestOpenAccessVideoId 
+			SELECT number_, eventType, categoryId, l.name, shortDesc, termId, language, facultyName, l.lectureseriesId, password_, approved, longDesc, latestOpenAccessVideoId
 			FROM LG_Lectureseries l, LG_Video_Lectureseries vl
 			WHERE (vl.videoId = ? AND l.lectureseriesId=vl.lectureseriesId)
 		]]>
-    </sql> 
+    </sql>
 
     <sql id="de.uhh.l2g.plugins.service.persistence.ProducerFinder.findProducerIds">
 		<![CDATA[
-			SELECT p.producerId 
-			FROM  LG_Producer_Lectureseries AS pc  
-			INNER JOIN LG_Producer AS p ON pc.producerId = p.producerId 
+			SELECT p.producerId
+			FROM  LG_Producer_Lectureseries AS pc
+			INNER JOIN LG_Producer AS p ON pc.producerId = p.producerId
 			WHERE pc.lectureseriesId = ?
 		]]>
-    </sql> 
+    </sql>
 
     <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.findLatestOpenAccessVideoForlectureseries">
 		<![CDATA[
-			SELECT videoId FROM LG_Video  
-			WHERE (generationDate=(SELECT MAX(generationDate) FROM LG_Video WHERE lectureseriesId=? AND openAccess=1) AND lectureseriesId=? AND openAccess=1)  
+			SELECT videoId FROM LG_Video
+			WHERE (generationDate=(SELECT MAX(generationDate) FROM LG_Video WHERE lectureseriesId=? AND openAccess=1) AND lectureseriesId=? AND openAccess=1)
 			ORDER BY videoId ASC
 		]]>
-    </sql> 
-    
+    </sql>
+
     <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.resetLectureseriesForVideos">
 		<![CDATA[
 			UPDATE LG_Video SET lectureseriesId=0 WHERE lectureseriesId=?
 		]]>
-    </sql> 
-    
+    </sql>
+
     <sql id="de.uhh.l2g.plugins.service.persistence.CreatorFinder.findCreatorsForLectureseries">
 		<![CDATA[
 			SELECT c.* FROM LG_Creator c, LG_Lectureseries_Creator lc WHERE c.creatorId=lc.creatorId AND lc.lectureseriesId = ?
 		]]>
-    </sql>     
-    
+    </sql>
+
     <sql id="de.uhh.l2g.plugins.service.persistence.CreatorFinder.findCreatorsForVideo">
 		<![CDATA[
 			SELECT c.* FROM LG_Creator c, LG_Video_Creator vc WHERE c.creatorId=vc.creatorId AND vc.videoId = ?
 		]]>
-    </sql>     
+    </sql>
 </custom-sql>
