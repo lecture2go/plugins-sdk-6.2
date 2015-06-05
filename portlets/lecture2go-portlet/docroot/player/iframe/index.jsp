@@ -1,8 +1,12 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org   /TR/html4/loose.dtd">
+<html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<script type="text/javascript" src="/lecture2go-portlet/js/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript" src="/lecture2go-portlet/player/jwplayer/jwplayer.js"></script>
 	<script type="text/javascript">jwplayer.key="Ez+YMIX4GOdXtP/v87cdP4FQuVY2dvNrQluq/w==";</script>
+	
 	<title>Lecture2o-Embed</title>
 </head>
 
@@ -27,11 +31,12 @@
 					var mobileStreamUrl ="<%=video.getStreamAndroidUrl()%>";
 					var mp4OpenAccessDownloadLink ="<%=video.getMp4OpenAccessDownloadLink()%>";
 					var vttChapterFile ="<%=video.getVttChapterFile()%>";
-					
+					var img = "<%=video.getImage()%>";
 			        jwplayer('player1').setup({
 			            width: "100%",
-			            height: "100%",
+        			    height: "100%",
 			            aspectratio: "16:9",
+			            image: img,
 			            sources: [
 			            	{ file: mobileStreamUrl },
 			            	{ file: desctopStreamUrl },
@@ -48,4 +53,4 @@
 		</script>
 	<%}%>
 </body>
-
+</html>
