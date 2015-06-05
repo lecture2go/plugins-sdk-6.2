@@ -27,6 +27,10 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 
 import de.uhh.l2g.plugins.HostNameException;
+import de.uhh.l2g.plugins.HostStreamingServerTemplateException;
+import de.uhh.l2g.plugins.HostStreamerException;
+import de.uhh.l2g.plugins.NoSuchInstitutionException;
+import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
@@ -132,6 +136,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 	public List<Institution> getInstitutionsFromLectureseriesIdsAndVideoIds(ArrayList<Long> lectureseriesIds, ArrayList<Long> videoIds) {
 		return InstitutionFinderUtil.findInstitutionsByLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds, new Long(0));
 	}
+
 
 	public List<Institution> getInstitutionsFromLectureseriesIdsAndVideoIds(ArrayList<Long> lectureseriesIds, ArrayList<Long> videoIds, Long parentId) {
 		return InstitutionFinderUtil.findInstitutionsByLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds, parentId);
@@ -239,7 +244,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 	protected int updateSort(Institution inst, int newpos) throws SystemException{
 		int validPosition = 0;
 
-		System.out.println(inst.getSort());
+		//System.out.println(inst.getSort());
 		int subElements = InstitutionLocalServiceUtil.getByGroupIdAndParentCount(inst.getGroupId(), inst.getParentId());
 
 		if (subElements < 1) validPosition = 1; // There is nothing to reorder and only one valid position
@@ -249,13 +254,13 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 			int curPos = 1;
 			int increment = 0;
 			for (Institution subInstitution: subtree){
-				 if (newpos <= curPos){ //insert new Institution here
+				 if (newpos <= curPos && increment == 0){ //insert new Institution here
 					 validPosition = curPos;
 					 increment = 1;
 				 }
 				 subInstitution.setSort(curPos + increment);
 				 institutionPersistence.update(subInstitution);
-				 System.out.println(subInstitution.getInstitutionId() +" "+ subInstitution.getName()+ " " + curPos + " "+ increment);
+				 //System.out.println(subInstitution.getInstitutionId() +" "+ subInstitution.getName()+ " " + curPos + " " + increment+ " " +validPosition);
 				 curPos++;
 
 			}
@@ -264,7 +269,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		}
 
 
-		System.out.println(validPosition);
+		//System.out.println(validPosition);
 
 		return validPosition;
 	}

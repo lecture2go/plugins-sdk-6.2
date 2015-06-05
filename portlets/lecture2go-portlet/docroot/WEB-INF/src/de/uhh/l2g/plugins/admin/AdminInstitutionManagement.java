@@ -20,11 +20,24 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import de.uhh.l2g.plugins.model.Host;
+<<<<<<< Upstream, based on origin/master
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.StreamingServerTemplate;
+=======
+import de.uhh.l2g.plugins.model.Producer;
+import de.uhh.l2g.plugins.model.StreamingServerTemplate;
+import de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil;
+>>>>>>> 47455b6 Loop fix and renaming
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
+<<<<<<< Upstream, based on origin/master
 import de.uhh.l2g.plugins.service.StreamingServerTemplateLocalServiceUtil;
+=======
+import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
+import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
+import de.uhh.l2g.plugins.service.StreamingServerTemplateLocalServiceUtil;
+import de.uhh.l2g.plugins.service.persistence.InstitutionPersistence;
+>>>>>>> 47455b6 Loop fix and renaming
 
 public class AdminInstitutionManagement extends MVCPortlet {
 
@@ -49,7 +62,10 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 		    List<Institution> institutions = InstitutionLocalServiceUtil.getByGroupId(groupId);
 		    List<Host> host = HostLocalServiceUtil.getByTemplateConfiguredAndGroupId(groupId);
+<<<<<<< Upstream, based on origin/master
 
+=======
+>>>>>>> 47455b6 Loop fix and renaming
 		    List<StreamingServerTemplate> streamingServerTemplate = StreamingServerTemplateLocalServiceUtil.getByGroupId(groupId);
 
 		    System.out.println(institutionId+" "+groupId+" "+institutions.toString());

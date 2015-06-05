@@ -4,7 +4,7 @@
 <%@ page import="de.uhh.l2g.plugins.model.Host" %>
 <%@ page import="de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil" %>
 <%@ page import="de.uhh.l2g.plugins.service.HostLocalServiceUtil" %>
-<%@ page import="de.uhh.l2g.plugins.service.ServerTemplateLocalServiceUtil" %>
+<%@ page import="de.uhh.l2g.plugins.service.StreamingServerTemplateLocalServiceUtil" %>
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
@@ -27,7 +27,6 @@
 <portlet:actionURL name="addStreamingServerTemplate" var="addStreamingServerTemplateURL"></portlet:actionURL>
 <portlet:actionURL name="updateStreamingServerTemplate" var="updateStreamingServerTemplateURL"></portlet:actionURL>
 <portlet:actionURL name="updateTopLevelInstitution" var="updateTopLevelInstitutionURL"></portlet:actionURL>
-
 
 <script src="https://code.jquery.com/jquery-1.11.2.js"></script>
 <script type="text/javascript">
