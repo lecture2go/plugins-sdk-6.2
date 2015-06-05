@@ -24,12 +24,12 @@ import com.liferay.portal.service.ServiceContext;
 
 import de.uhh.l2g.plugins.Institution_HostHostException;
 import de.uhh.l2g.plugins.Institution_HostInstitutionException;
-import de.uhh.l2g.plugins.ServerTemplateNameException;
-import de.uhh.l2g.plugins.ServerTemplateTemplateStringException;
+import de.uhh.l2g.plugins.StreamingServerTemplateNameException;
+import de.uhh.l2g.plugins.StreamingServerTemplateStringException;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Institution_Host;
-import de.uhh.l2g.plugins.model.ServerTemplate;
+import de.uhh.l2g.plugins.model.StreamingServerTemplate;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.Institution_HostLocalServiceBaseImpl;

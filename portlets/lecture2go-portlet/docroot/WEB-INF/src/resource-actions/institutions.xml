@@ -119,7 +119,7 @@
 </model-resource>
 
 <model-resource>
-    <model-name>de.uhh.l2g.plugins.model.ServerTemplate</model-name>
+    <model-name>de.uhh.l2g.plugins.model.StreamingServerTemplate</model-name>
     <portlet-ref>
         <portlet-name>lg-admin-institution-management</portlet-name>
     </portlet-ref>

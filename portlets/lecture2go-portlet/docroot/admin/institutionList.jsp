@@ -4,7 +4,7 @@
 <%@ page import="de.uhh.l2g.plugins.model.Host" %>
 <%@ page import="de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil" %>
 <%@ page import="de.uhh.l2g.plugins.service.HostLocalServiceUtil" %>
-<%@ page import="de.uhh.l2g.plugins.service.ServerTemplateLocalServiceUtil" %>
+<%@ page import="de.uhh.l2g.plugins.service.StreamingServerTemplateLocalServiceUtil" %>
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
@@ -22,8 +22,8 @@
 <portlet:actionURL name="updateSubInstitutionEntry" var="updateSubInstitutionEntryURL"></portlet:actionURL>
 <portlet:actionURL name="addServerEntry" var="addServerEntryURL"></portlet:actionURL>
 <portlet:actionURL name="updateServerEntry" var="updateServerEntryURL"></portlet:actionURL>
-<portlet:actionURL name="addServerTemplateEntry" var="addServerTemplateEntryURL"></portlet:actionURL>
-<portlet:actionURL name="updateServerTemplateEntry" var="updateServerTemplateEntryURL"></portlet:actionURL>
+<portlet:actionURL name="addStreamingServerTemplateEntry" var="addStreamingServerTemplateEntryURL"></portlet:actionURL>
+<portlet:actionURL name="updateStreamingServerTemplateEntry" var="updateStreamingServerTemplateEntryURL"></portlet:actionURL>
 <portlet:actionURL name="updateTopLevelInstitutionEntry" var="updateTopLevelInstitutionEntryURL"></portlet:actionURL>
 
 
@@ -51,17 +51,17 @@
 <%
 long institutionId = Long.valueOf((Long) renderRequest.getAttribute("institutionId"));
 long hostId = Long.valueOf((Long) renderRequest.getAttribute("hostId"));
-long serverTemplateId = Long.valueOf((Long) renderRequest.getAttribute("serverTemplateId"));
+long streamingServerTemplateId = Long.valueOf((Long) renderRequest.getAttribute("streamingServerTemplateId"));
 
 long groupId = themeDisplay.getLayout().getGroupId();
 
 boolean deviceSpecificURLs = false;
-if (serverTemplateId > 0) deviceSpecificURLs = ServerTemplateLocalServiceUtil.getDeviceSpecificByServerTemplateId(serverTemplateId);
+if (streamingServerTemplateId > 0) deviceSpecificURLs = StreamingServerTemplateLocalServiceUtil.getDeviceSpecificByStreamingServerTemplateId(streamingServerTemplateId);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("institutionId", institutionId+"");
 portletURL.setParameter("hostId", hostId+"");
-portletURL.setParameter("serverTemplateId", hostId+"");
+portletURL.setParameter("streamingServerTemplateId", hostId+"");
 
 List<Institution> institutions = InstitutionLocalServiceUtil.getByGroupIdAndParent(groupId,1);
 List<Host> hostList = HostLocalServiceUtil.getByTemplateConfiguredAndGroupId(groupId);
@@ -127,11 +127,11 @@ else{
 </aui:form>
 </liferay-ui:panel>
 
-<liferay-ui:panel title="Server Preset Configuration" collapsible="true" id="serverTemplates"
+<liferay-ui:panel title="Server Preset Configuration" collapsible="true" id="streamingServerTemplates"
 		    	defaultState="open"
 		    	extended="<%= false %>"
 		    	persistState="<%= true %>">
-				<aui:form action="<%= updateServerTemplateEntryURL %>" name="<portlet:namespace />fm" inlineLabel="true">
+				<aui:form action="<%= updateStreamingServerTemplateEntryURL %>" name="<portlet:namespace />fm" inlineLabel="true">
 		 	    <aui:fieldset column="true">
 		 	    	<aui:input label="Use Device Specific Templates" type="checkbox" name="deviceSpecific"></aui:input>
 		 	    </aui:fieldset>
@@ -142,7 +142,7 @@ else{
 			 	        <aui:input label="Suffix" name="suffixURL" inlineField="true"></aui:input>
 			 	        <aui:input label="Extension" name="secExt" inlineField="true"></aui:input>
 			 	        <aui:input name='type' type='hidden' inlineField="true" value='0'/>
-			 	        <aui:input name='serverTemplateId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "serverTemplateId") %>'/>
+			 	        <aui:input name='streamingServerTemplateId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "streamingServerTemplateId") %>'/>
 			 	        <aui:input label="URL Template String" required="true" name="templateURL"></aui:input>
 			 	    </aui:fieldset>
 		 	    </div>
@@ -152,7 +152,7 @@ else{
 			 	        <aui:input label="Suffix" name="suffixURL" inlineField="true"></aui:input>
 			 	        <aui:input label="Extension" name="secExt" inlineField="true"></aui:input>
 			 	        <aui:input name='type' type='hidden' inlineField="true" value='0'/>
-			 	        <aui:input name='serverTemplateId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "serverTemplateId") %>'/>
+			 	        <aui:input name='streamingServerTemplateId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "streamingServerTemplateId") %>'/>
 			 	        <aui:input label="URL Template String" required="false" name="templateURL"></aui:input>
 			 	    </aui:fieldset>
 		 	    </div>
@@ -162,7 +162,7 @@ else{
 			 	        <aui:input label="Suffix" name="suffixURL" inlineField="true"></aui:input>
 			 	        <aui:input label="Extension" name="secExt" inlineField="true"></aui:input>
 			 	        <aui:input name='type' type='hidden' inlineField="true" value='0'/>
-			 	        <aui:input name='serverTemplateId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "serverTemplateId") %>'/>
+			 	        <aui:input name='streamingServerTemplateId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "streamingServerTemplateId") %>'/>
 			 	        <aui:input label="URL Template String" required="false" name="templateURL"></aui:input>
 		 	    </aui:fieldset>
 		 	    </div>

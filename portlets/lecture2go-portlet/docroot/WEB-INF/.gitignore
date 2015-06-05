@@ -515,7 +515,6 @@
 /classes/
 /classes/
 /classes/
-/.gitignore
 /classes/
 /classes/
 /classes/
@@ -560,3 +559,4 @@
 /classes/
 /classes/
 /classes/
+/sql/

@@ -25,8 +25,8 @@ import com.liferay.portal.service.ServiceContext;
 import de.uhh.l2g.plugins.HostNameException;
 import de.uhh.l2g.plugins.HostServerTemplateException;
 import de.uhh.l2g.plugins.HostStreamerException;
-import de.uhh.l2g.plugins.ServerTemplateNameException;
-import de.uhh.l2g.plugins.ServerTemplateTemplateStringException;
+import de.uhh.l2g.plugins.StreamingServerTemplateNameException;
+import de.uhh.l2g.plugins.StreamingServerTemplateStringException;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.ServerTemplate;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
@@ -74,11 +74,11 @@ public class ServerTemplateLocalServiceImpl
 	protected void validate(String name, String templateURL) throws PortalException {
 
 		if (Validator.isNull(name)) {
-	       throw new ServerTemplateNameException();
+	       throw new StreamingServerTemplateNameException();
 		 }
 
 	     if (Validator.isNull(templateURL)) {
-	       throw new ServerTemplateTemplateStringException();
+	       throw new StreamingServerTemplateStringException();
 	     }
 	}
 
