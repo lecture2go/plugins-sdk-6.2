@@ -60,34 +60,83 @@
         </finder>
     </entity>
     <entity name="Institution" local-service="true" remote-service="false">
-        <column name="institutionId" type="long" primary="true" id-type="increment"></column>
-        <column name="parentId" type="long"></column>
-        <column name="name" type="String"></column>
-        <column name="typ" type="String"></column>
-        <column name="www" type="String"></column>
-        <column name="level" type="int"></column>
-        <column name="sort" type="int"></column>
-        <finder name="Parent" return-type="Collection">
+    	<column name="institutionId" type="long" primary="true"
+    		id-type="increment">
+    	</column>
+    	<column name="parentId" type="long"></column>
+    	<column name="name" type="String"></column>
+    	<column name="typ" type="String"></column>
+    	<column name="www" type="String"></column>
+    	<column name="level" type="int"></column>
+    	<column name="sort" type="int"></column>
+        <column name="groupId" type="long"></column>
+		<order by="asc"> <order-column name="sort" />
+		</order>
+    	<finder name="Parent" return-type="Collection">
+    		<finder-column name="parentId"></finder-column>
+    	</finder>
+    	<finder name="Name" return-type="Collection">
+    		<finder-column name="name"></finder-column>
+    	</finder>
+    	<finder name="Typ" return-type="Collection">
+    		<finder-column name="typ"></finder-column>
+    	</finder>
+    	<finder name="Www" return-type="Collection">
+    		<finder-column name="www"></finder-column>
+    	</finder>
+    	<finder name="level" return-type="Collection">
+    		<finder-column name="level"></finder-column>
+    	</finder>
+    	<finder name="Sort" return-type="Collection">
+    		<finder-column name="sort"></finder-column>
+    	</finder>
+    	<finder name="LevelAndType" return-type="Collection">
+    		<finder-column name="level"></finder-column>
+    		<finder-column name="typ"></finder-column>
+    	</finder>
+        <finder name="GroupId" return-type="Collection">
+            <finder-column name="groupId"></finder-column>
+        </finder>
+        <finder name="G_P" return-type="Collection">
+            <finder-column name="groupId"></finder-column>
             <finder-column name="parentId"></finder-column>
         </finder>
-        <finder name="Name" return-type="Collection">
+        <finder name="G_N" return-type="Collection">
             <finder-column name="name"></finder-column>
+            <finder-column name="groupId"></finder-column>
         </finder>
-        <finder name="Typ" return-type="Collection">
+        <finder name="G_T" return-type="Collection">
             <finder-column name="typ"></finder-column>
+            <finder-column name="groupId"></finder-column>
         </finder>
-        <finder name="Www" return-type="Collection">
+        <finder name="G_W" return-type="Collection">
             <finder-column name="www"></finder-column>
+            <finder-column name="groupId"></finder-column>
         </finder>
-        <finder name="level" return-type="Collection">
+        <finder name="G_L" return-type="Collection">
             <finder-column name="level"></finder-column>
+            <finder-column name="groupId"></finder-column>
         </finder>
-        <finder name="Sort" return-type="Collection">
+        <finder name="G_S" return-type="Collection">
+            <finder-column name="sort"></finder-column>
+            <finder-column name="groupId"></finder-column>
+        </finder>
+        <finder name="G_L_T" return-type="Collection">
+            <finder-column name="level"></finder-column>
+            <finder-column name="typ"></finder-column>
+            <finder-column name="groupId"></finder-column>
+        </finder>
+        <finder name="G_P_S" return-type="Collection">
+            <finder-column name="groupId"></finder-column>
+            <finder-column name="parentId"></finder-column>
             <finder-column name="sort"></finder-column>
         </finder>
-        <finder name="LevelAndType" return-type="Collection">
-            <finder-column name="level"></finder-column>
-            <finder-column name="typ"></finder-column>
+        <finder name="TopLevel" return-type="Institution" where="parentId = 0">
+            <finder-column name="groupId"></finder-column>
+        </finder>
+        <finder name="G_I" return-type="Institution">
+            <finder-column name="groupId"></finder-column>
+            <finder-column name="institutionId"></finder-column>
         </finder>
     </entity>
     <entity name="Lectureseries_Institution" local-service="true" remote-service="false">
@@ -152,36 +201,42 @@
     	<column name="hostId" primary="true" type="long"
     		id-type="increment">
     	</column>
+    	<column name="serverTemplateId" type="long"></column>
     	<column name="protocol" type="String"></column>
     	<column name="streamer" type="String"></column>
     	<column name="port" type="int"></column>
     	<column name="serverRoot" type="String"></column>
     	<column name="name" type="String"></column>
-
-
-    	<!-- PK fields -->
-
-    	<!-- Group instance -->
-    	<column name="serverTemplate" type="String"></column>
-
-    	<!-- Audit fields -->
-
-
-    	<!-- PK fields -->
-
-    	<!-- Group instance -->
-
-    	<!-- Audit fields -->
+		<column name="groupId" type="long"></column>
+		<finder name="GroupId" return-type="Collection">
+            <finder-column name="groupId"></finder-column>
+        </finder>
+        <finder name="TemplateConfiguredAndGroupId" return-type="Collection" where="serverTemplateId &gt; 0">
+            <finder-column name="groupId"></finder-column>
+        </finder>
+        <finder name="G_H" return-type="Host">
+            <finder-column name="groupId"></finder-column>
+            <finder-column name="hostId"></finder-column>
+        </finder>
     </entity>
     <entity name="Institution_Host" local-service="true" remote-service="false">
         <column name="institutionHostId" type="long" primary="true" id-type="increment"></column>
         <column name="institutionId" type="long"></column>
         <column name="hostId" type="long"></column>
-        <finder name="institutionId" return-type="Institution_Host">
+        <column name="groupId" type="long"></column>
+        <finder name="institutionId" return-type="Collection">
             <finder-column name="institutionId" case-sensitive="false"></finder-column>
         </finder>
-        <finder name="hostId" return-type="Institution_Host">
+        <finder name="hostId" return-type="Collection">
             <finder-column name="hostId"></finder-column>
+        </finder>
+        <finder name="G_H" unique="false" return-type="Collection">
+            <finder-column name="groupId"></finder-column>
+            <finder-column name="hostId"></finder-column>
+        </finder>
+        <finder name="G_I" return-type="Institution_Host" unique="true">
+            <finder-column name="groupId"></finder-column>
+            <finder-column name="institutionId"></finder-column>
         </finder>
     </entity>
     <entity name="Office" local-service="true" remote-service="false">
@@ -520,11 +575,40 @@
             <finder-column name="objectId"></finder-column>
         </finder>
     </entity>
+        <entity name="ServerTemplate" local-service="true" remote-service="false">
+    	<column name="serverTemplateId" type="long" primary="true"></column>
+		<column name="groupId" type="long"></column>
+        <column name="name" type="String" accessor="false"></column>
+        <column name="type" type="int"></column>
+        <column name="prefixURL" type="String"></column>
+        <column name="suffixURL" type="String"></column>
+        <column name="secExt" type="String"></column>
+        <column name="templateURL" type="String"></column>
+        <column name="prefixFile" type="String"></column>
+        <column name="suffixFile" type="String"></column>
+        <column name="templateFile" type="String"></column>
+        <column name="templateIOS" type="long"></column>
+        <column name="templateAndroid" type="long"></column>
+        <column name="defaultServer" type="int"></column>
+        <finder name="GroupId" return-type="Collection" where="type &lt; 1" db-index="true">
+            <finder-column name="groupId" case-sensitive="true"></finder-column>
+        </finder>
+        <finder name="DeviceSpecificURLs" return-type="Collection" where="type = 0 AND (templateIOS &gt; 0 OR templateAndroid &gt; 0)" db-index="true">
+            <finder-column name="serverTemplateId"></finder-column>
+        </finder>
+        <finder name="DefaultServer" return-type="Collection" where="defaultServer &gt; 0">
+            <finder-column name="groupId"></finder-column>
+        </finder>
+    </entity>
     <exceptions>
         <exception>HostName</exception>
         <exception>HostStreamer</exception>
         <exception>HostServerTemplate</exception>
         <exception>InstitutionName</exception>
+        <exception>Institution_HostHost</exception>
+        <exception>Institution_HostInstitution</exception>
+        <exception>ServerTemplateName</exception>
+        <exception>ServerTemplateString</exception>
     </exceptions>
 
 

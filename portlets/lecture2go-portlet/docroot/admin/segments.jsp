@@ -24,18 +24,18 @@ String backURL = request.getAttribute("backURL").toString();
 			<%}%>
 
 			<div class="player">
-				<%@ include file="mediaplayer/includeStrobeMediaPlayer.html"%>
+				<%@ include file="player/includePlayer.html"%>
 			</div>
 			
 		    <aui:input name="segment" value="1" type="radio" label="chapter" id="chapter" checked="true"/>	
 	
 		    <aui:input name="segment" value="0" type="radio" label="comment" id="comment"/>	
 			
-			<aui:input name="chortTitle" label="chort title" required="true" id="chortTitle"/>
+			<aui:input name="chortTitle" label="short title" required="true" id="chortTitle"/>
 	
-			<aui:input name="segmentBegin" label="segment begin" required="true" onclick="updateL2GoTimeForStart();" id="timeStart" readonly="true"/>
+			<aui:input name="segmentBegin" label="segment begin" required="true" id="timeStart" readonly="true"/>
 	
-			<aui:input name="segmentEnd" label="segment end" required="true" onclick="updateL2GoTimeForEnd();" id="timeEnd" readonly="true"/>
+			<aui:input name="segmentEnd" label="segment end" required="true" id="timeEnd" readonly="true"/>
 			
 			<div id="iav">
 				<aui:input name="text" type="textarea" label="text" autoSize="true" id="text"/>

@@ -220,7 +220,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 		}
 		
 		lQuery += "WHERE l.latestOpenAccessVideoId>0 ";
-		vQuery += "WHERE v.lectureseriesId<0 ";
+		vQuery += "WHERE v.lectureseriesId<0 AND v.openAccess=1 ";
 		
 		if (institutionId > 0 || institutionParentId > 0 || termIds.size() > 0 || categoryIds.size() > 0 || creatorIds.size() > 0) {
 			int i = 0;

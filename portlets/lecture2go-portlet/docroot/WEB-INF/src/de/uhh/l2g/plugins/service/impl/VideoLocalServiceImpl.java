@@ -18,6 +18,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import org.json.JSONArray;
@@ -31,18 +32,22 @@ import com.liferay.portal.kernel.util.PropsUtil;
 
 import de.uhh.l2g.plugins.NoSuchInstitutionException;
 import de.uhh.l2g.plugins.NoSuchProducerException;
+import de.uhh.l2g.plugins.model.Creator;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Lastvideolist;
 import de.uhh.l2g.plugins.model.Producer;
+import de.uhh.l2g.plugins.model.Segment;
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.impl.HostImpl;
 import de.uhh.l2g.plugins.model.impl.InstitutionImpl;
 import de.uhh.l2g.plugins.model.impl.LastvideolistImpl;
 import de.uhh.l2g.plugins.model.impl.ProducerImpl;
 import de.uhh.l2g.plugins.model.impl.VideoImpl;
+import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LastvideolistLocalServiceUtil;
+import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.VideoLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.VideoFinderUtil;
 import de.uhh.l2g.plugins.util.FFmpegManager;
@@ -122,26 +127,26 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		try {
 			objectVideo = videoPersistence.findByPrimaryKey(videoId);
 		} catch (NoSuchModelException e1) {
-			e1.printStackTrace();
+//			e1.printStackTrace();
 		} catch (SystemException e1) {
-			e1.printStackTrace();
+//			e1.printStackTrace();
 		}
 		// add all properties to the video object
 		Host objectHost = new HostImpl();
 		try {
 			objectHost = HostLocalServiceUtil.getHost(objectVideo.getHostId());
 		} catch (PortalException e1) {
-			e1.printStackTrace();
+//			e1.printStackTrace();
 		} catch (SystemException e1) {
-			e1.printStackTrace();
+//			e1.printStackTrace();
 		}
 		Producer objectProducer = new ProducerImpl();
 		try {
 			objectProducer = producerPersistence.findByPrimaryKey(objectVideo.getProducerId());
 		} catch (NoSuchProducerException e1) {
-			e1.printStackTrace();
+//			e1.printStackTrace();
 		} catch (SystemException e1) {
-			e1.printStackTrace();
+//			e1.printStackTrace();
 		}
 
 		// prepare video short name
@@ -234,6 +239,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			File fvlFile = new File(homedirPath + ".flv");
 			File oggFile = new File(homedirPath + ".ogg");
 			File webmFile = new File(homedirPath + ".webm");
+			String vttChapterFile = new String(PropsUtil.get("lecture2go.chapters.web.root") +"/"+objectVideo.getVideoId()+".vtt");
 			//
 			objectVideo.setMp4File(mp4File);
 			objectVideo.setMp3File(mp3File);
@@ -243,6 +249,8 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			objectVideo.setFlvFile(fvlFile);
 			objectVideo.setOggFile(oggFile);
 			objectVideo.setWebmFile(webmFile);
+			objectVideo.setVttChapterFile(vttChapterFile);
+			//test
 		} catch (Exception e) {
 			//
 		}
@@ -252,9 +260,9 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		try {
 			institudion = institutionPersistence.findByPrimaryKey(objectVideo.getRootInstitutionId());
 		} catch (NoSuchInstitutionException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		} catch (SystemException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		try {
 			if (webhome.contains("localhost"))
@@ -280,7 +288,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			url = objectHost.getProtocol() + "://" + objectHost.getStreamer() + "/vod/_definst_/mp3:" + objectVideo.getRootInstitutionId() + "l2g" + objectProducer.getHomeDir() + "/" + filename;
 		else
 			url = objectHost.getProtocol() + "://" + objectHost.getStreamer() + "/vod/_definst_/mp4:" + objectVideo.getRootInstitutionId() + "l2g" + objectProducer.getHomeDir() + "/" + filename;
-		streamUrl = url + "/manifest.f4m"; // normal
+		streamUrl = url; // normal
 		streamIosUrl = url + "/playlist.m3u8"; // iOS
 		streamAndroidUrl = url + "/playlist.m3u8"; // android
 
@@ -288,10 +296,82 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		objectVideo.setStreamIosUrl(streamIosUrl); // normal
 		objectVideo.setStreamAndroidUrl(streamAndroidUrl); // normal
 
-		// has chapters TODO Segmentation
-		// if(segmentDao.getChapterByVideoId(objectVideo.getId()).size()>0)objectVideo.setHasChapters(true);
-		// //has comments
-		// if(segmentDao.getCommentsByVideoId(objectVideo.getId()).size()>0)objectVideo.setHasComments(true);
+		List<Segment> sl = new ArrayList<Segment>();
+		try {
+			sl = SegmentLocalServiceUtil.getSegmentsByVideoId(videoId);
+			if(sl.size()>0)objectVideo.setHasChapters(true);
+		} catch (PortalException e) {
+		} catch (SystemException e) {
+		}
+		
+		//creators
+		List<Creator> cl = CreatorLocalServiceUtil.getCreatorsByVideoId(videoId);
+		String cS = "";
+		ListIterator<Creator> cli = cl.listIterator();
+		while(cli.hasNext()){
+			cS+=cli.next().getFullName()+"; ";
+		}
+		objectVideo.setCreators(cS);
+		
+		//get download Links 
+		String downMp3Link = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+objectVideo.getPreffix()+".mp3";
+		String downMp4Link = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+objectVideo.getPreffix()+".mp4";
+		String downM4vLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+objectVideo.getPreffix()+".m4v";
+		String downM4aLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+objectVideo.getPreffix()+".m4a";
+		String downWebmLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+objectVideo.getPreffix()+".webm";
+		String downPdfLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+objectVideo.getPreffix()+".pdf";
+		String downOggLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+objectVideo.getPreffix()+".ogg";
+		String downFlvLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+objectVideo.getPreffix()+".flv";
+		//
+		objectVideo.setMp4OpenAccessDownloadLink(downMp4Link);
+		objectVideo.setMp3OpenAccessDownloadLink(downMp3Link);
+		objectVideo.setM4vOpenAccessDownloadLink(downM4vLink);
+		objectVideo.setM4aOpenAccessDownloadLink(downM4aLink);
+		objectVideo.setWebmOpenAccessDownloadLink(downWebmLink);
+		objectVideo.setPdfOpenAccessDownloadLink(downPdfLink);
+		objectVideo.setOggOpenAccessDownloadLink(downOggLink);
+		objectVideo.setFlvOpenAccessDownloadLink(downFlvLink);
+		//rss links
+		if(objectVideo.getLectureseriesId()>0){
+			String rssMp3Link = PropsUtil.get("lecture2go.downloadserver.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".mp3.xml";
+			String rssMp4Link = PropsUtil.get("lecture2go.downloadserver.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".mp4.xml";
+			String rssM4vLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".m4v.xml";
+			String rssM4aLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".m4a.xml";
+			String rssWebmLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".webm.xml";
+			String rssOggLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".ogg.xml";
+			String rssFlvLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".flv.xml";		
+			//
+			objectVideo.setMp3RssLink(rssMp3Link);
+			objectVideo.setMp4RssLink(rssMp4Link);
+			objectVideo.setM4vRssLink(rssM4vLink);
+			objectVideo.setM4aRssLink(rssM4aLink);
+			objectVideo.setWebmRssLink(rssWebmLink);
+			objectVideo.setOggRssLink(rssOggLink);
+			objectVideo.setFlvRssLink(rssFlvLink);
+		}
+		
+		//embed iframe
+		String embedIframe="&lt;iframe src='"+PropsUtil.get("lecture2go.web.root")+"/lecture2go-portlet/player/iframe/?v="+objectVideo.getVideoId()+"' frameborder='0' width='647' height='373'&gt; &lt;/iframe&gt;";
+		objectVideo.setEmbedIframe(embedIframe);
+		
+		//embed html5
+		String embedHtml5="";
+		if(objectVideo.getDownloadLink()==1){
+			if(objectVideo.getContainerFormat().equals("mp4")){
+				if(objectVideo.getOpenAccess()==1){
+					embedHtml5="<video width='647' height='373' controls><source src='"+PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+objectVideo.getPreffix()+".mp4"+"' type='video/mp4'>Your browser does not support the video tag.</video>";
+				}else{
+					embedHtml5="<video width='647' height='373' controls><source src='"+PropsUtil.get("lecture2go.downloadserver.web.root")+"/videorep/"+objectHost.getName()+"/"+objectProducer.getHomeDir()+"/"+objectVideo.getSecureUrl()+"' type='video/mp4'>Your browser does not support the video tag.</video>";
+				}
+			}else{
+				if(objectVideo.getOpenAccess()==1){
+					embedHtml5="<audio controls><source src='"+PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+objectVideo.getPreffix()+".mp3"+"' type='audio/mpeg'>Your browser does not support the audio element.</audio>";
+				}else{
+					embedHtml5="<audio controls><source src='"+PropsUtil.get("lecture2go.downloadserver.web.root")+"/videorep/"+objectHost.getName()+"/"+objectProducer.getHomeDir()+"/"+objectVideo.getSecureUrl()+"' type='audio/mpeg'>Your browser does not support the audio element.</audio>";
+				}				
+			}
+		}
+		objectVideo.setEmbedHtml5(embedHtml5);
 		
 		return objectVideo;
 	}
@@ -315,7 +395,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				jsonoMp4.put("type", "mp4");
 				json.put(jsonoMp4);
 			} catch (JSONException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 		}
 
@@ -328,7 +408,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				jsonoMp3.put("type", "mp3");
 				json.put(jsonoMp3);
 			} catch (JSONException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 		}
 		
@@ -341,7 +421,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				jsonoM4a.put("type", "m4a");
 				json.put(jsonoM4a);
 			} catch (JSONException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			} 
 		}
 
@@ -354,7 +434,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				jsonoM4v.put("type", "m4v");
 				json.put(jsonoM4v);
 			} catch (JSONException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 		}
 		
@@ -367,7 +447,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				pdf.put("type", "pdf");
 				json.put(pdf);
 			} catch (JSONException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 		}
 		
@@ -380,7 +460,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				flv.put("type", "flv");
 				json.put(flv);
 			} catch (JSONException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 		}
 		
@@ -393,7 +473,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				ogg.put("type", "ogg");
 				json.put(ogg);
 			} catch (JSONException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 		}
 		
@@ -406,7 +486,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				webm.put("type", "webm");
 				json.put(webm);
 			} catch (JSONException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 		}
 		return json;
@@ -427,7 +507,14 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	}
 
 	public List<Video> getByLectureseriesAndOpenaccess(Long lectureseriesId, int openAccess) throws SystemException{
-		return videoPersistence.findByLectureseriesAndOpenaccess(lectureseriesId, openAccess);
+		List<Video> vl = videoPersistence.findByLectureseriesAndOpenaccess(lectureseriesId, openAccess);
+		List<Video> rvl = new ArrayList<Video>();
+		ListIterator<Video> vli = vl.listIterator();
+		while(vli.hasNext()){
+			Video objectVideo = getFullVideo(vli.next().getVideoId());
+			rvl.add(objectVideo);
+		}
+		return rvl;
 	}
 	
 	public List<Video> getFilteredByInstitutionParentInstitutionTermCategoryCreator (Long institutionId, Long parentInstitutionId, ArrayList<Long> termIds, ArrayList<Long> categoryIds, ArrayList<Long> creatorIds){

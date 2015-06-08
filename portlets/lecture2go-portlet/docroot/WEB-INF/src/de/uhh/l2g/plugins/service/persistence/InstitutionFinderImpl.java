@@ -1,6 +1,7 @@
 package de.uhh.l2g.plugins.service.persistence;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -21,7 +22,8 @@ public class InstitutionFinderImpl extends BasePersistenceImpl<Institution> impl
 
 	public static final String FIND_ALL_SORTED_AS_TREE = InstitutionFinder.class.getName() + ".findAllSortedAsTree";
 	public static final String FIND_FROM_LECTURESERIES = InstitutionFinder.class.getName() + ".findByLectureseriesId";
-	
+	public static final String FIND_MAX_SORT_BY_PARENT = InstitutionFinder.class.getName() + ".findMaxSortByParent";
+
 	public List<Institution> findByLectureseriesId(long lectureseriesId, int begin, int end) {
 		Session session = null;
 		try {
@@ -53,6 +55,8 @@ public class InstitutionFinderImpl extends BasePersistenceImpl<Institution> impl
 		return null;
 	}
 
+
+
 	public List<Institution> findAllSortedAsTree(int begin, int end) {
 		Session session = null;
 		try {
@@ -82,6 +86,41 @@ public class InstitutionFinderImpl extends BasePersistenceImpl<Institution> impl
 		}
 		return null;
 	}
+
+	public int findMaxSortByParent(long parentId) {
+		Session session = null;
+		int out = 0;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(FIND_MAX_SORT_BY_PARENT);
+			SQLQuery q = session.createSQLQuery(sql);
+			q.addScalar("maxsort", Type.INTEGER);
+			q.setCacheable(false);
+			QueryPos qPos = QueryPos.getInstance(q);
+			qPos.add(parentId);
+			Iterator<?> itr = q.list().iterator();
+
+	        if (itr.hasNext()) {
+	          Integer count = (Integer)itr.next();
+
+	          if (count != null) {
+	            return count.intValue();
+	          }
+	        }
+
+	        return out;
+	      } catch (Exception e) {
+			try {
+				throw new SystemException(e);
+			} catch (SystemException se) {
+				se.printStackTrace();
+			}
+		} finally {
+			closeSession(session);
+		}
+		return out;
+	}
+	
 	
 	public List<Institution> findInstitutionsByLectureseriesIdsAndVideoIds (ArrayList<Long> lectureseriesIds,  ArrayList<Long> videoIds)  {
 		Session session = null;

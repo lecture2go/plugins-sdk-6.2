@@ -106,21 +106,31 @@ public class CategoryLocalServiceClpInvoker {
 				"de.uhh.l2g.plugins.model.Category"
 			};
 
-		_methodName146 = "getBeanIdentifier";
+		_methodName154 = "getBeanIdentifier";
 
-		_methodParameterTypes146 = new String[] {  };
+		_methodParameterTypes154 = new String[] {  };
 
-		_methodName147 = "setBeanIdentifier";
+		_methodName155 = "setBeanIdentifier";
 
-		_methodParameterTypes147 = new String[] { "java.lang.String" };
+		_methodParameterTypes155 = new String[] { "java.lang.String" };
 
-		_methodName152 = "getAllCategories";
+		_methodName160 = "getAllCategories";
 
-		_methodParameterTypes152 = new String[] { "int", "int" };
+		_methodParameterTypes160 = new String[] { "int", "int" };
 
-		_methodName153 = "getByName";
+		_methodName161 = "getByName";
 
-		_methodParameterTypes153 = new String[] { "java.lang.String" };
+		_methodParameterTypes161 = new String[] { "java.lang.String" };
+
+		_methodName162 = "getById";
+
+		_methodParameterTypes162 = new String[] { "java.lang.Long" };
+
+		_methodName163 = "getCategoriesFromLectureseriesIdsAndVideoIds";
+
+		_methodParameterTypes163 = new String[] {
+				"java.util.ArrayList", "java.util.ArrayList"
+			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -212,27 +222,38 @@ public class CategoryLocalServiceClpInvoker {
 			return CategoryLocalServiceUtil.updateCategory((de.uhh.l2g.plugins.model.Category)arguments[0]);
 		}
 
-		if (_methodName146.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes146, parameterTypes)) {
+		if (_methodName154.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes154, parameterTypes)) {
 			return CategoryLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName147.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes147, parameterTypes)) {
+		if (_methodName155.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes155, parameterTypes)) {
 			CategoryLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName152.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes152, parameterTypes)) {
+		if (_methodName160.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes160, parameterTypes)) {
 			return CategoryLocalServiceUtil.getAllCategories(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
-		if (_methodName153.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes153, parameterTypes)) {
+		if (_methodName161.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes161, parameterTypes)) {
 			return CategoryLocalServiceUtil.getByName((java.lang.String)arguments[0]);
+		}
+
+		if (_methodName162.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
+			return CategoryLocalServiceUtil.getById((java.lang.Long)arguments[0]);
+		}
+
+		if (_methodName163.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes163, parameterTypes)) {
+			return CategoryLocalServiceUtil.getCategoriesFromLectureseriesIdsAndVideoIds((java.util.ArrayList<java.lang.Long>)arguments[0],
+				(java.util.ArrayList<java.lang.Long>)arguments[1]);
 		}
 
 		throw new UnsupportedOperationException();
@@ -270,12 +291,16 @@ public class CategoryLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName146;
-	private String[] _methodParameterTypes146;
-	private String _methodName147;
-	private String[] _methodParameterTypes147;
-	private String _methodName152;
-	private String[] _methodParameterTypes152;
-	private String _methodName153;
-	private String[] _methodParameterTypes153;
+	private String _methodName154;
+	private String[] _methodParameterTypes154;
+	private String _methodName155;
+	private String[] _methodParameterTypes155;
+	private String _methodName160;
+	private String[] _methodParameterTypes160;
+	private String _methodName161;
+	private String[] _methodParameterTypes161;
+	private String _methodName162;
+	private String[] _methodParameterTypes162;
+	private String _methodName163;
+	private String[] _methodParameterTypes163;
 }

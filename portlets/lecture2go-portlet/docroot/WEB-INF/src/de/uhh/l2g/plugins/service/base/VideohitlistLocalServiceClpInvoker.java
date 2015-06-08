@@ -106,17 +106,17 @@ public class VideohitlistLocalServiceClpInvoker {
 				"de.uhh.l2g.plugins.model.Videohitlist"
 			};
 
-		_methodName146 = "getBeanIdentifier";
+		_methodName154 = "getBeanIdentifier";
 
-		_methodParameterTypes146 = new String[] {  };
+		_methodParameterTypes154 = new String[] {  };
 
-		_methodName147 = "setBeanIdentifier";
+		_methodName155 = "setBeanIdentifier";
 
-		_methodParameterTypes147 = new String[] { "java.lang.String" };
+		_methodParameterTypes155 = new String[] { "java.lang.String" };
 
-		_methodName152 = "deleteByVideoId";
+		_methodName160 = "deleteByVideoId";
 
-		_methodParameterTypes152 = new String[] { "java.lang.Long" };
+		_methodParameterTypes160 = new String[] { "java.lang.Long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -208,20 +208,20 @@ public class VideohitlistLocalServiceClpInvoker {
 			return VideohitlistLocalServiceUtil.updateVideohitlist((de.uhh.l2g.plugins.model.Videohitlist)arguments[0]);
 		}
 
-		if (_methodName146.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes146, parameterTypes)) {
+		if (_methodName154.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes154, parameterTypes)) {
 			return VideohitlistLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName147.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes147, parameterTypes)) {
+		if (_methodName155.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes155, parameterTypes)) {
 			VideohitlistLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName152.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes152, parameterTypes)) {
+		if (_methodName160.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes160, parameterTypes)) {
 			VideohitlistLocalServiceUtil.deleteByVideoId((java.lang.Long)arguments[0]);
 
 			return null;
@@ -262,10 +262,10 @@ public class VideohitlistLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName146;
-	private String[] _methodParameterTypes146;
-	private String _methodName147;
-	private String[] _methodParameterTypes147;
-	private String _methodName152;
-	private String[] _methodParameterTypes152;
+	private String _methodName154;
+	private String[] _methodParameterTypes154;
+	private String _methodName155;
+	private String[] _methodParameterTypes155;
+	private String _methodName160;
+	private String[] _methodParameterTypes160;
 }

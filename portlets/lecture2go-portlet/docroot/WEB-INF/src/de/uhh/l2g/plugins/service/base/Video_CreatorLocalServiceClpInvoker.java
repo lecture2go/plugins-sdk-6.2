@@ -106,25 +106,25 @@ public class Video_CreatorLocalServiceClpInvoker {
 				"de.uhh.l2g.plugins.model.Video_Creator"
 			};
 
-		_methodName146 = "getBeanIdentifier";
+		_methodName154 = "getBeanIdentifier";
 
-		_methodParameterTypes146 = new String[] {  };
+		_methodParameterTypes154 = new String[] {  };
 
-		_methodName147 = "setBeanIdentifier";
+		_methodName155 = "setBeanIdentifier";
 
-		_methodParameterTypes147 = new String[] { "java.lang.String" };
+		_methodParameterTypes155 = new String[] { "java.lang.String" };
 
-		_methodName152 = "deleteByVideoId";
+		_methodName160 = "deleteByVideoId";
 
-		_methodParameterTypes152 = new String[] { "java.lang.Long" };
+		_methodParameterTypes160 = new String[] { "java.lang.Long" };
 
-		_methodName153 = "deleteByCreatorId";
+		_methodName161 = "deleteByCreatorId";
 
-		_methodParameterTypes153 = new String[] { "java.lang.Long" };
+		_methodParameterTypes161 = new String[] { "java.lang.Long" };
 
-		_methodName154 = "getByVideoCreator";
+		_methodName162 = "getByVideoCreator";
 
-		_methodParameterTypes154 = new String[] {
+		_methodParameterTypes162 = new String[] {
 				"java.lang.Long", "java.lang.Long"
 			};
 	}
@@ -218,34 +218,34 @@ public class Video_CreatorLocalServiceClpInvoker {
 			return Video_CreatorLocalServiceUtil.updateVideo_Creator((de.uhh.l2g.plugins.model.Video_Creator)arguments[0]);
 		}
 
-		if (_methodName146.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes146, parameterTypes)) {
+		if (_methodName154.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes154, parameterTypes)) {
 			return Video_CreatorLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName147.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes147, parameterTypes)) {
+		if (_methodName155.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes155, parameterTypes)) {
 			Video_CreatorLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName152.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes152, parameterTypes)) {
+		if (_methodName160.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes160, parameterTypes)) {
 			Video_CreatorLocalServiceUtil.deleteByVideoId((java.lang.Long)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName153.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes153, parameterTypes)) {
+		if (_methodName161.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes161, parameterTypes)) {
 			Video_CreatorLocalServiceUtil.deleteByCreatorId((java.lang.Long)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName154.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes154, parameterTypes)) {
+		if (_methodName162.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
 			return Video_CreatorLocalServiceUtil.getByVideoCreator((java.lang.Long)arguments[0],
 				(java.lang.Long)arguments[1]);
 		}
@@ -285,14 +285,14 @@ public class Video_CreatorLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName146;
-	private String[] _methodParameterTypes146;
-	private String _methodName147;
-	private String[] _methodParameterTypes147;
-	private String _methodName152;
-	private String[] _methodParameterTypes152;
-	private String _methodName153;
-	private String[] _methodParameterTypes153;
 	private String _methodName154;
 	private String[] _methodParameterTypes154;
+	private String _methodName155;
+	private String[] _methodParameterTypes155;
+	private String _methodName160;
+	private String[] _methodParameterTypes160;
+	private String _methodName161;
+	private String[] _methodParameterTypes161;
+	private String _methodName162;
+	private String[] _methodParameterTypes162;
 }

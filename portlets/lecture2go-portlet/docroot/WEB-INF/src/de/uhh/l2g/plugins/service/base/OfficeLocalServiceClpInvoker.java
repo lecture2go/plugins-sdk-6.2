@@ -100,13 +100,13 @@ public class OfficeLocalServiceClpInvoker {
 
 		_methodParameterTypes15 = new String[] { "de.uhh.l2g.plugins.model.Office" };
 
-		_methodName146 = "getBeanIdentifier";
+		_methodName154 = "getBeanIdentifier";
 
-		_methodParameterTypes146 = new String[] {  };
+		_methodParameterTypes154 = new String[] {  };
 
-		_methodName147 = "setBeanIdentifier";
+		_methodName155 = "setBeanIdentifier";
 
-		_methodParameterTypes147 = new String[] { "java.lang.String" };
+		_methodParameterTypes155 = new String[] { "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -198,13 +198,13 @@ public class OfficeLocalServiceClpInvoker {
 			return OfficeLocalServiceUtil.updateOffice((de.uhh.l2g.plugins.model.Office)arguments[0]);
 		}
 
-		if (_methodName146.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes146, parameterTypes)) {
+		if (_methodName154.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes154, parameterTypes)) {
 			return OfficeLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName147.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes147, parameterTypes)) {
+		if (_methodName155.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes155, parameterTypes)) {
 			OfficeLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
@@ -245,8 +245,8 @@ public class OfficeLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName146;
-	private String[] _methodParameterTypes146;
-	private String _methodName147;
-	private String[] _methodParameterTypes147;
+	private String _methodName154;
+	private String[] _methodParameterTypes154;
+	private String _methodName155;
+	private String[] _methodParameterTypes155;
 }

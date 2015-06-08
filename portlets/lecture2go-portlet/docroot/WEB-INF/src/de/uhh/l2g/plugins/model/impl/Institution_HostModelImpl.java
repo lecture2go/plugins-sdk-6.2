@@ -59,9 +59,10 @@ public class Institution_HostModelImpl extends BaseModelImpl<Institution_Host>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "institutionHostId", Types.BIGINT },
 			{ "institutionId", Types.BIGINT },
-			{ "hostId", Types.BIGINT }
+			{ "hostId", Types.BIGINT },
+			{ "groupId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Institution_Host (institutionHostId LONG not null primary key,institutionId LONG,hostId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Institution_Host (institutionHostId LONG not null primary key,institutionId LONG,hostId LONG,groupId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Institution_Host";
 	public static final String ORDER_BY_JPQL = " ORDER BY institution_Host.institutionHostId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Institution_Host.institutionHostId ASC";
@@ -77,9 +78,10 @@ public class Institution_HostModelImpl extends BaseModelImpl<Institution_Host>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.Institution_Host"),
 			true);
-	public static long HOSTID_COLUMN_BITMASK = 1L;
-	public static long INSTITUTIONID_COLUMN_BITMASK = 2L;
-	public static long INSTITUTIONHOSTID_COLUMN_BITMASK = 4L;
+	public static long GROUPID_COLUMN_BITMASK = 1L;
+	public static long HOSTID_COLUMN_BITMASK = 2L;
+	public static long INSTITUTIONID_COLUMN_BITMASK = 4L;
+	public static long INSTITUTIONHOSTID_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Institution_Host"));
 
@@ -123,6 +125,7 @@ public class Institution_HostModelImpl extends BaseModelImpl<Institution_Host>
 		attributes.put("institutionHostId", getInstitutionHostId());
 		attributes.put("institutionId", getInstitutionId());
 		attributes.put("hostId", getHostId());
+		attributes.put("groupId", getGroupId());
 
 		return attributes;
 	}
@@ -145,6 +148,12 @@ public class Institution_HostModelImpl extends BaseModelImpl<Institution_Host>
 
 		if (hostId != null) {
 			setHostId(hostId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 	}
 
@@ -202,6 +211,28 @@ public class Institution_HostModelImpl extends BaseModelImpl<Institution_Host>
 		return _originalHostId;
 	}
 
+	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
+		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -236,6 +267,7 @@ public class Institution_HostModelImpl extends BaseModelImpl<Institution_Host>
 		institution_HostImpl.setInstitutionHostId(getInstitutionHostId());
 		institution_HostImpl.setInstitutionId(getInstitutionId());
 		institution_HostImpl.setHostId(getHostId());
+		institution_HostImpl.setGroupId(getGroupId());
 
 		institution_HostImpl.resetOriginalValues();
 
@@ -296,6 +328,10 @@ public class Institution_HostModelImpl extends BaseModelImpl<Institution_Host>
 
 		institution_HostModelImpl._setOriginalHostId = false;
 
+		institution_HostModelImpl._originalGroupId = institution_HostModelImpl._groupId;
+
+		institution_HostModelImpl._setOriginalGroupId = false;
+
 		institution_HostModelImpl._columnBitmask = 0;
 	}
 
@@ -309,12 +345,14 @@ public class Institution_HostModelImpl extends BaseModelImpl<Institution_Host>
 
 		institution_HostCacheModel.hostId = getHostId();
 
+		institution_HostCacheModel.groupId = getGroupId();
+
 		return institution_HostCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{institutionHostId=");
 		sb.append(getInstitutionHostId());
@@ -322,6 +360,8 @@ public class Institution_HostModelImpl extends BaseModelImpl<Institution_Host>
 		sb.append(getInstitutionId());
 		sb.append(", hostId=");
 		sb.append(getHostId());
+		sb.append(", groupId=");
+		sb.append(getGroupId());
 		sb.append("}");
 
 		return sb.toString();
@@ -329,7 +369,7 @@ public class Institution_HostModelImpl extends BaseModelImpl<Institution_Host>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Institution_Host");
@@ -346,6 +386,10 @@ public class Institution_HostModelImpl extends BaseModelImpl<Institution_Host>
 		sb.append(
 			"<column><column-name>hostId</column-name><column-value><![CDATA[");
 		sb.append(getHostId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>groupId</column-name><column-value><![CDATA[");
+		sb.append(getGroupId());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -364,6 +408,9 @@ public class Institution_HostModelImpl extends BaseModelImpl<Institution_Host>
 	private long _hostId;
 	private long _originalHostId;
 	private boolean _setOriginalHostId;
+	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _columnBitmask;
 	private Institution_Host _escapedModel;
 }

@@ -33,6 +33,7 @@ import com.liferay.portal.service.persistence.UserPersistence;
 
 import de.uhh.l2g.plugins.model.Segment;
 import de.uhh.l2g.plugins.service.SegmentLocalService;
+import de.uhh.l2g.plugins.service.persistence.CategoryFinder;
 import de.uhh.l2g.plugins.service.persistence.CategoryPersistence;
 import de.uhh.l2g.plugins.service.persistence.CoordinatorPersistence;
 import de.uhh.l2g.plugins.service.persistence.CreatorFinder;
@@ -54,8 +55,10 @@ import de.uhh.l2g.plugins.service.persistence.ProducerFinder;
 import de.uhh.l2g.plugins.service.persistence.ProducerPersistence;
 import de.uhh.l2g.plugins.service.persistence.Producer_LectureseriesPersistence;
 import de.uhh.l2g.plugins.service.persistence.SegmentPersistence;
+import de.uhh.l2g.plugins.service.persistence.ServerTemplatePersistence;
 import de.uhh.l2g.plugins.service.persistence.SysPersistence;
 import de.uhh.l2g.plugins.service.persistence.TagcloudPersistence;
+import de.uhh.l2g.plugins.service.persistence.TermFinder;
 import de.uhh.l2g.plugins.service.persistence.TermPersistence;
 import de.uhh.l2g.plugins.service.persistence.UploadPersistence;
 import de.uhh.l2g.plugins.service.persistence.VideoFinder;
@@ -339,6 +342,24 @@ public abstract class SegmentLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setCategoryPersistence(CategoryPersistence categoryPersistence) {
 		this.categoryPersistence = categoryPersistence;
+	}
+
+	/**
+	 * Returns the category finder.
+	 *
+	 * @return the category finder
+	 */
+	public CategoryFinder getCategoryFinder() {
+		return categoryFinder;
+	}
+
+	/**
+	 * Sets the category finder.
+	 *
+	 * @param categoryFinder the category finder
+	 */
+	public void setCategoryFinder(CategoryFinder categoryFinder) {
+		this.categoryFinder = categoryFinder;
 	}
 
 	/**
@@ -1015,6 +1036,44 @@ public abstract class SegmentLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the server template local service.
+	 *
+	 * @return the server template local service
+	 */
+	public de.uhh.l2g.plugins.service.ServerTemplateLocalService getServerTemplateLocalService() {
+		return serverTemplateLocalService;
+	}
+
+	/**
+	 * Sets the server template local service.
+	 *
+	 * @param serverTemplateLocalService the server template local service
+	 */
+	public void setServerTemplateLocalService(
+		de.uhh.l2g.plugins.service.ServerTemplateLocalService serverTemplateLocalService) {
+		this.serverTemplateLocalService = serverTemplateLocalService;
+	}
+
+	/**
+	 * Returns the server template persistence.
+	 *
+	 * @return the server template persistence
+	 */
+	public ServerTemplatePersistence getServerTemplatePersistence() {
+		return serverTemplatePersistence;
+	}
+
+	/**
+	 * Sets the server template persistence.
+	 *
+	 * @param serverTemplatePersistence the server template persistence
+	 */
+	public void setServerTemplatePersistence(
+		ServerTemplatePersistence serverTemplatePersistence) {
+		this.serverTemplatePersistence = serverTemplatePersistence;
+	}
+
+	/**
 	 * Returns the sys local service.
 	 *
 	 * @return the sys local service
@@ -1123,6 +1182,24 @@ public abstract class SegmentLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setTermPersistence(TermPersistence termPersistence) {
 		this.termPersistence = termPersistence;
+	}
+
+	/**
+	 * Returns the term finder.
+	 *
+	 * @return the term finder
+	 */
+	public TermFinder getTermFinder() {
+		return termFinder;
+	}
+
+	/**
+	 * Sets the term finder.
+	 *
+	 * @param termFinder the term finder
+	 */
+	public void setTermFinder(TermFinder termFinder) {
+		this.termFinder = termFinder;
 	}
 
 	/**
@@ -1587,6 +1664,8 @@ public abstract class SegmentLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected de.uhh.l2g.plugins.service.CategoryLocalService categoryLocalService;
 	@BeanReference(type = CategoryPersistence.class)
 	protected CategoryPersistence categoryPersistence;
+	@BeanReference(type = CategoryFinder.class)
+	protected CategoryFinder categoryFinder;
 	@BeanReference(type = de.uhh.l2g.plugins.service.CoordinatorLocalService.class)
 	protected de.uhh.l2g.plugins.service.CoordinatorLocalService coordinatorLocalService;
 	@BeanReference(type = CoordinatorPersistence.class)
@@ -1659,6 +1738,10 @@ public abstract class SegmentLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected de.uhh.l2g.plugins.service.SegmentLocalService segmentLocalService;
 	@BeanReference(type = SegmentPersistence.class)
 	protected SegmentPersistence segmentPersistence;
+	@BeanReference(type = de.uhh.l2g.plugins.service.ServerTemplateLocalService.class)
+	protected de.uhh.l2g.plugins.service.ServerTemplateLocalService serverTemplateLocalService;
+	@BeanReference(type = ServerTemplatePersistence.class)
+	protected ServerTemplatePersistence serverTemplatePersistence;
 	@BeanReference(type = de.uhh.l2g.plugins.service.SysLocalService.class)
 	protected de.uhh.l2g.plugins.service.SysLocalService sysLocalService;
 	@BeanReference(type = SysPersistence.class)
@@ -1671,6 +1754,8 @@ public abstract class SegmentLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected de.uhh.l2g.plugins.service.TermLocalService termLocalService;
 	@BeanReference(type = TermPersistence.class)
 	protected TermPersistence termPersistence;
+	@BeanReference(type = TermFinder.class)
+	protected TermFinder termFinder;
 	@BeanReference(type = de.uhh.l2g.plugins.service.UploadLocalService.class)
 	protected de.uhh.l2g.plugins.service.UploadLocalService uploadLocalService;
 	@BeanReference(type = UploadPersistence.class)

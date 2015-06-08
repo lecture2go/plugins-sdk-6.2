@@ -106,21 +106,31 @@ public class Institution_HostLocalServiceClpInvoker {
 				"de.uhh.l2g.plugins.model.Institution_Host"
 			};
 
-		_methodName146 = "getBeanIdentifier";
+		_methodName154 = "getBeanIdentifier";
 
-		_methodParameterTypes146 = new String[] {  };
+		_methodParameterTypes154 = new String[] {  };
 
-		_methodName147 = "setBeanIdentifier";
+		_methodName155 = "setBeanIdentifier";
 
-		_methodParameterTypes147 = new String[] { "java.lang.String" };
+		_methodParameterTypes155 = new String[] { "java.lang.String" };
 
-		_methodName152 = "getByInstitutionId";
+		_methodName160 = "getByInstitutionId";
 
-		_methodParameterTypes152 = new String[] { "long" };
+		_methodParameterTypes160 = new String[] { "long" };
 
-		_methodName153 = "getByHostId";
+		_methodName161 = "getByGroupIdAndInstitutionId";
 
-		_methodParameterTypes153 = new String[] { "long" };
+		_methodParameterTypes161 = new String[] { "long", "long" };
+
+		_methodName162 = "getByGroupIdAndHostId";
+
+		_methodParameterTypes162 = new String[] { "long", "long" };
+
+		_methodName164 = "addEntry";
+
+		_methodParameterTypes164 = new String[] {
+				"long", "long", "com.liferay.portal.service.ServiceContext"
+			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -212,26 +222,40 @@ public class Institution_HostLocalServiceClpInvoker {
 			return Institution_HostLocalServiceUtil.updateInstitution_Host((de.uhh.l2g.plugins.model.Institution_Host)arguments[0]);
 		}
 
-		if (_methodName146.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes146, parameterTypes)) {
+		if (_methodName154.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes154, parameterTypes)) {
 			return Institution_HostLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName147.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes147, parameterTypes)) {
+		if (_methodName155.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes155, parameterTypes)) {
 			Institution_HostLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName152.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes152, parameterTypes)) {
+		if (_methodName160.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes160, parameterTypes)) {
 			return Institution_HostLocalServiceUtil.getByInstitutionId(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName153.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes153, parameterTypes)) {
-			return Institution_HostLocalServiceUtil.getByHostId(((Long)arguments[0]).longValue());
+		if (_methodName161.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes161, parameterTypes)) {
+			return Institution_HostLocalServiceUtil.getByGroupIdAndInstitutionId(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName162.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
+			return Institution_HostLocalServiceUtil.getByGroupIdAndHostId(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName164.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes164, parameterTypes)) {
+			return Institution_HostLocalServiceUtil.addEntry(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[2]);
 		}
 
 		throw new UnsupportedOperationException();
@@ -269,12 +293,16 @@ public class Institution_HostLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName146;
-	private String[] _methodParameterTypes146;
-	private String _methodName147;
-	private String[] _methodParameterTypes147;
-	private String _methodName152;
-	private String[] _methodParameterTypes152;
-	private String _methodName153;
-	private String[] _methodParameterTypes153;
+	private String _methodName154;
+	private String[] _methodParameterTypes154;
+	private String _methodName155;
+	private String[] _methodParameterTypes155;
+	private String _methodName160;
+	private String[] _methodParameterTypes160;
+	private String _methodName161;
+	private String[] _methodParameterTypes161;
+	private String _methodName162;
+	private String[] _methodParameterTypes162;
+	private String _methodName164;
+	private String[] _methodParameterTypes164;
 }

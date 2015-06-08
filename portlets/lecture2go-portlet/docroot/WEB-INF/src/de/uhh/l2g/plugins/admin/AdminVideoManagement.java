@@ -1,8 +1,9 @@
 package de.uhh.l2g.plugins.admin;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -73,7 +74,6 @@ import de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
-import de.uhh.l2g.plugins.service.impl.Video_CategoryLocalServiceImpl;
 import de.uhh.l2g.plugins.util.FFmpegManager;
 import de.uhh.l2g.plugins.util.ProzessManager;
 import de.uhh.l2g.plugins.util.Security;
@@ -383,6 +383,8 @@ public class AdminVideoManagement extends MVCPortlet {
 				else {
 					java.util.Date date= new java.util.Date();
 					video.setLectureseriesId(-date.getTime());
+					//update table video_lectureseries
+					Video_LectureseriesLocalServiceUtil.removeByVideoId(video.getVideoId());
 				}
 				video.setTags(tags);
 				if(lId>0){
@@ -491,6 +493,25 @@ public class AdminVideoManagement extends MVCPortlet {
 			writeJSON(resourceRequest, resourceResponse, json);
 		}
 
+		if(resourceID.equals("videoUpdateGenerationDate")){
+			String generationDate = ParamUtil.getString(resourceRequest, "generationDate");
+			JSONObject jo = JSONFactoryUtil.createJSONObject();
+			video.setGenerationDate(generationDate);
+			try {
+				VideoLocalServiceUtil.updateVideo(video);
+				jo.put("generationDate", generationDate);
+				writeJSON(resourceRequest, resourceResponse, jo);
+			} catch (SystemException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if(resourceID.equals("getGenerationDate")){
+			JSONObject jo = JSONFactoryUtil.createJSONObject();
+			jo.put("generationDate", video.getGenerationDate());
+			writeJSON(resourceRequest, resourceResponse, jo);
+		}
+		
 		if(resourceID.equals("videoFileNameExists")){
 			String filename = ParamUtil.getString(resourceRequest, "fileName");
 			JSONObject jo = JSONFactoryUtil.createJSONObject();
@@ -601,6 +622,8 @@ public class AdminVideoManagement extends MVCPortlet {
 					e.printStackTrace();
 				}
 			}
+			//update chapter file (vtt)
+			updateVttChapterFile(video);
 		}
 
 		if(resourceID.equals("showSegments")){
@@ -662,6 +685,8 @@ public class AdminVideoManagement extends MVCPortlet {
 			} catch (PortalException e) {
 				e.printStackTrace();
 			}
+			//update chapter file (vtt)
+			updateVttChapterFile(video);
 		}
 
 		if(resourceID.equals("isFirstUpload")){
@@ -945,6 +970,40 @@ public class AdminVideoManagement extends MVCPortlet {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void updateVttChapterFile(Video video){
+		File vttDirectory = new File(PropsUtil.get("lecture2go.chapters.system.path"));
+		String dateiName = vttDirectory + "/" + video.getVideoId()+".vtt";
+		//get all segments
+		List<Segment> sL = new ArrayList<Segment>();
+		try {
+			sL = SegmentLocalServiceUtil.getSegmentsByVideoId(video.getVideoId());
+		} 
+		catch (PortalException e) {} 
+		catch (SystemException e) {}
+		//
+		ListIterator<Segment> sLi = sL.listIterator();
+		String text="WEBVTT \n\n";
+		int count =1;
+		while(sLi.hasNext()){
+			Segment seg = sLi.next();
+			text +="Chapter "+count+" \n";
+			text +=seg.getStart()+" --> "+seg.getEnd()+" \n";
+			if(seg.getChapter()==1 && video.getContainerFormat().equals("mp4"))text +="<img src=\""+seg.getImage()+"\"/><br/>";
+			text +=seg.getTitle()+"<br/>"+seg.getDescription()+" \n\n";
+			count++;
+		}
+		FileOutputStream s;
+		try {
+			s = new FileOutputStream(dateiName);
+			for (int i = 0; i < text.length(); i++) {
+				s.write((byte) text.charAt(i));
+			}
+			s.close();
+		} 
+		catch (FileNotFoundException e) {} 
+		catch (IOException e) {}
 	}
 	
 }

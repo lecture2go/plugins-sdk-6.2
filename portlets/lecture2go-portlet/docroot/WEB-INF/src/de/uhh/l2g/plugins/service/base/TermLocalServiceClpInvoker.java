@@ -100,21 +100,27 @@ public class TermLocalServiceClpInvoker {
 
 		_methodParameterTypes15 = new String[] { "de.uhh.l2g.plugins.model.Term" };
 
-		_methodName146 = "getBeanIdentifier";
+		_methodName154 = "getBeanIdentifier";
 
-		_methodParameterTypes146 = new String[] {  };
+		_methodParameterTypes154 = new String[] {  };
 
-		_methodName147 = "setBeanIdentifier";
+		_methodName155 = "setBeanIdentifier";
 
-		_methodParameterTypes147 = new String[] { "java.lang.String" };
+		_methodParameterTypes155 = new String[] { "java.lang.String" };
 
-		_methodName152 = "getAllSemesters";
+		_methodName160 = "getAllSemesters";
 
-		_methodParameterTypes152 = new String[] { "int", "int" };
+		_methodParameterTypes160 = new String[] { "int", "int" };
 
-		_methodName153 = "getById";
+		_methodName161 = "getById";
 
-		_methodParameterTypes153 = new String[] { "java.lang.Long" };
+		_methodParameterTypes161 = new String[] { "java.lang.Long" };
+
+		_methodName162 = "getTermsFromLectureseriesIdsAndVideoIds";
+
+		_methodParameterTypes162 = new String[] {
+				"java.util.ArrayList", "java.util.ArrayList"
+			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -206,27 +212,33 @@ public class TermLocalServiceClpInvoker {
 			return TermLocalServiceUtil.updateTerm((de.uhh.l2g.plugins.model.Term)arguments[0]);
 		}
 
-		if (_methodName146.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes146, parameterTypes)) {
+		if (_methodName154.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes154, parameterTypes)) {
 			return TermLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName147.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes147, parameterTypes)) {
+		if (_methodName155.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes155, parameterTypes)) {
 			TermLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName152.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes152, parameterTypes)) {
+		if (_methodName160.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes160, parameterTypes)) {
 			return TermLocalServiceUtil.getAllSemesters(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
-		if (_methodName153.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes153, parameterTypes)) {
+		if (_methodName161.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes161, parameterTypes)) {
 			return TermLocalServiceUtil.getById((java.lang.Long)arguments[0]);
+		}
+
+		if (_methodName162.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
+			return TermLocalServiceUtil.getTermsFromLectureseriesIdsAndVideoIds((java.util.ArrayList<java.lang.Long>)arguments[0],
+				(java.util.ArrayList<java.lang.Long>)arguments[1]);
 		}
 
 		throw new UnsupportedOperationException();
@@ -264,12 +276,14 @@ public class TermLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName146;
-	private String[] _methodParameterTypes146;
-	private String _methodName147;
-	private String[] _methodParameterTypes147;
-	private String _methodName152;
-	private String[] _methodParameterTypes152;
-	private String _methodName153;
-	private String[] _methodParameterTypes153;
+	private String _methodName154;
+	private String[] _methodParameterTypes154;
+	private String _methodName155;
+	private String[] _methodParameterTypes155;
+	private String _methodName160;
+	private String[] _methodParameterTypes160;
+	private String _methodName161;
+	private String[] _methodParameterTypes161;
+	private String _methodName162;
+	private String[] _methodParameterTypes162;
 }
