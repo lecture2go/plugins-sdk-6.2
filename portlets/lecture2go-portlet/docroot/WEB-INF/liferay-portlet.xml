@@ -9,7 +9,7 @@
 
 		<header-portlet-css>/js/jquery.datetimepicker.css</header-portlet-css>
 
-		<header-portlet-javascript>/js/jquery-1.11.1.min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/jquery-2.1.4.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/jquery.tmpl.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/jquery-ui-1.11.1.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/strobe/swfobject.js</header-portlet-javascript>

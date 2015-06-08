@@ -351,7 +351,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		}
 		
 		//embed iframe
-		String embedIframe="&lt;iframe src='"+PropsUtil.get("lecture2go.web.root")+"/lecture2go-portlet/player/iframe/?v="+objectVideo.getVideoId()+"' width='647' height='373'&gt; &lt;/iframe&gt;";
+		String embedIframe="&lt;iframe src='"+PropsUtil.get("lecture2go.web.root")+"/lecture2go-portlet/player/iframe/?v="+objectVideo.getVideoId()+"' frameborder='0' width='647' height='373'&gt; &lt;/iframe&gt;";
 		objectVideo.setEmbedIframe(embedIframe);
 		
 		//embed html5
