@@ -58,7 +58,7 @@
 	if (hasParentInstitutionFiltered && hasInstitutionFiltered) {
 		presentInstitutions.add(InstitutionLocalServiceUtil.getById(institutionId));
 	} else {
-		presentInstitutions = InstitutionLocalServiceUtil.getByParentId(parentInstitutionId,"");
+		presentInstitutions = InstitutionLocalServiceUtil.getInstitutionsFromLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds, parentInstitutionId);
 	}
 	
 	if (hasTermFiltered) {

@@ -132,9 +132,13 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 	public int getMaxSortByParentId(long parentId) throws SystemException {
 		return InstitutionFinderUtil.findMaxSortByParent(parentId);
 	}
-
+	
 	public List<Institution> getInstitutionsFromLectureseriesIdsAndVideoIds(ArrayList<Long> lectureseriesIds, ArrayList<Long> videoIds) {
-		return InstitutionFinderUtil.findInstitutionsByLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds);
+		return InstitutionFinderUtil.findInstitutionsByLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds, new Long(0));
+	}
+
+	public List<Institution> getInstitutionsFromLectureseriesIdsAndVideoIds(ArrayList<Long> lectureseriesIds, ArrayList<Long> videoIds, Long parentId) {
+		return InstitutionFinderUtil.findInstitutionsByLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds, parentId);
 	}
 	
 	private String _indentFromPath(String path, String sep) {
