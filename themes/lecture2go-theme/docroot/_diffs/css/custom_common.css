@@ -998,5 +998,5 @@
 	#subject.appmon_support_form_row {
 	    display: none;
 	}
-	
+	#breadcrumbs { display:none; }
 }
