@@ -21,13 +21,25 @@
 	    			Institution insti = InstitutionLocalServiceUtil.getById(institutions.get(j).getInstitutionId());    			
 	    			Institution pInst = InstitutionLocalServiceUtil.getById(institutions.get(j).getParentId());
 		    		%>
-		    		<portlet:renderURL var="backURL">
+					<portlet:actionURL var="backURL1" name="addFilter">
 						<portlet:param name="jspPage" value="/guest/videosList.jsp" />
-						<portlet:param name="institutionId" value="<%=insti.getInstitutionId()+\"\"%>"/>
 						<portlet:param name="parentInstitutionId" value="<%=pInst.getInstitutionId()+\"\"%>"/>
-					</portlet:renderURL>
-			    	<A HREF="<%=backURL%>" CLASS="apath"><%=pInst.getName() %></A><span class="sep">&gt;</span> 
-			    	<A HREF="<%=backURL%>" CLASS="apath"><%=insti.getName() %></A> 
+						<portlet:param name="institutionId" value="0"/>
+						<portlet:param name="termId" value="0"/>
+						<portlet:param name="categoryId" value="0"/>
+						<portlet:param name="creatorId" value="0"/>
+					</portlet:actionURL>					
+					<portlet:actionURL var="backURL2" name="addFilter">
+						<portlet:param name="jspPage" value="/guest/videosList.jsp" />
+						<portlet:param name="parentInstitutionId" value="<%=pInst.getInstitutionId()+\"\"%>"/>
+						<portlet:param name="institutionId" value="<%=insti.getInstitutionId()+\"\"%>"/>
+						<portlet:param name="termId" value="0"/>
+						<portlet:param name="categoryId" value="0"/>
+						<portlet:param name="creatorId" value="0"/>
+					</portlet:actionURL>	
+					
+			    	<A HREF="<%=backURL1%>" CLASS="apath"><%=pInst.getName() %></A><span class="sep">&gt;</span> 
+			    	<A HREF="<%=backURL2%>" CLASS="apath"><%=insti.getName() %></A> 
 			    	<%if(lec.getLectureseriesId()>0) {%>
 			    		<span class="sep">&gt;</span> <SPAN CLASS="paththispage"><%=lec.getName()%></SPAN>
 			    	<%}%>
