@@ -14,6 +14,16 @@
 		<implicit-parameter name="javax.portlet.action">viewOpenAccessVideo</implicit-parameter>
     </route>
     <route>
+        <pattern>/{objectType}/{objectId}/{timeStart}/{timeEnd}</pattern>
+		<implicit-parameter name="p_p_id">lgopenaccessvideos_WAR_lecture2goportlet</implicit-parameter>
+		<implicit-parameter name="p_p_lifecycle">1</implicit-parameter>
+		<implicit-parameter name="p_p_state">normal</implicit-parameter>
+		<implicit-parameter name="p_p_mode">view</implicit-parameter>
+		<implicit-parameter name="p_p_col_id">column-1</implicit-parameter>
+		<implicit-parameter name="p_p_col_count">1</implicit-parameter>
+		<implicit-parameter name="javax.portlet.action">viewOpenAccessVideo</implicit-parameter>
+    </route>
+    <route>
         <pattern>/{institutionId}/{parentInstitutionId}/{categoryId}/{creatorId}/{termId}</pattern>
 		<implicit-parameter name="p_p_id">lgopenaccessvideos_WAR_lecture2goportlet</implicit-parameter>
 		<implicit-parameter name="p_p_lifecycle">1</implicit-parameter>

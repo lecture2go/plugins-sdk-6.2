@@ -9,6 +9,8 @@
 <jsp:useBean id="lectureseries" type="de.uhh.l2g.plugins.model.Lectureseries" scope="request" />
 <jsp:useBean id="videoLicense" type="de.uhh.l2g.plugins.model.License" scope="request" />
 
+<jsp:useBean id="timeStart" type="java.lang.Long" scope="request" />
+<jsp:useBean id="timeEnd" type="java.lang.Long" scope="request" />
 
 <div class="col-xs-10 col-md-10">
     <div id="pfad">
@@ -38,7 +40,7 @@
 						<portlet:param name="creatorId" value="0"/>
 					</portlet:actionURL>	
 					
-			    	<A HREF="<%=backURL1%>" CLASS="apath"><%=pInst.getName() %></A><span class="sep">&gt;</span> 
+			    	<A HREF="<%=backURL1%>" CLASS="apath"><%=pInst.getName() %></A> <span class="sep">&gt;</span> 
 			    	<A HREF="<%=backURL2%>" CLASS="apath"><%=insti.getName() %></A> 
 			    	<%if(lec.getLectureseriesId()>0) {%>
 			    		<span class="sep">&gt;</span> <SPAN CLASS="paththispage"><%=lec.getName()%></SPAN>
@@ -51,7 +53,7 @@
 	    		Institution insti = InstitutionLocalServiceUtil.getById(videoInstitutions.get(i).getInstitutionId());    			
 	    		Institution pInst = InstitutionLocalServiceUtil.getById(videoInstitutions.get(i).getInstitutionParentId());
 		    	%>
-			    <A HREF="#" CLASS="apath"><%=insti.getName() %></A><span class="sep">&gt;</span> <A HREF="#" CLASS="apath"><%=pInst.getName() %></A>
+			    <A HREF="#" CLASS="apath"><%=insti.getName() %></A> <span class="sep">&gt;</span> <A HREF="#" CLASS="apath"><%=pInst.getName() %></A>
 			    <br/> 
 	      <%}  		
     	}
@@ -61,7 +63,20 @@
     
 <div class="col-md-7" style="margin-bottom:10px">
     <div id="main" >
-      <h3 style="margin-top:10px; margin-bottom:2px">${video.title}</h3>
+	  <%
+	    String title = video.getTitle();
+	  	if(timeStart>0 && timeEnd>timeStart){
+			title ="citation-of "+title;
+	  	}
+	  %>
+      <h3 style="margin-top:10px; margin-bottom:2px"><%=title%></h3>
+      <%
+	    if(timeStart>0 && timeEnd>timeStart){
+	      %>
+	      	<aui:a href="<%=video.getUrl()%>" >go-to-full-video</aui:a>
+	      <%
+	    }
+      %>
 	  <p>
 	      <div class="player">
 				<%@ include file="/player/includePlayer.jsp"%>
@@ -87,113 +102,125 @@
       </span>
       <span class="label label-light" style="float:right; margin-top:6px; margin-right:5px;">${video.hits} views</span>
     </div>
-    <div id="meta">
-		<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-		    <c:if test="${video.downloadLink==1}">
-			    <li><a href="#download" data-toggle="tab">Download</a></li>
-		    </c:if>
-		    <li><a href="#share" data-toggle="tab">Share</a></li>
-		    <li><a href="#support" data-toggle="tab">Support</a></li>
-		</ul>
-		    
-		<div id="my-tab-content" class="tab-content">
-			<c:if test="${video.downloadLink==1}">
-				<div class="tab-pane" id="download">
-			        <p><%@ include file="/guest/includeDownload.jsp" %></p>
+    
+    <%
+    if(timeStart==0 || timeEnd==0){
+	%>
+	    <div id="meta">
+			<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+			    <c:if test="${video.downloadLink==1}">
+				    <li><a href="#download" data-toggle="tab">Download</a></li>
+			    </c:if>
+			    <li><a href="#share" data-toggle="tab">Share</a></li>
+			    <li><a href="#support" data-toggle="tab">Support</a></li>
+			</ul>
+			    
+			<div id="my-tab-content" class="tab-content">
+				<c:if test="${video.downloadLink==1}">
+					<div class="tab-pane" id="download">
+				        <p><%@ include file="/guest/includeDownload.jsp" %></p>
+				    </div>
+				</c:if>
+			    <div class="tab-pane" id="share">
+			        <p><%@ include file="/guest/includeShare.jsp" %></p>
 			    </div>
-			</c:if>
-		    <div class="tab-pane" id="share">
-		        <p><%@ include file="/guest/includeShare.jsp" %></p>
-		    </div>
-		    <div class="tab-pane" id="support">
-		        <p>
-					<%
-						int facultyId = 3;
-						String institut = "";
-						String option1 = request.getParameter("option1");
-						
-						switch(facultyId){
-							case 3: institut = "UHH-Jura";break;
-							case 4: institut = "UHH-WiSo";break;
-							case 5: institut = "UHH-Medizin";break;
-							case 6: institut = "UHH-EW";break;
-							case 7: institut = "UHH-GWiss";break;
-							case 8: institut = "UHH-MIN";break;
-							case 203: institut = "UHH-PB";break;
-							case 204: institut = "UHH-BWL";break;
-							default: institut = "Fakultätübergreifend";break;
-						}
-						
-						JSONObject jsn = new JSONObject();
-						jsn.put("institution",institut);
-						jsn.put("system","Lecture2Go");
-						jsn.put("role","Lecture2Go-Benutzer");
-						jsn.put("gender","");
-						jsn.put("firstname",request.getParameter("firstname"));
-						jsn.put("lastname",request.getParameter("lastname"));
-						jsn.put("email",request.getParameter("email"));
-						jsn.put("subject","###");
-						jsn.put("body",request.getParameter("body"));
-						jsn.put("ergebnis",request.getParameter("ergebnis"));
-						jsn.put("option1",option1);
-						jsn.put("result",request.getParameter("result"));
-						jsn.put("spamprotect",request.getParameter("spamprotect"));
-					%>
-					<div id="metadata">
+			    <div class="tab-pane" id="support">
+			        <p>
 						<%
-							SupportFormularClient sfc = new SupportFormularClient("mail4eLearnSupport",video.getUrl(),jsn.toString(),"");
-							out.print(sfc.getFormular());
-						%>
-						
-						<% 
-							if(option1!=null){
-								%>
-								<script type="text/javascript">
-									$(function() {
-										 // activate contact tab
-										 $("#tabs").tabs( "option", "active", $('#tabs >ul >li').size()-1 );
-										 scrollToAnchor('cont');
-									 });
-									
-									function scrollToAnchor(aid){
-									    var aTag = $("a[name='"+ aid +"']");
-									    $('html,body').animate({scrollTop: aTag.offset().top},'slow');
-									}
-								</script>
-								<%		
+							int facultyId = 3;
+							String institut = "";
+							String option1 = request.getParameter("option1");
+							
+							switch(facultyId){
+								case 3: institut = "UHH-Jura";break;
+								case 4: institut = "UHH-WiSo";break;
+								case 5: institut = "UHH-Medizin";break;
+								case 6: institut = "UHH-EW";break;
+								case 7: institut = "UHH-GWiss";break;
+								case 8: institut = "UHH-MIN";break;
+								case 203: institut = "UHH-PB";break;
+								case 204: institut = "UHH-BWL";break;
+								default: institut = "Fakultätübergreifend";break;
 							}
+							
+							JSONObject jsn = new JSONObject();
+							jsn.put("institution",institut);
+							jsn.put("system","Lecture2Go");
+							jsn.put("role","Lecture2Go-Benutzer");
+							jsn.put("gender","");
+							jsn.put("firstname",request.getParameter("firstname"));
+							jsn.put("lastname",request.getParameter("lastname"));
+							jsn.put("email",request.getParameter("email"));
+							jsn.put("subject","###");
+							jsn.put("body",request.getParameter("body"));
+							jsn.put("ergebnis",request.getParameter("ergebnis"));
+							jsn.put("option1",option1);
+							jsn.put("result",request.getParameter("result"));
+							jsn.put("spamprotect",request.getParameter("spamprotect"));
 						%>
-					</div>		        
-		    </div>
-		</div>    
-	</div>
+						<div id="metadata">
+							<%
+								SupportFormularClient sfc = new SupportFormularClient("mail4eLearnSupport",video.getUrl(),jsn.toString(),"");
+								out.print(sfc.getFormular());
+							%>
+							
+							<% 
+								if(option1!=null){
+									%>
+									<script type="text/javascript">
+										$(function() {
+											 // activate contact tab
+											 $("#tabs").tabs( "option", "active", $('#tabs >ul >li').size()-1 );
+											 scrollToAnchor('cont');
+										 });
+										
+										function scrollToAnchor(aid){
+										    var aTag = $("a[name='"+ aid +"']");
+										    $('html,body').animate({scrollTop: aTag.offset().top},'slow');
+										}
+									</script>
+									<%		
+								}
+							%>
+						</div>		        
+			    </div>
+			</div>    
+		</div>
+	<%
+	}
+    %>
 </div>
 
-<c:if test="${relatedVideos.size()>0}">
-	<div id="additional" class="col-md-5">
-	    <h4 style="margin-top:0px; float:left;">Veranstaltungsreihe</h4> &nbsp;
-		<a target="_blank" class="icon-large icon-rss" href="${video.mp4RssLink}"></a>
-		<br/><br/>
-		 <div class="list-group" style="margin: 5px;">
-			<c:forEach items="${relatedVideos}" var="vid">
-				<portlet:actionURL name="viewOpenAccessVideo" var="viewOpenAccessVideoURL">
-					<portlet:param name="objectId" value="${vid.videoId}"/>
-					<portlet:param name="objectType" value="v"/>
-				</portlet:actionURL>		
-				<c:choose>
-				<c:when test="${video.videoId==vid.videoId}"><a href="#" class="list-group-item active" style="padding-left: 10px; padding-top: 5px; padding-bottom: 5px;"></c:when>
-				<c:otherwise><a href="<%=viewOpenAccessVideoURL%>" class="list-group-item" style="padding-left: 10px; padding-top: 5px; padding-bottom: 5px;"></c:otherwise>
-				</c:choose>	
-			        <img class="preview" src="${vid.imageSmall}">
-			        <h5 class="list-group-item-heading" style="margin-top:4px; margin-bottom:3px;">${vid.title}</h5>
-			        <h5 style="margin-top:0px; margin-bottom:3px; font-size:80%;">${vid.creators}</h5>
-			        <h5 style="margin-top:0px; margin-bottom:0px; font-size:80%;">${vid.date}</h5>			
-				</a>
-			</c:forEach>
+<%
+if(timeStart==0 || timeEnd==0){
+%>
+	<c:if test="${relatedVideos.size()>0}">
+		<div id="additional" class="col-md-5">
+		    <h4 style="margin-top:0px; float:left;">Veranstaltungsreihe</h4> &nbsp;
+			<a target="_blank" class="icon-large icon-rss" href="${video.mp4RssLink}"></a>
+			<br/><br/>
+			 <div class="list-group" style="margin: 5px;">
+				<c:forEach items="${relatedVideos}" var="vid">
+					<portlet:actionURL name="viewOpenAccessVideo" var="viewOpenAccessVideoURL">
+						<portlet:param name="objectId" value="${vid.videoId}"/>
+						<portlet:param name="objectType" value="v"/>
+					</portlet:actionURL>		
+					<c:choose>
+					<c:when test="${video.videoId==vid.videoId}"><a href="#" class="list-group-item active" style="padding-left: 10px; padding-top: 5px; padding-bottom: 5px;"></c:when>
+					<c:otherwise><a href="<%=viewOpenAccessVideoURL%>" class="list-group-item" style="padding-left: 10px; padding-top: 5px; padding-bottom: 5px;"></c:otherwise>
+					</c:choose>	
+				        <img class="preview" src="${vid.imageSmall}">
+				        <h5 class="list-group-item-heading" style="margin-top:4px; margin-bottom:3px;">${vid.title}</h5>
+				        <h5 style="margin-top:0px; margin-bottom:3px; font-size:80%;">${vid.creators}</h5>
+				        <h5 style="margin-top:0px; margin-bottom:0px; font-size:80%;">${vid.date}</h5>			
+					</a>
+				</c:forEach>
+			</div>
 		</div>
-	</div>
-</c:if>
-
+	</c:if>
+<%
+}
+%>
 <script type="text/javascript">
     jQuery(document).ready(function ($) {
         $('#tabs').tab();

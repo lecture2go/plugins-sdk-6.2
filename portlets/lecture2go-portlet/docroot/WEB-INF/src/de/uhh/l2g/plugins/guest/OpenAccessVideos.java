@@ -51,7 +51,16 @@ public class OpenAccessVideos extends MVCPortlet {
 	public void viewOpenAccessVideo(ActionRequest request, ActionResponse response) throws SystemException, PortalException {
 	    Long objectId = ParamUtil.getLong(request, "objectId");
 	    String objectType = ParamUtil.getString(request, "objectType");
+
+	    Long timeStart = new Long(0);
+	    Long timeEnd = new Long(0);
+	    
+	    try{
+	    	timeStart = new Long(ParamUtil.getString(request, "timeStart"));
+	    	timeEnd = new Long(ParamUtil.getString(request, "timeEnd"));
+	    }catch(Exception e){}
 	   
+	    
 	    Video video = new VideoImpl();
 	    //lecture series object
 	    Lectureseries lectureseries = new LectureseriesImpl();
@@ -99,6 +108,8 @@ public class OpenAccessVideos extends MVCPortlet {
 	    request.setAttribute("relatedVideos",relatedVideos);
 	    request.setAttribute("segments",segments);
 	    request.setAttribute("lectureseries",lectureseries);
+	    request.setAttribute("timeStart",timeStart);
+	    request.setAttribute("timeEnd",timeEnd);
 		response.setRenderParameter("jspPage","/guest/videoDetails.jsp");
 	}
 	
