@@ -71,7 +71,7 @@
 	  %>
       <h3 style="margin-top:10px; margin-bottom:2px"><%=title%></h3>
       <%
-	    if(timeStart>0 && timeEnd>timeStart){
+	    if(timeEnd>0 && timeEnd>timeStart){
 	      %>
 	      	<aui:a href="<%=video.getUrl()%>" >go-to-full-video</aui:a>
 	      <%
@@ -104,7 +104,7 @@
     </div>
     
     <%
-    if(timeStart==0 || timeEnd==0){
+    if(timeEnd==0 || timeEnd<timeStart){
 	%>
 	    <div id="meta">
 			<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
@@ -192,7 +192,7 @@
 </div>
 
 <%
-if(timeStart==0 || timeEnd==0){
+if(timeEnd==0 || timeEnd<timeStart){
 %>
 	<c:if test="${relatedVideos.size()>0}">
 		<div id="additional" class="col-md-5">
