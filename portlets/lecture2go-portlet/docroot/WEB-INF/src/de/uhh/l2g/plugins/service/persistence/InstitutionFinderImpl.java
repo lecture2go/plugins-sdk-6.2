@@ -120,13 +120,12 @@ public class InstitutionFinderImpl extends BasePersistenceImpl<Institution> impl
 		}
 		return out;
 	}
-	
-	
-	public List<Institution> findInstitutionsByLectureseriesIdsAndVideoIds (ArrayList<Long> lectureseriesIds,  ArrayList<Long> videoIds)  {
+		
+	public List<Institution> findInstitutionsByLectureseriesIdsAndVideoIds (ArrayList<Long> lectureseriesIds,  ArrayList<Long> videoIds, Long parentId)  {
 		Session session = null;
 		try {
 			session = openSession();
-			String sql = sqlInstitutionsByLectureseriesIdsAndVideoIds(lectureseriesIds,videoIds);
+			String sql = sqlInstitutionsByLectureseriesIdsAndVideoIds(lectureseriesIds,videoIds,parentId);
 			SQLQuery q = session.createSQLQuery(sql);
 			q.addScalar("institutionId", Type.LONG);
 			q.addScalar("parentId", Type.INTEGER);
@@ -151,21 +150,24 @@ public class InstitutionFinderImpl extends BasePersistenceImpl<Institution> impl
 		return null;
 	}
 	
-	private String sqlInstitutionsByLectureseriesIdsAndVideoIds (ArrayList<Long> lectureseriesIds, ArrayList<Long> videoIds) {
+	private String sqlInstitutionsByLectureseriesIdsAndVideoIds (ArrayList<Long> lectureseriesIds, ArrayList<Long> videoIds, Long parentId) {
 		boolean hasLectureseries 	= !lectureseriesIds.isEmpty();
 		boolean hasVideos 			= !videoIds.isEmpty();
+		boolean institutionsWanted	= parentId >0;
+		// the query fetches the parentinstitutions or the child institutions depending on the given parentId
+		String institutionQuery = institutionsWanted ? "institutionId" : "institutionParentId";
 		String lquery = "";
 		String vquery = "";
 		
 		if (hasLectureseries) {
 			// convert the list of ids to a comma-seperated string for the sql query
 			String lectureseriesIdsQuery = StringUtils.join(lectureseriesIds, ',');
-			lquery = "SELECT institutionParentId FROM LG_Lectureseries_Institution WHERE lectureseriesId IN (" + lectureseriesIdsQuery + ")";
+			lquery = "SELECT " + institutionQuery + " FROM LG_Lectureseries_Institution WHERE lectureseriesId IN (" + lectureseriesIdsQuery + ")";
 		}
 		if (hasVideos) {
 			// convert the list of ids to a comma-seperated string for the sql query
 			String videoIdsQuery = StringUtils.join(videoIds, ',');
-			vquery = "SELECT institutionParentId FROM LG_Video_Institution WHERE videoId IN (" + videoIdsQuery + ")";
+			vquery = "SELECT " + institutionQuery + " FROM LG_Video_Institution WHERE videoId IN (" + videoIdsQuery + ")";
 		}
 				
 		String query =  "SELECT DISTINCT i.institutionId,i.parentId,i.name,i.typ,i.www,i.level,i.sort FROM (";
@@ -178,7 +180,11 @@ public class InstitutionFinderImpl extends BasePersistenceImpl<Institution> impl
 			query += vquery;
 		}
 		
-		query += ") AS a JOIN LG_Institution AS i ON a.institutionParentId = i.institutionId";
+		query += ") AS a JOIN LG_Institution AS i ON a." + institutionQuery + " = i.institutionId";
+		
+		if (institutionsWanted) {
+			query += " WHERE i.parentId = " + parentId.toString();
+		}
 					
 		return query;
 	}
