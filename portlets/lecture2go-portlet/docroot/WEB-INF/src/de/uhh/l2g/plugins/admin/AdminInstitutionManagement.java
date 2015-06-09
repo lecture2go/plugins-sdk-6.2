@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -138,7 +137,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 	       } catch (Exception e) {
 	         SessionErrors.add(request, e.getClass().getName());
 
-	                            PortalUtil.copyRequestParameters(request, response);
+	         PortalUtil.copyRequestParameters(request, response);
 
 	         response.setRenderParameter("mvcPath",
 	              "/admin/institutionList.jsp");
@@ -174,6 +173,85 @@ public class AdminInstitutionManagement extends MVCPortlet {
 				response.setRenderParameter("mvcPath",
 						"/admin/institutionList.jsp");
 			}
+		}
+
+		public void deleteInstitution (ActionRequest request, ActionResponse response) {
+
+		    long institutionId = ParamUtil.getLong(request, "outerListInstitutionId");
+		    long selectedInstitutionId = ParamUtil.getLong(request, "institutionId");
+
+		    System.out.println("Delete "+institutionId);
+		    try {
+
+		       ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		         Institution.class.getName(), request);
+
+		                    response.setRenderParameter("institutionId", Long.toString(institutionId));
+
+		       InstitutionLocalServiceUtil.deleteInstitution(institutionId, serviceContext);
+
+		    } catch (Exception e) {
+
+		       SessionErrors.add(request, e.getClass().getName());
+		    }
+		}
+
+		public void deleteSubInstitution (ActionRequest request, ActionResponse response) {
+
+		    long institutionId = ParamUtil.getLong(request, "innerListinstitutionId");
+		    long parentId = ParamUtil.getLong(request, "parentId");
+
+		    try {
+
+		       ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		         Institution.class.getName(), request);
+
+		                    response.setRenderParameter("institutionId", Long.toString(institutionId));
+
+		       InstitutionLocalServiceUtil.deleteInstitution(institutionId, serviceContext);
+
+		    } catch (Exception e) {
+
+		       SessionErrors.add(request, e.getClass().getName());
+		    }
+		}
+
+		public void deleteHost (ActionRequest request, ActionResponse response) {
+
+		    long hostId = ParamUtil.getLong(request, "hostId");
+
+		    try {
+
+		       ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		        Host.class.getName(), request);
+
+		                    response.setRenderParameter("hostId", Long.toString(hostId));
+
+		       HostLocalServiceUtil.deleteHost(hostId, serviceContext);
+
+		    } catch (Exception e) {
+
+		       SessionErrors.add(request, e.getClass().getName());
+		    }
+		}
+
+		public void deleteStreamingServerTemplate (ActionRequest request, ActionResponse response) {
+
+		    long streamingServerId = ParamUtil.getLong(request, "streamingServerId");
+
+		    try {
+
+		       ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		         StreamingServerTemplate.class.getName(), request);
+
+		                    response.setRenderParameter("streamingServerId", Long.toString(streamingServerId));
+
+		                    StreamingServerTemplateLocalServiceUtil.deleteStreamingServerTemplate(streamingServerId, serviceContext);
+
+		    } catch (Exception e) {
+
+		       SessionErrors.add(request, e.getClass().getName());
+		    }
 		}
 
 		public void updateTopLevelInstitutionEntry(ActionRequest request, ActionResponse response) throws PortalException, SystemException {

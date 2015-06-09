@@ -73,14 +73,14 @@ for (int i = 0; i < institutions.size(); i++) {
 }
 
 long parent = topLevel.getPrimaryKey();
-int maxOrder = 20 ;
-if (institutionId > 1) {
-	Institution selectedInstitution = InstitutionLocalServiceUtil.getById(institutionId);
-	maxOrder = selectedInstitution.getSort();
-}
-else{
+int maxOrder = 0;
+//if (institutionId > 1) {
+//	Institution selectedInstitution = InstitutionLocalServiceUtil.getById(institutionId);
+//	maxOrder = selectedInstitution.getSort();
+//}
+//else{
 	maxOrder = InstitutionLocalServiceUtil.getMaxSortByParentId(topLevel.getInstitutionId())+1;
-	}
+//	}
 %>
 
 <liferay-ui:panel title="Edit Institution Settings" collapsible="true" id="institutionSettings"
@@ -233,6 +233,14 @@ deltaConfigurable="true">
 				<aui:button type="submit"></aui:button>
 			</aui:fieldset>
  		</aui:form>
+ 		<portlet:actionURL name="deleteInstitution" var="deleteInstitutionURL">
+ 					<portlet:param name="outerListInstitutionId" value='<%= (new Long(institution_row.getInstitutionId())).toString() %>' />
+ 					<portlet:param name="institutionId" value='<%= (new Long(institutionId)).toString() %>' />
+					<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>
+		</portlet:actionURL>
+ 		<a href="<%=deleteInstitutionURL.toString()%>">
+					<span class="icon-large icon-remove"></span>
+		</a>
  		<aui:form action="<%= addSubInstitutionEntryURL %>" name="<portlet:namespace />fm">
  			<aui:fieldset>
 				<aui:input name="subInstitution" label="SubInstitution Name" inlineField="true" />
@@ -278,6 +286,14 @@ deltaConfigurable="true">
 							<aui:button type="submit"></aui:button>
 						</aui:fieldset>
  						</aui:form>
+ 					<portlet:actionURL name="deleteSubInstitution" var="deleteSubInstitutionURL">
+ 					<portlet:param name="innerListInstitutionId" value='<%= (new Long(subInstitution.getInstitutionId())).toString() %>' />
+ 					<portlet:param name="institutionId" value='<%= (new Long(institutionId)).toString() %>' />
+					<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>
+					</portlet:actionURL>
+						<a href="<%=deleteSubInstitutionURL.toString()%>">
+							<span class="icon-large icon-remove"></span>
+						</a>
         			</liferay-ui:search-container-column-text>
 
         		</liferay-ui:search-container-row>
