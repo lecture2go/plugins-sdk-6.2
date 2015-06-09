@@ -241,26 +241,42 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		return validPosition;
 	}
 
+	protected void up(){}
+
+	protected void down() {}
+
+
+    /** Refreshes sort number for given institution
+     *  Adds new number on insert (newpos > 0) - shifts numbers on delete (newpos = 0)
+     *
+     */
 	protected int updateSort(Institution inst, int newpos) throws SystemException{
 		int validPosition = 0;
+		int curPos = 1;
+		int prevPos = inst.getSort();
 
 		//System.out.println(inst.getSort());
 		int subElements = InstitutionLocalServiceUtil.getByGroupIdAndParentCount(inst.getGroupId(), inst.getParentId());
 
 		if (subElements < 1) validPosition = 1; // There is nothing to reorder and only one valid position
-		else{ // sort Elements newpos = 1 => shift all, newpos > max attach at back
+		else{ // sort Elements newpos <= 1 => shift all, newpos > max attach at back
 			List<Institution> subtree = InstitutionLocalServiceUtil.getByGroupIdAndParent(inst.getGroupId(), inst.getParentId());
 
-			int curPos = 1;
+			//if (newpos > 0) curPos = 1;
 			int increment = 0;
 			for (Institution subInstitution: subtree){
 				 if (newpos <= curPos && increment == 0){ //insert new Institution here
-					 validPosition = curPos;
-					 increment = 1;
+					 if (newpos > 0) {
+						 validPosition = curPos;
+						 increment = 1; //shift all follwing up
+					 }
+					 else {
+						 if (curPos > prevPos) increment = -1;
+					 }
 				 }
 				 subInstitution.setSort(curPos + increment);
 				 institutionPersistence.update(subInstitution);
-				 //System.out.println(subInstitution.getInstitutionId() +" "+ subInstitution.getName()+ " " + curPos + " " + increment+ " " +validPosition);
+				// System.out.println(subInstitution.getInstitutionId() +" "+ subInstitution.getName()+ " " + curPos + " " + increment+ " " +validPosition);
 				 curPos++;
 
 			}
@@ -344,7 +360,10 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 	   public Institution deleteInstitution(long institutionId, ServiceContext serviceContext)
 		        throws PortalException, SystemException {
 
+<<<<<<< Upstream, based on origin/master
 
+=======
+>>>>>>> ca6a9a4 Institution reorder for Delete Operation
 		        //TODO: check if Institution is empty
 		        Institution institution = getInstitution(institutionId);
 
@@ -353,7 +372,6 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		        		institutionId);
 
 		        updateSort(institution, 0);
-
 		        institution = deleteInstitution(institutionId);
 
 		        return institution;

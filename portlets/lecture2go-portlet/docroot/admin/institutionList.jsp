@@ -16,8 +16,6 @@
 <portlet:renderURL var="viewURL"><portlet:param name="jspPage" value="/admin/institutionList.jsp" /></portlet:renderURL>
 <liferay-portlet:renderURL varImpl="outerURL"><portlet:param name="jspPage" value="/admin/institutionList.jsp" /></liferay-portlet:renderURL>
 <liferay-portlet:renderURL varImpl="innerURL"><portlet:param name="jspPage" value="/admin/institutionList.jsp" /></liferay-portlet:renderURL>
-<liferay-portlet:renderURL varImpl="outerURL"><portlet:param name="jspPage" value="/admin/institutionList.jsp" /></liferay-portlet:renderURL>
-<liferay-portlet:renderURL varImpl="innerURL"><portlet:param name="jspPage" value="/admin/institutionList.jsp" /></liferay-portlet:renderURL>
 <portlet:actionURL name="addInstitution" var="addInstitutionURL"></portlet:actionURL>
 <portlet:actionURL name="addSubInstitution" var="addSubInstitutionURL"></portlet:actionURL>
 <portlet:actionURL name="updateInstitution" var="updateInstitutionURL"></portlet:actionURL>
@@ -74,15 +72,20 @@ for (int i = 0; i < institutions.size(); i++) {
 }
 
 long parent = topLevel.getPrimaryKey();
-
 int maxOrder = 0;
 if (institutionId > 1) {
 	Institution selectedInstitution = InstitutionLocalServiceUtil.getById(institutionId);
 	maxOrder = selectedInstitution.getSort();
 }
 else{
+int maxOrder = 0;
+//if (institutionId > 1) {
+//	Institution selectedInstitution = InstitutionLocalServiceUtil.getById(institutionId);
+//	maxOrder = selectedInstitution.getSort();
+//}
+//else{
 	maxOrder = InstitutionLocalServiceUtil.getMaxSortByParentId(topLevel.getInstitutionId())+1;
-	}
+//	}
 %>
 
 <liferay-ui:panel title="Edit Institution Settings" collapsible="true" id="institutionSettings"
@@ -243,7 +246,11 @@ deltaConfigurable="true">
  		<a href="<%=deleteInstitutionURL.toString()%>">
 					<span class="icon-large icon-remove"></span>
 		</a>
+<<<<<<< Upstream, based on origin/master
  		<aui:form action="<%= addSubInstitutionURL %>" name="<portlet:namespace />fm">
+=======
+ 		<aui:form action="<%= addSubInstitutionEntryURL %>" name="<portlet:namespace />fm">
+>>>>>>> ca6a9a4 Institution reorder for Delete Operation
  			<aui:fieldset>
 				<aui:input name="subInstitution" label="SubInstitution Name" inlineField="true" />
 				<aui:input name="subInstitutionOrder" label="Order" inlineField="true" value='<%= subInstitutionMax  %>'/>
