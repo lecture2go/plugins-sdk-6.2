@@ -100,6 +100,12 @@ public class OpenAccessVideos extends MVCPortlet {
 	    License l = new LicenseImpl();
 	    l = LicenseLocalServiceUtil.getByVideoId(video.getVideoId());
 	    
+	    //update video hits
+	    Long hits = video.getHits();
+	    hits = hits+1;
+	    video.setHits(hits);
+	    VideoLocalServiceUtil.updateVideo(video);
+	    
 	    request.setAttribute("videoLicense",l);
 	    request.setAttribute("videoMetadata",m);
 	    request.setAttribute("videoInstitutions",vi);
