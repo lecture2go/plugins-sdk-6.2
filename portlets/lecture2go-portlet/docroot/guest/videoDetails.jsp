@@ -82,13 +82,13 @@
     <div id="main" >
 	  <%
 	    String title = video.getTitle();
-	  	if(timeStart>0 && timeEnd>timeStart){
+	  	if(timeStart>0 && timeEnd>timeStart && video.getCitation2go()==1){
 			title ="citation-of "+title;
 	  	}
 	  %>
       <h3 style="margin-top:10px; margin-bottom:2px"><%=title%></h3>
       <%
-	    if(timeEnd>0 && timeEnd>timeStart){
+	    if(timeEnd>0 && timeEnd>timeStart && video.getCitation2go()==1){
 	      %>
 	      	<aui:a href="<%=video.getUrl()%>" >go-to-full-video</aui:a>
 	      <%
@@ -121,7 +121,7 @@
     </div>
     
     <%
-    if(timeEnd==0 || timeEnd<timeStart){
+    if(timeEnd==0 || timeEnd<timeStart || video.getCitation2go()==0){
 	%>
 	    <div id="meta">
 			<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
@@ -209,7 +209,7 @@
 </div>
 
 <%
-if(timeEnd==0 || timeEnd<timeStart){
+if(timeEnd==0 || timeEnd<timeStart || video.getCitation2go()==0){
 %>
 	<c:if test="${relatedVideos.size()>0}">
 		<div id="additional" class="col-md-5">
