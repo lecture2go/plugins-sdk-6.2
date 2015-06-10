@@ -124,7 +124,8 @@
   float: right;
 }
 
-#loadMore {
+#loadMoreTerms,
+#loadMoreCreators {
 	cursor: pointer
 }
 </style>
@@ -303,7 +304,7 @@ $( document ).ready(function() {
 	$("ul.creators > li").slice(<%=maxCreators%>).hide();
 	// show the remaining creators
 	$('#loadMoreCreators').click(function () {
-	    $('ul.creatorss > li').show();
+	    $('ul.creators > li').show();
 	    $('#loadMoreCreators').hide();
 	});
 
