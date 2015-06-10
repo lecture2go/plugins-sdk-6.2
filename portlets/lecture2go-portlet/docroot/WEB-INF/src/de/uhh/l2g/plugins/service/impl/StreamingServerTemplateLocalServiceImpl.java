@@ -19,6 +19,7 @@ import java.util.List;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 
@@ -28,6 +29,7 @@ import de.uhh.l2g.plugins.HostStreamerException;
 import de.uhh.l2g.plugins.StreamingServerTemplateNameException;
 import de.uhh.l2g.plugins.StreamingServerTemplateStringException;
 import de.uhh.l2g.plugins.model.Institution;
+import de.uhh.l2g.plugins.model.Institution_Host;
 import de.uhh.l2g.plugins.model.StreamingServerTemplate;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.StreamingServerTemplateLocalServiceUtil;
@@ -135,5 +137,20 @@ public class StreamingServerTemplateLocalServiceImpl
 
 		return streamingServerTemplate;
 	}
+
+	  public StreamingServerTemplate deleteStreamingServerTemplate(long streamingServerTemplateId, ServiceContext serviceContext)
+		        throws PortalException, SystemException {
+
+		  StreamingServerTemplate streamingServerTemplate = getById(streamingServerTemplateId);
+
+		        resourceLocalService.deleteResource(serviceContext.getCompanyId(),
+		        		Institution.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
+		        		streamingServerTemplateId);
+
+		        streamingServerTemplate = deleteStreamingServerTemplate(streamingServerTemplateId);
+
+		        return streamingServerTemplate;
+
+	  }
 
 }

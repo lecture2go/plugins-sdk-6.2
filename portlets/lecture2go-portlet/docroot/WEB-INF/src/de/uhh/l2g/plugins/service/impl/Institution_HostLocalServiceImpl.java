@@ -19,6 +19,7 @@ import java.util.List;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 
@@ -83,6 +84,16 @@ public class Institution_HostLocalServiceImpl
 		return institutions;
 	}
 
+	public List<Institution_Host> getListByGroupIdAndHostId(long groupId, long hostId) throws SystemException, PortalException {
+		List<Institution_Host> institution_host = institution_HostPersistence.findByG_H(groupId, hostId);
+		return institution_host;
+	}
+
+	public List<Institution_Host> getListByGroupIdAndInstitutionId(long groupId, long institutionId) throws SystemException, PortalException {
+		List<Institution_Host> institution_host = institution_HostPersistence.findByG_H(groupId, institutionId);
+		return institution_host;
+	}
+
 	/** Maximum one host per institution
 	 *
 	 * */
@@ -125,4 +136,23 @@ public class Institution_HostLocalServiceImpl
 		return institution_Host;
 
 	}
+
+	   public Institution_Host deleteEntriesByInstitution(long institutionId, ServiceContext serviceContext)
+		        throws PortalException, SystemException {
+
+		   		long groupId = serviceContext.getScopeGroupId();
+		   		long userId = serviceContext.getUserId();
+		   		Institution_Host institution_host = null;
+		       // Institution_Host institution_host = getByGroupIdAndInstitutionId(groupId,institutionId);
+
+		        resourceLocalService.deleteResource(serviceContext.getCompanyId(),
+		        		Institution.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
+		        		institutionId);
+
+		        institution_host = deleteInstitution_Host(institutionId);
+
+		        return institution_host;
+
+		    }
+
 }
