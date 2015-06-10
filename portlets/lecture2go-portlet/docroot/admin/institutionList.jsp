@@ -26,6 +26,7 @@
 <portlet:actionURL name="updateStreamingServerTemplate" var="updateStreamingServerTemplateURL"></portlet:actionURL>
 <portlet:actionURL name="updateTopLevelInstitution" var="updateTopLevelInstitutionURL"></portlet:actionURL>
 
+
 <script src="https://code.jquery.com/jquery-1.11.2.js"></script>
 <script type="text/javascript">
 
@@ -246,11 +247,7 @@ deltaConfigurable="true">
  		<a href="<%=deleteInstitutionURL.toString()%>">
 					<span class="icon-large icon-remove"></span>
 		</a>
-<<<<<<< Upstream, based on origin/master
  		<aui:form action="<%= addSubInstitutionURL %>" name="<portlet:namespace />fm">
-=======
- 		<aui:form action="<%= addSubInstitutionEntryURL %>" name="<portlet:namespace />fm">
->>>>>>> ca6a9a4 Institution reorder for Delete Operation
  			<aui:fieldset>
 				<aui:input name="subInstitution" label="SubInstitution Name" inlineField="true" />
 				<aui:input name="subInstitutionOrder" label="Order" inlineField="true" value='<%= subInstitutionMax  %>'/>
