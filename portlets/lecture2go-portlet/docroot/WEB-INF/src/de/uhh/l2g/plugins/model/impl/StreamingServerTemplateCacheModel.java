@@ -14,32 +14,32 @@
 
 package de.uhh.l2g.plugins.model.impl;
 
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CacheModel;
+
+import de.uhh.l2g.plugins.model.StreamingServerTemplate;
+
 import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.CacheModel;
-
-import de.uhh.l2g.plugins.model.ServerTemplate;
-
 /**
- * The cache model class for representing ServerTemplate in entity cache.
+ * The cache model class for representing StreamingServerTemplate in entity cache.
  *
  * @author Iavor Sturm
- * @see ServerTemplate
+ * @see StreamingServerTemplate
  * @generated
  */
-public class ServerTemplateCacheModel implements CacheModel<ServerTemplate>,
+public class StreamingServerTemplateCacheModel implements CacheModel<StreamingServerTemplate>,
 	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(29);
 
-		sb.append("{serverTemplateId=");
-		sb.append(serverTemplateId);
+		sb.append("{streamingServerTemplateId=");
+		sb.append(streamingServerTemplateId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", name=");
@@ -72,82 +72,82 @@ public class ServerTemplateCacheModel implements CacheModel<ServerTemplate>,
 	}
 
 	@Override
-	public ServerTemplate toEntityModel() {
-		ServerTemplateImpl serverTemplateImpl = new ServerTemplateImpl();
+	public StreamingServerTemplate toEntityModel() {
+		StreamingServerTemplateImpl streamingServerTemplateImpl = new StreamingServerTemplateImpl();
 
-		serverTemplateImpl.setServerTemplateId(serverTemplateId);
-		serverTemplateImpl.setGroupId(groupId);
+		streamingServerTemplateImpl.setStreamingServerTemplateId(streamingServerTemplateId);
+		streamingServerTemplateImpl.setGroupId(groupId);
 
 		if (name == null) {
-			serverTemplateImpl.setName(StringPool.BLANK);
+			streamingServerTemplateImpl.setName(StringPool.BLANK);
 		}
 		else {
-			serverTemplateImpl.setName(name);
+			streamingServerTemplateImpl.setName(name);
 		}
 
-		serverTemplateImpl.setType(type);
+		streamingServerTemplateImpl.setType(type);
 
 		if (prefixURL == null) {
-			serverTemplateImpl.setPrefixURL(StringPool.BLANK);
+			streamingServerTemplateImpl.setPrefixURL(StringPool.BLANK);
 		}
 		else {
-			serverTemplateImpl.setPrefixURL(prefixURL);
+			streamingServerTemplateImpl.setPrefixURL(prefixURL);
 		}
 
 		if (suffixURL == null) {
-			serverTemplateImpl.setSuffixURL(StringPool.BLANK);
+			streamingServerTemplateImpl.setSuffixURL(StringPool.BLANK);
 		}
 		else {
-			serverTemplateImpl.setSuffixURL(suffixURL);
+			streamingServerTemplateImpl.setSuffixURL(suffixURL);
 		}
 
 		if (secExt == null) {
-			serverTemplateImpl.setSecExt(StringPool.BLANK);
+			streamingServerTemplateImpl.setSecExt(StringPool.BLANK);
 		}
 		else {
-			serverTemplateImpl.setSecExt(secExt);
+			streamingServerTemplateImpl.setSecExt(secExt);
 		}
 
 		if (templateURL == null) {
-			serverTemplateImpl.setTemplateURL(StringPool.BLANK);
+			streamingServerTemplateImpl.setTemplateURL(StringPool.BLANK);
 		}
 		else {
-			serverTemplateImpl.setTemplateURL(templateURL);
+			streamingServerTemplateImpl.setTemplateURL(templateURL);
 		}
 
 		if (prefixFile == null) {
-			serverTemplateImpl.setPrefixFile(StringPool.BLANK);
+			streamingServerTemplateImpl.setPrefixFile(StringPool.BLANK);
 		}
 		else {
-			serverTemplateImpl.setPrefixFile(prefixFile);
+			streamingServerTemplateImpl.setPrefixFile(prefixFile);
 		}
 
 		if (suffixFile == null) {
-			serverTemplateImpl.setSuffixFile(StringPool.BLANK);
+			streamingServerTemplateImpl.setSuffixFile(StringPool.BLANK);
 		}
 		else {
-			serverTemplateImpl.setSuffixFile(suffixFile);
+			streamingServerTemplateImpl.setSuffixFile(suffixFile);
 		}
 
 		if (templateFile == null) {
-			serverTemplateImpl.setTemplateFile(StringPool.BLANK);
+			streamingServerTemplateImpl.setTemplateFile(StringPool.BLANK);
 		}
 		else {
-			serverTemplateImpl.setTemplateFile(templateFile);
+			streamingServerTemplateImpl.setTemplateFile(templateFile);
 		}
 
-		serverTemplateImpl.setTemplateIOS(templateIOS);
-		serverTemplateImpl.setTemplateAndroid(templateAndroid);
-		serverTemplateImpl.setDefaultServer(defaultServer);
+		streamingServerTemplateImpl.setTemplateIOS(templateIOS);
+		streamingServerTemplateImpl.setTemplateAndroid(templateAndroid);
+		streamingServerTemplateImpl.setDefaultServer(defaultServer);
 
-		serverTemplateImpl.resetOriginalValues();
+		streamingServerTemplateImpl.resetOriginalValues();
 
-		return serverTemplateImpl;
+		return streamingServerTemplateImpl;
 	}
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		serverTemplateId = objectInput.readLong();
+		streamingServerTemplateId = objectInput.readLong();
 		groupId = objectInput.readLong();
 		name = objectInput.readUTF();
 		type = objectInput.readInt();
@@ -166,7 +166,7 @@ public class ServerTemplateCacheModel implements CacheModel<ServerTemplate>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(serverTemplateId);
+		objectOutput.writeLong(streamingServerTemplateId);
 		objectOutput.writeLong(groupId);
 
 		if (name == null) {
@@ -232,7 +232,7 @@ public class ServerTemplateCacheModel implements CacheModel<ServerTemplate>,
 		objectOutput.writeInt(defaultServer);
 	}
 
-	public long serverTemplateId;
+	public long streamingServerTemplateId;
 	public long groupId;
 	public String name;
 	public int type;

@@ -20,7 +20,6 @@ import de.uhh.l2g.plugins.NoSuchLicenseException;
 import de.uhh.l2g.plugins.model.License;
 import de.uhh.l2g.plugins.service.base.LicenseLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.LicenseUtil;
-import de.uhh.l2g.plugins.service.persistence.Video_LectureseriesUtil;
 
 /**
  * The implementation of the license local service.

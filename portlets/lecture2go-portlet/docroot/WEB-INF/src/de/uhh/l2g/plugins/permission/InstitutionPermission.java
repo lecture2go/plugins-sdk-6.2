@@ -1,11 +1,12 @@
 package de.uhh.l2g.plugins.permission;
 
-import de.uhh.l2g.plugins.model.Institution;
-import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
+
+import de.uhh.l2g.plugins.model.Institution;
+import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 
 public class InstitutionPermission {
     public static void check(PermissionChecker permissionChecker,

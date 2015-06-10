@@ -22,14 +22,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 
-import de.uhh.l2g.plugins.HostNameException;
-import de.uhh.l2g.plugins.HostServerTemplateException;
-import de.uhh.l2g.plugins.HostStreamerException;
 import de.uhh.l2g.plugins.ServerTemplateNameException;
 import de.uhh.l2g.plugins.ServerTemplateStringException;
-import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.ServerTemplate;
-import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.ServerTemplateLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.ServerTemplateLocalServiceBaseImpl;
 

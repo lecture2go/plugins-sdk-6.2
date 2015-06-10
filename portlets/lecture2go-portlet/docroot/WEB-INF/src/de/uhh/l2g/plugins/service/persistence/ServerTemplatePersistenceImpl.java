@@ -14,6 +14,12 @@
 
 package de.uhh.l2g.plugins.service.persistence;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -43,13 +49,6 @@ import de.uhh.l2g.plugins.NoSuchServerTemplateException;
 import de.uhh.l2g.plugins.model.ServerTemplate;
 import de.uhh.l2g.plugins.model.impl.ServerTemplateImpl;
 import de.uhh.l2g.plugins.model.impl.ServerTemplateModelImpl;
-
-import java.io.Serializable;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
 
 /**
  * The persistence implementation for the server template service.

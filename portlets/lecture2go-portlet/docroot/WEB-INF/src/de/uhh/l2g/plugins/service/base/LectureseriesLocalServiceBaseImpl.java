@@ -55,7 +55,7 @@ import de.uhh.l2g.plugins.service.persistence.ProducerFinder;
 import de.uhh.l2g.plugins.service.persistence.ProducerPersistence;
 import de.uhh.l2g.plugins.service.persistence.Producer_LectureseriesPersistence;
 import de.uhh.l2g.plugins.service.persistence.SegmentPersistence;
-import de.uhh.l2g.plugins.service.persistence.ServerTemplatePersistence;
+import de.uhh.l2g.plugins.service.persistence.StreamingServerTemplatePersistence;
 import de.uhh.l2g.plugins.service.persistence.SysPersistence;
 import de.uhh.l2g.plugins.service.persistence.TagcloudPersistence;
 import de.uhh.l2g.plugins.service.persistence.TermFinder;
@@ -1043,41 +1043,41 @@ public abstract class LectureseriesLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the server template local service.
+	 * Returns the streaming server template local service.
 	 *
-	 * @return the server template local service
+	 * @return the streaming server template local service
 	 */
-	public de.uhh.l2g.plugins.service.ServerTemplateLocalService getServerTemplateLocalService() {
-		return serverTemplateLocalService;
+	public de.uhh.l2g.plugins.service.StreamingServerTemplateLocalService getStreamingServerTemplateLocalService() {
+		return streamingServerTemplateLocalService;
 	}
 
 	/**
-	 * Sets the server template local service.
+	 * Sets the streaming server template local service.
 	 *
-	 * @param serverTemplateLocalService the server template local service
+	 * @param streamingServerTemplateLocalService the streaming server template local service
 	 */
-	public void setServerTemplateLocalService(
-		de.uhh.l2g.plugins.service.ServerTemplateLocalService serverTemplateLocalService) {
-		this.serverTemplateLocalService = serverTemplateLocalService;
+	public void setStreamingServerTemplateLocalService(
+		de.uhh.l2g.plugins.service.StreamingServerTemplateLocalService streamingServerTemplateLocalService) {
+		this.streamingServerTemplateLocalService = streamingServerTemplateLocalService;
 	}
 
 	/**
-	 * Returns the server template persistence.
+	 * Returns the streaming server template persistence.
 	 *
-	 * @return the server template persistence
+	 * @return the streaming server template persistence
 	 */
-	public ServerTemplatePersistence getServerTemplatePersistence() {
-		return serverTemplatePersistence;
+	public StreamingServerTemplatePersistence getStreamingServerTemplatePersistence() {
+		return streamingServerTemplatePersistence;
 	}
 
 	/**
-	 * Sets the server template persistence.
+	 * Sets the streaming server template persistence.
 	 *
-	 * @param serverTemplatePersistence the server template persistence
+	 * @param streamingServerTemplatePersistence the streaming server template persistence
 	 */
-	public void setServerTemplatePersistence(
-		ServerTemplatePersistence serverTemplatePersistence) {
-		this.serverTemplatePersistence = serverTemplatePersistence;
+	public void setStreamingServerTemplatePersistence(
+		StreamingServerTemplatePersistence streamingServerTemplatePersistence) {
+		this.streamingServerTemplatePersistence = streamingServerTemplatePersistence;
 	}
 
 	/**
@@ -1745,10 +1745,10 @@ public abstract class LectureseriesLocalServiceBaseImpl
 	protected de.uhh.l2g.plugins.service.SegmentLocalService segmentLocalService;
 	@BeanReference(type = SegmentPersistence.class)
 	protected SegmentPersistence segmentPersistence;
-	@BeanReference(type = de.uhh.l2g.plugins.service.ServerTemplateLocalService.class)
-	protected de.uhh.l2g.plugins.service.ServerTemplateLocalService serverTemplateLocalService;
-	@BeanReference(type = ServerTemplatePersistence.class)
-	protected ServerTemplatePersistence serverTemplatePersistence;
+	@BeanReference(type = de.uhh.l2g.plugins.service.StreamingServerTemplateLocalService.class)
+	protected de.uhh.l2g.plugins.service.StreamingServerTemplateLocalService streamingServerTemplateLocalService;
+	@BeanReference(type = StreamingServerTemplatePersistence.class)
+	protected StreamingServerTemplatePersistence streamingServerTemplatePersistence;
 	@BeanReference(type = de.uhh.l2g.plugins.service.SysLocalService.class)
 	protected de.uhh.l2g.plugins.service.SysLocalService sysLocalService;
 	@BeanReference(type = SysPersistence.class)

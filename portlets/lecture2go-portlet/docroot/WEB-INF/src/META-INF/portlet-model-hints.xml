@@ -24,7 +24,7 @@
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Host">
 		<field name="hostId" type="long" />
-		<field name="serverTemplateId" type="long" />
+		<field name="streamingServerTemplateId" type="long" />
 		<field name="protocol" type="String" />
 		<field name="streamer" type="String" />
 		<field name="port" type="int" />
@@ -136,8 +136,8 @@
 		<field name="chapter" type="int" />
 		<field name="userId" type="long" />
 	</model>
-	<model name="de.uhh.l2g.plugins.model.ServerTemplate">
-		<field name="serverTemplateId" type="long" />
+	<model name="de.uhh.l2g.plugins.model.StreamingServerTemplate">
+		<field name="streamingServerTemplateId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="name" type="String" />
 		<field name="type" type="int" />

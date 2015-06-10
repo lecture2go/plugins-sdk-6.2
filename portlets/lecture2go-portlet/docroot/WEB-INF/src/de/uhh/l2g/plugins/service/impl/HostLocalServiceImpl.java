@@ -19,15 +19,14 @@ import java.util.List;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 
 import de.uhh.l2g.plugins.HostNameException;
-import de.uhh.l2g.plugins.HostServerTemplateException;
 import de.uhh.l2g.plugins.HostStreamerException;
-import de.uhh.l2g.plugins.NoSuchHostException;
+import de.uhh.l2g.plugins.HostStreamingServerTemplateException;
 import de.uhh.l2g.plugins.model.Host;
-import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.HostLocalServiceBaseImpl;
 
@@ -82,7 +81,7 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 
 
 
-	protected void validate (String name, String streamer, long serverTemplateId) throws PortalException {
+	protected void validate (String name, String streamer, long streamingServerTemplateId) throws PortalException {
 
 		if (Validator.isNull(name)) {
 	       throw new HostNameException();
@@ -92,12 +91,12 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 	       throw new HostStreamerException();
 	     }
 
-	     if (Validator.isNull(serverTemplateId)) {
-	       throw new HostServerTemplateException();
+	     if (Validator.isNull(streamingServerTemplateId)) {
+	       throw new HostStreamingServerTemplateException();
 	     }
 	}
 
-	public Host addHost(String name, String streamLocation, long serverTemplateId,
+	public Host addHost(String name, String streamLocation, long streamingServerTemplateId,
 			String protocol, String serverRoot, int port,
 			ServiceContext serviceContext) throws SystemException, PortalException {
 
@@ -106,7 +105,7 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		//validate(name,streamLocation,serverTemplateId);
+		//validate(name,streamLocation,streamingServerTemplateId);
 
 
 		long hostId = counterLocalService.increment();
@@ -115,7 +114,7 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 
 		host.setName(name);
 		host.setGroupId(groupId);
-		host.setServerTemplateId(serverTemplateId);
+		host.setStreamingServerTemplateId(streamingServerTemplateId);
 		host.setStreamer(streamLocation);
 		host.setProtocol(protocol);
 		host.setServerRoot(serverRoot);
@@ -129,5 +128,20 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 
 		return host;
 	}
+
+	   public Host deleteHost(long hostId, ServiceContext serviceContext)
+		        throws PortalException, SystemException {
+
+		        Host host = getHost(hostId);
+
+		        resourceLocalService.deleteResource(serviceContext.getCompanyId(),
+		        		Host.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
+		        		hostId);
+
+		        host = deleteHost(hostId);
+
+		        return host;
+
+		    }
 
 }

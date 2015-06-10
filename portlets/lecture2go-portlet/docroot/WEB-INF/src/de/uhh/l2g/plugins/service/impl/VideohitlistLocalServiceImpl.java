@@ -16,7 +16,6 @@ package de.uhh.l2g.plugins.service.impl;
 
 import com.liferay.portal.kernel.exception.SystemException;
 
-import de.uhh.l2g.plugins.model.Videohitlist;
 import de.uhh.l2g.plugins.service.base.VideohitlistLocalServiceBaseImpl;
 
 /**

@@ -20,7 +20,6 @@ import java.util.List;
 import com.liferay.portal.kernel.exception.SystemException;
 
 import de.uhh.l2g.plugins.model.Video_Institution;
-import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.Video_InstitutionLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.Video_InstitutionUtil;
 

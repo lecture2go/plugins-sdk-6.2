@@ -46,7 +46,7 @@
 	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.HostModelImpl">
 		<attributes>
 			<id name="hostId" />
-			<basic name="serverTemplateId" />
+			<basic name="streamingServerTemplateId" />
 			<basic name="protocol" />
 			<basic name="streamer" />
 			<basic name="port" />
@@ -240,9 +240,9 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.ServerTemplateModelImpl">
+	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.StreamingServerTemplateModelImpl">
 		<attributes>
-			<id name="serverTemplateId" />
+			<id name="streamingServerTemplateId" />
 			<basic name="groupId" />
 			<basic name="name" />
 			<basic name="type">
@@ -483,8 +483,8 @@
 			<transient name="seconds" />
 		</attributes>
 	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.ServerTemplateImpl" name="ServerTemplate">
-		<table name="LG_ServerTemplate" />
+	<entity class="de.uhh.l2g.plugins.model.impl.StreamingServerTemplateImpl" name="StreamingServerTemplate">
+		<table name="LG_StreamingServerTemplate" />
 		<attributes />
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.SysImpl" name="Sys">

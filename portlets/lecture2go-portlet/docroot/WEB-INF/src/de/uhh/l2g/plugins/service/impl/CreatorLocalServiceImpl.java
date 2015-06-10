@@ -25,10 +25,8 @@ import org.json.JSONObject;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
-import de.uhh.l2g.plugins.model.Category;
 import de.uhh.l2g.plugins.model.Creator;
 import de.uhh.l2g.plugins.service.base.CreatorLocalServiceBaseImpl;
-import de.uhh.l2g.plugins.service.persistence.CategoryFinderUtil;
 import de.uhh.l2g.plugins.service.persistence.CreatorFinderUtil;
 
 /**

@@ -2,7 +2,6 @@ package de.uhh.l2g.plugins.service.persistence;
 
 import java.util.List;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;

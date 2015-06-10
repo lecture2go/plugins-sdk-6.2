@@ -27,10 +27,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 
 import de.uhh.l2g.plugins.HostNameException;
-import de.uhh.l2g.plugins.HostServerTemplateException;
-import de.uhh.l2g.plugins.HostStreamerException;
-import de.uhh.l2g.plugins.NoSuchInstitutionException;
-import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
@@ -132,7 +128,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 	public int getMaxSortByParentId(long parentId) throws SystemException {
 		return InstitutionFinderUtil.findMaxSortByParent(parentId);
 	}
-	
+
 	public List<Institution> getInstitutionsFromLectureseriesIdsAndVideoIds(ArrayList<Long> lectureseriesIds, ArrayList<Long> videoIds) {
 		return InstitutionFinderUtil.findInstitutionsByLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds, new Long(0));
 	}
@@ -140,7 +136,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 	public List<Institution> getInstitutionsFromLectureseriesIdsAndVideoIds(ArrayList<Long> lectureseriesIds, ArrayList<Long> videoIds, Long parentId) {
 		return InstitutionFinderUtil.findInstitutionsByLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds, parentId);
 	}
-	
+
 	private String _indentFromPath(String path, String sep) {
 		String s = "";
 		for (int i = 1; i <= path.split(sep).length - 1; i++) {
@@ -157,26 +153,42 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 
 	}
 
+	protected void up(){}
+
+	protected void down() {}
+
+
+    /** Refreshes sort number for given institution
+     *  Adds new number on insert (newpos > 0) - shifts numbers on delete (newpos = 0)
+     *
+     */
 	protected int updateSort(Institution inst, int newpos) throws SystemException{
 		int validPosition = 0;
+		int curPos = 1;
+		int prevPos = inst.getSort();
 
-		System.out.println(inst.getSort());
+		//System.out.println(inst.getSort());
 		int subElements = InstitutionLocalServiceUtil.getByGroupIdAndParentCount(inst.getGroupId(), inst.getParentId());
 
 		if (subElements < 1) validPosition = 1; // There is nothing to reorder and only one valid position
-		else{ // sort Elements newpos = 1 => shift all, newpos > max attach at back
+		else{ // sort Elements newpos <= 1 => shift all, newpos > max attach at back
 			List<Institution> subtree = InstitutionLocalServiceUtil.getByGroupIdAndParent(inst.getGroupId(), inst.getParentId());
 
-			int curPos = 1;
+			//if (newpos > 0) curPos = 1;
 			int increment = 0;
 			for (Institution subInstitution: subtree){
-				 if (newpos <= curPos){ //insert new Institution here
-					 validPosition = curPos;
-					 increment = 1;
+				 if (newpos <= curPos && increment == 0){ //insert new Institution here
+					 if (newpos > 0) {
+						 validPosition = curPos;
+						 increment = 1; //shift all follwing up
+					 }
+					 else {
+						 if (curPos > prevPos) increment = -1;
+					 }
 				 }
 				 subInstitution.setSort(curPos + increment);
 				 institutionPersistence.update(subInstitution);
-				 System.out.println(subInstitution.getInstitutionId() +" "+ subInstitution.getName()+ " " + curPos + " "+ increment);
+				// System.out.println(subInstitution.getInstitutionId() +" "+ subInstitution.getName()+ " " + curPos + " " + increment+ " " +validPosition);
 				 curPos++;
 
 			}
@@ -185,7 +197,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		}
 
 
-		System.out.println(validPosition);
+		//System.out.println(validPosition);
 
 		return validPosition;
 	}
@@ -259,12 +271,14 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 	   public Institution deleteInstitution(long institutionId, ServiceContext serviceContext)
 		        throws PortalException, SystemException {
 
+		        //TODO: check if Institution is empty
 		        Institution institution = getInstitution(institutionId);
 
 		        resourceLocalService.deleteResource(serviceContext.getCompanyId(),
 		        		Institution.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
 		        		institutionId);
 
+		        updateSort(institution, 0);
 		        institution = deleteInstitution(institutionId);
 
 		        return institution;

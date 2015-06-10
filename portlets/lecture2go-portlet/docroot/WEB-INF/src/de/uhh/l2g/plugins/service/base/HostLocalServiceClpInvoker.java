@@ -135,6 +135,12 @@ public class HostLocalServiceClpInvoker {
 				"java.lang.String", "java.lang.String", "int",
 				"com.liferay.portal.service.ServiceContext"
 			};
+
+		_methodName167 = "deleteHost";
+
+		_methodParameterTypes167 = new String[] {
+				"long", "com.liferay.portal.service.ServiceContext"
+			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -274,6 +280,12 @@ public class HostLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[6]);
 		}
 
+		if (_methodName167.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes167, parameterTypes)) {
+			return HostLocalServiceUtil.deleteHost(((Long)arguments[0]).longValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[1]);
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -325,4 +337,6 @@ public class HostLocalServiceClpInvoker {
 	private String[] _methodParameterTypes164;
 	private String _methodName166;
 	private String[] _methodParameterTypes166;
+	private String _methodName167;
+	private String[] _methodParameterTypes167;
 }

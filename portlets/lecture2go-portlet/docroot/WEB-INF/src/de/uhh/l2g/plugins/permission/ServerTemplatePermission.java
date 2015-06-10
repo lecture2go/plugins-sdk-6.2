@@ -1,11 +1,12 @@
 package de.uhh.l2g.plugins.permission;
 
-import de.uhh.l2g.plugins.model.ServerTemplate;
-import de.uhh.l2g.plugins.service.ServerTemplateLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
+
+import de.uhh.l2g.plugins.model.ServerTemplate;
+import de.uhh.l2g.plugins.service.ServerTemplateLocalServiceUtil;
 
 public class ServerTemplatePermission {
     public static void check(PermissionChecker permissionChecker,

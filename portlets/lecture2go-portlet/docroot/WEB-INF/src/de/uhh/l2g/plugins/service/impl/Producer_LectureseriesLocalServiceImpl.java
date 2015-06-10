@@ -20,7 +20,6 @@ import java.util.List;
 import com.liferay.portal.kernel.exception.SystemException;
 
 import de.uhh.l2g.plugins.model.Producer_Lectureseries;
-import de.uhh.l2g.plugins.service.Producer_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.Producer_LectureseriesLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.Producer_LectureseriesUtil;
 

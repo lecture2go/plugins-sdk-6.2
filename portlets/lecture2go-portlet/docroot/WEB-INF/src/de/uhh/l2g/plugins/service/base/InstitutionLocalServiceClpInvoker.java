@@ -178,23 +178,23 @@ public class InstitutionLocalServiceClpInvoker {
 				"java.util.ArrayList", "java.util.ArrayList", "java.lang.Long"
 			};
 
-		_methodName178 = "addInstitution";
+		_methodName180 = "addInstitution";
 
-		_methodParameterTypes178 = new String[] {
+		_methodParameterTypes180 = new String[] {
 				"java.lang.String", "long", "long", "int",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName179 = "updateInstitution";
+		_methodName181 = "updateInstitution";
 
-		_methodParameterTypes179 = new String[] {
+		_methodParameterTypes181 = new String[] {
 				"long", "java.lang.String", "long", "long", "int",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName180 = "deleteInstitution";
+		_methodName182 = "deleteInstitution";
 
-		_methodParameterTypes180 = new String[] {
+		_methodParameterTypes182 = new String[] {
 				"long", "com.liferay.portal.service.ServiceContext"
 			};
 	}
@@ -388,8 +388,8 @@ public class InstitutionLocalServiceClpInvoker {
 				(java.lang.Long)arguments[2]);
 		}
 
-		if (_methodName178.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes178, parameterTypes)) {
+		if (_methodName180.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes180, parameterTypes)) {
 			return InstitutionLocalServiceUtil.addInstitution((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(),
@@ -397,8 +397,8 @@ public class InstitutionLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[4]);
 		}
 
-		if (_methodName179.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes179, parameterTypes)) {
+		if (_methodName181.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes181, parameterTypes)) {
 			return InstitutionLocalServiceUtil.updateInstitution(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1],
 				((Long)arguments[2]).longValue(),
@@ -407,8 +407,8 @@ public class InstitutionLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[5]);
 		}
 
-		if (_methodName180.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes180, parameterTypes)) {
+		if (_methodName182.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes182, parameterTypes)) {
 			return InstitutionLocalServiceUtil.deleteInstitution(((Long)arguments[0]).longValue(),
 				(com.liferay.portal.service.ServiceContext)arguments[1]);
 		}
@@ -482,10 +482,10 @@ public class InstitutionLocalServiceClpInvoker {
 	private String[] _methodParameterTypes173;
 	private String _methodName174;
 	private String[] _methodParameterTypes174;
-	private String _methodName178;
-	private String[] _methodParameterTypes178;
-	private String _methodName179;
-	private String[] _methodParameterTypes179;
 	private String _methodName180;
 	private String[] _methodParameterTypes180;
+	private String _methodName181;
+	private String[] _methodParameterTypes181;
+	private String _methodName182;
+	private String[] _methodParameterTypes182;
 }

@@ -19,7 +19,7 @@
 	<import class="de.uhh.l2g.plugins.model.Producer" />
 	<import class="de.uhh.l2g.plugins.model.Producer_Lectureseries" />
 	<import class="de.uhh.l2g.plugins.model.Segment" />
-	<import class="de.uhh.l2g.plugins.model.ServerTemplate" />
+	<import class="de.uhh.l2g.plugins.model.StreamingServerTemplate" />
 	<import class="de.uhh.l2g.plugins.model.Sys" />
 	<import class="de.uhh.l2g.plugins.model.Tagcloud" />
 	<import class="de.uhh.l2g.plugins.model.Term" />
@@ -65,7 +65,7 @@
 		<id name="hostId" type="long">
 			<generator class="increment" />
 		</id>
-		<property name="serverTemplateId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="streamingServerTemplateId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="protocol" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="streamer" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="port" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
@@ -216,9 +216,9 @@
 		<property name="chapter" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
-	<class name="de.uhh.l2g.plugins.model.impl.ServerTemplateImpl" table="LG_ServerTemplate">
+	<class name="de.uhh.l2g.plugins.model.impl.StreamingServerTemplateImpl" table="LG_StreamingServerTemplate">
 		<cache usage="read-write" />
-		<id name="serverTemplateId" type="long">
+		<id name="streamingServerTemplateId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

@@ -126,10 +126,24 @@ public class Institution_HostLocalServiceClpInvoker {
 
 		_methodParameterTypes162 = new String[] { "long", "long" };
 
-		_methodName164 = "addEntry";
+		_methodName163 = "getListByGroupIdAndHostId";
 
-		_methodParameterTypes164 = new String[] {
+		_methodParameterTypes163 = new String[] { "long", "long" };
+
+		_methodName164 = "getListByGroupIdAndInstitutionId";
+
+		_methodParameterTypes164 = new String[] { "long", "long" };
+
+		_methodName166 = "addEntry";
+
+		_methodParameterTypes166 = new String[] {
 				"long", "long", "com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName167 = "deleteEntriesByInstitution";
+
+		_methodParameterTypes167 = new String[] {
+				"long", "com.liferay.portal.service.ServiceContext"
 			};
 	}
 
@@ -251,11 +265,29 @@ public class Institution_HostLocalServiceClpInvoker {
 				((Long)arguments[1]).longValue());
 		}
 
+		if (_methodName163.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes163, parameterTypes)) {
+			return Institution_HostLocalServiceUtil.getListByGroupIdAndHostId(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
+		}
+
 		if (_methodName164.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes164, parameterTypes)) {
+			return Institution_HostLocalServiceUtil.getListByGroupIdAndInstitutionId(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName166.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes166, parameterTypes)) {
 			return Institution_HostLocalServiceUtil.addEntry(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(com.liferay.portal.service.ServiceContext)arguments[2]);
+		}
+
+		if (_methodName167.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes167, parameterTypes)) {
+			return Institution_HostLocalServiceUtil.deleteEntriesByInstitution(((Long)arguments[0]).longValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[1]);
 		}
 
 		throw new UnsupportedOperationException();
@@ -303,6 +335,12 @@ public class Institution_HostLocalServiceClpInvoker {
 	private String[] _methodParameterTypes161;
 	private String _methodName162;
 	private String[] _methodParameterTypes162;
+	private String _methodName163;
+	private String[] _methodParameterTypes163;
 	private String _methodName164;
 	private String[] _methodParameterTypes164;
+	private String _methodName166;
+	private String[] _methodParameterTypes166;
+	private String _methodName167;
+	private String[] _methodParameterTypes167;
 }

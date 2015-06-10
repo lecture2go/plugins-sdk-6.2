@@ -25,8 +25,8 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import de.uhh.l2g.plugins.model.Coordinator;
-import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Host;
+import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.model.impl.CoordinatorImpl;
 import de.uhh.l2g.plugins.model.impl.HostImpl;

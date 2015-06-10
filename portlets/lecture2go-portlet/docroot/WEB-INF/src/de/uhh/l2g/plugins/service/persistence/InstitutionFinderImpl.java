@@ -120,7 +120,7 @@ public class InstitutionFinderImpl extends BasePersistenceImpl<Institution> impl
 		}
 		return out;
 	}
-		
+	
 	public List<Institution> findInstitutionsByLectureseriesIdsAndVideoIds (ArrayList<Long> lectureseriesIds,  ArrayList<Long> videoIds, Long parentId)  {
 		Session session = null;
 		try {

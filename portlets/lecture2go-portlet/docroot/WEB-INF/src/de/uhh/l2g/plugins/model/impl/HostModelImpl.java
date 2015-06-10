@@ -58,7 +58,7 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 	public static final String TABLE_NAME = "LG_Host";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "hostId", Types.BIGINT },
-			{ "serverTemplateId", Types.BIGINT },
+			{ "streamingServerTemplateId", Types.BIGINT },
 			{ "protocol", Types.VARCHAR },
 			{ "streamer", Types.VARCHAR },
 			{ "port", Types.INTEGER },
@@ -66,7 +66,7 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 			{ "name", Types.VARCHAR },
 			{ "groupId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Host (hostId LONG not null primary key,serverTemplateId LONG,protocol VARCHAR(75) null,streamer VARCHAR(75) null,port INTEGER,serverRoot VARCHAR(75) null,name VARCHAR(75) null,groupId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Host (hostId LONG not null primary key,streamingServerTemplateId LONG,protocol VARCHAR(75) null,streamer VARCHAR(75) null,port INTEGER,serverRoot VARCHAR(75) null,name VARCHAR(75) null,groupId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Host";
 	public static final String ORDER_BY_JPQL = " ORDER BY host.hostId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Host.hostId ASC";
@@ -125,7 +125,8 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("hostId", getHostId());
-		attributes.put("serverTemplateId", getServerTemplateId());
+		attributes.put("streamingServerTemplateId",
+			getStreamingServerTemplateId());
 		attributes.put("protocol", getProtocol());
 		attributes.put("streamer", getStreamer());
 		attributes.put("port", getPort());
@@ -144,10 +145,11 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 			setHostId(hostId);
 		}
 
-		Long serverTemplateId = (Long)attributes.get("serverTemplateId");
+		Long streamingServerTemplateId = (Long)attributes.get(
+				"streamingServerTemplateId");
 
-		if (serverTemplateId != null) {
-			setServerTemplateId(serverTemplateId);
+		if (streamingServerTemplateId != null) {
+			setStreamingServerTemplateId(streamingServerTemplateId);
 		}
 
 		String protocol = (String)attributes.get("protocol");
@@ -210,13 +212,13 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 	}
 
 	@Override
-	public long getServerTemplateId() {
-		return _serverTemplateId;
+	public long getStreamingServerTemplateId() {
+		return _streamingServerTemplateId;
 	}
 
 	@Override
-	public void setServerTemplateId(long serverTemplateId) {
-		_serverTemplateId = serverTemplateId;
+	public void setStreamingServerTemplateId(long streamingServerTemplateId) {
+		_streamingServerTemplateId = streamingServerTemplateId;
 	}
 
 	@Override
@@ -343,7 +345,7 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 		HostImpl hostImpl = new HostImpl();
 
 		hostImpl.setHostId(getHostId());
-		hostImpl.setServerTemplateId(getServerTemplateId());
+		hostImpl.setStreamingServerTemplateId(getStreamingServerTemplateId());
 		hostImpl.setProtocol(getProtocol());
 		hostImpl.setStreamer(getStreamer());
 		hostImpl.setPort(getPort());
@@ -419,7 +421,7 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 
 		hostCacheModel.hostId = getHostId();
 
-		hostCacheModel.serverTemplateId = getServerTemplateId();
+		hostCacheModel.streamingServerTemplateId = getStreamingServerTemplateId();
 
 		hostCacheModel.protocol = getProtocol();
 
@@ -466,8 +468,8 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 
 		sb.append("{hostId=");
 		sb.append(getHostId());
-		sb.append(", serverTemplateId=");
-		sb.append(getServerTemplateId());
+		sb.append(", streamingServerTemplateId=");
+		sb.append(getStreamingServerTemplateId());
 		sb.append(", protocol=");
 		sb.append(getProtocol());
 		sb.append(", streamer=");
@@ -498,8 +500,8 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 		sb.append(getHostId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>serverTemplateId</column-name><column-value><![CDATA[");
-		sb.append(getServerTemplateId());
+			"<column><column-name>streamingServerTemplateId</column-name><column-value><![CDATA[");
+		sb.append(getStreamingServerTemplateId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>protocol</column-name><column-value><![CDATA[");
@@ -536,7 +538,7 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 	private long _hostId;
 	private long _originalHostId;
 	private boolean _setOriginalHostId;
-	private long _serverTemplateId;
+	private long _streamingServerTemplateId;
 	private String _protocol;
 	private String _streamer;
 	private int _port;
