@@ -19,7 +19,6 @@ import java.util.List;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Validator;
-<<<<<<< Upstream, based on origin/master
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -27,6 +26,7 @@ import com.liferay.portal.service.ServiceContext;
 import de.uhh.l2g.plugins.StreamingServerTemplateNameException;
 import de.uhh.l2g.plugins.StreamingServerTemplateStringException;
 import de.uhh.l2g.plugins.model.Institution;
+import de.uhh.l2g.plugins.model.Institution_Host;
 import de.uhh.l2g.plugins.model.StreamingServerTemplate;
 import de.uhh.l2g.plugins.service.StreamingServerTemplateLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.StreamingServerTemplateLocalServiceBaseImpl;

@@ -153,5 +153,3 @@ public class Institution_HostLocalServiceImpl
 		        return institution_host;
 
 		    }
-
-}
