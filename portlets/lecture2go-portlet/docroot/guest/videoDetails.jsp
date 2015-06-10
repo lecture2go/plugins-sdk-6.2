@@ -9,9 +9,9 @@
 <jsp:useBean id="lectureseries" type="de.uhh.l2g.plugins.model.Lectureseries" scope="request" />
 <jsp:useBean id="videoLicense" type="de.uhh.l2g.plugins.model.License" scope="request" />
 
-
 <jsp:useBean id="timeStart" type="java.lang.Long" scope="request" />
 <jsp:useBean id="timeEnd" type="java.lang.Long" scope="request" />
+
 <div class="col-xs-10 col-md-10">
     <div id="pfad">
     	<%
@@ -43,7 +43,7 @@
 					
 			    	<A HREF="<%=backURL1%>" CLASS="apath"><%=pInst.getName() %></A> <span class="sep">&gt;</span> 
 			    	<A HREF="<%=backURL2%>" CLASS="apath"><%=insti.getName() %></A> 
-
+<
 			    	<%if(lec.getLectureseriesId()>0) {%>
 			    		<span class="sep">&gt;</span> <SPAN CLASS="paththispage"><%=lec.getName()%></SPAN>
 			    	<%}%>
@@ -233,7 +233,10 @@ if(timeEnd==0 || timeEnd<timeStart || video.getCitation2go()==0){
 					</a>
 				</c:forEach>
 			</div>
+<<<<<<< Upstream, based on origin/master
 
+=======
+>>>>>>> c17334c Merge with Master
 		</div>
 	</c:if>
 <%
