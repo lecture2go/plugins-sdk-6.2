@@ -101,14 +101,12 @@
 	  </p>	
       <h5 data-date="12.11.2013" style="margin-top:0px; margin-bottom:10px">${video.creators}</h5>
       <h5 style="margin-top:0px;">${lectureseries.name}</h5>
+	  
 	  <%if(videoMetadata.getDescription().trim().length()>0){ %>	
 	  	<p>${videoMetadata.description}</p>
 	  <%}else{%>
       	<p>${lectureseries.longDesc}</p>
 	  <%}%>
-	  
-	  <p>
-	  </p>
       
       <span>
         <%if(videoLicense.getL2go()==1){%>
