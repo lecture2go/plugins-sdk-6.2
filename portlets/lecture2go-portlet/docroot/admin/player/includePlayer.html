@@ -14,7 +14,6 @@
       }
 </style>
 
-<script type="text/javascript" src="/lecture2go-portlet/js/jwplayer/jwplayer.js"></script>
 <script type="text/javascript">jwplayer.key="Ez+YMIX4GOdXtP/v87cdP4FQuVY2dvNrQluq/w==";</script>
 <script>
     $(function() {
@@ -50,6 +49,10 @@
             if (seconds < 10) {seconds = "0"+seconds;}
             return hours+':'+minutes+':'+seconds;
         };
+        
+        var timeToSeconds = function (timeStr) {
+        	
+        }
 
         // Start- und Endzeit der Zitatfunktion ermitteln (Durch die URL Parameter)
         var frameStart = getUrlParameter('start');
@@ -106,7 +109,7 @@
          	// Inputfelder für Start und Ende der Zitate / Kapitel speichern 
             var $inputTimeStart = $("#_lgadminvideomanagement_WAR_lecture2goportlet_timeStart").val("");
             var $inputTimeEnd = $("#_lgadminvideomanagement_WAR_lecture2goportlet_timeEnd").val("");
-            var $buttonAddSegment = $("yui_patched_v3_11_0_1_1433424697587_350");
+            var $buttonAddSegment = $(".btn-primary");
             $("#_lgadminvideomanagement_WAR_lecture2goportlet_chortTitle").val("");
             
 
@@ -218,7 +221,7 @@
                     		$inputTimeEnd.val(endTimeStr);
                     		
                     	}
-                    	generateClipLink (startFrameTime, endFrameTime);
+                    	//generateClipLink (startFrameTime, endFrameTime);
                     	console.log("start: " + startFrameTime + ", end: " + endFrameTime);
                     }
                     validateClipTime();
@@ -239,7 +242,7 @@
                     		$inputTimeStart.val(startTimeStr);
                     		
                     	}
-                    	generateClipLink (startFrameTime, endFrameTime);
+                    	//generateClipLink (startFrameTime, endFrameTime);
                     	console.log("start: " + startFrameTime + ", end: " + endFrameTime);
                     }
                     validateClipTime();
@@ -254,22 +257,23 @@
                 
                 function validateClipTime () {
                 	// Button addSegment disablen, falls Zeiten leer oder gleich
-                	if ( $inputTimeStart.val() != "" )
+                	if ( ( $inputTimeStart.val() != "" )
                 		&& ( $inputTimeEnd.val() != "" )
-                		&& ( $inputTimeStart.val() != $inputTimeEnd.val() ) {
+                		&& ( $inputTimeStart.val() != $inputTimeEnd.val() )) {
+                		console.log("enable");
                 		$buttonAddSegment.prop('disabled', false);
                 	}else{
+                		console.log("disabled");
                 		$buttonAddSegment.prop('disabled', true);
                 	}
                 }
 
                 //$('#clipStartTime').val("").show();
                 //$('#clipEndTime').val("").show();
-
             }
         });
 
-        $('#serverInfo').html(server);
+        //$('#serverInfo').html(server);
 
     });
 
@@ -278,7 +282,6 @@
 
 
 <div>
-    <div id="serverInfo"></div>
     <div id="player1"></div>
 
     <ol id="chapters"></ol>
@@ -287,9 +290,6 @@
     <input id="clipStartTime" style="display: none;" placeholder="Click to set start">
     <input id="clipEndTime" style="display: none;"  placeholder="Click to set end">
     <input id="clipLink" style="display: none;"  placeholder="Set start/end first">
-    <div id="clipLink2" style="display: none;">
-        or click <a>here</a>
-    </div>
 
 </div>
 
