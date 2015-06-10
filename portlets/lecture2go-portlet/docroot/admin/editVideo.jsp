@@ -106,6 +106,12 @@
 	<aui:fieldset column="false" label="" >
 		<aui:layout>
 			<aui:form action="<%=actionURL%>" commandName="model" name="metadata">
+			   <%if(reqVideo.getCitation2go()==0){%>
+				  <aui:input name="citationAllowed" type="checkbox" label="citation allowed" id="citationAllowed"/>
+			   <%}else{%>
+				  <aui:input name="citationAllowed" type="checkbox" label="citation allowed" id="citationAllowed" checked="true"/>
+			   <%}%>
+			
 				<aui:select size="1" name="lectureseriesId" label="lectureseries" onChange="toggleLectureseries()">
 					<aui:option value="0">select-lecture-series</aui:option>
 					<%for (int i = 0; i < reqLectureseriesList.size(); i++) {
@@ -471,7 +477,7 @@ function updateMetadata(){
 				 	   	<portlet:namespace/>title: A.one('#<portlet:namespace/>title').get('value'),
 				 	   	<portlet:namespace/>tags: A.one('#<portlet:namespace/>tags').get('value'),
 				 	   	<portlet:namespace/>publisher: A.one('#<portlet:namespace/>publisher').get('value'),
-				 	   	<portlet:namespace/>lectureseriesId: A.one('#<portlet:namespace/>lectureseriesId').get('value'),
+				 	   	<portlet:namespace/>citationAllowedCheckbox: A.one('#<portlet:namespace/>citationAllowedCheckbox').get('checked'),
 				 	   	<portlet:namespace/>categoryId: categoryId,
 				 	   	<portlet:namespace/>termId: termId,
 			 	},
@@ -721,6 +727,14 @@ AUI().use('aui-node',
     var crId = A.one('#<portlet:namespace/>crId');
     var subInstitutionId = A.one('#<portlet:namespace/>subInstitutionId');
     var subInstitutions = A.one('.subInstitutions');
+	var citationAllowed = A.one('#<portlet:namespace/>citationAllowedCheckbox');
+
+	citationAllowed.on(
+			'click',
+			function(A){
+				toggleCitationAllowed(citationAllowed.get('checked'))
+			}
+	);
 
     crId.on(
       	'change',

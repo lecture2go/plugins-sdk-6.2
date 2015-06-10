@@ -268,7 +268,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			if (webhome.contains("localhost"))
 				webhome += "/web/vod";
 			if (institudion.getTyp().equals("tree1"))
-				objectVideo.setUrl(webhome + "/l2go/-/v/" + objectVideo.getVideoId());
+				objectVideo.setUrl(webhome + "/l2go/-/get/v/" + objectVideo.getVideoId());
 		} catch (NoSuchElementException nseex) {
 		}
 		// SURL

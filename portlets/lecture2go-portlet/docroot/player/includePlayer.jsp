@@ -33,8 +33,16 @@
         };
 
         // Start- und Endzeit der Zitatfunktion ermitteln (Durch die URL Parameter)
-        var frameStart = getUrlParameter('start');
-        var frameEnd = getUrlParameter('end');
+        var frameStart = 0;
+        var frameEnd = 0;
+        var fs = <%=timeStart%>;
+        var fe = <%=timeEnd%>;
+        var citationAllowed = <%=video.getCitation2go()%>;
+        
+		if(citationAllowed==1 && fs>0 && fe>fs){
+	        frameStart = <%=timeStart%>;
+	        frameEnd = <%=timeEnd%>;			
+		}
 		
         var containerFormat = "${video.containerFormat}";
         var desctopStreamUrl ="${video.streamUrl}";

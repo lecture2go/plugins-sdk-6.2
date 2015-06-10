@@ -361,15 +361,15 @@ public class AdminVideoManagement extends MVCPortlet {
 			Long lId = ParamUtil.getLong(resourceRequest, "lectureseriesId");
 			Long termId = ParamUtil.getLong(resourceRequest, "termId");
 			Long categoryId = ParamUtil.getLong(resourceRequest, "categoryId");
-			System.out.print(termId +"   ###   "+categoryId);
+			Integer citationAllowed = ParamUtil.getInteger(resourceRequest, "citationAllowedCheckbox");
 			
 			Lectureseries oldLs = new LectureseriesImpl();
 			try {
 				oldLs = LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId());
 			} catch (PortalException e1) {
-				e1.printStackTrace();
+				//e1.printStackTrace();
 			} catch (SystemException e1) {
-				e1.printStackTrace();
+				//e1.printStackTrace();
 			}
 			//search tags
 			String tagCloudString = "";
@@ -450,7 +450,7 @@ public class AdminVideoManagement extends MVCPortlet {
 						creator = creatorsArray.getJSONObject(i);
 						tagCloudString += creator.getString("firstName")+" ### "+creator.getString("lastName")+" ### "+creator.getString("fullName")+" ### ";
 					} catch (JSONException e) {
-						e.printStackTrace();
+						//e.printStackTrace();
 					}
 				}
 				//update tag cloud for this video
@@ -464,18 +464,19 @@ public class AdminVideoManagement extends MVCPortlet {
 					tc.setTags(tagCloudString);
 				}
 				TagcloudLocalServiceUtil.updateTagcloud(tc);
-				
+				//set citation 
+				video.setCitation2go(citationAllowed);
 				// update video
 				VideoLocalServiceUtil.updateVideo(video);
 				// refresh open access for old lecture if lid > 0
 				if(oldLs.getLectureseriesId()>0) LectureseriesLocalServiceUtil.updateOpenAccess(video, oldLs);
 				
 			} catch (NumberFormatException e) {
-				System.out.println(e);
+				//System.out.println(e);
 			} catch (SystemException e) {
-				System.out.println(e);
+				//System.out.println(e);
 			} catch (PortalException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			//metadata
 			try {
@@ -484,9 +485,9 @@ public class AdminVideoManagement extends MVCPortlet {
 				metadata.setLanguage(language);
 				MetadataLocalServiceUtil.updateMetadata(metadata);
 			} catch (NumberFormatException e) {
-				System.out.println(e);
+//				System.out.println(e);
 			} catch (SystemException e) {
-				System.out.println(e);
+//				System.out.println(e);
 			}
 			
 			JSONObject json = JSONFactoryUtil.createJSONObject();
@@ -502,7 +503,7 @@ public class AdminVideoManagement extends MVCPortlet {
 				jo.put("generationDate", generationDate);
 				writeJSON(resourceRequest, resourceResponse, jo);
 			} catch (SystemException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 		}
 		
@@ -520,7 +521,7 @@ public class AdminVideoManagement extends MVCPortlet {
 				if(vl.size()>0)jo.put("exist", "1");
 				else jo.put("exist", "0");
 			} catch (SystemException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 				jo.put("exist", "0");
 			}
 			writeJSON(resourceRequest, resourceResponse, jo);
@@ -538,7 +539,7 @@ public class AdminVideoManagement extends MVCPortlet {
 				LicenseLocalServiceUtil.updateLicense(license);
 				logger.info("LICENSE_UPDATE_SUCCESS");
 			} catch (SystemException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 				logger.info("LICENSE_UPDATE_FAILED");
 			}
 			JSONObject json = JSONFactoryUtil.createJSONObject();
@@ -552,7 +553,7 @@ public class AdminVideoManagement extends MVCPortlet {
 				MetadataLocalServiceUtil.updateMetadata(metadata);
 				logger.info("DESCRIPTION_UPDATE_SUCCESS");
 			} catch (SystemException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 				logger.info("DESCRIPTION_UPDATE_FAILED");
 			}
 			JSONObject json = JSONFactoryUtil.createJSONObject();
@@ -568,7 +569,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			try {
 				VideoLocalServiceUtil.updateVideo(video);
 			} catch (SystemException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 			
 			JSONObject json = JSONFactoryUtil.createJSONObject();

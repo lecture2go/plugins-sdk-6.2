@@ -25,10 +25,10 @@
 					<div id="c2g">
 						<ul>
 							<li>
-								<aui:input name="segmentBegin" label="citation-start" required="false" id="timeStart" readonly="true"/>
+								<aui:input name="timeStart" label="citation-start" required="false" id="timeStart" readonly="true"/>
 							</li>
 							<li>
-								<aui:input name="segmentEnd" label="citation-end" required="false" id="timeEnd" readonly="true"/>
+								<aui:input name="timeEnd" label="citation-end" required="false" id="timeEnd" readonly="true"/>
 							</li>
 							<li>
 								<aui:input name="citation" label="citation" required="false" id="citation" readonly="true" onclick="document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_citation.focus(); document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_citation.select();"/>
