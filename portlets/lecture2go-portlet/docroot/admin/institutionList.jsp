@@ -16,15 +16,15 @@
 <portlet:renderURL var="viewURL"><portlet:param name="jspPage" value="/admin/institutionList.jsp" /></portlet:renderURL>
 <liferay-portlet:renderURL varImpl="outerURL"><portlet:param name="jspPage" value="/admin/institutionList.jsp" /></liferay-portlet:renderURL>
 <liferay-portlet:renderURL varImpl="innerURL"><portlet:param name="jspPage" value="/admin/institutionList.jsp" /></liferay-portlet:renderURL>
-<portlet:actionURL name="addInstitutionEntry" var="addInstitutionEntryURL"></portlet:actionURL>
-<portlet:actionURL name="addSubInstitutionEntry" var="addSubInstitutionEntryURL"></portlet:actionURL>
-<portlet:actionURL name="updateInstitutionEntry" var="updateInstitutionEntryURL"></portlet:actionURL>
-<portlet:actionURL name="updateSubInstitutionEntry" var="updateSubInstitutionEntryURL"></portlet:actionURL>
-<portlet:actionURL name="addServerEntry" var="addServerEntryURL"></portlet:actionURL>
-<portlet:actionURL name="updateServerEntry" var="updateServerEntryURL"></portlet:actionURL>
-<portlet:actionURL name="addStreamingServerTemplateEntry" var="addStreamingServerTemplateEntryURL"></portlet:actionURL>
-<portlet:actionURL name="updateStreamingServerTemplateEntry" var="updateStreamingServerTemplateEntryURL"></portlet:actionURL>
-<portlet:actionURL name="updateTopLevelInstitutionEntry" var="updateTopLevelInstitutionEntryURL"></portlet:actionURL>
+<portlet:actionURL name="addInstitution" var="addInstitutionURL"></portlet:actionURL>
+<portlet:actionURL name="addSubInstitution" var="addSubInstitutionURL"></portlet:actionURL>
+<portlet:actionURL name="updateInstitution" var="updateInstitutionURL"></portlet:actionURL>
+<portlet:actionURL name="updateSubInstitution" var="updateSubInstitutionURL"></portlet:actionURL>
+<portlet:actionURL name="addStreamingServer" var="addStreamingServerURL"></portlet:actionURL>
+<portlet:actionURL name="updateStreamingServer" var="updateStreamingServerURL"></portlet:actionURL>
+<portlet:actionURL name="addStreamingServerTemplate" var="addStreamingServerTemplateURL"></portlet:actionURL>
+<portlet:actionURL name="updateStreamingServerTemplate" var="updateStreamingServerTemplateURL"></portlet:actionURL>
+<portlet:actionURL name="updateTopLevelInstitution" var="updateTopLevelInstitutionURL"></portlet:actionURL>
 
 
 <script src="https://code.jquery.com/jquery-1.11.2.js"></script>
@@ -87,7 +87,7 @@ int maxOrder = 0;
 				defaultState="open"
 				extended="<%= false %>"
 				persistState="<%= true %>">
-<aui:form action="<%= addInstitutionEntryURL %>" name="<portlet:namespace />fm">
+<aui:form action="<%= addInstitutionURL %>" name="<portlet:namespace />fm">
 
 		<aui:fieldset>
 			<aui:input name="institution" label="Institution" required="true" inlineField="true"/>
@@ -108,17 +108,17 @@ int maxOrder = 0;
 </aui:form>
 <p></p>
 </liferay-ui:panel>
-       <liferay-ui:panel title="Streaming Server Options" collapsible="true" id="serverSettings"
+       <liferay-ui:panel title="Streaming Server Options" collapsible="true" id="streamingServerSettings"
 		    	defaultState="open"
 		    	extended="<%= false %>"
 		    	persistState="<%= true %>">
-				<aui:form action="<%= updateServerEntryURL %>" name="<portlet:namespace />fm" inlineLabel="true">
+				<aui:form action="<%= updateStreamingServerURL %>" name="<portlet:namespace />fm" inlineLabel="true">
 				<aui:button-row>
 		 	    <aui:fieldset column="true">
-					<aui:input label="Server Name" name="name" required="true" inlineField="true"></aui:input>
+					<aui:input label="StreamingServer Name" name="name" required="true" inlineField="true"></aui:input>
 		 	        <aui:input label="Streaming Server Domain or IP" name="ip" inlineField="true"></aui:input>
 		 	        <aui:input label="HTTP Protocol" name="protocol" inlineField="true"></aui:input>
-		 	        <aui:input label="Server Template" name="template" inlineField="true"></aui:input>
+		 	        <aui:input label="Streaming Server Template" name="template" inlineField="true"></aui:input>
 		 	        <aui:input name='hostId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "hostId") %>'/>
 		 	        <aui:button type="submit"></aui:button>
 					<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button>
@@ -131,7 +131,7 @@ int maxOrder = 0;
 		    	defaultState="open"
 		    	extended="<%= false %>"
 		    	persistState="<%= true %>">
-				<aui:form action="<%= updateStreamingServerTemplateEntryURL %>" name="<portlet:namespace />fm" inlineLabel="true">
+				<aui:form action="<%= updateStreamingServerTemplateURL %>" name="<portlet:namespace />fm" inlineLabel="true">
 		 	    <aui:fieldset column="true">
 		 	    	<aui:input label="Use Device Specific Templates" type="checkbox" name="deviceSpecific"></aui:input>
 		 	    </aui:fieldset>
@@ -179,7 +179,7 @@ int maxOrder = 0;
 				defaultState="closed"
 				extended="<%= false %>"
 				persistState="<%= true %>">
-<aui:form action="<%= updateTopLevelInstitutionEntryURL %>" name="<portlet:namespace />fm">
+<aui:form action="<%= updateTopLevelInstitutionURL %>" name="<portlet:namespace />fm">
 	<aui:fieldset>
 			<aui:input name="topLevelInstitution" label="Top Level Institution" required="true" inlineField="true" />
 			<aui:input name='topLevelInstitutionId' type='hidden' />
@@ -225,7 +225,7 @@ deltaConfigurable="true">
 
         <liferay-ui:search-container-column-text name="Institution">
 
- 		<aui:form action="<%= updateInstitutionEntryURL %>" name="<portlet:namespace />fm">
+ 		<aui:form action="<%= updateInstitutionURL %>" name="<portlet:namespace />fm">
  			<aui:fieldset>
 				<aui:input name="outerListInstitution" label="Institution Name" inlineField="true" value = "<%= institution.getName() %>" />
 				<aui:input name="outerListOrder" label="Order" inlineField="true" value='<%= outerOrder %>'/>
@@ -241,7 +241,7 @@ deltaConfigurable="true">
  		<a href="<%=deleteInstitutionURL.toString()%>">
 					<span class="icon-large icon-remove"></span>
 		</a>
- 		<aui:form action="<%= addSubInstitutionEntryURL %>" name="<portlet:namespace />fm">
+ 		<aui:form action="<%= addSubInstitutionURL %>" name="<portlet:namespace />fm">
  			<aui:fieldset>
 				<aui:input name="subInstitution" label="SubInstitution Name" inlineField="true" />
 				<aui:input name="subInstitutionOrder" label="Order" inlineField="true" value='<%= subInstitutionMax  %>'/>
@@ -279,7 +279,7 @@ deltaConfigurable="true">
         			<liferay-ui:search-container-column-text property="sort" name="Order"/>
 
         			<liferay-ui:search-container-column-text name="Institution" >
-        			 <aui:form action="<%= updateSubInstitutionEntryURL %>" name="<portlet:namespace />fm">
+        			 <aui:form action="<%= updateSubInstitutionURL %>" name="<portlet:namespace />fm">
  						<aui:fieldset>
 							<aui:input name="institution" label="Institution Name" inlineField="true" value = "<%= subInstitution.getName() %>" />
 							<aui:input name="innerListOrder" label="Order" inlineField="true" value='<%= subInstitution.getSort() %>'/>

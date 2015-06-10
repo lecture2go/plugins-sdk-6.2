@@ -114,7 +114,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 	}
 
-	public void addInstitutionEntry(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
+	public void addInstitution(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
 
 
 		try {
@@ -146,7 +146,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 	}
 
-		public void updateInstitutionEntry(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
+		public void updateInstitution(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
 
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -254,7 +254,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		    }
 		}
 
-		public void updateTopLevelInstitutionEntry(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
+		public void updateTopLevelInstitution(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
 
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -286,7 +286,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 	}
 
-	public void addStreamingServerEntry(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
+	public void addStreamingServer(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
 
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
