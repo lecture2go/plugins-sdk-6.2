@@ -27,10 +27,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 
 import de.uhh.l2g.plugins.HostNameException;
-import de.uhh.l2g.plugins.HostStreamingServerTemplateException;
-import de.uhh.l2g.plugins.HostStreamerException;
-import de.uhh.l2g.plugins.NoSuchInstitutionException;
-import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
@@ -136,7 +132,6 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 	public List<Institution> getInstitutionsFromLectureseriesIdsAndVideoIds(ArrayList<Long> lectureseriesIds, ArrayList<Long> videoIds) {
 		return InstitutionFinderUtil.findInstitutionsByLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds, new Long(0));
 	}
-
 
 	public List<Institution> getInstitutionsFromLectureseriesIdsAndVideoIds(ArrayList<Long> lectureseriesIds, ArrayList<Long> videoIds, Long parentId) {
 		return InstitutionFinderUtil.findInstitutionsByLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds, parentId);
@@ -360,10 +355,6 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 	   public Institution deleteInstitution(long institutionId, ServiceContext serviceContext)
 		        throws PortalException, SystemException {
 
-<<<<<<< Upstream, based on origin/master
-
-=======
->>>>>>> ca6a9a4 Institution reorder for Delete Operation
 		        //TODO: check if Institution is empty
 		        Institution institution = getInstitution(institutionId);
 

@@ -15,7 +15,6 @@ import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import de.uhh.l2g.plugins.model.Creator;
-import de.uhh.l2g.plugins.model.Term;
 import de.uhh.l2g.plugins.model.impl.CreatorImpl;
 
 public class CreatorFinderImpl extends BasePersistenceImpl<Creator> implements CreatorFinder {
