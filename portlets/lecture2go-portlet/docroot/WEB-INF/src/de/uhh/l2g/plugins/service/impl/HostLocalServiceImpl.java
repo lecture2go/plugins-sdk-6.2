@@ -24,7 +24,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 
 import de.uhh.l2g.plugins.HostNameException;
-import de.uhh.l2g.plugins.HostStreamingServerTemplateException;
 import de.uhh.l2g.plugins.HostStreamerException;
 import de.uhh.l2g.plugins.HostStreamingServerTemplateException;
 import de.uhh.l2g.plugins.model.Host;

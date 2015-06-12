@@ -202,89 +202,6 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		return validPosition;
 	}
 
-
-	protected int updateSort(Institution inst, int newpos) throws SystemException{
-		int validPosition = 0;
-
-		System.out.println(inst.getSort());
-		int subElements = InstitutionLocalServiceUtil.getByGroupIdAndParentCount(inst.getGroupId(), inst.getParentId());
-
-		if (subElements < 1) validPosition = 1; // There is nothing to reorder and only one valid position
-		else{ // sort Elements newpos = 1 => shift all, newpos > max attach at back
-			List<Institution> subtree = InstitutionLocalServiceUtil.getByGroupIdAndParent(inst.getGroupId(), inst.getParentId());
-
-			int curPos = 1;
-			int increment = 0;
-			for (Institution subInstitution: subtree){
-				 if (newpos <= curPos){ //insert new Institution here
-					 validPosition = curPos;
-					 increment = 1;
-				 }
-				 subInstitution.setSort(curPos + increment);
-				 institutionPersistence.update(subInstitution);
-				 System.out.println(subInstitution.getInstitutionId() +" "+ subInstitution.getName()+ " " + curPos + " "+ increment);
-				 curPos++;
-
-			}
-			if (increment == 0) validPosition = curPos;
-
-		}
-
-
-		System.out.println(validPosition);
-
-		return validPosition;
-	}
-
-	protected void up(){}
-
-	protected void down() {}
-
-
-    /** Refreshes sort number for given institution
-     *  Adds new number on insert (newpos > 0) - shifts numbers on delete (newpos = 0)
-     *
-     */
-	protected int updateSort(Institution inst, int newpos) throws SystemException{
-		int validPosition = 0;
-		int curPos = 1;
-		int prevPos = inst.getSort();
-
-		//System.out.println(inst.getSort());
-		int subElements = InstitutionLocalServiceUtil.getByGroupIdAndParentCount(inst.getGroupId(), inst.getParentId());
-
-		if (subElements < 1) validPosition = 1; // There is nothing to reorder and only one valid position
-		else{ // sort Elements newpos <= 1 => shift all, newpos > max attach at back
-			List<Institution> subtree = InstitutionLocalServiceUtil.getByGroupIdAndParent(inst.getGroupId(), inst.getParentId());
-
-			//if (newpos > 0) curPos = 1;
-			int increment = 0;
-			for (Institution subInstitution: subtree){
-				 if (newpos <= curPos && increment == 0){ //insert new Institution here
-					 if (newpos > 0) {
-						 validPosition = curPos;
-						 increment = 1; //shift all follwing up
-					 }
-					 else {
-						 if (curPos > prevPos) increment = -1;
-					 }
-				 }
-				 subInstitution.setSort(curPos + increment);
-				 institutionPersistence.update(subInstitution);
-				// System.out.println(subInstitution.getInstitutionId() +" "+ subInstitution.getName()+ " " + curPos + " " + increment+ " " +validPosition);
-				 curPos++;
-
-			}
-			if (increment == 0) validPosition = curPos;
-
-		}
-
-
-		//System.out.println(validPosition);
-
-		return validPosition;
-	}
-
 	public Institution addInstitution(String name, long hostId, long parentId, int sort, ServiceContext serviceContext) throws SystemException, PortalException {
 
 		long groupId = serviceContext.getScopeGroupId();
@@ -305,7 +222,6 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		institution.setParentId(parentId);
 		if (parentId > 0) institution.setLevel(parent.getLevel()+1);
 		else institution.setLevel(0);
-
 		institution.setSort(updateSort(institution,sort));
 
 		institution.setExpandoBridgeAttributes(serviceContext);

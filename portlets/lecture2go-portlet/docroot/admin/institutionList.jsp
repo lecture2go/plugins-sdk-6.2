@@ -74,12 +74,6 @@ for (int i = 0; i < institutions.size(); i++) {
 
 long parent = topLevel.getPrimaryKey();
 int maxOrder = 0;
-if (institutionId > 1) {
-	Institution selectedInstitution = InstitutionLocalServiceUtil.getById(institutionId);
-	maxOrder = selectedInstitution.getSort();
-}
-else{
-int maxOrder = 0;
 //if (institutionId > 1) {
 //	Institution selectedInstitution = InstitutionLocalServiceUtil.getById(institutionId);
 //	maxOrder = selectedInstitution.getSort();

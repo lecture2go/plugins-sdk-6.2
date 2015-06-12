@@ -25,8 +25,6 @@ import com.liferay.portal.service.ServiceContext;
 
 import de.uhh.l2g.plugins.Institution_HostHostException;
 import de.uhh.l2g.plugins.Institution_HostInstitutionException;
-import de.uhh.l2g.plugins.StreamingServerTemplateNameException;
-import de.uhh.l2g.plugins.StreamingServerTemplateStringException;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Institution_Host;
@@ -153,3 +151,5 @@ public class Institution_HostLocalServiceImpl
 		        return institution_host;
 
 		    }
+
+}

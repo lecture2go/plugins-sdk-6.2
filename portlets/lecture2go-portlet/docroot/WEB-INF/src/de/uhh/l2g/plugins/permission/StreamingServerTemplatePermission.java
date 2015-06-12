@@ -1,6 +1,5 @@
 package de.uhh.l2g.plugins.permission;
 
-<<<<<<< Upstream, based on origin/master
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -8,14 +7,6 @@ import com.liferay.portal.security.permission.PermissionChecker;
 
 import de.uhh.l2g.plugins.model.StreamingServerTemplate;
 import de.uhh.l2g.plugins.service.StreamingServerTemplateLocalServiceUtil;
-=======
-import de.uhh.l2g.plugins.model.StreamingServerTemplate;
-import de.uhh.l2g.plugins.service.StreamingServerTemplateLocalServiceUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.security.permission.PermissionChecker;
->>>>>>> 47455b6 Loop fix and renaming
 
 public class StreamingServerTemplatePermission {
     public static void check(PermissionChecker permissionChecker,
