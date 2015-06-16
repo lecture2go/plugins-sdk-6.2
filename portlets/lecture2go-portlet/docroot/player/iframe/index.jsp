@@ -27,9 +27,12 @@
 	<%if(video.getOpenAccess()==1 && video.getVideoId()>0){ %>
 		<div id="player1"></div>
 		<script>
-			        var desctopStreamUrl ="<%=video.getStreamUrl()%>";
-					var mobileStreamUrl ="<%=video.getStreamAndroidUrl()%>";
-					var mp4OpenAccessDownloadLink ="<%=video.getMp4OpenAccessDownloadLink()%>";
+			        var playerUri1 ="<%=video.getPlayerUris().get(0)%>";
+			        var playerUri2 ="<%=video.getPlayerUris().get(1)%>";
+			        var playerUri3 ="<%=video.getPlayerUris().get(2)%>";
+			        var playerUri4 ="<%=video.getPlayerUris().get(3)%>";
+			        var playerUri5 ="<%=video.getPlayerUris().get(4)%>";
+			        
 					var vttChapterFile ="<%=video.getVttChapterFile()%>";
 					var img = "<%=video.getImage()%>";
 			        jwplayer('player1').setup({
@@ -38,9 +41,11 @@
 			            aspectratio: "16:9",
 			            image: img,
 			            sources: [
-			            	{ file: mobileStreamUrl },
-			            	{ file: desctopStreamUrl },
-							{ file: mp4OpenAccessDownloadLink }
+			                  	{ file: playerUri1 },
+			                	{ file: playerUri2 },
+			                	{ file: playerUri3 },
+			                	{ file: playerUri4 },
+			                	{ file: playerUri5 },
 			            ],
 			            tracks: [{
 			               			file: vttChapterFile,
