@@ -4,7 +4,6 @@
 <%@ page import="de.uhh.l2g.plugins.model.Host" %>
 <%@ page import="de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil" %>
 <%@ page import="de.uhh.l2g.plugins.service.HostLocalServiceUtil" %>
-<%@ page import="de.uhh.l2g.plugins.service.StreamingServerTemplateLocalServiceUtil" %>
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
@@ -22,8 +21,6 @@
 <portlet:actionURL name="updateSubInstitution" var="updateSubInstitutionURL"></portlet:actionURL>
 <portlet:actionURL name="addStreamingServer" var="addStreamingServerURL"></portlet:actionURL>
 <portlet:actionURL name="updateStreamingServer" var="updateStreamingServerURL"></portlet:actionURL>
-<portlet:actionURL name="addStreamingServerTemplate" var="addStreamingServerTemplateURL"></portlet:actionURL>
-<portlet:actionURL name="updateStreamingServerTemplate" var="updateStreamingServerTemplateURL"></portlet:actionURL>
 <portlet:actionURL name="updateTopLevelInstitution" var="updateTopLevelInstitutionURL"></portlet:actionURL>
 
 
@@ -51,20 +48,17 @@
 <%
 long institutionId = Long.valueOf((Long) renderRequest.getAttribute("institutionId"));
 long hostId = Long.valueOf((Long) renderRequest.getAttribute("hostId"));
-long streamingServerTemplateId = Long.valueOf((Long) renderRequest.getAttribute("streamingServerTemplateId"));
 
 long groupId = themeDisplay.getLayout().getGroupId();
 
 boolean deviceSpecificURLs = false;
-if (streamingServerTemplateId > 0) deviceSpecificURLs = StreamingServerTemplateLocalServiceUtil.getDeviceSpecificByStreamingServerTemplateId(streamingServerTemplateId);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("institutionId", institutionId+"");
 portletURL.setParameter("hostId", hostId+"");
-portletURL.setParameter("streamingServerTemplateId", hostId+"");
 
 List<Institution> institutions = InstitutionLocalServiceUtil.getByGroupIdAndParent(groupId,1);
-List<Host> hostList = HostLocalServiceUtil.getByTemplateConfiguredAndGroupId(groupId);
+List<Host> hostList = HostLocalServiceUtil.getByGroupId(groupId);
 Institution topLevel = InstitutionLocalServiceUtil.getTopLevelByGroupId(groupId);
 
 for (int i = 0; i < institutions.size(); i++) {
@@ -107,6 +101,7 @@ int maxOrder = 0;
 
 </aui:form>
 <p></p>
+
 </liferay-ui:panel>
        <liferay-ui:panel title="Streaming Server Options" collapsible="true" id="streamingServerSettings"
 		    	defaultState="open"
@@ -118,7 +113,6 @@ int maxOrder = 0;
 					<aui:input label="StreamingServer Name" name="name" required="true" inlineField="true"></aui:input>
 		 	        <aui:input label="Streaming Server Domain or IP" name="ip" inlineField="true"></aui:input>
 		 	        <aui:input label="HTTP Protocol" name="protocol" inlineField="true"></aui:input>
-		 	        <aui:input label="Streaming Server Template" name="template" inlineField="true"></aui:input>
 		 	        <aui:input name='hostId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "hostId") %>'/>
 		 	        <aui:button type="submit"></aui:button>
 					<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button>
@@ -127,53 +121,6 @@ int maxOrder = 0;
 </aui:form>
 </liferay-ui:panel>
 
-<liferay-ui:panel title="Server Preset Configuration" collapsible="true" id="streamingServerTemplates"
-		    	defaultState="open"
-		    	extended="<%= false %>"
-		    	persistState="<%= true %>">
-				<aui:form action="<%= updateStreamingServerTemplateURL %>" name="<portlet:namespace />fm" inlineLabel="true">
-		 	    <aui:fieldset column="true">
-		 	    	<aui:input label="Use Device Specific Templates" type="checkbox" name="deviceSpecific"></aui:input>
-		 	    </aui:fieldset>
-		 	    <div id="<portlet:namespace />serverFieldsDefault" >
-			 	    <aui:fieldset column="true">
-						<aui:input label="Template Name" name="name" required="true" inlineField="true"></aui:input>
-			 	        <aui:input label="Prefix" name="prefixURL" inlineField="true"></aui:input>
-			 	        <aui:input label="Suffix" name="suffixURL" inlineField="true"></aui:input>
-			 	        <aui:input label="Extension" name="secExt" inlineField="true"></aui:input>
-			 	        <aui:input name='type' type='hidden' inlineField="true" value='0'/>
-			 	        <aui:input name='streamingServerTemplateId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "streamingServerTemplateId") %>'/>
-			 	        <aui:input label="URL Template String" required="true" name="templateURL"></aui:input>
-			 	    </aui:fieldset>
-		 	    </div>
-		 	    <div id="<portlet:namespace />serverFieldsAndroid" style="display: none">
-		 	    <aui:fieldset column="true">
-			 	        <aui:input label="Prefix" name="prefixURL" inlineField="true"></aui:input>
-			 	        <aui:input label="Suffix" name="suffixURL" inlineField="true"></aui:input>
-			 	        <aui:input label="Extension" name="secExt" inlineField="true"></aui:input>
-			 	        <aui:input name='type' type='hidden' inlineField="true" value='0'/>
-			 	        <aui:input name='streamingServerTemplateId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "streamingServerTemplateId") %>'/>
-			 	        <aui:input label="URL Template String" required="false" name="templateURL"></aui:input>
-			 	    </aui:fieldset>
-		 	    </div>
-		 	   <div id="<portlet:namespace />serverFieldsIOS" style="display: none">
-			 	    <aui:fieldset column="true">
-			 	        <aui:input label="Prefix" name="prefixURL" inlineField="true"></aui:input>
-			 	        <aui:input label="Suffix" name="suffixURL" inlineField="true"></aui:input>
-			 	        <aui:input label="Extension" name="secExt" inlineField="true"></aui:input>
-			 	        <aui:input name='type' type='hidden' inlineField="true" value='0'/>
-			 	        <aui:input name='streamingServerTemplateId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "streamingServerTemplateId") %>'/>
-			 	        <aui:input label="URL Template String" required="false" name="templateURL"></aui:input>
-		 	    </aui:fieldset>
-		 	    </div>
-		 	     <aui:fieldset column="true">
-		 	     </aui:fieldset>
-		 	     <aui:button-row>
-		 	     	<aui:button type="submit"></aui:button>
-					<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button>
-		 	    </aui:button-row>
-</aui:form>
-</liferay-ui:panel>
 
 <liferay-ui:panel title="Top Level Institution" collapsible="true" id="topLevelInstitutionSettings"
 				defaultState="closed"

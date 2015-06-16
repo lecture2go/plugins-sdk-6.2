@@ -52,12 +52,6 @@
         var playerUri4 ="${video.playerUris.get(3)}";
         var playerUri5 ="${video.playerUris.get(4)}";
         
-		var openAccessDownloadLink ="";
-		if(containerFormat=="mp4"){
-			openAccessDownloadLink = "${video.mp4OpenAccessDownloadLink}";
-		}else{
-			openAccessDownloadLink = "${video.mp3OpenAccessDownloadLink}";
-		}
 		var vttFile ="${video.vttChapterFile}";
 		
         // Hier wird der JW-Player initialisiert

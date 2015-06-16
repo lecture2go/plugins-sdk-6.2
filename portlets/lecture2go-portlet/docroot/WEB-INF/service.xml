@@ -210,9 +210,6 @@
 		<finder name="GroupId" return-type="Collection">
             <finder-column name="groupId"></finder-column>
         </finder>
-        <finder name="TemplateConfiguredAndGroupId" return-type="Collection" where="streamingServerTemplateId &gt; 0">
-            <finder-column name="groupId"></finder-column>
-        </finder>
         <finder name="G_H" return-type="Host">
             <finder-column name="groupId"></finder-column>
             <finder-column name="hostId"></finder-column>

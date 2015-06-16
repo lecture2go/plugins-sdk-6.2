@@ -39,25 +39,16 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 			long institutionId = ParamUtil.getLong(renderRequest, "institutionId");
 			long hostId = ParamUtil.getLong(renderRequest, "hostId");
-			long streamingServerTemplateId = ParamUtil.getLong(renderRequest, "streamingServerTemplateId");
 
 			long defaultHostId = 0;
 			long defaultStreamingServerTemplateId = 0;
 
 
 		    List<Institution> institutions = InstitutionLocalServiceUtil.getByGroupId(groupId);
-		    List<Host> host = HostLocalServiceUtil.getByTemplateConfiguredAndGroupId(groupId);
-//		    List<StreamingServerTemplate> streamingServerTemplate = StreamingServerTemplateLocalServiceUtil.getByGroupId(groupId);
+		    List<Host> host = HostLocalServiceUtil.getByGroupId(groupId);
 
 		    System.out.println(institutionId+" "+groupId+" "+institutions.toString());
 		    System.out.println(hostId+" "+groupId+" "+host.toString());
-
-		    //Add default server template if empty
-//		    if (streamingServerTemplate.size() == 0) {
-//		    	StreamingServerTemplate defaultStreamingServerTemplate = StreamingServerTemplateLocalServiceUtil.addStreamingServerTemplate("HTTP", 0, "{Protocol}://{ServerURL}/{L2GO_FILEPATH}/{Filename}.{Ext}", "", "", "", 0,0 , serviceContext);
-//		    	SessionMessages.add(renderRequest, "entryAdded");
-//		    	defaultStreamingServerTemplateId = defaultStreamingServerTemplate.getStreamingServerTemplateId();
-//		    }
 
 		    //Add default host if empty
 		    if (host.size() == 0) {
@@ -81,7 +72,6 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		    //System.out.println(StreamingServerTemplateLocalServiceUtil.getDefaultServersByGroupId(groupId));
 		    renderRequest.setAttribute("institutionId", institutionId);
 		    renderRequest.setAttribute("hostId", hostId);
-		    renderRequest.setAttribute("streamingServerTemplateId", streamingServerTemplateId);
 
 		    } catch (Exception e) {
 		    	throw new PortletException(e);
