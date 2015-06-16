@@ -21,10 +21,8 @@ import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
-import de.uhh.l2g.plugins.model.StreamingServerTemplate;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
-import de.uhh.l2g.plugins.service.StreamingServerTemplateLocalServiceUtil;
 
 public class AdminInstitutionManagement extends MVCPortlet {
 
@@ -49,17 +47,17 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 		    List<Institution> institutions = InstitutionLocalServiceUtil.getByGroupId(groupId);
 		    List<Host> host = HostLocalServiceUtil.getByTemplateConfiguredAndGroupId(groupId);
-		    List<StreamingServerTemplate> streamingServerTemplate = StreamingServerTemplateLocalServiceUtil.getByGroupId(groupId);
+//		    List<StreamingServerTemplate> streamingServerTemplate = StreamingServerTemplateLocalServiceUtil.getByGroupId(groupId);
 
 		    System.out.println(institutionId+" "+groupId+" "+institutions.toString());
 		    System.out.println(hostId+" "+groupId+" "+host.toString());
 
 		    //Add default server template if empty
-		    if (streamingServerTemplate.size() == 0) {
-		    	StreamingServerTemplate defaultStreamingServerTemplate = StreamingServerTemplateLocalServiceUtil.addStreamingServerTemplate("HTTP", 0, "{Protocol}://{ServerURL}/{L2GO_FILEPATH}/{Filename}.{Ext}", "", "", "", 0,0 , serviceContext);
-		    	SessionMessages.add(renderRequest, "entryAdded");
-		    	defaultStreamingServerTemplateId = defaultStreamingServerTemplate.getStreamingServerTemplateId();
-		    }
+//		    if (streamingServerTemplate.size() == 0) {
+//		    	StreamingServerTemplate defaultStreamingServerTemplate = StreamingServerTemplateLocalServiceUtil.addStreamingServerTemplate("HTTP", 0, "{Protocol}://{ServerURL}/{L2GO_FILEPATH}/{Filename}.{Ext}", "", "", "", 0,0 , serviceContext);
+//		    	SessionMessages.add(renderRequest, "entryAdded");
+//		    	defaultStreamingServerTemplateId = defaultStreamingServerTemplate.getStreamingServerTemplateId();
+//		    }
 
 		    //Add default host if empty
 		    if (host.size() == 0) {
@@ -215,24 +213,6 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		    }
 		}
 
-		public void deleteStreamingServerTemplate (ActionRequest request, ActionResponse response) {
-
-		    long streamingServerId = ParamUtil.getLong(request, "streamingServerId");
-
-		    try {
-
-		       ServiceContext serviceContext = ServiceContextFactory.getInstance(
-		         StreamingServerTemplate.class.getName(), request);
-
-		                    response.setRenderParameter("streamingServerId", Long.toString(streamingServerId));
-
-		                    StreamingServerTemplateLocalServiceUtil.deleteStreamingServerTemplate(streamingServerId, serviceContext);
-
-		    } catch (Exception e) {
-
-		       SessionErrors.add(request, e.getClass().getName());
-		    }
-		}
 
 		public void updateTopLevelInstitution(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
 

@@ -277,25 +277,11 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		}else{
 			objectVideo.setSecureUrl("");
 		}
+		
 		// Streaming-URL
-		String streamUrl = "";
-		String streamIosUrl = "";
-		String streamAndroidUrl = "";
-		// base url
-		String url = "";
-		// wowza stream
-		if (objectVideo.getContainerFormat().equals("mp3"))
-			url = objectHost.getProtocol() + "://" + objectHost.getStreamer() + "/vod/_definst_/mp3:" + objectVideo.getRootInstitutionId() + "l2g" + objectProducer.getHomeDir() + "/" + filename;
-		else
-			url = objectHost.getProtocol() + "://" + objectHost.getStreamer() + "/vod/_definst_/mp4:" + objectVideo.getRootInstitutionId() + "l2g" + objectProducer.getHomeDir() + "/" + filename;
-		streamUrl = url; // normal
-		streamIosUrl = url + "/playlist.m3u8"; // iOS
-		streamAndroidUrl = url + "/playlist.m3u8"; // android
-
-		objectVideo.setStreamUrl(streamUrl); // normal
-		objectVideo.setStreamIosUrl(streamIosUrl); // normal
-		objectVideo.setStreamAndroidUrl(streamAndroidUrl); // normal
-
+		addPlayerUris2Video(objectHost, objectVideo, objectProducer);
+		//Streaming-URL end
+			
 		List<Segment> sl = new ArrayList<Segment>();
 		try {
 			sl = SegmentLocalServiceUtil.getSegmentsByVideoId(videoId);
@@ -520,4 +506,56 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	public List<Video> getFilteredByInstitutionParentInstitutionTermCategoryCreator (Long institutionId, Long parentInstitutionId, ArrayList<Long> termIds, ArrayList<Long> categoryIds, ArrayList<Long> creatorIds){
 		return VideoFinderUtil.findFilteredByInstitutionParentInstitutionTermCategoryCreator(institutionId, parentInstitutionId, termIds, categoryIds, creatorIds);
 	}
+
+	/**
+	 * required properties for jwplayer in portal-ext.properties file
+	 * 
+	 * [host]=configured host in database (automatically e.g. streaming.server.com)
+	 * [ext]=file extension (automatically e.g mp3)
+	 * [l2go_path]=generated lecture2go file path (automatically e.g. 3l2gproducer1)
+	 * [filename]=video file name (automatically e.g 00.000_video_2015-06-08_08-06.mp4)
+	 * [protocol]=host protocol (automatically e.g rtmpt)
+	 * [port]=host port (automatically e.g 80)
+	 * lecture2go.uri1.player.template=${lecture2go.web.root}/abo/[filename]
+	 * lecture2go.uri2.player.template=rtmpt://[host]/vod/_definst/[ext]:[l2go_path]/[filename]
+	 * lecture2go.uri3.player.template=rtmpt://[host]/vod/_definst/[ext]:[l2go_path]/[filename]/playlist.m3u8
+	 * lecture2go.uri4.player.template=${lecture2go.uri3.player.template}
+	 * lecture2go.uri5.player.template=${lecture2go.uri3.player.template}
+	**/
+	public void addPlayerUris2Video(Host host, Video video, Producer producer){
+		ArrayList<String> playerUris = new ArrayList<String>();
+
+		String l2go_path = video.getRootInstitutionId() + "l2g" + producer.getHomeDir();
+		
+		String uri1 = PropsUtil.get("lecture2go.uri1.player.template");
+		String uri2 = PropsUtil.get("lecture2go.uri2.player.template");
+		String uri3 = PropsUtil.get("lecture2go.uri3.player.template");
+		String uri4 = PropsUtil.get("lecture2go.uri4.player.template");
+		String uri5 = PropsUtil.get("lecture2go.uri5.player.template");
+
+		String parameter1 = PropsUtil.get("lecture2go.uri.player.parameter1");
+		String parameter2 = PropsUtil.get("lecture2go.uri.player.parameter2");
+		String parameter3 = PropsUtil.get("lecture2go.uri.player.parameter3");
+		
+		ArrayList<String> uris = new ArrayList<String>();
+		uris.add(uri1);uris.add(uri2);uris.add(uri3);uris.add(uri4);uris.add(uri5);
+		
+		for(int i=0; i<uris.size();i++){
+			String playerUri = "";
+			playerUri += uris.get(i);
+			playerUri = playerUri.replace("[host]", host.getStreamer());
+			playerUri = playerUri.replace("[ext]", video.getContainerFormat());
+			playerUri = playerUri.replace("[l2go_path]", l2go_path);
+			playerUri = playerUri.replace("[filename]", video.getFilename());
+			playerUri = playerUri.replace("[protocol]", host.getProtocol());
+			playerUri = playerUri.replace("[port]", host.getPort()+"");
+			//optional parameter
+			playerUri = playerUri.replace("[parameter1]", parameter1);
+			playerUri = playerUri.replace("[parameter2]", parameter2);
+			playerUri = playerUri.replace("[parameter3]", parameter3);
+			if(playerUri.length()>0)playerUris.add(playerUri);
+		}
+		video.setPlayerUris(playerUris);
+	}
+
 }

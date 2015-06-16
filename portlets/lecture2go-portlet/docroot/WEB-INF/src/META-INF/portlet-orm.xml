@@ -46,7 +46,6 @@
 	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.HostModelImpl">
 		<attributes>
 			<id name="hostId" />
-			<basic name="streamingServerTemplateId" />
 			<basic name="protocol" />
 			<basic name="streamer" />
 			<basic name="port" />
@@ -238,29 +237,6 @@
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 			<transient name="userUuid" />
-		</attributes>
-	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.StreamingServerTemplateModelImpl">
-		<attributes>
-			<id name="streamingServerTemplateId" />
-			<basic name="groupId" />
-			<basic name="name" />
-			<basic name="type">
-				<column name="TYPE_" />
-			</basic>
-			<basic name="prefixURL" />
-			<basic name="suffixURL" />
-			<basic name="secExt" />
-			<basic name="templateURL" />
-			<basic name="prefixFile" />
-			<basic name="suffixFile" />
-			<basic name="templateFile" />
-			<basic name="templateIOS" />
-			<basic name="templateAndroid" />
-			<basic name="defaultServer" />
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
 	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.SysModelImpl">
@@ -483,10 +459,6 @@
 			<transient name="seconds" />
 		</attributes>
 	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.StreamingServerTemplateImpl" name="StreamingServerTemplate">
-		<table name="LG_StreamingServerTemplate" />
-		<attributes />
-	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.SysImpl" name="Sys">
 		<table name="LG_Sys" />
 		<attributes />
@@ -538,13 +510,11 @@
 			<transient name="oggRssLink" />
 			<transient name="pdfFile" />
 			<transient name="pdfOpenAccessDownloadLink" />
+			<transient name="playerUris" />
 			<transient name="secureUrl" />
 			<transient name="shortName" />
 			<transient name="shortTitle" />
 			<transient name="simpleDate" />
-			<transient name="streamAndroidUrl" />
-			<transient name="streamIosUrl" />
-			<transient name="streamUrl" />
 			<transient name="url" />
 			<transient name="vttChapterFile" />
 			<transient name="vttThumbsFilde" />

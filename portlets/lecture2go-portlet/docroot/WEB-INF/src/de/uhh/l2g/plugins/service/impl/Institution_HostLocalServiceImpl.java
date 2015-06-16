@@ -23,7 +23,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 
-import de.uhh.l2g.plugins.Institution_HostHostException;
+import de.uhh.l2g.plugins.Institution_HostException;
 import de.uhh.l2g.plugins.Institution_HostInstitutionException;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
@@ -101,7 +101,7 @@ public class Institution_HostLocalServiceImpl
 		 }
 
 	     if (Validator.isNull(hostId)) {
-	       throw new Institution_HostHostException();
+	       throw new Institution_HostException();
 	     }
 	}
 

@@ -114,7 +114,7 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 
 		host.setName(name);
 		host.setGroupId(groupId);
-		host.setStreamingServerTemplateId(streamingServerTemplateId);
+//		host.setStreamingServerTemplateId(streamingServerTemplateId);
 		host.setStreamer(streamLocation);
 		host.setProtocol(protocol);
 		host.setServerRoot(serverRoot);

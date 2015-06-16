@@ -1066,7 +1066,7 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	}
 
 	private static final String _FINDER_COLUMN_TEMPLATECONFIGUREDANDGROUPID_GROUPID_2 =
-		"host.groupId = ? AND host.streamingServerTemplateId > 0";
+		"host.groupId = ? AND streamingServerTemplateId > 0";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_H = new FinderPath(HostModelImpl.ENTITY_CACHE_ENABLED,
 			HostModelImpl.FINDER_CACHE_ENABLED, HostImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_H",
@@ -1625,7 +1625,6 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 		hostImpl.setPrimaryKey(host.getPrimaryKey());
 
 		hostImpl.setHostId(host.getHostId());
-		hostImpl.setStreamingServerTemplateId(host.getStreamingServerTemplateId());
 		hostImpl.setProtocol(host.getProtocol());
 		hostImpl.setStreamer(host.getStreamer());
 		hostImpl.setPort(host.getPort());

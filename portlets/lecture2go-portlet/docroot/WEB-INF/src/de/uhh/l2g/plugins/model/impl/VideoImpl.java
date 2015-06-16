@@ -15,6 +15,7 @@
 package de.uhh.l2g.plugins.model.impl;
 
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * The extended model implementation for the Video service. Represents a row in the &quot;LG_Video&quot; database table, with each column mapped to a property of this class.
@@ -32,6 +33,17 @@ public class VideoImpl extends VideoBaseImpl {
 	 * Never reference this class directly. All methods that expect a video model instance should use the {@link de.uhh.l2g.plugins.model.Video} interface instead.
 	 */
 	
+	private ArrayList<String> playerUris;
+	
+
+	public ArrayList<String> getPlayerUris() {
+		return playerUris;
+	}
+
+	public void setPlayerUris(ArrayList<String> playerUris) {
+		this.playerUris = playerUris;
+	}
+
 	private String embedIframe;
 
 	private String embedHtml5;
@@ -153,34 +165,6 @@ public class VideoImpl extends VideoBaseImpl {
 
 	public void setHasComments(boolean hasComments) {
 		this.hasComments = hasComments;
-	}
-
-	private String streamUrl;
-	private String streamIosUrl;
-	private String streamAndroidUrl;
-	
-	public String getStreamUrl() {
-		return streamUrl;
-	}
-
-	public void setStreamUrl(String streamUrl) {
-		this.streamUrl = streamUrl;
-	}
-
-	public String getStreamIosUrl() {
-		return streamIosUrl;
-	}
-
-	public void setStreamIosUrl(String streamIosUrl) {
-		this.streamIosUrl = streamIosUrl;
-	}
-
-	public String getStreamAndroidUrl() {
-		return streamAndroidUrl;
-	}
-
-	public void setStreamAndroidUrl(String streamAndroidUrl) {
-		this.streamAndroidUrl = streamAndroidUrl;
 	}
 
 	private String secureUrl;

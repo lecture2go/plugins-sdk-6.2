@@ -35,12 +35,10 @@ import java.io.ObjectOutput;
 public class HostCacheModel implements CacheModel<Host>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{hostId=");
 		sb.append(hostId);
-		sb.append(", streamingServerTemplateId=");
-		sb.append(streamingServerTemplateId);
 		sb.append(", protocol=");
 		sb.append(protocol);
 		sb.append(", streamer=");
@@ -63,7 +61,6 @@ public class HostCacheModel implements CacheModel<Host>, Externalizable {
 		HostImpl hostImpl = new HostImpl();
 
 		hostImpl.setHostId(hostId);
-		hostImpl.setStreamingServerTemplateId(streamingServerTemplateId);
 
 		if (protocol == null) {
 			hostImpl.setProtocol(StringPool.BLANK);
@@ -105,7 +102,6 @@ public class HostCacheModel implements CacheModel<Host>, Externalizable {
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		hostId = objectInput.readLong();
-		streamingServerTemplateId = objectInput.readLong();
 		protocol = objectInput.readUTF();
 		streamer = objectInput.readUTF();
 		port = objectInput.readInt();
@@ -118,7 +114,6 @@ public class HostCacheModel implements CacheModel<Host>, Externalizable {
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(hostId);
-		objectOutput.writeLong(streamingServerTemplateId);
 
 		if (protocol == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -154,7 +149,6 @@ public class HostCacheModel implements CacheModel<Host>, Externalizable {
 	}
 
 	public long hostId;
-	public long streamingServerTemplateId;
 	public String protocol;
 	public String streamer;
 	public int port;
