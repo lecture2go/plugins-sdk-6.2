@@ -532,10 +532,6 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		String uri3 = PropsUtil.get("lecture2go.uri3.player.template");
 		String uri4 = PropsUtil.get("lecture2go.uri4.player.template");
 		String uri5 = PropsUtil.get("lecture2go.uri5.player.template");
-
-		String parameter1 = PropsUtil.get("lecture2go.uri.player.parameter1");
-		String parameter2 = PropsUtil.get("lecture2go.uri.player.parameter2");
-		String parameter3 = PropsUtil.get("lecture2go.uri.player.parameter3");
 		
 		ArrayList<String> uris = new ArrayList<String>();
 		uris.add(uri1);uris.add(uri2);uris.add(uri3);uris.add(uri4);uris.add(uri5);
@@ -549,10 +545,6 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			playerUri = playerUri.replace("[filename]", video.getFilename());
 			playerUri = playerUri.replace("[protocol]", host.getProtocol());
 			playerUri = playerUri.replace("[port]", host.getPort()+"");
-			//optional parameter
-			playerUri = playerUri.replace("[parameter1]", parameter1);
-			playerUri = playerUri.replace("[parameter2]", parameter2);
-			playerUri = playerUri.replace("[parameter3]", parameter3);
 			if(playerUri.length()>0)playerUris.add(playerUri);
 		}
 		video.setPlayerUris(playerUris);
