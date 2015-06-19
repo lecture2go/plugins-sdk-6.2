@@ -338,8 +338,8 @@ $(function () {
         		repository: "<%=reqProducer.getHomeDir()%>",
         		openaccess: "<%=reqVideo.getOpenAccess()%>",
         		lectureseriesNumber: "<%=reqLectureseries.getNumber()%>",
-        		fileName: "<%=VideoLocalServiceUtil.getVideo(reqVideo.getVideoId()).getFilename()%>",
-        		secureFileName: "<%=VideoLocalServiceUtil.getVideo(reqVideo.getVideoId()).getSurl()%>",
+        		fileName: "<%=VideoLocalServiceUtil.getVideo(reqVideo.getVideoId()).getFilename().toLowerCase()%>",
+        		secureFileName: "<%=VideoLocalServiceUtil.getVideo(reqVideo.getVideoId()).getSurl().toLowerCase()%>",
         		l2gDateTime: $("#l2gDateTime").val(),
         };        
     });
