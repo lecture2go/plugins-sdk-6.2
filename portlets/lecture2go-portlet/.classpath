@@ -8,7 +8,6 @@
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/plugins-sdk-6.2"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="/liferay-portal-6.2-ce-ga3/tomcat-7.0.42/webapps/ROOT/WEB-INF/lib/ant.jar"/>
 	<classpathentry kind="lib" path="/liferay-portal-6.2-ce-ga3/tomcat-7.0.42/webapps/ROOT/WEB-INF/lib/commons-collections.jar"/>
@@ -20,5 +19,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="/liferay-portal-6.2-ce-ga3/tomcat-7.0.42/webapps/ROOT/WEB-INF/lib/jaxrpc.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/plugins-sdk-6.2"/>
 	<classpathentry kind="output" path="docroot/WEB-INF/classes"/>
 </classpath>

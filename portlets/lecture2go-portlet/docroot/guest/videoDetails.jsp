@@ -142,9 +142,9 @@
 			    <div class="tab-pane" id="support">
 			        <p>
 						<%
-							int facultyId = 3;
+							Integer facultyId = (int)video.getRootInstitutionId();
 							String institut = "";
-							String option1 = request.getParameter("option1");
+							String option1 = PortalUtil.getOriginalServletRequest(request).getParameter("option1"); 
 							
 							switch(facultyId){
 								case 3: institut = "UHH-Jura";break;
@@ -163,15 +163,15 @@
 							jsn.put("system","Lecture2Go");
 							jsn.put("role","Lecture2Go-Benutzer");
 							jsn.put("gender","");
-							jsn.put("firstname",request.getParameter("firstname"));
-							jsn.put("lastname",request.getParameter("lastname"));
-							jsn.put("email",request.getParameter("email"));
-							jsn.put("subject","###");
-							jsn.put("body",request.getParameter("body"));
-							jsn.put("ergebnis",request.getParameter("ergebnis"));
+							jsn.put("firstname",PortalUtil.getOriginalServletRequest(request).getParameter("firstname"));
+							jsn.put("lastname",PortalUtil.getOriginalServletRequest(request).getParameter("lastname"));
+							jsn.put("email",PortalUtil.getOriginalServletRequest(request).getParameter("email"));
+							jsn.put("subject",video.getUrl());
+							jsn.put("body",PortalUtil.getOriginalServletRequest(request).getParameter("body"));
+							jsn.put("ergebnis",PortalUtil.getOriginalServletRequest(request).getParameter("ergebnis"));
 							jsn.put("option1",option1);
-							jsn.put("result",request.getParameter("result"));
-							jsn.put("spamprotect",request.getParameter("spamprotect"));
+							jsn.put("result",PortalUtil.getOriginalServletRequest(request).getParameter("result"));
+							jsn.put("spamprotect",PortalUtil.getOriginalServletRequest(request).getParameter("spamprotect"));
 						%>
 						<div id="metadata">
 							<%

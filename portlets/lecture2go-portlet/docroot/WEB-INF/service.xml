@@ -578,8 +578,6 @@
         <exception>InstitutionName</exception>
         <exception>Institution_Host</exception>
         <exception>Institution_HostInstitution</exception>
-        <exception>StreamingServerTemplateName</exception>
-        <exception>StreamingServerTemplateString</exception>
     </exceptions>
 
 

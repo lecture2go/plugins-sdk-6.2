@@ -33,6 +33,7 @@
 <%@ page import="javax.portlet.PortletException"%>
 <%@ page import="org.apache.jasper.JasperException"%>
 
+<%@ page import="com.liferay.portal.util.PortalUtil"%>
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil"%>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil"%>
 <%@ page import="com.liferay.portal.kernel.util.CalendarFactoryUtil"%>
