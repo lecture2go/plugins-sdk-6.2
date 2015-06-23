@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 
 import de.uhh.l2g.plugins.NoSuchInstitutionException;
 import de.uhh.l2g.plugins.NoSuchProducerException;
+import de.uhh.l2g.plugins.NoSuchVideoException;
 import de.uhh.l2g.plugins.model.Creator;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
@@ -273,7 +274,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		}
 		// SURL
 		if (objectVideo.getOpenAccess() != 1){
-			objectVideo.setSecureUrl(webhome + "/lecture/-/sv/" + objectVideo.getSPreffix());
+			objectVideo.setSecureUrl(webhome + "/l2go/-/get/v/" + objectVideo.getSPreffix());
 		}else{
 			objectVideo.setSecureUrl("");
 		}
@@ -539,15 +540,22 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		for(int i=0; i<uris.size();i++){
 			String playerUri = "";
 			playerUri += uris.get(i);
+			if(video.getOpenAccess()==1)playerUri = playerUri.replace("[filename]", video.getFilename());
+			else playerUri = playerUri.replace("[filename]", video.getSurl());
+			//
 			playerUri = playerUri.replace("[host]", host.getStreamer());
 			playerUri = playerUri.replace("[ext]", video.getContainerFormat());
 			playerUri = playerUri.replace("[l2go_path]", l2go_path);
-			playerUri = playerUri.replace("[filename]", video.getFilename());
 			playerUri = playerUri.replace("[protocol]", host.getProtocol());
 			playerUri = playerUri.replace("[port]", host.getPort()+"");
+			//
 			if(playerUri.length()>0)playerUris.add(playerUri);
 		}
 		video.setPlayerUris(playerUris);
+	}
+	
+	public Video getBySecureUrl(String surl) throws NoSuchVideoException, SystemException{
+		return VideoFinderUtil.findVideoBySerureUrl(surl);
 	}
 
 }

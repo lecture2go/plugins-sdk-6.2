@@ -11,6 +11,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
+import de.uhh.l2g.plugins.NoSuchLicenseException;
+import de.uhh.l2g.plugins.NoSuchVideoException;
 import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.License;
 import de.uhh.l2g.plugins.model.Metadata;
@@ -29,6 +31,7 @@ import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
+import de.uhh.l2g.plugins.service.VideohitlistLocalServiceUtil;
 
 public class OpenAccessVideos extends MVCPortlet {
 
@@ -48,9 +51,21 @@ public class OpenAccessVideos extends MVCPortlet {
 		response.setRenderParameter("jspPage", jspPage);
 	}
 
-	public void viewOpenAccessVideo(ActionRequest request, ActionResponse response) throws SystemException, PortalException {
-	    Long objectId = ParamUtil.getLong(request, "objectId");
-	    String objectType = ParamUtil.getString(request, "objectType");
+	public void viewOpenAccessVideo(ActionRequest request, ActionResponse response) {
+		String objectType = ParamUtil.getString(request, "objectType");
+
+		Long objectId = new Long(0);
+	   	String oid = request.getParameter("objectId");
+	    try{
+	    	objectId = new Long(oid);
+	    }catch(NumberFormatException e){
+		    if(objectType.equals("v")){ //only for video objects
+	    		try {
+					objectId = VideoLocalServiceUtil.getBySecureUrl(oid).getVideoId();
+				} catch (NoSuchVideoException e1) {
+				} catch (SystemException e1) {}
+	    	 }
+	    }
 
 	    Long timeStart = new Long(0);
 	    Long timeEnd = new Long(0);
@@ -78,14 +93,24 @@ public class OpenAccessVideos extends MVCPortlet {
 	    
 	    List<Video> relatedVideos = new ArrayList<Video>();
 	    //related videos by lectureseries id
-    	relatedVideos = VideoLocalServiceUtil.getByLectureseriesAndOpenaccess(lectureseries.getLectureseriesId(),1);
+    	try {
+    		int os = 0;
+    		if(video.getOpenAccess()==1)os=1;
+			relatedVideos = VideoLocalServiceUtil.getByLectureseriesAndOpenaccess(lectureseries.getLectureseriesId(),os);
+		} catch (SystemException e) {}
 	    
 	    //chapters and segments
-	    List<Segment> segments = SegmentLocalServiceUtil.getSegmentsByVideoId(objectId);
+	    List<Segment> segments= new ArrayList<Segment>();
+		try {
+			segments = SegmentLocalServiceUtil.getSegmentsByVideoId(objectId);
+		} catch (PortalException e) {
+		} catch (SystemException e) {}
 	    
 	    //lectureseries for video
 	    List<Video_Lectureseries> vl = new ArrayList<Video_Lectureseries>();
-	    vl = Video_LectureseriesLocalServiceUtil.getByVideo(video.getVideoId());
+	    try {
+			vl = Video_LectureseriesLocalServiceUtil.getByVideo(video.getVideoId());
+		} catch (SystemException e) {}
 	    
 	    //institutions for video
 	    List<Video_Institution> vi = new ArrayList<Video_Institution>();
@@ -93,18 +118,26 @@ public class OpenAccessVideos extends MVCPortlet {
 	    
 	    //metadata for video
 	    Metadata m = new MetadataImpl();
-	    m = MetadataLocalServiceUtil.getMetadata(video.getMetadataId());
+	    try {
+			m = MetadataLocalServiceUtil.getMetadata(video.getMetadataId());
+		} catch (PortalException e) {
+		} catch (SystemException e) {}
 	    
 	    //license for video
 	    
 	    License l = new LicenseImpl();
-	    l = LicenseLocalServiceUtil.getByVideoId(video.getVideoId());
+	    try {
+			l = LicenseLocalServiceUtil.getByVideoId(video.getVideoId());
+		} catch (NoSuchLicenseException e) {
+		} catch (SystemException e) {}
 	    
 	    //update video hits
 	    Long hits = video.getHits();
 	    hits = hits+1;
 	    video.setHits(hits);
-	    VideoLocalServiceUtil.updateVideo(video);
+	    try {
+			VideoLocalServiceUtil.updateVideo(video);
+		} catch (SystemException e) {}
 	    
 	    request.setAttribute("videoLicense",l);
 	    request.setAttribute("videoMetadata",m);
