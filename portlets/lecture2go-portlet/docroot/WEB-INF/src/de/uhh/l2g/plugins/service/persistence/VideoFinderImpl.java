@@ -30,6 +30,7 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 
 	public static final String RESET_LECTURESERIES_FOR_VIDEOS = VideoFinder.class.getName() + ".resetLectureseriesForVideos";
 	public static final String FIND_LATES_OPEN_ACCESS_VIDEO_FOR_LECTURESERIES = VideoFinder.class.getName() + ".findLatestOpenAccessVideoForlectureseries";
+	public static final String FIND_VIDEO_FOR_SECURE_URL = VideoFinder.class.getName() + ".findVideoForSecureUrl";
 
 	public int unlinkLectureseriesFromVideos(Long lectureseriesId) {
 		Session session = null;
@@ -52,6 +53,33 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 			closeSession(session);
 		}
 		return 0;
+	}
+	
+	public Video findVideoBySerureUrl(String surl) {
+		Session session = null;
+		Video video = new VideoImpl();
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(FIND_VIDEO_FOR_SECURE_URL);
+			SQLQuery q = session.createSQLQuery(sql);
+			q.setCacheable(false);
+			q.addScalar("videoId", Type.LONG);
+			QueryPos qPos = QueryPos.getInstance(q);
+			qPos.add(surl+"%");
+			@SuppressWarnings("unchecked")
+			List <Long> vl =  (List<Long>) QueryUtil.list(q, getDialect(), com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+			video = VideoLocalServiceUtil.getVideo(vl.get(0));
+			return video;
+		} catch (Exception e) {
+			try {
+				throw new SystemException(e);
+			} catch (SystemException se) {
+				//se.printStackTrace();
+			}
+		} finally {
+			closeSession(session);
+		}
+		return video;
 	}
 	
 	public Video findLatestOpenAccessVideoForLectureseries(Long lectureseriesId) {

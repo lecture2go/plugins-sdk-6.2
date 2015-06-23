@@ -103,6 +103,12 @@
 		]]>
     </sql>
 
+    <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.findVideoForSecureUrl">
+		<![CDATA[
+			SELECT videoId FROM LG_Video WHERE surl LIKE ?
+		]]>
+    </sql>
+
     <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.findLatestOpenAccessVideoForlectureseries">
 		<![CDATA[
 			SELECT videoId FROM LG_Video
