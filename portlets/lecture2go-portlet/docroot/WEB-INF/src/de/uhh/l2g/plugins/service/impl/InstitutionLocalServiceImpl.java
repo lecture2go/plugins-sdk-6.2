@@ -129,6 +129,10 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		return InstitutionFinderUtil.findMaxSortByParent(parentId);
 	}
 
+	public int getLockingElements(long institutionId) throws SystemException {
+		return InstitutionFinderUtil.findLockingElements(institutionId);
+	}
+
 	public List<Institution> getInstitutionsFromLectureseriesIdsAndVideoIds(ArrayList<Long> lectureseriesIds, ArrayList<Long> videoIds) {
 		return InstitutionFinderUtil.findInstitutionsByLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds, new Long(0));
 	}
@@ -271,15 +275,23 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 	   public Institution deleteInstitution(long institutionId, ServiceContext serviceContext)
 		        throws PortalException, SystemException {
 
-		        //TODO: check if Institution is empty
-		        Institution institution = getInstitution(institutionId);
 
-		        resourceLocalService.deleteResource(serviceContext.getCompanyId(),
-		        		Institution.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
-		        		institutionId);
+		   		Institution institution = getInstitution(institutionId);
 
-		        updateSort(institution, 0);
-		        institution = deleteInstitution(institutionId);
+		        if (getLockingElements(institutionId) < 1){
+			        //Check if Institution is empty, i.e. no  subfacilities, lecture series, videos, and members
+
+			        resourceLocalService.deleteResource(serviceContext.getCompanyId(),
+			        		Institution.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
+			        		institutionId);
+
+			        updateSort(institution, 0);
+			        institution = deleteInstitution(institutionId);
+
+			        //Remove Entry from Link Table
+			        Institution_HostLocalServiceUtil.deleteEntriesByInstitution(institutionId, serviceContext);
+		        }
+		        else { System.out.println("Could not delte "+ institution.getName());}
 
 		        return institution;
 
