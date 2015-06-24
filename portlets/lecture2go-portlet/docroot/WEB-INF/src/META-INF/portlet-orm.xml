@@ -303,7 +303,7 @@
 			<basic name="openAccess" />
 			<basic name="downloadLink" />
 			<basic name="metadataId" />
-			<basic name="surl" />
+			<basic name="secureFilename" />
 			<basic name="hits" />
 			<basic name="uploadDate">
 				<temporal>TIMESTAMP</temporal>
@@ -314,6 +314,9 @@
 			<basic name="termId" />
 			<basic name="videoCreatorId" />
 			<basic name="tags" />
+			<basic name="password">
+				<column name="PASSWORD_" />
+			</basic>
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

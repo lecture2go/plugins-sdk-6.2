@@ -202,7 +202,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		newVideo.setMetadataId(reqMetadata.getMetadataId());
 		newVideo.setRootInstitutionId(reqProducer.getInstitutionId());
 		newVideo.setOpenAccess(0);
-		newVideo.setSurl(Security.createSecureFileName()+".xx");
+		newVideo.setSecureFilename(Security.createSecureFileName()+".xx");
 		//save it
 		Video video = VideoLocalServiceUtil.addVideo(newVideo);
 		request.setAttribute("reqVideo", newVideo);
@@ -303,7 +303,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			//update data base
 			try {
 				video.setFilename(fileName);
-				video.setSurl(secureFileName);
+				video.setSecureFilename(secureFileName);
 				video.setContainerFormat(containerFormat);
 				video.setGenerationDate(generationDate);
 				video.setUploadDate(new Date());
@@ -317,7 +317,7 @@ public class AdminVideoManagement extends MVCPortlet {
 					fileLocation = ProducerLocalServiceUtil.getProdUcer(video.getProducerId()).getHomeDir() + "/" + video.getFilename();
 				}else{
 					image = video.getSPreffix()+".jpg";
-					fileLocation = ProducerLocalServiceUtil.getProdUcer(video.getProducerId()).getHomeDir() + "/" + video.getSurl();
+					fileLocation = ProducerLocalServiceUtil.getProdUcer(video.getProducerId()).getHomeDir() + "/" + video.getSecureFilename();
 				}
 				String thumbnailLocation = PropsUtil.get("lecture2go.images.system.path") + "/" + image;
 				//delete old thumbs

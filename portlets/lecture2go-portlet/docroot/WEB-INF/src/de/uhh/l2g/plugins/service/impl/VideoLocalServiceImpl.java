@@ -167,7 +167,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			imageSmall = objectVideo.getPreffix() + "_s.jpg";
 			imageMedium = objectVideo.getPreffix() + "_m.jpg";
 		} else {
-			videoPfad = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + objectVideo.getSurl();
+			videoPfad = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + objectVideo.getSecureFilename();
 			image = objectVideo.getSPreffix() + ".jpg";
 			imageSmall = objectVideo.getSPreffix() + "_s.jpg";
 			imageMedium = objectVideo.getSPreffix() + "_m.jpg";
@@ -226,7 +226,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			filename = objectVideo.getFilename();
 		} else {
 			preffix = objectVideo.getSPreffix();
-			filename = objectVideo.getSurl();
+			filename = objectVideo.getSecureFilename();
 		}
 		String homedirPath = "";
 		homedirPath = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + preffix;
@@ -503,7 +503,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		ListIterator<Video> vli = vl.listIterator();
 		while(vli.hasNext()){
 			Video objectVideo = getFullVideo(vli.next().getVideoId());
-			rvl.add(objectVideo);
+			if(objectVideo.getFilename().trim().length()>0)rvl.add(objectVideo);
 		}
 		return rvl;
 	}
@@ -545,7 +545,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			String playerUri = "";
 			playerUri += uris.get(i);
 			if(video.getOpenAccess()==1)playerUri = playerUri.replace("[filename]", video.getFilename());
-			else playerUri = playerUri.replace("[filename]", video.getSurl());
+			else playerUri = playerUri.replace("[filename]", video.getSecureFilename());
 			//
 			playerUri = playerUri.replace("[host]", host.getStreamer());
 			playerUri = playerUri.replace("[ext]", video.getContainerFormat());

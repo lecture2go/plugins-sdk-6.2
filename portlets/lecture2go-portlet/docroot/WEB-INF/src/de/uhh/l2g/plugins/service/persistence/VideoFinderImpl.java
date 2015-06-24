@@ -176,7 +176,7 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 			v.setOpenAccess((Integer)video[11]);
 			v.setDownloadLink((Integer)video[12]);
 			v.setMetadataId((Long)video[13]);
-			v.setSurl((String)video[14]);
+			v.setSecureFilename((String)video[14]);
 			v.setHits((Integer)video[15]);
 			//parse date
 			DateFormat formatter ;

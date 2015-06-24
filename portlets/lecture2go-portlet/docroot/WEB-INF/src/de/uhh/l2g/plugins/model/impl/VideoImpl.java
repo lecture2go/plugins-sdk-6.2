@@ -417,7 +417,7 @@ public class VideoImpl extends VideoBaseImpl {
 		String preffix="";
 		try{
 			// extract time and date from the originalFileName
-			String[] parameter = this.getSurl().split("\\.");
+			String[] parameter = this.getSecureFilename().split("\\.");
 			preffix = parameter[0];
 		}catch(NullPointerException npe){}
 			return preffix;

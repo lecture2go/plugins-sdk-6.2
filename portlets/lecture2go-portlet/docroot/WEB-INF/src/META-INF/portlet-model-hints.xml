@@ -63,7 +63,7 @@
 		<field name="lectureseriesId" type="long" />
 		<field name="password" type="String" />
 		<field name="approved" type="int" />
-		<field name="longDesc" type="String" />
+		<field name="longDesc" type="TEXT" />
 		<field name="latestOpenAccessVideoId" type="long" />
 		<field name="latestVideoUploadDate" type="Date" />
 		<field name="latestVideoGenerationDate" type="String" />
@@ -101,7 +101,7 @@
 		<field name="language" type="String" />
 		<field name="title" type="String" />
 		<field name="subject" type="String" />
-		<field name="description" type="String" />
+		<field name="description" type="TEXT" />
 		<field name="publisher" type="String" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Office">
@@ -144,7 +144,7 @@
 		<field name="tagcloudId" type="long" />
 		<field name="objectClassType" type="String" />
 		<field name="objectId" type="long" />
-		<field name="tags" type="String" />
+		<field name="tags" type="TEXT" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Term">
 		<field name="termId" type="long" />
@@ -177,7 +177,7 @@
 		<field name="openAccess" type="int" />
 		<field name="downloadLink" type="int" />
 		<field name="metadataId" type="long" />
-		<field name="surl" type="String" />
+		<field name="secureFilename" type="String" />
 		<field name="hits" type="long" />
 		<field name="uploadDate" type="Date" />
 		<field name="permittedToSegment" type="int" />
@@ -186,6 +186,7 @@
 		<field name="termId" type="long" />
 		<field name="videoCreatorId" type="long" />
 		<field name="tags" type="String" />
+		<field name="password" type="String" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Video_Category">
 		<field name="videoCategoryId" type="long" />
