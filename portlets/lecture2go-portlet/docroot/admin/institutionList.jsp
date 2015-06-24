@@ -4,6 +4,7 @@
 <%@ page import="de.uhh.l2g.plugins.model.Host" %>
 <%@ page import="de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil" %>
 <%@ page import="de.uhh.l2g.plugins.service.HostLocalServiceUtil" %>
+<%@ page import="de.uhh.l2g.plugins.service.StreamingServerTemplateLocalServiceUtil" %>
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
@@ -21,44 +22,27 @@
 <portlet:actionURL name="updateSubInstitution" var="updateSubInstitutionURL"></portlet:actionURL>
 <portlet:actionURL name="addStreamingServer" var="addStreamingServerURL"></portlet:actionURL>
 <portlet:actionURL name="updateStreamingServer" var="updateStreamingServerURL"></portlet:actionURL>
+<portlet:actionURL name="addStreamingServerTemplate" var="addStreamingServerTemplateURL"></portlet:actionURL>
+<portlet:actionURL name="updateStreamingServerTemplate" var="updateStreamingServerTemplateURL"></portlet:actionURL>
 <portlet:actionURL name="updateTopLevelInstitution" var="updateTopLevelInstitutionURL"></portlet:actionURL>
-
-
-<script src="https://code.jquery.com/jquery-1.11.2.js"></script>
-<script type="text/javascript">
-
-	function toggleDevices() {
-	    	if($("#<portlet:namespace/>deviceSpecific").val() != "false") {
-	    		$("#<portlet:namespace />serverFieldsAndroid").show();
-	    		$("#<portlet:namespace />serverFieldsIOS").show();
-	    	}
-	    	else{
-	    		$("#<portlet:namespace />serverFieldsAndroid").hide();
-	    		$("#<portlet:namespace />serverFieldsIOS").hide();
-	    	}
-	}
-
-	$(document).ready(function() {
-			$("#<portlet:namespace/>deviceSpecificCheckbox").change(toggleDevices);   // when the input changes
-			toggleDevices(); // when the page is loaded
-	});
-
-</script>
 
 <%
 long institutionId = Long.valueOf((Long) renderRequest.getAttribute("institutionId"));
 long hostId = Long.valueOf((Long) renderRequest.getAttribute("hostId"));
+long streamingServerTemplateId = Long.valueOf((Long) renderRequest.getAttribute("streamingServerTemplateId"));
 
 long groupId = themeDisplay.getLayout().getGroupId();
 
 boolean deviceSpecificURLs = false;
+if (streamingServerTemplateId > 0) deviceSpecificURLs = StreamingServerTemplateLocalServiceUtil.getDeviceSpecificByStreamingServerTemplateId(streamingServerTemplateId);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("institutionId", institutionId+"");
 portletURL.setParameter("hostId", hostId+"");
+portletURL.setParameter("streamingServerTemplateId", hostId+"");
 
 List<Institution> institutions = InstitutionLocalServiceUtil.getByGroupIdAndParent(groupId,1);
-List<Host> hostList = HostLocalServiceUtil.getByGroupId(groupId);
+List<Host> hostList = HostLocalServiceUtil.getByTemplateConfiguredAndGroupId(groupId);
 Institution topLevel = InstitutionLocalServiceUtil.getTopLevelByGroupId(groupId);
 
 for (int i = 0; i < institutions.size(); i++) {
@@ -68,24 +52,18 @@ for (int i = 0; i < institutions.size(); i++) {
 
 long parent = topLevel.getPrimaryKey();
 int maxOrder = 0;
-//if (institutionId > 1) {
-//	Institution selectedInstitution = InstitutionLocalServiceUtil.getById(institutionId);
-//	maxOrder = selectedInstitution.getSort();
-//}
-//else{
-	maxOrder = InstitutionLocalServiceUtil.getMaxSortByParentId(topLevel.getInstitutionId())+1;
-//	}
+
+maxOrder = InstitutionLocalServiceUtil.getMaxSortByParentId(topLevel.getInstitutionId())+1;
 %>
 
-<liferay-ui:panel title="Edit Institution Settings" collapsible="true" id="institutionSettings"
-				defaultState="open"
-				extended="<%= false %>"
-				persistState="<%= true %>">
-<aui:form action="<%= addInstitutionURL %>" name="<portlet:namespace />fm">
-
+<liferay-ui:panel title="Add Institution" collapsible="true" id="institutionSettings"
+	defaultState="open"
+	extended="<%= false %>"
+	persistState="<%= true %>">
+	<aui:form action="<%= addInstitutionURL %>" name="<portlet:namespace />fm">
 		<aui:fieldset>
-			<aui:input name="institution" label="Institution" required="true" inlineField="true"/>
-            <aui:select name="serverselect" id="selecthost" label="Select Streaming Server" inlineField="true">
+			<aui:input name="institution" label="Name" required="true" inlineField="true"/>
+            <aui:select name="serverselect" id="selecthost" label="Streaming Server" inlineField="true">
 			<%
 					for(Host host : hostList){
 			%>
@@ -96,51 +74,15 @@ int maxOrder = 0;
             <aui:input name='institutionId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "institutionId") %>'/>
             <aui:input name='parent' type='hidden' inlineField="true" value='<%= parent %>'/>
 			<aui:button type="submit" value="Add" ></aui:button>
-			<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button>
+<%-- 			<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button> --%>
         </aui:fieldset>
-
-</aui:form>
-<p></p>
-
-</liferay-ui:panel>
-       <liferay-ui:panel title="Streaming Server Options" collapsible="true" id="streamingServerSettings"
-		    	defaultState="open"
-		    	extended="<%= false %>"
-		    	persistState="<%= true %>">
-				<aui:form action="<%= updateStreamingServerURL %>" name="<portlet:namespace />fm" inlineLabel="true">
-				<aui:button-row>
-		 	    <aui:fieldset column="true">
-					<aui:input label="StreamingServer Name" name="name" required="true" inlineField="true"></aui:input>
-		 	        <aui:input label="Streaming Server Domain or IP" name="ip" inlineField="true"></aui:input>
-		 	        <aui:input label="HTTP Protocol" name="protocol" inlineField="true"></aui:input>
-		 	        <aui:input name='hostId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "hostId") %>'/>
-		 	        <aui:button type="submit"></aui:button>
-					<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button>
-		 	    </aui:fieldset>
-		 	    </aui:button-row>
-</aui:form>
+	</aui:form>
 </liferay-ui:panel>
 
-
-<liferay-ui:panel title="Top Level Institution" collapsible="true" id="topLevelInstitutionSettings"
-				defaultState="closed"
-				extended="<%= false %>"
-				persistState="<%= true %>">
-<aui:form action="<%= updateTopLevelInstitutionURL %>" name="<portlet:namespace />fm">
-	<aui:fieldset>
-			<aui:input name="topLevelInstitution" label="Top Level Institution" required="true" inlineField="true" />
-			<aui:input name='topLevelInstitutionId' type='hidden' />
-			<aui:button type="submit"></aui:button>
-			<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button>
-	</aui:fieldset>
-</aui:form>
-</liferay-ui:panel>
-
-<liferay-ui:panel title="List of Institutions" collapsible="false" id="outerList">
+<%-- <liferay-ui:panel title="List of Institutions" collapsible="false" id="outerList"> --%>
 
 <liferay-ui:search-container searchContainer="<%= searchInstitutionContainer %>"
 curParam ="curOuter"
-orderByCol="sort"
 orderByType="asc"
 emptyResultsMessage="there-are-no-institutions"
 delta="20"
@@ -168,45 +110,39 @@ deltaConfigurable="true">
 
  		 <liferay-ui:search-container-row-parameter name="rowId" value="<%= institution_row.toString() %>"/>
 
-        <liferay-ui:search-container-column-text property="sort" name="Order"/>
-
         <liferay-ui:search-container-column-text name="Institution">
 
+		<portlet:actionURL name="deleteInstitution" var="deleteInstitutionURL">
+			<portlet:param name="outerListInstitutionId" value='<%= (new Long(institution_row.getInstitutionId())).toString() %>' />
+			<portlet:param name="institutionId" value='<%= (new Long(institutionId)).toString() %>' />
+			<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>
+		</portlet:actionURL>
+		
  		<aui:form action="<%= updateInstitutionURL %>" name="<portlet:namespace />fm">
  			<aui:fieldset>
 				<aui:input name="outerListInstitution" label="Institution Name" inlineField="true" value = "<%= institution.getName() %>" />
-				<aui:input name="outerListOrder" label="Order" inlineField="true" value='<%= outerOrder %>'/>
+				<aui:input name="outerListOrder" type="text" label="Order" inlineField="true" value='<%= outerOrder %>'/>
 				<aui:input name="outerListStreamer" label="Streamer" inlineField="true" value = "<%= institution.getTyp() %>" disabled="true"/>
 				<aui:button type="submit"></aui:button>
+				<aui:button name="delete" value="Löschen" type="button" href="<%=deleteInstitutionURL.toString() %>" />
 			</aui:fieldset>
  		</aui:form>
- 		<portlet:actionURL name="deleteInstitution" var="deleteInstitutionURL">
- 					<portlet:param name="outerListInstitutionId" value='<%= (new Long(institution_row.getInstitutionId())).toString() %>' />
- 					<portlet:param name="institutionId" value='<%= (new Long(institutionId)).toString() %>' />
-					<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>
-		</portlet:actionURL>
- 		<a href="<%=deleteInstitutionURL.toString()%>">
-					<span class="icon-large icon-remove"></span>
-		</a>
- 		<aui:form action="<%= addSubInstitutionURL %>" name="<portlet:namespace />fm">
- 			<aui:fieldset>
-				<aui:input name="subInstitution" label="SubInstitution Name" inlineField="true" />
-				<aui:input name="subInstitutionOrder" label="Order" inlineField="true" value='<%= subInstitutionMax  %>'/>
-				<aui:button type="submit" value="Add"></aui:button>
-			</aui:fieldset>
- 		</aui:form>
-
 		<liferay-ui:panel
 				defaultState="closed"
 				extended="<%= false %>"
 				id="<%= id_row %>"
 				persistState="<%= true %>"
-				title="<%= institution.getName() %>" >
-
+				title="SubInstitutions" >
+			<aui:form action="<%= addSubInstitutionURL %>" name="<portlet:namespace />fm">
+	 			<aui:fieldset>
+					<aui:input name="subInstitution" label="SubInstitution Name" inlineField="true" />
+					<aui:input name="subInstitutionOrder" label="Order" inlineField="true" value='<%= subInstitutionMax  %>'/>
+					<aui:button type="submit" value="Add"></aui:button>
+				</aui:fieldset>
+ 			</aui:form>
 
 			<liferay-ui:search-container searchContainer="<%= searchSubInstitutionContainer %>"
 				curParam ="<%=curParam_row%>"
-				orderByCol="sort"
 				orderByType="asc"
 				emptyResultsMessage="there-are-no-institutions"
 				iteratorURL="<%= innerURL %>"
@@ -219,44 +155,34 @@ deltaConfigurable="true">
         			total="<%=InstitutionLocalServiceUtil.getByGroupIdAndParentCount(groupId, institution_id)%>" />
 
 				<liferay-ui:search-container-row
-				className="de.uhh.l2g.plugins.model.Institution" modelVar="subInstitution"
+				className="de.uhh.l2g.plugins.model.Institution" modelVar="subInstitution" rowVar="thisRow"
 				keyProperty="institutionId"  escapedModel="<%= false %>" indexVar="j">
 
-
-        			<liferay-ui:search-container-column-text property="sort" name="Order"/>
-
         			<liferay-ui:search-container-column-text name="Institution" >
-        			 <aui:form action="<%= updateSubInstitutionURL %>" name="<portlet:namespace />fm">
- 						<aui:fieldset>
-							<aui:input name="institution" label="Institution Name" inlineField="true" value = "<%= subInstitution.getName() %>" />
-							<aui:input name="innerListOrder" label="Order" inlineField="true" value='<%= subInstitution.getSort() %>'/>
-							<aui:button type="submit"></aui:button>
-						</aui:fieldset>
- 						</aui:form>
- 					<portlet:actionURL name="deleteSubInstitution" var="deleteSubInstitutionURL">
- 					<portlet:param name="innerListInstitutionId" value='<%= (new Long(subInstitution.getInstitutionId())).toString() %>' />
- 					<portlet:param name="institutionId" value='<%= (new Long(institutionId)).toString() %>' />
-					<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>
-					</portlet:actionURL>
-						<a href="<%=deleteSubInstitutionURL.toString()%>">
-							<span class="icon-large icon-remove"></span>
-						</a>
+	        			<portlet:actionURL name="deleteSubInstitution" var="deleteSubInstitutionURL">
+		 					<portlet:param name="innerListInstitutionId" value='<%= (new Long(subInstitution.getInstitutionId())).toString() %>' />
+		 					<portlet:param name="institutionId" value='<%= (new Long(institutionId)).toString() %>' />
+							<portlet:param name="backURL" value="<%=String.valueOf(portletURL) %>"/>
+						</portlet:actionURL>
+						<aui:form action="<%= updateSubInstitutionURL %>" name="<portlet:namespace />fm">
+							<aui:fieldset>
+								<aui:input name="institution" label="Institution Name" inlineField="true" value = "<%= subInstitution.getName() %>" />
+								<aui:input cssClass="smallInput" name="innerListOrder" label="Order" inlineField="true" value='<%= subInstitution.getSort() %>'/>
+								<aui:button type="submit"></aui:button>
+								<aui:button name="delete" value="Löschen" type="button" href="<%=deleteInstitutionURL.toString() %>" />
+							</aui:fieldset>
+						</aui:form>
         			</liferay-ui:search-container-column-text>
 
         		</liferay-ui:search-container-row>
         	<liferay-ui:search-iterator searchContainer="<%= searchSubInstitutionContainer %>" />
 			</liferay-ui:search-container>
 
-
-
 		</liferay-ui:panel>
 		</liferay-ui:search-container-column-text>
 
-
     </liferay-ui:search-container-row>
-
 
     <liferay-ui:search-iterator searchContainer="<%= searchInstitutionContainer %>" />
 </liferay-ui:search-container>
-</liferay-ui:panel>
-
+<%-- </liferay-ui:panel> --%>
