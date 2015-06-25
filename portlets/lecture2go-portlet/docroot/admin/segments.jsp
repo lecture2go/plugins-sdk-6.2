@@ -50,7 +50,7 @@ String backURL = request.getAttribute("backURL").toString();
 	</aui:layout>
 </aui:fieldset>
 
-<div id="iframe" style="overflow: auto; width:750px; height:350px; font-size: 1.2em;">
+<div id="chapters" style="overflow: auto; width:750px; height:350px; font-size: 1.2em;">
 </div>
 
 <liferay-portlet:resourceURL id="showSegments" var="segmentsURL" />
@@ -109,10 +109,10 @@ String backURL = request.getAttribute("backURL").toString();
 	
 	function drawRow(segment) {
 	    if(segment.chapter==1){
-	    	newRow='<div class="chaptertile" id="'+segment.segmentId+'">'+
-			'<a><iavst begin="'+segment.start+'" end="'+segment.end+'"><img class="imgsmall" title="watch this chapter" src="'+segment.image+'"></iavst></a>'+
-			'<span style="font-size:8px;">'+segment.start +' - '+segment.end+'</span><br/>'+
-			'<a><iavst class="white" begin="'+segment.start+'" end="'+segment.end+'"><span style="font-size:11px;">'+segment.title+'</span></iavst></a>';
+	    	newRow='<div class="chaptertile" id="' + segment.segmentId + '" begin="' + segment.start + '" end="' + segment.end + '">'+
+			'<a><img class="imgsmall" title="watch this chapter" src="'+segment.image+'"></a>'+
+			'<span>'+segment.start +' - '+segment.end+'</span><br/>'+
+			'<a><span>'+segment.title+'</span></a>';
 		}else{
 			newRow='<div class="commenttile" id="'+segment.segmentId+'" onload="alert('+segment.segmentId+')">'+
     		'<div>'+
@@ -138,7 +138,7 @@ String backURL = request.getAttribute("backURL").toString();
 		}
 		
 		if(segment.previousSegmentId == -1){
-			$("#iframe").append(newRow);
+			$("#chapters").append(newRow);
 		}else{
 			$(newRow).insertAfter("#"+ segment.previousSegmentId);
 		}

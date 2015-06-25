@@ -238,77 +238,77 @@ public class VideoImpl extends VideoBaseImpl {
 
 	private String simpleDate = "";
 	
-	private String mp4OpenAccessDownloadLink;
-	private String pdfOpenAccessDownloadLink;
-	private String mp3OpenAccessDownloadLink;
-	private String m4vOpenAccessDownloadLink;
-	private String m4aOpenAccessDownloadLink;
-	private String flvOpenAccessDownloadLink;
-	private String oggOpenAccessDownloadLink;
-	private String webmOpenAccessDownloadLink;
+	private String mp4DownloadLink;
+	private String pdfDownloadLink;
+	private String mp3DownloadLink;
+	private String m4vDownloadLink;
+	private String m4aDownloadLink;
+	private String flvDownloadLink;
+	private String oggDownloadLink;
+	private String webmDownloadLink;
 
-	public String getMp4OpenAccessDownloadLink() {
-		return mp4OpenAccessDownloadLink;
+	public String getMp4DownloadLink() {
+		return mp4DownloadLink;
 	}
 
-	public void setMp4OpenAccessDownloadLink(String mp4OpenAccessDownloadLink) {
-		this.mp4OpenAccessDownloadLink = mp4OpenAccessDownloadLink;
+	public void setMp4DownloadLink(String mp4DownloadLink) {
+		this.mp4DownloadLink = mp4DownloadLink;
 	}
 
-	public String getPdfOpenAccessDownloadLink() {
-		return pdfOpenAccessDownloadLink;
+	public String getPdfDownloadLink() {
+		return pdfDownloadLink;
 	}
 
-	public void setPdfOpenAccessDownloadLink(String pdfOpenAccessDownloadLink) {
-		this.pdfOpenAccessDownloadLink = pdfOpenAccessDownloadLink;
+	public void setPdfDownloadLink(String pdfDownloadLink) {
+		this.pdfDownloadLink = pdfDownloadLink;
 	}
 
-	public String getMp3OpenAccessDownloadLink() {
-		return mp3OpenAccessDownloadLink;
+	public String getMp3DownloadLink() {
+		return mp3DownloadLink;
 	}
 
-	public void setMp3OpenAccessDownloadLink(String mp3OpenAccessDownloadLink) {
-		this.mp3OpenAccessDownloadLink = mp3OpenAccessDownloadLink;
+	public void setMp3DownloadLink(String mp3DownloadLink) {
+		this.mp3DownloadLink = mp3DownloadLink;
 	}
 
-	public String getM4vOpenAccessDownloadLink() {
-		return m4vOpenAccessDownloadLink;
+	public String getM4vDownloadLink() {
+		return m4vDownloadLink;
 	}
 
-	public void setM4vOpenAccessDownloadLink(String m4vOpenAccessDownloadLink) {
-		this.m4vOpenAccessDownloadLink = m4vOpenAccessDownloadLink;
+	public void setM4vDownloadLink(String m4vDownloadLink) {
+		this.m4vDownloadLink = m4vDownloadLink;
 	}
 
-	public String getM4aOpenAccessDownloadLink() {
-		return m4aOpenAccessDownloadLink;
+	public String getM4aDownloadLink() {
+		return m4aDownloadLink;
 	}
 
-	public void setM4aOpenAccessDownloadLink(String m4aOpenAccessDownloadLink) {
-		this.m4aOpenAccessDownloadLink = m4aOpenAccessDownloadLink;
+	public void setM4aDownloadLink(String m4aDownloadLink) {
+		this.m4aDownloadLink = m4aDownloadLink;
 	}
 
-	public String getFlvOpenAccessDownloadLink() {
-		return flvOpenAccessDownloadLink;
+	public String getFlvDownloadLink() {
+		return flvDownloadLink;
 	}
 
-	public void setFlvOpenAccessDownloadLink(String flvOpenAccessDownloadLink) {
-		this.flvOpenAccessDownloadLink = flvOpenAccessDownloadLink;
+	public void setFlvDownloadLink(String flvDownloadLink) {
+		this.flvDownloadLink = flvDownloadLink;
 	}
 
-	public String getOggOpenAccessDownloadLink() {
-		return oggOpenAccessDownloadLink;
+	public String getOggDownloadLink() {
+		return oggDownloadLink;
 	}
 
-	public void setOggOpenAccessDownloadLink(String oggOpenAccessDownloadLink) {
-		this.oggOpenAccessDownloadLink = oggOpenAccessDownloadLink;
+	public void setOggDownloadLink(String oggDownloadLink) {
+		this.oggDownloadLink = oggDownloadLink;
 	}
 
-	public String getWebmOpenAccessDownloadLink() {
-		return webmOpenAccessDownloadLink;
+	public String getWebmDownloadLink() {
+		return webmDownloadLink;
 	}
 
-	public void setWebmOpenAccessDownloadLink(String webmOpenAccessDownloadLink) {
-		this.webmOpenAccessDownloadLink = webmOpenAccessDownloadLink;
+	public void setWebmDownloadLink(String webmDownloadLink) {
+		this.webmDownloadLink = webmDownloadLink;
 	}
 
 	private File mp4File;

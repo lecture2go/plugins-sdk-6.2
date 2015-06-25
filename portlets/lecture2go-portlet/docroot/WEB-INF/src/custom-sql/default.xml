@@ -21,7 +21,7 @@
 		]]>
     </sql>
 
-        <sql id="de.uhh.l2g.plugins.service.persistence.HostFinder.findAllInstitutionsByHost">
+        <sql id="de.uhh.l2g.plugins.service.persistence.HostFinder.findLockingElements">
 		<![CDATA[
 			SELECT COUNT(*) as elements FROM LG_Institution as Inst
 			NATURAL JOIN
@@ -106,6 +106,12 @@
 			FROM  LG_Producer_Lectureseries AS pc
 			INNER JOIN LG_Producer AS p ON pc.producerId = p.producerId
 			WHERE pc.lectureseriesId = ?
+		]]>
+    </sql>
+
+    <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.findVideoForSecureUrl">
+		<![CDATA[
+			SELECT videoId FROM LG_Video WHERE surl LIKE ?
 		]]>
     </sql>
 
