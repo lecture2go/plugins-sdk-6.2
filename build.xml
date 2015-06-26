@@ -4,6 +4,17 @@
 <project name="plugins" basedir="." default="all" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-common.xml" />
 
+	<path id="plugins.includes.path">
+		<dirset dir="hooks" excludes="${plugins.excludes}" includes="${plugins.includes}" />
+		<dirset dir="layouttpl" excludes="${plugins.excludes}" includes="${plugins.includes}" />
+		<dirset dir="portlets" excludes="${plugins.excludes}" includes="${plugins.includes}" />
+		<dirset dir="shared" excludes="${plugins.excludes}" includes="${plugins.includes}" />
+		<dirset dir="themes" excludes="${plugins.excludes}" includes="${plugins.includes}" />
+		<dirset dir="webs" excludes="${plugins.excludes}" includes="${plugins.includes}" />
+	</path>
+
+	<pathconvert pathsep="," property="plugins.includes.path" refid="plugins.includes.path" targetos="unix" />
+
 	<target name="all">
 		<antcall target="clean" />
 		<antcall target="deploy" />
@@ -37,50 +48,6 @@
 			<arg value="${sdk.dir}/summary.xsl" />
 			<arg value="${sdk.dir}/summary.html" />
 		</java>
-	</target>
-
-	<target name="clean">
-		<for list="hooks,layouttpl,portlets,shared,themes,webs" param="loop.modules.dir">
-			<sequential>
-				<loop-modules
-					loop.modules.cmd="clean"
-					loop.modules.dir="@{loop.modules.dir}"
-				/>
-			</sequential>
-		</for>
-	</target>
-
-	<target name="compile">
-		<for list="hooks,layouttpl,portlets,shared,themes,webs" param="loop.modules.dir">
-			<sequential>
-				<loop-modules
-					loop.modules.cmd="compile"
-					loop.modules.dir="@{loop.modules.dir}"
-				/>
-			</sequential>
-		</for>
-	</target>
-
-	<target name="deploy">
-		<for list="hooks,layouttpl,portlets,shared,themes,webs" param="loop.modules.dir">
-			<sequential>
-				<loop-modules
-					loop.modules.cmd="deploy"
-					loop.modules.dir="@{loop.modules.dir}"
-				/>
-			</sequential>
-		</for>
-	</target>
-
-	<target name="direct-deploy">
-		<for list="hooks,layouttpl,portlets,themes,webs" param="loop.modules.dir">
-			<sequential>
-				<loop-modules
-					loop.modules.cmd="direct-deploy"
-					loop.modules.dir="@{loop.modules.dir}"
-				/>
-			</sequential>
-		</for>
 	</target>
 
 	<target name="ear">
@@ -188,7 +155,7 @@
 		<zip destfile="dist/liferay-plugins-sdk-${lp.version}.zip">
 			<zipfileset
 				dir="."
-				excludes="*.iml,.git/**,.ivy/**,build.*.properties,dist/**,ext/*-ext/**,hooks/*-hook/**,lib/**,ivy.xml.MD5,layouttpl/*-layouttpl/**,portlets/*-portlet/**,private-plugins.txt,shared/*-shared/**,source_formatter_*,summary.*,themes/*-theme/**,webs/*-web/**"
+				excludes="*.iml,.bnd/**,.git/**,.ivy/**,build.*.properties,dist/**,ext/*-ext/**,hooks/*-hook/**,lib/**,ivy.xml.MD5,layouttpl/*-layouttpl/**,portlets/*-portlet/**,private-plugins.txt,shared/*-shared/**,source_formatter_*,summary.*,themes/*-theme/**,webs/*-web/**"
 				prefix="liferay-plugins-sdk-${lp.version}"
 			/>
 			<zipfileset
@@ -214,20 +181,16 @@
 	</target>
 
 	<target name="setup-eclipse">
-		<for list="hooks,portlets,webs" param="loop.modules.dir">
+		<for list="${plugins.includes.path}" param="module.dir">
 			<sequential>
-				<loop-modules
-					loop.modules.cmd="clean"
-					loop.modules.dir="@{loop.modules.dir}"
+				<call-macrodef-or-target
+					macrodef.name="clean"
+					module.dir="@{module.dir}"
 				/>
-			</sequential>
-		</for>
 
-		<for list="hooks,portlets,webs" param="loop.modules.dir">
-			<sequential>
-				<loop-modules
-					loop.modules.cmd="compile"
-					loop.modules.dir="@{loop.modules.dir}"
+				<call-macrodef-or-target
+					macrodef.name="compile"
+					module.dir="@{module.dir}"
 				/>
 			</sequential>
 		</for>
@@ -235,17 +198,6 @@
 		<ant dir="hooks" target="setup-eclipse" inheritAll="false" />
 		<ant dir="portlets" target="setup-eclipse" inheritAll="false" />
 		<ant dir="webs" target="setup-eclipse" inheritAll="false" />
-	</target>
-
-	<target name="war">
-		<for list="hooks,layouttpl,portlets,shared,themes,webs" param="loop.modules.dir">
-			<sequential>
-				<loop-modules
-					loop.modules.cmd="war"
-					loop.modules.dir="@{loop.modules.dir}"
-				/>
-			</sequential>
-		</for>
 	</target>
 
 	<target name="zip-portal">

@@ -4,6 +4,12 @@
 <project name="build-common-plugins" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-common.xml" />
 
+	<path id="plugins.includes.path">
+		<dirset dir="." excludes="${plugins.excludes}" includes="${plugins.includes}" />
+	</path>
+
+	<pathconvert pathsep="," property="plugins.includes.path" refid="plugins.includes.path" targetos="unix" />
+
 	<if>
 		<equals arg1="${basedir}" arg2="${user.dir}" />
 		<then>
@@ -34,41 +40,6 @@
 				<ant dir="${portlet.dir}" target="build-service" inheritAll="false" />
 			</sequential>
 		</for>
-	</target>
-
-	<target name="clean">
-		<loop-modules
-			loop.modules.cmd="clean"
-			loop.modules.dir="."
-		/>
-	</target>
-
-	<target name="compile">
-		<loop-modules
-			loop.modules.cmd="compile"
-			loop.modules.dir="."
-		/>
-	</target>
-
-	<target name="deploy">
-		<loop-modules
-			loop.modules.cmd="deploy"
-			loop.modules.dir="."
-		/>
-	</target>
-
-	<target name="direct-deploy">
-		<loop-modules
-			loop.modules.cmd="direct-deploy"
-			loop.modules.dir="."
-		/>
-	</target>
-
-	<target name="jar">
-		<loop-modules
-			loop.modules.cmd="jar"
-			loop.modules.dir="."
-		/>
 	</target>
 
 	<target name="loop-modules">
@@ -103,12 +74,5 @@
 
 	<target name="setup-eclipse-module">
 		<ant dir="${module.name}" target="setup-eclipse" inheritAll="false" />
-	</target>
-
-	<target name="war">
-		<loop-modules
-			loop.modules.cmd="war"
-			loop.modules.dir="."
-		/>
 	</target>
 </project>
