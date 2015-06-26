@@ -21,9 +21,9 @@
 		]]>
     </sql>
 
-        <sql id="de.uhh.l2g.plugins.service.persistence.HostFinder.findLockingElements">
+        <sql id="de.uhh.l2g.plugins.service.persistence.InstitutionFinder.findLockingElements">
 		<![CDATA[
-			SELECT COUNT(*) as elements FROM LG_Institution as Inst
+			SELECT COUNT(*) as countElements FROM LG_Institution as Inst
 			NATURAL JOIN
 			(
 			(SELECT institutionId FROM LG_Lectureseries_Institution AS Lec)

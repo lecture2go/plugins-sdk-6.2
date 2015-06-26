@@ -129,7 +129,7 @@ public class InstitutionFinderImpl extends BasePersistenceImpl<Institution> impl
 			session = openSession();
 			String sql = CustomSQLUtil.get(FIND_LOCKING_ELEMENTS);
 			SQLQuery q = session.createSQLQuery(sql);
-			q.addScalar("elements", Type.INTEGER);
+			q.addScalar("countElements", Type.INTEGER);
 			q.setCacheable(false);
 			QueryPos qPos = QueryPos.getInstance(q);
 			qPos.add(institutionId);
