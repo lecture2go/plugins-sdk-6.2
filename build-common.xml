@@ -60,19 +60,15 @@
 		<fileset dir="${sdk.dir}/lib" includes="activation.jar,jargs.jar,javax.servlet-api.jar,jsp-api.jar,qdox.jar" />
 	</path>
 
-	<path id="portal-ant.classpath">
-		<path refid="portal.classpath" />
-		<fileset dir="${sdk.dir}/lib" includes="bnd.jar,portal-ant-shared.jar" />
-	</path>
+	<taskdef classpathref="lib.classpath" resource="aQute/bnd/ant/taskdef.properties" />
 
 	<path id="test.classpath">
 		<path refid="plugin.classpath" />
-		<path refid="plugin-test-type.classpath" />
 		<fileset dir="${app.server.lib.portal.dir}" excludes="ant.jar" includes="*.jar" />
 		<fileset dir="${sdk.dir}/lib" includes="junit.jar,mockito-all.jar,powermock-*.jar,spring-test.jar" />
+		<pathelement location="test-classes/integration" />
+		<pathelement location="test-classes/unit" />
 	</path>
-
-	<taskdef classpathref="lib.classpath" resource="aQute/bnd/ant/taskdef.properties" />
 
 	<condition property="correct.ant.version">
 		<antversion atleast="1.8.0" />
@@ -141,7 +137,7 @@ Error-Prone was automatically installed. Please rerun your task.
 		<sequential>
 			<taskdef
 				classname="com.liferay.portal.ant.bnd.BaselineJarTask"
-				classpathref="portal-ant.classpath"
+				classpathref="plugin.classpath"
 				name="baseline-jar"
 			/>
 
@@ -166,6 +162,10 @@ Error-Prone was automatically installed. Please rerun your task.
 		<attribute name="module.dir" />
 
 		<sequential>
+			<pathconvert property="module.dir.unix" targetos="unix">
+				<path location="@{module.dir}" />
+			</pathconvert>
+
 			<java
 				classname="com.liferay.portal.tools.SassToCssBuilder"
 				classpathref="portal.classpath"
@@ -178,6 +178,8 @@ Error-Prone was automatically installed. Please rerun your task.
 				<arg value="sass.docroot.dir=${module.dir.unix}/docroot" />
 				<arg value="sass.portal.common.dir=${app.server.portal.dir}/html/css/common" />
 			</java>
+
+			<var name="module.dir.unix" unset="true" />
 		</sequential>
 	</macrodef>
 
@@ -186,11 +188,10 @@ Error-Prone was automatically installed. Please rerun your task.
 		<attribute name="module.dir" />
 
 		<sequential>
+			<loadfile property="call-macrodef-or-target.build.xml.content" srcFile="@{module.dir}/build.xml" />
+
 			<if>
-				<resourcecontains
-					resource="${module.dir.unix}/build.xml"
-					substring="&lt;target name=&quot;@{macrodef.name}&quot;&gt;"
-				/>
+				<contains string="${call-macrodef-or-target.build.xml.content}" substring="&lt;target name=&quot;@{macrodef.name}&quot;&gt;" />
 				<then>
 					<ant dir="@{module.dir}" target="@{macrodef.name}" inheritAll="false" />
 				</then>
@@ -291,30 +292,6 @@ Error-Prone was automatically installed. Please rerun your task.
 							</then>
 						</elseif>
 						<elseif>
-							<equals arg1="@{macrodef.name}" arg2="test" />
-							<then>
-								<test
-									module.dir="@{module.dir}"
-								/>
-							</then>
-						</elseif>
-						<elseif>
-							<equals arg1="@{macrodef.name}" arg2="test-integration" />
-							<then>
-								<test-integration
-									module.dir="@{module.dir}"
-								/>
-							</then>
-						</elseif>
-						<elseif>
-							<equals arg1="@{macrodef.name}" arg2="test-unit" />
-							<then>
-								<test-unit
-									module.dir="@{module.dir}"
-								/>
-							</then>
-						</elseif>
-						<elseif>
 							<equals arg1="@{macrodef.name}" arg2="war" />
 							<then>
 								<war-macro
@@ -325,6 +302,8 @@ Error-Prone was automatically installed. Please rerun your task.
 					</if>
 				</else>
 			</if>
+
+			<var name="call-macrodef-or-target.build.xml.content" unset="true" />
 		</sequential>
 	</macrodef>
 
@@ -342,15 +321,16 @@ Error-Prone was automatically installed. Please rerun your task.
 			<if>
 				<available file="@{module.dir}/docroot/WEB-INF/.gitignore" />
 				<then>
+					<loadfile property=".gitignore.content" srcFile="@{module.dir}/docroot/WEB-INF/.gitignore" />
+
 					<if>
-						<resourcecontains
-							resource="${module.dir.unix}/docroot/WEB-INF/.gitignore"
-							substring="/lib"
-						/>
+						<contains string="${.gitignore.content}" substring="/lib" />
 						<then>
 							<delete dir="@{module.dir}/docroot/WEB-INF/lib" />
 						</then>
 					</if>
+
+					<var name=".gitignore.content" unset="true" />
 				</then>
 			</if>
 
@@ -388,20 +368,6 @@ Error-Prone was automatically installed. Please rerun your task.
 			<delete file="${plugin.sources.file}" />
 			<delete file="${plugin.src.file}" />
 
-			<if>
-				<equals arg1="${clean.delete.ivy.md5}" arg2="true" />
-				<then>
-					<delete file="@{module.dir}/ivy.xml.MD5" />
-				</then>
-			</if>
-
-			<if>
-				<equals arg1="${clean.delete.lib}" arg2="true" />
-				<then>
-					<delete dir="@{module.dir}/lib" />
-				</then>
-			</if>
-
 			<call-macrodef-or-target
 				macrodef.name="clean-portal-dependencies"
 				module.dir="@{module.dir}"
@@ -421,31 +387,6 @@ Error-Prone was automatically installed. Please rerun your task.
 							</delete>
 						</then>
 					</if>
-				</then>
-			</if>
-
-			<if>
-				<resourcecontains
-					resource="${module.dir.unix}/build.xml"
-					substring="/build-common-osgi-plugin.xml&quot;"
-				/>
-				<then>
-					<set-build-xml-var
-						build.xml.var.name="auto.deploy.dir"
-						module.dir="@{module.dir}"
-					/>
-
-					<if>
-						<isset property="set-build-xml-var.return" />
-						<then>
-							<var name="module.auto.deploy.dir" value="${set-build-xml-var.return}" />
-						</then>
-						<else>
-							<var name="module.auto.deploy.dir" value="${auto.deploy.dir}" />
-						</else>
-					</if>
-
-					<delete file="${module.auto.deploy.dir}/${plugin.name}.${plugin.packaging}" />
 				</then>
 			</if>
 		</sequential>
@@ -546,10 +487,6 @@ Error-Prone was automatically installed. Please rerun your task.
 						module.dir="@{module.dir}"
 					/>
 
-					<process-ivy
-						module.dir="@{module.dir}"
-					/>
-
 					<mkdir dir="@{module.dir}/classes" />
 
 					<compile-java
@@ -633,22 +570,36 @@ Error-Prone was automatically installed. Please rerun your task.
 							<if>
 								<available file="${sdk.dir}/shared/@{import.shared.current}/src" />
 								<then>
-									<compile-import-shared-jar
-										import.shared.current="@{import.shared.current}"
-										import.shared.current.dir="${sdk.dir}/shared/@{import.shared.current}"
+									<call-macrodef-or-target
+										macrodef.name="jar"
+										module.dir="${sdk.dir}/shared/@{import.shared.current}"
+									/>
+
+									<set-module-properties
 										module.dir="@{module.dir}"
 									/>
+
+									<for param="import.shared.full.path">
+										<path>
+											<fileset dir="${sdk.dir}/dist" includes="@{import.shared.current}-${lp.version}.*.jar" />
+										</path>
+										<sequential>
+											<copy
+												file="@{import.shared.full.path}"
+												tofile="${plugin.lib.dir}/@{import.shared.current}.jar"
+											/>
+										</sequential>
+									</for>
+
+									<if>
+										<available file="${sdk.dir}/shared/@{import.shared.current}/lib" />
+										<then>
+											<copy todir="${plugin.lib.dir}">
+												<fileset dir="${sdk.dir}/shared/@{import.shared.current}/lib" includes="*.jar" />
+											</copy>
+										</then>
+									</if>
 								</then>
-								<elseif>
-									<available file="${module.dir.unix}/../@{import.shared.current}/src" />
-									<then>
-										<compile-import-shared-jar
-											import.shared.current="@{import.shared.current}"
-											import.shared.current.dir="${module.dir.unix}/../@{import.shared.current}"
-											module.dir="@{module.dir}"
-										/>
-									</then>
-								</elseif>
 							</if>
 						</sequential>
 					</for>
@@ -657,49 +608,6 @@ Error-Prone was automatically installed. Please rerun your task.
 
 			<var name="compile-import-shared.import.compat.shared" unset="true" />
 			<var name="compile-import-shared.import.shared" unset="true" />
-		</sequential>
-	</macrodef>
-
-	<macrodef name="compile-import-shared-jar">
-		<attribute name="import.shared.current" />
-		<attribute name="import.shared.current.dir" />
-		<attribute name="module.dir" />
-
-		<sequential>
-			<if>
-				<available file="@{import.shared.current.dir}/src" />
-				<then>
-					<call-macrodef-or-target
-						macrodef.name="jar"
-						module.dir="@{import.shared.current.dir}"
-					/>
-
-					<set-module-properties
-						module.dir="@{module.dir}"
-					/>
-
-					<for param="import.shared.full.path">
-						<path>
-							<fileset dir="${sdk.dir}/dist" includes="@{import.shared.current}-${lp.version}.*.jar" />
-						</path>
-						<sequential>
-							<copy
-								file="@{import.shared.full.path}"
-								tofile="${plugin.lib.dir}/@{import.shared.current}.jar"
-							/>
-						</sequential>
-					</for>
-
-					<if>
-						<available file="@{import.shared.current.dir}/lib" />
-						<then>
-							<copy todir="${plugin.lib.dir}">
-								<fileset dir="@{import.shared.current.dir}/lib" includes="*.jar" />
-							</copy>
-						</then>
-					</if>
-				</then>
-			</if>
 		</sequential>
 	</macrodef>
 
@@ -846,11 +754,10 @@ Please find a solution that does not require portal-impl.jar.
 					<available file="@{module.dir}/docroot/WEB-INF/src/content" />
 				</and>
 				<then>
+					<loadfile property="liferay-hook.xml.content" srcFile="@{module.dir}/docroot/WEB-INF/liferay-hook.xml" />
+
 					<if>
-						<resourcecontains
-							resource="${module.dir.unix}/docroot/WEB-INF/liferay-hook.xml"
-							substring="&lt;language-properties&gt;content/Language*.properties&lt;/language-properties&gt;"
-						/>
+						<contains string="${liferay-hook.xml.content}" substring="&lt;language-properties&gt;content/Language*.properties&lt;/language-properties&gt;" />
 						<then>
 							<pathconvert pathsep="${line.separator}&#x9;" property="language.properties.elements">
 								<fileset dir="@{module.dir}/docroot/WEB-INF/src/content">
@@ -882,76 +789,6 @@ Please find a solution that does not require portal-impl.jar.
 			<call-macrodef-or-target
 				macrodef.name="merge"
 				module.dir="@{module.dir}"
-			/>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="compile-test">
-		<attribute name="module.dir" />
-
-		<sequential>
-			<compile
-				module.dir="@{module.dir}"
-			/>
-
-			<compile-test-integration
-				module.dir="@{module.dir}"
-			/>
-
-			<compile-test-unit
-				module.dir="@{module.dir}"
-			/>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="compile-test-cmd">
-		<attribute name="module.dir" />
-		<attribute name="test.type" />
-
-		<sequential>
-			<if>
-				<available file="@{module.dir}/test/@{test.type}" type="dir" />
-				<then>
-					<mkdir dir="@{module.dir}/test-classes/@{test.type}" />
-					<mkdir dir="@{module.dir}/test-results/@{test.type}" />
-
-					<copy todir="@{module.dir}/test-classes/@{test.type}">
-						<fileset dir="@{module.dir}/test" includes="*.properties" />
-						<fileset dir="@{module.dir}/test/@{test.type}" includes="**/*.png,**/*.properties,**/*.xml" />
-					</copy>
-
-					<path id="plugin-test-type.classpath">
-						<pathelement location="@{module.dir}/test-classes/@{test.type}" />
-					</path>
-
-					<compile-java
-						javac.classpathref="test.classpath"
-						javac.destdir="@{module.dir}/test-classes/@{test.type}"
-						javac.srcdir="@{module.dir}/test/@{test.type}"
-					/>
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="compile-test-integration">
-		<attribute name="module.dir" />
-
-		<sequential>
-			<compile-test-cmd
-				module.dir="@{module.dir}"
-				test.type="integration"
-			/>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="compile-test-unit">
-		<attribute name="module.dir" />
-
-		<sequential>
-			<compile-test-cmd
-				module.dir="@{module.dir}"
-				test.type="unit"
 			/>
 		</sequential>
 	</macrodef>
@@ -1163,54 +1000,20 @@ Please find a solution that does not require portal-impl.jar.
 						module.dir="@{module.dir}"
 					/>
 
+					<loadfile property="deploy.build.xml.content" srcFile="@{module.dir}/build.xml" />
+
 					<if>
-						<resourcecontains
-							resource="${module.dir.unix}/build.xml"
-							substring="/build-common-osgi-plugin.xml&quot;"
-						/>
+						<contains string="${deploy.build.xml.content}" substring="import file=&quot;../../build-common-osgi-plugin.xml&quot;" />
 						<then>
-							<set-build-xml-var
-								build.xml.var.name="auto.deploy.dir"
-								module.dir="@{module.dir}"
-							/>
+							<copy failonerror="false" todir="${auto.deploy.dir}">
+								<fileset dir="@{module.dir}/lib" includes="${osgi.dependencies}" />
+							</copy>
 
-							<if>
-								<isset property="set-build-xml-var.return" />
-								<then>
-									<var name="module.auto.deploy.dir" value="${set-build-xml-var.return}" />
-								</then>
-								<else>
-									<var name="module.auto.deploy.dir" value="${auto.deploy.dir}" />
-								</else>
-							</if>
-
-							<mkdir dir="${module.auto.deploy.dir}" />
-
-							<if>
-								<available file="@{module.dir}/lib" />
-								<then>
-									<set-build-xml-var
-										build.xml.var.name="osgi.dependencies"
-										module.dir="@{module.dir}"
-									/>
-
-									<if>
-										<isset property="set-build-xml-var.return" />
-										<then>
-											<copy failonerror="false" todir="${module.auto.deploy.dir}">
-												<fileset dir="@{module.dir}/lib" includes="${set-build-xml-var.return}" />
-											</copy>
-										</then>
-									</if>
-								</then>
-							</if>
-
-							<copy
-								file="${plugin.file}"
-								tofile="${module.auto.deploy.dir}/${plugin.name}.${plugin.packaging}"
-							/>
+							<copy file="${plugin.file}" todir="${auto.deploy.dir}" />
 						</then>
 					</if>
+
+					<var name="deploy.build.xml.content" unset="true" />
 				</else>
 			</if>
 		</sequential>
@@ -1476,11 +1279,10 @@ Please find a solution that does not require portal-impl.jar.
 
 			<mkdir dir="${sdk.dir}/dist" />
 
+			<loadfile property="jar-macro.build.xml.content" srcFile="@{module.dir}/build.xml" />
+
 			<if>
-				<resourcecontains
-					resource="${module.dir.unix}/build.xml"
-					substring="/build-common-osgi-plugin.xml&quot;"
-				/>
+				<contains string="${jar-macro.build.xml.content}" substring="import file=&quot;../../build-common-osgi-plugin.xml&quot;" />
 				<then>
 					<if>
 						<not>
@@ -1546,6 +1348,8 @@ Please find a solution that does not require portal-impl.jar.
 					/>
 				</else>
 			</if>
+
+			<var name="jar-macro.build.xml.content" unset="true" />
 		</sequential>
 	</macrodef>
 
@@ -1564,13 +1368,44 @@ Please find a solution that does not require portal-impl.jar.
 		</sequential>
 	</macrodef>
 
+	<macrodef name="loop-modules">
+		<attribute name="loop.modules.cmd" />
+		<attribute name="loop.modules.dir" />
+
+		<sequential>
+			<if>
+				<not>
+					<equals arg1="${plugins.includes}" arg2="" />
+				</not>
+				<then>
+					<path id="module.dirs.path">
+						<dirset dir="@{loop.modules.dir}" excludes="${plugins.excludes}" includes="${plugins.includes}" />
+					</path>
+
+					<pathconvert pathsep="," property="module.dirs" refid="module.dirs.path" targetos="unix" />
+
+					<for list="${module.dirs}" param="module.dir">
+						<sequential>
+							<call-macrodef-or-target
+								macrodef.name="@{loop.modules.cmd}"
+								module.dir="@{module.dir}"
+							/>
+						</sequential>
+					</for>
+
+					<var name="module.dirs" unset="true" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="manifest-helper">
 		<attribute name="analyze" default="false" />
 
 		<sequential>
 			<taskdef
 				classname="com.liferay.portal.ant.ManifestHelperTask"
-				classpathref="portal-ant.classpath"
+				classpathref="plugin.classpath"
 				name="liferay-manifest-helper"
 			/>
 
@@ -1695,11 +1530,7 @@ Please find a solution that does not require portal-impl.jar.
 		<attribute name="module.dir" />
 
 		<sequential>
-			<var name="module.dir.unix" unset="true" />
-
-			<pathconvert property="module.dir.unix" targetos="unix">
-				<path location="@{module.dir}" />
-			</pathconvert>
+			<loadfile property="set-module-properties.build.xml.content" srcFile="@{module.dir}/build.xml" />
 
 			<var name="plugin.jars" unset="true" />
 			<var name="plugin.required.contexts" unset="true" />
@@ -1746,10 +1577,10 @@ Please find a solution that does not require portal-impl.jar.
 				</then>
 				<else>
 					<antelope:grep
-						group="1"
+						group="2"
 						in="@{module.dir}"
 						property="plugin.name"
-						regex="(?:.*[/\\])(.*)"
+						regex="(.*/)(.*)"
 					/>
 				</else>
 			</if>
@@ -1865,17 +1696,9 @@ Please find a solution that does not require portal-impl.jar.
 			</if>
 
 			<if>
-				<resourcecontains
-					resource="${module.dir.unix}/build.xml"
-					substring="/build-common-osgi-plugin.xml&quot;"
-				/>
+				<contains string="${set-module-properties.build.xml.content}" substring="import file=&quot;../../build-common-osgi-plugin.xml&quot;" />
 				<then>
 					<property name="plugin-lib.classpath.path" refid="plugin-lib.classpath" />
-
-					<set-build-xml-var
-						build.xml.var.name="ignore.osgi.portal.classpath"
-						module.dir="@{module.dir}"
-					/>
 
 					<path id="plugin-lib.classpath">
 						<path refid="portal.classpath" />
@@ -1906,169 +1729,8 @@ Please find a solution that does not require portal-impl.jar.
 				</then>
 			</if>
 
+			<var name="set-module-properties.build.xml.content" unset="true" />
 			<var name="set-module-properties.plugin.version" unset="true" />
-		</sequential>
-	</macrodef>
-
-	<macrodef name="test">
-		<attribute name="module.dir" />
-
-		<sequential>
-			<test-integration
-				module.dir="@{module.dir}"
-			/>
-
-			<test-unit
-				module.dir="@{module.dir}"
-			/>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="test-class">
-		<attribute name="module.dir" />
-		<attribute name="test.class" />
-
-		<sequential>
-			<if>
-				<available file="@{module.dir}/test/integration" type="dir" />
-				<then>
-					<resourcecount property="test.integration.count">
-						<fileset dir="@{module.dir}/test-classes/integration" includes="**/@{test.class}.class" />
-					</resourcecount>
-				</then>
-			</if>
-
-			<if>
-				<available file="@{module.dir}/test/unit" type="dir" />
-				<then>
-					<resourcecount property="test.unit.count">
-						<fileset dir="@{module.dir}/test-classes/unit" includes="**/@{test.class}.class" />
-					</resourcecount>
-				</then>
-			</if>
-
-			<if>
-				<equals arg1="${test.integration.count}" arg2="1" />
-				<then>
-					<var name="test.type" value="integration" />
-				</then>
-				<elseif>
-					<equals arg1="${test.unit.count}" arg2="1" />
-					<then>
-						<var name="test.type" value="unit" />
-					</then>
-				</elseif>
-				<else>
-					<if>
-						<not>
-							<isset property="test.class" />
-						</not>
-						<then>
-							<fail>Use "ant test-class -Dtest.class=StringUtilTest".</fail>
-						</then>
-						<elseif>
-							<not>
-								<isset property="test.type" />
-							</not>
-							<then>
-								<fail>Test class ${test.class} cannot be found.</fail>
-							</then>
-						</elseif>
-					</if>
-				</else>
-			</if>
-
-			<test-cmd
-				junit.forkmode="once"
-				module.dir="@{module.dir}"
-				test.class="${test.class}"
-				test.type="${test.type}"
-			/>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="test-cmd">
-		<attribute name="junit.forkmode" />
-		<attribute name="module.dir" />
-		<attribute name="test.class" />
-		<attribute name="test.type" />
-
-		<sequential>
-			<set-module-properties
-				module.dir="@{module.dir}"
-			/>
-
-			<if>
-				<available file="@{module.dir}/test/@{test.type}" />
-				<then>
-					<delete dir="@{module.dir}/test-classes/@{test.type}" />
-					<delete dir="@{module.dir}/test-results/@{test.type}" />
-
-					<compile
-						module.dir="@{module.dir}"
-					/>
-
-					<compile-test-cmd
-						module.dir="@{module.dir}"
-						test.type="@{test.type}"
-					/>
-
-					<path id="plugin-test-type.classpath">
-						<pathelement location="@{module.dir}/test-classes/@{test.type}" />
-					</path>
-
-					<if>
-						<available file="@{module.dir}/test/@{test.type}" type="dir" />
-						<then>
-							<junit dir="${sdk.dir}" fork="on" forkmode="@{junit.forkmode}" outputtoformatters="false" printsummary="on" showoutput="true">
-								<sysproperty key="net.sourceforge.cobertura.datafile" file="@{module.dir}/test-coverage/cobertura.ser" />
-								<jvmarg line="${junit.debug.jpda}" />
-								<jvmarg value="-Xmx${junit.java.mx}" />
-								<jvmarg value="-XX:MaxPermSize=${junit.java.maxpermsize}" />
-								<jvmarg value="-Dexternal-properties=${test.properties}" />
-								<jvmarg value="-Dfile.encoding=UTF-8" />
-								<jvmarg value="-Djava.net.preferIPv4Stack=true" />
-								<jvmarg value="-Duser.timezone=GMT" />
-								<classpath location="@{module.dir}/test-coverage" />
-								<classpath refid="test.classpath" />
-								<formatter type="brief" usefile="false" />
-								<formatter type="xml" />
-								<batchtest todir="@{module.dir}/test-results/@{test.type}">
-									<fileset dir="@{module.dir}/test-classes/@{test.type}" includes="**/@{test.class}.class">
-										<filename regex="${junit.test.excludes}" negate="true" />
-									</fileset>
-								</batchtest>
-							</junit>
-						</then>
-					</if>
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="test-integration">
-		<attribute name="module.dir" />
-
-		<sequential>
-			<test-cmd
-				junit.forkmode="once"
-				module.dir="@{module.dir}"
-				test.class="*Test"
-				test.type="integration"
-			/>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="test-unit">
-		<attribute name="module.dir" />
-
-		<sequential>
-			<test-cmd
-				junit.forkmode="perTest"
-				module.dir="@{module.dir}"
-				test.class="*Test"
-				test.type="unit"
-			/>
 		</sequential>
 	</macrodef>
 
@@ -2252,28 +1914,6 @@ Please find a solution that does not require portal-impl.jar.
 		</sequential>
 	</macrodef>
 
-	<target name="clean">
-		<for list="${plugins.includes.path}" param="module.dir">
-			<sequential>
-				<call-macrodef-or-target
-					macrodef.name="clean"
-					module.dir="@{module.dir}"
-				/>
-			</sequential>
-		</for>
-	</target>
-
-	<target name="compile">
-		<for list="${plugins.includes.path}" param="module.dir">
-			<sequential>
-				<call-macrodef-or-target
-					macrodef.name="compile"
-					module.dir="@{module.dir}"
-				/>
-			</sequential>
-		</for>
-	</target>
-
 	<target name="create">
 		<if>
 			<or>
@@ -2305,28 +1945,6 @@ Please find a solution that does not require portal-impl.jar.
 		</if>
 	</target>
 
-	<target name="deploy">
-		<for list="${plugins.includes.path}" param="module.dir">
-			<sequential>
-				<call-macrodef-or-target
-					macrodef.name="deploy"
-					module.dir="@{module.dir}"
-				/>
-			</sequential>
-		</for>
-	</target>
-
-	<target name="direct-deploy">
-		<for list="${plugins.includes.path}" param="module.dir">
-			<sequential>
-				<call-macrodef-or-target
-					macrodef.name="direct-deploy"
-					module.dir="@{module.dir}"
-				/>
-			</sequential>
-		</for>
-	</target>
-
 	<target name="format-javadoc">
 		<java
 			classname="com.liferay.portal.tools.JavadocFormatter"
@@ -2355,17 +1973,6 @@ Please find a solution that does not require portal-impl.jar.
 		</java>
 
 		<delete file="ServiceBuilder.temp" />
-	</target>
-
-	<target name="jar">
-		<for list="${plugins.includes.path}" param="module.dir">
-			<sequential>
-				<call-macrodef-or-target
-					macrodef.name="jar"
-					module.dir="@{module.dir}"
-				/>
-			</sequential>
-		</for>
 	</target>
 
 	<target name="print-current-time">
@@ -2429,49 +2036,5 @@ Please find a solution that does not require portal-impl.jar.
 			<jvmarg value="-Xss2048k" />
 			<arg value="sort.xml.file.name=${sort.xml.file.name}" />
 		</java>
-	</target>
-
-	<target name="test">
-		<for list="${plugins.includes.path}" param="module.dir">
-			<sequential>
-				<call-macrodef-or-target
-					macrodef.name="test"
-					module.dir="@{module.dir}"
-				/>
-			</sequential>
-		</for>
-	</target>
-
-	<target name="test-integration">
-		<for list="${plugins.includes.path}" param="module.dir">
-			<sequential>
-				<call-macrodef-or-target
-					macrodef.name="test-integration"
-					module.dir="@{module.dir}"
-				/>
-			</sequential>
-		</for>
-	</target>
-
-	<target name="test-unit">
-		<for list="${plugins.includes.path}" param="module.dir">
-			<sequential>
-				<call-macrodef-or-target
-					macrodef.name="test-unit"
-					module.dir="@{module.dir}"
-				/>
-			</sequential>
-		</for>
-	</target>
-
-	<target name="war">
-		<for list="${plugins.includes.path}" param="module.dir">
-			<sequential>
-				<call-macrodef-or-target
-					macrodef.name="war"
-					module.dir="@{module.dir}"
-				/>
-			</sequential>
-		</for>
 	</target>
 </project>
