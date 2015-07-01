@@ -21,17 +21,23 @@
 		]]>
     </sql>
 
-        <sql id="de.uhh.l2g.plugins.service.persistence.HostFinder.findAllInstitutionsByHost">
+        <sql id="de.uhh.l2g.plugins.service.persistence.InstitutionFinder.findLockingElements">
 		<![CDATA[
-			SELECT myNode.institutionId, myNode.parentId, myNode.name, myNode.typ, myNode.www, myNode.level, myNode.sort,
-			IF(myParent.institutionId>=0, IF(myGrandparent.institutionId>=0,
-			CONCAT(myGrandparent.institutionId, '/', myParent.institutionId, '/', myNode.institutionId),
-			CONCAT('', myParent.institutionId, '/', myNode.institutionId)),
-			CONCAT( myNode.institutionId, '')) AS path
-			FROM LG_Institution AS myNode
-			LEFT JOIN LG_Institution AS myParent ON myNode.parentId = myParent.institutionId
-			LEFT JOIN LG_Institution AS myGrandparent ON myParent.parentId = myGrandparent.institutionId
-			ORDER BY path ASC
+			SELECT COUNT(*) as countElements FROM LG_Institution as Inst
+			NATURAL JOIN
+			(
+			(SELECT institutionId FROM LG_Lectureseries_Institution AS Lec)
+				UNION
+			(SELECT institutionId FROM LG_Video_Institution AS Vid)
+				UNION
+			(SELECT institutionId FROM LG_Coordinator AS Coo)
+				UNION
+			(SELECT institutionId FROM LG_Producer AS Pro)
+				UNION
+			(SELECT parentId as institutionId FROM LG_Institution AS Child)
+			 )
+			AS contents
+			WHERE Inst.institutionId = ?
 		]]>
     </sql>
         <sql id="de.uhh.l2g.plugins.service.persistence.HostFinder.findHostByInstitution">

@@ -4,7 +4,6 @@
 <%@ page import="de.uhh.l2g.plugins.model.Host" %>
 <%@ page import="de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil" %>
 <%@ page import="de.uhh.l2g.plugins.service.HostLocalServiceUtil" %>
-<%@ page import="de.uhh.l2g.plugins.service.StreamingServerTemplateLocalServiceUtil" %>
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
@@ -22,27 +21,21 @@
 <portlet:actionURL name="updateSubInstitution" var="updateSubInstitutionURL"></portlet:actionURL>
 <portlet:actionURL name="addStreamingServer" var="addStreamingServerURL"></portlet:actionURL>
 <portlet:actionURL name="updateStreamingServer" var="updateStreamingServerURL"></portlet:actionURL>
-<portlet:actionURL name="addStreamingServerTemplate" var="addStreamingServerTemplateURL"></portlet:actionURL>
-<portlet:actionURL name="updateStreamingServerTemplate" var="updateStreamingServerTemplateURL"></portlet:actionURL>
 <portlet:actionURL name="updateTopLevelInstitution" var="updateTopLevelInstitutionURL"></portlet:actionURL>
 
 <%
 long institutionId = Long.valueOf((Long) renderRequest.getAttribute("institutionId"));
 long hostId = Long.valueOf((Long) renderRequest.getAttribute("hostId"));
-long streamingServerTemplateId = Long.valueOf((Long) renderRequest.getAttribute("streamingServerTemplateId"));
 
 long groupId = themeDisplay.getLayout().getGroupId();
 
-boolean deviceSpecificURLs = false;
-if (streamingServerTemplateId > 0) deviceSpecificURLs = StreamingServerTemplateLocalServiceUtil.getDeviceSpecificByStreamingServerTemplateId(streamingServerTemplateId);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("institutionId", institutionId+"");
 portletURL.setParameter("hostId", hostId+"");
-portletURL.setParameter("streamingServerTemplateId", hostId+"");
 
 List<Institution> institutions = InstitutionLocalServiceUtil.getByGroupIdAndParent(groupId,1);
-List<Host> hostList = HostLocalServiceUtil.getByTemplateConfiguredAndGroupId(groupId);
+List<Host> hostList = HostLocalServiceUtil.getByGroupId(groupId);
 Institution topLevel = InstitutionLocalServiceUtil.getTopLevelByGroupId(groupId);
 
 for (int i = 0; i < institutions.size(); i++) {
@@ -52,15 +45,21 @@ for (int i = 0; i < institutions.size(); i++) {
 
 long parent = topLevel.getPrimaryKey();
 int maxOrder = 0;
-
-maxOrder = InstitutionLocalServiceUtil.getMaxSortByParentId(topLevel.getInstitutionId())+1;
+//if (institutionId > 1) {
+//	Institution selectedInstitution = InstitutionLocalServiceUtil.getById(institutionId);
+//	maxOrder = selectedInstitution.getSort();
+//}
+//else{
+	maxOrder = InstitutionLocalServiceUtil.getMaxSortByParentId(topLevel.getInstitutionId())+1;
+//	}
 %>
 
-<liferay-ui:panel title="Add Institution" collapsible="true" id="institutionSettings"
-	defaultState="open"
-	extended="<%= false %>"
-	persistState="<%= true %>">
-	<aui:form action="<%= addInstitutionURL %>" name="<portlet:namespace />fm">
+<liferay-ui:panel title="Edit Institution Settings" collapsible="true" id="institutionSettings"
+				defaultState="open"
+				extended="<%= false %>"
+				persistState="<%= true %>">
+<aui:form action="<%= addInstitutionURL %>" name="<portlet:namespace />fm">
+
 		<aui:fieldset>
 			<aui:input name="institution" label="Name" required="true" inlineField="true"/>
             <aui:select name="serverselect" id="selecthost" label="Streaming Server" inlineField="true">
@@ -76,10 +75,44 @@ maxOrder = InstitutionLocalServiceUtil.getMaxSortByParentId(topLevel.getInstitut
 			<aui:button type="submit" value="Add" ></aui:button>
 <%-- 			<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button> --%>
         </aui:fieldset>
-	</aui:form>
+</aui:form>
+
+</liferay-ui:panel>
+       <liferay-ui:panel title="Streaming Server Options" collapsible="true" id="streamingServerSettings"
+		    	defaultState="open"
+		    	extended="<%= false %>"
+		    	persistState="<%= true %>">
+				<aui:form action="<%= updateStreamingServerURL %>" name="<portlet:namespace />fm" inlineLabel="true">
+				<aui:button-row>
+		 	    <aui:fieldset column="true">
+					<aui:input label="StreamingServer Name" name="name" required="true" inlineField="true"></aui:input>
+		 	        <aui:input label="Streaming Server Domain or IP" name="ip" inlineField="true"></aui:input>
+		 	        <aui:input label="HTTP Protocol" name="protocol" inlineField="true"></aui:input>
+		 	        <aui:input name='hostId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "hostId") %>'/>
+		 	        <aui:button type="submit"></aui:button>
+					<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button>
+		 	    </aui:fieldset>
+		 	    </aui:button-row>
+</aui:form>
 </liferay-ui:panel>
 
 <%-- <liferay-ui:panel title="List of Institutions" collapsible="false" id="outerList"> --%>
+
+<liferay-ui:panel title="Top Level Institution" collapsible="true" id="topLevelInstitutionSettings"
+				defaultState="closed"
+				extended="<%= false %>"
+				persistState="<%= true %>">
+<aui:form action="<%= updateTopLevelInstitutionURL %>" name="<portlet:namespace />fm">
+	<aui:fieldset>
+			<aui:input name="topLevelInstitution" label="Top Level Institution" required="true" inlineField="true" />
+			<aui:input name='topLevelInstitutionId' type='hidden' />
+			<aui:button type="submit"></aui:button>
+			<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button>
+	</aui:fieldset>
+</aui:form>
+</liferay-ui:panel>
+
+<%--<liferay-ui:panel title="List of Institutions" collapsible="false" id="outerList"> --%>
 
 <liferay-ui:search-container searchContainer="<%= searchInstitutionContainer %>"
 curParam ="curOuter"
