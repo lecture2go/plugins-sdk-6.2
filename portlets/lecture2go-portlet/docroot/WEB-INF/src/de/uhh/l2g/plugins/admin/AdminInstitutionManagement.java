@@ -91,12 +91,12 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 			String name = ParamUtil.getString(request, "institution");
 			long hostId = ParamUtil.getLong(request, "serverselect");
-			long parent = ParamUtil.getLong(request, "parent");
+			long parentId = ParamUtil.getLong(request, "parent");
 			int sort = ParamUtil.getInteger(request, "order");
 
 
 	         InstitutionLocalServiceUtil.addInstitution(
-	              name, hostId, parent, sort, serviceContext);
+	              name, hostId, parentId, sort, serviceContext);
 
 	         SessionMessages.add(request, "entryAdded");
 
@@ -104,7 +104,8 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 	       } catch (Exception e) {
 	         SessionErrors.add(request, e.getClass().getName());
-
+	         System.out.println(e.getClass().getName());
+	         e.printStackTrace();
 	         PortalUtil.copyRequestParameters(request, response);
 
 	         response.setRenderParameter("mvcPath",
@@ -120,22 +121,22 @@ public class AdminInstitutionManagement extends MVCPortlet {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 					Institution.class.getName(), request);
 
-			String name = ParamUtil.getString(request, "institution");
+			String name = ParamUtil.getString(request, "outerListInstitution");
 			long hostId = ParamUtil.getLong(request, "serverselect");
-			long parent = ParamUtil.getLong(request, "parent");
-
+			long institutionId = ParamUtil.getLong(request, "institution");
+			System.out.println(institutionId);
 			try {
-				InstitutionLocalServiceUtil.addInstitution(
-						name, hostId, parent, 0, serviceContext);
+				InstitutionLocalServiceUtil.updateInstitution(
+						institutionId, name, hostId, 0, serviceContext);
 
-				SessionMessages.add(request, "entryAdded");
+				SessionMessages.add(request, "entryUpdated");
 
-				// response.setRenderParameter("institutionId",
-				//      Long.toString(institutionId));
+				// response.setRenderParameter("mvcPath",
+			     //         "/admin/institutionList.jsp");
 
 			} catch (Exception e) {
 				SessionErrors.add(request, e.getClass().getName());
-
+				System.out.println(e.getClass().getName());
 				PortalUtil.copyRequestParameters(request, response);
 
 				response.setRenderParameter("mvcPath",

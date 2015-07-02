@@ -43,7 +43,7 @@ for (int i = 0; i < institutions.size(); i++) {
 	long curId = curInstitution.getInstitutionId();
 }
 
-long parent = topLevel.getPrimaryKey();
+long topParentId = topLevel.getPrimaryKey();
 int maxOrder = 0;
 //if (institutionId > 1) {
 //	Institution selectedInstitution = InstitutionLocalServiceUtil.getById(institutionId);
@@ -71,7 +71,7 @@ int maxOrder = 0;
             </aui:select>
             <aui:input name="order" label="Order" inlineField="true" value='<%= maxOrder %>'/>
             <aui:input name='institutionId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "institutionId") %>'/>
-            <aui:input name='parent' type='hidden' inlineField="true" value='<%= parent %>'/>
+            <aui:input name='parent' type='hidden' inlineField="true" value='<%= topParentId %>'/>
 			<aui:button type="submit" value="Add" ></aui:button>
 <%-- 			<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button> --%>
         </aui:fieldset>
@@ -95,8 +95,6 @@ int maxOrder = 0;
 		 	    </aui:button-row>
 </aui:form>
 </liferay-ui:panel>
-
-<%-- <liferay-ui:panel title="List of Institutions" collapsible="false" id="outerList"> --%>
 
 <liferay-ui:panel title="Top Level Institution" collapsible="true" id="topLevelInstitutionSettings"
 				defaultState="closed"
@@ -122,8 +120,8 @@ delta="20"
 iteratorURL="<%= outerURL %>"
 deltaConfigurable="true">
     <liferay-ui:search-container-results
-        results="<%=InstitutionLocalServiceUtil.getByGroupIdAndParent(groupId, new Long(1), searchContainer.getStart(), searchContainer.getEnd())%>"
-        total="<%=InstitutionLocalServiceUtil.getByGroupIdAndParentCount(groupId, new Long(1))%>" />
+        results="<%=InstitutionLocalServiceUtil.getByGroupIdAndParent(groupId, topParentId  , searchContainer.getStart(), searchContainer.getEnd())%>"
+        total="<%=InstitutionLocalServiceUtil.getByGroupIdAndParentCount(groupId, topParentId)%>" />
 
     <liferay-ui:search-container-row
         className="de.uhh.l2g.plugins.model.Institution" modelVar="institution"
@@ -150,11 +148,11 @@ deltaConfigurable="true">
 			<portlet:param name="institutionId" value='<%= (new Long(institutionId)).toString() %>' />
 			<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>
 		</portlet:actionURL>
-		
+
  		<aui:form action="<%= updateInstitutionURL %>" name="<portlet:namespace />fm">
  			<aui:fieldset>
 				<aui:input name="outerListInstitution" label="Institution Name" inlineField="true" value = "<%= institution.getName() %>" />
-				<aui:input name="outerListOrder" type="text" label="Order" inlineField="true" value='<%= outerOrder %>'/>
+				<aui:input name="outerListOrder" label="Order" inlineField="true" value='<%= outerOrder %>'/>
 				<aui:input name="outerListStreamer" label="Streamer" inlineField="true" value = "<%= institution.getTyp() %>" disabled="true"/>
 				<aui:button type="submit"></aui:button>
 				<aui:button name="delete" value="Löschen" type="button" href="<%=deleteInstitutionURL.toString() %>" />
