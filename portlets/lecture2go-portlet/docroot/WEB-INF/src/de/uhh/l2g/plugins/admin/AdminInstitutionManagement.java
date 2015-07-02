@@ -149,7 +149,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		    long institutionId = ParamUtil.getLong(request, "outerListInstitutionId");
 		    long selectedInstitutionId = ParamUtil.getLong(request, "institutionId");
 
-		    System.out.println("Delete "+institutionId);
+		    System.out.println("Delete "+institutionId + " " +selectedInstitutionId);
 		    try {
 
 		       ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -160,7 +160,8 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		       InstitutionLocalServiceUtil.deleteInstitution(institutionId, serviceContext);
 
 		    } catch (Exception e) {
-
+		    	 System.out.println(e.getClass().getName());
+		         e.printStackTrace();
 		       SessionErrors.add(request, e.getClass().getName());
 		    }
 		}

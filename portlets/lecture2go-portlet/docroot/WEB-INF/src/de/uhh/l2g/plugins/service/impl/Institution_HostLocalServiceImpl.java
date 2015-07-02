@@ -170,6 +170,7 @@ public class Institution_HostLocalServiceImpl
 
 	   public Institution_Host deleteEntriesByInstitution(long institutionId, ServiceContext serviceContext)
 		        throws PortalException, SystemException {
+		   		Institution_Host institution_Host = null;
 
 		   		long groupId = serviceContext.getScopeGroupId();
 		   		long userId = serviceContext.getUserId();
@@ -178,17 +179,19 @@ public class Institution_HostLocalServiceImpl
 
 		   		List<Institution_Host> linstitution_Host = getListByGroupIdAndInstitutionId(groupId, institutionId);
 
-				Institution_Host institution_Host = linstitution_Host.get(0);
+				if (linstitution_Host.size() > 0){
+					institution_Host = linstitution_Host.get(0);
 
 
-		   		host.setExpandoBridgeAttributes(serviceContext);
+		   		institution_Host.setExpandoBridgeAttributes(serviceContext);
 		        resourceLocalService.deleteResource(serviceContext.getCompanyId(),
-		        		Institution.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
+		        		Institution_Host.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
 		        		institutionId);
 
-		        institution_host = deleteInstitution_Host(institutionId);
+		        institution_Host = deleteInstitution_Host(institutionId);
+				}
 
-		        return institution_host;
+		        return institution_Host;
 
 		    }
 
