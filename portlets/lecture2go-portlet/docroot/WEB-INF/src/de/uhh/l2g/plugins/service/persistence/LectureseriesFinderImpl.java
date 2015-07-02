@@ -140,7 +140,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 	 * @param creatorId
 	 * @return a list with lectureseries which fit to the given filters
 	 */
-	public List<Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreator(Long institutionId, Long parentInstitutionId, Long termId, Long categoryId, long creatorId) {
+	public List<Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreator(Long institutionId, Long parentInstitutionId, Long termId, Long categoryId, long creatorId, String searchQuery) {
 		ArrayList<Long> termIds = new ArrayList<Long>();
 		ArrayList<Long> categoryIds = new ArrayList<Long>();
 		ArrayList<Long> creatorIds = new ArrayList<Long>();
@@ -154,14 +154,14 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			creatorIds.add(creatorId);
 		}
 
-		return findFilteredByInstitutionParentInstitutionTermCategoryCreator(institutionId,parentInstitutionId,termIds,categoryIds,creatorIds);
+		return findFilteredByInstitutionParentInstitutionTermCategoryCreator(institutionId,parentInstitutionId,termIds,categoryIds,creatorIds, searchQuery);
 	}
 	
-	public List<Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreator(Long institutionId, Long parentInstitutionId, ArrayList<Long> termIds, ArrayList<Long> categoryIds, ArrayList<Long> creatorIds) {
+	public List<Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreator(Long institutionId, Long parentInstitutionId, ArrayList<Long> termIds, ArrayList<Long> categoryIds, ArrayList<Long> creatorIds, String searchQuery) {
 		Session session = null;
 		try {
 			session = openSession();
-			String sql = sqlFilterForOpenAccessLectureseries(institutionId, parentInstitutionId, termIds, categoryIds, creatorIds);
+			String sql = sqlFilterForOpenAccessLectureseries(institutionId, parentInstitutionId, termIds, categoryIds, creatorIds, searchQuery);
 			SQLQuery q = session.createSQLQuery(sql);
 			q.addScalar("number_", Type.STRING);
 			q.addScalar("eventType", Type.STRING);
@@ -191,14 +191,20 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 		}
 		return null;
 	}
-	
-	private String sqlFilterForOpenAccessLectureseries(Long institutionId, Long institutionParentId, ArrayList<Long> termIds, List<Long> categoryIds, ArrayList<Long> creatorIds) {
+		
+	private String sqlFilterForOpenAccessLectureseries(Long institutionId, Long institutionParentId, ArrayList<Long> termIds, List<Long> categoryIds, ArrayList<Long> creatorIds, String searchQuery) {
+		boolean isSearched = (searchQuery != "");
+		// this is an additional query only used for searching. videos which are part of a lectureseries must be searched for the searchquery but are not relevant of the normal filtering
+		String videoAsLectureseriesQuery = "";
+		
 		// build query
 		
-		String lQuery = "SELECT l.number_, l.eventType, l.categoryId, l.name, l.shortDesc, l.termId, l.language, l.facultyName, l.lectureseriesId, l.password_, l.approved, l.longDesc, l.latestOpenAccessVideoId, l.latestVideoUploadDate FROM LG_Lectureseries AS l ";
-		String vQuery = "SELECT \"00.000\" AS number_, NULL AS eventType, 0 AS categoryId, v.title AS name, v.title AS shortDesc, v.termId, \"\" AS language, \"\" AS facultyName, v.videoId AS lectureseriesId, NULL AS password_, 1 AS approved, v.title AS longDesc, v.lectureseriesId AS latestOpenAccessVideoId, v.uploadDate AS latestVideoUploadDate FROM LG_Video v ";
+		String lQuery = "SELECT l.number_, l.eventType, l.categoryId, l.name, l.shortDesc, l.termId, l.language, l.facultyName, l.lectureseriesId, l.password_, l.approved, l.longDesc, l.latestOpenAccessVideoId, l.latestVideoUploadDate, count(*) as videoCount FROM LG_Lectureseries AS l ";
+		String vQuery = "SELECT \"00.000\" AS number_, NULL AS eventType, 0 AS categoryId, v.title AS name, v.title AS shortDesc, v.termId, \"\" AS language, \"\" AS facultyName, v.videoId AS lectureseriesId, NULL AS password_, 1 AS approved, v.title AS longDesc, v.lectureseriesId AS latestOpenAccessVideoId, v.uploadDate AS latestVideoUploadDate,count(*) as videoCount FROM LG_Video v ";
 
 		String query = "";
+		
+		lQuery += "INNER JOIN LG_Video AS v ON (l.lectureseriesId=v.lectureseriesId)";
 
 		if (institutionId > 0 || institutionParentId > 0) {
 			lQuery += "INNER JOIN LG_Lectureseries_Institution AS li ON ( l.lectureseriesId = li.lectureseriesId ) ";
@@ -219,25 +225,39 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			vQuery += "INNER JOIN LG_Video_Category AS vcat ON ( v.videoId = vcat.videoId ) ";
 		}
 		
-		lQuery += "WHERE l.latestOpenAccessVideoId>0 ";
+		// the videos which are part of the lectureseries are searched, this is up to this point identical to the lectureseriesQuery
+		videoAsLectureseriesQuery = lQuery;
+		
+		if (isSearched) {
+			lQuery += "INNER JOIN LG_Tagcloud AS tag ON (v.lectureseriesId = tag.objectId)  ";
+			videoAsLectureseriesQuery += "INNER JOIN LG_Tagcloud AS tag ON (v.videoId = tag.objectId)  ";
+			vQuery += "INNER JOIN LG_Tagcloud AS tag ON (v.videoId=tag.objectId) ";
+		}
+		
+		lQuery += "WHERE l.latestOpenAccessVideoId>0 AND v.openAccess=1 ";
+		videoAsLectureseriesQuery += "WHERE l.latestOpenAccessVideoId>0 AND v.openAccess=1 ";
 		vQuery += "WHERE v.lectureseriesId<0 AND v.openAccess=1 ";
 		
 		if (institutionId > 0 || institutionParentId > 0 || termIds.size() > 0 || categoryIds.size() > 0 || creatorIds.size() > 0) {
 			int i = 0;
 			if (termIds.size() > 0) {
 				lQuery += "AND ";
+				videoAsLectureseriesQuery += "AND ";
 				vQuery += "AND ";
 				ListIterator<Long> it = termIds.listIterator();
 				lQuery += "( ";
+				videoAsLectureseriesQuery += "( ";
 				vQuery += "( ";
 				while(it.hasNext()){
 					Long termId = it.next();
 					if(it.hasNext()){
 						lQuery += "t.termId="+termId+" OR ";
+						videoAsLectureseriesQuery += "t.termId="+termId+" OR ";
 						vQuery += "t.termId="+termId+" OR ";
 					}
 					else{
 						lQuery += "t.termId="+termId+" ) ";
+						videoAsLectureseriesQuery += "t.termId="+termId+" ) ";
 						vQuery += "t.termId="+termId+" ) ";
 					}
 				}
@@ -255,10 +275,12 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 				Long creatorId = creatorIds.get(j);
 					if(j<(creatorIds.size()-1)){
 						lQuery += "lc.creatorId="+creatorId+" OR ";
+						videoAsLectureseriesQuery += "lc.creatorId="+creatorId+" OR ";
 						vQuery += "vc.creatorId="+creatorId+" OR ";
 					}
 					else{
 						lQuery += "lc.creatorId="+creatorId+" ) ";
+						videoAsLectureseriesQuery += "lc.creatorId="+creatorId+" ) ";
 						vQuery += "vc.creatorId="+creatorId+" ) ";
 					}
 				}
@@ -269,6 +291,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 //				lQuery += i > 0 ? "AND " : "";
 //				vQuery += i > 0 ? "AND " : "";
 				lQuery += "AND ";
+				videoAsLectureseriesQuery += "AND ";
 				vQuery += "AND ";
 				ListIterator<Long> it = categoryIds.listIterator();
 				lQuery += "( ";
@@ -277,10 +300,12 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 					Long categoryId = it.next();
 					if(it.hasNext()){
 						lQuery += "l.categoryId = "+categoryId + " OR ";
+						videoAsLectureseriesQuery += "l.categoryId = "+categoryId + " OR ";
 						vQuery += "vcat.categoryId = "+categoryId + " OR ";
 					}
 					else{
 						lQuery += "l.categoryId="+categoryId+" ) ";
+						videoAsLectureseriesQuery += "l.categoryId="+categoryId+" ) ";
 						vQuery += "vcat.categoryId="+categoryId+" ) ";
 					}
 				}
@@ -291,8 +316,10 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 //				lQuery += i > 0 ? "AND " : "";
 //				vQuery += i > 0 ? "AND " : "";
 				lQuery += "AND ";
+				videoAsLectureseriesQuery += "AND ";
 				vQuery += "AND ";
 				lQuery += "li.institutionId = "+institutionId + " ";
+				videoAsLectureseriesQuery += "li.institutionId = "+institutionId + " ";
 				vQuery += "vi.institutionId = "+institutionId + " ";
 				i++;
 			}
@@ -301,20 +328,44 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 //				lQuery += i > 0 ? "AND " : "";
 //				vQuery += i > 0 ? "AND " : "";
 				lQuery += "AND ";
+				videoAsLectureseriesQuery += "AND ";
 				vQuery += "AND ";
 				lQuery += "li.institutionParentId = "+institutionParentId + " ";
+				videoAsLectureseriesQuery += "li.institutionParentId = "+institutionParentId + " ";
 				vQuery += "vi.institutionParentId = "+institutionParentId + " ";
 				i++;
 			}
 
 		}
+		
+		if (isSearched) {
+			lQuery += "AND tag.tags LIKE \"%" + searchQuery + "%\" ";
+			videoAsLectureseriesQuery += "AND tag.tags LIKE \"%" + searchQuery + "%\" ";
+			vQuery += "AND tag.tags LIKE \"%" + searchQuery + "%\" ";
+			
+			
+			
+			lQuery += "AND tag.objectClassType=\"de.uhh.l2g.plugins.model.impl.LectureseriesImpl\" ";
+			vQuery += "AND tag.objectClassType=\"de.uhh.l2g.plugins.model.impl.VideoImpl\" ";
+			videoAsLectureseriesQuery += "AND tag.objectClassType=\"de.uhh.l2g.plugins.model.impl.VideoImpl\" ";
+		}
+		
+		lQuery+="GROUP BY l.lectureseriesId ";
+		videoAsLectureseriesQuery+="GROUP BY l.lectureseriesId ";
+		vQuery+="GROUP BY v.videoId ";
 
-		query = "SELECT * FROM ( ";
+
+		query = "SELECT number_,eventType,categoryId,name,shortDesc,termId,language,facultyName,lectureseriesId,password_,approved,longDesc,latestOpenAccessVideoId,latestVideoUploadDate,MAX(videoCount) as videoCount FROM  ( ";
 		query+= lQuery;
 		query+= "UNION "; 
 		query+= vQuery;
+		if (isSearched) {
+			query+= "UNION ";
+			query+= videoAsLectureseriesQuery;
+		}
 		query+= ") ";
 		query+= "AS a ";
+		query+= "GROUP BY lectureseriesId ";
 		query+= "ORDER BY a.latestVideoUploadDate";	
 		
 	    return query;
@@ -424,4 +475,5 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 
 		return query;
 	}
+	
 }
