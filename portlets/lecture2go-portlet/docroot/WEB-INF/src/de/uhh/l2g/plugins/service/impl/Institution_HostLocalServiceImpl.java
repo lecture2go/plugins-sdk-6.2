@@ -23,7 +23,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 
-import de.uhh.l2g.plugins.Institution_HostException;
+import de.uhh.l2g.plugins.Institution_HostHostException;
 import de.uhh.l2g.plugins.Institution_HostInstitutionException;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
@@ -69,6 +69,7 @@ public class Institution_HostLocalServiceImpl
 		return h;
 	}
 
+
 	public List<Institution> getByGroupIdAndHostId(long groupId, long hostId) throws SystemException, PortalException {
 		List<Institution_Host> linkList = institution_HostPersistence.findByG_H(groupId, hostId);
 		List<Institution> institutions = null;
@@ -101,8 +102,9 @@ public class Institution_HostLocalServiceImpl
 		 }
 
 	     if (Validator.isNull(hostId)) {
-	       throw new Institution_HostException();
+	       throw new Institution_HostHostException();
 	     }
+
 	}
 
 	public Institution_Host addEntry(long institutionId, long hostId, ServiceContext serviceContext) throws SystemException, PortalException {
@@ -143,7 +145,7 @@ public class Institution_HostLocalServiceImpl
 		long userId = serviceContext.getUserId();
 
 		User user = userPersistence.findByPrimaryKey(userId);
-
+        System.out.println (institutionId +" "+hostId);
 		validate(institutionId, hostId);
 
 		List<Institution_Host> linstitution_Host = getListByGroupIdAndInstitutionId(groupId, institutionId);
@@ -168,30 +170,33 @@ public class Institution_HostLocalServiceImpl
 	}
 
 
-	   public Institution_Host deleteEntriesByInstitution(long institutionId, ServiceContext serviceContext)
+	   public List<Institution_Host> deleteEntriesByInstitution(long institutionId, ServiceContext serviceContext)
 		        throws PortalException, SystemException {
 		   		Institution_Host institution_Host = null;
 
 		   		long groupId = serviceContext.getScopeGroupId();
 		   		long userId = serviceContext.getUserId();
 
-		   		//TODO:ensure one instititution maps to one single host
 
 		   		List<Institution_Host> linstitution_Host = getListByGroupIdAndInstitutionId(groupId, institutionId);
 
 				if (linstitution_Host.size() > 0){
-					institution_Host = linstitution_Host.get(0);
 
+					for (Institution_Host link : linstitution_Host) {
+						long ihId = link.getPrimaryKey();
+						institution_Host = deleteInstitution_Host(ihId);
+						System.out.println(ihId);
 
-		   		institution_Host.setExpandoBridgeAttributes(serviceContext);
-		        resourceLocalService.deleteResource(serviceContext.getCompanyId(),
-		        		Institution_Host.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
-		        		institutionId);
+				   		institution_Host.setExpandoBridgeAttributes(serviceContext);
+				        resourceLocalService.deleteResource(serviceContext.getCompanyId(),
+				        		Institution_Host.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
+				        		institutionId);
 
-		        institution_Host = deleteInstitution_Host(institutionId);
-				}
+						}
 
-		        return institution_Host;
+					}
+
+		        return linstitution_Host;
 
 		    }
 

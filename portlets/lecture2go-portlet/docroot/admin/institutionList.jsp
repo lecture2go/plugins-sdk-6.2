@@ -3,6 +3,7 @@
 <%@ page import="com.liferay.portal.kernel.dao.search.ResultRow" %>
 <%@ page import="de.uhh.l2g.plugins.model.Host" %>
 <%@ page import="de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil" %>
+<%@ page import="de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil" %>
 <%@ page import="de.uhh.l2g.plugins.service.HostLocalServiceUtil" %>
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
@@ -54,6 +55,14 @@ int maxOrder = 0;
 //	}
 %>
 
+<liferay-security:permissionsURL
+    modelResource="<%= Institution.class.getName() %>"
+    modelResourceDescription="<%= topLevel.getName() %>"
+    resourcePrimKey="<%= String.valueOf(topLevel.getInstitutionId()) %>"
+    var="permissionsURL" />
+
+<liferay-ui:icon image="permissions" url="<%= permissionsURL %>" />
+
 <liferay-ui:panel title="Edit Institution Settings" collapsible="true" id="institutionSettings"
 				defaultState="open"
 				extended="<%= false %>"
@@ -96,19 +105,21 @@ int maxOrder = 0;
 </aui:form>
 </liferay-ui:panel>
 
-<liferay-ui:panel title="Top Level Institution" collapsible="true" id="topLevelInstitutionSettings"
-				defaultState="closed"
-				extended="<%= false %>"
-				persistState="<%= true %>">
-<aui:form action="<%= updateTopLevelInstitutionURL %>" name="<portlet:namespace />fm">
-	<aui:fieldset>
-			<aui:input name="topLevelInstitution" label="Top Level Institution" required="true" inlineField="true" />
-			<aui:input name='topLevelInstitutionId' type='hidden' />
-			<aui:button type="submit"></aui:button>
-			<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button>
-	</aui:fieldset>
-</aui:form>
-</liferay-ui:panel>
+<c:if test='<%= InstitutionPermission.contains(permissionChecker, institutionId, "EDIT_ROOT_INSTITUTION") %>'>
+	<liferay-ui:panel title="Top Level Institution" collapsible="true" id="topLevelInstitutionSettings"
+					defaultState="closed"
+					extended="<%= false %>"
+					persistState="<%= true %>">
+	<aui:form action="<%= updateTopLevelInstitutionURL %>" name="<portlet:namespace />fm">
+		<aui:fieldset>
+				<aui:input name="topLevelInstitution" label="Top Level Institution" required="true" inlineField="true" />
+				<aui:input name='topLevelInstitutionId' type='hidden' />
+				<aui:button type="submit"></aui:button>
+				<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button>
+		</aui:fieldset>
+	</aui:form>
+	</liferay-ui:panel>
+</c:if>
 
 <%--<liferay-ui:panel title="List of Institutions" collapsible="false" id="outerList"> --%>
 
@@ -134,6 +145,7 @@ deltaConfigurable="true">
  			String id_row = "Inst"+String.valueOf(institution_row.getInstitutionId());
  			String curParam_row = "curInner"+String.valueOf(institution_row.getInstitutionId());
  			long outerOrder = institution_row.getSort();
+ 			Host curHost = Institution_HostLocalServiceUtil.getByGroupIdAndInstitutionId(groupId, institution_row.getInstitutionId());
  			int subInstitutionMax = InstitutionLocalServiceUtil.getMaxSortByParentId(institution_id)+1;
 
 
@@ -152,8 +164,13 @@ deltaConfigurable="true">
  		<aui:form action="<%= updateInstitutionURL %>" name="<portlet:namespace />fm">
  			<aui:fieldset>
 				<aui:input name="outerListInstitution" label="Institution Name" inlineField="true" value = "<%= institution.getName() %>" />
-				<aui:input name="outerListOrder" label="Order" inlineField="true" value='<%= outerOrder %>'/>
-				<aui:input name="outerListStreamer" label="Streamer" inlineField="true" value = "<%= institution.getTyp() %>" disabled="true"/>
+				<aui:input name="outerListOrder" label="Order" inlineField="true" value='<%= institution.getSort() %>'/>
+				<aui:input name="outerListStreamer" label="Streamer" inlineField="true" value = "<%= curHost.getName() %>" disabled="true"/>
+				<aui:input name="outerListInstitutionId" type='hidden' inlineField="true" value = "<%= institution.getPrimaryKey() %>"/>
+				<aui:input name="outerListHostId" type='hidden' inlineField="true" value = "<%= curHost.getPrimaryKey() %>"/>
+
+				<aui:input name='institutionId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "institutionId") %>'/>
+
 				<aui:button type="submit"></aui:button>
 				<aui:button name="delete" value="Löschen" type="button" href="<%=deleteInstitutionURL.toString() %>" />
 			</aui:fieldset>

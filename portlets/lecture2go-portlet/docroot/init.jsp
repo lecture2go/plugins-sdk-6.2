@@ -108,6 +108,9 @@
 <%@ page import="de.uhh.l2g.plugins.service.CreatorLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.util.Lecture2GoRoleChecker"%>
 <%@ page import="de.uhh.l2g.webservices.*"%>
+<%@ page import="de.uhh.l2g.plugins.service.permission.InstitutionPermission"%>
+<%@ page import="de.uhh.l2g.plugins.service.permission.L2GModelPermission"%>
+<%@ page import="de.uhh.l2g.plugins.service.permission.HostPermission"%>
 
 <portlet:defineObjects />
 <liferay-theme:defineObjects/>
@@ -137,14 +140,14 @@ try{
 	}else{
 		if(permissionCoordinator){
 			permissionProducer=false;
-			permissionStudent=false;		
+			permissionStudent=false;
 		}else{
 			if(permissionProducer){
 				permissionStudent=false;
 			}
 		}
 	}
-	PortletPreferences prefs = renderRequest.getPreferences();	
+	PortletPreferences prefs = renderRequest.getPreferences();
 }catch(Exception e){
 	//
 }

@@ -287,8 +287,8 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 
 		   		Institution institution = getInstitution(institutionId);
 
+		   	    //Check if Institution is empty, i.e. no  subfacilities, lecture series, videos, and members
 		        if (getLockingElements(institutionId) < 1){
-			        //Check if Institution is empty, i.e. no  subfacilities, lecture series, videos, and members
 
 			        resourceLocalService.deleteResource(serviceContext.getCompanyId(),
 			        		Institution.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
