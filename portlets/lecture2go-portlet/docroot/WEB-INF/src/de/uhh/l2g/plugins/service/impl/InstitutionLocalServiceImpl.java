@@ -28,6 +28,7 @@ import com.liferay.portal.service.ServiceContext;
 
 import de.uhh.l2g.plugins.InstitutionNameException;
 import de.uhh.l2g.plugins.model.Institution;
+import de.uhh.l2g.plugins.model.Institution_Host;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.InstitutionLocalServiceBaseImpl;
@@ -281,9 +282,12 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 
 		}
 
-	   public Institution deleteInstitution(long institutionId, ServiceContext serviceContext)
+	public Institution deleteInstitution(long institutionId, ServiceContext serviceContext)
 		        throws PortalException, SystemException {
 
+
+		   		long groupId = serviceContext.getScopeGroupId();
+		   		long userId = serviceContext.getUserId();
 
 		   		Institution institution = getInstitution(institutionId);
 
@@ -298,13 +302,26 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 			        institution = deleteInstitution(institutionId);
 
 			        //Remove Entry from Link Table
-			        Institution_HostLocalServiceUtil.deleteEntriesByInstitution(institutionId, serviceContext);
+			    	List<Institution_Host> linstitution_Host = Institution_HostLocalServiceUtil.getListByGroupIdAndInstitutionId(groupId, institutionId);
+
+					if (linstitution_Host.size() > 0){
+
+						for (Institution_Host link : linstitution_Host) {
+							long ihId = link.getPrimaryKey();
+							System.out.println(ihId);
+
+
+							//Institution_HostLocalServiceUtil.
+
+							//deleteLinkById(institutionId, serviceContext);
+						}
+					}
 		        }
 		        else { System.out.println("Could not delte "+ institution.getName());}
 
 		        return institution;
 
-		    }
+		  }
 
 
 }

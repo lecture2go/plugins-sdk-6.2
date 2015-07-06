@@ -74,6 +74,8 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		    renderRequest.setAttribute("hostId", hostId);
 
 		    } catch (Exception e) {
+		    	  System.out.println(e.getClass().getName());
+			         e.printStackTrace();
 		    	throw new PortletException(e);
 		    }
 
@@ -123,7 +125,8 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 			String name = ParamUtil.getString(request, "outerListInstitution");
 			long hostId = ParamUtil.getLong(request, "serverselect");
-			long institutionId = ParamUtil.getLong(request, "institution");
+			long institutionId = ParamUtil.getLong(request, "outerListInstitutionId");
+			long selectedInstitutionId = ParamUtil.getLong(request, "selectedInstitutionId");
 			System.out.println(institutionId);
 			try {
 				InstitutionLocalServiceUtil.updateInstitution(
@@ -137,6 +140,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 			} catch (Exception e) {
 				SessionErrors.add(request, e.getClass().getName());
 				System.out.println(e.getClass().getName());
+				e.printStackTrace();
 				PortalUtil.copyRequestParameters(request, response);
 
 				response.setRenderParameter("mvcPath",
@@ -149,7 +153,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		    long institutionId = ParamUtil.getLong(request, "outerListInstitutionId");
 		    long selectedInstitutionId = ParamUtil.getLong(request, "institutionId");
 
-		    System.out.println("Delete "+institutionId + " " +selectedInstitutionId);
+		    System.out.println("Delete "+institutionId);
 		    try {
 
 		       ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -181,7 +185,8 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		       InstitutionLocalServiceUtil.deleteInstitution(institutionId, serviceContext);
 
 		    } catch (Exception e) {
-
+		    	  System.out.println(e.getClass().getName());
+			         e.printStackTrace();
 		       SessionErrors.add(request, e.getClass().getName());
 		    }
 		}
@@ -200,7 +205,8 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		       HostLocalServiceUtil.deleteHost(hostId, serviceContext);
 
 		    } catch (Exception e) {
-
+		    	  System.out.println(e.getClass().getName());
+			         e.printStackTrace();
 		       SessionErrors.add(request, e.getClass().getName());
 		    }
 		}
@@ -227,7 +233,8 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 		       } catch (Exception e) {
 		         SessionErrors.add(request, e.getClass().getName());
-
+		         System.out.println(e.getClass().getName());
+		         e.printStackTrace();
 		                            PortalUtil.copyRequestParameters(request, response);
 
 		         response.setRenderParameter("mvcPath",
@@ -259,7 +266,8 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 		} catch (Exception e) {
         SessionErrors.add(request, e.getClass().getName());
-
+        System.out.println(e.getClass().getName());
+        e.printStackTrace();
         PortalUtil.copyRequestParameters(request, response);
 
          response.setRenderParameter("mvcPath",
@@ -290,7 +298,8 @@ public void viewStreamingServerList(ActionRequest request, ActionResponse respon
 
        } catch (Exception e) {
          SessionErrors.add(request, e.getClass().getName());
-
+         System.out.println(e.getClass().getName());
+         e.printStackTrace();
                             PortalUtil.copyRequestParameters(request, response);
 
          response.setRenderParameter("mvcPath",
