@@ -114,7 +114,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 
 	public Map<String, String> getAllSortedAsTree(int begin, int end) throws SystemException {
 		Map<String, String> allInstitutions = new LinkedHashMap<String, String>();
-		List<Institution> einListAll = InstitutionFinderUtil.findAllSortedAsTree(1, 20);
+		List<Institution> einListAll = InstitutionFinderUtil.findAllSortedAsTree(begin, end);
 
 		for (Institution institution : einListAll) {
 			String id = "" + institution.getInstitutionId();
