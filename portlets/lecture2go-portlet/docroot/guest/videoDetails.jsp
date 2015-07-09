@@ -192,17 +192,19 @@
 								%>
 								
 								<% 
-									// If support form was submitted, insert Javascript code for scrolling down
 									if(option1!=null){
 										%>
 										<script type="text/javascript">
 											$(function() {
 												 // activate contact tab
-												 $("#tabs").tabs().tabs( "option", "active", $('#tabs >ul >li').size()-1 );
-												 
-												 var aTag = $("a[href='#support']");
-												 $('html,body').animate({scrollTop: aTag.offset().top},'slow');
+												 $("#tabs").tabs( "option", "active", $('#tabs >ul >li').size()-1 );
+												 scrollToAnchor('cont');
 											 });
+											
+											function scrollToAnchor(aid){
+											    var aTag = $("a[name='"+ aid +"']");
+											    $('html,body').animate({scrollTop: aTag.offset().top},'slow');
+											}
 										</script>
 										<%		
 									}
@@ -266,7 +268,7 @@
 }
 %>
 <script type="text/javascript">
-    $( function () {
-        $('#tabs').tabs();
+    jQuery(document).ready(function ($) {
+        $('#tabs').tab();
     });
 </script>    

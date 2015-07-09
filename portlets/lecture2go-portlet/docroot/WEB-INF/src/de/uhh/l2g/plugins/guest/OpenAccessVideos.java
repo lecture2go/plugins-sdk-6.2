@@ -82,7 +82,7 @@ public class OpenAccessVideos extends MVCPortlet {
 	    }catch(NumberFormatException e){
 		    if(objectType.equals("v")){ //only for video objects
 	    		try {
-					objectId = VideoLocalServiceUtil.getBySecureUrl(oid).getVideoId();
+					objectId = VideoLocalServiceUtil.getBySecureUrl(oid).getVideoId();				
 				} catch (NoSuchVideoException e1) {
 				} catch (SystemException e1) {}
 	    	 }

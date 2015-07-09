@@ -878,4 +878,49 @@ $dockbarOpenGradientEnd: #e9e9e9;
 	#upload-form{
 		display: none;
 	}
+	
+	
+	
+	#chapters {
+		border: 1px solid #eee;
+	}
+	
+	.chaptertile {
+		padding: 10px 0px 0px;
+	}
+	
+	.chaptertile:hover {
+		background: #f9f9f9;
+		cursor: pointer;
+	}
+	
+	.chaptertile.active {
+		color: #fff;
+		background: #666;
+	}
+	
+	.chaptertile a {
+		cursor: pointer;
+	}
+	
+	.chaptertile span {
+		padding-left: 10px;
+		font-size: 10px;
+	}
+	
+	.chaptertile a span {
+		padding: 0px;
+	}
+	
+	.btn-primary.disabled, .btn-primary[disabled] {
+		background-image: linear-gradient(180deg, #e5331c 0%, #c90219 100%);
+	}
+	
+	.control-group {
+		margin: 0px 0px 10px;
+	}
+	
+	#_lgadminvideomanagement_WAR_lecture2goportlet_timeStart, #_lgadminvideomanagement_WAR_lecture2goportlet_timeEnd {
+		cursor: pointer;
+	}
 }
