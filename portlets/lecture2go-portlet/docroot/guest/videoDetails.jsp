@@ -192,19 +192,21 @@
 								%>
 								
 								<% 
+									// If support form was submitted, scroll down and select 'support' tab
 									if(option1!=null){
 										%>
 										<script type="text/javascript">
 											$(function() {
-												 // activate contact tab
-												 $("#tabs").tabs( "option", "active", $('#tabs >ul >li').size()-1 );
-												 scrollToAnchor('cont');
+												// activate contact tab
+												$("#tabs li a").eq(-1).click();
+												
+												// Scrolling must happen in onload, because otherwise the Player is not yet loaded and the position would be wrong
+												window.onload = function () {
+													var pos = $("#tabs").offset().top;
+													$('html, body').animate({scrollTop: pos - 10}, 1000, "easeInOutCubic");	
+												}
+												
 											 });
-											
-											function scrollToAnchor(aid){
-											    var aTag = $("a[name='"+ aid +"']");
-											    $('html,body').animate({scrollTop: aTag.offset().top},'slow');
-											}
 										</script>
 										<%		
 									}
@@ -267,8 +269,4 @@
 	<%
 }
 %>
-<script type="text/javascript">
-    jQuery(document).ready(function ($) {
-        $('#tabs').tab();
-    });
-</script>    
+

@@ -923,4 +923,8 @@ $dockbarOpenGradientEnd: #e9e9e9;
 	#_lgadminvideomanagement_WAR_lecture2goportlet_timeStart, #_lgadminvideomanagement_WAR_lecture2goportlet_timeEnd {
 		cursor: pointer;
 	}
+	
+	#tabs {
+		background: #eee;
+	}
 }
