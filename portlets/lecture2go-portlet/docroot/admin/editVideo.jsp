@@ -7,7 +7,7 @@
 <jsp:useBean id="reqVideo" type="de.uhh.l2g.plugins.model.Video" scope="request" />
 <jsp:useBean id="reqMetadata" type="de.uhh.l2g.plugins.model.Metadata" scope="request" />
 
-<liferay-portlet:resourceURL id="updateMeatadata" var="updateURL" />
+<liferay-portlet:resourceURL id="updateMetadata" var="updateURL" />
 <liferay-portlet:resourceURL id="updateDescription" var="updateDescriptionURL" />
 <liferay-portlet:resourceURL id="updateLicense" var="updateLicenseURL" />
 <liferay-portlet:resourceURL id="updateVideoFileName" var="updateVideoFileNameURL" />
@@ -233,6 +233,10 @@
 				creative-commons <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank"> details </a>
 				
 				<br/><br/>
+
+				<aui:input id="password" name="password" label="password" required="false" value="<%=reqVideo.getPassword()%>" />
+
+				<br/><br/>
 				
 				<aui:field-wrapper label="description">
 				    <liferay-ui:input-editor name="longDesc" toolbarSet="liferay-article" initMethod="initEditor" width="250" onChangeMethod="setDescriptionData" />
@@ -339,7 +343,7 @@ $(function () {
         		openaccess: "<%=reqVideo.getOpenAccess()%>",
         		lectureseriesNumber: "<%=reqLectureseries.getNumber()%>",
         		fileName: "<%=VideoLocalServiceUtil.getVideo(reqVideo.getVideoId()).getFilename()%>",
-        		secureFileName: "<%=VideoLocalServiceUtil.getVideo(reqVideo.getVideoId()).getSurl()%>",
+        		secureFileName: "<%=VideoLocalServiceUtil.getVideo(reqVideo.getVideoId()).getSecureFilename()%>",
         		l2gDateTime: $("#l2gDateTime").val(),
         };        
     });
@@ -480,6 +484,7 @@ function updateMetadata(){
 				 	   	<portlet:namespace/>citationAllowedCheckbox: A.one('#<portlet:namespace/>citationAllowedCheckbox').get('checked'),
 				 	   	<portlet:namespace/>categoryId: categoryId,
 				 	   	<portlet:namespace/>termId: termId,
+				 	   	<portlet:namespace/>password: A.one('#<portlet:namespace/>password').get('value'),
 			 	},
 			 	//get server response
 				on: {

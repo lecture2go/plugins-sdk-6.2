@@ -336,7 +336,7 @@
         <column name="openAccess" type="int"></column>
         <column name="downloadLink" type="int"></column>
         <column name="metadataId" type="long"></column>
-        <column name="surl" type="String"></column>
+        <column name="secureFilename" type="String"></column>
         <column name="hits" type="long"></column>
         <column name="uploadDate" type="Date"></column>
         <column name="permittedToSegment" type="int"></column>
@@ -345,6 +345,7 @@
         <column name="termId" type="long"></column>
         <column name="videoCreatorId" type="long"></column>
         <column name="tags" type="String"></column>
+        <column name="password" type="String"></column>
         <order by="desc">
             <order-column name="videoId" order-by="desc"></order-column>
             <order-column name="uploadDate" order-by="desc"></order-column>
@@ -375,6 +376,9 @@
         </finder>
         <finder name="RootInstitution" return-type="Collection">
             <finder-column name="rootInstitutionId"></finder-column>
+        </finder>
+        <finder name="Password" return-type="Collection">
+            <finder-column name="password"></finder-column>
         </finder>
     </entity>
     <entity name="Video_Institution" local-service="true" remote-service="false">

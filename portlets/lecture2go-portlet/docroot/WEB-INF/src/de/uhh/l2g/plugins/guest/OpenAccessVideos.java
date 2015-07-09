@@ -73,7 +73,8 @@ public class OpenAccessVideos extends MVCPortlet {
 
 	public void viewOpenAccessVideo(ActionRequest request, ActionResponse response) {
 		String objectType = ParamUtil.getString(request, "objectType");
-
+		String password = ParamUtil.getString(request, "password");
+		
 		Long objectId = new Long(0);
 	   	String oid = request.getParameter("objectId");
 	    try{
@@ -159,6 +160,22 @@ public class OpenAccessVideos extends MVCPortlet {
 			VideoLocalServiceUtil.updateVideo(video);
 		} catch (SystemException e) {}
 	    
+	    //check password access
+	    if(video.getVideoId()>0){
+	    	if(video.getOpenAccess()==1){
+	    		video.setAccessPermitted(1);
+	    	}else{
+	    		if(video.getPassword().length()>0 || lectureseries.getPassword().length()>0){
+	    			String pwd ="";
+	    			if(lectureseries.getPassword().trim().length()>0)pwd=lectureseries.getPassword();
+	    			if(video.getPassword().trim().length()>0)pwd=video.getPassword();
+	    			//
+	    			if(password.equals(pwd))video.setAccessPermitted(1);
+	    			else video.setAccessPermitted(0);
+	    		}
+	    	}
+	    }
+	    
 	    request.setAttribute("videoLicense",l);
 	    request.setAttribute("videoMetadata",m);
 	    request.setAttribute("videoInstitutions",vi);
@@ -169,6 +186,9 @@ public class OpenAccessVideos extends MVCPortlet {
 	    request.setAttribute("lectureseries",lectureseries);
 	    request.setAttribute("timeStart",timeStart);
 	    request.setAttribute("timeEnd",timeEnd);
+	    request.setAttribute("objectType",objectType);
+	    request.setAttribute("objectId",oid);
+	    
 		response.setRenderParameter("jspPage","/guest/videoDetails.jsp");
 	}
 	
