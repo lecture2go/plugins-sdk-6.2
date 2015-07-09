@@ -483,6 +483,7 @@
 	<entity class="de.uhh.l2g.plugins.model.impl.VideoImpl" name="Video">
 		<table name="LG_Video" />
 		<attributes>
+			<transient name="accessPermitted" />
 			<transient name="bitrate" />
 			<transient name="creators" />
 			<transient name="date" />

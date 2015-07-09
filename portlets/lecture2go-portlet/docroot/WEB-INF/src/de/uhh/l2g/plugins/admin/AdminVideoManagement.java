@@ -353,7 +353,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			writeJSON(resourceRequest, resourceResponse, json);
 		}
 		
-		if(resourceID.equals("updateMeatadata")){
+		if(resourceID.equals("updateMetadata")){
 	 	    String title = ParamUtil.getString(resourceRequest, "title");
 			String language = ParamUtil.getString(resourceRequest, "language");
 			String tags = ParamUtil.getString(resourceRequest, "tags");
@@ -362,7 +362,8 @@ public class AdminVideoManagement extends MVCPortlet {
 			Long termId = ParamUtil.getLong(resourceRequest, "termId");
 			Long categoryId = ParamUtil.getLong(resourceRequest, "categoryId");
 			Integer citationAllowed = ParamUtil.getInteger(resourceRequest, "citationAllowedCheckbox");
-			
+	 	    String password = ParamUtil.getString(resourceRequest, "password");
+
 			Lectureseries oldLs = new LectureseriesImpl();
 			try {
 				oldLs = LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId());
@@ -448,7 +449,7 @@ public class AdminVideoManagement extends MVCPortlet {
 					org.json.JSONObject creator;
 					try {
 						creator = creatorsArray.getJSONObject(i);
-						tagCloudString += creator.getString("firstName")+" ### "+creator.getString("lastName")+" ### "+creator.getString("fullName")+" ### ";
+						tagCloudString += creator.getString("fullName")+" ### ";
 					} catch (JSONException e) {
 						//e.printStackTrace();
 					}
@@ -466,6 +467,8 @@ public class AdminVideoManagement extends MVCPortlet {
 				TagcloudLocalServiceUtil.updateTagcloud(tc);
 				//set citation 
 				video.setCitation2go(citationAllowed);
+				//password
+				video.setPassword(password);
 				// update video
 				VideoLocalServiceUtil.updateVideo(video);
 				// refresh open access for old lecture if lid > 0

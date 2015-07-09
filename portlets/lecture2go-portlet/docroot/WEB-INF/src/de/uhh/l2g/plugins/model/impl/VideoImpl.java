@@ -32,7 +32,16 @@ public class VideoImpl extends VideoBaseImpl {
 	 *
 	 * Never reference this class directly. All methods that expect a video model instance should use the {@link de.uhh.l2g.plugins.model.Video} interface instead.
 	 */
+	private Integer accessPermitted;
 	
+	public Integer getAccessPermitted() {
+		return accessPermitted;
+	}
+
+	public void setAccessPermitted(Integer accessPermitted) {
+		this.accessPermitted = accessPermitted;
+	}
+
 	private ArrayList<String> playerUris;
 	
 

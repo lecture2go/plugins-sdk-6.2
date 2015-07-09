@@ -11,21 +11,30 @@
 	Long termId 				= ServletRequestUtils.getLongParameter(request, "termId", 0);
 	Long categoryId 			= ServletRequestUtils.getLongParameter(request, "categoryId", 0);
 	Long creatorId 				= ServletRequestUtils.getLongParameter(request, "creatorId", 0);
-		
+
+	String searchQuery			= ServletRequestUtils.getStringParameter(request, "searchQuery", "");
+	
 	// filters are set if they have a value different than 0
 	boolean hasInstitutionFiltered 			= (institutionId != 0);
 	boolean hasParentInstitutionFiltered 	= (parentInstitutionId != 0);
 	boolean hasTermFiltered 				= (termId != 0);
 	boolean hasCategoryFiltered				= (categoryId != 0);
 	boolean hasCreatorFiltered  			= (creatorId != 0);
+	boolean isSearched						= (searchQuery != "");
 
 	// the institution is dependent on the parentinstitution, do not allow institution-filters without parentinstitution-filter
 	if (hasInstitutionFiltered && !hasParentInstitutionFiltered) {
 		institutionId = new Long(0);
 	}
 
-	// get filtered lectureseries and videos
-	List<Lectureseries> reqLectureseries = LectureseriesLocalServiceUtil.getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(institutionId, parentInstitutionId, termId, categoryId, creatorId);
+// 	List<Lectureseries> reqLectureseries;
+// 	if (isSearched) {
+// 		reqLectureseries = LectureseriesLocalServiceUtil.getFilteredBySearchQuery(searchQuery);
+// 	} else {
+// 		reqLectureseries = LectureseriesLocalServiceUtil.getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(institutionId, parentInstitutionId, termId, categoryId, creatorId);
+// 	}
+	// get filtered lectureseries and single videos
+	List<Lectureseries> reqLectureseries = LectureseriesLocalServiceUtil.getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(institutionId, parentInstitutionId, termId, categoryId, creatorId, searchQuery);
 	
 	// differentiate returned lectureseries in real lectureseries and fake video lectureseries (openAccessVideoId is negative on videos)
 	ArrayList<Long> lectureseriesIds = new ArrayList<Long>();
@@ -89,6 +98,10 @@
 	portletURL.setParameter("termId", termId.toString());
 	portletURL.setParameter("categoryId", categoryId.toString());
 	portletURL.setParameter("creatorId", creatorId.toString());
+	portletURL.setParameter("searchQuery", searchQuery);
+// 	if (isSearched) {
+		
+// 	}
 	
 	// set page context for better use in taglibs
 	pageContext.setAttribute("hasParentInstitutionFiltered", hasParentInstitutionFiltered);
@@ -124,7 +137,8 @@
   float: right;
 }
 
-#loadMore {
+#loadMoreTerms,
+#loadMoreCreators {
 	cursor: pointer
 }
 </style>
@@ -147,6 +161,7 @@
 				<portlet:param name="termId" value="<%=termId.toString() %>"/>
 				<portlet:param name="categoryId" value="<%=categoryId.toString() %>"/>
 				<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>
+				<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
 			</portlet:actionURL>
 			<li ${hasParentInstitutionFiltered ? 'class="clicked"' : ''}><a href="${filterByParentInstitution}">${parentInstitution.name}</a></li>
 		</c:forEach>
@@ -165,6 +180,7 @@
 				<portlet:param name="termId" value="<%=termId.toString() %>"/>
 				<portlet:param name="categoryId" value="<%=categoryId.toString() %>"/>
 				<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>
+				<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
 			</portlet:actionURL>
 			<li ${hasInstitutionFiltered ? 'class="clicked"' : ''}><a href="${filterByInstitution}">${institution.name}</a></li>
 		</c:forEach>
@@ -182,7 +198,8 @@
 				<portlet:param name="parentInstitutionId" value="<%=parentInstitutionId.toString() %>"/>	
 				<portlet:param name="termId" value='${hasTermFiltered ? "0" : term.termId}'/>
 				<portlet:param name="categoryId" value="<%=categoryId.toString() %>"/>
-				<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>	
+				<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>
+				<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
 			</portlet:actionURL>
 			<li ${hasTermFiltered ? 'class="clicked"' : ''}><a href="${filterByTerm}">${term.termName}</a></li>
 		</c:forEach>
@@ -205,6 +222,7 @@
 				<portlet:param name="termId" value="<%=termId.toString() %>"/>
 				<portlet:param name="categoryId" value='${hasCategoryFiltered ? "0" : category.categoryId}'/>
 				<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>	
+				<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
 			</portlet:actionURL>
 			<li ${hasCategoryFiltered ? 'class="clicked"' : ''}><a href="${filterByCategory}">${category.name}</a></li>
 		</c:forEach>
@@ -227,6 +245,7 @@
 				<portlet:param name="termId" value="<%=termId.toString() %>"/>
 				<portlet:param name="categoryId" value="<%=categoryId.toString() %>"/>
 				<portlet:param name="creatorId" value='${hasCreatorFiltered ? "0" : creator.creatorId}'/>
+				<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
 			</portlet:actionURL>
 			<li ${hasCreatorFiltered ? 'class="clicked"' : ''}><a href="${filterByCreator}">${creator.fullName}</a></li>
 		</c:forEach>
@@ -240,7 +259,24 @@
 </div>
 
 <div class="span9">
-					
+		
+<portlet:actionURL var="filterBySearchQuery" name="addFilter">
+	<portlet:param name="jspPage" value="/guest/videosList.jsp" />
+	<portlet:param name="institutionId" value="0"/>
+	<portlet:param name="parentInstitutionId" value="0"/>
+	<portlet:param name="termId" value="0"/>
+	<portlet:param name="categoryId" value="0"/>
+	<portlet:param name="creatorId" value="0"/>
+	<portlet:param name="jspPage" value="/guest/videosList.jsp" />
+</portlet:actionURL>		
+	
+<aui:form action="${filterBySearchQuery}">
+	<aui:fieldset>
+		<aui:input name="searchQuery" inlineField="true"/>
+		<aui:button type="submit" value="Search" ></aui:button>
+       </aui:fieldset>
+</aui:form>
+		
 <liferay-ui:search-container emptyResultsMessage="no-lectureseries-found" delta="5" iteratorURL="<%=portletURL %>">
 	<liferay-ui:search-container-results>
 		<%
@@ -303,7 +339,7 @@ $( document ).ready(function() {
 	$("ul.creators > li").slice(<%=maxCreators%>).hide();
 	// show the remaining creators
 	$('#loadMoreCreators').click(function () {
-	    $('ul.creatorss > li').show();
+	    $('ul.creators > li').show();
 	    $('#loadMoreCreators').hide();
 	});
 

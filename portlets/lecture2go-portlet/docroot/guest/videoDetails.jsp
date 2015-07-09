@@ -8,11 +8,13 @@
 <jsp:useBean id="videoMetadata" type="de.uhh.l2g.plugins.model.Metadata" scope="request" />
 <jsp:useBean id="lectureseries" type="de.uhh.l2g.plugins.model.Lectureseries" scope="request" />
 <jsp:useBean id="videoLicense" type="de.uhh.l2g.plugins.model.License" scope="request" />
+<jsp:useBean id="objectType" type="java.lang.String" scope="request" />
+<jsp:useBean id="objectId" type="java.lang.String" scope="request" />
 
 <jsp:useBean id="timeStart" type="java.lang.Long" scope="request" />
 <jsp:useBean id="timeEnd" type="java.lang.Long" scope="request" />
 
-<%if(video.getVideoId()>0){%>
+<%if(video.getAccessPermitted()==1){%>
 	
 	<%if(video.getOpenAccess()==1){%>
 		<div class="col-xs-10 col-md-10">
@@ -183,7 +185,9 @@
 							%>
 							<div id="metadata">
 								<%
-									SupportFormularClient sfc = new SupportFormularClient("mail4eLearnSupport",video.getUrl(),jsn.toString(),"");
+									String url=video.getUrl();
+									if(video.getOpenAccess()==0)url=video.getSecureUrl();
+									SupportFormularClient sfc = new SupportFormularClient("mail4eLearnSupport",url,jsn.toString(),"");
 									out.print(sfc.getFormular());
 								%>
 								
@@ -244,6 +248,23 @@
 		</c:if>
 	<%
 	}
+}else{
+	%>
+	<portlet:actionURL name="viewOpenAccessVideo" var="viewOpenAccessVideoURL">
+		<portlet:param name="objectId" value="<%=objectId%>"/>
+		<%if(objectType.equals("v")){%><portlet:param name="objectType" value="v"/><%}%>
+		<%if(objectType.equals("l")){%><portlet:param name="objectType" value="l"/><%}%>
+	</portlet:actionURL>
+	<aui:form action="<%=viewOpenAccessVideoURL.toString() %>" method="post">
+		<aui:fieldset helpMessage="enter-password" column="true" label='<%="l2go-video-password"%>'>
+			<aui:input name="password" label="password" required="true" value=""/>
+			
+			<aui:button-row>
+				<aui:button type="submit"/>
+			</aui:button-row>
+		</aui:fieldset>
+	</aui:form>	
+	<%
 }
 %>
 <script type="text/javascript">

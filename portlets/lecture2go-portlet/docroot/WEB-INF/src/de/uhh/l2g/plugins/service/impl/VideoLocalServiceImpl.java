@@ -31,18 +31,21 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import de.uhh.l2g.plugins.NoSuchInstitutionException;
+import de.uhh.l2g.plugins.NoSuchLectureseriesException;
 import de.uhh.l2g.plugins.NoSuchProducerException;
 import de.uhh.l2g.plugins.NoSuchVideoException;
 import de.uhh.l2g.plugins.model.Creator;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Lastvideolist;
+import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.model.Segment;
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.impl.HostImpl;
 import de.uhh.l2g.plugins.model.impl.InstitutionImpl;
 import de.uhh.l2g.plugins.model.impl.LastvideolistImpl;
+import de.uhh.l2g.plugins.model.impl.LectureseriesImpl;
 import de.uhh.l2g.plugins.model.impl.ProducerImpl;
 import de.uhh.l2g.plugins.model.impl.VideoImpl;
 import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
@@ -149,7 +152,15 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		} catch (SystemException e1) {
 //			e1.printStackTrace();
 		}
-
+		Lectureseries objectLectureseries = new LectureseriesImpl();
+		try {
+			objectLectureseries = lectureseriesPersistence.findByPrimaryKey(objectVideo.getLectureseriesId());
+		} catch (NoSuchLectureseriesException e1) {
+//			e1.printStackTrace();
+		} catch (SystemException e1) {
+//			e1.printStackTrace();
+		}
+				
 		// prepare video short name
 		String video_shortname = objectVideo.getTitle();
 		if (video_shortname.length() > 45)
