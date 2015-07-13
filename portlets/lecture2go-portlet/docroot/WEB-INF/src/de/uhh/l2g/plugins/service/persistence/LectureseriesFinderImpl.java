@@ -268,8 +268,10 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 //				lQuery += i > 0 ? "AND " : "";
 //				vQuery += i > 0 ? "AND " : "";
 				lQuery += "AND ";
+				videoAsLectureseriesQuery += "AND ";
 				vQuery += "AND ";
 				lQuery += "( ";
+				videoAsLectureseriesQuery += "( ";
 				vQuery += "( ";
 				for(int j=0;j<creatorIds.size();j++){
 				Long creatorId = creatorIds.get(j);
@@ -295,6 +297,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 				vQuery += "AND ";
 				ListIterator<Long> it = categoryIds.listIterator();
 				lQuery += "( ";
+				videoAsLectureseriesQuery += "( ";
 				vQuery += "( ";
 				while(it.hasNext()){
 					Long categoryId = it.next();
