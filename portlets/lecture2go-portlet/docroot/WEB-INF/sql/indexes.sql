@@ -124,10 +124,12 @@ create index IX_88EAD11B on LG_Upload (videoId);
 create index IX_D1B2A998 on LG_Video (filename);
 create index IX_3B4515A3 on LG_Video (lectureseriesId);
 create index IX_AAE2F865 on LG_Video (lectureseriesId, openAccess);
+create index IX_43B83117 on LG_Video (password_);
 create index IX_35558E9E on LG_Video (producerId);
 create index IX_2B61D434 on LG_Video (producerId, downloadLink);
 create index IX_99A86BC2 on LG_Video (producerId, lectureseriesId);
 create index IX_55AEC6E4 on LG_Video (rootInstitutionId);
+create index IX_DB5519ED on LG_Video (surl);
 create index IX_923BA320 on LG_Video (uploadDate);
 
 create index IX_793FA2F9 on LG_Video_Category (categoryId);
