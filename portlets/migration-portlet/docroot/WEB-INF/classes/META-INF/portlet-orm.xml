@@ -1,0 +1,216 @@
+<?xml version="1.0"?>
+
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
+	<persistence-unit-metadata>
+		<xml-mapping-metadata-complete/>
+		<persistence-unit-defaults>
+			<access>PROPERTY</access>
+		</persistence-unit-defaults>
+	</persistence-unit-metadata>
+	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacyContactModelImpl">
+		<attributes>
+			<id name="contactId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="accountId" />
+			<basic name="parentContactId" />
+			<basic name="firstName" />
+			<basic name="middleName" />
+			<basic name="lastName" />
+			<basic name="prefixId" />
+			<basic name="suffixId" />
+			<basic name="male" />
+			<basic name="birthday">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="smsSn" />
+			<basic name="aimSn" />
+			<basic name="facebookSn" />
+			<basic name="icqSn" />
+			<basic name="jabberSn" />
+			<basic name="msnSn" />
+			<basic name="mySpaceSn" />
+			<basic name="skypeSn" />
+			<basic name="twitterSn" />
+			<basic name="ymSn" />
+			<basic name="employeeStatusId" />
+			<basic name="employeeNumber" />
+			<basic name="jobTitle" />
+			<basic name="jobClass" />
+			<basic name="hoursOfOperation" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacyLectureSeriesFacilityModelImpl">
+		<attributes>
+			<id name="facilityId" />
+			<basic name="lectureseriesId" />
+			<basic name="isLinkFrom" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacyMetadataModelImpl">
+		<attributes>
+			<id name="id">
+				<column name="ID_" />
+			</id>
+			<basic name="URLID" />
+			<basic name="format" />
+			<basic name="type">
+				<column name="TYPE_" />
+			</basic>
+			<basic name="language" />
+			<basic name="title" />
+			<basic name="subject" />
+			<basic name="description" />
+			<basic name="publisher" />
+			<basic name="rightsHolder" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacyOfficeModelImpl">
+		<attributes>
+			<id name="id">
+				<column name="ID_" />
+			</id>
+			<basic name="name" />
+			<basic name="www" />
+			<basic name="email" />
+			<basic name="facilityId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacySegmentModelImpl">
+		<attributes>
+			<id name="id">
+				<column name="ID_" />
+			</id>
+			<basic name="videoId" />
+			<basic name="start">
+				<column name="START_" />
+			</basic>
+			<basic name="title" />
+			<basic name="description" />
+			<basic name="end">
+				<column name="END_" />
+			</basic>
+			<basic name="chapter" />
+			<basic name="userId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacyUserModelImpl">
+		<attributes>
+			<id name="userId" />
+			<basic name="companyId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="defaultUser" />
+			<basic name="contactId" />
+			<basic name="password">
+				<column name="PASSWORD_" />
+			</basic>
+			<basic name="passwordEncrypted" />
+			<basic name="passwordReset" />
+			<basic name="passwordModifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="reminderQueryQuestion" />
+			<basic name="reminderQueryAnswer" />
+			<basic name="graceLoginCount" />
+			<basic name="screenName" />
+			<basic name="emailAddress" />
+			<basic name="openId" />
+			<basic name="portraitId" />
+			<basic name="languageId" />
+			<basic name="timeZoneId" />
+			<basic name="greeting" />
+			<basic name="comments" />
+			<basic name="loginDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="loginIP" />
+			<basic name="lastLoginDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="lastLoginIP" />
+			<basic name="lastFailedLoginDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="failedLoginAttempts" />
+			<basic name="lockout" />
+			<basic name="lockoutDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="agreedToTermsOfUse" />
+			<basic name="active">
+				<column name="ACTIVE_" />
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.TestEntityTwoModelImpl">
+		<attributes>
+			<id name="plid" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<entity class="de.uhh.l2g.plugins.migration.model.impl.LegacyContactImpl" name="LegacyContact">
+		<table name="Contact_" />
+		<attributes />
+	</entity>
+	<entity class="de.uhh.l2g.plugins.migration.model.impl.LegacyLectureSeriesFacilityImpl" name="LegacyLectureSeriesFacility">
+		<table name="lectureseries_facility" />
+		<attributes />
+	</entity>
+	<entity class="de.uhh.l2g.plugins.migration.model.impl.LegacyMetadataImpl" name="LegacyMetadata">
+		<table name="metadata" />
+		<attributes />
+	</entity>
+	<entity class="de.uhh.l2g.plugins.migration.model.impl.LegacyOfficeImpl" name="LegacyOffice">
+		<table name="office" />
+		<attributes />
+	</entity>
+	<entity class="de.uhh.l2g.plugins.migration.model.impl.LegacySegmentImpl" name="LegacySegment">
+		<table name="segment" />
+		<attributes />
+	</entity>
+	<entity class="de.uhh.l2g.plugins.migration.model.impl.LegacyUserImpl" name="LegacyUser">
+		<table name="User_" />
+		<attributes />
+	</entity>
+	<entity class="de.uhh.l2g.plugins.migration.model.impl.TestEntityTwoImpl" name="TestEntityTwo">
+		<table name="LG_Migration_TestEntityTwo" />
+		<attributes />
+	</entity>
+</entity-mappings>
