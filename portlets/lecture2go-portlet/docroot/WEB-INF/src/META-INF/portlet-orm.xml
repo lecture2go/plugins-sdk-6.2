@@ -497,6 +497,7 @@
 			<transient name="image" />
 			<transient name="imageMedium" />
 			<transient name="imageSmall" />
+			<transient name="lectureseriesUrl" />
 			<transient name="m4aDownloadLink" />
 			<transient name="m4aFile" />
 			<transient name="m4aRssLink" />

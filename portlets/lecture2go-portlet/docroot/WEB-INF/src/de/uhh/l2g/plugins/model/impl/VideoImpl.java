@@ -32,6 +32,17 @@ public class VideoImpl extends VideoBaseImpl {
 	 *
 	 * Never reference this class directly. All methods that expect a video model instance should use the {@link de.uhh.l2g.plugins.model.Video} interface instead.
 	 */
+	
+	private String lectureseriesUrl;
+	
+	public String getLectureseriesUrl() {
+		return lectureseriesUrl;
+	}
+
+	public void setLectureseriesUrl(String lectureseriesUrl) {
+		this.lectureseriesUrl = lectureseriesUrl;
+	}
+
 	private Integer accessPermitted;
 	
 	public Integer getAccessPermitted() {
