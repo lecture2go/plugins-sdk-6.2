@@ -32,7 +32,7 @@ import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 
-//test comment
+//test comment 1
 
 public class OpenAccessVideos extends MVCPortlet {
 
