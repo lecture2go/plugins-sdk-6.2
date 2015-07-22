@@ -32,6 +32,8 @@ import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 
+//test comment
+
 public class OpenAccessVideos extends MVCPortlet {
 
 	public void addFilter(ActionRequest request, ActionResponse response){
