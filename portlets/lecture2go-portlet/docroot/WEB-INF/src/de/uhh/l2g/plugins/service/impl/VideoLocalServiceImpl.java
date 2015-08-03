@@ -160,7 +160,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		} catch (SystemException e1) {
 //			e1.printStackTrace();
 		}
-				
+
 		// prepare video short name
 		String video_shortname = objectVideo.getTitle();
 		if (video_shortname.length() > 45)
@@ -279,7 +279,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		try {
 			if (webhome.contains("localhost"))
 				webhome += "/web/vod";
-			objectVideo.setUrl(webhome + "/l2go/-/get/v/" + objectVideo.getVideoId());
+				objectVideo.setUrl(webhome + "/l2go/-/get/v/" + objectVideo.getVideoId());
 			if(objectVideo.getLectureseriesId()>0)
 				objectVideo.setLectureseriesUrl(webhome + "/l2go/-/get/l/" + objectVideo.getLectureseriesId()); 
 		} catch (NoSuchElementException nseex) {

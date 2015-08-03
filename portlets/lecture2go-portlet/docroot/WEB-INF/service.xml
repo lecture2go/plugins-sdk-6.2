@@ -578,10 +578,10 @@
     <exceptions>
         <exception>HostName</exception>
         <exception>HostStreamer</exception>
-        <exception>HostStreamingServerTemplate</exception>
         <exception>InstitutionName</exception>
         <exception>Institution_Host</exception>
         <exception>Institution_HostInstitution</exception>
+        <exception>Institution_HostHost</exception>
     </exceptions>
 
 

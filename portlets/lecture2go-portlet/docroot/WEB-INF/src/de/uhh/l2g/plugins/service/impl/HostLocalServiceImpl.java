@@ -77,7 +77,7 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 
 
 
-	protected void validate (String name, String streamer, long streamingServerTemplateId) throws PortalException {
+	protected void validate (String name, String streamer) throws PortalException {
 
 		if (Validator.isNull(name)) {
 	       throw new HostNameException();
@@ -87,9 +87,6 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 	       throw new HostStreamerException();
 	     }
 
-	     if (Validator.isNull(streamingServerTemplateId)) {
-	       throw new HostStreamingServerTemplateException();
-	     }
 	}
 
 	public Host addHost(String name, String streamLocation, long streamingServerTemplateId,
@@ -101,12 +98,12 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		//validate(name,streamLocation,streamingServerTemplateId);
+		validate(name,streamLocation);
 
 
-		long hostId = counterLocalService.increment();
+		//long hostId = counterLocalService.increment();
 
-		Host host = hostPersistence.create(hostId);
+		Host host = hostPersistence.create(0);
 
 		host.setName(name);
 		host.setGroupId(groupId);
@@ -115,9 +112,11 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 		host.setProtocol(protocol);
 		host.setServerRoot(serverRoot);
 		host.setPort(port);
-		host.setExpandoBridgeAttributes(serviceContext);
 
 		hostPersistence.update(host);
+		long hostId = host.getPrimaryKey();
+
+		host.setExpandoBridgeAttributes(serviceContext);
 
 		resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
 			       Host.class.getName(), hostId, false, true, true);
