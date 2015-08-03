@@ -67,7 +67,7 @@ create table LG_Lectureseries (
 	lectureseriesId LONG not null primary key,
 	password_ VARCHAR(75) null,
 	approved INTEGER,
-	longDesc VARCHAR(75) null,
+	longDesc TEXT null,
 	latestOpenAccessVideoId LONG,
 	latestVideoUploadDate DATE null,
 	latestVideoGenerationDate VARCHAR(75) null
@@ -110,7 +110,7 @@ create table LG_Metadata (
 	language VARCHAR(75) null,
 	title VARCHAR(75) null,
 	subject VARCHAR(75) null,
-	description VARCHAR(75) null,
+	description STRING null,
 	publisher VARCHAR(75) null
 );
 
@@ -187,7 +187,7 @@ create table LG_Tagcloud (
 	tagcloudId LONG not null primary key,
 	objectClassType VARCHAR(75) null,
 	objectId LONG,
-	tags VARCHAR(75) null
+	tags STRING null
 );
 
 create table LG_Term (
@@ -233,7 +233,7 @@ create table LG_Video (
 	openAccess INTEGER,
 	downloadLink INTEGER,
 	metadataId LONG,
-	surl VARCHAR(75) null,
+	secureFilename VARCHAR(75) null,
 	hits LONG,
 	uploadDate DATE null,
 	permittedToSegment INTEGER,
@@ -241,7 +241,8 @@ create table LG_Video (
 	citation2go INTEGER,
 	termId LONG,
 	videoCreatorId LONG,
-	tags VARCHAR(75) null
+	tags VARCHAR(75) null,
+	password_ VARCHAR(75) null
 );
 
 create table LG_Video_Category (

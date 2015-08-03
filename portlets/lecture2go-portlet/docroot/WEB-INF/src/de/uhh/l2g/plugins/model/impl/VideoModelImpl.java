@@ -73,7 +73,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 			{ "openAccess", Types.INTEGER },
 			{ "downloadLink", Types.INTEGER },
 			{ "metadataId", Types.BIGINT },
-			{ "surl", Types.VARCHAR },
+			{ "secureFilename", Types.VARCHAR },
 			{ "hits", Types.BIGINT },
 			{ "uploadDate", Types.TIMESTAMP },
 			{ "permittedToSegment", Types.INTEGER },
@@ -81,9 +81,10 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 			{ "citation2go", Types.INTEGER },
 			{ "termId", Types.BIGINT },
 			{ "videoCreatorId", Types.BIGINT },
-			{ "tags", Types.VARCHAR }
+			{ "tags", Types.VARCHAR },
+			{ "password_", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Video (videoId LONG not null primary key,title VARCHAR(75) null,lectureseriesId LONG,producerId LONG,containerFormat VARCHAR(75) null,filename VARCHAR(75) null,resolution VARCHAR(75) null,duration VARCHAR(75) null,hostId LONG,fileSize VARCHAR(75) null,generationDate VARCHAR(75) null,openAccess INTEGER,downloadLink INTEGER,metadataId LONG,surl VARCHAR(75) null,hits LONG,uploadDate DATE null,permittedToSegment INTEGER,rootInstitutionId LONG,citation2go INTEGER,termId LONG,videoCreatorId LONG,tags VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Video (videoId LONG not null primary key,title VARCHAR(75) null,lectureseriesId LONG,producerId LONG,containerFormat VARCHAR(75) null,filename VARCHAR(75) null,resolution VARCHAR(75) null,duration VARCHAR(75) null,hostId LONG,fileSize VARCHAR(75) null,generationDate VARCHAR(75) null,openAccess INTEGER,downloadLink INTEGER,metadataId LONG,secureFilename VARCHAR(75) null,hits LONG,uploadDate DATE null,permittedToSegment INTEGER,rootInstitutionId LONG,citation2go INTEGER,termId LONG,videoCreatorId LONG,tags VARCHAR(75) null,password_ VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Video";
 	public static final String ORDER_BY_JPQL = " ORDER BY video.videoId DESC, video.uploadDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Video.videoId DESC, LG_Video.uploadDate DESC";
@@ -103,10 +104,11 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	public static long FILENAME_COLUMN_BITMASK = 2L;
 	public static long LECTURESERIESID_COLUMN_BITMASK = 4L;
 	public static long OPENACCESS_COLUMN_BITMASK = 8L;
-	public static long PRODUCERID_COLUMN_BITMASK = 16L;
-	public static long ROOTINSTITUTIONID_COLUMN_BITMASK = 32L;
-	public static long UPLOADDATE_COLUMN_BITMASK = 64L;
-	public static long VIDEOID_COLUMN_BITMASK = 128L;
+	public static long PASSWORD_COLUMN_BITMASK = 16L;
+	public static long PRODUCERID_COLUMN_BITMASK = 32L;
+	public static long ROOTINSTITUTIONID_COLUMN_BITMASK = 64L;
+	public static long UPLOADDATE_COLUMN_BITMASK = 128L;
+	public static long VIDEOID_COLUMN_BITMASK = 256L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Video"));
 
@@ -161,7 +163,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		attributes.put("openAccess", getOpenAccess());
 		attributes.put("downloadLink", getDownloadLink());
 		attributes.put("metadataId", getMetadataId());
-		attributes.put("surl", getSurl());
+		attributes.put("secureFilename", getSecureFilename());
 		attributes.put("hits", getHits());
 		attributes.put("uploadDate", getUploadDate());
 		attributes.put("permittedToSegment", getPermittedToSegment());
@@ -170,6 +172,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		attributes.put("termId", getTermId());
 		attributes.put("videoCreatorId", getVideoCreatorId());
 		attributes.put("tags", getTags());
+		attributes.put("password", getPassword());
 
 		return attributes;
 	}
@@ -260,10 +263,10 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 			setMetadataId(metadataId);
 		}
 
-		String surl = (String)attributes.get("surl");
+		String secureFilename = (String)attributes.get("secureFilename");
 
-		if (surl != null) {
-			setSurl(surl);
+		if (secureFilename != null) {
+			setSecureFilename(secureFilename);
 		}
 
 		Long hits = (Long)attributes.get("hits");
@@ -313,6 +316,12 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 
 		if (tags != null) {
 			setTags(tags);
+		}
+
+		String password = (String)attributes.get("password");
+
+		if (password != null) {
+			setPassword(password);
 		}
 	}
 
@@ -552,18 +561,18 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	}
 
 	@Override
-	public String getSurl() {
-		if (_surl == null) {
+	public String getSecureFilename() {
+		if (_secureFilename == null) {
 			return StringPool.BLANK;
 		}
 		else {
-			return _surl;
+			return _secureFilename;
 		}
 	}
 
 	@Override
-	public void setSurl(String surl) {
-		_surl = surl;
+	public void setSecureFilename(String secureFilename) {
+		_secureFilename = secureFilename;
 	}
 
 	@Override
@@ -673,6 +682,31 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		_tags = tags;
 	}
 
+	@Override
+	public String getPassword() {
+		if (_password == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _password;
+		}
+	}
+
+	@Override
+	public void setPassword(String password) {
+		_columnBitmask |= PASSWORD_COLUMN_BITMASK;
+
+		if (_originalPassword == null) {
+			_originalPassword = _password;
+		}
+
+		_password = password;
+	}
+
+	public String getOriginalPassword() {
+		return GetterUtil.getString(_originalPassword);
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -718,7 +752,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		videoImpl.setOpenAccess(getOpenAccess());
 		videoImpl.setDownloadLink(getDownloadLink());
 		videoImpl.setMetadataId(getMetadataId());
-		videoImpl.setSurl(getSurl());
+		videoImpl.setSecureFilename(getSecureFilename());
 		videoImpl.setHits(getHits());
 		videoImpl.setUploadDate(getUploadDate());
 		videoImpl.setPermittedToSegment(getPermittedToSegment());
@@ -727,6 +761,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		videoImpl.setTermId(getTermId());
 		videoImpl.setVideoCreatorId(getVideoCreatorId());
 		videoImpl.setTags(getTags());
+		videoImpl.setPassword(getPassword());
 
 		videoImpl.resetOriginalValues();
 
@@ -819,6 +854,8 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 
 		videoModelImpl._setOriginalRootInstitutionId = false;
 
+		videoModelImpl._originalPassword = videoModelImpl._password;
+
 		videoModelImpl._columnBitmask = 0;
 	}
 
@@ -896,12 +933,12 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 
 		videoCacheModel.metadataId = getMetadataId();
 
-		videoCacheModel.surl = getSurl();
+		videoCacheModel.secureFilename = getSecureFilename();
 
-		String surl = videoCacheModel.surl;
+		String secureFilename = videoCacheModel.secureFilename;
 
-		if ((surl != null) && (surl.length() == 0)) {
-			videoCacheModel.surl = null;
+		if ((secureFilename != null) && (secureFilename.length() == 0)) {
+			videoCacheModel.secureFilename = null;
 		}
 
 		videoCacheModel.hits = getHits();
@@ -933,12 +970,20 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 			videoCacheModel.tags = null;
 		}
 
+		videoCacheModel.password = getPassword();
+
+		String password = videoCacheModel.password;
+
+		if ((password != null) && (password.length() == 0)) {
+			videoCacheModel.password = null;
+		}
+
 		return videoCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(47);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("{videoId=");
 		sb.append(getVideoId());
@@ -968,8 +1013,8 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		sb.append(getDownloadLink());
 		sb.append(", metadataId=");
 		sb.append(getMetadataId());
-		sb.append(", surl=");
-		sb.append(getSurl());
+		sb.append(", secureFilename=");
+		sb.append(getSecureFilename());
 		sb.append(", hits=");
 		sb.append(getHits());
 		sb.append(", uploadDate=");
@@ -986,6 +1031,8 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		sb.append(getVideoCreatorId());
 		sb.append(", tags=");
 		sb.append(getTags());
+		sb.append(", password=");
+		sb.append(getPassword());
 		sb.append("}");
 
 		return sb.toString();
@@ -993,7 +1040,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(73);
+		StringBundler sb = new StringBundler(76);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Video");
@@ -1056,8 +1103,8 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		sb.append(getMetadataId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>surl</column-name><column-value><![CDATA[");
-		sb.append(getSurl());
+			"<column><column-name>secureFilename</column-name><column-value><![CDATA[");
+		sb.append(getSecureFilename());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>hits</column-name><column-value><![CDATA[");
@@ -1091,6 +1138,10 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 			"<column><column-name>tags</column-name><column-value><![CDATA[");
 		sb.append(getTags());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>password</column-name><column-value><![CDATA[");
+		sb.append(getPassword());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1122,7 +1173,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	private int _originalDownloadLink;
 	private boolean _setOriginalDownloadLink;
 	private long _metadataId;
-	private String _surl;
+	private String _secureFilename;
 	private long _hits;
 	private Date _uploadDate;
 	private Date _originalUploadDate;
@@ -1134,6 +1185,8 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	private long _termId;
 	private long _videoCreatorId;
 	private String _tags;
+	private String _password;
+	private String _originalPassword;
 	private long _columnBitmask;
 	private Video _escapedModel;
 }

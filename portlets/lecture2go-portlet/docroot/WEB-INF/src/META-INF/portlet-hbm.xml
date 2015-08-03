@@ -271,7 +271,7 @@
 		<property name="openAccess" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="downloadLink" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="metadataId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="surl" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="secureFilename" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="hits" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="uploadDate" type="org.hibernate.type.TimestampType" />
 		<property name="permittedToSegment" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
@@ -280,6 +280,7 @@
 		<property name="termId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="videoCreatorId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="tags" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="password" type="com.liferay.portal.dao.orm.hibernate.StringType" column="password_" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.Video_CategoryImpl" table="LG_Video_Category">
 		<cache usage="read-write" />

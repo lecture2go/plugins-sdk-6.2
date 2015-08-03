@@ -37,7 +37,7 @@ import java.util.Date;
 public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(47);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("{videoId=");
 		sb.append(videoId);
@@ -67,8 +67,8 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 		sb.append(downloadLink);
 		sb.append(", metadataId=");
 		sb.append(metadataId);
-		sb.append(", surl=");
-		sb.append(surl);
+		sb.append(", secureFilename=");
+		sb.append(secureFilename);
 		sb.append(", hits=");
 		sb.append(hits);
 		sb.append(", uploadDate=");
@@ -85,6 +85,8 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 		sb.append(videoCreatorId);
 		sb.append(", tags=");
 		sb.append(tags);
+		sb.append(", password=");
+		sb.append(password);
 		sb.append("}");
 
 		return sb.toString();
@@ -154,11 +156,11 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 		videoImpl.setDownloadLink(downloadLink);
 		videoImpl.setMetadataId(metadataId);
 
-		if (surl == null) {
-			videoImpl.setSurl(StringPool.BLANK);
+		if (secureFilename == null) {
+			videoImpl.setSecureFilename(StringPool.BLANK);
 		}
 		else {
-			videoImpl.setSurl(surl);
+			videoImpl.setSecureFilename(secureFilename);
 		}
 
 		videoImpl.setHits(hits);
@@ -183,6 +185,13 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 			videoImpl.setTags(tags);
 		}
 
+		if (password == null) {
+			videoImpl.setPassword(StringPool.BLANK);
+		}
+		else {
+			videoImpl.setPassword(password);
+		}
+
 		videoImpl.resetOriginalValues();
 
 		return videoImpl;
@@ -204,7 +213,7 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 		openAccess = objectInput.readInt();
 		downloadLink = objectInput.readInt();
 		metadataId = objectInput.readLong();
-		surl = objectInput.readUTF();
+		secureFilename = objectInput.readUTF();
 		hits = objectInput.readLong();
 		uploadDate = objectInput.readLong();
 		permittedToSegment = objectInput.readInt();
@@ -213,6 +222,7 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 		termId = objectInput.readLong();
 		videoCreatorId = objectInput.readLong();
 		tags = objectInput.readUTF();
+		password = objectInput.readUTF();
 	}
 
 	@Override
@@ -278,11 +288,11 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 		objectOutput.writeInt(downloadLink);
 		objectOutput.writeLong(metadataId);
 
-		if (surl == null) {
+		if (secureFilename == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
-			objectOutput.writeUTF(surl);
+			objectOutput.writeUTF(secureFilename);
 		}
 
 		objectOutput.writeLong(hits);
@@ -298,6 +308,13 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 		}
 		else {
 			objectOutput.writeUTF(tags);
+		}
+
+		if (password == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(password);
 		}
 	}
 
@@ -315,7 +332,7 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 	public int openAccess;
 	public int downloadLink;
 	public long metadataId;
-	public String surl;
+	public String secureFilename;
 	public long hits;
 	public long uploadDate;
 	public int permittedToSegment;
@@ -324,4 +341,5 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 	public long termId;
 	public long videoCreatorId;
 	public String tags;
+	public String password;
 }
