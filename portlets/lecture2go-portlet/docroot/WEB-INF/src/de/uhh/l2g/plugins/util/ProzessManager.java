@@ -158,7 +158,7 @@ public class ProzessManager {
 				
 				// then update the video in the database
 				video.setOpenAccess(1);
-				video.setSurl("");
+				video.setSecureFilename("");
 				VideoLocalServiceUtil.updateVideo(video);
 			}
 		} catch (Exception e) {}
@@ -211,7 +211,7 @@ public class ProzessManager {
 			video.setOpenAccess(0);
 			//generate secure file name
 			String secureUrl = Security.createSecureFileName() + "." + video.getContainerFormat();
-			video.setSurl(secureUrl);
+			video.setSecureFilename(secureUrl);
 			VideoLocalServiceUtil.updateVideo(video);
 			
 			String vidSPreffix = video.getSPreffix();
@@ -594,7 +594,7 @@ public class ProzessManager {
 			video.setContainerFormat("");
 			video.setDate("");
 			video.setGenerationDate("");
-			video.setSurl(Security.createSecureFileName()+".xx");
+			video.setSecureFilename(Security.createSecureFileName()+".xx");
 			video.setUploadDate(null);
 			video.setDownloadLink(0);
 			video.setOpenAccess(0);
