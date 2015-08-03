@@ -73,8 +73,8 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		return institutionPersistence.fetchByG_I(groupId, institutionId);
 	}
 
-	public Institution getTopLevelByGroupId(long groupId) throws SystemException {
-		return (Institution) institutionPersistence.fetchByTopLevel(groupId);
+	public Institution getRootByGroupId(long groupId) throws SystemException {
+		return (Institution) institutionPersistence.fetchByRoot(groupId);
 	}
 
 	public List<Institution> getByGroupIdAndParent(long groupId, long parentId) throws SystemException {

@@ -246,7 +246,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		}
 
 
-		public void updateTopLevelInstitution(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
+		public void updateRootInstitution(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
 
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
