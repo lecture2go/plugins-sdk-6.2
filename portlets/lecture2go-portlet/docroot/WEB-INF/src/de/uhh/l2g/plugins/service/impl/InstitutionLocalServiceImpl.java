@@ -311,9 +311,8 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 							System.out.println(ihId);
 
 
-							//Institution_HostLocalServiceUtil.
+							Institution_HostLocalServiceUtil.deleteLinkById(ihId, serviceContext);
 
-							//deleteLinkById(institutionId, serviceContext);
 						}
 					}
 		        }

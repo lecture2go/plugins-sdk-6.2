@@ -9,10 +9,10 @@ import com.liferay.portal.security.permission.PermissionChecker;
 
 public class HostPermission {
     public static void check(PermissionChecker permissionChecker,
-            long guestbookId, String actionId) throws PortalException,
+            long hostId, String actionId) throws PortalException,
             SystemException {
 
-        if (!contains(permissionChecker, guestbookId, actionId)) {
+        if (!contains(permissionChecker, hostId, actionId)) {
             throw new PrincipalException();
         }
     }

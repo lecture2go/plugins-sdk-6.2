@@ -117,6 +117,40 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 	}
 
+	/** Works analogous to addInstitution, but is sperate method to enforce restrictions*/
+	public void addSubInstitution(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
+
+
+		try {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		         Institution.class.getName(), request);
+
+			String name = ParamUtil.getString(request, "institution");
+			long hostId = ParamUtil.getLong(request, "serverselect");
+			long parentId = ParamUtil.getLong(request, "parent");
+			int sort = ParamUtil.getInteger(request, "order");
+
+
+	         InstitutionLocalServiceUtil.addInstitution(
+	              name, hostId, parentId, sort, serviceContext);
+
+	         SessionMessages.add(request, "entryAdded");
+
+	        // response.setRenderParameter("institutionId", Long.toString(institutionId));
+
+	       } catch (Exception e) {
+	         SessionErrors.add(request, e.getClass().getName());
+	         System.out.println(e.getClass().getName());
+	         e.printStackTrace();
+	         PortalUtil.copyRequestParameters(request, response);
+
+	         response.setRenderParameter("mvcPath",
+	              "/admin/institutionList.jsp");
+	       }
+
+
+	}
+
 		public void updateInstitution(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
 
 
@@ -124,7 +158,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 					Institution.class.getName(), request);
 
 			String name = ParamUtil.getString(request, "outerListInstitution");
-			long hostId = ParamUtil.getLong(request, "serverselect");
+			long hostId = ParamUtil.getLong(request, "outerListHostId");
 			long institutionId = ParamUtil.getLong(request, "outerListInstitutionId");
 			long selectedInstitutionId = ParamUtil.getLong(request, "selectedInstitutionId");
 			System.out.println(institutionId);

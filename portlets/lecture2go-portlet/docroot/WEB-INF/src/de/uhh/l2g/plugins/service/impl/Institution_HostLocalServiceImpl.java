@@ -149,7 +149,7 @@ public class Institution_HostLocalServiceImpl
 		validate(institutionId, hostId);
 
 		List<Institution_Host> linstitution_Host = getListByGroupIdAndInstitutionId(groupId, institutionId);
-
+		System.out.println (linstitution_Host.toString());
 		Institution_Host institution_Host = linstitution_Host.get(0);
 
 		institution_Host.setGroupId(groupId);

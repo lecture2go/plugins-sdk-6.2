@@ -108,9 +108,6 @@
 <%@ page import="de.uhh.l2g.plugins.service.CreatorLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.util.Lecture2GoRoleChecker"%>
 <%@ page import="de.uhh.l2g.webservices.*"%>
-<%@ page import="de.uhh.l2g.plugins.service.permission.InstitutionPermission"%>
-<%@ page import="de.uhh.l2g.plugins.service.permission.L2GModelPermission"%>
-<%@ page import="de.uhh.l2g.plugins.service.permission.HostPermission"%>
 
 <portlet:defineObjects />
 <liferay-theme:defineObjects/>

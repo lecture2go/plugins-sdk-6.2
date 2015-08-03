@@ -4,9 +4,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 
-public class L2GModelPermission {
+public class InstitutionModelPermission {
 
-    public static final String RESOURCE_NAME = "de.uhh.l2g.plugins.model";
+    public static final String RESOURCE_NAME = "de.uhh.l2g.plugins.model.Institution";
 
     public static void check(PermissionChecker permissionChecker, long groupId,
             String actionId) throws PortalException {
