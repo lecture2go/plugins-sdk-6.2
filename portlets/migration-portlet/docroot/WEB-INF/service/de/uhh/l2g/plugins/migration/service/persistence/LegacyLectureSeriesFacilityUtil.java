@@ -115,6 +115,87 @@ public class LegacyLectureSeriesFacilityUtil {
 	}
 
 	/**
+	* Returns the legacy lecture series facility where facilityId = &#63; and lectureseriesId = &#63; or throws a {@link de.uhh.l2g.plugins.migration.NoSuchLegacyLectureSeriesFacilityException} if it could not be found.
+	*
+	* @param facilityId the facility ID
+	* @param lectureseriesId the lectureseries ID
+	* @return the matching legacy lecture series facility
+	* @throws de.uhh.l2g.plugins.migration.NoSuchLegacyLectureSeriesFacilityException if a matching legacy lecture series facility could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.migration.model.LegacyLectureSeriesFacility findByFacilityIdlectureseriesId(
+		long facilityId, long lectureseriesId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.migration.NoSuchLegacyLectureSeriesFacilityException {
+		return getPersistence()
+				   .findByFacilityIdlectureseriesId(facilityId, lectureseriesId);
+	}
+
+	/**
+	* Returns the legacy lecture series facility where facilityId = &#63; and lectureseriesId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param facilityId the facility ID
+	* @param lectureseriesId the lectureseries ID
+	* @return the matching legacy lecture series facility, or <code>null</code> if a matching legacy lecture series facility could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.migration.model.LegacyLectureSeriesFacility fetchByFacilityIdlectureseriesId(
+		long facilityId, long lectureseriesId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByFacilityIdlectureseriesId(facilityId, lectureseriesId);
+	}
+
+	/**
+	* Returns the legacy lecture series facility where facilityId = &#63; and lectureseriesId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param facilityId the facility ID
+	* @param lectureseriesId the lectureseries ID
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching legacy lecture series facility, or <code>null</code> if a matching legacy lecture series facility could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.migration.model.LegacyLectureSeriesFacility fetchByFacilityIdlectureseriesId(
+		long facilityId, long lectureseriesId, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByFacilityIdlectureseriesId(facilityId,
+			lectureseriesId, retrieveFromCache);
+	}
+
+	/**
+	* Removes the legacy lecture series facility where facilityId = &#63; and lectureseriesId = &#63; from the database.
+	*
+	* @param facilityId the facility ID
+	* @param lectureseriesId the lectureseries ID
+	* @return the legacy lecture series facility that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static de.uhh.l2g.plugins.migration.model.LegacyLectureSeriesFacility removeByFacilityIdlectureseriesId(
+		long facilityId, long lectureseriesId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.migration.NoSuchLegacyLectureSeriesFacilityException {
+		return getPersistence()
+				   .removeByFacilityIdlectureseriesId(facilityId,
+			lectureseriesId);
+	}
+
+	/**
+	* Returns the number of legacy lecture series facilities where facilityId = &#63; and lectureseriesId = &#63;.
+	*
+	* @param facilityId the facility ID
+	* @param lectureseriesId the lectureseries ID
+	* @return the number of matching legacy lecture series facilities
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByFacilityIdlectureseriesId(long facilityId,
+		long lectureseriesId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .countByFacilityIdlectureseriesId(facilityId, lectureseriesId);
+	}
+
+	/**
 	* Caches the legacy lecture series facility in the entity cache if it is enabled.
 	*
 	* @param legacyLectureSeriesFacility the legacy lecture series facility

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
@@ -84,6 +86,257 @@ public class LegacyLectureSeriesFacilityPersistenceImpl
 			LegacyLectureSeriesFacilityModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
+	public static final FinderPath FINDER_PATH_FETCH_BY_FACILITYIDLECTURESERIESID =
+		new FinderPath(LegacyLectureSeriesFacilityModelImpl.ENTITY_CACHE_ENABLED,
+			LegacyLectureSeriesFacilityModelImpl.FINDER_CACHE_ENABLED,
+			LegacyLectureSeriesFacilityImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByFacilityIdlectureseriesId",
+			new String[] { Long.class.getName(), Long.class.getName() },
+			LegacyLectureSeriesFacilityModelImpl.FACILITYID_COLUMN_BITMASK |
+			LegacyLectureSeriesFacilityModelImpl.LECTURESERIESID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_FACILITYIDLECTURESERIESID =
+		new FinderPath(LegacyLectureSeriesFacilityModelImpl.ENTITY_CACHE_ENABLED,
+			LegacyLectureSeriesFacilityModelImpl.FINDER_CACHE_ENABLED,
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByFacilityIdlectureseriesId",
+			new String[] { Long.class.getName(), Long.class.getName() });
+
+	/**
+	 * Returns the legacy lecture series facility where facilityId = &#63; and lectureseriesId = &#63; or throws a {@link de.uhh.l2g.plugins.migration.NoSuchLegacyLectureSeriesFacilityException} if it could not be found.
+	 *
+	 * @param facilityId the facility ID
+	 * @param lectureseriesId the lectureseries ID
+	 * @return the matching legacy lecture series facility
+	 * @throws de.uhh.l2g.plugins.migration.NoSuchLegacyLectureSeriesFacilityException if a matching legacy lecture series facility could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public LegacyLectureSeriesFacility findByFacilityIdlectureseriesId(
+		long facilityId, long lectureseriesId)
+		throws NoSuchLegacyLectureSeriesFacilityException, SystemException {
+		LegacyLectureSeriesFacility legacyLectureSeriesFacility = fetchByFacilityIdlectureseriesId(facilityId,
+				lectureseriesId);
+
+		if (legacyLectureSeriesFacility == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("facilityId=");
+			msg.append(facilityId);
+
+			msg.append(", lectureseriesId=");
+			msg.append(lectureseriesId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchLegacyLectureSeriesFacilityException(msg.toString());
+		}
+
+		return legacyLectureSeriesFacility;
+	}
+
+	/**
+	 * Returns the legacy lecture series facility where facilityId = &#63; and lectureseriesId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param facilityId the facility ID
+	 * @param lectureseriesId the lectureseries ID
+	 * @return the matching legacy lecture series facility, or <code>null</code> if a matching legacy lecture series facility could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public LegacyLectureSeriesFacility fetchByFacilityIdlectureseriesId(
+		long facilityId, long lectureseriesId) throws SystemException {
+		return fetchByFacilityIdlectureseriesId(facilityId, lectureseriesId,
+			true);
+	}
+
+	/**
+	 * Returns the legacy lecture series facility where facilityId = &#63; and lectureseriesId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param facilityId the facility ID
+	 * @param lectureseriesId the lectureseries ID
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching legacy lecture series facility, or <code>null</code> if a matching legacy lecture series facility could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public LegacyLectureSeriesFacility fetchByFacilityIdlectureseriesId(
+		long facilityId, long lectureseriesId, boolean retrieveFromCache)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { facilityId, lectureseriesId };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_FACILITYIDLECTURESERIESID,
+					finderArgs, this);
+		}
+
+		if (result instanceof LegacyLectureSeriesFacility) {
+			LegacyLectureSeriesFacility legacyLectureSeriesFacility = (LegacyLectureSeriesFacility)result;
+
+			if ((facilityId != legacyLectureSeriesFacility.getFacilityId()) ||
+					(lectureseriesId != legacyLectureSeriesFacility.getLectureseriesId())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_LEGACYLECTURESERIESFACILITY_WHERE);
+
+			query.append(_FINDER_COLUMN_FACILITYIDLECTURESERIESID_FACILITYID_2);
+
+			query.append(_FINDER_COLUMN_FACILITYIDLECTURESERIESID_LECTURESERIESID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(facilityId);
+
+				qPos.add(lectureseriesId);
+
+				List<LegacyLectureSeriesFacility> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_FACILITYIDLECTURESERIESID,
+						finderArgs, list);
+				}
+				else {
+					if ((list.size() > 1) && _log.isWarnEnabled()) {
+						_log.warn(
+							"LegacyLectureSeriesFacilityPersistenceImpl.fetchByFacilityIdlectureseriesId(long, long, boolean) with parameters (" +
+							StringUtil.merge(finderArgs) +
+							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					}
+
+					LegacyLectureSeriesFacility legacyLectureSeriesFacility = list.get(0);
+
+					result = legacyLectureSeriesFacility;
+
+					cacheResult(legacyLectureSeriesFacility);
+
+					if ((legacyLectureSeriesFacility.getFacilityId() != facilityId) ||
+							(legacyLectureSeriesFacility.getLectureseriesId() != lectureseriesId)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_FACILITYIDLECTURESERIESID,
+							finderArgs, legacyLectureSeriesFacility);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_FACILITYIDLECTURESERIESID,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (LegacyLectureSeriesFacility)result;
+		}
+	}
+
+	/**
+	 * Removes the legacy lecture series facility where facilityId = &#63; and lectureseriesId = &#63; from the database.
+	 *
+	 * @param facilityId the facility ID
+	 * @param lectureseriesId the lectureseries ID
+	 * @return the legacy lecture series facility that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public LegacyLectureSeriesFacility removeByFacilityIdlectureseriesId(
+		long facilityId, long lectureseriesId)
+		throws NoSuchLegacyLectureSeriesFacilityException, SystemException {
+		LegacyLectureSeriesFacility legacyLectureSeriesFacility = findByFacilityIdlectureseriesId(facilityId,
+				lectureseriesId);
+
+		return remove(legacyLectureSeriesFacility);
+	}
+
+	/**
+	 * Returns the number of legacy lecture series facilities where facilityId = &#63; and lectureseriesId = &#63;.
+	 *
+	 * @param facilityId the facility ID
+	 * @param lectureseriesId the lectureseries ID
+	 * @return the number of matching legacy lecture series facilities
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByFacilityIdlectureseriesId(long facilityId,
+		long lectureseriesId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_FACILITYIDLECTURESERIESID;
+
+		Object[] finderArgs = new Object[] { facilityId, lectureseriesId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_LEGACYLECTURESERIESFACILITY_WHERE);
+
+			query.append(_FINDER_COLUMN_FACILITYIDLECTURESERIESID_FACILITYID_2);
+
+			query.append(_FINDER_COLUMN_FACILITYIDLECTURESERIESID_LECTURESERIESID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(facilityId);
+
+				qPos.add(lectureseriesId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_FACILITYIDLECTURESERIESID_FACILITYID_2 =
+		"legacyLectureSeriesFacility.facilityId = ? AND ";
+	private static final String _FINDER_COLUMN_FACILITYIDLECTURESERIESID_LECTURESERIESID_2 =
+		"legacyLectureSeriesFacility.lectureseriesId = ?";
 
 	public LegacyLectureSeriesFacilityPersistenceImpl() {
 		setModelClass(LegacyLectureSeriesFacility.class);
@@ -101,6 +354,12 @@ public class LegacyLectureSeriesFacilityPersistenceImpl
 			LegacyLectureSeriesFacilityImpl.class,
 			legacyLectureSeriesFacility.getPrimaryKey(),
 			legacyLectureSeriesFacility);
+
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_FACILITYIDLECTURESERIESID,
+			new Object[] {
+				legacyLectureSeriesFacility.getFacilityId(),
+				legacyLectureSeriesFacility.getLectureseriesId()
+			}, legacyLectureSeriesFacility);
 
 		legacyLectureSeriesFacility.resetOriginalValues();
 	}
@@ -162,6 +421,8 @@ public class LegacyLectureSeriesFacilityPersistenceImpl
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache(legacyLectureSeriesFacility);
 	}
 
 	@Override
@@ -174,6 +435,69 @@ public class LegacyLectureSeriesFacilityPersistenceImpl
 			EntityCacheUtil.removeResult(LegacyLectureSeriesFacilityModelImpl.ENTITY_CACHE_ENABLED,
 				LegacyLectureSeriesFacilityImpl.class,
 				legacyLectureSeriesFacility.getPrimaryKey());
+
+			clearUniqueFindersCache(legacyLectureSeriesFacility);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		LegacyLectureSeriesFacility legacyLectureSeriesFacility) {
+		if (legacyLectureSeriesFacility.isNew()) {
+			Object[] args = new Object[] {
+					legacyLectureSeriesFacility.getFacilityId(),
+					legacyLectureSeriesFacility.getLectureseriesId()
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_FACILITYIDLECTURESERIESID,
+				args, Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_FACILITYIDLECTURESERIESID,
+				args, legacyLectureSeriesFacility);
+		}
+		else {
+			LegacyLectureSeriesFacilityModelImpl legacyLectureSeriesFacilityModelImpl =
+				(LegacyLectureSeriesFacilityModelImpl)legacyLectureSeriesFacility;
+
+			if ((legacyLectureSeriesFacilityModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_FACILITYIDLECTURESERIESID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						legacyLectureSeriesFacility.getFacilityId(),
+						legacyLectureSeriesFacility.getLectureseriesId()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_FACILITYIDLECTURESERIESID,
+					args, Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_FACILITYIDLECTURESERIESID,
+					args, legacyLectureSeriesFacility);
+			}
+		}
+	}
+
+	protected void clearUniqueFindersCache(
+		LegacyLectureSeriesFacility legacyLectureSeriesFacility) {
+		LegacyLectureSeriesFacilityModelImpl legacyLectureSeriesFacilityModelImpl =
+			(LegacyLectureSeriesFacilityModelImpl)legacyLectureSeriesFacility;
+
+		Object[] args = new Object[] {
+				legacyLectureSeriesFacility.getFacilityId(),
+				legacyLectureSeriesFacility.getLectureseriesId()
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FACILITYIDLECTURESERIESID,
+			args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_FACILITYIDLECTURESERIESID,
+			args);
+
+		if ((legacyLectureSeriesFacilityModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_FACILITYIDLECTURESERIESID.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					legacyLectureSeriesFacilityModelImpl.getOriginalFacilityId(),
+					legacyLectureSeriesFacilityModelImpl.getOriginalLectureseriesId()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FACILITYIDLECTURESERIESID,
+				args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_FACILITYIDLECTURESERIESID,
+				args);
 		}
 	}
 
@@ -313,7 +637,8 @@ public class LegacyLectureSeriesFacilityPersistenceImpl
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (isNew ||
+				!LegacyLectureSeriesFacilityModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
@@ -321,6 +646,9 @@ public class LegacyLectureSeriesFacilityPersistenceImpl
 			LegacyLectureSeriesFacilityImpl.class,
 			legacyLectureSeriesFacility.getPrimaryKey(),
 			legacyLectureSeriesFacility);
+
+		clearUniqueFindersCache(legacyLectureSeriesFacility);
+		cacheUniqueFindersCache(legacyLectureSeriesFacility);
 
 		return legacyLectureSeriesFacility;
 	}
@@ -651,9 +979,12 @@ public class LegacyLectureSeriesFacilityPersistenceImpl
 	}
 
 	private static final String _SQL_SELECT_LEGACYLECTURESERIESFACILITY = "SELECT legacyLectureSeriesFacility FROM LegacyLectureSeriesFacility legacyLectureSeriesFacility";
+	private static final String _SQL_SELECT_LEGACYLECTURESERIESFACILITY_WHERE = "SELECT legacyLectureSeriesFacility FROM LegacyLectureSeriesFacility legacyLectureSeriesFacility WHERE ";
 	private static final String _SQL_COUNT_LEGACYLECTURESERIESFACILITY = "SELECT COUNT(legacyLectureSeriesFacility) FROM LegacyLectureSeriesFacility legacyLectureSeriesFacility";
+	private static final String _SQL_COUNT_LEGACYLECTURESERIESFACILITY_WHERE = "SELECT COUNT(legacyLectureSeriesFacility) FROM LegacyLectureSeriesFacility legacyLectureSeriesFacility WHERE ";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "legacyLectureSeriesFacility.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No LegacyLectureSeriesFacility exists with the primary key ";
+	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No LegacyLectureSeriesFacility exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = GetterUtil.getBoolean(PropsUtil.get(
 				PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
 	private static Log _log = LogFactoryUtil.getLog(LegacyLectureSeriesFacilityPersistenceImpl.class);

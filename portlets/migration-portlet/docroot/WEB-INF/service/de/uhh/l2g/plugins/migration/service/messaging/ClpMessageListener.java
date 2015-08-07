@@ -18,13 +18,27 @@ import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 
 import de.uhh.l2g.plugins.migration.service.ClpSerializer;
+import de.uhh.l2g.plugins.migration.service.LegacyAddressLocalServiceUtil;
 import de.uhh.l2g.plugins.migration.service.LegacyContactLocalServiceUtil;
+import de.uhh.l2g.plugins.migration.service.LegacyCoordinatorLocalServiceUtil;
+import de.uhh.l2g.plugins.migration.service.LegacyFacilityHostLocalServiceUtil;
+import de.uhh.l2g.plugins.migration.service.LegacyFacilityLocalServiceUtil;
+import de.uhh.l2g.plugins.migration.service.LegacyHostLocalServiceUtil;
+import de.uhh.l2g.plugins.migration.service.LegacyL2gSysLocalServiceUtil;
+import de.uhh.l2g.plugins.migration.service.LegacyLastVideoListLocalServiceUtil;
 import de.uhh.l2g.plugins.migration.service.LegacyLectureSeriesFacilityLocalServiceUtil;
+import de.uhh.l2g.plugins.migration.service.LegacyLectureSeriesLocalServiceUtil;
+import de.uhh.l2g.plugins.migration.service.LegacyLicenseLocalServiceUtil;
 import de.uhh.l2g.plugins.migration.service.LegacyMetadataLocalServiceUtil;
 import de.uhh.l2g.plugins.migration.service.LegacyOfficeLocalServiceUtil;
+import de.uhh.l2g.plugins.migration.service.LegacyProducerLectureseriesLocalServiceUtil;
+import de.uhh.l2g.plugins.migration.service.LegacyProducerLocalServiceUtil;
 import de.uhh.l2g.plugins.migration.service.LegacySegmentLocalServiceUtil;
+import de.uhh.l2g.plugins.migration.service.LegacyUploadLocalServiceUtil;
 import de.uhh.l2g.plugins.migration.service.LegacyUserLocalServiceUtil;
-import de.uhh.l2g.plugins.migration.service.TestEntityTwoLocalServiceUtil;
+import de.uhh.l2g.plugins.migration.service.LegacyVideoFacilityLocalServiceUtil;
+import de.uhh.l2g.plugins.migration.service.LegacyVideoHitlistLocalServiceUtil;
+import de.uhh.l2g.plugins.migration.service.LegacyVideoLocalServiceUtil;
 
 /**
  * @author unihh
@@ -41,19 +55,47 @@ public class ClpMessageListener extends BaseMessageListener {
 
 		if (command.equals("undeploy") &&
 				servletContextName.equals(getServletContextName())) {
+			LegacyAddressLocalServiceUtil.clearService();
+
 			LegacyContactLocalServiceUtil.clearService();
 
+			LegacyCoordinatorLocalServiceUtil.clearService();
+
+			LegacyFacilityLocalServiceUtil.clearService();
+
+			LegacyFacilityHostLocalServiceUtil.clearService();
+
+			LegacyHostLocalServiceUtil.clearService();
+
+			LegacyL2gSysLocalServiceUtil.clearService();
+
+			LegacyLastVideoListLocalServiceUtil.clearService();
+
+			LegacyLectureSeriesLocalServiceUtil.clearService();
+
 			LegacyLectureSeriesFacilityLocalServiceUtil.clearService();
+
+			LegacyLicenseLocalServiceUtil.clearService();
 
 			LegacyMetadataLocalServiceUtil.clearService();
 
 			LegacyOfficeLocalServiceUtil.clearService();
 
+			LegacyProducerLocalServiceUtil.clearService();
+
+			LegacyProducerLectureseriesLocalServiceUtil.clearService();
+
 			LegacySegmentLocalServiceUtil.clearService();
+
+			LegacyUploadLocalServiceUtil.clearService();
 
 			LegacyUserLocalServiceUtil.clearService();
 
-			TestEntityTwoLocalServiceUtil.clearService();
+			LegacyVideoLocalServiceUtil.clearService();
+
+			LegacyVideoFacilityLocalServiceUtil.clearService();
+
+			LegacyVideoHitlistLocalServiceUtil.clearService();
 		}
 	}
 }

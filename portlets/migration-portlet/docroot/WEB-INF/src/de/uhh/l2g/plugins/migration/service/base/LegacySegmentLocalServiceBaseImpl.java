@@ -33,13 +33,27 @@ import com.liferay.portal.service.persistence.UserPersistence;
 
 import de.uhh.l2g.plugins.migration.model.LegacySegment;
 import de.uhh.l2g.plugins.migration.service.LegacySegmentLocalService;
+import de.uhh.l2g.plugins.migration.service.persistence.LegacyAddressPersistence;
 import de.uhh.l2g.plugins.migration.service.persistence.LegacyContactPersistence;
+import de.uhh.l2g.plugins.migration.service.persistence.LegacyCoordinatorPersistence;
+import de.uhh.l2g.plugins.migration.service.persistence.LegacyFacilityHostPersistence;
+import de.uhh.l2g.plugins.migration.service.persistence.LegacyFacilityPersistence;
+import de.uhh.l2g.plugins.migration.service.persistence.LegacyHostPersistence;
+import de.uhh.l2g.plugins.migration.service.persistence.LegacyL2gSysPersistence;
+import de.uhh.l2g.plugins.migration.service.persistence.LegacyLastVideoListPersistence;
 import de.uhh.l2g.plugins.migration.service.persistence.LegacyLectureSeriesFacilityPersistence;
+import de.uhh.l2g.plugins.migration.service.persistence.LegacyLectureSeriesPersistence;
+import de.uhh.l2g.plugins.migration.service.persistence.LegacyLicensePersistence;
 import de.uhh.l2g.plugins.migration.service.persistence.LegacyMetadataPersistence;
 import de.uhh.l2g.plugins.migration.service.persistence.LegacyOfficePersistence;
+import de.uhh.l2g.plugins.migration.service.persistence.LegacyProducerLectureseriesPersistence;
+import de.uhh.l2g.plugins.migration.service.persistence.LegacyProducerPersistence;
 import de.uhh.l2g.plugins.migration.service.persistence.LegacySegmentPersistence;
+import de.uhh.l2g.plugins.migration.service.persistence.LegacyUploadPersistence;
 import de.uhh.l2g.plugins.migration.service.persistence.LegacyUserPersistence;
-import de.uhh.l2g.plugins.migration.service.persistence.TestEntityTwoPersistence;
+import de.uhh.l2g.plugins.migration.service.persistence.LegacyVideoFacilityPersistence;
+import de.uhh.l2g.plugins.migration.service.persistence.LegacyVideoHitlistPersistence;
+import de.uhh.l2g.plugins.migration.service.persistence.LegacyVideoPersistence;
 
 import java.io.Serializable;
 
@@ -286,6 +300,44 @@ public abstract class LegacySegmentLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the legacy address local service.
+	 *
+	 * @return the legacy address local service
+	 */
+	public de.uhh.l2g.plugins.migration.service.LegacyAddressLocalService getLegacyAddressLocalService() {
+		return legacyAddressLocalService;
+	}
+
+	/**
+	 * Sets the legacy address local service.
+	 *
+	 * @param legacyAddressLocalService the legacy address local service
+	 */
+	public void setLegacyAddressLocalService(
+		de.uhh.l2g.plugins.migration.service.LegacyAddressLocalService legacyAddressLocalService) {
+		this.legacyAddressLocalService = legacyAddressLocalService;
+	}
+
+	/**
+	 * Returns the legacy address persistence.
+	 *
+	 * @return the legacy address persistence
+	 */
+	public LegacyAddressPersistence getLegacyAddressPersistence() {
+		return legacyAddressPersistence;
+	}
+
+	/**
+	 * Sets the legacy address persistence.
+	 *
+	 * @param legacyAddressPersistence the legacy address persistence
+	 */
+	public void setLegacyAddressPersistence(
+		LegacyAddressPersistence legacyAddressPersistence) {
+		this.legacyAddressPersistence = legacyAddressPersistence;
+	}
+
+	/**
 	 * Returns the legacy contact local service.
 	 *
 	 * @return the legacy contact local service
@@ -324,6 +376,272 @@ public abstract class LegacySegmentLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the legacy coordinator local service.
+	 *
+	 * @return the legacy coordinator local service
+	 */
+	public de.uhh.l2g.plugins.migration.service.LegacyCoordinatorLocalService getLegacyCoordinatorLocalService() {
+		return legacyCoordinatorLocalService;
+	}
+
+	/**
+	 * Sets the legacy coordinator local service.
+	 *
+	 * @param legacyCoordinatorLocalService the legacy coordinator local service
+	 */
+	public void setLegacyCoordinatorLocalService(
+		de.uhh.l2g.plugins.migration.service.LegacyCoordinatorLocalService legacyCoordinatorLocalService) {
+		this.legacyCoordinatorLocalService = legacyCoordinatorLocalService;
+	}
+
+	/**
+	 * Returns the legacy coordinator persistence.
+	 *
+	 * @return the legacy coordinator persistence
+	 */
+	public LegacyCoordinatorPersistence getLegacyCoordinatorPersistence() {
+		return legacyCoordinatorPersistence;
+	}
+
+	/**
+	 * Sets the legacy coordinator persistence.
+	 *
+	 * @param legacyCoordinatorPersistence the legacy coordinator persistence
+	 */
+	public void setLegacyCoordinatorPersistence(
+		LegacyCoordinatorPersistence legacyCoordinatorPersistence) {
+		this.legacyCoordinatorPersistence = legacyCoordinatorPersistence;
+	}
+
+	/**
+	 * Returns the legacy facility local service.
+	 *
+	 * @return the legacy facility local service
+	 */
+	public de.uhh.l2g.plugins.migration.service.LegacyFacilityLocalService getLegacyFacilityLocalService() {
+		return legacyFacilityLocalService;
+	}
+
+	/**
+	 * Sets the legacy facility local service.
+	 *
+	 * @param legacyFacilityLocalService the legacy facility local service
+	 */
+	public void setLegacyFacilityLocalService(
+		de.uhh.l2g.plugins.migration.service.LegacyFacilityLocalService legacyFacilityLocalService) {
+		this.legacyFacilityLocalService = legacyFacilityLocalService;
+	}
+
+	/**
+	 * Returns the legacy facility persistence.
+	 *
+	 * @return the legacy facility persistence
+	 */
+	public LegacyFacilityPersistence getLegacyFacilityPersistence() {
+		return legacyFacilityPersistence;
+	}
+
+	/**
+	 * Sets the legacy facility persistence.
+	 *
+	 * @param legacyFacilityPersistence the legacy facility persistence
+	 */
+	public void setLegacyFacilityPersistence(
+		LegacyFacilityPersistence legacyFacilityPersistence) {
+		this.legacyFacilityPersistence = legacyFacilityPersistence;
+	}
+
+	/**
+	 * Returns the legacy facility host local service.
+	 *
+	 * @return the legacy facility host local service
+	 */
+	public de.uhh.l2g.plugins.migration.service.LegacyFacilityHostLocalService getLegacyFacilityHostLocalService() {
+		return legacyFacilityHostLocalService;
+	}
+
+	/**
+	 * Sets the legacy facility host local service.
+	 *
+	 * @param legacyFacilityHostLocalService the legacy facility host local service
+	 */
+	public void setLegacyFacilityHostLocalService(
+		de.uhh.l2g.plugins.migration.service.LegacyFacilityHostLocalService legacyFacilityHostLocalService) {
+		this.legacyFacilityHostLocalService = legacyFacilityHostLocalService;
+	}
+
+	/**
+	 * Returns the legacy facility host persistence.
+	 *
+	 * @return the legacy facility host persistence
+	 */
+	public LegacyFacilityHostPersistence getLegacyFacilityHostPersistence() {
+		return legacyFacilityHostPersistence;
+	}
+
+	/**
+	 * Sets the legacy facility host persistence.
+	 *
+	 * @param legacyFacilityHostPersistence the legacy facility host persistence
+	 */
+	public void setLegacyFacilityHostPersistence(
+		LegacyFacilityHostPersistence legacyFacilityHostPersistence) {
+		this.legacyFacilityHostPersistence = legacyFacilityHostPersistence;
+	}
+
+	/**
+	 * Returns the legacy host local service.
+	 *
+	 * @return the legacy host local service
+	 */
+	public de.uhh.l2g.plugins.migration.service.LegacyHostLocalService getLegacyHostLocalService() {
+		return legacyHostLocalService;
+	}
+
+	/**
+	 * Sets the legacy host local service.
+	 *
+	 * @param legacyHostLocalService the legacy host local service
+	 */
+	public void setLegacyHostLocalService(
+		de.uhh.l2g.plugins.migration.service.LegacyHostLocalService legacyHostLocalService) {
+		this.legacyHostLocalService = legacyHostLocalService;
+	}
+
+	/**
+	 * Returns the legacy host persistence.
+	 *
+	 * @return the legacy host persistence
+	 */
+	public LegacyHostPersistence getLegacyHostPersistence() {
+		return legacyHostPersistence;
+	}
+
+	/**
+	 * Sets the legacy host persistence.
+	 *
+	 * @param legacyHostPersistence the legacy host persistence
+	 */
+	public void setLegacyHostPersistence(
+		LegacyHostPersistence legacyHostPersistence) {
+		this.legacyHostPersistence = legacyHostPersistence;
+	}
+
+	/**
+	 * Returns the legacy l2g sys local service.
+	 *
+	 * @return the legacy l2g sys local service
+	 */
+	public de.uhh.l2g.plugins.migration.service.LegacyL2gSysLocalService getLegacyL2gSysLocalService() {
+		return legacyL2gSysLocalService;
+	}
+
+	/**
+	 * Sets the legacy l2g sys local service.
+	 *
+	 * @param legacyL2gSysLocalService the legacy l2g sys local service
+	 */
+	public void setLegacyL2gSysLocalService(
+		de.uhh.l2g.plugins.migration.service.LegacyL2gSysLocalService legacyL2gSysLocalService) {
+		this.legacyL2gSysLocalService = legacyL2gSysLocalService;
+	}
+
+	/**
+	 * Returns the legacy l2g sys persistence.
+	 *
+	 * @return the legacy l2g sys persistence
+	 */
+	public LegacyL2gSysPersistence getLegacyL2gSysPersistence() {
+		return legacyL2gSysPersistence;
+	}
+
+	/**
+	 * Sets the legacy l2g sys persistence.
+	 *
+	 * @param legacyL2gSysPersistence the legacy l2g sys persistence
+	 */
+	public void setLegacyL2gSysPersistence(
+		LegacyL2gSysPersistence legacyL2gSysPersistence) {
+		this.legacyL2gSysPersistence = legacyL2gSysPersistence;
+	}
+
+	/**
+	 * Returns the legacy last video list local service.
+	 *
+	 * @return the legacy last video list local service
+	 */
+	public de.uhh.l2g.plugins.migration.service.LegacyLastVideoListLocalService getLegacyLastVideoListLocalService() {
+		return legacyLastVideoListLocalService;
+	}
+
+	/**
+	 * Sets the legacy last video list local service.
+	 *
+	 * @param legacyLastVideoListLocalService the legacy last video list local service
+	 */
+	public void setLegacyLastVideoListLocalService(
+		de.uhh.l2g.plugins.migration.service.LegacyLastVideoListLocalService legacyLastVideoListLocalService) {
+		this.legacyLastVideoListLocalService = legacyLastVideoListLocalService;
+	}
+
+	/**
+	 * Returns the legacy last video list persistence.
+	 *
+	 * @return the legacy last video list persistence
+	 */
+	public LegacyLastVideoListPersistence getLegacyLastVideoListPersistence() {
+		return legacyLastVideoListPersistence;
+	}
+
+	/**
+	 * Sets the legacy last video list persistence.
+	 *
+	 * @param legacyLastVideoListPersistence the legacy last video list persistence
+	 */
+	public void setLegacyLastVideoListPersistence(
+		LegacyLastVideoListPersistence legacyLastVideoListPersistence) {
+		this.legacyLastVideoListPersistence = legacyLastVideoListPersistence;
+	}
+
+	/**
+	 * Returns the legacy lecture series local service.
+	 *
+	 * @return the legacy lecture series local service
+	 */
+	public de.uhh.l2g.plugins.migration.service.LegacyLectureSeriesLocalService getLegacyLectureSeriesLocalService() {
+		return legacyLectureSeriesLocalService;
+	}
+
+	/**
+	 * Sets the legacy lecture series local service.
+	 *
+	 * @param legacyLectureSeriesLocalService the legacy lecture series local service
+	 */
+	public void setLegacyLectureSeriesLocalService(
+		de.uhh.l2g.plugins.migration.service.LegacyLectureSeriesLocalService legacyLectureSeriesLocalService) {
+		this.legacyLectureSeriesLocalService = legacyLectureSeriesLocalService;
+	}
+
+	/**
+	 * Returns the legacy lecture series persistence.
+	 *
+	 * @return the legacy lecture series persistence
+	 */
+	public LegacyLectureSeriesPersistence getLegacyLectureSeriesPersistence() {
+		return legacyLectureSeriesPersistence;
+	}
+
+	/**
+	 * Sets the legacy lecture series persistence.
+	 *
+	 * @param legacyLectureSeriesPersistence the legacy lecture series persistence
+	 */
+	public void setLegacyLectureSeriesPersistence(
+		LegacyLectureSeriesPersistence legacyLectureSeriesPersistence) {
+		this.legacyLectureSeriesPersistence = legacyLectureSeriesPersistence;
+	}
+
+	/**
 	 * Returns the legacy lecture series facility local service.
 	 *
 	 * @return the legacy lecture series facility local service
@@ -359,6 +677,44 @@ public abstract class LegacySegmentLocalServiceBaseImpl
 	public void setLegacyLectureSeriesFacilityPersistence(
 		LegacyLectureSeriesFacilityPersistence legacyLectureSeriesFacilityPersistence) {
 		this.legacyLectureSeriesFacilityPersistence = legacyLectureSeriesFacilityPersistence;
+	}
+
+	/**
+	 * Returns the legacy license local service.
+	 *
+	 * @return the legacy license local service
+	 */
+	public de.uhh.l2g.plugins.migration.service.LegacyLicenseLocalService getLegacyLicenseLocalService() {
+		return legacyLicenseLocalService;
+	}
+
+	/**
+	 * Sets the legacy license local service.
+	 *
+	 * @param legacyLicenseLocalService the legacy license local service
+	 */
+	public void setLegacyLicenseLocalService(
+		de.uhh.l2g.plugins.migration.service.LegacyLicenseLocalService legacyLicenseLocalService) {
+		this.legacyLicenseLocalService = legacyLicenseLocalService;
+	}
+
+	/**
+	 * Returns the legacy license persistence.
+	 *
+	 * @return the legacy license persistence
+	 */
+	public LegacyLicensePersistence getLegacyLicensePersistence() {
+		return legacyLicensePersistence;
+	}
+
+	/**
+	 * Sets the legacy license persistence.
+	 *
+	 * @param legacyLicensePersistence the legacy license persistence
+	 */
+	public void setLegacyLicensePersistence(
+		LegacyLicensePersistence legacyLicensePersistence) {
+		this.legacyLicensePersistence = legacyLicensePersistence;
 	}
 
 	/**
@@ -438,6 +794,82 @@ public abstract class LegacySegmentLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the legacy producer local service.
+	 *
+	 * @return the legacy producer local service
+	 */
+	public de.uhh.l2g.plugins.migration.service.LegacyProducerLocalService getLegacyProducerLocalService() {
+		return legacyProducerLocalService;
+	}
+
+	/**
+	 * Sets the legacy producer local service.
+	 *
+	 * @param legacyProducerLocalService the legacy producer local service
+	 */
+	public void setLegacyProducerLocalService(
+		de.uhh.l2g.plugins.migration.service.LegacyProducerLocalService legacyProducerLocalService) {
+		this.legacyProducerLocalService = legacyProducerLocalService;
+	}
+
+	/**
+	 * Returns the legacy producer persistence.
+	 *
+	 * @return the legacy producer persistence
+	 */
+	public LegacyProducerPersistence getLegacyProducerPersistence() {
+		return legacyProducerPersistence;
+	}
+
+	/**
+	 * Sets the legacy producer persistence.
+	 *
+	 * @param legacyProducerPersistence the legacy producer persistence
+	 */
+	public void setLegacyProducerPersistence(
+		LegacyProducerPersistence legacyProducerPersistence) {
+		this.legacyProducerPersistence = legacyProducerPersistence;
+	}
+
+	/**
+	 * Returns the legacy producer lectureseries local service.
+	 *
+	 * @return the legacy producer lectureseries local service
+	 */
+	public de.uhh.l2g.plugins.migration.service.LegacyProducerLectureseriesLocalService getLegacyProducerLectureseriesLocalService() {
+		return legacyProducerLectureseriesLocalService;
+	}
+
+	/**
+	 * Sets the legacy producer lectureseries local service.
+	 *
+	 * @param legacyProducerLectureseriesLocalService the legacy producer lectureseries local service
+	 */
+	public void setLegacyProducerLectureseriesLocalService(
+		de.uhh.l2g.plugins.migration.service.LegacyProducerLectureseriesLocalService legacyProducerLectureseriesLocalService) {
+		this.legacyProducerLectureseriesLocalService = legacyProducerLectureseriesLocalService;
+	}
+
+	/**
+	 * Returns the legacy producer lectureseries persistence.
+	 *
+	 * @return the legacy producer lectureseries persistence
+	 */
+	public LegacyProducerLectureseriesPersistence getLegacyProducerLectureseriesPersistence() {
+		return legacyProducerLectureseriesPersistence;
+	}
+
+	/**
+	 * Sets the legacy producer lectureseries persistence.
+	 *
+	 * @param legacyProducerLectureseriesPersistence the legacy producer lectureseries persistence
+	 */
+	public void setLegacyProducerLectureseriesPersistence(
+		LegacyProducerLectureseriesPersistence legacyProducerLectureseriesPersistence) {
+		this.legacyProducerLectureseriesPersistence = legacyProducerLectureseriesPersistence;
+	}
+
+	/**
 	 * Returns the legacy segment local service.
 	 *
 	 * @return the legacy segment local service
@@ -473,6 +905,44 @@ public abstract class LegacySegmentLocalServiceBaseImpl
 	public void setLegacySegmentPersistence(
 		LegacySegmentPersistence legacySegmentPersistence) {
 		this.legacySegmentPersistence = legacySegmentPersistence;
+	}
+
+	/**
+	 * Returns the legacy upload local service.
+	 *
+	 * @return the legacy upload local service
+	 */
+	public de.uhh.l2g.plugins.migration.service.LegacyUploadLocalService getLegacyUploadLocalService() {
+		return legacyUploadLocalService;
+	}
+
+	/**
+	 * Sets the legacy upload local service.
+	 *
+	 * @param legacyUploadLocalService the legacy upload local service
+	 */
+	public void setLegacyUploadLocalService(
+		de.uhh.l2g.plugins.migration.service.LegacyUploadLocalService legacyUploadLocalService) {
+		this.legacyUploadLocalService = legacyUploadLocalService;
+	}
+
+	/**
+	 * Returns the legacy upload persistence.
+	 *
+	 * @return the legacy upload persistence
+	 */
+	public LegacyUploadPersistence getLegacyUploadPersistence() {
+		return legacyUploadPersistence;
+	}
+
+	/**
+	 * Sets the legacy upload persistence.
+	 *
+	 * @param legacyUploadPersistence the legacy upload persistence
+	 */
+	public void setLegacyUploadPersistence(
+		LegacyUploadPersistence legacyUploadPersistence) {
+		this.legacyUploadPersistence = legacyUploadPersistence;
 	}
 
 	/**
@@ -514,41 +984,117 @@ public abstract class LegacySegmentLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the test entity two local service.
+	 * Returns the legacy video local service.
 	 *
-	 * @return the test entity two local service
+	 * @return the legacy video local service
 	 */
-	public de.uhh.l2g.plugins.migration.service.TestEntityTwoLocalService getTestEntityTwoLocalService() {
-		return testEntityTwoLocalService;
+	public de.uhh.l2g.plugins.migration.service.LegacyVideoLocalService getLegacyVideoLocalService() {
+		return legacyVideoLocalService;
 	}
 
 	/**
-	 * Sets the test entity two local service.
+	 * Sets the legacy video local service.
 	 *
-	 * @param testEntityTwoLocalService the test entity two local service
+	 * @param legacyVideoLocalService the legacy video local service
 	 */
-	public void setTestEntityTwoLocalService(
-		de.uhh.l2g.plugins.migration.service.TestEntityTwoLocalService testEntityTwoLocalService) {
-		this.testEntityTwoLocalService = testEntityTwoLocalService;
+	public void setLegacyVideoLocalService(
+		de.uhh.l2g.plugins.migration.service.LegacyVideoLocalService legacyVideoLocalService) {
+		this.legacyVideoLocalService = legacyVideoLocalService;
 	}
 
 	/**
-	 * Returns the test entity two persistence.
+	 * Returns the legacy video persistence.
 	 *
-	 * @return the test entity two persistence
+	 * @return the legacy video persistence
 	 */
-	public TestEntityTwoPersistence getTestEntityTwoPersistence() {
-		return testEntityTwoPersistence;
+	public LegacyVideoPersistence getLegacyVideoPersistence() {
+		return legacyVideoPersistence;
 	}
 
 	/**
-	 * Sets the test entity two persistence.
+	 * Sets the legacy video persistence.
 	 *
-	 * @param testEntityTwoPersistence the test entity two persistence
+	 * @param legacyVideoPersistence the legacy video persistence
 	 */
-	public void setTestEntityTwoPersistence(
-		TestEntityTwoPersistence testEntityTwoPersistence) {
-		this.testEntityTwoPersistence = testEntityTwoPersistence;
+	public void setLegacyVideoPersistence(
+		LegacyVideoPersistence legacyVideoPersistence) {
+		this.legacyVideoPersistence = legacyVideoPersistence;
+	}
+
+	/**
+	 * Returns the legacy video facility local service.
+	 *
+	 * @return the legacy video facility local service
+	 */
+	public de.uhh.l2g.plugins.migration.service.LegacyVideoFacilityLocalService getLegacyVideoFacilityLocalService() {
+		return legacyVideoFacilityLocalService;
+	}
+
+	/**
+	 * Sets the legacy video facility local service.
+	 *
+	 * @param legacyVideoFacilityLocalService the legacy video facility local service
+	 */
+	public void setLegacyVideoFacilityLocalService(
+		de.uhh.l2g.plugins.migration.service.LegacyVideoFacilityLocalService legacyVideoFacilityLocalService) {
+		this.legacyVideoFacilityLocalService = legacyVideoFacilityLocalService;
+	}
+
+	/**
+	 * Returns the legacy video facility persistence.
+	 *
+	 * @return the legacy video facility persistence
+	 */
+	public LegacyVideoFacilityPersistence getLegacyVideoFacilityPersistence() {
+		return legacyVideoFacilityPersistence;
+	}
+
+	/**
+	 * Sets the legacy video facility persistence.
+	 *
+	 * @param legacyVideoFacilityPersistence the legacy video facility persistence
+	 */
+	public void setLegacyVideoFacilityPersistence(
+		LegacyVideoFacilityPersistence legacyVideoFacilityPersistence) {
+		this.legacyVideoFacilityPersistence = legacyVideoFacilityPersistence;
+	}
+
+	/**
+	 * Returns the legacy video hitlist local service.
+	 *
+	 * @return the legacy video hitlist local service
+	 */
+	public de.uhh.l2g.plugins.migration.service.LegacyVideoHitlistLocalService getLegacyVideoHitlistLocalService() {
+		return legacyVideoHitlistLocalService;
+	}
+
+	/**
+	 * Sets the legacy video hitlist local service.
+	 *
+	 * @param legacyVideoHitlistLocalService the legacy video hitlist local service
+	 */
+	public void setLegacyVideoHitlistLocalService(
+		de.uhh.l2g.plugins.migration.service.LegacyVideoHitlistLocalService legacyVideoHitlistLocalService) {
+		this.legacyVideoHitlistLocalService = legacyVideoHitlistLocalService;
+	}
+
+	/**
+	 * Returns the legacy video hitlist persistence.
+	 *
+	 * @return the legacy video hitlist persistence
+	 */
+	public LegacyVideoHitlistPersistence getLegacyVideoHitlistPersistence() {
+		return legacyVideoHitlistPersistence;
+	}
+
+	/**
+	 * Sets the legacy video hitlist persistence.
+	 *
+	 * @param legacyVideoHitlistPersistence the legacy video hitlist persistence
+	 */
+	public void setLegacyVideoHitlistPersistence(
+		LegacyVideoHitlistPersistence legacyVideoHitlistPersistence) {
+		this.legacyVideoHitlistPersistence = legacyVideoHitlistPersistence;
 	}
 
 	/**
@@ -727,14 +1273,50 @@ public abstract class LegacySegmentLocalServiceBaseImpl
 		}
 	}
 
+	@BeanReference(type = de.uhh.l2g.plugins.migration.service.LegacyAddressLocalService.class)
+	protected de.uhh.l2g.plugins.migration.service.LegacyAddressLocalService legacyAddressLocalService;
+	@BeanReference(type = LegacyAddressPersistence.class)
+	protected LegacyAddressPersistence legacyAddressPersistence;
 	@BeanReference(type = de.uhh.l2g.plugins.migration.service.LegacyContactLocalService.class)
 	protected de.uhh.l2g.plugins.migration.service.LegacyContactLocalService legacyContactLocalService;
 	@BeanReference(type = LegacyContactPersistence.class)
 	protected LegacyContactPersistence legacyContactPersistence;
+	@BeanReference(type = de.uhh.l2g.plugins.migration.service.LegacyCoordinatorLocalService.class)
+	protected de.uhh.l2g.plugins.migration.service.LegacyCoordinatorLocalService legacyCoordinatorLocalService;
+	@BeanReference(type = LegacyCoordinatorPersistence.class)
+	protected LegacyCoordinatorPersistence legacyCoordinatorPersistence;
+	@BeanReference(type = de.uhh.l2g.plugins.migration.service.LegacyFacilityLocalService.class)
+	protected de.uhh.l2g.plugins.migration.service.LegacyFacilityLocalService legacyFacilityLocalService;
+	@BeanReference(type = LegacyFacilityPersistence.class)
+	protected LegacyFacilityPersistence legacyFacilityPersistence;
+	@BeanReference(type = de.uhh.l2g.plugins.migration.service.LegacyFacilityHostLocalService.class)
+	protected de.uhh.l2g.plugins.migration.service.LegacyFacilityHostLocalService legacyFacilityHostLocalService;
+	@BeanReference(type = LegacyFacilityHostPersistence.class)
+	protected LegacyFacilityHostPersistence legacyFacilityHostPersistence;
+	@BeanReference(type = de.uhh.l2g.plugins.migration.service.LegacyHostLocalService.class)
+	protected de.uhh.l2g.plugins.migration.service.LegacyHostLocalService legacyHostLocalService;
+	@BeanReference(type = LegacyHostPersistence.class)
+	protected LegacyHostPersistence legacyHostPersistence;
+	@BeanReference(type = de.uhh.l2g.plugins.migration.service.LegacyL2gSysLocalService.class)
+	protected de.uhh.l2g.plugins.migration.service.LegacyL2gSysLocalService legacyL2gSysLocalService;
+	@BeanReference(type = LegacyL2gSysPersistence.class)
+	protected LegacyL2gSysPersistence legacyL2gSysPersistence;
+	@BeanReference(type = de.uhh.l2g.plugins.migration.service.LegacyLastVideoListLocalService.class)
+	protected de.uhh.l2g.plugins.migration.service.LegacyLastVideoListLocalService legacyLastVideoListLocalService;
+	@BeanReference(type = LegacyLastVideoListPersistence.class)
+	protected LegacyLastVideoListPersistence legacyLastVideoListPersistence;
+	@BeanReference(type = de.uhh.l2g.plugins.migration.service.LegacyLectureSeriesLocalService.class)
+	protected de.uhh.l2g.plugins.migration.service.LegacyLectureSeriesLocalService legacyLectureSeriesLocalService;
+	@BeanReference(type = LegacyLectureSeriesPersistence.class)
+	protected LegacyLectureSeriesPersistence legacyLectureSeriesPersistence;
 	@BeanReference(type = de.uhh.l2g.plugins.migration.service.LegacyLectureSeriesFacilityLocalService.class)
 	protected de.uhh.l2g.plugins.migration.service.LegacyLectureSeriesFacilityLocalService legacyLectureSeriesFacilityLocalService;
 	@BeanReference(type = LegacyLectureSeriesFacilityPersistence.class)
 	protected LegacyLectureSeriesFacilityPersistence legacyLectureSeriesFacilityPersistence;
+	@BeanReference(type = de.uhh.l2g.plugins.migration.service.LegacyLicenseLocalService.class)
+	protected de.uhh.l2g.plugins.migration.service.LegacyLicenseLocalService legacyLicenseLocalService;
+	@BeanReference(type = LegacyLicensePersistence.class)
+	protected LegacyLicensePersistence legacyLicensePersistence;
 	@BeanReference(type = de.uhh.l2g.plugins.migration.service.LegacyMetadataLocalService.class)
 	protected de.uhh.l2g.plugins.migration.service.LegacyMetadataLocalService legacyMetadataLocalService;
 	@BeanReference(type = LegacyMetadataPersistence.class)
@@ -743,18 +1325,38 @@ public abstract class LegacySegmentLocalServiceBaseImpl
 	protected de.uhh.l2g.plugins.migration.service.LegacyOfficeLocalService legacyOfficeLocalService;
 	@BeanReference(type = LegacyOfficePersistence.class)
 	protected LegacyOfficePersistence legacyOfficePersistence;
+	@BeanReference(type = de.uhh.l2g.plugins.migration.service.LegacyProducerLocalService.class)
+	protected de.uhh.l2g.plugins.migration.service.LegacyProducerLocalService legacyProducerLocalService;
+	@BeanReference(type = LegacyProducerPersistence.class)
+	protected LegacyProducerPersistence legacyProducerPersistence;
+	@BeanReference(type = de.uhh.l2g.plugins.migration.service.LegacyProducerLectureseriesLocalService.class)
+	protected de.uhh.l2g.plugins.migration.service.LegacyProducerLectureseriesLocalService legacyProducerLectureseriesLocalService;
+	@BeanReference(type = LegacyProducerLectureseriesPersistence.class)
+	protected LegacyProducerLectureseriesPersistence legacyProducerLectureseriesPersistence;
 	@BeanReference(type = de.uhh.l2g.plugins.migration.service.LegacySegmentLocalService.class)
 	protected de.uhh.l2g.plugins.migration.service.LegacySegmentLocalService legacySegmentLocalService;
 	@BeanReference(type = LegacySegmentPersistence.class)
 	protected LegacySegmentPersistence legacySegmentPersistence;
+	@BeanReference(type = de.uhh.l2g.plugins.migration.service.LegacyUploadLocalService.class)
+	protected de.uhh.l2g.plugins.migration.service.LegacyUploadLocalService legacyUploadLocalService;
+	@BeanReference(type = LegacyUploadPersistence.class)
+	protected LegacyUploadPersistence legacyUploadPersistence;
 	@BeanReference(type = de.uhh.l2g.plugins.migration.service.LegacyUserLocalService.class)
 	protected de.uhh.l2g.plugins.migration.service.LegacyUserLocalService legacyUserLocalService;
 	@BeanReference(type = LegacyUserPersistence.class)
 	protected LegacyUserPersistence legacyUserPersistence;
-	@BeanReference(type = de.uhh.l2g.plugins.migration.service.TestEntityTwoLocalService.class)
-	protected de.uhh.l2g.plugins.migration.service.TestEntityTwoLocalService testEntityTwoLocalService;
-	@BeanReference(type = TestEntityTwoPersistence.class)
-	protected TestEntityTwoPersistence testEntityTwoPersistence;
+	@BeanReference(type = de.uhh.l2g.plugins.migration.service.LegacyVideoLocalService.class)
+	protected de.uhh.l2g.plugins.migration.service.LegacyVideoLocalService legacyVideoLocalService;
+	@BeanReference(type = LegacyVideoPersistence.class)
+	protected LegacyVideoPersistence legacyVideoPersistence;
+	@BeanReference(type = de.uhh.l2g.plugins.migration.service.LegacyVideoFacilityLocalService.class)
+	protected de.uhh.l2g.plugins.migration.service.LegacyVideoFacilityLocalService legacyVideoFacilityLocalService;
+	@BeanReference(type = LegacyVideoFacilityPersistence.class)
+	protected LegacyVideoFacilityPersistence legacyVideoFacilityPersistence;
+	@BeanReference(type = de.uhh.l2g.plugins.migration.service.LegacyVideoHitlistLocalService.class)
+	protected de.uhh.l2g.plugins.migration.service.LegacyVideoHitlistLocalService legacyVideoHitlistLocalService;
+	@BeanReference(type = LegacyVideoHitlistPersistence.class)
+	protected LegacyVideoHitlistPersistence legacyVideoHitlistPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)

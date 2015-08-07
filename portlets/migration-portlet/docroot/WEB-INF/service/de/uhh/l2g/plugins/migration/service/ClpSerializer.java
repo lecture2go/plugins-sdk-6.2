@@ -25,13 +25,27 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BaseModel;
 
+import de.uhh.l2g.plugins.migration.model.LegacyAddressClp;
 import de.uhh.l2g.plugins.migration.model.LegacyContactClp;
+import de.uhh.l2g.plugins.migration.model.LegacyCoordinatorClp;
+import de.uhh.l2g.plugins.migration.model.LegacyFacilityClp;
+import de.uhh.l2g.plugins.migration.model.LegacyFacilityHostClp;
+import de.uhh.l2g.plugins.migration.model.LegacyHostClp;
+import de.uhh.l2g.plugins.migration.model.LegacyL2gSysClp;
+import de.uhh.l2g.plugins.migration.model.LegacyLastVideoListClp;
+import de.uhh.l2g.plugins.migration.model.LegacyLectureSeriesClp;
 import de.uhh.l2g.plugins.migration.model.LegacyLectureSeriesFacilityClp;
+import de.uhh.l2g.plugins.migration.model.LegacyLicenseClp;
 import de.uhh.l2g.plugins.migration.model.LegacyMetadataClp;
 import de.uhh.l2g.plugins.migration.model.LegacyOfficeClp;
+import de.uhh.l2g.plugins.migration.model.LegacyProducerClp;
+import de.uhh.l2g.plugins.migration.model.LegacyProducerLectureseriesClp;
 import de.uhh.l2g.plugins.migration.model.LegacySegmentClp;
+import de.uhh.l2g.plugins.migration.model.LegacyUploadClp;
 import de.uhh.l2g.plugins.migration.model.LegacyUserClp;
-import de.uhh.l2g.plugins.migration.model.TestEntityTwoClp;
+import de.uhh.l2g.plugins.migration.model.LegacyVideoClp;
+import de.uhh.l2g.plugins.migration.model.LegacyVideoFacilityClp;
+import de.uhh.l2g.plugins.migration.model.LegacyVideoHitlistClp;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -108,13 +122,49 @@ public class ClpSerializer {
 
 		String oldModelClassName = oldModelClass.getName();
 
+		if (oldModelClassName.equals(LegacyAddressClp.class.getName())) {
+			return translateInputLegacyAddress(oldModel);
+		}
+
 		if (oldModelClassName.equals(LegacyContactClp.class.getName())) {
 			return translateInputLegacyContact(oldModel);
+		}
+
+		if (oldModelClassName.equals(LegacyCoordinatorClp.class.getName())) {
+			return translateInputLegacyCoordinator(oldModel);
+		}
+
+		if (oldModelClassName.equals(LegacyFacilityClp.class.getName())) {
+			return translateInputLegacyFacility(oldModel);
+		}
+
+		if (oldModelClassName.equals(LegacyFacilityHostClp.class.getName())) {
+			return translateInputLegacyFacilityHost(oldModel);
+		}
+
+		if (oldModelClassName.equals(LegacyHostClp.class.getName())) {
+			return translateInputLegacyHost(oldModel);
+		}
+
+		if (oldModelClassName.equals(LegacyL2gSysClp.class.getName())) {
+			return translateInputLegacyL2gSys(oldModel);
+		}
+
+		if (oldModelClassName.equals(LegacyLastVideoListClp.class.getName())) {
+			return translateInputLegacyLastVideoList(oldModel);
+		}
+
+		if (oldModelClassName.equals(LegacyLectureSeriesClp.class.getName())) {
+			return translateInputLegacyLectureSeries(oldModel);
 		}
 
 		if (oldModelClassName.equals(
 					LegacyLectureSeriesFacilityClp.class.getName())) {
 			return translateInputLegacyLectureSeriesFacility(oldModel);
+		}
+
+		if (oldModelClassName.equals(LegacyLicenseClp.class.getName())) {
+			return translateInputLegacyLicense(oldModel);
 		}
 
 		if (oldModelClassName.equals(LegacyMetadataClp.class.getName())) {
@@ -125,16 +175,37 @@ public class ClpSerializer {
 			return translateInputLegacyOffice(oldModel);
 		}
 
+		if (oldModelClassName.equals(LegacyProducerClp.class.getName())) {
+			return translateInputLegacyProducer(oldModel);
+		}
+
+		if (oldModelClassName.equals(
+					LegacyProducerLectureseriesClp.class.getName())) {
+			return translateInputLegacyProducerLectureseries(oldModel);
+		}
+
 		if (oldModelClassName.equals(LegacySegmentClp.class.getName())) {
 			return translateInputLegacySegment(oldModel);
+		}
+
+		if (oldModelClassName.equals(LegacyUploadClp.class.getName())) {
+			return translateInputLegacyUpload(oldModel);
 		}
 
 		if (oldModelClassName.equals(LegacyUserClp.class.getName())) {
 			return translateInputLegacyUser(oldModel);
 		}
 
-		if (oldModelClassName.equals(TestEntityTwoClp.class.getName())) {
-			return translateInputTestEntityTwo(oldModel);
+		if (oldModelClassName.equals(LegacyVideoClp.class.getName())) {
+			return translateInputLegacyVideo(oldModel);
+		}
+
+		if (oldModelClassName.equals(LegacyVideoFacilityClp.class.getName())) {
+			return translateInputLegacyVideoFacility(oldModel);
+		}
+
+		if (oldModelClassName.equals(LegacyVideoHitlistClp.class.getName())) {
+			return translateInputLegacyVideoHitlist(oldModel);
 		}
 
 		return oldModel;
@@ -152,10 +223,92 @@ public class ClpSerializer {
 		return newList;
 	}
 
+	public static Object translateInputLegacyAddress(BaseModel<?> oldModel) {
+		LegacyAddressClp oldClpModel = (LegacyAddressClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getLegacyAddressRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
 	public static Object translateInputLegacyContact(BaseModel<?> oldModel) {
 		LegacyContactClp oldClpModel = (LegacyContactClp)oldModel;
 
 		BaseModel<?> newModel = oldClpModel.getLegacyContactRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputLegacyCoordinator(BaseModel<?> oldModel) {
+		LegacyCoordinatorClp oldClpModel = (LegacyCoordinatorClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getLegacyCoordinatorRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputLegacyFacility(BaseModel<?> oldModel) {
+		LegacyFacilityClp oldClpModel = (LegacyFacilityClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getLegacyFacilityRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputLegacyFacilityHost(BaseModel<?> oldModel) {
+		LegacyFacilityHostClp oldClpModel = (LegacyFacilityHostClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getLegacyFacilityHostRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputLegacyHost(BaseModel<?> oldModel) {
+		LegacyHostClp oldClpModel = (LegacyHostClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getLegacyHostRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputLegacyL2gSys(BaseModel<?> oldModel) {
+		LegacyL2gSysClp oldClpModel = (LegacyL2gSysClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getLegacyL2gSysRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputLegacyLastVideoList(
+		BaseModel<?> oldModel) {
+		LegacyLastVideoListClp oldClpModel = (LegacyLastVideoListClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getLegacyLastVideoListRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputLegacyLectureSeries(
+		BaseModel<?> oldModel) {
+		LegacyLectureSeriesClp oldClpModel = (LegacyLectureSeriesClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getLegacyLectureSeriesRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -167,6 +320,16 @@ public class ClpSerializer {
 		LegacyLectureSeriesFacilityClp oldClpModel = (LegacyLectureSeriesFacilityClp)oldModel;
 
 		BaseModel<?> newModel = oldClpModel.getLegacyLectureSeriesFacilityRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputLegacyLicense(BaseModel<?> oldModel) {
+		LegacyLicenseClp oldClpModel = (LegacyLicenseClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getLegacyLicenseRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -193,10 +356,41 @@ public class ClpSerializer {
 		return newModel;
 	}
 
+	public static Object translateInputLegacyProducer(BaseModel<?> oldModel) {
+		LegacyProducerClp oldClpModel = (LegacyProducerClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getLegacyProducerRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputLegacyProducerLectureseries(
+		BaseModel<?> oldModel) {
+		LegacyProducerLectureseriesClp oldClpModel = (LegacyProducerLectureseriesClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getLegacyProducerLectureseriesRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
 	public static Object translateInputLegacySegment(BaseModel<?> oldModel) {
 		LegacySegmentClp oldClpModel = (LegacySegmentClp)oldModel;
 
 		BaseModel<?> newModel = oldClpModel.getLegacySegmentRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputLegacyUpload(BaseModel<?> oldModel) {
+		LegacyUploadClp oldClpModel = (LegacyUploadClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getLegacyUploadRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -213,10 +407,31 @@ public class ClpSerializer {
 		return newModel;
 	}
 
-	public static Object translateInputTestEntityTwo(BaseModel<?> oldModel) {
-		TestEntityTwoClp oldClpModel = (TestEntityTwoClp)oldModel;
+	public static Object translateInputLegacyVideo(BaseModel<?> oldModel) {
+		LegacyVideoClp oldClpModel = (LegacyVideoClp)oldModel;
 
-		BaseModel<?> newModel = oldClpModel.getTestEntityTwoRemoteModel();
+		BaseModel<?> newModel = oldClpModel.getLegacyVideoRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputLegacyVideoFacility(
+		BaseModel<?> oldModel) {
+		LegacyVideoFacilityClp oldClpModel = (LegacyVideoFacilityClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getLegacyVideoFacilityRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputLegacyVideoHitlist(BaseModel<?> oldModel) {
+		LegacyVideoHitlistClp oldClpModel = (LegacyVideoHitlistClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getLegacyVideoHitlistRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -239,6 +454,43 @@ public class ClpSerializer {
 		Class<?> oldModelClass = oldModel.getClass();
 
 		String oldModelClassName = oldModelClass.getName();
+
+		if (oldModelClassName.equals(
+					"de.uhh.l2g.plugins.migration.model.impl.LegacyAddressImpl")) {
+			return translateOutputLegacyAddress(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
 
 		if (oldModelClassName.equals(
 					"de.uhh.l2g.plugins.migration.model.impl.LegacyContactImpl")) {
@@ -278,8 +530,304 @@ public class ClpSerializer {
 		}
 
 		if (oldModelClassName.equals(
+					"de.uhh.l2g.plugins.migration.model.impl.LegacyCoordinatorImpl")) {
+			return translateOutputLegacyCoordinator(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
+
+		if (oldModelClassName.equals(
+					"de.uhh.l2g.plugins.migration.model.impl.LegacyFacilityImpl")) {
+			return translateOutputLegacyFacility(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
+
+		if (oldModelClassName.equals(
+					"de.uhh.l2g.plugins.migration.model.impl.LegacyFacilityHostImpl")) {
+			return translateOutputLegacyFacilityHost(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
+
+		if (oldModelClassName.equals(
+					"de.uhh.l2g.plugins.migration.model.impl.LegacyHostImpl")) {
+			return translateOutputLegacyHost(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
+
+		if (oldModelClassName.equals(
+					"de.uhh.l2g.plugins.migration.model.impl.LegacyL2gSysImpl")) {
+			return translateOutputLegacyL2gSys(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
+
+		if (oldModelClassName.equals(
+					"de.uhh.l2g.plugins.migration.model.impl.LegacyLastVideoListImpl")) {
+			return translateOutputLegacyLastVideoList(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
+
+		if (oldModelClassName.equals(
+					"de.uhh.l2g.plugins.migration.model.impl.LegacyLectureSeriesImpl")) {
+			return translateOutputLegacyLectureSeries(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
+
+		if (oldModelClassName.equals(
 					"de.uhh.l2g.plugins.migration.model.impl.LegacyLectureSeriesFacilityImpl")) {
 			return translateOutputLegacyLectureSeriesFacility(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
+
+		if (oldModelClassName.equals(
+					"de.uhh.l2g.plugins.migration.model.impl.LegacyLicenseImpl")) {
+			return translateOutputLegacyLicense(oldModel);
 		}
 		else if (oldModelClassName.endsWith("Clp")) {
 			try {
@@ -389,8 +937,119 @@ public class ClpSerializer {
 		}
 
 		if (oldModelClassName.equals(
+					"de.uhh.l2g.plugins.migration.model.impl.LegacyProducerImpl")) {
+			return translateOutputLegacyProducer(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
+
+		if (oldModelClassName.equals(
+					"de.uhh.l2g.plugins.migration.model.impl.LegacyProducerLectureseriesImpl")) {
+			return translateOutputLegacyProducerLectureseries(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
+
+		if (oldModelClassName.equals(
 					"de.uhh.l2g.plugins.migration.model.impl.LegacySegmentImpl")) {
 			return translateOutputLegacySegment(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
+
+		if (oldModelClassName.equals(
+					"de.uhh.l2g.plugins.migration.model.impl.LegacyUploadImpl")) {
+			return translateOutputLegacyUpload(oldModel);
 		}
 		else if (oldModelClassName.endsWith("Clp")) {
 			try {
@@ -463,8 +1122,82 @@ public class ClpSerializer {
 		}
 
 		if (oldModelClassName.equals(
-					"de.uhh.l2g.plugins.migration.model.impl.TestEntityTwoImpl")) {
-			return translateOutputTestEntityTwo(oldModel);
+					"de.uhh.l2g.plugins.migration.model.impl.LegacyVideoImpl")) {
+			return translateOutputLegacyVideo(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
+
+		if (oldModelClassName.equals(
+					"de.uhh.l2g.plugins.migration.model.impl.LegacyVideoFacilityImpl")) {
+			return translateOutputLegacyVideoFacility(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
+
+		if (oldModelClassName.equals(
+					"de.uhh.l2g.plugins.migration.model.impl.LegacyVideoHitlistImpl")) {
+			return translateOutputLegacyVideoHitlist(oldModel);
 		}
 		else if (oldModelClassName.endsWith("Clp")) {
 			try {
@@ -580,13 +1313,58 @@ public class ClpSerializer {
 		}
 
 		if (className.equals(
+					"de.uhh.l2g.plugins.migration.NoSuchLegacyAddressException")) {
+			return new de.uhh.l2g.plugins.migration.NoSuchLegacyAddressException();
+		}
+
+		if (className.equals(
 					"de.uhh.l2g.plugins.migration.NoSuchLegacyContactException")) {
 			return new de.uhh.l2g.plugins.migration.NoSuchLegacyContactException();
 		}
 
 		if (className.equals(
+					"de.uhh.l2g.plugins.migration.NoSuchLegacyCoordinatorException")) {
+			return new de.uhh.l2g.plugins.migration.NoSuchLegacyCoordinatorException();
+		}
+
+		if (className.equals(
+					"de.uhh.l2g.plugins.migration.NoSuchLegacyFacilityException")) {
+			return new de.uhh.l2g.plugins.migration.NoSuchLegacyFacilityException();
+		}
+
+		if (className.equals(
+					"de.uhh.l2g.plugins.migration.NoSuchLegacyFacilityHostException")) {
+			return new de.uhh.l2g.plugins.migration.NoSuchLegacyFacilityHostException();
+		}
+
+		if (className.equals(
+					"de.uhh.l2g.plugins.migration.NoSuchLegacyHostException")) {
+			return new de.uhh.l2g.plugins.migration.NoSuchLegacyHostException();
+		}
+
+		if (className.equals(
+					"de.uhh.l2g.plugins.migration.NoSuchLegacyL2gSysException")) {
+			return new de.uhh.l2g.plugins.migration.NoSuchLegacyL2gSysException();
+		}
+
+		if (className.equals(
+					"de.uhh.l2g.plugins.migration.NoSuchLegacyLastVideoListException")) {
+			return new de.uhh.l2g.plugins.migration.NoSuchLegacyLastVideoListException();
+		}
+
+		if (className.equals(
+					"de.uhh.l2g.plugins.migration.NoSuchLegacyLectureSeriesException")) {
+			return new de.uhh.l2g.plugins.migration.NoSuchLegacyLectureSeriesException();
+		}
+
+		if (className.equals(
 					"de.uhh.l2g.plugins.migration.NoSuchLegacyLectureSeriesFacilityException")) {
 			return new de.uhh.l2g.plugins.migration.NoSuchLegacyLectureSeriesFacilityException();
+		}
+
+		if (className.equals(
+					"de.uhh.l2g.plugins.migration.NoSuchLegacyLicenseException")) {
+			return new de.uhh.l2g.plugins.migration.NoSuchLegacyLicenseException();
 		}
 
 		if (className.equals(
@@ -600,8 +1378,23 @@ public class ClpSerializer {
 		}
 
 		if (className.equals(
+					"de.uhh.l2g.plugins.migration.NoSuchLegacyProducerException")) {
+			return new de.uhh.l2g.plugins.migration.NoSuchLegacyProducerException();
+		}
+
+		if (className.equals(
+					"de.uhh.l2g.plugins.migration.NoSuchLegacyProducerLectureseriesException")) {
+			return new de.uhh.l2g.plugins.migration.NoSuchLegacyProducerLectureseriesException();
+		}
+
+		if (className.equals(
 					"de.uhh.l2g.plugins.migration.NoSuchLegacySegmentException")) {
 			return new de.uhh.l2g.plugins.migration.NoSuchLegacySegmentException();
+		}
+
+		if (className.equals(
+					"de.uhh.l2g.plugins.migration.NoSuchLegacyUploadException")) {
+			return new de.uhh.l2g.plugins.migration.NoSuchLegacyUploadException();
 		}
 
 		if (className.equals(
@@ -610,11 +1403,31 @@ public class ClpSerializer {
 		}
 
 		if (className.equals(
-					"de.uhh.l2g.plugins.migration.NoSuchTestEntityTwoException")) {
-			return new de.uhh.l2g.plugins.migration.NoSuchTestEntityTwoException();
+					"de.uhh.l2g.plugins.migration.NoSuchLegacyVideoException")) {
+			return new de.uhh.l2g.plugins.migration.NoSuchLegacyVideoException();
+		}
+
+		if (className.equals(
+					"de.uhh.l2g.plugins.migration.NoSuchLegacyVideoFacilityException")) {
+			return new de.uhh.l2g.plugins.migration.NoSuchLegacyVideoFacilityException();
+		}
+
+		if (className.equals(
+					"de.uhh.l2g.plugins.migration.NoSuchLegacyVideoHitlistException")) {
+			return new de.uhh.l2g.plugins.migration.NoSuchLegacyVideoHitlistException();
 		}
 
 		return throwable;
+	}
+
+	public static Object translateOutputLegacyAddress(BaseModel<?> oldModel) {
+		LegacyAddressClp newModel = new LegacyAddressClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setLegacyAddressRemoteModel(oldModel);
+
+		return newModel;
 	}
 
 	public static Object translateOutputLegacyContact(BaseModel<?> oldModel) {
@@ -627,6 +1440,79 @@ public class ClpSerializer {
 		return newModel;
 	}
 
+	public static Object translateOutputLegacyCoordinator(BaseModel<?> oldModel) {
+		LegacyCoordinatorClp newModel = new LegacyCoordinatorClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setLegacyCoordinatorRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputLegacyFacility(BaseModel<?> oldModel) {
+		LegacyFacilityClp newModel = new LegacyFacilityClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setLegacyFacilityRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputLegacyFacilityHost(
+		BaseModel<?> oldModel) {
+		LegacyFacilityHostClp newModel = new LegacyFacilityHostClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setLegacyFacilityHostRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputLegacyHost(BaseModel<?> oldModel) {
+		LegacyHostClp newModel = new LegacyHostClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setLegacyHostRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputLegacyL2gSys(BaseModel<?> oldModel) {
+		LegacyL2gSysClp newModel = new LegacyL2gSysClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setLegacyL2gSysRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputLegacyLastVideoList(
+		BaseModel<?> oldModel) {
+		LegacyLastVideoListClp newModel = new LegacyLastVideoListClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setLegacyLastVideoListRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputLegacyLectureSeries(
+		BaseModel<?> oldModel) {
+		LegacyLectureSeriesClp newModel = new LegacyLectureSeriesClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setLegacyLectureSeriesRemoteModel(oldModel);
+
+		return newModel;
+	}
+
 	public static Object translateOutputLegacyLectureSeriesFacility(
 		BaseModel<?> oldModel) {
 		LegacyLectureSeriesFacilityClp newModel = new LegacyLectureSeriesFacilityClp();
@@ -634,6 +1520,16 @@ public class ClpSerializer {
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
 		newModel.setLegacyLectureSeriesFacilityRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputLegacyLicense(BaseModel<?> oldModel) {
+		LegacyLicenseClp newModel = new LegacyLicenseClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setLegacyLicenseRemoteModel(oldModel);
 
 		return newModel;
 	}
@@ -658,12 +1554,43 @@ public class ClpSerializer {
 		return newModel;
 	}
 
+	public static Object translateOutputLegacyProducer(BaseModel<?> oldModel) {
+		LegacyProducerClp newModel = new LegacyProducerClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setLegacyProducerRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputLegacyProducerLectureseries(
+		BaseModel<?> oldModel) {
+		LegacyProducerLectureseriesClp newModel = new LegacyProducerLectureseriesClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setLegacyProducerLectureseriesRemoteModel(oldModel);
+
+		return newModel;
+	}
+
 	public static Object translateOutputLegacySegment(BaseModel<?> oldModel) {
 		LegacySegmentClp newModel = new LegacySegmentClp();
 
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
 		newModel.setLegacySegmentRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputLegacyUpload(BaseModel<?> oldModel) {
+		LegacyUploadClp newModel = new LegacyUploadClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setLegacyUploadRemoteModel(oldModel);
 
 		return newModel;
 	}
@@ -678,12 +1605,34 @@ public class ClpSerializer {
 		return newModel;
 	}
 
-	public static Object translateOutputTestEntityTwo(BaseModel<?> oldModel) {
-		TestEntityTwoClp newModel = new TestEntityTwoClp();
+	public static Object translateOutputLegacyVideo(BaseModel<?> oldModel) {
+		LegacyVideoClp newModel = new LegacyVideoClp();
 
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
-		newModel.setTestEntityTwoRemoteModel(oldModel);
+		newModel.setLegacyVideoRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputLegacyVideoFacility(
+		BaseModel<?> oldModel) {
+		LegacyVideoFacilityClp newModel = new LegacyVideoFacilityClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setLegacyVideoFacilityRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputLegacyVideoHitlist(
+		BaseModel<?> oldModel) {
+		LegacyVideoHitlistClp newModel = new LegacyVideoHitlistClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setLegacyVideoHitlistRemoteModel(oldModel);
 
 		return newModel;
 	}
