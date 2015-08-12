@@ -504,15 +504,15 @@ public class LegacyLectureSeriesFacilityPersistenceImpl
 	/**
 	 * Creates a new legacy lecture series facility with the primary key. Does not add the legacy lecture series facility to the database.
 	 *
-	 * @param facilityId the primary key for the new legacy lecture series facility
+	 * @param lectureseriesFacilityId the primary key for the new legacy lecture series facility
 	 * @return the new legacy lecture series facility
 	 */
 	@Override
-	public LegacyLectureSeriesFacility create(long facilityId) {
+	public LegacyLectureSeriesFacility create(long lectureseriesFacilityId) {
 		LegacyLectureSeriesFacility legacyLectureSeriesFacility = new LegacyLectureSeriesFacilityImpl();
 
 		legacyLectureSeriesFacility.setNew(true);
-		legacyLectureSeriesFacility.setPrimaryKey(facilityId);
+		legacyLectureSeriesFacility.setPrimaryKey(lectureseriesFacilityId);
 
 		return legacyLectureSeriesFacility;
 	}
@@ -520,15 +520,15 @@ public class LegacyLectureSeriesFacilityPersistenceImpl
 	/**
 	 * Removes the legacy lecture series facility with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param facilityId the primary key of the legacy lecture series facility
+	 * @param lectureseriesFacilityId the primary key of the legacy lecture series facility
 	 * @return the legacy lecture series facility that was removed
 	 * @throws de.uhh.l2g.plugins.migration.NoSuchLegacyLectureSeriesFacilityException if a legacy lecture series facility with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public LegacyLectureSeriesFacility remove(long facilityId)
+	public LegacyLectureSeriesFacility remove(long lectureseriesFacilityId)
 		throws NoSuchLegacyLectureSeriesFacilityException, SystemException {
-		return remove((Serializable)facilityId);
+		return remove((Serializable)lectureseriesFacilityId);
 	}
 
 	/**
@@ -664,6 +664,7 @@ public class LegacyLectureSeriesFacilityPersistenceImpl
 		legacyLectureSeriesFacilityImpl.setNew(legacyLectureSeriesFacility.isNew());
 		legacyLectureSeriesFacilityImpl.setPrimaryKey(legacyLectureSeriesFacility.getPrimaryKey());
 
+		legacyLectureSeriesFacilityImpl.setLectureseriesFacilityId(legacyLectureSeriesFacility.getLectureseriesFacilityId());
 		legacyLectureSeriesFacilityImpl.setFacilityId(legacyLectureSeriesFacility.getFacilityId());
 		legacyLectureSeriesFacilityImpl.setLectureseriesId(legacyLectureSeriesFacility.getLectureseriesId());
 		legacyLectureSeriesFacilityImpl.setIsLinkFrom(legacyLectureSeriesFacility.getIsLinkFrom());
@@ -699,15 +700,16 @@ public class LegacyLectureSeriesFacilityPersistenceImpl
 	/**
 	 * Returns the legacy lecture series facility with the primary key or throws a {@link de.uhh.l2g.plugins.migration.NoSuchLegacyLectureSeriesFacilityException} if it could not be found.
 	 *
-	 * @param facilityId the primary key of the legacy lecture series facility
+	 * @param lectureseriesFacilityId the primary key of the legacy lecture series facility
 	 * @return the legacy lecture series facility
 	 * @throws de.uhh.l2g.plugins.migration.NoSuchLegacyLectureSeriesFacilityException if a legacy lecture series facility with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public LegacyLectureSeriesFacility findByPrimaryKey(long facilityId)
+	public LegacyLectureSeriesFacility findByPrimaryKey(
+		long lectureseriesFacilityId)
 		throws NoSuchLegacyLectureSeriesFacilityException, SystemException {
-		return findByPrimaryKey((Serializable)facilityId);
+		return findByPrimaryKey((Serializable)lectureseriesFacilityId);
 	}
 
 	/**
@@ -762,14 +764,14 @@ public class LegacyLectureSeriesFacilityPersistenceImpl
 	/**
 	 * Returns the legacy lecture series facility with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param facilityId the primary key of the legacy lecture series facility
+	 * @param lectureseriesFacilityId the primary key of the legacy lecture series facility
 	 * @return the legacy lecture series facility, or <code>null</code> if a legacy lecture series facility with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public LegacyLectureSeriesFacility fetchByPrimaryKey(long facilityId)
-		throws SystemException {
-		return fetchByPrimaryKey((Serializable)facilityId);
+	public LegacyLectureSeriesFacility fetchByPrimaryKey(
+		long lectureseriesFacilityId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)lectureseriesFacilityId);
 	}
 
 	/**

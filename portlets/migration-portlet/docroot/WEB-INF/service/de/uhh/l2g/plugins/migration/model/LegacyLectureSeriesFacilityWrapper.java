@@ -51,6 +51,7 @@ public class LegacyLectureSeriesFacilityWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("lectureseriesFacilityId", getLectureseriesFacilityId());
 		attributes.put("facilityId", getFacilityId());
 		attributes.put("lectureseriesId", getLectureseriesId());
 		attributes.put("isLinkFrom", getIsLinkFrom());
@@ -60,6 +61,13 @@ public class LegacyLectureSeriesFacilityWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long lectureseriesFacilityId = (Long)attributes.get(
+				"lectureseriesFacilityId");
+
+		if (lectureseriesFacilityId != null) {
+			setLectureseriesFacilityId(lectureseriesFacilityId);
+		}
+
 		Long facilityId = (Long)attributes.get("facilityId");
 
 		if (facilityId != null) {
@@ -97,6 +105,26 @@ public class LegacyLectureSeriesFacilityWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		_legacyLectureSeriesFacility.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	* Returns the lectureseries facility ID of this legacy lecture series facility.
+	*
+	* @return the lectureseries facility ID of this legacy lecture series facility
+	*/
+	@Override
+	public long getLectureseriesFacilityId() {
+		return _legacyLectureSeriesFacility.getLectureseriesFacilityId();
+	}
+
+	/**
+	* Sets the lectureseries facility ID of this legacy lecture series facility.
+	*
+	* @param lectureseriesFacilityId the lectureseries facility ID of this legacy lecture series facility
+	*/
+	@Override
+	public void setLectureseriesFacilityId(long lectureseriesFacilityId) {
+		_legacyLectureSeriesFacility.setLectureseriesFacilityId(lectureseriesFacilityId);
 	}
 
 	/**

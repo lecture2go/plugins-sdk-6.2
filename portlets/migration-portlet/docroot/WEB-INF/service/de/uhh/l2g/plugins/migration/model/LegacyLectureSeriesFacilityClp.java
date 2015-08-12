@@ -51,17 +51,17 @@ public class LegacyLectureSeriesFacilityClp extends BaseModelImpl<LegacyLectureS
 
 	@Override
 	public long getPrimaryKey() {
-		return _facilityId;
+		return _lectureseriesFacilityId;
 	}
 
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		setFacilityId(primaryKey);
+		setLectureseriesFacilityId(primaryKey);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _facilityId;
+		return _lectureseriesFacilityId;
 	}
 
 	@Override
@@ -73,6 +73,7 @@ public class LegacyLectureSeriesFacilityClp extends BaseModelImpl<LegacyLectureS
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("lectureseriesFacilityId", getLectureseriesFacilityId());
 		attributes.put("facilityId", getFacilityId());
 		attributes.put("lectureseriesId", getLectureseriesId());
 		attributes.put("isLinkFrom", getIsLinkFrom());
@@ -82,6 +83,13 @@ public class LegacyLectureSeriesFacilityClp extends BaseModelImpl<LegacyLectureS
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long lectureseriesFacilityId = (Long)attributes.get(
+				"lectureseriesFacilityId");
+
+		if (lectureseriesFacilityId != null) {
+			setLectureseriesFacilityId(lectureseriesFacilityId);
+		}
+
 		Long facilityId = (Long)attributes.get("facilityId");
 
 		if (facilityId != null) {
@@ -98,6 +106,31 @@ public class LegacyLectureSeriesFacilityClp extends BaseModelImpl<LegacyLectureS
 
 		if (isLinkFrom != null) {
 			setIsLinkFrom(isLinkFrom);
+		}
+	}
+
+	@Override
+	public long getLectureseriesFacilityId() {
+		return _lectureseriesFacilityId;
+	}
+
+	@Override
+	public void setLectureseriesFacilityId(long lectureseriesFacilityId) {
+		_lectureseriesFacilityId = lectureseriesFacilityId;
+
+		if (_legacyLectureSeriesFacilityRemoteModel != null) {
+			try {
+				Class<?> clazz = _legacyLectureSeriesFacilityRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setLectureseriesFacilityId",
+						long.class);
+
+				method.invoke(_legacyLectureSeriesFacilityRemoteModel,
+					lectureseriesFacilityId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
 		}
 	}
 
@@ -244,6 +277,7 @@ public class LegacyLectureSeriesFacilityClp extends BaseModelImpl<LegacyLectureS
 	public Object clone() {
 		LegacyLectureSeriesFacilityClp clone = new LegacyLectureSeriesFacilityClp();
 
+		clone.setLectureseriesFacilityId(getLectureseriesFacilityId());
 		clone.setFacilityId(getFacilityId());
 		clone.setLectureseriesId(getLectureseriesId());
 		clone.setIsLinkFrom(getIsLinkFrom());
@@ -300,9 +334,11 @@ public class LegacyLectureSeriesFacilityClp extends BaseModelImpl<LegacyLectureS
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
-		sb.append("{facilityId=");
+		sb.append("{lectureseriesFacilityId=");
+		sb.append(getLectureseriesFacilityId());
+		sb.append(", facilityId=");
 		sb.append(getFacilityId());
 		sb.append(", lectureseriesId=");
 		sb.append(getLectureseriesId());
@@ -315,13 +351,17 @@ public class LegacyLectureSeriesFacilityClp extends BaseModelImpl<LegacyLectureS
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("<model><model-name>");
 		sb.append(
 			"de.uhh.l2g.plugins.migration.model.LegacyLectureSeriesFacility");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>lectureseriesFacilityId</column-name><column-value><![CDATA[");
+		sb.append(getLectureseriesFacilityId());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>facilityId</column-name><column-value><![CDATA[");
 		sb.append(getFacilityId());
@@ -340,6 +380,7 @@ public class LegacyLectureSeriesFacilityClp extends BaseModelImpl<LegacyLectureS
 		return sb.toString();
 	}
 
+	private long _lectureseriesFacilityId;
 	private long _facilityId;
 	private long _lectureseriesId;
 	private long _isLinkFrom;

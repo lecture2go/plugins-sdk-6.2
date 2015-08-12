@@ -33,6 +33,6 @@ public abstract class LegacyLectureSeriesFacilityActionableDynamicQuery
 
 		setClassLoader(de.uhh.l2g.plugins.migration.service.ClpSerializer.class.getClassLoader());
 
-		setPrimaryKeyPropertyName("facilityId");
+		setPrimaryKeyPropertyName("lectureseriesFacilityId");
 	}
 }

@@ -71,6 +71,7 @@
 		<field name="sort" type="int" />
 	</model>
 	<model name="de.uhh.l2g.plugins.migration.model.LegacyFacilityHost">
+		<field name="facilityHostId" type="long" />
 		<field name="facilityId" type="long" />
 		<field name="hostId" type="long" />
 	</model>
@@ -107,6 +108,7 @@
 		<field name="longDesc" type="String" />
 	</model>
 	<model name="de.uhh.l2g.plugins.migration.model.LegacyLectureSeriesFacility">
+		<field name="lectureseriesFacilityId" type="long" />
 		<field name="facilityId" type="long" />
 		<field name="lectureseriesId" type="long" />
 		<field name="isLinkFrom" type="long" />

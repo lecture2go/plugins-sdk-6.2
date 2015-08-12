@@ -5,18 +5,8 @@
 
 <%@ include file="/WEB-INF/jsp/include.jsp" %>
 
+
 <h3><liferay-ui:message key="migrationPortlet" /></h3>
-
-<pre>
-LF52 User Entries Size.....: <c:out value="${userEntrieSize}" />
-LF52 Contact Entrie Size........: <c:out value="${contactEntrieSize}" />
-LF52 Office Entries Size.....: <c:out value="${officeEntrieSize}" />
-LF52 LectureSeries Entries Size.....: <c:out value="${legacyLectureSeriesEntrieSize}" />
-LF52 Metadata Entries Size.....: <c:out value="${metadataEntrieSize}" />
-LF52 Segment Entries Size.....: <c:out value="${segmentEntrieSize}" />
-</pre>
-
-<p><liferay-ui:message key="migrationActions" /></p>
 
 
 <portlet:actionURL var="testExternalDBEntitiesUrl">
@@ -31,12 +21,312 @@ LF52 Segment Entries Size.....: <c:out value="${segmentEntrieSize}" />
 	<portlet:param name="action" value="migrateSegments" />
 </portlet:actionURL>
 
+<portlet:actionURL var="executeCoordinatorMigrationUrl">
+	<portlet:param name="action" value="migrateCoordinators" />
+</portlet:actionURL>
+
+<portlet:actionURL var="executeProducerMigrationUrl">
+	<portlet:param name="action" value="migrateProducers" />
+</portlet:actionURL>
+
+<portlet:actionURL var="executeVideoMigrationUrl">
+	<portlet:param name="action" value="migrateVideos" />
+</portlet:actionURL>
+
+<portlet:actionURL var="executeUploadMigrationUrl">
+	<portlet:param name="action" value="migrateUploads" />
+</portlet:actionURL>
+
+<portlet:actionURL var="executeMigrateMetadataUrl">
+	<portlet:param name="action" value="migrateMetadatas" />
+</portlet:actionURL>
+
+<portlet:actionURL var="executeMigrateInstitutionUrl">
+	<portlet:param name="action" value="migrateInstitutions" />
+</portlet:actionURL>
+
+
+<portlet:actionURL var="executeMigrateLicenseUrl">
+	<portlet:param name="action" value="migrateLicenses" />
+</portlet:actionURL>
+
+<portlet:actionURL var="executeMigrateHostUrl">
+	<portlet:param name="action" value="migrateHosts" />
+</portlet:actionURL>
+
+<portlet:actionURL var="executeMigrateL2gsysUrl">
+	<portlet:param name="action" value="migrateL2gSyses" />
+</portlet:actionURL>
+
+<portlet:actionURL var="executeMigrateLectureseriesUrl">
+	<portlet:param name="action" value="migrateLectureserieses" />
+</portlet:actionURL>
+
+<portlet:actionURL var="executeMigrateVideohitlistUrl">
+	<portlet:param name="action" value="migrateVideohitlists" />
+</portlet:actionURL>
+
+<portlet:actionURL var="executeMigrateLastvideolistUrl">
+	<portlet:param name="action" value="migrateLastvideolists" />
+</portlet:actionURL>
+
+
+
+
+<portlet:actionURL var="executeMigrateOfficeUrl">
+	<portlet:param name="action" value="migrateOffices" />
+</portlet:actionURL>
+
+
+<portlet:actionURL var="executeVideo_InstitutionUrl">
+	<portlet:param name="action" value="migrateVideo_Institution" />
+</portlet:actionURL>
+
+<portlet:actionURL var="executeProducer_LectureseriesUrl">
+	<portlet:param name="action" value="migrateProducer_Lectureseries" />
+</portlet:actionURL>
+
+<portlet:actionURL var="executeInstitution_HostUrl">
+	<portlet:param name="action" value="migrateInstitution_Host" />
+</portlet:actionURL>
+
+<p><liferay-ui:message key="migrationActions" /></p>
+
 
 <p><a href="<c:out value="${testExternalDBEntitiesUrl}" />"><liferay-ui:message key="testExternalDBEntities" /></a></p>
 
-<p><a href="<c:out value="${executeUserMigrationUrl}" />"><liferay-ui:message key="migrateUser" /></a></p>
 
-<p><a href="<c:out value="${executeSegmentMigrationUrl}" />"><liferay-ui:message key="migrateSegments" /></a></p>
+<%@ include file="/WEB-INF/jsp/logOutput.jsp" %> 
+
+ <pre>
+ <table style="width:100%">
+  <tr>
+    <th align="left" width="20%"><b>User Entities</b></th>
+    <th align="left" width="10%"><b>LF52</b></th>
+    <th align="left" width="15%"><b>LF62 migrated</b></th>
+    <th align="left" width="10%"><b>Action</b></th>
+    <th align="left" width="10%">Status</th>
+    <th align="left" ></th>
+  </tr>
+  <tr>
+    <td>User (& Contact & Adresses)</td>
+    <td><c:out value="${userEntrieSize}" /></td>
+    <td><c:out value="${userEntrieSize62}" /></td>
+    <td><a href="<c:out value="${executeUserMigrationUrl}" />"><liferay-ui:message key="migrate" /></a></td>
+    <td><c:out value="${userOkflag}" escapeXml="false" /></td>
+    <td></td>
+  </tr>
+  
+  <tr>
+    <td>Contact</td>
+    <td><c:out value="${contactEntrieSize}" /></td>
+    <td><c:out value="${contactEntrieSize62}" /></td>
+    <td></td>
+    <td><c:out value="${userOkflag}" escapeXml="false" /></td>
+    <td></td>
+  </tr>
+  
+   <tr>
+    <td>Address</td>
+    <td><c:out value="${addressEntrieSize}" /></td>
+    <td><c:out value="${addressEntrieSize62}" /></td>
+    <td></td>
+    <td><c:out value="${userOkflag}" escapeXml="false" /></td>
+    <td></td>
+  </tr>
+  
+  <tr>
+    <td>Segment</td>
+    <td><c:out value="${segmentEntrieSize}" /></td>
+    <td><c:out value="${segmentEntrieSize62}" /></td>
+    <td><a href="<c:out value="${executeSegmentMigrationUrl}" />"><liferay-ui:message key="migrate" /></a></td>
+    <td><c:out value="${segmentOkflag}" escapeXml="false" /></td>
+    <td></td>
+  </tr>  
+  <tr>
+    <td>Coordintator</td>
+    <td><c:out value="${coordinatorEntrieSize}" /></td>
+    <td><c:out value="${coordinatorEntrieSize62}" /></td>
+    <td><a href="<c:out value="${executeCoordinatorMigrationUrl}" />"><liferay-ui:message key="migrate" /></a></td>
+    <td><c:out value="${coordinatorOkflag}" escapeXml="false" /></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Producer</td>
+    <td><c:out value="${producerEntrieSize}" /></td>
+    <td><c:out value="${producerEntrieSize62}" /></td>
+    <td><a href="<c:out value="${executeProducerMigrationUrl}" />"><liferay-ui:message key="migrate" /></a></td>
+    <td><c:out value="${producerOkflag}" escapeXml="false" /></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Video</td>
+    <td><c:out value="${videoEntrieSize}" /></td>
+    <td><c:out value="${videoEntrieSize62}" /></td>
+    <td><a href="<c:out value="${executeVideoMigrationUrl}" />"><liferay-ui:message key="migrate" /></td>
+    <td><c:out value="${videoOkflag}" escapeXml="false" /></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Upload</td>
+    <td><c:out value="${uploadEntrieSize}" /></td>
+    <td><c:out value="${uploadEntrieSize62}" /></td>
+    <td><a href="<c:out value="${executeUploadMigrationUrl}" />"><liferay-ui:message key="migrate" /></a></td>
+    <td><c:out value="${uploadOkflag}" escapeXml="false" /></td>
+    <td></td>
+  </tr>
+</table> 
+</pre>
+
+
+<pre>
+ <table style="width:100%">
+  <tr>
+    <th align="left" width="20%"><b>Single Entities</b></th>
+    <th align="left" width="10%"><b>LF52</b></th>
+    <th align="left" width="15%"><b>LF62 migrated</b></th>
+    <th align="left" width="10%"><b>Action</b></th>
+    <th align="left" width="10%"><b>Satus</b></th>
+    <th align="left"></th>
+  </tr>
+  
+  <tr>
+    <td>Office</td>
+    <td><c:out value="${officeEntrieSize}" /></td>
+    <td><c:out value="${officeEntrieSize62}" /></td>
+    <td><a href="<c:out value="${executeMigrateOfficeUrl}" />"><liferay-ui:message key="migrate" /></a></td>
+    <td><c:out value="${officeOkflag}" escapeXml="false" /></td>
+    <td></td>
+  </tr>  
+  
+  <tr>
+    <td>Metadata</td>
+    <td><c:out value="${metadataEntrieSize}" /></td>
+    <td><c:out value="${metadataEntrieSize62}" /></td>
+    <td><a href="<c:out value="${executeMigrateMetadataUrl}" />"><liferay-ui:message key="migrate" /></a></td>
+    <td><c:out value="${metadataOkflag}" escapeXml="false" /></td>
+    <td></td>
+  </tr>
+  
+  <tr>
+    <td>Institution / Facility</td>
+    <td><c:out value="${faciliyEntrieSize}" /></td>
+    <td><c:out value="${InstitutionEntrieSize62}" /></td>
+    <td><a href="<c:out value="${executeMigrateInstitutionUrl}" />"><liferay-ui:message key="migrate" /></a></td>
+    <td><c:out value="${institutionOkflag}" escapeXml="false" /></td>
+    <td></td></tr> 
+   
+  <tr>
+    <td>License</td>
+    <td><c:out value="${licenseEntrieSize}" /></td>
+    <td><c:out value="${licenseEntrieSize62}" /></td>
+    <td><a href="<c:out value="${executeMigrateLicenseUrl}" />"><liferay-ui:message key="migrate" /></a></td>
+    <td><c:out value="${licenseOkflag}" escapeXml="false" /></td>
+    <td></td>
+  </tr> 
+  
+  <tr>
+    <td>Host</td>
+    <td><c:out value="${hostEntrieSize}" /></td>
+    <td><c:out value="${hostEntrieSize62}" /></td>
+    <td><a href="<c:out value="${executeMigrateHostUrl}" />"><liferay-ui:message key="migrate" /></a></td>
+    <td><c:out value="${hostOkflag}" escapeXml="false" /></td>
+    <td></td>
+  </tr> 
+  
+  <tr>
+    <td>L2GSys / Sys</td>
+    <td><c:out value="${l2gsysEntrieSize}" /></td>
+    <td><c:out value="${sysEntrieSize62}" /></td>
+    <td><a href="<c:out value="${executeMigrateL2gsysUrl}" />"><liferay-ui:message key="migrate" /></a></td>
+    <td><c:out value="${sysOkflag}" escapeXml="false" /></td>
+    <td></td>
+  </tr>   
+  
+  <tr>
+    <td>Lectureseries</td>
+    <td><c:out value="${lectureseriesEntrieSize}" /></td>
+    <td><c:out value="${lectureseriesEntrieSize62}" /></td>
+    <td><a href="<c:out value="${executeMigrateLectureseriesUrl}" />"><liferay-ui:message key="migrate" /></a></td>
+    <td><c:out value="${lectureseriesOkflag}" escapeXml="false" /></td>
+    <td></td>
+  </tr>
+
+  <tr>
+    <td>Videohitlist</td>
+    <td><c:out value="${videohitlistEntrieSize}" /></td>
+    <td><c:out value="${videohitlistEntrieSize62}" /></td>
+    <td><a href="<c:out value="${executeMigrateVideohitlistUrl}" />"><liferay-ui:message key="migrate" /></a></td>
+    <td><c:out value="${videohitlistOkflag}" escapeXml="false" /></td>
+    <td></td>    
+  </tr>   
+    
+  <tr>
+    <td>Lastvideolist</td>
+    <td><c:out value="${lastvideolistEntrieSize}" /></td>
+    <td><c:out value="${lastvideolistEntrieSize62}" /></td>
+    <td><a href="<c:out value="${executeMigrateLastvideolistUrl}" />"><liferay-ui:message key="migrate" /></a></td>
+    <td><c:out value="${lastvideolistOkflag}" escapeXml="false" /></td>
+    <td></td>
+  </tr>        
+  </table> 
+</pre>
+  
+  
+  <pre>
+ <table style="width:100%">
+  <tr>
+    <th align="left" width="20%" ><b>Mapping Entities</b></th>
+    <th align="left" width="10%" ><b>LF52</b></th>
+    <th align="left" width="15%" ><b>LF62 migrated</b></th>
+    <th align="left" width="10%"><b>Action</b></th>
+    <th align="left" width="10%"><b>Satus</b></th>
+    <th align="left"></th>
+  </tr>
+  <tr>
+    <td>Lectureseries_Institution</td>
+    <td><c:out value="${legacyLectureSeriesFacitityEntrieSize}" /></td>
+    <td><c:out value="${lectureSeriesInstitutionEntrieSize62}" /></td>
+    <td><a href="<c:out value="${executeLectureseriesFacilityUrl}" />"><liferay-ui:message key="migrate" /></a></td>
+    <td><c:out value="${lectureseriesInstitutionOkflag}" escapeXml="false" /></td>
+    <td></td>
+  </tr>  
+  <tr>
+    <td>Producer_LectureSeries</td>
+    <td><c:out value="${legacyProducerLectureseriesEntrieSize}" /></td>
+    <td><c:out value="${producerLectureseriesEntrieSize62}" /></td>
+    <td><a href="<c:out value="${executeProducer_LectureseriesUrl}" />"><liferay-ui:message key="migrate" /></a></td>
+    <td><c:out value="${producerLectureseriesOkflag}" escapeXml="false" /></td>
+    <td></td>
+  </tr>  
+  
+   <tr>
+    <td>Video_Faclilty</td>
+    <td><c:out value="${legacyVideoFacilityEntrieSize}" /></td>
+    <td><c:out value="${videoFacilityEntrieSize62}" /></td>
+    <td><a href="<c:out value="${executeVideo_InstitutionUrl}" />"><liferay-ui:message key="migrate" /></a></td>
+    <td><c:out value="${videoFacilityOkflag}" escapeXml="false" /></td>
+    <td></td>    
+  </tr>  
+  
+  
+    <tr>
+    <td>Facilit_Host</td>
+    <td><c:out value="${legacyFacilityHostEntrieSize}" /></td>
+    <td><c:out value="${facilityHostEntrieSize62}" /></td>
+    <td><a href="<c:out value="${executeInstitution_HostUrl}" />"><liferay-ui:message key="migrate" /></a></td>
+    <td><c:out value="${facilityHostOkflag}" escapeXml="false" /></td>
+    <td></td>
+  </tr>   
+  </table> 
+</pre>
+  
+
+
+
+
+
+
 
 
 

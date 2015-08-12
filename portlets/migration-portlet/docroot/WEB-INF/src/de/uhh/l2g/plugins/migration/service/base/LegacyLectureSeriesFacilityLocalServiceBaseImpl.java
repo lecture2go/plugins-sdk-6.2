@@ -102,19 +102,19 @@ public abstract class LegacyLectureSeriesFacilityLocalServiceBaseImpl
 	/**
 	 * Creates a new legacy lecture series facility with the primary key. Does not add the legacy lecture series facility to the database.
 	 *
-	 * @param facilityId the primary key for the new legacy lecture series facility
+	 * @param lectureseriesFacilityId the primary key for the new legacy lecture series facility
 	 * @return the new legacy lecture series facility
 	 */
 	@Override
 	public LegacyLectureSeriesFacility createLegacyLectureSeriesFacility(
-		long facilityId) {
-		return legacyLectureSeriesFacilityPersistence.create(facilityId);
+		long lectureseriesFacilityId) {
+		return legacyLectureSeriesFacilityPersistence.create(lectureseriesFacilityId);
 	}
 
 	/**
 	 * Deletes the legacy lecture series facility with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param facilityId the primary key of the legacy lecture series facility
+	 * @param lectureseriesFacilityId the primary key of the legacy lecture series facility
 	 * @return the legacy lecture series facility that was removed
 	 * @throws PortalException if a legacy lecture series facility with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
@@ -122,8 +122,8 @@ public abstract class LegacyLectureSeriesFacilityLocalServiceBaseImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public LegacyLectureSeriesFacility deleteLegacyLectureSeriesFacility(
-		long facilityId) throws PortalException, SystemException {
-		return legacyLectureSeriesFacilityPersistence.remove(facilityId);
+		long lectureseriesFacilityId) throws PortalException, SystemException {
+		return legacyLectureSeriesFacilityPersistence.remove(lectureseriesFacilityId);
 	}
 
 	/**
@@ -236,22 +236,22 @@ public abstract class LegacyLectureSeriesFacilityLocalServiceBaseImpl
 
 	@Override
 	public LegacyLectureSeriesFacility fetchLegacyLectureSeriesFacility(
-		long facilityId) throws SystemException {
-		return legacyLectureSeriesFacilityPersistence.fetchByPrimaryKey(facilityId);
+		long lectureseriesFacilityId) throws SystemException {
+		return legacyLectureSeriesFacilityPersistence.fetchByPrimaryKey(lectureseriesFacilityId);
 	}
 
 	/**
 	 * Returns the legacy lecture series facility with the primary key.
 	 *
-	 * @param facilityId the primary key of the legacy lecture series facility
+	 * @param lectureseriesFacilityId the primary key of the legacy lecture series facility
 	 * @return the legacy lecture series facility
 	 * @throws PortalException if a legacy lecture series facility with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public LegacyLectureSeriesFacility getLegacyLectureSeriesFacility(
-		long facilityId) throws PortalException, SystemException {
-		return legacyLectureSeriesFacilityPersistence.findByPrimaryKey(facilityId);
+		long lectureseriesFacilityId) throws PortalException, SystemException {
+		return legacyLectureSeriesFacilityPersistence.findByPrimaryKey(lectureseriesFacilityId);
 	}
 
 	@Override

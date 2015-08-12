@@ -120,22 +120,22 @@ public interface LegacyLectureSeriesFacilityPersistence extends BasePersistence<
 	/**
 	* Creates a new legacy lecture series facility with the primary key. Does not add the legacy lecture series facility to the database.
 	*
-	* @param facilityId the primary key for the new legacy lecture series facility
+	* @param lectureseriesFacilityId the primary key for the new legacy lecture series facility
 	* @return the new legacy lecture series facility
 	*/
 	public de.uhh.l2g.plugins.migration.model.LegacyLectureSeriesFacility create(
-		long facilityId);
+		long lectureseriesFacilityId);
 
 	/**
 	* Removes the legacy lecture series facility with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param facilityId the primary key of the legacy lecture series facility
+	* @param lectureseriesFacilityId the primary key of the legacy lecture series facility
 	* @return the legacy lecture series facility that was removed
 	* @throws de.uhh.l2g.plugins.migration.NoSuchLegacyLectureSeriesFacilityException if a legacy lecture series facility with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public de.uhh.l2g.plugins.migration.model.LegacyLectureSeriesFacility remove(
-		long facilityId)
+		long lectureseriesFacilityId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.migration.NoSuchLegacyLectureSeriesFacilityException;
 
@@ -146,25 +146,25 @@ public interface LegacyLectureSeriesFacilityPersistence extends BasePersistence<
 	/**
 	* Returns the legacy lecture series facility with the primary key or throws a {@link de.uhh.l2g.plugins.migration.NoSuchLegacyLectureSeriesFacilityException} if it could not be found.
 	*
-	* @param facilityId the primary key of the legacy lecture series facility
+	* @param lectureseriesFacilityId the primary key of the legacy lecture series facility
 	* @return the legacy lecture series facility
 	* @throws de.uhh.l2g.plugins.migration.NoSuchLegacyLectureSeriesFacilityException if a legacy lecture series facility with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public de.uhh.l2g.plugins.migration.model.LegacyLectureSeriesFacility findByPrimaryKey(
-		long facilityId)
+		long lectureseriesFacilityId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.migration.NoSuchLegacyLectureSeriesFacilityException;
 
 	/**
 	* Returns the legacy lecture series facility with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param facilityId the primary key of the legacy lecture series facility
+	* @param lectureseriesFacilityId the primary key of the legacy lecture series facility
 	* @return the legacy lecture series facility, or <code>null</code> if a legacy lecture series facility with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public de.uhh.l2g.plugins.migration.model.LegacyLectureSeriesFacility fetchByPrimaryKey(
-		long facilityId)
+		long lectureseriesFacilityId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

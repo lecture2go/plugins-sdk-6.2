@@ -35,9 +35,11 @@ public class LegacyLectureSeriesFacilityCacheModel implements CacheModel<LegacyL
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
-		sb.append("{facilityId=");
+		sb.append("{lectureseriesFacilityId=");
+		sb.append(lectureseriesFacilityId);
+		sb.append(", facilityId=");
 		sb.append(facilityId);
 		sb.append(", lectureseriesId=");
 		sb.append(lectureseriesId);
@@ -52,6 +54,7 @@ public class LegacyLectureSeriesFacilityCacheModel implements CacheModel<LegacyL
 	public LegacyLectureSeriesFacility toEntityModel() {
 		LegacyLectureSeriesFacilityImpl legacyLectureSeriesFacilityImpl = new LegacyLectureSeriesFacilityImpl();
 
+		legacyLectureSeriesFacilityImpl.setLectureseriesFacilityId(lectureseriesFacilityId);
 		legacyLectureSeriesFacilityImpl.setFacilityId(facilityId);
 		legacyLectureSeriesFacilityImpl.setLectureseriesId(lectureseriesId);
 		legacyLectureSeriesFacilityImpl.setIsLinkFrom(isLinkFrom);
@@ -63,6 +66,7 @@ public class LegacyLectureSeriesFacilityCacheModel implements CacheModel<LegacyL
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		lectureseriesFacilityId = objectInput.readLong();
 		facilityId = objectInput.readLong();
 		lectureseriesId = objectInput.readLong();
 		isLinkFrom = objectInput.readLong();
@@ -71,11 +75,13 @@ public class LegacyLectureSeriesFacilityCacheModel implements CacheModel<LegacyL
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(lectureseriesFacilityId);
 		objectOutput.writeLong(facilityId);
 		objectOutput.writeLong(lectureseriesId);
 		objectOutput.writeLong(isLinkFrom);
 	}
 
+	public long lectureseriesFacilityId;
 	public long facilityId;
 	public long lectureseriesId;
 	public long isLinkFrom;

@@ -30,6 +30,7 @@ public class LegacyLectureSeriesFacilitySoap implements Serializable {
 		LegacyLectureSeriesFacility model) {
 		LegacyLectureSeriesFacilitySoap soapModel = new LegacyLectureSeriesFacilitySoap();
 
+		soapModel.setLectureseriesFacilityId(model.getLectureseriesFacilityId());
 		soapModel.setFacilityId(model.getFacilityId());
 		soapModel.setLectureseriesId(model.getLectureseriesId());
 		soapModel.setIsLinkFrom(model.getIsLinkFrom());
@@ -81,11 +82,19 @@ public class LegacyLectureSeriesFacilitySoap implements Serializable {
 	}
 
 	public long getPrimaryKey() {
-		return _facilityId;
+		return _lectureseriesFacilityId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setFacilityId(pk);
+		setLectureseriesFacilityId(pk);
+	}
+
+	public long getLectureseriesFacilityId() {
+		return _lectureseriesFacilityId;
+	}
+
+	public void setLectureseriesFacilityId(long lectureseriesFacilityId) {
+		_lectureseriesFacilityId = lectureseriesFacilityId;
 	}
 
 	public long getFacilityId() {
@@ -112,6 +121,7 @@ public class LegacyLectureSeriesFacilitySoap implements Serializable {
 		_isLinkFrom = isLinkFrom;
 	}
 
+	private long _lectureseriesFacilityId;
 	private long _facilityId;
 	private long _lectureseriesId;
 	private long _isLinkFrom;

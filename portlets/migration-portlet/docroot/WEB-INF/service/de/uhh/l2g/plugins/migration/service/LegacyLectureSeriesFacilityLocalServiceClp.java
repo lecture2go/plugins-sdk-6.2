@@ -152,12 +152,13 @@ public class LegacyLectureSeriesFacilityLocalServiceClp
 
 	@Override
 	public de.uhh.l2g.plugins.migration.model.LegacyLectureSeriesFacility createLegacyLectureSeriesFacility(
-		long facilityId) {
+		long lectureseriesFacilityId) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName1,
-					_methodParameterTypes1, new Object[] { facilityId });
+					_methodParameterTypes1,
+					new Object[] { lectureseriesFacilityId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -176,14 +177,15 @@ public class LegacyLectureSeriesFacilityLocalServiceClp
 
 	@Override
 	public de.uhh.l2g.plugins.migration.model.LegacyLectureSeriesFacility deleteLegacyLectureSeriesFacility(
-		long facilityId)
+		long lectureseriesFacilityId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName2,
-					_methodParameterTypes2, new Object[] { facilityId });
+					_methodParameterTypes2,
+					new Object[] { lectureseriesFacilityId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -440,13 +442,14 @@ public class LegacyLectureSeriesFacilityLocalServiceClp
 
 	@Override
 	public de.uhh.l2g.plugins.migration.model.LegacyLectureSeriesFacility fetchLegacyLectureSeriesFacility(
-		long facilityId)
+		long lectureseriesFacilityId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName10,
-					_methodParameterTypes10, new Object[] { facilityId });
+					_methodParameterTypes10,
+					new Object[] { lectureseriesFacilityId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -469,14 +472,15 @@ public class LegacyLectureSeriesFacilityLocalServiceClp
 
 	@Override
 	public de.uhh.l2g.plugins.migration.model.LegacyLectureSeriesFacility getLegacyLectureSeriesFacility(
-		long facilityId)
+		long lectureseriesFacilityId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName11,
-					_methodParameterTypes11, new Object[] { facilityId });
+					_methodParameterTypes11,
+					new Object[] { lectureseriesFacilityId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);

@@ -57,6 +57,20 @@ public interface LegacyLectureSeriesFacilityModel extends BaseModel<LegacyLectur
 	public void setPrimaryKey(long primaryKey);
 
 	/**
+	 * Returns the lectureseries facility ID of this legacy lecture series facility.
+	 *
+	 * @return the lectureseries facility ID of this legacy lecture series facility
+	 */
+	public long getLectureseriesFacilityId();
+
+	/**
+	 * Sets the lectureseries facility ID of this legacy lecture series facility.
+	 *
+	 * @param lectureseriesFacilityId the lectureseries facility ID of this legacy lecture series facility
+	 */
+	public void setLectureseriesFacilityId(long lectureseriesFacilityId);
+
+	/**
 	 * Returns the facility ID of this legacy lecture series facility.
 	 *
 	 * @return the facility ID of this legacy lecture series facility

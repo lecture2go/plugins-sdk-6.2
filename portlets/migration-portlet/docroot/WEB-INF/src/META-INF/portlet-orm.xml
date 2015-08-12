@@ -113,7 +113,8 @@
 	</mapped-superclass>
 	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacyFacilityHostModelImpl">
 		<attributes>
-			<id name="facilityId" />
+			<id name="facilityHostId" />
+			<basic name="facilityId" />
 			<basic name="hostId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
@@ -186,7 +187,8 @@
 	</mapped-superclass>
 	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacyLectureSeriesFacilityModelImpl">
 		<attributes>
-			<id name="facilityId" />
+			<id name="lectureseriesFacilityId" />
+			<basic name="facilityId" />
 			<basic name="lectureseriesId" />
 			<basic name="isLinkFrom" />
 			<transient name="modelAttributes" />

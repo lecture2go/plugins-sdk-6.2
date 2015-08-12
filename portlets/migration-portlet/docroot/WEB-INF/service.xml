@@ -275,7 +275,8 @@
   </entity>
   
   <entity name="LegacyLectureSeriesFacility" uuid="false" local-service="true" remote-service="false" data-source="anotherDataSource" session-factory="anotherSessionFactory" table="lectureseries_facility" tx-manager="anotherTransactionManager">
-		<column name="facilityId" type="long" primary="true"  />
+  		<column name="lectureseriesFacilityId" type="long" primary="true" id-type="increment"  />
+		<column name="facilityId" type="long" />
 		<column name="lectureseriesId" type="long"/>
 		<column name="isLinkFrom" type="long" />
 		
@@ -327,12 +328,13 @@
   </entity>  
   
   <entity name="LegacyFacilityHost" uuid="false" local-service="true" remote-service="false" data-source="anotherDataSource" session-factory="anotherSessionFactory" table="facility_host" tx-manager="anotherTransactionManager">
-        <column name="facilityId" type="long"  primary="true" ></column>
+        <column name="facilityHostId" type="long"  primary="true"> </column>
+        <column name="facilityId" type="long"></column>
         <column name="hostId" type="long"></column>
   </entity>   
 
   <entity name="LegacyProducerLectureseries" uuid="false" local-service="true" remote-service="false" data-source="anotherDataSource" session-factory="anotherSessionFactory" table="producer_lectureseries" tx-manager="anotherTransactionManager">
-		<column name="id" type="long" primary="true" id-type="increment"></column>
+		<column name="id" type="long" primary="true" ></column>
         <column name="producerId" type="long"></column>
         <column name="lectureseriesId" type="long"></column>
   </entity>    

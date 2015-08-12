@@ -61,23 +61,23 @@ public interface LegacyLectureSeriesFacilityLocalService
 	/**
 	* Creates a new legacy lecture series facility with the primary key. Does not add the legacy lecture series facility to the database.
 	*
-	* @param facilityId the primary key for the new legacy lecture series facility
+	* @param lectureseriesFacilityId the primary key for the new legacy lecture series facility
 	* @return the new legacy lecture series facility
 	*/
 	public de.uhh.l2g.plugins.migration.model.LegacyLectureSeriesFacility createLegacyLectureSeriesFacility(
-		long facilityId);
+		long lectureseriesFacilityId);
 
 	/**
 	* Deletes the legacy lecture series facility with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param facilityId the primary key of the legacy lecture series facility
+	* @param lectureseriesFacilityId the primary key of the legacy lecture series facility
 	* @return the legacy lecture series facility that was removed
 	* @throws PortalException if a legacy lecture series facility with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public de.uhh.l2g.plugins.migration.model.LegacyLectureSeriesFacility deleteLegacyLectureSeriesFacility(
-		long facilityId)
+		long lectureseriesFacilityId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -172,20 +172,20 @@ public interface LegacyLectureSeriesFacilityLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public de.uhh.l2g.plugins.migration.model.LegacyLectureSeriesFacility fetchLegacyLectureSeriesFacility(
-		long facilityId)
+		long lectureseriesFacilityId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns the legacy lecture series facility with the primary key.
 	*
-	* @param facilityId the primary key of the legacy lecture series facility
+	* @param lectureseriesFacilityId the primary key of the legacy lecture series facility
 	* @return the legacy lecture series facility
 	* @throws PortalException if a legacy lecture series facility with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public de.uhh.l2g.plugins.migration.model.LegacyLectureSeriesFacility getLegacyLectureSeriesFacility(
-		long facilityId)
+		long lectureseriesFacilityId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

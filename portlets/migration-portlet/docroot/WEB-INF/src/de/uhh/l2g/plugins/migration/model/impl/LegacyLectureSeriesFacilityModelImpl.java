@@ -57,14 +57,15 @@ public class LegacyLectureSeriesFacilityModelImpl extends BaseModelImpl<LegacyLe
 	 */
 	public static final String TABLE_NAME = "lectureseries_facility";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "lectureseriesFacilityId", Types.BIGINT },
 			{ "facilityId", Types.BIGINT },
 			{ "lectureseriesId", Types.BIGINT },
 			{ "isLinkFrom", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table lectureseries_facility (facilityId LONG not null primary key,lectureseriesId LONG,isLinkFrom LONG)";
+	public static final String TABLE_SQL_CREATE = "create table lectureseries_facility (lectureseriesFacilityId LONG not null primary key,facilityId LONG,lectureseriesId LONG,isLinkFrom LONG)";
 	public static final String TABLE_SQL_DROP = "drop table lectureseries_facility";
-	public static final String ORDER_BY_JPQL = " ORDER BY legacyLectureSeriesFacility.facilityId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY lectureseries_facility.facilityId ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY legacyLectureSeriesFacility.lectureseriesFacilityId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY lectureseries_facility.lectureseriesFacilityId ASC";
 	public static final String DATA_SOURCE = "anotherDataSource";
 	public static final String SESSION_FACTORY = "anotherSessionFactory";
 	public static final String TX_MANAGER = "anotherTransactionManager";
@@ -79,6 +80,7 @@ public class LegacyLectureSeriesFacilityModelImpl extends BaseModelImpl<LegacyLe
 			true);
 	public static long FACILITYID_COLUMN_BITMASK = 1L;
 	public static long LECTURESERIESID_COLUMN_BITMASK = 2L;
+	public static long LECTURESERIESFACILITYID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.migration.model.LegacyLectureSeriesFacility"));
 
@@ -87,17 +89,17 @@ public class LegacyLectureSeriesFacilityModelImpl extends BaseModelImpl<LegacyLe
 
 	@Override
 	public long getPrimaryKey() {
-		return _facilityId;
+		return _lectureseriesFacilityId;
 	}
 
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		setFacilityId(primaryKey);
+		setLectureseriesFacilityId(primaryKey);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _facilityId;
+		return _lectureseriesFacilityId;
 	}
 
 	@Override
@@ -119,6 +121,7 @@ public class LegacyLectureSeriesFacilityModelImpl extends BaseModelImpl<LegacyLe
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("lectureseriesFacilityId", getLectureseriesFacilityId());
 		attributes.put("facilityId", getFacilityId());
 		attributes.put("lectureseriesId", getLectureseriesId());
 		attributes.put("isLinkFrom", getIsLinkFrom());
@@ -128,6 +131,13 @@ public class LegacyLectureSeriesFacilityModelImpl extends BaseModelImpl<LegacyLe
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long lectureseriesFacilityId = (Long)attributes.get(
+				"lectureseriesFacilityId");
+
+		if (lectureseriesFacilityId != null) {
+			setLectureseriesFacilityId(lectureseriesFacilityId);
+		}
+
 		Long facilityId = (Long)attributes.get("facilityId");
 
 		if (facilityId != null) {
@@ -145,6 +155,16 @@ public class LegacyLectureSeriesFacilityModelImpl extends BaseModelImpl<LegacyLe
 		if (isLinkFrom != null) {
 			setIsLinkFrom(isLinkFrom);
 		}
+	}
+
+	@Override
+	public long getLectureseriesFacilityId() {
+		return _lectureseriesFacilityId;
+	}
+
+	@Override
+	public void setLectureseriesFacilityId(long lectureseriesFacilityId) {
+		_lectureseriesFacilityId = lectureseriesFacilityId;
 	}
 
 	@Override
@@ -232,6 +252,7 @@ public class LegacyLectureSeriesFacilityModelImpl extends BaseModelImpl<LegacyLe
 	public Object clone() {
 		LegacyLectureSeriesFacilityImpl legacyLectureSeriesFacilityImpl = new LegacyLectureSeriesFacilityImpl();
 
+		legacyLectureSeriesFacilityImpl.setLectureseriesFacilityId(getLectureseriesFacilityId());
 		legacyLectureSeriesFacilityImpl.setFacilityId(getFacilityId());
 		legacyLectureSeriesFacilityImpl.setLectureseriesId(getLectureseriesId());
 		legacyLectureSeriesFacilityImpl.setIsLinkFrom(getIsLinkFrom());
@@ -305,6 +326,8 @@ public class LegacyLectureSeriesFacilityModelImpl extends BaseModelImpl<LegacyLe
 		LegacyLectureSeriesFacilityCacheModel legacyLectureSeriesFacilityCacheModel =
 			new LegacyLectureSeriesFacilityCacheModel();
 
+		legacyLectureSeriesFacilityCacheModel.lectureseriesFacilityId = getLectureseriesFacilityId();
+
 		legacyLectureSeriesFacilityCacheModel.facilityId = getFacilityId();
 
 		legacyLectureSeriesFacilityCacheModel.lectureseriesId = getLectureseriesId();
@@ -316,9 +339,11 @@ public class LegacyLectureSeriesFacilityModelImpl extends BaseModelImpl<LegacyLe
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
-		sb.append("{facilityId=");
+		sb.append("{lectureseriesFacilityId=");
+		sb.append(getLectureseriesFacilityId());
+		sb.append(", facilityId=");
 		sb.append(getFacilityId());
 		sb.append(", lectureseriesId=");
 		sb.append(getLectureseriesId());
@@ -331,13 +356,17 @@ public class LegacyLectureSeriesFacilityModelImpl extends BaseModelImpl<LegacyLe
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("<model><model-name>");
 		sb.append(
 			"de.uhh.l2g.plugins.migration.model.LegacyLectureSeriesFacility");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>lectureseriesFacilityId</column-name><column-value><![CDATA[");
+		sb.append(getLectureseriesFacilityId());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>facilityId</column-name><column-value><![CDATA[");
 		sb.append(getFacilityId());
@@ -360,6 +389,7 @@ public class LegacyLectureSeriesFacilityModelImpl extends BaseModelImpl<LegacyLe
 	private static Class<?>[] _escapedModelInterfaces = new Class[] {
 			LegacyLectureSeriesFacility.class
 		};
+	private long _lectureseriesFacilityId;
 	private long _facilityId;
 	private long _originalFacilityId;
 	private boolean _setOriginalFacilityId;

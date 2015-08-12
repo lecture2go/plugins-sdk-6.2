@@ -103,9 +103,10 @@
 	</class>
 	<class name="de.uhh.l2g.plugins.migration.model.impl.LegacyFacilityHostImpl" table="facility_host">
 		<cache usage="read-write" />
-		<id name="facilityId" type="long">
+		<id name="facilityHostId" type="long">
 			<generator class="assigned" />
 		</id>
+		<property name="facilityId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="hostId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.migration.model.impl.LegacyHostImpl" table="host">
@@ -154,9 +155,10 @@
 	</class>
 	<class name="de.uhh.l2g.plugins.migration.model.impl.LegacyLectureSeriesFacilityImpl" table="lectureseries_facility">
 		<cache usage="read-write" />
-		<id name="facilityId" type="long">
-			<generator class="assigned" />
+		<id name="lectureseriesFacilityId" type="long">
+			<generator class="increment" />
 		</id>
+		<property name="facilityId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="lectureseriesId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="isLinkFrom" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
@@ -215,7 +217,7 @@
 	<class name="de.uhh.l2g.plugins.migration.model.impl.LegacyProducerLectureseriesImpl" table="producer_lectureseries">
 		<cache usage="read-write" />
 		<id name="id" column="id_" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property name="producerId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="lectureseriesId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
