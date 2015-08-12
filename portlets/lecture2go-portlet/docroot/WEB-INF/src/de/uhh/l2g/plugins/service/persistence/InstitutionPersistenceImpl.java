@@ -8660,14 +8660,14 @@ public class InstitutionPersistenceImpl extends BasePersistenceImpl<Institution>
 	private static final String _FINDER_COLUMN_G_P_S_GROUPID_2 = "institution.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_S_PARENTID_2 = "institution.parentId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_S_SORT_2 = "institution.sort = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_TOPLEVEL = new FinderPath(InstitutionModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_FETCH_BY_ROOT = new FinderPath(InstitutionModelImpl.ENTITY_CACHE_ENABLED,
 			InstitutionModelImpl.FINDER_CACHE_ENABLED, InstitutionImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByTopLevel",
+			FINDER_CLASS_NAME_ENTITY, "fetchByRoot",
 			new String[] { Long.class.getName() },
 			InstitutionModelImpl.GROUPID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_TOPLEVEL = new FinderPath(InstitutionModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_ROOT = new FinderPath(InstitutionModelImpl.ENTITY_CACHE_ENABLED,
 			InstitutionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTopLevel",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByRoot",
 			new String[] { Long.class.getName() });
 
 	/**
@@ -8679,9 +8679,9 @@ public class InstitutionPersistenceImpl extends BasePersistenceImpl<Institution>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Institution findByTopLevel(long groupId)
+	public Institution findByRoot(long groupId)
 		throws NoSuchInstitutionException, SystemException {
-		Institution institution = fetchByTopLevel(groupId);
+		Institution institution = fetchByRoot(groupId);
 
 		if (institution == null) {
 			StringBundler msg = new StringBundler(4);
@@ -8711,8 +8711,8 @@ public class InstitutionPersistenceImpl extends BasePersistenceImpl<Institution>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Institution fetchByTopLevel(long groupId) throws SystemException {
-		return fetchByTopLevel(groupId, true);
+	public Institution fetchByRoot(long groupId) throws SystemException {
+		return fetchByRoot(groupId, true);
 	}
 
 	/**
@@ -8724,14 +8724,14 @@ public class InstitutionPersistenceImpl extends BasePersistenceImpl<Institution>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Institution fetchByTopLevel(long groupId, boolean retrieveFromCache)
+	public Institution fetchByRoot(long groupId, boolean retrieveFromCache)
 		throws SystemException {
 		Object[] finderArgs = new Object[] { groupId };
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_TOPLEVEL,
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_ROOT,
 					finderArgs, this);
 		}
 
@@ -8748,7 +8748,7 @@ public class InstitutionPersistenceImpl extends BasePersistenceImpl<Institution>
 
 			query.append(_SQL_SELECT_INSTITUTION_WHERE);
 
-			query.append(_FINDER_COLUMN_TOPLEVEL_GROUPID_2);
+			query.append(_FINDER_COLUMN_ROOT_GROUPID_2);
 
 			String sql = query.toString();
 
@@ -8766,13 +8766,13 @@ public class InstitutionPersistenceImpl extends BasePersistenceImpl<Institution>
 				List<Institution> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_TOPLEVEL,
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ROOT,
 						finderArgs, list);
 				}
 				else {
 					if ((list.size() > 1) && _log.isWarnEnabled()) {
 						_log.warn(
-							"InstitutionPersistenceImpl.fetchByTopLevel(long, boolean) with parameters (" +
+							"InstitutionPersistenceImpl.fetchByRoot(long, boolean) with parameters (" +
 							StringUtil.merge(finderArgs) +
 							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 					}
@@ -8784,13 +8784,13 @@ public class InstitutionPersistenceImpl extends BasePersistenceImpl<Institution>
 					cacheResult(institution);
 
 					if ((institution.getGroupId() != groupId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_TOPLEVEL,
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ROOT,
 							finderArgs, institution);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_TOPLEVEL,
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_ROOT,
 					finderArgs);
 
 				throw processException(e);
@@ -8816,9 +8816,9 @@ public class InstitutionPersistenceImpl extends BasePersistenceImpl<Institution>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Institution removeByTopLevel(long groupId)
+	public Institution removeByRoot(long groupId)
 		throws NoSuchInstitutionException, SystemException {
-		Institution institution = findByTopLevel(groupId);
+		Institution institution = findByRoot(groupId);
 
 		return remove(institution);
 	}
@@ -8831,8 +8831,8 @@ public class InstitutionPersistenceImpl extends BasePersistenceImpl<Institution>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByTopLevel(long groupId) throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_TOPLEVEL;
+	public int countByRoot(long groupId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_ROOT;
 
 		Object[] finderArgs = new Object[] { groupId };
 
@@ -8844,7 +8844,7 @@ public class InstitutionPersistenceImpl extends BasePersistenceImpl<Institution>
 
 			query.append(_SQL_COUNT_INSTITUTION_WHERE);
 
-			query.append(_FINDER_COLUMN_TOPLEVEL_GROUPID_2);
+			query.append(_FINDER_COLUMN_ROOT_GROUPID_2);
 
 			String sql = query.toString();
 
@@ -8876,7 +8876,7 @@ public class InstitutionPersistenceImpl extends BasePersistenceImpl<Institution>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_TOPLEVEL_GROUPID_2 = "institution.groupId = ? AND institution.parentId = 0";
+	private static final String _FINDER_COLUMN_ROOT_GROUPID_2 = "institution.groupId = ? AND institution.parentId = 0";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_I = new FinderPath(InstitutionModelImpl.ENTITY_CACHE_ENABLED,
 			InstitutionModelImpl.FINDER_CACHE_ENABLED, InstitutionImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_I",
@@ -9131,7 +9131,7 @@ public class InstitutionPersistenceImpl extends BasePersistenceImpl<Institution>
 		EntityCacheUtil.putResult(InstitutionModelImpl.ENTITY_CACHE_ENABLED,
 			InstitutionImpl.class, institution.getPrimaryKey(), institution);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_TOPLEVEL,
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ROOT,
 			new Object[] { institution.getGroupId() }, institution);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_I,
@@ -9216,9 +9216,9 @@ public class InstitutionPersistenceImpl extends BasePersistenceImpl<Institution>
 		if (institution.isNew()) {
 			Object[] args = new Object[] { institution.getGroupId() };
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_TOPLEVEL, args,
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_ROOT, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_TOPLEVEL, args,
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ROOT, args,
 				institution);
 
 			args = new Object[] {
@@ -9234,12 +9234,12 @@ public class InstitutionPersistenceImpl extends BasePersistenceImpl<Institution>
 			InstitutionModelImpl institutionModelImpl = (InstitutionModelImpl)institution;
 
 			if ((institutionModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_TOPLEVEL.getColumnBitmask()) != 0) {
+					FINDER_PATH_FETCH_BY_ROOT.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] { institution.getGroupId() };
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_TOPLEVEL, args,
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_ROOT, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_TOPLEVEL, args,
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ROOT, args,
 					institution);
 			}
 
@@ -9262,15 +9262,15 @@ public class InstitutionPersistenceImpl extends BasePersistenceImpl<Institution>
 
 		Object[] args = new Object[] { institution.getGroupId() };
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TOPLEVEL, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_TOPLEVEL, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ROOT, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_ROOT, args);
 
 		if ((institutionModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_TOPLEVEL.getColumnBitmask()) != 0) {
+				FINDER_PATH_FETCH_BY_ROOT.getColumnBitmask()) != 0) {
 			args = new Object[] { institutionModelImpl.getOriginalGroupId() };
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TOPLEVEL, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_TOPLEVEL, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ROOT, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_ROOT, args);
 		}
 
 		args = new Object[] {
