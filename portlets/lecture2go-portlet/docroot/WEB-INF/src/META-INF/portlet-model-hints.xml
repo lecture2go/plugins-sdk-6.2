@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<hint-collection name="BIGTEXT">
+	<hint-collection name="TEXTAREA">
 		<hint name="max-length">2000000</hint>
 	</hint-collection>
-	<hint-collection name="MEDIUMTEXT">
+	<hint-collection name="SHORTTEXT">
 		<hint name="max-length">4000</hint>
 	</hint-collection>
 	<model name="de.uhh.l2g.plugins.model.Category">
@@ -30,19 +30,33 @@
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Host">
 		<field name="hostId" type="long" />
-		<field name="protocol" type="String" />
-		<field name="streamer" type="String" />
+		<field name="protocol" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
+		<field name="streamer" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
 		<field name="port" type="int" />
-		<field name="serverRoot" type="String" />
-		<field name="name" type="String" />
+		<field name="serverRoot" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
+		<field name="name" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
 		<field name="groupId" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Institution">
 		<field name="institutionId" type="long" />
 		<field name="parentId" type="long" />
-		<field name="name" type="String" />
-		<field name="typ" type="String" />
-		<field name="www" type="String" />
+		<field name="name" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
+		<field name="typ" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
+		<field name="www" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
 		<field name="level" type="int" />
 		<field name="sort" type="int" />
 		<field name="groupId" type="long" />
@@ -59,18 +73,30 @@
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Lectureseries">
 		<field name="number" type="String" />
-		<field name="eventType" type="String" />
+		<field name="eventType" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
 		<field name="categoryId" type="long" />
-		<field name="name" type="String" />
-		<field name="shortDesc" type="String" />
+		<field name="name" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
+		<field name="shortDesc" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
 		<field name="termId" type="long" />
-		<field name="language" type="String" />
-		<field name="facultyName" type="String" />
+		<field name="language" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
+		<field name="facultyName" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
 		<field name="lectureseriesId" type="long" />
-		<field name="password" type="String" />
+		<field name="password" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
 		<field name="approved" type="int" />
 		<field name="longDesc" type="String">
-			<hint-collection name="BIGTEXT" />
+			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="latestOpenAccessVideoId" type="long" />
 		<field name="latestVideoUploadDate" type="Date" />
@@ -107,12 +133,18 @@
 		<field name="metadataId" type="long" />
 		<field name="type" type="String" />
 		<field name="language" type="String" />
-		<field name="title" type="String" />
-		<field name="subject" type="String" />
-		<field name="description" type="String">
-			<hint-collection name="MEDIUMTEXT" />
+		<field name="title" type="String">
+			<hint-collection name="SHORTTEXT" />
 		</field>
-		<field name="publisher" type="String" />
+		<field name="subject" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="publisher" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Office">
 		<field name="officeId" type="long" />
@@ -139,24 +171,28 @@
 		<field name="segmentId" type="long" />
 		<field name="videoId" type="long" />
 		<field name="start" type="String" />
-		<field name="title" type="String" />
-		<field name="description" type="String" />
+		<field name="title" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
 		<field name="end" type="String" />
 		<field name="chapter" type="int" />
 		<field name="userId" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Sys">
 		<field name="sysId" type="int" />
-		<field name="version" type="String" />
+		<field name="version" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
 		<field name="setupWizard" type="int" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Tagcloud">
 		<field name="tagcloudId" type="long" />
 		<field name="objectClassType" type="String" />
 		<field name="objectId" type="long" />
-		<field name="tags" type="String">
-			<hint-collection name="MEDIUMTEXT" />
-		</field>
+		<field name="tags" type="String" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Term">
 		<field name="termId" type="long" />
@@ -170,26 +206,32 @@
 		<field name="uploadId" type="long" />
 		<field name="userId" type="long" />
 		<field name="contentLength" type="long" />
-		<field name="timestamp" type="long" />
+		<field name="timestamp" type="Date" />
 		<field name="status" type="int" />
 		<field name="videoId" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Video">
 		<field name="videoId" type="long" />
-		<field name="title" type="String" />
+		<field name="title" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
 		<field name="lectureseriesId" type="long" />
 		<field name="producerId" type="long" />
 		<field name="containerFormat" type="String" />
-		<field name="filename" type="String" />
+		<field name="filename" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
 		<field name="resolution" type="String" />
 		<field name="duration" type="String" />
 		<field name="hostId" type="long" />
 		<field name="fileSize" type="String" />
 		<field name="generationDate" type="String" />
 		<field name="openAccess" type="int" />
-		<field name="downloadLink" type="int" />
+		<field name="downloadLink" type="int">
+			<hint-collection name="SHORTTEXT" />
+		</field>
 		<field name="metadataId" type="long" />
-		<field name="secureFilename" type="String" />
+		<field name="surl" type="String" />
 		<field name="hits" type="long" />
 		<field name="uploadDate" type="Date" />
 		<field name="permittedToSegment" type="int" />
@@ -197,8 +239,9 @@
 		<field name="citation2go" type="int" />
 		<field name="termId" type="long" />
 		<field name="videoCreatorId" type="long" />
-		<field name="tags" type="String" />
-		<field name="password" type="String" />
+		<field name="tags" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Video_Category">
 		<field name="videoCategoryId" type="long" />
