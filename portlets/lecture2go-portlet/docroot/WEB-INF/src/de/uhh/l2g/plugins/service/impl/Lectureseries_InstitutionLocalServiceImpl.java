@@ -83,4 +83,14 @@ public class Lectureseries_InstitutionLocalServiceImpl
 		return lectureseries_InstitutionPersistence.findByLectureseriesId(lectureseriesId);
 	}
 	
+	
+	public Lectureseries_Institution findFirstByLectureseriesIdAndInstitutionId(long lectureseriesId, long institutionId) throws SystemException{
+		List<Lectureseries_Institution> result = lectureseries_InstitutionPersistence.findByLectureseriesIdAndInstitutionId(lectureseriesId, institutionId);
+		if (result != null && result.size() > 0 ) {
+			return result.get(0);
+		} else {
+			return null;
+		}
+		
+	}
 }

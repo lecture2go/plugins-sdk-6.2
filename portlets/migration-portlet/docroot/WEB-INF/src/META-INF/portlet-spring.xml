@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="de.uhh.l2g.plugins.migration.service.LegacyAddressLocalService" class="de.uhh.l2g.plugins.migration.service.impl.LegacyAddressLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.migration.service.persistence.LegacyAddressPersistence" class="de.uhh.l2g.plugins.migration.service.persistence.LegacyAddressPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="anotherDataSource" />
+		<property name="sessionFactory" ref="anotherSessionFactory" />
+	</bean>
+	<bean id="de.uhh.l2g.plugins.migration.service.LegacyContactLocalService" class="de.uhh.l2g.plugins.migration.service.impl.LegacyContactLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.migration.service.persistence.LegacyContactPersistence" class="de.uhh.l2g.plugins.migration.service.persistence.LegacyContactPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="anotherDataSource" />
+		<property name="sessionFactory" ref="anotherSessionFactory" />
+	</bean>
+	<bean id="de.uhh.l2g.plugins.migration.service.LegacyCoordinatorLocalService" class="de.uhh.l2g.plugins.migration.service.impl.LegacyCoordinatorLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.migration.service.persistence.LegacyCoordinatorPersistence" class="de.uhh.l2g.plugins.migration.service.persistence.LegacyCoordinatorPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="anotherDataSource" />
+		<property name="sessionFactory" ref="anotherSessionFactory" />
+	</bean>
+	<bean id="de.uhh.l2g.plugins.migration.service.LegacyFacilityLocalService" class="de.uhh.l2g.plugins.migration.service.impl.LegacyFacilityLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.migration.service.persistence.LegacyFacilityPersistence" class="de.uhh.l2g.plugins.migration.service.persistence.LegacyFacilityPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="anotherDataSource" />
+		<property name="sessionFactory" ref="anotherSessionFactory" />
+	</bean>
+	<bean id="de.uhh.l2g.plugins.migration.service.LegacyFacilityHostLocalService" class="de.uhh.l2g.plugins.migration.service.impl.LegacyFacilityHostLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.migration.service.persistence.LegacyFacilityHostPersistence" class="de.uhh.l2g.plugins.migration.service.persistence.LegacyFacilityHostPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="anotherDataSource" />
+		<property name="sessionFactory" ref="anotherSessionFactory" />
+	</bean>
+	<bean id="de.uhh.l2g.plugins.migration.service.LegacyHostLocalService" class="de.uhh.l2g.plugins.migration.service.impl.LegacyHostLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.migration.service.persistence.LegacyHostPersistence" class="de.uhh.l2g.plugins.migration.service.persistence.LegacyHostPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="anotherDataSource" />
+		<property name="sessionFactory" ref="anotherSessionFactory" />
+	</bean>
+	<bean id="de.uhh.l2g.plugins.migration.service.LegacyL2gSysLocalService" class="de.uhh.l2g.plugins.migration.service.impl.LegacyL2gSysLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.migration.service.persistence.LegacyL2gSysPersistence" class="de.uhh.l2g.plugins.migration.service.persistence.LegacyL2gSysPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="anotherDataSource" />
+		<property name="sessionFactory" ref="anotherSessionFactory" />
+	</bean>
+	<bean id="de.uhh.l2g.plugins.migration.service.LegacyLastVideoListLocalService" class="de.uhh.l2g.plugins.migration.service.impl.LegacyLastVideoListLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.migration.service.persistence.LegacyLastVideoListPersistence" class="de.uhh.l2g.plugins.migration.service.persistence.LegacyLastVideoListPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="anotherDataSource" />
+		<property name="sessionFactory" ref="anotherSessionFactory" />
+	</bean>
+	<bean id="de.uhh.l2g.plugins.migration.service.LegacyLectureSeriesLocalService" class="de.uhh.l2g.plugins.migration.service.impl.LegacyLectureSeriesLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.migration.service.persistence.LegacyLectureSeriesPersistence" class="de.uhh.l2g.plugins.migration.service.persistence.LegacyLectureSeriesPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="anotherDataSource" />
+		<property name="sessionFactory" ref="anotherSessionFactory" />
+	</bean>
+	<bean id="de.uhh.l2g.plugins.migration.service.LegacyLectureSeriesFacilityLocalService" class="de.uhh.l2g.plugins.migration.service.impl.LegacyLectureSeriesFacilityLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.migration.service.persistence.LegacyLectureSeriesFacilityPersistence" class="de.uhh.l2g.plugins.migration.service.persistence.LegacyLectureSeriesFacilityPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="anotherDataSource" />
+		<property name="sessionFactory" ref="anotherSessionFactory" />
+	</bean>
+	<bean id="de.uhh.l2g.plugins.migration.service.LegacyLicenseLocalService" class="de.uhh.l2g.plugins.migration.service.impl.LegacyLicenseLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.migration.service.persistence.LegacyLicensePersistence" class="de.uhh.l2g.plugins.migration.service.persistence.LegacyLicensePersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="anotherDataSource" />
+		<property name="sessionFactory" ref="anotherSessionFactory" />
+	</bean>
+	<bean id="de.uhh.l2g.plugins.migration.service.LegacyMetadataLocalService" class="de.uhh.l2g.plugins.migration.service.impl.LegacyMetadataLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.migration.service.persistence.LegacyMetadataPersistence" class="de.uhh.l2g.plugins.migration.service.persistence.LegacyMetadataPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="anotherDataSource" />
+		<property name="sessionFactory" ref="anotherSessionFactory" />
+	</bean>
+	<bean id="de.uhh.l2g.plugins.migration.service.LegacyOfficeLocalService" class="de.uhh.l2g.plugins.migration.service.impl.LegacyOfficeLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.migration.service.persistence.LegacyOfficePersistence" class="de.uhh.l2g.plugins.migration.service.persistence.LegacyOfficePersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="anotherDataSource" />
+		<property name="sessionFactory" ref="anotherSessionFactory" />
+	</bean>
+	<bean id="de.uhh.l2g.plugins.migration.service.LegacyProducerLocalService" class="de.uhh.l2g.plugins.migration.service.impl.LegacyProducerLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.migration.service.persistence.LegacyProducerPersistence" class="de.uhh.l2g.plugins.migration.service.persistence.LegacyProducerPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="anotherDataSource" />
+		<property name="sessionFactory" ref="anotherSessionFactory" />
+	</bean>
+	<bean id="de.uhh.l2g.plugins.migration.service.LegacyProducerLectureseriesLocalService" class="de.uhh.l2g.plugins.migration.service.impl.LegacyProducerLectureseriesLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.migration.service.persistence.LegacyProducerLectureseriesPersistence" class="de.uhh.l2g.plugins.migration.service.persistence.LegacyProducerLectureseriesPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="anotherDataSource" />
+		<property name="sessionFactory" ref="anotherSessionFactory" />
+	</bean>
+	<bean id="de.uhh.l2g.plugins.migration.service.LegacySegmentLocalService" class="de.uhh.l2g.plugins.migration.service.impl.LegacySegmentLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.migration.service.persistence.LegacySegmentPersistence" class="de.uhh.l2g.plugins.migration.service.persistence.LegacySegmentPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="anotherDataSource" />
+		<property name="sessionFactory" ref="anotherSessionFactory" />
+	</bean>
+	<bean id="de.uhh.l2g.plugins.migration.service.LegacyUploadLocalService" class="de.uhh.l2g.plugins.migration.service.impl.LegacyUploadLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.migration.service.persistence.LegacyUploadPersistence" class="de.uhh.l2g.plugins.migration.service.persistence.LegacyUploadPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="anotherDataSource" />
+		<property name="sessionFactory" ref="anotherSessionFactory" />
+	</bean>
+	<bean id="de.uhh.l2g.plugins.migration.service.LegacyUserLocalService" class="de.uhh.l2g.plugins.migration.service.impl.LegacyUserLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.migration.service.persistence.LegacyUserPersistence" class="de.uhh.l2g.plugins.migration.service.persistence.LegacyUserPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="anotherDataSource" />
+		<property name="sessionFactory" ref="anotherSessionFactory" />
+	</bean>
+	<bean id="de.uhh.l2g.plugins.migration.service.LegacyVideoLocalService" class="de.uhh.l2g.plugins.migration.service.impl.LegacyVideoLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.migration.service.persistence.LegacyVideoPersistence" class="de.uhh.l2g.plugins.migration.service.persistence.LegacyVideoPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="anotherDataSource" />
+		<property name="sessionFactory" ref="anotherSessionFactory" />
+	</bean>
+	<bean id="de.uhh.l2g.plugins.migration.service.LegacyVideoFacilityLocalService" class="de.uhh.l2g.plugins.migration.service.impl.LegacyVideoFacilityLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.migration.service.persistence.LegacyVideoFacilityPersistence" class="de.uhh.l2g.plugins.migration.service.persistence.LegacyVideoFacilityPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="anotherDataSource" />
+		<property name="sessionFactory" ref="anotherSessionFactory" />
+	</bean>
+	<bean id="de.uhh.l2g.plugins.migration.service.LegacyVideoHitlistLocalService" class="de.uhh.l2g.plugins.migration.service.impl.LegacyVideoHitlistLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.migration.service.persistence.LegacyVideoHitlistPersistence" class="de.uhh.l2g.plugins.migration.service.persistence.LegacyVideoHitlistPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="anotherDataSource" />
+		<property name="sessionFactory" ref="anotherSessionFactory" />
+	</bean>
+</beans>
