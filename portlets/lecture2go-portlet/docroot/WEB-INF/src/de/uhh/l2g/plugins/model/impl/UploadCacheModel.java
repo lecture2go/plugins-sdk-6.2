@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import java.util.Date;
+
 /**
  * The cache model class for representing Upload in entity cache.
  *
@@ -60,7 +62,14 @@ public class UploadCacheModel implements CacheModel<Upload>, Externalizable {
 		uploadImpl.setUploadId(uploadId);
 		uploadImpl.setUserId(userId);
 		uploadImpl.setContentLength(contentLength);
-		uploadImpl.setTimestamp(timestamp);
+
+		if (timestamp == Long.MIN_VALUE) {
+			uploadImpl.setTimestamp(null);
+		}
+		else {
+			uploadImpl.setTimestamp(new Date(timestamp));
+		}
+
 		uploadImpl.setStatus(status);
 		uploadImpl.setVideoId(videoId);
 

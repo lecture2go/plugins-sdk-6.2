@@ -278,7 +278,9 @@
 			<id name="uploadId" />
 			<basic name="userId" />
 			<basic name="contentLength" />
-			<basic name="timestamp" />
+			<basic name="timestamp">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<basic name="status" />
 			<basic name="videoId" />
 			<transient name="modelAttributes" />

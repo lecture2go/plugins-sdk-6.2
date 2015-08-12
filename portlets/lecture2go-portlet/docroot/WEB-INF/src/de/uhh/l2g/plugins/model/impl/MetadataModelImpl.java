@@ -63,10 +63,10 @@ public class MetadataModelImpl extends BaseModelImpl<Metadata>
 			{ "language", Types.VARCHAR },
 			{ "title", Types.VARCHAR },
 			{ "subject", Types.VARCHAR },
-			{ "description", Types.VARCHAR },
+			{ "description", Types.CLOB },
 			{ "publisher", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Metadata (metadataId LONG not null primary key,type_ VARCHAR(75) null,language VARCHAR(75) null,title VARCHAR(75) null,subject VARCHAR(75) null,description VARCHAR(75) null,publisher VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Metadata (metadataId LONG not null primary key,type_ VARCHAR(75) null,language VARCHAR(75) null,title STRING null,subject STRING null,description TEXT null,publisher STRING null)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Metadata";
 	public static final String ORDER_BY_JPQL = " ORDER BY metadata.metadataId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Metadata.metadataId ASC";

@@ -63,19 +63,19 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 			{ "eventType", Types.VARCHAR },
 			{ "categoryId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
-			{ "shortDesc", Types.VARCHAR },
+			{ "shortDesc", Types.CLOB },
 			{ "termId", Types.BIGINT },
 			{ "language", Types.VARCHAR },
 			{ "facultyName", Types.VARCHAR },
 			{ "lectureseriesId", Types.BIGINT },
 			{ "password_", Types.VARCHAR },
 			{ "approved", Types.INTEGER },
-			{ "longDesc", Types.VARCHAR },
+			{ "longDesc", Types.CLOB },
 			{ "latestOpenAccessVideoId", Types.BIGINT },
 			{ "latestVideoUploadDate", Types.TIMESTAMP },
 			{ "latestVideoGenerationDate", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Lectureseries (number_ VARCHAR(75) null,eventType VARCHAR(75) null,categoryId LONG,name VARCHAR(75) null,shortDesc VARCHAR(75) null,termId LONG,language VARCHAR(75) null,facultyName VARCHAR(75) null,lectureseriesId LONG not null primary key,password_ VARCHAR(75) null,approved INTEGER,longDesc VARCHAR(75) null,latestOpenAccessVideoId LONG,latestVideoUploadDate DATE null,latestVideoGenerationDate VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Lectureseries (number_ VARCHAR(75) null,eventType STRING null,categoryId LONG,name STRING null,shortDesc TEXT null,termId LONG,language STRING null,facultyName STRING null,lectureseriesId LONG not null primary key,password_ STRING null,approved INTEGER,longDesc TEXT null,latestOpenAccessVideoId LONG,latestVideoUploadDate DATE null,latestVideoGenerationDate VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Lectureseries";
 	public static final String ORDER_BY_JPQL = " ORDER BY lectureseries.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Lectureseries.name ASC";

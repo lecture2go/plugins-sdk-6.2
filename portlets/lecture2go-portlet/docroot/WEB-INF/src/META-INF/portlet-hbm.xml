@@ -74,7 +74,7 @@
 	<class name="de.uhh.l2g.plugins.model.impl.InstitutionImpl" table="LG_Institution">
 		<cache usage="read-write" />
 		<id name="institutionId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property name="parentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -87,7 +87,7 @@
 	<class name="de.uhh.l2g.plugins.model.impl.Institution_HostImpl" table="LG_Institution_Host">
 		<cache usage="read-write" />
 		<id name="institutionHostId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property name="institutionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="hostId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -103,7 +103,7 @@
 	<class name="de.uhh.l2g.plugins.model.impl.LectureseriesImpl" table="LG_Lectureseries">
 		<cache usage="read-write" />
 		<id name="lectureseriesId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property name="number" type="com.liferay.portal.dao.orm.hibernate.StringType" column="number_" />
 		<property name="eventType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -139,7 +139,7 @@
 	<class name="de.uhh.l2g.plugins.model.impl.Lectureseries_InstitutionImpl" table="LG_Lectureseries_Institution">
 		<cache usage="read-write" />
 		<id name="lectureseriesInstitutionId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property name="lectureseriesId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="institutionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -148,7 +148,7 @@
 	<class name="de.uhh.l2g.plugins.model.impl.LicenseImpl" table="LG_License">
 		<cache usage="read-write" />
 		<id name="licenseId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property name="videoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="ccby" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
@@ -162,7 +162,7 @@
 	<class name="de.uhh.l2g.plugins.model.impl.MetadataImpl" table="LG_Metadata">
 		<cache usage="read-write" />
 		<id name="metadataId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" column="type_" />
 		<property name="language" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -196,7 +196,7 @@
 	<class name="de.uhh.l2g.plugins.model.impl.Producer_LectureseriesImpl" table="LG_Producer_Lectureseries">
 		<cache usage="read-write" />
 		<id name="producerLectureseriesId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property name="lectureseriesId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="producerId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -204,7 +204,7 @@
 	<class name="de.uhh.l2g.plugins.model.impl.SegmentImpl" table="LG_Segment">
 		<cache usage="read-write" />
 		<id name="segmentId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property name="videoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="start" type="com.liferay.portal.dao.orm.hibernate.StringType" column="start_" />
@@ -245,18 +245,18 @@
 	<class name="de.uhh.l2g.plugins.model.impl.UploadImpl" table="LG_Upload">
 		<cache usage="read-write" />
 		<id name="uploadId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="contentLength" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="timestamp" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="timestamp" type="org.hibernate.type.TimestampType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="videoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.VideoImpl" table="LG_Video">
 		<cache usage="read-write" />
 		<id name="videoId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="lectureseriesId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -300,7 +300,7 @@
 	<class name="de.uhh.l2g.plugins.model.impl.Video_InstitutionImpl" table="LG_Video_Institution">
 		<cache usage="read-write" />
 		<id name="videoInstitutionId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property name="videoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="institutionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

@@ -57,7 +57,7 @@ public class SysModelImpl extends BaseModelImpl<Sys> implements SysModel {
 			{ "version", Types.VARCHAR },
 			{ "setupWizard", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Sys (sysId INTEGER not null primary key,version VARCHAR(75) null,setupWizard INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Sys (sysId INTEGER not null primary key,version STRING null,setupWizard INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Sys";
 	public static final String ORDER_BY_JPQL = " ORDER BY sys.sysId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Sys.sysId ASC";
