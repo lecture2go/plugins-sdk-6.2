@@ -187,8 +187,11 @@
 		<property name="language" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="subject" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="coverage" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="creator" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="publisher" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="contributor" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="rightsHolder" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.migration.model.impl.LegacyOfficeImpl" table="office">

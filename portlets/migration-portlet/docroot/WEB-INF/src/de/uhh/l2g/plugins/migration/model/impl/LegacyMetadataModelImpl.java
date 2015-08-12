@@ -65,11 +65,14 @@ public class LegacyMetadataModelImpl extends BaseModelImpl<LegacyMetadata>
 			{ "language", Types.VARCHAR },
 			{ "title", Types.VARCHAR },
 			{ "subject", Types.VARCHAR },
+			{ "coverage", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
+			{ "creator", Types.VARCHAR },
 			{ "publisher", Types.VARCHAR },
+			{ "contributor", Types.VARCHAR },
 			{ "rightsHolder", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table metadata (id_ LONG not null primary key,URLID VARCHAR(75) null,format VARCHAR(75) null,type_ VARCHAR(75) null,language VARCHAR(75) null,title VARCHAR(75) null,subject VARCHAR(75) null,description VARCHAR(75) null,publisher VARCHAR(75) null,rightsHolder VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table metadata (id_ LONG not null primary key,URLID VARCHAR(75) null,format VARCHAR(75) null,type_ VARCHAR(75) null,language VARCHAR(75) null,title VARCHAR(75) null,subject VARCHAR(75) null,coverage VARCHAR(75) null,description VARCHAR(75) null,creator VARCHAR(75) null,publisher VARCHAR(75) null,contributor VARCHAR(75) null,rightsHolder VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table metadata";
 	public static final String ORDER_BY_JPQL = " ORDER BY legacyMetadata.id ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY metadata.id_ ASC";
@@ -130,8 +133,11 @@ public class LegacyMetadataModelImpl extends BaseModelImpl<LegacyMetadata>
 		attributes.put("language", getLanguage());
 		attributes.put("title", getTitle());
 		attributes.put("subject", getSubject());
+		attributes.put("coverage", getCoverage());
 		attributes.put("description", getDescription());
+		attributes.put("creator", getCreator());
 		attributes.put("publisher", getPublisher());
+		attributes.put("contributor", getContributor());
 		attributes.put("rightsHolder", getRightsHolder());
 
 		return attributes;
@@ -181,16 +187,34 @@ public class LegacyMetadataModelImpl extends BaseModelImpl<LegacyMetadata>
 			setSubject(subject);
 		}
 
+		String coverage = (String)attributes.get("coverage");
+
+		if (coverage != null) {
+			setCoverage(coverage);
+		}
+
 		String description = (String)attributes.get("description");
 
 		if (description != null) {
 			setDescription(description);
 		}
 
+		String creator = (String)attributes.get("creator");
+
+		if (creator != null) {
+			setCreator(creator);
+		}
+
 		String publisher = (String)attributes.get("publisher");
 
 		if (publisher != null) {
 			setPublisher(publisher);
+		}
+
+		String contributor = (String)attributes.get("contributor");
+
+		if (contributor != null) {
+			setContributor(contributor);
 		}
 
 		String rightsHolder = (String)attributes.get("rightsHolder");
@@ -301,6 +325,21 @@ public class LegacyMetadataModelImpl extends BaseModelImpl<LegacyMetadata>
 	}
 
 	@Override
+	public String getCoverage() {
+		if (_coverage == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _coverage;
+		}
+	}
+
+	@Override
+	public void setCoverage(String coverage) {
+		_coverage = coverage;
+	}
+
+	@Override
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;
@@ -316,6 +355,21 @@ public class LegacyMetadataModelImpl extends BaseModelImpl<LegacyMetadata>
 	}
 
 	@Override
+	public String getCreator() {
+		if (_creator == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _creator;
+		}
+	}
+
+	@Override
+	public void setCreator(String creator) {
+		_creator = creator;
+	}
+
+	@Override
 	public String getPublisher() {
 		if (_publisher == null) {
 			return StringPool.BLANK;
@@ -328,6 +382,21 @@ public class LegacyMetadataModelImpl extends BaseModelImpl<LegacyMetadata>
 	@Override
 	public void setPublisher(String publisher) {
 		_publisher = publisher;
+	}
+
+	@Override
+	public String getContributor() {
+		if (_contributor == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _contributor;
+		}
+	}
+
+	@Override
+	public void setContributor(String contributor) {
+		_contributor = contributor;
 	}
 
 	@Override
@@ -379,8 +448,11 @@ public class LegacyMetadataModelImpl extends BaseModelImpl<LegacyMetadata>
 		legacyMetadataImpl.setLanguage(getLanguage());
 		legacyMetadataImpl.setTitle(getTitle());
 		legacyMetadataImpl.setSubject(getSubject());
+		legacyMetadataImpl.setCoverage(getCoverage());
 		legacyMetadataImpl.setDescription(getDescription());
+		legacyMetadataImpl.setCreator(getCreator());
 		legacyMetadataImpl.setPublisher(getPublisher());
+		legacyMetadataImpl.setContributor(getContributor());
 		legacyMetadataImpl.setRightsHolder(getRightsHolder());
 
 		legacyMetadataImpl.resetOriginalValues();
@@ -488,6 +560,14 @@ public class LegacyMetadataModelImpl extends BaseModelImpl<LegacyMetadata>
 			legacyMetadataCacheModel.subject = null;
 		}
 
+		legacyMetadataCacheModel.coverage = getCoverage();
+
+		String coverage = legacyMetadataCacheModel.coverage;
+
+		if ((coverage != null) && (coverage.length() == 0)) {
+			legacyMetadataCacheModel.coverage = null;
+		}
+
 		legacyMetadataCacheModel.description = getDescription();
 
 		String description = legacyMetadataCacheModel.description;
@@ -496,12 +576,28 @@ public class LegacyMetadataModelImpl extends BaseModelImpl<LegacyMetadata>
 			legacyMetadataCacheModel.description = null;
 		}
 
+		legacyMetadataCacheModel.creator = getCreator();
+
+		String creator = legacyMetadataCacheModel.creator;
+
+		if ((creator != null) && (creator.length() == 0)) {
+			legacyMetadataCacheModel.creator = null;
+		}
+
 		legacyMetadataCacheModel.publisher = getPublisher();
 
 		String publisher = legacyMetadataCacheModel.publisher;
 
 		if ((publisher != null) && (publisher.length() == 0)) {
 			legacyMetadataCacheModel.publisher = null;
+		}
+
+		legacyMetadataCacheModel.contributor = getContributor();
+
+		String contributor = legacyMetadataCacheModel.contributor;
+
+		if ((contributor != null) && (contributor.length() == 0)) {
+			legacyMetadataCacheModel.contributor = null;
 		}
 
 		legacyMetadataCacheModel.rightsHolder = getRightsHolder();
@@ -517,7 +613,7 @@ public class LegacyMetadataModelImpl extends BaseModelImpl<LegacyMetadata>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -533,10 +629,16 @@ public class LegacyMetadataModelImpl extends BaseModelImpl<LegacyMetadata>
 		sb.append(getTitle());
 		sb.append(", subject=");
 		sb.append(getSubject());
+		sb.append(", coverage=");
+		sb.append(getCoverage());
 		sb.append(", description=");
 		sb.append(getDescription());
+		sb.append(", creator=");
+		sb.append(getCreator());
 		sb.append(", publisher=");
 		sb.append(getPublisher());
+		sb.append(", contributor=");
+		sb.append(getContributor());
 		sb.append(", rightsHolder=");
 		sb.append(getRightsHolder());
 		sb.append("}");
@@ -546,7 +648,7 @@ public class LegacyMetadataModelImpl extends BaseModelImpl<LegacyMetadata>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.migration.model.LegacyMetadata");
@@ -581,12 +683,24 @@ public class LegacyMetadataModelImpl extends BaseModelImpl<LegacyMetadata>
 		sb.append(getSubject());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>coverage</column-name><column-value><![CDATA[");
+		sb.append(getCoverage());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>description</column-name><column-value><![CDATA[");
 		sb.append(getDescription());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>creator</column-name><column-value><![CDATA[");
+		sb.append(getCreator());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>publisher</column-name><column-value><![CDATA[");
 		sb.append(getPublisher());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>contributor</column-name><column-value><![CDATA[");
+		sb.append(getContributor());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>rightsHolder</column-name><column-value><![CDATA[");
@@ -609,8 +723,11 @@ public class LegacyMetadataModelImpl extends BaseModelImpl<LegacyMetadata>
 	private String _language;
 	private String _title;
 	private String _subject;
+	private String _coverage;
 	private String _description;
+	private String _creator;
 	private String _publisher;
+	private String _contributor;
 	private String _rightsHolder;
 	private LegacyMetadata _escapedModel;
 }

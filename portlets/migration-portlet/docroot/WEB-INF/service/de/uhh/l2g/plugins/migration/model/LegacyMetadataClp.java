@@ -80,8 +80,11 @@ public class LegacyMetadataClp extends BaseModelImpl<LegacyMetadata>
 		attributes.put("language", getLanguage());
 		attributes.put("title", getTitle());
 		attributes.put("subject", getSubject());
+		attributes.put("coverage", getCoverage());
 		attributes.put("description", getDescription());
+		attributes.put("creator", getCreator());
 		attributes.put("publisher", getPublisher());
+		attributes.put("contributor", getContributor());
 		attributes.put("rightsHolder", getRightsHolder());
 
 		return attributes;
@@ -131,16 +134,34 @@ public class LegacyMetadataClp extends BaseModelImpl<LegacyMetadata>
 			setSubject(subject);
 		}
 
+		String coverage = (String)attributes.get("coverage");
+
+		if (coverage != null) {
+			setCoverage(coverage);
+		}
+
 		String description = (String)attributes.get("description");
 
 		if (description != null) {
 			setDescription(description);
 		}
 
+		String creator = (String)attributes.get("creator");
+
+		if (creator != null) {
+			setCreator(creator);
+		}
+
 		String publisher = (String)attributes.get("publisher");
 
 		if (publisher != null) {
 			setPublisher(publisher);
+		}
+
+		String contributor = (String)attributes.get("contributor");
+
+		if (contributor != null) {
+			setContributor(contributor);
 		}
 
 		String rightsHolder = (String)attributes.get("rightsHolder");
@@ -312,6 +333,29 @@ public class LegacyMetadataClp extends BaseModelImpl<LegacyMetadata>
 	}
 
 	@Override
+	public String getCoverage() {
+		return _coverage;
+	}
+
+	@Override
+	public void setCoverage(String coverage) {
+		_coverage = coverage;
+
+		if (_legacyMetadataRemoteModel != null) {
+			try {
+				Class<?> clazz = _legacyMetadataRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setCoverage", String.class);
+
+				method.invoke(_legacyMetadataRemoteModel, coverage);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
 	public String getDescription() {
 		return _description;
 	}
@@ -335,6 +379,29 @@ public class LegacyMetadataClp extends BaseModelImpl<LegacyMetadata>
 	}
 
 	@Override
+	public String getCreator() {
+		return _creator;
+	}
+
+	@Override
+	public void setCreator(String creator) {
+		_creator = creator;
+
+		if (_legacyMetadataRemoteModel != null) {
+			try {
+				Class<?> clazz = _legacyMetadataRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setCreator", String.class);
+
+				method.invoke(_legacyMetadataRemoteModel, creator);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
 	public String getPublisher() {
 		return _publisher;
 	}
@@ -350,6 +417,29 @@ public class LegacyMetadataClp extends BaseModelImpl<LegacyMetadata>
 				Method method = clazz.getMethod("setPublisher", String.class);
 
 				method.invoke(_legacyMetadataRemoteModel, publisher);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getContributor() {
+		return _contributor;
+	}
+
+	@Override
+	public void setContributor(String contributor) {
+		_contributor = contributor;
+
+		if (_legacyMetadataRemoteModel != null) {
+			try {
+				Class<?> clazz = _legacyMetadataRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setContributor", String.class);
+
+				method.invoke(_legacyMetadataRemoteModel, contributor);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -458,8 +548,11 @@ public class LegacyMetadataClp extends BaseModelImpl<LegacyMetadata>
 		clone.setLanguage(getLanguage());
 		clone.setTitle(getTitle());
 		clone.setSubject(getSubject());
+		clone.setCoverage(getCoverage());
 		clone.setDescription(getDescription());
+		clone.setCreator(getCreator());
 		clone.setPublisher(getPublisher());
+		clone.setContributor(getContributor());
 		clone.setRightsHolder(getRightsHolder());
 
 		return clone;
@@ -513,7 +606,7 @@ public class LegacyMetadataClp extends BaseModelImpl<LegacyMetadata>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -529,10 +622,16 @@ public class LegacyMetadataClp extends BaseModelImpl<LegacyMetadata>
 		sb.append(getTitle());
 		sb.append(", subject=");
 		sb.append(getSubject());
+		sb.append(", coverage=");
+		sb.append(getCoverage());
 		sb.append(", description=");
 		sb.append(getDescription());
+		sb.append(", creator=");
+		sb.append(getCreator());
 		sb.append(", publisher=");
 		sb.append(getPublisher());
+		sb.append(", contributor=");
+		sb.append(getContributor());
 		sb.append(", rightsHolder=");
 		sb.append(getRightsHolder());
 		sb.append("}");
@@ -542,7 +641,7 @@ public class LegacyMetadataClp extends BaseModelImpl<LegacyMetadata>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.migration.model.LegacyMetadata");
@@ -577,12 +676,24 @@ public class LegacyMetadataClp extends BaseModelImpl<LegacyMetadata>
 		sb.append(getSubject());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>coverage</column-name><column-value><![CDATA[");
+		sb.append(getCoverage());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>description</column-name><column-value><![CDATA[");
 		sb.append(getDescription());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>creator</column-name><column-value><![CDATA[");
+		sb.append(getCreator());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>publisher</column-name><column-value><![CDATA[");
 		sb.append(getPublisher());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>contributor</column-name><column-value><![CDATA[");
+		sb.append(getContributor());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>rightsHolder</column-name><column-value><![CDATA[");
@@ -601,8 +712,11 @@ public class LegacyMetadataClp extends BaseModelImpl<LegacyMetadata>
 	private String _language;
 	private String _title;
 	private String _subject;
+	private String _coverage;
 	private String _description;
+	private String _creator;
 	private String _publisher;
+	private String _contributor;
 	private String _rightsHolder;
 	private BaseModel<?> _legacyMetadataRemoteModel;
 	private Class<?> _clpSerializerClass = de.uhh.l2g.plugins.migration.service.ClpSerializer.class;

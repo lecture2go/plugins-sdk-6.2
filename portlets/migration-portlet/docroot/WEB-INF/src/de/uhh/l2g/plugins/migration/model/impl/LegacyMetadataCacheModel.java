@@ -36,7 +36,7 @@ public class LegacyMetadataCacheModel implements CacheModel<LegacyMetadata>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -52,10 +52,16 @@ public class LegacyMetadataCacheModel implements CacheModel<LegacyMetadata>,
 		sb.append(title);
 		sb.append(", subject=");
 		sb.append(subject);
+		sb.append(", coverage=");
+		sb.append(coverage);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", creator=");
+		sb.append(creator);
 		sb.append(", publisher=");
 		sb.append(publisher);
+		sb.append(", contributor=");
+		sb.append(contributor);
 		sb.append(", rightsHolder=");
 		sb.append(rightsHolder);
 		sb.append("}");
@@ -111,6 +117,13 @@ public class LegacyMetadataCacheModel implements CacheModel<LegacyMetadata>,
 			legacyMetadataImpl.setSubject(subject);
 		}
 
+		if (coverage == null) {
+			legacyMetadataImpl.setCoverage(StringPool.BLANK);
+		}
+		else {
+			legacyMetadataImpl.setCoverage(coverage);
+		}
+
 		if (description == null) {
 			legacyMetadataImpl.setDescription(StringPool.BLANK);
 		}
@@ -118,11 +131,25 @@ public class LegacyMetadataCacheModel implements CacheModel<LegacyMetadata>,
 			legacyMetadataImpl.setDescription(description);
 		}
 
+		if (creator == null) {
+			legacyMetadataImpl.setCreator(StringPool.BLANK);
+		}
+		else {
+			legacyMetadataImpl.setCreator(creator);
+		}
+
 		if (publisher == null) {
 			legacyMetadataImpl.setPublisher(StringPool.BLANK);
 		}
 		else {
 			legacyMetadataImpl.setPublisher(publisher);
+		}
+
+		if (contributor == null) {
+			legacyMetadataImpl.setContributor(StringPool.BLANK);
+		}
+		else {
+			legacyMetadataImpl.setContributor(contributor);
 		}
 
 		if (rightsHolder == null) {
@@ -146,8 +173,11 @@ public class LegacyMetadataCacheModel implements CacheModel<LegacyMetadata>,
 		language = objectInput.readUTF();
 		title = objectInput.readUTF();
 		subject = objectInput.readUTF();
+		coverage = objectInput.readUTF();
 		description = objectInput.readUTF();
+		creator = objectInput.readUTF();
 		publisher = objectInput.readUTF();
+		contributor = objectInput.readUTF();
 		rightsHolder = objectInput.readUTF();
 	}
 
@@ -198,6 +228,13 @@ public class LegacyMetadataCacheModel implements CacheModel<LegacyMetadata>,
 			objectOutput.writeUTF(subject);
 		}
 
+		if (coverage == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(coverage);
+		}
+
 		if (description == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -205,11 +242,25 @@ public class LegacyMetadataCacheModel implements CacheModel<LegacyMetadata>,
 			objectOutput.writeUTF(description);
 		}
 
+		if (creator == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(creator);
+		}
+
 		if (publisher == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
 			objectOutput.writeUTF(publisher);
+		}
+
+		if (contributor == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(contributor);
 		}
 
 		if (rightsHolder == null) {
@@ -227,7 +278,10 @@ public class LegacyMetadataCacheModel implements CacheModel<LegacyMetadata>,
 	public String language;
 	public String title;
 	public String subject;
+	public String coverage;
 	public String description;
+	public String creator;
 	public String publisher;
+	public String contributor;
 	public String rightsHolder;
 }

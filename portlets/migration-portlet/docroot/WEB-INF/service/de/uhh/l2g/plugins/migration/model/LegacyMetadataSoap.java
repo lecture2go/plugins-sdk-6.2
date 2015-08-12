@@ -36,8 +36,11 @@ public class LegacyMetadataSoap implements Serializable {
 		soapModel.setLanguage(model.getLanguage());
 		soapModel.setTitle(model.getTitle());
 		soapModel.setSubject(model.getSubject());
+		soapModel.setCoverage(model.getCoverage());
 		soapModel.setDescription(model.getDescription());
+		soapModel.setCreator(model.getCreator());
 		soapModel.setPublisher(model.getPublisher());
+		soapModel.setContributor(model.getContributor());
 		soapModel.setRightsHolder(model.getRightsHolder());
 
 		return soapModel;
@@ -147,6 +150,14 @@ public class LegacyMetadataSoap implements Serializable {
 		_subject = subject;
 	}
 
+	public String getCoverage() {
+		return _coverage;
+	}
+
+	public void setCoverage(String coverage) {
+		_coverage = coverage;
+	}
+
 	public String getDescription() {
 		return _description;
 	}
@@ -155,12 +166,28 @@ public class LegacyMetadataSoap implements Serializable {
 		_description = description;
 	}
 
+	public String getCreator() {
+		return _creator;
+	}
+
+	public void setCreator(String creator) {
+		_creator = creator;
+	}
+
 	public String getPublisher() {
 		return _publisher;
 	}
 
 	public void setPublisher(String publisher) {
 		_publisher = publisher;
+	}
+
+	public String getContributor() {
+		return _contributor;
+	}
+
+	public void setContributor(String contributor) {
+		_contributor = contributor;
 	}
 
 	public String getRightsHolder() {
@@ -178,7 +205,10 @@ public class LegacyMetadataSoap implements Serializable {
 	private String _language;
 	private String _title;
 	private String _subject;
+	private String _coverage;
 	private String _description;
+	private String _creator;
 	private String _publisher;
+	private String _contributor;
 	private String _rightsHolder;
 }

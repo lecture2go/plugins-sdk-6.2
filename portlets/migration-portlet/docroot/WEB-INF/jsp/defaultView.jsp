@@ -37,6 +37,11 @@
 	<portlet:param name="action" value="migrateUploads" />
 </portlet:actionURL>
 
+
+<portlet:actionURL var="executeMigrateOfficeUrl">
+	<portlet:param name="action" value="migrateOffices" />
+</portlet:actionURL>
+
 <portlet:actionURL var="executeMigrateMetadataUrl">
 	<portlet:param name="action" value="migrateMetadatas" />
 </portlet:actionURL>
@@ -73,8 +78,8 @@
 
 
 
-<portlet:actionURL var="executeMigrateOfficeUrl">
-	<portlet:param name="action" value="migrateOffices" />
+<portlet:actionURL var="executeLectureseriesFacilityUrl">
+	<portlet:param name="action" value="migrateLectureseriesFacilities" />
 </portlet:actionURL>
 
 

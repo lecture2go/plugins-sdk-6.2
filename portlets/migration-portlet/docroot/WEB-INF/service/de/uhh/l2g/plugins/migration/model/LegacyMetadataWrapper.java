@@ -56,8 +56,11 @@ public class LegacyMetadataWrapper implements LegacyMetadata,
 		attributes.put("language", getLanguage());
 		attributes.put("title", getTitle());
 		attributes.put("subject", getSubject());
+		attributes.put("coverage", getCoverage());
 		attributes.put("description", getDescription());
+		attributes.put("creator", getCreator());
 		attributes.put("publisher", getPublisher());
+		attributes.put("contributor", getContributor());
 		attributes.put("rightsHolder", getRightsHolder());
 
 		return attributes;
@@ -107,16 +110,34 @@ public class LegacyMetadataWrapper implements LegacyMetadata,
 			setSubject(subject);
 		}
 
+		String coverage = (String)attributes.get("coverage");
+
+		if (coverage != null) {
+			setCoverage(coverage);
+		}
+
 		String description = (String)attributes.get("description");
 
 		if (description != null) {
 			setDescription(description);
 		}
 
+		String creator = (String)attributes.get("creator");
+
+		if (creator != null) {
+			setCreator(creator);
+		}
+
 		String publisher = (String)attributes.get("publisher");
 
 		if (publisher != null) {
 			setPublisher(publisher);
+		}
+
+		String contributor = (String)attributes.get("contributor");
+
+		if (contributor != null) {
+			setContributor(contributor);
 		}
 
 		String rightsHolder = (String)attributes.get("rightsHolder");
@@ -287,6 +308,26 @@ public class LegacyMetadataWrapper implements LegacyMetadata,
 	}
 
 	/**
+	* Returns the coverage of this legacy metadata.
+	*
+	* @return the coverage of this legacy metadata
+	*/
+	@Override
+	public java.lang.String getCoverage() {
+		return _legacyMetadata.getCoverage();
+	}
+
+	/**
+	* Sets the coverage of this legacy metadata.
+	*
+	* @param coverage the coverage of this legacy metadata
+	*/
+	@Override
+	public void setCoverage(java.lang.String coverage) {
+		_legacyMetadata.setCoverage(coverage);
+	}
+
+	/**
 	* Returns the description of this legacy metadata.
 	*
 	* @return the description of this legacy metadata
@@ -307,6 +348,26 @@ public class LegacyMetadataWrapper implements LegacyMetadata,
 	}
 
 	/**
+	* Returns the creator of this legacy metadata.
+	*
+	* @return the creator of this legacy metadata
+	*/
+	@Override
+	public java.lang.String getCreator() {
+		return _legacyMetadata.getCreator();
+	}
+
+	/**
+	* Sets the creator of this legacy metadata.
+	*
+	* @param creator the creator of this legacy metadata
+	*/
+	@Override
+	public void setCreator(java.lang.String creator) {
+		_legacyMetadata.setCreator(creator);
+	}
+
+	/**
 	* Returns the publisher of this legacy metadata.
 	*
 	* @return the publisher of this legacy metadata
@@ -324,6 +385,26 @@ public class LegacyMetadataWrapper implements LegacyMetadata,
 	@Override
 	public void setPublisher(java.lang.String publisher) {
 		_legacyMetadata.setPublisher(publisher);
+	}
+
+	/**
+	* Returns the contributor of this legacy metadata.
+	*
+	* @return the contributor of this legacy metadata
+	*/
+	@Override
+	public java.lang.String getContributor() {
+		return _legacyMetadata.getContributor();
+	}
+
+	/**
+	* Sets the contributor of this legacy metadata.
+	*
+	* @param contributor the contributor of this legacy metadata
+	*/
+	@Override
+	public void setContributor(java.lang.String contributor) {
+		_legacyMetadata.setContributor(contributor);
 	}
 
 	/**
