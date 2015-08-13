@@ -132,8 +132,11 @@
 		<field name="language" type="String" />
 		<field name="title" type="String" />
 		<field name="subject" type="String" />
+		<field name="coverage" type="String" />
 		<field name="description" type="String" />
+		<field name="creator" type="String" />
 		<field name="publisher" type="String" />
+		<field name="contributor" type="String" />
 		<field name="rightsHolder" type="String" />
 	</model>
 	<model name="de.uhh.l2g.plugins.migration.model.LegacyOffice">

@@ -63,7 +63,7 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 			{ "eventType", Types.VARCHAR },
 			{ "categoryId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
-			{ "shortDesc", Types.VARCHAR },
+			{ "shortDesc", Types.CLOB },
 			{ "termId", Types.BIGINT },
 			{ "language", Types.VARCHAR },
 			{ "facultyName", Types.VARCHAR },

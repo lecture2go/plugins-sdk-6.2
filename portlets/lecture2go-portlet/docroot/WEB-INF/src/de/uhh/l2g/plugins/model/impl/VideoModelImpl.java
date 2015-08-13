@@ -64,7 +64,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 			{ "lectureseriesId", Types.BIGINT },
 			{ "producerId", Types.BIGINT },
 			{ "containerFormat", Types.VARCHAR },
-			{ "filename", Types.VARCHAR },
+			{ "filename", Types.CLOB },
 			{ "resolution", Types.VARCHAR },
 			{ "duration", Types.VARCHAR },
 			{ "hostId", Types.BIGINT },
@@ -81,10 +81,18 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 			{ "citation2go", Types.INTEGER },
 			{ "termId", Types.BIGINT },
 			{ "videoCreatorId", Types.BIGINT },
+<<<<<<< HEAD
 			{ "tags", Types.VARCHAR },
 			{ "password_", Types.VARCHAR }
+=======
+			{ "tags", Types.CLOB }
+>>>>>>> refs/heads/master-eike
 		};
+<<<<<<< HEAD
 	public static final String TABLE_SQL_CREATE = "create table LG_Video (videoId LONG not null primary key,title VARCHAR(75) null,lectureseriesId LONG,producerId LONG,containerFormat VARCHAR(75) null,filename VARCHAR(75) null,resolution VARCHAR(75) null,duration VARCHAR(75) null,hostId LONG,fileSize VARCHAR(75) null,generationDate VARCHAR(75) null,openAccess INTEGER,downloadLink INTEGER,metadataId LONG,secureFilename VARCHAR(75) null,hits LONG,uploadDate DATE null,permittedToSegment INTEGER,rootInstitutionId LONG,citation2go INTEGER,termId LONG,videoCreatorId LONG,tags VARCHAR(75) null,password_ VARCHAR(75) null)";
+=======
+	public static final String TABLE_SQL_CREATE = "create table LG_Video (videoId LONG not null primary key,title STRING null,lectureseriesId LONG,producerId LONG,containerFormat VARCHAR(75) null,filename TEXT null,resolution VARCHAR(75) null,duration VARCHAR(75) null,hostId LONG,fileSize VARCHAR(75) null,generationDate VARCHAR(75) null,openAccess INTEGER,downloadLink INTEGER,metadataId LONG,surl VARCHAR(75) null,hits LONG,uploadDate DATE null,permittedToSegment INTEGER,rootInstitutionId LONG,citation2go INTEGER,termId LONG,videoCreatorId LONG,tags TEXT null)";
+>>>>>>> refs/heads/master-eike
 	public static final String TABLE_SQL_DROP = "drop table LG_Video";
 	public static final String ORDER_BY_JPQL = " ORDER BY video.videoId DESC, video.uploadDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Video.videoId DESC, LG_Video.uploadDate DESC";

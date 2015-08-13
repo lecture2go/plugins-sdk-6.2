@@ -227,8 +227,11 @@
 			<basic name="language" />
 			<basic name="title" />
 			<basic name="subject" />
+			<basic name="coverage" />
 			<basic name="description" />
+			<basic name="creator" />
 			<basic name="publisher" />
+			<basic name="contributor" />
 			<basic name="rightsHolder" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />

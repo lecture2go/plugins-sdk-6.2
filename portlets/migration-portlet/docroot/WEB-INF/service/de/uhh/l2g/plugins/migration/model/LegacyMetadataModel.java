@@ -162,6 +162,21 @@ public interface LegacyMetadataModel extends BaseModel<LegacyMetadata> {
 	public void setSubject(String subject);
 
 	/**
+	 * Returns the coverage of this legacy metadata.
+	 *
+	 * @return the coverage of this legacy metadata
+	 */
+	@AutoEscape
+	public String getCoverage();
+
+	/**
+	 * Sets the coverage of this legacy metadata.
+	 *
+	 * @param coverage the coverage of this legacy metadata
+	 */
+	public void setCoverage(String coverage);
+
+	/**
 	 * Returns the description of this legacy metadata.
 	 *
 	 * @return the description of this legacy metadata
@@ -177,6 +192,21 @@ public interface LegacyMetadataModel extends BaseModel<LegacyMetadata> {
 	public void setDescription(String description);
 
 	/**
+	 * Returns the creator of this legacy metadata.
+	 *
+	 * @return the creator of this legacy metadata
+	 */
+	@AutoEscape
+	public String getCreator();
+
+	/**
+	 * Sets the creator of this legacy metadata.
+	 *
+	 * @param creator the creator of this legacy metadata
+	 */
+	public void setCreator(String creator);
+
+	/**
 	 * Returns the publisher of this legacy metadata.
 	 *
 	 * @return the publisher of this legacy metadata
@@ -190,6 +220,21 @@ public interface LegacyMetadataModel extends BaseModel<LegacyMetadata> {
 	 * @param publisher the publisher of this legacy metadata
 	 */
 	public void setPublisher(String publisher);
+
+	/**
+	 * Returns the contributor of this legacy metadata.
+	 *
+	 * @return the contributor of this legacy metadata
+	 */
+	@AutoEscape
+	public String getContributor();
+
+	/**
+	 * Sets the contributor of this legacy metadata.
+	 *
+	 * @param contributor the contributor of this legacy metadata
+	 */
+	public void setContributor(String contributor);
 
 	/**
 	 * Returns the rights holder of this legacy metadata.
@@ -243,19 +288,20 @@ public interface LegacyMetadataModel extends BaseModel<LegacyMetadata> {
 	public Object clone();
 
 	@Override
-	public int compareTo(LegacyMetadata legacyMetadata);
+	public int compareTo(
+		de.uhh.l2g.plugins.migration.model.LegacyMetadata legacyMetadata);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<LegacyMetadata> toCacheModel();
+	public CacheModel<de.uhh.l2g.plugins.migration.model.LegacyMetadata> toCacheModel();
 
 	@Override
-	public LegacyMetadata toEscapedModel();
+	public de.uhh.l2g.plugins.migration.model.LegacyMetadata toEscapedModel();
 
 	@Override
-	public LegacyMetadata toUnescapedModel();
+	public de.uhh.l2g.plugins.migration.model.LegacyMetadata toUnescapedModel();
 
 	@Override
 	public String toString();

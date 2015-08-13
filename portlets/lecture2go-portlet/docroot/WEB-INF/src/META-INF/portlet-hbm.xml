@@ -249,7 +249,7 @@
 		</id>
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="contentLength" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="timestamp" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="timestamp" type="org.hibernate.type.TimestampType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="videoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>

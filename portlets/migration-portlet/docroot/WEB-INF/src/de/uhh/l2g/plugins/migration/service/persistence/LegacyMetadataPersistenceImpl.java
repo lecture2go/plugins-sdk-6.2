@@ -332,8 +332,11 @@ public class LegacyMetadataPersistenceImpl extends BasePersistenceImpl<LegacyMet
 		legacyMetadataImpl.setLanguage(legacyMetadata.getLanguage());
 		legacyMetadataImpl.setTitle(legacyMetadata.getTitle());
 		legacyMetadataImpl.setSubject(legacyMetadata.getSubject());
+		legacyMetadataImpl.setCoverage(legacyMetadata.getCoverage());
 		legacyMetadataImpl.setDescription(legacyMetadata.getDescription());
+		legacyMetadataImpl.setCreator(legacyMetadata.getCreator());
 		legacyMetadataImpl.setPublisher(legacyMetadata.getPublisher());
+		legacyMetadataImpl.setContributor(legacyMetadata.getContributor());
 		legacyMetadataImpl.setRightsHolder(legacyMetadata.getRightsHolder());
 
 		return legacyMetadataImpl;

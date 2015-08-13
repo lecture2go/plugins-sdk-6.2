@@ -310,8 +310,11 @@
 		<column name="language" type="String" />
 		<column name="title" type="String" />
 		<column name="subject" type="String" />
+		<column name="coverage" type="String" />
 		<column name="description" type="String" />
+		<column name="creator" type="String" />		
 		<column name="publisher" type="String" />
+		<column name="contributor" type="String" />
 		<column name="rightsHolder" type="String" />
   </entity>
   

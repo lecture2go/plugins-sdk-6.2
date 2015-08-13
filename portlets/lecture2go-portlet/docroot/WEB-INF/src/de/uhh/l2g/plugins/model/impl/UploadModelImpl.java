@@ -34,6 +34,7 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,11 +63,11 @@ public class UploadModelImpl extends BaseModelImpl<Upload>
 			{ "uploadId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "contentLength", Types.BIGINT },
-			{ "timestamp", Types.BIGINT },
+			{ "timestamp", Types.TIMESTAMP },
 			{ "status", Types.INTEGER },
 			{ "videoId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Upload (uploadId LONG not null primary key,userId LONG,contentLength LONG,timestamp LONG,status INTEGER,videoId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Upload (uploadId LONG not null primary key,userId LONG,contentLength LONG,timestamp DATE null,status INTEGER,videoId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Upload";
 	public static final String ORDER_BY_JPQL = " ORDER BY upload.uploadId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Upload.uploadId ASC";
@@ -154,7 +155,7 @@ public class UploadModelImpl extends BaseModelImpl<Upload>
 			setContentLength(contentLength);
 		}
 
-		Long timestamp = (Long)attributes.get("timestamp");
+		Date timestamp = (Date)attributes.get("timestamp");
 
 		if (timestamp != null) {
 			setTimestamp(timestamp);
@@ -214,12 +215,12 @@ public class UploadModelImpl extends BaseModelImpl<Upload>
 	}
 
 	@Override
-	public long getTimestamp() {
+	public Date getTimestamp() {
 		return _timestamp;
 	}
 
 	@Override
-	public void setTimestamp(long timestamp) {
+	public void setTimestamp(Date timestamp) {
 		_timestamp = timestamp;
 	}
 
@@ -361,7 +362,14 @@ public class UploadModelImpl extends BaseModelImpl<Upload>
 
 		uploadCacheModel.contentLength = getContentLength();
 
-		uploadCacheModel.timestamp = getTimestamp();
+		Date timestamp = getTimestamp();
+
+		if (timestamp != null) {
+			uploadCacheModel.timestamp = timestamp.getTime();
+		}
+		else {
+			uploadCacheModel.timestamp = Long.MIN_VALUE;
+		}
 
 		uploadCacheModel.status = getStatus();
 
@@ -435,7 +443,7 @@ public class UploadModelImpl extends BaseModelImpl<Upload>
 	private long _userId;
 	private String _userUuid;
 	private long _contentLength;
-	private long _timestamp;
+	private Date _timestamp;
 	private int _status;
 	private long _videoId;
 	private long _originalVideoId;

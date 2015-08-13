@@ -659,25 +659,32 @@ public class MigrationController {
     	String userOkflag = ok;
     	
 		List<LegacyUser> users;
+		List<User> migratedUser;
+		int initialUserNumber=0;
 		try {
 			users = LegacyUserLocalServiceUtil.getLegacyUsers(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			initialUserNumber = UserLocalServiceUtil.getUsersCount();
 		for (LegacyUser user: users) {
 			try {
 				createUser(user, companyId, request);
 			} catch (PortalException e) {
-				log.error("Error occured during User Migration:", e);
+				log.warn("Error occured during User Migration:", e);
 		    	userOkflag = failed;
 			} catch (SystemException e) {
-				log.error("Error occured during User Migration:", e);
+				log.warn("Error occured during User Migration:", e);
 		    	userOkflag = failed;
 			}
 		} 
-		logInfo("Migration / Update of:" + users.size() + " Users sucessfull!");
+		request.setAttribute("logInfoString", logInfoString);
+		migratedUser =  UserLocalServiceUtil.getUsers(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		logInfo("Migration / Update of "+(migratedUser.size() - initialUserNumber) +"  of:" + users.size() + "Legacy Users created/updated!");
+		
 		
 		} catch (SystemException e1) {
 			logInfo("Migration of User failed. Can not read Source Data. Please Check Log for more details!");
 	    	userOkflag = failed;
 		}
+		request.setAttribute("logInfoString", logInfoString);
 		request.setAttribute("userOkflag", userOkflag);	
     }
     
@@ -692,7 +699,8 @@ public class MigrationController {
 		for (LegacySegment segment: segments) {
 			migrateSegment(segment, companyId);
 		} 
-    	
+    	logInfo("Migration / Update of:" + segments.size() + "Legacy Users sucessfull!");
+		
 		} catch (SystemException e1) {
 			logInfo("Migration of Segments failed. Can not read Source Data");
 			segmentOkflag = failed;
@@ -1335,14 +1343,14 @@ public class MigrationController {
     private void migrateProducer(LegacyProducer legacyProducer, long companyId) throws SystemException {
     	Producer producer = null;
     	try {
-    		producer = ProducerLocalServiceUtil.getProducer(UserIDMapper.getNewUserId(legacyProducer.getUserId(), companyId));
+    		producer = ProducerLocalServiceUtil.getProducer(UserIDMapper.getNewUserId(legacyProducer.getId(), companyId));
     		producer = ProducerMapper.mapProducer(legacyProducer, producer);
-			log.debug("Producer UPDATE:" +producer);
+			log.info("Producer UPDATE:" +producer);
 			ProducerLocalServiceUtil.updateProducer(producer);
 		} catch (Exception e) {
-			producer = ProducerLocalServiceUtil.createProducer(UserIDMapper.getNewUserId(legacyProducer.getUserId(), companyId));
+			producer = ProducerLocalServiceUtil.createProducer(UserIDMapper.getNewUserId(legacyProducer.getId(), companyId));
 	 		producer = ProducerMapper.mapProducer(legacyProducer, producer);
-			log.debug("Producer NEW:" +producer);
+			log.info("Producer NEW:" +producer);
 			ProducerLocalServiceUtil.addProducer(producer);
 		}
     } 

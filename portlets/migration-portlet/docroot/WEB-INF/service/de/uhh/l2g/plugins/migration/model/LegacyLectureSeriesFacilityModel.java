@@ -150,19 +150,19 @@ public interface LegacyLectureSeriesFacilityModel extends BaseModel<LegacyLectur
 
 	@Override
 	public int compareTo(
-		LegacyLectureSeriesFacility legacyLectureSeriesFacility);
+		de.uhh.l2g.plugins.migration.model.LegacyLectureSeriesFacility legacyLectureSeriesFacility);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<LegacyLectureSeriesFacility> toCacheModel();
+	public CacheModel<de.uhh.l2g.plugins.migration.model.LegacyLectureSeriesFacility> toCacheModel();
 
 	@Override
-	public LegacyLectureSeriesFacility toEscapedModel();
+	public de.uhh.l2g.plugins.migration.model.LegacyLectureSeriesFacility toEscapedModel();
 
 	@Override
-	public LegacyLectureSeriesFacility toUnescapedModel();
+	public de.uhh.l2g.plugins.migration.model.LegacyLectureSeriesFacility toUnescapedModel();
 
 	@Override
 	public String toString();

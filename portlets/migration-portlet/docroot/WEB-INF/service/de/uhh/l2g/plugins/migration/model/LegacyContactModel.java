@@ -572,19 +572,20 @@ public interface LegacyContactModel extends AuditedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(LegacyContact legacyContact);
+	public int compareTo(
+		de.uhh.l2g.plugins.migration.model.LegacyContact legacyContact);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<LegacyContact> toCacheModel();
+	public CacheModel<de.uhh.l2g.plugins.migration.model.LegacyContact> toCacheModel();
 
 	@Override
-	public LegacyContact toEscapedModel();
+	public de.uhh.l2g.plugins.migration.model.LegacyContact toEscapedModel();
 
 	@Override
-	public LegacyContact toUnescapedModel();
+	public de.uhh.l2g.plugins.migration.model.LegacyContact toUnescapedModel();
 
 	@Override
 	public String toString();
