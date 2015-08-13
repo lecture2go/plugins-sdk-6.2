@@ -137,14 +137,14 @@ try{
 	}else{
 		if(permissionCoordinator){
 			permissionProducer=false;
-			permissionStudent=false;
+			permissionStudent=false;		
 		}else{
 			if(permissionProducer){
 				permissionStudent=false;
 			}
 		}
 	}
-	PortletPreferences prefs = renderRequest.getPreferences();
+	PortletPreferences prefs = renderRequest.getPreferences();	
 }catch(Exception e){
 	//
 }

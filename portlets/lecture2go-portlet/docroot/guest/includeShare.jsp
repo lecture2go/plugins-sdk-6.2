@@ -57,12 +57,6 @@
 								<input id="embed_code1" name="embed_code1" title="embed-html5-title" type="text" value="${video.embedHtml5}" onclick="document.embedForm.embed_code1.focus();document.embedForm.embed_code1.select();" readonly />
 							</li>
 						</c:if>
-						<c:if test="${video.lectureseriesId>0}">
-							<li>
-								<label>lectureseries-url </label>
-								<input id="embed_code2" name="embed_code2" title="embed-html5-title" type="text" value="${video.lectureseriesUrl}" onclick="document.embedForm.embed_code2.focus();document.embedForm.embed_code2.select();" readonly />
-							</li>
-						</c:if>
 					</ul>
 				</div>
 			</div>

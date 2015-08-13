@@ -202,7 +202,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		newVideo.setMetadataId(reqMetadata.getMetadataId());
 		newVideo.setRootInstitutionId(reqProducer.getInstitutionId());
 		newVideo.setOpenAccess(0);
-		newVideo.setSurl(Security.createSecureFileName()+".xx");
+		newVideo.setSecureFilename(Security.createSecureFileName()+".xx");
 		//save it
 		Video video = VideoLocalServiceUtil.addVideo(newVideo);
 		request.setAttribute("reqVideo", newVideo);
@@ -303,7 +303,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			//update data base
 			try {
 				video.setFilename(fileName);
-				video.setSurl(secureFileName);
+				video.setSecureFilename(secureFileName);
 				video.setContainerFormat(containerFormat);
 				video.setGenerationDate(generationDate);
 				video.setUploadDate(new Date());
@@ -317,7 +317,7 @@ public class AdminVideoManagement extends MVCPortlet {
 					fileLocation = ProducerLocalServiceUtil.getProdUcer(video.getProducerId()).getHomeDir() + "/" + video.getFilename();
 				}else{
 					image = video.getSPreffix()+".jpg";
-					fileLocation = ProducerLocalServiceUtil.getProdUcer(video.getProducerId()).getHomeDir() + "/" + video.getSurl();
+					fileLocation = ProducerLocalServiceUtil.getProdUcer(video.getProducerId()).getHomeDir() + "/" + video.getSecureFilename();
 				}
 				String thumbnailLocation = PropsUtil.get("lecture2go.images.system.path") + "/" + image;
 				//delete old thumbs
@@ -362,7 +362,8 @@ public class AdminVideoManagement extends MVCPortlet {
 			Long termId = ParamUtil.getLong(resourceRequest, "termId");
 			Long categoryId = ParamUtil.getLong(resourceRequest, "categoryId");
 			Integer citationAllowed = ParamUtil.getInteger(resourceRequest, "citationAllowedCheckbox");
-			
+	 	    String password = ParamUtil.getString(resourceRequest, "password");
+
 			Lectureseries oldLs = new LectureseriesImpl();
 			try {
 				oldLs = LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId());
@@ -448,7 +449,7 @@ public class AdminVideoManagement extends MVCPortlet {
 					org.json.JSONObject creator;
 					try {
 						creator = creatorsArray.getJSONObject(i);
-						tagCloudString += creator.getString("firstName")+" ### "+creator.getString("lastName")+" ### "+creator.getString("fullName")+" ### ";
+						tagCloudString += creator.getString("fullName")+" ### ";
 					} catch (JSONException e) {
 						//e.printStackTrace();
 					}
@@ -466,6 +467,8 @@ public class AdminVideoManagement extends MVCPortlet {
 				TagcloudLocalServiceUtil.updateTagcloud(tc);
 				//set citation 
 				video.setCitation2go(citationAllowed);
+				//password
+				video.setPassword(password);
 				// update video
 				VideoLocalServiceUtil.updateVideo(video);
 				// refresh open access for old lecture if lid > 0

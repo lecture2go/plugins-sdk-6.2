@@ -130,20 +130,38 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 		}
 		return null;		
 	}
+	
+	/**
+	 * Queries the database for data by single filter id's
+	 * @param institutionId
+	 * @param parentInstitutionId
+	 * @param termId
+	 * @param categoryId
+	 * @param creatorId
+	 * @return a list with lectureseries which fit to the given filters
+	 */
+	public List<Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreator(Long institutionId, Long parentInstitutionId, Long termId, Long categoryId, long creatorId, String searchQuery) {
+		ArrayList<Long> termIds = new ArrayList<Long>();
+		ArrayList<Long> categoryIds = new ArrayList<Long>();
+		ArrayList<Long> creatorIds = new ArrayList<Long>();
+		if (termId != 0) {
+			termIds.add(termId);
+		}
+		if (categoryId != 0) {
+			categoryIds.add(categoryId);
+		}
+		if (creatorId != 0) {
+			creatorIds.add(creatorId);
+		}
 
-	public List<Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreator(Long institutionId, Long parentInstitutionId, Long termId, Long categoryId, Long creatorId, String searchQuery) {
-		boolean hasInstitution 			= (institutionId > 0);
-		boolean hasParentInstitution	= (parentInstitutionId > 0);
-		boolean hasTerm 				= (termId > 0);
-		boolean hasCategory 			= (categoryId > 0);
-		boolean hasCreator 				= (creatorId > 0);
-		boolean hasSearch 				= (searchQuery != "");
-		int subQueryCount;
-
+		return findFilteredByInstitutionParentInstitutionTermCategoryCreator(institutionId,parentInstitutionId,termIds,categoryIds,creatorIds, searchQuery);
+	}
+	
+	public List<Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreator(Long institutionId, Long parentInstitutionId, ArrayList<Long> termIds, ArrayList<Long> categoryIds, ArrayList<Long> creatorIds, String searchQuery) {
 		Session session = null;
 		try {
 			session = openSession();
-			String sql = sqlFilterForOpenAccessLectureseries(institutionId, parentInstitutionId, termId, categoryId, creatorId, searchQuery);
+			String sql = sqlFilterForOpenAccessLectureseries(institutionId, parentInstitutionId, termIds, categoryIds, creatorIds, searchQuery);
 			SQLQuery q = session.createSQLQuery(sql);
 			q.addScalar("number_", Type.STRING);
 			q.addScalar("eventType", Type.STRING);
@@ -159,46 +177,6 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			q.addScalar("longDesc", Type.STRING);
 			q.addScalar("latestOpenAccessVideoId", Type.LONG);
 			q.setCacheable(false);
-			
-			/*
-			 *  the filter query has a variable number of parameters and those are used in subqueries (lectureseries/single videos/ all videos if a search is used)
-			 *  an array is created with the specific filter values and iterated for every subquery
-			 */
-			List<Long> filterValues = new ArrayList<Long>();
-			if (hasTerm) {
-				filterValues.add(termId);
-			}
-			if (hasCreator) {
-				filterValues.add(creatorId);
-			}
-			if (hasCategory) {
-				filterValues.add(categoryId);
-			}
-			if (hasInstitution) {
-				filterValues.add(institutionId);
-			}
-			if (hasParentInstitution) {
-				filterValues.add(parentInstitutionId);
-			}
-							
-			if (hasSearch) {
-				subQueryCount = 3;
-			} else {
-				subQueryCount = 2;
-			}
-			
-			QueryPos qPos = QueryPos.getInstance(q);
-			
-			for (int i=0;i<subQueryCount;i++) {
-				// fill in the parametrized values and search query
-				for (long filterValue: filterValues) {
-					qPos.add(filterValue);
-				}
-				if (hasSearch) {
-			        qPos.add("%" + searchQuery + "%");
-				}
-			}
-			
 			@SuppressWarnings("unchecked")
 			List <Object[]> l =  (List<Object[]>) QueryUtil.list(q, getDialect(),com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 			return assembleLectureseries(l);
@@ -214,12 +192,13 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 		return null;
 	}
 		
-	private String sqlFilterForOpenAccessLectureseries(Long institutionId, Long institutionParentId, Long termId, Long categoryId, Long creatorId, String searchQuery) {
+	private String sqlFilterForOpenAccessLectureseries(Long institutionId, Long institutionParentId, ArrayList<Long> termIds, List<Long> categoryIds, ArrayList<Long> creatorIds, String searchQuery) {
 		boolean isSearched = (searchQuery != "");
 		// this is an additional query only used for searching. videos which are part of a lectureseries must be searched for the searchquery but are not relevant of the normal filtering
-		String sQuery = "";
+		String videoAsLectureseriesQuery = "";
 		
 		// build query
+		
 		String lQuery = "SELECT l.number_, l.eventType, l.categoryId, l.name, l.shortDesc, l.termId, l.language, l.facultyName, l.lectureseriesId, l.password_, l.approved, l.longDesc, l.latestOpenAccessVideoId, l.latestVideoUploadDate, count(*) as videoCount FROM LG_Lectureseries AS l ";
 		String vQuery = "SELECT \"00.000\" AS number_, NULL AS eventType, 0 AS categoryId, v.title AS name, v.title AS shortDesc, v.termId, \"\" AS language, \"\" AS facultyName, v.videoId AS lectureseriesId, NULL AS password_, 1 AS approved, v.title AS longDesc, v.lectureseriesId AS latestOpenAccessVideoId, v.uploadDate AS latestVideoUploadDate,count(*) as videoCount FROM LG_Video v ";
 
@@ -232,87 +211,150 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			vQuery += "INNER JOIN LG_Video_Institution AS vi ON ( v.videoId = vi.videoId ) ";
 		}
 
-		if (termId > 0) {
+		if (termIds.size() > 0) {
 			lQuery += "INNER JOIN LG_Term AS t ON ( l.termId = t.termId ) ";
 			vQuery += "INNER JOIN LG_Term AS t ON ( v.termId = t.termId ) ";
 		}
 		
-		if (creatorId > 0) {
+		if (creatorIds.size() > 0) {
 			lQuery += "INNER JOIN LG_Lectureseries_Creator AS lc ON ( l.lectureseriesId = lc.lectureseriesId ) ";
 			vQuery += "INNER JOIN LG_Video_Creator AS vc ON ( v.videoId = vc.videoId ) ";
 		}
 		
-		if (categoryId > 0) {
+		if (categoryIds.size() > 0) {
 			vQuery += "INNER JOIN LG_Video_Category AS vcat ON ( v.videoId = vcat.videoId ) ";
 		}
 		
-		// all videos which are part of the lectureseries are searched, this is up to this point identical to the lectureseriesQuery
-		sQuery = lQuery;
+		// the videos which are part of the lectureseries are searched, this is up to this point identical to the lectureseriesQuery
+		videoAsLectureseriesQuery = lQuery;
 		
 		if (isSearched) {
 			lQuery += "INNER JOIN LG_Tagcloud AS tag ON (v.lectureseriesId = tag.objectId)  ";
-			sQuery += "INNER JOIN LG_Tagcloud AS tag ON (v.videoId = tag.objectId)  ";
+			videoAsLectureseriesQuery += "INNER JOIN LG_Tagcloud AS tag ON (v.videoId = tag.objectId)  ";
 			vQuery += "INNER JOIN LG_Tagcloud AS tag ON (v.videoId=tag.objectId) ";
 		}
 		
 		lQuery += "WHERE l.latestOpenAccessVideoId>0 AND v.openAccess=1 ";
-		sQuery += "WHERE l.latestOpenAccessVideoId>0 AND v.openAccess=1 ";
+		videoAsLectureseriesQuery += "WHERE l.latestOpenAccessVideoId>0 AND v.openAccess=1 ";
 		vQuery += "WHERE v.lectureseriesId<0 AND v.openAccess=1 ";
 		
-		// add the specific query for all set filters
-		if (termId > 0) {
-			String termQuery = "AND t.termId = ? ";
-			lQuery += termQuery;
-			sQuery += termQuery;
-			vQuery += termQuery;
-		}
-		
-		if (creatorId > 0) {
-			String creatorQueryL	 = "AND lc.creatorId = ? ";
-			String creatorQueryV	 = "AND vc.creatorId = ? ";
-			lQuery += creatorQueryL;
-			sQuery += creatorQueryL;
-			vQuery += creatorQueryV;
-		}
-	
-		if (categoryId > 0) {
-			String categoryQueryL 	= "AND l.categoryId = ? ";
-			String categoryQueryV 	= "AND vcat.categoryId = ? ";
-			lQuery += categoryQueryL;
-			sQuery += categoryQueryL;
-			vQuery += categoryQueryV;
-		}
+		if (institutionId > 0 || institutionParentId > 0 || termIds.size() > 0 || categoryIds.size() > 0 || creatorIds.size() > 0) {
+			int i = 0;
+			if (termIds.size() > 0) {
+				lQuery += "AND ";
+				videoAsLectureseriesQuery += "AND ";
+				vQuery += "AND ";
+				ListIterator<Long> it = termIds.listIterator();
+				lQuery += "( ";
+				videoAsLectureseriesQuery += "( ";
+				vQuery += "( ";
+				while(it.hasNext()){
+					Long termId = it.next();
+					if(it.hasNext()){
+						lQuery += "t.termId="+termId+" OR ";
+						videoAsLectureseriesQuery += "t.termId="+termId+" OR ";
+						vQuery += "t.termId="+termId+" OR ";
+					}
+					else{
+						lQuery += "t.termId="+termId+" ) ";
+						videoAsLectureseriesQuery += "t.termId="+termId+" ) ";
+						vQuery += "t.termId="+termId+" ) ";
+					}
+				}
+				i++;
+			}
 
-		if (institutionId > 0) {
-			String institutionQueryL	= "AND li.institutionId = ? ";
-			String institutionQueryV	= "AND vi.institutionId = ? ";
-			lQuery += institutionQueryL;
-			sQuery += institutionQueryL;
-			vQuery += institutionQueryV;
-		}
+			if (creatorIds.size() > 0) {
+//				lQuery += i > 0 ? "AND " : "";
+//				vQuery += i > 0 ? "AND " : "";
+				lQuery += "AND ";
+				videoAsLectureseriesQuery += "AND ";
+				vQuery += "AND ";
+				lQuery += "( ";
+				videoAsLectureseriesQuery += "( ";
+				vQuery += "( ";
+				for(int j=0;j<creatorIds.size();j++){
+				Long creatorId = creatorIds.get(j);
+					if(j<(creatorIds.size()-1)){
+						lQuery += "lc.creatorId="+creatorId+" OR ";
+						videoAsLectureseriesQuery += "lc.creatorId="+creatorId+" OR ";
+						vQuery += "vc.creatorId="+creatorId+" OR ";
+					}
+					else{
+						lQuery += "lc.creatorId="+creatorId+" ) ";
+						videoAsLectureseriesQuery += "lc.creatorId="+creatorId+" ) ";
+						vQuery += "vc.creatorId="+creatorId+" ) ";
+					}
+				}
+				i++;				
+			}
+			
+			if (categoryIds.size() > 0) {
+//				lQuery += i > 0 ? "AND " : "";
+//				vQuery += i > 0 ? "AND " : "";
+				lQuery += "AND ";
+				videoAsLectureseriesQuery += "AND ";
+				vQuery += "AND ";
+				ListIterator<Long> it = categoryIds.listIterator();
+				lQuery += "( ";
+				videoAsLectureseriesQuery += "( ";
+				vQuery += "( ";
+				while(it.hasNext()){
+					Long categoryId = it.next();
+					if(it.hasNext()){
+						lQuery += "l.categoryId = "+categoryId + " OR ";
+						videoAsLectureseriesQuery += "l.categoryId = "+categoryId + " OR ";
+						vQuery += "vcat.categoryId = "+categoryId + " OR ";
+					}
+					else{
+						lQuery += "l.categoryId="+categoryId+" ) ";
+						videoAsLectureseriesQuery += "l.categoryId="+categoryId+" ) ";
+						vQuery += "vcat.categoryId="+categoryId+" ) ";
+					}
+				}
+				i++;				
+			}
 
-		if (institutionParentId > 0) {
-			String institutionParentQueryL	= "AND li.institutionParentId = ? ";
-			String institutionParentQueryV	= "AND vi.institutionParentId = ? ";
-			lQuery += institutionParentQueryL;
-			sQuery += institutionParentQueryL;
-			vQuery += institutionParentQueryV;
-		}
+			if (institutionId > 0) {
+//				lQuery += i > 0 ? "AND " : "";
+//				vQuery += i > 0 ? "AND " : "";
+				lQuery += "AND ";
+				videoAsLectureseriesQuery += "AND ";
+				vQuery += "AND ";
+				lQuery += "li.institutionId = "+institutionId + " ";
+				videoAsLectureseriesQuery += "li.institutionId = "+institutionId + " ";
+				vQuery += "vi.institutionId = "+institutionId + " ";
+				i++;
+			}
 
+			if (institutionParentId > 0) {
+//				lQuery += i > 0 ? "AND " : "";
+//				vQuery += i > 0 ? "AND " : "";
+				lQuery += "AND ";
+				videoAsLectureseriesQuery += "AND ";
+				vQuery += "AND ";
+				lQuery += "li.institutionParentId = "+institutionParentId + " ";
+				videoAsLectureseriesQuery += "li.institutionParentId = "+institutionParentId + " ";
+				vQuery += "vi.institutionParentId = "+institutionParentId + " ";
+				i++;
+			}
+
+		}
 		
 		if (isSearched) {
-			String tagQuery = "AND tag.tags LIKE ? ";
-			lQuery += tagQuery;
-			sQuery += tagQuery;
-			vQuery += tagQuery;
+			lQuery += "AND tag.tags LIKE \"%" + searchQuery + "%\" ";
+			videoAsLectureseriesQuery += "AND tag.tags LIKE \"%" + searchQuery + "%\" ";
+			vQuery += "AND tag.tags LIKE \"%" + searchQuery + "%\" ";
+			
+			
 			
 			lQuery += "AND tag.objectClassType=\"de.uhh.l2g.plugins.model.impl.LectureseriesImpl\" ";
 			vQuery += "AND tag.objectClassType=\"de.uhh.l2g.plugins.model.impl.VideoImpl\" ";
-			sQuery += "AND tag.objectClassType=\"de.uhh.l2g.plugins.model.impl.VideoImpl\" ";
+			videoAsLectureseriesQuery += "AND tag.objectClassType=\"de.uhh.l2g.plugins.model.impl.VideoImpl\" ";
 		}
 		
 		lQuery+="GROUP BY l.lectureseriesId ";
-		sQuery+="GROUP BY l.lectureseriesId ";
+		videoAsLectureseriesQuery+="GROUP BY l.lectureseriesId ";
 		vQuery+="GROUP BY v.videoId ";
 
 
@@ -322,7 +364,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 		query+= vQuery;
 		if (isSearched) {
 			query+= "UNION ";
-			query+= sQuery;
+			query+= videoAsLectureseriesQuery;
 		}
 		query+= ") ";
 		query+= "AS a ";
