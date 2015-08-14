@@ -763,8 +763,7 @@ public class LegacyVideoWrapper implements LegacyVideo,
 	}
 
 	@Override
-	public int compareTo(
-		de.uhh.l2g.plugins.migration.model.LegacyVideo legacyVideo) {
+	public int compareTo(LegacyVideo legacyVideo) {
 		return _legacyVideo.compareTo(legacyVideo);
 	}
 
@@ -774,17 +773,17 @@ public class LegacyVideoWrapper implements LegacyVideo,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.migration.model.LegacyVideo> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<LegacyVideo> toCacheModel() {
 		return _legacyVideo.toCacheModel();
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacyVideo toEscapedModel() {
+	public LegacyVideo toEscapedModel() {
 		return new LegacyVideoWrapper(_legacyVideo.toEscapedModel());
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacyVideo toUnescapedModel() {
+	public LegacyVideo toUnescapedModel() {
 		return new LegacyVideoWrapper(_legacyVideo.toUnescapedModel());
 	}
 

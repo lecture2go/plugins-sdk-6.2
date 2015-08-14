@@ -983,8 +983,7 @@ public class LegacyContactWrapper implements LegacyContact,
 	}
 
 	@Override
-	public int compareTo(
-		de.uhh.l2g.plugins.migration.model.LegacyContact legacyContact) {
+	public int compareTo(LegacyContact legacyContact) {
 		return _legacyContact.compareTo(legacyContact);
 	}
 
@@ -994,17 +993,17 @@ public class LegacyContactWrapper implements LegacyContact,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.migration.model.LegacyContact> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<LegacyContact> toCacheModel() {
 		return _legacyContact.toCacheModel();
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacyContact toEscapedModel() {
+	public LegacyContact toEscapedModel() {
 		return new LegacyContactWrapper(_legacyContact.toEscapedModel());
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacyContact toUnescapedModel() {
+	public LegacyContact toUnescapedModel() {
 		return new LegacyContactWrapper(_legacyContact.toUnescapedModel());
 	}
 

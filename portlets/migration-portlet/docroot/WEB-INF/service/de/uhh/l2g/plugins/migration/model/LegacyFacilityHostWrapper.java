@@ -221,8 +221,7 @@ public class LegacyFacilityHostWrapper implements LegacyFacilityHost,
 	}
 
 	@Override
-	public int compareTo(
-		de.uhh.l2g.plugins.migration.model.LegacyFacilityHost legacyFacilityHost) {
+	public int compareTo(LegacyFacilityHost legacyFacilityHost) {
 		return _legacyFacilityHost.compareTo(legacyFacilityHost);
 	}
 
@@ -232,17 +231,17 @@ public class LegacyFacilityHostWrapper implements LegacyFacilityHost,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.migration.model.LegacyFacilityHost> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<LegacyFacilityHost> toCacheModel() {
 		return _legacyFacilityHost.toCacheModel();
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacyFacilityHost toEscapedModel() {
+	public LegacyFacilityHost toEscapedModel() {
 		return new LegacyFacilityHostWrapper(_legacyFacilityHost.toEscapedModel());
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacyFacilityHost toUnescapedModel() {
+	public LegacyFacilityHost toUnescapedModel() {
 		return new LegacyFacilityHostWrapper(_legacyFacilityHost.toUnescapedModel());
 	}
 

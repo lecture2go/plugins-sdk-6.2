@@ -233,7 +233,7 @@ create table LG_Video (
 	openAccess INTEGER,
 	downloadLink INTEGER,
 	metadataId LONG,
-	surl VARCHAR(75) null,
+	secureFilename VARCHAR(75) null,
 	hits LONG,
 	uploadDate DATE null,
 	permittedToSegment INTEGER,
@@ -241,7 +241,8 @@ create table LG_Video (
 	citation2go INTEGER,
 	termId LONG,
 	videoCreatorId LONG,
-	tags TEXT null
+	tags TEXT null,
+	password_ VARCHAR(75) null
 );
 
 create table LG_Video_Category (

@@ -305,7 +305,7 @@
 			<basic name="openAccess" />
 			<basic name="downloadLink" />
 			<basic name="metadataId" />
-			<basic name="surl" />
+			<basic name="secureFilename" />
 			<basic name="hits" />
 			<basic name="uploadDate">
 				<temporal>TIMESTAMP</temporal>

@@ -194,8 +194,7 @@ public class LegacyLastVideoListWrapper implements LegacyLastVideoList,
 	}
 
 	@Override
-	public int compareTo(
-		de.uhh.l2g.plugins.migration.model.LegacyLastVideoList legacyLastVideoList) {
+	public int compareTo(LegacyLastVideoList legacyLastVideoList) {
 		return _legacyLastVideoList.compareTo(legacyLastVideoList);
 	}
 
@@ -205,17 +204,17 @@ public class LegacyLastVideoListWrapper implements LegacyLastVideoList,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.migration.model.LegacyLastVideoList> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<LegacyLastVideoList> toCacheModel() {
 		return _legacyLastVideoList.toCacheModel();
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacyLastVideoList toEscapedModel() {
+	public LegacyLastVideoList toEscapedModel() {
 		return new LegacyLastVideoListWrapper(_legacyLastVideoList.toEscapedModel());
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacyLastVideoList toUnescapedModel() {
+	public LegacyLastVideoList toUnescapedModel() {
 		return new LegacyLastVideoListWrapper(_legacyLastVideoList.toUnescapedModel());
 	}
 

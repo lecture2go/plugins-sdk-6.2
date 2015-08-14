@@ -378,8 +378,7 @@ public class LegacySegmentWrapper implements LegacySegment,
 	}
 
 	@Override
-	public int compareTo(
-		de.uhh.l2g.plugins.migration.model.LegacySegment legacySegment) {
+	public int compareTo(LegacySegment legacySegment) {
 		return _legacySegment.compareTo(legacySegment);
 	}
 
@@ -389,17 +388,17 @@ public class LegacySegmentWrapper implements LegacySegment,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.migration.model.LegacySegment> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<LegacySegment> toCacheModel() {
 		return _legacySegment.toCacheModel();
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacySegment toEscapedModel() {
+	public LegacySegment toEscapedModel() {
 		return new LegacySegmentWrapper(_legacySegment.toEscapedModel());
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacySegment toUnescapedModel() {
+	public LegacySegment toUnescapedModel() {
 		return new LegacySegmentWrapper(_legacySegment.toUnescapedModel());
 	}
 

@@ -378,8 +378,7 @@ public class LegacyProducerWrapper implements LegacyProducer,
 	}
 
 	@Override
-	public int compareTo(
-		de.uhh.l2g.plugins.migration.model.LegacyProducer legacyProducer) {
+	public int compareTo(LegacyProducer legacyProducer) {
 		return _legacyProducer.compareTo(legacyProducer);
 	}
 
@@ -389,17 +388,17 @@ public class LegacyProducerWrapper implements LegacyProducer,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.migration.model.LegacyProducer> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<LegacyProducer> toCacheModel() {
 		return _legacyProducer.toCacheModel();
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacyProducer toEscapedModel() {
+	public LegacyProducer toEscapedModel() {
 		return new LegacyProducerWrapper(_legacyProducer.toEscapedModel());
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacyProducer toUnescapedModel() {
+	public LegacyProducer toUnescapedModel() {
 		return new LegacyProducerWrapper(_legacyProducer.toUnescapedModel());
 	}
 

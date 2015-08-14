@@ -329,8 +329,7 @@ public class LegacyFacilityWrapper implements LegacyFacility,
 	}
 
 	@Override
-	public int compareTo(
-		de.uhh.l2g.plugins.migration.model.LegacyFacility legacyFacility) {
+	public int compareTo(LegacyFacility legacyFacility) {
 		return _legacyFacility.compareTo(legacyFacility);
 	}
 
@@ -340,17 +339,17 @@ public class LegacyFacilityWrapper implements LegacyFacility,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.migration.model.LegacyFacility> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<LegacyFacility> toCacheModel() {
 		return _legacyFacility.toCacheModel();
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacyFacility toEscapedModel() {
+	public LegacyFacility toEscapedModel() {
 		return new LegacyFacilityWrapper(_legacyFacility.toEscapedModel());
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacyFacility toUnescapedModel() {
+	public LegacyFacility toUnescapedModel() {
 		return new LegacyFacilityWrapper(_legacyFacility.toUnescapedModel());
 	}
 

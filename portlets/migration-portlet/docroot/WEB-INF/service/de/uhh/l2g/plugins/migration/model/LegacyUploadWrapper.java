@@ -325,8 +325,7 @@ public class LegacyUploadWrapper implements LegacyUpload,
 	}
 
 	@Override
-	public int compareTo(
-		de.uhh.l2g.plugins.migration.model.LegacyUpload legacyUpload) {
+	public int compareTo(LegacyUpload legacyUpload) {
 		return _legacyUpload.compareTo(legacyUpload);
 	}
 
@@ -336,17 +335,17 @@ public class LegacyUploadWrapper implements LegacyUpload,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.migration.model.LegacyUpload> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<LegacyUpload> toCacheModel() {
 		return _legacyUpload.toCacheModel();
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacyUpload toEscapedModel() {
+	public LegacyUpload toEscapedModel() {
 		return new LegacyUploadWrapper(_legacyUpload.toEscapedModel());
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacyUpload toUnescapedModel() {
+	public LegacyUpload toUnescapedModel() {
 		return new LegacyUploadWrapper(_legacyUpload.toUnescapedModel());
 	}
 

@@ -221,8 +221,7 @@ public class LegacyL2gSysWrapper implements LegacyL2gSys,
 	}
 
 	@Override
-	public int compareTo(
-		de.uhh.l2g.plugins.migration.model.LegacyL2gSys legacyL2gSys) {
+	public int compareTo(LegacyL2gSys legacyL2gSys) {
 		return _legacyL2gSys.compareTo(legacyL2gSys);
 	}
 
@@ -232,17 +231,17 @@ public class LegacyL2gSysWrapper implements LegacyL2gSys,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.migration.model.LegacyL2gSys> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<LegacyL2gSys> toCacheModel() {
 		return _legacyL2gSys.toCacheModel();
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacyL2gSys toEscapedModel() {
+	public LegacyL2gSys toEscapedModel() {
 		return new LegacyL2gSysWrapper(_legacyL2gSys.toEscapedModel());
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacyL2gSys toUnescapedModel() {
+	public LegacyL2gSys toUnescapedModel() {
 		return new LegacyL2gSysWrapper(_legacyL2gSys.toUnescapedModel());
 	}
 

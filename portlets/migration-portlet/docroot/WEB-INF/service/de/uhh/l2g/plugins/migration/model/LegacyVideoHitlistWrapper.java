@@ -275,8 +275,7 @@ public class LegacyVideoHitlistWrapper implements LegacyVideoHitlist,
 	}
 
 	@Override
-	public int compareTo(
-		de.uhh.l2g.plugins.migration.model.LegacyVideoHitlist legacyVideoHitlist) {
+	public int compareTo(LegacyVideoHitlist legacyVideoHitlist) {
 		return _legacyVideoHitlist.compareTo(legacyVideoHitlist);
 	}
 
@@ -286,17 +285,17 @@ public class LegacyVideoHitlistWrapper implements LegacyVideoHitlist,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.migration.model.LegacyVideoHitlist> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<LegacyVideoHitlist> toCacheModel() {
 		return _legacyVideoHitlist.toCacheModel();
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacyVideoHitlist toEscapedModel() {
+	public LegacyVideoHitlist toEscapedModel() {
 		return new LegacyVideoHitlistWrapper(_legacyVideoHitlist.toEscapedModel());
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacyVideoHitlist toUnescapedModel() {
+	public LegacyVideoHitlist toUnescapedModel() {
 		return new LegacyVideoHitlistWrapper(_legacyVideoHitlist.toUnescapedModel());
 	}
 
