@@ -363,7 +363,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			Long categoryId = ParamUtil.getLong(resourceRequest, "categoryId");
 			Integer citationAllowed = ParamUtil.getInteger(resourceRequest, "citationAllowedCheckbox");
 	 	    String password = ParamUtil.getString(resourceRequest, "password");
-			
+
 			Lectureseries oldLs = new LectureseriesImpl();
 			try {
 				oldLs = LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId());

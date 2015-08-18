@@ -64,7 +64,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 			{ "lectureseriesId", Types.BIGINT },
 			{ "producerId", Types.BIGINT },
 			{ "containerFormat", Types.VARCHAR },
-			{ "filename", Types.VARCHAR },
+			{ "filename", Types.CLOB },
 			{ "resolution", Types.VARCHAR },
 			{ "duration", Types.VARCHAR },
 			{ "hostId", Types.BIGINT },
@@ -81,10 +81,10 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 			{ "citation2go", Types.INTEGER },
 			{ "termId", Types.BIGINT },
 			{ "videoCreatorId", Types.BIGINT },
-			{ "tags", Types.VARCHAR },
+			{ "tags", Types.CLOB },
 			{ "password_", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Video (videoId LONG not null primary key,title VARCHAR(75) null,lectureseriesId LONG,producerId LONG,containerFormat VARCHAR(75) null,filename VARCHAR(75) null,resolution VARCHAR(75) null,duration VARCHAR(75) null,hostId LONG,fileSize VARCHAR(75) null,generationDate VARCHAR(75) null,openAccess INTEGER,downloadLink INTEGER,metadataId LONG,secureFilename VARCHAR(75) null,hits LONG,uploadDate DATE null,permittedToSegment INTEGER,rootInstitutionId LONG,citation2go INTEGER,termId LONG,videoCreatorId LONG,tags VARCHAR(75) null,password_ VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Video (videoId LONG not null primary key,title STRING null,lectureseriesId LONG,producerId LONG,containerFormat VARCHAR(75) null,filename TEXT null,resolution VARCHAR(75) null,duration VARCHAR(75) null,hostId LONG,fileSize VARCHAR(75) null,generationDate VARCHAR(75) null,openAccess INTEGER,downloadLink INTEGER,metadataId LONG,secureFilename VARCHAR(75) null,hits LONG,uploadDate DATE null,permittedToSegment INTEGER,rootInstitutionId LONG,citation2go INTEGER,termId LONG,videoCreatorId LONG,tags TEXT null,password_ VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Video";
 	public static final String ORDER_BY_JPQL = " ORDER BY video.videoId DESC, video.uploadDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Video.videoId DESC, LG_Video.uploadDate DESC";
@@ -104,11 +104,10 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	public static long FILENAME_COLUMN_BITMASK = 2L;
 	public static long LECTURESERIESID_COLUMN_BITMASK = 4L;
 	public static long OPENACCESS_COLUMN_BITMASK = 8L;
-	public static long PASSWORD_COLUMN_BITMASK = 16L;
-	public static long PRODUCERID_COLUMN_BITMASK = 32L;
-	public static long ROOTINSTITUTIONID_COLUMN_BITMASK = 64L;
-	public static long UPLOADDATE_COLUMN_BITMASK = 128L;
-	public static long VIDEOID_COLUMN_BITMASK = 256L;
+	public static long PRODUCERID_COLUMN_BITMASK = 16L;
+	public static long ROOTINSTITUTIONID_COLUMN_BITMASK = 32L;
+	public static long UPLOADDATE_COLUMN_BITMASK = 64L;
+	public static long VIDEOID_COLUMN_BITMASK = 128L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Video"));
 
@@ -694,17 +693,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 
 	@Override
 	public void setPassword(String password) {
-		_columnBitmask |= PASSWORD_COLUMN_BITMASK;
-
-		if (_originalPassword == null) {
-			_originalPassword = _password;
-		}
-
 		_password = password;
-	}
-
-	public String getOriginalPassword() {
-		return GetterUtil.getString(_originalPassword);
 	}
 
 	public long getColumnBitmask() {
@@ -853,8 +842,6 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		videoModelImpl._originalRootInstitutionId = videoModelImpl._rootInstitutionId;
 
 		videoModelImpl._setOriginalRootInstitutionId = false;
-
-		videoModelImpl._originalPassword = videoModelImpl._password;
 
 		videoModelImpl._columnBitmask = 0;
 	}
@@ -1186,7 +1173,6 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	private long _videoCreatorId;
 	private String _tags;
 	private String _password;
-	private String _originalPassword;
 	private long _columnBitmask;
 	private Video _escapedModel;
 }

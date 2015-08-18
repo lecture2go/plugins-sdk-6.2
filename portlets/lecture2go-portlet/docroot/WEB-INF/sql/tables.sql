@@ -24,20 +24,20 @@ create table LG_Creator (
 
 create table LG_Host (
 	hostId LONG not null primary key,
-	protocol VARCHAR(75) null,
-	streamer VARCHAR(75) null,
+	protocol STRING null,
+	streamer STRING null,
 	port INTEGER,
-	serverRoot VARCHAR(75) null,
-	name VARCHAR(75) null,
+	serverRoot STRING null,
+	name STRING null,
 	groupId LONG
 );
 
 create table LG_Institution (
 	institutionId LONG not null primary key,
 	parentId LONG,
-	name VARCHAR(75) null,
-	typ VARCHAR(75) null,
-	www VARCHAR(75) null,
+	name STRING null,
+	typ STRING null,
+	www STRING null,
 	level INTEGER,
 	sort INTEGER,
 	groupId LONG
@@ -57,15 +57,15 @@ create table LG_Lastvideolist (
 
 create table LG_Lectureseries (
 	number_ VARCHAR(75) null,
-	eventType VARCHAR(75) null,
+	eventType STRING null,
 	categoryId LONG,
-	name VARCHAR(75) null,
-	shortDesc VARCHAR(75) null,
+	name STRING null,
+	shortDesc TEXT null,
 	termId LONG,
-	language VARCHAR(75) null,
-	facultyName VARCHAR(75) null,
+	language STRING null,
+	facultyName STRING null,
 	lectureseriesId LONG not null primary key,
-	password_ VARCHAR(75) null,
+	password_ STRING null,
 	approved INTEGER,
 	longDesc TEXT null,
 	latestOpenAccessVideoId LONG,
@@ -108,10 +108,10 @@ create table LG_Metadata (
 	metadataId LONG not null primary key,
 	type_ VARCHAR(75) null,
 	language VARCHAR(75) null,
-	title VARCHAR(75) null,
-	subject VARCHAR(75) null,
-	description STRING null,
-	publisher VARCHAR(75) null
+	title STRING null,
+	subject STRING null,
+	description TEXT null,
+	publisher STRING null
 );
 
 create table LG_Office (
@@ -142,8 +142,8 @@ create table LG_Segment (
 	segmentId LONG not null primary key,
 	videoId LONG,
 	start_ VARCHAR(75) null,
-	title VARCHAR(75) null,
-	description VARCHAR(75) null,
+	title STRING null,
+	description TEXT null,
 	end_ VARCHAR(75) null,
 	chapter INTEGER,
 	userId LONG
@@ -179,7 +179,7 @@ create table LG_StreamingServerTemplate (
 
 create table LG_Sys (
 	sysId INTEGER not null primary key,
-	version VARCHAR(75) null,
+	version STRING null,
 	setupWizard INTEGER
 );
 
@@ -187,7 +187,7 @@ create table LG_Tagcloud (
 	tagcloudId LONG not null primary key,
 	objectClassType VARCHAR(75) null,
 	objectId LONG,
-	tags STRING null
+	tags VARCHAR(75) null
 );
 
 create table LG_Term (
@@ -213,18 +213,18 @@ create table LG_Upload (
 	uploadId LONG not null primary key,
 	userId LONG,
 	contentLength LONG,
-	timestamp LONG,
+	timestamp DATE null,
 	status INTEGER,
 	videoId LONG
 );
 
 create table LG_Video (
 	videoId LONG not null primary key,
-	title VARCHAR(75) null,
+	title STRING null,
 	lectureseriesId LONG,
 	producerId LONG,
 	containerFormat VARCHAR(75) null,
-	filename VARCHAR(75) null,
+	filename TEXT null,
 	resolution VARCHAR(75) null,
 	duration VARCHAR(75) null,
 	hostId LONG,
@@ -241,7 +241,7 @@ create table LG_Video (
 	citation2go INTEGER,
 	termId LONG,
 	videoCreatorId LONG,
-	tags VARCHAR(75) null,
+	tags TEXT null,
 	password_ VARCHAR(75) null
 );
 

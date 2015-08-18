@@ -67,7 +67,7 @@ public class InstitutionModelImpl extends BaseModelImpl<Institution>
 			{ "sort", Types.INTEGER },
 			{ "groupId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Institution (institutionId LONG not null primary key,parentId LONG,name VARCHAR(75) null,typ VARCHAR(75) null,www VARCHAR(75) null,level INTEGER,sort INTEGER,groupId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Institution (institutionId LONG not null primary key,parentId LONG,name STRING null,typ STRING null,www STRING null,level INTEGER,sort INTEGER,groupId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Institution";
 	public static final String ORDER_BY_JPQL = " ORDER BY institution.sort ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Institution.sort ASC";

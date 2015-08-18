@@ -231,7 +231,7 @@
 			<hint-collection name="SHORTTEXT" />
 		</field>
 		<field name="metadataId" type="long" />
-		<field name="surl" type="String" />
+		<field name="secureFilename" type="String" />
 		<field name="hits" type="long" />
 		<field name="uploadDate" type="Date" />
 		<field name="permittedToSegment" type="int" />
@@ -242,6 +242,7 @@
 		<field name="tags" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
+		<field name="password" type="String" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Video_Category">
 		<field name="videoCategoryId" type="long" />
