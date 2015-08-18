@@ -2,10 +2,14 @@ package de.uhh.l2g.plugins.migration.controller;
 
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -33,13 +37,17 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 
 import de.uhh.l2g.plugins.migration.mapper.AddressMapper;
+import de.uhh.l2g.plugins.migration.mapper.CategoryMapper;
 import de.uhh.l2g.plugins.migration.mapper.ContactMapper;
 import de.uhh.l2g.plugins.migration.mapper.CoordinatorMapper;
+import de.uhh.l2g.plugins.migration.mapper.CreatorMapper;
 import de.uhh.l2g.plugins.migration.mapper.FacilityHostMapper;
 import de.uhh.l2g.plugins.migration.mapper.FacilityMapper;
 import de.uhh.l2g.plugins.migration.mapper.HostMapper;
 import de.uhh.l2g.plugins.migration.mapper.L2gSysMapper;
 import de.uhh.l2g.plugins.migration.mapper.LastVideoListMapper;
+import de.uhh.l2g.plugins.migration.mapper.LectureseriesCategoryMapper;
+import de.uhh.l2g.plugins.migration.mapper.LectureseriesCreatorMapper;
 import de.uhh.l2g.plugins.migration.mapper.LectureseriesFacilityMapper;
 import de.uhh.l2g.plugins.migration.mapper.LectureseriesMapper;
 import de.uhh.l2g.plugins.migration.mapper.LicenseMapper;
@@ -48,11 +56,15 @@ import de.uhh.l2g.plugins.migration.mapper.OfficeMapper;
 import de.uhh.l2g.plugins.migration.mapper.ProducerLectureseriesMapper;
 import de.uhh.l2g.plugins.migration.mapper.ProducerMapper;
 import de.uhh.l2g.plugins.migration.mapper.SegmentMapper;
+import de.uhh.l2g.plugins.migration.mapper.TermMapper;
 import de.uhh.l2g.plugins.migration.mapper.UploadMapper;
 import de.uhh.l2g.plugins.migration.mapper.UserIDMapper;
 import de.uhh.l2g.plugins.migration.mapper.UserMapper;
+import de.uhh.l2g.plugins.migration.mapper.VideoCategoryMapper;
+import de.uhh.l2g.plugins.migration.mapper.VideoCreatorMapper;
 import de.uhh.l2g.plugins.migration.mapper.VideoFacilityMapper;
 import de.uhh.l2g.plugins.migration.mapper.VideoHitlistMapper;
+import de.uhh.l2g.plugins.migration.mapper.VideoLectureseriesMapper;
 import de.uhh.l2g.plugins.migration.mapper.VideoMapper;
 import de.uhh.l2g.plugins.migration.model.LegacyAddress;
 import de.uhh.l2g.plugins.migration.model.LegacyContact;
@@ -96,12 +108,16 @@ import de.uhh.l2g.plugins.migration.service.LegacyVideoHitlistLocalServiceUtil;
 import de.uhh.l2g.plugins.migration.service.LegacyUserLocalServiceUtil;
 import de.uhh.l2g.plugins.migration.service.LegacyVideoFacilityLocalServiceUtil;
 import de.uhh.l2g.plugins.migration.service.LegacyVideoLocalServiceUtil;
+import de.uhh.l2g.plugins.model.Category;
 import de.uhh.l2g.plugins.model.Coordinator;
+import de.uhh.l2g.plugins.model.Creator;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Institution_Host;
 import de.uhh.l2g.plugins.model.Lastvideolist;
 import de.uhh.l2g.plugins.model.Lectureseries;
+import de.uhh.l2g.plugins.model.Lectureseries_Category;
+import de.uhh.l2g.plugins.model.Lectureseries_Creator;
 import de.uhh.l2g.plugins.model.Lectureseries_Institution;
 import de.uhh.l2g.plugins.model.License;
 import de.uhh.l2g.plugins.model.Metadata;
@@ -110,16 +126,25 @@ import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.model.Producer_Lectureseries;
 import de.uhh.l2g.plugins.model.Segment;
 import de.uhh.l2g.plugins.model.Sys;
+import de.uhh.l2g.plugins.model.Term;
 import de.uhh.l2g.plugins.model.Upload;
 import de.uhh.l2g.plugins.model.Video;
+import de.uhh.l2g.plugins.model.Video_Category;
+import de.uhh.l2g.plugins.model.Video_Creator;
 import de.uhh.l2g.plugins.model.Video_Institution;
+import de.uhh.l2g.plugins.model.Video_Lectureseries;
 import de.uhh.l2g.plugins.model.Videohitlist;
+import de.uhh.l2g.plugins.service.CategoryLocalServiceUtil;
+import de.uhh.l2g.plugins.service.ClpSerializer;
 import de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil;
+import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LastvideolistLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Lectureseries_CategoryLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Lectureseries_CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Lectureseries_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LicenseLocalServiceUtil;
 import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
@@ -128,9 +153,13 @@ import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Producer_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
 import de.uhh.l2g.plugins.service.SysLocalServiceUtil;
+import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
 import de.uhh.l2g.plugins.service.UploadLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Video_CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideohitlistLocalServiceUtil;
 
 import javax.portlet.ActionRequest;
@@ -153,7 +182,8 @@ public class MigrationController {
 	private String sites = "";
 	private String logInfoString = "";
 	private boolean propsOk = false;
-	String userOkflag=""; 
+    private static Pattern termPattern = Pattern.compile("\\s*(\\w+)\\s+(\\d+\\W*\\d+)");
+    
     // comma separated values of SiteIds are allowed. GoupIds must match name in DB or in Site-Settings of backend.
 	private static String failed = "<font color=\"red\">failed!!</font>";
 	private static String ok = "<font color=\"green\">ok!!</font>";
@@ -176,6 +206,9 @@ public class MigrationController {
         ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
         logInfo("themeDisplay:" +themeDisplay.getCompanyId());
         logInfo("scopeGroupID:" +themeDisplay.getScopeGroupId());
+//        checkString("SoSe 15",termPattern);
+//        checkString(" Weise 14", termPattern);
+//        checkString("Spse 12/15", termPattern);
         
         boolean signedIn = themeDisplay.isSignedIn();
         if (!signedIn) {
@@ -238,8 +271,6 @@ public class MigrationController {
         model.addAttribute("videoEntrieSize62", VideoLocalServiceUtil.getVideosCount());
         model.addAttribute("uploadEntrieSize62", UploadLocalServiceUtil.getUploadsCount());
         
-        
-        
         // Single Entries
         model.addAttribute("officeEntrieSize62", OfficeLocalServiceUtil.getOfficesCount());
         model.addAttribute("metadataEntrieSize62", MetadataLocalServiceUtil.getMetadatasCount());
@@ -248,6 +279,8 @@ public class MigrationController {
         model.addAttribute("hostEntrieSize62", HostLocalServiceUtil.getHostsCount());
         model.addAttribute("sysEntrieSize62", SysLocalServiceUtil.getSysesCount());
         model.addAttribute("lectureseriesEntrieSize62", LectureseriesLocalServiceUtil.getLectureseriesesCount());
+        model.addAttribute("termEntrieSize62", TermLocalServiceUtil.getTermsCount());
+        model.addAttribute("categoryEntrieSize62", CategoryLocalServiceUtil.getCategoriesCount());
         model.addAttribute("videohitlistEntrieSize62", VideohitlistLocalServiceUtil.getVideohitlistsCount());
         model.addAttribute("lastvideolistEntrieSize62", LastvideolistLocalServiceUtil.getLastvideolistsCount());
 
@@ -256,7 +289,14 @@ public class MigrationController {
         model.addAttribute("producerLectureseriesEntrieSize62", Producer_LectureseriesLocalServiceUtil.getProducer_LectureseriesesCount());
         model.addAttribute("videoFacilityEntrieSize62", Video_InstitutionLocalServiceUtil.getVideo_InstitutionsCount());
         model.addAttribute("facilityHostEntrieSize62", Institution_HostLocalServiceUtil.getInstitution_HostsCount());
-        
+        model.addAttribute("videoLectureseriesEntrieSize62", Video_LectureseriesLocalServiceUtil.getVideo_LectureseriesesCount());
+     
+        model.addAttribute("categoryEntrieSize62", CategoryLocalServiceUtil.getCategoriesCount());
+        model.addAttribute("lectureseriesCategoryEntrieSize62", Lectureseries_CategoryLocalServiceUtil.getLectureseries_CategoriesCount());
+        model.addAttribute("videoCategoryEntrieSize62", Video_CategoryLocalServiceUtil.getVideo_CategoriesCount());
+        model.addAttribute("creatorEntrieSize62", CreatorLocalServiceUtil.getCreatorsCount());
+        model.addAttribute("lectureseriesCreatorEntrieSize62", Lectureseries_CreatorLocalServiceUtil.getLectureseries_CreatorsCount());
+        model.addAttribute("videoCreatorEntrieSize62", Video_CreatorLocalServiceUtil.getVideo_CreatorsCount());
         model.addAttribute("logInfoString", logInfoString);
         
         return "defaultView";
@@ -705,6 +745,7 @@ public class MigrationController {
 			logInfo("Migration of Segments failed. Can not read Source Data");
 			segmentOkflag = failed;
 		}
+		request.setAttribute("logInfoString", logInfoString);		
 		request.setAttribute("segmentOkflag", segmentOkflag);
 		
     }
@@ -725,14 +766,15 @@ public class MigrationController {
 			logInfo("Migration of Coordinator failed. Can not read Source Data");
 		   	coordinatorOkflag = failed;
 		}
+		request.setAttribute("logInfoString", logInfoString);		
 		request.setAttribute("coordinatorOkflag", coordinatorOkflag);
     }
     
     
     @RequestMapping(params = "action=migrateProducers")
-    public void migrateProducers(ActionRequest request) throws FileNotFoundException {
-    	// Load Legacy Producers
-    	String producerOkflag = ok;
+	public void migrateProducers(ActionRequest request) throws FileNotFoundException {
+		// Load Legacy Producers
+		String producerOkflag = ok;
 		List<LegacyProducer> producers;
 		try {
 			producers = LegacyProducerLocalServiceUtil.getLegacyProducers(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -740,30 +782,44 @@ public class MigrationController {
 		for (LegacyProducer producer: producers) {
 			migrateProducer(producer, companyId);
 		} 
-    	
+		
 		} catch (SystemException e1) {
 			logInfo("Migration of producer failed. Can not read Source Data");
 			producerOkflag = failed;
 		}
+		request.setAttribute("logInfoString", logInfoString);		
 		request.setAttribute("producerOkflag", producerOkflag);
-    }
+	}
+
+
     
     
     @RequestMapping(params = "action=migrateVideos")
     public void migrateVideos(ActionRequest request) throws FileNotFoundException {
     	// Load Legacy Videos
     	String videoOkflag = ok;
-		List<LegacyVideo> videos;
+		List<LegacyVideo> legacyVideos;
+		Video video = null;
 		try {
-			videos = LegacyVideoLocalServiceUtil.getLegacyVideos(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		for (LegacyVideo video: videos) {
-			migrateVideo(video, companyId);
+			legacyVideos = LegacyVideoLocalServiceUtil.getLegacyVideos(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		for (LegacyVideo legacyVideo: legacyVideos) {
+			video =  migrateVideo(legacyVideo, companyId);
+			try {
+				LegacyLectureSeriesLocalServiceUtil.getLegacyLectureSeries(video.getLectureseriesId());
+			} catch (PortalException e) {
+				logInfo("ConsistencyCHECK: video.getLectureseriesId() of old Data not valid! No Lectureseries in LF52 existing with ID: " + video.getLectureseriesId());
+				logInfo("ConsistencyCHECK:  Set video.getLectureseriesId() to 0") ;
+				video.setLectureseriesId(0);
+				VideoLocalServiceUtil.updateVideo(video);
+			}
 		} 
     	
 		} catch (SystemException e1) {
 			logInfo("Migration of video failed. Can not read Source Data");
 			videoOkflag = failed;
 		}
+		
+		request.setAttribute("logInfoString", logInfoString);
 		request.setAttribute("videoOkflag", videoOkflag);
     }
     
@@ -784,6 +840,7 @@ public class MigrationController {
 			logInfo("Migration of uploads failed. Can not read Source Data");
 			uploadOkflag = failed;
 		}
+		request.setAttribute("logInfoString", logInfoString);
 		request.setAttribute("uploadOkflag", uploadOkflag);
     }
     
@@ -804,6 +861,7 @@ public class MigrationController {
 			logInfo("Migration of offices failed. Can not read Source Data");
 			officeOkflag = failed;
 		}
+		request.setAttribute("logInfoString", logInfoString);
 		request.setAttribute("officeOkflag", officeOkflag);
     }
     
@@ -825,6 +883,7 @@ public class MigrationController {
 			logInfo("Migration of Metadatas failed. Can not read Source Data");
 			metatdataOkflag = failed;
 		}
+		request.setAttribute("logInfoString", logInfoString);
 		request.setAttribute("metatdataOkflag", metatdataOkflag);
     }
     
@@ -844,6 +903,7 @@ public class MigrationController {
 			logInfo("Migration of Facilities failed. Can not read Source Data");
 			institutionOkflag = failed;
 		}
+		request.setAttribute("logInfoString", logInfoString);
 		request.setAttribute("institutionOkflag", institutionOkflag);
     }    
     
@@ -864,6 +924,7 @@ public class MigrationController {
 			logInfo("Migration of License failed. Can not read Source Data");
 			licenseOkflag = failed;
 		}
+		request.setAttribute("logInfoString", logInfoString);
 		request.setAttribute("licenseOkflag", licenseOkflag);
     }
 
@@ -884,6 +945,7 @@ public class MigrationController {
 			logInfo("Migration of Host failed. Can not read Source Data");
 			hostOkflag = failed;
 		}
+		request.setAttribute("logInfoString", logInfoString);		
 		request.setAttribute("hostOkflag", hostOkflag);
 		
     }  
@@ -904,6 +966,7 @@ public class MigrationController {
 			logInfo("Migration of Sys failed. Can not read Source Data");
 			sysOkflag = failed;
 		}
+		request.setAttribute("logInfoString", logInfoString);		
 		request.setAttribute("sysOkflag", sysOkflag);
     }  
     
@@ -923,6 +986,7 @@ public class MigrationController {
 			logInfo("Migration of Lectureseries failed. Can not read Source Data");
 			lectureseriesOkflag = failed;
 		}
+		request.setAttribute("logInfoString", logInfoString);		
 		request.setAttribute("lectureseriesOkflag", lectureseriesOkflag);
     }  
     
@@ -942,6 +1006,7 @@ public class MigrationController {
 			logInfo("Migration of Videohitlist failed. Can not read Source Data");
 			videohitlistOkflag = failed;
 		}
+		request.setAttribute("logInfoString", logInfoString);		
 		request.setAttribute("videohitlistOkflag", videohitlistOkflag);
     }  
     
@@ -961,12 +1026,14 @@ public class MigrationController {
 			logInfo("Migration of uploads failed. Can not read Source Data");
 			lastvideolistOkflag = failed;
 		}
+		request.setAttribute("logInfoString", logInfoString);		
 		request.setAttribute("lastvideolistOkflag", lastvideolistOkflag);
     }  
 
     
-    
-    @RequestMapping(params = "action=migrateLectureseriesFacilities")
+
+
+	@RequestMapping(params = "action=migrateLectureseriesFacilities")
     public void migrateLectureseriesFacilities(ActionRequest request) throws FileNotFoundException {
     	// Load Legacy Uploads
     	logInfo("Call migrateLectureseriesFacilities");
@@ -983,6 +1050,7 @@ public class MigrationController {
 			logInfo("Migration of uploads failed. Can not read Source Data");
 			lectureseriesFacilitiesOkflag = failed;
 		}
+		request.setAttribute("logInfoString", logInfoString);		
 		request.setAttribute("lectureseriesFacilitiesOkflag", lectureseriesFacilitiesOkflag);
     }
     
@@ -1005,6 +1073,7 @@ public class MigrationController {
 			logInfo("Migration of uploads failed. Can not read Source Data");
 			videoInstitutionOkflag = failed;
 		}
+		request.setAttribute("logInfoString", logInfoString);		
 		request.setAttribute("videoInstitutionOkflag", videoInstitutionOkflag);
     }
     
@@ -1025,11 +1094,9 @@ public class MigrationController {
 			logInfo("Migration of uploads failed. Can not read Source Data");
 			producerLectureseriesOkflag = failed;
 		}
+		request.setAttribute("logInfoString", logInfoString);		
 		request.setAttribute("producerLectureseriesOkflag", producerLectureseriesOkflag);
     }    
-    
-    
-    
     
     @RequestMapping(params = "action=migrateInstitution_Host")
     public void migrateInstitution_Host(ActionRequest request) throws FileNotFoundException {
@@ -1049,10 +1116,354 @@ public class MigrationController {
 			institutionHostOkflag = failed;
 		}
 		request.setAttribute("institutionHostOkflag", institutionHostOkflag);
-    }   
+    }  
     
-    /******************** Private User Migration Methods ********************************************************************************/
+    @RequestMapping(params = "action=migrateVideo_Lectureseries")
+    public void migrateVideo_LectureseriesAction(ActionRequest request) throws FileNotFoundException {
+    	// Load Legacy Uploads
+    	logInfo("Call migrateVideo_Lectureseries");
+    	String videoLectureseriesOkflag = ok;
+		List<Video> videos;
+		try {
+			videos = VideoLocalServiceUtil.getVideos(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			for (Video video: videos) {
+				if (video.getLectureseriesId() > 0 ) {
+					Video_Lectureseries video_Lectureseries = migrateVideo_Lectureseries(video);
+					// Set Term ID
+					Lectureseries lectureseries;
+					try {
+						lectureseries = LectureseriesLocalServiceUtil.getLectureseries(video_Lectureseries.getLectureseriesId());
+						video.setTermId(lectureseries.getTermId());
+					} catch (Exception e) {
+						logInfo("Warn: Could not link TermId to Video" + video);
+					}
+				} else {
+					logInfo("ConsistencyCheck Video: found with no Lectureseries linked (LectureseriesId = 0!): " + video);
+					logInfo("Video Entry Skipped for mapping into Video_Lectureseries Table");
+				}
+			} 			
+    	
+		} catch (SystemException e1) {
+			logInfo("Migration of Video_Lectureseries failed. Can not read Source Data");
+			videoLectureseriesOkflag = failed;
+		}
+		request.setAttribute("logInfoString", logInfoString);		
+		request.setAttribute("videoLectureseriesOkflag", videoLectureseriesOkflag);
+    }  
+    
+    
+    @RequestMapping(params = "action=migrateVideo_Category")
+    public void migrateVideo_CategoryAction(ActionRequest request) throws FileNotFoundException {
+    	// Load Legacy Uploads
+    	logInfo("Call Video_Lectureseries");
+    	String videoCategoryOkflag = ok;
+		List<Video_Lectureseries> video_Lectureserieses;
+		try {
+			video_Lectureserieses = Video_LectureseriesLocalServiceUtil.getVideo_Lectureserieses(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			log.info("video_Lectureserieses.size()" + video_Lectureserieses.size());
+			for (Video_Lectureseries video_Lectureseries: video_Lectureserieses) {
+				migrateVideo_Category(video_Lectureseries);
+			} 			
+    	
+		} catch (SystemException e1) {
+			logInfo("Migration of Video_Category failed. Can not read Source Data");
+			videoCategoryOkflag = failed;
+		}
+		request.setAttribute("logInfoString", logInfoString);		
+		request.setAttribute("videoCategoryOkflag", videoCategoryOkflag);
+    }  
+    
+    @RequestMapping(params = "action=migrateCreator")
+    public void migrateCreator(ActionRequest request) throws FileNotFoundException {
+    	// Load Legacy Uploads
+    	logInfo("Call Video_Lectureseries");
+    	String creatorOkflag = ok;
+		List<Video> videos;
+		try {
+			videos = VideoLocalServiceUtil.getVideos(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			log.info("videos.size()" + videos.size());
+			for (Video video: videos) {
+				migrateCreator(video);
+			} 			
+		} catch (SystemException e1) {
+			logInfo("Migration of Metadata failed. Can not read Source Data");
+			creatorOkflag = failed;
+		}
+		request.setAttribute("logInfoString", logInfoString);		
+		request.setAttribute("creatorOkflag", creatorOkflag);
+    }  
+    
+    /******************** Private User Migration Methods 
+     * @throws SystemException ********************************************************************************/
     //TODO put into UTIL-Class
+
+	private void migrateCreator(Video video) throws SystemException {
+		Creator creator = null;
+		LegacyMetadata legacyMetadata = null;
+		try {
+			legacyMetadata = LegacyMetadataLocalServiceUtil.getLegacyMetadata(video.getMetadataId());
+		} catch (PortalException e1) {
+			logInfo("warn: could not load legacy metadata by id" + video.getMetadataId() + "- skip entry" );
+			return;
+		}
+    	String creatorsAsString = legacyMetadata.getCreator();
+    	if (creatorsAsString.contains(";") && creatorsAsString.contains(",")) {
+    		creatorsAsString = creatorsAsString.replace(",", "");
+    	}
+    	creatorsAsString = creatorsAsString.replace(",", ";");
+    	creatorsAsString = creatorsAsString.replace("/", ";");
+       	creatorsAsString = creatorsAsString.replace(" und ", ";");
+       	creatorsAsString = creatorsAsString.replace(" mit ", ";");
+       	creatorsAsString = creatorsAsString.replace(" & ", ";");
+       	creatorsAsString = creatorsAsString.replace(" u. ", ";");
+       	creatorsAsString = creatorsAsString.replace("  ", " ");
+       	creatorsAsString = creatorsAsString.replace("h. c.", "h.c.");
+       	creatorsAsString = creatorsAsString.replace("hc.", "h.c.");
+       	creatorsAsString = creatorsAsString.replace("Professor", "Prof.");
+    	// getPersons
+    	Pattern personStringPattern = Pattern.compile("\\s*([^;]+)*\\s*;?\\s*([^;]+)*\\s*;?\\s*([^;]+)*\\s*;?\\s*([^;]+)*\\s*;?\\s*([^;]+)*\\s*;?\\s*([^;]+)*\\s*;?\\s*([^;]+)*\\s*;?\\s*([^;]+)*\\s*;?\\s*([^;]+)*\\s*;?\\s*([^;]+)*\\s*;?\\s*([^;]+)*\\s*;?\\s*([^;]+)*\\s*;?\\s*([^;]+)*\\s*");
+    	Matcher personMatches = checkStringMatcher(creatorsAsString, personStringPattern );
+    	if (personMatches != null) {
+    		// start at index 1 as 0 contains whole string length is currently 13 due to pattern with 13 groups
+	    	for (int i=1; i < personMatches.groupCount(); i++) {
+	    		String person = personMatches.group(i);
+	    		if (person == null) {
+	    			//leave loop if person is null
+	    			continue;
+	    		}
+	    		creator = createSingleCreator(person);
+	    		migrateVideoCreator (video, creator);
+	    		if (video.getLectureseriesId()  > 0) {
+		    		Lectureseries lectureseries;
+					try {
+						lectureseries = LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId());
+						migrateLectreseriesCreator (lectureseries, creator);
+					} catch (PortalException e) {
+						logInfo("warn: no lectureSeries found by id" + video.getLectureseriesId() );
+					}
+	    		}
+	    	}
+    	} else {
+    		logInfo("warn: matcher did not match" );
+    	}
+  
+    }
+
+
+	private void migrateLectreseriesCreator(Lectureseries lectureseries, Creator creator) throws SystemException {     
+	Lectureseries_Creator lectureseries_Creator = null;
+	try {
+		//find by lectureSeries.EventType
+		ClassLoader classLoader = (ClassLoader)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),"portletClassLoader");    		
+		DynamicQuery query = DynamicQueryFactoryUtil.forClass(Lectureseries_Creator.class,classLoader).add(PropertyFactoryUtil.forName("lectureseriesId").eq(lectureseries.getLectureseriesId())).add(PropertyFactoryUtil.forName("creatorId").eq(creator.getCreatorId()));
+		List<Lectureseries_Creator> lectureseries_Creators = Lectureseries_CreatorLocalServiceUtil.dynamicQuery(query);
+		if (lectureseries_Creators.size() > 0) {
+			lectureseries_Creator= lectureseries_Creators.get(0);
+			lectureseries_Creator = LectureseriesCreatorMapper.map(lectureseries_Creator, lectureseries,  creator);
+				log.debug("Lectureseries_Creator UPDATE:" +lectureseries_Creator);
+    			Lectureseries_CreatorLocalServiceUtil.updateLectureseries_Creator(lectureseries_Creator);
+    		} else {
+    			lectureseries_Creator = Lectureseries_CreatorLocalServiceUtil.createLectureseries_Creator(CounterLocalServiceUtil.increment());
+    			lectureseries_Creator = LectureseriesCreatorMapper.map(lectureseries_Creator, lectureseries,  creator);
+    			log.debug("Lectureseries_Creator NEW:" +lectureseries_Creator);
+    			Lectureseries_CreatorLocalServiceUtil.addLectureseries_Creator(lectureseries_Creator);
+    		}
+		} catch (Exception e) {
+			lectureseries_Creator = Lectureseries_CreatorLocalServiceUtil.createLectureseries_Creator(CounterLocalServiceUtil.increment());
+			lectureseries_Creator = LectureseriesCreatorMapper.map(lectureseries_Creator,  lectureseries,  creator);
+			log.debug("Lectureseries_Creator NEW:" +lectureseries_Creator);
+			Lectureseries_CreatorLocalServiceUtil.addLectureseries_Creator(lectureseries_Creator);
+		}
+	
+}
+
+
+	private void migrateVideoCreator(Video video, Creator creator) throws SystemException {
+		Video_Creator video_Creator = null;
+		try {
+			//find by lectureSeries.EventType
+			ClassLoader classLoader = (ClassLoader)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),"portletClassLoader");    		
+			DynamicQuery query = DynamicQueryFactoryUtil.forClass(Video_Creator.class,classLoader).add(PropertyFactoryUtil.forName("videoId").eq(video.getLectureseriesId())).add(PropertyFactoryUtil.forName("creatorId").eq(creator.getCreatorId()));
+			List<Video_Creator> video_Creators = Video_CreatorLocalServiceUtil.dynamicQuery(query);
+			if (video_Creators.size() > 0) {
+				video_Creator= video_Creators.get(0);
+				video_Creator = VideoCreatorMapper.map(video_Creator, video,  creator);
+					log.debug("Video_Creator UPDATE:" +video_Creator);
+	    			Video_CreatorLocalServiceUtil.updateVideo_Creator(video_Creator);
+	    		} else {
+	    			video_Creator = Video_CreatorLocalServiceUtil.createVideo_Creator(CounterLocalServiceUtil.increment());
+	    			video_Creator = VideoCreatorMapper.map(video_Creator, video,  creator);
+	    			log.debug("Video_Creator NEW:" +video_Creator);
+	    			Video_CreatorLocalServiceUtil.addVideo_Creator(video_Creator);
+	    		}
+			} catch (Exception e) {
+				video_Creator = Video_CreatorLocalServiceUtil.createVideo_Creator(CounterLocalServiceUtil.increment());
+				video_Creator = VideoCreatorMapper.map(video_Creator,  video,  creator);
+				log.debug("Video_Creator NEW:" +video_Creator);
+				Video_CreatorLocalServiceUtil.addVideo_Creator(video_Creator);
+			}
+		
+	}
+
+
+	private Creator createSingleCreator(String person) throws SystemException {
+
+		
+    	String firstName =""; 
+    	String lastName ="";
+    	String jobTitle = extractSpecialJobTitle(person);
+    	person = person.replace(jobTitle, "");
+    	String middleName ="";
+    	String gender ="";
+    	
+		String[] nameAndJobArray = person.split(" ");
+		if ( nameAndJobArray.length > 4) {
+			log.info("nameAndJobArray: person" + person + " lenght:" +  nameAndJobArray.length);
+		}
+    	
+    	if  (nameAndJobArray.length == 1) {
+    		firstName =nameAndJobArray[0];
+    		lastName =nameAndJobArray[0];
+    	}
+    	
+		if  (nameAndJobArray.length == 2) {
+			// check first
+			String tmp = nameAndJobArray[0].toLowerCase();
+			if (jobTitle.isEmpty() && containsTitle(tmp) ) {
+				jobTitle = nameAndJobArray[0];
+			} else {
+				firstName = nameAndJobArray[0];
+			}
+			// check second
+			tmp = nameAndJobArray[1].toLowerCase();
+			if (jobTitle.isEmpty() && containsTitle(tmp) ) {
+				jobTitle = jobTitle + " " + nameAndJobArray[1];
+			} else {
+				lastName = nameAndJobArray[1];
+			}			
+		}
+
+		if  (nameAndJobArray.length == 3) {
+			// check first
+			String tmp = nameAndJobArray[0].toLowerCase();
+			if (jobTitle.isEmpty() && containsTitle(tmp) ) {
+				jobTitle = nameAndJobArray[0];
+			} else {
+				firstName = nameAndJobArray[0];
+			}
+			// check second
+			tmp = nameAndJobArray[1].toLowerCase();
+			if (jobTitle.isEmpty() && containsTitle(tmp) ) {
+				jobTitle = jobTitle + " " + nameAndJobArray[1];
+			} else {
+				if (!firstName.isEmpty()) {
+					if (containsParticle(nameAndJobArray[1])) {
+						lastName = nameAndJobArray[1] + " ";
+					} else {
+						middleName = nameAndJobArray[1];
+					}
+				} else {
+					firstName = nameAndJobArray[1];
+				}
+			}
+			// check third
+			tmp = nameAndJobArray[2].toLowerCase();
+			if (jobTitle.isEmpty() &&  containsTitle(tmp) ) {
+				jobTitle = jobTitle + " " + nameAndJobArray[2];
+			} else {
+				lastName = nameAndJobArray[2];
+			}
+		}
+		
+		if  (nameAndJobArray.length == 4) {
+			// check first
+			String tmp = nameAndJobArray[0].toLowerCase();
+			if (jobTitle.isEmpty() &&  containsTitle(tmp) ) {
+				jobTitle = nameAndJobArray[0];
+			} else {
+				firstName = nameAndJobArray[0];
+			}
+			// check second
+			tmp = nameAndJobArray[1].toLowerCase();
+			if (jobTitle.isEmpty() &&  containsTitle(tmp) ) {
+				jobTitle = jobTitle + " " + nameAndJobArray[1];
+			} else {
+				if (!firstName.isEmpty()) {
+					if (containsParticle(nameAndJobArray[1])) {
+						lastName = nameAndJobArray[1] + " ";
+					} else {
+						middleName = nameAndJobArray[1];
+					}
+				} else {
+					firstName = nameAndJobArray[1];
+				}
+			}
+			// check third
+			tmp = nameAndJobArray[2].toLowerCase();
+			if (jobTitle.isEmpty() &&  containsTitle(tmp) ) {
+				jobTitle = jobTitle + " " + nameAndJobArray[2];
+			} else {
+				if (firstName.isEmpty()) {
+					firstName = nameAndJobArray[2];
+				} else {
+					if (containsParticle(nameAndJobArray[1])) {
+						lastName = nameAndJobArray[1] + " ";
+					} else {
+						middleName = middleName +" " +nameAndJobArray[1];
+					}
+	
+				}				
+			}
+
+			// check fourth
+			tmp = nameAndJobArray[3].toLowerCase();
+			if (jobTitle.isEmpty() &&  containsTitle(tmp) ) {
+				jobTitle = jobTitle + " " + nameAndJobArray[2];
+			} else {
+					lastName = nameAndJobArray[3];
+			}			
+		}		
+		
+		Creator creator = null;
+    	String fullName= person;
+    	try {
+    		
+    		
+    		//find by lectureSeries.EventType 
+    		ClassLoader classLoader = (ClassLoader)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),"portletClassLoader");
+    		DynamicQuery query = DynamicQueryFactoryUtil.forClass(Creator.class, classLoader).add(PropertyFactoryUtil.forName("fullName").eq(person));
+    		List<Creator> creators = CreatorLocalServiceUtil.dynamicQuery(query);
+	    		if (creators.size() > 0) {
+	    			creator = creators.get(0);
+	    			creator = CreatorMapper.mapCreator(creator, firstName, lastName, middleName, jobTitle, gender, fullName);
+	    			log.debug("creator UPDATE:" +creator);
+	    			creator = CreatorLocalServiceUtil.updateCreator(creator);
+	    		} else {
+	    			creator = CreatorLocalServiceUtil.createCreator(CounterLocalServiceUtil.increment());
+	    			creator = CreatorMapper.mapCreator(creator, firstName, lastName, middleName, jobTitle, gender, fullName);
+	    			log.debug("creator NEW:" +creator);
+	    			creator = CreatorLocalServiceUtil.addCreator(creator);
+	    		}
+    		} catch (Exception e) {
+       			creator = CreatorLocalServiceUtil.createCreator(CounterLocalServiceUtil.increment());
+    			creator = CreatorMapper.mapCreator(creator, firstName, lastName, middleName, jobTitle, gender, fullName);
+    			log.debug("creator NEW:" +creator);
+    			creator = CreatorLocalServiceUtil.addCreator(creator);
+    		}
+    	return creator;
+	}
+
+
+	private boolean containsParticle(String tmp) {
+		return tmp.equalsIgnoreCase("von")|| tmp.equalsIgnoreCase("van") || tmp.equalsIgnoreCase("v.") || tmp.equalsIgnoreCase("de") || tmp.equalsIgnoreCase("del")   || tmp.equalsIgnoreCase("der")  ;
+	}
+
+
+	private boolean containsTitle(String tmp) {
+		return tmp.contains("Dr.".toLowerCase())|| tmp.contains("Prof.".toLowerCase()) ||  tmp.contains("PHD".toLowerCase())  ||   tmp.contains("PD".toLowerCase())  || tmp.contains("Pro.".toLowerCase())  || tmp.contains("Dipl".toLowerCase())  || tmp.contains("Associate".toLowerCase()) || tmp.contains("phil.".toLowerCase())  || tmp.contains("priv-doz".toLowerCase()) ;
+	}   
+		
+
 
 	/**
      * Create a user on specific parameters.
@@ -1356,19 +1767,20 @@ public class MigrationController {
     } 
     
     
-    private void migrateVideo(LegacyVideo legacyVideo, long companyId) throws SystemException {
+    private Video migrateVideo(LegacyVideo legacyVideo, long companyId) throws SystemException {
     	Video video = null;
     	try {
     		video = VideoLocalServiceUtil.getVideo(legacyVideo.getId());
     		video = VideoMapper.mapVideo(legacyVideo, video, companyId);
-			logInfo("Video UPDATE:" +video);
-			VideoLocalServiceUtil.updateVideo(video);
+			log.debug("Video UPDATE:" +video);
+			video = VideoLocalServiceUtil.updateVideo(video);
 		} catch (Exception e) {
 			video = VideoLocalServiceUtil.createVideo(legacyVideo.getId());
 			video = VideoMapper.mapVideo(legacyVideo, video, companyId);
-			logInfo("Video NEW:" +video);
-			VideoLocalServiceUtil.addVideo(video);
+			log.debug("Video NEW:" +video);
+			video = VideoLocalServiceUtil.addVideo(video);
 		}
+    	return video;
     }  
 
     private void migrateUpload(LegacyUpload legacyUpload, long companyId) throws SystemException {
@@ -1477,6 +1889,12 @@ public class MigrationController {
 		}
     }    
 
+    /**
+     * @param legacyLectureseries
+     * @param companyId
+     * @param groupId
+     * @throws SystemException
+     */
     private void migrateLectureseries(LegacyLectureSeries legacyLectureseries, long companyId, long groupId) throws SystemException {
     	Lectureseries lectureseries = null;
     	try {
@@ -1490,9 +1908,130 @@ public class MigrationController {
 			log.debug("Lectureseries NEW:" +lectureseries);
 			LectureseriesLocalServiceUtil.addLectureseries(lectureseries);
 		}
+    	// Migrate Termn;
+    	Term term = migrateTerms(legacyLectureseries, lectureseries);
+    	if (term !=null) {
+	    	lectureseries.setTermId(term.getTermId());
+	    	log.debug("lectureseries UPADATED with termID:" +term.getTermId());
+	    	LectureseriesLocalServiceUtil.updateLectureseries(lectureseries);
+    	}
+    	// Migrate Categories;
+    	Category category = migrateCategories(lectureseries);
+	    if (category !=null) {
+			lectureseries.setCategoryId(category.getCategoryId());
+			log.debug("lectureseries try to update with categorie ID:" + category.getCategoryId());
+			LectureseriesLocalServiceUtil.updateLectureseries(lectureseries);
+			// Migrate Lectureseries_Category
+			migrateLectureseries_Category(lectureseries, category);
+    	}
     }    
 
-   
+    /**
+     * Local Function invoced by private function migrateLectureseries
+     * @param lectureseries
+     * @return
+     * @throws SystemException
+     */
+    private Term migrateTerms(LegacyLectureSeries legacyLectureseries, Lectureseries lectureseries) throws SystemException {
+    	Term term = null;
+    	String cleanedSemesterName = legacyLectureseries.getSemesterName().replace(" ab ", "");
+    	cleanedSemesterName = cleanedSemesterName.replace("ab ", "");
+    	cleanedSemesterName = cleanedSemesterName.replace("20", "");
+    	log.info("cleanedSemesterName !!! :" + cleanedSemesterName +  "sourceName :" + legacyLectureseries.getSemesterName());
+    	String prefix = checkString(cleanedSemesterName, termPattern, 1);
+    	String year = checkString(cleanedSemesterName, termPattern, 2);
+    	
+    	try {
+    		//find by lectureSeries.EventType 
+    		ClassLoader classLoader = (ClassLoader)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),"portletClassLoader");
+    		DynamicQuery query = DynamicQueryFactoryUtil.forClass(Term.class, classLoader).add(PropertyFactoryUtil.forName("year").eq(year)).add(PropertyFactoryUtil.forName("prefix").eq(prefix));
+    		List<Term> terms = TermLocalServiceUtil.dynamicQuery(query);
+	    		if (terms.size() > 0) {
+	    			term = terms.get(0);
+	    			term = TermMapper.mapTerm(term, 0L, "de_DE",prefix, year, "");
+	    			log.debug("term UPDATE:" +term);
+	    			term = TermLocalServiceUtil.updateTerm(term);
+	    		} else {
+	    			term = TermLocalServiceUtil.createTerm(CounterLocalServiceUtil.increment());
+	    			term = TermMapper.mapTerm(term, 0L, "de_DE",prefix, year, "");
+	    			log.debug("term NEW:" +term);
+	    			term = TermLocalServiceUtil.addTerm(term);
+	    		}
+    		} catch (Exception e) {
+    			term = TermLocalServiceUtil.createTerm(CounterLocalServiceUtil.increment());
+    			term = TermMapper.mapTerm(term, 0L, "de_DE",prefix, year, "");
+    			log.debug("term NEW:" +term);
+    			term = TermLocalServiceUtil.addTerm(term);
+    		}
+    	return term;
+    }    
+    
+    /**
+     * Local function invoced by private function migrateLectureseries
+     * @param lectureseries
+     * @return
+     * @throws SystemException
+     */
+    private Category migrateCategories(Lectureseries lectureseries) throws SystemException {
+    	Category category = null;
+    	try {
+    		//find by lectureSeries.EventType 
+    		ClassLoader classLoader = (ClassLoader)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),"portletClassLoader");    		
+    		DynamicQuery query = DynamicQueryFactoryUtil.forClass(Category.class, classLoader).add(PropertyFactoryUtil.forName("name").eq(lectureseries.getEventType()));
+    		List<Category> categories = CategoryLocalServiceUtil.dynamicQuery(query);
+	    		if (categories.size() > 0) {
+	    			category= categories.get(0);
+	    			category = CategoryMapper.mapCategory(category, lectureseries.getEventType(), "de_DE", "", 0L);
+	    			log.debug("category UPDATE:" +category);
+	    			category = CategoryLocalServiceUtil.updateCategory(category);
+	    		} else {
+	    			category = CategoryLocalServiceUtil.createCategory(CounterLocalServiceUtil.increment());
+	    			category = CategoryMapper.mapCategory(category,lectureseries.getEventType(), "de_DE","", 0L);
+	    			log.debug("category NEW:" +category);
+	    			category = CategoryLocalServiceUtil.updateCategory(category);
+	    		}
+    		} catch (Exception e) {
+    			category = CategoryLocalServiceUtil.createCategory(CounterLocalServiceUtil.increment());
+    			category = CategoryMapper.mapCategory(category,lectureseries.getEventType(), "de_DE","", 0L);
+    			log.debug("category NEW:" +category);
+    			category = CategoryLocalServiceUtil.updateCategory(category);
+    		}
+    		return category;
+    }
+    
+    /**
+     * Local function invoced by private function migrateLectureseries, after Category and Term has been initialised
+     * @param lectureseries
+     * @param category
+     * @throws SystemException
+     */
+    private void migrateLectureseries_Category(Lectureseries lectureseries, Category category) throws SystemException {
+    	Lectureseries_Category lectureseries_Category = null;
+    	try {
+    		//find by lectureSeries.EventType
+    		ClassLoader classLoader = (ClassLoader)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),"portletClassLoader");    		
+    		DynamicQuery query = DynamicQueryFactoryUtil.forClass(Lectureseries_Category.class, classLoader).add(PropertyFactoryUtil.forName("lectureseriesId").eq(lectureseries.getLectureseriesId()));
+    		List<Lectureseries_Category> lectureseries_Categories = Lectureseries_CategoryLocalServiceUtil.dynamicQuery(query);
+	    		if (lectureseries_Categories.size() > 0) {
+	    			lectureseries_Category= lectureseries_Categories.get(0);
+	    			lectureseries_Category = LectureseriesCategoryMapper.mapLectureseries_Category(lectureseries_Category, lectureseries, category);
+	    			log.debug("lectureseries_Category UPDATE:" +category);
+	    			Lectureseries_CategoryLocalServiceUtil.updateLectureseries_Category(lectureseries_Category);
+	    		} else {
+	    			lectureseries_Category = Lectureseries_CategoryLocalServiceUtil.createLectureseries_Category(CounterLocalServiceUtil.increment());
+	    			lectureseries_Category = LectureseriesCategoryMapper.mapLectureseries_Category(lectureseries_Category, lectureseries, category);
+	    			log.debug("lectureseries_Category NEW:" +category);
+	    			Lectureseries_CategoryLocalServiceUtil.addLectureseries_Category(lectureseries_Category);
+	    		}
+    		} catch (Exception e) {
+    			lectureseries_Category = Lectureseries_CategoryLocalServiceUtil.createLectureseries_Category(CounterLocalServiceUtil.increment());
+    			lectureseries_Category = LectureseriesCategoryMapper.mapLectureseries_Category(lectureseries_Category, lectureseries, category);
+    			log.debug("lectureseries_Category NEW:" +category);
+    			Lectureseries_CategoryLocalServiceUtil.addLectureseries_Category(lectureseries_Category);
+    		}
+    	
+    }
+    
 
 
     private void migrateVideohitlist(LegacyVideoHitlist legacyVideohitlist, long companyId, long groupId) throws SystemException {
@@ -1593,7 +2132,88 @@ public class MigrationController {
 			log.debug("Producer_Lectureseries NEW:" +producerLectureseries);
 			Producer_LectureseriesLocalServiceUtil.addProducer_Lectureseries(producerLectureseries);
 		}
-    }       
+    }    
+    
+    
+    /**
+     * Invoked by: public migrateVideo_Lectureseries Action
+     * @param video
+     * @return
+     * @throws SystemException
+     */
+    private Video_Lectureseries migrateVideo_Lectureseries(Video video) throws SystemException {
+    	Video_Lectureseries videoLectureseries = null;
+    	try {
+    		ClassLoader classLoader = (ClassLoader)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),"portletClassLoader");
+    		DynamicQuery query = DynamicQueryFactoryUtil.forClass(Video_Lectureseries.class, classLoader).add(PropertyFactoryUtil.forName("videoId").eq(video.getVideoId()));
+    		List<Video_Lectureseries> videoLectureserieses = Video_LectureseriesLocalServiceUtil.dynamicQuery(query);
+    		if (videoLectureserieses.size() > 0) {
+    			videoLectureseries = videoLectureserieses.get(0);
+    			videoLectureseries = VideoLectureseriesMapper.mapVideoLectureseries(video, videoLectureseries, companyId);
+    			log.debug("Video_Lectureseries UPDATE:" +videoLectureseries);
+    			videoLectureseries= Video_LectureseriesLocalServiceUtil.updateVideo_Lectureseries(videoLectureseries);
+    		} else {
+    			videoLectureseries = Video_LectureseriesLocalServiceUtil.createVideo_Lectureseries(CounterLocalServiceUtil.increment());
+    			videoLectureseries = VideoLectureseriesMapper.mapVideoLectureseries(video, videoLectureseries, companyId);
+    			log.debug("Video_Lectureseries NEW:" +videoLectureseries);
+    			videoLectureseries= Video_LectureseriesLocalServiceUtil.addVideo_Lectureseries(videoLectureseries);
+    		}
+		} catch (Exception e) {
+			videoLectureseries = Video_LectureseriesLocalServiceUtil.createVideo_Lectureseries(CounterLocalServiceUtil.increment());
+			videoLectureseries = VideoLectureseriesMapper.mapVideoLectureseries(video, videoLectureseries, companyId);
+			log.debug("Video_Lectureseries NEW:" +videoLectureseries);
+			videoLectureseries= Video_LectureseriesLocalServiceUtil.addVideo_Lectureseries(videoLectureseries);
+		}
+    	return videoLectureseries; 
+    }
+    
+    /**
+     * Local function invoced by  Video_Category Action, Video, Lectureseries, and Categoryhas been initialised
+     * MANDATAORY: video_lectureseries mus have beein initialsied
+     * @param video_lectureseries
+     * @throws SystemException
+     */
+    private void migrateVideo_Category(Video_Lectureseries video_lectureseries) throws SystemException {
+    	Video_Category video_category = null;
+    	Lectureseries lectureseries;
+		try {
+			lectureseries = LectureseriesLocalServiceUtil.getLectureseries(video_lectureseries.getLectureseriesId());
+		} catch (PortalException e1) {
+			log.warn("Cant load lectureseries from:" +video_lectureseries +"! video_lectureseries must be migrated beforehand!");
+			return;
+		}
+    	try {
+    		//find by lectureSeries.EventType
+    		ClassLoader classLoader = (ClassLoader)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),"portletClassLoader");    		
+    		DynamicQuery query = DynamicQueryFactoryUtil.forClass(Video_Category.class,classLoader).add(PropertyFactoryUtil.forName("videoId").eq(video_lectureseries.getVideoId())).add(PropertyFactoryUtil.forName("categoryId").eq(lectureseries.getCategoryId()));
+    		List<Video_Category> video_categories = Video_CategoryLocalServiceUtil.dynamicQuery(query);
+    		if (video_categories.size() > 0) {
+    				video_category= video_categories.get(0);
+    				video_category = VideoCategoryMapper.mapVideoCategory(video_category, video_lectureseries.getVideoId(), lectureseries.getCategoryId());
+	    			log.debug("video_category UPDATE:" +video_category);
+	    			Video_CategoryLocalServiceUtil.updateVideo_Category(video_category);
+	    		} else {
+	    			video_category = Video_CategoryLocalServiceUtil.createVideo_Category(CounterLocalServiceUtil.increment());
+    				video_category = VideoCategoryMapper.mapVideoCategory(video_category, video_lectureseries.getVideoId(), lectureseries.getCategoryId());
+	    			log.debug("video_category NEW:" +video_category);
+	    			Video_CategoryLocalServiceUtil.addVideo_Category(video_category);
+	    		}
+    		} catch (Exception e) {
+    			video_category = Video_CategoryLocalServiceUtil.createVideo_Category(CounterLocalServiceUtil.increment());
+				video_category = VideoCategoryMapper.mapVideoCategory(video_category, video_lectureseries.getVideoId(), lectureseries.getCategoryId());
+    			log.debug("lectureseries_Category NEW:" +video_category);
+    			Video_CategoryLocalServiceUtil.addVideo_Category(video_category);
+    		}
+    	
+    }
+    
+    
+ 
+    
+    
+
+    
+ 
    
     private void logInfo(String string) {
     	log.info(string);
@@ -1608,4 +2228,76 @@ public class MigrationController {
         RoleLocalServiceUtil.addUserRole(userId, userRoleId);
     }
     
+
+
+    public static void checkString(String s, Pattern pattern)
+    {
+        Matcher m = pattern.matcher(s);
+        if (m.matches()) {
+            System.out.println(s + " matches; first part is " + m.group(0) +
+                               ", second part is " + m.group(1) + ". third part is " + m.group(2) + ". Groupcount is:" +  m.groupCount());
+        } else {
+            System.out.println(s + " does not match.");
+        }
+    }
+
+
+    public static String checkString(String s, Pattern pattern, int index) 
+    {
+        Matcher m = pattern.matcher(s);
+        if (m.matches()) {
+        	if (m.groupCount() >= index) {
+            System.out.println(s + " matches; return value at index : " + index + ":" + m.group(index));  
+            return m.group(index); 
+            } else {
+                System.out.println(s + "m.groupCount() < index" + m.groupCount()+ "<" +index);	
+            }
+        } else {
+            System.out.println(s + " does not match.");
+        }
+        return " ";
+    }
+    
+    public static Matcher checkStringMatcher(String s, Pattern pattern)
+    {
+        Matcher m = pattern.matcher(s);
+        if (m.matches()) {
+        	return m;
+        } else {
+            System.out.println(s + " does not match.");
+        }
+        return null;
+    }
+    private String extractSpecialJobTitle (String fullString) {
+    		List<String> titles =  new  ArrayList<String>();
+    		titles.add("Prof. Dr. Dr. h.c. mult."); 
+    		titles.add("Prof. Dr. Dr. h.c.");        		
+    		titles.add("Prof. Dr. rer. nat.");
+    		titles.add("Priv. Doz. Dr.");
+    		titles.add("(Hamburg) PD Dr.");
+    		titles.add("(Hannover) PD Dr.");
+    		titles.add("(Flensburg) Prof. Dr.");
+    		titles.add("(Florenz) M.A.");
+    		titles.add("Sekretariat Prof. Dr.");
+    		titles.add("Prof. Dr. habil.");
+    		titles.add("PD Dr. habil.");
+    		titles.add("Dr. phil. habil.");
+    		titles.add("Prof. em. Dr.");
+    		titles.add("Prof. Dr. Dr.");
+    		titles.add("Prof. Dr.");
+    		titles.add("Leal et al.");
+    		
+    		for (String title : titles) {
+	    		if (fullString.contains(title)) {
+	    			fullString = fullString.replace(title, "");
+//	    			result.add(title);
+//	    			result.add(fullString);
+	    			return title; 
+	    		}
+    		}
+//    		result.add("");
+//			result.add(fullString);
+    		return "";
+    	
+    }
 }

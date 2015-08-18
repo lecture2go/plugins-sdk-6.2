@@ -7,7 +7,7 @@ import de.uhh.l2g.plugins.migration.model.LegacyLectureSeries;
 import de.uhh.l2g.plugins.model.Lectureseries;
 
 public class LectureseriesMapper {
-	static final Log log = LogFactoryUtil.getLog(LectureseriesFacilityMapper.class);
+	static final Log log = LogFactoryUtil.getLog(LectureseriesMapper.class);
 	
 	public static Lectureseries mapLectureseries(LegacyLectureSeries legacyLectureseries, Lectureseries lectureseries) {
 		if (legacyLectureseries == null || lectureseries == null) {
@@ -17,8 +17,7 @@ public class LectureseriesMapper {
 	lectureseries.setApproved(legacyLectureseries.getApproved());
 	// TODO Where does it come from ? 
 	//lectureseries.setCategoryId(legacyLectureseries.get)
-	// TODO Where does it come from ? 
-	//lectureseries.setEventType(legacyLectureseries.getT)
+	lectureseries.setEventType(legacyLectureseries.getEventType());
 	lectureseries.setFacultyName(legacyLectureseries.getFacultyName());
 	lectureseries.setLanguage(legacyLectureseries.getLanguage());
 	// TODO Where does it come from ? 
