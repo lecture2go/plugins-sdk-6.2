@@ -25,6 +25,7 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.AddressLocalServiceUtil;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
@@ -342,7 +343,7 @@ public class MigrationController {
     	try {
 			longCompanyId = Long.valueOf(companyId);
 		} catch (NumberFormatException e) {
-			logInfo("migration.portlet.target.companyid is not a number");
+			logInfo("migration.portlet.target.companyid is not a number or set");
 			return false;
 		}
     	
@@ -704,6 +705,7 @@ public class MigrationController {
 		try {
 			users = LegacyUserLocalServiceUtil.getLegacyUsers(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 			initialUserNumber = UserLocalServiceUtil.getUsersCount();
+			logInfo("Begin Migration / Update of:" + users.size() +  "Legacy Users!");
 		for (LegacyUser user: users) {
 			try {
 				createUser(user, companyId, request);
@@ -715,9 +717,8 @@ public class MigrationController {
 		    	userOkflag = failed;
 			}
 		} 
+		logInfo("Migration / Update of:" + users.size() + " Legacy Users successfull!!");
 		request.setAttribute("logInfoString", logInfoString);
-		migratedUser =  UserLocalServiceUtil.getUsers(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		logInfo("Migration / Update of "+(migratedUser.size() - initialUserNumber) +"  of:" + users.size() + "Legacy Users created/updated!");
 		
 		
 		} catch (SystemException e1) {
@@ -1507,23 +1508,27 @@ public class MigrationController {
 			log.info("User not found by mailAddress in LF62 DB.");
 		}
         
-        if (currentUser != null && !legacyUser.getEmailAddress().equals("default@liferay.com") && !legacyUser.getEmailAddress().equals(currentUser.getEmailAddress())) {
+        if (currentUser != null && !legacyUser.getEmailAddress().equals("default@liferay.com")  && !legacyUser.getEmailAddress().equals("default@")  && !legacyUser.getEmailAddress().equals(currentUser.getEmailAddress())) {
         	logInfo("Migrating " + legacyContact.getFirstName() + " " + legacyContact.getLastName() + " with mailAddress " + legacyUser.getEmailAddress());
             long contactId = createOrGetContactId(exstingUser);
             long userId = createOrGetUserId(exstingUser);
             long personalGroupId = createOrGetPersonalGroupId(exstingUser,  String.valueOf(userId));
             logInfo("Creating Contact");
             Contact contact = createOrUpdateContact(companyId,contactId,userId,legacyContact);
+            logInfo("Contact created");
             logInfo("Creating User with legacyContactID " + legacyContact.getContactId() + " contactId: " + contactId);
             User user =	createOrUpdateUser(companyId, exstingUser, userId, legacyUser, legacyContact, contactId);
             createOrUpdateAddress(companyId, user, legacyUser, contact);
             createPersonalGroupIfNotExistent(exstingUser, personalGroupId, userId, currentUserId, String.valueOf(userId), user.getScreenName());
+            logInfo("Group created");
             createPersonalLayoutIfNotExistent(personalGroupId, true);
+            logInfo(" Private Layout  created");
             createPersonalLayoutIfNotExistent(personalGroupId, false);
+            logInfo(" Public Layout  created");
             
             // ADD Power User and User role
             addRolesToUser(user.getUserId());
-            
+            logInfo(" Roles added");
             //update sites to user 
             addUserToSite(sites, userId, companyId);
             logInfo("Added user with id: " + user.getUserId());
@@ -2220,12 +2225,23 @@ public class MigrationController {
     	logInfoString = logInfoString.concat(string + "\n");
     }
     
-    private void addRolesToUser(long userId) throws SystemException {
+    private void addRolesToUser(long userId)  {
         /* Adding user to 'Power User' and 'User' role. */
-        long powerUserRoleId = RoleLocalServiceUtil.fetchRole(companyId, "Power User").getRoleId();
-        long userRoleId = RoleLocalServiceUtil.fetchRole(companyId, "User").getRoleId();
-        RoleLocalServiceUtil.addUserRole(userId, powerUserRoleId);
-        RoleLocalServiceUtil.addUserRole(userId, userRoleId);
+    	Role powerUser;
+		try {
+			powerUser = RoleLocalServiceUtil.fetchRole(companyId, "Power User");
+			Role user = RoleLocalServiceUtil.fetchRole(companyId, "User");
+     	if (powerUser != null) {
+     		RoleLocalServiceUtil.addUserRole(userId, powerUser.getRoleId());
+     	}
+     	if (user != null) {
+     		RoleLocalServiceUtil.addUserRole(userId, user.getRoleId());
+     	}
+		} catch (SystemException e) {
+			log.warn("can't load Role PowerUser and/or User Role and add Role to userid" + userId); 
+		}
+     	
+
     }
     
 
