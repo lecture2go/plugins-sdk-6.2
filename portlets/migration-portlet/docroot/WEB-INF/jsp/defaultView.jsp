@@ -95,6 +95,19 @@
 	<portlet:param name="action" value="migrateInstitution_Host" />
 </portlet:actionURL>
 
+
+<portlet:actionURL var="executeVideo_LectureseriesUrl">
+	<portlet:param name="action" value="migrateVideo_Lectureseries" />
+</portlet:actionURL>
+
+<portlet:actionURL var="executeVideo_CategoryUrl">
+	<portlet:param name="action" value="migrateVideo_Category" />
+</portlet:actionURL>
+
+<portlet:actionURL var="executeCreatorUrl">
+	<portlet:param name="action" value="migrateCreator" />
+</portlet:actionURL>
+
 <p><liferay-ui:message key="migrationActions" /></p>
 
 
@@ -106,7 +119,7 @@
  <pre>
  <table style="width:100%">
   <tr>
-    <th align="left" width="20%"><b>User Entities</b></th>
+    <th align="left" width=""><b>User Entities</b></th>
     <th align="left" width="10%"><b>LF52</b></th>
     <th align="left" width="15%"><b>LF62 migrated</b></th>
     <th align="left" width="10%"><b>Action</b></th>
@@ -187,7 +200,7 @@
 <pre>
  <table style="width:100%">
   <tr>
-    <th align="left" width="20%"><b>Single Entities</b></th>
+    <th align="left" width=""><b>Single Entities</b></th>
     <th align="left" width="10%"><b>LF52</b></th>
     <th align="left" width="15%"><b>LF62 migrated</b></th>
     <th align="left" width="10%"><b>Action</b></th>
@@ -249,13 +262,42 @@
   </tr>   
   
   <tr>
-    <td>Lectureseries</td>
+    <td>Lectureseries (Term && Categories)</td>
     <td><c:out value="${lectureseriesEntrieSize}" /></td>
     <td><c:out value="${lectureseriesEntrieSize62}" /></td>
     <td><a href="<c:out value="${executeMigrateLectureseriesUrl}" />"><liferay-ui:message key="migrate" /></a></td>
     <td><c:out value="${lectureseriesOkflag}" escapeXml="false" /></td>
     <td></td>
   </tr>
+    
+  <tr>
+    <td>&#10149; Lecturesereries.setTermId</td>
+    <td>0</td>
+    <td><c:out value="${lectureseriesEntrieSize62}" /></td>
+    <td></td>
+    <td><c:out value="${lectureseriesOkflag}" escapeXml="false" /></td>
+    <td></td>
+  </tr>
+  
+  
+  <tr>
+    <td>&#10149; Term</td>
+    <td>0</td>
+    <td><c:out value="${termEntrieSize62}" /></td>
+    <td></td>
+    <td><c:out value="${lectureseriesOkflag}" escapeXml="false" /></td>
+    <td></td>
+  </tr>
+
+  <tr>
+    <td>&#10149; Category</td>
+    <td>0</td>
+    <td><c:out value="${categoryEntrieSize62}" /></td>
+    <td></td>
+    <td><c:out value="${lectureseriesOkflag}" escapeXml="false" /></td>
+    <td></td>
+  </tr>
+  
 
   <tr>
     <td>Videohitlist</td>
@@ -278,10 +320,10 @@
 </pre>
   
   
-  <pre>
+<pre>
  <table style="width:100%">
   <tr>
-    <th align="left" width="20%" ><b>Mapping Entities</b></th>
+    <th align="left" width="" ><b>Mapping Entities</b></th>
     <th align="left" width="10%" ><b>LF52</b></th>
     <th align="left" width="15%" ><b>LF62 migrated</b></th>
     <th align="left" width="10%"><b>Action</b></th>
@@ -315,23 +357,61 @@
   </tr>  
   
   
-    <tr>
-    <td>Facilit_Host</td>
+  <tr>
+    <td>Facility_Host</td>
     <td><c:out value="${legacyFacilityHostEntrieSize}" /></td>
     <td><c:out value="${facilityHostEntrieSize62}" /></td>
     <td><a href="<c:out value="${executeInstitution_HostUrl}" />"><liferay-ui:message key="migrate" /></a></td>
     <td><c:out value="${facilityHostOkflag}" escapeXml="false" /></td>
     <td></td>
   </tr>   
+  <tr>
+    <td>Video_Lectureseries (req: TermId )</td>
+    <td>0</td>
+    <td><c:out value="${videoLectureseriesEntrieSize62}" /></td>
+    <td><a href="<c:out value="${executeVideo_LectureseriesUrl}" />"><liferay-ui:message key="migrate" /></a></td>
+    <td><c:out value="${videoLectureseriesOkflag}" escapeXml="false" /></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>&#10149; Video.setTermId()</td>
+    <td>0</td>
+    <td><c:out value="${videoLectureseriesEntrieSize62}" /></td>
+    <td></td>
+    <td><c:out value="${videoLectureseriesOkflag}" escapeXml="false" /></td>
+    <td></td>
+  </tr>  
+  <tr>
+    <td>Video_Category (req: Video_Lectureseries)</td>
+    <td>0</td>
+    <td><c:out value="${videoCategoryEntrieSize62}" /></td>
+    <td><a href="<c:out value="${executeVideo_CategoryUrl}" />"><liferay-ui:message key="migrate" /></a></td>
+    <td><c:out value="${videoCategoryOkflag}" escapeXml="false" /></td>
+    <td></td>
+  </tr>  
+  <tr>
+    <td>Creator</td>
+    <td>0</td>
+    <td><c:out value="${creatorEntrieSize62}" /></td>
+    <td><a href="<c:out value="${executeCreatorUrl}" />"><liferay-ui:message key="migrate" /></a></td>
+    <td><c:out value="${creatorOkflag}" escapeXml="false" /></td>
+    <td></td>
+  </tr>    
+  <tr>
+    <td>&#10149; Lectureseries_Creator</td>
+    <td>0</td>
+    <td><c:out value="${lectureseriesCreatorEntrieSize62}" /></td>
+    <td></td>
+    <td><c:out value="${creatorOkflag}" escapeXml="false" /></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>&#10149; Video_Creator</td>
+    <td>0</td>
+    <td><c:out value="${videoCreatorEntrieSize62}" /></td>
+    <td></td>
+    <td><c:out value="${creatorOkflag}" escapeXml="false" /></td>
+    <td></td>
+  </tr> 
   </table> 
 </pre>
-  
-
-
-
-
-
-
-
-
-
