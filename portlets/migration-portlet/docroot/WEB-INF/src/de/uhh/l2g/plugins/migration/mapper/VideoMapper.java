@@ -14,7 +14,7 @@ public class VideoMapper {
 			log.warn("can't execute method with null values - return video as null value");
 			return null;
 		}
-		
+
 		video.setCitation2go(legacyVideo.getCitation2go());
 		video.setContainerFormat(legacyVideo.getContainerFormat());;
 		video.setDownloadLink(legacyVideo.getDownloadLink());
@@ -32,7 +32,7 @@ public class VideoMapper {
 		video.setResolution(legacyVideo.getResolution());
 		// TODO sourcedata comes from ?
 		// video.setRootInstitutionId(legacyVideo.get);
-		video.setSurl(legacyVideo.getSurl());
+		video.setSecureFilename(legacyVideo.getSurl());
 		video.setTags(legacyVideo.getTags());
 		// TODO sourcedata comes from ?
 		//video.setTermId(legacyVideo);

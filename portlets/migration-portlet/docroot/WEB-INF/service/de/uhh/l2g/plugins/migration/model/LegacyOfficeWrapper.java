@@ -275,8 +275,7 @@ public class LegacyOfficeWrapper implements LegacyOffice,
 	}
 
 	@Override
-	public int compareTo(
-		de.uhh.l2g.plugins.migration.model.LegacyOffice legacyOffice) {
+	public int compareTo(LegacyOffice legacyOffice) {
 		return _legacyOffice.compareTo(legacyOffice);
 	}
 
@@ -286,17 +285,17 @@ public class LegacyOfficeWrapper implements LegacyOffice,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.migration.model.LegacyOffice> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<LegacyOffice> toCacheModel() {
 		return _legacyOffice.toCacheModel();
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacyOffice toEscapedModel() {
+	public LegacyOffice toEscapedModel() {
 		return new LegacyOfficeWrapper(_legacyOffice.toEscapedModel());
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacyOffice toUnescapedModel() {
+	public LegacyOffice toUnescapedModel() {
 		return new LegacyOfficeWrapper(_legacyOffice.toUnescapedModel());
 	}
 

@@ -14,6 +14,7 @@
 
 package de.uhh.l2g.plugins.migration.service.impl;
 
+<<<<<<< HEAD
 import com.liferay.portal.kernel.exception.SystemException;
 
 import de.uhh.l2g.plugins.migration.model.LegacyAddress;
@@ -43,4 +44,29 @@ public class LegacyAddressLocalServiceImpl
 	public LegacyAddress getAdressByUserIdFirst(long userId) throws SystemException {
 		return legacyAddressPersistence.fetchByUserId_First(userId, null);
 	} 
+=======
+import de.uhh.l2g.plugins.migration.service.base.LegacyAddressLocalServiceBaseImpl;
+
+/**
+ * The implementation of the legacy address local service.
+ *
+ * <p>
+ * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link de.uhh.l2g.plugins.migration.service.LegacyAddressLocalService} interface.
+ *
+ * <p>
+ * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
+ * </p>
+ *
+ * @author unihh
+ * @see de.uhh.l2g.plugins.migration.service.base.LegacyAddressLocalServiceBaseImpl
+ * @see de.uhh.l2g.plugins.migration.service.LegacyAddressLocalServiceUtil
+ */
+public class LegacyAddressLocalServiceImpl
+	extends LegacyAddressLocalServiceBaseImpl {
+	/*
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.migration.service.LegacyAddressLocalServiceUtil} to access the legacy address local service.
+	 */
+>>>>>>> refs/heads/origin-master
 }

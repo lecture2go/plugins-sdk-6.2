@@ -88,14 +88,16 @@
             var $chapters = $('#chapters');
             var $chapterDivs = $chapters.find("div.chaptertile");
             
-            // Chapter ids und Zeiten in Array für spätere Abfragen speichern
+            // Chapter ids und Zeiten in Object für spätere Abfragen speichern
             var chapters = [];
             for (var i = 0; i < $chapterDivs.length; i++) {
             	// Array chapters enthält Triple aus id, Anfangs- und Endzeit der Kapitel
-            	chapters[i] = [];
-            	chapters[i][0] = $chapterDivs.eq(i).attr("id");
-            	chapters[i][1] = timeToSeconds($chapterDivs.eq(i).attr("begin"));
-            	chapters[i][2] = timeToSeconds($chapterDivs.eq(i).attr("end"));
+            	var chapter = {
+            			id : $chapterDivs.eq(i).attr("id"),
+            			begin : timeToSeconds($chapterDivs.eq(i).attr("begin")),
+                    	end : timeToSeconds($chapterDivs.eq(i).attr("end"))
+            	}
+            	chapters[i] = chapter;
             }
 
             if (frameStart && frameEnd) {
@@ -129,17 +131,22 @@
                     jwplayer().pause();
                 }
             
-            	
                 // Falls neues Kapitel beginnt, zu Kapitel scrollen und hervorheben
 
                 for (var i = 0; i < chapters.length; i++) {
                     // Falls Player in ein Kapitel eintritt, Kapitel Klasse 'active' setzen
-                    $cur = $("#" + chapters[i][0]);
-                	if ( pos == chapters[i][1] ) {
+                    var $cur = $("#" + chapters[i].id);
+                	if ( pos == chapters[i].begin && !$cur.hasClass("active")) {
                 		$cur.addClass("active").siblings().removeClass("active");
-                		var offset = Math.floor( $cur.offset().top - $chapters.offset().top );
-                		$chapters.animate({ scrollTop: offset}, 1000);
-                	} else if ( pos == chapters[i][2] ){
+                		
+                		var off1 = Math.floor( $cur.offset().top );
+                		var off2 = Math.floor( $chapters.offset().top );
+                		var diff = off1 - off2;
+                		var target = $chapters.scrollTop() + diff;
+                		
+                		$chapters.animate({ scrollTop: target}, 600);
+                		
+                	} else if ( pos == chapters[i].end + 1 ){
                 		$cur.removeClass("active");
                 	}
                 }

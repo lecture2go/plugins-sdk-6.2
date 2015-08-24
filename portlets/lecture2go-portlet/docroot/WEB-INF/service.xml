@@ -130,7 +130,7 @@
             <finder-column name="parentId"></finder-column>
             <finder-column name="sort"></finder-column>
         </finder>
-        <finder name="TopLevel" return-type="Institution" where="parentId = 0">
+         <finder name="Root" return-type="Institution" where="parentId = 0">
             <finder-column name="groupId"></finder-column>
         </finder>
         <finder name="G_I" return-type="Institution">
@@ -334,7 +334,7 @@
         <column name="openAccess" type="int"></column>
         <column name="downloadLink" type="int"></column>
         <column name="metadataId" type="long"></column>
-        <column name="surl" type="String"></column>
+        <column name="secureFilename" type="String"></column>
         <column name="hits" type="long"></column>
         <column name="uploadDate" type="Date"></column>
         <column name="permittedToSegment" type="int"></column>
@@ -343,6 +343,7 @@
         <column name="termId" type="long"></column>
         <column name="videoCreatorId" type="long"></column>
         <column name="tags" type="String"></column>
+        <column name="password" type="String"></column>
         <order by="desc">
             <order-column name="videoId" order-by="desc"></order-column>
             <order-column name="uploadDate" order-by="desc"></order-column>

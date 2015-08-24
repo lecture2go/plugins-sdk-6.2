@@ -4,7 +4,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
 	version="2.0">
-	
+
 	<portlet>
      	<portlet-name>lg-open-access-videos</portlet-name>
      	<display-name>Open Access Videos</display-name>
@@ -40,7 +40,7 @@
 	      	<role-name>user</role-name>
 	    </security-role-ref>
     </portlet>
-	
+
 	<portlet>
      	<portlet-name>lg-admin-video-management</portlet-name>
      	<display-name>L2Go Video Management</display-name>
@@ -76,7 +76,7 @@
 	      	<role-name>user</role-name>
 	    </security-role-ref>
     </portlet>
-    	
+
 	<portlet>
      	<portlet-name>lg-admin-lecture-series-management</portlet-name>
      	<display-name>L2Go Lecture Series Management</display-name>
@@ -111,8 +111,8 @@
 	    <security-role-ref>
 	      	<role-name>user</role-name>
 	    </security-role-ref>
-    </portlet> 
-  
+    </portlet>
+
     <portlet>
      	<portlet-name>lg-admin-user-management</portlet-name>
      	<display-name>L2Go User Management</display-name>
@@ -163,6 +163,7 @@
         <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
+            <portlet-mode>view</portlet-mode>
         </supports>
         <resource-bundle>content.Language</resource-bundle>
         <portlet-info>
@@ -170,18 +171,6 @@
             <short-title>L2Go Institution Management</short-title>
             <keywords>L2Go Institution Management</keywords>
         </portlet-info>
-        <security-role-ref>
-            <role-name>administrator</role-name>
-        </security-role-ref>
-        <security-role-ref>
-            <role-name>guest</role-name>
-        </security-role-ref>
-        <security-role-ref>
-            <role-name>power-user</role-name>
-        </security-role-ref>
-        <security-role-ref>
-            <role-name>user</role-name>
-        </security-role-ref>
     </portlet>
 
 </portlet-app>

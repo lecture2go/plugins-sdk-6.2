@@ -23,7 +23,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 
-import de.uhh.l2g.plugins.Institution_HostException;
+import de.uhh.l2g.plugins.Institution_HostHostException;
 import de.uhh.l2g.plugins.Institution_HostInstitutionException;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
@@ -69,6 +69,7 @@ public class Institution_HostLocalServiceImpl
 		return h;
 	}
 
+
 	public List<Institution> getByGroupIdAndHostId(long groupId, long hostId) throws SystemException, PortalException {
 		List<Institution_Host> linkList = institution_HostPersistence.findByG_H(groupId, hostId);
 		List<Institution> institutions = null;
@@ -101,8 +102,9 @@ public class Institution_HostLocalServiceImpl
 		 }
 
 	     if (Validator.isNull(hostId)) {
-	       throw new Institution_HostException();
+	       throw new Institution_HostHostException();
 	     }
+
 	}
 
 	public Institution_Host addEntry(long institutionId, long hostId, ServiceContext serviceContext) throws SystemException, PortalException {
@@ -114,9 +116,41 @@ public class Institution_HostLocalServiceImpl
 
 		validate(institutionId, hostId);
 
-		long institution_HostId = counterLocalService.increment(Institution_Host.class.getName());
+		//long institution_HostId = counterLocalService.increment(Institution_Host.class.getName());
 
-		Institution_Host institution_Host = institution_HostPersistence.create(institution_HostId);
+		Institution_Host institution_Host = institution_HostPersistence.create(0);
+
+		institution_Host.setGroupId(groupId);
+		institution_Host.setInstitutionId(institutionId);
+		institution_Host.setHostId(hostId);
+
+
+		institution_HostPersistence.update(institution_Host);
+		long institution_HostId = institution_Host.getPrimaryKey();
+
+		institution_Host.setExpandoBridgeAttributes(serviceContext);
+
+		resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
+			       Institution.class.getName(), institution_HostId, false, true, true);
+
+
+
+		return institution_Host;
+
+	}
+
+	public Institution_Host updateEntry(long institutionId, long hostId, ServiceContext serviceContext) throws SystemException, PortalException {
+
+		long groupId = serviceContext.getScopeGroupId();
+		long userId = serviceContext.getUserId();
+
+		User user = userPersistence.findByPrimaryKey(userId);
+        System.out.println (institutionId +" "+hostId);
+		validate(institutionId, hostId);
+
+		List<Institution_Host> linstitution_Host = getListByGroupIdAndInstitutionId(groupId, institutionId);
+		System.out.println (linstitution_Host.toString());
+		Institution_Host institution_Host = linstitution_Host.get(0);
 
 		institution_Host.setGroupId(groupId);
 		institution_Host.setInstitutionId(institutionId);
@@ -126,29 +160,34 @@ public class Institution_HostLocalServiceImpl
 
 		institution_HostPersistence.update(institution_Host);
 
+		long institution_HostId = institution_Host.getPrimaryKey();
 		resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
-			       Institution.class.getName(), institutionId, false, true, true);
+			       Institution.class.getName(), institution_HostId, false, true, true);
 
 
 		return institution_Host;
 
 	}
 
-	   public Institution_Host deleteEntriesByInstitution(long institutionId, ServiceContext serviceContext)
+
+	   public Institution_Host deleteLinkById(long institutionHostId, ServiceContext serviceContext)
 		        throws PortalException, SystemException {
+		   		Institution_Host institution_Host = null;
 
 		   		long groupId = serviceContext.getScopeGroupId();
 		   		long userId = serviceContext.getUserId();
-		   		Institution_Host institution_host = null;
-		       // Institution_Host institution_host = getByGroupIdAndInstitutionId(groupId,institutionId);
 
-		        resourceLocalService.deleteResource(serviceContext.getCompanyId(),
-		        		Institution.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
-		        		institutionId);
 
-		        institution_host = deleteInstitution_Host(institutionId);
 
-		        return institution_host;
+				institution_Host = deleteInstitution_Host(institutionHostId);
+
+
+				institution_Host.setExpandoBridgeAttributes(serviceContext);
+				resourceLocalService.deleteResource(serviceContext.getCompanyId(),
+				        		Institution_Host.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
+				        		institutionHostId);
+
+		        return institution_Host;
 
 		    }
 

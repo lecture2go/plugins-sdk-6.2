@@ -26,8 +26,9 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 
-import de.uhh.l2g.plugins.HostNameException;
+import de.uhh.l2g.plugins.InstitutionNameException;
 import de.uhh.l2g.plugins.model.Institution;
+import de.uhh.l2g.plugins.model.Institution_Host;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.InstitutionLocalServiceBaseImpl;
@@ -72,8 +73,8 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		return institutionPersistence.fetchByG_I(groupId, institutionId);
 	}
 
-	public Institution getTopLevelByGroupId(long groupId) throws SystemException {
-		return (Institution) institutionPersistence.fetchByTopLevel(groupId);
+	public Institution getRootByGroupId(long groupId) throws SystemException {
+		return (Institution) institutionPersistence.fetchByRoot(groupId);
 	}
 
 	public List<Institution> getByGroupIdAndParent(long groupId, long parentId) throws SystemException {
@@ -129,6 +130,10 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		return InstitutionFinderUtil.findMaxSortByParent(parentId);
 	}
 
+	public int getLockingElements(long institutionId) throws SystemException {
+		return InstitutionFinderUtil.findLockingElements(institutionId);
+	}
+
 	public List<Institution> getInstitutionsFromLectureseriesIdsAndVideoIds(ArrayList<Long> lectureseriesIds, ArrayList<Long> videoIds) {
 		return InstitutionFinderUtil.findInstitutionsByLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds, new Long(0));
 	}
@@ -148,7 +153,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 	protected void validate(String name) throws PortalException {
 
 		if (Validator.isNull(name)) {
-			throw new HostNameException();
+			throw new InstitutionNameException();
 		}
 
 	}
@@ -211,9 +216,9 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 
 		validate(name);
 
-		long institutionId = counterLocalService.increment(Institution.class.getName());
+		//long institutionId = counterLocalService.increment(Institution.class.getName());
 
-		Institution institution = institutionPersistence.create(institutionId);
+		Institution institution = institutionPersistence.create(0);
 
 		Institution parent = InstitutionLocalServiceUtil.getById(parentId);
 
@@ -224,11 +229,17 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		else institution.setLevel(0);
 		institution.setSort(updateSort(institution,sort));
 
-		institution.setExpandoBridgeAttributes(serviceContext);
-
-		Institution_HostLocalServiceUtil.addEntry(institutionId, hostId, serviceContext);
+		//institution.setExpandoBridgeAttributes(serviceContext);
 
 		institutionPersistence.update(institution);
+		long institutionId = institution.getPrimaryKey();
+
+		institution.setExpandoBridgeAttributes(serviceContext);
+
+		System.out.println(institutionId+" "+institution.getPrimaryKey() +" "+institution.getInstitutionId());
+
+
+		Institution_HostLocalServiceUtil.addEntry(institutionId, hostId, serviceContext);
 
 		resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
 			       Institution.class.getName(), institutionId, false, true, true);
@@ -236,7 +247,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		return institution;
 	}
 
-	public Institution updateInstitution(long institutionId, String name, long hostId, long parentId, int sort,
+	public Institution updateInstitution(long institutionId, String name, long hostId, int sort,
 		       ServiceContext serviceContext) throws PortalException,
 		       SystemException {
 		    long groupId = serviceContext.getScopeGroupId();
@@ -248,16 +259,19 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 			validate(name);
 
 		    Institution institution = getInstitution(institutionId);
-		    Institution parent = InstitutionLocalServiceUtil.getById(parentId);
+		    //Institution parent = InstitutionLocalServiceUtil.getInstitution(institution.getParentId());;
 
 		    institution.setName(name);
 			institution.setGroupId(groupId);
-			institution.setParentId(parentId);
-			if (parentId > 0) institution.setLevel(parent.getLevel()+1);
-			else institution.setLevel(0);
+
 			institution.setSort(updateSort(institution,sort));
 
-		    institutionPersistence.update(institution);
+			institution.setExpandoBridgeAttributes(serviceContext);
+
+			System.out.println(institutionId+" "+institution.getPrimaryKey() );
+
+			institutionPersistence.update(institution);
+			Institution_HostLocalServiceUtil.updateEntry(institutionId, hostId, serviceContext);
 
 		    resourceLocalService.updateResources(user.getCompanyId(), groupId,
 		         Institution.class.getName(), institutionId,
@@ -268,22 +282,45 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 
 		}
 
-	   public Institution deleteInstitution(long institutionId, ServiceContext serviceContext)
+	public Institution deleteInstitution(long institutionId, ServiceContext serviceContext)
 		        throws PortalException, SystemException {
 
-		        //TODO: check if Institution is empty
-		        Institution institution = getInstitution(institutionId);
 
-		        resourceLocalService.deleteResource(serviceContext.getCompanyId(),
-		        		Institution.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
-		        		institutionId);
+		   		long groupId = serviceContext.getScopeGroupId();
+		   		long userId = serviceContext.getUserId();
 
-		        updateSort(institution, 0);
-		        institution = deleteInstitution(institutionId);
+		   		Institution institution = getInstitution(institutionId);
+
+		   	    //Check if Institution is empty, i.e. no  subfacilities, lecture series, videos, and members
+		        if (getLockingElements(institutionId) < 1){
+
+			        resourceLocalService.deleteResource(serviceContext.getCompanyId(),
+			        		Institution.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
+			        		institutionId);
+
+			        updateSort(institution, 0);
+			        institution = deleteInstitution(institutionId);
+
+			        //Remove Entry from Link Table
+			    	List<Institution_Host> linstitution_Host = Institution_HostLocalServiceUtil.getListByGroupIdAndInstitutionId(groupId, institutionId);
+
+					if (linstitution_Host.size() > 0){
+
+						for (Institution_Host link : linstitution_Host) {
+							long ihId = link.getPrimaryKey();
+							System.out.println(ihId);
+
+
+							Institution_HostLocalServiceUtil.deleteLinkById(ihId, serviceContext);
+
+						}
+					}
+		        }
+		        else { System.out.println("Could not delte "+ institution.getName());}
 
 		        return institution;
 
-		    }
+		  }
 
 
 }

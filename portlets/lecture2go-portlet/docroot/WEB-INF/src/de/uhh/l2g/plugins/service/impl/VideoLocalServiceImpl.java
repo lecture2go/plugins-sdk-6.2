@@ -31,18 +31,21 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import de.uhh.l2g.plugins.NoSuchInstitutionException;
+import de.uhh.l2g.plugins.NoSuchLectureseriesException;
 import de.uhh.l2g.plugins.NoSuchProducerException;
 import de.uhh.l2g.plugins.NoSuchVideoException;
 import de.uhh.l2g.plugins.model.Creator;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Lastvideolist;
+import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.model.Segment;
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.impl.HostImpl;
 import de.uhh.l2g.plugins.model.impl.InstitutionImpl;
 import de.uhh.l2g.plugins.model.impl.LastvideolistImpl;
+import de.uhh.l2g.plugins.model.impl.LectureseriesImpl;
 import de.uhh.l2g.plugins.model.impl.ProducerImpl;
 import de.uhh.l2g.plugins.model.impl.VideoImpl;
 import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
@@ -149,7 +152,15 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		} catch (SystemException e1) {
 //			e1.printStackTrace();
 		}
-
+		Lectureseries objectLectureseries = new LectureseriesImpl();
+		try {
+			objectLectureseries = lectureseriesPersistence.findByPrimaryKey(objectVideo.getLectureseriesId());
+		} catch (NoSuchLectureseriesException e1) {
+//			e1.printStackTrace();
+		} catch (SystemException e1) {
+//			e1.printStackTrace();
+		}
+				
 		// prepare video short name
 		String video_shortname = objectVideo.getTitle();
 		if (video_shortname.length() > 45)
@@ -167,7 +178,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			imageSmall = objectVideo.getPreffix() + "_s.jpg";
 			imageMedium = objectVideo.getPreffix() + "_m.jpg";
 		} else {
-			videoPfad = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + objectVideo.getSurl();
+			videoPfad = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + objectVideo.getSecureFilename();
 			image = objectVideo.getSPreffix() + ".jpg";
 			imageSmall = objectVideo.getSPreffix() + "_s.jpg";
 			imageMedium = objectVideo.getSPreffix() + "_m.jpg";
@@ -226,7 +237,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			filename = objectVideo.getFilename();
 		} else {
 			preffix = objectVideo.getSPreffix();
-			filename = objectVideo.getSurl();
+			filename = objectVideo.getSecureFilename();
 		}
 		String homedirPath = "";
 		homedirPath = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + preffix;
@@ -503,7 +514,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		ListIterator<Video> vli = vl.listIterator();
 		while(vli.hasNext()){
 			Video objectVideo = getFullVideo(vli.next().getVideoId());
-			rvl.add(objectVideo);
+			if(objectVideo.getFilename().trim().length()>0)rvl.add(objectVideo);
 		}
 		return rvl;
 	}
@@ -545,7 +556,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			String playerUri = "";
 			playerUri += uris.get(i);
 			if(video.getOpenAccess()==1)playerUri = playerUri.replace("[filename]", video.getFilename());
-			else playerUri = playerUri.replace("[filename]", video.getSurl());
+			else playerUri = playerUri.replace("[filename]", video.getSecureFilename());
 			//
 			playerUri = playerUri.replace("[host]", host.getStreamer());
 			playerUri = playerUri.replace("[ext]", video.getContainerFormat());

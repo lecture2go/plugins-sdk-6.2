@@ -226,20 +226,19 @@ public interface LegacySegmentModel extends BaseModel<LegacySegment> {
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		de.uhh.l2g.plugins.migration.model.LegacySegment legacySegment);
+	public int compareTo(LegacySegment legacySegment);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<de.uhh.l2g.plugins.migration.model.LegacySegment> toCacheModel();
+	public CacheModel<LegacySegment> toCacheModel();
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacySegment toEscapedModel();
+	public LegacySegment toEscapedModel();
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacySegment toUnescapedModel();
+	public LegacySegment toUnescapedModel();
 
 	@Override
 	public String toString();

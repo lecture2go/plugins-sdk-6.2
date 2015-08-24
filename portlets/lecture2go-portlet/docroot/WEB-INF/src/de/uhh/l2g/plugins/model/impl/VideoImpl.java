@@ -33,6 +33,26 @@ public class VideoImpl extends VideoBaseImpl {
 	 * Never reference this class directly. All methods that expect a video model instance should use the {@link de.uhh.l2g.plugins.model.Video} interface instead.
 	 */
 	
+	private String lectureseriesUrl;
+	
+	public String getLectureseriesUrl() {
+		return lectureseriesUrl;
+	}
+
+	public void setLectureseriesUrl(String lectureseriesUrl) {
+		this.lectureseriesUrl = lectureseriesUrl;
+	}
+
+	private Integer accessPermitted;
+	
+	public Integer getAccessPermitted() {
+		return accessPermitted;
+	}
+
+	public void setAccessPermitted(Integer accessPermitted) {
+		this.accessPermitted = accessPermitted;
+	}
+
 	private ArrayList<String> playerUris;
 	
 
@@ -417,7 +437,7 @@ public class VideoImpl extends VideoBaseImpl {
 		String preffix="";
 		try{
 			// extract time and date from the originalFileName
-			String[] parameter = this.getSurl().split("\\.");
+			String[] parameter = this.getSecureFilename().split("\\.");
 			preffix = parameter[0];
 		}catch(NullPointerException npe){}
 			return preffix;

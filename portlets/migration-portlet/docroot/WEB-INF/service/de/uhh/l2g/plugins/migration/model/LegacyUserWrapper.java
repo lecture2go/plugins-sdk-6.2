@@ -1063,8 +1063,7 @@ public class LegacyUserWrapper implements LegacyUser, ModelWrapper<LegacyUser> {
 	}
 
 	@Override
-	public int compareTo(
-		de.uhh.l2g.plugins.migration.model.LegacyUser legacyUser) {
+	public int compareTo(LegacyUser legacyUser) {
 		return _legacyUser.compareTo(legacyUser);
 	}
 
@@ -1074,17 +1073,17 @@ public class LegacyUserWrapper implements LegacyUser, ModelWrapper<LegacyUser> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.migration.model.LegacyUser> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<LegacyUser> toCacheModel() {
 		return _legacyUser.toCacheModel();
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacyUser toEscapedModel() {
+	public LegacyUser toEscapedModel() {
 		return new LegacyUserWrapper(_legacyUser.toEscapedModel());
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacyUser toUnescapedModel() {
+	public LegacyUser toUnescapedModel() {
 		return new LegacyUserWrapper(_legacyUser.toUnescapedModel());
 	}
 

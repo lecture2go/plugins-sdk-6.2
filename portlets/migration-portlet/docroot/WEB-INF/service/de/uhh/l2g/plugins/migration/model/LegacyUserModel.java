@@ -600,20 +600,19 @@ public interface LegacyUserModel extends BaseModel<LegacyUser> {
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		de.uhh.l2g.plugins.migration.model.LegacyUser legacyUser);
+	public int compareTo(LegacyUser legacyUser);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<de.uhh.l2g.plugins.migration.model.LegacyUser> toCacheModel();
+	public CacheModel<LegacyUser> toCacheModel();
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacyUser toEscapedModel();
+	public LegacyUser toEscapedModel();
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacyUser toUnescapedModel();
+	public LegacyUser toUnescapedModel();
 
 	@Override
 	public String toString();
