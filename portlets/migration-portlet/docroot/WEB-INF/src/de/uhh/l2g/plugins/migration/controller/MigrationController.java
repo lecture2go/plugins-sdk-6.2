@@ -1109,7 +1109,7 @@ public class MigrationController {
 			facilityHosts = LegacyFacilityHostLocalServiceUtil.getLegacyFacilityHosts(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 			logInfo("FacilityHost Size : " + facilityHosts.size());
 			for (LegacyFacilityHost FacilityHost: facilityHosts) {
-				migrateInstitution_Host(FacilityHost, companyId);
+				migrateInstitution_Host(FacilityHost, siteId);
 			} 			
     	
 		} catch (SystemException e1) {
