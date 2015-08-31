@@ -101,9 +101,9 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 		validate(name,streamLocation);
 
 
-		//long hostId = counterLocalService.increment();
+		long hostId = counterLocalService.increment();
 
-		Host host = hostPersistence.create(0);
+		Host host = hostPersistence.create(hostId);
 
 		host.setName(name);
 		host.setGroupId(groupId);
@@ -114,7 +114,6 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 		host.setPort(port);
 
 		hostPersistence.update(host);
-		long hostId = host.getPrimaryKey();
 
 		host.setExpandoBridgeAttributes(serviceContext);
 

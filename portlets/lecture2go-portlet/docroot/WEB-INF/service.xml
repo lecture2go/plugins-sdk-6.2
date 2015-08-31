@@ -69,6 +69,7 @@
     	<column name="level" type="int"></column>
     	<column name="sort" type="int"></column>
         <column name="groupId" type="long"></column>
+        <column name="companyId" type="long"></column>
 		<order by="asc"> <order-column name="sort" />
 		</order>
     	<finder name="Parent" return-type="Collection">
@@ -136,6 +137,9 @@
         <finder name="G_I" return-type="Institution">
             <finder-column name="groupId"></finder-column>
             <finder-column name="institutionId"></finder-column>
+        </finder>
+        <finder name="CompanyId" return-type="Collection">
+            <finder-column name="companyId"></finder-column>
         </finder>
     </entity>
     <entity name="Lectureseries_Institution" local-service="true" remote-service="false">
@@ -205,6 +209,7 @@
     	<column name="serverRoot" type="String"></column>
     	<column name="name" type="String"></column>
 		<column name="groupId" type="long"></column>
+        <column name="companId" type="long"></column>
 		<finder name="GroupId" return-type="Collection">
             <finder-column name="groupId"></finder-column>
         </finder>
@@ -218,6 +223,7 @@
         <column name="institutionId" type="long"></column>
         <column name="hostId" type="long"></column>
         <column name="groupId" type="long"></column>
+        <column name="companyId" type="long"></column>
         <finder name="institutionId" return-type="Collection">
             <finder-column name="institutionId" case-sensitive="false"></finder-column>
         </finder>
@@ -231,6 +237,9 @@
         <finder name="G_I" return-type="Institution_Host" unique="true">
             <finder-column name="groupId"></finder-column>
             <finder-column name="institutionId"></finder-column>
+        </finder>
+        <finder name="GroupId" return-type="Collection">
+            <finder-column name="groupId"></finder-column>
         </finder>
     </entity>
     <entity name="Office" local-service="true" remote-service="false">
@@ -573,9 +582,8 @@
     <exceptions>
         <exception>HostName</exception>
         <exception>HostStreamer</exception>
-        <exception>HostStreamingServerTemplate</exception>
         <exception>InstitutionName</exception>
-        <exception>Institution_Host</exception>
+        <exception>Institution_HostHost</exception>
         <exception>Institution_HostInstitution</exception>
     </exceptions>
 

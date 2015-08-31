@@ -27,6 +27,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 
 import de.uhh.l2g.plugins.InstitutionNameException;
+import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Institution_Host;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
@@ -187,7 +188,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 						 validPosition = curPos;
 						 increment = 1; //shift all follwing up
 					 }
-					 else {
+					 else { //newpos = 0 <=> remove 
 						 if (curPos > prevPos) increment = -1;
 					 }
 				 }
@@ -200,6 +201,44 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 			if (increment == 0) validPosition = curPos;
 
 		}
+		
+		/** Refreshes sort numbers to start with 1
+	     *
+	     */
+		protected int initilizeSort(Institution parent) throws SystemException{
+			int validPosition = 0;
+			int curPos = 1;
+			//int prevPos = inst.getSort();
+
+			//System.out.println(inst.getSort());
+			int subElements = InstitutionLocalServiceUtil.getByGroupIdAndParentCount(parent.getGroupId(), parent.getPrimaryKey());
+
+			if (subElements < 1) validPosition = 1; // There is nothing to reorder and only one valid position
+			else{ // sort Elements if gap => shift all following
+				List<Institution> subtree = InstitutionLocalServiceUtil.getByGroupIdAndParent(inst.getGroupId(), inst.getParentId());
+
+				//if (newpos > 0) curPos = 1;
+				int increment = 0;
+				for (Institution subInstitution: subtree){
+					 if (newpos <= curPos && increment == 0){ //insert new Institution here
+						 if (newpos > 0) {
+							 validPosition = curPos;
+							 increment = 1; //shift all follwing up
+						 }
+						 else { //newpos = 0 <=> remove 
+							 if (curPos > prevPos) increment = -1;
+						 }
+					 }
+					 subInstitution.setSort(curPos + increment);
+					 institutionPersistence.update(subInstitution);
+					// System.out.println(subInstitution.getInstitutionId() +" "+ subInstitution.getName()+ " " + curPos + " " + increment+ " " +validPosition);
+					 curPos++;
+
+				}
+				if (increment == 0) validPosition = curPos;
+
+			}
+
 
 
 		//System.out.println(validPosition);
@@ -216,28 +255,28 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 
 		validate(name);
 
-		//long institutionId = counterLocalService.increment(Institution.class.getName());
+		long institutionId = counterLocalService.increment(Institution.class.getName());
 
-		Institution institution = institutionPersistence.create(0);
+		Institution institution = institutionPersistence.create(institutionId);
 
 		Institution parent = InstitutionLocalServiceUtil.getById(parentId);
 
 		institution.setName(name);
 		institution.setGroupId(groupId);
 		institution.setParentId(parentId);
-		if (parentId > 0) institution.setLevel(parent.getLevel()+1);
+		if (parentId > 0 && parentId < Long.MAX_VALUE) institution.setLevel(parent.getLevel()+1);
 		else institution.setLevel(0);
 		institution.setSort(updateSort(institution,sort));
 
 		//institution.setExpandoBridgeAttributes(serviceContext);
 
 		institutionPersistence.update(institution);
-		long institutionId = institution.getPrimaryKey();
+		//long institutionId = institution.getPrimaryKey();
 
 		institution.setExpandoBridgeAttributes(serviceContext);
 
 		System.out.println(institutionId+" "+institution.getPrimaryKey() +" "+institution.getInstitutionId());
-
+		System.out.println(institutionId+" "+hostId);
 
 		Institution_HostLocalServiceUtil.addEntry(institutionId, hostId, serviceContext);
 
@@ -247,7 +286,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		return institution;
 	}
 
-	public Institution updateInstitution(long institutionId, String name, long hostId, int sort,
+	public Institution updateInstitution(long institutionId, String name, int sort,
 		       ServiceContext serviceContext) throws PortalException,
 		       SystemException {
 		    long groupId = serviceContext.getScopeGroupId();
@@ -259,7 +298,6 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 			validate(name);
 
 		    Institution institution = getInstitution(institutionId);
-		    //Institution parent = InstitutionLocalServiceUtil.getInstitution(institution.getParentId());;
 
 		    institution.setName(name);
 			institution.setGroupId(groupId);
@@ -271,7 +309,16 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 			System.out.println(institutionId+" "+institution.getPrimaryKey() );
 
 			institutionPersistence.update(institution);
-			Institution_HostLocalServiceUtil.updateEntry(institutionId, hostId, serviceContext);
+			
+			
+			//Refresh LinkTable Resources if existing
+			try{
+				Host host = Institution_HostLocalServiceUtil.getByGroupIdAndInstitutionId(groupId, institutionId);
+				//Dummy Call: Actually never change Host 
+				Institution_HostLocalServiceUtil.updateEntry(institutionId, host.getPrimaryKey(), serviceContext);
+			} catch (Exception e) {
+			    //TODO: Update Parent...
+			}
 
 		    resourceLocalService.updateResources(user.getCompanyId(), groupId,
 		         Institution.class.getName(), institutionId,
@@ -301,7 +348,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 			        updateSort(institution, 0);
 			        institution = deleteInstitution(institutionId);
 
-			        //Remove Entry from Link Table
+			        //Remove anything from link table if there...			        
 			    	List<Institution_Host> linstitution_Host = Institution_HostLocalServiceUtil.getListByGroupIdAndInstitutionId(groupId, institutionId);
 
 					if (linstitution_Host.size() > 0){
