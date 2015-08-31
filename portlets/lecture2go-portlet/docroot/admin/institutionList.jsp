@@ -214,8 +214,8 @@ Root Institution Permissions:
 					persistState="<%= true %>">
 	<aui:form action="<%= updateRootInstitutionURL %>" name="<portlet:namespace />fm">
 		<aui:fieldset>
-				<aui:input name="rootInstitution" label="Top Level Institution" required="true" inlineField="true" />
-				<aui:input name='rootInstitutionId' type='hidden' />
+				<aui:input name="rootInstitution" label="Top Level Institution" required="true" inlineField="true"  value = "<%= root.getInstitutionName() %/>
+				<aui:input name="rootInsitutionId" type='hidden' inlineField="true" value = "<%= root.getPrimaryKey() %>"/>
 				<aui:button type="submit"></aui:button>
 				<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button>
 		</aui:fieldset>
@@ -319,8 +319,9 @@ deltaConfigurable="true">
 						</portlet:actionURL>
 						<aui:form action="<%= updateSubInstitutionURL %>" name="<portlet:namespace />fm">
 							<aui:fieldset>
-								<aui:input name="institution" label="Institution Name" inlineField="true" value = "<%= subInstitution.getName() %>" />
+								<aui:input name="innerListInstitution" label="Institution Name" inlineField="true" value = "<%= subInstitution.getName() %>" />
 								<aui:input cssClass="smallInput" name="innerListOrder" label="Order" inlineField="true" value='<%= subInstitution.getSort() %>'/>
+								<aui:input name="innerListInstitutionId" type='hidden' inlineField="true" value = "<%= subInstitution.getPrimaryKey() %>"/>
 								<aui:button type="submit"></aui:button>
 								<aui:button name="delete" value="Löschen" type="button" href="<%=deleteSubInstitutionURL.toString() %>" />
 							</aui:fieldset>

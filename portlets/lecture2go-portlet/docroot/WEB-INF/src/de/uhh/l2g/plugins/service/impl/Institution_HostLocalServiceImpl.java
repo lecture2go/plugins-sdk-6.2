@@ -55,6 +55,11 @@ public class Institution_HostLocalServiceImpl
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil} to access the institution_ host local service.
 	 */
 
+	public List<Institution_Host> getByGroupId(long groupId) throws SystemException, PortalException {
+		List<Institution_Host> institution_host = institution_HostPersistence.findByGroupId(groupId);
+		return institution_host;
+}
+
 	public Host getByInstitutionId(long institutionId) throws SystemException, PortalException {
 			long hId = institution_HostPersistence.findByG_I(0,institutionId).getHostId();
 
@@ -114,11 +119,11 @@ public class Institution_HostLocalServiceImpl
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		validate(institutionId, hostId);
+		//validate(institutionId, hostId);
 
-		//long institution_HostId = counterLocalService.increment(Institution_Host.class.getName());
+		long institution_HostId = counterLocalService.increment(Institution_Host.class.getName());
 
-		Institution_Host institution_Host = institution_HostPersistence.create(0);
+		Institution_Host institution_Host = institution_HostPersistence.create(institution_HostId);
 
 		institution_Host.setGroupId(groupId);
 		institution_Host.setInstitutionId(institutionId);
@@ -126,7 +131,6 @@ public class Institution_HostLocalServiceImpl
 
 
 		institution_HostPersistence.update(institution_Host);
-		long institution_HostId = institution_Host.getPrimaryKey();
 
 		institution_Host.setExpandoBridgeAttributes(serviceContext);
 
