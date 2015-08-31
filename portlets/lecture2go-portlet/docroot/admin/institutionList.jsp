@@ -214,8 +214,8 @@ Root Institution Permissions:
 					persistState="<%= true %>">
 	<aui:form action="<%= updateRootInstitutionURL %>" name="<portlet:namespace />fm">
 		<aui:fieldset>
-				<aui:input name="rootInstitution" label="Top Level Institution" required="true" inlineField="true"  value = "<%= root.getInstitutionName() %/>
-				<aui:input name="rootInsitutionId" type='hidden' inlineField="true" value = "<%= root.getPrimaryKey() %>"/>
+				<aui:input name="rootInstitution" label="Top Level Institution" required="true" inlineField="true"  value = '<%= root.getName() %>'/>
+				<aui:input name="rootInsitutionId" type='hidden' inlineField="true" value = '<%= root.getPrimaryKey() %>'/>
 				<aui:button type="submit"></aui:button>
 				<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button>
 		</aui:fieldset>

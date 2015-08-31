@@ -201,50 +201,39 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 			if (increment == 0) validPosition = curPos;
 
 		}
-		
-		/** Refreshes sort numbers to start with 1
-	     *
-	     */
-		protected int initilizeSort(Institution parent) throws SystemException{
-			int validPosition = 0;
-			int curPos = 1;
-			//int prevPos = inst.getSort();
-
-			//System.out.println(inst.getSort());
-			int subElements = InstitutionLocalServiceUtil.getByGroupIdAndParentCount(parent.getGroupId(), parent.getPrimaryKey());
-
-			if (subElements < 1) validPosition = 1; // There is nothing to reorder and only one valid position
-			else{ // sort Elements if gap => shift all following
-				List<Institution> subtree = InstitutionLocalServiceUtil.getByGroupIdAndParent(inst.getGroupId(), inst.getParentId());
-
-				//if (newpos > 0) curPos = 1;
-				int increment = 0;
-				for (Institution subInstitution: subtree){
-					 if (newpos <= curPos && increment == 0){ //insert new Institution here
-						 if (newpos > 0) {
-							 validPosition = curPos;
-							 increment = 1; //shift all follwing up
-						 }
-						 else { //newpos = 0 <=> remove 
-							 if (curPos > prevPos) increment = -1;
-						 }
-					 }
-					 subInstitution.setSort(curPos + increment);
-					 institutionPersistence.update(subInstitution);
-					// System.out.println(subInstitution.getInstitutionId() +" "+ subInstitution.getName()+ " " + curPos + " " + increment+ " " +validPosition);
-					 curPos++;
-
-				}
-				if (increment == 0) validPosition = curPos;
-
-			}
-
 
 
 		//System.out.println(validPosition);
 
 		return validPosition;
 	}
+	
+    /** Refreshes sort of subinstitutions forgiven parent
+     *  Brings values in natural order starting with 1
+     *  
+     *  Finder results must be preorderd by sort
+     */
+	protected void reorderChildren(Institution inst) throws SystemException{
+
+		int subElements = InstitutionLocalServiceUtil.getByGroupIdAndParentCount(inst.getGroupId(), inst.getPrimaryKey());
+
+		// There is nothing to reorder if number of children is smaller 1   
+		int startPos = 1;
+		if (subElements < 1) { // sort Elements newpos <= 1 => shift all
+			List<Institution> subtree = InstitutionLocalServiceUtil.getByGroupIdAndParent(inst.getGroupId(), inst.getPrimaryKey());
+
+			int increment = 0;
+			for (Institution subInstitution: subtree){
+				 subInstitution.setSort(startPos + increment);
+				 institutionPersistence.update(subInstitution);
+				 increment++;
+
+			}
+
+		}
+	}
+	
+	
 
 	public Institution addInstitution(String name, long hostId, long parentId, int sort, ServiceContext serviceContext) throws SystemException, PortalException {
 
