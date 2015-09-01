@@ -114,7 +114,6 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 		host.setPort(port);
 
 		hostPersistence.update(host);
-		long hostId = host.getPrimaryKey();
 
 		host.setExpandoBridgeAttributes(serviceContext);
 
