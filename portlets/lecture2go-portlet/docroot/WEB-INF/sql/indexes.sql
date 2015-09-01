@@ -12,6 +12,7 @@ create index IX_B56E8218 on LG_Host (groupId);
 create index IX_35EC15AF on LG_Host (groupId, hostId);
 create index IX_59DDB869 on LG_Host (hostId);
 
+create index IX_7AB52C4E on LG_Institution (companyId);
 create index IX_78986E50 on LG_Institution (groupId);
 create index IX_2F011093 on LG_Institution (groupId, institutionId);
 create index IX_BB3A2F69 on LG_Institution (groupId, parentId);
@@ -30,6 +31,7 @@ create index IX_8BEF7329 on LG_Institution (typ, groupId);
 create index IX_C9925EAD on LG_Institution (www);
 create index IX_8A5E489D on LG_Institution (www, groupId);
 
+create index IX_1034FB71 on LG_Institution_Host (groupId);
 create index IX_4EF42608 on LG_Institution_Host (groupId, hostId);
 create unique index IX_56E67D52 on LG_Institution_Host (groupId, institutionId);
 create index IX_C8262FF0 on LG_Institution_Host (hostId);

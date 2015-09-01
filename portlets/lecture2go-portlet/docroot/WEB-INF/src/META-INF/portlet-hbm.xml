@@ -70,6 +70,7 @@
 		<property name="serverRoot" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.InstitutionImpl" table="LG_Institution">
 		<cache usage="read-write" />
@@ -83,6 +84,7 @@
 		<property name="level" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="sort" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.Institution_HostImpl" table="LG_Institution_Host">
 		<cache usage="read-write" />
@@ -92,6 +94,7 @@
 		<property name="institutionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="hostId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.LastvideolistImpl" table="LG_Lastvideolist">
 		<cache usage="read-write" />

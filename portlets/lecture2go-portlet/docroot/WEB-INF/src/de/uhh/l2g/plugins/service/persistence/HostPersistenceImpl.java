@@ -1114,6 +1114,7 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 		hostImpl.setServerRoot(host.getServerRoot());
 		hostImpl.setName(host.getName());
 		hostImpl.setGroupId(host.getGroupId());
+		hostImpl.setCompanId(host.getCompanId());
 
 		return hostImpl;
 	}
