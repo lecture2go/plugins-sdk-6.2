@@ -70,6 +70,9 @@ public class TermFinderImpl extends BasePersistenceImpl<Term> implements TermFin
 		} else if (hasVideos) {
 			query += vquery;
 		}
+		else { //surpress error on empty lists
+			query += "SELECT termId FROM LG_Video WHERE videoId IN (0)";
+		}
 		
 		query += ") AS a JOIN LG_Term AS t ON a.termId = t.termId ORDER BY t.year DESC";
 					
