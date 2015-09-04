@@ -209,7 +209,7 @@
     	<column name="serverRoot" type="String"></column>
     	<column name="name" type="String"></column>
 		<column name="groupId" type="long"></column>
-        <column name="companId" type="long"></column>
+        <column name="companyId" type="long"></column>
 		<finder name="GroupId" return-type="Collection">
             <finder-column name="groupId"></finder-column>
         </finder>
@@ -383,6 +383,9 @@
         </finder>
         <finder name="RootInstitution" return-type="Collection">
             <finder-column name="rootInstitutionId"></finder-column>
+        </finder>
+        <finder name="Password" return-type="Collection">
+            <finder-column name="password"></finder-column>
         </finder>
     </entity>
     <entity name="Video_Institution" local-service="true" remote-service="false">

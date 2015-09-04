@@ -51,8 +51,8 @@ public class HostCacheModel implements CacheModel<Host>, Externalizable {
 		sb.append(name);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companId=");
-		sb.append(companId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -95,7 +95,7 @@ public class HostCacheModel implements CacheModel<Host>, Externalizable {
 		}
 
 		hostImpl.setGroupId(groupId);
-		hostImpl.setCompanId(companId);
+		hostImpl.setCompanyId(companyId);
 
 		hostImpl.resetOriginalValues();
 
@@ -111,7 +111,7 @@ public class HostCacheModel implements CacheModel<Host>, Externalizable {
 		serverRoot = objectInput.readUTF();
 		name = objectInput.readUTF();
 		groupId = objectInput.readLong();
-		companId = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -150,7 +150,7 @@ public class HostCacheModel implements CacheModel<Host>, Externalizable {
 		}
 
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companId);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long hostId;
@@ -160,5 +160,5 @@ public class HostCacheModel implements CacheModel<Host>, Externalizable {
 	public String serverRoot;
 	public String name;
 	public long groupId;
-	public long companId;
+	public long companyId;
 }

@@ -131,8 +131,15 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 		return null;		
 	}
 	
-
-	
+	/**
+	 * Queries the database for data by single filter id's
+	 * @param institutionId
+	 * @param parentInstitutionId
+	 * @param termId
+	 * @param categoryId
+	 * @param creatorId
+	 * @return a list with lectureseries which fit to the given filters
+	 */
 	public List<Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreator(Long institutionId, Long parentInstitutionId, Long termId, Long categoryId, Long creatorId, String searchQuery) {
 		boolean hasInstitution 			= (institutionId > 0);
 		boolean hasParentInstitution	= (parentInstitutionId > 0);
@@ -221,7 +228,6 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 		// this is an additional query only used for searching. videos which are part of a lectureseries must be searched for the searchquery but are not relevant of the normal filtering
 		String sQuery = "";
 		
-		System.out.println(institutionId+" "+institutionParentId+" "+ termId+" "+ categoryId+" "+ creatorId);
 		// build query
 		String lQuery = "SELECT l.number_, l.eventType, l.categoryId, l.name, l.shortDesc, l.termId, l.language, l.facultyName, l.lectureseriesId, l.password_, l.approved, l.longDesc, l.latestOpenAccessVideoId, l.latestVideoUploadDate, count(*) as videoCount FROM LG_Lectureseries AS l ";
 		String vQuery = "SELECT \"00.000\" AS number_, NULL AS eventType, 0 AS categoryId, v.title AS name, v.title AS shortDesc, v.termId, \"\" AS language, \"\" AS facultyName, v.videoId AS lectureseriesId, NULL AS password_, 1 AS approved, v.title AS longDesc, v.lectureseriesId AS latestOpenAccessVideoId, v.uploadDate AS latestVideoUploadDate,count(*) as videoCount FROM LG_Video v ";
@@ -261,8 +267,9 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 		/**TODO: Calculate latestOpenAccessVideoId for migrated Data*/
 		//lQuery += "WHERE l.latestOpenAccessVideoId>0 AND v.openAccess=1 ";
 		//sQuery += "WHERE l.latestOpenAccessVideoId>0 AND v.openAccess=1 ";
-		vQuery += "WHERE v.openAccess=1 ";
-		sQuery += "WHERE AND v.openAccess=1 ";
+		lQuery += "WHERE v.openAccess=1 ";
+		sQuery += "WHERE v.openAccess=1 ";
+		vQuery += "WHERE v.lectureseriesId<0 AND v.openAccess=1 ";
 		
 		// add the specific query for all set filters
 		if (termId > 0) {
@@ -442,7 +449,5 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 
 		return query;
 	}
-
-
 	
 }

@@ -224,7 +224,7 @@ public class InstitutionFinderImpl extends BasePersistenceImpl<Institution> impl
 		if (institutionsWanted) {
 			query += " WHERE i.parentId = " + parentId.toString();
 		}
-	
+
 		return query;
 	}
 

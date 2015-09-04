@@ -144,7 +144,7 @@ public class CreatorFinderImpl extends BasePersistenceImpl<Creator> implements C
 		}
 		
 		query += ") AS a JOIN LG_Creator AS c	ON a.creatorId = c.creatorId ORDER BY c.lastName";
-				 	
+					
 		return query;
 	}
 	

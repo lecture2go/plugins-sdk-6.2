@@ -44,7 +44,7 @@
 			<hint-collection name="SHORTTEXT" />
 		</field>
 		<field name="groupId" type="long" />
-		<field name="companId" type="long" />
+		<field name="companyId" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Institution">
 		<field name="institutionId" type="long" />

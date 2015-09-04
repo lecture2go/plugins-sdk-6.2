@@ -20,7 +20,7 @@
 		<header-portlet-javascript>/js/jquery.datetimepicker.js</header-portlet-javascript>
 		<header-portlet-javascript>/player/jwplayer/jwplayer.js</header-portlet-javascript>
 	</portlet>
-
+	
 	<portlet>
 		<portlet-name>lg-admin-lecture-series-management</portlet-name>
 		<instanceable>false</instanceable>
@@ -30,14 +30,14 @@
 		<header-portlet-javascript>/js/jquery.tmpl.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/jquery-ui-1.10.3.custom.min.js</header-portlet-javascript>
 	</portlet>
-
+	
 	<portlet>
 		<portlet-name>lg-open-access-videos</portlet-name>
-
+		
 		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>get</friendly-url-mapping>
 		<friendly-url-routes>de/uhh/l2g/lg-open-access-videos-friendly-url-routes.xml</friendly-url-routes>
-
+		
 		<instanceable>false</instanceable>
 		<private-request-attributes>false</private-request-attributes>
 

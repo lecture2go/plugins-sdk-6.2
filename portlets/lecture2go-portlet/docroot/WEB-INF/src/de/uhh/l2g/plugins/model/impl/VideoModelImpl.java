@@ -104,10 +104,11 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	public static long FILENAME_COLUMN_BITMASK = 2L;
 	public static long LECTURESERIESID_COLUMN_BITMASK = 4L;
 	public static long OPENACCESS_COLUMN_BITMASK = 8L;
-	public static long PRODUCERID_COLUMN_BITMASK = 16L;
-	public static long ROOTINSTITUTIONID_COLUMN_BITMASK = 32L;
-	public static long UPLOADDATE_COLUMN_BITMASK = 64L;
-	public static long VIDEOID_COLUMN_BITMASK = 128L;
+	public static long PASSWORD_COLUMN_BITMASK = 16L;
+	public static long PRODUCERID_COLUMN_BITMASK = 32L;
+	public static long ROOTINSTITUTIONID_COLUMN_BITMASK = 64L;
+	public static long UPLOADDATE_COLUMN_BITMASK = 128L;
+	public static long VIDEOID_COLUMN_BITMASK = 256L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Video"));
 
@@ -693,7 +694,17 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 
 	@Override
 	public void setPassword(String password) {
+		_columnBitmask |= PASSWORD_COLUMN_BITMASK;
+
+		if (_originalPassword == null) {
+			_originalPassword = _password;
+		}
+
 		_password = password;
+	}
+
+	public String getOriginalPassword() {
+		return GetterUtil.getString(_originalPassword);
 	}
 
 	public long getColumnBitmask() {
@@ -842,6 +853,8 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		videoModelImpl._originalRootInstitutionId = videoModelImpl._rootInstitutionId;
 
 		videoModelImpl._setOriginalRootInstitutionId = false;
+
+		videoModelImpl._originalPassword = videoModelImpl._password;
 
 		videoModelImpl._columnBitmask = 0;
 	}
@@ -1173,6 +1186,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	private long _videoCreatorId;
 	private String _tags;
 	private String _password;
+	private String _originalPassword;
 	private long _columnBitmask;
 	private Video _escapedModel;
 }

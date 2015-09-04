@@ -30,7 +30,7 @@ create table LG_Host (
 	serverRoot STRING null,
 	name STRING null,
 	groupId LONG,
-	companId LONG
+	companyId LONG
 );
 
 create table LG_Institution (

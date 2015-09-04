@@ -52,7 +52,7 @@
 			<basic name="serverRoot" />
 			<basic name="name" />
 			<basic name="groupId" />
-			<basic name="companId" />
+			<basic name="companyId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
