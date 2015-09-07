@@ -31,7 +31,7 @@
 // 	if (isSearched) {
 // 		reqLectureseries = LectureseriesLocalServiceUtil.getFilteredBySearchQuery(searchQuery);
 // 	} else {
-// 		reqLectureseries = LectureseriesLocalServiceUtil.getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(institutionId, parentInstitutionId, termId, categoryId, creatorId);
+//		reqLectureseries = LectureseriesLocalServiceUtil.getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(institutionId, parentInstitutionId, termId, categoryId, creatorId);
 // 	}
 	// get filtered lectureseries and single videos
 	List<Lectureseries> reqLectureseries = LectureseriesLocalServiceUtil.getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(institutionId, parentInstitutionId, termId, categoryId, creatorId, searchQuery);

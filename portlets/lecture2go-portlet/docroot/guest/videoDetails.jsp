@@ -137,6 +137,9 @@
 				   	 	<li><a href="#share" data-toggle="tab">Share</a></li>
 				    <%}%>
 				    <li><a href="#support" data-toggle="tab">Support</a></li>
+				    <%if( video.isHasChapters() || video.isHasComments() ){%>
+				    	<li><a href="#segments" data-toggle="tab">Segments</a></li>
+				    <%}%>
 				</ul>
 				    
 				<div id="my-tab-content" class="tab-content">
@@ -152,7 +155,7 @@
 				    <%}%>
 				    <div class="tab-pane" id="support">
 				        <p>
-							<%
+							<%  //TODO:get rid of hardcoded faculties
 								Integer facultyId = (int)video.getRootInstitutionId();
 								String institut = "";
 								String option1 = PortalUtil.getOriginalServletRequest(request).getParameter("option1"); 
@@ -210,6 +213,13 @@
 								%>
 							</div>		        
 				    </div>
+				    <%if(video.isHasChapters() || video.isHasComments()){%>
+					    <div class="tab-pane" id="segments">
+					    	
+					    	// KOMMENTARE UND CHAPTERS EINFUEGEN
+					    	
+					    </div>
+				    <%}%>
 				</div>    
 			</div>
 		<%
