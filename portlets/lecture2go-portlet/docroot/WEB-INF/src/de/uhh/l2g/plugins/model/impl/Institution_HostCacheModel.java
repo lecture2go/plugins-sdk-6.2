@@ -35,7 +35,7 @@ public class Institution_HostCacheModel implements CacheModel<Institution_Host>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{institutionHostId=");
 		sb.append(institutionHostId);
@@ -45,6 +45,8 @@ public class Institution_HostCacheModel implements CacheModel<Institution_Host>,
 		sb.append(hostId);
 		sb.append(", groupId=");
 		sb.append(groupId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -58,6 +60,7 @@ public class Institution_HostCacheModel implements CacheModel<Institution_Host>,
 		institution_HostImpl.setInstitutionId(institutionId);
 		institution_HostImpl.setHostId(hostId);
 		institution_HostImpl.setGroupId(groupId);
+		institution_HostImpl.setCompanyId(companyId);
 
 		institution_HostImpl.resetOriginalValues();
 
@@ -70,6 +73,7 @@ public class Institution_HostCacheModel implements CacheModel<Institution_Host>,
 		institutionId = objectInput.readLong();
 		hostId = objectInput.readLong();
 		groupId = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -79,10 +83,12 @@ public class Institution_HostCacheModel implements CacheModel<Institution_Host>,
 		objectOutput.writeLong(institutionId);
 		objectOutput.writeLong(hostId);
 		objectOutput.writeLong(groupId);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long institutionHostId;
 	public long institutionId;
 	public long hostId;
 	public long groupId;
+	public long companyId;
 }

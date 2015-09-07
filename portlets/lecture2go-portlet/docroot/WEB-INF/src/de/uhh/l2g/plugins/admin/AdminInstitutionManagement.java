@@ -54,7 +54,6 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		    //TODO: Improve default handling for open source users
 		    //Add default host if empty or default entry does not exist
 		    if (host.size() == 0) {
-		    	CounterLocalServiceUtil.reset(Host.class.getName());
 		    	Host defaultHost = HostLocalServiceUtil.addHost("Default", "localhost", 0 ,"HTTP", "", 80, serviceContext);
 		    	SessionMessages.add(renderRequest, "entryAdded");
 		    	defaultHostId = defaultHost.getHostId();
@@ -62,7 +61,6 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 		    //new Tree Root for Institution if empty
 		    if (institutions.size() == 0) {
-		    	CounterLocalServiceUtil.reset(Institution.class.getName());
 		    	Institution defaultInstitution = InstitutionLocalServiceUtil.addInstitution("----", 0 ,Long.MAX_VALUE, 0, serviceContext);
 		    	defaultInstitution = InstitutionLocalServiceUtil.addInstitution("Main", 0 ,new Long(0), 0, serviceContext);
 		    	SessionMessages.add(renderRequest, "entryAdded");
@@ -71,7 +69,6 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		    System.out.println(defaultInstitutionId+" "+defaultHostId);
 		    //Add default Link if empty or default entry does not exist
 		    if (institution_host.size() == 0) {
-		    	CounterLocalServiceUtil.reset(Institution_Host.class.getName());
 		    	Institution_Host defaultInstitution_Host = Institution_HostLocalServiceUtil.addEntry(defaultInstitutionId, defaultHostId, serviceContext);
 		    	SessionMessages.add(renderRequest, "entryAdded");
 		    	long defaultInstitution_HostId = defaultInstitution_Host.getPrimaryKey();

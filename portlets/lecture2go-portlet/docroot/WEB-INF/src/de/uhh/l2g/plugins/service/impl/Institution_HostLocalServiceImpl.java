@@ -74,7 +74,6 @@ public class Institution_HostLocalServiceImpl
 		return h;
 	}
 
-
 	public List<Institution> getByGroupIdAndHostId(long groupId, long hostId) throws SystemException, PortalException {
 		List<Institution_Host> linkList = institution_HostPersistence.findByG_H(groupId, hostId);
 		List<Institution> institutions = null;
@@ -130,13 +129,12 @@ public class Institution_HostLocalServiceImpl
 		institution_Host.setHostId(hostId);
 
 
+		institution_Host.setExpandoBridgeAttributes(serviceContext);
+		
 		institution_HostPersistence.update(institution_Host);
 
-		institution_Host.setExpandoBridgeAttributes(serviceContext);
-
 		resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
-			       Institution.class.getName(), institution_HostId, false, true, true);
-
+			       Institution_Host.class.getName(), institution_HostId, false, true, true);
 
 
 		return institution_Host;
@@ -166,7 +164,7 @@ public class Institution_HostLocalServiceImpl
 
 		long institution_HostId = institution_Host.getPrimaryKey();
 		resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
-			       Institution.class.getName(), institution_HostId, false, true, true);
+			       Institution_Host.class.getName(), institution_HostId, false, true, true);
 
 
 		return institution_Host;

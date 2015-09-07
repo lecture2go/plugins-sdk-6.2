@@ -14,6 +14,7 @@
 <jsp:useBean id="timeStart" type="java.lang.Long" scope="request" />
 <jsp:useBean id="timeEnd" type="java.lang.Long" scope="request" />
 
+<%if(video.getVideoId()>0){%>
 <%if(video.getAccessPermitted()==1){%>
 	
 	<%if(video.getOpenAccess()==1){%>
@@ -192,20 +193,16 @@
 								%>
 								
 								<% 
-									// If support form was submitted, scroll down and select 'support' tab
+									// If support form was submitted, insert Javascript code for scrolling down
 									if(option1!=null){
 										%>
 										<script type="text/javascript">
 											$(function() {
-												// activate contact tab
-												$("#tabs li a").eq(-1).click();
-												
-												// Scrolling must happen in onload, because otherwise the Player is not yet loaded and the position would be wrong
-												window.onload = function () {
-													var pos = $("#tabs").offset().top;
-													$('html, body').animate({scrollTop: pos - 10}, 1000, "easeInOutCubic");	
-												}
-												
+												 // activate contact tab
+												 $("#tabs").tabs().tabs( "option", "active", $('#tabs >ul >li').size()-1 );
+												 
+												 var aTag = $("a[href='#support']");
+												 $('html,body').animate({scrollTop: aTag.offset().top},'slow');
 											 });
 										</script>
 										<%		
@@ -269,4 +266,11 @@
 	<%
 }
 %>
-
+<%
+}
+%>
+<script type="text/javascript">
+    $( function () {
+        $('#tabs').tabs();
+    });
+</script>    

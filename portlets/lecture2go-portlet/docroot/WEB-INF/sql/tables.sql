@@ -29,7 +29,8 @@ create table LG_Host (
 	port INTEGER,
 	serverRoot STRING null,
 	name STRING null,
-	groupId LONG
+	groupId LONG,
+	companyId LONG
 );
 
 create table LG_Institution (
@@ -40,14 +41,16 @@ create table LG_Institution (
 	www STRING null,
 	level INTEGER,
 	sort INTEGER,
-	groupId LONG
+	groupId LONG,
+	companyId LONG
 );
 
 create table LG_Institution_Host (
 	institutionHostId LONG not null primary key,
 	institutionId LONG,
 	hostId LONG,
-	groupId LONG
+	groupId LONG,
+	companyId LONG
 );
 
 create table LG_Lastvideolist (

@@ -63,9 +63,10 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 			{ "port", Types.INTEGER },
 			{ "serverRoot", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
-			{ "groupId", Types.BIGINT }
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Host (hostId LONG not null primary key,protocol STRING null,streamer STRING null,port INTEGER,serverRoot STRING null,name STRING null,groupId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Host (hostId LONG not null primary key,protocol STRING null,streamer STRING null,port INTEGER,serverRoot STRING null,name STRING null,groupId LONG,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Host";
 	public static final String ORDER_BY_JPQL = " ORDER BY host.hostId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Host.hostId ASC";
@@ -130,6 +131,7 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 		attributes.put("serverRoot", getServerRoot());
 		attributes.put("name", getName());
 		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -176,6 +178,12 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 
 		if (groupId != null) {
 			setGroupId(groupId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -293,13 +301,23 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 		return _originalGroupId;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			Host.class.getName(), getPrimaryKey());
 	}
 
@@ -331,6 +349,7 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 		hostImpl.setServerRoot(getServerRoot());
 		hostImpl.setName(getName());
 		hostImpl.setGroupId(getGroupId());
+		hostImpl.setCompanyId(getCompanyId());
 
 		hostImpl.resetOriginalValues();
 
@@ -436,12 +455,14 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 
 		hostCacheModel.groupId = getGroupId();
 
+		hostCacheModel.companyId = getCompanyId();
+
 		return hostCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{hostId=");
 		sb.append(getHostId());
@@ -457,6 +478,8 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 		sb.append(getName());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -464,7 +487,7 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Host");
@@ -498,6 +521,10 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -517,6 +544,7 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
+	private long _companyId;
 	private long _columnBitmask;
 	private Host _escapedModel;
 }

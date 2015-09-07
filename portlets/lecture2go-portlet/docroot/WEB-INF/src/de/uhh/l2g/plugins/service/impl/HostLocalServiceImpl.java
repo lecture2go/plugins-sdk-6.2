@@ -112,10 +112,9 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 		host.setProtocol(protocol);
 		host.setServerRoot(serverRoot);
 		host.setPort(port);
+		host.setExpandoBridgeAttributes(serviceContext);
 
 		hostPersistence.update(host);
-
-		host.setExpandoBridgeAttributes(serviceContext);
 
 		resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
 			       Host.class.getName(), hostId, false, true, true);
