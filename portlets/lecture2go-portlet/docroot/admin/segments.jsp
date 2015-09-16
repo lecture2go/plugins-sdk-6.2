@@ -186,7 +186,12 @@ String backURL = request.getAttribute("backURL").toString();
 							     var segment = this.get('responseData');
 							        setTimeout(function() {
 							        	drawRow(segment);
-							        }, 2000)
+							        	
+							        	var inputDelete = A.one('#' + segment.segmentId).one("input[alt='delete']");
+							        	inputDelete.on("click", deleteSegment(segment.segmentId));
+							        	
+							        	
+							        }, 1000)
 							   }
 						}
 					});	
