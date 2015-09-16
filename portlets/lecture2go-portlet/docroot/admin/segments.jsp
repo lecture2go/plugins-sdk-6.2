@@ -65,6 +65,7 @@ String backURL = request.getAttribute("backURL").toString();
 	    success: function(data, textStatus, jqXHR) {
 	        // since we are using jQuery, you don't need to parse response
 	        drawSegmentRow(data);
+	        console.log(data);
 	    }
 	});	
 

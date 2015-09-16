@@ -218,7 +218,92 @@
 				    <%if(video.isHasChapters() || video.isHasComments()){%>
 					    <div class="tab-pane" id="segments">
 					    	
-					    	// KOMMENTARE UND CHAPTERS EINFUEGEN
+					    	// KOMMENTARE UND CHAPTERS !
+					    	<div id="chapters"></div>
+					    	
+					    	<liferay-portlet:resourceURL id="showSegments" var="segmentsURL" />
+
+							<script type="text/javascript">
+
+								$( function () {
+									console.log('<%=segmentsURL%>');
+									$.ajax({
+									    url: '<%=segmentsURL%>',
+									    method: 'POST',
+									    dataType: "json",
+									    data: {
+									 	   	<portlet:namespace/>videoId: "<%=video.getVideoId()%>",
+									    },
+									    success: function(data, textStatus, jqXHR) {
+									        // since we are using jQuery, you don't need to parse response
+									        console.log("data: " + data);
+									        drawSegmentRow(data);
+									    }
+									});	
+								});
+								
+							
+								function hideSegment(sId){
+									$("b#pf2_"+sId).hide();
+									$("b#pf1_"+sId).show();
+									$("b#iav"+sId).hide();		
+								}
+								function showSegment(sId){
+									$("b#pf1_"+sId).hide();
+									$("b#pf2_"+sId).show();
+									$("b#iav"+sId).show();		
+								}
+								function loadSegment(sId){
+									$("b#pf2_"+sId).show();
+									$("b#pf1_"+sId).hide();
+									$("b#iav"+sId).show();
+								}
+								
+								
+								
+								function drawSegmentRow(data) {
+									for (var i = 0; i < data.length; i++) {
+										drawRow(data[i]);
+								    }
+								}
+								
+								function drawRow(segment) {
+								    if(segment.chapter==1){
+								    	newRow='<div class="chaptertile" id="' + segment.segmentId + '" begin="' + segment.start + '" end="' + segment.end + '">'+
+										'<a><img class="imgsmall" title="watch this chapter" src="'+segment.image+'"></a>'+
+										'<span>'+segment.start +' - '+segment.end+'</span><br/>'+
+										'<a><span>'+segment.title+'</span></a>';
+									}else{
+										newRow='<div class="commenttile" id="'+segment.segmentId+'" onload="alert('+segment.segmentId+')">'+
+							    		'<div>'+
+										'<b id="pf1_'+segment.segmentId+'">'+
+							    		'<input type="image" height="10" width="10" src="/lecture2go-portlet/img/commentOff.png" title="comment on" alt="comment on" id="showr'+segment.segmentId+'" onclick="showSegment('+segment.segmentId+')"/>'+
+							    		'</b>'+
+							    		'<b id="pf2_'+segment.segmentId+'">'+
+							    		'<input type="image" height="10" width="10" src="/lecture2go-portlet/img/commentOn.png" title=" comment off" alt="comment off" id="hidr'+segment.segmentId+'" onclick="hideSegment('+segment.segmentId+')"/>'+
+							    		'</b>'+
+							    		'<span class="fs8">'+segment.start+'</span>'+
+							    		'<a><iavst class="white" begin="'+segment.start+'" end="'+segment.end+'"><span style="font-size:11px;">'+segment.title+'</span></iavst></a>'+
+							    		'</div>';
+							    		if(segment.description >""){
+							    			newRow=newRow+'<b id="iav'+segment.segmentId+'"><span class="fs10"><div id="description"><em>'+segment.description+'</em></div></span></b>';
+							    		}
+									}
+									
+									newRow=newRow+'</div>';
+									if(segment.chapter!=1){
+										newRow=newRow+'<script>YUI().use("node-base", function(Y) {Y.on("available", loadSegment('+segment.segmentId+'), "#'+segment.segmentId+'")})<\/script>';
+									}
+									
+									if(segment.previousSegmentId == -1){
+										$("#chapters").append(newRow);
+									}else{
+										$(newRow).insertAfter("#"+ segment.previousSegmentId);
+									}
+								}
+							</script>			    	
+					    	
+					    	
 					    	
 					    </div>
 				    <%}%>
