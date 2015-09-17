@@ -288,19 +288,20 @@ public interface LegacyMetadataModel extends BaseModel<LegacyMetadata> {
 	public Object clone();
 
 	@Override
-	public int compareTo(LegacyMetadata legacyMetadata);
+	public int compareTo(
+		de.uhh.l2g.plugins.migration.model.LegacyMetadata legacyMetadata);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<LegacyMetadata> toCacheModel();
+	public CacheModel<de.uhh.l2g.plugins.migration.model.LegacyMetadata> toCacheModel();
 
 	@Override
-	public LegacyMetadata toEscapedModel();
+	public de.uhh.l2g.plugins.migration.model.LegacyMetadata toEscapedModel();
 
 	@Override
-	public LegacyMetadata toUnescapedModel();
+	public de.uhh.l2g.plugins.migration.model.LegacyMetadata toUnescapedModel();
 
 	@Override
 	public String toString();

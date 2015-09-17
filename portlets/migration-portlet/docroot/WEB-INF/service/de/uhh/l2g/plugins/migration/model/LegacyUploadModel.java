@@ -195,19 +195,20 @@ public interface LegacyUploadModel extends BaseModel<LegacyUpload> {
 	public Object clone();
 
 	@Override
-	public int compareTo(LegacyUpload legacyUpload);
+	public int compareTo(
+		de.uhh.l2g.plugins.migration.model.LegacyUpload legacyUpload);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<LegacyUpload> toCacheModel();
+	public CacheModel<de.uhh.l2g.plugins.migration.model.LegacyUpload> toCacheModel();
 
 	@Override
-	public LegacyUpload toEscapedModel();
+	public de.uhh.l2g.plugins.migration.model.LegacyUpload toEscapedModel();
 
 	@Override
-	public LegacyUpload toUnescapedModel();
+	public de.uhh.l2g.plugins.migration.model.LegacyUpload toUnescapedModel();
 
 	@Override
 	public String toString();

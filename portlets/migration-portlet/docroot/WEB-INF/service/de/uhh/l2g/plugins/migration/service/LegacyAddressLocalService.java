@@ -253,4 +253,8 @@ public interface LegacyAddressLocalService extends BaseLocalService,
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public de.uhh.l2g.plugins.migration.model.LegacyAddress getAdressByUserIdFirst(
+		long userId) throws com.liferay.portal.kernel.exception.SystemException;
 }

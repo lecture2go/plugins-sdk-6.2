@@ -224,19 +224,20 @@ public interface LegacyProducerModel extends BaseModel<LegacyProducer> {
 	public Object clone();
 
 	@Override
-	public int compareTo(LegacyProducer legacyProducer);
+	public int compareTo(
+		de.uhh.l2g.plugins.migration.model.LegacyProducer legacyProducer);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<LegacyProducer> toCacheModel();
+	public CacheModel<de.uhh.l2g.plugins.migration.model.LegacyProducer> toCacheModel();
 
 	@Override
-	public LegacyProducer toEscapedModel();
+	public de.uhh.l2g.plugins.migration.model.LegacyProducer toEscapedModel();
 
 	@Override
-	public LegacyProducer toUnescapedModel();
+	public de.uhh.l2g.plugins.migration.model.LegacyProducer toUnescapedModel();
 
 	@Override
 	public String toString();

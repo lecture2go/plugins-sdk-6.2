@@ -233,8 +233,8 @@
 				creative-commons <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank"> details </a>
 				
 				<br/><br/>
-				
-								<aui:input id="password" name="password" label="password" required="false" value="<%=reqVideo.getPassword()%>" />
+
+				<aui:input id="password" name="password" label="password" required="false" value="<%=reqVideo.getPassword()%>" />
 
 				<br/><br/>
 				

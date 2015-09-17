@@ -275,6 +275,11 @@ public class LegacyAddressLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static de.uhh.l2g.plugins.migration.model.LegacyAddress getAdressByUserIdFirst(
+		long userId) throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getAdressByUserIdFirst(userId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

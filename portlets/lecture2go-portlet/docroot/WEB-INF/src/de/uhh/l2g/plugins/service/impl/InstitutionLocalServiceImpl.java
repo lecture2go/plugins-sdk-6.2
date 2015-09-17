@@ -208,7 +208,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		return validPosition;
 	}
 	
-    /** Refreshes sort of subinstitutions forgiven parent
+    /** Refreshes sort of subinstitutions for given parent
      *  Brings values in natural order starting with 1
      *  
      *  Finder results must be preorderd by sort
@@ -296,7 +296,8 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 			System.out.println(institutionId+" "+institution.getPrimaryKey() );
 
 			institutionPersistence.update(institution);
-			
+			//refresh order
+			reorderChildren(institution);
 			
 			//Refresh LinkTable Resources if existing
 			try{

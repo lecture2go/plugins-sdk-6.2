@@ -192,6 +192,7 @@ public class AdminVideoManagement extends MVCPortlet {
 
 		//video
 		Video newVideo = new VideoImpl();
+		//newVideo = VideoLocalServiceUtil.createVideo(videoId);
 		newVideo.setProducerId(producerId);
 		if(lectureseriesId>0)newVideo.setLectureseriesId(lectureseriesId);
 		else {

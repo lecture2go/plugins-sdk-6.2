@@ -135,19 +135,20 @@ public interface LegacyVideoFacilityModel extends BaseModel<LegacyVideoFacility>
 	public Object clone();
 
 	@Override
-	public int compareTo(LegacyVideoFacility legacyVideoFacility);
+	public int compareTo(
+		de.uhh.l2g.plugins.migration.model.LegacyVideoFacility legacyVideoFacility);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<LegacyVideoFacility> toCacheModel();
+	public CacheModel<de.uhh.l2g.plugins.migration.model.LegacyVideoFacility> toCacheModel();
 
 	@Override
-	public LegacyVideoFacility toEscapedModel();
+	public de.uhh.l2g.plugins.migration.model.LegacyVideoFacility toEscapedModel();
 
 	@Override
-	public LegacyVideoFacility toUnescapedModel();
+	public de.uhh.l2g.plugins.migration.model.LegacyVideoFacility toUnescapedModel();
 
 	@Override
 	public String toString();

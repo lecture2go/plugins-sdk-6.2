@@ -136,19 +136,19 @@ public interface LegacyProducerLectureseriesModel extends BaseModel<LegacyProduc
 
 	@Override
 	public int compareTo(
-		LegacyProducerLectureseries legacyProducerLectureseries);
+		de.uhh.l2g.plugins.migration.model.LegacyProducerLectureseries legacyProducerLectureseries);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<LegacyProducerLectureseries> toCacheModel();
+	public CacheModel<de.uhh.l2g.plugins.migration.model.LegacyProducerLectureseries> toCacheModel();
 
 	@Override
-	public LegacyProducerLectureseries toEscapedModel();
+	public de.uhh.l2g.plugins.migration.model.LegacyProducerLectureseries toEscapedModel();
 
 	@Override
-	public LegacyProducerLectureseries toUnescapedModel();
+	public de.uhh.l2g.plugins.migration.model.LegacyProducerLectureseries toUnescapedModel();
 
 	@Override
 	public String toString();
