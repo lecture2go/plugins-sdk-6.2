@@ -5,9 +5,6 @@
         <dependent-module archiveName="lecture2go-portlet-service.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/lecture2go-portlet/docroot/WEB-INF/lib/lecture2go-portlet-service.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="lecture2go-portlet-service.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/lecture2go-portlet/docroot/WEB-INF/lib/lecture2go-portlet-service.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <property name="context-root" value="migration-portlet"/>
         <property name="java-output-path" value="/migration-portlet/docroot/WEB-INF/classes"/>
     </wb-module>
