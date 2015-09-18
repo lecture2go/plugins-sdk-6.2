@@ -38,6 +38,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 			         Institution.class.getName(), renderRequest);
 
 			long groupId = serviceContext.getScopeGroupId();
+			long companyId = serviceContext.getCompanyId();
 			//groupId = 0;
 
 			long institutionId = ParamUtil.getLong(renderRequest, "institutionId");
@@ -51,15 +52,12 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		    List<Host> host = HostLocalServiceUtil.getByGroupId(groupId);
 		    List<Institution_Host> institution_host = Institution_HostLocalServiceUtil.getByGroupId(groupId);
 
-		    //TODO: Improve default handling for open source users
 		    //Add default host if empty or default entry does not exist
-		    if (host.size() == 0) {
-		    	Host defaultHost = HostLocalServiceUtil.addHost("Default", "localhost", 0 ,"HTTP", "", 80, serviceContext);
-		    	SessionMessages.add(renderRequest, "entryAdded");
-		    	defaultHostId = defaultHost.getHostId();
-		    }
+		    defaultHostId = HostLocalServiceUtil.getDefaultHostId(groupId,companyId);
+		    if (defaultHostId == 0) defaultHostId = HostLocalServiceUtil.addDefaultHost(serviceContext).getHostId();
 
 		    //new Tree Root for Institution if empty
+		    //Default Institution must represent Root: InstitutionId = 1 and parentId = 0 
 		    if (institutions.size() == 0) {
 		    	Institution defaultInstitution = InstitutionLocalServiceUtil.addInstitution("----", 0 ,Long.MAX_VALUE, 0, serviceContext);
 		    	defaultInstitution = InstitutionLocalServiceUtil.addInstitution("Main", 0 ,new Long(0), 0, serviceContext);
@@ -68,6 +66,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		    }
 		    System.out.println(defaultInstitutionId+" "+defaultHostId);
 		    //Add default Link if empty or default entry does not exist
+		    //Default Institution must represent Root: InstitutionId = 1 and hostId = 0 
 		    if (institution_host.size() == 0) {
 		    	Institution_Host defaultInstitution_Host = Institution_HostLocalServiceUtil.addEntry(defaultInstitutionId, defaultHostId, serviceContext);
 		    	SessionMessages.add(renderRequest, "entryAdded");
@@ -172,10 +171,10 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		String name = ParamUtil.getString(request, "rootInstitution");
 		long institutionId = ParamUtil.getLong(request, "rootInstitutionId");
 		//long selectedInstitutionId = ParamUtil.getLong(request, "selectedInstitutionId");
-		System.out.println(institutionId);
+		System.out.println("Root: "+ institutionId);
 		try {
 			InstitutionLocalServiceUtil.updateInstitution(
-					institutionId, name, 0, serviceContext);
+					institutionId, name, 1, serviceContext);
 
 			SessionMessages.add(request, "Institution entry updated");
 

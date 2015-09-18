@@ -217,6 +217,10 @@
             <finder-column name="groupId"></finder-column>
             <finder-column name="hostId"></finder-column>
         </finder>
+        <finder name="DefaultHost" return-type="Host" where="serverNameLIKE ''" unique="true">
+            <finder-column name="companyId"></finder-column>
+            <finder-column name="groupId"></finder-column>
+        </finder>
     </entity>
     <entity name="Institution_Host" local-service="true" remote-service="false">
         <column name="institutionHostId" type="long" primary="true"></column>

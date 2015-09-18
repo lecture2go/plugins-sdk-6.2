@@ -413,19 +413,20 @@ public interface LegacyAddressModel extends AttachedModel, AuditedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(LegacyAddress legacyAddress);
+	public int compareTo(
+		de.uhh.l2g.plugins.migration.model.LegacyAddress legacyAddress);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<LegacyAddress> toCacheModel();
+	public CacheModel<de.uhh.l2g.plugins.migration.model.LegacyAddress> toCacheModel();
 
 	@Override
-	public LegacyAddress toEscapedModel();
+	public de.uhh.l2g.plugins.migration.model.LegacyAddress toEscapedModel();
 
 	@Override
-	public LegacyAddress toUnescapedModel();
+	public de.uhh.l2g.plugins.migration.model.LegacyAddress toUnescapedModel();
 
 	@Override
 	public String toString();

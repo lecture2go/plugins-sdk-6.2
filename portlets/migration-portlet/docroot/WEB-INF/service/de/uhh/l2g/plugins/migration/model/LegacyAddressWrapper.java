@@ -684,7 +684,8 @@ public class LegacyAddressWrapper implements LegacyAddress,
 	}
 
 	@Override
-	public int compareTo(LegacyAddress legacyAddress) {
+	public int compareTo(
+		de.uhh.l2g.plugins.migration.model.LegacyAddress legacyAddress) {
 		return _legacyAddress.compareTo(legacyAddress);
 	}
 
@@ -694,17 +695,17 @@ public class LegacyAddressWrapper implements LegacyAddress,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<LegacyAddress> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.migration.model.LegacyAddress> toCacheModel() {
 		return _legacyAddress.toCacheModel();
 	}
 
 	@Override
-	public LegacyAddress toEscapedModel() {
+	public de.uhh.l2g.plugins.migration.model.LegacyAddress toEscapedModel() {
 		return new LegacyAddressWrapper(_legacyAddress.toEscapedModel());
 	}
 
 	@Override
-	public LegacyAddress toUnescapedModel() {
+	public de.uhh.l2g.plugins.migration.model.LegacyAddress toUnescapedModel() {
 		return new LegacyAddressWrapper(_legacyAddress.toUnescapedModel());
 	}
 

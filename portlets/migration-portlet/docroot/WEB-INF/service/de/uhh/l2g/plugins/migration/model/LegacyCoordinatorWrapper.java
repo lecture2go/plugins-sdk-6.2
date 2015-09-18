@@ -243,7 +243,8 @@ public class LegacyCoordinatorWrapper implements LegacyCoordinator,
 	}
 
 	@Override
-	public int compareTo(LegacyCoordinator legacyCoordinator) {
+	public int compareTo(
+		de.uhh.l2g.plugins.migration.model.LegacyCoordinator legacyCoordinator) {
 		return _legacyCoordinator.compareTo(legacyCoordinator);
 	}
 
@@ -253,17 +254,17 @@ public class LegacyCoordinatorWrapper implements LegacyCoordinator,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<LegacyCoordinator> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.migration.model.LegacyCoordinator> toCacheModel() {
 		return _legacyCoordinator.toCacheModel();
 	}
 
 	@Override
-	public LegacyCoordinator toEscapedModel() {
+	public de.uhh.l2g.plugins.migration.model.LegacyCoordinator toEscapedModel() {
 		return new LegacyCoordinatorWrapper(_legacyCoordinator.toEscapedModel());
 	}
 
 	@Override
-	public LegacyCoordinator toUnescapedModel() {
+	public de.uhh.l2g.plugins.migration.model.LegacyCoordinator toUnescapedModel() {
 		return new LegacyCoordinatorWrapper(_legacyCoordinator.toUnescapedModel());
 	}
 

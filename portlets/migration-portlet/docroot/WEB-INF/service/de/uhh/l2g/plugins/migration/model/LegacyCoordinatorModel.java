@@ -151,19 +151,20 @@ public interface LegacyCoordinatorModel extends BaseModel<LegacyCoordinator> {
 	public Object clone();
 
 	@Override
-	public int compareTo(LegacyCoordinator legacyCoordinator);
+	public int compareTo(
+		de.uhh.l2g.plugins.migration.model.LegacyCoordinator legacyCoordinator);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<LegacyCoordinator> toCacheModel();
+	public CacheModel<de.uhh.l2g.plugins.migration.model.LegacyCoordinator> toCacheModel();
 
 	@Override
-	public LegacyCoordinator toEscapedModel();
+	public de.uhh.l2g.plugins.migration.model.LegacyCoordinator toEscapedModel();
 
 	@Override
-	public LegacyCoordinator toUnescapedModel();
+	public de.uhh.l2g.plugins.migration.model.LegacyCoordinator toUnescapedModel();
 
 	@Override
 	public String toString();

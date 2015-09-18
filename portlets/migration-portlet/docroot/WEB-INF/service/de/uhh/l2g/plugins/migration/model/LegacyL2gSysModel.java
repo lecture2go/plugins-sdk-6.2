@@ -137,19 +137,20 @@ public interface LegacyL2gSysModel extends BaseModel<LegacyL2gSys> {
 	public Object clone();
 
 	@Override
-	public int compareTo(LegacyL2gSys legacyL2gSys);
+	public int compareTo(
+		de.uhh.l2g.plugins.migration.model.LegacyL2gSys legacyL2gSys);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<LegacyL2gSys> toCacheModel();
+	public CacheModel<de.uhh.l2g.plugins.migration.model.LegacyL2gSys> toCacheModel();
 
 	@Override
-	public LegacyL2gSys toEscapedModel();
+	public de.uhh.l2g.plugins.migration.model.LegacyL2gSys toEscapedModel();
 
 	@Override
-	public LegacyL2gSys toUnescapedModel();
+	public de.uhh.l2g.plugins.migration.model.LegacyL2gSys toUnescapedModel();
 
 	@Override
 	public String toString();

@@ -17,7 +17,9 @@ public class FacilityMapper {
 		institution.setLevel(legacyFacility.getLevel());
 		institution.setName(legacyFacility.getName());
 		institution.setParentId(legacyFacility.getParentId());
-		institution.setSort(legacyFacility.getSort());
+		//shift sort on first level because Conferences is not a seperate List anymore
+		if (legacyFacility.getLevel() == 1)  institution.setSort(legacyFacility.getSort()+1);
+		else institution.setSort(legacyFacility.getSort());
 		institution.setTyp(legacyFacility.getTyp());
 		institution.setWww(legacyFacility.getWww());
 		return institution;

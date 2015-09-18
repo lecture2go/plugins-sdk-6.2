@@ -121,19 +121,20 @@ public interface LegacyLastVideoListModel extends BaseModel<LegacyLastVideoList>
 	public Object clone();
 
 	@Override
-	public int compareTo(LegacyLastVideoList legacyLastVideoList);
+	public int compareTo(
+		de.uhh.l2g.plugins.migration.model.LegacyLastVideoList legacyLastVideoList);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<LegacyLastVideoList> toCacheModel();
+	public CacheModel<de.uhh.l2g.plugins.migration.model.LegacyLastVideoList> toCacheModel();
 
 	@Override
-	public LegacyLastVideoList toEscapedModel();
+	public de.uhh.l2g.plugins.migration.model.LegacyLastVideoList toEscapedModel();
 
 	@Override
-	public LegacyLastVideoList toUnescapedModel();
+	public de.uhh.l2g.plugins.migration.model.LegacyLastVideoList toUnescapedModel();
 
 	@Override
 	public String toString();

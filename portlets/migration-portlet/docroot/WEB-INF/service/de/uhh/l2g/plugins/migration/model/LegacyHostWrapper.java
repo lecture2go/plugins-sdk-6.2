@@ -301,7 +301,8 @@ public class LegacyHostWrapper implements LegacyHost, ModelWrapper<LegacyHost> {
 	}
 
 	@Override
-	public int compareTo(LegacyHost legacyHost) {
+	public int compareTo(
+		de.uhh.l2g.plugins.migration.model.LegacyHost legacyHost) {
 		return _legacyHost.compareTo(legacyHost);
 	}
 
@@ -311,17 +312,17 @@ public class LegacyHostWrapper implements LegacyHost, ModelWrapper<LegacyHost> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<LegacyHost> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.migration.model.LegacyHost> toCacheModel() {
 		return _legacyHost.toCacheModel();
 	}
 
 	@Override
-	public LegacyHost toEscapedModel() {
+	public de.uhh.l2g.plugins.migration.model.LegacyHost toEscapedModel() {
 		return new LegacyHostWrapper(_legacyHost.toEscapedModel());
 	}
 
 	@Override
-	public LegacyHost toUnescapedModel() {
+	public de.uhh.l2g.plugins.migration.model.LegacyHost toUnescapedModel() {
 		return new LegacyHostWrapper(_legacyHost.toUnescapedModel());
 	}
 

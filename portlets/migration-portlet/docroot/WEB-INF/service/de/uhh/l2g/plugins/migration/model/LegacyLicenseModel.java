@@ -219,19 +219,20 @@ public interface LegacyLicenseModel extends BaseModel<LegacyLicense> {
 	public Object clone();
 
 	@Override
-	public int compareTo(LegacyLicense legacyLicense);
+	public int compareTo(
+		de.uhh.l2g.plugins.migration.model.LegacyLicense legacyLicense);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<LegacyLicense> toCacheModel();
+	public CacheModel<de.uhh.l2g.plugins.migration.model.LegacyLicense> toCacheModel();
 
 	@Override
-	public LegacyLicense toEscapedModel();
+	public de.uhh.l2g.plugins.migration.model.LegacyLicense toEscapedModel();
 
 	@Override
-	public LegacyLicense toUnescapedModel();
+	public de.uhh.l2g.plugins.migration.model.LegacyLicense toUnescapedModel();
 
 	@Override
 	public String toString();

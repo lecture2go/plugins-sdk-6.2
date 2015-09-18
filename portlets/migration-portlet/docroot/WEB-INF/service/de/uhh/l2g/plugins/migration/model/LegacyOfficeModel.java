@@ -167,19 +167,20 @@ public interface LegacyOfficeModel extends BaseModel<LegacyOffice> {
 	public Object clone();
 
 	@Override
-	public int compareTo(LegacyOffice legacyOffice);
+	public int compareTo(
+		de.uhh.l2g.plugins.migration.model.LegacyOffice legacyOffice);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<LegacyOffice> toCacheModel();
+	public CacheModel<de.uhh.l2g.plugins.migration.model.LegacyOffice> toCacheModel();
 
 	@Override
-	public LegacyOffice toEscapedModel();
+	public de.uhh.l2g.plugins.migration.model.LegacyOffice toEscapedModel();
 
 	@Override
-	public LegacyOffice toUnescapedModel();
+	public de.uhh.l2g.plugins.migration.model.LegacyOffice toUnescapedModel();
 
 	@Override
 	public String toString();

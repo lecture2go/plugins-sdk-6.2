@@ -82,8 +82,9 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.Host"),
 			true);
-	public static long GROUPID_COLUMN_BITMASK = 1L;
-	public static long HOSTID_COLUMN_BITMASK = 2L;
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long HOSTID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Host"));
 
@@ -308,7 +309,19 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 
 	@Override
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	public long getColumnBitmask() {
@@ -409,6 +422,10 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 		hostModelImpl._originalGroupId = hostModelImpl._groupId;
 
 		hostModelImpl._setOriginalGroupId = false;
+
+		hostModelImpl._originalCompanyId = hostModelImpl._companyId;
+
+		hostModelImpl._setOriginalCompanyId = false;
 
 		hostModelImpl._columnBitmask = 0;
 	}
@@ -545,6 +562,8 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private Host _escapedModel;
 }

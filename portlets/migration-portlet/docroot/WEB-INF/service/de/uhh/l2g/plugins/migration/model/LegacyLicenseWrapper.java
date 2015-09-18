@@ -383,7 +383,8 @@ public class LegacyLicenseWrapper implements LegacyLicense,
 	}
 
 	@Override
-	public int compareTo(LegacyLicense legacyLicense) {
+	public int compareTo(
+		de.uhh.l2g.plugins.migration.model.LegacyLicense legacyLicense) {
 		return _legacyLicense.compareTo(legacyLicense);
 	}
 
@@ -393,17 +394,17 @@ public class LegacyLicenseWrapper implements LegacyLicense,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<LegacyLicense> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.migration.model.LegacyLicense> toCacheModel() {
 		return _legacyLicense.toCacheModel();
 	}
 
 	@Override
-	public LegacyLicense toEscapedModel() {
+	public de.uhh.l2g.plugins.migration.model.LegacyLicense toEscapedModel() {
 		return new LegacyLicenseWrapper(_legacyLicense.toEscapedModel());
 	}
 
 	@Override
-	public LegacyLicense toUnescapedModel() {
+	public de.uhh.l2g.plugins.migration.model.LegacyLicense toUnescapedModel() {
 		return new LegacyLicenseWrapper(_legacyLicense.toUnescapedModel());
 	}
 

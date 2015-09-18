@@ -18,6 +18,8 @@ import java.util.List;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
@@ -27,6 +29,8 @@ import de.uhh.l2g.plugins.HostNameException;
 import de.uhh.l2g.plugins.HostStreamerException;
 import de.uhh.l2g.plugins.HostStreamingServerTemplateException;
 import de.uhh.l2g.plugins.model.Host;
+import de.uhh.l2g.plugins.model.Institution;
+import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.HostLocalServiceBaseImpl;
 
@@ -74,11 +78,19 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 	public Host getByGroupIdAndHostId(long groupId, long hostId) throws SystemException{
 		return hostPersistence.fetchByG_H(groupId, hostId);
 	}
+	
+	public long getDefaultHostId(long companyId, long groupId) throws SystemException{
+		Host defaultHost = hostPersistence.fetchByDefaultHost(companyId, groupId);
+		if (defaultHost == null) return 0;
+		else return defaultHost.getPrimaryKey();
+	}
+	
 
 
 
 	protected void validate (String name, String streamer) throws PortalException {
-
+		
+		//only default host db entries name field is allowed to be empty
 		if (Validator.isNull(name)) {
 	       throw new HostNameException();
 		 }
@@ -88,12 +100,49 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 	     }
 
 	}
+	
+	
+	/**Special handling for default entries (no update)
+	 * 
+	 */
+	public Host addDefaultHost(ServiceContext serviceContext) throws SystemException, PortalException {
+		
+    	
+		long groupId = serviceContext.getScopeGroupId();
+		long companyId = serviceContext.getCompanyId();
+		long userId = serviceContext.getUserId();
+
+		User user = userPersistence.findByPrimaryKey(userId);
+		
+		long hostId = counterLocalService.increment(Host.class.getName());
+
+		Host defaultHost = hostPersistence.create(hostId);
+
+		//Empty name marks default
+		defaultHost.setName("");
+		defaultHost.setGroupId(groupId);
+		defaultHost.setCompanyId(companyId);
+		//Load from Portal Properties
+		defaultHost.setStreamer(PropsUtil.get("lecture2go.default.streamingHost"));
+		defaultHost.setProtocol(PropsUtil.get("lecture2go.default.streamingProtocol"));
+		defaultHost.setServerRoot(PropsUtil.get("lecture2go.default.serverRoot"));
+		defaultHost.setPort(Integer.valueOf(PropsUtil.get("lecture2go.default.streamingPort")));
+		defaultHost.setExpandoBridgeAttributes(serviceContext);
+
+		hostPersistence.update(defaultHost);
+
+		resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
+			       Host.class.getName(), hostId, false, true, true);
+    	
+    	return defaultHost;
+	}
 
 	public Host addHost(String name, String streamLocation, long streamingServerTemplateId,
 			String protocol, String serverRoot, int port,
 			ServiceContext serviceContext) throws SystemException, PortalException {
 
 		long groupId = serviceContext.getScopeGroupId();
+		long companyId = serviceContext.getCompanyId();
 		long userId = serviceContext.getUserId();
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -101,12 +150,13 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 		validate(name,streamLocation);
 
 
-		long hostId = counterLocalService.increment();
+		long hostId = counterLocalService.increment(Host.class.getName());
 
 		Host host = hostPersistence.create(hostId);
 
 		host.setName(name);
 		host.setGroupId(groupId);
+		host.setCompanyId(port);
 //		host.setStreamingServerTemplateId(streamingServerTemplateId);
 		host.setStreamer(streamLocation);
 		host.setProtocol(protocol);

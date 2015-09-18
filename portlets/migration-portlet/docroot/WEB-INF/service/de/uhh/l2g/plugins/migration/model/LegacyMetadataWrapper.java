@@ -491,7 +491,8 @@ public class LegacyMetadataWrapper implements LegacyMetadata,
 	}
 
 	@Override
-	public int compareTo(LegacyMetadata legacyMetadata) {
+	public int compareTo(
+		de.uhh.l2g.plugins.migration.model.LegacyMetadata legacyMetadata) {
 		return _legacyMetadata.compareTo(legacyMetadata);
 	}
 
@@ -501,17 +502,17 @@ public class LegacyMetadataWrapper implements LegacyMetadata,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<LegacyMetadata> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.migration.model.LegacyMetadata> toCacheModel() {
 		return _legacyMetadata.toCacheModel();
 	}
 
 	@Override
-	public LegacyMetadata toEscapedModel() {
+	public de.uhh.l2g.plugins.migration.model.LegacyMetadata toEscapedModel() {
 		return new LegacyMetadataWrapper(_legacyMetadata.toEscapedModel());
 	}
 
 	@Override
-	public LegacyMetadata toUnescapedModel() {
+	public de.uhh.l2g.plugins.migration.model.LegacyMetadata toUnescapedModel() {
 		return new LegacyMetadataWrapper(_legacyMetadata.toUnescapedModel());
 	}
 

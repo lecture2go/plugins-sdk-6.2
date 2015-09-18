@@ -288,6 +288,12 @@ public class LegacyAddressLocalServiceWrapper
 			arguments);
 	}
 
+	@Override
+	public de.uhh.l2g.plugins.migration.model.LegacyAddress getAdressByUserIdFirst(
+		long userId) throws com.liferay.portal.kernel.exception.SystemException {
+		return _legacyAddressLocalService.getAdressByUserIdFirst(userId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

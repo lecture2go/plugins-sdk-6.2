@@ -491,7 +491,8 @@ public class LegacyLectureSeriesWrapper implements LegacyLectureSeries,
 	}
 
 	@Override
-	public int compareTo(LegacyLectureSeries legacyLectureSeries) {
+	public int compareTo(
+		de.uhh.l2g.plugins.migration.model.LegacyLectureSeries legacyLectureSeries) {
 		return _legacyLectureSeries.compareTo(legacyLectureSeries);
 	}
 
@@ -501,17 +502,17 @@ public class LegacyLectureSeriesWrapper implements LegacyLectureSeries,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<LegacyLectureSeries> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<de.uhh.l2g.plugins.migration.model.LegacyLectureSeries> toCacheModel() {
 		return _legacyLectureSeries.toCacheModel();
 	}
 
 	@Override
-	public LegacyLectureSeries toEscapedModel() {
+	public de.uhh.l2g.plugins.migration.model.LegacyLectureSeries toEscapedModel() {
 		return new LegacyLectureSeriesWrapper(_legacyLectureSeries.toEscapedModel());
 	}
 
 	@Override
-	public LegacyLectureSeries toUnescapedModel() {
+	public de.uhh.l2g.plugins.migration.model.LegacyLectureSeries toUnescapedModel() {
 		return new LegacyLectureSeriesWrapper(_legacyLectureSeries.toUnescapedModel());
 	}
 

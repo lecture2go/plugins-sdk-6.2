@@ -182,19 +182,20 @@ public interface LegacyHostModel extends BaseModel<LegacyHost> {
 	public Object clone();
 
 	@Override
-	public int compareTo(LegacyHost legacyHost);
+	public int compareTo(
+		de.uhh.l2g.plugins.migration.model.LegacyHost legacyHost);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<LegacyHost> toCacheModel();
+	public CacheModel<de.uhh.l2g.plugins.migration.model.LegacyHost> toCacheModel();
 
 	@Override
-	public LegacyHost toEscapedModel();
+	public de.uhh.l2g.plugins.migration.model.LegacyHost toEscapedModel();
 
 	@Override
-	public LegacyHost toUnescapedModel();
+	public de.uhh.l2g.plugins.migration.model.LegacyHost toUnescapedModel();
 
 	@Override
 	public String toString();

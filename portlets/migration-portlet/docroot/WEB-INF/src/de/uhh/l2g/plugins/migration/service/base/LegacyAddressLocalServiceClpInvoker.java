@@ -113,6 +113,10 @@ public class LegacyAddressLocalServiceClpInvoker {
 		_methodName113 = "setBeanIdentifier";
 
 		_methodParameterTypes113 = new String[] { "java.lang.String" };
+
+		_methodName118 = "getAdressByUserIdFirst";
+
+		_methodParameterTypes118 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -216,6 +220,11 @@ public class LegacyAddressLocalServiceClpInvoker {
 			return null;
 		}
 
+		if (_methodName118.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
+			return LegacyAddressLocalServiceUtil.getAdressByUserIdFirst(((Long)arguments[0]).longValue());
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -255,4 +264,6 @@ public class LegacyAddressLocalServiceClpInvoker {
 	private String[] _methodParameterTypes112;
 	private String _methodName113;
 	private String[] _methodParameterTypes113;
+	private String _methodName118;
+	private String[] _methodParameterTypes118;
 }

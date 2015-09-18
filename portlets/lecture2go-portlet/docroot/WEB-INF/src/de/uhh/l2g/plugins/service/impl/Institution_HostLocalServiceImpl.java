@@ -96,7 +96,7 @@ public class Institution_HostLocalServiceImpl
 		return institution_host;
 	}
 
-	/** Maximum one host per institution
+	/** TODO: Maximum one host per institution
 	 *
 	 * */
 	protected void validate(long institutionId, long hostId) throws PortalException {
@@ -109,6 +109,11 @@ public class Institution_HostLocalServiceImpl
 	       throw new Institution_HostHostException();
 	     }
 
+	}
+	
+	public void addDefaultEntry(){
+		
+		
 	}
 
 	public Institution_Host addEntry(long institutionId, long hostId, ServiceContext serviceContext) throws SystemException, PortalException {
