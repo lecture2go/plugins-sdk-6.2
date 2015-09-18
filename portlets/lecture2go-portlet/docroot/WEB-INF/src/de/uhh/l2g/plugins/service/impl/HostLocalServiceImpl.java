@@ -118,13 +118,13 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 
 		Host defaultHost = hostPersistence.create(hostId);
 
-		//Empyt name marks default
+		//Empty name marks default
 		defaultHost.setName("");
 		defaultHost.setGroupId(groupId);
 		defaultHost.setCompanyId(companyId);
 		//Load from Portal Properties
 		defaultHost.setStreamer(PropsUtil.get("lecture2go.default.streamingHost"));
-		defaultHost.setProtocol(PropsUtil.get("lecture2go.default.streamingPort"));
+		defaultHost.setProtocol(PropsUtil.get("lecture2go.default.streamingProtocol"));
 		defaultHost.setServerRoot(PropsUtil.get("lecture2go.default.serverRoot"));
 		defaultHost.setPort(Integer.valueOf(PropsUtil.get("lecture2go.default.streamingPort")));
 		defaultHost.setExpandoBridgeAttributes(serviceContext);
