@@ -806,30 +806,38 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	public static final FinderPath FINDER_PATH_FETCH_BY_DEFAULTHOST = new FinderPath(HostModelImpl.ENTITY_CACHE_ENABLED,
 			HostModelImpl.FINDER_CACHE_ENABLED, HostImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByDefaultHost",
-			new String[] { Long.class.getName(), Long.class.getName() },
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName()
+			},
 			HostModelImpl.COMPANYID_COLUMN_BITMASK |
-			HostModelImpl.GROUPID_COLUMN_BITMASK);
+			HostModelImpl.GROUPID_COLUMN_BITMASK |
+			HostModelImpl.DEFAULTHOST_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_DEFAULTHOST = new FinderPath(HostModelImpl.ENTITY_CACHE_ENABLED,
 			HostModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByDefaultHost",
-			new String[] { Long.class.getName(), Long.class.getName() });
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName()
+			});
 
 	/**
-	 * Returns the host where companyId = &#63; and groupId = &#63; or throws a {@link de.uhh.l2g.plugins.NoSuchHostException} if it could not be found.
+	 * Returns the host where companyId = &#63; and groupId = &#63; and defaultHost = &#63; or throws a {@link de.uhh.l2g.plugins.NoSuchHostException} if it could not be found.
 	 *
 	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param defaultHost the default host
 	 * @return the matching host
 	 * @throws de.uhh.l2g.plugins.NoSuchHostException if a matching host could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Host findByDefaultHost(long companyId, long groupId)
+	public Host findByDefaultHost(long companyId, long groupId, int defaultHost)
 		throws NoSuchHostException, SystemException {
-		Host host = fetchByDefaultHost(companyId, groupId);
+		Host host = fetchByDefaultHost(companyId, groupId, defaultHost);
 
 		if (host == null) {
-			StringBundler msg = new StringBundler(6);
+			StringBundler msg = new StringBundler(8);
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
@@ -838,6 +846,9 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 			msg.append(", groupId=");
 			msg.append(groupId);
+
+			msg.append(", defaultHost=");
+			msg.append(defaultHost);
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -852,32 +863,34 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	}
 
 	/**
-	 * Returns the host where companyId = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the host where companyId = &#63; and groupId = &#63; and defaultHost = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param defaultHost the default host
 	 * @return the matching host, or <code>null</code> if a matching host could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Host fetchByDefaultHost(long companyId, long groupId)
+	public Host fetchByDefaultHost(long companyId, long groupId, int defaultHost)
 		throws SystemException {
-		return fetchByDefaultHost(companyId, groupId, true);
+		return fetchByDefaultHost(companyId, groupId, defaultHost, true);
 	}
 
 	/**
-	 * Returns the host where companyId = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the host where companyId = &#63; and groupId = &#63; and defaultHost = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param defaultHost the default host
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching host, or <code>null</code> if a matching host could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Host fetchByDefaultHost(long companyId, long groupId,
-		boolean retrieveFromCache) throws SystemException {
-		Object[] finderArgs = new Object[] { companyId, groupId };
+		int defaultHost, boolean retrieveFromCache) throws SystemException {
+		Object[] finderArgs = new Object[] { companyId, groupId, defaultHost };
 
 		Object result = null;
 
@@ -890,19 +903,22 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 			Host host = (Host)result;
 
 			if ((companyId != host.getCompanyId()) ||
-					(groupId != host.getGroupId())) {
+					(groupId != host.getGroupId()) ||
+					(defaultHost != host.getDefaultHost())) {
 				result = null;
 			}
 		}
 
 		if (result == null) {
-			StringBundler query = new StringBundler(4);
+			StringBundler query = new StringBundler(5);
 
 			query.append(_SQL_SELECT_HOST_WHERE);
 
 			query.append(_FINDER_COLUMN_DEFAULTHOST_COMPANYID_2);
 
 			query.append(_FINDER_COLUMN_DEFAULTHOST_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_DEFAULTHOST_DEFAULTHOST_2);
 
 			String sql = query.toString();
 
@@ -919,6 +935,8 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 				qPos.add(groupId);
 
+				qPos.add(defaultHost);
+
 				List<Host> list = q.list();
 
 				if (list.isEmpty()) {
@@ -933,7 +951,8 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 					cacheResult(host);
 
 					if ((host.getCompanyId() != companyId) ||
-							(host.getGroupId() != groupId)) {
+							(host.getGroupId() != groupId) ||
+							(host.getDefaultHost() != defaultHost)) {
 						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_DEFAULTHOST,
 							finderArgs, host);
 					}
@@ -959,47 +978,51 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	}
 
 	/**
-	 * Removes the host where companyId = &#63; and groupId = &#63; from the database.
+	 * Removes the host where companyId = &#63; and groupId = &#63; and defaultHost = &#63; from the database.
 	 *
 	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param defaultHost the default host
 	 * @return the host that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Host removeByDefaultHost(long companyId, long groupId)
-		throws NoSuchHostException, SystemException {
-		Host host = findByDefaultHost(companyId, groupId);
+	public Host removeByDefaultHost(long companyId, long groupId,
+		int defaultHost) throws NoSuchHostException, SystemException {
+		Host host = findByDefaultHost(companyId, groupId, defaultHost);
 
 		return remove(host);
 	}
 
 	/**
-	 * Returns the number of hosts where companyId = &#63; and groupId = &#63;.
+	 * Returns the number of hosts where companyId = &#63; and groupId = &#63; and defaultHost = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param groupId the group ID
+	 * @param defaultHost the default host
 	 * @return the number of matching hosts
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByDefaultHost(long companyId, long groupId)
+	public int countByDefaultHost(long companyId, long groupId, int defaultHost)
 		throws SystemException {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_DEFAULTHOST;
 
-		Object[] finderArgs = new Object[] { companyId, groupId };
+		Object[] finderArgs = new Object[] { companyId, groupId, defaultHost };
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(3);
+			StringBundler query = new StringBundler(4);
 
 			query.append(_SQL_COUNT_HOST_WHERE);
 
 			query.append(_FINDER_COLUMN_DEFAULTHOST_COMPANYID_2);
 
 			query.append(_FINDER_COLUMN_DEFAULTHOST_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_DEFAULTHOST_DEFAULTHOST_2);
 
 			String sql = query.toString();
 
@@ -1015,6 +1038,8 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 				qPos.add(companyId);
 
 				qPos.add(groupId);
+
+				qPos.add(defaultHost);
 
 				count = (Long)q.uniqueResult();
 
@@ -1034,7 +1059,8 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	}
 
 	private static final String _FINDER_COLUMN_DEFAULTHOST_COMPANYID_2 = "host.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_DEFAULTHOST_GROUPID_2 = "host.groupId = ? AND serverNameLIKE ''";
+	private static final String _FINDER_COLUMN_DEFAULTHOST_GROUPID_2 = "host.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_DEFAULTHOST_DEFAULTHOST_2 = "host.defaultHost = ?";
 
 	public HostPersistenceImpl() {
 		setModelClass(Host.class);
@@ -1054,7 +1080,9 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 			new Object[] { host.getGroupId(), host.getHostId() }, host);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_DEFAULTHOST,
-			new Object[] { host.getCompanyId(), host.getGroupId() }, host);
+			new Object[] {
+				host.getCompanyId(), host.getGroupId(), host.getDefaultHost()
+			}, host);
 
 		host.resetOriginalValues();
 	}
@@ -1136,7 +1164,10 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_H, args, host);
 
-			args = new Object[] { host.getCompanyId(), host.getGroupId() };
+			args = new Object[] {
+					host.getCompanyId(), host.getGroupId(),
+					host.getDefaultHost()
+				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_DEFAULTHOST, args,
 				Long.valueOf(1));
@@ -1158,7 +1189,8 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 			if ((hostModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_DEFAULTHOST.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						host.getCompanyId(), host.getGroupId()
+						host.getCompanyId(), host.getGroupId(),
+						host.getDefaultHost()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_DEFAULTHOST,
@@ -1188,7 +1220,9 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_H, args);
 		}
 
-		args = new Object[] { host.getCompanyId(), host.getGroupId() };
+		args = new Object[] {
+				host.getCompanyId(), host.getGroupId(), host.getDefaultHost()
+			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_DEFAULTHOST, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_DEFAULTHOST, args);
@@ -1197,7 +1231,8 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 				FINDER_PATH_FETCH_BY_DEFAULTHOST.getColumnBitmask()) != 0) {
 			args = new Object[] {
 					hostModelImpl.getOriginalCompanyId(),
-					hostModelImpl.getOriginalGroupId()
+					hostModelImpl.getOriginalGroupId(),
+					hostModelImpl.getOriginalDefaultHost()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_DEFAULTHOST, args);
@@ -1385,6 +1420,7 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 		hostImpl.setName(host.getName());
 		hostImpl.setGroupId(host.getGroupId());
 		hostImpl.setCompanyId(host.getCompanyId());
+		hostImpl.setDefaultHost(host.getDefaultHost());
 
 		return hostImpl;
 	}

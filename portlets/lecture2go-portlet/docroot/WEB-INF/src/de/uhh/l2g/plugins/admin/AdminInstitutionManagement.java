@@ -48,31 +48,27 @@ public class AdminInstitutionManagement extends MVCPortlet {
 			long defaultInstitutionId = 0;
 
 
-		    List<Institution> institutions = InstitutionLocalServiceUtil.getByGroupId(groupId);
-		    List<Host> host = HostLocalServiceUtil.getByGroupId(groupId);
 		    List<Institution_Host> institution_host = Institution_HostLocalServiceUtil.getByGroupId(groupId);
-
+		    
 		    //Add default host if empty or default entry does not exist
-		    defaultHostId = HostLocalServiceUtil.getDefaultHostId(groupId,companyId);
+		    defaultHostId = HostLocalServiceUtil.getDefaultHostId(companyId,groupId);
 		    if (defaultHostId == 0) defaultHostId = HostLocalServiceUtil.addDefaultHost(serviceContext).getHostId();
 
 		    //new Tree Root for Institution if empty
-		    //Default Institution must represent Root: InstitutionId = 1 and parentId = 0 
-		    if (institutions.size() == 0) {
-		    	Institution defaultInstitution = InstitutionLocalServiceUtil.addInstitution("----", 0 ,Long.MAX_VALUE, 0, serviceContext);
-		    	defaultInstitution = InstitutionLocalServiceUtil.addInstitution("Main", 0 ,new Long(0), 0, serviceContext);
-		    	SessionMessages.add(renderRequest, "entryAdded");
-		    	defaultInstitutionId = defaultInstitution.getInstitutionId();
-		    }
-		    System.out.println(defaultInstitutionId+" "+defaultHostId);
-		    //Add default Link if empty or default entry does not exist
-		    //Default Institution must represent Root: InstitutionId = 1 and hostId = 0 
-		    if (institution_host.size() == 0) {
+		    defaultInstitutionId = InstitutionLocalServiceUtil.getDefaultInstitutionId(companyId,groupId);
+		    if (defaultInstitutionId == 0) {
+		    	defaultInstitutionId = InstitutionLocalServiceUtil.addDefaultInstitution(serviceContext).getInstitutionId();
+		    	
+			    //Add default Link if new institution has been added 
 		    	Institution_Host defaultInstitution_Host = Institution_HostLocalServiceUtil.addEntry(defaultInstitutionId, defaultHostId, serviceContext);
 		    	SessionMessages.add(renderRequest, "entryAdded");
 		    	long defaultInstitution_HostId = defaultInstitution_Host.getPrimaryKey();
 		    }
+		    
+		    
 
+		    List<Institution> institutions = InstitutionLocalServiceUtil.getByGroupId(groupId);
+		    List<Host> host = HostLocalServiceUtil.getByGroupId(groupId);
 
 		    if (!(institutionId > 0)) {
 		    	institutionId = institutions.get(0).getInstitutionId();

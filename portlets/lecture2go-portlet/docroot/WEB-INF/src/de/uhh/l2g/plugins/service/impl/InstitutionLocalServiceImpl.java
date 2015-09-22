@@ -21,6 +21,7 @@ import java.util.Map;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
@@ -74,8 +75,8 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		return institutionPersistence.fetchByG_I(groupId, institutionId);
 	}
 
-	public Institution getRootByGroupId(long groupId) throws SystemException {
-		return (Institution) institutionPersistence.fetchByRoot(groupId);
+	public Institution getRootByGroupId(long companyId, long groupId) throws SystemException {
+		return (Institution) institutionPersistence.fetchByRoot(companyId, groupId);
 	}
 
 	public List<Institution> getByGroupIdAndParent(long groupId, long parentId) throws SystemException {
@@ -231,6 +232,50 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 			}
 
 		}
+	}
+	
+	public long getDefaultInstitutionId(long companyId, long groupId) throws SystemException{
+		Institution defaultInstitution = institutionPersistence.fetchByRoot(companyId, groupId, false);
+		if (defaultInstitution == null) return 0;
+		else return defaultInstitution.getPrimaryKey();
+	}
+	
+	
+	/**Special handling for default entry
+	 * Default has to be Top Level Institution, must be replaced while migrating
+	 * 
+	 * TODO: remove Default when migrating data
+	 */
+	public Institution addDefaultInstitution(ServiceContext serviceContext) throws SystemException, PortalException {
+		
+    	
+		long groupId = serviceContext.getScopeGroupId();
+		long companyId = serviceContext.getCompanyId();
+		long userId = serviceContext.getUserId();
+
+		User user = userPersistence.findByPrimaryKey(userId);
+		
+		long institutionId = counterLocalService.increment(Institution.class.getName());
+
+		Institution defaultInstitution = institutionPersistence.create(institutionId);
+
+		//Empty name marks default
+		defaultInstitution.setName(PropsUtil.get("lecture2go.default.rootInstitution"));
+		defaultInstitution.setGroupId(groupId);
+		defaultInstitution.setCompanyId(companyId);
+		//Set Top Level Attributes
+		defaultInstitution.setParentId(0);
+		defaultInstitution.setLevel(0);
+		defaultInstitution.setParentId(0);
+		defaultInstitution.setTyp("tree1");
+		defaultInstitution.setExpandoBridgeAttributes(serviceContext);
+
+		institutionPersistence.update(defaultInstitution);
+
+		resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
+				Institution.class.getName(), institutionId, false, true, true);
+    	
+    	return defaultInstitution;
 	}
 	
 	

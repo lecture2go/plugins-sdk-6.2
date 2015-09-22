@@ -8663,32 +8663,37 @@ public class InstitutionPersistenceImpl extends BasePersistenceImpl<Institution>
 	public static final FinderPath FINDER_PATH_FETCH_BY_ROOT = new FinderPath(InstitutionModelImpl.ENTITY_CACHE_ENABLED,
 			InstitutionModelImpl.FINDER_CACHE_ENABLED, InstitutionImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByRoot",
-			new String[] { Long.class.getName() },
+			new String[] { Long.class.getName(), Long.class.getName() },
+			InstitutionModelImpl.COMPANYID_COLUMN_BITMASK |
 			InstitutionModelImpl.GROUPID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_ROOT = new FinderPath(InstitutionModelImpl.ENTITY_CACHE_ENABLED,
 			InstitutionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByRoot",
-			new String[] { Long.class.getName() });
+			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns the institution where groupId = &#63; or throws a {@link de.uhh.l2g.plugins.NoSuchInstitutionException} if it could not be found.
+	 * Returns the institution where companyId = &#63; and groupId = &#63; or throws a {@link de.uhh.l2g.plugins.NoSuchInstitutionException} if it could not be found.
 	 *
+	 * @param companyId the company ID
 	 * @param groupId the group ID
 	 * @return the matching institution
 	 * @throws de.uhh.l2g.plugins.NoSuchInstitutionException if a matching institution could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Institution findByRoot(long groupId)
+	public Institution findByRoot(long companyId, long groupId)
 		throws NoSuchInstitutionException, SystemException {
-		Institution institution = fetchByRoot(groupId);
+		Institution institution = fetchByRoot(companyId, groupId);
 
 		if (institution == null) {
-			StringBundler msg = new StringBundler(4);
+			StringBundler msg = new StringBundler(6);
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("groupId=");
+			msg.append("companyId=");
+			msg.append(companyId);
+
+			msg.append(", groupId=");
 			msg.append(groupId);
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
@@ -8704,29 +8709,32 @@ public class InstitutionPersistenceImpl extends BasePersistenceImpl<Institution>
 	}
 
 	/**
-	 * Returns the institution where groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the institution where companyId = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
+	 * @param companyId the company ID
 	 * @param groupId the group ID
 	 * @return the matching institution, or <code>null</code> if a matching institution could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Institution fetchByRoot(long groupId) throws SystemException {
-		return fetchByRoot(groupId, true);
+	public Institution fetchByRoot(long companyId, long groupId)
+		throws SystemException {
+		return fetchByRoot(companyId, groupId, true);
 	}
 
 	/**
-	 * Returns the institution where groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the institution where companyId = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @param companyId the company ID
 	 * @param groupId the group ID
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching institution, or <code>null</code> if a matching institution could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Institution fetchByRoot(long groupId, boolean retrieveFromCache)
-		throws SystemException {
-		Object[] finderArgs = new Object[] { groupId };
+	public Institution fetchByRoot(long companyId, long groupId,
+		boolean retrieveFromCache) throws SystemException {
+		Object[] finderArgs = new Object[] { companyId, groupId };
 
 		Object result = null;
 
@@ -8738,15 +8746,18 @@ public class InstitutionPersistenceImpl extends BasePersistenceImpl<Institution>
 		if (result instanceof Institution) {
 			Institution institution = (Institution)result;
 
-			if ((groupId != institution.getGroupId())) {
+			if ((companyId != institution.getCompanyId()) ||
+					(groupId != institution.getGroupId())) {
 				result = null;
 			}
 		}
 
 		if (result == null) {
-			StringBundler query = new StringBundler(3);
+			StringBundler query = new StringBundler(4);
 
 			query.append(_SQL_SELECT_INSTITUTION_WHERE);
+
+			query.append(_FINDER_COLUMN_ROOT_COMPANYID_2);
 
 			query.append(_FINDER_COLUMN_ROOT_GROUPID_2);
 
@@ -8761,6 +8772,8 @@ public class InstitutionPersistenceImpl extends BasePersistenceImpl<Institution>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
+				qPos.add(companyId);
+
 				qPos.add(groupId);
 
 				List<Institution> list = q.list();
@@ -8772,7 +8785,7 @@ public class InstitutionPersistenceImpl extends BasePersistenceImpl<Institution>
 				else {
 					if ((list.size() > 1) && _log.isWarnEnabled()) {
 						_log.warn(
-							"InstitutionPersistenceImpl.fetchByRoot(long, boolean) with parameters (" +
+							"InstitutionPersistenceImpl.fetchByRoot(long, long, boolean) with parameters (" +
 							StringUtil.merge(finderArgs) +
 							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 					}
@@ -8783,7 +8796,8 @@ public class InstitutionPersistenceImpl extends BasePersistenceImpl<Institution>
 
 					cacheResult(institution);
 
-					if ((institution.getGroupId() != groupId)) {
+					if ((institution.getCompanyId() != companyId) ||
+							(institution.getGroupId() != groupId)) {
 						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ROOT,
 							finderArgs, institution);
 					}
@@ -8809,40 +8823,45 @@ public class InstitutionPersistenceImpl extends BasePersistenceImpl<Institution>
 	}
 
 	/**
-	 * Removes the institution where groupId = &#63; from the database.
+	 * Removes the institution where companyId = &#63; and groupId = &#63; from the database.
 	 *
+	 * @param companyId the company ID
 	 * @param groupId the group ID
 	 * @return the institution that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Institution removeByRoot(long groupId)
+	public Institution removeByRoot(long companyId, long groupId)
 		throws NoSuchInstitutionException, SystemException {
-		Institution institution = findByRoot(groupId);
+		Institution institution = findByRoot(companyId, groupId);
 
 		return remove(institution);
 	}
 
 	/**
-	 * Returns the number of institutions where groupId = &#63;.
+	 * Returns the number of institutions where companyId = &#63; and groupId = &#63;.
 	 *
+	 * @param companyId the company ID
 	 * @param groupId the group ID
 	 * @return the number of matching institutions
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByRoot(long groupId) throws SystemException {
+	public int countByRoot(long companyId, long groupId)
+		throws SystemException {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_ROOT;
 
-		Object[] finderArgs = new Object[] { groupId };
+		Object[] finderArgs = new Object[] { companyId, groupId };
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(2);
+			StringBundler query = new StringBundler(3);
 
 			query.append(_SQL_COUNT_INSTITUTION_WHERE);
+
+			query.append(_FINDER_COLUMN_ROOT_COMPANYID_2);
 
 			query.append(_FINDER_COLUMN_ROOT_GROUPID_2);
 
@@ -8856,6 +8875,8 @@ public class InstitutionPersistenceImpl extends BasePersistenceImpl<Institution>
 				Query q = session.createQuery(sql);
 
 				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
 
 				qPos.add(groupId);
 
@@ -8876,6 +8897,7 @@ public class InstitutionPersistenceImpl extends BasePersistenceImpl<Institution>
 		return count.intValue();
 	}
 
+	private static final String _FINDER_COLUMN_ROOT_COMPANYID_2 = "institution.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_ROOT_GROUPID_2 = "institution.groupId = ? AND institution.parentId = 0";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_I = new FinderPath(InstitutionModelImpl.ENTITY_CACHE_ENABLED,
 			InstitutionModelImpl.FINDER_CACHE_ENABLED, InstitutionImpl.class,
@@ -9625,7 +9647,8 @@ public class InstitutionPersistenceImpl extends BasePersistenceImpl<Institution>
 			InstitutionImpl.class, institution.getPrimaryKey(), institution);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ROOT,
-			new Object[] { institution.getGroupId() }, institution);
+			new Object[] { institution.getCompanyId(), institution.getGroupId() },
+			institution);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_I,
 			new Object[] {
@@ -9707,7 +9730,9 @@ public class InstitutionPersistenceImpl extends BasePersistenceImpl<Institution>
 
 	protected void cacheUniqueFindersCache(Institution institution) {
 		if (institution.isNew()) {
-			Object[] args = new Object[] { institution.getGroupId() };
+			Object[] args = new Object[] {
+					institution.getCompanyId(), institution.getGroupId()
+				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_ROOT, args,
 				Long.valueOf(1));
@@ -9728,7 +9753,9 @@ public class InstitutionPersistenceImpl extends BasePersistenceImpl<Institution>
 
 			if ((institutionModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_ROOT.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { institution.getGroupId() };
+				Object[] args = new Object[] {
+						institution.getCompanyId(), institution.getGroupId()
+					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_ROOT, args,
 					Long.valueOf(1));
@@ -9753,14 +9780,19 @@ public class InstitutionPersistenceImpl extends BasePersistenceImpl<Institution>
 	protected void clearUniqueFindersCache(Institution institution) {
 		InstitutionModelImpl institutionModelImpl = (InstitutionModelImpl)institution;
 
-		Object[] args = new Object[] { institution.getGroupId() };
+		Object[] args = new Object[] {
+				institution.getCompanyId(), institution.getGroupId()
+			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ROOT, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_ROOT, args);
 
 		if ((institutionModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_ROOT.getColumnBitmask()) != 0) {
-			args = new Object[] { institutionModelImpl.getOriginalGroupId() };
+			args = new Object[] {
+					institutionModelImpl.getOriginalCompanyId(),
+					institutionModelImpl.getOriginalGroupId()
+				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ROOT, args);
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_ROOT, args);
