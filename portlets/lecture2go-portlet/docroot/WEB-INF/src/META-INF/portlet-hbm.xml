@@ -71,6 +71,7 @@
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="defaultHost" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.InstitutionImpl" table="LG_Institution">
 		<cache usage="read-write" />

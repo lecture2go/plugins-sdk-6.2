@@ -35,7 +35,7 @@ import java.io.ObjectOutput;
 public class HostCacheModel implements CacheModel<Host>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{hostId=");
 		sb.append(hostId);
@@ -53,6 +53,8 @@ public class HostCacheModel implements CacheModel<Host>, Externalizable {
 		sb.append(groupId);
 		sb.append(", companyId=");
 		sb.append(companyId);
+		sb.append(", defaultHost=");
+		sb.append(defaultHost);
 		sb.append("}");
 
 		return sb.toString();
@@ -96,6 +98,7 @@ public class HostCacheModel implements CacheModel<Host>, Externalizable {
 
 		hostImpl.setGroupId(groupId);
 		hostImpl.setCompanyId(companyId);
+		hostImpl.setDefaultHost(defaultHost);
 
 		hostImpl.resetOriginalValues();
 
@@ -112,6 +115,7 @@ public class HostCacheModel implements CacheModel<Host>, Externalizable {
 		name = objectInput.readUTF();
 		groupId = objectInput.readLong();
 		companyId = objectInput.readLong();
+		defaultHost = objectInput.readInt();
 	}
 
 	@Override
@@ -151,6 +155,7 @@ public class HostCacheModel implements CacheModel<Host>, Externalizable {
 
 		objectOutput.writeLong(groupId);
 		objectOutput.writeLong(companyId);
+		objectOutput.writeInt(defaultHost);
 	}
 
 	public long hostId;
@@ -161,4 +166,5 @@ public class HostCacheModel implements CacheModel<Host>, Externalizable {
 	public String name;
 	public long groupId;
 	public long companyId;
+	public int defaultHost;
 }

@@ -120,7 +120,8 @@ public class Institution_HostLocalServiceImpl
 
 		long groupId = serviceContext.getScopeGroupId();
 		long userId = serviceContext.getUserId();
-
+		long companyId = serviceContext.getCompanyId();
+		
 		User user = userPersistence.findByPrimaryKey(userId);
 
 		//validate(institutionId, hostId);
@@ -130,6 +131,7 @@ public class Institution_HostLocalServiceImpl
 		Institution_Host institution_Host = institution_HostPersistence.create(institution_HostId);
 
 		institution_Host.setGroupId(groupId);
+		institution_Host.setCompanyId(companyId);
 		institution_Host.setInstitutionId(institutionId);
 		institution_Host.setHostId(hostId);
 

@@ -1837,12 +1837,12 @@ public class MigrationController {
     	Institution instition = null;
     	try {
     		instition = InstitutionLocalServiceUtil.getInstitution(legacyFacility.getId());
-    		instition = FacilityMapper.mapFacility(legacyFacility, instition, groupId);
+    		instition = FacilityMapper.mapFacility(legacyFacility, instition, groupId, companyId);
 			log.info("Institution UPDATE:" +instition);
 			InstitutionLocalServiceUtil.updateInstitution(instition);
 		} catch (Exception e) {
 			instition = InstitutionLocalServiceUtil.createInstitution(legacyFacility.getId());
-			instition = FacilityMapper.mapFacility(legacyFacility, instition, groupId);
+			instition = FacilityMapper.mapFacility(legacyFacility, instition, groupId, companyId);
 			log.debug("Institution NEW:" +instition);
 			InstitutionLocalServiceUtil.addInstitution(instition);
 		}

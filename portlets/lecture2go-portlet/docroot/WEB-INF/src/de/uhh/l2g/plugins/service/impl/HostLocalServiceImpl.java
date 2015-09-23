@@ -80,7 +80,9 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 	}
 	
 	public long getDefaultHostId(long companyId, long groupId) throws SystemException{
-		Host defaultHost = hostPersistence.fetchByDefaultHost(companyId, groupId);
+		int isDefaultHost = 1;
+		System.out.println(companyId +" "+groupId);
+		Host defaultHost = hostPersistence.fetchByDefaultHost(companyId, groupId, isDefaultHost, false);
 		if (defaultHost == null) return 0;
 		else return defaultHost.getPrimaryKey();
 	}
@@ -127,6 +129,8 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 		defaultHost.setProtocol(PropsUtil.get("lecture2go.default.streamingProtocol"));
 		defaultHost.setServerRoot(PropsUtil.get("lecture2go.default.serverRoot"));
 		defaultHost.setPort(Integer.valueOf(PropsUtil.get("lecture2go.default.streamingPort")));
+		defaultHost.setDefaultHost(1);
+		
 		defaultHost.setExpandoBridgeAttributes(serviceContext);
 
 		hostPersistence.update(defaultHost);

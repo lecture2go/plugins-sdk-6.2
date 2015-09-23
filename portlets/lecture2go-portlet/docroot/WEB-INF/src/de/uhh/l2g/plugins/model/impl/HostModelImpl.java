@@ -64,9 +64,10 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 			{ "serverRoot", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT }
+			{ "companyId", Types.BIGINT },
+			{ "defaultHost", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Host (hostId LONG not null primary key,protocol STRING null,streamer STRING null,port INTEGER,serverRoot STRING null,name STRING null,groupId LONG,companyId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Host (hostId LONG not null primary key,protocol STRING null,streamer STRING null,port INTEGER,serverRoot STRING null,name STRING null,groupId LONG,companyId LONG,defaultHost INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Host";
 	public static final String ORDER_BY_JPQL = " ORDER BY host.hostId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Host.hostId ASC";
@@ -83,8 +84,9 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.Host"),
 			true);
 	public static long COMPANYID_COLUMN_BITMASK = 1L;
-	public static long GROUPID_COLUMN_BITMASK = 2L;
-	public static long HOSTID_COLUMN_BITMASK = 4L;
+	public static long DEFAULTHOST_COLUMN_BITMASK = 2L;
+	public static long GROUPID_COLUMN_BITMASK = 4L;
+	public static long HOSTID_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Host"));
 
@@ -133,6 +135,7 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 		attributes.put("name", getName());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("defaultHost", getDefaultHost());
 
 		return attributes;
 	}
@@ -185,6 +188,12 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Integer defaultHost = (Integer)attributes.get("defaultHost");
+
+		if (defaultHost != null) {
+			setDefaultHost(defaultHost);
 		}
 	}
 
@@ -324,6 +333,28 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 		return _originalCompanyId;
 	}
 
+	@Override
+	public int getDefaultHost() {
+		return _defaultHost;
+	}
+
+	@Override
+	public void setDefaultHost(int defaultHost) {
+		_columnBitmask |= DEFAULTHOST_COLUMN_BITMASK;
+
+		if (!_setOriginalDefaultHost) {
+			_setOriginalDefaultHost = true;
+
+			_originalDefaultHost = _defaultHost;
+		}
+
+		_defaultHost = defaultHost;
+	}
+
+	public int getOriginalDefaultHost() {
+		return _originalDefaultHost;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -363,6 +394,7 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 		hostImpl.setName(getName());
 		hostImpl.setGroupId(getGroupId());
 		hostImpl.setCompanyId(getCompanyId());
+		hostImpl.setDefaultHost(getDefaultHost());
 
 		hostImpl.resetOriginalValues();
 
@@ -427,6 +459,10 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 
 		hostModelImpl._setOriginalCompanyId = false;
 
+		hostModelImpl._originalDefaultHost = hostModelImpl._defaultHost;
+
+		hostModelImpl._setOriginalDefaultHost = false;
+
 		hostModelImpl._columnBitmask = 0;
 	}
 
@@ -474,12 +510,14 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 
 		hostCacheModel.companyId = getCompanyId();
 
+		hostCacheModel.defaultHost = getDefaultHost();
+
 		return hostCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{hostId=");
 		sb.append(getHostId());
@@ -497,6 +535,8 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 		sb.append(getGroupId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
+		sb.append(", defaultHost=");
+		sb.append(getDefaultHost());
 		sb.append("}");
 
 		return sb.toString();
@@ -504,7 +544,7 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Host");
@@ -542,6 +582,10 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
 		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>defaultHost</column-name><column-value><![CDATA[");
+		sb.append(getDefaultHost());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -564,6 +608,9 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
+	private int _defaultHost;
+	private int _originalDefaultHost;
+	private boolean _setOriginalDefaultHost;
 	private long _columnBitmask;
 	private Host _escapedModel;
 }

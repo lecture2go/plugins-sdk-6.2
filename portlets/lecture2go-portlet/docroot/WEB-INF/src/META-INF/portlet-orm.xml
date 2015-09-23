@@ -53,6 +53,7 @@
 			<basic name="name" />
 			<basic name="groupId" />
 			<basic name="companyId" />
+			<basic name="defaultHost" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

@@ -45,6 +45,7 @@
 		</field>
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
+		<field name="defaultHost" type="int" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Institution">
 		<field name="institutionId" type="long" />

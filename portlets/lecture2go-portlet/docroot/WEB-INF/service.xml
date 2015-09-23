@@ -132,6 +132,7 @@
             <finder-column name="sort"></finder-column>
         </finder>
          <finder name="Root" return-type="Institution" where="parentId = 0">
+            <finder-column name="companyId"></finder-column>
             <finder-column name="groupId"></finder-column>
         </finder>
         <finder name="G_I" return-type="Institution">
@@ -210,6 +211,7 @@
     	<column name="name" type="String"></column>
 		<column name="groupId" type="long"></column>
         <column name="companyId" type="long"></column>
+        <column name="defaultHost" type="int"></column>
 		<finder name="GroupId" return-type="Collection">
             <finder-column name="groupId"></finder-column>
         </finder>
@@ -217,9 +219,10 @@
             <finder-column name="groupId"></finder-column>
             <finder-column name="hostId"></finder-column>
         </finder>
-        <finder name="DefaultHost" return-type="Host" where="serverNameLIKE ''" unique="true">
+        <finder name="DefaultHost" return-type="Host" unique="true">
             <finder-column name="companyId"></finder-column>
             <finder-column name="groupId"></finder-column>
+            <finder-column name="defaultHost"></finder-column>
         </finder>
     </entity>
     <entity name="Institution_Host" local-service="true" remote-service="false">
