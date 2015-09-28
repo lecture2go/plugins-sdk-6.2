@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="ivy-report.xsl"?>
+<ivy-report version="1.0">
+	<info
+		organisation="com.liferay"
+		module="com.liferay.sdk.dependencies.org.sonar.ant"
+		revision="working@gund.rrz.uni-hamburg.de"
+		conf="default"
+		confs="default, internal"
+		date="20150817113430"/>
+	<dependencies>
+		<module organisation="org.codehaus.sonar-plugins" name="sonar-ant-task">
+			<revision name="2.2" status="release" pubdate="20140617102503" resolver="liferay-public" artresolver="default" homepage="http://docs.codehaus.org/display/SONAR/Sonar+Ant+Task" downloaded="true" searched="true" default="false" conf="default, compile, runtime, master" position="0">
+				<license name="GNU LGPL 3" url="http://www.gnu.org/licenses/lgpl.txt"/>
+				<metadata-artifact status="successful" details="" size="4910" time="63" location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/org.codehaus.sonar-plugins/sonar-ant-task/ivy-2.2.xml" searched="true" original-local-location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/org.codehaus.sonar-plugins/sonar-ant-task/ivy-2.2.xml.original" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/codehaus/sonar-plugins/sonar-ant-task/2.2/sonar-ant-task-2.2.pom"/>
+				<caller organisation="com.liferay" name="com.liferay.sdk.dependencies.org.sonar.ant" conf="default" rev="2.2" rev-constraint-default="2.2" rev-constraint-dynamic="2.2" callerrev="working@gund.rrz.uni-hamburg.de"/>
+				<artifacts>
+					<artifact name="sonar-ant-task" type="jar" ext="jar" status="successful" details="" size="1825821" time="266" location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/org.codehaus.sonar-plugins/sonar-ant-task/jars/sonar-ant-task-2.2.jar">
+						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/codehaus/sonar-plugins/sonar-ant-task/2.2/sonar-ant-task-2.2.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+	</dependencies>
+</ivy-report>

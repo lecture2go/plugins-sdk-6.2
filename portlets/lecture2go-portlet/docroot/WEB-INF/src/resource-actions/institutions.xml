@@ -64,13 +64,13 @@
         </supports>
         <site-member-defaults>
             <action-key>ADD_SUB_INSTITUTION_ENTRY</action-key>
-            <action-key>ADD_HOST_ENTRY</action-key>
+            
         </site-member-defaults>
         <guest-defaults>
         </guest-defaults>
         <guest-unsupported>
             <action-key>ADD_INSTITUTION_ENTRY</action-key>
-            <action-key>ADD_HOST_ENTRY</action-key>
+            
         </guest-unsupported>
     </permissions>
   </model-resource>
@@ -89,6 +89,7 @@
       	<action-key>ADD_SUB_INSTITUTION_ENTRY</action-key>
       	<action-key>VIEW_HOSTS</action-key>
       	<action-key>ADD_HOSTS</action-key>
+      	<action-key>ADD_HOST_ENTRY</action-key>
       	<action-key>EDIT_HOSTS</action-key>
         <action-key>EDIT_ALL_INSTITUTIONS</action-key>
         <action-key>VIEW_OWN_INSTITUTIONS</action-key>
@@ -102,13 +103,13 @@
         </supports>
         <site-member-defaults>
             <action-key>ADD_SUB_INSTITUTION_ENTRY</action-key>
-            <action-key>ADD_HOST_ENTRY</action-key>
+            <action-key>ADD_HOSTS</action-key>
         </site-member-defaults>
         <guest-defaults>
         </guest-defaults>
         <guest-unsupported>
             <action-key>ADD_INSTITUTION_ENTRY</action-key>
-            <action-key>ADD_HOST_ENTRY</action-key>
+            <action-key>ADD_HOSTS</action-key>
         </guest-unsupported>
     </permissions>
   </model-resource>
@@ -123,6 +124,7 @@
         <supports>
             <action-key>ADD_HOST_ENTRY</action-key>
             <action-key>EDIT_HOST_ENTRY</action-key>
+             <action-key>ADD_HOSTS</action-key>
             <action-key>DELETE</action-key>
             <action-key>PERMISSIONS</action-key>
             <action-key>UPDATE</action-key>
@@ -135,6 +137,7 @@
         <guest-unsupported>
             <action-key>ADD_HOST_ENTRY</action-key>
             <action-key>EDIT_HOST_ENTRY</action-key>
+             <action-key>ADD_HOSTS</action-key>
             <action-key>UPDATE</action-key>
             <action-key>PERMISSIONS</action-key>
             <action-key>DELETE</action-key>

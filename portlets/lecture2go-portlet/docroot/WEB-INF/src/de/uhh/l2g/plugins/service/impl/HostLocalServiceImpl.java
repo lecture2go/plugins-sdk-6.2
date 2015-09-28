@@ -34,6 +34,9 @@ import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.HostLocalServiceBaseImpl;
 
+import java.util.List;
+import de.uhh.l2g.plugins.service.persistence.HostUtil;
+
 /**
  * The implementation of the host local service.
  *
@@ -74,10 +77,30 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 	public List<Host> getByGroupId(long groupId) throws SystemException{
 		return hostPersistence.findByGroupId(groupId);
 	}
+	
+	public List<Host> getByGroupId(long groupId, int start, int end) throws SystemException{
+		return hostPersistence.findByGroupId(groupId, start, end);
+	}
+	
+	public int getByGroupIdCount(long groupId) throws SystemException {
+		return hostPersistence.countByGroupId(groupId);
+	}
 
 	public Host getByGroupIdAndHostId(long groupId, long hostId) throws SystemException{
 		return hostPersistence.fetchByG_H(groupId, hostId);
 	}
+	
+	public List<Host> getByCompanyIdAndGroupId(long companyId, long groupId) throws SystemException{
+		return hostPersistence.findByCompanyIdAndGroupId(companyId, groupId);
+	}
+	
+	public Host getByDefault(long companyId, long groupId) throws SystemException{
+		int isDefaultHost = 1;
+		Host defaultHost = hostPersistence.fetchByDefaultHost(companyId, groupId, isDefaultHost, false);
+		return defaultHost;
+	}
+	
+
 	
 	public long getDefaultHostId(long companyId, long groupId) throws SystemException{
 		int isDefaultHost = 1;

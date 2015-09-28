@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="ivy-report.xsl"?>
+<ivy-report version="1.0">
+	<info
+		organisation="com.liferay"
+		module="com.liferay.sdk.dependencies.org.sourceforge.pmd"
+		revision="working@gund.rrz.uni-hamburg.de"
+		conf="default"
+		confs="default, internal"
+		date="20150817113406"/>
+	<dependencies>
+		<module organisation="com.liferay" name="com.liferay.pmd">
+			<revision name="1.0.0" status="release" pubdate="20150108195852" resolver="liferay-public" artresolver="default" homepage="" downloaded="true" searched="true" default="false" conf="default, compile, runtime, master" position="0">
+				<license name="LGPL 2.1" url="http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt"/>
+				<metadata-artifact status="successful" details="" size="1261" time="65" location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/com.liferay/com.liferay.pmd/ivy-1.0.0.xml" searched="true" original-local-location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/com.liferay/com.liferay.pmd/ivy-1.0.0.xml.original" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/com/liferay/com.liferay.pmd/1.0.0/com.liferay.pmd-1.0.0.pom"/>
+				<caller organisation="com.liferay" name="com.liferay.sdk.dependencies.org.sourceforge.pmd" conf="default" rev="1.0.0" rev-constraint-default="1.0.0" rev-constraint-dynamic="1.0.0" callerrev="working@gund.rrz.uni-hamburg.de"/>
+				<artifacts>
+					<artifact name="com.liferay.pmd" type="jar" ext="jar" status="successful" details="" size="2666" time="63" location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/com.liferay/com.liferay.pmd/jars/com.liferay.pmd-1.0.0.jar">
+						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/com/liferay/com.liferay.pmd/1.0.0/com.liferay.pmd-1.0.0.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="net.sourceforge.pmd" name="pmd-java">
+			<revision name="5.2.3" status="release" pubdate="20141221120629" resolver="liferay-public" artresolver="default" homepage="" downloaded="true" searched="true" default="false" conf="default, compile, master(*), runtime, compile(*), runtime(*), master" position="1">
+				<metadata-artifact status="successful" details="" size="6634" time="64" location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/net.sourceforge.pmd/pmd-java/ivy-5.2.3.xml" searched="true" original-local-location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/net.sourceforge.pmd/pmd-java/ivy-5.2.3.xml.original" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/net/sourceforge/pmd/pmd-java/5.2.3/pmd-java-5.2.3.pom"/>
+				<caller organisation="com.liferay" name="com.liferay.pmd" conf="default, compile, runtime, master" rev="5.2.3" rev-constraint-default="5.2.3" rev-constraint-dynamic="5.2.3" callerrev="1.0.0"/>
+				<caller organisation="com.liferay" name="com.liferay.sdk.dependencies.org.sourceforge.pmd" conf="default" rev="5.2.3" rev-constraint-default="5.2.3" rev-constraint-dynamic="5.2.3" callerrev="working@gund.rrz.uni-hamburg.de"/>
+				<artifacts>
+					<artifact name="pmd-java" type="jar" ext="jar" status="successful" details="" size="710381" time="132" location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/net.sourceforge.pmd/pmd-java/jars/pmd-java-5.2.3.jar">
+						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/net/sourceforge/pmd/pmd-java/5.2.3/pmd-java-5.2.3.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="xerces" name="xercesImpl">
+			<revision name="2.11.0" status="release" pubdate="20130220212006" resolver="liferay-public" artresolver="default" homepage="https://xerces.apache.org/xerces2-j/" downloaded="true" searched="true" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="10">
+				<license name="The Apache Software License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
+				<metadata-artifact status="successful" details="" size="3392" time="63" location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/xerces/xercesImpl/ivy-2.11.0.xml" searched="true" original-local-location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/xerces/xercesImpl/ivy-2.11.0.xml.original" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/xerces/xercesImpl/2.11.0/xercesImpl-2.11.0.pom"/>
+				<caller organisation="net.sourceforge.pmd" name="pmd-java" conf="default, compile, runtime, master" rev="2.11.0" rev-constraint-default="2.11.0" rev-constraint-dynamic="2.11.0" callerrev="5.2.3"/>
+				<artifacts>
+					<artifact name="xercesImpl" type="jar" ext="jar" status="successful" details="" size="1367760" time="199" location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/xerces/xercesImpl/jars/xercesImpl-2.11.0.jar">
+						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/xerces/xercesImpl/2.11.0/xercesImpl-2.11.0.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="xml-apis" name="xml-apis">
+			<revision name="1.4.01" status="release" pubdate="20110820021111" resolver="liferay-public" artresolver="default" homepage="http://xml.apache.org/commons/components/external/" downloaded="false" searched="false" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="11">
+				<license name="The Apache Software License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
+				<license name="The SAX License" url="http://www.saxproject.org/copying.html"/>
+				<license name="The W3C License" url="http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/java-binding.zip"/>
+				<metadata-artifact status="no" details="" size="3317" time="0" location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/xml-apis/xml-apis/ivy-1.4.01.xml" searched="false" original-local-location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/xml-apis/xml-apis/ivy-1.4.01.xml.original" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/xml-apis/xml-apis/1.4.01/xml-apis-1.4.01.pom"/>
+				<caller organisation="xerces" name="xercesImpl" conf="compile, runtime" rev="1.4.01" rev-constraint-default="1.4.01" rev-constraint-dynamic="1.4.01" callerrev="2.11.0"/>
+				<artifacts>
+					<artifact name="xml-apis" type="jar" ext="jar" status="no" details="" size="220536" time="0" location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/xml-apis/xml-apis/jars/xml-apis-1.4.01.jar">
+						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/xml-apis/xml-apis/1.4.01/xml-apis-1.4.01.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="net.sourceforge.pmd" name="pmd-core">
+			<revision name="5.2.3" status="release" pubdate="20141221115439" resolver="liferay-public" artresolver="default" homepage="" downloaded="true" searched="true" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="4">
+				<metadata-artifact status="successful" details="" size="4521" time="63" location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/net.sourceforge.pmd/pmd-core/ivy-5.2.3.xml" searched="true" original-local-location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/net.sourceforge.pmd/pmd-core/ivy-5.2.3.xml.original" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/net/sourceforge/pmd/pmd-core/5.2.3/pmd-core-5.2.3.pom"/>
+				<caller organisation="net.sourceforge.pmd" name="pmd-java" conf="default, compile, runtime, master" rev="5.2.3" rev-constraint-default="5.2.3" rev-constraint-dynamic="5.2.3" callerrev="5.2.3"/>
+				<artifacts>
+					<artifact name="pmd-core" type="jar" ext="jar" status="successful" details="" size="667205" time="125" location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/net.sourceforge.pmd/pmd-core/jars/pmd-core-5.2.3.jar">
+						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/net/sourceforge/pmd/pmd-core/5.2.3/pmd-core-5.2.3.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.ow2.asm" name="asm">
+			<revision name="5.0.3" status="release" pubdate="20140524103012" resolver="liferay-public" artresolver="default" homepage="" downloaded="true" searched="true" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="9">
+				<metadata-artifact status="successful" details="" size="1935" time="62" location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/org.ow2.asm/asm/ivy-5.0.3.xml" searched="true" original-local-location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/org.ow2.asm/asm/ivy-5.0.3.xml.original" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/ow2/asm/asm/5.0.3/asm-5.0.3.pom"/>
+				<caller organisation="net.sourceforge.pmd" name="pmd-java" conf="default, compile, runtime, master" rev="5.0.3" rev-constraint-default="5.0.3" rev-constraint-dynamic="5.0.3" callerrev="5.2.3"/>
+				<caller organisation="net.sourceforge.pmd" name="pmd-core" conf="compile, runtime" rev="5.0.3" rev-constraint-default="5.0.3" rev-constraint-dynamic="5.0.3" callerrev="5.2.3"/>
+				<artifacts>
+					<artifact name="asm" type="jar" ext="jar" status="successful" details="" size="53231" time="69" location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/org.ow2.asm/asm/jars/asm-5.0.3.jar">
+						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/ow2/asm/asm/5.0.3/asm-5.0.3.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.apache.commons" name="commons-lang3">
+			<revision name="3.3.2" status="release" pubdate="20140406142129" resolver="liferay-public" artresolver="default" homepage="http://commons.apache.org/proper/commons-lang/" downloaded="true" searched="true" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="8">
+				<metadata-artifact status="successful" details="" size="20377" time="65" location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/org.apache.commons/commons-lang3/ivy-3.3.2.xml" searched="true" original-local-location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/org.apache.commons/commons-lang3/ivy-3.3.2.xml.original" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/apache/commons/commons-lang3/3.3.2/commons-lang3-3.3.2.pom"/>
+				<caller organisation="net.sourceforge.pmd" name="pmd-core" conf="compile, runtime" rev="3.3.2" rev-constraint-default="3.3.2" rev-constraint-dynamic="3.3.2" callerrev="5.2.3"/>
+				<artifacts>
+					<artifact name="commons-lang3" type="jar" ext="jar" status="successful" details="" size="412739" time="104" location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/org.apache.commons/commons-lang3/jars/commons-lang3-3.3.2.jar">
+						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/apache/commons/commons-lang3/3.3.2/commons-lang3-3.3.2.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="net.sourceforge.saxon" name="saxon">
+			<revision name="9.1.0.8" status="release" pubdate="20100226065342" resolver="liferay-public" artresolver="default" homepage="http://saxon.sourceforge.net/" downloaded="true" searched="true" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="7">
+				<license name="Mozilla Public License Version 1.0" url="http://www.mozilla.org/MPL/MPL-1.0.txt"/>
+				<metadata-artifact status="successful" details="" size="5744" time="63" location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/net.sourceforge.saxon/saxon/ivy-9.1.0.8.xml" searched="true" original-local-location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/net.sourceforge.saxon/saxon/ivy-9.1.0.8.xml.original" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/net/sourceforge/saxon/saxon/9.1.0.8/saxon-9.1.0.8.pom"/>
+				<caller organisation="net.sourceforge.pmd" name="pmd-java" conf="default, compile, runtime, master" rev="9.1.0.8" rev-constraint-default="9.1.0.8" rev-constraint-dynamic="9.1.0.8" callerrev="5.2.3"/>
+				<caller organisation="net.sourceforge.pmd" name="pmd-core" conf="compile, runtime" rev="9.1.0.8" rev-constraint-default="9.1.0.8" rev-constraint-dynamic="9.1.0.8" callerrev="5.2.3"/>
+				<artifacts>
+					<artifact name="saxon" type="jar" ext="jar" extra-classifier="dom" status="successful" details="" size="129236" time="93" location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/net.sourceforge.saxon/saxon/jars/saxon-9.1.0.8-dom.jar">
+						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/net/sourceforge/saxon/saxon/9.1.0.8/saxon-9.1.0.8-dom.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="commons-io" name="commons-io">
+			<revision name="2.4" status="release" pubdate="20120613002206" resolver="liferay-public" artresolver="default" homepage="http://commons.apache.org/io/" downloaded="true" searched="true" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="6">
+				<metadata-artifact status="successful" details="" size="10166" time="63" location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/commons-io/commons-io/ivy-2.4.xml" searched="true" original-local-location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/commons-io/commons-io/ivy-2.4.xml.original" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/commons-io/commons-io/2.4/commons-io-2.4.pom"/>
+				<caller organisation="net.sourceforge.pmd" name="pmd-core" conf="compile, runtime" rev="2.4" rev-constraint-default="2.4" rev-constraint-dynamic="2.4" callerrev="5.2.3"/>
+				<artifacts>
+					<artifact name="commons-io" type="jar" ext="jar" status="successful" details="" size="185140" time="82" location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/commons-io/commons-io/jars/commons-io-2.4.jar">
+						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/commons-io/commons-io/2.4/commons-io-2.4.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="com.beust" name="jcommander">
+			<revision name="1.35" status="release" pubdate="20140222183010" resolver="liferay-public" artresolver="default" homepage="http://beust.com/jcommander" downloaded="true" searched="true" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="5">
+				<license name="The Apache Software License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
+				<metadata-artifact status="successful" details="" size="7225" time="63" location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/com.beust/jcommander/ivy-1.35.xml" searched="true" original-local-location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/com.beust/jcommander/ivy-1.35.xml.original" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/com/beust/jcommander/1.35/jcommander-1.35.pom"/>
+				<caller organisation="net.sourceforge.pmd" name="pmd-core" conf="compile, runtime" rev="1.35" rev-constraint-default="1.35" rev-constraint-dynamic="1.35" callerrev="5.2.3"/>
+				<artifacts>
+					<artifact name="jcommander" type="jar" ext="jar" status="successful" details="" size="60550" time="71" location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/com.beust/jcommander/jars/jcommander-1.35.jar">
+						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/com/beust/jcommander/1.35/jcommander-1.35.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="net.java.dev.javacc" name="javacc">
+			<revision name="5.0" status="release" pubdate="20090918220457" resolver="liferay-public" artresolver="default" homepage="https://javacc.dev.java.net/" downloaded="true" searched="true" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="3">
+				<license name="Berkeley Software Distribution (BSD) License" url="http://www.opensource.org/licenses/bsd-license.html"/>
+				<metadata-artifact status="successful" details="" size="2907" time="63" location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/net.java.dev.javacc/javacc/ivy-5.0.xml" searched="true" original-local-location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/net.java.dev.javacc/javacc/ivy-5.0.xml.original" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/net/java/dev/javacc/javacc/5.0/javacc-5.0.pom"/>
+				<caller organisation="net.sourceforge.pmd" name="pmd-java" conf="default, compile, runtime, master" rev="5.0" rev-constraint-default="5.0" rev-constraint-dynamic="5.0" callerrev="5.2.3"/>
+				<caller organisation="net.sourceforge.pmd" name="pmd-core" conf="compile, runtime" rev="5.0" rev-constraint-default="5.0" rev-constraint-dynamic="5.0" callerrev="5.2.3"/>
+				<artifacts>
+					<artifact name="javacc" type="jar" ext="jar" status="successful" details="" size="298569" time="98" location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/net.java.dev.javacc/javacc/jars/javacc-5.0.jar">
+						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/net/java/dev/javacc/javacc/5.0/javacc-5.0.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="jaxen" name="jaxen">
+			<revision name="1.1.4" status="release" pubdate="20120816183051" resolver="liferay-public" artresolver="default" homepage="http://jaxen.codehaus.org/" downloaded="true" searched="true" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="2">
+				<license name="Unknown License" url="http://jaxen.codehaus.org/license.html"/>
+				<metadata-artifact status="successful" details="" size="12489" time="64" location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/jaxen/jaxen/ivy-1.1.4.xml" searched="true" original-local-location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/jaxen/jaxen/ivy-1.1.4.xml.original" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/jaxen/jaxen/1.1.4/jaxen-1.1.4.pom"/>
+				<caller organisation="net.sourceforge.pmd" name="pmd-java" conf="default, compile, runtime, master" rev="1.1.4" rev-constraint-default="1.1.4" rev-constraint-dynamic="1.1.4" callerrev="5.2.3"/>
+				<caller organisation="net.sourceforge.pmd" name="pmd-core" conf="compile, runtime" rev="1.1.4" rev-constraint-default="1.1.4" rev-constraint-dynamic="1.1.4" callerrev="5.2.3"/>
+				<artifacts>
+					<artifact name="jaxen" type="jar" ext="jar" status="successful" details="" size="226161" time="165" location="/Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/.ivy/cache/jaxen/jaxen/jars/jaxen-1.1.4.jar">
+						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/jaxen/jaxen/1.1.4/jaxen-1.1.4.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+	</dependencies>
+</ivy-report>

@@ -341,7 +341,6 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 		query+= "GROUP BY lectureseriesId ";
 		query+= "ORDER BY a.latestVideoUploadDate";	
 		
-		System.out.println(query);
 	    return query;
 	}
 

@@ -10,6 +10,7 @@
 
 <%!com.liferay.portal.kernel.dao.search.SearchContainer<Institution> searchInstitutionContainer = null;%>
 <%!com.liferay.portal.kernel.dao.search.SearchContainer<Institution> searchSubInstitutionContainer = null;%>
+<%!com.liferay.portal.kernel.dao.search.SearchContainer<Host> searchHostContainer = null;%>
 
 <liferay-ui:error key="host-or-institution-error" message="host-or-institution-error"/>
 
@@ -116,7 +117,11 @@ long rootId = root.getPrimaryKey();
 //Get First Level institution List
 List<Institution> institutions = InstitutionLocalServiceUtil.getByGroupIdAndParent(groupId,rootId);
 
+//Get StreamingServers
 List<Host> hostList = HostLocalServiceUtil.getByGroupId(groupId);
+System.out.println(hostList.toString());
+//Get StreamingServer Defaults
+Host defaultHost = HostLocalServiceUtil.getByDefault(companyId, groupId);
 
 //Sort preset for first level Institutions
 int maxOrder = InstitutionLocalServiceUtil.getMaxSortByParentId(rootId)+1;
@@ -170,9 +175,17 @@ Root Institution Permissions:
 	            <aui:select name="serverselect" id="selecthost" label="Streaming Server" inlineField="true">
 				<%
 						for(Host host : hostList){
+							if (host.getDefaultHost() > 0) {
 				%>
-						<aui:option label="<%= host.getName() %>" value="<%= host.getHostId() %>"></aui:option>
-				<% } %>
+							<aui:option label="Default" value="<%= host.getHostId() %>"></aui:option>
+				<%			}
+							else {
+							%>
+								<aui:option label="<%= host.getName() %>" value="<%= host.getHostId() %>"></aui:option>
+							<%
+								
+							}
+				 } %>
 	            </aui:select>
 	            <aui:input name="order" label="Order" inlineField="true" value='<%= maxOrder %>'/>
 	            <aui:input name='institutionId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "institutionId") %>'/>
@@ -185,25 +198,74 @@ Root Institution Permissions:
 </c:if>
 
 <c:if test='<%= permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "VIEW_HOSTS") %>'>
-	<c:if  test='<%= permissionChecker.hasPermission(groupId, institutionModel, groupId, "ADD_HOSTS") %>'>
-	       <liferay-ui:panel title="Streaming Server Options" collapsible="true" id="streamingServerSettings"
+
+	 <liferay-ui:panel title="Streaming Server Options" collapsible="true" id="streamingServerSettings"
 			    	defaultState="open"
 			    	extended="<%= false %>"
 			    	persistState="<%= true %>">
-					<aui:form action="<%= updateStreamingServerURL %>" name="<portlet:namespace />fm" inlineLabel="true">
-					<aui:button-row>
-			 	    <aui:fieldset column="true">
-						<aui:input label="StreamingServer Name" name="name" required="true" inlineField="true"></aui:input>
-			 	        <aui:input label="Streaming Server Domain or IP" name="ip" inlineField="true"></aui:input>
-			 	        <aui:input label="HTTP Protocol" name="protocol" inlineField="true"></aui:input>
-			 	        <aui:input name='hostId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "hostId") %>'/>
-			 	        <aui:button type="submit"></aui:button>
-						<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button>
-			 	    </aui:fieldset>
-			 	    </aui:button-row>
-					</aui:form>
-			</liferay-ui:panel>
-	</c:if>
+					<c:if  test='<%= permissionChecker.hasPermission(groupId, institutionModel, groupId, "ADD_HOSTS") %>'>
+	      
+						<aui:form action="<%= updateStreamingServerURL %>" name="<portlet:namespace />fm" inlineLabel="true">
+						<aui:button-row>
+				 	    <aui:fieldset column="true">
+							<aui:input label="StreamingServer Name" name="name" required="true" inlineField="true"></aui:input>
+				 	        <aui:input label="Streaming Server Domain or IP" name="ip" inlineField="true" value='<%= defaultHost.getStreamer() %>'></aui:input>
+				 	        <aui:input label="Protocol" name="protocol" inlineField="true" value='<%= defaultHost.getProtocol() %>'></aui:input>
+				 	        <aui:input name='hostId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "hostId") %>'/>
+				 	        <aui:button type="submit"></aui:button>
+							<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button>
+				 	    </aui:fieldset>
+				 	    </aui:button-row>
+						</aui:form>
+			
+				</c:if>
+				<liferay-ui:search-container searchContainer="<%= searchSubInstitutionContainer %>"
+				curParam ="curStreamingServer"
+				orderByType="asc"
+				emptyResultsMessage="there-are-no-hosts"
+				iteratorURL="<%= innerURL %>"
+				delta="20"
+				deltaConfigurable="true" >
+
+
+				<liferay-ui:search-container-results
+        			results="<%=HostLocalServiceUtil.getByGroupId(groupId, searchContainer.getStart(), searchContainer.getEnd())%>"
+        			total="<%=HostLocalServiceUtil.getByGroupIdCount(groupId)%>" />
+
+				<liferay-ui:search-container-row
+				className="de.uhh.l2g.plugins.model.Host" modelVar="Hosts" rowVar="thisRow"
+				keyProperty="hostId"  escapedModel="<%= false %>" indexVar="k">
+
+        			<liferay-ui:search-container-column-text name="Host" >
+	        			<portlet:actionURL name="deleteStreamingServer" var="deleteStreamingServerURL">
+								<portlet:param name="curStreamingServerId" value='<%= (new Long(Hosts.getHostId())).toString() %>' />
+		 					<portlet:param name="selectedStreamingServerId" value='<%= (new Long(hostId)).toString() %>' />
+							<portlet:param name="backURL" value="<%=String.valueOf(portletURL) %>"/>
+						</portlet:actionURL>
+						<aui:form action="<%= updateStreamingServerURL %>" name="<portlet:namespace />fm">
+							<aui:fieldset>
+							<%	if (Hosts.getDefaultHost() > 0) {
+							%>
+								<aui:input name="curStreamingServerName" label="StreamingServer Name" inlineField="true" value = "Default" />
+								
+							<% }
+							else {
+							%>
+			
+								<aui:input name="curStreamingServerName" label="StreamingServer Name" inlineField="true" value = "<%= Hosts.getName() %>" />
+								
+							<%}%>
+								<aui:input name="curStreamingServerId" type='hidden' inlineField="true" value = "<%= (new Long(Hosts.getHostId())).toString() %>"/>
+								<aui:button type="submit"></aui:button>
+								<aui:button name="delete" value="Löschen" type="button" href="<%=deleteStreamingServerURL.toString() %>" />
+							</aui:fieldset>
+						</aui:form>
+        			</liferay-ui:search-container-column-text>
+
+        		</liferay-ui:search-container-row>
+        	<liferay-ui:search-iterator searchContainer="<%= searchHostContainer %>" />
+			</liferay-ui:search-container>
+		</liferay-ui:panel>
 </c:if>
 
 

@@ -1867,12 +1867,12 @@ public class MigrationController {
     	Host lastvideolist = null;
     	try {
     		lastvideolist = HostLocalServiceUtil.getHost(legacyHost.getId());
-    		lastvideolist = HostMapper.mapHost(legacyHost, lastvideolist, groupId);
+    		lastvideolist = HostMapper.mapHost(legacyHost, lastvideolist, groupId, companyId);
 			log.debug("Host UPDATE:" +lastvideolist);
 			HostLocalServiceUtil.updateHost(lastvideolist);
 		} catch (Exception e) {
 			lastvideolist = HostLocalServiceUtil.createHost(legacyHost.getId());
-			lastvideolist = HostMapper.mapHost(legacyHost, lastvideolist, groupId);
+			lastvideolist = HostMapper.mapHost(legacyHost, lastvideolist, groupId, companyId);
 			log.debug("Host NEW:" +lastvideolist);
 			HostLocalServiceUtil.addHost(lastvideolist);
 		}
@@ -2112,12 +2112,12 @@ public class MigrationController {
     	Institution_Host institutionHost = null;
     	try {
     		institutionHost = Institution_HostLocalServiceUtil.getInstitution_Host(legacyFacilityHost.getFacilityHostId());
-    		institutionHost = FacilityHostMapper.mapFacilityHost(legacyFacilityHost, institutionHost, groupId);
+    		institutionHost = FacilityHostMapper.mapFacilityHost(legacyFacilityHost, institutionHost, groupId, companyId);
 			log.debug("Institution_Host UPDATE:" +institutionHost);
 			Institution_HostLocalServiceUtil.updateInstitution_Host(institutionHost);
 		} catch (Exception e) {
 			institutionHost = Institution_HostLocalServiceUtil.createInstitution_Host(legacyFacilityHost.getFacilityHostId());
-			institutionHost = FacilityHostMapper.mapFacilityHost(legacyFacilityHost, institutionHost, groupId);
+			institutionHost = FacilityHostMapper.mapFacilityHost(legacyFacilityHost, institutionHost, groupId, companyId);
 			log.debug("Institution_Host NEW:" +institutionHost);
 			Institution_HostLocalServiceUtil.addInstitution_Host(institutionHost);
 		}
