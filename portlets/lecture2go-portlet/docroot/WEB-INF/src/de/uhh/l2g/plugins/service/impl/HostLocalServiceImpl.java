@@ -95,17 +95,15 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 	}
 	
 	public Host getByDefault(long companyId, long groupId) throws SystemException{
-		int isDefaultHost = 1;
-		Host defaultHost = hostPersistence.fetchByDefaultHost(companyId, groupId, isDefaultHost, false);
+		Host defaultHost = hostPersistence.fetchByDefaultHost(companyId, groupId,false);
 		return defaultHost;
 	}
 	
 
 	
 	public long getDefaultHostId(long companyId, long groupId) throws SystemException{
-		int isDefaultHost = 1;
 		System.out.println(companyId +" "+groupId);
-		Host defaultHost = hostPersistence.fetchByDefaultHost(companyId, groupId, isDefaultHost, false);
+		Host defaultHost = hostPersistence.fetchByDefaultHost(companyId, groupId, false);
 		if (defaultHost == null) return 0;
 		else return defaultHost.getPrimaryKey();
 	}

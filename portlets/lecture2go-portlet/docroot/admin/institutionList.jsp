@@ -219,7 +219,7 @@ Root Institution Permissions:
 						</aui:form>
 			
 				</c:if>
-				<liferay-ui:search-container searchContainer="<%= searchSubInstitutionContainer %>"
+				<liferay-ui:search-container searchContainer="<%= searchHostContainer %>"
 				curParam ="curStreamingServer"
 				orderByType="asc"
 				emptyResultsMessage="there-are-no-hosts"
@@ -311,6 +311,9 @@ deltaConfigurable="true">
  			String curParam_row = "curInner"+String.valueOf(institution_row.getInstitutionId());
  			long outerOrder = institution_row.getSort();
  			Host curHost = Institution_HostLocalServiceUtil.getByGroupIdAndInstitutionId(groupId, institution_row.getInstitutionId());
+ 			String curHostName = "Default";
+ 			if (curHost.getDefaultHost() < 1 ) curHostName = curHost.getName();
+ 			
  			int subInstitutionMax = InstitutionLocalServiceUtil.getMaxSortByParentId(institution_id)+1;
 
 
@@ -330,7 +333,7 @@ deltaConfigurable="true">
  			<aui:fieldset>
 				<aui:input name="outerListInstitution" label="Institution Name" inlineField="true" value = "<%= institution.getName() %>" />
 				<aui:input name="outerListOrder" label="Order" inlineField="true" value='<%= institution.getSort() %>'/>
-				<aui:input name="outerListStreamer" label="Streamer" inlineField="true" value = "<%= curHost.getName() %>" disabled="true"/>
+				<aui:input name="outerListStreamer" label="Streamer" inlineField="true" value = "<%= curHostName %>" disabled="true"/>
 				<aui:input name="outerListInstitutionId" type='hidden' inlineField="true" value = "<%= institution.getPrimaryKey() %>"/>
 				<aui:input name="outerListHostId" type='hidden' inlineField="true" value = "<%= curHost.getPrimaryKey() %>"/>
 

@@ -259,7 +259,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 
 		Institution defaultInstitution = institutionPersistence.create(institutionId);
 
-		//Empty name marks default
+		//ParentId = 0 marks default
 		defaultInstitution.setName(PropsUtil.get("lecture2go.default.rootInstitution"));
 		defaultInstitution.setGroupId(groupId);
 		defaultInstitution.setCompanyId(companyId);

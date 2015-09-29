@@ -70,7 +70,7 @@ public class Institution_HostLocalServiceImpl
 	public Host getByGroupIdAndInstitutionId(long groupId, long institutionId) throws SystemException, PortalException {
 		long hId = institution_HostPersistence.findByG_I(groupId, institutionId).getHostId();
 
-		Host h = HostLocalServiceUtil.getByGroupIdAndHostId(groupId,hId);
+	    Host h = HostLocalServiceUtil.getByGroupIdAndHostId(groupId,hId);
 		return h;
 	}
 
