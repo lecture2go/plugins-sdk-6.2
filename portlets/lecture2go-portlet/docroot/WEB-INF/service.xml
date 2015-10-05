@@ -202,7 +202,7 @@
         </finder>
     </entity>
     <entity name="Host" local-service="true" remote-service="false">
-    	<column name="hostId" primary="true" type="long">
+    	<column name="hostId" type="long" primary="true">
     	</column>
     	<column name="protocol" type="String"></column>
     	<column name="streamer" type="String"></column>
@@ -215,14 +215,17 @@
 		<finder name="GroupId" return-type="Collection">
             <finder-column name="groupId"></finder-column>
         </finder>
+        <finder name="CompanyIdAndGroupId" return-type="Collection">
+       		<finder-column name="companyId"></finder-column>
+            <finder-column name="groupId"></finder-column>
+        </finder>
         <finder name="G_H" return-type="Host">
             <finder-column name="groupId"></finder-column>
             <finder-column name="hostId"></finder-column>
         </finder>
-        <finder name="DefaultHost" return-type="Host" unique="true">
+        <finder name="DefaultHost" return-type="Host" where="defaultHost &gt; 0">
             <finder-column name="companyId"></finder-column>
             <finder-column name="groupId"></finder-column>
-            <finder-column name="defaultHost"></finder-column>
         </finder>
     </entity>
     <entity name="Institution_Host" local-service="true" remote-service="false">
@@ -241,7 +244,7 @@
             <finder-column name="groupId"></finder-column>
             <finder-column name="hostId"></finder-column>
         </finder>
-        <finder name="G_I" return-type="Institution_Host" unique="true">
+        <finder name="G_I" return-type="Institution_Host" unique="false" db-index="false">
             <finder-column name="groupId"></finder-column>
             <finder-column name="institutionId"></finder-column>
         </finder>
