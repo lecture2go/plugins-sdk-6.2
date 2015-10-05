@@ -4,7 +4,6 @@ package de.uhh.l2g.plugins.migration.mapper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Contact;
-import com.liferay.portal.model.User;
 
 import de.uhh.l2g.plugins.migration.model.LegacyContact;
 

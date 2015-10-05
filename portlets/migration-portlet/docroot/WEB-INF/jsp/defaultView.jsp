@@ -262,7 +262,7 @@
   </tr>   
   
   <tr>
-    <td>Lectureseries (Term && Categories)</td>
+    <td>Lectureseries (Term && Categories &&  Maps Latest Video ID)</td>
     <td><c:out value="${lectureseriesEntrieSize}" /></td>
     <td><c:out value="${lectureseriesEntrieSize62}" /></td>
     <td><a href="<c:out value="${executeMigrateLectureseriesUrl}" />"><liferay-ui:message key="migrate" /></a></td>

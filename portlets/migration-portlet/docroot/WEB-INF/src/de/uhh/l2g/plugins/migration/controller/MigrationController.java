@@ -3,43 +3,40 @@ package de.uhh.l2g.plugins.migration.controller;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.log4j.Logger;
+
+
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Address;
 import com.liferay.portal.model.Company;
-import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.Role;
-import com.liferay.portal.model.User;
 import com.liferay.portal.service.AddressLocalServiceUtil;
-import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.ContactLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 
-import de.uhh.l2g.plugins.migration.mapper.AddressMapper;
 import de.uhh.l2g.plugins.migration.mapper.CategoryMapper;
-import de.uhh.l2g.plugins.migration.mapper.ContactMapper;
 import de.uhh.l2g.plugins.migration.mapper.CoordinatorMapper;
 import de.uhh.l2g.plugins.migration.mapper.CreatorMapper;
 import de.uhh.l2g.plugins.migration.mapper.FacilityHostMapper;
@@ -60,14 +57,12 @@ import de.uhh.l2g.plugins.migration.mapper.SegmentMapper;
 import de.uhh.l2g.plugins.migration.mapper.TermMapper;
 import de.uhh.l2g.plugins.migration.mapper.UploadMapper;
 import de.uhh.l2g.plugins.migration.mapper.UserIDMapper;
-import de.uhh.l2g.plugins.migration.mapper.UserMapper;
 import de.uhh.l2g.plugins.migration.mapper.VideoCategoryMapper;
 import de.uhh.l2g.plugins.migration.mapper.VideoCreatorMapper;
 import de.uhh.l2g.plugins.migration.mapper.VideoFacilityMapper;
 import de.uhh.l2g.plugins.migration.mapper.VideoHitlistMapper;
 import de.uhh.l2g.plugins.migration.mapper.VideoLectureseriesMapper;
 import de.uhh.l2g.plugins.migration.mapper.VideoMapper;
-import de.uhh.l2g.plugins.migration.model.LegacyAddress;
 import de.uhh.l2g.plugins.migration.model.LegacyContact;
 import de.uhh.l2g.plugins.migration.model.LegacyCoordinator;
 import de.uhh.l2g.plugins.migration.model.LegacyFacility;
@@ -178,6 +173,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MigrationController {
 
     private static final Log log = LogFactoryUtil.getLog(MigrationController.class);
+    private static Logger portletLog = Logger.getLogger("migrationLog");
 	private long companyId = 0;
 	private long siteId = 0;
 	private String sites = "";
@@ -195,6 +191,7 @@ public class MigrationController {
      */
     @RequestMapping
     public String list(PortletRequest request, Model model) throws SystemException {
+    	portletLog.error("logged into migration-portlet log!");
     	String actionResponse = (String) request.getAttribute("logInfoString");
     	if (actionResponse == null || actionResponse.isEmpty() ) {
     		logInfoString = "";
@@ -207,10 +204,7 @@ public class MigrationController {
         ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
         logInfo("themeDisplay:" +themeDisplay.getCompanyId());
         logInfo("scopeGroupID:" +themeDisplay.getScopeGroupId());
-//        checkString("SoSe 15",termPattern);
-//        checkString(" Weise 14", termPattern);
-//        checkString("Spse 12/15", termPattern);
-        
+
         boolean signedIn = themeDisplay.isSignedIn();
         if (!signedIn) {
             model.addAttribute("logInfoString", logInfoString);
@@ -696,38 +690,38 @@ public class MigrationController {
     
     @RequestMapping(params = "action=migrateUser")
     public void migrateUser(ActionRequest request) throws FileNotFoundException {
-    	// Load Legacy Users
-    	String userOkflag = ok;
-    	
-		List<LegacyUser> users;
-		List<User> migratedUser;
-		int initialUserNumber=0;
-		try {
-			users = LegacyUserLocalServiceUtil.getLegacyUsers(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-			initialUserNumber = UserLocalServiceUtil.getUsersCount();
-			logInfo("Begin Migration / Update of:" + users.size() +  "Legacy Users!");
-		for (LegacyUser user: users) {
-			try {
-				createUser(user, companyId, request);
-			} catch (PortalException e) {
-				log.warn("Error occured during User Migration:", e);
-		    	userOkflag = failed;
-			} catch (SystemException e) {
-				log.warn("Error occured during User Migration:", e);
-		    	userOkflag = failed;
-			}
-		} 
-		logInfo("Migration / Update of:" + users.size() + " Legacy Users successfull!!");
-		request.setAttribute("logInfoString", logInfoString);
-		
-		
-		} catch (SystemException e1) {
-			logInfo("Migration of User failed. Can not read Source Data. Please Check Log for more details!");
-	    	userOkflag = failed;
-		}
-		request.setAttribute("logInfoString", logInfoString);
-		request.setAttribute("userOkflag", userOkflag);	
-    }
+        // Load Legacy Users
+        String userOkflag = ok;
+        
+        List<LegacyUser> users;
+        try {
+            users = LegacyUserLocalServiceUtil.getLegacyUsers(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+            logInfo("Begin Migration / Update of:" + users.size() +  "Legacy Users!");
+        for (LegacyUser user: users) {
+            try {
+                UserManager.getInstance().createUser(user, companyId, sites, request);
+            } catch (PortalException e) {
+                log.warn("Error occured during User Migration:", e);
+                portletLog.warn("Migration / Update of a user failed:" + e);
+                userOkflag = failed;
+            } catch (SystemException e) {
+                log.warn("Error occured during User Migration:", e);
+                userOkflag = failed;
+                portletLog.warn("Migration / Update of a user failed:" + e);
+            }
+        } 
+        logInfo("Migration / Update of:" + users.size() + " Legacy Users successfull!!");
+        portletLog.info("Migration / Update of:" + users.size() + " Legacy Users successfull!!");
+        request.setAttribute("logInfoString", logInfoString);
+        
+        
+        } catch (SystemException e1) {
+            logInfo("Migration of User failed. Can not read Source Data. Please Check Log for more details!");
+            userOkflag = failed;
+        }
+        request.setAttribute("logInfoString", logInfoString);
+        request.setAttribute("userOkflag", userOkflag); 
+    }    
     
     
     @RequestMapping(params = "action=migrateSegments")
@@ -740,10 +734,21 @@ public class MigrationController {
 		for (LegacySegment segment: segments) {
 			migrateSegment(segment, companyId);
 		} 
-    	logInfo("Migration / Update of:" + segments.size() + "Legacy Users sucessfull!");
+    	logInfo("Migration / Update of:" + segments.size() + "Legacy Segments sucessfull!");
+        portletLog.info("Migration / Update of:" + segments.size() + " Legacy Segments successfull!!");
+		ClassLoader classLoader = (ClassLoader)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),"portletClassLoader");    		
+		DynamicQuery query = DynamicQueryFactoryUtil.forClass(Segment.class,classLoader).add(PropertyFactoryUtil.forName("userId").eq(0L));
+		List<LegacySegment> segmentsWithNullUser =SegmentLocalServiceUtil.dynamicQuery(query);
+    	logInfo("Segements with UserId = 0 ==  " + segmentsWithNullUser.size()) ;
+        portletLog.info("Segements with UserId = 0 ==  " + segmentsWithNullUser.size());
+		query = DynamicQueryFactoryUtil.forClass(LegacySegment.class).add(PropertyFactoryUtil.forName("userId").isNull());
+		List<LegacySegment> legacySegmentsWithNullUser =LegacySegmentLocalServiceUtil.dynamicQuery(query);
+    	logInfo("legacySegments with UserId = 0 ==  " + legacySegmentsWithNullUser.size()) ;
+        portletLog.info("legacySegments with UserId = 0 ==  " + legacySegmentsWithNullUser.size());
 		
 		} catch (SystemException e1) {
-			logInfo("Migration of Segments failed. Can not read Source Data");
+			logInfo("Migration of Segments failed. Can not read Source Data" + e1);
+		    portletLog.warn("Migration of Segments failed. Can not read Source Data" + e1);
 			segmentOkflag = failed;
 		}
 		request.setAttribute("logInfoString", logInfoString);		
@@ -780,12 +785,15 @@ public class MigrationController {
 		try {
 			producers = LegacyProducerLocalServiceUtil.getLegacyProducers(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 			
-		for (LegacyProducer producer: producers) {
-			migrateProducer(producer, companyId);
-		} 
-		
+			for (LegacyProducer producer: producers) {
+				migrateProducer(producer, companyId);
+			} 
+	    	logInfo("Migration / Update of:" + producers.size() + "Legacy producer sucessfull!");
+	        portletLog.info("Migration / Update of:" + producers.size() + " Legacy producer successfull!!");
+        
 		} catch (SystemException e1) {
-			logInfo("Migration of producer failed. Can not read Source Data");
+			logInfo("Migration of producer failed. Can not read Source Data" +e1);
+	        portletLog.info("Migration of producer failed. Can not read Source Data" +e1);
 			producerOkflag = failed;
 		}
 		request.setAttribute("logInfoString", logInfoString);		
@@ -808,8 +816,8 @@ public class MigrationController {
 			try {
 				LegacyLectureSeriesLocalServiceUtil.getLegacyLectureSeries(video.getLectureseriesId());
 			} catch (PortalException e) {
-				logInfo("ConsistencyCHECK: video.getLectureseriesId() of old Data not valid! No Lectureseries in LF52 existing with ID: " + video.getLectureseriesId());
-				logInfo("ConsistencyCHECK:  Set video.getLectureseriesId() to 0") ;
+				logInfo("ConsistencyCHECK: Legacy-Video has dead LectureseriesID in legacy system LectureseriesID will be set to 0 | video item" + video);
+				portletLog.warn("ConsistencyCHECK: Legacy-Video has dead LectureseriesID in legacy system LectureseriesID will be set to 0 | video item" + JSONFactoryUtil.looseSerialize(video));
 				video.setLectureseriesId(0);
 				VideoLocalServiceUtil.updateVideo(video);
 			}
@@ -833,12 +841,15 @@ public class MigrationController {
 		List<LegacyUpload> uploads;
 		try {
 			uploads = LegacyUploadLocalServiceUtil.getLegacyUploads(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		for (LegacyUpload upload: uploads) {
-			migrateUpload(upload, companyId);
-		} 
-    	
+			for (LegacyUpload upload: uploads) {
+				migrateUpload(upload, companyId);
+			} 
+	    	logInfo("Migration / Update of:" + uploads.size() + "Legacy upload sucessfull!");
+	        portletLog.info("Migration / Update of:" + uploads.size() + " Legacy upload successfull!!");
+	        
 		} catch (SystemException e1) {
-			logInfo("Migration of uploads failed. Can not read Source Data");
+			logInfo("Migration of uploads failed. Can not read Source Data "  +e1 );
+	        portletLog.warn("Migration of uploads failed. Can not read Source Data"  +e1);
 			uploadOkflag = failed;
 		}
 		request.setAttribute("logInfoString", logInfoString);
@@ -854,12 +865,15 @@ public class MigrationController {
 		List<LegacyOffice> offices;
 		try {
 			offices = LegacyOfficeLocalServiceUtil.getLegacyOffices(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		for (LegacyOffice office: offices) {
-			migrateOffice(office, companyId);
-		} 
+			for (LegacyOffice office: offices) {
+				migrateOffice(office, companyId);
+			} 
+	    	logInfo("Migration / Update of:" + offices.size() + "Legacy offices sucessfull!");
+	        portletLog.info("Migration / Update of:" + offices.size() + " Legacy offices successfull!!");
     	
 		} catch (SystemException e1) {
-			logInfo("Migration of offices failed. Can not read Source Data");
+			logInfo("Migration of offices failed. Can not read Source Data"  +e1);
+	        portletLog.warn("Migration of offices failed. Can not read Source Data"  +e1);
 			officeOkflag = failed;
 		}
 		request.setAttribute("logInfoString", logInfoString);
@@ -876,10 +890,12 @@ public class MigrationController {
 		List<LegacyMetadata> legacyMetadatas;
 		try {
 			legacyMetadatas = LegacyMetadataLocalServiceUtil.getLegacyMetadatas(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		for (LegacyMetadata legacyMetadata: legacyMetadatas) {
-			migrateMetadata(legacyMetadata, companyId);
-		} 
-    	
+			for (LegacyMetadata legacyMetadata: legacyMetadatas) {
+				migrateMetadata(legacyMetadata, companyId);
+			} 
+	    	logInfo("Migration / Update of:" + legacyMetadatas.size() + "Legacy offices sucessfull!");
+	        portletLog.info("Migration / Update of:" + legacyMetadatas.size() + " Legacy offices successfull!!");
+			
 		} catch (SystemException e1) {
 			logInfo("Migration of Metadatas failed. Can not read Source Data");
 			metatdataOkflag = failed;
@@ -896,9 +912,11 @@ public class MigrationController {
 		List<LegacyFacility> legacyFacilities;
 		try {
 			legacyFacilities = LegacyFacilityLocalServiceUtil.getLegacyFacilities(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		for (LegacyFacility legacyFacility: legacyFacilities) {
-			migrateInstitution(legacyFacility, companyId, siteId);
-		} 
+			for (LegacyFacility legacyFacility: legacyFacilities) {
+				migrateInstitution(legacyFacility, companyId, siteId);
+			} 
+	    	logInfo("Migration / Update of:" + legacyFacilities.size() + "Legacy legacyFacilities sucessfull!");
+	        portletLog.info("Migration / Update of:" + legacyFacilities.size() + " Legacy legacyFacilities successfull!!");			
     	
 		} catch (SystemException e1) {
 			logInfo("Migration of Facilities failed. Can not read Source Data");
@@ -917,9 +935,11 @@ public class MigrationController {
 		List<LegacyLicense> legacyLicenses;
 		try {
 			legacyLicenses = LegacyLicenseLocalServiceUtil.getLegacyLicenses(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		for (LegacyLicense legacyLicense: legacyLicenses) {
-			migrateLicense(legacyLicense, companyId, siteId);
-		} 
+			for (LegacyLicense legacyLicense: legacyLicenses) {
+				migrateLicense(legacyLicense, companyId, siteId);
+			} 
+	    	logInfo("Migration / Update of:" + legacyLicenses.size() + "Legacy legacyLicenses sucessfull!");
+	        portletLog.info("Migration / Update of:" + legacyLicenses.size() + " Legacy legacyLicenses successfull!!");					
     	
 		} catch (SystemException e1) {
 			logInfo("Migration of License failed. Can not read Source Data");
@@ -938,10 +958,13 @@ public class MigrationController {
 		List<LegacyHost> legacyHosts;
 		try {
 			legacyHosts = LegacyHostLocalServiceUtil.getLegacyHosts(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		for (LegacyHost legacyHost: legacyHosts) {
-			migrateHost(legacyHost, companyId, siteId);
-		} 
-    	
+			for (LegacyHost legacyHost: legacyHosts) {
+				migrateHost(legacyHost, companyId, siteId);
+			} 
+    	logInfo("Migration / Update of:" + legacyHosts.size() + "Legacy legacyHosts sucessfull!");
+        portletLog.info("Migration / Update of:" + legacyHosts.size() + " Legacy legacyHosts successfull!!");	
+		
+		
 		} catch (SystemException e1) {
 			logInfo("Migration of Host failed. Can not read Source Data");
 			hostOkflag = failed;
@@ -959,9 +982,11 @@ public class MigrationController {
 		List<LegacyL2gSys> legacyL2gSyss;
 		try {
 			legacyL2gSyss = LegacyL2gSysLocalServiceUtil.getLegacyL2gSyses(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		for (LegacyL2gSys legacyL2gSys: legacyL2gSyss) {
-			migrateL2gsys(legacyL2gSys, companyId, siteId);
-		} 
+			for (LegacyL2gSys legacyL2gSys: legacyL2gSyss) {
+				migrateL2gsys(legacyL2gSys, companyId, siteId);
+			} 
+    	logInfo("Migration / Update of:" + legacyL2gSyss.size() + "Legacy legacyL2gSyss sucessfull!");
+        portletLog.info("Migration / Update of:" + legacyL2gSyss.size() + " Legacy legacyL2gSyss successfull!!");	
     	
 		} catch (SystemException e1) {
 			logInfo("Migration of Sys failed. Can not read Source Data");
@@ -979,9 +1004,11 @@ public class MigrationController {
 		List<LegacyLectureSeries> legacyLectureserieses;
 		try {
 			legacyLectureserieses = LegacyLectureSeriesLocalServiceUtil.getLegacyLectureSerieses(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		for (LegacyLectureSeries legacyLectureseries: legacyLectureserieses) {
-			migrateLectureseries(legacyLectureseries, companyId, siteId);
-		} 
+			for (LegacyLectureSeries legacyLectureseries: legacyLectureserieses) {
+				migrateLectureseries(legacyLectureseries, companyId, siteId);
+			} 
+	    	logInfo("Migration / Update of:" + legacyLectureserieses.size() + "Legacy legacyLectureserieses sucessfull!");
+	        portletLog.info("Migration / Update of:" + legacyLectureserieses.size() + " Legacy legacyLectureserieses successfull!!");				
     	
 		} catch (SystemException e1) {
 			logInfo("Migration of Lectureseries failed. Can not read Source Data");
@@ -999,10 +1026,12 @@ public class MigrationController {
 		List<LegacyVideoHitlist> legacyVideohitlists;
 		try {
 			legacyVideohitlists = LegacyVideoHitlistLocalServiceUtil.getLegacyVideoHitlists(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		for (LegacyVideoHitlist legacyVideohitlist: legacyVideohitlists) {
-			migrateVideohitlist(legacyVideohitlist, companyId, siteId);
-		} 
-    	
+			for (LegacyVideoHitlist legacyVideohitlist: legacyVideohitlists) {
+				migrateVideohitlist(legacyVideohitlist, companyId, siteId);
+			} 
+	    	logInfo("Migration / Update of:" + legacyVideohitlists.size() + "Legacy legacyVideohitlists sucessfull!");
+	        portletLog.info("Migration / Update of:" + legacyVideohitlists.size() + " Legacy legacyVideohitlists successfull!!");						
+		
 		} catch (SystemException e1) {
 			logInfo("Migration of Videohitlist failed. Can not read Source Data");
 			videohitlistOkflag = failed;
@@ -1019,9 +1048,12 @@ public class MigrationController {
 		List<LegacyLastVideoList> legacyLastvideolists;
 		try {
 			legacyLastvideolists = LegacyLastVideoListLocalServiceUtil.getLegacyLastVideoLists(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		for (LegacyLastVideoList legacyLastvideolist: legacyLastvideolists) {
-			migrateLastvideolist(legacyLastvideolist, companyId, siteId);
-		} 
+			for (LegacyLastVideoList legacyLastvideolist: legacyLastvideolists) {
+				migrateLastvideolist(legacyLastvideolist, companyId, siteId);
+			} 
+	    	logInfo("Migration / Update of:" + legacyLastvideolists.size() + "Legacy legacyLastvideolists sucessfull!");
+	        portletLog.info("Migration / Update of:" + legacyLastvideolists.size() + " Legacy legacyLastvideolists successfull!!");	
+			
     	
 		} catch (SystemException e1) {
 			logInfo("Migration of uploads failed. Can not read Source Data");
@@ -1045,7 +1077,9 @@ public class MigrationController {
 			logInfo("lectureseriesFacilities Size : " + lectureseriesFacilities.size());
 			for (LegacyLectureSeriesFacility lectureseriesFacility: lectureseriesFacilities) {
 				migrateLectureseriesInstitution(lectureseriesFacility, companyId);
-			} 			
+			} 		
+	    	logInfo("Migration / Update of:" + lectureseriesFacilities.size() + "Legacy lectureseriesFacilities sucessfull!");
+	        portletLog.info("Migration / Update of:" + lectureseriesFacilities.size() + " Legacy lectureseriesFacilities successfull!!");				
     	
 		} catch (SystemException e1) {
 			logInfo("Migration of uploads failed. Can not read Source Data");
@@ -1068,7 +1102,10 @@ public class MigrationController {
 			logInfo("videoFacility Size : " + videoFacilities.size());
 			for (LegacyVideoFacility videoFacility: videoFacilities) {
 				migrateVideo_Institution(videoFacility, companyId);
-			} 			
+			} 	
+			
+	    	logInfo("Migration / Update of:" + videoFacilities.size() + "Legacy videoFacilities sucessfull!");
+	        portletLog.info("Migration / Update of:" + videoFacilities.size() + " Legacy videoFacilities successfull!!");			
     	
 		} catch (SystemException e1) {
 			logInfo("Migration of uploads failed. Can not read Source Data");
@@ -1090,7 +1127,10 @@ public class MigrationController {
 			for (LegacyProducerLectureseries producerLectureseries: producerLectureserieses) {
 				migrateProducer_Lectureseries(producerLectureseries, companyId);
 			} 			
-    	
+	    	logInfo("Migration / Update of:" + producerLectureserieses.size() + "Legacy producerLectureserieses sucessfull!");
+	        portletLog.info("Migration / Update of:" + producerLectureserieses.size() + " Legacy producerLectureserieses successfull!!");		
+	        
+	        
 		} catch (SystemException e1) {
 			logInfo("Migration of uploads failed. Can not read Source Data");
 			producerLectureseriesOkflag = failed;
@@ -1111,7 +1151,11 @@ public class MigrationController {
 			for (LegacyFacilityHost FacilityHost: facilityHosts) {
 				migrateInstitution_Host(FacilityHost, companyId);
 			} 			
-    	
+			
+	    	logInfo("Migration / Update of:" + facilityHosts.size() + "Legacy facilityHosts sucessfull!");
+	        portletLog.info("Migration / Update of:" + facilityHosts.size() + " Legacy facilityHosts successfull!!");		
+	        
+	        
 		} catch (SystemException e1) {
 			logInfo("Migration of uploads failed. Can not read Source Data");
 			institutionHostOkflag = failed;
@@ -1135,14 +1179,19 @@ public class MigrationController {
 					try {
 						lectureseries = LectureseriesLocalServiceUtil.getLectureseries(video_Lectureseries.getLectureseriesId());
 						video.setTermId(lectureseries.getTermId());
+						VideoLocalServiceUtil.updateVideo(video);
 					} catch (Exception e) {
 						logInfo("Warn: Could not link TermId to Video" + video);
 					}
 				} else {
 					logInfo("ConsistencyCheck Video: found with no Lectureseries linked (LectureseriesId = 0!): " + video);
+					portletLog.warn("ConsistencyCheck Video: CAN NOT LINK TERM ID ! Due to Lectureseries ID == 0 found at video " + JSONFactoryUtil.serialize(video));
 					logInfo("Video Entry Skipped for mapping into Video_Lectureseries Table");
+					portletLog.warn("Video Entry Skipped for mapping into Video_Lectureseries Table");
 				}
-			} 			
+			} 
+		    	logInfo("Update of:" + videos.size() + "Videos sucessfull - updated!");
+		        portletLog.info("Update of:" + videos.size() + "Videos sucessfull - updated!");					
     	
 		} catch (SystemException e1) {
 			logInfo("Migration of Video_Lectureseries failed. Can not read Source Data");
@@ -1165,6 +1214,8 @@ public class MigrationController {
 			for (Video_Lectureseries video_Lectureseries: video_Lectureserieses) {
 				migrateVideo_Category(video_Lectureseries);
 			} 			
+	    	logInfo("Update of:" + video_Lectureserieses.size() + "video_Lectureserieses sucessfull - updated!");
+	        portletLog.info("Update of:" + video_Lectureserieses.size() + "video_Lectureserieses sucessfull - updated!");		
     	
 		} catch (SystemException e1) {
 			logInfo("Migration of Video_Category failed. Can not read Source Data");
@@ -1185,7 +1236,9 @@ public class MigrationController {
 			log.info("videos.size()" + videos.size());
 			for (Video video: videos) {
 				migrateCreator(video);
-			} 			
+			} 		
+	    	logInfo("Update of:" + videos.size() + " creators found in Videos  sucessfull - created / Updated!");
+	        portletLog.info("Update of:" + videos.size() + " creators found in Videos  sucessfull -  created / Updated!");					
 		} catch (SystemException e1) {
 			logInfo("Migration of Metadata failed. Can not read Source Data");
 			creatorOkflag = failed;
@@ -1264,13 +1317,13 @@ public class MigrationController {
 				log.debug("Lectureseries_Creator UPDATE:" +lectureseries_Creator);
     			Lectureseries_CreatorLocalServiceUtil.updateLectureseries_Creator(lectureseries_Creator);
     		} else {
-    			lectureseries_Creator = Lectureseries_CreatorLocalServiceUtil.createLectureseries_Creator(CounterLocalServiceUtil.increment());
+    			lectureseries_Creator = Lectureseries_CreatorLocalServiceUtil.createLectureseries_Creator(CounterLocalServiceUtil.increment(Lectureseries_Creator.class.getName()));
     			lectureseries_Creator = LectureseriesCreatorMapper.map(lectureseries_Creator, lectureseries,  creator);
     			log.debug("Lectureseries_Creator NEW:" +lectureseries_Creator);
     			Lectureseries_CreatorLocalServiceUtil.addLectureseries_Creator(lectureseries_Creator);
     		}
 		} catch (Exception e) {
-			lectureseries_Creator = Lectureseries_CreatorLocalServiceUtil.createLectureseries_Creator(CounterLocalServiceUtil.increment());
+			lectureseries_Creator = Lectureseries_CreatorLocalServiceUtil.createLectureseries_Creator(CounterLocalServiceUtil.increment(Lectureseries_Creator.class.getName()));
 			lectureseries_Creator = LectureseriesCreatorMapper.map(lectureseries_Creator,  lectureseries,  creator);
 			log.debug("Lectureseries_Creator NEW:" +lectureseries_Creator);
 			Lectureseries_CreatorLocalServiceUtil.addLectureseries_Creator(lectureseries_Creator);
@@ -1292,13 +1345,13 @@ public class MigrationController {
 					log.debug("Video_Creator UPDATE:" +video_Creator);
 	    			Video_CreatorLocalServiceUtil.updateVideo_Creator(video_Creator);
 	    		} else {
-	    			video_Creator = Video_CreatorLocalServiceUtil.createVideo_Creator(CounterLocalServiceUtil.increment());
+	    			video_Creator = Video_CreatorLocalServiceUtil.createVideo_Creator(CounterLocalServiceUtil.increment(Video_Creator.class.getName()));
 	    			video_Creator = VideoCreatorMapper.map(video_Creator, video,  creator);
 	    			log.debug("Video_Creator NEW:" +video_Creator);
 	    			Video_CreatorLocalServiceUtil.addVideo_Creator(video_Creator);
 	    		}
 			} catch (Exception e) {
-				video_Creator = Video_CreatorLocalServiceUtil.createVideo_Creator(CounterLocalServiceUtil.increment());
+				video_Creator = Video_CreatorLocalServiceUtil.createVideo_Creator(CounterLocalServiceUtil.increment(Video_Creator.class.getName()));
 				video_Creator = VideoCreatorMapper.map(video_Creator,  video,  creator);
 				log.debug("Video_Creator NEW:" +video_Creator);
 				Video_CreatorLocalServiceUtil.addVideo_Creator(video_Creator);
@@ -1318,8 +1371,9 @@ public class MigrationController {
     	String gender ="";
     	
 		String[] nameAndJobArray = person.split(" ");
+		// Creators with more than 4 splittable snippets need to be revised manually, they will be imported with full name.
 		if ( nameAndJobArray.length > 4) {
-			log.info("nameAndJobArray: person" + person + " lenght:" +  nameAndJobArray.length);
+			portletLog.info("Following Person/Creator needs to be revised manually: " + person + " lenght:" +  nameAndJobArray.length);
 		}
     	
     	if  (nameAndJobArray.length == 1) {
@@ -1440,13 +1494,13 @@ public class MigrationController {
 	    			log.debug("creator UPDATE:" +creator);
 	    			creator = CreatorLocalServiceUtil.updateCreator(creator);
 	    		} else {
-	    			creator = CreatorLocalServiceUtil.createCreator(CounterLocalServiceUtil.increment());
+	    			creator = CreatorLocalServiceUtil.createCreator(CounterLocalServiceUtil.increment(Creator.class.getName()));
 	    			creator = CreatorMapper.mapCreator(creator, firstName, lastName, middleName, jobTitle, gender, fullName);
 	    			log.debug("creator NEW:" +creator);
 	    			creator = CreatorLocalServiceUtil.addCreator(creator);
 	    		}
     		} catch (Exception e) {
-       			creator = CreatorLocalServiceUtil.createCreator(CounterLocalServiceUtil.increment());
+       			creator = CreatorLocalServiceUtil.createCreator(CounterLocalServiceUtil.increment(Creator.class.getName()));
     			creator = CreatorMapper.mapCreator(creator, firstName, lastName, middleName, jobTitle, gender, fullName);
     			log.debug("creator NEW:" +creator);
     			creator = CreatorLocalServiceUtil.addCreator(creator);
@@ -1465,266 +1519,6 @@ public class MigrationController {
 	}   
 		
 
-
-	/**
-     * Create a user on specific parameters.
-     *
-     * @throws SystemException
-     * @throws PortalException
-     * @throws IOException
-     */
-    private void createUser(LegacyUser legacyUser, long companyId, ActionRequest request) throws SystemException, PortalException   {
-    	long currentUserId = Long.valueOf(request.getRemoteUser());
-    	User currentUser = null;
-        String currentUserFullName = "";
-        try {
-        	currentUser = UserLocalServiceUtil.getUser(currentUserId);
-            currentUserFullName = currentUser.getFullName();
-        } catch (PortalException e) {
-            log.error("There is no current user.");
-        } catch (SystemException e) {
-            log.error("There is no current user.");
-        }
-        String currentUserName = currentUserFullName;
-        
-        
-    	/* Read data from LegacyUser and LegacyContact. */
-    	LegacyContact legacyContact;
-    	legacyContact = LegacyContactLocalServiceUtil.getLegacyContact(legacyUser.getContactId());
-    	/*
-    	 * 1) Read out legacy  Fields
-    	 * 2) Check if User already existing in LF 62, if yes do update of existing user (
-    	 * 		a) call createOrGetID Methods 
-    	 * 		b) call createOrUpdate Methodes 
-    	 * )
-    	 * 
-    	 */
-    	
-    	logInfo("Legacy User loaded: " + legacyContact.getFirstName() + " " + legacyContact.getLastName() + " with mailAddress " + legacyUser.getEmailAddress());    	
-        User exstingUser = null;
-        try {
-        	exstingUser = UserLocalServiceUtil.getUserByEmailAddress(companyId, legacyUser.getEmailAddress());
-		} catch (Exception e) {
-			log.info("User not found by mailAddress in LF62 DB.");
-		}
-        
-        if (currentUser != null && !legacyUser.getEmailAddress().equals("default@liferay.com")  && !legacyUser.getEmailAddress().equals("default@")  && !legacyUser.getEmailAddress().equals(currentUser.getEmailAddress())) {
-        	logInfo("Migrating " + legacyContact.getFirstName() + " " + legacyContact.getLastName() + " with mailAddress " + legacyUser.getEmailAddress());
-            long contactId = createOrGetContactId(exstingUser);
-            long userId = createOrGetUserId(exstingUser);
-            long personalGroupId = createOrGetPersonalGroupId(exstingUser,  String.valueOf(userId));
-            logInfo("Creating Contact");
-            Contact contact = createOrUpdateContact(companyId,contactId,userId,legacyContact);
-            logInfo("Contact created");
-            logInfo("Creating User with legacyContactID " + legacyContact.getContactId() + " contactId: " + contactId);
-            User user =	createOrUpdateUser(companyId, exstingUser, userId, legacyUser, legacyContact, contactId);
-            createOrUpdateAddress(companyId, user, legacyUser, contact);
-            createPersonalGroupIfNotExistent(exstingUser, personalGroupId, userId, currentUserId, String.valueOf(userId), user.getScreenName());
-            logInfo("Group created");
-            createPersonalLayoutIfNotExistent(personalGroupId, true);
-            logInfo(" Private Layout  created");
-            createPersonalLayoutIfNotExistent(personalGroupId, false);
-            logInfo(" Public Layout  created");
-            
-            // ADD Power User and User role
-            addRolesToUser(user.getUserId());
-            logInfo(" Roles added");
-            //update sites to user 
-            addUserToSite(sites, userId, companyId);
-            logInfo("Added user with id: " + user.getUserId());
-        }
-    }
-
-
-    private long createOrGetContactId(User userByMail) throws SystemException, PortalException {
-        long contactId;
-        if (userByMail == null) {
-            contactId = CounterLocalServiceUtil.increment();
-        } else {
-            contactId = userByMail.getContactId();
-        }
-        return contactId;
-    }
-    
-    private long createOrGetUserId(User userByMail) throws SystemException {
-        long userId;
-        if (userByMail == null) {
-            userId = CounterLocalServiceUtil.increment();
-        } else {
-            userId = userByMail.getUserId();
-        }
-        return userId;
-    }
-    
-    
-    private long createOrGetAddressId(User userByMail, long companyId) throws SystemException  {
-        long addressId;
-        if (userByMail == null) {
-            addressId = CounterLocalServiceUtil.increment();
-        } else {
-            List<Address> addresses = AddressLocalServiceUtil.getAddresses(companyId, Contact.class.getName(), userByMail.getContactId());
-            if (!addresses.isEmpty()) {
-                addressId = addresses.get(0).getAddressId(); // we assume everyone has only one address.
-            } else {
-                addressId = CounterLocalServiceUtil.increment();
-            }
-        }
-        return addressId;
-    }
-    
-    
-    private Contact createOrUpdateContact(long companyId, long contactId,  long userId, LegacyContact legacyContact) throws SystemException {
-            
-    		Contact contact;
-			try {
-				contact = ContactLocalServiceUtil.getContact(contactId);
-				contact = ContactMapper.mapContact(contact, legacyContact, userId, companyId);
-				ContactLocalServiceUtil.updateContact(contact);
-			} catch (Exception e) {
-				contact = ContactLocalServiceUtil.createContact(contactId);
-				contact = ContactMapper.mapContact(contact, legacyContact, userId, companyId);
-				ContactLocalServiceUtil.addContact(contact);
-			}
-			
-			return contact;
-    		
-    }
-    
-    private void createOrUpdateAddress(long companyId, User user,  LegacyUser legacyUser,  Contact contact) throws SystemException  {
-    	LegacyAddress legacyAddress =  null;
-    	Address address = null;
-    	
-    	try {
-    		// if legacy user has address
-			legacyAddress = LegacyAddressLocalServiceUtil.getAdressByUserIdFirst(legacyUser.getUserId());
-			// load address by LF 62 user
-		} catch (SystemException e1) {
-			logInfo("LegacyUser did not have any address - create nothing");
-			return;
-		}
-    	
-    	if (legacyAddress != null) {
-			try {
-				// get first adress by created user -- (success on re-import)
-		        DynamicQuery query = DynamicQueryFactoryUtil.forClass(Address.class).add(PropertyFactoryUtil.forName("userId").eq(user.getUserId())).add(PropertyFactoryUtil.forName("companyId").eq(companyId));
-				@SuppressWarnings("unchecked")
-				List<Address> addresses = AddressLocalServiceUtil.dynamicQuery(query);
-				// get first Address of user
-				address = addresses.get(0);
-				address = AddressMapper.mapAddress(address, legacyAddress, user, companyId, contact);
-				AddressLocalServiceUtil.updateAddress(address);
-			} catch (Exception e) {
-				// created new address 
-				address = AddressLocalServiceUtil.createAddress(CounterLocalServiceUtil.increment());
-				address = AddressMapper.mapAddress(address, legacyAddress, user, companyId, contact);
-				AddressLocalServiceUtil.addAddress(address);
-			}
-    	}
-    }
-
-    private User createOrUpdateUser(long companyId, User user, long userId, LegacyUser legacyUser, LegacyContact contact,  long contactId) {
-    	// Only create User if user was not imported before 
-        if (user == null) {
-            user = UserLocalServiceUtil.createUser(userId);
-            user = UserMapper.mapUser(companyId, user, legacyUser, contact, contactId);
-            try {
-				UserLocalServiceUtil.addUser(user);
-			} catch (SystemException e) {
-				logInfo("Error adding User - please check log for further details!");
-				log.warn("Error adding User:" + user, e);
-			}
-        } else {
-            user = UserMapper.mapUser(companyId, user, legacyUser, contact, contactId);
-            try {
-				UserLocalServiceUtil.updateUser(user);
-			} catch (SystemException e) {
-				logInfo("Error updating User - please check log for further details!");
-				log.warn("Error updating User:" + user, e);
-			}
-        }
-        return user;
-    }
-    
-    private void addUserToSite(String sites, long userId, long companyId) throws SystemException, PortalException {
-        String[] siteIdStrings = sites.split(",");
-        for (String site: siteIdStrings) {
-            log.debug("Fetching group / site  with id: \"" + site + "\"");
-            long siteId = Long.valueOf(site);
-            Group group = null;
-			try {
-				group = GroupLocalServiceUtil.getGroup(siteId);
-				if (group != null) {
-					GroupLocalServiceUtil.addUserGroup(userId, group);
-					logInfo("Link user to Site/Group with name: \"" + group.getName() + "\"");
-				} else {
-					log.error("NO group / site with id found : \"" + site + "\" - user not linked to group");
-				}
-			} catch (Exception e) {
-				 log.error("NO group / site with id found : \"" + site + "\" - user not linked to group");
-			}
-        }
-    }
-    
-    private void createPersonalGroupIfNotExistent(User userByMail, long groupId, long userId, long creatorId,  String groupName, String friendlyUrl) throws SystemException {
-    		if (groupId  < 1) {
-    			log.error("Personal Group with id:" + groupId +  " is invalid, skip creation of group");
-    			return;
-    		} 
-    	
-    		Group userGroup = null;
-            try {
-				userGroup = GroupLocalServiceUtil.getGroup(groupId);
-				logInfo("Personal Group found:"  + groupId + "  - do nothing");
-			} catch (PortalException e) {
-				logInfo("No existing Personal Group found with groupId:"  + groupId + "  - create new one"); 
-				userGroup = GroupLocalServiceUtil.createGroup(groupId);
-	            userGroup.setClassNameId(ClassNameLocalServiceUtil.getClassNameId(User.class));
-	            userGroup.setClassPK(userId);
-	            userGroup.setCompanyId(companyId);
-	            userGroup.setName(groupName);
-	            userGroup.setFriendlyURL("/" + friendlyUrl);
-	            userGroup.setCreatorUserId(creatorId);
-	            userGroup.setTreePath("/" + groupId + "/");
-	            userGroup.setActive(true);
-	          	GroupLocalServiceUtil.addGroup(userGroup);
-			}
-            
-    }
-    
-
-    private long createOrGetPersonalGroupId(User userByMail, String userIdAsString) throws SystemException, PortalException {
-        long groupId = 0;
-        try {
-                groupId = GroupLocalServiceUtil.getGroup(companyId, userIdAsString).getGroupId();
-            } catch (Exception e) {
-            	logInfo("Can't get groupId for user with ID: " + userIdAsString + " : createId by CounterLocalServiceUtil" );
-            	groupId = CounterLocalServiceUtil.increment();
-            }
-        return groupId;
-    }
-    
-    private void createPersonalLayoutIfNotExistent(long groupId, boolean privateLayout)  {
-    	LayoutSet layoutSet = null;
-    	try {
-			layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupId, privateLayout);
-			log.info("Layout Set for groupId (userId) : " + groupId + " existing - do nothing");
-		} catch (Exception e) {
-			long layoutSetId;
-			try {
-				layoutSetId = CounterLocalServiceUtil.increment();
-				layoutSet = LayoutSetLocalServiceUtil.createLayoutSet(layoutSetId);
-				layoutSet.setCompanyId(companyId);
-				layoutSet.setPrivateLayout(privateLayout);
-				layoutSet.setGroupId(groupId);
-				layoutSet.setThemeId("classic");
-				layoutSet.setCreateDate(new Date());
-				layoutSet.setModifiedDate(new Date());
-				LayoutSetLocalServiceUtil.addLayoutSet(layoutSet);
-			} catch (SystemException e1) {
-				log.warn("Can't create Layout Set for groupId (userId) : " + groupId + " - user will not be able to login");
-			}
-		} 
-    }
 
     private void migrateSegment(LegacySegment legacySegment, long companyId) throws SystemException {
     	Segment segment  = null;
@@ -1929,8 +1723,12 @@ public class MigrationController {
 			// Migrate Lectureseries_Category
 			migrateLectureseries_Category(lectureseries, category);
     	}
-    }    
-
+	    
+	    // MAP latest Video !
+	    long videoId  = getLatestVideoId(lectureseries);
+	    lectureseries.setLatestOpenAccessVideoId(videoId);
+	    LectureseriesLocalServiceUtil.updateLectureseries(lectureseries);
+    }
     /**
      * Local Function invoced by private function migrateLectureseries
      * @param lectureseries
@@ -1957,13 +1755,13 @@ public class MigrationController {
 	    			log.debug("term UPDATE:" +term);
 	    			term = TermLocalServiceUtil.updateTerm(term);
 	    		} else {
-	    			term = TermLocalServiceUtil.createTerm(CounterLocalServiceUtil.increment());
+	    			term = TermLocalServiceUtil.createTerm(CounterLocalServiceUtil.increment(Term.class.getName()));
 	    			term = TermMapper.mapTerm(term, 0L, "de_DE",prefix, year, "");
 	    			log.debug("term NEW:" +term);
 	    			term = TermLocalServiceUtil.addTerm(term);
 	    		}
     		} catch (Exception e) {
-    			term = TermLocalServiceUtil.createTerm(CounterLocalServiceUtil.increment());
+    			term = TermLocalServiceUtil.createTerm(CounterLocalServiceUtil.increment(Term.class.getName()));
     			term = TermMapper.mapTerm(term, 0L, "de_DE",prefix, year, "");
     			log.debug("term NEW:" +term);
     			term = TermLocalServiceUtil.addTerm(term);
@@ -1990,13 +1788,13 @@ public class MigrationController {
 	    			log.debug("category UPDATE:" +category);
 	    			category = CategoryLocalServiceUtil.updateCategory(category);
 	    		} else {
-	    			category = CategoryLocalServiceUtil.createCategory(CounterLocalServiceUtil.increment());
+	    			category = CategoryLocalServiceUtil.createCategory(CounterLocalServiceUtil.increment(Category.class.getCanonicalName()));
 	    			category = CategoryMapper.mapCategory(category,lectureseries.getEventType(), "de_DE","", 0L);
 	    			log.debug("category NEW:" +category);
 	    			category = CategoryLocalServiceUtil.updateCategory(category);
 	    		}
     		} catch (Exception e) {
-    			category = CategoryLocalServiceUtil.createCategory(CounterLocalServiceUtil.increment());
+    			category = CategoryLocalServiceUtil.createCategory(CounterLocalServiceUtil.increment(Category.class.getCanonicalName()));
     			category = CategoryMapper.mapCategory(category,lectureseries.getEventType(), "de_DE","", 0L);
     			log.debug("category NEW:" +category);
     			category = CategoryLocalServiceUtil.updateCategory(category);
@@ -2023,13 +1821,13 @@ public class MigrationController {
 	    			log.debug("lectureseries_Category UPDATE:" +category);
 	    			Lectureseries_CategoryLocalServiceUtil.updateLectureseries_Category(lectureseries_Category);
 	    		} else {
-	    			lectureseries_Category = Lectureseries_CategoryLocalServiceUtil.createLectureseries_Category(CounterLocalServiceUtil.increment());
+	    			lectureseries_Category = Lectureseries_CategoryLocalServiceUtil.createLectureseries_Category(CounterLocalServiceUtil.increment(Lectureseries_Category.class.getName()));
 	    			lectureseries_Category = LectureseriesCategoryMapper.mapLectureseries_Category(lectureseries_Category, lectureseries, category);
 	    			log.debug("lectureseries_Category NEW:" +category);
 	    			Lectureseries_CategoryLocalServiceUtil.addLectureseries_Category(lectureseries_Category);
 	    		}
     		} catch (Exception e) {
-    			lectureseries_Category = Lectureseries_CategoryLocalServiceUtil.createLectureseries_Category(CounterLocalServiceUtil.increment());
+    			lectureseries_Category = Lectureseries_CategoryLocalServiceUtil.createLectureseries_Category(CounterLocalServiceUtil.increment(Lectureseries_Category.class.getName()));
     			lectureseries_Category = LectureseriesCategoryMapper.mapLectureseries_Category(lectureseries_Category, lectureseries, category);
     			log.debug("lectureseries_Category NEW:" +category);
     			Lectureseries_CategoryLocalServiceUtil.addLectureseries_Category(lectureseries_Category);
@@ -2086,9 +1884,9 @@ public class MigrationController {
 				Lectureseries_InstitutionLocalServiceUtil.addLectureseries_Institution(lectureseriesInstitution);
 			}
 		} catch (Exception e) {
-			lectureseriesInstitution = Lectureseries_InstitutionLocalServiceUtil.createLectureseries_Institution(CounterLocalServiceUtil.increment());
+			lectureseriesInstitution = Lectureseries_InstitutionLocalServiceUtil.createLectureseries_Institution(CounterLocalServiceUtil.increment(Lectureseries_Institution.class.getName()));
 			lectureseriesInstitution = LectureseriesFacilityMapper.mapLectureseriesFacility(legacyLectureSeriesFacility, lectureseriesInstitution);
-			logInfo("LectureSeriesInstitution NEW:" +lectureseriesInstitution);
+			log.debug("LectureSeriesInstitution NEW:" +lectureseriesInstitution);
 			Lectureseries_InstitutionLocalServiceUtil.addLectureseries_Institution(lectureseriesInstitution);
 		}
     }
@@ -2158,13 +1956,13 @@ public class MigrationController {
     			log.debug("Video_Lectureseries UPDATE:" +videoLectureseries);
     			videoLectureseries= Video_LectureseriesLocalServiceUtil.updateVideo_Lectureseries(videoLectureseries);
     		} else {
-    			videoLectureseries = Video_LectureseriesLocalServiceUtil.createVideo_Lectureseries(CounterLocalServiceUtil.increment());
+    			videoLectureseries = Video_LectureseriesLocalServiceUtil.createVideo_Lectureseries(CounterLocalServiceUtil.increment(Video_Lectureseries.class.getName()));
     			videoLectureseries = VideoLectureseriesMapper.mapVideoLectureseries(video, videoLectureseries, companyId);
     			log.debug("Video_Lectureseries NEW:" +videoLectureseries);
     			videoLectureseries= Video_LectureseriesLocalServiceUtil.addVideo_Lectureseries(videoLectureseries);
     		}
 		} catch (Exception e) {
-			videoLectureseries = Video_LectureseriesLocalServiceUtil.createVideo_Lectureseries(CounterLocalServiceUtil.increment());
+			videoLectureseries = Video_LectureseriesLocalServiceUtil.createVideo_Lectureseries(CounterLocalServiceUtil.increment(Video_Lectureseries.class.getName()));
 			videoLectureseries = VideoLectureseriesMapper.mapVideoLectureseries(video, videoLectureseries, companyId);
 			log.debug("Video_Lectureseries NEW:" +videoLectureseries);
 			videoLectureseries= Video_LectureseriesLocalServiceUtil.addVideo_Lectureseries(videoLectureseries);
@@ -2174,7 +1972,7 @@ public class MigrationController {
     
     /**
      * Local function invoced by  Video_Category Action, Video, Lectureseries, and Categoryhas been initialised
-     * MANDATAORY: video_lectureseries mus have beein initialsied
+     * MANDATAORY: video_lectureseries must have been initialized
      * @param video_lectureseries
      * @throws SystemException
      */
@@ -2198,13 +1996,13 @@ public class MigrationController {
 	    			log.debug("video_category UPDATE:" +video_category);
 	    			Video_CategoryLocalServiceUtil.updateVideo_Category(video_category);
 	    		} else {
-	    			video_category = Video_CategoryLocalServiceUtil.createVideo_Category(CounterLocalServiceUtil.increment());
+	    			video_category = Video_CategoryLocalServiceUtil.createVideo_Category(CounterLocalServiceUtil.increment(Video_Category.class.getName()));
     				video_category = VideoCategoryMapper.mapVideoCategory(video_category, video_lectureseries.getVideoId(), lectureseries.getCategoryId());
 	    			log.debug("video_category NEW:" +video_category);
 	    			Video_CategoryLocalServiceUtil.addVideo_Category(video_category);
 	    		}
     		} catch (Exception e) {
-    			video_category = Video_CategoryLocalServiceUtil.createVideo_Category(CounterLocalServiceUtil.increment());
+    			video_category = Video_CategoryLocalServiceUtil.createVideo_Category(CounterLocalServiceUtil.increment(Video_Category.class.getName()));
 				video_category = VideoCategoryMapper.mapVideoCategory(video_category, video_lectureseries.getVideoId(), lectureseries.getCategoryId());
     			log.debug("lectureseries_Category NEW:" +video_category);
     			Video_CategoryLocalServiceUtil.addVideo_Category(video_category);
@@ -2213,7 +2011,23 @@ public class MigrationController {
     }
     
     
- 
+    /**
+     * Local function invoced by  Video_Category Action, Video, Lectureseries, and Categoryhas been initialised
+     * MANDATAORY: video_lectureseries must have been initialized
+     * @param video_lectureseries
+     * @throws SystemException
+     */
+    private long getLatestVideoId(Lectureseries lectureseries) throws SystemException {
+    	List<Video> videos;
+		ClassLoader classLoader = (ClassLoader)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),"portletClassLoader");    		
+		DynamicQuery query = DynamicQueryFactoryUtil.forClass(Video.class,classLoader).add(PropertyFactoryUtil.forName("lectureseriesId").eq(lectureseries.getLectureseriesId())).add(PropertyFactoryUtil.forName("openAccess").eq(Integer.valueOf(1))).addOrder(OrderFactoryUtil.desc("generationDate"));
+		videos = VideoLocalServiceUtil.dynamicQuery(query);
+		if (videos != null && videos.size() > 0)   {
+			return videos.get(0).getVideoId();
+		}
+		return 0;
+    }
+    
     
     
 
