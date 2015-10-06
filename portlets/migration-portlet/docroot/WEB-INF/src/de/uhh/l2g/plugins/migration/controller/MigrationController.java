@@ -2108,7 +2108,7 @@ public class MigrationController {
 		}
     }    
     
-    private void migrateInstitution_Host(LegacyFacilityHost legacyFacilityHost,  long groupId) throws SystemException {
+    private void migrateInstitution_Host(LegacyFacilityHost legacyFacilityHost,  long groupId, long companyId) throws SystemException {
     	Institution_Host institutionHost = null;
     	try {
     		institutionHost = Institution_HostLocalServiceUtil.getInstitution_Host(legacyFacilityHost.getFacilityHostId());
