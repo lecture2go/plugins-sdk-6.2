@@ -15,16 +15,14 @@ public class LectureseriesMapper {
 			return null;
 		}
 	lectureseries.setApproved(legacyLectureseries.getApproved());
-	// TODO Where does it come from ? 
+	// This field is updated on Category Migration! 
 	//lectureseries.setCategoryId(legacyLectureseries.get)
 	lectureseries.setEventType(legacyLectureseries.getEventType());
 	lectureseries.setFacultyName(legacyLectureseries.getFacultyName());
 	lectureseries.setLanguage(legacyLectureseries.getLanguage());
-	// TODO Where does it come from ? 
+	// These 3 fields are  updated after Video_LectureSeries Mapping Table Migration! 
 	//lectureseries.setLatestOpenAccessVideoId(legacyLectureseries.get)
-	// TODO Where does it come from ? 
 	//lectureseries.setLatestVideoGenerationDate(legacyLectureseries.)
-	// TODO Where does it come from ? 
 	//lectureseries.setLatestVideoUploadDate(legacyLectureseries)
 	lectureseries.setLectureseriesId(legacyLectureseries.getId());
 	lectureseries.setLongDesc(legacyLectureseries.getLongDesc());
@@ -32,8 +30,8 @@ public class LectureseriesMapper {
 	lectureseries.setNumber(legacyLectureseries.getNumber());
 	lectureseries.setPassword(legacyLectureseries.getPassword());
 	lectureseries.setShortDesc(legacyLectureseries.getShortDesc());
-	// TODO Where does it come from ? 
-	//lectureseries.setTermId(legacyLectureseries.getS)
+	// This field is updated on Term Migration! 
+	//lectureseries.setTermId()
 	 return lectureseries;
 	}
 

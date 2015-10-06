@@ -12,7 +12,7 @@ public class UserIDMapper {
 	static Log log = LogFactoryUtil.getLog(UserIDMapper.class);	
 	public static Long getNewUserId(Long legacyUserId, long companyId) {
 		if (legacyUserId == 0) {
-			log.warn("legacyId" + legacyUserId + " !! and companyid:" +companyId + "---> id 0 is beeing set in migrated table!!");
+			log.warn("legacyId:" + legacyUserId + " !! and companyid:" +companyId + "---> id 0 is beeing set in migrated table!!");
 			return 0L;
 		}
 		if (legacyUserId == null) {
