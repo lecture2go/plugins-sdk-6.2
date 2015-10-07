@@ -29,6 +29,8 @@ import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.ServiceContext;
 
 import de.uhh.l2g.plugins.NoSuchInstitutionException;
 import de.uhh.l2g.plugins.NoSuchLectureseriesException;
@@ -573,5 +575,6 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	public Video getBySecureUrl(String surl) throws NoSuchVideoException, SystemException{
 		return VideoFinderUtil.findVideoBySerureUrl(surl);
 	}
+	
 
 }

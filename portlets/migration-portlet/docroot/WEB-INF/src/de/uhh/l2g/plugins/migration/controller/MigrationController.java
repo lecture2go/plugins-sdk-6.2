@@ -699,7 +699,7 @@ public class MigrationController {
             logInfo("Begin Migration / Update of:" + users.size() +  "Legacy Users!");
         for (LegacyUser user: users) {
             try {
-                UserManager.getInstance().createUser(user, companyId, sites, request);
+              //  UserManager.getInstance().createUser(user, companyId, sites, request);
             } catch (PortalException e) {
                 log.warn("Error occured during User Migration:", e);
                 portletLog.warn("Migration / Update of a user failed:" + e);
