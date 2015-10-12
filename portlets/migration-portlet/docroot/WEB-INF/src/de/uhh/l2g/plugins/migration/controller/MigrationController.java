@@ -699,7 +699,7 @@ public class MigrationController {
             logInfo("Begin Migration / Update of:" + users.size() +  "Legacy Users!");
         for (LegacyUser user: users) {
             try {
-              //  UserManager.getInstance().createUser(user, companyId, sites, request);
+                UserManager.getInstance().createUser(user, companyId, sites, request);
             } catch (PortalException e) {
                 log.warn("Error occured during User Migration:", e);
                 portletLog.warn("Migration / Update of a user failed:" + e);
@@ -747,8 +747,8 @@ public class MigrationController {
         portletLog.info("legacySegments with UserId = 0 ==  " + legacySegmentsWithNullUser.size());
 		
 		} catch (SystemException e1) {
-			logInfo("Migration of Segments failed. Can not read Source Data" + e1);
-		    portletLog.warn("Migration of Segments failed. Can not read Source Data" + e1);
+			logInfo("Migration of Segments failed. Can not read Source Data " + e1);
+		    portletLog.warn("Migration of Segments failed. Can not read Source Data " + e1);
 			segmentOkflag = failed;
 		}
 		request.setAttribute("logInfoString", logInfoString);		
