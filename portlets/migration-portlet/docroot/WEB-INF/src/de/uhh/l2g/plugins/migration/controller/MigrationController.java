@@ -747,8 +747,8 @@ public class MigrationController {
         portletLog.info("legacySegments with UserId = 0 ==  " + legacySegmentsWithNullUser.size());
 		
 		} catch (SystemException e1) {
-			logInfo("Migration of Segments failed. Can not read Source Data " + e1);
-		    portletLog.warn("Migration of Segments failed. Can not read Source Data " + e1);
+			logInfo("Migration of Segments failed. Can not read Source Data" + e1);
+		    portletLog.warn("Migration of Segments failed. Can not read Source Data" + e1);
 			segmentOkflag = failed;
 		}
 		request.setAttribute("logInfoString", logInfoString);		
