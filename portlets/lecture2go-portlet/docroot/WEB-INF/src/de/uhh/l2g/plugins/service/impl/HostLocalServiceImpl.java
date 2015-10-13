@@ -138,7 +138,7 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 		User user = userPersistence.findByPrimaryKey(userId);
 		
 		long hostId = counterLocalService.increment(Host.class.getName());
-
+		
 		Host defaultHost = hostPersistence.create(hostId);
 
 		//Empty name marks default

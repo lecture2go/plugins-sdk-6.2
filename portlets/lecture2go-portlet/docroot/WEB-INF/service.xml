@@ -234,10 +234,10 @@
         <column name="hostId" type="long"></column>
         <column name="groupId" type="long"></column>
         <column name="companyId" type="long"></column>
-        <finder name="institutionId" return-type="Collection">
+        <finder name="institutionId" return-type="Collection" db-index="false">
             <finder-column name="institutionId" case-sensitive="false"></finder-column>
         </finder>
-        <finder name="hostId" return-type="Collection">
+        <finder name="hostId" return-type="Collection" db-index="false">
             <finder-column name="hostId"></finder-column>
         </finder>
         <finder name="G_H" unique="false" return-type="Collection">

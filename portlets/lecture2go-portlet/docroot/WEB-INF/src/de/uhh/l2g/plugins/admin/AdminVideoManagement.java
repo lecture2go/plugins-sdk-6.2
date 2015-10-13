@@ -19,6 +19,7 @@ import javax.portlet.ResourceResponse;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -74,6 +75,7 @@ import de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
+import de.uhh.l2g.plugins.service.persistence.VideoPersistenceImpl;
 import de.uhh.l2g.plugins.util.FFmpegManager;
 import de.uhh.l2g.plugins.util.ProzessManager;
 import de.uhh.l2g.plugins.util.Security;
@@ -192,6 +194,8 @@ public class AdminVideoManagement extends MVCPortlet {
 
 		//video
 		Video newVideo = new VideoImpl();
+		//long newVideoId = counterLocalServiceUtil.increment(Video.class.getName());
+		//Video newVideo = videoPersistence.create(newVideoId);
 		//newVideo = VideoLocalServiceUtil.createVideo(videoId);
 		newVideo.setProducerId(producerId);
 		if(lectureseriesId>0)newVideo.setLectureseriesId(lectureseriesId);
