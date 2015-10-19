@@ -21,12 +21,22 @@
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Creator">
 		<field name="creatorId" type="long" />
-		<field name="firstName" type="String" />
-		<field name="lastName" type="String" />
-		<field name="middleName" type="String" />
-		<field name="jobTitle" type="String" />
+		<field name="firstName" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
+		<field name="lastName" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
+		<field name="middleName" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
+		<field name="jobTitle" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
 		<field name="gender" type="String" />
-		<field name="fullName" type="String" />
+		<field name="fullName" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Host">
 		<field name="hostId" type="long" />
