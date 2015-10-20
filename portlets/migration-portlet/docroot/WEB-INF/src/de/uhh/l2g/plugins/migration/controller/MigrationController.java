@@ -191,7 +191,6 @@ public class MigrationController {
      */
     @RequestMapping
     public String list(PortletRequest request, Model model) throws SystemException {
-    	portletLog.error("logged into migration-portlet log!");
     	String actionResponse = (String) request.getAttribute("logInfoString");
     	if (actionResponse == null || actionResponse.isEmpty() ) {
     		logInfoString = "";
@@ -817,7 +816,7 @@ public class MigrationController {
 				LegacyLectureSeriesLocalServiceUtil.getLegacyLectureSeries(video.getLectureseriesId());
 			} catch (PortalException e) {
 				logInfo("ConsistencyCHECK: Legacy-Video has dead LectureseriesID in legacy system LectureseriesID will be set to 0 | video item" + video);
-				portletLog.warn("ConsistencyCHECK: Legacy-Video has dead LectureseriesID in legacy system LectureseriesID will be set to 0 | video item" + JSONFactoryUtil.looseSerialize(video));
+				portletLog.warn("ConsistencyCHECK: Legacy-Video has dead LectureseriesID in legacy system LectureseriesID will be set to 0 | video item with id" + video.getVideoId());
 				video.setLectureseriesId(0);
 				VideoLocalServiceUtil.updateVideo(video);
 			}
