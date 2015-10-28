@@ -11,6 +11,9 @@ import org.apache.log4j.Logger;
 
 
 
+
+
+import com.liferay.counter.model.Counter;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -164,6 +167,7 @@ import javax.portlet.PortletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 
 /**
  * View controller.
@@ -1064,6 +1068,39 @@ public class MigrationController {
 
     
 
+    @RequestMapping(params = "action=migrateCounterTableValues")
+    public void migrateCounterTableValues(ActionRequest request) throws FileNotFoundException {
+    	// Load Legacy Uploads
+    	logInfo("Call migrateCounterTableValues");
+    	String updateCounterTableValues = ok;
+        Counter counter;
+		try { 
+			// Initialize counter with a default value liferay suggests
+			CounterLocalServiceUtil.increment(Institution.class.getName());
+			counter = CounterLocalServiceUtil.getCounter(Institution.class.getName());
+			// Catch latest ID used form Institution by dynamic Query, order desc by instition ID
+			ClassLoader classLoader = (ClassLoader)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),"portletClassLoader");    		
+			DynamicQuery query = DynamicQueryFactoryUtil.forClass(Institution.class,classLoader).addOrder(OrderFactoryUtil.desc("institutionId"));
+			List<Institution> institutionList = InstitutionLocalServiceUtil.dynamicQuery(query);
+			// If values are found read out institution Id form first object = object with highest InstitionId 
+			if (institutionList != null && institutionList.size() > 0) {
+				// add  +1 on institionId and use as counter new counter ID
+				long latestIdPlusOne =  institutionList.get(0).getInstitutionId() + 1;
+				counter.setCurrentId(latestIdPlusOne);
+				CounterLocalServiceUtil.updateCounter(counter);
+				log.info("Counter updated for:" + Institution.class.getName() + " new value is: " + latestIdPlusOne);
+			}
+		} catch (PortalException e) {
+			logInfo("Error resetting counter for: " + Institution.class.getName());
+			log.warn("Error resetting counter for: " +Institution.class.getName());
+		} catch (SystemException e) {
+			logInfo("Error resetting counter for: " +Institution.class.getName());
+			log.warn("Error resetting counter for: " +Institution.class.getName() );
+		}
+		request.setAttribute("logInfoString", logInfoString);		
+		request.setAttribute("updateCounterTableValuesOkFlag", updateCounterTableValues);
+    }  
+    
 
 	@RequestMapping(params = "action=migrateLectureseriesFacilities")
     public void migrateLectureseriesFacilities(ActionRequest request) throws FileNotFoundException {
