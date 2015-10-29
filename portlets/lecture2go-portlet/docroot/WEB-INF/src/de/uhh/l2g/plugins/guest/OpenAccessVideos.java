@@ -5,20 +5,15 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.servlet.http.Cookie;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import de.uhh.l2g.plugins.NoSuchLicenseException;
 import de.uhh.l2g.plugins.NoSuchVideoException;
-import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.License;
 import de.uhh.l2g.plugins.model.Metadata;
@@ -30,7 +25,6 @@ import de.uhh.l2g.plugins.model.impl.LectureseriesImpl;
 import de.uhh.l2g.plugins.model.impl.LicenseImpl;
 import de.uhh.l2g.plugins.model.impl.MetadataImpl;
 import de.uhh.l2g.plugins.model.impl.VideoImpl;
-import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LicenseLocalServiceUtil;
 import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
@@ -38,7 +32,6 @@ import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
-import de.uhh.l2g.plugins.service.VideohitlistLocalServiceUtil;
 
 public class OpenAccessVideos extends MVCPortlet {
 
@@ -165,14 +158,35 @@ public class OpenAccessVideos extends MVCPortlet {
 	    	if(video.getOpenAccess()==1){
 	    		video.setAccessPermitted(1);
 	    	}else{
-	    		if(video.getPassword().length()>0 || lectureseries.getPassword().length()>0){
+	    		//1. authentication by lecture series password
+	    		if(lectureseries.getPassword().length()>0){
 	    			String pwd ="";
 	    			if(lectureseries.getPassword().trim().length()>0)pwd=lectureseries.getPassword();
-	    			if(video.getPassword().trim().length()>0)pwd=video.getPassword();
 	    			//
 	    			if(password.equals(pwd))video.setAccessPermitted(1);
 	    			else video.setAccessPermitted(0);
 	    		}
+
+	    		//2. authentication by cookie
+	    		Cookie[] c = request.getCookies();
+	    		for(int i=0; i<c.length;i++){
+	    			Cookie coo = c[i];
+	    			String cooVal ="";
+	    			if(coo.getName().equals("L2G_LSID"))cooVal=c[i].getValue();
+	    			//has been already logged in
+	    			if(cooVal.equals(video.getLectureseriesId()+"")){
+	    				video.setAccessPermitted(1);
+	    			}
+	    		}
+	    		
+	    		//3. authentication by video password
+	    		if(video.getPassword().length()>0){
+	    			String pwd ="";
+	    			if(video.getPassword().trim().length()>0)pwd=video.getPassword();
+	    			//
+	    			if(password.equals(pwd))video.setAccessPermitted(1);
+	    			else video.setAccessPermitted(0);
+	    		}	    		
 	    	}
 	    }
 	    
