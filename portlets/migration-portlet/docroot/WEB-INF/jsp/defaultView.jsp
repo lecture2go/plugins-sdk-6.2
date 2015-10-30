@@ -108,6 +108,11 @@
 	<portlet:param name="action" value="migrateCreator" />
 </portlet:actionURL>
 
+
+<portlet:actionURL var="updateCounterTableValuesUrl">
+	<portlet:param name="action" value="migrateCounterTableValues" />
+</portlet:actionURL>
+
 <p><liferay-ui:message key="migrationActions" /></p>
 
 
@@ -413,5 +418,13 @@
     <td><c:out value="${creatorOkflag}" escapeXml="false" /></td>
     <td></td>
   </tr> 
+  <tr>
+    <td> Update Counter Table Values</td>
+    <td>--</td>
+   	<td>--</td>
+    <td><a href="<c:out value="${updateCounterTableValuesUrl}" />"><liferay-ui:message key="migrate" /></a></td>
+    <td><c:out value="${updateCounterTableValuesOkFlag}" escapeXml="false" /></td>
+    <td></td>
+  </tr>   
   </table> 
 </pre>
