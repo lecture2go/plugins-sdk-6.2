@@ -815,8 +815,8 @@ public class MigrationController {
 			try {
 				LegacyLectureSeriesLocalServiceUtil.getLegacyLectureSeries(video.getLectureseriesId());
 			} catch (PortalException e) {
-				logInfo("ConsistencyCHECK: Legacy-Video has dead LectureseriesID in legacy system LectureseriesID will be set to 0 | video item" + video);
-				portletLog.warn("ConsistencyCHECK: Legacy-Video has dead LectureseriesID in legacy system LectureseriesID will be set to 0 | video item with id" + video.getVideoId());
+				logInfo("ConsistencyCheck: Legacy-Video has dead LectureseriesID in legacy system LectureseriesID will be set to 0 | video item" + video);
+				portletLog.warn("ConsistencyCheck: Legacy-Video has dead LectureseriesID in legacy system LectureseriesID will be set to 0 | video item with id" + video.getVideoId());
 				video.setLectureseriesId(0);
 				VideoLocalServiceUtil.updateVideo(video);
 			}
@@ -1184,7 +1184,7 @@ public class MigrationController {
 					}
 				} else {
 					logInfo("ConsistencyCheck Video: found with no Lectureseries linked (LectureseriesId = 0!): " + video);
-					portletLog.warn("ConsistencyCheck Video: CAN NOT LINK TERM ID ! Due to Lectureseries ID == 0 found at video " + JSONFactoryUtil.serialize(video));
+					portletLog.warn("ConsistencyCheck Video: CAN NOT LINK TERM ID ! Due to Lectureseries ID == 0 found at video "+ video.getVideoId());// + JSONFactoryUtil.serialize(video));
 					logInfo("Video Entry Skipped for mapping into Video_Lectureseries Table");
 					portletLog.warn("Video Entry Skipped for mapping into Video_Lectureseries Table");
 				}

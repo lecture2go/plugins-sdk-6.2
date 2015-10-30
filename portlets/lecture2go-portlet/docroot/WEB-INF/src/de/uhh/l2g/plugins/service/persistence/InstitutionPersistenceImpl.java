@@ -8898,7 +8898,7 @@ public class InstitutionPersistenceImpl extends BasePersistenceImpl<Institution>
 	}
 
 	private static final String _FINDER_COLUMN_ROOT_COMPANYID_2 = "institution.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_ROOT_GROUPID_2 = "institution.groupId = ? AND institution.parentId = 0";
+	private static final String _FINDER_COLUMN_ROOT_GROUPID_2 = "institution.groupId = ? AND institution.parentId < 1";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_I = new FinderPath(InstitutionModelImpl.ENTITY_CACHE_ENABLED,
 			InstitutionModelImpl.FINDER_CACHE_ENABLED, InstitutionImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_I",

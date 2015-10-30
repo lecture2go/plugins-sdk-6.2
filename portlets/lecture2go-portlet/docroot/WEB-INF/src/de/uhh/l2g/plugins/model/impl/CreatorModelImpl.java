@@ -66,7 +66,7 @@ public class CreatorModelImpl extends BaseModelImpl<Creator>
 			{ "gender", Types.VARCHAR },
 			{ "fullName", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Creator (creatorId LONG not null primary key,firstName VARCHAR(75) null,lastName VARCHAR(75) null,middleName VARCHAR(75) null,jobTitle VARCHAR(75) null,gender VARCHAR(75) null,fullName VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Creator (creatorId LONG not null primary key,firstName STRING null,lastName STRING null,middleName STRING null,jobTitle STRING null,gender VARCHAR(75) null,fullName STRING null)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Creator";
 	public static final String ORDER_BY_JPQL = " ORDER BY creator.lastName ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Creator.lastName ASC";
