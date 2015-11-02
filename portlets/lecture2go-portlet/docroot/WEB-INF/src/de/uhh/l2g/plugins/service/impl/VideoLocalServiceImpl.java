@@ -270,9 +270,9 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		}
 		// URL
 		String webhome = PropsUtil.get("lecture2go.web.home");
-		Institution institudion = new InstitutionImpl();
+		Institution institution = new InstitutionImpl();
 		try {
-			institudion = institutionPersistence.findByPrimaryKey(objectVideo.getRootInstitutionId());
+			institution = institutionPersistence.findByPrimaryKey(objectVideo.getRootInstitutionId());
 		} catch (NoSuchInstitutionException e) {
 //			e.printStackTrace();
 		} catch (SystemException e) {

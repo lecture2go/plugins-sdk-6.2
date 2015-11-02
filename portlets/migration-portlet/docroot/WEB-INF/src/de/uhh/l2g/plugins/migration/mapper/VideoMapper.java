@@ -30,15 +30,15 @@ public class VideoMapper {
 		video.setPermittedToSegment(legacyVideo.getPermittedToSegment());
 		video.setProducerId(UserIDMapper.getNewUserId(legacyVideo.getProducerId(), companyId));
 		video.setResolution(legacyVideo.getResolution());
-		// TODO sourcedata comes from origin facilityId field in video (might be inconsistent with actual producer facility/video location)
+		// TODO Check consistency: sourcedata comes from origin facilityId field in legacyvideo (might be inconsistent with actual producer facility/video location)
 		video.setRootInstitutionId(legacyVideo.getFacilityId());
 		video.setSecureFilename(legacyVideo.getSurl());
 		video.setTags(legacyVideo.getTags());
-		// TODO sourcedata comes from ?
+		// Terms are set after Lectureseries is processed
 		//video.setTermId(legacyVideo);
 		video.setTitle(legacyVideo.getTitle());
 		video.setUploadDate(legacyVideo.getUploadDate());
-		// TODO sourcedata comes from ?
+		// Creators are set after Metadata is processed
 		//video.setVideoCreatorId(legacyVideo.getVideoCreatorId());
 		return video;
 	} 
