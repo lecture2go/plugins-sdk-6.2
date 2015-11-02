@@ -206,7 +206,9 @@
 		<field name="tagcloudId" type="long" />
 		<field name="objectClassType" type="String" />
 		<field name="objectId" type="long" />
-		<field name="tags" type="String" />
+		<field name="tags" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Term">
 		<field name="termId" type="long" />
