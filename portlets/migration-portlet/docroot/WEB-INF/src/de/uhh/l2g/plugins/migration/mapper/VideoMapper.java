@@ -30,8 +30,8 @@ public class VideoMapper {
 		video.setPermittedToSegment(legacyVideo.getPermittedToSegment());
 		video.setProducerId(UserIDMapper.getNewUserId(legacyVideo.getProducerId(), companyId));
 		video.setResolution(legacyVideo.getResolution());
-		// TODO sourcedata comes from ?
-		// video.setRootInstitutionId(legacyVideo.get);
+		// TODO sourcedata comes from origin facilityId field in video (might be inconsistent with actual producer facility/video location)
+		video.setRootInstitutionId(legacyVideo.getFacilityId());
 		video.setSecureFilename(legacyVideo.getSurl());
 		video.setTags(legacyVideo.getTags());
 		// TODO sourcedata comes from ?

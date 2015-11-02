@@ -141,9 +141,15 @@
 	</model>
 	<model name="de.uhh.l2g.plugins.migration.model.LegacyOffice">
 		<field name="id" type="long" />
-		<field name="name" type="String" />
-		<field name="www" type="String" />
-		<field name="email" type="String" />
+		<field name="name" type="String">
+			<hint-collection name="LongText" />
+		</field>
+		<field name="www" type="String">
+			<hint-collection name="LongText" />
+		</field>
+		<field name="email" type="String">
+			<hint-collection name="LongText" />
+		</field>
 		<field name="facilityId" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.migration.model.LegacyProducer">
