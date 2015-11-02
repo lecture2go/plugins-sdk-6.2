@@ -99,11 +99,15 @@ public class AdminUserManagement extends MVCPortlet {
 			List<User> allCoord = UserLocalServiceUtil.getRoleUsers(RoleLocalServiceUtil.getRole(remoteUser.getCompanyId(), "L2Go Coordinator").getRoleId()); 
 			List<Institution> assignedInstitutions = new ArrayList<Institution>();		
 			try{
-				for (int i = 0; i < allCoord.size(); i++)
-				assignedInstitutions.add(InstitutionLocalServiceUtil.getInstitution(CoordinatorLocalServiceUtil.getCoordinator(allCoord.get(i).getUserId()).getInstitutionId()));
+				for (int i = 0; i < allCoord.size(); i++){
+					Long cId = allCoord.get(i).getUserId();
+					Coordinator c = CoordinatorLocalServiceUtil.getCoordinator(cId);
+					Institution instId = InstitutionLocalServiceUtil.getInstitution(c.getInstitutionId());
+					assignedInstitutions.add(instId);
+				}
 			}catch(Exception e){}
 			List<Institution> notAssignedInstitutions = new ArrayList<Institution>();
-			for(int i = 0; i < allFacil.size(); i++){
+  			for(int i = 0; i < allFacil.size(); i++){
 				boolean assigned = false;
 				for (int j = 0; j < assignedInstitutions.size(); j++){
 					if(allFacil.get(i).equals(assignedInstitutions.get(j)) && allFacil.get(i).getInstitutionId()!=reqCoord.getInstitutionId())assigned=true;
@@ -126,7 +130,10 @@ public class AdminUserManagement extends MVCPortlet {
 				if(loggedInCoord.getInstitutionId()==reqProd.getInstitutionId())pfL=cfL;
 				else {
 					if(reqProd.getInstitutionId()!=0) pfL.add(InstitutionLocalServiceUtil.getInstitution(reqProd.getInstitutionId()));
-					else pfL.add(InstitutionLocalServiceUtil.getInstitution(loggedInCoord.getInstitutionId()));
+//					else{
+//						Institution inst = InstitutionLocalServiceUtil.getInstitution(loggedInCoord.getInstitutionId()); 
+//						pfL.add(inst);
+//					}
 				}
 			}catch(PortalException e){
 			}
