@@ -18,6 +18,7 @@ public class FacilityMapper {
 			return null;
 		}
 		institution.setGroupId(groupId);
+		institution.setCompanyId(companyId);	
 		institution.setLevel(legacyFacility.getLevel());
 		institution.setName(legacyFacility.getName());
 		//if root then delete default root

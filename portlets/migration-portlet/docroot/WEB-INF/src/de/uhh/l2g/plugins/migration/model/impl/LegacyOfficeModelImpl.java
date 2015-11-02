@@ -59,12 +59,12 @@ public class LegacyOfficeModelImpl extends BaseModelImpl<LegacyOffice>
 	public static final String TABLE_NAME = "office";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "id_", Types.BIGINT },
-			{ "name", Types.VARCHAR },
-			{ "www", Types.VARCHAR },
-			{ "email", Types.VARCHAR },
+			{ "name", Types.CLOB },
+			{ "www", Types.CLOB },
+			{ "email", Types.CLOB },
 			{ "facilityId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table office (id_ LONG not null primary key,name VARCHAR(75) null,www VARCHAR(75) null,email VARCHAR(75) null,facilityId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table office (id_ LONG not null primary key,name TEXT null,www TEXT null,email TEXT null,facilityId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table office";
 	public static final String ORDER_BY_JPQL = " ORDER BY legacyOffice.id ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY office.id_ ASC";
