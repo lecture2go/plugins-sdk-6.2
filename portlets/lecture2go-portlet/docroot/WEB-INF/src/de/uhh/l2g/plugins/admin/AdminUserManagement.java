@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -129,11 +130,15 @@ public class AdminUserManagement extends MVCPortlet {
 				//coordinator and requested producer belong to different institutions
 				if(loggedInCoord.getInstitutionId()==reqProd.getInstitutionId())pfL=cfL;
 				else {
-					if(reqProd.getInstitutionId()!=0) pfL.add(InstitutionLocalServiceUtil.getInstitution(reqProd.getInstitutionId()));
-//					else{
-//						Institution inst = InstitutionLocalServiceUtil.getInstitution(loggedInCoord.getInstitutionId()); 
-//						pfL.add(inst);
-//					}
+					if(reqProd.getInstitutionId()!=0){
+						Long instId = reqProd.getInstitutionId();
+						Institution inst = InstitutionLocalServiceUtil.getInstitution(instId);
+						pfL.add(inst);
+					}
+					else{
+						Institution inst = InstitutionLocalServiceUtil.getInstitution(loggedInCoord.getInstitutionId()); 
+						pfL.add(inst);
+					}
 				}
 			}catch(PortalException e){
 			}
