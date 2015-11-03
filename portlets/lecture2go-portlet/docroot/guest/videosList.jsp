@@ -277,7 +277,7 @@
        </aui:fieldset>
 </aui:form>
 		
-<liferay-ui:search-container emptyResultsMessage="no-lectureseries-found" delta="5" iteratorURL="<%=portletURL %>">
+<liferay-ui:search-container emptyResultsMessage="no-lectureseries-found" delta="10" iteratorURL="<%=portletURL %>">
 	<liferay-ui:search-container-results>
 		<%
 			tempLectureseriesList = reqLectureseries;
