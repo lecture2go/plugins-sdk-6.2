@@ -310,9 +310,9 @@ deltaConfigurable="true">
  			String id_row = "Inst"+String.valueOf(institution_row.getInstitutionId());
  			String curParam_row = "curInner"+String.valueOf(institution_row.getInstitutionId());
  			long outerOrder = institution_row.getSort();
- 			Host curHost = Institution_HostLocalServiceUtil.getByGroupIdAndInstitutionId(groupId, institution_row.getInstitutionId());
+ 			Host curHost = Institution_HostLocalServiceUtil.getByGroupIdAndInstitutionId(companyId, groupId, institution_row.getInstitutionId());
  			String curHostName = "Default";
- 			if (curHost.getDefaultHost() < 1 ) curHostName = curHost.getName();
+ 			//if (curHost != null && curHost.getDefaultHost() < 1 ) curHostName = curHost.getName();
  			
  			int subInstitutionMax = InstitutionLocalServiceUtil.getMaxSortByParentId(institution_id)+1;
 
@@ -355,6 +355,8 @@ deltaConfigurable="true">
 	 			<aui:fieldset>
 					<aui:input name="subInstitution" label="SubInstitution Name" inlineField="true" />
 					<aui:input name="subInstitutionOrder" label="Order" inlineField="true" value='<%= subInstitutionMax  %>'/>
+					<aui:input name='subParent' type='hidden' inlineField="true" value='<%= (new Long(institutionId)).toString() %>'/>
+					
 					<aui:button type="submit" value="Add"></aui:button>
 				</aui:fieldset>
  			</aui:form>

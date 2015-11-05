@@ -16,16 +16,6 @@ public class FacilityHostMapper {
 		}
 		institutionHost.setGroupId(groupId);
 		institutionHost.setCompanyId(companyId);
-		/**if default then delete default host
-				if (legacyHost.getDefaultId () != 0){
-					try {
-					//InstitutionLocalServiceUtil.deleteInstitution(InstitutionLocalServiceUtil.getRootByGroupId(companyId, groupId));
-					} catch (Exception e) {
-				         System.out.println(e.getClass().getName());
-				         e.printStackTrace();
-				         
-				       }
-				}	*/	
 		institutionHost.setHostId(legacyFacilityHost.getHostId());
 		institutionHost.setInstitutionId(legacyFacilityHost.getFacilityId());
 		return institutionHost;

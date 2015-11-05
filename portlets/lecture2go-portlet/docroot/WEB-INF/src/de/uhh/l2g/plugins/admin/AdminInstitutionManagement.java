@@ -136,10 +136,10 @@ public class AdminInstitutionManagement extends MVCPortlet {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 		         Institution.class.getName(), request);
 
-			String name = ParamUtil.getString(request, "institution");
-			long hostId = ParamUtil.getLong(request, "serverselect");
-			long parentId = ParamUtil.getLong(request, "parent");
-			int sort = ParamUtil.getInteger(request, "order");
+			String name = ParamUtil.getString(request, "subInstitution");
+			long hostId = 0;
+			long parentId = ParamUtil.getLong(request, "subParent");
+			int sort = ParamUtil.getInteger(request, "subInstitutionOrder");
 
 
 	         InstitutionLocalServiceUtil.addInstitution(

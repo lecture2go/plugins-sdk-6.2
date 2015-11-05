@@ -8,6 +8,7 @@ import com.liferay.portal.util.PortalUtil;
 import de.uhh.l2g.plugins.migration.model.LegacyFacility;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
 
 public class FacilityMapper {
 	static final Log log = LogFactoryUtil.getLog(FacilityMapper.class);
@@ -21,15 +22,20 @@ public class FacilityMapper {
 		institution.setCompanyId(companyId);	
 		institution.setLevel(legacyFacility.getLevel());
 		institution.setName(legacyFacility.getName());
-		//if root then delete default root
+		//if migrated root then delete default root
 		if (legacyFacility.getParentId() == 0){
 			try {
-			InstitutionLocalServiceUtil.deleteInstitution(InstitutionLocalServiceUtil.getRootByGroupId(companyId, groupId));
+				Institution prevRoot = InstitutionLocalServiceUtil.getRootByGroupId(companyId, groupId);
+				InstitutionLocalServiceUtil.deleteInstitution(prevRoot);
+				//also clean Link
+				Institution_HostLocalServiceUtil.deleteLinkByInstitution(prevRoot, groupId, companyId);
+			
 			} catch (Exception e) {
 		         System.out.println(e.getClass().getName());
 		         e.printStackTrace();
 		         
 		       }
+			
 		}			
 		institution.setParentId(legacyFacility.getParentId());
 		//shift sort on first level because Conferences is not a seperate List anymore
