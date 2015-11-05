@@ -18,5 +18,10 @@
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/lecture2go-portlet"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/lecture2go-theme"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/liferay-portal-src-6.2-ce-ga4"/>
+	<classpathentry kind="lib" path="/plugins-sdk-6.2"/>
+	<classpathentry kind="lib" path="/liferay-portal-6.2-ce-ga4"/>
 	<classpathentry kind="output" path="docroot/WEB-INF/classes"/>
 </classpath>
