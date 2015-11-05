@@ -312,7 +312,7 @@ deltaConfigurable="true">
  			long outerOrder = institution_row.getSort();
  			Host curHost = Institution_HostLocalServiceUtil.getByGroupIdAndInstitutionId(companyId, groupId, institution_row.getInstitutionId());
  			String curHostName = "Default";
- 			//if (curHost != null && curHost.getDefaultHost() < 1 ) curHostName = curHost.getName();
+ 			if (curHost != null && curHost.getDefaultHost() < 1 ) curHostName = curHost.getName();
  			
  			int subInstitutionMax = InstitutionLocalServiceUtil.getMaxSortByParentId(institution_id)+1;
 
@@ -355,7 +355,7 @@ deltaConfigurable="true">
 	 			<aui:fieldset>
 					<aui:input name="subInstitution" label="SubInstitution Name" inlineField="true" />
 					<aui:input name="subInstitutionOrder" label="Order" inlineField="true" value='<%= subInstitutionMax  %>'/>
-					<aui:input name='subParent' type='hidden' inlineField="true" value='<%= (new Long(institutionId)).toString() %>'/>
+					<aui:input name='subInstitutionParentId' type='hidden' inlineField="true" value='<%= institution.getPrimaryKey() %>'/>
 					
 					<aui:button type="submit" value="Add"></aui:button>
 				</aui:fieldset>
@@ -381,8 +381,8 @@ deltaConfigurable="true">
 
         			<liferay-ui:search-container-column-text name="Institution" >
 	        			<portlet:actionURL name="deleteSubInstitution" var="deleteSubInstitutionURL">
-		 					<portlet:param name="innerListInstitutionId" value='<%= (new Long(subInstitution.getInstitutionId())).toString() %>' />
-		 					<portlet:param name="institutionId" value='<%= (new Long(institutionId)).toString() %>' />
+		 					<portlet:param name="innerListInstitutionId" value='<%= (new Long(subInstitution.getPrimaryKey())).toString() %>' />
+		 					<portlet:param name="innerListInstitutionParentId" value='<%= (new Long(institution.getPrimaryKey())).toString() %>' />
 							<portlet:param name="backURL" value="<%=String.valueOf(portletURL) %>"/>
 						</portlet:actionURL>
 						<aui:form action="<%= updateSubInstitutionURL %>" name="<portlet:namespace />fm">

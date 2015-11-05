@@ -62,7 +62,7 @@
 	<class name="de.uhh.l2g.plugins.model.impl.HostImpl" table="LG_Host">
 		<cache usage="read-write" />
 		<id name="hostId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property name="protocol" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="streamer" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -76,7 +76,7 @@
 	<class name="de.uhh.l2g.plugins.model.impl.InstitutionImpl" table="LG_Institution">
 		<cache usage="read-write" />
 		<id name="institutionId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property name="parentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -90,7 +90,7 @@
 	<class name="de.uhh.l2g.plugins.model.impl.Institution_HostImpl" table="LG_Institution_Host">
 		<cache usage="read-write" />
 		<id name="institutionHostId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property name="institutionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="hostId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

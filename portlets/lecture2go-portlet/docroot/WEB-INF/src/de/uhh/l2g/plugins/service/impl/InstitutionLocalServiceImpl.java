@@ -300,6 +300,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		institution.setGroupId(groupId);
 		institution.setCompanyId(companyId);
 		institution.setParentId(parentId);
+		institution.setTyp("tree1"); //there is no tree2 anymore
 		if (parentId > 0 && parentId < Long.MAX_VALUE) institution.setLevel(parent.getLevel()+1);
 		else institution.setLevel(0);
 		institution.setSort(updateSort(institution,sort));

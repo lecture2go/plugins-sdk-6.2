@@ -138,7 +138,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 			String name = ParamUtil.getString(request, "subInstitution");
 			long hostId = 0;
-			long parentId = ParamUtil.getLong(request, "subParent");
+			long parentId = ParamUtil.getLong(request, "subInstitutionParentId");
 			int sort = ParamUtil.getInteger(request, "subInstitutionOrder");
 
 
@@ -281,8 +281,10 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 		public void deleteSubInstitution (ActionRequest request, ActionResponse response) {
 
-		    long institutionId = ParamUtil.getLong(request, "innerListinstitutionId");
-		    long parentId = ParamUtil.getLong(request, "parentId");
+		    long institutionId = ParamUtil.getLong(request, "innerListInstitutionId");
+		    long parentId = ParamUtil.getLong(request, "innerListInstitutionParentId");
+		    
+		    System.out.println("Try to remove "+ institutionId +" in "+parentId);
 
 		    try {
 
