@@ -42,7 +42,7 @@
 	<class name="de.uhh.l2g.plugins.model.impl.CoordinatorImpl" table="LG_Coordinator">
 		<cache usage="read-write" />
 		<id name="coordinatorId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property name="institutionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="officeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -188,7 +188,7 @@
 	<class name="de.uhh.l2g.plugins.model.impl.ProducerImpl" table="LG_Producer">
 		<cache usage="read-write" />
 		<id name="producerId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property name="idNum" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="homeDir" type="com.liferay.portal.dao.orm.hibernate.StringType" />
