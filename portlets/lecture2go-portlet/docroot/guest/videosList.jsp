@@ -40,14 +40,14 @@
 	ArrayList<Long> lectureseriesIds = new ArrayList<Long>();
 	ArrayList<Long> videoIds = new ArrayList<Long>();
 	long id;
-	for (Lectureseries lecture : reqLectureseries) {
+ 	for (Lectureseries lecture : reqLectureseries) {
 		id = lecture.getLectureseriesId();
 		if (lecture.getLatestOpenAccessVideoId() < 0) {
 			videoIds.add(id);
 		} else {
 			lectureseriesIds.add(id);
 		}
-	}
+	} 
 	
 	// get the institutions, parentinstitutuons, terms, categories and creators which are part of the dataset. those are displayed so the user can do further filtering
 	List<Institution> presentParentInstitutions 	= new ArrayList<Institution>();
@@ -58,13 +58,13 @@
 
 	// if a filter is selected, only show the selected one else show all
 	// in the first case only the selected one is shown because some filtered data may have multiple entries for the filter e.g. multiple creators
-	if (hasParentInstitutionFiltered) {
+ 	if (hasParentInstitutionFiltered) {
 		presentParentInstitutions.add(InstitutionLocalServiceUtil.getById(parentInstitutionId));
 	} else {
 		presentParentInstitutions = InstitutionLocalServiceUtil.getInstitutionsFromLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds);
 	} 
 	
-	if (hasParentInstitutionFiltered && hasInstitutionFiltered) {
+ 	if (hasParentInstitutionFiltered && hasInstitutionFiltered) {
 		presentInstitutions.add(InstitutionLocalServiceUtil.getById(institutionId));
 	} else {
 		presentInstitutions = InstitutionLocalServiceUtil.getInstitutionsFromLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds, parentInstitutionId);
@@ -81,12 +81,12 @@
 	} else {
 		presentCategories = CategoryLocalServiceUtil.getCategoriesFromLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds);
 	}
-	
+	/*
 	if (hasCreatorFiltered) {
 		presentCreators.add(CreatorLocalServiceUtil.getCreator(creatorId));
 	} else {
 		presentCreators = CreatorLocalServiceUtil.getCreatorsFromLectureseriesIdsAndVideoIds(lectureseriesIds,videoIds);
-	}
+	} */
 
 	List<Lectureseries> tempLectureseriesList = new ArrayList();
 	
@@ -277,7 +277,7 @@
        </aui:fieldset>
 </aui:form>
 		
-<liferay-ui:search-container emptyResultsMessage="no-lectureseries-found" delta="5" iteratorURL="<%=portletURL %>">
+<liferay-ui:search-container emptyResultsMessage="no-lectureseries-found" delta="15" iteratorURL="<%=portletURL %>">
 	<liferay-ui:search-container-results>
 		<%
 			tempLectureseriesList = reqLectureseries;
