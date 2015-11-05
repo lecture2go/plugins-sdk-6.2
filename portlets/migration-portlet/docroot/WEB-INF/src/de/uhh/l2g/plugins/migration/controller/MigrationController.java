@@ -1958,16 +1958,16 @@ public class MigrationController {
     }  
     
     
-    private void migrateProducer_Lectureseries(LegacyProducerLectureseries legacyProducerLectureseries,  long groupId) throws SystemException {
+    private void migrateProducer_Lectureseries(LegacyProducerLectureseries legacyProducerLectureseries,  long companyId) throws SystemException {
     	Producer_Lectureseries producerLectureseries = null;
     	try {
     		producerLectureseries = Producer_LectureseriesLocalServiceUtil.getProducer_Lectureseries(legacyProducerLectureseries.getId());
-    		producerLectureseries = ProducerLectureseriesMapper.mapProducerLectureseries(legacyProducerLectureseries, producerLectureseries);
+    		producerLectureseries = ProducerLectureseriesMapper.mapProducerLectureseries(legacyProducerLectureseries, producerLectureseries, companyId);
 			log.debug("Producer_Lectureseries UPDATE:" +producerLectureseries);
 			Producer_LectureseriesLocalServiceUtil.updateProducer_Lectureseries(producerLectureseries);
 		} catch (Exception e) {
 			producerLectureseries = Producer_LectureseriesLocalServiceUtil.createProducer_Lectureseries(legacyProducerLectureseries.getId());
-			producerLectureseries = ProducerLectureseriesMapper.mapProducerLectureseries(legacyProducerLectureseries, producerLectureseries);
+			producerLectureseries = ProducerLectureseriesMapper.mapProducerLectureseries(legacyProducerLectureseries, producerLectureseries, companyId);
 			log.debug("Producer_Lectureseries NEW:" +producerLectureseries);
 			Producer_LectureseriesLocalServiceUtil.addProducer_Lectureseries(producerLectureseries);
 		}
