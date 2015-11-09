@@ -136,10 +136,10 @@ public class AdminInstitutionManagement extends MVCPortlet {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 		         Institution.class.getName(), request);
 
-			String name = ParamUtil.getString(request, "institution");
-			long hostId = ParamUtil.getLong(request, "serverselect");
-			long parentId = ParamUtil.getLong(request, "parent");
-			int sort = ParamUtil.getInteger(request, "order");
+			String name = ParamUtil.getString(request, "subInstitution");
+			long hostId = 0;
+			long parentId = ParamUtil.getLong(request, "subInstitutionParentId");
+			int sort = ParamUtil.getInteger(request, "subInstitutionOrder");
 
 
 	         InstitutionLocalServiceUtil.addInstitution(
@@ -281,8 +281,10 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 		public void deleteSubInstitution (ActionRequest request, ActionResponse response) {
 
-		    long institutionId = ParamUtil.getLong(request, "innerListinstitutionId");
-		    long parentId = ParamUtil.getLong(request, "parentId");
+		    long institutionId = ParamUtil.getLong(request, "innerListInstitutionId");
+		    long parentId = ParamUtil.getLong(request, "innerListInstitutionParentId");
+		    
+		    System.out.println("Try to remove "+ institutionId +" in "+parentId);
 
 		    try {
 

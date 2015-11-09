@@ -283,6 +283,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 	public Institution addInstitution(String name, long hostId, long parentId, int sort, ServiceContext serviceContext) throws SystemException, PortalException {
 
 		long groupId = serviceContext.getScopeGroupId();
+		long companyId = serviceContext.getCompanyId();
 		long userId = serviceContext.getUserId();
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -297,7 +298,9 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 
 		institution.setName(name);
 		institution.setGroupId(groupId);
+		institution.setCompanyId(companyId);
 		institution.setParentId(parentId);
+		institution.setTyp("tree1"); //there is no tree2 anymore
 		if (parentId > 0 && parentId < Long.MAX_VALUE) institution.setLevel(parent.getLevel()+1);
 		else institution.setLevel(0);
 		institution.setSort(updateSort(institution,sort));
@@ -310,7 +313,10 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		System.out.println(institutionId+" "+institution.getPrimaryKey() +" "+institution.getInstitutionId());
 		System.out.println(institutionId+" "+hostId);
 
-		Institution_HostLocalServiceUtil.addEntry(institutionId, hostId, serviceContext);
+		//only add if set
+		if (hostId > 0){
+			Institution_HostLocalServiceUtil.addEntry(institutionId, hostId, serviceContext);
+		}
 
 		resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
 			       Institution.class.getName(), institutionId, false, true, true);
@@ -322,6 +328,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		       ServiceContext serviceContext) throws PortalException,
 		       SystemException {
 		    long groupId = serviceContext.getScopeGroupId();
+		    long companyId = serviceContext.getCompanyId();
 		    long userId = serviceContext.getUserId();
 
 		    User user = userPersistence.findByPrimaryKey(userId);
@@ -333,6 +340,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 
 		    institution.setName(name);
 			institution.setGroupId(groupId);
+			institution.setCompanyId(companyId);
 
 			institution.setSort(updateSort(institution,sort));
 
@@ -346,7 +354,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 			
 			//Refresh LinkTable Resources if existing
 			try{
-				Host host = Institution_HostLocalServiceUtil.getByGroupIdAndInstitutionId(groupId, institutionId);
+				Host host = Institution_HostLocalServiceUtil.getByGroupIdAndInstitutionId(companyId, groupId, institutionId);
 				//Dummy Call: Actually never change Host 
 				Institution_HostLocalServiceUtil.updateEntry(institutionId, host.getPrimaryKey(), serviceContext);
 			} catch (Exception e) {

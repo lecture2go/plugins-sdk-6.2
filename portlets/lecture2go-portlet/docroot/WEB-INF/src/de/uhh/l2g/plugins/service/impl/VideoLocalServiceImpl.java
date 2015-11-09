@@ -319,14 +319,14 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		String preff="";
 		if(objectVideo.getOpenAccess()==1)preff=objectVideo.getPreffix();
 		else preff=objectVideo.getSPreffix();
-		String downMp3Link = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+l2go_path+"/"+preff+".mp3";
-		String downMp4Link = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+l2go_path+"/"+preff+".mp4";
-		String downM4vLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+l2go_path+"/"+preff+".m4v";
-		String downM4aLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+l2go_path+"/"+preff+".m4a";
-		String downWebmLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+l2go_path+"/"+preff+".webm";
-		String downPdfLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+l2go_path+"/"+preff+".pdf";
-		String downOggLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+l2go_path+"/"+preff+".ogg";
-		String downFlvLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+l2go_path+"/"+preff+".flv";
+		String downMp3Link = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+preff+".mp3";
+		String downMp4Link = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+preff+".mp4";
+		String downM4vLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+preff+".m4v";
+		String downM4aLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+preff+".m4a";
+		String downWebmLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+preff+".webm";
+		String downPdfLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+preff+".pdf";
+		String downOggLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+preff+".ogg";
+		String downFlvLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+preff+".flv";
 		//
 		objectVideo.setMp4DownloadLink(downMp4Link);
 		objectVideo.setMp3DownloadLink(downMp3Link);

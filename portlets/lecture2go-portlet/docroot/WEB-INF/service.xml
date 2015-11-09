@@ -60,7 +60,7 @@
         </finder>
     </entity>
     <entity name="Institution" local-service="true" remote-service="false">
-    	<column name="institutionId" type="long" primary="true" id-type="increment">
+    	<column name="institutionId" type="long" primary="true">
     	</column>
     	<column name="parentId" type="long"></column>
     	<column name="name" type="String"></column>
@@ -202,7 +202,7 @@
         </finder>
     </entity>
     <entity name="Host" local-service="true" remote-service="false">
-    	<column name="hostId" type="long" primary="true" id-type="increment">
+    	<column name="hostId" type="long" primary="true">
     	</column>
     	<column name="protocol" type="String"></column>
     	<column name="streamer" type="String"></column>
@@ -229,7 +229,7 @@
         </finder>
     </entity>
     <entity name="Institution_Host" local-service="true" remote-service="false">
-        <column name="institutionHostId" type="long" primary="true" id-type="increment"></column>
+        <column name="institutionHostId" type="long" primary="true"></column>
         <column name="institutionId" type="long"></column>
         <column name="hostId" type="long"></column>
         <column name="groupId" type="long"></column>
