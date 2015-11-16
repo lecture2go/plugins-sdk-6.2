@@ -17,6 +17,8 @@ public class ProducerMapper {
 		producer.setHomeDir(legacyProducer.getHomeDir());
 		producer.setHostId(legacyProducer.getHostId());
 		producer.setInstitutionId(legacyProducer.getFacilityId());
+		producer.setApproved(legacyProducer.getApproved());
+		producer.setNumberOfProductions(legacyProducer.getNumberOfProductions());
 		return producer;
 	} 
 
