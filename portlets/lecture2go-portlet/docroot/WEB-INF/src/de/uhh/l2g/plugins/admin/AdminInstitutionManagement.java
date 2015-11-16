@@ -50,6 +50,9 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 		    List<Institution_Host> institution_host = Institution_HostLocalServiceUtil.getByGroupId(groupId);
 		    
+		    HostLocalServiceUtil.updateCounter();
+		    Institution_HostLocalServiceUtil.updateCounter();
+		    
 		    //Add default host if empty or default entry does not exist
 		    defaultHostId = HostLocalServiceUtil.getDefaultHostId(companyId,groupId);
 		    System.out.println("Default Host: "+defaultHostId);
@@ -60,6 +63,8 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		    System.out.println("Default Institution: "+defaultInstitutionId);
 		    if (defaultInstitutionId == 0) {
 		    	defaultInstitutionId = InstitutionLocalServiceUtil.addDefaultInstitution(serviceContext).getInstitutionId();
+		    	
+		    	
 		    	
 			    //Add default Link if new institution has been added 
 		    	Institution_Host defaultInstitution_Host = Institution_HostLocalServiceUtil.addEntry(defaultInstitutionId, defaultHostId, serviceContext);
