@@ -358,6 +358,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		}
 		
 		if(resourceID.equals("updateMetadata")){
+			
 	 	    String title = ParamUtil.getString(resourceRequest, "title");
 			String language = ParamUtil.getString(resourceRequest, "language");
 			String tags = ParamUtil.getString(resourceRequest, "tags");
@@ -407,6 +408,7 @@ public class AdminVideoManagement extends MVCPortlet {
 						Institution in = new InstitutionImpl();
 						Lectureseries_Institution lectinst = l_i.next();
 						in = InstitutionLocalServiceUtil.getInstitution(lectinst.getInstitutionId());
+						tagCloudArrayString.add(in.getName());
 						Video_Institution vi = new Video_InstitutionImpl();
 						vi.setVideoId(video.getVideoId());
 						vi.setInstitutionId(lectinst.getInstitutionId());
@@ -427,6 +429,15 @@ public class AdminVideoManagement extends MVCPortlet {
 					//add lecture series parameter to tag cloud
 					tagCloudArrayString.add(newLect.getName());
 					tagCloudArrayString.add(newLect.getNumber());
+				}else{
+					List<Video_Institution> vinst = Video_InstitutionLocalServiceUtil.getByVideo(video.getVideoId());
+					ListIterator<Video_Institution> vinstItt = vinst.listIterator();
+					while(vinstItt.hasNext()){
+						Institution inst = InstitutionLocalServiceUtil.getById(vinstItt.next().getInstitutionId());
+						Institution parent = InstitutionLocalServiceUtil.getById(inst.getParentId());
+						tagCloudArrayString.add(inst.getName());
+						tagCloudArrayString.add(parent.getName());
+					}
 				}
 				//add category and term to tag cloud
 				//category
@@ -461,7 +472,17 @@ public class AdminVideoManagement extends MVCPortlet {
 					}
 				}
 				//update tag cloud for this video
-				TagcloudLocalServiceUtil.updateByObjectIdAndObjectClassType(tagCloudArrayString, video.getClass().getName(), video.getVideoId());
+				//clean tag clouds for this object
+				TagcloudLocalServiceUtil.deleteByObjectId(videoId);
+				TagcloudLocalServiceUtil.deleteByObjectId(oldLs.getLectureseriesId());
+				//
+				if(video.getLectureseriesId()>0){
+					//update or generate tag clouds for the new lecture
+					TagcloudLocalServiceUtil.updateByObjectIdAndObjectClassType(tagCloudArrayString, newLect.getClass().getName(), newLect.getLectureseriesId());
+				}else{
+					//update or generate tag cloud for video
+					TagcloudLocalServiceUtil.updateByObjectIdAndObjectClassType(tagCloudArrayString, video.getClass().getName(), video.getVideoId());
+				}
 				//set citation 
 				video.setCitation2go(citationAllowed);
 				//password
