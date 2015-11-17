@@ -32,6 +32,7 @@ import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
+import de.uhh.l2g.plugins.util.AutocompleteManager;
 
 public class OpenAccessVideos extends MVCPortlet {
 
@@ -46,6 +47,16 @@ public class OpenAccessVideos extends MVCPortlet {
 		if (request.getParameter("searchQuery") != null) {
 			searchQuery = request.getParameter("searchQuery");
 		} 
+		
+		AutocompleteManager acm = new AutocompleteManager();
+		try {
+			List<String> vl = acm.getAutocompleteResults(searchQuery);
+			int i =0;
+			i++;
+		} catch (SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		response.setRenderParameter("institutionId", institutionId+"");
 		response.setRenderParameter("parentInstitutionId", parentInstitutionId+"");

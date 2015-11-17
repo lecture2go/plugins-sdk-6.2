@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <custom-sql>
 
+    <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.findVideosBySearchWord">
+		<![CDATA[
+			SELECT DISTINCT LG_Video.* , LG_Lectureseries.name AS lectureseriesName, LG_Lectureseries.number_ AS lectureseriesNumber, LG_Creator.fullName AS creatorFullName
+			FROM LG_Video, LG_Metadata, LG_Lectureseries, LG_Institution, LG_Creator,  LG_Video_Creator
+			WHERE (
+				( 
+					LG_Video.openAccess=1 AND 
+			        LG_Video.metadataId = LG_Metadata.metadataId AND 
+			        LG_Video.lectureseriesId = LG_Lectureseries.lectureseriesId AND 
+			        LG_Video.rootInstitutionId=LG_Institution.institutionId AND
+			        LG_Video.videoId = LG_Video_Creator.videoId AND 
+			        LG_Creator.creatorId = LG_Video_Creator.creatorId
+				) 
+			    AND 
+			    ( 
+					( LG_Video.title LIKE ? ) OR 
+			        ( LG_Lectureseries.name LIKE ? ) OR 
+			        ( LG_Video.tags LIKE ? ) OR 
+			        ( LG_Lectureseries.number_ LIKE ? ) OR
+			        ( LG_Creator.fullName LIKE ? )
+				)
+			) 
+			ORDER BY LG_Video.generationDate DESC, LG_Lectureseries.name ASC
+		]]>
+    </sql>
+
     <sql id="de.uhh.l2g.plugins.service.persistence.InstitutionFinder.findAllSortedAsTree">
 		<![CDATA[
 			SELECT myNode.institutionId, myNode.parentId, myNode.name, myNode.typ, myNode.www, myNode.level, myNode.sort,
