@@ -270,12 +270,7 @@
 	<portlet:param name="jspPage" value="/guest/videosList.jsp" />
 </portlet:actionURL>		
 	
-<aui:form action="${filterBySearchQuery}">
-	<aui:fieldset>
-		<aui:input name="searchQuery" inlineField="true"/>
-		<aui:button type="submit" value="Search" ></aui:button>
-       </aui:fieldset>
-</aui:form>
+<p><%@ include file="/guest/includeSearchField.jsp" %></p>
 		
 <liferay-ui:search-container emptyResultsMessage="no-lectureseries-found" delta="15" iteratorURL="<%=portletURL %>">
 	<liferay-ui:search-container-results>
@@ -327,6 +322,10 @@
 
 <script type="text/javascript">
 $( document ).ready(function() {
+	//turn off autocomplete
+	$(document).on('focus', ':input', function() {
+	    $(this).attr('autocomplete', 'off');
+	});
 	// only the show the last terms
 	$("ul.terms > li").slice(<%=maxTerms%>).hide();
 	// show the remaining terms

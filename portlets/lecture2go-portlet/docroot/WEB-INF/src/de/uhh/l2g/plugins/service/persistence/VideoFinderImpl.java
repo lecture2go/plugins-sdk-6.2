@@ -31,7 +31,45 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 	public static final String RESET_LECTURESERIES_FOR_VIDEOS = VideoFinder.class.getName() + ".resetLectureseriesForVideos";
 	public static final String FIND_LATES_OPEN_ACCESS_VIDEO_FOR_LECTURESERIES = VideoFinder.class.getName() + ".findLatestOpenAccessVideoForlectureseries";
 	public static final String FIND_VIDEO_FOR_SECURE_URL = VideoFinder.class.getName() + ".findVideoForSecureUrl";
+	public static final String FIND_VIDEOS_BY_SEARCH_WORD = VideoFinder.class.getName() + ".findVideosBySearchWord";
 
+	public List<Video> findVideosBySearchWord(String word, int limit) {
+		word="%"+word+"%";
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(FIND_VIDEOS_BY_SEARCH_WORD);
+			SQLQuery q = session.createSQLQuery(sql);
+			q.addScalar("title", Type.STRING);
+			//custom fields
+			q.addScalar("lectureseriesName", Type.STRING);
+			q.addScalar("lectureseriesNumber", Type.STRING);
+			q.addScalar("creatorFullName", Type.STRING);
+			
+			q.setCacheable(false);
+			
+			QueryPos qPos = QueryPos.getInstance(q);
+			qPos.add(word);
+			qPos.add(word);
+			qPos.add(word);
+			qPos.add(word);
+			qPos.add(word);
+			
+			@SuppressWarnings("unchecked")
+			List <Object[]> l =  (List<Object[]>) QueryUtil.list(q, getDialect(), 0 , limit);
+			return assembleVideosSearchWord(l);
+		} catch (Exception e) {
+			try {
+				throw new SystemException(e);
+			} catch (SystemException se) {
+				se.printStackTrace();
+			}
+		} finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
 	public int unlinkLectureseriesFromVideos(Long lectureseriesId) {
 		Session session = null;
 		try {
@@ -140,6 +178,7 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 			q.addScalar("termId", Type.LONG);
 			q.addScalar("videoCreatorId", Type.LONG);
 			q.addScalar("tags", Type.STRING);
+			q.addScalar("password_", Type.STRING);
 			
 			q.setCacheable(false);
 			@SuppressWarnings("unchecked")
@@ -196,6 +235,21 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 			v.setTermId((Long)video[20]);
 			v.setVideoCreatorId((Long)video[21]);
 			v.setTags((String)video[22]);
+			v.setPassword((String)video[23]);
+			
+			vl.add(v);
+		}
+		return vl;
+	}
+	
+	private List<Video> assembleVideosSearchWord(List<Object[]> objectList){
+		List<Video> vl = new ArrayList<Video>();
+		for (Object[] video: objectList){
+			VideoImpl v = new VideoImpl();
+			v.setTitle((String)video[0]);
+			v.setLectureseriesName((String)video[1]);
+			v.setLectureseriesNumber((String)video[2]);
+			v.setCreatorFullName((String)video[3]);
 			
 			vl.add(v);
 		}
@@ -204,7 +258,7 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 	
 	private String sqlFilterForOpenAccessLectureseries(Long institutionId, Long institutionParentId, ArrayList<Long> termIds, List<Long> categoryIds, ArrayList<Long> creatorIds) {
 		// build query
-		String query =  "SELECT v.videoId, title, v.lectureseriesId, producerId, containerFormat, filename, resolution, duration, hostId, fileSize, generationDate, openAccess, downloadLink, metadataId, surl, hits, uploadDate, permittedToSegment, rootInstitutionId, citation2go, v.termId, v.videoCreatorId, tags ";
+		String query =  "SELECT v.videoId, title, v.lectureseriesId, producerId, containerFormat, filename, resolution, duration, hostId, fileSize, generationDate, openAccess, downloadLink, metadataId, surl, hits, uploadDate, permittedToSegment, rootInstitutionId, citation2go, v.termId, v.videoCreatorId, tags, password_ ";
 			   query += "FROM LG_Video v ";
 
 		if (institutionId > 0 || institutionParentId > 0) {
