@@ -13,7 +13,7 @@ import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 
 public class AutocompleteManager {
 
-	private int _autocompSearchLimit = 10;
+	private int _autocompSearchLimit = 100;
 
 
 	/** The dao bean factory. */
@@ -75,7 +75,7 @@ public class AutocompleteManager {
 					
 					}
 					/** Limit the number of result strings for ajax request to 10 */
-					if (resultList.size() >= _autocompSearchLimit) {
+					if (resultList.size() >= 7) {
 						break;
 					}
 				}

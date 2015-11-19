@@ -1,3 +1,11 @@
 #wrapper {
     background: none repeat scroll 0 0 #faf9f9;
 }
+
+.yui3-aclist-content {
+    width: 312px;
+}
+
+input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
+    width: 300px;
+}

@@ -1,15 +1,25 @@
 package de.uhh.l2g.plugins.guest;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 import javax.servlet.http.Cookie;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.model.User;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import de.uhh.l2g.plugins.NoSuchLicenseException;
@@ -36,6 +46,38 @@ import de.uhh.l2g.plugins.util.AutocompleteManager;
 
 public class OpenAccessVideos extends MVCPortlet {
 
+	@Override
+	public void serveResource( ResourceRequest resourceRequest, ResourceResponse resourceResponse ) throws IOException, PortletException {
+		String cmd = ParamUtil.getString(resourceRequest, Constants.CMD);
+		if (cmd.equals("get_search_words")) {
+			getSearchWords(resourceRequest, resourceResponse);
+		}
+	}
+	
+	private void getSearchWords(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws IOException, PortletException {
+		String searchWord = "";
+		String w = ParamUtil.getString(resourceRequest, "searchWord");
+		if(w.length()>=3)searchWord=w;
+		
+		AutocompleteManager acm = new AutocompleteManager();
+		List<String> arrStr = new ArrayList<String>();
+		
+		JSONArray wordsJSONArray = JSONFactoryUtil.createJSONArray();
+		JSONObject strJSON = null;
+		try {
+			arrStr = acm.getAutocompleteResults(searchWord);
+			for (int i=0; i<arrStr.size();i++) {
+				strJSON = JSONFactoryUtil.createJSONObject();
+				strJSON.put("word", arrStr.get(i));
+				wordsJSONArray.put(strJSON);
+			}
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		PrintWriter out = resourceResponse.getWriter();
+		out.println(wordsJSONArray);
+	}
+	
 	public void addFilter(ActionRequest request, ActionResponse response){
 		String jspPage = request.getParameter("jspPage");
 		Long institutionId = new Long(request.getParameter("institutionId"));
@@ -47,16 +89,6 @@ public class OpenAccessVideos extends MVCPortlet {
 		if (request.getParameter("searchQuery") != null) {
 			searchQuery = request.getParameter("searchQuery");
 		} 
-		
-		AutocompleteManager acm = new AutocompleteManager();
-		try {
-			List<String> vl = acm.getAutocompleteResults(searchQuery);
-			int i =0;
-			i++;
-		} catch (SystemException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		response.setRenderParameter("institutionId", institutionId+"");
 		response.setRenderParameter("parentInstitutionId", parentInstitutionId+"");

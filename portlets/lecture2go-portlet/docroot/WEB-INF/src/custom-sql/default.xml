@@ -23,7 +23,7 @@
 			        ( LG_Creator.fullName LIKE ? )
 				)
 			) 
-			ORDER BY LG_Video.generationDate DESC, LG_Lectureseries.name ASC
+			ORDER BY LG_Video.generationDate DESC
 		]]>
     </sql>
 
