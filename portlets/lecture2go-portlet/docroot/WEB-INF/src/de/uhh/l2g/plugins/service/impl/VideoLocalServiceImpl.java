@@ -29,8 +29,6 @@ import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.ServiceContext;
 
 import de.uhh.l2g.plugins.NoSuchInstitutionException;
 import de.uhh.l2g.plugins.NoSuchLectureseriesException;
@@ -319,14 +317,14 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		String preff="";
 		if(objectVideo.getOpenAccess()==1)preff=objectVideo.getPreffix();
 		else preff=objectVideo.getSPreffix();
-		String downMp3Link = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+l2go_path+"/"+preff+".mp3";
-		String downMp4Link = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+l2go_path+"/"+preff+".mp4";
-		String downM4vLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+l2go_path+"/"+preff+".m4v";
-		String downM4aLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+l2go_path+"/"+preff+".m4a";
-		String downWebmLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+l2go_path+"/"+preff+".webm";
-		String downPdfLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+l2go_path+"/"+preff+".pdf";
-		String downOggLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+l2go_path+"/"+preff+".ogg";
-		String downFlvLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+l2go_path+"/"+preff+".flv";
+		String downMp3Link = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+preff+".mp3";
+		String downMp4Link = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+preff+".mp4";
+		String downM4vLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+preff+".m4v";
+		String downM4aLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+preff+".m4a";
+		String downWebmLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+preff+".webm";
+		String downPdfLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+preff+".pdf";
+		String downOggLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+preff+".ogg";
+		String downFlvLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+preff+".flv";
 		//
 		objectVideo.setMp4DownloadLink(downMp4Link);
 		objectVideo.setMp3DownloadLink(downMp3Link);
@@ -576,5 +574,11 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		return VideoFinderUtil.findVideoBySerureUrl(surl);
 	}
 	
+	public List<Video> getAll() throws SystemException{
+		return videoPersistence.findAll();
+	}
 
+	public List<Video> getBySearchWord(String word, int limit) throws SystemException{
+		return VideoFinderUtil.findVideosBySearchWord(word, limit);
+	}	
 }

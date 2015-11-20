@@ -491,6 +491,7 @@
 		<attributes>
 			<transient name="accessPermitted" />
 			<transient name="bitrate" />
+			<transient name="creatorFullName" />
 			<transient name="creators" />
 			<transient name="date" />
 			<transient name="embedHtml5" />
@@ -503,6 +504,8 @@
 			<transient name="image" />
 			<transient name="imageMedium" />
 			<transient name="imageSmall" />
+			<transient name="lectureseriesName" />
+			<transient name="lectureseriesNumber" />
 			<transient name="lectureseriesUrl" />
 			<transient name="m4aDownloadLink" />
 			<transient name="m4aFile" />

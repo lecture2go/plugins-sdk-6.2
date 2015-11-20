@@ -59,6 +59,11 @@ public class LectureseriesLocalServiceImpl extends LectureseriesLocalServiceBase
 		return l;
 	}
 	
+
+	public List<Lectureseries> getAll() throws SystemException{
+		return lectureseriesPersistence.findAll();
+	}
+	
 	public List<Lectureseries> getAllLectureseriesWhithOpenaccessVideos(){
 		return LectureseriesFinderUtil.findAllLectureseriesWhithOpenaccessVideos();
 	}
