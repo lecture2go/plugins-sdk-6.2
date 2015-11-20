@@ -16,6 +16,12 @@ package de.uhh.l2g.plugins.service.impl;
 
 import java.util.List;
 
+import com.liferay.counter.model.Counter;
+import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -30,11 +36,14 @@ import de.uhh.l2g.plugins.HostStreamerException;
 import de.uhh.l2g.plugins.HostStreamingServerTemplateException;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
+import de.uhh.l2g.plugins.service.ClpSerializer;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
+import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.HostLocalServiceBaseImpl;
 
 import java.util.List;
+
 import de.uhh.l2g.plugins.service.persistence.HostUtil;
 
 /**
@@ -102,7 +111,7 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 
 	
 	public long getDefaultHostId(long companyId, long groupId) throws SystemException{
-		System.out.println(companyId +" "+groupId);
+		//System.out.println(companyId +" "+groupId);
 		Host defaultHost = hostPersistence.fetchByDefaultHost(companyId, groupId, false);
 		if (defaultHost == null) return 0;
 		else return defaultHost.getPrimaryKey();
@@ -162,7 +171,7 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
     	return defaultHost;
 	}
 
-	public Host addHost(String name, String streamLocation, long streamingServerTemplateId,
+	public Host addHost(String name, String streamLocation, 
 			String protocol, String serverRoot, int port,
 			ServiceContext serviceContext) throws SystemException, PortalException {
 
@@ -196,6 +205,40 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 
 		return host;
 	}
+	
+		public Host updateHost(long hostId, String name, String streamLocation, 
+			String protocol, int port,
+			ServiceContext serviceContext) throws SystemException, PortalException {
+
+		long groupId = serviceContext.getScopeGroupId();
+		long companyId = serviceContext.getCompanyId();
+		long userId = serviceContext.getUserId();
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		validate(name,streamLocation);
+
+		Host host = getHost(hostId);
+
+		host.setName(name);
+		host.setGroupId(groupId);
+		host.setCompanyId(companyId);
+//		host.setStreamingServerTemplateId(streamingServerTemplateId);
+		host.setStreamer(streamLocation);
+		host.setProtocol(protocol);
+		//host.setServerRoot(serverRoot);
+		host.setPort(port);
+		host.setExpandoBridgeAttributes(serviceContext);
+
+		hostPersistence.update(host);
+		
+	    resourceLocalService.updateResources(user.getCompanyId(), groupId,
+		         Host.class.getName(), hostId,
+		         serviceContext.getGroupPermissions(),
+		         serviceContext.getGuestPermissions());
+
+		return host;
+	}
 
 	   public Host deleteHost(long hostId, ServiceContext serviceContext)
 		        throws PortalException, SystemException {
@@ -211,5 +254,26 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 		        return host;
 
 		    }
-
+	   
+	   public Host updateCounter() throws SystemException, PortalException {
+		   Counter counter;
+	   			// Initialize counter with a default value liferay suggests
+				CounterLocalServiceUtil.increment(Host.class.getName());
+				counter = CounterLocalServiceUtil.getCounter(Host.class.getName());
+	   
+				//Retrieve actual table data
+				ClassLoader classLoader = (ClassLoader)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),"portletClassLoader");    		
+				DynamicQuery query = DynamicQueryFactoryUtil.forClass(Host.class,classLoader).addOrder(OrderFactoryUtil.desc("hostId"));
+				query.setLimit(0,1);
+				List<Host> hosts = HostLocalServiceUtil.dynamicQuery(query);
+				Host host = hosts.get(0);
+				
+				//write Counter
+				if (host != null) counter.setCurrentId(host.getHostId() + 1);
+				CounterLocalServiceUtil.updateCounter(counter);
+				
+				return host;
+					
+		   
+	   }
 }

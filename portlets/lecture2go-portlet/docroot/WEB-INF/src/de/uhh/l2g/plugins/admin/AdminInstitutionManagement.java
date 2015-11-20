@@ -50,6 +50,10 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 		    List<Institution_Host> institution_host = Institution_HostLocalServiceUtil.getByGroupId(groupId);
 		    
+		    HostLocalServiceUtil.updateCounter();
+		    Institution_HostLocalServiceUtil.updateCounter();
+		    InstitutionLocalServiceUtil.updateCounter();
+		    
 		    //Add default host if empty or default entry does not exist
 		    defaultHostId = HostLocalServiceUtil.getDefaultHostId(companyId,groupId);
 		    System.out.println("Default Host: "+defaultHostId);
@@ -60,6 +64,8 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		    System.out.println("Default Institution: "+defaultInstitutionId);
 		    if (defaultInstitutionId == 0) {
 		    	defaultInstitutionId = InstitutionLocalServiceUtil.addDefaultInstitution(serviceContext).getInstitutionId();
+		    	
+		    	
 		    	
 			    //Add default Link if new institution has been added 
 		    	Institution_Host defaultInstitution_Host = Institution_HostLocalServiceUtil.addEntry(defaultInstitutionId, defaultHostId, serviceContext);
@@ -77,8 +83,8 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		    	institutionId = institutions.get(0).getInstitutionId();
 	        }
 		    
-		    System.out.println(institutionId+" "+groupId+" "+institutions.toString());
-		    System.out.println(hostId+" "+groupId+" "+host.toString());
+		    //System.out.println(institutionId+" "+groupId+" "+institutions.toString());
+		    //System.out.println(hostId+" "+groupId+" "+host.toString());
 
 		    //System.out.println(StreamingServerTemplateLocalServiceUtil.getDefaultServersByGroupId(groupId));
 		    renderRequest.setAttribute("institutionId", institutionId);
@@ -111,7 +117,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 	         InstitutionLocalServiceUtil.addInstitution(
 	              name, hostId, parentId, sort, serviceContext);
 
-	         SessionMessages.add(request, "Institution entry added");
+	         SessionMessages.add(request, "request_processed", "institution-entry-added");
 
 	        // response.setRenderParameter("institutionId", Long.toString(institutionId));
 
@@ -145,7 +151,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 	         InstitutionLocalServiceUtil.addInstitution(
 	              name, hostId, parentId, sort, serviceContext);
 
-	         SessionMessages.add(request, "Subinstitution entry added");
+	         SessionMessages.add(request, "request_processed", "subinstitution-entry-added");
 
 	        // response.setRenderParameter("institutionId", Long.toString(institutionId));
 
@@ -170,12 +176,12 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		String name = ParamUtil.getString(request, "rootInstitution");
 		long institutionId = ParamUtil.getLong(request, "rootInstitutionId");
 		//long selectedInstitutionId = ParamUtil.getLong(request, "selectedInstitutionId");
-		System.out.println("Root: "+ institutionId);
+		//System.out.println("Root: "+ institutionId);
 		try {
 			InstitutionLocalServiceUtil.updateInstitution(
 					institutionId, name, 1, serviceContext);
 
-			SessionMessages.add(request, "Institution entry updated");
+			SessionMessages.add(request,"request_processed", "root-institution-entry-updated");
 
 			// response.setRenderParameter("mvcPath",
 		     //         "/admin/institutionList.jsp");
@@ -201,12 +207,12 @@ public class AdminInstitutionManagement extends MVCPortlet {
 			long institutionId = ParamUtil.getLong(request, "outerListInstitutionId");
 			int sort = ParamUtil.getInteger(request, "outerListOrder");
 			//long selectedInstitutionId = ParamUtil.getLong(request, "selectedInstitutionId");
-			System.out.println(institutionId);
+			//System.out.println(institutionId);
 			try {
 				InstitutionLocalServiceUtil.updateInstitution(
 						institutionId, name, sort, serviceContext);
 
-				SessionMessages.add(request, "Institution entry updated");
+				SessionMessages.add(request, "request_processed", "institution-entry-updated");
 
 				// response.setRenderParameter("mvcPath",
 			     //         "/admin/institutionList.jsp");
@@ -233,13 +239,13 @@ public class AdminInstitutionManagement extends MVCPortlet {
 			long institutionId = ParamUtil.getLong(request, "innerListInstitutionId");
 			int sort = ParamUtil.getInteger(request, "innerListOrder");
 			//long selectedInstitutionId = ParamUtil.getLong(request, "selectedInstitutionId");
-			System.out.println(institutionId);
+			//System.out.println(institutionId);
 			try {
 				InstitutionLocalServiceUtil.updateInstitution(
 						institutionId, name, sort, serviceContext);
 
-				SessionMessages.add(request, "Institution entry updated");
-
+				SessionMessages.add(request, "request_processed", "subinstitution-entry-updated");
+			
 				// response.setRenderParameter("mvcPath",
 			     //         "/admin/institutionList.jsp");
 
@@ -258,9 +264,9 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		public void deleteInstitution (ActionRequest request, ActionResponse response) {
 
 		    long institutionId = ParamUtil.getLong(request, "outerListInstitutionId");
-		    long selectedInstitutionId = ParamUtil.getLong(request, "institutionId");
+		   // long selectedInstitutionId = ParamUtil.getLong(request, "institutionId");
 
-		    System.out.println("Delete "+institutionId);
+		    //System.out.println("Delete "+institutionId);
 		    try {
 
 		       ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -270,7 +276,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 		       InstitutionLocalServiceUtil.deleteInstitution(institutionId, serviceContext);
 		       
-		       SessionMessages.add(request, "Institution entry deleted");
+		       SessionMessages.add(request, "request_processed", "institution-entry-deleted");
 
 		    } catch (Exception e) {
 		    	 System.out.println(e.getClass().getName());
@@ -284,7 +290,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		    long institutionId = ParamUtil.getLong(request, "innerListInstitutionId");
 		    long parentId = ParamUtil.getLong(request, "innerListInstitutionParentId");
 		    
-		    System.out.println("Try to remove "+ institutionId +" in "+parentId);
+		    //System.out.println("Try to remove "+ institutionId +" in "+parentId);
 
 		    try {
 
@@ -295,7 +301,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 		       InstitutionLocalServiceUtil.deleteInstitution(institutionId, serviceContext);
 		       
-		       SessionMessages.add(request, "Sub Institution entry deleted");
+		       SessionMessages.add(request, "request_processed", "subnstitution-entry-deleted");
 
 		    } catch (Exception e) {
 		    	  System.out.println(e.getClass().getName());
@@ -304,9 +310,9 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		    }
 		}
 
-		public void deleteHost (ActionRequest request, ActionResponse response) {
+		public void deleteStreamingServer (ActionRequest request, ActionResponse response) {
 
-		    long hostId = ParamUtil.getLong(request, "hostId");
+		    long hostId = ParamUtil.getLong(request, "curStreamingServerId");
 
 		    try {
 
@@ -316,6 +322,9 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		                    response.setRenderParameter("hostId", Long.toString(hostId));
 
 		       HostLocalServiceUtil.deleteHost(hostId, serviceContext);
+		       
+		       SessionMessages.add(request, "request_processed", "streamer-entry-deleted");
+
 
 		    } catch (Exception e) {
 		    	  System.out.println(e.getClass().getName());
@@ -329,17 +338,53 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				Institution.class.getName(), request);
+				Host.class.getName(), request);
 
-		String name = ParamUtil.getString(request, "institution");
-		long hostId = ParamUtil.getLong(request, "serverselect");
-		long parent = ParamUtil.getLong(request, "parent");
+		String name = ParamUtil.getString(request, "name");
+		String ip = ParamUtil.getString(request, "ip");
+		String protocol = ParamUtil.getString(request, "protocol");
+		String serverRoot = ParamUtil.getString(request, "serverroot");
+		int port = ParamUtil.getInteger(request, "port");
 
 		try {
-			InstitutionLocalServiceUtil.addInstitution(
-					name, hostId, parent, 0, serviceContext);
+			
+			HostLocalServiceUtil.addHost(name, ip, protocol, serverRoot, port, serviceContext);
+			
+			SessionMessages.add(request, "request_processed", "streamer-entry-added");
 
-			SessionMessages.add(request, "entryAdded");
+
+			// response.setRenderParameter("institutionId",
+			//      Long.toString(institutionId));
+
+		} catch (Exception e) {
+        SessionErrors.add(request, e.getClass().getName());
+        System.out.println(e.getClass().getName());
+        e.printStackTrace();
+        PortalUtil.copyRequestParameters(request, response);
+
+         response.setRenderParameter("mvcPath",
+              "/admin/institutionList.jsp");
+       }
+
+
+	}
+		public void updateStreamingServer(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
+
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				Host.class.getName(), request);
+		
+
+		String name = ParamUtil.getString(request, "curStreamingServerName");
+		String ip = ParamUtil.getString(request, "curStreamingServerIP");
+		int port = ParamUtil.getInteger(request, "curStreamingServerPort");
+		long hostId = ParamUtil.getLong(request, "curStreamingServerId");
+		String protocol = ParamUtil.getString(request, "curStreamingServerProtocol");
+
+		try {
+			HostLocalServiceUtil.updateHost(hostId, name, ip, protocol, port, serviceContext);
+
+			SessionMessages.add(request, "request_processed", "streamer-entry-updated");
 
 			// response.setRenderParameter("institutionId",
 			//      Long.toString(institutionId));
@@ -357,7 +402,8 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 	}
 
-public void viewStreamingServerList(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
+
+/** public void viewStreamingServerList(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
 
 
 	ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -371,7 +417,8 @@ public void viewStreamingServerList(ActionRequest request, ActionResponse respon
 		InstitutionLocalServiceUtil.addInstitution(
 				name, hostId, parent, 0, serviceContext);
 
-         SessionMessages.add(request, "entryAdded");
+		SessionMessages.add(request, "request_processed", "subnstitution-entry-deleted");
+
 
         // response.setRenderParameter("institutionId",
         //      Long.toString(institutionId));
@@ -380,13 +427,12 @@ public void viewStreamingServerList(ActionRequest request, ActionResponse respon
          SessionErrors.add(request, e.getClass().getName());
          System.out.println(e.getClass().getName());
          e.printStackTrace();
-                            PortalUtil.copyRequestParameters(request, response);
+         PortalUtil.copyRequestParameters(request, response);
 
          response.setRenderParameter("mvcPath",
               "/admin/institutionList.jsp");
        }
 
 
-}
-
+	}*/
 }

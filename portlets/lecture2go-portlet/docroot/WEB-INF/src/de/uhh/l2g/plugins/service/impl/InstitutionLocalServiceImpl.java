@@ -19,6 +19,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.liferay.counter.model.Counter;
+import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -31,6 +37,7 @@ import de.uhh.l2g.plugins.InstitutionNameException;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Institution_Host;
+import de.uhh.l2g.plugins.service.ClpSerializer;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.InstitutionLocalServiceBaseImpl;
@@ -181,7 +188,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		else{ // sort Elements newpos <= 1 => shift all, newpos > max attach at back
 			List<Institution> subtree = InstitutionLocalServiceUtil.getByGroupIdAndParent(inst.getGroupId(), inst.getParentId());
 
-			//if (newpos > 0) curPos = 1;
+			//if (newpos == 0 ) newpos = subElements+1;
 			int increment = 0;
 			for (Institution subInstitution: subtree){
 				 if (newpos <= curPos && increment == 0){ //insert new Institution here
@@ -220,11 +227,12 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 
 		// There is nothing to reorder if number of children is smaller 1   
 		int startPos = 1;
-		if (subElements < 1) { // sort Elements newpos <= 1 => shift all
+		if (subElements > 1) { // sort Elements newpos <= 1 => shift all
 			List<Institution> subtree = InstitutionLocalServiceUtil.getByGroupIdAndParent(inst.getGroupId(), inst.getPrimaryKey());
 
 			int increment = 0;
 			for (Institution subInstitution: subtree){
+				//System.out.println("Reorder: "+startPos + increment);
 				 subInstitution.setSort(startPos + increment);
 				 institutionPersistence.update(subInstitution);
 				 increment++;
@@ -303,6 +311,8 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		institution.setTyp("tree1"); //there is no tree2 anymore
 		if (parentId > 0 && parentId < Long.MAX_VALUE) institution.setLevel(parent.getLevel()+1);
 		else institution.setLevel(0);
+		
+		if(sort == 0) sort = 1;
 		institution.setSort(updateSort(institution,sort));
 
 		institution.setExpandoBridgeAttributes(serviceContext);
@@ -310,8 +320,8 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		institutionPersistence.update(institution);
 
 
-		System.out.println(institutionId+" "+institution.getPrimaryKey() +" "+institution.getInstitutionId());
-		System.out.println(institutionId+" "+hostId);
+		//System.out.println(institutionId+" "+institution.getPrimaryKey() +" "+institution.getInstitutionId());
+		//System.out.println(institutionId+" "+hostId);
 
 		//only add if set
 		if (hostId > 0){
@@ -342,6 +352,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 			institution.setGroupId(groupId);
 			institution.setCompanyId(companyId);
 
+			if(sort == 0) sort = 1;
 			institution.setSort(updateSort(institution,sort));
 
 			institution.setExpandoBridgeAttributes(serviceContext);
@@ -375,6 +386,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 
 
 		   		long groupId = serviceContext.getScopeGroupId();
+		   		long companyId = serviceContext.getCompanyId();
 		   		long userId = serviceContext.getUserId();
 
 		   		Institution institution = getInstitution(institutionId);
@@ -390,13 +402,13 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 			        institution = deleteInstitution(institutionId);
 
 			        //Remove anything from link table if there...			        
-			    	List<Institution_Host> linstitution_Host = Institution_HostLocalServiceUtil.getListByGroupIdAndInstitutionId(groupId, institutionId);
+			    	List<Institution_Host> linstitution_Host = Institution_HostLocalServiceUtil.getListByGroupIdAndInstitutionId(companyId, groupId, institutionId);
 
 					if (linstitution_Host.size() > 0){
 
 						for (Institution_Host link : linstitution_Host) {
 							long ihId = link.getPrimaryKey();
-							System.out.println(ihId);
+							//System.out.println(ihId);
 
 
 							Institution_HostLocalServiceUtil.deleteLinkById(ihId, serviceContext);
@@ -404,11 +416,35 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 						}
 					}
 		        }
-		        else { System.out.println("Could not delte "+ institution.getName());}
+		        else { 
+		        	System.out.println("Could not delte "+ institution.getName() + "because there are lectures, videos or other entity instances associated with this institution");
+		        	}
 
 		        return institution;
 
 		  }
+	
+	   public Institution updateCounter() throws SystemException, PortalException {
+		   Counter counter;
+	   			// Initialize counter with a default value liferay suggests
+				CounterLocalServiceUtil.increment(Institution.class.getName());
+				counter = CounterLocalServiceUtil.getCounter(Institution.class.getName());
+	   
+				//Retrieve actual table data
+				ClassLoader classLoader = (ClassLoader)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),"portletClassLoader");    		
+				DynamicQuery query = DynamicQueryFactoryUtil.forClass(Institution.class,classLoader).addOrder(OrderFactoryUtil.desc("institutionId"));
+				query.setLimit(0,1);
+				List<Institution> institutions = InstitutionLocalServiceUtil.dynamicQuery(query);
+				Institution institution = institutions.get(0);
+				
+				//write Counter
+				if (institution != null) counter.setCurrentId(institution.getInstitutionId() + 1);
+				CounterLocalServiceUtil.updateCounter(counter);
+				
+				return institution;
+					
+		   
+	   }
 
 
 }
