@@ -140,7 +140,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 	 * @param creatorId
 	 * @return a list with lectureseries which fit to the given filters
 	 */
-	public List<Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreator(Long institutionId, Long parentInstitutionId, Long termId, Long categoryId, Long creatorId, String searchQuery) {
+	public List<Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(Long institutionId, Long parentInstitutionId, Long termId, Long categoryId, Long creatorId, String searchQuery) {
 		boolean hasInstitution 			= (institutionId > 0);
 		boolean hasParentInstitution	= (parentInstitutionId > 0);
 		boolean hasTerm 				= (termId > 0);
@@ -339,7 +339,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 		query+= ") ";
 		query+= "AS a ";
 		query+= "GROUP BY lectureseriesId ";
-		query+= "ORDER BY a.latestVideoUploadDate";	
+		query+= "ORDER BY a.latestVideoUploadDate DESC";	
 		
 	    return query;
 	}
