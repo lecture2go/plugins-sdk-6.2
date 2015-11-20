@@ -27,6 +27,7 @@
 <portlet:actionURL name="updateStreamingServer" var="updateStreamingServerURL"></portlet:actionURL>
 <portlet:actionURL name="updateRootInstitution" var="updateRootInstitutionURL"></portlet:actionURL>
 
+
 <%
 //Variables required for Permissions
 
@@ -112,14 +113,14 @@ portletURL.setParameter("hostId", hostId+"");
 
 //Get Top Level institution of current scope
 Institution root = InstitutionLocalServiceUtil.getRootByGroupId(companyId, groupId);
-long rootId = root.getPrimaryKey();
+long rootId = root.getInstitutionId();
 
 //Get First Level institution List
 List<Institution> institutions = InstitutionLocalServiceUtil.getByGroupIdAndParent(groupId,rootId);
 
 //Get StreamingServers
 List<Host> hostList = HostLocalServiceUtil.getByGroupId(groupId);
-System.out.println(hostList.toString());
+//System.out.println(hostList.toString());
 //Get StreamingServer Defaults
 Host defaultHost = HostLocalServiceUtil.getByDefault(companyId, groupId);
 
@@ -162,6 +163,8 @@ Root Institution Permissions:
 	<liferay-ui:icon image="permissions" url="<%= rootentitypermissionsURL %>" />
 </c:if>
 
+<%--ADD INSTITUTION--%>
+
 <%-- Permission on Portlet Scope --%>
 <c:if test='<%= permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "ADD_INSTITUTIONS") %>'>
 	<liferay-ui:panel title="Add Institution" collapsible="true" id="institutionSettings"
@@ -197,6 +200,8 @@ Root Institution Permissions:
 	</liferay-ui:panel>
 </c:if>
 
+
+<%--STREAMING SERVER SETTINGS AND LIST --%>
 <c:if test='<%= permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "VIEW_HOSTS") %>'>
 
 	 <liferay-ui:panel title="Streaming Server Options" collapsible="true" id="streamingServerSettings"
@@ -205,12 +210,14 @@ Root Institution Permissions:
 			    	persistState="<%= true %>">
 					<c:if  test='<%= permissionChecker.hasPermission(groupId, institutionModel, groupId, "ADD_HOSTS") %>'>
 	      
-						<aui:form action="<%= updateStreamingServerURL %>" name="<portlet:namespace />fm" inlineLabel="true">
+						<aui:form action="<%= addStreamingServerURL %>" name="<portlet:namespace />fm" inlineLabel="true">
 						<aui:button-row>
 				 	    <aui:fieldset column="true">
 							<aui:input label="StreamingServer Name" name="name" required="true" inlineField="true"></aui:input>
 				 	        <aui:input label="Streaming Server Domain or IP" name="ip" inlineField="true" value='<%= defaultHost.getStreamer() %>'></aui:input>
+				 	        <aui:input label="Port" name="port" inlineField="true" value='<%= defaultHost.getPort() %>'></aui:input>
 				 	        <aui:input label="Protocol" name="protocol" inlineField="true" value='<%= defaultHost.getProtocol() %>'></aui:input>
+				 	        <aui:input label="Root Directory" name="serverroot" inlineField="true" value='<%= defaultHost.getServerRoot() %>'></aui:input>
 				 	        <aui:input name='hostId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "hostId") %>'/>
 				 	        <aui:button type="submit"></aui:button>
 							<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button>
@@ -238,8 +245,7 @@ Root Institution Permissions:
 
         			<liferay-ui:search-container-column-text name="Host" >
 	        			<portlet:actionURL name="deleteStreamingServer" var="deleteStreamingServerURL">
-								<portlet:param name="curStreamingServerId" value='<%= (new Long(Hosts.getHostId())).toString() %>' />
-		 					<portlet:param name="selectedStreamingServerId" value='<%= (new Long(hostId)).toString() %>' />
+							<portlet:param name="curStreamingServerId" value='<%= (new Long(Hosts.getHostId())).toString() %>' />
 							<portlet:param name="backURL" value="<%=String.valueOf(portletURL) %>"/>
 						</portlet:actionURL>
 						<aui:form action="<%= updateStreamingServerURL %>" name="<portlet:namespace />fm">
@@ -255,6 +261,13 @@ Root Institution Permissions:
 								<aui:input name="curStreamingServerName" label="StreamingServer Name" inlineField="true" value = "<%= Hosts.getName() %>" />
 								
 							<%}%>
+							
+								<aui:input name="curStreamingServerIP" label="IP" inlineField="true" value = "<%= Hosts.getStreamer() %>" />				
+								<aui:input name="curStreamingServerPort" label="Port" inlineField="true" value = "<%= Hosts.getPort() %>" />
+								<aui:input name="curStreamingServerProtocol" label="Protocol" inlineField="true" value = "<%= Hosts.getProtocol() %>" />
+								
+								<aui:input name="curStreamingServerRoot" label="Root Directory" inlineField="true" disabled="true" value = "<%= Hosts.getServerRoot() %>" />
+								
 								<aui:input name="curStreamingServerId" type='hidden' inlineField="true" value = "<%= (new Long(Hosts.getHostId())).toString() %>"/>
 								<aui:button type="submit"></aui:button>
 								<aui:button name="delete" value="Löschen" type="button" href="<%=deleteStreamingServerURL.toString() %>" />
@@ -268,7 +281,7 @@ Root Institution Permissions:
 		</liferay-ui:panel>
 </c:if>
 
-
+<%--ROOT INSTITUTION--%>
 <%--Permission regarding concrete instance of element, namely RootInstitution --%>
 <c:if  test='<%= permissionChecker.hasPermission(groupId, institutionModel, groupId, "EDIT_ROOT_INSTITUTION") %>'>
 	<liferay-ui:panel title="Top Level Institution" collapsible="true" id="rootInstitutionSettings"
@@ -278,7 +291,7 @@ Root Institution Permissions:
 	<aui:form action="<%= updateRootInstitutionURL %>" name="<portlet:namespace />fm">
 		<aui:fieldset>
 				<aui:input name="rootInstitution" label="Top Level Institution" required="true" inlineField="true"  value = '<%= root.getName() %>'/>
-				<aui:input name="rootInsitutionId" type='hidden' inlineField="true" value = '<%= root.getPrimaryKey() %>'/>
+				<aui:input name="rootInstitutionId" type='hidden' inlineField="true" value = '<%= root.getInstitutionId() %>'/>
 				<aui:button type="submit"></aui:button>
 				<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button>
 		</aui:fieldset>
@@ -286,6 +299,7 @@ Root Institution Permissions:
 	</liferay-ui:panel>
 </c:if>
 
+<%--TOP LEVEL INSTITUTIONS--%>
 
 <%--<liferay-ui:panel title="List of Institutions" collapsible="false" id="outerList"> --%>
 <liferay-ui:search-container searchContainer="<%= searchInstitutionContainer %>"
@@ -345,6 +359,8 @@ deltaConfigurable="true">
 				</c:if>
 			</aui:fieldset>
  		</aui:form>
+ 		
+ 		<%--SUB INSTITUTIONS--%>
 		<liferay-ui:panel
 				defaultState="closed"
 				extended="<%= false %>"
@@ -400,13 +416,15 @@ deltaConfigurable="true">
         	<liferay-ui:search-iterator searchContainer="<%= searchSubInstitutionContainer %>" />
 			</liferay-ui:search-container>
 
-	</liferay-ui:panel>
-			</liferay-ui:search-container-column-text>
+		</liferay-ui:panel>
+		<%--END: SUB INSTUTIONS--%>
+		</liferay-ui:search-container-column-text>
 
     	</liferay-ui:search-container-row>
 
    	 	<liferay-ui:search-iterator searchContainer="<%= searchInstitutionContainer %>" />
 		</liferay-ui:search-container>
+	<%--END: INSTITUTIONS--%>
 
 
 <%-- </liferay-ui:panel> --%>

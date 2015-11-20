@@ -16,6 +16,12 @@ package de.uhh.l2g.plugins.service.impl;
 
 import java.util.List;
 
+import com.liferay.counter.model.Counter;
+import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Validator;
@@ -28,8 +34,10 @@ import de.uhh.l2g.plugins.Institution_HostInstitutionException;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Institution_Host;
+import de.uhh.l2g.plugins.service.ClpSerializer;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.Institution_HostLocalServiceBaseImpl;
 
 /**
@@ -99,8 +107,10 @@ public class Institution_HostLocalServiceImpl
 		return institution_host;
 	}
 
-	public List<Institution_Host> getListByGroupIdAndInstitutionId(long groupId, long institutionId) throws SystemException, PortalException {
-		List<Institution_Host> institution_host = institution_HostPersistence.findByG_H(groupId, institutionId);
+	/** Actually this should never give a list because, there can be only one host per isntitution
+	 * */
+	public List<Institution_Host> getListByGroupIdAndInstitutionId(long companyId, long groupId, long institutionId) throws SystemException, PortalException {
+		List<Institution_Host> institution_host = (List<Institution_Host>) institution_HostPersistence.findByC_G_I(companyId, groupId, institutionId);
 		return institution_host;
 	}
 
@@ -142,7 +152,8 @@ public class Institution_HostLocalServiceImpl
 		institution_Host.setCompanyId(companyId);
 		institution_Host.setInstitutionId(institutionId);
 		institution_Host.setHostId(hostId);
-
+		//System.out.println ("Link: " +institutionId +" "+hostId);
+		//System.out.println ("Link Contents: "+ institution_Host.toString());
 
 		institution_Host.setExpandoBridgeAttributes(serviceContext);
 		
@@ -162,12 +173,11 @@ public class Institution_HostLocalServiceImpl
 		long userId = serviceContext.getUserId();
 
 		User user = userPersistence.findByPrimaryKey(userId);
-        System.out.println (institutionId +" "+hostId);
+		// System.out.println ("Link: " +institutionId +" "+hostId);
 		validate(institutionId, hostId);
 
-		List<Institution_Host> linstitution_Host = getListByGroupIdAndInstitutionId(groupId, institutionId);
-		System.out.println (linstitution_Host.toString());
-		Institution_Host institution_Host = linstitution_Host.get(0);
+		Institution_Host institution_Host = getLinkByGroupIdAndInstitutionId(groupId, institutionId);
+		//System.out.println ("Link Contents: "+ institution_Host.toString());
 
 		institution_Host.setGroupId(groupId);
 		institution_Host.setInstitutionId(institutionId);
@@ -230,5 +240,25 @@ public class Institution_HostLocalServiceImpl
 		        return institution_Host;
 
 		    }
+	   public Institution_Host updateCounter() throws SystemException, PortalException {
+		   Counter counter;
+	   			// Initialize counter with a default value liferay suggests
+				CounterLocalServiceUtil.increment(Institution_Host.class.getName());
+				counter = CounterLocalServiceUtil.getCounter(Institution_Host.class.getName());
+	   
+				//Retrieve actual table data
+				ClassLoader classLoader = (ClassLoader)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),"portletClassLoader");    		
+				DynamicQuery query = DynamicQueryFactoryUtil.forClass(Institution_Host.class,classLoader).addOrder(OrderFactoryUtil.desc("institutionHostId"));
+				query.setLimit(0,1);
+				List<Institution_Host> institution_hosts = Institution_HostLocalServiceUtil.dynamicQuery(query);
+				Institution_Host institution_host = institution_hosts.get(0);
+				
+				//write Counter
+				if (institution_host != null) counter.setCurrentId(institution_host.getInstitutionHostId() + 1);
+				CounterLocalServiceUtil.updateCounter(counter);
+				return institution_host;
+					
+		   
+	   }
 
 }
