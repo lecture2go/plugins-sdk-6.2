@@ -29,6 +29,22 @@ public class LectureseriesImpl extends LectureseriesBaseImpl {
 	 *
 	 * Never reference this class directly. All methods that expect a lectureseries model instance should use the {@link de.uhh.l2g.plugins.model.Lectureseries} interface instead.
 	 */
+	
+	private String type;
+	
+	
+	public String getType() {
+		return type;
+	}
+
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+
 	public LectureseriesImpl() {
 	}
+	
+	
 }

@@ -251,6 +251,11 @@
         <finder name="GroupId" return-type="Collection">
             <finder-column name="groupId"></finder-column>
         </finder>
+        <finder name="C_G_I" return-type="Collection">
+            <finder-column name="companyId"></finder-column>
+            <finder-column name="groupId"></finder-column>
+            <finder-column name="institutionId"></finder-column>
+        </finder>
     </entity>
     <entity name="Office" local-service="true" remote-service="false">
         <column name="officeId" type="long" primary="true" id-type="increment"></column>
@@ -396,6 +401,9 @@
         </finder>
         <finder name="Password" return-type="Collection">
             <finder-column name="password"></finder-column>
+        </finder>
+        <finder name="OpenAccess" return-type="Collection">
+            <finder-column name="openAccess"></finder-column>
         </finder>
     </entity>
     <entity name="Video_Institution" local-service="true" remote-service="false">
