@@ -1004,14 +1004,16 @@ public class AdminVideoManagement extends MVCPortlet {
 		//
 		ListIterator<Segment> sLi = sL.listIterator();
 		String text="WEBVTT \n\n";
-		int count =1;
 		while(sLi.hasNext()){
 			Segment seg = sLi.next();
-			text +="Chapter "+count+" \n";
 			text +=seg.getStart()+" --> "+seg.getEnd()+" \n";
-			if(seg.getChapter()==1 && video.getContainerFormat().equals("mp4"))text +="<img src=\""+seg.getImage()+"\"/><br/>";
-			text +=seg.getTitle()+"<br/>"+seg.getDescription()+" \n\n";
-			count++;
+			if(seg.getChapter()==1){
+				text +="Chapter: "+seg.getTitle()+" \n\n";
+			}else{
+				String desc="";
+				if(seg.getDescription().trim().length()>0)desc = " ("+seg.getDescription().trim() + ")";
+				text += seg.getTitle()+ desc + " \n\n";
+			}
 		}
 		FileOutputStream s;
 		try {
