@@ -94,6 +94,7 @@ public class AdminVideoManagement extends MVCPortlet {
 	
 	public void viewVideo(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
 		//TagcloudLocalServiceUtil.generateForAllVideos();
+		//updateSegmentsForVideos();
 		// requested producer id
 		Long reqPproducerId = (long)0;
 		try{reqPproducerId = new Long(request.getParameterMap().get("producerId")[0]);}catch(Exception e){}
@@ -1027,4 +1028,16 @@ public class AdminVideoManagement extends MVCPortlet {
 		catch (IOException e) {}
 	}
 	
+	public void updateSegmentsForVideos(){
+		try {
+			List<Video> vl = VideoLocalServiceUtil.getAll();
+			ListIterator<Video> vit = vl.listIterator();
+			while(vit.hasNext()){
+				Video v = VideoLocalServiceUtil.getFullVideo(vit.next().getVideoId());
+				if(v.isHasChapters())updateVttChapterFile(v);
+			}
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+	}
 }
