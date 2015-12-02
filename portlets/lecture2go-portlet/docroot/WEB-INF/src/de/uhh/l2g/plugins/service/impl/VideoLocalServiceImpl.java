@@ -82,6 +82,10 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	 * de.uhh.l2g.plugins.service.VideoLocalServiceUtil} to access the video
 	 * local service.
 	 */
+	public List<Video> getByOpenAccess(int bool) throws SystemException {
+		return videoPersistence.findByOpenAccess(bool);
+	}
+
 	public Video getLatestOpenAccessVideoForLectureseries(Long lectureseriesId) {
 		return VideoFinderUtil.findLatestOpenAccessVideoForLectureseries(lectureseriesId);
 	}
