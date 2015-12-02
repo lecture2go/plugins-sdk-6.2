@@ -75,6 +75,12 @@ public class Institution_HostLocalServiceImpl
 			return h;
 	}
 
+	public Host getByInstitution(long institutionId) throws SystemException, PortalException {
+		long hid = institution_HostPersistence.findByinstitutionId(institutionId).iterator().next().getHostId(); 
+		Host h = HostLocalServiceUtil.getByHostId(hid);
+		return h;
+	}
+
 	public Host getByGroupIdAndInstitutionId(long companyId, long groupId, long institutionId) throws SystemException, PortalException {
 		Institution_Host iH = institution_HostPersistence.fetchByG_I(groupId, institutionId);
 		if (iH != null){

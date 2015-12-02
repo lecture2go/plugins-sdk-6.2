@@ -94,6 +94,7 @@ public class AdminVideoManagement extends MVCPortlet {
 	
 	public void viewVideo(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
 		//TagcloudLocalServiceUtil.generateForAllVideos();
+		//updateSegmentsForVideos();
 		// requested producer id
 		Long reqPproducerId = (long)0;
 		try{reqPproducerId = new Long(request.getParameterMap().get("producerId")[0]);}catch(Exception e){}
@@ -1004,14 +1005,16 @@ public class AdminVideoManagement extends MVCPortlet {
 		//
 		ListIterator<Segment> sLi = sL.listIterator();
 		String text="WEBVTT \n\n";
-		int count =1;
 		while(sLi.hasNext()){
 			Segment seg = sLi.next();
-			text +="Chapter "+count+" \n";
 			text +=seg.getStart()+" --> "+seg.getEnd()+" \n";
-			if(seg.getChapter()==1 && video.getContainerFormat().equals("mp4"))text +="<img src=\""+seg.getImage()+"\"/><br/>";
-			text +=seg.getTitle()+"<br/>"+seg.getDescription()+" \n\n";
-			count++;
+			if(seg.getChapter()==1){
+				text +="Chapter: "+seg.getTitle()+" \n\n";
+			}else{
+				String desc="";
+				if(seg.getDescription().trim().length()>0)desc = " ("+seg.getDescription().trim() + ")";
+				text += seg.getTitle()+ desc + " \n\n";
+			}
 		}
 		FileOutputStream s;
 		try {
@@ -1025,4 +1028,16 @@ public class AdminVideoManagement extends MVCPortlet {
 		catch (IOException e) {}
 	}
 	
+	public void updateSegmentsForVideos(){
+		try {
+			List<Video> vl = VideoLocalServiceUtil.getAll();
+			ListIterator<Video> vit = vl.listIterator();
+			while(vit.hasNext()){
+				Video v = VideoLocalServiceUtil.getFullVideo(vit.next().getVideoId());
+				if(v.isHasChapters())updateVttChapterFile(v);
+			}
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+	}
 }
