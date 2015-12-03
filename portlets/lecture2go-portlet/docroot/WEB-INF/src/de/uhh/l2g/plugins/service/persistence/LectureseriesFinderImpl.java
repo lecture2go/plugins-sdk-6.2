@@ -1,7 +1,11 @@
 package de.uhh.l2g.plugins.service.persistence;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -159,6 +163,10 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			q.addScalar("approved", Type.STRING);
 			q.addScalar("longDesc", Type.STRING);
 			q.addScalar("latestOpenAccessVideoId", Type.LONG);
+			//additional parameter
+			q.addScalar("latestVideoUploadDate", Type.STRING);
+			q.addScalar("videoCount", Type.INTEGER);		
+			//
 			q.setCacheable(false);
 			
 			/*
@@ -334,6 +342,15 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			l.setApproved(new Integer((String) lectser[10]));
 			l.setLongDesc((String) lectser[11]);
 			l.setLatestOpenAccessVideoId((Long) lectser[12]);
+			//additional parameter
+			try{
+				String string = (String)lectser[13];
+				DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+				Date date = format.parse(string);
+				l.setLatestVideoUploadDate(date);
+			}catch (Exception e){}
+			try{l.setNumberOfVideos((Integer) lectser[14]);}catch (Exception e){}
+			//
 			ll.add(l);
 		}
 		return ll;

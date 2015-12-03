@@ -524,10 +524,6 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		return rvl;
 	}
 	
-	public List<Video> getFilteredByInstitutionParentInstitutionTermCategoryCreator (Long institutionId, Long parentInstitutionId, ArrayList<Long> termIds, ArrayList<Long> categoryIds, ArrayList<Long> creatorIds){
-		return VideoFinderUtil.findFilteredByInstitutionParentInstitutionTermCategoryCreator(institutionId, parentInstitutionId, termIds, categoryIds, creatorIds);
-	}
-
 	/**
 	 * required properties for jwplayer in portal-ext.properties file
 	 * 
@@ -584,5 +580,9 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 
 	public List<Video> getBySearchWord(String word, int limit) throws SystemException{
 		return VideoFinderUtil.findVideosBySearchWord(word, limit);
+	}	
+
+	public List<Video> getBySearchWordAndLectureseriesId(String word, Long lectureseriesId) throws SystemException{
+		return VideoFinderUtil.findVideosBySearchWordAndLectureseriesId(word, lectureseriesId);
 	}	
 }

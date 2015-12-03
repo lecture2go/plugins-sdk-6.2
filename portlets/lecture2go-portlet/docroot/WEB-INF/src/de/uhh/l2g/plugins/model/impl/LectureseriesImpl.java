@@ -32,7 +32,18 @@ public class LectureseriesImpl extends LectureseriesBaseImpl {
 	
 	private String type;
 	
+	private int numberOfVideos = 0;
 	
+	public int getNumberOfVideos() {
+		return numberOfVideos;
+	}
+
+
+	public void setNumberOfVideos(int numberOfVideos) {
+		this.numberOfVideos = numberOfVideos;
+	}
+
+
 	public String getType() {
 		return type;
 	}
