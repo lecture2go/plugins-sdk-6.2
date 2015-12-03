@@ -1,3 +1,4 @@
+<%@page import="java.util.ListIterator"%>
 <%@include file="/init.jsp"%>
 
 <%
@@ -27,12 +28,6 @@
 		institutionId = new Long(0);
 	}
 
-// 	List<Lectureseries> reqLectureseries;
-// 	if (isSearched) {
-// 		reqLectureseries = LectureseriesLocalServiceUtil.getFilteredBySearchQuery(searchQuery);
-// 	} else {
-// 		reqLectureseries = LectureseriesLocalServiceUtil.getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(institutionId, parentInstitutionId, termId, categoryId, creatorId);
-// 	}
 	// get filtered lectureseries and single videos
 	List<Lectureseries> reqLectureseries = LectureseriesLocalServiceUtil.getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(institutionId, parentInstitutionId, termId, categoryId, creatorId, searchQuery);
 	
@@ -99,9 +94,6 @@
 	portletURL.setParameter("categoryId", categoryId.toString());
 	portletURL.setParameter("creatorId", creatorId.toString());
 	portletURL.setParameter("searchQuery", searchQuery);
-// 	if (isSearched) {
-		
-// 	}
 	
 	// set page context for better use in taglibs
 	pageContext.setAttribute("hasParentInstitutionFiltered", hasParentInstitutionFiltered);
@@ -296,6 +288,7 @@
 				oId = lectser.getLectureseriesId()+"";
 				vidDummy = VideoLocalServiceUtil.getFullVideo(lectser.getLatestOpenAccessVideoId());
 			}
+			int videoCount=lectser.getNumberOfVideos();
 		%>
 		<liferay-ui:search-container-column-text>
 			<img alt="" src="<%=vidDummy.getImageSmall()%>">
@@ -309,9 +302,34 @@
 			<a href="<%=viewOpenAccessVideoURL%>"><%=lectser.getName()%></a>
 			<br/>
 			<%
-				if(lectser.getLatestOpenAccessVideoId()<0){%>video id = <%=lectser.getLectureseriesId()%><%}
-				else{%>lecture series id = <%=lectser.getLectureseriesId()%><%}
-			%>		
+			if(videoCount>1 && searchQuery.trim().length()>0){
+				%>videos <%=videoCount %>
+				<br/>
+				<button id="<%="b"+oId%>">toggle</button>
+			    <ul id="<%="p"+oId%>">
+				<%
+				//get videos by search word and lecture series
+				List<Video> vl = VideoLocalServiceUtil.getBySearchWordAndLectureseriesId(searchQuery, new Long(oId));
+				ListIterator<Video> vli = vl.listIterator();
+				while(vli.hasNext()){
+				Video v = vli.next();
+				String vId = v.getVideoId()+"";
+				%>
+					<portlet:actionURL name="viewOpenAccessVideo" var="vURL">
+						<portlet:param name="objectId" value="<%=vId%>"/>
+						<portlet:param name="objectType" value="v"/>
+					</portlet:actionURL>				
+					<li><a target="_blank" href="<%=vURL%>"><%=v.getTitle()%></a></li>
+				<%}%>
+				</ul>
+				<script>
+				$("<%="#b"+oId%>").click(function() {
+					$("<%="#p"+oId%>").slideToggle("slow");
+				});
+				</script>
+				<%	
+			}
+			%>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 	<liferay-ui:search-iterator />

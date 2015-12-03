@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <custom-sql>
 
+    <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.findVideosBySearchWordAndLectureseriesId">
+		<![CDATA[
+			SELECT v.* 
+			FROM LG_Video v 
+			INNER JOIN LG_Tagcloud as tag ON (v.videoId = tag.objectId) 
+			WHERE objectClassType="de.uhh.l2g.plugins.model.impl.VideoImpl" 
+			AND tag.tags LIKE ? 
+			AND v.lectureseriesId=?
+		]]>
+    </sql>
+
     <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.findVideosBySearchWord">
 		<![CDATA[
 			SELECT DISTINCT LG_Video.* , LG_Lectureseries.name AS lectureseriesName, LG_Lectureseries.number_ AS lectureseriesNumber, LG_Creator.fullName AS creatorFullName
