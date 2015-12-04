@@ -308,7 +308,7 @@
 				if(videoCount==1){
 					if(isVideo){
 						%>
-						<a href="<%=view1URL%>"><%=lectser.getName()%></a>
+						<a href="<%=view1URL%>"><b><%=lectser.getName()%></b></a>
 						<%
 					}else{
 						Video v = new VideoImpl();
@@ -319,12 +319,15 @@
 							<portlet:param name="objectId" value="<%=vId%>"/>
 							<portlet:param name="objectType" value="v"/>
 						</portlet:actionURL>
-						<a href="<%=view2URL%>"><%=v.getTitle()%></a>
+						<a href="<%=view2URL%>">
+							<b><%=lectser.getName()%></b></br>
+							<%=v.getTitle()%>
+						</a>
 						<%						
 					}
 				}else{
 					%>
-					<a href="<%=view1URL%>"><%=lectser.getName()%></a>
+					<a href="<%=view1URL%>"><b><%=lectser.getName()%></b></a>
 					<br/>
 					videos <%=videoCount %>
 					<br/>
@@ -351,7 +354,7 @@
 				}
 			}else{
 				%>
-				<a href="<%=view1URL%>"><%=lectser.getName()%></a>
+				<a href="<%=view1URL%>"><b><%=lectser.getName()%></b></a>
 				<%
 				if(videoCount>1){
 					%>
