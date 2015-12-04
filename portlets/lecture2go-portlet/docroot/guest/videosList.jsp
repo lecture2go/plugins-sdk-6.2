@@ -332,9 +332,6 @@
 						<br/>
 						<%
 						while(cli1.hasNext()){%><em><%=cli1.next().getFullName()+"; " %></em><%}
-						%>
-						<br/>
-						
 					}
 				}else{
 					%>
