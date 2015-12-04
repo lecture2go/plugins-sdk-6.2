@@ -294,40 +294,71 @@
 			<img alt="" src="<%=vidDummy.getImageSmall()%>">
 		</liferay-ui:search-container-column-text>
 		<liferay-ui:search-container-column-text>
-			<portlet:actionURL name="viewOpenAccessVideo" var="viewOpenAccessVideoURL">
+			<portlet:actionURL name="viewOpenAccessVideo" var="view1URL">
 				<portlet:param name="objectId" value="<%=oId%>"/>
 				<%if(isVideo){%><portlet:param name="objectType" value="v"/><%}%>
 				<%if(!isVideo){%><portlet:param name="objectType" value="l"/><%}%>
 			</portlet:actionURL>
-			<a href="<%=viewOpenAccessVideoURL%>"><%=lectser.getName()%></a>
-			<br/>
 			<%
-			if(videoCount>1 && searchQuery.trim().length()>0){
-				%>videos <%=videoCount %>
-				<br/>
-				<button id="<%="b"+oId%>">toggle</button>
-			    <ul id="<%="p"+oId%>">
-				<%
+			if(videoCount>0 && searchQuery.trim().length()>0){
 				//get videos by search word and lecture series
 				List<Video> vl = VideoLocalServiceUtil.getBySearchWordAndLectureseriesId(searchQuery, new Long(oId));
 				ListIterator<Video> vli = vl.listIterator();
-				while(vli.hasNext()){
-				Video v = vli.next();
-				String vId = v.getVideoId()+"";
+				//				
+				if(videoCount==1){
+					if(isVideo){
+						%>
+						<a href="<%=view1URL%>"><%=lectser.getName()%></a>
+						<%
+					}else{
+						Video v = new VideoImpl();
+						v = vl.get(0);
+						String vId = v.getVideoId()+"";
+						%>
+						<portlet:actionURL name="viewOpenAccessVideo" var="view2URL">
+							<portlet:param name="objectId" value="<%=vId%>"/>
+							<portlet:param name="objectType" value="v"/>
+						</portlet:actionURL>
+						<a href="<%=view2URL%>"><%=v.getTitle()%></a>
+						<%						
+					}
+				}else{
+					%>
+					<a href="<%=view1URL%>"><%=lectser.getName()%></a>
+					<br/>
+					videos <%=videoCount %>
+					<br/>
+					<button id="<%="b"+oId%>">toggle</button>
+				    <ul id="<%="p"+oId%>">
+					<%
+					while(vli.hasNext()){
+					Video v = vli.next();
+					String vId = v.getVideoId()+"";
+					%>
+						<portlet:actionURL name="viewOpenAccessVideo" var="vURL">
+							<portlet:param name="objectId" value="<%=vId%>"/>
+							<portlet:param name="objectType" value="v"/>
+						</portlet:actionURL>				
+						<li><a href="<%=vURL%>"><%=v.getTitle()%></a></li>
+					<%}%>
+					</ul>
+					<script>
+					$("<%="#b"+oId%>").click(function() {
+						$("<%="#p"+oId%>").slideToggle("slow");
+					});
+					</script>
+					<%	
+				}
+			}else{
 				%>
-					<portlet:actionURL name="viewOpenAccessVideo" var="vURL">
-						<portlet:param name="objectId" value="<%=vId%>"/>
-						<portlet:param name="objectType" value="v"/>
-					</portlet:actionURL>				
-					<li><a target="_blank" href="<%=vURL%>"><%=v.getTitle()%></a></li>
-				<%}%>
-				</ul>
-				<script>
-				$("<%="#b"+oId%>").click(function() {
-					$("<%="#p"+oId%>").slideToggle("slow");
-				});
-				</script>
-				<%	
+				<a href="<%=view1URL%>"><%=lectser.getName()%></a>
+				<%
+				if(videoCount>1){
+					%>
+					<br/>				
+					videos <%=videoCount %>
+					<%					
+				}
 			}
 			%>
 		</liferay-ui:search-container-column-text>
