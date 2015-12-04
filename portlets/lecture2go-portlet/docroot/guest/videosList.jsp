@@ -289,9 +289,11 @@
 				vidDummy = VideoLocalServiceUtil.getFullVideo(lectser.getLatestOpenAccessVideoId());
 			}
 			int videoCount=lectser.getNumberOfVideos();
+			List<Creator> cl = CreatorLocalServiceUtil.getCreatorsByLectureseriesId(lectser.getLectureseriesId());
+			ListIterator<Creator> cli = cl.listIterator();
 		%>
 		<liferay-ui:search-container-column-text>
-			<img alt="" src="<%=vidDummy.getImageSmall()%>">
+			<img alt="" src="<%=vidDummy.getImageSmall()%>" width="150px">
 		</liferay-ui:search-container-column-text>
 		<liferay-ui:search-container-column-text>
 			<portlet:actionURL name="viewOpenAccessVideo" var="view1URL">
@@ -309,11 +311,15 @@
 					if(isVideo){
 						%>
 						<a href="<%=view1URL%>"><b><%=lectser.getName()%></b></a>
+						<br/>
 						<%
+						while(cli.hasNext()){%><em><%=cli.next().getFullName()+"; " %></em><%}
 					}else{
 						Video v = new VideoImpl();
 						v = vl.get(0);
 						String vId = v.getVideoId()+"";
+						List<Creator> cl1 = CreatorLocalServiceUtil.getCreatorsByVideoId(v.getVideoId());
+						ListIterator<Creator> cli1 = cl.listIterator();
 						%>
 						<portlet:actionURL name="viewOpenAccessVideo" var="view2URL">
 							<portlet:param name="objectId" value="<%=vId%>"/>
@@ -323,11 +329,18 @@
 							<b><%=lectser.getName()%></b></br>
 							<%=v.getTitle()%>
 						</a>
-						<%						
+						<br/>
+						<%
+						while(cli1.hasNext()){%><em><%=cli1.next().getFullName()+"; " %></em><%}
+						%>
+						<br/>
+						
 					}
 				}else{
 					%>
 					<a href="<%=view1URL%>"><b><%=lectser.getName()%></b></a>
+					<br/>
+					<%while(cli.hasNext()){%><em><%=cli.next().getFullName()+"; " %></em><%}%>
 					<br/>
 					videos <%=videoCount %>
 					<br/>
@@ -355,7 +368,9 @@
 			}else{
 				%>
 				<a href="<%=view1URL%>"><b><%=lectser.getName()%></b></a>
+				<br/>
 				<%
+				while(cli.hasNext()){%><em><%=cli.next().getFullName()+"; " %></em><%}
 				if(videoCount>1){
 					%>
 					<br/>				
