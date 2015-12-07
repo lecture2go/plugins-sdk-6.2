@@ -407,6 +407,9 @@
         <finder name="Password" return-type="Collection">
             <finder-column name="password"></finder-column>
         </finder>
+        <finder name="OpenAccess" return-type="Collection">
+            <finder-column name="openAccess"></finder-column>
+        </finder>
     </entity>
     <entity name="Video_Institution" local-service="true" remote-service="false">
         <column name="videoInstitutionId" type="long" primary="true" id-type="increment"></column>

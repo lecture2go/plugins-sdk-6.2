@@ -420,7 +420,10 @@
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.LectureseriesImpl" name="Lectureseries">
 		<table name="LG_Lectureseries" />
-		<attributes />
+		<attributes>
+			<transient name="numberOfVideos" />
+			<transient name="type" />
+		</attributes>
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.Lectureseries_CategoryImpl" name="Lectureseries_Category">
 		<table name="LG_Lectureseries_Category" />
