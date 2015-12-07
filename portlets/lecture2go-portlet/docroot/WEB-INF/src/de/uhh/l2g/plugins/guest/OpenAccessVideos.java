@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -47,9 +48,45 @@ public class OpenAccessVideos extends MVCPortlet {
 
 	@Override
 	public void serveResource( ResourceRequest resourceRequest, ResourceResponse resourceResponse ) throws IOException, PortletException {
+		String resourceID = resourceRequest.getResourceID();
 		String cmd = ParamUtil.getString(resourceRequest, Constants.CMD);
 		if (cmd.equals("get_search_words")) {
 			getSearchWords(resourceRequest, resourceResponse);
+		}
+		
+		if(resourceID.equals("showSegments")){
+			String vId = ParamUtil.getString(resourceRequest, "videoId");
+			Long vID = new Long(vId);
+			com.liferay.portal.kernel.json.JSONArray ja = JSONFactoryUtil.createJSONArray();
+			//get segments for video and convert to json array
+			try {
+				List<Segment> sl= SegmentLocalServiceUtil.getSegmentsByVideoId(vID);
+				ListIterator<Segment> sIt = sl.listIterator();
+				while(sIt.hasNext()){
+					Segment s = sIt.next();
+					JSONObject jo = JSONFactoryUtil.createJSONObject();
+					jo.put("chapter", s.getChapter());
+					jo.put("description", s.getDescription());
+					jo.put("end", s.getEnd());
+					jo.put("image", s.getImage());
+					jo.put("number", s.getNumber());
+					jo.put("segmentId", s.getPrimaryKey());
+					jo.put("seconds", s.getSeconds());
+					jo.put("start", s.getStart());
+					jo.put("title", s.getTitle());
+					jo.put("userId", s.getUserId());
+					jo.put("videoId", s.getVideoId());
+					jo.put("previousSegmentId", SegmentLocalServiceUtil.getPreviusSegmentId(s.getSegmentId()));
+					ja.put(jo);
+				}
+				
+			} catch (PortalException e) {
+				e.printStackTrace();
+			} catch (SystemException e) {
+				e.printStackTrace();
+			}
+			
+			writeJSON(resourceRequest, resourceResponse, ja);
 		}
 	}
 	
