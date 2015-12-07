@@ -295,7 +295,7 @@
 								function drawRow(segment) {
 								    if(segment.chapter==1){
 								    	newRow='<div class="chaptertile" id="' + segment.segmentId + '" begin="' + segment.start + '" end="' + segment.end + '">'+
-										'<a><img class="imgsmall" title="watch this chapter" src="'+segment.image+'"></a>'+
+										'<a><img width="130px" height="63px" class="imgsmall" title="watch this chapter" src="'+segment.image+'"></a>'+
 										'<span>'+segment.start +' - '+segment.end+'</span><br/>'+
 										'<a><span>'+segment.title+'</span></a>';
 									}else{
@@ -313,9 +313,6 @@
 							    		if(segment.description >""){
 							    			newRow=newRow+'<b id="iav'+segment.segmentId+'"><span class="fs10"><div id="description"><em>'+segment.description+'</em></div></span></b>';
 							    		}
-									}
-									if(segment.userId==<%=remoteUser.getUserId()%>){
-										newRow=newRow+'<input type="image" src="/lecture2go-portlet/img/delete.png" alt="delete" onclick="deleteSegment('+segment.segmentId+')" >';
 									}
 									newRow=newRow+'</div>';
 									if(segment.chapter!=1){
