@@ -19,7 +19,6 @@ import javax.portlet.ResourceResponse;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -38,7 +37,6 @@ import de.uhh.l2g.plugins.model.License;
 import de.uhh.l2g.plugins.model.Metadata;
 import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.model.Segment;
-import de.uhh.l2g.plugins.model.Tagcloud;
 import de.uhh.l2g.plugins.model.Term;
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.Video_Category;
@@ -53,7 +51,6 @@ import de.uhh.l2g.plugins.model.impl.LicenseImpl;
 import de.uhh.l2g.plugins.model.impl.MetadataImpl;
 import de.uhh.l2g.plugins.model.impl.ProducerImpl;
 import de.uhh.l2g.plugins.model.impl.SegmentImpl;
-import de.uhh.l2g.plugins.model.impl.TagcloudImpl;
 import de.uhh.l2g.plugins.model.impl.VideoImpl;
 import de.uhh.l2g.plugins.model.impl.Video_CategoryImpl;
 import de.uhh.l2g.plugins.model.impl.Video_CreatorImpl;
@@ -75,7 +72,6 @@ import de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
-import de.uhh.l2g.plugins.service.persistence.VideoPersistenceImpl;
 import de.uhh.l2g.plugins.util.FFmpegManager;
 import de.uhh.l2g.plugins.util.ProzessManager;
 import de.uhh.l2g.plugins.util.Security;
@@ -97,6 +93,8 @@ public class AdminVideoManagement extends MVCPortlet {
 	}
 	
 	public void viewVideo(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
+		//TagcloudLocalServiceUtil.generateForAllVideos();
+		//updateSegmentsForVideos();
 		// requested producer id
 		Long reqPproducerId = (long)0;
 		try{reqPproducerId = new Long(request.getParameterMap().get("producerId")[0]);}catch(Exception e){}
@@ -1007,14 +1005,16 @@ public class AdminVideoManagement extends MVCPortlet {
 		//
 		ListIterator<Segment> sLi = sL.listIterator();
 		String text="WEBVTT \n\n";
-		int count =1;
 		while(sLi.hasNext()){
 			Segment seg = sLi.next();
-			text +="Chapter "+count+" \n";
 			text +=seg.getStart()+" --> "+seg.getEnd()+" \n";
-			if(seg.getChapter()==1 && video.getContainerFormat().equals("mp4"))text +="<img src=\""+seg.getImage()+"\"/><br/>";
-			text +=seg.getTitle()+"<br/>"+seg.getDescription()+" \n\n";
-			count++;
+			if(seg.getChapter()==1){
+				text +="Chapter: "+seg.getTitle()+" \n\n";
+			}else{
+				String desc="";
+				if(seg.getDescription().trim().length()>0)desc = " ("+seg.getDescription().trim() + ")";
+				text += seg.getTitle()+ desc + " \n\n";
+			}
 		}
 		FileOutputStream s;
 		try {
@@ -1028,4 +1028,16 @@ public class AdminVideoManagement extends MVCPortlet {
 		catch (IOException e) {}
 	}
 	
+	public void updateSegmentsForVideos(){
+		try {
+			List<Video> vl = VideoLocalServiceUtil.getAll();
+			ListIterator<Video> vit = vl.listIterator();
+			while(vit.hasNext()){
+				Video v = VideoLocalServiceUtil.getFullVideo(vit.next().getVideoId());
+				if(v.isHasChapters())updateVttChapterFile(v);
+			}
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+	}
 }

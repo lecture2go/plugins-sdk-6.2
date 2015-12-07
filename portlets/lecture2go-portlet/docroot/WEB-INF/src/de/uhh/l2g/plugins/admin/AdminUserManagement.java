@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.ListIterator;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -39,6 +40,7 @@ import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 public class AdminUserManagement extends MVCPortlet {
 
 	public void viewRole(ActionRequest request, ActionResponse response) throws SystemException, PortalException {
+		//updateUsersScreenName();
 		// logged in user
 		User remoteUser = UserLocalServiceUtil.getUser(new Long(request.getRemoteUser()));
 		
@@ -163,6 +165,24 @@ public class AdminUserManagement extends MVCPortlet {
 		response.setRenderParameter("jspPage", "/admin/editL2GoRole.jsp");
 	}
 	
+	public void updateUsersScreenName(){
+		List<Producer> pl = new ArrayList<Producer>();
+		try {
+			pl = ProducerLocalServiceUtil.getAllProducers(0, 300);
+			ListIterator<Producer> pit = pl.listIterator();
+			while (pit.hasNext()){
+				Producer p = pit.next();
+				try {
+					User u = UserLocalServiceUtil.getUser(p.getProducerId());
+					UserLocalServiceUtil.updateScreenName(u.getUserId(), p.getHomeDir());
+				} catch (PortalException e) {
+					e.printStackTrace();
+				}
+			}
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+	}
 	public static List<Role> getL2GoRoles(User u) throws SystemException{
 		//prepare l2go roles
 		List<Role> l2goRoles = new ArrayList<Role>();
@@ -292,7 +312,7 @@ public class AdminUserManagement extends MVCPortlet {
 		// repository for producer
 		Host h = new HostImpl();
 		try{
-			h = Institution_HostLocalServiceUtil.getByInstitutionId(p.getInstitutionId());
+			h = Institution_HostLocalServiceUtil.getByInstitution(p.getInstitutionId());
 			// host to producer 
 			p.setHostId(h.getHostId());
 		}catch(Exception e){
@@ -312,9 +332,10 @@ public class AdminUserManagement extends MVCPortlet {
 	public static boolean createProducersRepository(Host host, Producer producer) throws IOException{
 		boolean ret = false;
 		File folder = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/");
+		Runtime runtime = Runtime.getRuntime();
 		if (!folder.exists()) {
+			//create repository for producer
 			if (folder.mkdir()) {
-				Runtime runtime = Runtime.getRuntime();
 				String[] cmdArray = {PropsUtil.get("lecture2go.shell.bin"), "-c", "chown nobody " + folder.getAbsolutePath() };
 				runtime.exec(cmdArray);
 				String[] cmdArray1 = { PropsUtil.get("lecture2go.shell.bin"), "-c", "chown nobody:nobody " + folder.getAbsolutePath() };
@@ -322,15 +343,16 @@ public class AdminUserManagement extends MVCPortlet {
 				String[] cmdArray2 = { PropsUtil.get("lecture2go.shell.bin"), "-c", "chmod 701 " + folder.getAbsolutePath() };
 				runtime.exec(cmdArray2);
 
-				File prodFolder = new File(PropsUtil.get("lecture2go.httpstreaming.video.repository") + "/" + producer.getInstitutionId() + "l2g" + producer.getHomeDir());
-				if (!prodFolder.exists()) {
-					String cmd = "ln -s " + folder.getAbsolutePath() + " " + prodFolder.getAbsolutePath();
-					runtime.exec(cmd);
-				}
 				ret = true;
 			}
 		}else{
 			ret = true;
+		}
+		//link to main server dir
+		File prodFolder = new File(PropsUtil.get("lecture2go.httpstreaming.video.repository") + "/" + producer.getInstitutionId() + "l2g" + producer.getHomeDir());
+		if (!prodFolder.exists()) {
+			String cmd = "ln -s " + folder.getAbsolutePath() + " " + prodFolder.getAbsolutePath();
+			runtime.exec(cmd);
 		}
 		return ret;
 	}

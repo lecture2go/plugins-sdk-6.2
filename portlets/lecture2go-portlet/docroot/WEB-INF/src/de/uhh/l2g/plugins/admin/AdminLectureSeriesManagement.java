@@ -53,6 +53,8 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 	public void viewLectureseries(ActionRequest request, ActionResponse response) throws SystemException, PortalException {
 		// requested lectureseries
 		//TagcloudLocalServiceUtil.generateForAllLectureseries();
+		//LectureseriesLocalServiceUtil.updateUploadAndGenerationDate();
+		
 		long reqLectureseriesId = new Long(request.getParameterMap().get("lectureseriesId")[0]);
 		String backURL = request.getParameter("backURL");
 		Lectureseries reqLectureseries = LectureseriesLocalServiceUtil.getLectureseries(reqLectureseriesId);
