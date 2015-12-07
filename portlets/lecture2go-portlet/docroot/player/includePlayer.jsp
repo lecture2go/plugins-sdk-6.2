@@ -105,7 +105,7 @@
             var $inputTimeEnd = $("#<portlet:namespace></portlet:namespace>timeEnd").val("");
             var $citation = $("#<portlet:namespace></portlet:namespace>citation").val("");
             
-            var chapterListElement = $('#chapters');
+            var chapterListElement = $('#');
 
             if (frameStart && frameEnd) {
                 // Sollten sich die Start- und Endzeit in den URL Parametern befinden
