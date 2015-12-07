@@ -311,9 +311,12 @@
 					if(isVideo){
 						%>
 						<a href="<%=view1URL%>"><b><%=lectser.getName()%></b></a>
-						<br/>
 						<%
 						while(cli.hasNext()){%><em><%=cli.next().getFullName()+"; " %></em><%}
+						%>
+						<br/>
+						<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
+						<%
 					}else{
 						Video v = new VideoImpl();
 						v = vl.get(0);
@@ -329,9 +332,12 @@
 							<b><%=lectser.getName()%></b></br>
 							<%=v.getTitle()%>
 						</a>
-						<br/>
 						<%
 						while(cli1.hasNext()){%><em><%=cli1.next().getFullName()+"; " %></em><%}
+						%>
+						<br/>
+						<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
+						<%
 					}
 				}else{
 					%>
@@ -340,6 +346,8 @@
 					<%while(cli.hasNext()){%><em><%=cli.next().getFullName()+"; " %></em><%}%>
 					<br/>
 					videos <%=videoCount %>
+					<br/>
+					<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
 					<br/>
 					<button id="<%="b"+oId%>">toggle</button>
 				    <ul id="<%="p"+oId%>">
@@ -374,6 +382,10 @@
 					videos <%=videoCount %>
 					<%					
 				}
+				%>
+				<br/>
+				<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
+				<%
 			}
 			%>
 		</liferay-ui:search-container-column-text>
