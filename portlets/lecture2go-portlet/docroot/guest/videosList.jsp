@@ -311,6 +311,7 @@
 					if(isVideo){
 						%>
 						<a href="<%=view1URL%>"><b><%=lectser.getName()%></b></a>
+						<br/>
 						<%
 						while(cli.hasNext()){%><em><%=cli.next().getFullName()+"; " %></em><%}
 						%>
@@ -332,6 +333,7 @@
 							<b><%=lectser.getName()%></b></br>
 							<%=v.getTitle()%>
 						</a>
+						<br/>
 						<%
 						while(cli1.hasNext()){%><em><%=cli1.next().getFullName()+"; " %></em><%}
 						%>
