@@ -104,7 +104,15 @@
 		  <p>
 		      <div class="player">
 					<%@ include file="/player/includePlayer.jsp"%>
+			      <span>
+			        <%if(videoLicense.getL2go()==1){%>
+			        	<a href="#"><img id="myTooltip" title="lecture2Go-license-click-for-info" src="/lecture2go-portlet/img/l2go-lizenz-88x31.png" style="width:50px; opacity:0.5; float:right; margin-top:5px; margin-right:2px;"/></a>
+			 		<%}else{%>
+						<a href="#"><img id="myTooltip" title="cc-license-click-for-info" src="/lecture2go-portlet/img/lizenz_cc.png" style="width:20px; opacity:0.5; float:right; margin-top:5px; margin-right:2px;"/></a> 		
+			 		<%}%>       
+			      </span>
 			  </div>
+	      <span class="label label-light" style="float:right; margin-top:6px; margin-right:5px;">${video.hits} views</span>			  
 		  </p>	
 	      <h5 data-date="12.11.2013" style="margin-top:0px; margin-bottom:10px">${video.creators}</h5>
 	      <h5 style="margin-top:0px;">${lectureseries.name}</h5>
@@ -114,15 +122,6 @@
 		  <%}else{%>
 	      	<p>${lectureseries.longDesc}</p>
 		  <%}%>
-	      
-	      <span>
-	        <%if(videoLicense.getL2go()==1){%>
-	        	<a href="#"><img id="myTooltip" title="lecture2Go-license-click-for-info" src="/lecture2go-portlet/img/l2go-lizenz-88x31.png" style="width:50px; opacity:0.5; float:right; margin-top:5px; margin-right:2px;"/></a>
-	 		<%}else{%>
-				<a href="#"><img id="myTooltip" title="cc-license-click-for-info" src="/lecture2go-portlet/img/lizenz_cc.png" style="width:20px; opacity:0.5; float:right; margin-top:5px; margin-right:2px;"/></a> 		
-	 		<%}%>       
-	      </span>
-	      <span class="label label-light" style="float:right; margin-top:6px; margin-right:5px;">${video.hits} views</span>
 	    </div>
 	    
 	    <%
@@ -137,6 +136,9 @@
 				   	 	<li><a href="#share" data-toggle="tab">Share</a></li>
 				    <%}%>
 				    <li><a href="#support" data-toggle="tab">Support</a></li>
+				    <%if(relatedVideos.size()>1){ %>
+				    <li><a href="#related" data-toggle="tab">Related Videos</a></li>
+				    <%}%>
 				</ul>
 				    
 				<div id="my-tab-content" class="tab-content">
@@ -214,6 +216,40 @@
 								%>
 							</div>		        
 				    </div>
+				    
+				    <div class="tab-pane" id="related">
+						<%
+						if(timeEnd==0 || timeEnd<timeStart || video.getCitation2go()==0){
+						%>
+							<c:if test="${relatedVideos.size()>1}">
+								<div id="additional" class="col-md-5">
+								    <h4 style="margin-top:0px; float:left;">Veranstaltungsreihe</h4> &nbsp;
+									<a target="_blank" class="icon-large icon-rss" href="${video.mp4RssLink}"></a>
+									<br/><br/>
+									 <div class="list-group" style="margin: 5px;">
+										<c:forEach items="${relatedVideos}" var="vid">
+											<portlet:actionURL name="viewOpenAccessVideo" var="viewOpenAccessVideoURL">
+												<c:if test="${vid.openAccess==1}"><portlet:param name="objectId" value="${vid.videoId}"/></c:if>
+												<c:if test="${vid.openAccess==0}"><portlet:param name="objectId" value="${vid.getSPreffix()}"/></c:if>
+												<portlet:param name="objectType" value="v"/>
+											</portlet:actionURL>		
+											<c:choose>
+											<c:when test="${video.videoId==vid.videoId}"><a href="#" class="list-group-item active" style="padding-left: 10px; padding-top: 5px; padding-bottom: 5px;"></c:when>
+											<c:otherwise><a href="<%=viewOpenAccessVideoURL%>" class="list-group-item" style="padding-left: 10px; padding-top: 5px; padding-bottom: 5px;"></c:otherwise>
+											</c:choose>	
+										        <img class="preview" src="${vid.imageSmall}">
+										        <h5 class="list-group-item-heading" style="margin-top:4px; margin-bottom:3px;">${vid.title}</h5>
+										        <h5 style="margin-top:0px; margin-bottom:3px; font-size:80%;">${vid.creators}</h5>
+										        <h5 style="margin-top:0px; margin-bottom:0px; font-size:80%;">${vid.date}</h5>			
+											</a>
+										</c:forEach>
+									</div>
+								</div>
+							</c:if>
+						<%
+						}
+						%>				    
+				    </div>
 				</div>    
 			</div>
 		<%
@@ -221,37 +257,6 @@
 	    %>
 	</div>
 	
-	<%
-	if(timeEnd==0 || timeEnd<timeStart || video.getCitation2go()==0){
-	%>
-		<c:if test="${relatedVideos.size()>0}">
-			<div id="additional" class="col-md-5">
-			    <h4 style="margin-top:0px; float:left;">Veranstaltungsreihe</h4> &nbsp;
-				<a target="_blank" class="icon-large icon-rss" href="${video.mp4RssLink}"></a>
-				<br/><br/>
-				 <div class="list-group" style="margin: 5px;">
-					<c:forEach items="${relatedVideos}" var="vid">
-						<portlet:actionURL name="viewOpenAccessVideo" var="viewOpenAccessVideoURL">
-							<c:if test="${vid.openAccess==1}"><portlet:param name="objectId" value="${vid.videoId}"/></c:if>
-							<c:if test="${vid.openAccess==0}"><portlet:param name="objectId" value="${vid.getSPreffix()}"/></c:if>
-							<portlet:param name="objectType" value="v"/>
-						</portlet:actionURL>		
-						<c:choose>
-						<c:when test="${video.videoId==vid.videoId}"><a href="#" class="list-group-item active" style="padding-left: 10px; padding-top: 5px; padding-bottom: 5px;"></c:when>
-						<c:otherwise><a href="<%=viewOpenAccessVideoURL%>" class="list-group-item" style="padding-left: 10px; padding-top: 5px; padding-bottom: 5px;"></c:otherwise>
-						</c:choose>	
-					        <img class="preview" src="${vid.imageSmall}">
-					        <h5 class="list-group-item-heading" style="margin-top:4px; margin-bottom:3px;">${vid.title}</h5>
-					        <h5 style="margin-top:0px; margin-bottom:3px; font-size:80%;">${vid.creators}</h5>
-					        <h5 style="margin-top:0px; margin-bottom:0px; font-size:80%;">${vid.date}</h5>			
-						</a>
-					</c:forEach>
-				</div>
-			</div>
-		</c:if>
-	<%
-	}
-	%>
 	<!-- coockie start -->
 	<script type="text/javascript">
 		$(function(){
