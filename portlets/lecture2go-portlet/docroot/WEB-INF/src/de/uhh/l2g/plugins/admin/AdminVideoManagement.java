@@ -474,13 +474,10 @@ public class AdminVideoManagement extends MVCPortlet {
 				TagcloudLocalServiceUtil.deleteByObjectId(videoId);
 				TagcloudLocalServiceUtil.deleteByObjectId(oldLs.getLectureseriesId());
 				//
-				if(video.getLectureseriesId()>0){
-					//update or generate tag clouds for the new lecture
-					TagcloudLocalServiceUtil.updateByObjectIdAndObjectClassType(tagCloudArrayString, newLect.getClass().getName(), newLect.getLectureseriesId());
-				}else{
-					//update or generate tag cloud for video
-					TagcloudLocalServiceUtil.updateByObjectIdAndObjectClassType(tagCloudArrayString, video.getClass().getName(), video.getVideoId());
-				}
+				
+				//update or generate tag cloud for video
+				TagcloudLocalServiceUtil.updateByObjectIdAndObjectClassType(tagCloudArrayString, video.getClass().getName(), video.getVideoId());
+
 				//set citation 
 				video.setCitation2go(citationAllowed);
 				//password
