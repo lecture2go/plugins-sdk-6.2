@@ -29,18 +29,21 @@ $dockbarOpenGradientEnd: #e9e9e9;
 	}
 }
 
+.view-720 #banner {
+	background: url("") no-repeat scroll right 0 top 0 rgba(0, 0, 0, 0);
+}
 
+.view-960 #banner {
+	background: url("/lecture2go-theme/images/logo_l2go.png") no-repeat scroll right 0 top 0 rgba(0, 0, 0, 0);
+}
+
+.view-720 .taglib-page-iterator .lfr-pagination-buttons {
+    width: 80%;
+    margin-top: -46px;
+}
 
 .aui {
-	
-	#banner {
-		background: url("/lecture2go-theme/images/logo_l2go.png") no-repeat scroll right 0 top 0 rgba(0, 0, 0, 0);
-		
-	}
-	
-	
-	
-	
+
 	.separator {
 		border-color: #BFBFBF transparent #FFF;
 		border-style: solid;

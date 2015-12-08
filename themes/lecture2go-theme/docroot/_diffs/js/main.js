@@ -20,3 +20,5 @@ AUI().ready(
 		}
 	}
 );
+
+AUI().use('aui-viewport');
