@@ -112,6 +112,10 @@ public class Institution_HostLocalServiceImpl
 		List<Institution_Host> institution_host = institution_HostPersistence.findByG_H(groupId, hostId);
 		return institution_host;
 	}
+	public int getByGroupIdAndHostIdCount(long groupId, long hostId) throws SystemException, PortalException {
+		int institution_host = institution_HostPersistence.countByG_H(groupId, hostId);
+		return institution_host;
+	}
 
 	/** Actually this should never give a list because, there can be only one host per isntitution
 	 * */

@@ -188,7 +188,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		else{ // sort Elements newpos <= 1 => shift all, newpos > max attach at back
 			List<Institution> subtree = InstitutionLocalServiceUtil.getByGroupIdAndParent(inst.getGroupId(), inst.getParentId());
 
-			//if (newpos == 0 ) newpos = subElements+1;
+			if (newpos == 0 ) newpos = subElements+1;
 			int increment = 0;
 			for (Institution subInstitution: subtree){
 				 if (newpos <= curPos && increment == 0){ //insert new Institution here

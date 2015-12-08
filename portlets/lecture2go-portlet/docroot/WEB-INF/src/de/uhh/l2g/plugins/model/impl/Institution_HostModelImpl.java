@@ -79,10 +79,11 @@ public class Institution_HostModelImpl extends BaseModelImpl<Institution_Host>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.Institution_Host"),
 			true);
-	public static long GROUPID_COLUMN_BITMASK = 1L;
-	public static long HOSTID_COLUMN_BITMASK = 2L;
-	public static long INSTITUTIONID_COLUMN_BITMASK = 4L;
-	public static long INSTITUTIONHOSTID_COLUMN_BITMASK = 8L;
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long HOSTID_COLUMN_BITMASK = 4L;
+	public static long INSTITUTIONID_COLUMN_BITMASK = 8L;
+	public static long INSTITUTIONHOSTID_COLUMN_BITMASK = 16L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Institution_Host"));
 
@@ -248,7 +249,19 @@ public class Institution_HostModelImpl extends BaseModelImpl<Institution_Host>
 
 	@Override
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	public long getColumnBitmask() {
@@ -351,6 +364,10 @@ public class Institution_HostModelImpl extends BaseModelImpl<Institution_Host>
 
 		institution_HostModelImpl._setOriginalGroupId = false;
 
+		institution_HostModelImpl._originalCompanyId = institution_HostModelImpl._companyId;
+
+		institution_HostModelImpl._setOriginalCompanyId = false;
+
 		institution_HostModelImpl._columnBitmask = 0;
 	}
 
@@ -439,6 +456,8 @@ public class Institution_HostModelImpl extends BaseModelImpl<Institution_Host>
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private Institution_Host _escapedModel;
 }

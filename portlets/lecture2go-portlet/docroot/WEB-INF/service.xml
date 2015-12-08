@@ -251,6 +251,11 @@
         <finder name="GroupId" return-type="Collection">
             <finder-column name="groupId"></finder-column>
         </finder>
+        <finder name="C_G_H" return-type="Collection">
+            <finder-column name="companyId"></finder-column>
+            <finder-column name="groupId"></finder-column>
+            <finder-column name="hostId"></finder-column>
+        </finder>
         <finder name="C_G_I" return-type="Collection">
             <finder-column name="companyId"></finder-column>
             <finder-column name="groupId"></finder-column>

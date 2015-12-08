@@ -315,13 +315,13 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		    long hostId = ParamUtil.getLong(request, "curStreamingServerId");
 
 		    try {
-
+     
 		       ServiceContext serviceContext = ServiceContextFactory.getInstance(
 		        Host.class.getName(), request);
 
 		                    response.setRenderParameter("hostId", Long.toString(hostId));
 
-		       HostLocalServiceUtil.deleteHost(hostId, serviceContext);
+		      if(hostId > 0) HostLocalServiceUtil.deleteHost(hostId, serviceContext);
 		       
 		       SessionMessages.add(request, "request_processed", "streamer-entry-deleted");
 
