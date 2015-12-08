@@ -104,7 +104,15 @@
 		  <p>
 		      <div class="player">
 					<%@ include file="/player/includePlayer.jsp"%>
+			      <span>
+			        <%if(videoLicense.getL2go()==1){%>
+			        	<a href="#"><img id="myTooltip" title="lecture2Go-license-click-for-info" src="/lecture2go-portlet/img/l2go-lizenz-88x31.png" style="width:50px; opacity:0.5; float:right; margin-top:5px; margin-right:2px;"/></a>
+			 		<%}else{%>
+						<a href="#"><img id="myTooltip" title="cc-license-click-for-info" src="/lecture2go-portlet/img/lizenz_cc.png" style="width:20px; opacity:0.5; float:right; margin-top:5px; margin-right:2px;"/></a> 		
+			 		<%}%>       
+			      </span>
 			  </div>
+	      <span class="label label-light" style="float:right; margin-top:6px; margin-right:5px;">${video.hits} views</span>			  
 		  </p>	
 	      <h5 data-date="12.11.2013" style="margin-top:0px; margin-bottom:10px">${video.creators}</h5>
 	      <h5 style="margin-top:0px;">${lectureseries.name}</h5>
@@ -114,15 +122,6 @@
 		  <%}else{%>
 	      	<p>${lectureseries.longDesc}</p>
 		  <%}%>
-	      
-	      <span>
-	        <%if(videoLicense.getL2go()==1){%>
-	        	<a href="#"><img id="myTooltip" title="lecture2Go-license-click-for-info" src="/lecture2go-portlet/img/l2go-lizenz-88x31.png" style="width:50px; opacity:0.5; float:right; margin-top:5px; margin-right:2px;"/></a>
-	 		<%}else{%>
-				<a href="#"><img id="myTooltip" title="cc-license-click-for-info" src="/lecture2go-portlet/img/lizenz_cc.png" style="width:20px; opacity:0.5; float:right; margin-top:5px; margin-right:2px;"/></a> 		
-	 		<%}%>       
-	      </span>
-	      <span class="label label-light" style="float:right; margin-top:6px; margin-right:5px;">${video.hits} views</span>
 	    </div>
 	    
 	    <%
@@ -137,6 +136,12 @@
 				   	 	<li><a href="#share" data-toggle="tab">Share</a></li>
 				    <%}%>
 				    <li><a href="#support" data-toggle="tab">Support</a></li>
+				    <%if((timeEnd==0 || timeEnd<timeStart || video.getCitation2go()==0) && relatedVideos.size()>1){ %>
+				    	<li><a href="#related" data-toggle="tab">Related Videos</a></li>
+				    <%}%>
+				    <%if(video.isHasChapters()){ %>
+				    	<li><a href="#chapters" data-toggle="tab">Chapters</a></li>
+				    <%}%>				    
 				</ul>
 				    
 				<div id="my-tab-content" class="tab-content">
@@ -150,70 +155,179 @@
 					        <p><%@ include file="/guest/includeShare.jsp" %></p>
 					    </div>
 				    <%}%>
-				    <div class="tab-pane" id="support">
-				        <p>
-							<%
-								Integer facultyId = (int)video.getRootInstitutionId();
-								String institut = "";
-								String option1 = PortalUtil.getOriginalServletRequest(request).getParameter("option1"); 
-								
-								switch(facultyId){
-									case 3: institut = "UHH-Jura";break;
-									case 4: institut = "UHH-WiSo";break;
-									case 5: institut = "UHH-Medizin";break;
-									case 6: institut = "UHH-EW";break;
-									case 7: institut = "UHH-GWiss";break;
-									case 8: institut = "UHH-MIN";break;
-									case 203: institut = "UHH-PB";break;
-									case 204: institut = "UHH-BWL";break;
-									default: institut = "Fakultätübergreifend";break;
+					    <div class="tab-pane" id="support">
+					        <p>
+								<%
+									Integer facultyId = (int)video.getRootInstitutionId();
+									String institut = "";
+									String option1 = PortalUtil.getOriginalServletRequest(request).getParameter("option1"); 
+									
+									switch(facultyId){
+										case 3: institut = "UHH-Jura";break;
+										case 4: institut = "UHH-WiSo";break;
+										case 5: institut = "UHH-Medizin";break;
+										case 6: institut = "UHH-EW";break;
+										case 7: institut = "UHH-GWiss";break;
+										case 8: institut = "UHH-MIN";break;
+										case 203: institut = "UHH-PB";break;
+										case 204: institut = "UHH-BWL";break;
+										default: institut = "Fakultätübergreifend";break;
+									}
+									
+									JSONObject jsn = new JSONObject();
+									jsn.put("institution",institut);
+									jsn.put("system","Lecture2Go");
+									jsn.put("role","Lecture2Go-Benutzer");
+									jsn.put("gender","");
+									jsn.put("firstname",PortalUtil.getOriginalServletRequest(request).getParameter("firstname"));
+									jsn.put("lastname",PortalUtil.getOriginalServletRequest(request).getParameter("lastname"));
+									jsn.put("email",PortalUtil.getOriginalServletRequest(request).getParameter("email"));
+									jsn.put("subject",video.getUrl());
+									jsn.put("body",PortalUtil.getOriginalServletRequest(request).getParameter("body"));
+									jsn.put("ergebnis",PortalUtil.getOriginalServletRequest(request).getParameter("ergebnis"));
+									jsn.put("option1",option1);
+									jsn.put("result",PortalUtil.getOriginalServletRequest(request).getParameter("result"));
+									jsn.put("spamprotect",PortalUtil.getOriginalServletRequest(request).getParameter("spamprotect"));
+								%>
+								<div id="metadata">
+									<%
+										String url=video.getUrl();
+										if(video.getOpenAccess()==0)url=video.getSecureUrl();
+										SupportFormularClient sfc = new SupportFormularClient("mail4eLearnSupport",url,jsn.toString(),"");
+										out.print(sfc.getFormular());
+									%>
+									
+									<% 
+										// If support form was submitted, scroll down and select 'support' tab
+										if(option1!=null){
+											%>
+											<script type="text/javascript">
+												$(function() {
+													// activate contact tab
+													$("#tabs li a").eq(-1).click();
+													
+													// Scrolling must happen in onload, because otherwise the Player is not yet loaded and the position would be wrong
+													window.onload = function () {
+														var pos = $("#tabs").offset().top;
+														$('html, body').animate({scrollTop: pos - 10}, 1000, "easeInOutCubic");	
+													}
+													
+												 });
+											</script>
+											<%		
+										}
+									%>
+								</div>		        
+					    </div>
+				    
+						<%
+						if((timeEnd==0 || timeEnd<timeStart || video.getCitation2go()==0) && relatedVideos.size()>1){
+						%>
+				    	<div class="tab-pane" id="related">
+							<c:if test="${relatedVideos.size()>1}">
+								<div id="additional" class="col-md-5">
+								    <h4 style="margin-top:0px; float:left;">Veranstaltungsreihe</h4> &nbsp;
+									<a target="_blank" class="icon-large icon-rss" href="${video.mp4RssLink}"></a>
+									<br/><br/>
+									 <div class="list-group" style="margin: 5px;">
+										<c:forEach items="${relatedVideos}" var="vid">
+											<portlet:actionURL name="viewOpenAccessVideo" var="viewOpenAccessVideoURL">
+												<c:if test="${vid.openAccess==1}"><portlet:param name="objectId" value="${vid.videoId}"/></c:if>
+												<c:if test="${vid.openAccess==0}"><portlet:param name="objectId" value="${vid.getSPreffix()}"/></c:if>
+												<portlet:param name="objectType" value="v"/>
+											</portlet:actionURL>		
+											<c:choose>
+											<c:when test="${video.videoId==vid.videoId}"><a href="#" class="list-group-item active" style="padding-left: 10px; padding-top: 5px; padding-bottom: 5px;"></c:when>
+											<c:otherwise><a href="<%=viewOpenAccessVideoURL%>" class="list-group-item" style="padding-left: 10px; padding-top: 5px; padding-bottom: 5px;"></c:otherwise>
+											</c:choose>	
+										        <img class="preview" src="${vid.imageSmall}">
+										        <h5 class="list-group-item-heading" style="margin-top:4px; margin-bottom:3px;">${vid.title}</h5>
+										        <h5 style="margin-top:0px; margin-bottom:3px; font-size:80%;">${vid.creators}</h5>
+										        <h5 style="margin-top:0px; margin-bottom:0px; font-size:80%;">${vid.date}</h5>			
+											</a>
+										</c:forEach>
+									</div>
+								</div>
+							</c:if>
+				    	</div>
+						<%
+						}
+						%>	
+						<%if(video.isHasChapters() || video.isHasComments()){%>
+					    <div class="tab-pane" id="chapters" style="overflow: auto; width:auto; height:350px; font-size: 1.2em;">
+					    	<liferay-portlet:resourceURL id="showSegments" var="segmentsURL" />
+							<script type="text/javascript">
+								$.ajax({
+								    url: '<%=segmentsURL%>',
+								    method: 'POST',
+								    dataType: "json",
+								    data: {
+								 	   	<portlet:namespace/>videoId: "<%=video.getVideoId()%>",
+								    },
+								    success: function(data, textStatus, jqXHR) {
+								        // since we are using jQuery, you don't need to parse response
+								        drawSegmentRow(data);
+								    }
+								});	
+							
+								function hideSegment(sId){
+									$("b#pf2_"+sId).hide();
+									$("b#pf1_"+sId).show();
+									$("b#iav"+sId).hide();		
+								}
+								function showSegment(sId){
+									$("b#pf1_"+sId).hide();
+									$("b#pf2_"+sId).show();
+									$("b#iav"+sId).show();		
+								}
+								function loadSegment(sId){
+									$("b#pf2_"+sId).show();
+									$("b#pf1_"+sId).hide();
+									$("b#iav"+sId).show();
 								}
 								
-								JSONObject jsn = new JSONObject();
-								jsn.put("institution",institut);
-								jsn.put("system","Lecture2Go");
-								jsn.put("role","Lecture2Go-Benutzer");
-								jsn.put("gender","");
-								jsn.put("firstname",PortalUtil.getOriginalServletRequest(request).getParameter("firstname"));
-								jsn.put("lastname",PortalUtil.getOriginalServletRequest(request).getParameter("lastname"));
-								jsn.put("email",PortalUtil.getOriginalServletRequest(request).getParameter("email"));
-								jsn.put("subject",video.getUrl());
-								jsn.put("body",PortalUtil.getOriginalServletRequest(request).getParameter("body"));
-								jsn.put("ergebnis",PortalUtil.getOriginalServletRequest(request).getParameter("ergebnis"));
-								jsn.put("option1",option1);
-								jsn.put("result",PortalUtil.getOriginalServletRequest(request).getParameter("result"));
-								jsn.put("spamprotect",PortalUtil.getOriginalServletRequest(request).getParameter("spamprotect"));
-							%>
-							<div id="metadata">
-								<%
-									String url=video.getUrl();
-									if(video.getOpenAccess()==0)url=video.getSecureUrl();
-									SupportFormularClient sfc = new SupportFormularClient("mail4eLearnSupport",url,jsn.toString(),"");
-									out.print(sfc.getFormular());
-								%>
+								function drawSegmentRow(data) {
+									for (var i = 0; i < data.length; i++) {
+										drawRow(data[i]);
+								    }
+								}
 								
-								<% 
-									// If support form was submitted, scroll down and select 'support' tab
-									if(option1!=null){
-										%>
-										<script type="text/javascript">
-											$(function() {
-												// activate contact tab
-												$("#tabs li a").eq(-1).click();
-												
-												// Scrolling must happen in onload, because otherwise the Player is not yet loaded and the position would be wrong
-												window.onload = function () {
-													var pos = $("#tabs").offset().top;
-													$('html, body').animate({scrollTop: pos - 10}, 1000, "easeInOutCubic");	
-												}
-												
-											 });
-										</script>
-										<%		
+								function drawRow(segment) {
+								    if(segment.chapter==1){
+								    	newRow='<div class="chaptertile" id="' + segment.segmentId + '" begin="' + segment.start + '" end="' + segment.end + '">'+
+										'<a><img width="130px" height="63px" class="imgsmall" title="watch this chapter" src="'+segment.image+'"></a>'+
+										'<span>'+segment.start +' - '+segment.end+'</span><br/>'+
+										'<a><span>'+segment.title+'</span></a>';
+									}else{
+										newRow='<div class="commenttile" id="'+segment.segmentId+'" onload="alert('+segment.segmentId+')">'+
+							    		'<div>'+
+										'<b id="pf1_'+segment.segmentId+'">'+
+							    		'<input type="image" height="10" width="10" src="/lecture2go-portlet/img/commentOff.png" title="comment on" alt="comment on" id="showr'+segment.segmentId+'" onclick="showSegment('+segment.segmentId+')"/>'+
+							    		'</b>'+
+							    		'<b id="pf2_'+segment.segmentId+'">'+
+							    		'<input type="image" height="10" width="10" src="/lecture2go-portlet/img/commentOn.png" title=" comment off" alt="comment off" id="hidr'+segment.segmentId+'" onclick="hideSegment('+segment.segmentId+')"/>'+
+							    		'</b>'+
+							    		'<span class="fs8">'+segment.start+'</span>'+
+							    		'<a><iavst class="white" begin="'+segment.start+'" end="'+segment.end+'"><span style="font-size:11px;">'+segment.title+'</span></iavst></a>'+
+							    		'</div>';
+							    		if(segment.description >""){
+							    			newRow=newRow+'<b id="iav'+segment.segmentId+'"><span class="fs10"><div id="description"><em>'+segment.description+'</em></div></span></b>';
+							    		}
 									}
-								%>
-							</div>		        
-				    </div>
+									newRow=newRow+'</div>';
+									if(segment.chapter!=1){
+										newRow=newRow+'<script>YUI().use("node-base", function(Y) {Y.on("available", loadSegment('+segment.segmentId+'), "#'+segment.segmentId+'")})<\/script>';
+									}
+									
+									if(segment.previousSegmentId == -1){
+										$("#chapters").append(newRow);
+									}else{
+										$(newRow).insertAfter("#"+ segment.previousSegmentId);
+									}
+								}
+							</script>
+					    </div>
+				    <%}%>
 				</div>    
 			</div>
 		<%
@@ -221,37 +335,6 @@
 	    %>
 	</div>
 	
-	<%
-	if(timeEnd==0 || timeEnd<timeStart || video.getCitation2go()==0){
-	%>
-		<c:if test="${relatedVideos.size()>0}">
-			<div id="additional" class="col-md-5">
-			    <h4 style="margin-top:0px; float:left;">Veranstaltungsreihe</h4> &nbsp;
-				<a target="_blank" class="icon-large icon-rss" href="${video.mp4RssLink}"></a>
-				<br/><br/>
-				 <div class="list-group" style="margin: 5px;">
-					<c:forEach items="${relatedVideos}" var="vid">
-						<portlet:actionURL name="viewOpenAccessVideo" var="viewOpenAccessVideoURL">
-							<c:if test="${vid.openAccess==1}"><portlet:param name="objectId" value="${vid.videoId}"/></c:if>
-							<c:if test="${vid.openAccess==0}"><portlet:param name="objectId" value="${vid.getSPreffix()}"/></c:if>
-							<portlet:param name="objectType" value="v"/>
-						</portlet:actionURL>		
-						<c:choose>
-						<c:when test="${video.videoId==vid.videoId}"><a href="#" class="list-group-item active" style="padding-left: 10px; padding-top: 5px; padding-bottom: 5px;"></c:when>
-						<c:otherwise><a href="<%=viewOpenAccessVideoURL%>" class="list-group-item" style="padding-left: 10px; padding-top: 5px; padding-bottom: 5px;"></c:otherwise>
-						</c:choose>	
-					        <img class="preview" src="${vid.imageSmall}">
-					        <h5 class="list-group-item-heading" style="margin-top:4px; margin-bottom:3px;">${vid.title}</h5>
-					        <h5 style="margin-top:0px; margin-bottom:3px; font-size:80%;">${vid.creators}</h5>
-					        <h5 style="margin-top:0px; margin-bottom:0px; font-size:80%;">${vid.date}</h5>			
-						</a>
-					</c:forEach>
-				</div>
-			</div>
-		</c:if>
-	<%
-	}
-	%>
 	<!-- coockie start -->
 	<script type="text/javascript">
 		$(function(){
