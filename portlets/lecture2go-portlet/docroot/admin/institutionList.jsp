@@ -374,7 +374,14 @@ deltaConfigurable="true">
 
 				<aui:button type="submit"></aui:button>
 				<c:if  test='<%= permissionChecker.hasPermission(groupId, institutionModel, groupId, "DELETE_INSTITUTIONS") %>'>
-					<aui:button name="delete" value="Löschen" type="button" href="<%=deleteInstitutionURL.toString() %>" />
+					<c:choose>
+					<c:when test='<%=  InstitutionLocalServiceUtil.getLockingElements(institution.getInstitutionId()) < 1 %>'>
+								<aui:button name="delete" value="Löschen" type="button" href="<%=deleteInstitutionURL.toString() %>" />
+					</c:when>
+					<c:otherwise>
+								<aui:button name="delete" value="Löschen" type="button" disabled="true" href="<%=deleteInstitutionURL.toString() %>" />								
+					</c:otherwise>
+					</c:choose>
 				</c:if>
 			</aui:fieldset>
  		</aui:form>
@@ -426,7 +433,14 @@ deltaConfigurable="true">
 								<aui:input cssClass="smallInput" name="innerListOrder" label="Order" inlineField="true" value='<%= subInstitution.getSort() %>'/>
 								<aui:input name="innerListInstitutionId" type='hidden' inlineField="true" value = "<%= subInstitution.getPrimaryKey() %>"/>
 								<aui:button type="submit"></aui:button>
-								<aui:button name="delete" value="Löschen" type="button" href="<%=deleteSubInstitutionURL.toString() %>" />
+								<c:choose>
+									<c:when test='<%=  InstitutionLocalServiceUtil.getLockingElements(subInstitution.getInstitutionId()) < 1 %>'>
+											<aui:button name="delete" value="Löschen" type="button" href="<%=deleteSubInstitutionURL.toString() %>" />
+									</c:when>
+									<c:otherwise>
+											<aui:button name="delete" value="Löschen" type="button" disabled="true" href="<%=deleteSubInstitutionURL.toString() %>" />								
+									</c:otherwise>
+								</c:choose>
 							</aui:fieldset>
 						</aui:form>
         			</liferay-ui:search-container-column-text>
