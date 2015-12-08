@@ -56,12 +56,12 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		    
 		    //Add default host if empty or default entry does not exist
 		    defaultHostId = HostLocalServiceUtil.getDefaultHostId(companyId,groupId);
-		    System.out.println("Default Host: "+defaultHostId);
+		    //System.out.println("Default Host: "+defaultHostId);
 		    if (defaultHostId == 0) defaultHostId = HostLocalServiceUtil.addDefaultHost(serviceContext).getHostId();
 
 		    //new Tree Root for Institution if empty
 		    defaultInstitutionId = InstitutionLocalServiceUtil.getDefaultInstitutionId(companyId,groupId);
-		    System.out.println("Default Institution: "+defaultInstitutionId);
+		    //System.out.println("Default Institution: "+defaultInstitutionId);
 		    if (defaultInstitutionId == 0) {
 		    	defaultInstitutionId = InstitutionLocalServiceUtil.addDefaultInstitution(serviceContext).getInstitutionId();
 		    	
@@ -71,7 +71,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		    	Institution_Host defaultInstitution_Host = Institution_HostLocalServiceUtil.addEntry(defaultInstitutionId, defaultHostId, serviceContext);
 		    	SessionMessages.add(renderRequest, "entryAdded");
 		    	long defaultInstitution_HostId = defaultInstitution_Host.getPrimaryKey();
-		    	System.out.println("Default Institution_Host: "+defaultInstitution_HostId);
+		    	//System.out.println("Default Institution_Host: "+defaultInstitution_HostId);
 		    }
 		    
 		    

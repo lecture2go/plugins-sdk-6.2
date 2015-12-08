@@ -188,8 +188,9 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		else{ // sort Elements newpos <= 1 => shift all, newpos > max attach at back
 			List<Institution> subtree = InstitutionLocalServiceUtil.getByGroupIdAndParent(inst.getGroupId(), inst.getParentId());
 
-			if (newpos == 0 ) newpos = subElements+1;
+			//delete (virtually append to end and shift all other down)
 			int increment = 0;
+			//System.out.println("Start: " + curPos + " " + newpos + " " + prevPos  + " " +increment+ " " +validPosition);
 			for (Institution subInstitution: subtree){
 				 if (newpos <= curPos && increment == 0){ //insert new Institution here
 					 if (newpos > 0) {
@@ -198,6 +199,8 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 					 }
 					 else { //newpos = 0 <=> remove 
 						 if (curPos > prevPos) increment = -1;
+							//System.out.println(subInstitution.getInstitutionId() +" "+ subInstitution.getName()+ " " + curPos + " " + increment+ " " +validPosition);
+							
 					 }
 				 }
 				 subInstitution.setSort(curPos + increment);
