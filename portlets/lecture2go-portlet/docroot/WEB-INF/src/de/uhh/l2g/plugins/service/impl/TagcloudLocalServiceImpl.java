@@ -108,7 +108,7 @@ public class TagcloudLocalServiceImpl extends TagcloudLocalServiceBaseImpl {
 		tagcloud.setTags(tagCloudString);
 		tagcloud.setObjectClassType(className);
 		tagcloud.setObjectId(objectId);
-		TagcloudLocalServiceUtil.addTagcloud(tagcloud);
+		TagcloudLocalServiceUtil.updateTagcloud(tagcloud);
 	}
 	
 	public void generateForAllLectureseries(){
