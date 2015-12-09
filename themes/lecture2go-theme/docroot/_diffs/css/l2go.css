@@ -33,3 +33,33 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     height: 0px;
     width: 0px;
 }
+
+.view-720 .row-fluid .span3 {
+    margin: 0px;
+    padding: 0px;
+    float: left;
+}
+
+.view-720 .row-fluid .span9 {
+    padding: 0px;
+    margin: 0px;
+    float: left;
+    margin-left: 14px;
+}
+
+
+.view-480 .row-fluid .span3 {
+    width: 100%;
+}
+
+.view-480 .row-fluid .span9 {
+    width: 100%;
+}
+
+.view-480 .taglib-page-iterator {
+    clear: both;
+    height: auto;
+    overflow: hidden;
+    width: auto;
+    height: 49px;
+}
