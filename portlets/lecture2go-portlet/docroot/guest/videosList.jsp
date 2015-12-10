@@ -107,6 +107,7 @@
 %>
 
 <style>
+
 .clicked,
 .clicked:hover,
 .clicked:focus {
@@ -114,6 +115,7 @@
   color: #a94442;
   background-color: #f9f9f9;
 }
+
 .clicked:before {
   position: relative;
   top: 1px;
@@ -133,13 +135,11 @@
 #loadMoreCreators {
 	cursor: pointer
 }
+
 </style>
-
-
 
 <div class="row-fluid">
 	<div class="span3">
-
 
 <liferay-ui:panel-container>
 	<!-- 	parentinstitution filter -->
@@ -261,7 +261,7 @@
 	<portlet:param name="creatorId" value="0"/>
 	<portlet:param name="jspPage" value="/guest/videosList.jsp" />
 </portlet:actionURL>		
-	
+
 <p><%@ include file="/guest/includeSearchField.jsp" %></p>
 		
 <liferay-ui:search-container emptyResultsMessage="no-lectureseries-found" delta="15" iteratorURL="<%=portletURL %>">
