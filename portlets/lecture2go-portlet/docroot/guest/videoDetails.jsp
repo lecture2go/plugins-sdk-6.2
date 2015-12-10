@@ -371,3 +371,13 @@
         $('#tabs').tabs();
     });
 </script>    
+
+<portlet:actionURL var="filterBySearchQuery" name="addFilter">
+	<portlet:param name="jspPage" value="/guest/videosList.jsp" />
+	<portlet:param name="institutionId" value="0"/>
+	<portlet:param name="parentInstitutionId" value="0"/>
+	<portlet:param name="termId" value="0"/>
+	<portlet:param name="categoryId" value="0"/>
+	<portlet:param name="creatorId" value="0"/>
+	<portlet:param name="jspPage" value="/guest/videosList.jsp" />
+</portlet:actionURL>		

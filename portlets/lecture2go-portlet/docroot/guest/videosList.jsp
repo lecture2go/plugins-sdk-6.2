@@ -262,7 +262,6 @@
 	<portlet:param name="jspPage" value="/guest/videosList.jsp" />
 </portlet:actionURL>		
 
-<p><%@ include file="/guest/includeSearchField.jsp" %></p>
 		
 <liferay-ui:search-container emptyResultsMessage="no-lectureseries-found" delta="15" iteratorURL="<%=portletURL %>">
 	<liferay-ui:search-container-results>
