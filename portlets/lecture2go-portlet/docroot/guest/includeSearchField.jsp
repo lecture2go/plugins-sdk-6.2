@@ -4,11 +4,13 @@
 	<portlet:param name="<%=Constants.CMD%>" value="get_search_words" />
 </portlet:resourceURL>
 
+<!-- 
 <aui:form action="${filterBySearchQuery}">
 	<aui:fieldset>
-		<aui:input id="searchQuery" name="searchQuery" inlineField="true" />
+		<aui:input id="searchQuery" name="searchQuery" title="" label="" inlineField="true" />
     </aui:fieldset>
 </aui:form>
+-->
 
 <aui:script>
 	AUI().use('autocomplete-list','aui-base','aui-io-request','autocomplete-filters','autocomplete-highlighters',

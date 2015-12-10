@@ -1,5 +1,5 @@
 .yui3-aclist-content {
-    width: 312px;
+    width: 332px;
 }
 
 input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
@@ -62,4 +62,28 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     overflow: hidden;
     width: auto;
     height: 49px;
+}
+
+.view-960 input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
+    width: 320px;
+    float: right;
+}
+
+.view-720 input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
+    width: 320px;
+    float: right;
+}
+
+.view-480 input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
+    width: 320px;
+    margin: 0;
+}
+
+.view-320 input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
+    width: 237px;
+    margin: 0;
+}
+
+.view-320 .yui3-aclist-content {
+    width: 249px;
 }
