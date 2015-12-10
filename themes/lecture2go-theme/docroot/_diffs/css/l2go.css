@@ -3,7 +3,8 @@
 }
 
 input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
-    width: 300px;
+    width: 320px;
+    margin:0px;
 }
 
 .view-960 #banner {
@@ -59,11 +60,13 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 .view-960 input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     width: 320px;
     float: right;
+    margin:0px;
 }
 
 .view-720 input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     width: 320px;
     float: right;
+    margin:0px;
 }
 
 .view-480 input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
