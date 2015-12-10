@@ -44,15 +44,15 @@
         }
 
         // Start- und Endzeit der Zitatfunktion ermitteln (Durch die URL Parameter)
-        var frameStart = 0;
-        var frameEnd = 0;
+        var frameStart = getUrlParameter('start');
+        var frameEnd = getUrlParameter('end');
         var fs = <%=timeStart%>;
         var fe = <%=timeEnd%>;
         var citationAllowed = <%=video.getCitation2go()%>;
         
 		if(citationAllowed==1 && fs>0 && fe>fs){
 	        frameStart = <%=timeStart%>;
-	        frameEnd = <%=timeEnd%>;			
+	        frameEnd = <%=timeEnd%>;		
 		}
 		
         var containerFormat = "${video.containerFormat}";
@@ -96,8 +96,6 @@
             var $inputTimeStart = $("#<portlet:namespace></portlet:namespace>timeStart").val("");
             var $inputTimeEnd = $("#<portlet:namespace></portlet:namespace>timeEnd").val("");
             var $citation = $("#<portlet:namespace></portlet:namespace>citation").val("");
-            $("#<portlet:namespace></portlet:namespace>_chortTitle").val("");
-
 
             var $chapters = $('#chapters');
             var $chapterDivs = $chapters.find("div.chaptertile");
@@ -146,7 +144,6 @@
                 }
             
                 // Falls neues Kapitel beginnt, zu Kapitel scrollen und hervorheben
-
                 for (var i = 0; i < chapters.length; i++) {
                     // Falls Player in ein Kapitel eintritt, Kapitel Klasse 'active' setzen
                     var $cur = $("#" + chapters[i].id);
@@ -166,8 +163,6 @@
                 }
             });
 
-         
-
             // Diese Stelle ist wiederum nur auf PC nötig.
             // Hiermit wird verhindert, dass der Nutzer per Tastatur
             // aus den Zitatsbereich herausspult
@@ -184,8 +179,6 @@
 
             $('#fullVideo').show();
         
-
-        
         	// Sollte der Nutzer auf die Kapitel klicken,
             // wird zur entsprechenden Stelle gesprungen
             $chapters.find('div.chaptertile').on('click', function(event) {
@@ -200,8 +193,6 @@
             	event.stopPropagation();
             });
 
-
-
             // Im nachfolgenden Abschnitt wird den Nutzer ermöglicht
             // eigene Zitate zu erstellen und zu teilen
             var player = jwplayer();
@@ -210,27 +201,25 @@
             var endFrameTime = undefined;
             var startTimeStr = undefined;
             var entTimeStr = undefined;
-            
 
             // Benutzer setzt Start des Clips
             $inputTimeStart.click(function() {
-            	startFrameTime = player.getPosition();
-                startTimeStr = secondsToTime(Math.floor(startFrameTime));
+                	startFrameTime = Math.round(player.getPosition());
+                    startTimeStr = secondsToTime(Math.floor(startFrameTime));
 
-                $inputTimeStart.val(startTimeStr);
-                
-                if (startFrameTime && endFrameTime) {
-                	// Falls Startzeit nach Endzeit liegt, Zeiten angleichen
-                	if (startFrameTime > endFrameTime) {
-                		endFrameTime = startFrameTime;
-                		endTimeStr = secondsToTime(Math.floor(endFrameTime));
-                		$inputTimeEnd.val(endTimeStr);
-                		
-                	}
-                	//generateClipLink (startFrameTime, endFrameTime);
-                	console.log("start: " + startFrameTime + ", end: " + endFrameTime);
-                }
-                validateClipTime();
+                    $inputTimeStart.val(startTimeStr);
+                    
+                    if (startFrameTime && endFrameTime) {
+                    	// Falls Startzeit nach Endzeit liegt, Zeiten angleichen
+                    	if (startFrameTime > endFrameTime) {
+                    		endFrameTime = startFrameTime;
+                    		endTimeStr = secondsToTime(Math.floor(endFrameTime));
+                    		$inputTimeEnd.val(endTimeStr);
+                    		
+                    	}
+                    	generateClipLink (startFrameTime, endFrameTime);
+                    	console.log("start: " + startFrameTime + ", end: " + endFrameTime);
+                    }
             });
 
             // Benutzer setzt Ende des Clips
@@ -248,8 +237,8 @@
                 		$inputTimeStart.val(startTimeStr);
                 		
                 	}
-                	//generateClipLink (startFrameTime, endFrameTime);
-                	//console.log("start: " + startFrameTime + ", end: " + endFrameTime);
+                	generateClipLink (startFrameTime, endFrameTime);
+                	console.log("start: " + startFrameTime + ", end: " + endFrameTime);
                 }
                 validateClipTime();
             });
@@ -257,26 +246,7 @@
             function generateClipLink (firstFrame, lastFrame) {
             	$citation.val("${video.url}"+"/"+firstFrame+"/"+lastFrame);
             }
-            
-            function validateClipTime () {
-            	// Button addSegment disablen, falls Zeiten leer oder gleich sind
-            	if ( ( $inputTimeStart.val() != "" )
-            		&& ( $inputTimeEnd.val() != "" )
-            		&& ( $inputTimeStart.val() != $inputTimeEnd.val() )) {
-            		console.log("enable");
-            		$buttonAddSegment.prop('disabled', false);
-            	}else{
-            		console.log("disabled");
-            		$buttonAddSegment.prop('disabled', true);
-            	}
-            }
-
-            //$('#clipStartTime').val("").show();
-            //$('#clipEndTime').val("").show();
         });
-
-        //$('#serverInfo').html(server);
-
     });
 
 </script>
