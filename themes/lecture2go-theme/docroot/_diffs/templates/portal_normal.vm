@@ -8,7 +8,7 @@
 	<title>$the_title - $company_name</title>
 
 	<meta content="initial-scale=1.0, width=device-width" name="viewport" />
-
+	
 	$theme.include($top_head_include)
 </head>
 
@@ -44,8 +44,18 @@ $theme.include($body_top_include)
 		#if ($has_navigation || $is_signed_in)
 			#parse ("$full_templates_path/navigation.vm")
 		#end
+		
 	</header>
-
+	
+	#set ($param1="")
+	#set ($param1 = $request.getParameter('_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery')) 
+	
+	<div class="search" style="height:33px;">
+		<form action="/web/vod/l2go/-/get/0/0/0/0/0"  method="post" name="_lgopenaccessvideos_WAR_lecture2goportlet_fm"> 
+		<input style="display:none" autocomplete="off" aria-owns="yui_patched_v3_11_0_1_1449737860306_123" aria-expanded="false" aria-autocomplete="list" class="field yui3-aclist-input" id="_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery" name="_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery" value="$param1" type="text">
+		</form>
+	</div>
+	
 	<div id="content">
 		<nav id="breadcrumbs">#breadcrumbs()</nav>
 
