@@ -82,3 +82,95 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 .view-320 .yui3-aclist-content {
     width: 249px;
 }
+
+#allcreators {
+	font-size: smaller;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;	
+}
+	
+.view-960 #allcreators {
+    width: 36em;
+}
+
+.view-720 #allcreators {
+    width: 26em;
+}
+
+.view-480 #allcreators {
+    width: 16em;
+}
+
+.view-320 #allcreators {
+    width: 6em;
+}
+
+.videotile {
+    border: 0px solid #000;
+    border-radius: 0px;
+    height: auto;
+    padding: 0px;
+}
+
+.videotile.wide {
+    width: 100%;
+}
+
+.videotile .metainfo {
+    color: #494949;
+    padding: 8px;
+    margin-left: 33%;
+}
+
+.view-960 .videotile .metainfo {
+    margin-left: 265px;
+}
+
+.view-720 .videotile .metainfo {
+    margin-left: 213px;
+}
+
+.view-480 .videotile .metainfo {
+    margin-left: 160px;
+}
+
+.view-320 .videotile .metainfo {
+    margin-left: 105px;
+}
+
+.imgmedium {
+    border: 1px solid #808080;
+    border-radius: 0px;
+    float: left;
+    height: auto;
+    margin: 3px 3px 3px 8px;
+    opacity: 0.9;
+    padding: 0px;
+    width: 250px;
+}
+
+.view-720 .imgmedium {
+    width: 200px;
+}
+
+.view-480 .imgmedium {
+    width: 150px;
+}
+
+.view-320 .imgmedium {
+    width: 100px;
+}
+
+.aui ul, .aui ol {
+    padding: 0px;
+    margin: 0px 0px 0px 15px;
+    list-style: none;
+}
+
+.aui body {
+    font-family: TheSansUHH, sans-serif;
+    font-size: 13px;
+}
+
