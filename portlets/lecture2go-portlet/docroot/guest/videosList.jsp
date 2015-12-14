@@ -131,11 +131,6 @@
   float: right;
 }
 
-#loadMoreTerms,
-#loadMoreCreators {
-	cursor: pointer
-}
-
 </style>
 
 <div class="row-fluid">
@@ -293,7 +288,7 @@
 		%>
 		<liferay-ui:search-container-column-text>
 			<div class="videotile wide">
-				<img class="imgmedium" src="<%=vidDummy.getImageMedium()%>"/>
+				<a href=""><img class="imgmedium" src="<%=vidDummy.getImageMedium()%>"/></a>
 					<div class="videotile metainfo">
 					<portlet:actionURL name="viewOpenAccessVideo" var="view1URL">
 						<portlet:param name="objectId" value="<%=oId%>"/>
@@ -312,7 +307,7 @@
 								<a href="<%=view1URL%>"><b><%=lectser.getName()%></b></a>
 								<div id="allcreators">
 									<%
-									while(cli.hasNext()){%><em><%=cli.next().getFullName()+"; " %></em><%}
+									while(cli.hasNext()){%><%=cli.next().getFullName()+"; " %><%}
 									%>
 								</div>
 								<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
@@ -334,7 +329,7 @@
 								</a>
 								<div id="allcreators">
 									<%
-									while(cli1.hasNext()){%><em><%=cli1.next().getFullName()+"; " %></em><%}
+									while(cli1.hasNext()){%><%=cli1.next().getFullName()+"; " %><%}
 									%>
 								</div>
 								<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
@@ -345,11 +340,13 @@
 							<a href="<%=view1URL%>"><b><%=lectser.getName()%></b></a>
 							<div id="allcreators">
 								<%
-								while(cli.hasNext()){%><em><%=cli.next().getFullName()+"; " %></em><%}
+								while(cli.hasNext()){%><%=cli.next().getFullName()+"; " %><%}
 								%>
 							</div>
-							videos <%=videoCount %>
-							<br/>
+							<div id="videoscount">
+								videos <%=videoCount %>
+							</div>
+							
 							<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
 							<br/>
 							<button id="<%="b"+oId%>">toggle</button>
@@ -378,18 +375,18 @@
 						<a href="<%=view1URL%>"><b><%=lectser.getName()%></b></a>
 						<div id="allcreators">
 							<%
-							while(cli.hasNext()){%><em><%=cli.next().getFullName()+"; " %></em><%}
+							while(cli.hasNext()){%><%=cli.next().getFullName()+"; " %><%}
 							%>
 						</div>
 						<%
 						if(videoCount>1){
 							%>
-							<br/>				
-							videos <%=videoCount %>
+							<div id="videoscount">				
+								videos <%=videoCount %>
+							</div>
 							<%					
 						}
 						%>
-						<br/>
 						<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
 						<%
 					}
