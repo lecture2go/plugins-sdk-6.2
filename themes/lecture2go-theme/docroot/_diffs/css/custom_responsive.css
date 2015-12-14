@@ -30,7 +30,7 @@
 				display: block;
 
 				.navbar-inner {
-					@include border-radius(3px);
+					@include border-radius(0px);
 
 					padding: 10px;
 

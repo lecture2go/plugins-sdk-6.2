@@ -1,6 +1,3 @@
-
-@import url(l2go.css);
-
 @import url(base.css);
 
 @import url(application.css);
@@ -19,3 +16,4 @@
 
 @import url(custom.css);
 
+@import url(l2go.css);
