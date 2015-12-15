@@ -33,7 +33,160 @@ package de.uhh.l2g.plugins.util;
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  ***************************************************************************/
 
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.PropsUtil;
+
+import de.uhh.l2g.plugins.model.Host;
+import de.uhh.l2g.plugins.model.Institution_Host;
+import de.uhh.l2g.plugins.model.Producer;
+import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
+import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
+
+
 public class RepositoryManager {
+	
+	//get runtime
+	/** The run cmd. */
+	static Runtime runCmd = Runtime.getRuntime();
+	
+	/**
+	 * Creates the folder.
+	 *
+	 * @param path the path
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public static void createForlder(String path) throws IOException{
+		File folder = new File(path);
+		if(folder.mkdirs()){
+			String[] cmdArray = {PropsUtil.get("lecture2go.shell.bin"), "-cr", "chown nobody " + folder.getAbsolutePath() };
+			runCmd.exec(cmdArray);
+			String[] cmdArray1 = { PropsUtil.get("lecture2go.shell.bin"), "-cr", "chown nobody:nobody " + folder.getAbsolutePath() };
+			runCmd.exec(cmdArray1);
+			String[] cmdArray2 = { PropsUtil.get("lecture2go.shell.bin"), "-cr", "chmod 701 " + folder.getAbsolutePath() };
+			runCmd.exec(cmdArray2);
+		}
+	}
+	
+	/**
+	 * Creates repository and folders if none is existing.
+	 *
+	 * @param host
+	 * @param producer
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public static void createRepository(long groupId) throws IOException{
+		File mediaRep = new File(PropsUtil.get("lecture2go.media.repository"));
+		if(!mediaRep.isDirectory()){
+			createForlder(PropsUtil.get("lecture2go.media.repository")); //media repository 
+			createForlder(PropsUtil.get("lecture2go.images.system.path")); //image subfolder
+			createForlder(PropsUtil.get("lecture2go.media.repository")+"/abo"); //abo
+			//createForlder(PropsUtil.get("lecture2go.media.repository")+"/chapters"); //chapters?
+			createForlder(PropsUtil.get("lecture2go.security.folder")); //security
+			createVHosts(groupId);
+			symlinkToImagesHome();
+			symlinkToAboHome();
+		}
+	}
+	
+	/**
+	 * Test if repository and all required subfolders exist.
+	 *
+	 * @return true, if successful
+	 */
+	public static boolean repositoryExists(){
+		boolean exists = false;
+
+		File mediaRep = new File(PropsUtil.get("lecture2go.media.repository"));
+		
+		File aboRep = new File(PropsUtil.get("lecture2go.media.repository")+"/abo");
+		File imagesRep = new File(PropsUtil.get("lecture2go.images.system.path"));
+		File securityRep = new File(PropsUtil.get("lecture2go.security.folder"));
+		
+		if(mediaRep.isDirectory() && aboRep.isDirectory() && imagesRep.isDirectory() && securityRep.isDirectory())exists = true;
+		
+		return exists;
+	}
+	
+	/**
+	 * Symlink to abo home.
+	 */
+	public static void symlinkToAboHome(){
+		File aboFolder = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo");
+		if (aboFolder.exists()) {
+			String cmd = "ln -s " + aboFolder.getAbsolutePath() + " " + System.getProperty("catalina.base") + "/" + "webapps" + "/" + "abo";
+			try { runCmd.exec(cmd); } catch (IOException e) {}
+		}		
+	}
+
+	/**
+	 * Symlink to images home.
+	 */
+	public static void symlinkToImagesHome(){
+		File imgFolder = new File(PropsUtil.get("lecture2go.images.system.path"));
+		if (imgFolder.exists()) {
+			String cmd = "ln -s " + imgFolder.getAbsolutePath() + " " + System.getProperty("catalina.base") + "/" + "webapps" + "/" + "images";
+			try { runCmd.exec(cmd); } catch (IOException e) {}
+		}		
+	}
+	
+	/**
+	 * Symlink to user home.
+	 *
+	 * @param host the host
+	 * @param producer the producer
+	 */
+	public static void symlinkToUserHome(Host host, Producer producer){
+		File folder = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/");
+		File httpFolder = new File(PropsUtil.get("lecture2go.httpstreaming.video.repository") + "/" + producer.getInstitutionId() + "l2g" + producer.getHomeDir());
+		if (!httpFolder.exists()) {
+			String cmd = "ln -s " + folder.getAbsolutePath() + " " + httpFolder.getAbsolutePath();
+			try { runCmd.exec(cmd); } catch (IOException e) {}
+		}		
+	}
+
+	/**
+	 * Creates vhosts according to database.
+	 *
+	 * @param host
+	 * @param producer
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public static void createVHosts(long groupId) throws IOException{
+		List<Host> hosts;
+
+		//create httpstreaming.video.repository i.e. default folder
+		createForlder(PropsUtil.get("lecture2go.httpstreaming.video.repository"));
+		
+		//retrieving hosts should only fail if default Host has not been generated yet
+		try {
+			hosts = HostLocalServiceUtil.getByGroupId(groupId);
+		
+			//then directories
+			for (Host h : hosts) {
+				//test if producers exist, before writing directory
+				if ( ProducerLocalServiceUtil.getProducersByHostIdCount(h.getHostId()) > 0) {
+					
+					List<Producer> producers = ProducerLocalServiceUtil.getProducersByHostId(h.getHostId());
+					//create host
+					createForlder(PropsUtil.get("lecture2go.media.repository")+"/"+h.getServerRoot());
+					//and user directories 
+					for (Producer p : producers) {
+						createForlder(PropsUtil.get("lecture2go.media.repository")+"/"+h.getServerRoot()+"/"+p.getHomeDir());
+						//create symbolic link to required directory
+						symlinkToUserHome(h, p);
+					}
+				}
+		}
+		} catch (SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	
 
 }
