@@ -894,7 +894,7 @@
 	}
 
 	.modify-pages .delete-tab {
-		@include border-radius(50%);
+		@include border-radius(0%);
 		@include text-shadow(none);
 	}
 
@@ -913,7 +913,7 @@
 	}
 
 	.table {
-		@include border-radius(5px);
+		@include border-radius(0px);
 	}
 
 	input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="number"], input[type="password"], input[type="text"], input[type="time"], input[type="week"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], textarea, .uneditable-input {
@@ -926,7 +926,7 @@
 	}
 
 	input.search-query {
-		border-radius: 15px;
+		border-radius: 0px;
 	}
 
 	.tagselector-focused .tagselector-content .textboxlistentry-holder {
@@ -950,7 +950,7 @@
 
 		.container .btn, .nav li.dropdown.user-avatar {
 			.user-avatar-image {
-				@include border-radius(50%);
+				@include border-radius(0%);
 				@include box-shadow(0 0 0 2px #5594E0);
 			}
 		}
@@ -964,7 +964,7 @@
 		}
 
 		.icon-caret-down {
-			@include border-radius(50%);
+			@include border-radius(0%);
 		}
 
 		.nav {

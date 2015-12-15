@@ -258,7 +258,7 @@
 </portlet:actionURL>		
 
 		
-<liferay-ui:search-container emptyResultsMessage="no-lectureseries-found" delta="15" iteratorURL="<%=portletURL %>">
+<liferay-ui:search-container emptyResultsMessage="no-lectureseries-found" delta="15" iteratorURL="<%=portletURL %>" >
 	<liferay-ui:search-container-results>
 		<%
 			tempLectureseriesList = reqLectureseries;
@@ -310,7 +310,9 @@
 									while(cli.hasNext()){%><%=cli.next().getFullName()+"; " %><%}
 									%>
 								</div>
-								<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
+								<div id="term">
+									<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
+								</div>
 								<%
 							}else{
 								Video v = new VideoImpl();
@@ -332,22 +334,25 @@
 									while(cli1.hasNext()){%><%=cli1.next().getFullName()+"; " %><%}
 									%>
 								</div>
-								<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
+								<div id="term">
+									<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
+								</div>
 								<%
 							}
 						}else{
 							%>
+							<div id="videoscount">
+								<%=videoCount %> videos
+							</div>
 							<a href="<%=view1URL%>"><b><%=lectser.getName()%></b></a>
 							<div id="allcreators">
 								<%
 								while(cli.hasNext()){%><%=cli.next().getFullName()+"; " %><%}
 								%>
 							</div>
-							<div id="videoscount">
-								videos <%=videoCount %>
+							<div id="term">
+								<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
 							</div>
-							
-							<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
 							<br/>
 							<button id="<%="b"+oId%>">toggle</button>
 						    <ul id="<%="p"+oId%>">
@@ -372,6 +377,9 @@
 						}
 					}else{
 						%>
+						<div id="videoscount">				
+							<%=videoCount %> videos
+						</div>
 						<a href="<%=view1URL%>"><b><%=lectser.getName()%></b></a>
 						<div id="allcreators">
 							<%
@@ -381,13 +389,12 @@
 						<%
 						if(videoCount>1){
 							%>
-							<div id="videoscount">				
-								videos <%=videoCount %>
-							</div>
 							<%					
 						}
 						%>
-						<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
+						<div id="term">
+							<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
+						</div>
 						<%
 					}
 					%>
