@@ -243,6 +243,7 @@ thead, th {
     background-image: linear-gradient(to bottom, rgb(227, 227, 227), rgb(227, 227, 227));
     border-width: 0px;
     margin-right: 10px;
+    border-radius: 0px;
 }
 
 .aui .dropdown-menu {
@@ -272,5 +273,6 @@ thead, th {
 }
 
 .aui .table th, .aui .table td {
-    border-bottom: 1px solid #dddddd;
+	border-bottom: 1px solid #DDD;
+	border-top: 0px;
 }

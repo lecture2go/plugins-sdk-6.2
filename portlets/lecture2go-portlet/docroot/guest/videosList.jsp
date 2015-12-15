@@ -354,7 +354,11 @@
 								<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
 							</div>
 							<br/>
-							<button id="<%="b"+oId%>" class="dropdown-toggle direction-down btn">videos found <i class="caret"></i></button>
+							<button id="<%="b"+oId%>" class="dropdown-toggle direction-down btn">
+								<span class="lfr-icon-menu-text">
+									videos found <i class="caret"></i>
+								</span>	
+							</button>
 						    <ul id="<%="p"+oId%>">
 							<%
 							while(vli.hasNext()){
