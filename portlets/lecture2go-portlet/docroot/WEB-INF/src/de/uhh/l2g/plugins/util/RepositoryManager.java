@@ -36,6 +36,7 @@ package de.uhh.l2g.plugins.util;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -91,6 +92,7 @@ public class RepositoryManager {
 			symlinkToAboHome();
 		}
 	}
+	
 	
 	/**
 	 * Test if repository and all required subfolders exist.
@@ -185,6 +187,35 @@ public class RepositoryManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Prepare directory name by extending server Root prefix with id.
+	 * 
+	 * Does not distinguish default directory for multi-site installations
+	 * 
+	 * @param the Host
+	 * @return the string
+	 */
+	public static String prepareServerRoot(long hostId){
+		String base = PropsUtil.get("lecture2go.default.serverRoot");
+		
+		String[] segs = base.split(Pattern.quote( "_" ) );
+
+		String prefix = segs[0];
+		int positions = segs[1].length();
+		if (positions<1) positions = 4; //default
+		
+		String numbering = "";
+		int id = (int) hostId;
+		if (id < Math.pow(10,positions)){
+			for (int i = 1; i < positions; i++){
+				numbering = numbering+String.valueOf(id/(Math.pow(10,positions-i)));
+				id = (int) (id % (Math.pow(10,positions-i)));
+			}
+		}
+		
+		return prefix+"_"+numbering;
 	}
 	
 	
