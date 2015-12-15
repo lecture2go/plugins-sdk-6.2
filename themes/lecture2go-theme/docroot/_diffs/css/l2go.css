@@ -149,6 +149,7 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     opacity: 0.9;
     padding: 0px;
     width: 250px;
+    border: 1px solid #BA9797 !important;
 }
 
 .view-720 .imgmedium {
@@ -174,3 +175,25 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     font-size: 13px;
 }
 
+.search {
+    margin-top: -30px;
+}
+
+.view-480 .search {
+    margin-top: 0px;
+}
+
+.view-320 .search {
+    margin-top: 0px;
+}
+
+#loadMoreTerms, #loadMoreCreators {
+    cursor: pointer;
+    margin-left: 15px;
+    color: rgb(249, 14, 14);
+}
+
+.aui .accordion-inner {
+    padding: 6px 0px;
+    border-top: 1px solid #E5E5E5;
+}
