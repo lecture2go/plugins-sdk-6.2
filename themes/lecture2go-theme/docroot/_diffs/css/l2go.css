@@ -215,6 +215,7 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     margin-top: -15px;
     padding: 0px;
     margin-right: -10px;
+    color: #E2001A;
 }
 
 thead, th {
@@ -237,4 +238,39 @@ thead, th {
 .aui #navigation .nav li.active > a {
     border-radius: 0px;
 }
- 
+
+.aui .btn {
+    background-image: linear-gradient(to bottom, rgb(227, 227, 227), rgb(227, 227, 227));
+    border-width: 0px;
+    margin-right: 10px;
+}
+
+.aui .dropdown-menu {
+    border: 0px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0px;
+}
+
+#searchedvideo {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: small;
+    width: 40em;
+}
+
+.view-720 #searchedvideo {
+    width: 30em;
+}
+
+.view-480 #searchedvideo {
+    width: 20em;
+}
+
+.view-320 #searchedvideo {
+    width: 10em;
+}
+
+.aui .table th, .aui .table td {
+    border-bottom: 1px solid #dddddd;
+}

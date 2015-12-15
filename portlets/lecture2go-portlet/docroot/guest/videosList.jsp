@@ -354,7 +354,7 @@
 								<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
 							</div>
 							<br/>
-							<button id="<%="b"+oId%>">toggle</button>
+							<button id="<%="b"+oId%>" class="dropdown-toggle direction-down btn">videos found <i class="caret"></i></button>
 						    <ul id="<%="p"+oId%>">
 							<%
 							while(vli.hasNext()){
@@ -365,7 +365,14 @@
 									<portlet:param name="objectId" value="<%=vId%>"/>
 									<portlet:param name="objectType" value="v"/>
 								</portlet:actionURL>				
-								<li><a href="<%=vURL%>"><%=v.getTitle()%></a></li>
+								<li>
+									<div id="searchedvideo">
+										<a href="<%=vURL%>">
+											<span class="iclon-large icon-play-circle">&nbsp;</span>
+											<%=v.getTitle()%>
+										</a>
+									</div>
+								</li>
 							<%}%>
 							</ul>
 							<script>
@@ -376,22 +383,21 @@
 							<%	
 						}
 					}else{
-						%>
-						<div id="videoscount">				
-							<%=videoCount %> videos
-						</div>
+						if(videoCount>1){
+							%>
+							<div id="videoscount">				
+								<%=videoCount %> videos
+							</div>
+							<%					
+						}
+						%>						
 						<a href="<%=view1URL%>"><b><%=lectser.getName()%></b></a>
 						<div id="allcreators">
 							<%
 							while(cli.hasNext()){%><%=cli.next().getFullName()+"; " %><%}
 							%>
 						</div>
-						<%
-						if(videoCount>1){
-							%>
-							<%					
-						}
-						%>
+
 						<div id="term">
 							<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
 						</div>
