@@ -170,11 +170,6 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     list-style: none;
 }
 
-.aui body {
-    font-family: TheSansUHH, sans-serif;
-    font-size: 13px;
-}
-
 .search {
     margin-top: -30px;
 }
@@ -196,4 +191,88 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 .aui .accordion-inner {
     padding: 6px 0px;
     border-top: 1px solid #E5E5E5;
+}
+
+#_lgopenaccessvideos_WAR_lecture2goportlet_lectureseriesesSearchContainer_col-1 {
+    padding: 0px;
+    margin: 0px;
+}
+
+.aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle {
+    padding: 4px 4px 5px 10px;
+    background-color: #E3E3E3;
+    font-weight: initial;
+    color: black;
+}
+
+#term {
+    font-size: smaller;
+}
+
+#videoscount {
+    font-size: 11px;
+    float: right;
+    margin-top: -15px;
+    padding: 0px;
+    margin-right: -10px;
+    color: #E2001A;
+}
+
+thead, th {
+    display: none;
+}
+
+.aui .table {
+    border-radius: 0px;
+}
+
+.aui .accordion-group.lfr-panel-extended {
+    border-width: 1px;
+    border-radius: 0px;
+}
+
+.aui .btn-group > .btn:first-child {
+	border-radius: 0px;
+}
+
+.aui #navigation .nav li.active > a {
+    border-radius: 0px;
+}
+
+.aui .btn {
+    background-image: linear-gradient(to bottom, rgb(227, 227, 227), rgb(227, 227, 227));
+    border-width: 0px;
+    margin-right: 10px;
+    border-radius: 0px;
+}
+
+.aui .dropdown-menu {
+    border: 0px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0px;
+}
+
+#searchedvideo {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: small;
+    width: 40em;
+}
+
+.view-720 #searchedvideo {
+    width: 30em;
+}
+
+.view-480 #searchedvideo {
+    width: 20em;
+}
+
+.view-320 #searchedvideo {
+    width: 10em;
+}
+
+.aui .table th, .aui .table td {
+	border-bottom: 1px solid #DDD;
+	border-top: 0px;
 }

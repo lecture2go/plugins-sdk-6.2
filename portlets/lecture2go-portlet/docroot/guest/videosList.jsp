@@ -106,33 +106,6 @@
 		
 %>
 
-<style>
-
-.clicked,
-.clicked:hover,
-.clicked:focus {
-  z-index: 2;
-  color: #a94442;
-  background-color: #f9f9f9;
-}
-
-.clicked:before {
-  position: relative;
-  top: 1px;
-  display: inline-block;
-  font-family: 'Glyphicons Halflings';
-  font-style: normal;
-  font-weight: normal;
-  line-height: 1;
-
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  content: "\e014";
-  float: right;
-}
-
-</style>
-
 <div class="row-fluid">
 	<div class="span3">
 
@@ -150,7 +123,7 @@
 				<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>
 				<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
 			</portlet:actionURL>
-			<li ${hasParentInstitutionFiltered ? 'class="clicked"' : ''}><a href="${filterByParentInstitution}">${parentInstitution.name}</a></li>
+			<li><a href="${filterByParentInstitution}">${parentInstitution.name}</a> <span ${hasParentInstitutionFiltered ? 'class="icon-large icon-check"' : ''}/></li>
 		</c:forEach>
 		</ul>
 	</liferay-ui:panel>
@@ -169,7 +142,7 @@
 				<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>
 				<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
 			</portlet:actionURL>
-			<li ${hasInstitutionFiltered ? 'class="clicked"' : ''}><a href="${filterByInstitution}">${institution.name}</a></li>
+			<li><a href="${filterByInstitution}">${institution.name}</a> <span ${hasInstitutionFiltered ? 'class="icon-large icon-check"' : ''}/></li>
 		</c:forEach>
 		</ul>
 	</liferay-ui:panel>
@@ -188,7 +161,7 @@
 				<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>
 				<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
 			</portlet:actionURL>
-			<li ${hasTermFiltered ? 'class="clicked"' : ''}><a href="${filterByTerm}">${term.termName}</a></li>
+			<li><a href="${filterByTerm}">${term.termName}</a> <span ${hasTermFiltered ? 'class="icon-large icon-check"' : ''}/></li>
 		</c:forEach>
 		</ul>
 		<c:if test="${hasManyTerms}">
@@ -211,11 +184,11 @@
 				<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>	
 				<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
 			</portlet:actionURL>
-			<li ${hasCategoryFiltered ? 'class="clicked"' : ''}><a href="${filterByCategory}">${category.name}</a></li>
+			<li><a href="${filterByCategory}">${category.name}</a> <span ${hasCategoryFiltered ? 'class="icon-large icon-check"' : ''}/></li>
 		</c:forEach>
 		</ul>
 	</liferay-ui:panel>
-	
+
 	<!-- 	creator filter -->
 	<liferay-ui:panel extended="true" title="Person">
 		<c:if test="${!hasCreatorFiltered && hasManyCreators}">
@@ -234,7 +207,7 @@
 				<portlet:param name="creatorId" value='${hasCreatorFiltered ? "0" : creator.creatorId}'/>
 				<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
 			</portlet:actionURL>
-			<li ${hasCreatorFiltered ? 'class="clicked"' : ''}><a href="${filterByCreator}">${creator.fullName}</a></li>
+			<li><a href="${filterByCreator}">${creator.fullName}</a> <span ${hasCreatorFiltered ? 'class="icon-large icon-check"' : ''}/></li>
 		</c:forEach>
 		</ul>
 		<c:if test="${hasManyCreators}">
@@ -258,7 +231,7 @@
 </portlet:actionURL>		
 
 		
-<liferay-ui:search-container emptyResultsMessage="no-lectureseries-found" delta="15" iteratorURL="<%=portletURL %>">
+<liferay-ui:search-container emptyResultsMessage="no-lectureseries-found" delta="15" iteratorURL="<%=portletURL %>" >
 	<liferay-ui:search-container-results>
 		<%
 			tempLectureseriesList = reqLectureseries;
@@ -310,7 +283,9 @@
 									while(cli.hasNext()){%><%=cli.next().getFullName()+"; " %><%}
 									%>
 								</div>
-								<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
+								<div id="term">
+									<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
+								</div>
 								<%
 							}else{
 								Video v = new VideoImpl();
@@ -332,24 +307,31 @@
 									while(cli1.hasNext()){%><%=cli1.next().getFullName()+"; " %><%}
 									%>
 								</div>
-								<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
+								<div id="term">
+									<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
+								</div>
 								<%
 							}
 						}else{
 							%>
+							<div id="videoscount">
+								<%=videoCount %> videos
+							</div>
 							<a href="<%=view1URL%>"><b><%=lectser.getName()%></b></a>
 							<div id="allcreators">
 								<%
 								while(cli.hasNext()){%><%=cli.next().getFullName()+"; " %><%}
 								%>
 							</div>
-							<div id="videoscount">
-								videos <%=videoCount %>
+							<div id="term">
+								<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
 							</div>
-							
-							<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
 							<br/>
-							<button id="<%="b"+oId%>">toggle</button>
+							<button id="<%="b"+oId%>" class="dropdown-toggle direction-down btn">
+								<span class="lfr-icon-menu-text">
+									videos found <i class="caret"></i>
+								</span>	
+							</button>
 						    <ul id="<%="p"+oId%>">
 							<%
 							while(vli.hasNext()){
@@ -360,7 +342,14 @@
 									<portlet:param name="objectId" value="<%=vId%>"/>
 									<portlet:param name="objectType" value="v"/>
 								</portlet:actionURL>				
-								<li><a href="<%=vURL%>"><%=v.getTitle()%></a></li>
+								<li>
+									<div id="searchedvideo">
+										<a href="<%=vURL%>">
+											<span class="iclon-large icon-play-circle">&nbsp;</span>
+											<%=v.getTitle()%>
+										</a>
+									</div>
+								</li>
 							<%}%>
 							</ul>
 							<script>
@@ -371,23 +360,24 @@
 							<%	
 						}
 					}else{
-						%>
+						if(videoCount>1){
+							%>
+							<div id="videoscount">				
+								<%=videoCount %> videos
+							</div>
+							<%					
+						}
+						%>						
 						<a href="<%=view1URL%>"><b><%=lectser.getName()%></b></a>
 						<div id="allcreators">
 							<%
 							while(cli.hasNext()){%><%=cli.next().getFullName()+"; " %><%}
 							%>
 						</div>
-						<%
-						if(videoCount>1){
-							%>
-							<div id="videoscount">				
-								videos <%=videoCount %>
-							</div>
-							<%					
-						}
-						%>
-						<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
+
+						<div id="term">
+							<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
+						</div>
 						<%
 					}
 					%>
