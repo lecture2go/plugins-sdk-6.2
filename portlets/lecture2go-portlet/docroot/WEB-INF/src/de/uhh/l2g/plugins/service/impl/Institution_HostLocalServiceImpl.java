@@ -264,7 +264,7 @@ public class Institution_HostLocalServiceImpl
 				Institution_Host institution_host = institution_hosts.get(0);
 				
 				//write Counter
-				if (institution_host != null) counter.setCurrentId(institution_host.getInstitutionHostId() + 1);
+				if (institution_host != null) counter.setCurrentId(institution_host.getInstitutionHostId());
 				CounterLocalServiceUtil.updateCounter(counter);
 				return institution_host;
 					
