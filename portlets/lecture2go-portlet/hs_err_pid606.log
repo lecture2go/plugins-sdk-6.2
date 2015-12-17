@@ -1,0 +1,780 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGBUS (0xa) at pc=0x000000010c0880b7, pid=606, tid=1811
+#
+# JRE version: Java(TM) SE Runtime Environment (7.0_75-b13) (build 1.7.0_75-b13)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (24.75-b04 mixed mode bsd-amd64 compressed oops)
+# Problematic frame:
+# C  [libzip.dylib+0x30b7]  newEntry+0x154
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.sun.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007f82c300a000):  JavaThread "main" [_thread_in_native, id=1811, stack(0x00007fff546b8000,0x00007fff54738000)]
+
+siginfo:si_signo=SIGBUS: si_errno=0, si_code=2 (BUS_ADRERR), si_addr=0x000000011826498f
+
+Registers:
+RAX=0x00007f82c275dd10, RBX=0x0000000118264983, RCX=0x00000000ffffff01, RDX=0x0000000000000008
+RSP=0x00007fff5472b4f0, RBP=0x00007fff5472b550, RSI=0x0000000000000048, RDI=0x000000010b4e6e00
+R8 =0x0000000000000049, R9 =0x0000000000000a40, R10=0x000000010ca74358, R11=0x00007ff77aaf8456
+R12=0x00000000000002a0, R13=0x00007f82c41fb800, R14=0x00007f82c275dd10, R15=0x00007f82c275ecd0
+RIP=0x000000010c0880b7, EFLAGS=0x0000000000010202, ERR=0x0000000000000004
+  TRAPNO=0x000000000000000e
+
+Top of Stack: (sp=0x00007fff5472b4f0)
+0x00007fff5472b4f0:   0000000000000000 00000000c300a000
+0x00007fff5472b500:   00007f82c2674a00 0000000000000036
+0x00007fff5472b510:   00007fff5472b530 00007f82c275dd10
+0x00007fff5472b520:   00007f82c24befd0 00000000e3b3e732
+0x00007fff5472b530:   00000000000002a0 00007f82c41fb800
+0x00007fff5472b540:   00007f82c275dd10 00007f82c275ecd0
+0x00007fff5472b550:   00007fff5472b5a0 000000010c088725
+0x00007fff5472b560:   0000000000000039 00000039c300a000
+0x00007fff5472b570:   00007fff5472b5be 00007fff5472ba08
+0x00007fff5472b580:   0000000000000039 00007fff5472b5be
+0x00007fff5472b590:   00007f82c275dd10 00007f82c300a1e8
+0x00007fff5472b5a0:   00007fff5472b9f0 000000010c087570
+0x00007fff5472b5b0:   00007fff5472b620 6564000100000001
+0x00007fff5472b5c0:   67326c2f6868752f 736e6967756c702f
+0x00007fff5472b5d0:   56686375536f4e2f 736e495f6f656469
+0x00007fff5472b5e0:   6e6f697475746974 6f69747065637845
+0x00007fff5472b5f0:   007373616c632e6e 0000000000000004
+0x00007fff5472b600:   00007f82c2509910 000000010bd2bd88
+0x00007fff5472b610:   00007f82c300a000 00000000ffffffff
+0x00007fff5472b620:   00007fff5472b690 000000010b788a55
+0x00007fff5472b630:   00007f82c300a000 00007f82c2509910
+0x00007fff5472b640:   000027115472b660 000000010bb1917c
+0x00007fff5472b650:   00007f82c300a000 0000000000000000
+0x00007fff5472b660:   0000000000000000 00007f82c300a000
+0x00007fff5472b670:   00007f82c2703830 000000077c0c8180
+0x00007fff5472b680:   00007f82c2509910 000000077ae02bb0
+0x00007fff5472b690:   00007fff5472bde0 000000010b7afe2c
+0x00007fff5472b6a0:   00000003c300a000 00007f82c300a000
+0x00007fff5472b6b0:   0000000000000000 00007f82c300a000
+0x00007fff5472b6c0:   00000000ffffffff 00007f82c2509910
+0x00007fff5472b6d0:   00007fff5472b710 000000010b77c10a
+0x00007fff5472b6e0:   00007fff5472b7a8 000000010000a000 
+
+Instructions: (pc=0x000000010c0880b7)
+0x000000010c088097:   49 8b 7f 38 e8 9c 1a 00 00 4d 89 77 38 49 89 5f
+0x000000010c0880a7:   40 4c 89 f0 48 85 c0 0f 84 16 05 00 00 48 89 c3
+0x000000010c0880b7:   0f b6 43 0c 0f b6 4b 0d 48 c1 e1 08 48 01 c1 0f
+0x000000010c0880c7:   b6 43 0e 0f b6 53 0f 48 c1 e2 08 48 01 c2 48 c1 
+
+Register to memory mapping:
+
+RAX=0x00007f82c275dd10 is an unknown value
+RBX=0x0000000118264983 is an unknown value
+RCX=0x00000000ffffff01 is an unknown value
+RDX=0x0000000000000008 is an unknown value
+RSP=0x00007fff5472b4f0 is pointing into the stack for thread: 0x00007f82c300a000
+RBP=0x00007fff5472b550 is pointing into the stack for thread: 0x00007f82c300a000
+RSI=0x0000000000000048 is an unknown value
+RDI=0x000000010b4e6e00 is an unknown value
+R8 =0x0000000000000049 is an unknown value
+R9 =0x0000000000000a40 is an unknown value
+R10=0x000000010ca74358 is at entry_point+88 in (nmethod*)0x000000010ca74190
+R11=0x00007ff77aaf8456 is an unknown value
+R12=0x00000000000002a0 is an unknown value
+R13=0x00007f82c41fb800 is an unknown value
+R14=0x00007f82c275dd10 is an unknown value
+R15=0x00007f82c275ecd0 is an unknown value
+
+
+Stack: [0x00007fff546b8000,0x00007fff54738000],  sp=0x00007fff5472b4f0,  free space=461k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C  [libzip.dylib+0x30b7]  newEntry+0x154
+C  [libzip.dylib+0x3725]  ZIP_GetEntry+0xa2
+C  [libzip.dylib+0x2570]  Java_java_util_zip_ZipFile_getEntry+0xdd
+J 106  java.util.zip.ZipFile.getEntry(J[BZ)J (0 bytes) @ 0x000000010ca743ce [0x000000010ca74300+0xce]
+
+Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
+J 106  java.util.zip.ZipFile.getEntry(J[BZ)J (0 bytes) @ 0x000000010ca74358 [0x000000010ca74300+0x58]
+J 134 C2 java.util.zip.ZipFile.getEntry(Ljava/lang/String;)Ljava/util/zip/ZipEntry; (86 bytes) @ 0x000000010caaff18 [0x000000010caafe40+0xd8]
+j  org.eclipse.jdt.internal.compiler.classfmt.ClassFileReader.read(Ljava/util/zip/ZipFile;Ljava/lang/String;Z)Lorg/eclipse/jdt/internal/compiler/classfmt/ClassFileReader;+2
+J 567 C2 org.eclipse.jdt.internal.compiler.batch.FileSystem.findClass(Ljava/lang/String;[CZ)Lorg/eclipse/jdt/internal/compiler/env/NameEnvironmentAnswer; (322 bytes) @ 0x000000010ccd9448 [0x000000010ccd8d60+0x6e8]
+j  org.eclipse.jdt.internal.compiler.batch.FileSystem.findType([[C)Lorg/eclipse/jdt/internal/compiler/env/NameEnvironmentAnswer;+25
+j  org.eclipse.jdt.internal.compiler.lookup.LookupEnvironment.askForType([[C)Lorg/eclipse/jdt/internal/compiler/lookup/ReferenceBinding;+5
+j  org.eclipse.jdt.internal.compiler.lookup.UnresolvedReferenceBinding.resolve(Lorg/eclipse/jdt/internal/compiler/lookup/LookupEnvironment;Z)Lorg/eclipse/jdt/internal/compiler/lookup/ReferenceBinding;+39
+J 603 C2 org.eclipse.jdt.internal.compiler.lookup.CompilationUnitScope.findImport([[CI)Lorg/eclipse/jdt/internal/compiler/lookup/Binding; (307 bytes) @ 0x000000010cd03ee4 [0x000000010cd03ba0+0x344]
+j  org.eclipse.jdt.internal.compiler.lookup.CompilationUnitScope.findSingleImport([[CIZ)Lorg/eclipse/jdt/internal/compiler/lookup/Binding;+85
+j  org.eclipse.jdt.internal.compiler.lookup.CompilationUnitScope.resolveSingleImport(Lorg/eclipse/jdt/internal/compiler/lookup/ImportBinding;I)Lorg/eclipse/jdt/internal/compiler/lookup/Binding;+18
+j  org.eclipse.jdt.internal.compiler.lookup.Scope.getTypeOrPackage([CIZ)Lorg/eclipse/jdt/internal/compiler/lookup/Binding;+973
+j  org.eclipse.jdt.internal.compiler.lookup.Scope.getType([C)Lorg/eclipse/jdt/internal/compiler/lookup/TypeBinding;+15
+j  org.eclipse.jdt.internal.compiler.ast.SingleTypeReference.getTypeBinding(Lorg/eclipse/jdt/internal/compiler/lookup/Scope;)Lorg/eclipse/jdt/internal/compiler/lookup/TypeBinding;+18
+j  org.eclipse.jdt.internal.compiler.ast.TypeReference.internalResolveType(Lorg/eclipse/jdt/internal/compiler/lookup/Scope;)Lorg/eclipse/jdt/internal/compiler/lookup/TypeBinding;+101
+j  org.eclipse.jdt.internal.compiler.ast.TypeReference.resolveType(Lorg/eclipse/jdt/internal/compiler/lookup/BlockScope;Z)Lorg/eclipse/jdt/internal/compiler/lookup/TypeBinding;+2
+j  org.eclipse.jdt.internal.compiler.lookup.SourceTypeBinding.resolveTypesFor(Lorg/eclipse/jdt/internal/compiler/lookup/MethodBinding;)Lorg/eclipse/jdt/internal/compiler/lookup/MethodBinding;+205
+j  org.eclipse.jdt.internal.compiler.apt.dispatch.AnnotationDiscoveryVisitor.visit(Lorg/eclipse/jdt/internal/compiler/ast/MethodDeclaration;Lorg/eclipse/jdt/internal/compiler/lookup/ClassScope;)Z+32
+j  org.eclipse.jdt.internal.compiler.ast.MethodDeclaration.traverse(Lorg/eclipse/jdt/internal/compiler/ASTVisitor;Lorg/eclipse/jdt/internal/compiler/lookup/ClassScope;)V+3
+j  org.eclipse.jdt.internal.compiler.ast.TypeDeclaration.traverse(Lorg/eclipse/jdt/internal/compiler/ASTVisitor;Lorg/eclipse/jdt/internal/compiler/lookup/CompilationUnitScope;)V+317
+j  org.eclipse.jdt.internal.compiler.ast.CompilationUnitDeclaration.traverse(Lorg/eclipse/jdt/internal/compiler/ASTVisitor;Lorg/eclipse/jdt/internal/compiler/lookup/CompilationUnitScope;)V+220
+j  org.eclipse.jdt.internal.compiler.apt.dispatch.RoundEnvImpl.<init>([Lorg/eclipse/jdt/internal/compiler/ast/CompilationUnitDeclaration;[Lorg/eclipse/jdt/internal/compiler/lookup/ReferenceBinding;ZLorg/eclipse/jdt/internal/compiler/apt/dispatch/BaseProcessingEnvImpl;)V+88
+j  org.eclipse.jdt.internal.compiler.apt.dispatch.BaseAnnotationProcessorManager.processAnnotations([Lorg/eclipse/jdt/internal/compiler/ast/CompilationUnitDeclaration;[Lorg/eclipse/jdt/internal/compiler/lookup/ReferenceBinding;Z)V+11
+j  org.eclipse.jdt.internal.compiler.Compiler.processAnnotations()V+131
+j  org.eclipse.jdt.internal.compiler.Compiler.compile([Lorg/eclipse/jdt/internal/compiler/env/ICompilationUnit;)V+51
+j  org.eclipse.jdt.internal.compiler.batch.Main.performCompilation()V+238
+j  org.eclipse.jdt.internal.compiler.batch.Main.compile([Ljava/lang/String;)Z+125
+v  ~StubRoutines::call_stub
+j  sun.reflect.NativeMethodAccessorImpl.invoke0(Ljava/lang/reflect/Method;Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+0
+j  sun.reflect.NativeMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+87
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+57
+j  org.eclipse.jdt.core.JDTCompilerAdapter.execute()Z+256
+j  org.apache.tools.ant.taskdefs.Javac.compile()V+172
+j  org.apache.tools.ant.taskdefs.Javac.execute()V+124
+j  org.apache.tools.ant.UnknownElement.execute()V+25
+j  sun.reflect.GeneratedMethodAccessor4.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+36
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+57
+j  org.apache.tools.ant.dispatch.DispatchUtils.execute(Ljava/lang/Object;)V+518
+j  org.apache.tools.ant.Task.perform()V+22
+j  org.apache.tools.ant.taskdefs.Sequential.execute()V+40
+j  org.apache.tools.ant.UnknownElement.execute()V+25
+j  sun.reflect.GeneratedMethodAccessor4.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+36
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+57
+j  org.apache.tools.ant.dispatch.DispatchUtils.execute(Ljava/lang/Object;)V+518
+j  org.apache.tools.ant.Task.perform()V+22
+j  org.apache.tools.ant.taskdefs.MacroInstance.execute()V+498
+j  org.apache.tools.ant.UnknownElement.execute()V+25
+j  sun.reflect.GeneratedMethodAccessor4.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+36
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+57
+j  org.apache.tools.ant.dispatch.DispatchUtils.execute(Ljava/lang/Object;)V+518
+j  org.apache.tools.ant.Task.perform()V+22
+j  org.apache.tools.ant.taskdefs.Sequential.execute()V+40
+j  net.sf.antcontrib.logic.IfTask.execute()V+69
+j  sun.reflect.GeneratedMethodAccessor8.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+36
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+57
+j  org.apache.tools.ant.dispatch.DispatchUtils.execute(Ljava/lang/Object;)V+518
+j  org.apache.tools.ant.TaskAdapter.execute()V+192
+j  org.apache.tools.ant.UnknownElement.execute()V+25
+j  sun.reflect.GeneratedMethodAccessor4.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+36
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+57
+j  org.apache.tools.ant.dispatch.DispatchUtils.execute(Ljava/lang/Object;)V+518
+j  org.apache.tools.ant.Task.perform()V+22
+j  org.apache.tools.ant.taskdefs.Sequential.execute()V+40
+j  org.apache.tools.ant.UnknownElement.execute()V+25
+j  sun.reflect.GeneratedMethodAccessor4.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+36
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+57
+j  org.apache.tools.ant.dispatch.DispatchUtils.execute(Ljava/lang/Object;)V+518
+j  org.apache.tools.ant.Task.perform()V+22
+j  org.apache.tools.ant.taskdefs.MacroInstance.execute()V+498
+j  org.apache.tools.ant.UnknownElement.execute()V+25
+j  sun.reflect.GeneratedMethodAccessor4.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+36
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+57
+j  org.apache.tools.ant.dispatch.DispatchUtils.execute(Ljava/lang/Object;)V+518
+j  org.apache.tools.ant.Task.perform()V+22
+j  org.apache.tools.ant.taskdefs.Sequential.execute()V+40
+j  net.sf.antcontrib.logic.IfTask.execute()V+69
+j  sun.reflect.GeneratedMethodAccessor8.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+36
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+57
+j  org.apache.tools.ant.dispatch.DispatchUtils.execute(Ljava/lang/Object;)V+518
+j  org.apache.tools.ant.TaskAdapter.execute()V+192
+j  org.apache.tools.ant.UnknownElement.execute()V+25
+j  sun.reflect.GeneratedMethodAccessor4.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+36
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+57
+j  org.apache.tools.ant.dispatch.DispatchUtils.execute(Ljava/lang/Object;)V+518
+j  org.apache.tools.ant.Task.perform()V+22
+j  org.apache.tools.ant.taskdefs.Sequential.execute()V+40
+j  org.apache.tools.ant.UnknownElement.execute()V+25
+j  sun.reflect.GeneratedMethodAccessor4.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+36
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+57
+j  org.apache.tools.ant.dispatch.DispatchUtils.execute(Ljava/lang/Object;)V+518
+j  org.apache.tools.ant.Task.perform()V+22
+j  org.apache.tools.ant.taskdefs.MacroInstance.execute()V+498
+j  org.apache.tools.ant.UnknownElement.execute()V+25
+j  sun.reflect.GeneratedMethodAccessor4.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+36
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+57
+j  org.apache.tools.ant.dispatch.DispatchUtils.execute(Ljava/lang/Object;)V+518
+j  groovy.util.AntBuilder.performTask(Lorg/apache/tools/ant/Task;)Ljava/lang/Object;+66
+j  groovy.util.AntBuilder.nodeCompleted(Ljava/lang/Object;Ljava/lang/Object;)V+195
+j  groovy.util.BuilderSupport.doInvokeMethod(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;+540
+j  groovy.util.AntBuilder.doInvokeMethod(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;+4
+j  groovy.util.BuilderSupport.invokeMethod(Ljava/lang/String;Ljava/lang/Object;)Ljava/lang/Object;+10
+j  org.codehaus.groovy.runtime.InvokerHelper.invokePogoMethod(Ljava/lang/Object;Ljava/lang/String;Ljava/lang/Object;)Ljava/lang/Object;+100
+j  org.codehaus.groovy.runtime.InvokerHelper.invokeMethod(Ljava/lang/Object;Ljava/lang/String;Ljava/lang/Object;)Ljava/lang/Object;+62
+j  org.codehaus.groovy.runtime.ScriptBytecodeAdapter.invokeMethodN(Ljava/lang/Class;Ljava/lang/Object;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/Object;+3
+j  embedded_script_in__Users_sgund_Documents_workspace_for_liferay_6_dot_2_dot_0_plugins_sdk_6_dot_2_build_common_dot_xml.run()Ljava/lang/Object;+860
+j  org.codehaus.groovy.ant.Groovy.parseAndRunScript(Lgroovy/lang/GroovyShell;Ljava/lang/String;Ljava/lang/Object;Ljava/lang/String;Ljava/io/File;Lgroovy/util/AntBuilder;)V+119
+j  org.codehaus.groovy.ant.Groovy.execGroovy(Ljava/lang/String;Ljava/io/PrintStream;)V+502
+j  org.codehaus.groovy.ant.Groovy.execute()V+307
+j  org.apache.tools.ant.UnknownElement.execute()V+25
+j  sun.reflect.GeneratedMethodAccessor4.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+36
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+57
+j  org.apache.tools.ant.dispatch.DispatchUtils.execute(Ljava/lang/Object;)V+518
+j  org.apache.tools.ant.Task.perform()V+22
+j  org.apache.tools.ant.taskdefs.Sequential.execute()V+40
+j  org.apache.tools.ant.UnknownElement.execute()V+25
+j  sun.reflect.GeneratedMethodAccessor4.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+36
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+57
+j  org.apache.tools.ant.dispatch.DispatchUtils.execute(Ljava/lang/Object;)V+518
+j  org.apache.tools.ant.Task.perform()V+22
+j  org.apache.tools.ant.taskdefs.MacroInstance.execute()V+498
+j  org.apache.tools.ant.UnknownElement.execute()V+25
+j  sun.reflect.GeneratedMethodAccessor4.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+36
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+57
+j  org.apache.tools.ant.dispatch.DispatchUtils.execute(Ljava/lang/Object;)V+518
+j  org.apache.tools.ant.Task.perform()V+22
+j  org.apache.tools.ant.taskdefs.Sequential.execute()V+40
+j  net.sf.antcontrib.logic.IfTask$ElseIf.execute()V+11
+j  net.sf.antcontrib.logic.IfTask.execute()V+127
+j  sun.reflect.GeneratedMethodAccessor8.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+36
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+57
+j  org.apache.tools.ant.dispatch.DispatchUtils.execute(Ljava/lang/Object;)V+518
+j  org.apache.tools.ant.TaskAdapter.execute()V+192
+j  org.apache.tools.ant.UnknownElement.execute()V+25
+j  sun.reflect.GeneratedMethodAccessor4.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+36
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+57
+j  org.apache.tools.ant.dispatch.DispatchUtils.execute(Ljava/lang/Object;)V+518
+j  org.apache.tools.ant.Task.perform()V+22
+j  org.apache.tools.ant.taskdefs.Sequential.execute()V+40
+j  net.sf.antcontrib.logic.IfTask.execute()V+151
+j  sun.reflect.GeneratedMethodAccessor8.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+36
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+57
+j  org.apache.tools.ant.dispatch.DispatchUtils.execute(Ljava/lang/Object;)V+518
+j  org.apache.tools.ant.TaskAdapter.execute()V+192
+j  org.apache.tools.ant.UnknownElement.execute()V+25
+j  sun.reflect.GeneratedMethodAccessor4.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+36
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+57
+j  org.apache.tools.ant.dispatch.DispatchUtils.execute(Ljava/lang/Object;)V+518
+j  org.apache.tools.ant.Task.perform()V+22
+j  org.apache.tools.ant.taskdefs.Sequential.execute()V+40
+j  org.apache.tools.ant.UnknownElement.execute()V+25
+j  sun.reflect.GeneratedMethodAccessor4.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+36
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+57
+j  org.apache.tools.ant.dispatch.DispatchUtils.execute(Ljava/lang/Object;)V+518
+j  org.apache.tools.ant.Task.perform()V+22
+j  org.apache.tools.ant.taskdefs.MacroInstance.execute()V+498
+j  org.apache.tools.ant.UnknownElement.execute()V+25
+j  sun.reflect.GeneratedMethodAccessor4.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+36
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+57
+j  org.apache.tools.ant.dispatch.DispatchUtils.execute(Ljava/lang/Object;)V+518
+j  groovy.util.AntBuilder.performTask(Lorg/apache/tools/ant/Task;)Ljava/lang/Object;+66
+j  groovy.util.AntBuilder.nodeCompleted(Ljava/lang/Object;Ljava/lang/Object;)V+195
+j  groovy.util.BuilderSupport.doInvokeMethod(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;+540
+j  groovy.util.AntBuilder.doInvokeMethod(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;+4
+j  groovy.util.BuilderSupport.invokeMethod(Ljava/lang/String;Ljava/lang/Object;)Ljava/lang/Object;+10
+j  org.codehaus.groovy.runtime.InvokerHelper.invokePogoMethod(Ljava/lang/Object;Ljava/lang/String;Ljava/lang/Object;)Ljava/lang/Object;+100
+j  org.codehaus.groovy.runtime.InvokerHelper.invokeMethod(Ljava/lang/Object;Ljava/lang/String;Ljava/lang/Object;)Ljava/lang/Object;+62
+j  org.codehaus.groovy.runtime.ScriptBytecodeAdapter.invokeMethodN(Ljava/lang/Class;Ljava/lang/Object;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/Object;+3
+j  embedded_script_in__Users_sgund_Documents_workspace_for_liferay_6_dot_2_dot_0_plugins_sdk_6_dot_2_build_common_dot_xml.run()Ljava/lang/Object;+860
+j  org.codehaus.groovy.ant.Groovy.parseAndRunScript(Lgroovy/lang/GroovyShell;Ljava/lang/String;Ljava/lang/Object;Ljava/lang/String;Ljava/io/File;Lgroovy/util/AntBuilder;)V+119
+j  org.codehaus.groovy.ant.Groovy.execGroovy(Ljava/lang/String;Ljava/io/PrintStream;)V+502
+j  org.codehaus.groovy.ant.Groovy.execute()V+307
+j  org.apache.tools.ant.UnknownElement.execute()V+25
+j  sun.reflect.GeneratedMethodAccessor4.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+36
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+57
+j  org.apache.tools.ant.dispatch.DispatchUtils.execute(Ljava/lang/Object;)V+518
+j  org.apache.tools.ant.Task.perform()V+22
+j  org.apache.tools.ant.taskdefs.Sequential.execute()V+40
+j  org.apache.tools.ant.UnknownElement.execute()V+25
+j  sun.reflect.GeneratedMethodAccessor4.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+36
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+57
+j  org.apache.tools.ant.dispatch.DispatchUtils.execute(Ljava/lang/Object;)V+518
+j  org.apache.tools.ant.Task.perform()V+22
+j  org.apache.tools.ant.taskdefs.MacroInstance.execute()V+498
+j  org.apache.tools.ant.UnknownElement.execute()V+25
+j  sun.reflect.GeneratedMethodAccessor4.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+36
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+57
+j  org.apache.tools.ant.dispatch.DispatchUtils.execute(Ljava/lang/Object;)V+518
+j  org.apache.tools.ant.Task.perform()V+22
+j  org.apache.tools.ant.taskdefs.Sequential.execute()V+40
+j  net.sf.antcontrib.logic.IfTask.execute()V+69
+j  sun.reflect.GeneratedMethodAccessor8.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+36
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+57
+j  org.apache.tools.ant.dispatch.DispatchUtils.execute(Ljava/lang/Object;)V+518
+j  org.apache.tools.ant.TaskAdapter.execute()V+192
+j  org.apache.tools.ant.UnknownElement.execute()V+25
+j  sun.reflect.GeneratedMethodAccessor4.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+36
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+57
+j  org.apache.tools.ant.dispatch.DispatchUtils.execute(Ljava/lang/Object;)V+518
+j  org.apache.tools.ant.Task.perform()V+22
+j  org.apache.tools.ant.taskdefs.Sequential.execute()V+40
+j  org.apache.tools.ant.UnknownElement.execute()V+25
+j  sun.reflect.GeneratedMethodAccessor4.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+36
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+57
+j  org.apache.tools.ant.dispatch.DispatchUtils.execute(Ljava/lang/Object;)V+518
+j  org.apache.tools.ant.Task.perform()V+22
+j  org.apache.tools.ant.taskdefs.MacroInstance.execute()V+498
+j  org.apache.tools.ant.UnknownElement.execute()V+25
+j  sun.reflect.GeneratedMethodAccessor4.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+36
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+57
+j  org.apache.tools.ant.dispatch.DispatchUtils.execute(Ljava/lang/Object;)V+518
+j  groovy.util.AntBuilder.performTask(Lorg/apache/tools/ant/Task;)Ljava/lang/Object;+66
+j  groovy.util.AntBuilder.nodeCompleted(Ljava/lang/Object;Ljava/lang/Object;)V+195
+j  groovy.util.BuilderSupport.doInvokeMethod(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;+540
+j  groovy.util.AntBuilder.doInvokeMethod(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;+4
+j  groovy.util.BuilderSupport.invokeMethod(Ljava/lang/String;Ljava/lang/Object;)Ljava/lang/Object;+10
+j  org.codehaus.groovy.runtime.InvokerHelper.invokePogoMethod(Ljava/lang/Object;Ljava/lang/String;Ljava/lang/Object;)Ljava/lang/Object;+100
+j  org.codehaus.groovy.runtime.InvokerHelper.invokeMethod(Ljava/lang/Object;Ljava/lang/String;Ljava/lang/Object;)Ljava/lang/Object;+62
+j  org.codehaus.groovy.runtime.ScriptBytecodeAdapter.invokeMethodN(Ljava/lang/Class;Ljava/lang/Object;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/Object;+3
+j  embedded_script_in__Users_sgund_Documents_workspace_for_liferay_6_dot_2_dot_0_plugins_sdk_6_dot_2_build_common_dot_xml.run()Ljava/lang/Object;+860
+j  org.codehaus.groovy.ant.Groovy.parseAndRunScript(Lgroovy/lang/GroovyShell;Ljava/lang/String;Ljava/lang/Object;Ljava/lang/String;Ljava/io/File;Lgroovy/util/AntBuilder;)V+119
+j  org.codehaus.groovy.ant.Groovy.execGroovy(Ljava/lang/String;Ljava/io/PrintStream;)V+502
+j  org.codehaus.groovy.ant.Groovy.execute()V+307
+j  org.apache.tools.ant.UnknownElement.execute()V+25
+j  sun.reflect.GeneratedMethodAccessor4.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+36
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+57
+j  org.apache.tools.ant.dispatch.DispatchUtils.execute(Ljava/lang/Object;)V+518
+j  org.apache.tools.ant.Task.perform()V+22
+j  org.apache.tools.ant.taskdefs.Sequential.execute()V+40
+j  org.apache.tools.ant.UnknownElement.execute()V+25
+j  sun.reflect.GeneratedMethodAccessor4.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+36
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+57
+j  org.apache.tools.ant.dispatch.DispatchUtils.execute(Ljava/lang/Object;)V+518
+j  org.apache.tools.ant.Task.perform()V+22
+j  org.apache.tools.ant.taskdefs.MacroInstance.execute()V+498
+j  org.apache.tools.ant.UnknownElement.execute()V+25
+j  sun.reflect.GeneratedMethodAccessor4.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+36
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+57
+j  org.apache.tools.ant.dispatch.DispatchUtils.execute(Ljava/lang/Object;)V+518
+j  org.apache.tools.ant.Task.perform()V+22
+j  org.apache.tools.ant.Target.execute()V+179
+j  org.apache.tools.ant.Target.performTasks()V+11
+j  org.apache.tools.ant.Project.executeSortedTargets(Ljava/util/Vector;)V+145
+j  org.apache.tools.ant.Project.executeTarget(Ljava/lang/String;)V+27
+j  org.apache.tools.ant.helper.DefaultExecutor.executeTargets(Lorg/apache/tools/ant/Project;[Ljava/lang/String;)V+17
+j  org.eclipse.ant.internal.launching.remote.EclipseDefaultExecutor.executeTargets(Lorg/apache/tools/ant/Project;[Ljava/lang/String;)V+27
+j  org.apache.tools.ant.Project.executeTargets(Ljava/util/Vector;)V+29
+j  org.eclipse.ant.internal.launching.remote.InternalAntRunner.run(Ljava/util/List;)V+825
+j  org.eclipse.ant.internal.launching.remote.InternalAntRunner.main([Ljava/lang/String;)V+11
+v  ~StubRoutines::call_stub
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x00007f82c3008000 JavaThread "Service Thread" daemon [_thread_blocked, id=17411, stack(0x0000000117e2f000,0x0000000117f2f000)]
+  0x00007f82c2821000 JavaThread "C2 CompilerThread1" daemon [_thread_in_native, id=16899, stack(0x0000000117d2c000,0x0000000117e2c000)]
+  0x00007f82c3808800 JavaThread "C2 CompilerThread0" daemon [_thread_in_native, id=16387, stack(0x0000000117c29000,0x0000000117d29000)]
+  0x00007f82c3808000 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=15883, stack(0x0000000117b26000,0x0000000117c26000)]
+  0x00007f82c3805000 JavaThread "Finalizer" daemon [_thread_blocked, id=11523, stack(0x0000000116010000,0x0000000116110000)]
+  0x00007f82c304a800 JavaThread "Reference Handler" daemon [_thread_blocked, id=11011, stack(0x0000000115f0d000,0x000000011600d000)]
+=>0x00007f82c300a000 JavaThread "main" [_thread_in_native, id=1811, stack(0x00007fff546b8000,0x00007fff54738000)]
+
+Other Threads:
+  0x00007f82c400c800 VMThread [stack: 0x0000000115e0a000,0x0000000115f0a000] [id=10499]
+  0x00007f82c4014000 WatcherThread [stack: 0x0000000117f32000,0x0000000118032000] [id=17923]
+
+VM state:not at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Heap
+ PSYoungGen      total 140288K, used 78316K [0x00000007d5500000, 0x00000007de300000, 0x0000000800000000)
+  eden space 135168K, 54% used [0x00000007d5500000,0x00000007d9c7e490,0x00000007dd900000)
+  from space 5120K, 99% used [0x00000007dde00000,0x00000007de2fcd68,0x00000007de300000)
+  to   space 5120K, 0% used [0x00000007dd900000,0x00000007dd900000,0x00000007dde00000)
+ ParOldGen       total 87040K, used 21493K [0x0000000780000000, 0x0000000785500000, 0x00000007d5500000)
+  object space 87040K, 24% used [0x0000000780000000,0x00000007814fd6a8,0x0000000785500000)
+ PSPermGen       total 22016K, used 21986K [0x000000077ae00000, 0x000000077c380000, 0x0000000780000000)
+  object space 22016K, 99% used [0x000000077ae00000,0x000000077c378988,0x000000077c380000)
+
+Card table byte_map: [0x000000010fa00000,0x000000010fe2a000] byte_map_base: 0x000000010be29000
+
+Polling page: 0x000000010c07c000
+
+Code Cache  [0x000000010ca00000, 0x000000010cd10000, 0x000000010fa00000)
+ total_blobs=1118 nmethods=579 adapters=493 free_code_cache=46099Kb largest_free_block=47149952
+
+Compilation events (10 events):
+Event: 11.389 Thread 0x00007f82c3808800 nmethod 600% 0x000000010ccfe490 code [0x000000010ccfe8a0, 0x000000010cd00b30]
+Event: 11.389 Thread 0x00007f82c3808800  601             org.eclipse.jdt.internal.compiler.lookup.PackageBinding::problemId (17 bytes)
+Event: 11.390 Thread 0x00007f82c3808800 nmethod 601 0x000000010ccd2150 code [0x000000010ccd2280, 0x000000010ccd22f8]
+Event: 11.390 Thread 0x00007f82c3808800  602             org.eclipse.jdt.internal.compiler.lookup.TypeBinding::isBaseType (17 bytes)
+Event: 11.390 Thread 0x00007f82c3808800 nmethod 602 0x000000010ccd1f50 code [0x000000010ccd2080, 0x000000010ccd20f8]
+Event: 11.390 Thread 0x00007f82c3808800  603             org.eclipse.jdt.internal.compiler.lookup.CompilationUnitScope::findImport (307 bytes)
+Event: 11.445 Thread 0x00007f82c3808800 nmethod 603 0x000000010cd038d0 code [0x000000010cd03ba0, 0x000000010cd04958]
+Event: 11.445 Thread 0x00007f82c3808800  604             org.eclipse.jdt.internal.compiler.lookup.TypeBinding::isRawType (14 bytes)
+Event: 11.446 Thread 0x00007f82c3808800 nmethod 604 0x000000010ccd1cd0 code [0x000000010ccd1e20, 0x000000010ccd1eb8]
+Event: 11.446 Thread 0x00007f82c3808800  605             org.eclipse.jdt.internal.compiler.util.SimpleLookupTable::put (104 bytes)
+
+GC Heap History (8 events):
+Event: 1.759 GC heap before
+{Heap before GC invocations=1 (full 0):
+ PSYoungGen      total 38912K, used 33792K [0x00000007d5500000, 0x00000007d8000000, 0x0000000800000000)
+  eden space 33792K, 100% used [0x00000007d5500000,0x00000007d7600000,0x00000007d7600000)
+  from space 5120K, 0% used [0x00000007d7b00000,0x00000007d7b00000,0x00000007d8000000)
+  to   space 5120K, 0% used [0x00000007d7600000,0x00000007d7600000,0x00000007d7b00000)
+ ParOldGen       total 87040K, used 0K [0x0000000780000000, 0x0000000785500000, 0x00000007d5500000)
+  object space 87040K, 0% used [0x0000000780000000,0x0000000780000000,0x0000000785500000)
+ PSPermGen       total 21504K, used 7946K [0x000000077ae00000, 0x000000077c300000, 0x0000000780000000)
+  object space 21504K, 36% used [0x000000077ae00000,0x000000077b5c2900,0x000000077c300000)
+Event: 1.778 GC heap after
+Heap after GC invocations=1 (full 0):
+ PSYoungGen      total 38912K, used 5090K [0x00000007d5500000, 0x00000007da100000, 0x0000000800000000)
+  eden space 33792K, 0% used [0x00000007d5500000,0x00000007d5500000,0x00000007d7600000)
+  from space 5120K, 99% used [0x00000007d7600000,0x00000007d7af8a60,0x00000007d7b00000)
+  to   space 5120K, 0% used [0x00000007d9c00000,0x00000007d9c00000,0x00000007da100000)
+ ParOldGen       total 87040K, used 2898K [0x0000000780000000, 0x0000000785500000, 0x00000007d5500000)
+  object space 87040K, 3% used [0x0000000780000000,0x00000007802d4ae0,0x0000000785500000)
+ PSPermGen       total 21504K, used 7946K [0x000000077ae00000, 0x000000077c300000, 0x0000000780000000)
+  object space 21504K, 36% used [0x000000077ae00000,0x000000077b5c2900,0x000000077c300000)
+}
+Event: 2.738 GC heap before
+{Heap before GC invocations=2 (full 0):
+ PSYoungGen      total 38912K, used 38882K [0x00000007d5500000, 0x00000007da100000, 0x0000000800000000)
+  eden space 33792K, 100% used [0x00000007d5500000,0x00000007d7600000,0x00000007d7600000)
+  from space 5120K, 99% used [0x00000007d7600000,0x00000007d7af8a60,0x00000007d7b00000)
+  to   space 5120K, 0% used [0x00000007d9c00000,0x00000007d9c00000,0x00000007da100000)
+ ParOldGen       total 87040K, used 2898K [0x0000000780000000, 0x0000000785500000, 0x00000007d5500000)
+  object space 87040K, 3% used [0x0000000780000000,0x00000007802d4ae0,0x0000000785500000)
+ PSPermGen       total 21504K, used 10781K [0x000000077ae00000, 0x000000077c300000, 0x0000000780000000)
+  object space 21504K, 50% used [0x000000077ae00000,0x000000077b8874f8,0x000000077c300000)
+Event: 2.774 GC heap after
+Heap after GC invocations=2 (full 0):
+ PSYoungGen      total 72704K, used 5113K [0x00000007d5500000, 0x00000007da100000, 0x0000000800000000)
+  eden space 67584K, 0% used [0x00000007d5500000,0x00000007d5500000,0x00000007d9700000)
+  from space 5120K, 99% used [0x00000007d9c00000,0x00000007da0fe4f8,0x00000007da100000)
+  to   space 5120K, 0% used [0x00000007d9700000,0x00000007d9700000,0x00000007d9c00000)
+ ParOldGen       total 87040K, used 9331K [0x0000000780000000, 0x0000000785500000, 0x00000007d5500000)
+  object space 87040K, 10% used [0x0000000780000000,0x000000078091cc38,0x0000000785500000)
+ PSPermGen       total 21504K, used 10781K [0x000000077ae00000, 0x000000077c300000, 0x0000000780000000)
+  object space 21504K, 50% used [0x000000077ae00000,0x000000077b8874f8,0x000000077c300000)
+}
+Event: 4.918 GC heap before
+{Heap before GC invocations=3 (full 0):
+ PSYoungGen      total 72704K, used 72697K [0x00000007d5500000, 0x00000007da100000, 0x0000000800000000)
+  eden space 67584K, 100% used [0x00000007d5500000,0x00000007d9700000,0x00000007d9700000)
+  from space 5120K, 99% used [0x00000007d9c00000,0x00000007da0fe4f8,0x00000007da100000)
+  to   space 5120K, 0% used [0x00000007d9700000,0x00000007d9700000,0x00000007d9c00000)
+ ParOldGen       total 87040K, used 9331K [0x0000000780000000, 0x0000000785500000, 0x00000007d5500000)
+  object space 87040K, 10% used [0x0000000780000000,0x000000078091cc38,0x0000000785500000)
+ PSPermGen       total 21504K, used 17590K [0x000000077ae00000, 0x000000077c300000, 0x0000000780000000)
+  object space 21504K, 81% used [0x000000077ae00000,0x000000077bf2d950,0x000000077c300000)
+Event: 4.943 GC heap after
+Heap after GC invocations=3 (full 0):
+ PSYoungGen      total 72704K, used 5113K [0x00000007d5500000, 0x00000007de300000, 0x0000000800000000)
+  eden space 67584K, 0% used [0x00000007d5500000,0x00000007d5500000,0x00000007d9700000)
+  from space 5120K, 99% used [0x00000007d9700000,0x00000007d9bfe578,0x00000007d9c00000)
+  to   space 5120K, 0% used [0x00000007dde00000,0x00000007dde00000,0x00000007de300000)
+ ParOldGen       total 87040K, used 15755K [0x0000000780000000, 0x0000000785500000, 0x00000007d5500000)
+  object space 87040K, 18% used [0x0000000780000000,0x0000000780f62de0,0x0000000785500000)
+ PSPermGen       total 21504K, used 17590K [0x000000077ae00000, 0x000000077c300000, 0x0000000780000000)
+  object space 21504K, 81% used [0x000000077ae00000,0x000000077bf2d950,0x000000077c300000)
+}
+Event: 6.801 GC heap before
+{Heap before GC invocations=4 (full 0):
+ PSYoungGen      total 72704K, used 72697K [0x00000007d5500000, 0x00000007de300000, 0x0000000800000000)
+  eden space 67584K, 100% used [0x00000007d5500000,0x00000007d9700000,0x00000007d9700000)
+  from space 5120K, 99% used [0x00000007d9700000,0x00000007d9bfe578,0x00000007d9c00000)
+  to   space 5120K, 0% used [0x00000007dde00000,0x00000007dde00000,0x00000007de300000)
+ ParOldGen       total 87040K, used 15755K [0x0000000780000000, 0x0000000785500000, 0x00000007d5500000)
+  object space 87040K, 18% used [0x0000000780000000,0x0000000780f62de0,0x0000000785500000)
+ PSPermGen       total 21504K, used 21174K [0x000000077ae00000, 0x000000077c300000, 0x0000000780000000)
+  object space 21504K, 98% used [0x000000077ae00000,0x000000077c2ada30,0x000000077c300000)
+Event: 6.815 GC heap after
+Heap after GC invocations=4 (full 0):
+ PSYoungGen      total 140288K, used 5107K [0x00000007d5500000, 0x00000007de300000, 0x0000000800000000)
+  eden space 135168K, 0% used [0x00000007d5500000,0x00000007d5500000,0x00000007dd900000)
+  from space 5120K, 99% used [0x00000007dde00000,0x00000007de2fcd68,0x00000007de300000)
+  to   space 5120K, 0% used [0x00000007dd900000,0x00000007dd900000,0x00000007dde00000)
+ ParOldGen       total 87040K, used 21493K [0x0000000780000000, 0x0000000785500000, 0x00000007d5500000)
+  object space 87040K, 24% used [0x0000000780000000,0x00000007814fd6a8,0x0000000785500000)
+ PSPermGen       total 21504K, used 21174K [0x000000077ae00000, 0x000000077c300000, 0x0000000780000000)
+  object space 21504K, 98% used [0x000000077ae00000,0x000000077c2ada30,0x000000077c300000)
+}
+
+Deoptimization events (10 events):
+Event: 6.947 Thread 0x00007f82c300a000 Uncommon trap: reason=unreached action=reinterpret pc=0x000000010caabe24 method=java.util.zip.ZipCoder.decoder()Ljava/nio/charset/CharsetDecoder; @ 4
+Event: 6.947 Thread 0x00007f82c300a000 Uncommon trap: reason=unreached action=reinterpret pc=0x000000010caaaa78 method=java.util.zip.ZipCoder.decoder()Ljava/nio/charset/CharsetDecoder; @ 4
+Event: 6.949 Thread 0x00007f82c300a000 Uncommon trap: reason=unreached action=reinterpret pc=0x000000010cac571c method=java.util.zip.ZipCoder.decoder()Ljava/nio/charset/CharsetDecoder; @ 4
+Event: 7.650 Thread 0x00007f82c300a000 Uncommon trap: reason=unloaded action=reinterpret pc=0x000000010cc7a20c method=org.eclipse.jdt.internal.compiler.parser.Parser.consumeToken(I)V @ 1377
+Event: 8.882 Thread 0x00007f82c300a000 Uncommon trap: reason=unloaded action=reinterpret pc=0x000000010cc868a4 method=org.eclipse.jdt.internal.compiler.parser.Parser.getTypeReference(I)Lorg/eclipse/jdt/internal/compiler/ast/TypeReference; @ 328
+Event: 8.885 Thread 0x00007f82c300a000 Uncommon trap: reason=unloaded action=reinterpret pc=0x000000010cc9f094 method=org.eclipse.jdt.internal.compiler.parser.Parser.consumeToken(I)V @ 1437
+Event: 9.340 Thread 0x00007f82c300a000 Uncommon trap: reason=unloaded action=reinterpret pc=0x000000010ccc4500 method=org.eclipse.jdt.internal.compiler.classfmt.ClassFileReader.<init>([B[CZ)V @ 945
+Event: 9.388 Thread 0x00007f82c300a000 Uncommon trap: reason=predicate action=maybe_recompile pc=0x000000010ccbe3ac method=org.eclipse.jdt.internal.compiler.lookup.BinaryTypeBinding.createMethod(Lorg/eclipse/jdt/internal/compiler/env/IBinaryMethod;J[[[C)Lorg/eclipse/jdt/internal/compiler/looku
+Event: 9.673 Thread 0x00007f82c300a000 Uncommon trap: reason=unreached action=reinterpret pc=0x000000010cc87b28 method=org.eclipse.jdt.internal.compiler.lookup.ImportBinding.isStatic()Z @ 4
+Event: 9.865 Thread 0x00007f82c300a000 Uncommon trap: reason=unreached action=reinterpret pc=0x000000010cce3ea4 method=org.eclipse.jdt.internal.compiler.lookup.Scope.getTypeOrPackage([CIZ)Lorg/eclipse/jdt/internal/compiler/lookup/Binding; @ 737
+
+Internal exceptions (10 events):
+Event: 9.336 Thread 0x00007f82c300a000 Threw 0x00000007d94f2030 at /HUDSON/workspace/7u-2-build-macosx-x86_64/jdk7u75/1940/hotspot/src/share/vm/prims/jvm.cpp:1281
+Event: 9.339 Thread 0x00007f82c300a000 Threw 0x00000007d95038c8 at /HUDSON/workspace/7u-2-build-macosx-x86_64/jdk7u75/1940/hotspot/src/share/vm/prims/jvm.cpp:1281
+Event: 9.360 Thread 0x00007f82c300a000 Threw 0x00000007d9524518 at /HUDSON/workspace/7u-2-build-macosx-x86_64/jdk7u75/1940/hotspot/src/share/vm/prims/jvm.cpp:1281
+Event: 9.360 Thread 0x00007f82c300a000 Threw 0x00000007d9533368 at /HUDSON/workspace/7u-2-build-macosx-x86_64/jdk7u75/1940/hotspot/src/share/vm/prims/jvm.cpp:1281
+Event: 9.361 Thread 0x00007f82c300a000 Threw 0x00000007d953d768 at /HUDSON/workspace/7u-2-build-macosx-x86_64/jdk7u75/1940/hotspot/src/share/vm/prims/jvm.cpp:1281
+Event: 9.362 Thread 0x00007f82c300a000 Threw 0x00000007d9545248 at /HUDSON/workspace/7u-2-build-macosx-x86_64/jdk7u75/1940/hotspot/src/share/vm/prims/jvm.cpp:1281
+Event: 9.363 Thread 0x00007f82c300a000 Threw 0x00000007d95562c8 at /HUDSON/workspace/7u-2-build-macosx-x86_64/jdk7u75/1940/hotspot/src/share/vm/prims/jvm.cpp:1281
+Event: 9.502 Thread 0x00007f82c300a000 Threw 0x00000007d96a08c0 at /HUDSON/workspace/7u-2-build-macosx-x86_64/jdk7u75/1940/hotspot/src/share/vm/prims/jvm.cpp:1281
+Event: 9.505 Thread 0x00007f82c300a000 Threw 0x00000007d96aaee0 at /HUDSON/workspace/7u-2-build-macosx-x86_64/jdk7u75/1940/hotspot/src/share/vm/prims/jvm.cpp:1281
+Event: 9.594 Thread 0x00007f82c300a000 Threw 0x00000007d9719f60 at /HUDSON/workspace/7u-2-build-macosx-x86_64/jdk7u75/1940/hotspot/src/share/vm/prims/jvm.cpp:1281
+
+Events (10 events):
+Event: 9.673 Thread 0x00007f82c300a000 DEOPT UNPACKING pc=0x000000010ca39045 sp=0x00007fff5472bb48 mode 2
+Event: 9.865 Thread 0x00007f82c300a000 Uncommon trap: trap_request=0xffffffad fr.pc=0x000000010cce3ea4
+Event: 9.865 Thread 0x00007f82c300a000 DEOPT PACKING pc=0x000000010cce3ea4 sp=0x00007fff5472baf0
+Event: 9.865 Thread 0x00007f82c300a000 DEOPT UNPACKING pc=0x000000010ca39045 sp=0x00007fff5472baa0 mode 2
+Event: 10.150 Thread 0x00007f82c3808800 flushing nmethod 0x000000010cac6f10
+Event: 10.150 Thread 0x00007f82c3808800 flushing nmethod 0x000000010cac8610
+Event: 10.150 Thread 0x00007f82c3808800 flushing nmethod 0x000000010cacaf90
+Event: 10.344 Thread 0x00007f82c3808800 flushing nmethod 0x000000010cadd590
+Event: 10.395 Thread 0x00007f82c3808800 flushing nmethod 0x000000010cc45050
+Event: 10.652 Thread 0x00007f82c3808800 flushing nmethod 0x000000010cad2650
+
+
+Dynamic libraries:
+0x0000000006cae000 	/System/Library/Frameworks/Cocoa.framework/Versions/A/Cocoa
+0x0000000006cae000 	/System/Library/Frameworks/Security.framework/Versions/A/Security
+0x0000000006cae000 	/System/Library/Frameworks/ApplicationServices.framework/Versions/A/ApplicationServices
+0x0000000006cae000 	/usr/lib/libz.1.dylib
+0x0000000006cae000 	/usr/lib/libSystem.B.dylib
+0x0000000006cae000 	/usr/lib/libobjc.A.dylib
+0x0000000006cae000 	/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation
+0x0000000006cae000 	/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation
+0x0000000006cae000 	/System/Library/Frameworks/AppKit.framework/Versions/C/AppKit
+0x0000000006cae000 	/System/Library/Frameworks/CoreData.framework/Versions/A/CoreData
+0x0000000006cae000 	/System/Library/PrivateFrameworks/RemoteViewServices.framework/Versions/A/RemoteViewServices
+0x0000000006cae000 	/System/Library/PrivateFrameworks/UIFoundation.framework/Versions/A/UIFoundation
+0x0000000006cae000 	/System/Library/Frameworks/IOSurface.framework/Versions/A/IOSurface
+0x0000000006cae000 	/System/Library/Frameworks/AudioToolbox.framework/Versions/A/AudioToolbox
+0x0000000006cae000 	/System/Library/Frameworks/AudioUnit.framework/Versions/A/AudioUnit
+0x0000000006cae000 	/System/Library/PrivateFrameworks/DataDetectorsCore.framework/Versions/A/DataDetectorsCore
+0x0000000006cae000 	/System/Library/PrivateFrameworks/DesktopServicesPriv.framework/Versions/A/DesktopServicesPriv
+0x0000000006cae000 	/System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/HIToolbox.framework/Versions/A/HIToolbox
+0x0000000006cae000 	/System/Library/Frameworks/QuartzCore.framework/Versions/A/QuartzCore
+0x0000000006cae000 	/System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/SpeechRecognition.framework/Versions/A/SpeechRecognition
+0x0000000006cae000 	/usr/lib/libauto.dylib
+0x0000000006cae000 	/usr/lib/libicucore.A.dylib
+0x0000000006cae000 	/usr/lib/libxml2.2.dylib
+0x0000000006cae000 	/System/Library/PrivateFrameworks/CoreUI.framework/Versions/A/CoreUI
+0x0000000006cae000 	/System/Library/Frameworks/CoreAudio.framework/Versions/A/CoreAudio
+0x0000000006cae000 	/System/Library/Frameworks/DiskArbitration.framework/Versions/A/DiskArbitration
+0x0000000006cae000 	/usr/lib/liblangid.dylib
+0x0000000006cae000 	/System/Library/PrivateFrameworks/MultitouchSupport.framework/Versions/A/MultitouchSupport
+0x0000000006cae000 	/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit
+0x0000000006cae000 	/usr/lib/libDiagnosticMessagesClient.dylib
+0x0000000006cae000 	/System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices
+0x0000000006cae000 	/System/Library/PrivateFrameworks/PerformanceAnalysis.framework/Versions/A/PerformanceAnalysis
+0x0000000006cae000 	/System/Library/PrivateFrameworks/GenerationalStorage.framework/Versions/A/GenerationalStorage
+0x0000000006cae000 	/System/Library/Frameworks/OpenGL.framework/Versions/A/OpenGL
+0x0000000006cae000 	/System/Library/PrivateFrameworks/Sharing.framework/Versions/A/Sharing
+0x0000000006cae000 	/System/Library/Frameworks/CoreGraphics.framework/Versions/A/CoreGraphics
+0x0000000006cae000 	/System/Library/Frameworks/CoreText.framework/Versions/A/CoreText
+0x0000000006cae000 	/System/Library/Frameworks/ImageIO.framework/Versions/A/ImageIO
+0x0000000006cae000 	/usr/lib/libextension.dylib
+0x0000000006cae000 	/System/Library/PrivateFrameworks/Backup.framework/Versions/A/Backup
+0x0000000006cae000 	/usr/lib/libarchive.2.dylib
+0x0000000006cae000 	/System/Library/Frameworks/CFNetwork.framework/Versions/A/CFNetwork
+0x0000000006cae000 	/System/Library/Frameworks/SystemConfiguration.framework/Versions/A/SystemConfiguration
+0x0000000006cae000 	/usr/lib/libCRFSuite.dylib
+0x0000000006cae000 	/usr/lib/libc++.1.dylib
+0x0000000006cae000 	/usr/lib/libc++abi.dylib
+0x0000000006cae000 	/usr/lib/system/libcache.dylib
+0x0000000006cae000 	/usr/lib/system/libcommonCrypto.dylib
+0x0000000006cae000 	/usr/lib/system/libcompiler_rt.dylib
+0x0000000006cae000 	/usr/lib/system/libcopyfile.dylib
+0x0000000006cae000 	/usr/lib/system/libcorecrypto.dylib
+0x0000000006cae000 	/usr/lib/system/libdispatch.dylib
+0x0000000006cae000 	/usr/lib/system/libdyld.dylib
+0x0000000006cae000 	/usr/lib/system/libkeymgr.dylib
+0x0000000006cae000 	/usr/lib/system/liblaunch.dylib
+0x0000000006cae000 	/usr/lib/system/libmacho.dylib
+0x0000000006cae000 	/usr/lib/system/libquarantine.dylib
+0x0000000006cae000 	/usr/lib/system/libremovefile.dylib
+0x0000000006cae000 	/usr/lib/system/libsystem_asl.dylib
+0x0000000006cae000 	/usr/lib/system/libsystem_blocks.dylib
+0x0000000006cae000 	/usr/lib/system/libsystem_c.dylib
+0x0000000006cae000 	/usr/lib/system/libsystem_configuration.dylib
+0x0000000006cae000 	/usr/lib/system/libsystem_coreservices.dylib
+0x0000000006cae000 	/usr/lib/system/libsystem_coretls.dylib
+0x0000000006cae000 	/usr/lib/system/libsystem_dnssd.dylib
+0x0000000006cae000 	/usr/lib/system/libsystem_info.dylib
+0x0000000006cae000 	/usr/lib/system/libsystem_kernel.dylib
+0x0000000006cae000 	/usr/lib/system/libsystem_m.dylib
+0x0000000006cae000 	/usr/lib/system/libsystem_malloc.dylib
+0x0000000006cae000 	/usr/lib/system/libsystem_network.dylib
+0x0000000006cae000 	/usr/lib/system/libsystem_networkextension.dylib
+0x0000000006cae000 	/usr/lib/system/libsystem_notify.dylib
+0x0000000006cae000 	/usr/lib/system/libsystem_platform.dylib
+0x0000000006cae000 	/usr/lib/system/libsystem_pthread.dylib
+0x0000000006cae000 	/usr/lib/system/libsystem_sandbox.dylib
+0x0000000006cae000 	/usr/lib/system/libsystem_secinit.dylib
+0x0000000006cae000 	/usr/lib/system/libsystem_stats.dylib
+0x0000000006cae000 	/usr/lib/system/libsystem_trace.dylib
+0x0000000006cae000 	/usr/lib/system/libunc.dylib
+0x0000000006cae000 	/usr/lib/system/libunwind.dylib
+0x0000000006cae000 	/usr/lib/system/libxpc.dylib
+0x0000000006cae000 	/usr/lib/libbz2.1.0.dylib
+0x0000000006cae000 	/usr/lib/liblzma.5.dylib
+0x0000000006cae000 	/usr/lib/libbsm.0.dylib
+0x0000000006cae000 	/usr/lib/libsqlite3.dylib
+0x0000000006cae000 	/usr/lib/system/libkxld.dylib
+0x0000000006cae000 	/usr/lib/libxar.1.dylib
+0x0000000006cae000 	/usr/lib/libpam.2.dylib
+0x0000000006cae000 	/usr/lib/libOpenScriptingUtil.dylib
+0x0000000006cae000 	/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/FSEvents.framework/Versions/A/FSEvents
+0x0000000006cae000 	/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/CarbonCore.framework/Versions/A/CarbonCore
+0x0000000006cae000 	/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Metadata
+0x0000000006cae000 	/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/OSServices.framework/Versions/A/OSServices
+0x0000000006cae000 	/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/SearchKit.framework/Versions/A/SearchKit
+0x0000000006cae000 	/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/AE.framework/Versions/A/AE
+0x0000000006cae000 	/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/LaunchServices
+0x0000000006cae000 	/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/DictionaryServices.framework/Versions/A/DictionaryServices
+0x0000000006cae000 	/System/Library/Frameworks/NetFS.framework/Versions/A/NetFS
+0x0000000006cae000 	/System/Library/PrivateFrameworks/NetAuth.framework/Versions/A/NetAuth
+0x0000000006cae000 	/System/Library/PrivateFrameworks/login.framework/Versions/A/Frameworks/loginsupport.framework/Versions/A/loginsupport
+0x0000000006cae000 	/System/Library/PrivateFrameworks/TCC.framework/Versions/A/TCC
+0x0000000006cae000 	/usr/lib/libmecabra.dylib
+0x0000000006cae000 	/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/ATS.framework/Versions/A/ATS
+0x0000000006cae000 	/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/ColorSync.framework/Versions/A/ColorSync
+0x0000000006cae000 	/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/HIServices.framework/Versions/A/HIServices
+0x0000000006cae000 	/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/LangAnalysis.framework/Versions/A/LangAnalysis
+0x0000000006cae000 	/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/PrintCore.framework/Versions/A/PrintCore
+0x0000000006cae000 	/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/QD.framework/Versions/A/QD
+0x0000000006cae000 	/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/SpeechSynthesis.framework/Versions/A/SpeechSynthesis
+0x0000000006cae000 	/System/Library/Frameworks/Accelerate.framework/Versions/A/Accelerate
+0x0000000006cae000 	/System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vImage.framework/Versions/A/vImage
+0x0000000006cae000 	/System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/vecLib
+0x0000000006cae000 	/System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libvDSP.dylib
+0x0000000006cae000 	/System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libvMisc.dylib
+0x0000000006cae000 	/System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libLAPACK.dylib
+0x0000000006cae000 	/System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBLAS.dylib
+0x0000000006cae000 	/System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libLinearAlgebra.dylib
+0x0000000006cae000 	/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/ATS.framework/Versions/A/Resources/libFontParser.dylib
+0x0000000006cae000 	/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/ATS.framework/Versions/A/Resources/libFontRegistry.dylib
+0x0000000006cae000 	/System/Library/PrivateFrameworks/AppleVPA.framework/Versions/A/AppleVPA
+0x0000000006cae000 	/System/Library/PrivateFrameworks/AppleJPEG.framework/Versions/A/AppleJPEG
+0x0000000006cae000 	/System/Library/Frameworks/ImageIO.framework/Versions/A/Resources/libJPEG.dylib
+0x0000000006cae000 	/System/Library/Frameworks/ImageIO.framework/Versions/A/Resources/libTIFF.dylib
+0x0000000006cae000 	/System/Library/Frameworks/ImageIO.framework/Versions/A/Resources/libPng.dylib
+0x0000000006cae000 	/System/Library/Frameworks/ImageIO.framework/Versions/A/Resources/libGIF.dylib
+0x0000000006cae000 	/System/Library/Frameworks/ImageIO.framework/Versions/A/Resources/libJP2.dylib
+0x0000000006cae000 	/System/Library/Frameworks/ImageIO.framework/Versions/A/Resources/libRadiance.dylib
+0x0000000006cae000 	/System/Library/Frameworks/CoreVideo.framework/Versions/A/CoreVideo
+0x0000000006cae000 	/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGLU.dylib
+0x0000000006cae000 	/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGFXShared.dylib
+0x0000000006cae000 	/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGL.dylib
+0x0000000006cae000 	/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGLImage.dylib
+0x0000000006cae000 	/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libCVMSPluginSupport.dylib
+0x0000000006cae000 	/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libCoreVMClient.dylib
+0x0000000006cae000 	/usr/lib/libcups.2.dylib
+0x0000000006cae000 	/System/Library/Frameworks/Kerberos.framework/Versions/A/Kerberos
+0x0000000006cae000 	/System/Library/Frameworks/GSS.framework/Versions/A/GSS
+0x0000000006cae000 	/usr/lib/libresolv.9.dylib
+0x0000000006cae000 	/usr/lib/libiconv.2.dylib
+0x0000000006cae000 	/System/Library/PrivateFrameworks/Heimdal.framework/Versions/A/Heimdal
+0x0000000006cae000 	/usr/lib/libheimdal-asn1.dylib
+0x0000000006cae000 	/System/Library/Frameworks/OpenDirectory.framework/Versions/A/OpenDirectory
+0x0000000006cae000 	/System/Library/PrivateFrameworks/CommonAuth.framework/Versions/A/CommonAuth
+0x0000000006cae000 	/System/Library/Frameworks/OpenDirectory.framework/Versions/A/Frameworks/CFOpenDirectory.framework/Versions/A/CFOpenDirectory
+0x0000000006cae000 	/System/Library/Frameworks/SecurityFoundation.framework/Versions/A/SecurityFoundation
+0x0000000006cae000 	/System/Library/PrivateFrameworks/LanguageModeling.framework/Versions/A/LanguageModeling
+0x0000000006cae000 	/usr/lib/libcmph.dylib
+0x0000000006cae000 	/System/Library/Frameworks/ServiceManagement.framework/Versions/A/ServiceManagement
+0x0000000006cae000 	/usr/lib/libxslt.1.dylib
+0x0000000006cae000 	/System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/Ink.framework/Versions/A/Ink
+0x0000000006cae000 	/System/Library/Frameworks/QuartzCore.framework/Versions/A/Frameworks/CoreImage.framework/Versions/A/CoreImage
+0x0000000006cae000 	/System/Library/PrivateFrameworks/CrashReporterSupport.framework/Versions/A/CrashReporterSupport
+0x0000000006cae000 	/System/Library/Frameworks/OpenCL.framework/Versions/A/OpenCL
+0x0000000006cae000 	/System/Library/PrivateFrameworks/FaceCore.framework/Versions/A/FaceCore
+0x0000000006cae000 	/System/Library/PrivateFrameworks/Ubiquity.framework/Versions/A/Ubiquity
+0x0000000006cae000 	/System/Library/PrivateFrameworks/IconServices.framework/Versions/A/IconServices
+0x0000000006cae000 	/System/Library/PrivateFrameworks/ChunkingLibrary.framework/Versions/A/ChunkingLibrary
+0x0000000006cae000 	/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Apple80211
+0x0000000006cae000 	/System/Library/Frameworks/CoreWLAN.framework/Versions/A/CoreWLAN
+0x0000000006cae000 	/System/Library/Frameworks/IOBluetooth.framework/Versions/A/IOBluetooth
+0x0000000006cae000 	/System/Library/PrivateFrameworks/CoreWiFi.framework/Versions/A/CoreWiFi
+0x0000000006cae000 	/System/Library/Frameworks/CoreBluetooth.framework/Versions/A/CoreBluetooth
+0x0000000006cae000 	/System/Library/PrivateFrameworks/DebugSymbols.framework/Versions/A/DebugSymbols
+0x0000000006cae000 	/System/Library/PrivateFrameworks/CoreSymbolication.framework/Versions/A/CoreSymbolication
+0x0000000006cae000 	/System/Library/PrivateFrameworks/Symbolication.framework/Versions/A/Symbolication
+0x0000000006cae000 	/System/Library/PrivateFrameworks/SpeechRecognitionCore.framework/Versions/A/SpeechRecognitionCore
+0x000000010b5c6000 	/Library/Java/JavaVirtualMachines/jdk1.7.0_75.jdk/Contents/Home/jre/lib/server/libjvm.dylib
+0x0000000006cae000 	/usr/lib/libstdc++.6.dylib
+0x000000010c03f000 	/Library/Java/JavaVirtualMachines/jdk1.7.0_75.jdk/Contents/Home/jre/lib/libverify.dylib
+0x000000010c04c000 	/Library/Java/JavaVirtualMachines/jdk1.7.0_75.jdk/Contents/Home/jre/lib/libjava.dylib
+0x000000010c085000 	/Library/Java/JavaVirtualMachines/jdk1.7.0_75.jdk/Contents/Home/jre/lib/libzip.dylib
+0x0000000116112000 	/System/Library/Frameworks/JavaVM.framework/Frameworks/JavaRuntimeSupport.framework/JavaRuntimeSupport
+0x000000010c1ea000 	/System/Library/Frameworks/JavaVM.framework/Versions/A/Frameworks/JavaNativeFoundation.framework/Versions/A/JavaNativeFoundation
+0x000000011612a000 	/System/Library/Frameworks/JavaVM.framework/Versions/A/JavaVM
+0x0000000006cae000 	/System/Library/Frameworks/Carbon.framework/Versions/A/Carbon
+0x0000000116137000 	/System/Library/PrivateFrameworks/JavaLaunching.framework/Versions/A/JavaLaunching
+0x0000000006cae000 	/System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/CommonPanels.framework/Versions/A/CommonPanels
+0x0000000006cae000 	/System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/Help.framework/Versions/A/Help
+0x0000000006cae000 	/System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/ImageCapture.framework/Versions/A/ImageCapture
+0x0000000006cae000 	/System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/OpenScripting.framework/Versions/A/OpenScripting
+0x0000000006cae000 	/System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/Print.framework/Versions/A/Print
+0x0000000006cae000 	/System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/SecurityHI.framework/Versions/A/SecurityHI
+0x0000000118142000 	/Library/Java/JavaVirtualMachines/jdk1.7.0_75.jdk/Contents/Home/jre/lib/libnet.dylib
+0x0000000118213000 	/Library/Java/JavaVirtualMachines/jdk1.7.0_75.jdk/Contents/Home/jre/lib/libnio.dylib
+
+VM Arguments:
+jvm_args: -Dant.home=/Applications/eclipse/plugins/org.apache.ant_1.9.2.v201404171502 -Dant.library.dir=/Applications/eclipse/plugins/org.apache.ant_1.9.2.v201404171502/lib -Djava.library.path=/Users/sgund/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.:/Applications/eclipse/configuration/org.eclipse.osgi/730/0/.cp -Dfile.encoding=UTF-8 
+java_command: org.eclipse.ant.internal.launching.remote.InternalAntRunner -Dorg.eclipse.ant.core.ANT_PROCESS_ID=1450085561576 -Declipse.connect.port=50022 -Declipse.pdebuild.home=/Applications/eclipse/plugins/org.eclipse.pde.build_3.9.0.v20140415-2029/.// -Declipse.pdebuild.scripts=/Applications/eclipse/plugins/org.eclipse.pde.build_3.9.0.v20140415-2029/scripts// -Declipse.pdebuild.templates=/Applications/eclipse/plugins/org.eclipse.pde.build_3.9.0.v20140415-2029/templates// -Dant.home=/Applications/eclipse/plugins/org.apache.ant_1.9.2.v201404171502 -logger org.eclipse.ant.internal.launching.remote.logger.RemoteAntBuildLogger -inputhandler org.eclipse.ant.internal.ui.antsupport.inputhandler.ProxyInputHandler -buildfile /Users/sgund/Documents/workspace-for-liferay-6.2.0/plugins-sdk-6.2/portlets/lecture2go-portlet/build.xml
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+PATH=/usr/bin:/bin:/usr/sbin:/sbin
+SHELL=/bin/bash
+DISPLAY=/private/tmp/com.apple.launchd.wggyi6VzNO/org.macosforge.xquartz:0
+
+Signal Handlers:
+SIGSEGV: [libjvm.dylib+0x52d20d], sa_mask[0]=0xfffefeff, sa_flags=0x00000043
+SIGBUS: [libjvm.dylib+0x52d20d], sa_mask[0]=0xfffefeff, sa_flags=0x00000042
+SIGFPE: [libjvm.dylib+0x41ee7a], sa_mask[0]=0xfffefeff, sa_flags=0x00000042
+SIGPIPE: [libjvm.dylib+0x41ee7a], sa_mask[0]=0xfffefeff, sa_flags=0x00000042
+SIGXFSZ: [libjvm.dylib+0x41ee7a], sa_mask[0]=0xfffefeff, sa_flags=0x00000042
+SIGILL: [libjvm.dylib+0x41ee7a], sa_mask[0]=0xfffefeff, sa_flags=0x00000042
+SIGUSR1: SIG_DFL, sa_mask[0]=0x00000000, sa_flags=0x00000000
+SIGUSR2: [libjvm.dylib+0x41e96c], sa_mask[0]=0x00000004, sa_flags=0x00000042
+SIGHUP: [libjvm.dylib+0x41cbfd], sa_mask[0]=0xfffefeff, sa_flags=0x00000042
+SIGINT: [libjvm.dylib+0x41cbfd], sa_mask[0]=0xfffefeff, sa_flags=0x00000042
+SIGTERM: [libjvm.dylib+0x41cbfd], sa_mask[0]=0xfffefeff, sa_flags=0x00000042
+SIGQUIT: [libjvm.dylib+0x41cbfd], sa_mask[0]=0xfffefeff, sa_flags=0x00000042
+
+
+---------------  S Y S T E M  ---------------
+
+OS:Bsduname:Darwin 14.5.0 Darwin Kernel Version 14.5.0: Tue Sep  1 21:23:09 PDT 2015; root:xnu-2782.50.1~1/RELEASE_X86_64 x86_64
+rlimit: STACK 8192k, CORE 0k, NPROC 709, NOFILE 10240, AS infinity
+load average:4.06 2.50 2.10
+
+CPU:total 4 (2 cores per cpu, 2 threads per core) family 6 model 69 stepping 1, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, avx2, aes, erms, ht, tsc, tscinvbit
+
+Memory: 4k page, physical 8388608k(2097152k free)
+
+/proc/meminfo:
+
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (24.75-b04) for bsd-amd64 JRE (1.7.0_75-b13), built on Dec 18 2014 21:48:12 by "java_re" with gcc 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2336.11.00)
+
+time: Mon Dec 14 10:32:53 2015
+elapsed time: 11 seconds
+

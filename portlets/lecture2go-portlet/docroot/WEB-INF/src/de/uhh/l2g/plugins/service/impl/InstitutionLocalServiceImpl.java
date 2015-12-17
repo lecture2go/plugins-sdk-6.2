@@ -441,7 +441,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 				Institution institution = institutions.get(0);
 				
 				//write Counter
-				if (institution != null) counter.setCurrentId(institution.getInstitutionId() + 1);
+				if (institution != null) counter.setCurrentId(institution.getInstitutionId());
 				CounterLocalServiceUtil.updateCounter(counter);
 				
 				return institution;

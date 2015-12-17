@@ -14,6 +14,7 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.liferay.counter.model.Counter;
@@ -176,6 +177,15 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 		defaultHost.setExpandoBridgeAttributes(serviceContext);
 
 		hostPersistence.update(defaultHost);
+		
+		//Create Directory
+		try {
+			
+			RepositoryManager.createFolder(PropsUtil.get("lecture2go.media.repository")+"/"+ defaultHost.getServerRoot());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
 			       Host.class.getName(), hostId, false, true, true);
@@ -212,6 +222,14 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 
 		hostPersistence.update(host);
 
+		//Create Directory
+		try {
+			RepositoryManager.createFolder(PropsUtil.get("lecture2go.media.repository")+"/"+ host.getServerRoot());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
 			       Host.class.getName(), hostId, false, true, true);
 
@@ -238,6 +256,7 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 //		host.setStreamingServerTemplateId(streamingServerTemplateId);
 		host.setStreamer(streamLocation);
 		host.setProtocol(protocol);
+		//Server Root will be constant over all changes
 		//host.setServerRoot(serverRoot);
 		host.setPort(port);
 		host.setExpandoBridgeAttributes(serviceContext);
@@ -287,8 +306,10 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 				List<Host> hosts = HostLocalServiceUtil.dynamicQuery(query);
 				Host host = hosts.get(0);
 				
+				//TODO: Check back with file system an increment until directory number is free
+				
 				//write Counter
-				if (host != null) counter.setCurrentId(host.getHostId() + 1);
+				if (host != null) counter.setCurrentId(host.getHostId());
 				CounterLocalServiceUtil.updateCounter(counter);
 				
 				return host;

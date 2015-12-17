@@ -60,7 +60,7 @@ public class RepositoryManager {
 	 * @param path the path
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public static void createForlder(String path) throws IOException{
+	public static void createFolder(String path) throws IOException{
 		File folder = new File(path);
 		if(folder.mkdirs()){
 			String[] cmdArray = {PropsUtil.get("lecture2go.shell.bin"), "-cr", "chown nobody " + folder.getAbsolutePath() };
@@ -82,11 +82,11 @@ public class RepositoryManager {
 	public static void createRepository(long groupId) throws IOException{
 		File mediaRep = new File(PropsUtil.get("lecture2go.media.repository"));
 		if(!mediaRep.isDirectory()){
-			createForlder(PropsUtil.get("lecture2go.media.repository")); //media repository 
-			createForlder(PropsUtil.get("lecture2go.images.system.path")); //image subfolder
-			createForlder(PropsUtil.get("lecture2go.media.repository")+"/abo"); //abo
+			createFolder(PropsUtil.get("lecture2go.media.repository")); //media repository 
+			createFolder(PropsUtil.get("lecture2go.images.system.path")); //image subfolder
+			createFolder(PropsUtil.get("lecture2go.media.repository")+"/abo"); //abo
 			//createForlder(PropsUtil.get("lecture2go.media.repository")+"/chapters"); //chapters?
-			createForlder(PropsUtil.get("lecture2go.security.folder")); //security
+			createFolder(PropsUtil.get("lecture2go.security.folder")); //security
 			createVHosts(groupId);
 			symlinkToImagesHome();
 			symlinkToAboHome();
@@ -151,17 +151,16 @@ public class RepositoryManager {
 	}
 
 	/**
-	 * Creates vhosts according to database.
+	 * Creates all vhosts according to database record.
 	 *
-	 * @param host
-	 * @param producer
+	 * @param groupId - the scope of host records to be considered
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static void createVHosts(long groupId) throws IOException{
 		List<Host> hosts;
 
 		//create httpstreaming.video.repository i.e. default folder
-		createForlder(PropsUtil.get("lecture2go.httpstreaming.video.repository"));
+		createFolder(PropsUtil.get("lecture2go.httpstreaming.video.repository"));
 		
 		//retrieving hosts should only fail if default Host has not been generated yet
 		try {
@@ -174,10 +173,10 @@ public class RepositoryManager {
 					
 					List<Producer> producers = ProducerLocalServiceUtil.getProducersByHostId(h.getHostId());
 					//create host
-					createForlder(PropsUtil.get("lecture2go.media.repository")+"/"+h.getServerRoot());
+					createFolder(PropsUtil.get("lecture2go.media.repository")+"/"+h.getServerRoot());
 					//and user directories 
 					for (Producer p : producers) {
-						createForlder(PropsUtil.get("lecture2go.media.repository")+"/"+h.getServerRoot()+"/"+p.getHomeDir());
+						createFolder(PropsUtil.get("lecture2go.media.repository")+"/"+h.getServerRoot()+"/"+p.getHomeDir());
 						//create symbolic link to required directory
 						symlinkToUserHome(h, p);
 					}
@@ -192,10 +191,10 @@ public class RepositoryManager {
 	/**
 	 * Prepare directory name by extending server Root prefix with id.
 	 * 
-	 * Does not distinguish default directory for multi-site installations
+	 * Does not distinguish default directory for multi site/company yet
 	 * 
-	 * @param the Host
-	 * @return the string
+	 * @param hostId
+	 * @return the directory name
 	 */
 	public static String prepareServerRoot(long hostId){
 		String base = PropsUtil.get("lecture2go.default.serverRoot");
@@ -209,13 +208,25 @@ public class RepositoryManager {
 		String numbering = "";
 		int id = (int) hostId;
 		if (id < Math.pow(10,positions)){
-			for (int i = 1; i < positions; i++){
-				numbering = numbering+String.valueOf(id/(Math.pow(10,positions-i)));
+			for (int i = 1; i <= positions; i++){
+				numbering = numbering+String.valueOf((int)Math.floor(id/(Math.pow(10,positions-i))));
 				id = (int) (id % (Math.pow(10,positions-i)));
 			}
+			return prefix+"_"+numbering;
 		}
+		else return "";
 		
-		return prefix+"_"+numbering;
+	}
+	
+	/**
+	 * Retrieve highest Folder Id from repository
+	 * 
+	 * @return the string
+	 */
+	public long getMaximumServerRoot(){
+		return 0;
+		
+		
 	}
 	
 	
