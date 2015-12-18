@@ -168,13 +168,12 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     height: 30px;
 }
 
-.title-small {
-    font-family: TheSansUHHBold,sans-serif;
-    font-weight: normal;
-    font-size: 13px;
-    color: #555;
-    margin-bottom: 0px;
-    padding: 0px;
+.metainfo-small {
+    margin-left: 67px;
+}
+
+.list-group.toggler-content-collapsed.content > li {
+    border-bottom: 1px solid #bcbcbc;
 }
 
 .creator-small2 {
@@ -372,7 +371,6 @@ thead, th {
 }
 
 .title-small {
-	font-family: TheSansUHHBold,sans-serif;
 	font-weight: normal;
 	font-size: 13px;
 	color: #555;

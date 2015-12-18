@@ -434,28 +434,26 @@
 												<span class="play"></span>
 	              								<span class="overlay-small"></span>
 											</div>
-											
-											<div class="title-small"><%=v.getTitle()%></div>
-											<%
-												List<Creator> cv = CreatorLocalServiceUtil.getCreatorsByVideoId(v.getVideoId());
-												ListIterator<Creator> cvi = cl.listIterator();										
-											%>
-		              						
 										</div>
-	              						<div class="creator-small2">
-	              							<% 
-	              								int i=0;
-	              								while(cvi.hasNext()){
-		              								if(i<2){
-		              									%><%=cvi.next().getFullName()+"; " %><%
-		              								}else{
-		              									%><%="ET. AL" %><%
-			              								break;
+										<div class="metainfo-small">
+											<div class="title-small"><%=v.getTitle()%></div>
+		              						<div class="creator-small2">
+												<%
+													List<Creator> cv = CreatorLocalServiceUtil.getCreatorsByVideoId(v.getVideoId());
+													ListIterator<Creator> cvi = cl.listIterator();										
+		              								int i=0;
+		              								while(cvi.hasNext()){
+			              								if(i<2){
+			              									%><%=cvi.next().getFullName()+"; " %><%
+			              								}else{
+			              									%><%="ET. AL" %><%
+				              								break;
+			              								}
+			              								i++;
 		              								}
-		              								i++;
-	              								}
-	              							%>
-	              							&nbsp;|&nbsp;<%=v.getGenerationDate()%>&nbsp;|&nbsp;<%=v.getDuration()%>
+		              							%>
+		              							&nbsp;|&nbsp;<%=v.getGenerationDate()%>&nbsp;|&nbsp;<%=v.getDuration()%>
+		              						</div>
 	              						</div>
 									</a>
 								</li>
