@@ -107,6 +107,90 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     width: 6em;
 }
 
+#myToggler .toggler-header-collapsed:hover .video-image-overlay, #myToggler .toggler-header-collapsed:hover .tri, #myToggler .toggler-header-expanded .video-image-overlay, #myToggler .toggler-header-expanded .tri {
+    visibility: visible;
+}
+
+.layered-paper {
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.15), 0px 8px 0px -5px #666, 0px 8px 1px -4px rgba(0, 0, 0, 0.15), 0px 15px 0px -10px #BBB, 0px 15px 1px -9px rgba(0, 0, 0, 0.15);
+}
+
+.video-image-wrapper {
+    margin-right: 8px;
+    float: left;
+    max-width: 250px;
+    height: 150px;
+}
+
+.video-image-big {
+    position: relative;
+    width: 200px;
+    height: 100px;
+    text-align: center;
+}
+
+.video-image-overlay {
+    left: 10px;
+    position: absolute;
+    top: 10px;
+    background-color: #C40017;
+    color: #FFF;
+    margin-left: 7px;
+    visibility: hidden;
+}
+
+#video-list .list-group-item:hover .overlay {
+  position: absolute; 
+  top: 8px; 
+  width: 200px; 
+  height: 100px; 
+  background-color: 
+  #000000; 
+  opacity: .1;
+  z-index: 95;
+}
+
+#video-list .list-group-item:hover .overlay-small {
+  position: absolute; 
+  top: 5px; 
+  width: 60px; 
+  height: 30px; 
+  background-color: 
+  #000000; 
+  opacity: .1;
+  z-index: 95;
+}
+
+.video-image-wrapper-small {
+    margin-right: 8px;
+    float: left;
+    max-width: 60px;
+    height: 30px;
+}
+
+.title-small {
+    font-family: TheSansUHHBold,sans-serif;
+    font-weight: normal;
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 0px;
+    padding: 0px;
+}
+
+.creator-small2 {
+    font-size: 13px;
+    font-family: TheSansUHH;
+    font-weight: normal;
+    color: #AAA;
+    margin-top: -2px;
+}
+
+.video-image {
+    position: relative;
+    width: 60px;
+    height: 30px;
+}
+
 .videotile {
     border: 0px solid #000;
     border-radius: 0px;
@@ -118,50 +202,78 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     width: 100%;
 }
 
-.videotile .metainfo {
-    color: #494949;
+#video-list .list-group-item {
+    position: relative;
+    display: block;
     padding: 8px;
-    margin-left: 33%;
+    margin-top: 10px;
+    margin-bottom: -1px;
+    background-color: #FFF;
+    border: 1px solid #DDD;
+    height: 118px;
 }
 
-.view-960 .videotile .metainfo {
-    margin-left: 265px;
+#video-list .list-group-item:hover {
+    text-decoration: none;
+    background-color: #F9F9F9;
 }
 
-.view-720 .videotile .metainfo {
-    margin-left: 213px;
-}
-
-.view-480 .videotile .metainfo {
-    margin-left: 160px;
-}
-
-.view-320 .videotile .metainfo {
-    margin-left: 105px;
-}
-
-.imgmedium {
-    border: 1px solid #808080;
-    border-radius: 0px;
-    float: left;
+#video-list .sublist2 {
+    margin-top: 0px;
+    margin-bottom: -1px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     height: auto;
-    margin: 3px 3px 3px 8px;
-    opacity: 0.9;
+}
+
+#videoscount {
+    font-size: 11px;
+    float: right;
     padding: 0px;
-    width: 250px;
-    border: 1px solid #BA9797 !important;
+    color: #E2001A;
 }
 
-.view-720 .imgmedium {
-    width: 200px;
+#searchedvideos {
+    margin-top: 85px;
+    margin-left: 60px;
 }
 
-.view-480 .imgmedium {
-    width: 150px;
+#searchedvideos > button {
+    float: right;
+    margin-top: -30px;
+    margin-right: -1px;
 }
 
-.view-320 .imgmedium {
-    width: 100px;
+#searchedvideo {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: small;
+    width: 40em;
+}
+
+.view-720 #searchedvideo {
+    width: 30em;
+}
+
+.view-480 #searchedvideo {
+    width: 20em;
+}
+
+.view-320 #searchedvideo {
+    width: 10em;
+}
+
+a.list-group-item:hover, a.list-group-item:focus {
+    color: #555;
+    text-decoration: none;
+    background-color: #F5F5F5;
+}
+
+.list-group-item:first-child {
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
 }
 
 .aui ul, .aui ol {
@@ -174,12 +286,9 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     margin-top: -30px;
 }
 
-.view-480 .search {
-    margin-top: 0px;
-}
-
-.view-320 .search {
-    margin-top: 0px;
+#_lgopenaccessvideos_WAR_lecture2goportlet_lectureseriesesSearchContainer_col-1 {
+    padding: 0px;
+    margin: 0px;
 }
 
 #loadMoreTerms, #loadMoreCreators {
@@ -193,10 +302,6 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     border-top: 1px solid #E5E5E5;
 }
 
-#_lgopenaccessvideos_WAR_lecture2goportlet_lectureseriesesSearchContainer_col-1 {
-    padding: 0px;
-    margin: 0px;
-}
 
 .aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle {
     padding: 4px 4px 5px 10px;
@@ -209,14 +314,7 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     font-size: smaller;
 }
 
-#videoscount {
-    font-size: 11px;
-    float: right;
-    margin-top: -15px;
-    padding: 0px;
-    margin-right: -10px;
-    color: #E2001A;
-}
+
 
 thead, th {
     display: none;
@@ -251,28 +349,41 @@ thead, th {
     border-radius: 0px;
 }
 
-#searchedvideo {
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-size: small;
-    width: 40em;
-}
-
-.view-720 #searchedvideo {
-    width: 30em;
-}
-
-.view-480 #searchedvideo {
-    width: 20em;
-}
-
-.view-320 #searchedvideo {
-    width: 10em;
-}
-
 .aui .table th, .aui .table td {
 	border-bottom: 1px solid #DDD;
 	border-top: 0px;
+}
+
+.aui .thumbnail {
+    display: block;
+    padding: 4px;
+    line-height: 20px;
+    border: 1px solid #DDD;
+    border-radius: 0px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.055);
+    transition: all 0.2s ease-in-out 0s;
+    height: 150px;
+    width: 250px;
+    float: left;
+}
+
+.badge {
+    float: right;
+}
+
+.title-small {
+	font-family: TheSansUHHBold,sans-serif;
+	font-weight: normal;
+	font-size: 13px;
+	color: #555;
+	margin-bottom: 0px;
+	padding: 0px;
+}
+
+.creator-small2 {
+    font-size: 13px;
+    font-family: TheSansUHH;
+    font-weight: normal;
+    color: #AAA;
+    margin-top: -2px;
 }
