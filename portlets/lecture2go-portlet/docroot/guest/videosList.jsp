@@ -413,7 +413,7 @@
 					<div id="searchedvideos">
 							<button id="<%="b"+oId%>" >
 								<span class="lfr-icon-menu-text">
-									<i class="caret"></i>
+									<i class="icon-large icon-chevron-down"></i>
 								</span>	
 							</button>
 						    <ul id="<%="p"+oId%>" class="list-group toggler-content-collapsed content" style="margin-left:30px;">
@@ -431,31 +431,27 @@
 										<div class="videotile metainfo small">
 											<div class="video-image-wrapper-small">
 												<img class="video-image" src="<%=v.getImageSmall()%>">
-												<span class="play"></span>
-	              								<span class="overlay-small"></span>
 											</div>
-											
-											<div class="title-small"><%=v.getTitle()%></div>
-											<%
-												List<Creator> cv = CreatorLocalServiceUtil.getCreatorsByVideoId(v.getVideoId());
-												ListIterator<Creator> cvi = cl.listIterator();										
-											%>
-		              						
 										</div>
-	              						<div class="creator-small2">
-	              							<% 
-	              								int i=0;
-	              								while(cvi.hasNext()){
-		              								if(i<2){
-		              									%><%=cvi.next().getFullName()+"; " %><%
-		              								}else{
-		              									%><%="ET. AL" %><%
-			              								break;
+										<div class="metainfo-small">
+											<div class="title-small"><%=v.getTitle()%></div>
+		              						<em class="creator-small2">
+												<%
+													List<Creator> cv = CreatorLocalServiceUtil.getCreatorsByVideoId(v.getVideoId());
+													ListIterator<Creator> cvi = cl.listIterator();										
+		              								int i=0;
+		              								while(cvi.hasNext()){
+			              								if(i<2){
+			              									%><%=cvi.next().getFullName()+"; " %><%
+			              								}else{
+			              									%><%="ET. AL" %><%
+				              								break;
+			              								}
+			              								i++;
 		              								}
-		              								i++;
-	              								}
-	              							%>
-	              							&nbsp;|&nbsp;<%=v.getGenerationDate()%>&nbsp;|&nbsp;<%=v.getDuration()%>
+		              							%>
+		              							&nbsp;|&nbsp;<%=v.getGenerationDate()%>&nbsp;|&nbsp;<%=v.getDuration()%>
+		              						</em>
 	              						</div>
 									</a>
 								</li>
