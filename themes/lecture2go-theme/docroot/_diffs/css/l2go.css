@@ -119,7 +119,7 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     margin-right: 8px;
     float: left;
     max-width: 250px;
-    height: 150px;
+    height: 100px;
 }
 
 .video-image-big {
@@ -234,7 +234,7 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 }
 
 #searchedvideos {
-    margin-top: 78px;
+    margin-top: 35px;
     margin-left: 60px;
 }
 
