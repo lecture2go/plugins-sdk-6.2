@@ -436,3 +436,9 @@ thead, th {
     border-radius: 0px;
     border: 0px;
 }
+
+.placeholder {
+    height: 1px;
+    border: 0px !important;
+    background-color: #E0E0E0 !important;
+}
