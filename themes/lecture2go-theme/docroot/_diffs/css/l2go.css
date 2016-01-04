@@ -125,7 +125,7 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 .video-image-big {
     position: relative;
     width: 200px;
-    height: 100px;
+    height: 100px !important;
     text-align: center;
 }
 
