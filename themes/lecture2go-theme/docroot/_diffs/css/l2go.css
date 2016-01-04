@@ -187,7 +187,7 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 .video-image {
     position: relative;
     width: 60px;
-    height: 30px;
+    max-height: 37px !important;
     margin-left: 2px;
 }
 
