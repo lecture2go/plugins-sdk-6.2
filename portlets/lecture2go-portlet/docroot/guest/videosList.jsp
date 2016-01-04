@@ -413,7 +413,7 @@
 					<div id="searchedvideos">
 							<button id="<%="b"+oId%>" >
 								<span class="lfr-icon-menu-text">
-									<i class="caret"></i>
+									<i class="icon-large icon-chevron-down"></i>
 								</span>	
 							</button>
 						    <ul id="<%="p"+oId%>" class="list-group toggler-content-collapsed content" style="margin-left:30px;">
@@ -431,13 +431,11 @@
 										<div class="videotile metainfo small">
 											<div class="video-image-wrapper-small">
 												<img class="video-image" src="<%=v.getImageSmall()%>">
-												<span class="play"></span>
-	              								<span class="overlay-small"></span>
 											</div>
 										</div>
 										<div class="metainfo-small">
 											<div class="title-small"><%=v.getTitle()%></div>
-		              						<div class="creator-small2">
+		              						<em class="creator-small2">
 												<%
 													List<Creator> cv = CreatorLocalServiceUtil.getCreatorsByVideoId(v.getVideoId());
 													ListIterator<Creator> cvi = cl.listIterator();										
@@ -453,7 +451,7 @@
 		              								}
 		              							%>
 		              							&nbsp;|&nbsp;<%=v.getGenerationDate()%>&nbsp;|&nbsp;<%=v.getDuration()%>
-		              						</div>
+		              						</em>
 	              						</div>
 									</a>
 								</li>
