@@ -280,7 +280,7 @@ a.list-group-item:hover, a.list-group-item:focus {
 
 .aui ul, .aui ol {
     padding: 0px;
-    margin: 0px 0px 0px 15px;
+    margin: 0px;
     list-style: none;
 }
 
@@ -442,3 +442,17 @@ thead, th {
     border: 0px !important;
     background-color: #E0E0E0 !important;
 }
+
+.aui a:hover {
+    text-decoration: none !important;
+}
+
+.filter-menu-link {
+    margin-left: 10px;
+}
+
+.filter-menu {
+    border-bottom: 1px solid #E0E0E0 !important;
+}
+
+

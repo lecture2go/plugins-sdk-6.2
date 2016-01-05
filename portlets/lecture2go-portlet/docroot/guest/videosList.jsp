@@ -124,7 +124,7 @@
 				<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>
 				<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
 			</portlet:actionURL>
-			<li><a href="${filterByParentInstitution}">${parentInstitution.name}</a> <span ${hasParentInstitutionFiltered ? 'class="icon-large icon-check"' : ''}/></li>
+			<li class="filter-menu"><div class="filter-menu-link"><a href="${filterByParentInstitution}">${parentInstitution.name}</a> <span ${hasParentInstitutionFiltered ? 'class=""' : ''}/></div></li>
 		</c:forEach>
 		</ul>
 	</liferay-ui:panel>
@@ -143,7 +143,7 @@
 				<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>
 				<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
 			</portlet:actionURL>
-			<li><a href="${filterByInstitution}">${institution.name}</a> <span ${hasInstitutionFiltered ? 'class="icon-large icon-check"' : ''}/></li>
+			<li class="filter-menu"><div class="filter-menu-link"><a href="${filterByInstitution}">${institution.name}</a> <span ${hasInstitutionFiltered ? 'class=""' : ''}/></div></li>
 		</c:forEach>
 		</ul>
 	</liferay-ui:panel>
@@ -162,7 +162,7 @@
 				<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>
 				<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
 			</portlet:actionURL>
-			<li><a href="${filterByTerm}">${term.termName}</a> <span ${hasTermFiltered ? 'class="icon-large icon-check"' : ''}/></li>
+			<li class="filter-menu"><div class="filter-menu-link"><a href="${filterByTerm}">${term.termName}</a> <span ${hasTermFiltered ? 'class=""' : ''}/></div></li>
 		</c:forEach>
 		</ul>
 		<c:if test="${hasManyTerms}">
@@ -185,7 +185,7 @@
 				<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>	
 				<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
 			</portlet:actionURL>
-			<li><a href="${filterByCategory}">${category.name}</a> <span ${hasCategoryFiltered ? 'class="icon-large icon-check"' : ''}/></li>
+			<li class="filter-menu"><div class="filter-menu-link"><a href="${filterByCategory}">${category.name}</a> <span ${hasCategoryFiltered ? 'class=""' : ''}/></div></li>
 		</c:forEach>
 		</ul>
 	</liferay-ui:panel>
@@ -208,7 +208,7 @@
 				<portlet:param name="creatorId" value='${hasCreatorFiltered ? "0" : creator.creatorId}'/>
 				<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
 			</portlet:actionURL>
-			<li><a href="${filterByCreator}">${creator.fullName}</a> <span ${hasCreatorFiltered ? 'class="icon-large icon-check"' : ''}/></li>
+			<li class="filter-menu"><div class="filter-menu-link"><a href="${filterByCreator}">${creator.fullName}</a> <span ${hasCreatorFiltered ? 'class=""' : ''}/></div></li>
 		</c:forEach>
 		</ul>
 		<c:if test="${hasManyCreators}">
@@ -302,12 +302,10 @@
 										<portlet:param name="objectType" value="v"/>
 									</portlet:actionURL>
 							        
-							        <a href="<%=view2URL%>" onclick="event.preventDefault();" class="list-group-item header toggler-header-collapsed" style="margin-top:0px;">
+							        <a href="<%=view2URL%>">
 								       <div class="videotile metainfo ">
 									        <div class="video-image-wrapper">
 									          <img class="video-image-big layered-paper" src="<%=vidDummy.getImageMedium()%>"/>
-									          <span class="tri"></span>
-									          <span class="overlay"></span>
 									        </div>
 									        
 											<b><%=lectser.getName()%></b></br>
@@ -344,7 +342,7 @@
 								}
 							}else{
 								%>
-							        <a href="<%=view1URL%>" onclick="event.preventDefault();" class="list-group-item header toggler-header-collapsed" style="margin-top:0px;">
+							        <a href="<%=view1URL%>">
 							          <span class="badge"><%=videoCount%></span>
 								       <div class="videotile metainfo ">
 									        <div class="video-image-wrapper">
@@ -427,7 +425,7 @@
 									<portlet:param name="objectType" value="v"/>
 								</portlet:actionURL>				
 								<li>
-									<a href="<%=vURL%>" class="list-group-item sublist2">
+									<a href="<%=vURL%>">
 										<div class="videotile metainfo small">
 											<div class="video-image-wrapper-small">
 												<img class="video-image" src="<%=v.getImageSmall()%>">
