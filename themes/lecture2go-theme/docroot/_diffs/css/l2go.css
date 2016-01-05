@@ -375,11 +375,13 @@ thead, th {
 }
 
 .title-small {
-	font-weight: 400 !important;
-	font-size: 13px;
-	margin-bottom: 0px;
-	padding: 0px;
-	line-height: 17px;
+    font-weight: 400 !important;
+    font-size: 13px;
+    margin-bottom: 0px;
+    padding: 0px;
+    line-height: 17px;
+    width: 50%;
+    color: initial;
 }
 
 .play-small {
@@ -456,7 +458,25 @@ thead, th {
     border-bottom: 1px solid #E0E0E0 !important;
 }
 
-.lfr-search-container {
-    margin-top: -10px;
-    overflow: auto;
+.generation-date {
+    float: right;
+    margin-right: 2%;
+}
+
+.duration {
+    float: right;
+    margin-right: 26%;
+}
+
+.lectureseries-title {
+    color: initial;
+}
+
+.aui .table-striped tbody > tr > td:hover {
+    background-color: #E3E3E3 !important;
+}
+
+.title-text {
+    color: black !important;
+    font-size: 15px;
 }
