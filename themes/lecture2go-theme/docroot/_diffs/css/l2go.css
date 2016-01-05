@@ -314,6 +314,7 @@ a.list-group-item:hover, a.list-group-item:focus {
 
 #term {
     font-size: smaller;
+	margin-left: 73%;
 }
 
 
@@ -455,4 +456,7 @@ thead, th {
     border-bottom: 1px solid #E0E0E0 !important;
 }
 
-
+.lfr-search-container {
+    margin-top: -10px;
+    overflow: auto;
+}
