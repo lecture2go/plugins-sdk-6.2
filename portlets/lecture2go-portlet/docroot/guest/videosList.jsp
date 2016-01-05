@@ -285,7 +285,7 @@
 							<%if(!isVideo){%><portlet:param name="objectType" value="l"/><%}%>
 						</portlet:actionURL>
 						<%
-						if(videoCount>0 && searchQuery.trim().length()>0){
+						if(videoCount>0 && isSearched){
 							//				
 							if(videoCount==1){
 								if(isVideo){
