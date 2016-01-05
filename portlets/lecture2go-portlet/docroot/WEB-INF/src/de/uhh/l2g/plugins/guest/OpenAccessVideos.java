@@ -45,7 +45,6 @@ import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.util.AutocompleteManager;
 
 public class OpenAccessVideos extends MVCPortlet {
-
 	@Override
 	public void serveResource( ResourceRequest resourceRequest, ResourceResponse resourceResponse ) throws IOException, PortletException {
 		String resourceID = resourceRequest.getResourceID();
@@ -123,11 +122,8 @@ public class OpenAccessVideos extends MVCPortlet {
 		Long termId = new Long(request.getParameter("termId"));
 		Long categoryId = new Long(request.getParameter("categoryId"));
 		Long creatorId = new Long(request.getParameter("creatorId"));
-		String searchQuery = "";
-		if (request.getParameter("searchQuery") != null) {
-			searchQuery = request.getParameter("searchQuery");
-		} 
-		
+		String searchQuery = request.getParameter("searchQuery");
+
 		response.setRenderParameter("institutionId", institutionId+"");
 		response.setRenderParameter("parentInstitutionId", parentInstitutionId+"");
 		response.setRenderParameter("termId", termId+"");
