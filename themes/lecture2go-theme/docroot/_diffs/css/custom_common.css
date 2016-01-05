@@ -6,6 +6,11 @@
 
 @import url(custom_responsive.css);
 
+@font-face {font-family: 'TheSansUHHBold';src: url('/lecture2go-theme/fonts/TheSansUHH_Bold.ttf') format('truetype'); font-weight: normal; font-style: normal;}
+@font-face {font-family: 'TheSansUHHBoldItalic';src: url('/lecture2go-theme/fonts/TheSansUHH_Bold_Italic.ttf') format('truetype'); font-weight: normal; font-style: normal;}
+@font-face {font-family: 'TheSansUHHItalic';src: url('/lecture2go-theme/fonts/TheSansUHH_Regular_Italic.ttf') format('truetype'); font-weight: normal; font-style: normal;}
+@font-face {font-family: 'TheSansUHH';src: url('/lecture2go-theme/fonts/TheSansUHH_Regular.ttf') format('truetype'); font-weight: normal; font-style: normal;}
+
 .aui {
 	body {
 		font-weight: 200;
