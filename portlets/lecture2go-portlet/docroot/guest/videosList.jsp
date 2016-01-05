@@ -280,16 +280,52 @@
 							if(videoCount==1){
 								if(isVideo){
 									%>
-									<a href="<%=view1URL%>"><b><%=lectser.getName()%></b></a>
-									<div id="allcreators">
-										<%
-										while(cli.hasNext()){%><%=cli.next().getFullName()+"; " %><%}
-										%>
-									</div>
-									<div id="term">
-										<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
-									</div>
-									<%
+							        <a href="<%=view1URL%>">
+								       <div class="videotile metainfo ">
+									        <div class="video-image-wrapper">
+									          <img class="video-image-big" src="<%=vidDummy.getImageMedium()%>"/>
+									        </div>
+									        
+											<b><%=lectser.getName()%></b>
+											
+											<div id="allcreators">
+												<%
+												List<Creator> clv = CreatorLocalServiceUtil.getCreatorsByVideoId(vidDummy.getVideoId());
+												ListIterator<Creator> clvi = clv.listIterator();
+												while(clvi.hasNext()){%><%=clvi.next().getFullName()+"; " %><%}
+												%>
+											</div>		
+																	
+											<div id="term">
+												<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
+											</div>
+											
+									        <div class="tags">
+									          <%
+									        	String cat = "";
+									        	List<Lectureseries_Institution> li = Lectureseries_InstitutionLocalServiceUtil.getByLectureseries(lectser.getLectureseriesId());
+									        	ListIterator<Lectureseries_Institution> liIt = li.listIterator();
+									            try{
+									            	Long cId = Video_CategoryLocalServiceUtil.getByVideo(lectser.getLectureseriesId()).get(0).getCategoryId();
+									            	cat =  CategoryLocalServiceUtil.getById(cId).getName();
+									            }catch(Exception e){
+									            	System.out.print(e);
+									            }
+									          %>
+									          <span class="label label-light2"><%=cat%></span>
+									          <%
+									          	while(liIt.hasNext()){
+									          		Lectureseries_Institution lI = liIt.next();
+									          		Institution i = InstitutionLocalServiceUtil.getById(lI.getInstitutionId());
+									          		%>
+											          <span class="label label-light2"><%=i.getName()%></span>
+									          		<%
+									          	}
+									          %>
+									        </div>   
+								        </div>
+							        </a>
+							    	<%									
 								}else{
 									Video v = new VideoImpl();
 									v = vl.get(0);
@@ -303,19 +339,23 @@
 									</portlet:actionURL>
 							        
 							        <a href="<%=view2URL%>">
+							          <span class="badge"><%=videoCount%></span>
 								       <div class="videotile metainfo ">
 									        <div class="video-image-wrapper">
 									          <img class="video-image-big layered-paper" src="<%=vidDummy.getImageMedium()%>"/>
+									          <span class="tri"></span>
+									          <span class="overlay"></span>
 									        </div>
 									        
-											<b><%=lectser.getName()%></b></br>
-											<%=v.getTitle()%>
+											<b><%=lectser.getName()%></b>
 											
 											<div id="allcreators">
-												<%while(cli1.hasNext()){%><%=cli1.next().getFullName()+"; " %><%}%>
+												<%
+												while(cli1.hasNext()){%><%=cli1.next().getFullName()+"; " %><%}
+												%>
 											</div>		
 																	
-									        <div id="term">
+											<div id="term">
 												<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
 											</div>
 											
@@ -335,10 +375,10 @@
 									          		<%
 									          	}
 									          %>
-									        </div>  
-								        </div>  
-							        </a>									
-									<%
+									        </div>   
+								        </div>
+							        </a>
+							    	<%										
 								}
 							}else{
 								%>
@@ -406,63 +446,64 @@
 							<%
 						}
 						%>
-				
-				<%if(videoCount>1 && searchQuery.trim().length()>0){ %>
-					<div id="searchedvideos">
-							<button id="<%="b"+oId%>" >
-								<span class="lfr-icon-menu-text">
-									<i class="icon-large icon-chevron-down"></i>
-								</span>	
-							</button>
-						    <ul id="<%="p"+oId%>" class="list-group toggler-content-collapsed content" style="margin-left:30px;">
-							<%
-							while(vli.hasNext()){
-							Video v =  VideoLocalServiceUtil.getFullVideo(vli.next().getVideoId());
-							String vId = v.getVideoId()+"";
-							%>
-								<portlet:actionURL name="viewOpenAccessVideo" var="vURL">
-									<portlet:param name="objectId" value="<%=vId%>"/>
-									<portlet:param name="objectType" value="v"/>
-								</portlet:actionURL>				
-								<li>
-									<a href="<%=vURL%>">
-										<div class="videotile metainfo small">
-											<div class="video-image-wrapper-small">
-												<img class="video-image" src="<%=v.getImageSmall()%>">
-											</div>
-										</div>
-										<div class="metainfo-small">
-											<div class="title-small"><%=v.getTitle()%></div>
-		              						<em class="creator-small2">
-												<%
-													List<Creator> cv = CreatorLocalServiceUtil.getCreatorsByVideoId(v.getVideoId());
-													ListIterator<Creator> cvi = cl.listIterator();										
-		              								int i=0;
-		              								while(cvi.hasNext()){
-			              								if(i<2){
-			              									%><%=cvi.next().getFullName()+"; " %><%
-			              								}else{
-			              									%><%="ET. AL" %><%
-				              								break;
-			              								}
-			              								i++;
-		              								}
-		              							%>
-		              							&nbsp;|&nbsp;<%=v.getGenerationDate()%>&nbsp;|&nbsp;<%=v.getDuration()%>
-		              						</em>
-	              						</div>
-									</a>
-								</li>
-								<li class="placeholder"></li>
-							<%}%>
-							</ul>
-							<script>
-							$("<%="#b"+oId%>").click(function() {
-								$("<%="#p"+oId%>").slideToggle("slow");
-							});
-							</script>
-						</div>
-				<%}%>
+						
+						<!-- sublist for searched videos -->
+						<%if(videoCount>1 && searchQuery.trim().length()>0){ %>
+							<div id="searchedvideos">
+									<button id="<%="b"+oId%>" >
+										<span class="lfr-icon-menu-text">
+											<i class="icon-large icon-chevron-down"></i>
+										</span>	
+									</button>
+								    <ul id="<%="p"+oId%>" class="list-group toggler-content-collapsed content" style="margin-left:30px;">
+									<%
+									while(vli.hasNext()){
+									Video v =  VideoLocalServiceUtil.getFullVideo(vli.next().getVideoId());
+									String vId = v.getVideoId()+"";
+									%>
+										<portlet:actionURL name="viewOpenAccessVideo" var="vURL">
+											<portlet:param name="objectId" value="<%=vId%>"/>
+											<portlet:param name="objectType" value="v"/>
+										</portlet:actionURL>				
+										<li>
+											<a href="<%=vURL%>">
+												<div class="videotile metainfo small">
+													<div class="video-image-wrapper-small">
+														<img class="video-image" src="<%=v.getImageSmall()%>">
+													</div>
+												</div>
+												<div class="metainfo-small">
+													<div class="title-small"><%=v.getTitle()%></div>
+				              						<em class="creator-small2">
+														<%
+															List<Creator> cv = CreatorLocalServiceUtil.getCreatorsByVideoId(v.getVideoId());
+															ListIterator<Creator> cvi = cl.listIterator();										
+				              								int i=0;
+				              								while(cvi.hasNext()){
+					              								if(i<2){
+					              									%><%=cvi.next().getFullName()+"; " %><%
+					              								}else{
+					              									%><%="ET. AL" %><%
+						              								break;
+					              								}
+					              								i++;
+				              								}
+				              							%>
+				              							&nbsp;|&nbsp;<%=v.getGenerationDate()%>&nbsp;|&nbsp;<%=v.getDuration()%>
+				              						</em>
+			              						</div>
+											</a>
+										</li>
+										<li class="placeholder"></li>
+									<%}%>
+									</ul>
+									<script>
+									$("<%="#b"+oId%>").click(function() {
+										$("<%="#p"+oId%>").slideToggle("slow");
+									});
+									</script>
+								</div>
+						<%}%>
 				</div>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
