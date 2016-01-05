@@ -180,7 +180,8 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 				if (categoryId > 0) qPos.add(categoryId);
 				if (institutionId > 0) qPos.add(institutionId);
 				if (parentInstitutionId > 0) qPos.add(parentInstitutionId);
-				if (searchQuery.trim().length()>0) qPos.add("%" + searchQuery + "%");
+//				if (searchQuery.trim().length()>0) qPos.add("%" + searchQuery + "%");
+				if (!searchQuery.equals("0")) qPos.add("%" + searchQuery + "%");
 			}
 			
 			@SuppressWarnings("unchecked")
@@ -204,9 +205,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 		boolean hasTerm 				= (termId > 0);
 		boolean hasCategory 			= (categoryId > 0);
 		boolean hasCreator 				= (creatorId > 0);
-		boolean hasSearch 				= (searchQuery.trim().length()>0);
-		
-		// this is an additional query only used for searching. videos which are part of a lectureseries must be searched for the searchquery but are not relevant of the normal filtering
+		boolean hasSearch 				= (!searchQuery.equals("0"));
 		
 		//for lecture series
 		String lQuery = "SELECT l.number_, l.eventType, l.categoryId, l.name, l.shortDesc, l.termId, \"\" AS language, \"\" AS facultyName, l.lectureseriesId, NULL AS password_, 1 AS approved, l.longDesc, l. latestOpenAccessVideoId, l.latestVideoUploadDate, COUNT(l.lectureseriesId) as videoCount FROM LG_Video v ";
