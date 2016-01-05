@@ -174,7 +174,6 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 
 .list-group.toggler-content-collapsed.content > li {
     border: 0px solid;
-    margin-top: 2px;
     background-color: transparent;
     border-left: 3px solid #D81B1B;
 }
@@ -200,6 +199,17 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 
 .videotile.wide {
     width: 100%;
+    height: 120px;
+    background-color: #F3F3F3;
+    padding: 8px 0px 0px 8px;
+}
+
+.videotile.wide:hover {
+    background-color: #EAEAEA !important;
+}
+
+.videotile.small:hover {
+    background-color: #EAEAEA !important;
 }
 
 #video-list .list-group-item {
@@ -234,16 +244,18 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 }
 
 #searchedvideos {
-    margin-top: 35px;
     margin-left: 60px;
+    background-color: #F3F3F3;
+    margin-top: 0px;
+    border-bottom: 1px solid #F3F3F3 !important;
 }
 
 #searchedvideos > button {
     float: right;
-    margin-top: -30px;
-    margin-right: -1px;
+    margin-top: -25px;
+    margin-right: 3px;
     background-color: transparent;
-    border: none;
+    border: medium none;
 }
 
 #searchedvideo {
@@ -352,11 +364,6 @@ thead, th {
     border-radius: 0px;
 }
 
-.aui .table th, .aui .table td {
-	border-bottom: 1px solid #DDD;
-	border-top: 0px;
-}
-
 .aui .thumbnail {
     display: block;
     padding: 4px;
@@ -372,6 +379,7 @@ thead, th {
 
 .badge {
     float: right;
+    margin-right: 15px;
 }
 
 .title-small {
@@ -423,7 +431,7 @@ thead, th {
 }
 
 .aui .table td {
-    background-color: #F3F3F3 !important;
+    background-color: #FFF !important;
 }
 
 .aui .table-bordered th, .aui .table-bordered td {
@@ -432,9 +440,11 @@ thead, th {
 
 .aui .table th, .aui .table td {
     margin: 0px;
-    border-bottom: 10px solid rgb(255, 255, 255);
+    border-bottom: 0px solid #FFF;
     border-top: 0px none;
+    padding: 0px 0px 7px 0px;
 }
+
 .aui .table {
     border-radius: 0px;
     border: 0px;
@@ -470,10 +480,6 @@ thead, th {
 
 .lectureseries-title {
     color: initial;
-}
-
-.aui .table-striped tbody > tr > td:hover {
-    background-color: #E3E3E3 !important;
 }
 
 .title-text {

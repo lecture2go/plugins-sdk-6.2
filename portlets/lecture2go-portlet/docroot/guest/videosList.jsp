@@ -446,7 +446,7 @@
 							<%
 						}
 						%>
-						
+				</div>
 						<!-- sublist for searched videos -->
 						<%if(videoCount>1 && searchQuery.trim().length()>0){ %>
 							<div id="searchedvideos">
@@ -455,7 +455,7 @@
 											<i class="icon-large icon-chevron-down"></i>
 										</span>	
 									</button>
-								    <ul id="<%="p"+oId%>" class="list-group toggler-content-collapsed content" style="margin-left:30px;">
+								    <ul id="<%="p"+oId%>" class="list-group toggler-content-collapsed content">
 									<%
 									while(vli.hasNext()){
 									Video v =  VideoLocalServiceUtil.getFullVideo(vli.next().getVideoId());
@@ -465,7 +465,7 @@
 											<portlet:param name="objectId" value="<%=vId%>"/>
 											<portlet:param name="objectType" value="v"/>
 										</portlet:actionURL>				
-										<li>
+										<li class="videotile small">
 											<a href="<%=vURL%>">
 												<div class="videotile metainfo small">
 													<div class="video-image-wrapper-small">
@@ -506,7 +506,7 @@
 									</script>
 								</div>
 						<%}%>
-				</div>
+				
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 	<liferay-ui:search-iterator />
