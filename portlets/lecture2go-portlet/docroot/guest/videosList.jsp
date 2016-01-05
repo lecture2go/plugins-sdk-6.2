@@ -286,7 +286,7 @@
 									          <img class="video-image-big" src="<%=vidDummy.getImageMedium()%>"/>
 									        </div>
 									        
-											<b><%=lectser.getName()%></b>
+											<div class="lectureseries-title"><%=lectser.getName()%></div>
 											
 											<div id="allcreators">
 												<%
@@ -347,7 +347,7 @@
 									          <span class="overlay"></span>
 									        </div>
 									        
-											<b><%=lectser.getName()%></b>
+											<div class="lectureseries-title"><%=lectser.getName()%></div>
 											
 											<div id="allcreators">
 												<%
@@ -391,7 +391,7 @@
 									          <span class="overlay"></span>
 									        </div>
 									        
-											<b><%=lectser.getName()%></b>
+											<div class="lectureseries-title"><%=lectser.getName()%></div>
 											
 											<div id="allcreators">
 												<%
@@ -433,7 +433,7 @@
 								<%					
 							}
 							%>						
-							<a href="<%=view1URL%>"><b><%=lectser.getName()%></b></a>
+							<a href="<%=view1URL%>"><div class="lectureseries-title"><%=lectser.getName()%></div></a>
 							<div id="allcreators">
 								<%
 								while(cli.hasNext()){%><%=cli.next().getFullName()+"; " %><%}
@@ -488,8 +488,10 @@
 					              								}
 					              								i++;
 				              								}
+				              								
 				              							%>
-				              							&nbsp;|&nbsp;<%=v.getGenerationDate()%>&nbsp;|&nbsp;<%=v.getDuration()%>
+				              							<div class="generation-date"><%=v.getDate().trim()%></div>
+				              							<div class="duration"><%=v.getDuration().trim().substring(0, 8)%></div>
 				              						</em>
 			              						</div>
 											</a>
