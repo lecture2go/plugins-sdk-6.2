@@ -73,6 +73,17 @@ public class ProducerLocalServiceImpl extends ProducerLocalServiceBaseImpl {
 		List<Producer> prods = producerPersistence.findByInstitution(institutionId);
 		return fillProps(prods);
 	}
+	
+	public List<Producer> getProducersByHostId(long hostId) throws SystemException{
+		List<Producer> prods = producerPersistence.findByHost(hostId);
+		return fillProps(prods);
+	}
+	
+	public int getProducersByHostIdCount(long hostId) throws SystemException{
+		int prods = producerPersistence.countByHost(hostId);
+		return prods;
+	}
+
 
 	public List<Producer> getAllProducers(int begin, int end) throws SystemException{
 		List<Producer> prods = ProducerLocalServiceUtil.getProducers(begin, end);

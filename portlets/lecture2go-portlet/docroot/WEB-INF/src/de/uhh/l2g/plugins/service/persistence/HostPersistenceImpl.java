@@ -96,7 +96,8 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 			HostModelImpl.FINDER_CACHE_ENABLED, HostImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] { Long.class.getName() },
-			HostModelImpl.GROUPID_COLUMN_BITMASK);
+			HostModelImpl.GROUPID_COLUMN_BITMASK |
+			HostModelImpl.SERVERROOT_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(HostModelImpl.ENTITY_CACHE_ENABLED,
 			HostModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
@@ -585,7 +586,8 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 			"findByCompanyIdAndGroupId",
 			new String[] { Long.class.getName(), Long.class.getName() },
 			HostModelImpl.COMPANYID_COLUMN_BITMASK |
-			HostModelImpl.GROUPID_COLUMN_BITMASK);
+			HostModelImpl.GROUPID_COLUMN_BITMASK |
+			HostModelImpl.SERVERROOT_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYIDANDGROUPID = new FinderPath(HostModelImpl.ENTITY_CACHE_ENABLED,
 			HostModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

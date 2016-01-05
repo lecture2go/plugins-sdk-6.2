@@ -180,7 +180,6 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 				if (categoryId > 0) qPos.add(categoryId);
 				if (institutionId > 0) qPos.add(institutionId);
 				if (parentInstitutionId > 0) qPos.add(parentInstitutionId);
-//				if (searchQuery.trim().length()>0) qPos.add("%" + searchQuery + "%");
 				if (!searchQuery.equals("0")) qPos.add("%" + searchQuery + "%");
 			}
 			
