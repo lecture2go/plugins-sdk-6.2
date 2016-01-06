@@ -122,7 +122,10 @@ public class OpenAccessVideos extends MVCPortlet {
 		Long termId = new Long(request.getParameter("termId"));
 		Long categoryId = new Long(request.getParameter("categoryId"));
 		Long creatorId = new Long(request.getParameter("creatorId"));
-		String searchQuery = request.getParameter("searchQuery");
+		String searchQuery = "";
+		if (request.getParameter("searchQuery") != null) {
+			searchQuery = request.getParameter("searchQuery");
+		}
 
 		response.setRenderParameter("institutionId", institutionId+"");
 		response.setRenderParameter("parentInstitutionId", parentInstitutionId+"");

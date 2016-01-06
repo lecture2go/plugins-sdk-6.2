@@ -15,17 +15,15 @@
 	Long creatorId 				= ServletRequestUtils.getLongParameter(request, "creatorId", 0);
 
 	String searchQuery			= ServletRequestUtils.getStringParameter(request, "searchQuery", "");
-	if (searchQuery == null || searchQuery.equals("")) {
-		searchQuery="0";
-	}
+
 	// filters are set if they have a value different than 0
 	boolean hasInstitutionFiltered 			= (institutionId != 0);
 	boolean hasParentInstitutionFiltered 	= (parentInstitutionId != 0);
 	boolean hasTermFiltered 				= (termId != 0);
 	boolean hasCategoryFiltered				= (categoryId != 0);
 	boolean hasCreatorFiltered  			= (creatorId != 0);
-	boolean isSearched						= (!searchQuery.equals("0"));
-	
+	boolean isSearched						= (searchQuery.trim().length()>0);
+
 	// the institution is dependent on the parentinstitution, do not allow institution-filters without parentinstitution-filter
 	if (hasInstitutionFiltered && !hasParentInstitutionFiltered) {
 		institutionId = new Long(0);
@@ -526,7 +524,6 @@
 </div>
 
 <script type="text/javascript">
-
 $('#loadMoreCreators, #searchName').on("click", function () {
 	// this event is only fired once
 	$('#loadMoreCreators').hide();
