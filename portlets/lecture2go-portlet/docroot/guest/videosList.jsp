@@ -498,8 +498,14 @@
 				              								}
 				              								
 				              							%>
-				              							<div class="generation-date"><%=v.getDate().trim()%></div>
-				              							<div class="duration"><%=v.getDuration().trim().substring(0, 8)%></div>
+				              							<%
+				              								String date = "";
+				              								String dur = "";
+				              								try{ date = v.getDate().trim();}catch(Exception e){}
+				              								try{ dur = v.getDuration().trim().substring(0, 8);}catch(Exception e){}
+				              							%>
+				              							<div class="generation-date"><%=date%></div>
+				              							<div class="duration"><%=dur%></div>
 				              						</em>
 			              						</div>
 											</a>
