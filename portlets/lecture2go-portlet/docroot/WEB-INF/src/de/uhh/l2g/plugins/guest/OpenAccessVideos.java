@@ -45,7 +45,6 @@ import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.util.AutocompleteManager;
 
 public class OpenAccessVideos extends MVCPortlet {
-
 	@Override
 	public void serveResource( ResourceRequest resourceRequest, ResourceResponse resourceResponse ) throws IOException, PortletException {
 		String resourceID = resourceRequest.getResourceID();

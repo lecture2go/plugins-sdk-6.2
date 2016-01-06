@@ -5,7 +5,7 @@
 <%
 	// defines how many terms and creators are shown initially	
 	int maxTerms	= 4;
-	int maxCreators = 4;
+	int maxCreators = 10;
 
 	// get all filter-requests
 	Long parentInstitutionId 	= ServletRequestUtils.getLongParameter(request, "parentInstitutionId", 0);
@@ -22,7 +22,7 @@
 	boolean hasTermFiltered 				= (termId != 0);
 	boolean hasCategoryFiltered				= (categoryId != 0);
 	boolean hasCreatorFiltered  			= (creatorId != 0);
-	boolean isSearched						= (searchQuery != "");
+	boolean isSearched						= (searchQuery.trim().length()>0);
 
 	// the institution is dependent on the parentinstitution, do not allow institution-filters without parentinstitution-filter
 	if (hasInstitutionFiltered && !hasParentInstitutionFiltered) {
@@ -53,7 +53,6 @@
 	List<Category> presentCategories 				= new ArrayList<Category>();
 
 	// if a filter is selected, only show the selected one else show all
-	// in the first case only the selected one is shown because some filtered data may have multiple entries for the filter e.g. multiple creators
  	if (hasParentInstitutionFiltered) {
 		presentParentInstitutions.add(InstitutionLocalServiceUtil.getById(parentInstitutionId));
 	} else {
@@ -77,13 +76,21 @@
 	} else {
 		presentCategories = CategoryLocalServiceUtil.getCategoriesFromLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds);
 	}
-	/*
+	
 	if (hasCreatorFiltered) {
 		presentCreators.add(CreatorLocalServiceUtil.getCreator(creatorId));
 	} else {
 		presentCreators = CreatorLocalServiceUtil.getCreatorsFromLectureseriesIdsAndVideoIds(lectureseriesIds,videoIds);
-	} */
-
+	}
+	
+	// we only process the first creators, because this list can be become quite large, the rest is rendered via javascript
+	List<Creator> renderedCreators = presentCreators;
+	List<Creator> nonRenderedCreators = new  ArrayList<Creator>();
+	if (presentCreators.size() > maxCreators) {
+		renderedCreators = presentCreators.subList(0, maxCreators-1);
+		nonRenderedCreators = presentCreators.subList(maxCreators, presentCreators.size());
+	}
+	
 	List<Lectureseries> tempLectureseriesList = new ArrayList();
 	
 	PortletURL portletURL = renderResponse.createRenderURL();
@@ -191,14 +198,14 @@
 	</liferay-ui:panel>
 
 	<!-- 	creator filter -->
-	<liferay-ui:panel extended="true" title="Person">
+	<liferay-ui:panel extended="true" title="Person" id="creators">
 		<c:if test="${!hasCreatorFiltered && hasManyCreators}">
 			<div class="input-group">
       			<input id="searchName" type="text" class="form-control" placeholder="Suche Person...">
     		</div>
 		</c:if>
 		<ul class="creators">
-		<c:forEach items="<%=presentCreators %>" var="creator">
+		<c:forEach items="<%=renderedCreators %>" var="creator">
 			<portlet:actionURL var="filterByCreator" name="addFilter">
 				<portlet:param name="jspPage" value="/guest/videosList.jsp" />
 				<portlet:param name="institutionId" value="<%=institutionId.toString() %>"/>
@@ -208,7 +215,7 @@
 				<portlet:param name="creatorId" value='${hasCreatorFiltered ? "0" : creator.creatorId}'/>
 				<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
 			</portlet:actionURL>
-			<li class="filter-menu"><div class="filter-menu-link"><a href="${filterByCreator}">${creator.fullName}</a> <span ${hasCreatorFiltered ? 'class=""' : ''}/></div></li>
+			<li class="filter-menu"><div class="filter-menu-link"><a href="${filterByCreator}">${creator.lastName}, ${creator.jobTitle} ${creator.firstName} ${creator.middleName}</a> <span ${hasCreatorFiltered ? 'class=""' : ''}/></div></li>
 		</c:forEach>
 		</ul>
 		<c:if test="${hasManyCreators}">
@@ -261,7 +268,8 @@
 			ListIterator<Creator> cli = cl.listIterator();
 			List<Video> vl = new ArrayList<Video>();
 			ListIterator<Video> vli = vl.listIterator();
-			if(videoCount>0 && searchQuery.trim().length()>0){
+
+			if(videoCount>0 && isSearched){
 				//get videos by search word and lecture series
 				vl = VideoLocalServiceUtil.getBySearchWordAndLectureseriesId(searchQuery, new Long(oId));
 				vli = vl.listIterator();
@@ -275,7 +283,7 @@
 							<%if(!isVideo){%><portlet:param name="objectType" value="l"/><%}%>
 						</portlet:actionURL>
 						<%
-						if(videoCount>0 && searchQuery.trim().length()>0){
+						if(videoCount>0 && isSearched){
 							//				
 							if(videoCount==1){
 								if(isVideo){
@@ -448,7 +456,7 @@
 						%>
 				</div>
 						<!-- sublist for searched videos -->
-						<%if(videoCount>1 && searchQuery.trim().length()>0){ %>
+						<%if(videoCount>1 && isSearched){ %>
 							<div id="searchedvideos">
 									<button id="<%="b"+oId%>" >
 										<span class="lfr-icon-menu-text">
@@ -516,12 +524,49 @@
 </div>
 
 <script type="text/javascript">
+$('#loadMoreCreators, #searchName').on("click", function () {
+	// this event is only fired once
+	$('#loadMoreCreators').hide();
+	$('#searchName').off("click");
+	var creatorList = [ 
+	        		<% for(Creator creator: nonRenderedCreators) {%><%="{id:\"" + creator.getCreatorId() + "\", fullname: \"" + creator.getLastName() + ", " + creator.getJobTitle() + " " + creator.getFirstName() + " " + creator.getMiddleName() + "\"},"%><% } %> 
+	        		];
+	var parentInstitutionId = <%=parentInstitutionId.toString() %>;
+    var institutionId = <%=institutionId.toString() %>;
+    var termId = <%=termId.toString() %>;
+    var categoryId = <%=categoryId.toString() %>;
+    var searchQuery = "<%=searchQuery %>";
+    	
+	var arrayLength = creatorList.length;
+	for (var i = 0; i < arrayLength; i++) {
+		addRowToCreatorPanel(creatorList[i],parentInstitutionId,institutionId,termId,categoryId,searchQuery);
+	}
+});
+	
+function addRowToCreatorPanel(creator,parentInstitutionId,institutionId,termId,categoryId,searchQuery){
+	var filterUrl = createFilterUrl(parentInstitutionId,institutionId,termId,categoryId,creator.id,searchQuery);
+	var row = "<li><a href=\"" + filterUrl + "\">" + creator.fullname + "</a> <span /></li>";
+	$("#creators").find("ul").append(row);
+}
+
+function createFilterUrl(parentInstitutionId,institutionId,termId,categoryId,creatorId,searchQuery){
+	var filterUrl = 
+		"/web/vod/l2go/-/get/" + 
+		institutionId + "/" +
+		parentInstitutionId + "/" + 
+		categoryId + "/" +
+		creatorId + "/" +
+		termId + "/" +
+		searchQuery;
+	return filterUrl;
+}
+
 $( document ).ready(function() {
 	//turn off autocomplete
 	$(document).on('focus', ':input', function() {
 	    $(this).attr('autocomplete', 'off');
 	});
-	// only the show the last terms
+	// only show the last terms
 	$("ul.terms > li").slice(<%=maxTerms%>).hide();
 	// show the remaining terms
 	$('#loadMoreTerms').click(function () {
@@ -529,28 +574,22 @@ $( document ).ready(function() {
 	    $('#loadMoreTerms').hide();
 	});
 	
-	// only the show the first creators
-	$("ul.creators > li").slice(<%=maxCreators%>).hide();
-	// show the remaining creators
-	$('#loadMoreCreators').click(function () {
-	    $('ul.creators > li').show();
-	    $('#loadMoreCreators').hide();
-	});
-
 	// search in the creator list
 	$("#searchName").keyup(function(){
         // get the search input
         var searchName = $(this).val();
-         // loop all creators
-        $(".creators li").each(function(){
-            // if the the search query does not match (case insensitive), fade it out
-            if ($(this).text().search(new RegExp(searchName, "i")) < 0) {
-                $(this).fadeOut();
-            // if the search query matches, show the item
-            } else {
-                $(this).show();
-            }
-        });
+            // loop all creators
+            $(".creators li").each(function(){
+                // if the the search query does not match (case insensitive), hide it
+                if ($(this).text().search(new RegExp(searchName, "i")) < 0) {
+                    $(this).hide();
+                // if the search query matches, show the item
+                } else {
+                    $(this).show();
+                }
+            });
     });
 });
+
+
 </script>
