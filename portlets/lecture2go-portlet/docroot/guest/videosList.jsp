@@ -272,8 +272,10 @@
 			if(videoCount>0 && isSearched){
 				//get videos by search word and lecture series
 				vl = VideoLocalServiceUtil.getBySearchWordAndLectureseriesId(searchQuery, new Long(oId));
-				vli = vl.listIterator();
-			}			
+			}else{
+				vl = VideoLocalServiceUtil.getByLectureseries(new Long(oId));
+			}
+			vli = vl.listIterator();
 		%>
 		<liferay-ui:search-container-column-text>
 				<div class="videotile wide">
@@ -283,8 +285,6 @@
 							<%if(!isVideo){%><portlet:param name="objectType" value="l"/><%}%>
 						</portlet:actionURL>
 						<%
-						if(videoCount>0 && isSearched){
-							//				
 							if(videoCount==1){
 								if(isVideo){
 									%>
@@ -432,95 +432,71 @@
 							        </a>
 								<%	
 							}
-						}else{
-							if(videoCount>1){
-								%>
-								<div id="videoscount">				
-									<%=videoCount %> videos
-								</div>
-								<%					
-							}
-							%>						
-							<a href="<%=view1URL%>"><div class="lectureseries-title"><%=lectser.getName()%></div></a>
-							<div id="allcreators">
-								<%
-								while(cli.hasNext()){%><%=cli.next().getFullName()+"; " %><%}
-								%>
-							</div>
-	
-							<div id="term">
-								<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
-							</div>
-							<%
-						}
 						%>
 				</div>
-						<!-- sublist for searched videos -->
-						<%if(videoCount>1 && isSearched){ %>
-							<div id="searchedvideos">
-									<button id="<%="b"+oId%>" >
-										<span class="lfr-icon-menu-text">
-											<i class="icon-large icon-chevron-down"></i>
-										</span>	
-									</button>
-								    <ul id="<%="p"+oId%>" class="list-group toggler-content-collapsed content">
-									<%
-									while(vli.hasNext()){
-									Video v =  VideoLocalServiceUtil.getFullVideo(vli.next().getVideoId());
-									String vId = v.getVideoId()+"";
-									%>
-										<portlet:actionURL name="viewOpenAccessVideo" var="vURL">
-											<portlet:param name="objectId" value="<%=vId%>"/>
-											<portlet:param name="objectType" value="v"/>
-										</portlet:actionURL>				
-										<li class="videotile small">
-											<a href="<%=vURL%>">
-												<div class="videotile metainfo small">
-													<div class="video-image-wrapper-small">
-														<img class="video-image" src="<%=v.getImageSmall()%>">
-													</div>
-												</div>
-												<div class="metainfo-small">
-													<div class="title-small"><%=v.getTitle()%></div>
-				              						<em class="creator-small2">
-														<%
-															List<Creator> cv = CreatorLocalServiceUtil.getCreatorsByVideoId(v.getVideoId());
-															ListIterator<Creator> cvi = cl.listIterator();										
-				              								int i=0;
-				              								while(cvi.hasNext()){
-					              								if(i<2){
-					              									%><%=cvi.next().getFullName()+"; " %><%
-					              								}else{
-					              									%><%="ET. AL" %><%
-						              								break;
-					              								}
-					              								i++;
-				              								}
-				              								
-				              							%>
-				              							<%
-				              								String date = "";
-				              								String dur = "";
-				              								try{ date = v.getDate().trim();}catch(Exception e){}
-				              								try{ dur = v.getDuration().trim().substring(0, 8);}catch(Exception e){}
-				              							%>
-				              							<div class="generation-date"><%=date%></div>
-				              							<div class="duration"><%=dur%></div>
-				              						</em>
-			              						</div>
-											</a>
-										</li>
-										<li class="placeholder"></li>
-									<%}%>
-									</ul>
-									<script>
-									$("<%="#b"+oId%>").click(function() {
-										$("<%="#p"+oId%>").slideToggle("slow");
-									});
-									</script>
-								</div>
-						<%}%>
-				
+				<!-- sublist for searched videos -->
+				<%if(videoCount>1 && isSearched){ %>
+					<div id="searchedvideos">
+							<button id="<%="b"+oId%>" >
+								<span class="lfr-icon-menu-text">
+									<i class="icon-large icon-chevron-down"></i>
+								</span>	
+							</button>
+						    <ul id="<%="p"+oId%>" class="list-group toggler-content-collapsed content">
+							<%
+							while(vli.hasNext()){
+							Video v =  VideoLocalServiceUtil.getFullVideo(vli.next().getVideoId());
+							String vId = v.getVideoId()+"";
+							%>
+								<portlet:actionURL name="viewOpenAccessVideo" var="vURL">
+									<portlet:param name="objectId" value="<%=vId%>"/>
+									<portlet:param name="objectType" value="v"/>
+								</portlet:actionURL>				
+								<li class="videotile small">
+									<a href="<%=vURL%>">
+										<div class="videotile metainfo small">
+											<div class="video-image-wrapper-small">
+												<img class="video-image" src="<%=v.getImageSmall()%>">
+											</div>
+										</div>
+										<div class="metainfo-small">
+											<div class="title-small"><%=v.getTitle()%></div>
+		              						<em class="creator-small2">
+												<%
+													List<Creator> cv = CreatorLocalServiceUtil.getCreatorsByVideoId(v.getVideoId());
+													ListIterator<Creator> cvi = cl.listIterator();										
+		              								int i=0;
+		              								while(cvi.hasNext()){
+			              								if(i<2){
+			              									%><%=cvi.next().getFullName()+"; " %><%
+			              								}else{
+			              									%><%="ET. AL" %><%
+				              								break;
+			              								}
+			              								i++;
+		              								}
+		              								
+		              								String date = "";
+		              								String dur = "";
+		              								try{ date = v.getDate().trim();}catch(Exception e){}
+		              								try{ dur = v.getDuration().trim().substring(0, 8);}catch(Exception e){}
+		              							%>
+		              							<div class="generation-date"><%=date%></div>
+		              							<div class="duration"><%=dur%></div>
+		              						</em>
+	              						</div>
+									</a>
+								</li>
+								<li class="placeholder"></li>
+							<%}%>
+							</ul>
+							<script>
+							$("<%="#b"+oId%>").click(function() {
+								$("<%="#p"+oId%>").slideToggle("slow");
+							});
+							</script>
+						</div>
+				<%}%>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 	<liferay-ui:search-iterator />
