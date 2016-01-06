@@ -296,11 +296,20 @@
 									        
 											<div class="lectureseries-title"><%=lectser.getName()%></div>
 											
-											<div id="allcreators">
+											<div class="allcreators">
 												<%
 												List<Creator> clv = CreatorLocalServiceUtil.getCreatorsByVideoId(vidDummy.getVideoId());
 												ListIterator<Creator> clvi = clv.listIterator();
-												while(clvi.hasNext()){%><%=clvi.next().getFullName()+"; " %><%}
+	              								int i=0;
+	              								while(clvi.hasNext()){
+		              								if(i<2){
+		              									%><%=clvi.next().getFullName()+"; " %><%
+		              								}else{
+		              									%><%="ET. AL" %><%
+			              								break;
+		              								}
+		              								i++;
+	              								}
 												%>
 											</div>		
 																	
@@ -324,9 +333,9 @@
 									          <%
 									          	while(liIt.hasNext()){
 									          		Lectureseries_Institution lI = liIt.next();
-									          		Institution i = InstitutionLocalServiceUtil.getById(lI.getInstitutionId());
+									          		Institution inst = InstitutionLocalServiceUtil.getById(lI.getInstitutionId());
 									          		%>
-											          <span class="label label-light2"><%=i.getName()%></span>
+											          <span class="label label-light2"><%=inst.getName()%></span>
 									          		<%
 									          	}
 									          %>
@@ -357,9 +366,18 @@
 									        
 											<div class="lectureseries-title"><%=lectser.getName()%></div>
 											
-											<div id="allcreators">
+											<div class="allcreators">
 												<%
-												while(cli1.hasNext()){%><%=cli1.next().getFullName()+"; " %><%}
+	              								int i=0;
+	              								while(cli1.hasNext()){
+		              								if(i<2){
+		              									%><%=cli1.next().getFullName()+"; " %><%
+		              								}else{
+		              									%><%="ET. AL" %><%
+			              								break;
+		              								}
+		              								i++;
+	              								}
 												%>
 											</div>		
 																	
@@ -377,9 +395,9 @@
 									          <%
 									          	while(liIt.hasNext()){
 									          		Lectureseries_Institution lI = liIt.next();
-									          		Institution i = InstitutionLocalServiceUtil.getById(lI.getInstitutionId());
+									          		Institution inst = InstitutionLocalServiceUtil.getById(lI.getInstitutionId());
 									          		%>
-											          <span class="label label-light2"><%=i.getName()%></span>
+											          <span class="label label-light2"><%=inst.getName()%></span>
 									          		<%
 									          	}
 									          %>
@@ -401,9 +419,18 @@
 									        
 											<div class="lectureseries-title"><%=lectser.getName()%></div>
 											
-											<div id="allcreators">
+											<div class="allcreators">
 												<%
-												while(cli.hasNext()){%><%=cli.next().getFullName()+"; " %><%}
+	              								int i=0;
+	              								while(cli.hasNext()){
+		              								if(i<2){
+		              									%><%=cli.next().getFullName()+"; " %><%
+		              								}else{
+		              									%><%="ET. AL" %><%
+			              								break;
+		              								}
+		              								i++;
+	              								}
 												%>
 											</div>		
 																	
@@ -421,9 +448,9 @@
 									          <%
 									          	while(liIt.hasNext()){
 									          		Lectureseries_Institution lI = liIt.next();
-									          		Institution i = InstitutionLocalServiceUtil.getById(lI.getInstitutionId());
+									          		Institution inst = InstitutionLocalServiceUtil.getById(lI.getInstitutionId());
 									          		%>
-											          <span class="label label-light2"><%=i.getName()%></span>
+											          <span class="label label-light2"><%=inst.getName()%></span>
 									          		<%
 									          	}
 									          %>
@@ -434,6 +461,7 @@
 							}
 						%>
 				</div>
+				
 				<!-- sublist for searched videos -->
 				<%if(videoCount>1 && isSearched){ %>
 					<div id="searchedvideos">

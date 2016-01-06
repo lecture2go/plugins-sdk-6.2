@@ -83,28 +83,8 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     width: 249px;
 }
 
-#allcreators {
+.allcreators {
 	font-size: smaller;
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;	
-}
-	
-.view-960 #allcreators {
-    width: 36em;
-}
-
-.view-720 #allcreators {
-    width: 26em;
-}
-
-.view-480 #allcreators {
-    width: 16em;
-}
-
-.view-320 #allcreators {
-    width: 6em;
 }
 
 #myToggler .toggler-header-collapsed:hover .video-image-overlay, #myToggler .toggler-header-collapsed:hover .tri, #myToggler .toggler-header-expanded .video-image-overlay, #myToggler .toggler-header-expanded .tri {
