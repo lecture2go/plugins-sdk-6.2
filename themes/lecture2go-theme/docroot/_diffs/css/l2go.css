@@ -180,6 +180,14 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 	width: 100%;
 }
 
+.meta-video-title{
+	width: 70%;
+}
+
+.meta-video-title-wide{
+	width: 100%;
+}
+
 .list-group.toggler-content-collapsed.content > li {
     border: 0px solid;
     background-color: transparent;
