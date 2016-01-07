@@ -76,7 +76,7 @@
 	} else {
 		presentCategories = CategoryLocalServiceUtil.getCategoriesFromLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds);
 	}
-	
+
 	if (hasCreatorFiltered) {
 		presentCreators.add(CreatorLocalServiceUtil.getCreator(creatorId));
 	} else {

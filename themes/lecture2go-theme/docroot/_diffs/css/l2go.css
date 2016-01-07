@@ -152,6 +152,34 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     margin-left: 67px;
 }
 
+.metainfo-small.related {
+    margin-left: 67px;
+}
+
+.metainfo-wide {
+    width: 100%;
+}
+
+.metainfo {
+    width: 70%;
+}
+
+.meta-description-wide {
+    width: 100%;
+}
+
+.meta-description {
+    width: 70%;
+}
+
+.path{
+	width: 70%;
+}
+
+.path-wide{
+	width: 100%;
+}
+
 .list-group.toggler-content-collapsed.content > li {
     border: 0px solid;
     background-color: transparent;
@@ -190,6 +218,15 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 
 .videotile.small:hover {
     background-color: #EAEAEA !important;
+}
+
+.videotile.small.related {
+    list-style: outside none none !important;
+    padding: 0px !important;
+    margin: 0px !important;
+    height: auto;
+    line-height: 11px;
+    min-height: 55px;
 }
 
 #video-list .list-group-item {
@@ -304,9 +341,14 @@ a.list-group-item:hover, a.list-group-item:focus {
     color: black;
 }
 
+.aui #my-tab-content {
+    min-height: auto;
+}
+
 #term {
     font-size: smaller;
-	margin-left: 73%;
+    margin-left: 101%;
+    width: 100px;
 }
 
 thead, th {
@@ -370,6 +412,16 @@ thead, th {
     color: initial;
 }
 
+.title-small.related {
+    font-weight: 400 !important;
+    font-size: 13px;
+    margin-bottom: 0px;
+    padding: 0px;
+    line-height: 17px;
+    width: 50%;
+    color: initial;
+}
+
 .play-small {
   left: 26px;
   position:absolute;
@@ -390,6 +442,14 @@ thead, th {
     color:#fff; 
     text-shadow: 1px 1px #ff0000; 
     opacity: 0.7;
+}
+
+.player-wide {
+    width: 100%;
+}
+
+.player {
+    width: 70%;
 }
 
 .aui .label {
@@ -432,6 +492,7 @@ thead, th {
     height: 1px;
     border: 0px !important;
     background-color: #E0E0E0 !important;
+    list-style: none;
 }
 
 .aui a:hover {
@@ -463,4 +524,15 @@ thead, th {
 .title-text {
     color: black !important;
     font-size: 15px;
+}
+
+.related-lectureseries-name {
+	margin-bottom: 10px;
+}
+
+.col-md-5 {
+    top: 10px;
+    right: 0%;
+    width: 28%;
+    position: absolute;
 }
