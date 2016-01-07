@@ -14,6 +14,7 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.liferay.counter.model.Counter;
@@ -43,8 +44,11 @@ import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.HostLocalServiceBaseImpl;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import de.uhh.l2g.plugins.service.persistence.HostUtil;
+import de.uhh.l2g.plugins.service.persistence.InstitutionFinderUtil;
+import de.uhh.l2g.plugins.util.RepositoryManager;
 
 /**
  * The implementation of the host local service.
@@ -108,7 +112,6 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 		return defaultHost;
 	}
 	
-
 	
 	public long getDefaultHostId(long companyId, long groupId) throws SystemException{
 		//System.out.println(companyId +" "+groupId);
@@ -117,7 +120,17 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 		else return defaultHost.getPrimaryKey();
 	}
 	
-
+	/**Host is locked if it is linked to an institution */
+	public int getLockingElements(long groupId, long hostId) throws SystemException { 
+		int c = 0;
+			try {
+				c = Institution_HostLocalServiceUtil.getByGroupIdAndHostIdCount(groupId, hostId);
+			} catch (PortalException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		return c;
+	}
 
 
 	protected void validate (String name, String streamer) throws PortalException {
@@ -164,6 +177,15 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 		defaultHost.setExpandoBridgeAttributes(serviceContext);
 
 		hostPersistence.update(defaultHost);
+		
+		//Create Directory
+		try {
+			
+			RepositoryManager.createFolder(PropsUtil.get("lecture2go.media.repository")+"/"+ defaultHost.getServerRoot());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
 			       Host.class.getName(), hostId, false, true, true);
@@ -190,16 +212,24 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 
 		host.setName(name);
 		host.setGroupId(groupId);
-		host.setCompanyId(port);
+		host.setCompanyId(companyId);
 //		host.setStreamingServerTemplateId(streamingServerTemplateId);
 		host.setStreamer(streamLocation);
 		host.setProtocol(protocol);
-		host.setServerRoot(serverRoot);
+		host.setServerRoot(RepositoryManager.prepareServerRoot(hostId));
 		host.setPort(port);
 		host.setExpandoBridgeAttributes(serviceContext);
 
 		hostPersistence.update(host);
 
+		//Create Directory
+		try {
+			RepositoryManager.createFolder(PropsUtil.get("lecture2go.media.repository")+"/"+ host.getServerRoot());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
 			       Host.class.getName(), hostId, false, true, true);
 
@@ -242,15 +272,22 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 
 	   public Host deleteHost(long hostId, ServiceContext serviceContext)
 		        throws PortalException, SystemException {
-
+		   		
+		   		long companyId = serviceContext.getCompanyId();
+		   		long groupId = serviceContext.getScopeGroupId();
 		        Host host = getHost(hostId);
-
-		        resourceLocalService.deleteResource(serviceContext.getCompanyId(),
-		        		Host.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
-		        		hostId);
-
-		        host = deleteHost(hostId);
-
+		        int l = getLockingElements(groupId, hostId);
+  
+		        if (l<1){
+			        resourceLocalService.deleteResource(companyId,
+			        		Host.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
+			        		hostId);
+	
+			        host = deleteHost(hostId);
+		        }
+		        else{
+		        	System.out.println("Could not delete Host because it is still used by "+ l +" Institutions");
+		        }
 		        return host;
 
 		    }
@@ -269,7 +306,7 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 				Host host = hosts.get(0);
 				
 				//write Counter
-				if (host != null) counter.setCurrentId(host.getHostId() + 1);
+				if (host != null) counter.setCurrentId(host.getHostId());
 				CounterLocalServiceUtil.updateCounter(counter);
 				
 				return host;

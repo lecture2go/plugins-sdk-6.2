@@ -555,7 +555,7 @@ $('#loadMoreCreators, #searchName').on("click", function () {
 	
 function addRowToCreatorPanel(creator,parentInstitutionId,institutionId,termId,categoryId,searchQuery){
 	var filterUrl = createFilterUrl(parentInstitutionId,institutionId,termId,categoryId,creator.id,searchQuery);
-	var row = "<li><a href=\"" + filterUrl + "\">" + creator.fullname + "</a> <span /></li>";
+	var row = "<li class='filter-menu'><div class='filter-menu-link'><a href=\"" + filterUrl + "\">" + creator.fullname + "</a> <span /></div></li>";
 	$("#creators").find("ul").append(row);
 }
 

@@ -69,8 +69,8 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 		};
 	public static final String TABLE_SQL_CREATE = "create table LG_Host (hostId LONG not null primary key,protocol STRING null,streamer STRING null,port INTEGER,serverRoot STRING null,name STRING null,groupId LONG,companyId LONG,defaultHost INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Host";
-	public static final String ORDER_BY_JPQL = " ORDER BY host.hostId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY LG_Host.hostId ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY host.serverRoot ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY LG_Host.serverRoot ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -86,6 +86,7 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 	public static long COMPANYID_COLUMN_BITMASK = 1L;
 	public static long GROUPID_COLUMN_BITMASK = 2L;
 	public static long HOSTID_COLUMN_BITMASK = 4L;
+	public static long SERVERROOT_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Host"));
 
@@ -270,6 +271,8 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 
 	@Override
 	public void setServerRoot(String serverRoot) {
+		_columnBitmask = -1L;
+
 		_serverRoot = serverRoot;
 	}
 
@@ -390,17 +393,15 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 
 	@Override
 	public int compareTo(Host host) {
-		long primaryKey = host.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		value = getServerRoot().compareTo(host.getServerRoot());
+
+		if (value != 0) {
+			return value;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
-		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	@Override

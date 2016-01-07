@@ -125,8 +125,8 @@ public class OpenAccessVideos extends MVCPortlet {
 		String searchQuery = "";
 		if (request.getParameter("searchQuery") != null) {
 			searchQuery = request.getParameter("searchQuery");
-		} 
-		
+		}
+
 		response.setRenderParameter("institutionId", institutionId+"");
 		response.setRenderParameter("parentInstitutionId", parentInstitutionId+"");
 		response.setRenderParameter("termId", termId+"");

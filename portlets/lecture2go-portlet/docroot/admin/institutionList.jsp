@@ -111,6 +111,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("institutionId", institutionId+"");
 portletURL.setParameter("hostId", hostId+"");
 
+String repDirectory = PropsUtil.get("lecture2go.media.repository");
 //Get Top Level institution of current scope
 Institution root = InstitutionLocalServiceUtil.getRootByGroupId(companyId, groupId);
 long rootId = root.getInstitutionId();
@@ -226,6 +227,7 @@ Root Institution Permissions:
 						</aui:form>
 			
 				</c:if>
+				<%--STREAMING SERVER SEARCH CONTAINER --%>
 				<liferay-ui:search-container searchContainer="<%= searchHostContainer %>"
 				curParam ="curStreamingServer"
 				orderByType="asc"
@@ -243,13 +245,21 @@ Root Institution Permissions:
 				className="de.uhh.l2g.plugins.model.Host" modelVar="Hosts" rowVar="thisRow"
 				keyProperty="hostId"  escapedModel="<%= false %>" indexVar="k">
 
-        			<liferay-ui:search-container-column-text name="Host" >
-	        			<portlet:actionURL name="deleteStreamingServer" var="deleteStreamingServerURL">
-							<portlet:param name="curStreamingServerId" value='<%= (new Long(Hosts.getHostId())).toString() %>' />
-							<portlet:param name="backURL" value="<%=String.valueOf(portletURL) %>"/>
-						</portlet:actionURL>
+        			<liferay-ui:search-container-column-text name="Host" >      			    
+		        			<portlet:actionURL name="deleteStreamingServer" var="deleteStreamingServerURL">
+		        				<c:choose>
+		        					<c:when test='<%=  HostLocalServiceUtil.getLockingElements(groupId, Hosts.getHostId()) < 1 %>'>
+		        						<portlet:param name="curStreamingServerId" value='<%= (new Long(Hosts.getHostId())).toString() %>' />
+									</c:when>
+									<c:otherwise>
+										<portlet:param name="curStreamingServerId" value='<%= "0" %>' />
+									</c:otherwise>
+								</c:choose>
+								<portlet:param name="backURL" value="<%=String.valueOf(portletURL) %>"/>
+							</portlet:actionURL>
 						<aui:form action="<%= updateStreamingServerURL %>" name="<portlet:namespace />fm">
 							<aui:fieldset>
+							
 							<%	if (Hosts.getDefaultHost() > 0) {
 							%>
 								<aui:input name="curStreamingServerName" label="StreamingServer Name" inlineField="true" value = "Default" />
@@ -266,11 +276,20 @@ Root Institution Permissions:
 								<aui:input name="curStreamingServerPort" label="Port" inlineField="true" value = "<%= Hosts.getPort() %>" />
 								<aui:input name="curStreamingServerProtocol" label="Protocol" inlineField="true" value = "<%= Hosts.getProtocol() %>" />
 								
-								<aui:input name="curStreamingServerRoot" label="Root Directory" inlineField="true" disabled="true" value = "<%= Hosts.getServerRoot() %>" />
+								<%-- <aui:input name="curStreamingServerRoot" label="Root Directory" inlineField="true" disabled="true" value = "<%= Hosts.getServerRoot() %>" /> --%>
 								
 								<aui:input name="curStreamingServerId" type='hidden' inlineField="true" value = "<%= (new Long(Hosts.getHostId())).toString() %>"/>
 								<aui:button type="submit"></aui:button>
-								<aui:button name="delete" value="Löschen" type="button" href="<%=deleteStreamingServerURL.toString() %>" />
+								<c:choose>
+								<c:when test='<%=  HostLocalServiceUtil.getLockingElements(groupId, Hosts.getHostId()) < 1 %>'>
+									<aui:button name="delete" value="Löschen" type="button" href="<%=deleteStreamingServerURL.toString() %>" />
+								</c:when>
+								<c:otherwise>
+									<aui:button name="delete" value="Löschen" type="button" disabled="true" href="<%=deleteStreamingServerURL.toString() %>" />								
+								</c:otherwise>
+								</c:choose>
+								</br>
+								<liferay-ui:message key="<%= repDirectory %>" />/<liferay-ui:message key="<%= Hosts.getServerRoot() %>"/>
 							</aui:fieldset>
 						</aui:form>
         			</liferay-ui:search-container-column-text>
@@ -355,7 +374,14 @@ deltaConfigurable="true">
 
 				<aui:button type="submit"></aui:button>
 				<c:if  test='<%= permissionChecker.hasPermission(groupId, institutionModel, groupId, "DELETE_INSTITUTIONS") %>'>
-					<aui:button name="delete" value="Löschen" type="button" href="<%=deleteInstitutionURL.toString() %>" />
+					<c:choose>
+					<c:when test='<%=  InstitutionLocalServiceUtil.getLockingElements(institution.getInstitutionId()) < 1 %>'>
+								<aui:button name="delete" value="Löschen" type="button" href="<%=deleteInstitutionURL.toString() %>" />
+					</c:when>
+					<c:otherwise>
+								<aui:button name="delete" value="Löschen" type="button" disabled="true" href="<%=deleteInstitutionURL.toString() %>" />								
+					</c:otherwise>
+					</c:choose>
 				</c:if>
 			</aui:fieldset>
  		</aui:form>
@@ -407,7 +433,14 @@ deltaConfigurable="true">
 								<aui:input cssClass="smallInput" name="innerListOrder" label="Order" inlineField="true" value='<%= subInstitution.getSort() %>'/>
 								<aui:input name="innerListInstitutionId" type='hidden' inlineField="true" value = "<%= subInstitution.getPrimaryKey() %>"/>
 								<aui:button type="submit"></aui:button>
-								<aui:button name="delete" value="Löschen" type="button" href="<%=deleteSubInstitutionURL.toString() %>" />
+								<c:choose>
+									<c:when test='<%=  InstitutionLocalServiceUtil.getLockingElements(subInstitution.getInstitutionId()) < 1 %>'>
+											<aui:button name="delete" value="Löschen" type="button" href="<%=deleteSubInstitutionURL.toString() %>" />
+									</c:when>
+									<c:otherwise>
+											<aui:button name="delete" value="Löschen" type="button" disabled="true" href="<%=deleteSubInstitutionURL.toString() %>" />								
+									</c:otherwise>
+								</c:choose>
 							</aui:fieldset>
 						</aui:form>
         			</liferay-ui:search-container-column-text>

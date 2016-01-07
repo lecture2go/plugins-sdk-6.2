@@ -212,6 +212,8 @@
 		<column name="groupId" type="long"></column>
         <column name="companyId" type="long"></column>
         <column name="defaultHost" type="int"></column>
+        <order by="asc"> <order-column name="serverRoot" />
+        </order>
 		<finder name="GroupId" return-type="Collection">
             <finder-column name="groupId"></finder-column>
         </finder>
@@ -250,6 +252,11 @@
         </finder>
         <finder name="GroupId" return-type="Collection">
             <finder-column name="groupId"></finder-column>
+        </finder>
+        <finder name="C_G_H" return-type="Collection">
+            <finder-column name="companyId"></finder-column>
+            <finder-column name="groupId"></finder-column>
+            <finder-column name="hostId"></finder-column>
         </finder>
         <finder name="C_G_I" return-type="Collection">
             <finder-column name="companyId"></finder-column>
