@@ -321,8 +321,8 @@
 								</portlet:actionURL>		
 								<li class="videotile small related">
 									<a href="<%=viewOpenAccessVideoURL1.toString()%>">
-										<div class="video-image-wrapper-small">
-											<img class="video-image" src="<%=vid.getImageSmall()%>">
+										<div class="video-image-wrapper-small related">
+											<img class="video-image related" src="<%=vid.getImageSmall()%>">
 										</div>
 										<div class="metainfo-small related">
 							          			<em class="creator-small2 related">
