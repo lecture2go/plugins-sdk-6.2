@@ -306,6 +306,7 @@
 						<div class="col-md-5">
 						    <div class="related-lectureseries-name">lecture-series &nbsp;<a target="_blank" class="icon-small icon-rss" href="${video.mp4RssLink}"></a> </div>
 							<ul class="ul-related">
+								<li class="placeholder"></li>
 								<%
 								ListIterator<Video> vli = relatedVideos.listIterator();
 								while(vli.hasNext()){
@@ -324,29 +325,30 @@
 											<img class="video-image" src="<%=vid.getImageSmall()%>">
 										</div>
 										<div class="metainfo-small related">
-											<div class="title-small related"><%=vid.getTitle()%></div>
-							          			<em class="creator-small2">
+							          			<em class="creator-small2 related">
 												<%
+						       						String fullname="";
 							        				String date = "";
 							           				try{ date = vid.getDate().trim().substring(0, 10);}catch(Exception e){}
-							           			%>
-								           		<%=date%> - 
-							           			<%
-													List<Creator> cv = CreatorLocalServiceUtil.getCreatorsByVideoId(vid.getVideoId());
+
+							           				List<Creator> cv = CreatorLocalServiceUtil.getCreatorsByVideoId(vid.getVideoId());
 													ListIterator<Creator> cvi = cv.listIterator();										
 							       					int i=0;
 							       					while(cvi.hasNext()){
-									   					if(i<2){
-								    						%><%=cvi.next().getFullName()+"; " %><%
+							       						if(i<2){
+							       							fullname += cvi.next().getFullName();
+							       							if(cv.size()>1) fullname+="; ";
 								    					}else{
-								    						%><%="ET. AL" %><%
+								    						fullname+="ET. AL";
 															break;
 								    					}
 								    					i++;
 							        				}
-							              								
 							           			%>
+												<%=fullname %>
 							           			</em>
+												<div class="title-small related"><%=vid.getTitle()%></div>
+								           		<div class="date related">[<%=date%>]</div> 
 						            	</div>
 									</a>
 								</li>
