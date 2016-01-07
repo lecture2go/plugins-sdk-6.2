@@ -306,6 +306,7 @@
 						<div class="col-md-5">
 						    <div class="related-lectureseries-name">lecture-series &nbsp;<a target="_blank" class="icon-small icon-rss" href="${video.mp4RssLink}"></a> </div>
 							<ul class="ul-related">
+								<li class="placeholder"></li>
 								<%
 								ListIterator<Video> vli = relatedVideos.listIterator();
 								while(vli.hasNext()){

@@ -231,10 +231,9 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 .videotile.small.related {
     list-style: outside none none !important;
     padding: 0px !important;
-    margin: 0px 0px 11px 0px;
     height: auto;
     line-height: 11px;
-    min-height: 55px;
+    min-height: 70px;
 }
 
 #video-list .list-group-item {
@@ -491,10 +490,10 @@ thead, th {
 }
 
 .placeholder {
-    height: 1px;
-    border: 0px !important;
+    border: 0px none !important;
     background-color: #E0E0E0 !important;
-    list-style: none;
+    list-style: outside none none;
+    height: 1px;
 }
 
 .aui a:hover {
