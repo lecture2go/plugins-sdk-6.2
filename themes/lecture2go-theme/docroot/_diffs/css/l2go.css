@@ -164,12 +164,8 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     width: 70%;
 }
 
-.meta-description-wide {
-    width: 100%;
-}
-
 .meta-description {
-    width: 70%;
+    width: 100%;
 }
 
 .path{
@@ -180,11 +176,11 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 	width: 100%;
 }
 
-.meta-video-title{
+.meta-video-info{
 	width: 70%;
 }
 
-.meta-video-title-wide{
+.meta-video-info-wide{
 	width: 100%;
 }
 
@@ -421,13 +417,7 @@ thead, th {
 }
 
 .title-small.related {
-    font-weight: 400 !important;
-    font-size: 13px;
-    margin-bottom: 0px;
-    padding: 0px;
-    line-height: 17px;
-    width: 50%;
-    color: initial;
+    width: 100%;
 }
 
 .play-small {
@@ -543,4 +533,29 @@ thead, th {
     right: 0%;
     width: 28%;
     position: absolute;
+}
+
+.label.label-light {
+    float: right;
+    height: 16px;
+    margin-right: 5px;
+}
+
+.license > a > img {
+    height: 20px;
+    float: right;
+}
+
+.meta-title {
+    margin-top: 23px;
+}
+
+.meta-description {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 7px;
+}
+
+.col-md-7 {
+    margin-top: 10px;
 }

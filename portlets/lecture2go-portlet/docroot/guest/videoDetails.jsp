@@ -113,17 +113,17 @@
 			       <div class="label label-light">${video.hits} views</div>			  
 			  </div>
 			  
-			  <c:if test="${relatedVideos.size()>1}"> <div class="meta-video-title"></c:if>
-			  <c:if test="${relatedVideos.size()<=1}"> <div class="meta-video-title-wide"></c:if>
-		      <div class="meta-creators">${video.creators}</div>
-			  <c:if test="${relatedVideos.size()>1}"><div class="meta-description"></c:if>
-			  <c:if test="${relatedVideos.size()<=1}"><div class="meta-description-wide"></c:if>
-				  <%if(videoMetadata.getDescription().trim().length()>0){ %>	
-				  	${videoMetadata.description}
-				  <%}else{%>
-			      	${lectureseries.longDesc}
-				  <%}%>
-			  </div>
+			  <c:if test="${relatedVideos.size()>1}"> <div class="meta-video-info"></c:if>
+			  <c:if test="${relatedVideos.size()<=1}"> <div class="meta-video-info-wide"></c:if>
+			    <div class="meta-title"><%=title%></div>
+		      	<div class="meta-creators">${video.creators}</div>
+				  <div class="meta-description">
+					  <%if(videoMetadata.getDescription().trim().length()>0){ %>	
+					  	${videoMetadata.description}
+					  <%}else{%>
+				      	${lectureseries.longDesc}
+					  <%}%>
+				  </div>
 		    </div>
 		    
 		    <%
@@ -324,7 +324,7 @@
 											<img class="video-image" src="<%=vid.getImageSmall()%>">
 										</div>
 										<div class="metainfo-small related">
-											<div class="title-small"><%=vid.getTitle()%></div>
+											<div class="title-small related"><%=vid.getTitle()%></div>
 							          			<em class="creator-small2">
 												<%
 													List<Creator> cv = CreatorLocalServiceUtil.getCreatorsByVideoId(vid.getVideoId());
