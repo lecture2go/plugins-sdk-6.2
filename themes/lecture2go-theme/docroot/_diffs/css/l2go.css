@@ -148,6 +148,11 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     height: 30px;
 }
 
+.video-image-wrapper-small.related {
+    max-width: 113px;
+    height: 57px;
+}
+
 .metainfo-small {
     margin-left: 67px;
 }
@@ -206,6 +211,11 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     margin-left: 2px;
 }
 
+.video-image.related{
+    width: 113px;
+    height: 55px !important;
+}
+
 .videotile {
     border: 0px solid #000;
     border-radius: 0px;
@@ -232,7 +242,7 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     list-style: outside none none !important;
     padding: 0px !important;
     height: auto;
-    line-height: 11px;
+    line-height: 15px;
     min-height: 70px;
 }
 
