@@ -327,6 +327,11 @@
 											<div class="title-small related"><%=vid.getTitle()%></div>
 							          			<em class="creator-small2">
 												<%
+							        				String date = "";
+							           				try{ date = vid.getDate().trim().substring(0, 10);}catch(Exception e){}
+							           			%>
+								           		<%=date%> - 
+							           			<%
 													List<Creator> cv = CreatorLocalServiceUtil.getCreatorsByVideoId(vid.getVideoId());
 													ListIterator<Creator> cvi = cv.listIterator();										
 							       					int i=0;
@@ -340,10 +345,7 @@
 								    					i++;
 							        				}
 							              								
-							        				String date = "";
-							           				try{ date = vid.getDate().trim().substring(0, 10);}catch(Exception e){}
 							           			%>
-							           			|&nbsp;<%=date%>
 							           			</em>
 						            	</div>
 									</a>
