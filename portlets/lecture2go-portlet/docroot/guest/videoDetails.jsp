@@ -113,7 +113,8 @@
 			       <div class="label label-light">${video.hits} views</div>			  
 			  </div>
 			  
-		      <div class="meta-video-title"><%=title%></div>
+			  <c:if test="${relatedVideos.size()>1}"> <div class="meta-video-title"></c:if>
+			  <c:if test="${relatedVideos.size()<=1}"> <div class="meta-video-title-wide"></c:if>
 		      <div class="meta-creators">${video.creators}</div>
 			  <c:if test="${relatedVideos.size()>1}"><div class="meta-description"></c:if>
 			  <c:if test="${relatedVideos.size()<=1}"><div class="meta-description-wide"></c:if>
