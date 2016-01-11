@@ -47,10 +47,10 @@
 									<portlet:param name="creatorId" value="0"/>
 								</portlet:actionURL>	
 								
-						    	<A HREF="<%=backURL1%>"><%=pInst.getName() %></A> <span class="sep">&gt;</span> 
+						    	<A HREF="<%=backURL1%>"><%=pInst.getName() %></A> <span class="icon-arrow-right">&nbsp;</span> 
 						    	<A HREF="<%=backURL2%>"><%=insti.getName() %></A> 
 						    	<%if(lec.getLectureseriesId()>0) {%>
-					    		<span class="sep">&gt;</span> <SPAN><%=lec.getName()%></SPAN>
+					    		<span class="icon-arrow-right">&nbsp;</span> <SPAN><%=lec.getName()%></SPAN>
 					    	<%}%>
 						    	<br/>
 				    		<%}
@@ -76,7 +76,7 @@
 									<portlet:param name="categoryId" value="0"/>
 									<portlet:param name="creatorId" value="0"/>
 								</portlet:actionURL>		    	
-						    	<A HREF="<%=backURL3%>"><%=pInst.getName() %></A> <span class="sep">&gt;</span> 
+						    	<A HREF="<%=backURL3%>"><%=pInst.getName() %></A>  <span class="icon-arrow-right">&nbsp;</span>  
 						    	<A HREF="<%=backURL4%>"><%=insti.getName() %></A>
 						    	<br/> 
 				      <%}  		
@@ -358,7 +358,7 @@
 						            	</div>
 									</a>
 								</li>
-								<li class="placeholder"></li>
+								<%if(vli.hasNext()){%><li class="placeholder"></li><%}%>
 							</ul>
 							<%}%>
 						</div>

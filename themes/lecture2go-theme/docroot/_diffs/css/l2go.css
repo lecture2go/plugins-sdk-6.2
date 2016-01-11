@@ -177,9 +177,14 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 
 .path-wide{
 	width: 100%;
+	font-size: 11px;
 }
 
 .path > span {
+    font-weight: 900;
+}
+
+.path-wide > span {
     font-weight: 900;
 }
 
@@ -608,6 +613,7 @@ thead, th {
     margin-top: 38px;
     font-size: 22px;
     font-weight: 900;
+    line-height: 30px;
 }
 
 .meta-description {
@@ -617,7 +623,7 @@ thead, th {
     font-size: 11px !important;
 }
 .meta-creators {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 100;
     margin-top: 4px;
 }
