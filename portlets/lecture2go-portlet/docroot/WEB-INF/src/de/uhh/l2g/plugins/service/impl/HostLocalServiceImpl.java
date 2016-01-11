@@ -301,10 +301,10 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 				List<Host> hosts = HostLocalServiceUtil.dynamicQuery(query);
 				Host host = hosts.get(0);
 				
-				//TODO: Check back with file system an increment until directory number is free
-				
+				//Check back with real directory
+				long newHostId = java.lang.Math.max(RepositoryManager.getMaximumRealServerRootId(),host.getHostId());
 				//write Counter
-				if (host != null) counter.setCurrentId(host.getHostId());
+				if (host != null) counter.setCurrentId(newHostId);
 				CounterLocalServiceUtil.updateCounter(counter);
 				
 				return host;
