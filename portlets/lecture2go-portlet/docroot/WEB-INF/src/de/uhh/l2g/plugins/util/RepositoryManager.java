@@ -38,12 +38,20 @@ import java.io.IOException;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import com.liferay.counter.model.Counter;
+import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution_Host;
 import de.uhh.l2g.plugins.model.Producer;
+import de.uhh.l2g.plugins.service.ClpSerializer;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 
@@ -151,10 +159,9 @@ public class RepositoryManager {
 	}
 
 	/**
-	 * Creates vhosts according to database.
+	 * Creates all vhosts according to database record.
 	 *
-	 * @param host
-	 * @param producer
+	 * @param groupId - the scope of host records to be considered
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static void createVHosts(long groupId) throws IOException{
@@ -192,10 +199,10 @@ public class RepositoryManager {
 	/**
 	 * Prepare directory name by extending server Root prefix with id.
 	 * 
-	 * Does not distinguish default directory for multi-site installations
+	 * Does not distinguish default directory for multi site/company yet
 	 * 
-	 * @param the Host
-	 * @return the string
+	 * @param hostId
+	 * @return the directory name
 	 */
 	public static String prepareServerRoot(long hostId){
 		String base = PropsUtil.get("lecture2go.default.serverRoot");
@@ -222,13 +229,27 @@ public class RepositoryManager {
 	/**
 	 * Retrieve highest Folder Id from repository
 	 * 
-	 * @return the string
+	 * @return maximum folder id
+	 * @throws SystemException 
+	 * @throws PortalException 
 	 */
-	public long getMaximumServerRoot(){
-		return 0;
+	public static long getMaximumRealServerRootId() throws SystemException, PortalException{
 		
-		
+		//Retrieve maximum host id (highest existing folder name must end with larger)	
+		Counter hcounter = CounterLocalServiceUtil.getCounter(Host.class.getName());
+		long hId =  hcounter.getCurrentId();    //directory numbering will overflow for large values...
+		String curRootDir = prepareServerRoot(hId);
+		File folder = new File(PropsUtil.get("lecture2go.media.repository")+"/"+curRootDir);
+		while(folder.isDirectory()){
+			hId++;
+			curRootDir = prepareServerRoot(hId);
+			folder = new File(PropsUtil.get("lecture2go.media.repository")+"/"+curRootDir);
+		}
+		return hId-1;
+			
 	}
+
+
 	
 	
 

@@ -246,6 +246,7 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 //		host.setStreamingServerTemplateId(streamingServerTemplateId);
 		host.setStreamer(streamLocation);
 		host.setProtocol(protocol);
+		//Server Root will be constant over all changes
 		//host.setServerRoot(serverRoot);
 		host.setPort(port);
 		host.setExpandoBridgeAttributes(serviceContext);
@@ -260,6 +261,11 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 		return host;
 	}
 
+	   /**Removes database record of Host
+	    * 
+	    * This will not remove Folder on Filesystem, Folder will not be reused 
+	    * 
+	    */
 	   public Host deleteHost(long hostId, ServiceContext serviceContext)
 		        throws PortalException, SystemException {
 		   		
@@ -295,8 +301,10 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 				List<Host> hosts = HostLocalServiceUtil.dynamicQuery(query);
 				Host host = hosts.get(0);
 				
+				//Check back with real directory
+				long newHostId = java.lang.Math.max(RepositoryManager.getMaximumRealServerRootId(),host.getHostId());
 				//write Counter
-				if (host != null) counter.setCurrentId(host.getHostId());
+				if (host != null) counter.setCurrentId(newHostId);
 				CounterLocalServiceUtil.updateCounter(counter);
 				
 				return host;
