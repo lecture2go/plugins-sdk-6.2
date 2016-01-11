@@ -151,6 +151,7 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 .video-image-wrapper-small.related {
     max-width: 113px;
     height: 57px;
+    margin-top: 2px;
 }
 
 .metainfo-small {
@@ -169,24 +170,26 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     width: 70%;
 }
 
-.meta-description {
-    width: 100%;
-}
-
-.path{
-	width: 70%;
+.path {
+    width: 70%;
+    font-size: 11px;
 }
 
 .path-wide{
 	width: 100%;
 }
 
-.meta-video-info{
-	width: 70%;
+.path > span {
+    font-weight: 900;
+}
+
+.meta-video-info {
+    width: 70%;
 }
 
 .meta-video-info-wide{
 	width: 100%;
+	margin-top: -30px;
 }
 
 .list-group.toggler-content-collapsed.content > li {
@@ -330,6 +333,10 @@ a.list-group-item:hover, a.list-group-item:focus {
     list-style: none;
 }
 
+.aui form {
+    margin: 0px;
+}
+
 .search {
     margin-top: -30px;
 }
@@ -463,6 +470,10 @@ thead, th {
     width: 70%;
 }
 
+.aui .portlet-borderless-container {
+    padding: 0px;
+}
+
 .aui .label {
     border-radius: 0px;
     display: inline-block;
@@ -497,6 +508,40 @@ thead, th {
 .aui .table {
     border-radius: 0px;
     border: 0px;
+}
+
+.aui #tabs {
+    background: #fff none repeat scroll 0% 0%;
+}
+
+.aui .nav-tabs {
+    border-bottom:none;
+}
+
+.aui .nav-tabs > li > a {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border: 1px solid #FFF;
+    border-radius: 0px;
+    background-color: #EAEAEA;
+}
+
+.aui .nav-tabs > li > a:hover, .aui .nav-tabs > li > a:focus {
+    border-color: #EEE #EEE #EEE #EEE;
+}
+
+.aui .nav-tabs > .active > a, .aui .nav-tabs > .active > a:hover, .aui .nav-tabs > .active > a:focus {
+    color: #555;
+    background-color: #FFF;
+    border-width: 3px 0px 0px 0px !important;
+    border-style: solid;
+    border-color: #D81B1B #FFF #FFF #FFF;
+    -moz-border-top-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    border-image: none;
+    cursor: default;
 }
 
 .placeholder {
@@ -560,17 +605,30 @@ thead, th {
 }
 
 .meta-title {
-    margin-top: 23px;
+    margin-top: 38px;
+    font-size: 22px;
+    font-weight: 900;
 }
 
 .meta-description {
     width: 100%;
     margin-top: 10px;
     margin-bottom: 7px;
+    font-size: 11px !important;
+}
+.meta-creators {
+    font-size: 13px;
+    font-weight: 100;
+    margin-top: 4px;
+}
+
+.meta-date {
+    font-style: normal !important;
+    color: #AEAEAE;
 }
 
 .col-md-7 {
-    margin-top: 10px;
+    margin-top: 0px;
 }
 
 .date.related {

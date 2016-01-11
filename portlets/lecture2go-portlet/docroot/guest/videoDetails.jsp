@@ -47,10 +47,10 @@
 									<portlet:param name="creatorId" value="0"/>
 								</portlet:actionURL>	
 								
-						    	<A HREF="<%=backURL1%>" CLASS="apath"><%=pInst.getName() %></A> <span class="sep">&gt;</span> 
-						    	<A HREF="<%=backURL2%>" CLASS="apath"><%=insti.getName() %></A> 
+						    	<A HREF="<%=backURL1%>"><%=pInst.getName() %></A> <span class="sep">&gt;</span> 
+						    	<A HREF="<%=backURL2%>"><%=insti.getName() %></A> 
 						    	<%if(lec.getLectureseriesId()>0) {%>
-					    		<span class="sep">&gt;</span> <SPAN CLASS="paththispage"><%=lec.getName()%></SPAN>
+					    		<span class="sep">&gt;</span> <SPAN><%=lec.getName()%></SPAN>
 					    	<%}%>
 						    	<br/>
 				    		<%}
@@ -76,8 +76,8 @@
 									<portlet:param name="categoryId" value="0"/>
 									<portlet:param name="creatorId" value="0"/>
 								</portlet:actionURL>		    	
-						    	<A HREF="<%=backURL3%>" CLASS="apath"><%=pInst.getName() %></A> <span class="sep">&gt;</span> 
-						    	<A HREF="<%=backURL4%>" CLASS="apath"><%=insti.getName() %></A>
+						    	<A HREF="<%=backURL3%>"><%=pInst.getName() %></A> <span class="sep">&gt;</span> 
+						    	<A HREF="<%=backURL4%>"><%=insti.getName() %></A>
 						    	<br/> 
 				      <%}  		
 			    	}
@@ -116,14 +116,20 @@
 			  <c:if test="${relatedVideos.size()>1}"> <div class="meta-video-info"></c:if>
 			  <c:if test="${relatedVideos.size()<=1}"> <div class="meta-video-info-wide"></c:if>
 			    <div class="meta-title"><%=title%></div>
-		      	<div class="meta-creators">${video.creators}</div>
-				  <div class="meta-description">
+		      	<div class="meta-creators">${video.creators}
+		      		<%
+		      		String dt = "";
+		      		try{dt=video.getDate().trim().substring(0, 10);}catch(Exception e){}
+		      		%>
+		      		&nbsp;<em class= "meta-date"><%=dt%></em>
+		      	</div>
+				<div class="meta-description">
 					  <%if(videoMetadata.getDescription().trim().length()>0){ %>	
 					  	${videoMetadata.description}
 					  <%}else{%>
 				      	${lectureseries.longDesc}
 					  <%}%>
-				  </div>
+				</div>
 		    </div>
 		    
 		    <%
