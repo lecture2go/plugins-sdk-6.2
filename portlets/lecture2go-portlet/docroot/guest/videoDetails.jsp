@@ -121,7 +121,7 @@
 		      		String dt = "";
 		      		try{dt=video.getDate().trim().substring(0, 10);}catch(Exception e){}
 		      		%>
-		      		&nbsp;<em class= "meta-date"><%=dt%></em>
+		      		&nbsp;<p class= "meta-date"><%=dt%></p>
 		      	</div>
 				<div class="meta-description">
 					  <%if(videoMetadata.getDescription().trim().length()>0){ %>	

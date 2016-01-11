@@ -170,6 +170,10 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     width: 70%;
 }
 
+#metadata {
+    float: left;
+}
+
 .path {
     width: 70%;
     font-size: 11px;
@@ -346,6 +350,23 @@ a.list-group-item:hover, a.list-group-item:focus {
     margin-top: -30px;
 }
 
+.sharetile {
+    float: left;
+    width: 150px;
+    height: auto;
+    margin-left: 23px;
+    padding-left: 2px;
+    border-left: 3px solid #DDD;
+}
+
+#socialshareprivacy {
+    float: left;
+    width: 150px;
+    padding: 5px;
+    padding-top: 0px;
+    margin-top: -10px;
+}
+
 #_lgopenaccessvideos_WAR_lecture2goportlet_lectureseriesesSearchContainer_col-1 {
     padding: 0px;
     margin: 0px;
@@ -380,6 +401,10 @@ a.list-group-item:hover, a.list-group-item:focus {
     width: 100px;
 }
 
+.tileheading {
+    font-weight: 900;
+}
+
 thead, th {
     display: none;
 }
@@ -411,6 +436,11 @@ thead, th {
 .aui .dropdown-menu {
     border: 0px solid rgba(0, 0, 0, 0.2);
     border-radius: 0px;
+}
+
+.aui em.smallitalic {
+    float: left;
+    margin-left: 13px;
 }
 
 .aui .thumbnail {
@@ -578,6 +608,17 @@ thead, th {
     margin-right: 26%;
 }
 
+.download {
+    float: left;
+    margin-left: 13px;
+}
+
+
+#downloads {
+    margin: 0px;
+    padding: 0px;
+}
+
 .lectureseries-title {
     color: initial;
 }
@@ -639,4 +680,52 @@ thead, th {
 
 .date.related {
     font-size: 10px;
+}
+
+#_lgopenaccessvideos_WAR_lecture2goportlet_timeStart {
+    width: 125px;
+    margin-left: 5px;
+}
+
+#_lgopenaccessvideos_WAR_lecture2goportlet_citation {
+    width: 125px;
+    margin-left: 5px;
+}
+
+#_lgopenaccessvideos_WAR_lecture2goportlet_timeEnd {
+    width: 125px;
+    margin-left: 5px;
+}
+
+#metadata input {
+    height: 20px;
+    font-size: 13px;
+    padding: 1px;
+    width: 136px;
+}
+
+#metadata > p.smallitalic {
+    margin-top: 250px;
+    margin-left: 13px;
+    font-style: italic;
+}
+
+#metadata ul > li {
+    padding: 0px;
+    margin: 0px;
+}
+
+#metadata label {
+    padding: 0px;
+    margin: 3px 0px 3px 5px;
+    font-size: 12px;
+    line-height: 11px;
+}
+
+#qr {
+    margin-left: -20px;
+}
+
+#embedForm {
+    float: left;
 }
