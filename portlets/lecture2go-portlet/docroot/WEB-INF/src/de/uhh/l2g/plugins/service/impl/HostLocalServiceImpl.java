@@ -271,6 +271,11 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 		return host;
 	}
 
+	   /**Removes database record of Host
+	    * 
+	    * This will not remove Folder on Filesystem, Folder will not be reused 
+	    * 
+	    */
 	   public Host deleteHost(long hostId, ServiceContext serviceContext)
 		        throws PortalException, SystemException {
 		   		
