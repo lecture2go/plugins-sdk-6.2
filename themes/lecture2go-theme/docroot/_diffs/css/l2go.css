@@ -614,13 +614,20 @@ thead, th {
 
 .download {
     float: left;
-    margin-left: 13px;
+    margin-left: 0;
 }
 
 
 #downloads {
     margin: 0px;
     padding: 0px;
+}
+
+#down > p.smallitalic {
+    float: left;
+    position: absolute;
+    font-style: italic;
+    margin-top: 53px;
 }
 
 .lectureseries-title {
@@ -709,6 +716,11 @@ thead, th {
     margin: 0px 0px 0px 8px !important;
 }
 
+#metadata input:hover {
+    border: 1px solid #d81b1b !important;
+    color: #d81b1b;
+}
+
 #metadata > p.smallitalic {
     margin-top: 250px;
     margin-left: 0px;
@@ -743,10 +755,13 @@ thead, th {
     height: 27px;
     font-size: 12px;
     margin-top: -15px;
+    background-color: #E3E3E3;
+    border: none;
+    color:#575757;
 }
 
-#meta-share:hover {
-    background-color: #EEE !important
+#meta-share input.option1:hover {
+    background-color: #CCC;
 }
 
 #meta-share {
@@ -755,6 +770,13 @@ thead, th {
     width: 229px;
     padding-bottom: 0px;
     margin-bottom: 0px;
+}
+
+#down > p.smallitalic {
+    float: left;
+    font-style: italic;
+    margin-top: 53px;
+    position: absolute;
 }
 
 #qr {
