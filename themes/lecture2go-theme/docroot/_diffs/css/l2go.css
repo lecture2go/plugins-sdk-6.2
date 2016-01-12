@@ -360,10 +360,6 @@ a.list-group-item:hover, a.list-group-item:focus {
     padding-right: 8px;
 }
 
-.sharetile:hover {
-    background-color: #EEE;
-}
-
 #socialshareprivacy {
     float: left;
     max-width: 111px;
