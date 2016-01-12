@@ -216,6 +216,14 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     font-size: 13px;
 }
 
+.aui #chapters {
+    border-left: 3px solid #B1B1B1;
+    padding-left: 5px;
+    padding-top: 0px;
+    margin-top: 0px;
+    width: 50%;
+}
+
 .video-image {
     position: relative;
     width: 60px;
@@ -355,7 +363,7 @@ a.list-group-item:hover, a.list-group-item:focus {
     width: auto;
     height: auto;
     margin-left: 23px;
-    padding-left: 2px;
+    padding-left: 5px;
     border-left: 3px solid #B1B1B1;
     padding-right: 8px;
 }
@@ -765,7 +773,7 @@ thead, th {
 
 #meta-share {
     border-left: 3px solid #B1B1B1;
-    padding-left: 8px;
+    padding-left: 5px;
     width: 229px;
     padding-bottom: 0px;
     margin-bottom: 0px;
@@ -796,4 +804,44 @@ thead, th {
 #embedForm {
     float: left;
     margin-left: -22px;
+}
+
+.aui img.imgsmall {
+    vertical-align: middle;
+    border: 0px none;
+    height: 57px;
+    max-width: 113px;
+    width: 100%;
+}
+
+.aui #chapters {
+    padding-left: 5px;
+    padding-top: 0px;
+    margin-top: 0px;
+    width: 50%;
+    border-width: 0px 0px 0px 3px;
+    border-style: none none none solid;
+    border-color: -moz-use-text-color -moz-use-text-color -moz-use-text-color #B1B1B1;
+}
+
+.aui .chaptertile {
+    padding: 0px 0px 3px 0px;
+    border-width: 1px 0px 0px 0px !important;
+    border-style: solid none none none;
+    border-color: #E0E0E0 -moz-use-text-color -moz-use-text-color -moz-use-text-color;
+}
+
+.aui .chaptertile span {
+    padding-left: 10px;
+    font-size: 10px;
+    float: left;
+    position: absolute;
+    font-size: 9px;
+}
+
+.aui .chaptertile a span {
+    padding: 0px;
+    margin-left: 123px;
+    margin-top: -44px;
+    font-size: 12px;
 }
