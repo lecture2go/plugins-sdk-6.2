@@ -156,6 +156,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		} catch (SystemException e1) {
 //			e1.printStackTrace();
 		}
+		@SuppressWarnings("unused")
 		Lectureseries objectLectureseries = new LectureseriesImpl();
 		try {
 			objectLectureseries = lectureseriesPersistence.findByPrimaryKey(objectVideo.getLectureseriesId());
@@ -235,6 +236,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		
 		// set preffix and filename
 		String preffix = "";
+		@SuppressWarnings("unused")
 		String filename = "";
 		if (objectVideo.getOpenAccess() == 1) {
 			preffix = objectVideo.getPreffix();
@@ -272,6 +274,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		}
 		// URL
 		String webhome = PropsUtil.get("lecture2go.web.home");
+		@SuppressWarnings("unused")
 		Institution institution = new InstitutionImpl();
 		try {
 			institution = institutionPersistence.findByPrimaryKey(objectVideo.getRootInstitutionId());
@@ -317,6 +320,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		objectVideo.setCreators(cS);
 		
 		//get download Links 
+		@SuppressWarnings("unused")
 		String l2go_path = objectVideo.getRootInstitutionId() + "l2g" + objectProducer.getHomeDir();
 		String preff="";
 		if(objectVideo.getOpenAccess()==1)preff=objectVideo.getPreffix();
@@ -358,7 +362,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		}
 		
 		//embed iframe
-		String embedIframe="&lt;iframe src='"+PropsUtil.get("lecture2go.web.root")+"/lecture2go-portlet/player/iframe/?v="+objectVideo.getVideoId()+"' frameborder='0' width='647' height='373'&gt; &lt;/iframe&gt;";
+		String embedIframe="<iframe src='"+PropsUtil.get("lecture2go.web.root")+"/lecture2go-portlet/player/iframe/?v="+objectVideo.getVideoId()+"' frameborder='0' width='647' height='373'></iframe>";
 		objectVideo.setEmbedIframe(embedIframe);
 		
 		//embed html5
