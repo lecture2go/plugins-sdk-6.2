@@ -65,5 +65,6 @@
 	</script>
 	
 	<p class="smallitalic">embed-conditions</p>
+	
 	<%@ include file="/guest/includeQR.jsp" %>
 </div>
