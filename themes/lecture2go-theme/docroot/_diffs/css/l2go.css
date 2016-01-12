@@ -845,3 +845,8 @@ thead, th {
     margin-top: -44px;
     font-size: 12px;
 }
+
+.aui .chaptertile.active {
+    color: #d81b1b;
+    background: #EAEAEA none repeat scroll 0% 0%;
+}
