@@ -1,43 +1,5 @@
 <div id="metadata">
-	<!-- Facebook Twitter Google+ -->
-	<div class="sharetile">
-		<p class="tileheading">social-media</p>
-		<div id="socialshareprivacy"></div>
-	</div>
-
-	<script type="text/javascript">
-		$('#socialshareprivacy').socialSharePrivacy({
-			services : {
-				gplus : {
-					status : 'on'
-				}
-			}
-		});
-	</script>
-	
-	<br/>
-	
 	<form name="embedForm" id="embedForm">
-		<!-- citation2go allowed -->
-		<c:if test="${video.citation2go==1}">
-				<div class="sharetile">
-					<p class="tileheading">citation2go</p>
-					<div id="c2g">
-						<ul>
-							<li>
-								<aui:input name="timeStart" label="citation-start" required="false" id="timeStart" readonly="true"/>
-							</li>
-							<li>
-								<aui:input name="timeEnd" label="citation-end" required="false" id="timeEnd" readonly="true"/>
-							</li>
-							<li>
-								<aui:input name="citation" label="citation" required="false" id="citation" readonly="true" onclick="document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_citation.focus(); document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_citation.select();"/>
-							</li>
-						</ul>
-					</div>
-				</div>
-		</c:if>
-		<!-- citation2go allowed end-->
 		<!-- embed start -->
 			<div class="sharetile">
 				<p class="tileheading">links</p>
@@ -67,9 +29,44 @@
 				</div>
 			</div>
 		<!-- embed end -->
+		
+		<!-- citation2go allowed -->
+		<c:if test="${video.citation2go==1}">
+				<div class="sharetile">
+					<p class="tileheading">citation2go</p>
+					<div id="c2g">
+						<ul>
+							<li>
+								<aui:input name="timeStart" label="citation-start" required="false" id="timeStart" readonly="true"/>
+							</li>
+							<li>
+								<aui:input name="timeEnd" label="citation-end" required="false" id="timeEnd" readonly="true"/>
+							</li>
+							<li>
+								<aui:input name="citation" label="citation" required="false" id="citation" readonly="true" onclick="document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_citation.focus(); document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_citation.select();"/>
+							</li>
+						</ul>
+					</div>
+				</div>
+		</c:if>
+		<!-- citation2go allowed end-->		
 	</form>
+		
+	<!-- Facebook Twitter Google+ -->
+	<div class="sharetile">
+		<p class="tileheading">social-media</p>
+		<div id="socialshareprivacy"></div>
+	</div>
 
-	<br/>
+	<script type="text/javascript">
+		$('#socialshareprivacy').socialSharePrivacy({
+			services : {
+				gplus : {
+					status : 'on'
+				}
+			}
+		});
+	</script>
 	
 	<p class="smallitalic">embed-conditions</p>
 	<%@ include file="/guest/includeQR.jsp" %>
