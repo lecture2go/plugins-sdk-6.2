@@ -356,7 +356,11 @@ a.list-group-item:hover, a.list-group-item:focus {
     height: auto;
     margin-left: 23px;
     padding-left: 2px;
-    border-left: 3px solid #DDD;
+    border-left: 3px solid #B1B1B1;
+}
+
+.sharetile:hover {
+    background-color: #EEE;
 }
 
 #socialshareprivacy {
@@ -402,7 +406,7 @@ a.list-group-item:hover, a.list-group-item:focus {
 }
 
 .tileheading {
-    font-weight: 900;
+    font-size: 17px;
 }
 
 thead, th {
@@ -702,11 +706,12 @@ thead, th {
     font-size: 13px;
     padding: 1px;
     width: 136px;
+    margin: 0px 0px 0px 8px !important;
 }
 
 #metadata > p.smallitalic {
     margin-top: 250px;
-    margin-left: 13px;
+    margin-left: 0px;
     font-style: italic;
 }
 
@@ -717,15 +722,57 @@ thead, th {
 
 #metadata label {
     padding: 0px;
-    margin: 3px 0px 3px 5px;
+    margin: 3px 0px 3px 8px;
     font-size: 12px;
     line-height: 11px;
 }
 
+#meta-share input {
+    height: 13px;
+}
+
+#meta-share .appmon_support_form_row_1 {
+    font-size: 13px;
+}
+
+#meta-share .appmon_support_form_row_2 {
+    font-size: 13px;
+}
+
+#meta-share input.option1 {
+    height: 27px;
+    font-size: 12px;
+    margin-top: -15px;
+}
+
+#meta-share:hover {
+    background-color: #EEE !important
+}
+
+#meta-share {
+    border-left: 3px solid #B1B1B1;
+    padding-left: 8px;
+    width: 229px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+
 #qr {
-    margin-left: -20px;
+    width: 330px;
+    height: 330px;
+    opacity: 0.1;
+    margin-left: -33px;
+    overflow: hidden;
+    transition: opacity 0.3s ease 0s;
+}
+
+#qr:hover {
+    cursor: none;
+    opacity: 0.9;
+    transition: opacity 0.3s ease 0s;
 }
 
 #embedForm {
     float: left;
+    margin-left: -22px;
 }

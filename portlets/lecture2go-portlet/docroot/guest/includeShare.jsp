@@ -6,23 +6,19 @@
 				<div id="urls">
 					<ul>
 						<li>
-							<label>url </label>
-							<input id="embed_code3" name="embed_code3" title="url-address-title" type="text" value="${video.url}" onclick="document.embedForm.embed_code3.focus();document.embedForm.embed_code3.select();" readonly />
+							<aui:input name="embed_code3" label="url" required="false" id="embed_code3" readonly="true" value="${video.url}" onclick="document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_embed_code3.focus();document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_embed_code3.select();"/>
 						</li>
 						<li>
-							<label>embed-iframe </label>
-							<input id="embed_code" name="embed_code" title="embed-iframe-title" type="text" value="${video.embedIframe}" onclick="document.embedForm.embed_code.focus();document.embedForm.embed_code.select();" readonly />
+							<aui:input name="embed_code" label="embed-iframe" required="false" id="embed_code" readonly="true" value="${video.embedIframe}" onclick="document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_embed_code.focus();document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_embed_code.select();"/>
 						</li>
 						<c:if test="${video.downloadLink==1}">
 							<li>
-								<label>embed-html5 </label>
-								<input id="embed_code1" name="embed_code1" title="embed-html5-title" type="text" value="${video.embedHtml5}" onclick="document.embedForm.embed_code1.focus();document.embedForm.embed_code1.select();" readonly />
+								<aui:input name="embed_code1" label="embed-html5" required="false" id="embed_code1" readonly="true" value="${video.embedHtml5}" onclick="document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_embed_code1.focus();document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_embed_code1.select();"/>							
 							</li>
 						</c:if>
 						<c:if test="${video.lectureseriesId>0}">
 							<li>
-								<label>lectureseries-url </label>
-								<input id="embed_code2" name="embed_code2" title="embed-html5-title" type="text" value="${video.lectureseriesUrl}" onclick="document.embedForm.embed_code2.focus();document.embedForm.embed_code2.select();" readonly />
+								<aui:input name="embed_code2" label="lecture-series-url" required="false" id="embed_code2" readonly="true" value="${video.lectureseriesUrl}" onclick="document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_embed_code2.focus();document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_embed_code2.select();"/>
 							</li>
 						</c:if>
 					</ul>
