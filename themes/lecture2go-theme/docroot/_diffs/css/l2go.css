@@ -352,11 +352,12 @@ a.list-group-item:hover, a.list-group-item:focus {
 
 .sharetile {
     float: left;
-    width: 150px;
+    width: auto;
     height: auto;
     margin-left: 23px;
     padding-left: 2px;
     border-left: 3px solid #B1B1B1;
+    padding-right: 8px;
 }
 
 .sharetile:hover {
@@ -365,9 +366,8 @@ a.list-group-item:hover, a.list-group-item:focus {
 
 #socialshareprivacy {
     float: left;
-    width: 150px;
-    padding: 5px;
-    padding-top: 0px;
+    max-width: 111px;
+    padding: 0px 5px 5px;
     margin-top: -10px;
 }
 
