@@ -951,3 +951,10 @@ thead, th {
 .aui input[type="color"], .aui input[type="date"], .aui input[type="datetime"], .aui input[type="datetime-local"], .aui input[type="email"], .aui input[type="month"], .aui input[type="number"], .aui input[type="password"], .aui input[type="search"], .aui input[type="tel"], .aui input[type="text"], .aui input[type="time"], .aui input[type="url"], .aui input[type="week"], .aui select, .aui textarea, .aui .uneditable-input {
     font-family: TheSansUHH,sans-serif;
 }
+
+.format {
+    font-size: 10px;
+    padding: 0px;
+    line-height: 5px;
+    color: #B19292;
+}
