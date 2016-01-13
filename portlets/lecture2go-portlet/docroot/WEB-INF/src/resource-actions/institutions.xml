@@ -17,9 +17,8 @@
         <action-key>UPDATE</action-key>
         <action-key>VIEW</action-key>
         <action-key>VIEW_ALL_INSTITUTIONS</action-key>
-        <action-key>VIEW_HOSTS</action-key>
-        <action-key>ADD_INSTITUTIONS</action-key>
-
+        <action-key>MANAGE_HOSTS</action-key>
+        <action-key>MANAGE_INSTITUTIONS</action-key>
       </supports>
       <site-member-defaults>
       </site-member-defaults>
@@ -79,7 +78,32 @@
     </permissions>
   </model-resource>
 
+<model-resource>
+    <model-name>de.uhh.l2g.plugins</model-name>
+    <portlet-ref>
+        <portlet-name>lg-admin-institution-management</portlet-name>
+    </portlet-ref>
+    <permissions>
+        <supports>
+        	<action-key>MANAGE_INSTITUTIONS</action-key>
+            <action-key>DELETE</action-key>
+            <action-key>PERMISSIONS</action-key>
+            <action-key>UPDATE</action-key>
+            <action-key>VIEW</action-key>
+        </supports>
+        <site-member-defaults>
+        </site-member-defaults>
+        <guest-defaults>
+        </guest-defaults>
+        <guest-unsupported>
+         	<action-key>VIEW</action-key>
+            <action-key>UPDATE</action-key>
+            <action-key>PERMISSIONS</action-key>
+            <action-key>DELETE</action-key>
+        </guest-unsupported>
+    </permissions>
 
+</model-resource>
 <model-resource>
     <model-name>de.uhh.l2g.plugins.model.Host</model-name>
     <portlet-ref>

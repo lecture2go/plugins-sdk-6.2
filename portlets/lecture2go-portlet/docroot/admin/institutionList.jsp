@@ -46,12 +46,12 @@ String companyIdString = String.valueOf(companyId);
 //Portlet Instance Id (can be string)
 String institutionPortletPrimKey = portletDisplay.getResourcePK();
 //On Model Level:
-String portletModel = "de.uhh.l2g.plugins.model";
+String portletModel = "de.uhh.l2g.plugins";
 //On Entity Level:
 String institutionModel = "de.uhh.l2g.plugins.model.Institution";
 
 //Definded Action Ids
-String actionId = "VIEW_ALL_INSTITUTIONS";
+String actionId = "VIEW";
 %>
 
 <%--START: DEBUG INFO--%>
@@ -134,7 +134,7 @@ int maxOrder = InstitutionLocalServiceUtil.getMaxSortByParentId(rootId)+1;
 <c:if test='<%=  permissionChecker.hasPermission(groupId, institutionPortletName, companyIdString, "PERMISSIONS") %>'>
 <%-- Permission for setting permissions regarding model on group/entity scope--%>
 
-<%--Global Permission for setting permissions regarding model on group scope--%>
+<%--Global Permission for setting permissions regarding plugin on group scope--%>
 Company Institution Permissions:
 	<liferay-security:permissionsURL
 	    modelResource="<%= portletModel %>"
@@ -143,7 +143,7 @@ Company Institution Permissions:
 	    var="globalmodelpermissionsURL" />
 
 	<liferay-ui:icon image="permissions" url="<%= globalmodelpermissionsURL %>" />
-<%--Permission for setting permissions regarding model on group scope--%>
+<%--Permission for setting permissions regarding plugin on group scope--%>
 Institution Permissions:
 	<liferay-security:permissionsURL
 	    modelResource="<%= portletModel %>"
@@ -153,6 +153,16 @@ Institution Permissions:
 
 	<liferay-ui:icon image="permissions" url="<%= modelpermissionsURL %>" />
 
+<%--Permission for setting permissions regarding institution model on group scope--%>
+Institution Permissions:
+	<liferay-security:permissionsURL
+	    modelResource="<%= institutionModel %>"
+	    modelResourceDescription="Model Site"
+	    resourcePrimKey="<%= String.valueOf(groupId) %>"
+	    var="institutionmodelpermissionsURL" />
+
+	<liferay-ui:icon image="permissions" url="<%= institutionmodelpermissionsURL %>" />
+	
 <%--Permission for setting permissions regarding concrete entity Root--%>
 Root Institution Permissions:
 		<liferay-security:permissionsURL
