@@ -281,8 +281,8 @@
 									    		'<b id="pf2_'+segment.segmentId+'">'+
 									    		'<span class="icon-small icon-minus" id="hidr'+segment.segmentId+'" onclick="hideSegment('+segment.segmentId+')"/>'+
 									    		'</b>'+
-									    		'<a><span class="fs8">'+segment.start+'</span>'+
-									    		'<iavst class="white" begin="'+segment.start+'" end="'+segment.end+'"><span>'+segment.title+'</span></iavst></a>'+
+									    		'<span class="fs8">'+segment.start+'</span>'+
+									    		'<a><iavst class="white" begin="'+segment.start+'" end="'+segment.end+'"><span>'+segment.title+'</span></iavst></a>'+
 									    		'</div>';
 									    		if(segment.description >""){
 									    			newRow=newRow+'<b id="iav'+segment.segmentId+'"><span class="fs10"><div id="description"><em>'+segment.description+'</em></div></span></b>';

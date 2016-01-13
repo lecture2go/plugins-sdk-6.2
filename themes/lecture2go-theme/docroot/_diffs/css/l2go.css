@@ -825,7 +825,7 @@ thead, th {
 }
 
 .aui .chaptertile {
-    padding: 3px 0px 3px;
+    padding: 2px 0px 5px;
     border-width: 1px 0px 0px !important;
     border-style: solid none none;
     border-color: #E0E0E0 -moz-use-text-color -moz-use-text-color;
