@@ -929,8 +929,7 @@ thead, th {
 }
 
 .aui .control-group {
-    margin: 0px;
-    margin-left: -7px;
+    margin: 11px 0 0 0;
 }
 
 .aui select {
@@ -943,12 +942,12 @@ thead, th {
 
 .adminrow.wide:hover {
     background-color: #eaeaea;
-    height: 114px;
+    height: 100%;
 }
 
 .adminrow.wide {
-    background-color: #f3f3f3;
-    height: 114px;
+    background-color: #F3F3F3;
+    border-top: 1px solid #DDD;
 }
 
 .lfr-search-container {
