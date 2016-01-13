@@ -107,11 +107,12 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     width: 200px;
     height: 100px !important;
     text-align: center;
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 .video-image-big:hover {
     opacity: 1;
+    transition: opacity 0.3s ease 0s;
 }
 
 .video-image-overlay {
@@ -153,10 +154,17 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     height: 30px;
 }
 
+
 .video-image-wrapper-small.related {
     max-width: 113px;
     height: 57px;
     margin-top: 2px;
+    opacity: 0.9;
+}
+
+.video-image-wrapper-small.related:hover {
+	 opacity: 1;
+	 transition: opacity 0.3s ease 0s;
 }
 
 .metainfo-small {
