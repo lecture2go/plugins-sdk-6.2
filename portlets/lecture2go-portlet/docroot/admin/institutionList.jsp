@@ -177,7 +177,7 @@ Root Institution Permissions:
 <%--ADD INSTITUTION--%>
 
 <%-- Permission on Portlet Scope --%>
-<c:if test='<%= permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "ADD_INSTITUTIONS") %>'>
+<c:if test='<%= permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "MANAGE_INSTITUTIONS") %>'>
 	<liferay-ui:panel title="Add Institution" collapsible="true" id="institutionSettings"
 					defaultState="open"
 					extended="<%= false %>"
@@ -213,7 +213,7 @@ Root Institution Permissions:
 
 
 <%--STREAMING SERVER SETTINGS AND LIST --%>
-<c:if test='<%= permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "VIEW_HOSTS") %>'>
+<c:if test='<%= permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "MANAGE_HOSTS") %>'>
 
 	 <liferay-ui:panel title="Streaming Server Options" collapsible="true" id="streamingServerSettings"
 			    	defaultState="open"
