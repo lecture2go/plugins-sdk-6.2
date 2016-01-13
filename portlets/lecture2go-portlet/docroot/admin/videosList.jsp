@@ -184,6 +184,7 @@
 					<br/>
 					<%
 					if(!vid.getFilename().equals("")){
+						%><div class="format"><%
 						if(vid.getMp4File().isFile()){%>
 							mp4 &nbsp;
 						<%}
@@ -215,6 +216,7 @@
 						if(vid.getPdfFile().isFile()){%>
 							pdf &nbsp;
 						<%}%>
+						</div>
 						<em> 
 							<br/>
 							<%=vid.getDate()%> 
