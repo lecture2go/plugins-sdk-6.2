@@ -38,42 +38,7 @@
     </permissions>
   </portlet-resource>
 
-    <model-resource>
-    <model-name>
-      de.uhh.l2g.plugins.model
-    </model-name>
-    <portlet-ref>
-      <portlet-name>lg-admin-institution-management</portlet-name>
-    </portlet-ref>
-    <permissions>
-        <supports>
-     	<action-key>ADD_INSTITUTION_ENTRY</action-key>
-      	<action-key>ADD_SUB_INSTITUTION_ENTRY</action-key>
-      	<action-key>VIEW_HOSTS</action-key>
-      	<action-key>ADD_HOSTS</action-key>
-      	<action-key>EDIT_HOSTS</action-key>
-        <action-key>EDIT_ALL_INSTITUTIONS</action-key>
-        <action-key>VIEW_OWN_INSTITUTIONS</action-key>
-        <action-key>EDIT_OWN_INSTITUTIONS</action-key>
-        <action-key>DELETE_INSTITUTIONS</action-key>
-        <action-key>DELETE_SUB_INSTITUTIONS</action-key>
-        <action-key>EDIT_ROOT_INSTITUTION</action-key>
-        <action-key>PERMISSIONS</action-key>
-        <action-key>UPDATE</action-key>
-        <action-key>VIEW</action-key>
-        </supports>
-        <site-member-defaults>
-            <action-key>ADD_SUB_INSTITUTION_ENTRY</action-key>
-            
-        </site-member-defaults>
-        <guest-defaults>
-        </guest-defaults>
-        <guest-unsupported>
-            <action-key>ADD_INSTITUTION_ENTRY</action-key>
-            
-        </guest-unsupported>
-    </permissions>
-  </model-resource>
+
 
 
    <model-resource>
