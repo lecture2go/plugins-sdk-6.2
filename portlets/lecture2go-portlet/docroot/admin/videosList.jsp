@@ -67,7 +67,7 @@
 								<portlet:param name="lectureseriesId" value="<%=lectureseriesId.toString()%>"/>
 							</portlet:renderURL>
 							<aui:form action="<%= sortByCoordinator.toString() %>" method="post">
-								<aui:select name="coordinatorId" label="select-coordinator" onChange="submit();">
+								<aui:select name="coordinatorId" label="" onChange="submit();">
 									<aui:option value="">select-coordinator</aui:option>
 									<%for (int i = 0; i < coordinators.size(); i++) {
 										if(coordinators.get(i).getCoordinatorId()==coordinatorId){%>
@@ -88,7 +88,7 @@
 								<portlet:param name="lectureseriesId" value="<%=lectureseriesId.toString()%>"/>
 							</portlet:renderURL>
 							<aui:form action="<%= sortByProducer.toString() %>" method="post">
-								<aui:select name="producerId" label="select-producer" onChange="submit();">
+								<aui:select name="producerId" label="" onChange="submit();">
 									<aui:option value="">select-producer</aui:option>
 									<%for (int i = 0; i < producers.size(); i++) {
 										if(producers.get(i).getProducerId()==producerId){%>
@@ -109,7 +109,7 @@
 								<portlet:param name="producerId" value="<%=producerId.toString()%>"/>
 							</portlet:renderURL>
 							<aui:form action="<%= sortByLectureseries.toString() %>" method="post">
-								<aui:select name="lectureseriesId" label="select-lecture-series" onChange="submit();">
+								<aui:select name="lectureseriesId" label="" onChange="submit();">
 									<aui:option value="">select-lecture-series</aui:option>
 									<%for (int i = 0; i < lectureseries.size(); i++) {
 										if(lectureseries.get(i).getLectureseriesId()==lectureseriesId){%>
@@ -157,6 +157,7 @@
 				<portlet:param name="videoId" value="<%= String.valueOf(video.getVideoId())%>" />
 			</portlet:actionURL>
 			<liferay-ui:search-container-column-text name="">
+				<div class="adminrow wide">
 					<div class="admintile wide">
 					<%
 						Lectureseries ls = new LectureseriesImpl();
@@ -214,7 +215,12 @@
 						if(vid.getPdfFile().isFile()){%>
 							pdf &nbsp;
 						<%}%>
-						<em> <%=vid.getDate()%> <br/>hits: <%=vid.getHits()%></em>
+						<em> 
+							<br/>
+							<%=vid.getDate()%> 
+							<br/>
+							hits: <%=vid.getHits()%>
+						</em>
 					<%}%>
 					</div>
 					<div class="admintile wide icons">
@@ -297,7 +303,8 @@
 						<span class="icon-large icon-remove"></span>
 					</a>		
 				</div>
-			</liferay-ui:search-container-column-text>
+			</div>
+		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
