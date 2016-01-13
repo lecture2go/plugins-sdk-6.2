@@ -216,6 +216,14 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     font-size: 13px;
 }
 
+.aui #chapters {
+    border-left: 3px solid #B1B1B1;
+    padding-left: 5px;
+    padding-top: 0px;
+    margin-top: 0px;
+    width: 50%;
+}
+
 .video-image {
     position: relative;
     width: 60px;
@@ -352,18 +360,18 @@ a.list-group-item:hover, a.list-group-item:focus {
 
 .sharetile {
     float: left;
-    width: 150px;
+    width: auto;
     height: auto;
     margin-left: 23px;
-    padding-left: 2px;
-    border-left: 3px solid #DDD;
+    padding-left: 5px;
+    border-left: 3px solid #B1B1B1;
+    padding-right: 8px;
 }
 
 #socialshareprivacy {
     float: left;
-    width: 150px;
-    padding: 5px;
-    padding-top: 0px;
+    max-width: 111px;
+    padding: 0px 5px 5px;
     margin-top: -10px;
 }
 
@@ -402,7 +410,7 @@ a.list-group-item:hover, a.list-group-item:focus {
 }
 
 .tileheading {
-    font-weight: 900;
+    font-size: 17px;
 }
 
 thead, th {
@@ -610,13 +618,23 @@ thead, th {
 
 .download {
     float: left;
-    margin-left: 13px;
+    margin-left: 0px;
+    margin-right: 15px;
+    border-left: 3px solid #B1B1B1;
+    padding-left: 5px;
 }
 
 
 #downloads {
     margin: 0px;
     padding: 0px;
+}
+
+#down > p.smallitalic {
+    float: left;
+    position: absolute;
+    font-style: italic;
+    margin-top: 53px;
 }
 
 .lectureseries-title {
@@ -702,11 +720,17 @@ thead, th {
     font-size: 13px;
     padding: 1px;
     width: 136px;
+    margin: 0px 0px 0px 8px !important;
+}
+
+#metadata input:hover {
+    border: 1px solid #d81b1b !important;
+    color: #d81b1b;
 }
 
 #metadata > p.smallitalic {
     margin-top: 250px;
-    margin-left: 13px;
+    margin-left: 0px;
     font-style: italic;
 }
 
@@ -717,15 +741,142 @@ thead, th {
 
 #metadata label {
     padding: 0px;
-    margin: 3px 0px 3px 5px;
+    margin: 3px 0px 3px 8px;
     font-size: 12px;
     line-height: 11px;
 }
 
+#meta-share input {
+    height: 13px;
+}
+
+#meta-share .appmon_support_form_row_1 {
+    font-size: 13px;
+}
+
+#meta-share .appmon_support_form_row_2 {
+    font-size: 13px;
+}
+
+#meta-share input.option1 {
+    height: 27px;
+    font-size: 12px;
+    margin-top: -15px;
+    background-color: #E3E3E3;
+    border: none;
+    color:#575757;
+}
+
+#meta-share input.option1:hover {
+    background-color: #CCC;
+}
+
+#meta-share {
+    border-left: 3px solid #B1B1B1;
+    padding-left: 5px;
+    width: 229px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+
+#down > p.smallitalic {
+    float: left;
+    font-style: italic;
+    margin-top: 53px;
+    position: absolute;
+}
+
 #qr {
-    margin-left: -20px;
+    width: 330px;
+    height: 330px;
+    opacity: 0.1;
+    margin-left: -33px;
+    overflow: hidden;
+    transition: opacity 0.3s ease 0s;
+}
+
+#qr:hover {
+    cursor: none;
+    opacity: 0.9;
+    transition: opacity 0.3s ease 0s;
 }
 
 #embedForm {
     float: left;
+    margin-left: -22px;
+}
+
+.aui img.imgsmall {
+    vertical-align: middle;
+    border: 0px none;
+    height: 57px;
+    max-width: 113px;
+    width: 100%;
+}
+
+.aui #chapters {
+    padding-left: 5px;
+    padding-top: 0px;
+    margin-top: 0px;
+    width: 50%;
+    border-width: 0px 0px 0px 3px;
+    border-style: none none none solid;
+    border-color: -moz-use-text-color -moz-use-text-color -moz-use-text-color #B1B1B1;
+}
+
+.aui .chaptertile {
+    padding: 2px 0px 5px;
+    border-width: 1px 0px 0px !important;
+    border-style: solid none none;
+    border-color: #E0E0E0 -moz-use-text-color -moz-use-text-color;
+}
+
+.aui .chaptertile span {
+    padding-left: 10px;
+    font-size: 10px;
+    float: left;
+    position: absolute;
+    font-size: 9px;
+}
+
+.aui .chaptertile a span {
+    padding: 0px;
+    margin-left: 123px;
+    margin-top: -44px;
+    font-size: 12px;
+}
+
+.aui .chaptertile.active {
+    color: #d81b1b;
+    background: #EAEAEA none repeat scroll 0% 0%;
+}
+
+.commenttile > div {
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.commenttile {
+    margin-left: 130px;
+}
+
+.fs8 {
+    margin-right: 5px;
+    font-size: 9px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.fs10 {
+    font-size: 10px;
+}
+
+#description > em {
+    font-style: inherit;
+    margin-left: 53px;
+}
+
+#description {
+    line-height: 8px;
+    padding-bottom: 15px;
 }

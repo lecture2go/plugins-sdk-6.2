@@ -276,13 +276,13 @@
 												newRow='<div class="commenttile" id="'+segment.segmentId+'" onload="alert('+segment.segmentId+')">'+
 									    		'<div>'+
 												'<b id="pf1_'+segment.segmentId+'">'+
-									    		'<input type="image" height="10" width="10" src="/lecture2go-portlet/img/commentOff.png" title="comment on" alt="comment on" id="showr'+segment.segmentId+'" onclick="showSegment('+segment.segmentId+')"/>'+
+									    		'<span class="icon-small icon-plus" id="showr'+segment.segmentId+'" onclick="showSegment('+segment.segmentId+')"/>'+
 									    		'</b>'+
 									    		'<b id="pf2_'+segment.segmentId+'">'+
-									    		'<input type="image" height="10" width="10" src="/lecture2go-portlet/img/commentOn.png" title=" comment off" alt="comment off" id="hidr'+segment.segmentId+'" onclick="hideSegment('+segment.segmentId+')"/>'+
+									    		'<span class="icon-small icon-minus" id="hidr'+segment.segmentId+'" onclick="hideSegment('+segment.segmentId+')"/>'+
 									    		'</b>'+
 									    		'<span class="fs8">'+segment.start+'</span>'+
-									    		'<a><iavst class="white" begin="'+segment.start+'" end="'+segment.end+'"><span style="font-size:11px;">'+segment.title+'</span></iavst></a>'+
+									    		'<a><iavst class="white" begin="'+segment.start+'" end="'+segment.end+'"><span>'+segment.title+'</span></iavst></a>'+
 									    		'</div>';
 									    		if(segment.description >""){
 									    			newRow=newRow+'<b id="iav'+segment.segmentId+'"><span class="fs10"><div id="description"><em>'+segment.description+'</em></div></span></b>';
