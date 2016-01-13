@@ -880,3 +880,37 @@ thead, th {
     line-height: 8px;
     padding-bottom: 15px;
 }
+
+.admintile.wide.icons > a {
+    margin-left: 3px;
+}
+
+.admintile.wide.icons {
+    width: 15%;
+}
+
+.admintile.wide {
+    width: 85%;
+}
+
+.admintile {
+    border-top: 1px solid #EAEAEA;
+    float: left;
+    padding-bottom: 10px;
+    padding-top: 3px;
+    font-size: 13px;
+}
+
+.admintile.wide > a {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.admintile.wide em {
+    font-size: 11px;
+    font-style: normal;
+}
+
+.admintile.wide.icons > a {
+    float: right;
+}
