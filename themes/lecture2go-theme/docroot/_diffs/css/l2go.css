@@ -825,10 +825,10 @@ thead, th {
 }
 
 .aui .chaptertile {
-    padding: 0px 0px 3px 0px;
-    border-width: 1px 0px 0px 0px !important;
-    border-style: solid none none none;
-    border-color: #E0E0E0 -moz-use-text-color -moz-use-text-color -moz-use-text-color;
+    padding: 3px 0px 3px;
+    border-width: 1px 0px 0px !important;
+    border-style: solid none none;
+    border-color: #E0E0E0 -moz-use-text-color -moz-use-text-color;
 }
 
 .aui .chaptertile span {
@@ -849,4 +849,34 @@ thead, th {
 .aui .chaptertile.active {
     color: #d81b1b;
     background: #EAEAEA none repeat scroll 0% 0%;
+}
+
+.commenttile > div {
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.commenttile {
+    margin-left: 130px;
+}
+
+.fs8 {
+    margin-right: 5px;
+    font-size: 9px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.fs10 {
+    font-size: 10px;
+}
+
+#description > em {
+    font-style: inherit;
+    margin-left: 53px;
+}
+
+#description {
+    line-height: 8px;
+    padding-bottom: 15px;
 }
