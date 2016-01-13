@@ -965,3 +965,11 @@ thead, th {
     line-height: 5px;
     color: #B19292;
 }
+
+.aui select {
+    border-width: 0px;
+    margin-right: 10px;
+    border-radius: 0px;
+    background-image: linear-gradient(to bottom, #E3E3E3, #E3E3E3);
+    color: #484848;
+}
