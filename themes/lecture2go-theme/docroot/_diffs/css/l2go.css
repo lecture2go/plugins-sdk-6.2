@@ -454,6 +454,11 @@ thead, th {
     border-radius: 0px;
 }
 
+.aui .btn .caret {
+    margin-top: 9px;
+    margin-left: 8px;
+}
+
 .aui .dropdown-menu {
     border: 0px solid rgba(0, 0, 0, 0.2);
     border-radius: 0px;
@@ -967,9 +972,38 @@ thead, th {
 }
 
 .aui select {
-    border-width: 0px;
-    margin-right: 10px;
+    -moz-appearance: none;
+    background-color: #DDD;
+    background-image: linear-gradient(45deg, transparent 50%, #000 50%), linear-gradient(135deg, #000 50%, transparent 50%), linear-gradient(to right, #DDD, #DDD);
+    background-position: calc(100% - 18px) calc(1em + -2px), calc(100% - 13px) calc(1em + -2px), 100% 0px;
+    background-repeat: no-repeat;
+    background-size: 5px 5px, 5px 5px, 2.5em 2.5em;
+    border: 0px none;
     border-radius: 0px;
-    background-image: linear-gradient(to bottom, #E3E3E3, #E3E3E3);
+    box-sizing: border-box;
     color: #484848;
+    float: left;
+    margin-right: 10px;
+}
+
+.aui select > option {
+    background-color: #fff;
+    border: 0 none;
+}
+
+.aui select:focus {
+    border: 0 solid rgba(0, 172, 255, 0.8);
+    outline: 0px auto rgba(82, 168, 236, 0.6);
+    outline-offset: -2px;
+}
+
+.aui .alert, .aui .portlet-msg-alert, .aui .portlet-msg-error, .aui .portlet-msg-help, .aui .portlet-msg-info, .aui .portlet-msg-progress, .aui .portlet-msg-success {
+    background-color: transparent;
+    border-color: #eaeaea -moz-use-text-color -moz-use-text-color;
+    border-style: solid none none;
+    border-width: 1px 0 0;
+    color: #c40017;
+    margin-top: 20px;
+    padding-left: 0;
+    word-wrap: break-word;
 }
