@@ -975,14 +975,6 @@ thead, th {
     margin: 11px 0 0 0;
 }
 
-.aui select {
-    width: 230px;
-    border: 1px solid #CCC;
-    background-color: #FFF;
-    border-radius: 0px;
-    font-family: TheSansUHH,sans-serif;
-}
-
 .adminrow.wide:hover {
     background-color: #eaeaea;
     height: 100%;
@@ -1022,6 +1014,7 @@ thead, th {
     color: #484848;
     float: left;
     margin-right: 10px;
+    line-height: 20px;
     
     /* reset */
 	-webkit-box-sizing: border-box;
