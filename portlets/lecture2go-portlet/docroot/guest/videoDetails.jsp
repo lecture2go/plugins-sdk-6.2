@@ -128,7 +128,7 @@
 							       					while(cvi1.hasNext()){
 							       						if(j<2){
 							       							fullname1 += cvi1.next().getFullName();
-							       							if(cv1.size()>1) fullname1+="; ";
+							       							if(cv1.size()>1 && cvi1.hasNext()) fullname1+=", ";
 								    					}else{
 								    						fullname1+="ET. AL";
 															break;
@@ -359,7 +359,7 @@
 							       					while(cvi.hasNext()){
 							       						if(i<2){
 							       							fullname += cvi.next().getFullName();
-							       							if(cv.size()>1) fullname+="; ";
+							       							if(cv.size()>1 && cvi.hasNext()) fullname+=", ";
 								    					}else{
 								    						fullname+="ET. AL";
 															break;
