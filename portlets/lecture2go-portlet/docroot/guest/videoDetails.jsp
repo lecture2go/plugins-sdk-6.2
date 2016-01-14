@@ -331,6 +331,7 @@
 											<img class="video-image related" src="<%=vid.getImageSmall()%>">
 										</div>
 										<div class="metainfo-small related">
+												<div class="title-small related"><%=vid.getTitle()%></div>
 							          			<em class="creator-small2 related">
 												<%
 						       						String fullname="";
@@ -353,8 +354,7 @@
 							           			%>
 												<%=fullname %>
 							           			</em>
-												<div class="title-small related"><%=vid.getTitle()%></div>
-								           		<div class="date related">[<%=date%>]</div> 
+								           		<div class="date related"><%=date%></div> 
 						            	</div>
 									</a>
 								</li>

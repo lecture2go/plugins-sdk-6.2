@@ -226,7 +226,7 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 }
 
 .creator-small2.related {
-    font-size: 13px;
+    font-size: 12px;
 }
 
 .aui #chapters {
@@ -488,13 +488,12 @@ thead, th {
 }
 
 .title-small {
-    font-weight: 400 !important;
+    font-weight: 600 !important;
     font-size: 13px;
     margin-bottom: 0px;
     padding: 0px;
     line-height: 17px;
     width: 50%;
-    color: initial;
 }
 
 .title-small.related {
@@ -656,7 +655,7 @@ thead, th {
 }
 
 .lectureseries-title {
-    color: initial;
+    font-weight: 600;
 }
 
 .title-text {
@@ -708,6 +707,8 @@ thead, th {
 .meta-date {
     font-style: normal !important;
     color: #AEAEAE;
+    line-height: 10px;
+    font-size: 10px;
 }
 
 .col-md-7 {
