@@ -18,26 +18,28 @@
 
 <portlet:renderURL var="allRoles"><portlet:param name="jspPage" value="/admin/userList.jsp" /></portlet:renderURL>
 
-<aui:form action="<%= allRoles.toString() %>" method="post">
-	<aui:select name="roleId" label="" onChange="submit();">
-		<aui:option value="">select-l2go-role</aui:option>
-		<%for (int i = 0; i < l2goRoles.size(); i++) {
-			//check for permissions
-			boolean permission = false;
-			if(permissionChecker.hasPermission(groupId,name,u.getPrimaryKey(),"ADD_L2GOPRODUCER") && (l2goRoles.get(i).getName().equals("L2Go Producer") || l2goRoles.get(i).getName().equals("L2Go Student"))) permission = true;
-			else if(permissionChecker.hasPermission(groupId,name,u.getPrimaryKey(),"ADD_L2GOADMIN")) permission = true;
-			
-			if(permission){
-				if(l2goRoles.get(i).getRoleId()==roleId){
-					%>
-					<aui:option value='<%=l2goRoles.get(i).getRoleId()%>' selected="true"><%=l2goRoles.get(i).getName()%></aui:option>
-					<%}else{%>
-					<aui:option value='<%=l2goRoles.get(i).getRoleId()%>'><%=l2goRoles.get(i).getName()%></aui:option>
-					<%}					
-			}
-		}%>
-	</aui:select>
-</aui:form>
+<aui:fieldset helpMessage="choose-filter" column="true">
+	<aui:form action="<%= allRoles.toString() %>" method="post">
+		<aui:select name="roleId" label="" onChange="submit();">
+			<aui:option value="">select-l2go-role</aui:option>
+			<%for (int i = 0; i < l2goRoles.size(); i++) {
+				//check for permissions
+				boolean permission = false;
+				if(permissionChecker.hasPermission(groupId,name,u.getPrimaryKey(),"ADD_L2GOPRODUCER") && (l2goRoles.get(i).getName().equals("L2Go Producer") || l2goRoles.get(i).getName().equals("L2Go Student"))) permission = true;
+				else if(permissionChecker.hasPermission(groupId,name,u.getPrimaryKey(),"ADD_L2GOADMIN")) permission = true;
+				
+				if(permission){
+					if(l2goRoles.get(i).getRoleId()==roleId){
+						%>
+						<aui:option value='<%=l2goRoles.get(i).getRoleId()%>' selected="true"><%=l2goRoles.get(i).getName()%></aui:option>
+						<%}else{%>
+						<aui:option value='<%=l2goRoles.get(i).getRoleId()%>'><%=l2goRoles.get(i).getName()%></aui:option>
+						<%}					
+				}
+			}%>
+		</aui:select>
+	</aui:form>
+</aui:fieldset>
 
 <liferay-ui:search-container emptyResultsMessage="no-l2go-roles-found" delta="10" iteratorURL="<%= portletURL %>">
 	<liferay-ui:search-container-results>
