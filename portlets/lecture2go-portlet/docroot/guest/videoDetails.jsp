@@ -116,13 +116,28 @@
 			  <c:if test="${relatedVideos.size()>1}"> <div class="meta-video-info"></c:if>
 			  <c:if test="${relatedVideos.size()<=1}"> <div class="meta-video-info-wide"></c:if>
 			    <div class="meta-title"><%=title%></div>
-		      	<div class="meta-creators">${video.creators}
-		      		<%
-		      		String dt = "";
-		      		try{dt=video.getDate().trim().substring(0, 10);}catch(Exception e){}
-		      		%>
-		      		&nbsp;<p class= "meta-date"><%=dt%></p>
-		      	</div>
+		      	<div class="meta-creators">
+												<%
+						       						String fullname1="";
+							        				String date1 = "";
+							           				try{ date1 = video.getDate().trim().substring(0, 10);}catch(Exception e){}
+
+							           				List<Creator> cv1 = CreatorLocalServiceUtil.getCreatorsByVideoId(video.getVideoId());
+													ListIterator<Creator> cvi1 = cv1.listIterator();										
+							       					int j=0;
+							       					while(cvi1.hasNext()){
+							       						if(j<2){
+							       							fullname1 += cvi1.next().getFullName();
+							       							if(cv1.size()>1) fullname1+="; ";
+								    					}else{
+								    						fullname1+="ET. AL";
+															break;
+								    					}
+								    					j++;
+							        				}
+							           			%>
+												<%=fullname1 %>&nbsp;<p class= "meta-date"><%=date1%></p>
+				</div>
 				<div class="meta-description">
 					  <%if(videoMetadata.getDescription().trim().length()>0){ %>	
 					  	${videoMetadata.description}
