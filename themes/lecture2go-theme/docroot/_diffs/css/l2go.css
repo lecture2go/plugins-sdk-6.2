@@ -107,11 +107,12 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     width: 200px;
     height: 100px !important;
     text-align: center;
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 .video-image-big:hover {
     opacity: 1;
+    transition: opacity 0.3s ease 0s;
 }
 
 .video-image-overlay {
@@ -153,10 +154,17 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     height: 30px;
 }
 
+
 .video-image-wrapper-small.related {
     max-width: 113px;
     height: 57px;
     margin-top: 2px;
+    opacity: 0.9;
+}
+
+.video-image-wrapper-small.related:hover {
+	 opacity: 1;
+	 transition: opacity 0.3s ease 0s;
 }
 
 .metainfo-small {
@@ -921,8 +929,7 @@ thead, th {
 }
 
 .aui .control-group {
-    margin: 0px;
-    margin-left: -7px;
+    margin: 11px 0 0 0;
 }
 
 .aui select {
@@ -935,12 +942,12 @@ thead, th {
 
 .adminrow.wide:hover {
     background-color: #eaeaea;
-    height: 114px;
+    height: 100%;
 }
 
 .adminrow.wide {
-    background-color: #f3f3f3;
-    height: 114px;
+    background-color: #F3F3F3;
+    border-top: 1px solid #DDD;
 }
 
 .lfr-search-container {
@@ -950,4 +957,19 @@ thead, th {
 
 .aui input[type="color"], .aui input[type="date"], .aui input[type="datetime"], .aui input[type="datetime-local"], .aui input[type="email"], .aui input[type="month"], .aui input[type="number"], .aui input[type="password"], .aui input[type="search"], .aui input[type="tel"], .aui input[type="text"], .aui input[type="time"], .aui input[type="url"], .aui input[type="week"], .aui select, .aui textarea, .aui .uneditable-input {
     font-family: TheSansUHH,sans-serif;
+}
+
+.format {
+    font-size: 10px;
+    padding: 0px;
+    line-height: 5px;
+    color: #B19292;
+}
+
+.aui select {
+    border-width: 0px;
+    margin-right: 10px;
+    border-radius: 0px;
+    background-image: linear-gradient(to bottom, #E3E3E3, #E3E3E3);
+    color: #484848;
 }
