@@ -162,10 +162,6 @@
 		 			<%=prds %>
 		 		</div>
 		 		<div class="admintile wide icons">
-					<a href="<%=editURL.toString()%>">
-		   				<span class="icon-large icon-pencil"></span>
-					</a>
-					
 					<portlet:actionURL name="removeLectureseries" var="removeURL">
 						<portlet:param name="lectureseriesId" value='<%=""+lectser.getLectureseriesId()%>' />
 						<portlet:param name="backURL" value='<%=String.valueOf(portletURL)%>' />
@@ -173,6 +169,10 @@
 					
 					<a href="<%=removeURL.toString()%>">
 						<span class="icon-large icon-remove"></span>
+					</a>
+
+					<a href="<%=editURL.toString()%>">
+		   				<span class="icon-large icon-pencil"></span>
 					</a>
 				</div>
 			</div>
