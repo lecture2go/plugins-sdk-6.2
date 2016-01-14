@@ -38,8 +38,6 @@
 </portlet:renderURL>
 
 <aui:fieldset helpMessage="choose-filter" column="true">
-		<aui:layout>
- 			<aui:column>
 						<portlet:renderURL var="sortByInstitution">
 							<portlet:param name="jspPage" value="/admin/lectureSeriesList.jsp" />
 							<portlet:param name="producerId" value="<%=producerId.toString()%>"/>
@@ -59,8 +57,7 @@
 								}%>
 							</aui:select>
 						</aui:form>	
-				</aui:column>			
-				<aui:column>
+						
 						<portlet:renderURL var="sortByProducer">
 							<portlet:param name="jspPage" value="/admin/lectureSeriesList.jsp" />
 							<portlet:param name="institutionId" value="<%=institutionId.toString()%>"/>
@@ -79,9 +76,8 @@
 											<%}					
 								}%>
 							</aui:select>
-						</aui:form>		
-				</aui:column>	
-				<aui:column>
+						</aui:form>	
+							
 						<portlet:renderURL var="sortBySemester">
 							<portlet:param name="jspPage" value="/admin/lectureSeriesList.jsp" />
 							<portlet:param name="institutionId" value="<%=institutionId.toString()%>"/>
@@ -100,9 +96,8 @@
 											<%}					
 								}%>
 							</aui:select>
-						</aui:form>				
-				</aui:column>	
-				<aui:column>
+						</aui:form>		
+								
 						<portlet:renderURL var="sortByStatus">
 							<portlet:param name="jspPage" value="/admin/lectureSeriesList.jsp" />
 							<portlet:param name="institutionId" value="<%=institutionId.toString()%>"/>
@@ -124,18 +119,11 @@
 										<%}%>
 							</aui:select>
 						</aui:form>
-				</aui:column>		
-		</aui:layout>
-		<aui:layout>
-			<aui:row>
-				
-			<a href="<%=addLectureseriesURL.toString()%>">
-			    add-new-lectureseries <span class="icon-large icon-plus-sign"/>
-			</a>
-		
-			</aui:row>
-		</aui:layout>
 </aui:fieldset>
+<br/>
+<a href="<%=addLectureseriesURL.toString()%>">
+    add-new-lectureseries <span class="icon-large icon-plus-sign"/>
+</a>
 				
 <liferay-ui:search-container emptyResultsMessage="no-lectureseries-found" delta="10" iteratorURL="<%= portletURL %>">
 	<liferay-ui:search-container-results>
