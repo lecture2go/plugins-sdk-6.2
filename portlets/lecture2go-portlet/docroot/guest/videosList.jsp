@@ -298,19 +298,23 @@
 											
 											<div class="allcreators">
 												<%
-												List<Creator> clv = CreatorLocalServiceUtil.getCreatorsByVideoId(vidDummy.getVideoId());
-												ListIterator<Creator> clvi = clv.listIterator();
-	              								int i=0;
-	              								while(clvi.hasNext()){
-		              								if(i<2){
-		              									%><%=clvi.next().getFullName()+"; " %><%
-		              								}else{
-		              									%><%="ET. AL" %><%
-			              								break;
-		              								}
-		              								i++;
-	              								}
-												%>
+						       						String fullname1="";
+
+							           				List<Creator> clv = CreatorLocalServiceUtil.getCreatorsByVideoId(vidDummy.getVideoId());
+													ListIterator<Creator> clvi = clv.listIterator();										
+							       					int j=0;
+							       					while(clvi.hasNext()){
+							       						if(j<2){
+							       							fullname1 += clvi.next().getFullName();
+							       							if(clv.size()>1 && clvi.hasNext()) fullname1+=", ";
+								    					}else{
+								    						fullname1+="ET. AL";
+															break;
+								    					}
+								    					j++;
+							        				}
+							           			%>
+												<%=fullname1 %>
 											</div>		
 																	
 											<div id="term">
@@ -348,7 +352,7 @@
 									v = vl.get(0);
 									String vId = v.getVideoId()+"";
 									List<Creator> cl1 = CreatorLocalServiceUtil.getCreatorsByVideoId(v.getVideoId());
-									ListIterator<Creator> cli1 = cl.listIterator();
+									ListIterator<Creator> cli1 = cl1.listIterator();
 									%>
 									<portlet:actionURL name="viewOpenAccessVideo" var="view2URL">
 										<portlet:param name="objectId" value="<%=vId%>"/>
@@ -368,17 +372,21 @@
 											
 											<div class="allcreators">
 												<%
+												String fullname1="";
+												
 	              								int i=0;
 	              								while(cli1.hasNext()){
 		              								if(i<2){
-		              									%><%=cli1.next().getFullName()+"; " %><%
-		              								}else{
-		              									%><%="ET. AL" %><%
-			              								break;
-		              								}
+						       							fullname1 += cli1.next().getFullName();
+						       							if(cl1.size()>1 && cli1.hasNext()) fullname1+=", ";
+							    					}else{
+							    						fullname1+="ET. AL";
+														break;
+							    					}
 		              								i++;
 	              								}
 												%>
+												<%=fullname1%>
 											</div>		
 																	
 											<div id="term">
@@ -421,17 +429,20 @@
 											
 											<div class="allcreators">
 												<%
+												String fullname2="";
 	              								int i=0;
 	              								while(cli.hasNext()){
 		              								if(i<2){
-		              									%><%=cli.next().getFullName()+"; " %><%
-		              								}else{
-		              									%><%="ET. AL" %><%
-			              								break;
-		              								}
+						       							fullname2 += cli.next().getFullName();
+						       							if(cl.size()>1 && cli.hasNext()) fullname2+=", ";
+							    					}else{
+							    						fullname2+="ET. AL";
+														break;
+							    					}
 		              								i++;
 	              								}
 												%>
+												<%=fullname2%>
 											</div>		
 																	
 											<div id="term">
@@ -494,21 +505,23 @@
 													List<Creator> cv = CreatorLocalServiceUtil.getCreatorsByVideoId(v.getVideoId());
 													ListIterator<Creator> cvi = cl.listIterator();										
 		              								int i=0;
+		              								String fullname3="";
 		              								while(cvi.hasNext()){
 			              								if(i<2){
-			              									%><%=cvi.next().getFullName()+"; " %><%
-			              								}else{
-			              									%><%="ET. AL" %><%
-				              								break;
-			              								}
+							       							fullname3 += cvi.next().getFullName();
+							       							if(cv.size()>1 && cvi.hasNext()) fullname3+=", ";
+								    					}else{
+								    						fullname3+="ET. AL";
+															break;
+								    					}
 			              								i++;
 		              								}
-		              								
 		              								String date = "";
 		              								String dur = "";
 		              								try{ date = v.getDate().trim();}catch(Exception e){}
 		              								try{ dur = v.getDuration().trim().substring(0, 8);}catch(Exception e){}
 		              							%>
+		              							<%=fullname3%>
 		              							<div class="generation-date"><%=date%></div>
 		              							<div class="duration"><%=dur%></div>
 		              						</em>

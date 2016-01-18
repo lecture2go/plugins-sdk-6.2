@@ -58,9 +58,7 @@
 %>
 
 <aui:fieldset helpMessage="choose-filter" column="true">
-		<aui:layout>
 			<%if(permissionAdmin){%>
-	 			<aui:column>
 							<portlet:renderURL var="sortByCoordinator">
 								<portlet:param name="jspPage" value="/admin/videosList.jsp" />
 								<portlet:param name="producerId" value="<%=producerId.toString()%>"/>
@@ -78,10 +76,8 @@
 									}%>								
 								</aui:select>
 							</aui:form>	
-					</aui:column>	
 				<%}%>
 				<%if(permissionCoordinator || (permissionAdmin && coordinatorId>0)){%>		
-					<aui:column>
 							<portlet:renderURL var="sortByProducer">
 								<portlet:param name="jspPage" value="/admin/videosList.jsp" />
 								<portlet:param name="coordinatorId" value="<%=coordinatorId.toString()%>"/>
@@ -99,10 +95,8 @@
 									}%>									
 								</aui:select>
 							</aui:form>		
-					</aui:column>
 				<%}%>	
 				<%if( ((permissionAdmin || permissionCoordinator) && producerId>0  && coordinatorId>0) || permissionProducer ){%>		
-					<aui:column>
 							<portlet:renderURL var="sortByLectureseries">
 								<portlet:param name="jspPage" value="/admin/videosList.jsp" />
 								<portlet:param name="coordinatorId" value="<%=coordinatorId.toString()%>"/>
@@ -120,12 +114,11 @@
 									}%>								
 								</aui:select>
 							</aui:form>				
-					</aui:column>	
 				<%}%>
-		</aui:layout>
 </aui:fieldset>
 
 <%if(producerId>0){%>	
+	<br/>
 	<portlet:actionURL name="addVideo" var="addVideoURL">
 		<portlet:param name="lectureseriesId" value='<%=lectureseriesId+""%>'/>
 			<portlet:param name="producerId" value='<%=producerId+""%>'/>
@@ -234,10 +227,6 @@
 						<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>
 					</portlet:actionURL>
 					
-					<portlet:actionURL name="removeVideo" var="removeURL">
-						<portlet:param name="videoId" value="<%= primKey%>" />
-						<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>	
-					</portlet:actionURL>
 					
 					<portlet:actionURL name="lockVideo" var="lockURL">
 						<portlet:param name="videoId" value="<%= primKey%>" />
@@ -263,12 +252,36 @@
 						<portlet:param name="videoId" value="<%= primKey%>" />
 						<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>		
 					</portlet:actionURL>
+
+					<portlet:actionURL name="removeVideo" var="removeURL">
+						<portlet:param name="videoId" value="<%= primKey%>" />
+						<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>	
+					</portlet:actionURL>
 					
-					<a href="<%=editURL.toString()%>">
-					   <span class="icon-large icon-pencil"></span>
-					</a>
 							
+					<a href="<%=removeURL.toString()%>">
+						<span class="icon-large icon-remove"></span>
+					</a>		
+					
 					<%if(vid.getFilename().length()>0){
+						if (SegmentLocalServiceUtil.getSegmentsByVideoId(vid.getVideoId()).size()>0){%>
+							 <a href="<%=segmentURL.toString()%>">
+							    <span class="icon-large icon-comment"></span>
+							 </a>			
+						<%}else{%>
+							<a href="<%=segmentURL.toString()%>">
+							   <span class="icon-large icon-align-justify"></span>
+							</a>	
+						<%}	
+						if (vid.getDownloadLink()==1){%>
+							 <a href="<%=deactivateDowonloadURL.toString()%>">
+							    <span class="icon-large icon-download-alt"></span>
+							 </a>
+						<%}else{%>
+							 <a href="<%=activateDowonloadURL.toString()%>">
+							    <span class="icon-large icon-download"></span>
+							 </a>		
+						<%}	
 						if (vid.getOpenAccess()==1){%>
 							<a href="<%=lockURL.toString()%>">
 							   <span class="icon-large icon-unlock"></span>
@@ -279,29 +292,12 @@
 							 </a>
 						<%}	
 						
-						if (vid.getDownloadLink()==1){%>
-							 <a href="<%=deactivateDowonloadURL.toString()%>">
-							    <span class="icon-large icon-download-alt"></span>
-							 </a>
-						<%}else{%>
-							 <a href="<%=activateDowonloadURL.toString()%>">
-							    <span class="icon-large icon-download"></span>
-							 </a>		
-						<%}	
-						if (SegmentLocalServiceUtil.getSegmentsByVideoId(vid.getVideoId()).size()>0){%>
-							 <a href="<%=segmentURL.toString()%>">
-							    <span class="icon-large icon-comment"></span>
-							 </a>			
-						<%}else{%>
-							<a href="<%=segmentURL.toString()%>">
-							   <span class="icon-large icon-align-justify"></span>
-							</a>	
-						<%}	
 					}%>
 					
-					<a href="<%=removeURL.toString()%>">
-						<span class="icon-large icon-remove"></span>
-					</a>		
+					<a href="<%=editURL.toString()%>">
+					   <span class="icon-large icon-pencil"></span>
+					</a>
+					
 				</div>
 			</div>
 		</liferay-ui:search-container-column-text>

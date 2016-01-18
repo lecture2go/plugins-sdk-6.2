@@ -116,13 +116,28 @@
 			  <c:if test="${relatedVideos.size()>1}"> <div class="meta-video-info"></c:if>
 			  <c:if test="${relatedVideos.size()<=1}"> <div class="meta-video-info-wide"></c:if>
 			    <div class="meta-title"><%=title%></div>
-		      	<div class="meta-creators">${video.creators}
-		      		<%
-		      		String dt = "";
-		      		try{dt=video.getDate().trim().substring(0, 10);}catch(Exception e){}
-		      		%>
-		      		&nbsp;<p class= "meta-date"><%=dt%></p>
-		      	</div>
+		      	<div class="meta-creators">
+												<%
+						       						String fullname1="";
+							        				String date1 = "";
+							           				try{ date1 = video.getDate().trim().substring(0, 10);}catch(Exception e){}
+
+							           				List<Creator> cv1 = CreatorLocalServiceUtil.getCreatorsByVideoId(video.getVideoId());
+													ListIterator<Creator> cvi1 = cv1.listIterator();										
+							       					int j=0;
+							       					while(cvi1.hasNext()){
+							       						if(j<2){
+							       							fullname1 += cvi1.next().getFullName();
+							       							if(cv1.size()>1 && cvi1.hasNext()) fullname1+=", ";
+								    					}else{
+								    						fullname1+="ET. AL";
+															break;
+								    					}
+								    					j++;
+							        				}
+							           			%>
+												<%=fullname1 %>&nbsp;<p class= "meta-date"><%=date1%></p>
+				</div>
 				<div class="meta-description">
 					  <%if(videoMetadata.getDescription().trim().length()>0){ %>	
 					  	${videoMetadata.description}
@@ -331,6 +346,7 @@
 											<img class="video-image related" src="<%=vid.getImageSmall()%>">
 										</div>
 										<div class="metainfo-small related">
+												<div class="title-small related"><%=vid.getTitle()%></div>
 							          			<em class="creator-small2 related">
 												<%
 						       						String fullname="";
@@ -343,7 +359,7 @@
 							       					while(cvi.hasNext()){
 							       						if(i<2){
 							       							fullname += cvi.next().getFullName();
-							       							if(cv.size()>1) fullname+="; ";
+							       							if(cv.size()>1 && cvi.hasNext()) fullname+=", ";
 								    					}else{
 								    						fullname+="ET. AL";
 															break;
@@ -353,8 +369,7 @@
 							           			%>
 												<%=fullname %>
 							           			</em>
-												<div class="title-small related"><%=vid.getTitle()%></div>
-								           		<div class="date related">[<%=date%>]</div> 
+								           		<div class="date related"><%=date%></div> 
 						            	</div>
 									</a>
 								</li>
