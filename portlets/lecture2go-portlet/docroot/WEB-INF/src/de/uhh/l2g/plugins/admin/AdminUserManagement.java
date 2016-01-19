@@ -369,6 +369,7 @@ public class AdminUserManagement extends MVCPortlet {
 			List<Coordinator> cL = CoordinatorLocalServiceUtil.getCoordinators(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 			for (int i = 0; i < cL.size(); i++)
 				CoordinatorLocalServiceUtil.deleteCoordinator(cL.get(i));
+			
 			Role role = createRole("L2Go Coordinator", u);
 			//add default Permissions
 			try {
