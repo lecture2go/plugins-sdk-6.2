@@ -1251,3 +1251,12 @@ thead, th {
     text-decoration: none;
 }
 
+.aui .icon-caret-down::before {
+    content: "";
+}
+
+.aui .modify-pages .lfr-nav-item .lfr-nav-child-toggle {
+    margin-left: -7px;
+    padding: 0;
+    visibility: hidden;
+}
