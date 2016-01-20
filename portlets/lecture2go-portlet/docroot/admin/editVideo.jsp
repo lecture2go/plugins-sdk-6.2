@@ -111,7 +111,8 @@
 			   <%}else{%>
 				  <aui:input name="citationAllowed" type="checkbox" label="citation allowed" id="citationAllowed" checked="true"/>
 			   <%}%>
-			
+				
+				<div id="metadata-upload">
 				<aui:select size="1" name="lectureseriesId" label="lectureseries" onChange="toggleLectureseries()">
 					<aui:option value="0">select-lecture-series</aui:option>
 					<%for (int i = 0; i < reqLectureseriesList.size(); i++) {
@@ -217,33 +218,33 @@
 				<a id="addCreator">
 				    add-new-creator <span class="icon-large icon-plus-sign"></span>
 				</a>
-				<br/><br/>
 		
-				license
-				<br/>
-				<em>uhh-l2go</em>
-				<%if(reqLicense.getL2go()==1){%><aui:input name="license"  id="uhhl2go" value="uhhl2go" checked="true" type="radio"/><%}%>
-				<%if(reqLicense.getL2go()==0){%><aui:input name="license" id="uhhl2go" value="uhhl2go" type="radio"/><%}%>
-				lecture2go-licence <a href="/license" target="_blank"> details </a>	 	      	      
-				<br/><br/>
-				
-				<em>by-nc-sa</em>	
-				<%if(reqLicense.getCcbyncsa()==1){%><aui:input name="license" id="ccbyncsa" value="ccbyncsa" checked="true" type="radio" /><%}%>
-				<%if(reqLicense.getCcbyncsa()==0){%><aui:input name="license" id="ccbyncsa" value="ccbyncsa" type="radio"/><%}%>
-				creative-commons <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank"> details </a>
-				
-				<br/><br/>
-
-				<aui:input id="password" name="password" label="password" required="false" value="<%=reqVideo.getPassword()%>" />
-
-				<br/><br/>
-				
 				<aui:field-wrapper label="description">
-				    <liferay-ui:input-editor name="longDesc" toolbarSet="liferay-article" initMethod="initEditor" width="250" onChangeMethod="setDescriptionData" />
+				    <liferay-ui:input-editor  name="longDesc" toolbarSet="simple" initMethod="initEditor" onChangeMethod="setDescriptionData" cssClass="ta"/>
 				    <script type="text/javascript">
 				        function <portlet:namespace />initEditor() { return "<%= UnicodeFormatter.toString(reqMetadata.getDescription()) %>"; }
 				    </script>
 				</aui:field-wrapper>
+				</div>
+				
+				<div id="permissions">
+					<aui:input id="password" name="password" label="password" required="false" value="<%=reqVideo.getPassword()%>" />
+				</div>
+				
+				<div id="license">
+					<div>
+						<em>uhh-l2go</em>
+						<%if(reqLicense.getL2go()==1){%><aui:input name="license"  id="uhhl2go" value="uhhl2go" checked="true" type="radio"/><%}%>
+						<%if(reqLicense.getL2go()==0){%><aui:input name="license" id="uhhl2go" value="uhhl2go" type="radio"/><%}%>
+						lecture2go-licence <a href="/license" target="_blank"> details </a>	 	      	      
+					</div>
+					<div>		
+						<em>by-nc-sa</em>	
+						<%if(reqLicense.getCcbyncsa()==1){%><aui:input name="license" id="ccbyncsa" value="ccbyncsa" checked="true" type="radio" /><%}%>
+						<%if(reqLicense.getCcbyncsa()==0){%><aui:input name="license" id="ccbyncsa" value="ccbyncsa" type="radio"/><%}%>
+						creative-commons <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank"> details </a>
+					</div>
+				</div>
 				
 				<aui:button-row>
 					<aui:button value="apply changes" onclick="applyAllMetadataChanges()"/>
