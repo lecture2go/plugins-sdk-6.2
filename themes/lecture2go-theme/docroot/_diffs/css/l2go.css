@@ -1088,7 +1088,7 @@ thead, th {
 
 #metadata-upload #creators {
     margin-left: 20%;
-    width: 85%;
+    width: 56% !important;
 }
 
 #metadata-upload #creators div div label {
@@ -1204,10 +1204,12 @@ thead, th {
 
 .prodCont {
     margin-left: 20%;
+    width: 56% !important;
 }
 
 .facilCont {
     margin-left: 20%;
+    width: 56% !important;
 }
 
 #fileupload {
