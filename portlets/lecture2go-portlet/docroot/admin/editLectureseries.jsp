@@ -100,7 +100,7 @@
 <aui:form action="<%=actionURL%>" commandName="model">
 	<aui:fieldset helpMessage="test" column="true" label='<%=lName%>'>
 		<aui:layout>
-			
+			<div id="metadata-upload">
 			<aui:input name="number" label="number" required="true" value="<%=lNumber %>" />
 
 			<aui:input name="name" label="name" required="true" value="<%=lName%>"/>
@@ -205,7 +205,7 @@
 			<aui:input name="password" label="password" value="<%=lPassword%>"/>
 			
 			<aui:field-wrapper label="description">
-			    <liferay-ui:input-editor name="longDesc" toolbarSet="liferay-article" initMethod="initEditor" width="250" />
+			    <liferay-ui:input-editor name="longDesc" toolbarSet="simple" initMethod="initEditor" width="250" />
 			    <script type="text/javascript">
 			        function <portlet:namespace />initEditor() { return "<%= UnicodeFormatter.toString(lLongDesc) %>"; }
 			    </script>
@@ -215,6 +215,7 @@
 				<aui:button type="submit" onclick="<portlet:namespace />extractCodeFromEditor()"/>
 				<aui:button type="cancel" value="cancel" href="<%=backURL%>"/>
 			</aui:button-row>
+			</div>
 		</aui:layout>
 	</aui:fieldset>
 </aui:form>
