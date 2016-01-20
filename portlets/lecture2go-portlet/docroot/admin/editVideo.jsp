@@ -105,6 +105,21 @@
 			<aui:form action="<%=actionURL%>" commandName="model" name="metadata">
 				<label class="edit-video-lable">metadata</label>
 				<div id="metadata-upload">
+				<aui:input id="title" name="title" label="title" required="false" value="<%=reqVideo.getTitle()%>" />
+				
+				<aui:select size="1" name="crId" label="creators">
+					<aui:option value="">select-creator</aui:option>
+					<%for (int i = 0; i < creators.size(); i++) {
+						%><aui:option value='<%=creators.get(i).getCreatorId()%>'><%=creators.get(i).getJobTitle() + " "+creators.get(i).getLastName() + ", " + creators.get(i).getFirstName()%></aui:option><%
+					}%>	
+				</aui:select>	
+							
+				<div id="creators"></div>
+	
+				<a id="addCreator">
+				    add-new-creator <span class="icon-large icon-plus-sign"></span>
+				</a>
+								
 				<aui:select size="1" name="lectureseriesId" label="lectureseries" onChange="toggleLectureseries()">
 					<aui:option value="0">select-lecture-series</aui:option>
 					<%for (int i = 0; i < reqLectureseriesList.size(); i++) {
@@ -192,27 +207,12 @@
 					}%>				
 				</aui:select>
 				
-				<aui:input id="title" name="title" label="title" required="false" value="<%=reqVideo.getTitle()%>" />
-
 				<aui:input id="lecture2go-date" name="lecture2go-date" label="lecture2go-date" required="false" value="" />
 	
 				<aui:input name="tags" label="tags" required="false" value="<%=reqVideo.getTags()%>"/>
 	
 				<aui:input name="publisher" label="publisher" required="false" value="<%=reqMetadata.getPublisher()%>"/>
 				
-				<aui:select size="1" name="crId" label="creators">
-					<aui:option value="">select-creator</aui:option>
-					<%for (int i = 0; i < creators.size(); i++) {
-						%><aui:option value='<%=creators.get(i).getCreatorId()%>'><%=creators.get(i).getJobTitle() + " "+creators.get(i).getLastName() + ", " + creators.get(i).getFirstName()%></aui:option><%
-					}%>	
-				</aui:select>	
-							
-				<div id="creators"></div>
-	
-				<a id="addCreator">
-				    add-new-creator <span class="icon-large icon-plus-sign"></span>
-				</a>
-		
 				<aui:field-wrapper label="description">
 				    <liferay-ui:input-editor  name="longDesc" toolbarSet="simple" initMethod="initEditor" onChangeMethod="setDescriptionData" cssClass="ta"/>
 				    <script type="text/javascript">
