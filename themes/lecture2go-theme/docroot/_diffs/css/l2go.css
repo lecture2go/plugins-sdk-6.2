@@ -1117,20 +1117,22 @@ thead, th {
     width: 49%;
 }
 
-#metadata-upload .ta {
-    margin-left: -15%;
-    margin-top: 25px;
-    width: 65%;
-}
-
 #permissions div label {
     float: left;
-    margin-right: 5px;
+    line-height: 41px;
+    margin-right: 10px;
 }
 
 #permissions div {
     float: left;
+    line-height: 47px;
     margin-right: 14px;
+}
+
+#permissions div.control-group.form-inline input {
+    margin-left: 120px;
+    margin-top: 5px;
+    position: absolute;
 }
 
 #license {
@@ -1138,8 +1140,69 @@ thead, th {
     width: 100%;
 }
 
+#license > div {
+    float: left;
+    margin-bottom: 43px;
+    margin-right: 41px;
+    margin-top: -12px;
+}
+
+#license input {
+    line-height: 28px;
+    margin-bottom: -33px;
+}
+
+#license div a {
+    margin-left: 20px;
+}
+
 #permissions {
     float: left;
     width: 100%;
 }
+
+.cke_1.cke.cke_reset.cke_chrome {
+    width: 65% !important;
+}
+
+.edit-video-lable {
+    border-bottom: 1px solid #ddd;
+    color: black !important;
+    font-size: 24px !important;
+    font-style: normal;
+    font-weight: 700 !important;
+    padding: 30px 0 5px;
+    width: 65%;
+}
+
+#uploaded-files {
+    color: #c40017 !important;
+    font-size: 13px !important;
+    font-style: normal;
+}
 	
+.aui #upload-form {
+    display: none;
+    width: 65%;
+}
+
+.aui .progress {
+    overflow: hidden;
+    height: 25px;
+    margin-bottom: 11px;
+    background-color: #F6F6F6;
+    background-image: none;
+    border-radius: 0px;
+}
+
+#c2g {
+    margin-top: 6px;
+}
+
+#uploaded-files > tbody > tr > td {
+    width: 100% !important;
+}
+
+
+
+
