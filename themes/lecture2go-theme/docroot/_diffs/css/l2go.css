@@ -1215,3 +1215,39 @@ thead, th {
 #fileupload {
     font-family: inherit !important;
 }
+
+.aui .dropdown-menu {
+    border-bottom: 4px solid #888 !important;
+    border-left: 1px solid transparent !important;
+    border-right: 1px solid transparent !important;
+    box-shadow: none;
+    margin-left: -2px !important;
+    width: auto;
+    padding-top: 0px;
+    padding-bottom: 1px;
+}
+
+.aui #navigation .nav .dropdown-menu > li {
+    background: #f9f9f9 none repeat scroll 0 0 !important;
+    border-bottom: 1px solid #f3f3f3;
+}
+
+.aui #navigation .nav .dropdown-menu > li a {
+    background: #F9F9F9 url("https://www.uni-hamburg.de/assets/rot_navi-fdf29d5b8f2a0c0cff02298385c1450f.png") no-repeat scroll 9px 9px !important;
+    border-color: #DDD;
+    border-style: solid;
+    border-width: 1px;
+    color: #4E4E4E;
+    display: block;
+    text-decoration: none;
+    font-size: 12px;
+    padding-left: 28px;
+    margin-left: 0px;
+    text-align: left;
+}
+
+.aui #navigation .nav .dropdown-menu > li a:hover {
+    background: #ddd url("https://www.uni-hamburg.de/assets/rot_navi-fdf29d5b8f2a0c0cff02298385c1450f.png") no-repeat scroll 9px 9px !important;
+    text-decoration: none;
+}
+
