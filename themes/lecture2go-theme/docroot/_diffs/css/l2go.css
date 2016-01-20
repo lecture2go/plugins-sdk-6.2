@@ -1223,7 +1223,7 @@ thead, th {
     box-shadow: none;
     margin-left: -2px !important;
     width: auto;
-    padding-top: 0px;
+    padding-top: 1px;
     padding-bottom: 1px;
 }
 
