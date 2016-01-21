@@ -1290,6 +1290,7 @@ thead, th {
     font-size:11px;
 }
 
+
 .aui .dockbar .navbar-inner .nav > li > a, .aui .dockbar .navbar-inner .nav > li a:focus, .aui .dockbar-split .dockbar .navbar-inner .nav > li > a, .aui .dockbar-split .dockbar .navbar-inner .nav > li a:focus {
     background: transparent none repeat scroll 0 0;
     border: medium none;
@@ -1309,6 +1310,11 @@ thead, th {
     padding: 0 0 3px 20px;
 }
 
+.aui .dockbar.navbar .nav li.dropdown .dropdown-menu li a {
+    background: #f9f9f9 none repeat scroll 0 0;
+    color: #4e4e4e;
+    font-size: 11px;
+}
 .aui .modal {
     border-radius: 0px;
 }
