@@ -107,12 +107,11 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     width: 200px;
     height: 100px !important;
     text-align: center;
-    opacity: 0.9;
+    opacity: 0.8;
 }
 
 .video-image-big:hover {
     opacity: 1;
-    transition: opacity 0.3s ease 0s;
 }
 
 .video-image-overlay {
@@ -154,17 +153,10 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     height: 30px;
 }
 
-
 .video-image-wrapper-small.related {
     max-width: 113px;
     height: 57px;
     margin-top: 2px;
-    opacity: 0.9;
-}
-
-.video-image-wrapper-small.related:hover {
-	 opacity: 1;
-	 transition: opacity 0.3s ease 0s;
 }
 
 .metainfo-small {
@@ -215,17 +207,10 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 }
 
 .list-group.toggler-content-collapsed.content > li {
-    border-width: 0px 0px 0px 3px;
-    border-style: solid;
-    border-color: -moz-use-text-color -moz-use-text-color -moz-use-text-color #D81B1B;
-    -moz-border-top-colors: none;
-    -moz-border-right-colors: none;
-    -moz-border-bottom-colors: none;
-    -moz-border-left-colors: none;
-    border-image: none;
-    background-color: #f6f6f6;
+    border: 0px solid;
+    background-color: transparent;
+    border-left: 3px solid #D81B1B;
 }
-
 
 .creator-small2 {
     font-size: 11px;
@@ -233,7 +218,7 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 }
 
 .creator-small2.related {
-    font-size: 12px;
+    font-size: 13px;
 }
 
 .aui #chapters {
@@ -266,16 +251,16 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 .videotile.wide {
     width: 100%;
     height: 120px;
-    background-color: #F6F6F6;
+    background-color: #F3F3F3;
     padding: 8px 0px 0px 8px;
 }
 
 .videotile.wide:hover {
-    background-color: #f3f3f3 !important;
+    background-color: #EAEAEA !important;
 }
 
 .videotile.small:hover {
-    background-color: #f3f3f3 !important;
+    background-color: #EAEAEA !important;
 }
 
 .videotile.small.related {
@@ -299,7 +284,7 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 
 #video-list .list-group-item:hover {
     text-decoration: none;
-    background-color: #f3f3f3;
+    background-color: #F9F9F9;
 }
 
 #video-list .sublist2 {
@@ -356,7 +341,7 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 a.list-group-item:hover, a.list-group-item:focus {
     color: #555;
     text-decoration: none;
-    background-color: #f3f3f3;
+    background-color: #F5F5F5;
 }
 
 .list-group-item:first-child {
@@ -411,27 +396,12 @@ a.list-group-item:hover, a.list-group-item:focus {
     border-top: 1px solid #E5E5E5;
 }
 
+
 .aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle {
-    background-color: rgb(221, 221, 221);
-    border-left: 3px solid #DDD !important;
-    font-weight: 900;
-    padding: 0px 3px 20px 6px;
-    color: #000;
-}
-
-.aui .accordion-group .toggler-content-expanded .accordion-inner {
-    border-width: 0px 0px 0px 3px;
-    border-style: solid;
-    border-color: #ddd;
-}
-
-.aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle::after, .aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle::before {
-    color: #484848;
-    float: right;
-    font-size: 18px;
-    margin: 9px 5px 0 0;
-    opacity: 1;
-    padding: 0;
+    padding: 4px 4px 5px 10px;
+    background-color: #E3E3E3;
+    font-weight: initial;
+    color: black;
 }
 
 .aui #my-tab-content {
@@ -456,14 +426,9 @@ thead, th {
     border-radius: 0px;
 }
 
-.aui .accordion {
-    margin-bottom: 20px;
-}
-
 .aui .accordion-group.lfr-panel-extended {
-    border-width: 0px;
+    border-width: 1px;
     border-radius: 0px;
-    padding-bottom: 5px;
 }
 
 .aui .btn-group > .btn:first-child {
@@ -479,11 +444,6 @@ thead, th {
     border-width: 0px;
     margin-right: 10px;
     border-radius: 0px;
-}
-
-.aui .btn .caret {
-    margin-top: 9px;
-    margin-left: 8px;
 }
 
 .aui .dropdown-menu {
@@ -515,12 +475,13 @@ thead, th {
 }
 
 .title-small {
-    font-weight: 600 !important;
+    font-weight: 400 !important;
     font-size: 13px;
     margin-bottom: 0px;
     padding: 0px;
     line-height: 17px;
     width: 50%;
+    color: initial;
 }
 
 .title-small.related {
@@ -647,7 +608,7 @@ thead, th {
 }
 
 .filter-menu {
-    border-bottom: 1px solid #F6F6F6 !important
+    border-bottom: 1px solid #E0E0E0 !important;
 }
 
 .generation-date {
@@ -682,17 +643,12 @@ thead, th {
 }
 
 .lectureseries-title {
-    font-weight: 600;
+    color: initial;
 }
 
 .title-text {
+    color: black !important;
     font-size: 15px;
-    color: rgb(72, 72, 72) !important;
-}
-
-.toggler-content-wrapper {
-    overflow: hidden;
-    padding-bottom: 8px;
 }
 
 .related-lectureseries-name {
@@ -721,7 +677,7 @@ thead, th {
     margin-top: 38px;
     font-size: 22px;
     font-weight: 900;
-    line-height: 20px;
+    line-height: 30px;
 }
 
 .meta-description {
@@ -739,8 +695,6 @@ thead, th {
 .meta-date {
     font-style: normal !important;
     color: #AEAEAE;
-    line-height: 10px;
-    font-size: 10px;
 }
 
 .col-md-7 {
@@ -882,11 +836,6 @@ thead, th {
     border-color: #E0E0E0 -moz-use-text-color -moz-use-text-color;
 }
 
-.aui .chaptertile:hover {
-    background: #f3f3f3 none repeat scroll 0 0;
-    cursor: pointer;
-}
-
 .aui .chaptertile span {
     padding-left: 10px;
     font-size: 10px;
@@ -903,8 +852,8 @@ thead, th {
 }
 
 .aui .chaptertile.active {
-    color: #D81B1B;
-    background: #fff none repeat scroll 0% 0%;
+    color: #d81b1b;
+    background: #EAEAEA none repeat scroll 0% 0%;
 }
 
 .commenttile > div {
@@ -972,17 +921,26 @@ thead, th {
 }
 
 .aui .control-group {
-    margin: 11px 0 0 0;
+    margin: 0px;
+    margin-left: -7px;
+}
+
+.aui select {
+    width: 230px;
+    border: 1px solid #CCC;
+    background-color: #FFF;
+    border-radius: 0px;
+    font-family: TheSansUHH,sans-serif;
 }
 
 .adminrow.wide:hover {
     background-color: #eaeaea;
-    height: 100%;
+    height: 114px;
 }
 
 .adminrow.wide {
-    background-color: #F3F3F3;
-    border-top: 1px solid #DDD;
+    background-color: #f3f3f3;
+    height: 114px;
 }
 
 .lfr-search-container {
@@ -992,65 +950,4 @@ thead, th {
 
 .aui input[type="color"], .aui input[type="date"], .aui input[type="datetime"], .aui input[type="datetime-local"], .aui input[type="email"], .aui input[type="month"], .aui input[type="number"], .aui input[type="password"], .aui input[type="search"], .aui input[type="tel"], .aui input[type="text"], .aui input[type="time"], .aui input[type="url"], .aui input[type="week"], .aui select, .aui textarea, .aui .uneditable-input {
     font-family: TheSansUHH,sans-serif;
-}
-
-.format {
-    font-size: 10px;
-    padding: 0px;
-    line-height: 5px;
-    color: #B19292;
-}
-
-.aui select {
-    -moz-appearance: none;
-    background-color: #DDD;
-    background-image: linear-gradient(45deg, transparent 50%, #000 50%), linear-gradient(135deg, #000 50%, transparent 50%), linear-gradient(to right, #DDD, #DDD);
-    background-position: calc(100% - 18px) calc(1em + -2px), calc(100% - 13px) calc(1em + -2px), 100% 0px;
-    background-repeat: no-repeat;
-    background-size: 5px 5px, 5px 5px, 2.5em 2.5em;
-    border: 0px none;
-    border-radius: 0px;
-    box-sizing: border-box;
-    color: #484848;
-    float: left;
-    margin-right: 10px;
-    line-height: 20px;
-    
-    /* reset */
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-}
-
-.aui select > option {
-    background-color: #fff;
-    border: 0 none;
-}
-
-.aui select:focus {
-    border: 0 solid rgba(0, 172, 255, 0.8);
-    outline: 0px auto rgba(82, 168, 236, 0.6);
-    outline-offset: -2px;
-}
-
-.aui .alert, .aui .portlet-msg-alert, .aui .portlet-msg-error, .aui .portlet-msg-help, .aui .portlet-msg-info, .aui .portlet-msg-progress, .aui .portlet-msg-success {
-    background-color: transparent;
-    border-color: #eaeaea -moz-use-text-color -moz-use-text-color;
-    border-style: solid none none;
-    border-width: 1px 0 0;
-    color: #c40017;
-    margin-top: 20px;
-    padding-left: 0;
-    word-wrap: break-word;
-}
-
-#searchName {
-    margin-left: 3px;
-    margin-top: 3px;
-}
-
-#content {
-    margin-top: 10px;
 }
