@@ -46,60 +46,13 @@ String companyIdString = String.valueOf(companyId);
 //Portlet Instance Id (can be string)
 String institutionPortletPrimKey = portletDisplay.getResourcePK();
 //On Model Level:
-String portletModel = "de.uhh.l2g.plugins";
+String portletModel = "de.uhh.l2g.plugins.model.Institution";
 //On Entity Level:
 String institutionModel = "de.uhh.l2g.plugins.model.Institution";
 
-//Definded Action Ids
-String actionId = "VIEW";
 %>
 
-<%--START: DEBUG INFO--%>
-Do you have the individual <i><liferay-ui:message key='<%= "action." + actionId %>' /></i> permission for this portlet (<%= groupId+" "+institutionPortletName+" "+institutionPortletPrimKey %>)?
 
-<strong>
-
-<c:choose>
-	<c:when test="<%= permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, actionId) %>">
-		Yes
-	</c:when>
-	<c:otherwise>
-		No
-	</c:otherwise>
-</c:choose>
-
-</strong>
-</br>
-Do you have the group based <i><liferay-ui:message key='<%= "action." + actionId %>' /></i> permission for this portlet (<%= groupId+" "+institutionPortletName+" "+groupId %>)?
-
-<strong>
-
-<c:choose>
-	<c:when test="<%= permissionChecker.hasPermission(groupId, institutionPortletName, groupId, actionId) %>">
-		Yes
-	</c:when>
-	<c:otherwise>
-		No
-	</c:otherwise>
-</c:choose>
-
-</strong>
-</br>
-Do you have the global <i><liferay-ui:message key='<%= "action." + actionId %>' /></i> permission for this portlet (<%= groupId+" "+institutionPortletName+" "+ companyIdString %>)?
-
-<strong>
-
-<c:choose>
-	<c:when test="<%= permissionChecker.hasPermission(groupId, institutionPortletName, companyIdString, actionId) %>">
-		Yes
-	</c:when>
-	<c:otherwise>
-		No
-	</c:otherwise>
-</c:choose>
-
-</strong>
-</br>
 
 <%--END: DEBUG INFO--%>
 <%
@@ -135,7 +88,7 @@ int maxOrder = InstitutionLocalServiceUtil.getMaxSortByParentId(rootId)+1;
 <%-- Permission for setting permissions regarding model on group/entity scope--%>
 
 <%--Global Permission for setting permissions regarding plugin on group scope--%>
-Company Institution Permissions:
+Company Permissions:
 	<liferay-security:permissionsURL
 	    modelResource="<%= portletModel %>"
 	    modelResourceDescription="Model Global"
@@ -144,19 +97,19 @@ Company Institution Permissions:
 
 	<liferay-ui:icon image="permissions" url="<%= globalmodelpermissionsURL %>" />
 <%--Permission for setting permissions regarding plugin on group scope--%>
-Institution Permissions:
+Company Institution Permissions:
 	<liferay-security:permissionsURL
-	    modelResource="<%= portletModel %>"
+	    modelResource="<%= Institution.class.getName()  %>"
 	    modelResourceDescription="Model Site"
-	    resourcePrimKey="<%= String.valueOf(groupId) %>"
+	    resourcePrimKey="<%= String.valueOf(companyId) %>"
 	    var="modelpermissionsURL" />
 
 	<liferay-ui:icon image="permissions" url="<%= modelpermissionsURL %>" />
 
 <%--Permission for setting permissions regarding institution model on group scope--%>
-Institution Permissions:
+Group Institution Permissions:
 	<liferay-security:permissionsURL
-	    modelResource="<%= institutionModel %>"
+	    modelResource="<%= Institution.class.getName()  %>"
 	    modelResourceDescription="Model Site"
 	    resourcePrimKey="<%= String.valueOf(groupId) %>"
 	    var="institutionmodelpermissionsURL" />

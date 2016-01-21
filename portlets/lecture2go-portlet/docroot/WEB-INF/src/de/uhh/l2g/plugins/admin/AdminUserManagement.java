@@ -11,11 +11,13 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
@@ -25,7 +27,11 @@ import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.permission.PortletPermission;
+import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import de.uhh.l2g.plugins.model.Coordinator;
@@ -373,9 +379,15 @@ public class AdminUserManagement extends MVCPortlet {
 			Role role = createRole("L2Go Coordinator", u);
 			//add default Permissions
 			try {
-				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(role.getRoleId()), role.getRoleId(), new String[] {ActionKeys.VIEW});
-				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution_Host.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(role.getRoleId()), role.getRoleId(), new String[] {ActionKeys.VIEW});
-				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Host.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(role.getRoleId()), role.getRoleId(), new String[] {ActionKeys.VIEW});
+				//User Model: Add Producer Permission
+				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), User.class.getName(), ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {"ADD_L2GOPRODUCER"});
+				
+				//Institutions Portlet
+				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), "lgadmininstitutionmanagement_WAR_lecture2goportlet", ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {ActionKeys.VIEW});
+				//Institutions Models 
+				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(u.getGroupId()), role.getRoleId(), new String[] {ActionKeys.VIEW, "VIEW_OWN_INSTITUTIONS"});
+				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution_Host.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(u.getGroupId()), role.getRoleId(), new String[] {ActionKeys.VIEW});
+				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Host.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(u.getGroupId()), role.getRoleId(), new String[] {ActionKeys.VIEW});
 			} catch (PortalException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -388,17 +400,56 @@ public class AdminUserManagement extends MVCPortlet {
 			List<Producer> cL = ProducerLocalServiceUtil.getProducers(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 			for (int i = 0; i < cL.size(); i++)
 				ProducerLocalServiceUtil.deleteProducer(cL.get(i));
-			createRole("L2Go Producer", u);
+			Role role = createRole("L2Go Producer", u);
+			//add default Permissions
+			try {
+				//ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), "lgadmininstitutionmanagement_WAR_lecture2goportlet", ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {ActionKeys.VIEW, "MANAGE_INSTITUTIONS"});
+				//ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution.class.getName(), ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {ActionKeys.VIEW, "VIEW_OWN_INSTITUTIONS"});
+				//ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution_Host.class.getName(), ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {ActionKeys.VIEW});
+				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Host.class.getName(), ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {ActionKeys.VIEW});
+			} catch (PortalException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		try {
 			RoleLocalServiceUtil.getRole(u.getCompanyId(), "L2Go Student");
 		} catch (PortalException e) {
-			createRole("L2Go Student", u);
+			Role role = createRole("L2Go Student", u);
+			//add default Permissions
+			try {
+				//ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), "lgadmininstitutionmanagement_WAR_lecture2goportlet", ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {ActionKeys.VIEW, "MANAGE_INSTITUTIONS"});
+				//ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution.class.getName(), ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {ActionKeys.VIEW, "VIEW_OWN_INSTITUTIONS"});
+				//ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution_Host.class.getName(), ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {ActionKeys.VIEW});
+				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Host.class.getName(), ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {ActionKeys.VIEW});
+			} catch (PortalException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		try {
 			RoleLocalServiceUtil.getRole(u.getCompanyId(), "L2Go Admin");
 		} catch (PortalException e) {
-			createRole("L2Go Admin", u);
+			Role role = createRole("L2Go Admin", u);
+			//add default Permissions
+			try {
+				//User Portlet
+				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), "lgadmininstitutionmanagement_WAR_lecture2goportlet", ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {ActionKeys.VIEW, ActionKeys.UPDATE});	
+				//User Model: Add Producer Permission
+				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), User.class.getName(), ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {"ADD_L2GOADMIN","ADD_L2GOCOORDINATOR","ADD_L2GOPRODUCER","ADD_L2GOSTUDENT"});
+				
+				//Institutions Portlet
+				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), "lgadmininstitutionmanagement_WAR_lecture2goportlet", ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {ActionKeys.VIEW, "MANAGE_INSTITUTIONS","VIEW_HOSTS","MANAGE_HOSTS","VIEW_ALL_INSTITUTIONS"});
+				//General Entity Defaults 
+				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(u.getGroupId()), role.getRoleId(), new String[] {ActionKeys.VIEW, "VIEW_OWN_INSTITUTIONS"});
+				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution_Host.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(u.getGroupId()), role.getRoleId(), new String[] {ActionKeys.VIEW});
+				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Host.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(u.getGroupId()), role.getRoleId(), new String[] {ActionKeys.VIEW});
+				//Root Institution 
+				ResourcePermissionLocalServiceUtil.removeResourcePermission(u.getCompanyId(), Institution.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(InstitutionLocalServiceUtil.getRootByGroupId(u.getCompanyId(), u.getGroupId())), role.getRoleId(), "EDIT_INSTITUTION");
+			} catch (PortalException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 	
