@@ -595,10 +595,6 @@
 		position: absolute;
 	}
 
-	#banner {
-		background: url("/lecture2go-theme/images/logo_l2go.png") no-repeat scroll right 0 top 0 rgba(0, 0, 0, 0);
-	}
-	
 	.opens-new-window-accessible {
 		background: url(@theme_image_path@/common/open_window.png) no-repeat 0 50%;
 		display: inline-block;
