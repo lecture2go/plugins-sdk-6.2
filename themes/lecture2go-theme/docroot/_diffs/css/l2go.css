@@ -1295,7 +1295,7 @@ thead, th {
     background: transparent none repeat scroll 0 0;
     border: medium none;
     font-size: 11px;
-    padding: 0 0 3px 20px;
+    padding: 3px 3px 3px 20px;
 }
 
 .aui .dockbar-split .dockbar .navbar-inner .nav-account-controls > li > a, .aui .dockbar-split .dockbar .navbar-inner .nav-account-controls li.open > a {
@@ -1307,7 +1307,7 @@ thead, th {
 .aui .dockbar.navbar .nav > li > a, .aui .dockbar.navbar .nav > li a:focus {
     background: transparent none repeat scroll 0 0;
     color: #4e4e4e;
-    padding: 0 0 3px 20px;
+   padding: 3px 3px 3px 20px;
 }
 
 .aui .dockbar.navbar .nav li.dropdown .dropdown-menu li a {
