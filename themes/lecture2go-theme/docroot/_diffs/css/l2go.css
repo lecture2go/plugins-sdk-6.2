@@ -1275,11 +1275,11 @@ thead, th {
 }
 
 .aui .dockbar-split .dockbar .navbar-inner .nav-account-controls {
-    border: 0px solid #DDD;
-    background: transparent none repeat scroll 0% 0%;
-    right: 0px;
-    margin-right: 11px;
+    background: transparent none repeat scroll 0 0;
+    border: 0 solid #ddd;
+    margin-right: 13px;
     margin-top: -3px;
+    right: 0;
 }
 
 .aui .dockbar-split .dockbar .navbar-inner .nav li.dropdown.open > .dropdown-toggle {
@@ -1294,18 +1294,19 @@ thead, th {
     background: transparent none repeat scroll 0 0;
     border: medium none;
     font-size: 11px;
+    padding: 0 0 3px 20px;
 }
 
 .aui .dockbar-split .dockbar .navbar-inner .nav-account-controls > li > a, .aui .dockbar-split .dockbar .navbar-inner .nav-account-controls li.open > a {
     color: #4e4e4e;
-    margin-right: 3px;
+    margin-right: 0px;
     padding: 0;
 }
 
 .aui .dockbar.navbar .nav > li > a, .aui .dockbar.navbar .nav > li a:focus {
     background: transparent none repeat scroll 0 0;
     color: #4e4e4e;
-    padding: 3px 5px 3px 20px;
+    padding: 0 0 3px 20px;
 }
 
 .aui .modal {
@@ -1336,5 +1337,6 @@ thead, th {
     float: right;
     font-size: 11px;
     padding: 0;
+    margin-right: 3px
 }
 
