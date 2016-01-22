@@ -143,8 +143,29 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 	 * @param creatorId
 	 * @return a list with lectureseries which fit to the given filters
 	 */
+<<<<<<< HEAD
 	public List<Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(Long institutionId, Long parentInstitutionId, Long termId, Long categoryId, Long creatorId, String searchQuery) {
 
+=======
+	public List<Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreator(Long institutionId, Long parentInstitutionId, Long termId, Long categoryId, long creatorId) {
+		ArrayList<Long> termIds = new ArrayList<Long>();
+		ArrayList<Long> categoryIds = new ArrayList<Long>();
+		ArrayList<Long> creatorIds = new ArrayList<Long>();
+		if (termId != 0) {
+			termIds.add(termId);
+		}
+		if (categoryId != 0) {
+			categoryIds.add(categoryId);
+		}
+		if (creatorId != 0) {
+			creatorIds.add(creatorId);
+		}
+
+		return findFilteredByInstitutionParentInstitutionTermCategoryCreator(institutionId,parentInstitutionId,termIds,categoryIds,creatorIds);
+	}
+	
+	public List<Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreator(Long institutionId, Long parentInstitutionId, ArrayList<Long> termIds, ArrayList<Long> categoryIds, ArrayList<Long> creatorIds) {
+>>>>>>> branch 'master' of https://github.com/pio/plugins-sdk-6.2.git
 		Session session = null;
 		try {
 			session = openSession();
@@ -237,11 +258,17 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			vQuery += "INNER JOIN LG_Video_Category AS vcat ON ( v.videoId = vcat.videoId ) ";
 		}
 		
+<<<<<<< HEAD
 		if(hasSearch){
 			lQuery += "INNER JOIN LG_Tagcloud AS tag ON (v.videoId = tag.objectId)  ";
 			vQuery += "INNER JOIN LG_Tagcloud AS tag ON (v.videoId = tag.objectId) ";			
 		}
+=======
+		lQuery += "WHERE l.latestOpenAccessVideoId>0 ";
+		vQuery += "WHERE v.lectureseriesId<0 AND v.openAccess=1 ";
+>>>>>>> branch 'master' of https://github.com/pio/plugins-sdk-6.2.git
 		
+<<<<<<< HEAD
 		lQuery += "WHERE v.openAccess=1 ";
 		vQuery += "WHERE v.lectureseriesId<0 AND v.openAccess=1 ";
 		
@@ -259,6 +286,93 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 		if (hasCategory) {
 			lQuery += "AND l.categoryId = ? ";
 			vQuery += "AND vcat.categoryId = ? ";
+=======
+		if (institutionId > 0 || institutionParentId > 0 || termIds.size() > 0 || categoryIds.size() > 0 || creatorIds.size() > 0) {
+			int i = 0;
+			if (termIds.size() > 0) {
+				lQuery += "AND ";
+				vQuery += "AND ";
+				ListIterator<Long> it = termIds.listIterator();
+				lQuery += "( ";
+				vQuery += "( ";
+				while(it.hasNext()){
+					Long termId = it.next();
+					if(it.hasNext()){
+						lQuery += "t.termId="+termId+" OR ";
+						vQuery += "t.termId="+termId+" OR ";
+					}
+					else{
+						lQuery += "t.termId="+termId+" ) ";
+						vQuery += "t.termId="+termId+" ) ";
+					}
+				}
+				i++;
+			}
+
+			if (creatorIds.size() > 0) {
+//				lQuery += i > 0 ? "AND " : "";
+//				vQuery += i > 0 ? "AND " : "";
+				lQuery += "AND ";
+				vQuery += "AND ";
+				lQuery += "( ";
+				vQuery += "( ";
+				for(int j=0;j<creatorIds.size();j++){
+				Long creatorId = creatorIds.get(j);
+					if(j<(creatorIds.size()-1)){
+						lQuery += "lc.creatorId="+creatorId+" OR ";
+						vQuery += "vc.creatorId="+creatorId+" OR ";
+					}
+					else{
+						lQuery += "lc.creatorId="+creatorId+" ) ";
+						vQuery += "vc.creatorId="+creatorId+" ) ";
+					}
+				}
+				i++;				
+			}
+			
+			if (categoryIds.size() > 0) {
+//				lQuery += i > 0 ? "AND " : "";
+//				vQuery += i > 0 ? "AND " : "";
+				lQuery += "AND ";
+				vQuery += "AND ";
+				ListIterator<Long> it = categoryIds.listIterator();
+				lQuery += "( ";
+				vQuery += "( ";
+				while(it.hasNext()){
+					Long categoryId = it.next();
+					if(it.hasNext()){
+						lQuery += "l.categoryId = "+categoryId + " OR ";
+						vQuery += "vcat.categoryId = "+categoryId + " OR ";
+					}
+					else{
+						lQuery += "l.categoryId="+categoryId+" ) ";
+						vQuery += "vcat.categoryId="+categoryId+" ) ";
+					}
+				}
+				i++;				
+			}
+
+			if (institutionId > 0) {
+//				lQuery += i > 0 ? "AND " : "";
+//				vQuery += i > 0 ? "AND " : "";
+				lQuery += "AND ";
+				vQuery += "AND ";
+				lQuery += "li.institutionId = "+institutionId + " ";
+				vQuery += "vi.institutionId = "+institutionId + " ";
+				i++;
+			}
+
+			if (institutionParentId > 0) {
+//				lQuery += i > 0 ? "AND " : "";
+//				vQuery += i > 0 ? "AND " : "";
+				lQuery += "AND ";
+				vQuery += "AND ";
+				lQuery += "li.institutionParentId = "+institutionParentId + " ";
+				vQuery += "vi.institutionParentId = "+institutionParentId + " ";
+				i++;
+			}
+
+>>>>>>> branch 'master' of https://github.com/pio/plugins-sdk-6.2.git
 		}
 
 		if (hasInstitution) {

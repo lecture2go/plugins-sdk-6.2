@@ -137,8 +137,16 @@ public class LectureseriesLocalServiceImpl extends LectureseriesLocalServiceBase
 			}
 		}
 	}
+<<<<<<< HEAD
 		
 	public List<Lectureseries> getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(Long institutionId, Long parentInstitutionId, Long termId, Long categoryId, Long creatorId, String searchQuery){
 		return LectureseriesFinderUtil.findFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(institutionId, parentInstitutionId, termId, categoryId, creatorId, searchQuery);
 	}
+=======
+	
+	public List<Lectureseries> getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(Long institutionId, Long parentInstitutionId, Long termId, Long categoryId, Long creatorId){
+		return LectureseriesFinderUtil.findFilteredByInstitutionParentInstitutionTermCategoryCreator(institutionId, parentInstitutionId, termId, categoryId, creatorId);
+	}
+	
+>>>>>>> branch 'master' of https://github.com/pio/plugins-sdk-6.2.git
 }

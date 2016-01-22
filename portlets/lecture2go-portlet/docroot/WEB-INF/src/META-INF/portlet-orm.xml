@@ -494,13 +494,23 @@
 		<attributes>
 			<transient name="accessPermitted" />
 			<transient name="bitrate" />
+<<<<<<< HEAD
 			<transient name="creatorFullName" />
+=======
+>>>>>>> branch 'master' of https://github.com/pio/plugins-sdk-6.2.git
 			<transient name="creators" />
 			<transient name="date" />
 			<transient name="embedHtml5" />
 			<transient name="embedIframe" />
+<<<<<<< HEAD
 			<transient name="flvDownloadLink" />
+=======
+>>>>>>> branch 'master' of https://github.com/pio/plugins-sdk-6.2.git
 			<transient name="flvFile" />
+<<<<<<< HEAD
+=======
+			<transient name="flvOpenAccessDownloadLink" />
+>>>>>>> branch 'master' of https://github.com/pio/plugins-sdk-6.2.git
 			<transient name="flvRssLink" />
 			<transient name="hasChapters" />
 			<transient name="hasComments" />
@@ -512,22 +522,51 @@
 			<transient name="lectureseriesUrl" />
 			<transient name="m4aDownloadLink" />
 			<transient name="m4aFile" />
+<<<<<<< HEAD
 			<transient name="m4aRssLink" />
 			<transient name="m4vDownloadLink" />
+=======
+			<transient name="m4aOpenAccessDownloadLink" />
+			<transient name="m4aRssLink" />
+>>>>>>> branch 'master' of https://github.com/pio/plugins-sdk-6.2.git
 			<transient name="m4vFile" />
+<<<<<<< HEAD
 			<transient name="m4vRssLink" />
 			<transient name="mp3DownloadLink" />
+=======
+			<transient name="m4vOpenAccessDownloadLink" />
+			<transient name="m4vRssLink" />
+>>>>>>> branch 'master' of https://github.com/pio/plugins-sdk-6.2.git
 			<transient name="mp3File" />
+<<<<<<< HEAD
 			<transient name="mp3RssLink" />
 			<transient name="mp4DownloadLink" />
+=======
+			<transient name="mp3OpenAccessDownloadLink" />
+			<transient name="mp3RssLink" />
+>>>>>>> branch 'master' of https://github.com/pio/plugins-sdk-6.2.git
 			<transient name="mp4File" />
+<<<<<<< HEAD
 			<transient name="mp4RssLink" />
 			<transient name="oggDownloadLink" />
+=======
+			<transient name="mp4OpenAccessDownloadLink" />
+			<transient name="mp4RssLink" />
+>>>>>>> branch 'master' of https://github.com/pio/plugins-sdk-6.2.git
 			<transient name="oggFile" />
+<<<<<<< HEAD
 			<transient name="oggRssLink" />
 			<transient name="pdfDownloadLink" />
+=======
+			<transient name="oggOpenAccessDownloadLink" />
+			<transient name="oggRssLink" />
+>>>>>>> branch 'master' of https://github.com/pio/plugins-sdk-6.2.git
 			<transient name="pdfFile" />
+<<<<<<< HEAD
 			<transient name="playerUris" />
+=======
+			<transient name="pdfOpenAccessDownloadLink" />
+>>>>>>> branch 'master' of https://github.com/pio/plugins-sdk-6.2.git
 			<transient name="secureUrl" />
 			<transient name="shortName" />
 			<transient name="shortTitle" />
@@ -535,8 +574,15 @@
 			<transient name="url" />
 			<transient name="vttChapterFile" />
 			<transient name="vttThumbsFilde" />
+<<<<<<< HEAD
 			<transient name="webmDownloadLink" />
+=======
+>>>>>>> branch 'master' of https://github.com/pio/plugins-sdk-6.2.git
 			<transient name="webmFile" />
+<<<<<<< HEAD
+=======
+			<transient name="webmOpenAccessDownloadLink" />
+>>>>>>> branch 'master' of https://github.com/pio/plugins-sdk-6.2.git
 			<transient name="webmRssLink" />
 		</attributes>
 	</entity>

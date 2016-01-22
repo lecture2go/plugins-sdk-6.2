@@ -13,6 +13,7 @@
 		<implicit-parameter name="p_p_col_count">1</implicit-parameter>
 		<implicit-parameter name="javax.portlet.action">viewOpenAccessVideo</implicit-parameter>
     </route>
+<<<<<<< HEAD
     <route>
         <pattern>/{objectType}/{objectId}/{timeStart}/{timeEnd}</pattern>
 		<implicit-parameter name="p_p_id">lgopenaccessvideos_WAR_lecture2goportlet</implicit-parameter>
@@ -45,4 +46,6 @@
 		<implicit-parameter name="jspPage">/guest/videosList.jsp</implicit-parameter>
 		<implicit-parameter name="javax.portlet.action">addFilter</implicit-parameter>
     </route>
+=======
+>>>>>>> branch 'master' of https://github.com/pio/plugins-sdk-6.2.git
 </routes> 

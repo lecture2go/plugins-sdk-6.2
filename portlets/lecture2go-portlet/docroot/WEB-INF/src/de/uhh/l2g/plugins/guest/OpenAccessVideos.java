@@ -15,10 +15,13 @@ import javax.servlet.http.Cookie;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+<<<<<<< HEAD
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.Constants;
+=======
+>>>>>>> branch 'master' of https://github.com/pio/plugins-sdk-6.2.git
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
@@ -42,9 +45,13 @@ import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
+<<<<<<< HEAD
 import de.uhh.l2g.plugins.util.AutocompleteManager;
+=======
+>>>>>>> branch 'master' of https://github.com/pio/plugins-sdk-6.2.git
 
 public class OpenAccessVideos extends MVCPortlet {
+<<<<<<< HEAD
 	@Override
 	public void serveResource( ResourceRequest resourceRequest, ResourceResponse resourceResponse ) throws IOException, PortletException {
 		String resourceID = resourceRequest.getResourceID();
@@ -89,6 +96,61 @@ public class OpenAccessVideos extends MVCPortlet {
 			}			
 		}catch (NullPointerException npe){}
 		
+=======
+	
+	public void viewOpenAccessVideo(ActionRequest request, ActionResponse response) throws SystemException, PortalException {
+	    Long objectId = ParamUtil.getLong(request, "objectId");
+	    String objectType = ParamUtil.getString(request, "objectType");
+	   
+	    Video video = new VideoImpl();
+	    //lecture series object
+	    Lectureseries lectureseries = new LectureseriesImpl();
+	    
+	    //Lecture series
+	    if(objectType.equals("l")){
+	    	try{
+	    		lectureseries = LectureseriesLocalServiceUtil.getLectureseries(objectId);
+	    		video = VideoLocalServiceUtil.getFullVideo(lectureseries.getLatestOpenAccessVideoId());
+	    	}catch(Exception e){}
+	    }else if(objectType.equals("v")){
+	    	video = VideoLocalServiceUtil.getFullVideo(objectId);
+	    	try{lectureseries = LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId());}catch(Exception e){}
+	    }
+	    
+	    List<Video> relatedVideos = new ArrayList<Video>();
+	    //related videos by lectureseries id
+    	relatedVideos = VideoLocalServiceUtil.getByLectureseriesAndOpenaccess(lectureseries.getLectureseriesId(),1);
+	    
+	    //chapters and segments
+	    List<Segment> segments = SegmentLocalServiceUtil.getSegmentsByVideoId(objectId);
+	    
+	    //lectureseries for video
+	    List<Video_Lectureseries> vl = new ArrayList<Video_Lectureseries>();
+	    vl = Video_LectureseriesLocalServiceUtil.getByVideo(video.getVideoId());
+	    
+	    //institutions for video
+	    List<Video_Institution> vi = new ArrayList<Video_Institution>();
+	    vi = Video_InstitutionLocalServiceUtil.getByVideo(video.getVideoId());
+	    
+	    //metadata for video
+	    Metadata m = new MetadataImpl();
+	    m = MetadataLocalServiceUtil.getMetadata(video.getMetadataId());
+	    
+	    //license for video
+	    
+	    License l = new LicenseImpl();
+	    l = LicenseLocalServiceUtil.getByVideoId(video.getVideoId());
+	    
+	    request.setAttribute("videoLicense",l);
+	    request.setAttribute("videoMetadata",m);
+	    request.setAttribute("videoInstitutions",vi);
+	    request.setAttribute("videoLectureseries",vl);
+	    request.setAttribute("video",video);
+	    request.setAttribute("relatedVideos",relatedVideos);
+	    request.setAttribute("segments",segments);
+	    request.setAttribute("lectureseries",lectureseries);
+		response.setRenderParameter("jspPage","/guest/videoDetails.jsp");
+>>>>>>> branch 'master' of https://github.com/pio/plugins-sdk-6.2.git
 	}
 	
 	private void getSearchWords(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws IOException, PortletException {

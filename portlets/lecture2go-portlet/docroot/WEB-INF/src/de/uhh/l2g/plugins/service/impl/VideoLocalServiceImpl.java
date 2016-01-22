@@ -33,7 +33,10 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import de.uhh.l2g.plugins.NoSuchInstitutionException;
 import de.uhh.l2g.plugins.NoSuchLectureseriesException;
 import de.uhh.l2g.plugins.NoSuchProducerException;
+<<<<<<< HEAD
 import de.uhh.l2g.plugins.NoSuchVideoException;
+=======
+>>>>>>> branch 'master' of https://github.com/pio/plugins-sdk-6.2.git
 import de.uhh.l2g.plugins.model.Creator;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
@@ -299,6 +302,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		}
 		
 		// Streaming-URL
+<<<<<<< HEAD
 		addPlayerUris2Video(objectHost, objectVideo, objectProducer);
 		//Streaming-URL end
 			
@@ -363,6 +367,82 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		
 		//embed iframe
 		String embedIframe="<iframe src='"+PropsUtil.get("lecture2go.web.root")+"/lecture2go-portlet/player/iframe/?v="+objectVideo.getVideoId()+"' frameborder='0' width='647' height='373'></iframe>";
+=======
+		String streamUrl = "";
+		String streamIosUrl = "";
+		String streamAndroidUrl = "";
+		// base url
+		String url = "";
+		// wowza stream
+		if (objectVideo.getContainerFormat().equals("mp3"))
+			url = objectHost.getProtocol() + "://" + objectHost.getStreamer() + "/vod/_definst_/mp3:" + objectVideo.getRootInstitutionId() + "l2g" + objectProducer.getHomeDir() + "/" + filename;
+		else
+			url = objectHost.getProtocol() + "://" + objectHost.getStreamer() + "/vod/_definst_/mp4:" + objectVideo.getRootInstitutionId() + "l2g" + objectProducer.getHomeDir() + "/" + filename;
+		streamUrl = url; // normal
+		streamIosUrl = url + "/playlist.m3u8"; // iOS
+		streamAndroidUrl = url + "/playlist.m3u8"; // android
+
+		objectVideo.setStreamUrl(streamUrl); // normal
+		objectVideo.setStreamIosUrl(streamIosUrl); // normal
+		objectVideo.setStreamAndroidUrl(streamAndroidUrl); // normal
+
+		List<Segment> sl = new ArrayList<Segment>();
+		try {
+			sl = SegmentLocalServiceUtil.getSegmentsByVideoId(videoId);
+			if(sl.size()>0)objectVideo.setHasChapters(true);
+		} catch (PortalException e) {
+		} catch (SystemException e) {
+		}
+		
+		//creators
+		List<Creator> cl = CreatorLocalServiceUtil.getCreatorsByVideoId(videoId);
+		String cS = "";
+		ListIterator<Creator> cli = cl.listIterator();
+		while(cli.hasNext()){
+			cS+=cli.next().getFullName()+"; ";
+		}
+		objectVideo.setCreators(cS);
+		
+		//get download Links 
+		String downMp3Link = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+objectVideo.getPreffix()+".mp3";
+		String downMp4Link = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+objectVideo.getPreffix()+".mp4";
+		String downM4vLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+objectVideo.getPreffix()+".m4v";
+		String downM4aLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+objectVideo.getPreffix()+".m4a";
+		String downWebmLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+objectVideo.getPreffix()+".webm";
+		String downPdfLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+objectVideo.getPreffix()+".pdf";
+		String downOggLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+objectVideo.getPreffix()+".ogg";
+		String downFlvLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+objectVideo.getPreffix()+".flv";
+		//
+		objectVideo.setMp4OpenAccessDownloadLink(downMp4Link);
+		objectVideo.setMp3OpenAccessDownloadLink(downMp3Link);
+		objectVideo.setM4vOpenAccessDownloadLink(downM4vLink);
+		objectVideo.setM4aOpenAccessDownloadLink(downM4aLink);
+		objectVideo.setWebmOpenAccessDownloadLink(downWebmLink);
+		objectVideo.setPdfOpenAccessDownloadLink(downPdfLink);
+		objectVideo.setOggOpenAccessDownloadLink(downOggLink);
+		objectVideo.setFlvOpenAccessDownloadLink(downFlvLink);
+		//rss links
+		if(objectVideo.getLectureseriesId()>0){
+			String rssMp3Link = PropsUtil.get("lecture2go.downloadserver.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".mp3.xml";
+			String rssMp4Link = PropsUtil.get("lecture2go.downloadserver.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".mp4.xml";
+			String rssM4vLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".m4v.xml";
+			String rssM4aLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".m4a.xml";
+			String rssWebmLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".webm.xml";
+			String rssOggLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".ogg.xml";
+			String rssFlvLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".flv.xml";		
+			//
+			objectVideo.setMp3RssLink(rssMp3Link);
+			objectVideo.setMp4RssLink(rssMp4Link);
+			objectVideo.setM4vRssLink(rssM4vLink);
+			objectVideo.setM4aRssLink(rssM4aLink);
+			objectVideo.setWebmRssLink(rssWebmLink);
+			objectVideo.setOggRssLink(rssOggLink);
+			objectVideo.setFlvRssLink(rssFlvLink);
+		}
+		
+		//embed iframe
+		String embedIframe="&lt;iframe src='"+PropsUtil.get("lecture2go.web.root")+"/lecture2go-portlet/player/iframe/?v="+objectVideo.getVideoId()+"' width='647' height='373'&gt; &lt;/iframe&gt;";
+>>>>>>> branch 'master' of https://github.com/pio/plugins-sdk-6.2.git
 		objectVideo.setEmbedIframe(embedIframe);
 		
 		//embed html5
@@ -523,7 +603,11 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		ListIterator<Video> vli = vl.listIterator();
 		while(vli.hasNext()){
 			Video objectVideo = getFullVideo(vli.next().getVideoId());
+<<<<<<< HEAD
 			if(objectVideo.getFilename().trim().length()>0)rvl.add(objectVideo);
+=======
+			rvl.add(objectVideo);
+>>>>>>> branch 'master' of https://github.com/pio/plugins-sdk-6.2.git
 		}
 		return rvl;
 	}

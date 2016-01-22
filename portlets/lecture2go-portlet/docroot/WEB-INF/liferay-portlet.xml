@@ -7,19 +7,20 @@
 		<instanceable>false</instanceable>
 		<private-request-attributes>false</private-request-attributes>
 
-		<header-portlet-css>/js/jquery.datetimepicker.css</header-portlet-css>
-
-		<header-portlet-javascript>/js/jquery-2.1.4.min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/jquery-1.11.1.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/jquery.tmpl.min.js</header-portlet-javascript>
-		<header-portlet-javascript>/js/jquery-ui-1.11.1.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/jquery-ui-1.10.3.custom.min.js</header-portlet-javascript>
+		
+		<header-portlet-javascript>/js/strobe/swfobject.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/strobe/jquery.scrollTo-1.4.2-min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/strobe/lib/ParsedQueryString.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/strobe/jsdemo.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/strobe/jquery.strobemediaplayback.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/strobe/jquery.strobemediaplaybackchrome.js</header-portlet-javascript>
 
 		<header-portlet-javascript>/js/upload/vendor/jquery.ui.widget.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/upload/jquery.fileupload.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/upload/jquery.iframe-transport.js</header-portlet-javascript>
-
-		<header-portlet-javascript>/js/jquery.datetimepicker.js</header-portlet-javascript>
-		<header-portlet-javascript>/player/jwplayer/jwplayer.js</header-portlet-javascript>
-		<header-portlet-javascript>/js/autocomplete.js</header-portlet-javascript>
 	</portlet>
 	
 	<portlet>
@@ -30,41 +31,5 @@
 		<header-portlet-javascript>/js/jquery-1.11.1.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/jquery.tmpl.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/jquery-ui-1.10.3.custom.min.js</header-portlet-javascript>
-	</portlet>
-	
-	<portlet>
-		<portlet-name>lg-open-access-videos</portlet-name>
-		
-		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
-		<friendly-url-mapping>get</friendly-url-mapping>
-		<friendly-url-routes>de/uhh/l2g/lg-open-access-videos-friendly-url-routes.xml</friendly-url-routes>
-		
-		<instanceable>false</instanceable>
-		<private-request-attributes>false</private-request-attributes>
-
-		<header-portlet-javascript>/js/jquery-2.1.4.min.js</header-portlet-javascript>
-		<header-portlet-javascript>/js/jquery.tmpl.min.js</header-portlet-javascript>
-		<header-portlet-javascript>/js/jquery-ui-1.11.1.js</header-portlet-javascript>
-		<header-portlet-javascript>/js/bootstrap.min.js</header-portlet-javascript>
-		<header-portlet-javascript>/js/jquery.socialshareprivacy.js</header-portlet-javascript>
-		<header-portlet-javascript>/js/qrc.js</header-portlet-javascript>
-		<header-portlet-javascript>/js/jquery.cookie.js</header-portlet-javascript>
-		<header-portlet-javascript>/player/jwplayer/jwplayer.js</header-portlet-javascript>
-	</portlet>
-
-	<portlet>
-   	 <portlet-name>lg-admin-institution-management</portlet-name>
-   	 	<icon>/icon.png</icon>
-  	    <configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
-
-  	    <instanceable>false</instanceable>
-		<private-request-attributes>false</private-request-attributes>
-
-		<header-portlet-javascript>/js/jquery-2.1.4.min.js</header-portlet-javascript>
-		<header-portlet-javascript>/js/jquery.tmpl.min.js</header-portlet-javascript>
-		<header-portlet-javascript>/js/jquery-ui-1.11.1.js</header-portlet-javascript>
-		<header-portlet-javascript>/js/bootstrap.min.js</header-portlet-javascript>
-
-		<add-default-resource>true</add-default-resource>
 	</portlet>
 </liferay-portlet-app>
