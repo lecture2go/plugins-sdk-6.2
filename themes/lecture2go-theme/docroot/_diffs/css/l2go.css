@@ -107,11 +107,12 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     width: 200px;
     height: 100px !important;
     text-align: center;
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 .video-image-big:hover {
     opacity: 1;
+    transition: opacity 0.3s ease 0s;
 }
 
 .video-image-overlay {
@@ -153,10 +154,17 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     height: 30px;
 }
 
+
 .video-image-wrapper-small.related {
     max-width: 113px;
     height: 57px;
     margin-top: 2px;
+    opacity: 0.9;
+}
+
+.video-image-wrapper-small.related:hover {
+	 opacity: 1;
+	 transition: opacity 0.3s ease 0s;
 }
 
 .metainfo-small {
@@ -176,6 +184,10 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 }
 
 #metadata {
+    float: left;
+}
+
+#metadata-upload {
     float: left;
 }
 
@@ -207,10 +219,17 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 }
 
 .list-group.toggler-content-collapsed.content > li {
-    border: 0px solid;
-    background-color: transparent;
-    border-left: 3px solid #D81B1B;
+    border-width: 0px 0px 0px 3px;
+    border-style: solid;
+    border-color: -moz-use-text-color -moz-use-text-color -moz-use-text-color #D81B1B;
+    -moz-border-top-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    border-image: none;
+    background-color: #f6f6f6;
 }
+
 
 .creator-small2 {
     font-size: 11px;
@@ -218,7 +237,7 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 }
 
 .creator-small2.related {
-    font-size: 13px;
+    font-size: 12px;
 }
 
 .aui #chapters {
@@ -251,16 +270,16 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 .videotile.wide {
     width: 100%;
     height: 120px;
-    background-color: #F3F3F3;
+    background-color: #F6F6F6;
     padding: 8px 0px 0px 8px;
 }
 
 .videotile.wide:hover {
-    background-color: #EAEAEA !important;
+    background-color: #f3f3f3 !important;
 }
 
 .videotile.small:hover {
-    background-color: #EAEAEA !important;
+    background-color: #f3f3f3 !important;
 }
 
 .videotile.small.related {
@@ -284,7 +303,7 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 
 #video-list .list-group-item:hover {
     text-decoration: none;
-    background-color: #F9F9F9;
+    background-color: #f3f3f3;
 }
 
 #video-list .sublist2 {
@@ -341,7 +360,7 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 a.list-group-item:hover, a.list-group-item:focus {
     color: #555;
     text-decoration: none;
-    background-color: #F5F5F5;
+    background-color: #f3f3f3;
 }
 
 .list-group-item:first-child {
@@ -396,12 +415,27 @@ a.list-group-item:hover, a.list-group-item:focus {
     border-top: 1px solid #E5E5E5;
 }
 
-
 .aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle {
-    padding: 4px 4px 5px 10px;
-    background-color: #E3E3E3;
-    font-weight: initial;
-    color: black;
+    background-color: rgb(221, 221, 221);
+    border-left: 3px solid #DDD !important;
+    font-weight: 900;
+    padding: 0px 3px 20px 6px;
+    color: #000;
+}
+
+.aui .accordion-group .toggler-content-expanded .accordion-inner {
+    border-width: 0px 0px 0px 3px;
+    border-style: solid;
+    border-color: #ddd;
+}
+
+.aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle::after, .aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle::before {
+    color: #484848;
+    float: right;
+    font-size: 18px;
+    margin: 9px 5px 0 0;
+    opacity: 1;
+    padding: 0;
 }
 
 .aui #my-tab-content {
@@ -426,9 +460,14 @@ thead, th {
     border-radius: 0px;
 }
 
+.aui .accordion {
+    margin-bottom: 20px;
+}
+
 .aui .accordion-group.lfr-panel-extended {
-    border-width: 1px;
+    border-width: 0px;
     border-radius: 0px;
+    padding-bottom: 5px;
 }
 
 .aui .btn-group > .btn:first-child {
@@ -444,6 +483,11 @@ thead, th {
     border-width: 0px;
     margin-right: 10px;
     border-radius: 0px;
+}
+
+.aui .btn .caret {
+    margin-top: 9px;
+    margin-left: 8px;
 }
 
 .aui .dropdown-menu {
@@ -475,13 +519,12 @@ thead, th {
 }
 
 .title-small {
-    font-weight: 400 !important;
+    font-weight: 600 !important;
     font-size: 13px;
     margin-bottom: 0px;
     padding: 0px;
     line-height: 17px;
     width: 50%;
-    color: initial;
 }
 
 .title-small.related {
@@ -608,7 +651,7 @@ thead, th {
 }
 
 .filter-menu {
-    border-bottom: 1px solid #E0E0E0 !important;
+    border-bottom: 1px solid #F6F6F6 !important
 }
 
 .generation-date {
@@ -643,12 +686,17 @@ thead, th {
 }
 
 .lectureseries-title {
-    color: initial;
+    font-weight: 600;
 }
 
 .title-text {
-    color: black !important;
     font-size: 15px;
+    color: rgb(72, 72, 72) !important;
+}
+
+.toggler-content-wrapper {
+    overflow: hidden;
+    padding-bottom: 8px;
 }
 
 .related-lectureseries-name {
@@ -677,7 +725,7 @@ thead, th {
     margin-top: 38px;
     font-size: 22px;
     font-weight: 900;
-    line-height: 30px;
+    line-height: 20px;
 }
 
 .meta-description {
@@ -695,6 +743,8 @@ thead, th {
 .meta-date {
     font-style: normal !important;
     color: #AEAEAE;
+    line-height: 10px;
+    font-size: 10px;
 }
 
 .col-md-7 {
@@ -836,6 +886,11 @@ thead, th {
     border-color: #E0E0E0 -moz-use-text-color -moz-use-text-color;
 }
 
+.aui .chaptertile:hover {
+    background: #f3f3f3 none repeat scroll 0 0;
+    cursor: pointer;
+}
+
 .aui .chaptertile span {
     padding-left: 10px;
     font-size: 10px;
@@ -852,8 +907,8 @@ thead, th {
 }
 
 .aui .chaptertile.active {
-    color: #d81b1b;
-    background: #EAEAEA none repeat scroll 0% 0%;
+    color: #D81B1B;
+    background: #fff none repeat scroll 0% 0%;
 }
 
 .commenttile > div {
@@ -921,26 +976,17 @@ thead, th {
 }
 
 .aui .control-group {
-    margin: 0px;
-    margin-left: -7px;
-}
-
-.aui select {
-    width: 230px;
-    border: 1px solid #CCC;
-    background-color: #FFF;
-    border-radius: 0px;
-    font-family: TheSansUHH,sans-serif;
+    margin: 11px 0 0 0;
 }
 
 .adminrow.wide:hover {
     background-color: #eaeaea;
-    height: 114px;
+    height: 100%;
 }
 
 .adminrow.wide {
-    background-color: #f3f3f3;
-    height: 114px;
+    background-color: #F3F3F3;
+    border-top: 1px solid #DDD;
 }
 
 .lfr-search-container {
@@ -950,4 +996,267 @@ thead, th {
 
 .aui input[type="color"], .aui input[type="date"], .aui input[type="datetime"], .aui input[type="datetime-local"], .aui input[type="email"], .aui input[type="month"], .aui input[type="number"], .aui input[type="password"], .aui input[type="search"], .aui input[type="tel"], .aui input[type="text"], .aui input[type="time"], .aui input[type="url"], .aui input[type="week"], .aui select, .aui textarea, .aui .uneditable-input {
     font-family: TheSansUHH,sans-serif;
+}
+
+.format {
+    font-size: 10px;
+    padding: 0px;
+    line-height: 5px;
+    color: #B19292;
+}
+
+.aui select {
+    -moz-appearance: none;
+    background-color: #DDD;
+    background-image: linear-gradient(45deg, transparent 50%, #000 50%), linear-gradient(135deg, #000 50%, transparent 50%), linear-gradient(to right, #DDD, #DDD);
+    background-position: calc(100% - 18px) calc(1em + -2px), calc(100% - 13px) calc(1em + -2px), 100% 0px;
+    background-repeat: no-repeat;
+    background-size: 5px 5px, 5px 5px, 2.5em 2.5em;
+    border: 0px none;
+    border-radius: 0px;
+    box-sizing: border-box;
+    color: #484848;
+    float: left;
+    margin-right: 10px;
+    line-height: 20px;
+    
+    /* reset */
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+}
+
+.aui select > option {
+    background-color: #fff;
+    border: 0 none;
+}
+
+.aui select:focus {
+    border: 0 solid rgba(0, 172, 255, 0.8);
+    outline: 0px auto rgba(82, 168, 236, 0.6);
+    outline-offset: -2px;
+}
+
+.aui select, .aui input[type="file"] {
+    height: 30px;
+    line-height: 28px;
+    margin-bottom: 8px;
+}
+
+.aui .alert, .aui .portlet-msg-alert, .aui .portlet-msg-error, .aui .portlet-msg-help, .aui .portlet-msg-info, .aui .portlet-msg-progress, .aui .portlet-msg-success {
+    background-color: transparent;
+    border-color: #eaeaea -moz-use-text-color -moz-use-text-color;
+    border-style: solid none none;
+    border-width: 1px 0 0;
+    color: #c40017;
+    margin-top: 20px;
+    padding-left: 0;
+    word-wrap: break-word;
+}
+
+#searchName {
+    margin-left: 3px;
+    margin-top: 3px;
+}
+
+#content {
+    margin-top: 10px;
+}
+
+#metadata-upload div {
+    float: left;
+    width: 100%;
+}
+
+#metadata-upload label {
+    float: left;
+    min-width: 116px;
+    width: 15%;
+}
+
+#metadata-upload .subInstitutions {
+    border: 0 none;
+    margin-left: 20%;
+    width: 49%;
+}
+
+#metadata-upload #creators div {
+    margin-top: -1px;
+}
+
+#metadata-upload #creators {
+    margin-left: 20%;
+    width: 56% !important;
+}
+
+#metadata-upload #creators div div label {
+    margin-right: -6%;
+}
+
+#metadata-upload #creators div div select {
+    margin-left: 9%;
+    margin-top: 10px;
+}
+
+#addCreator {
+    margin-left: 20%;
+}
+
+#metadata-upload select {
+    width: 50%;
+}
+
+#metadata-upload .textarea {
+    width: 50%;
+}
+
+#metadata-upload input {
+    padding: 5px;
+    width: 49%;
+}
+
+#permissions div label {
+    float: left;
+    line-height: 41px;
+    margin-right: 10px;
+}
+
+#permissions div {
+    float: left;
+    line-height: 47px;
+    margin-right: 14px;
+}
+
+#permissions div.control-group.form-inline input {
+    margin-left: 120px;
+    margin-top: 5px;
+    position: absolute;
+}
+
+#license {
+    float: left;
+    width: 100%;
+}
+
+#license > div {
+    float: left;
+    margin-bottom: 43px;
+    margin-right: 41px;
+    margin-top: -12px;
+}
+
+#license input {
+    line-height: 28px;
+    margin-bottom: -33px;
+}
+
+#license div a {
+    margin-left: 20px;
+}
+
+#permissions {
+    float: left;
+    width: 100%;
+}
+
+.cke_1.cke.cke_reset.cke_chrome {
+    width: 65% !important;
+}
+
+.edit-video-lable {
+    border-bottom: 1px solid #ddd;
+    color: black !important;
+    font-size: 24px !important;
+    font-style: normal;
+    font-weight: 700 !important;
+    padding: 30px 0 5px;
+}
+
+#uploaded-files {
+    color: #c40017 !important;
+    font-size: 13px !important;
+    font-style: normal;
+}
+	
+.aui #upload-form {
+    display: none;
+    width: 65%;
+}
+
+.aui .progress {
+    overflow: hidden;
+    height: 25px;
+    margin-bottom: 11px;
+    background-color: #F6F6F6;
+    background-image: none;
+    border-radius: 0px;
+}
+
+#c2g {
+    margin-top: 6px;
+}
+
+#uploaded-files > tbody > tr > td {
+    width: 100% !important;
+}
+
+.prodCont {
+    margin-left: 20%;
+    width: 56% !important;
+}
+
+.facilCont {
+    margin-left: 20%;
+    width: 56% !important;
+}
+
+#fileupload {
+    font-family: inherit !important;
+}
+
+.aui .dropdown-menu {
+    border-bottom: 4px solid #888 !important;
+    border-left: 1px solid transparent !important;
+    border-right: 1px solid transparent !important;
+    box-shadow: none;
+    margin-left: -2px !important;
+    width: auto;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+.aui #navigation .nav .dropdown-menu > li {
+    background: #f9f9f9 none repeat scroll 0 0 !important;
+    border-bottom: 1px solid #f3f3f3;
+}
+
+.aui #navigation .nav .dropdown-menu > li a {
+    background: #F9F9F9 url("https://www.uni-hamburg.de/assets/rot_navi-fdf29d5b8f2a0c0cff02298385c1450f.png") no-repeat scroll 9px 9px !important;
+    border-color: #DDD;
+    border-style: solid;
+    border-width: 1px;
+    color: #4E4E4E;
+    display: block;
+    text-decoration: none;
+    font-size: 12px;
+    padding-left: 28px;
+    margin-left: 0px;
+    text-align: left;
+}
+
+.aui #navigation .nav .dropdown-menu > li a:hover {
+    background: #ddd url("https://www.uni-hamburg.de/assets/rot_navi-fdf29d5b8f2a0c0cff02298385c1450f.png") no-repeat scroll 9px 9px !important;
+    text-decoration: none;
+}
+
+.aui .icon-caret-down::before {
+    content: "";
+}
+
+.aui .modify-pages .lfr-nav-item .lfr-nav-child-toggle {
+    margin-left: -7px;
+    padding: 0;
+    visibility: hidden;
 }
