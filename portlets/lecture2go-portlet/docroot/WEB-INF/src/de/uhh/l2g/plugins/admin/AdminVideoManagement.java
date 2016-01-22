@@ -519,11 +519,7 @@ public class AdminVideoManagement extends MVCPortlet {
 				jo.put("generationDate", generationDate);
 				writeJSON(resourceRequest, resourceResponse, jo);
 			} catch (SystemException e) {
-<<<<<<< HEAD
 //				e.printStackTrace();
-=======
-				e.printStackTrace();
->>>>>>> branch 'master' of https://github.com/pio/plugins-sdk-6.2.git
 			}
 		}
 		
@@ -1006,7 +1002,6 @@ public class AdminVideoManagement extends MVCPortlet {
 		//
 		ListIterator<Segment> sLi = sL.listIterator();
 		String text="WEBVTT \n\n";
-<<<<<<< HEAD
 		while(sLi.hasNext()){
 			Segment seg = sLi.next();
 			text +=seg.getStart()+" --> "+seg.getEnd()+" \n";
@@ -1042,27 +1037,4 @@ public class AdminVideoManagement extends MVCPortlet {
 			e.printStackTrace();
 		}
 	}
-=======
-		int count =1;
-		while(sLi.hasNext()){
-			Segment seg = sLi.next();
-			text +="Chapter "+count+" \n";
-			text +=seg.getStart()+" --> "+seg.getEnd()+" \n";
-			if(seg.getChapter()==1 && video.getContainerFormat().equals("mp4"))text +="<img src=\""+seg.getImage()+"\"/><br/>";
-			text +=seg.getTitle()+"<br/>"+seg.getDescription()+" \n\n";
-			count++;
-		}
-		FileOutputStream s;
-		try {
-			s = new FileOutputStream(dateiName);
-			for (int i = 0; i < text.length(); i++) {
-				s.write((byte) text.charAt(i));
-			}
-			s.close();
-		} 
-		catch (FileNotFoundException e) {} 
-		catch (IOException e) {}
-	}
-	
->>>>>>> branch 'master' of https://github.com/pio/plugins-sdk-6.2.git
 }

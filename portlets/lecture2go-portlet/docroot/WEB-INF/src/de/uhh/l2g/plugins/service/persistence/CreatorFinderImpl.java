@@ -15,7 +15,6 @@ import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import de.uhh.l2g.plugins.model.Creator;
-import de.uhh.l2g.plugins.model.Term;
 import de.uhh.l2g.plugins.model.impl.CreatorImpl;
 
 public class CreatorFinderImpl extends BasePersistenceImpl<Creator> implements CreatorFinder {
@@ -140,12 +139,9 @@ public class CreatorFinderImpl extends BasePersistenceImpl<Creator> implements C
 		} else if (hasVideos) {
 			query += vquery;
 		}
-<<<<<<< HEAD
 		else { ////surpress sql error on empty lists 
 			query += "SELECT creatorId FROM LG_Video_Creator WHERE videoId IN (0)";
 		}
-=======
->>>>>>> branch 'master' of https://github.com/pio/plugins-sdk-6.2.git
 		
 		query += ") AS a JOIN LG_Creator AS c	ON a.creatorId = c.creatorId ORDER BY c.lastName";
 					

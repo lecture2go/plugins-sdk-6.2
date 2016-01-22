@@ -32,7 +32,6 @@ public class VideoImpl extends VideoBaseImpl {
 	 *
 	 * Never reference this class directly. All methods that expect a video model instance should use the {@link de.uhh.l2g.plugins.model.Video} interface instead.
 	 */
-<<<<<<< HEAD
 	private String lectureseriesName;
 	private String lectureseriesNumber;
 	private String creatorFullName;
@@ -92,9 +91,6 @@ public class VideoImpl extends VideoBaseImpl {
 		this.playerUris = playerUris;
 	}
 
-=======
-	
->>>>>>> branch 'master' of https://github.com/pio/plugins-sdk-6.2.git
 	private String embedIframe;
 
 	private String embedHtml5;
@@ -289,7 +285,6 @@ public class VideoImpl extends VideoBaseImpl {
 
 	private String simpleDate = "";
 	
-<<<<<<< HEAD
 	private String mp4DownloadLink;
 	private String pdfDownloadLink;
 	private String mp3DownloadLink;
@@ -361,79 +356,6 @@ public class VideoImpl extends VideoBaseImpl {
 
 	public void setWebmDownloadLink(String webmDownloadLink) {
 		this.webmDownloadLink = webmDownloadLink;
-=======
-	private String mp4OpenAccessDownloadLink;
-	private String pdfOpenAccessDownloadLink;
-	private String mp3OpenAccessDownloadLink;
-	private String m4vOpenAccessDownloadLink;
-	private String m4aOpenAccessDownloadLink;
-	private String flvOpenAccessDownloadLink;
-	private String oggOpenAccessDownloadLink;
-	private String webmOpenAccessDownloadLink;
-
-	public String getMp4OpenAccessDownloadLink() {
-		return mp4OpenAccessDownloadLink;
-	}
-
-	public void setMp4OpenAccessDownloadLink(String mp4OpenAccessDownloadLink) {
-		this.mp4OpenAccessDownloadLink = mp4OpenAccessDownloadLink;
-	}
-
-	public String getPdfOpenAccessDownloadLink() {
-		return pdfOpenAccessDownloadLink;
-	}
-
-	public void setPdfOpenAccessDownloadLink(String pdfOpenAccessDownloadLink) {
-		this.pdfOpenAccessDownloadLink = pdfOpenAccessDownloadLink;
-	}
-
-	public String getMp3OpenAccessDownloadLink() {
-		return mp3OpenAccessDownloadLink;
-	}
-
-	public void setMp3OpenAccessDownloadLink(String mp3OpenAccessDownloadLink) {
-		this.mp3OpenAccessDownloadLink = mp3OpenAccessDownloadLink;
-	}
-
-	public String getM4vOpenAccessDownloadLink() {
-		return m4vOpenAccessDownloadLink;
-	}
-
-	public void setM4vOpenAccessDownloadLink(String m4vOpenAccessDownloadLink) {
-		this.m4vOpenAccessDownloadLink = m4vOpenAccessDownloadLink;
-	}
-
-	public String getM4aOpenAccessDownloadLink() {
-		return m4aOpenAccessDownloadLink;
-	}
-
-	public void setM4aOpenAccessDownloadLink(String m4aOpenAccessDownloadLink) {
-		this.m4aOpenAccessDownloadLink = m4aOpenAccessDownloadLink;
-	}
-
-	public String getFlvOpenAccessDownloadLink() {
-		return flvOpenAccessDownloadLink;
-	}
-
-	public void setFlvOpenAccessDownloadLink(String flvOpenAccessDownloadLink) {
-		this.flvOpenAccessDownloadLink = flvOpenAccessDownloadLink;
-	}
-
-	public String getOggOpenAccessDownloadLink() {
-		return oggOpenAccessDownloadLink;
-	}
-
-	public void setOggOpenAccessDownloadLink(String oggOpenAccessDownloadLink) {
-		this.oggOpenAccessDownloadLink = oggOpenAccessDownloadLink;
-	}
-
-	public String getWebmOpenAccessDownloadLink() {
-		return webmOpenAccessDownloadLink;
-	}
-
-	public void setWebmOpenAccessDownloadLink(String webmOpenAccessDownloadLink) {
-		this.webmOpenAccessDownloadLink = webmOpenAccessDownloadLink;
->>>>>>> branch 'master' of https://github.com/pio/plugins-sdk-6.2.git
 	}
 
 	private File mp4File;
