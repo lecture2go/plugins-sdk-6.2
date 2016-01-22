@@ -121,6 +121,26 @@ public class TagcloudLocalServiceClpInvoker {
 		_methodName157 = "getByObjectIdAndObjectClassType";
 
 		_methodParameterTypes157 = new String[] { "long", "java.lang.String" };
+
+		_methodName158 = "add";
+
+		_methodParameterTypes158 = new String[] {
+				"java.util.ArrayList", "java.lang.String", "java.lang.Long"
+			};
+
+		_methodName159 = "updateByObjectIdAndObjectClassType";
+
+		_methodParameterTypes159 = new String[] {
+				"java.util.ArrayList", "java.lang.String", "long"
+			};
+
+		_methodName160 = "generateForAllLectureseries";
+
+		_methodParameterTypes160 = new String[] {  };
+
+		_methodName161 = "generateForAllVideos";
+
+		_methodParameterTypes161 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -237,6 +257,36 @@ public class TagcloudLocalServiceClpInvoker {
 				(java.lang.String)arguments[1]);
 		}
 
+		if (_methodName158.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes158, parameterTypes)) {
+			TagcloudLocalServiceUtil.add((java.util.ArrayList<java.lang.String>)arguments[0],
+				(java.lang.String)arguments[1], (java.lang.Long)arguments[2]);
+
+			return null;
+		}
+
+		if (_methodName159.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes159, parameterTypes)) {
+			TagcloudLocalServiceUtil.updateByObjectIdAndObjectClassType((java.util.ArrayList<java.lang.String>)arguments[0],
+				(java.lang.String)arguments[1], ((Long)arguments[2]).longValue());
+
+			return null;
+		}
+
+		if (_methodName160.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes160, parameterTypes)) {
+			TagcloudLocalServiceUtil.generateForAllLectureseries();
+
+			return null;
+		}
+
+		if (_methodName161.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes161, parameterTypes)) {
+			TagcloudLocalServiceUtil.generateForAllVideos();
+
+			return null;
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -280,4 +330,12 @@ public class TagcloudLocalServiceClpInvoker {
 	private String[] _methodParameterTypes156;
 	private String _methodName157;
 	private String[] _methodParameterTypes157;
+	private String _methodName158;
+	private String[] _methodParameterTypes158;
+	private String _methodName159;
+	private String[] _methodParameterTypes159;
+	private String _methodName160;
+	private String[] _methodParameterTypes160;
+	private String _methodName161;
+	private String[] _methodParameterTypes161;
 }

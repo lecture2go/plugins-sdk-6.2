@@ -34,22 +34,13 @@ public class LectureseriesFinderUtil {
 		return getFinder().findAllLectureseriesWhithOpenaccessVideos();
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreator(
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(
 		java.lang.Long institutionId, java.lang.Long parentInstitutionId,
-		java.lang.Long termId, java.lang.Long categoryId, long creatorId) {
+		java.lang.Long termId, java.lang.Long categoryId,
+		java.lang.Long creatorId, java.lang.String searchQuery) {
 		return getFinder()
-				   .findFilteredByInstitutionParentInstitutionTermCategoryCreator(institutionId,
-			parentInstitutionId, termId, categoryId, creatorId);
-	}
-
-	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreator(
-		java.lang.Long institutionId, java.lang.Long parentInstitutionId,
-		java.util.ArrayList<java.lang.Long> termIds,
-		java.util.ArrayList<java.lang.Long> categoryIds,
-		java.util.ArrayList<java.lang.Long> creatorIds) {
-		return getFinder()
-				   .findFilteredByInstitutionParentInstitutionTermCategoryCreator(institutionId,
-			parentInstitutionId, termIds, categoryIds, creatorIds);
+				   .findFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(institutionId,
+			parentInstitutionId, termId, categoryId, creatorId, searchQuery);
 	}
 
 	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findFilteredByApprovedSemesterFacultyProducer(

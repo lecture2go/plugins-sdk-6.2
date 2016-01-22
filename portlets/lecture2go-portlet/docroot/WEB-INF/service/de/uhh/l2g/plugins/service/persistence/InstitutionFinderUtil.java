@@ -31,12 +31,20 @@ public class InstitutionFinderUtil {
 		return getFinder().findAllSortedAsTree(begin, end);
 	}
 
+	public static int findMaxSortByParent(long parentId) {
+		return getFinder().findMaxSortByParent(parentId);
+	}
+
+	public static int findLockingElements(long institutionId) {
+		return getFinder().findLockingElements(institutionId);
+	}
+
 	public static java.util.List<de.uhh.l2g.plugins.model.Institution> findInstitutionsByLectureseriesIdsAndVideoIds(
 		java.util.ArrayList<java.lang.Long> lectureseriesIds,
-		java.util.ArrayList<java.lang.Long> videoIds) {
+		java.util.ArrayList<java.lang.Long> videoIds, java.lang.Long parentId) {
 		return getFinder()
 				   .findInstitutionsByLectureseriesIdsAndVideoIds(lectureseriesIds,
-			videoIds);
+			videoIds, parentId);
 	}
 
 	public static InstitutionFinder getFinder() {

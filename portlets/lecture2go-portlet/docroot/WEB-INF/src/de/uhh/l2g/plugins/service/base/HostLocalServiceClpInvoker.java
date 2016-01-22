@@ -116,13 +116,69 @@ public class HostLocalServiceClpInvoker {
 
 		_methodParameterTypes157 = new String[] { "long" };
 
-		_methodName159 = "addHost";
+		_methodName158 = "getByGroupId";
 
-		_methodParameterTypes159 = new String[] {
-				"long", "java.lang.String", "java.lang.String",
-				"java.lang.String", "java.lang.String", "java.lang.String",
-				"int", "com.liferay.portal.service.ServiceContext"
+		_methodParameterTypes158 = new String[] { "long" };
+
+		_methodName159 = "getByGroupId";
+
+		_methodParameterTypes159 = new String[] { "long", "int", "int" };
+
+		_methodName160 = "getByGroupIdCount";
+
+		_methodParameterTypes160 = new String[] { "long" };
+
+		_methodName161 = "getByGroupIdAndHostId";
+
+		_methodParameterTypes161 = new String[] { "long", "long" };
+
+		_methodName162 = "getByCompanyIdAndGroupId";
+
+		_methodParameterTypes162 = new String[] { "long", "long" };
+
+		_methodName163 = "getByDefault";
+
+		_methodParameterTypes163 = new String[] { "long", "long" };
+
+		_methodName164 = "getDefaultHostId";
+
+		_methodParameterTypes164 = new String[] { "long", "long" };
+
+		_methodName165 = "getLockingElements";
+
+		_methodParameterTypes165 = new String[] { "long", "long" };
+
+		_methodName167 = "addDefaultHost";
+
+		_methodParameterTypes167 = new String[] {
+				"com.liferay.portal.service.ServiceContext"
 			};
+
+		_methodName168 = "addHost";
+
+		_methodParameterTypes168 = new String[] {
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"java.lang.String", "int",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName169 = "updateHost";
+
+		_methodParameterTypes169 = new String[] {
+				"long", "java.lang.String", "java.lang.String",
+				"java.lang.String", "int",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName170 = "deleteHost";
+
+		_methodParameterTypes170 = new String[] {
+				"long", "com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName171 = "updateCounter";
+
+		_methodParameterTypes171 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -236,14 +292,85 @@ public class HostLocalServiceClpInvoker {
 			return HostLocalServiceUtil.getByHostId(((Long)arguments[0]).longValue());
 		}
 
+		if (_methodName158.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes158, parameterTypes)) {
+			return HostLocalServiceUtil.getByGroupId(((Long)arguments[0]).longValue());
+		}
+
 		if (_methodName159.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes159, parameterTypes)) {
-			return HostLocalServiceUtil.addHost(((Long)arguments[0]).longValue(),
+			return HostLocalServiceUtil.getByGroupId(((Long)arguments[0]).longValue(),
+				((Integer)arguments[1]).intValue(),
+				((Integer)arguments[2]).intValue());
+		}
+
+		if (_methodName160.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes160, parameterTypes)) {
+			return HostLocalServiceUtil.getByGroupIdCount(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName161.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes161, parameterTypes)) {
+			return HostLocalServiceUtil.getByGroupIdAndHostId(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName162.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
+			return HostLocalServiceUtil.getByCompanyIdAndGroupId(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName163.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes163, parameterTypes)) {
+			return HostLocalServiceUtil.getByDefault(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName164.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes164, parameterTypes)) {
+			return HostLocalServiceUtil.getDefaultHostId(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName165.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes165, parameterTypes)) {
+			return HostLocalServiceUtil.getLockingElements(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName167.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes167, parameterTypes)) {
+			return HostLocalServiceUtil.addDefaultHost((com.liferay.portal.service.ServiceContext)arguments[0]);
+		}
+
+		if (_methodName168.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes168, parameterTypes)) {
+			return HostLocalServiceUtil.addHost((java.lang.String)arguments[0],
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
-				(java.lang.String)arguments[3], (java.lang.String)arguments[4],
-				(java.lang.String)arguments[5],
-				((Integer)arguments[6]).intValue(),
-				(com.liferay.portal.service.ServiceContext)arguments[7]);
+				(java.lang.String)arguments[3],
+				((Integer)arguments[4]).intValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[5]);
+		}
+
+		if (_methodName169.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes169, parameterTypes)) {
+			return HostLocalServiceUtil.updateHost(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
+				(java.lang.String)arguments[3],
+				((Integer)arguments[4]).intValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[5]);
+		}
+
+		if (_methodName170.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes170, parameterTypes)) {
+			return HostLocalServiceUtil.deleteHost(((Long)arguments[0]).longValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[1]);
+		}
+
+		if (_methodName171.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes171, parameterTypes)) {
+			return HostLocalServiceUtil.updateCounter();
 		}
 
 		throw new UnsupportedOperationException();
@@ -289,6 +416,30 @@ public class HostLocalServiceClpInvoker {
 	private String[] _methodParameterTypes156;
 	private String _methodName157;
 	private String[] _methodParameterTypes157;
+	private String _methodName158;
+	private String[] _methodParameterTypes158;
 	private String _methodName159;
 	private String[] _methodParameterTypes159;
+	private String _methodName160;
+	private String[] _methodParameterTypes160;
+	private String _methodName161;
+	private String[] _methodParameterTypes161;
+	private String _methodName162;
+	private String[] _methodParameterTypes162;
+	private String _methodName163;
+	private String[] _methodParameterTypes163;
+	private String _methodName164;
+	private String[] _methodParameterTypes164;
+	private String _methodName165;
+	private String[] _methodParameterTypes165;
+	private String _methodName167;
+	private String[] _methodParameterTypes167;
+	private String _methodName168;
+	private String[] _methodParameterTypes168;
+	private String _methodName169;
+	private String[] _methodParameterTypes169;
+	private String _methodName170;
+	private String[] _methodParameterTypes170;
+	private String _methodName171;
+	private String[] _methodParameterTypes171;
 }

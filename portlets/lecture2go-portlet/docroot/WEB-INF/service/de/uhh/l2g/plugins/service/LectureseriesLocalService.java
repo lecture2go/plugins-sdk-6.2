@@ -260,6 +260,10 @@ public interface LectureseriesLocalService extends BaseLocalService,
 		java.lang.Long facultyId, java.lang.Long producerId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getAll()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getAllLectureseriesWhithOpenaccessVideos();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -278,16 +282,12 @@ public interface LectureseriesLocalService extends BaseLocalService,
 		de.uhh.l2g.plugins.model.Lectureseries lectureseries)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(
-		java.lang.Long institutionId, java.lang.Long parentInstitutionId,
-		java.util.ArrayList<java.lang.Long> termIds,
-		java.util.ArrayList<java.lang.Long> categoryIds,
-		java.util.ArrayList<java.lang.Long> creatorIds);
+	public void updateUploadAndGenerationDate()
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(
 		java.lang.Long institutionId, java.lang.Long parentInstitutionId,
 		java.lang.Long termId, java.lang.Long categoryId,
-		java.lang.Long creatorId);
+		java.lang.Long creatorId, java.lang.String searchQuery);
 }

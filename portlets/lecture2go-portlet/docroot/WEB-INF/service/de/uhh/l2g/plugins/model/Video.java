@@ -31,6 +31,30 @@ public interface Video extends VideoModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link de.uhh.l2g.plugins.model.impl.VideoImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public java.lang.String getLectureseriesName();
+
+	public void setLectureseriesName(java.lang.String lectureseriesName);
+
+	public java.lang.String getLectureseriesNumber();
+
+	public void setLectureseriesNumber(java.lang.String lectureseriesNumber);
+
+	public java.lang.String getCreatorFullName();
+
+	public void setCreatorFullName(java.lang.String creatorFullName);
+
+	public java.lang.String getLectureseriesUrl();
+
+	public void setLectureseriesUrl(java.lang.String lectureseriesUrl);
+
+	public java.lang.Integer getAccessPermitted();
+
+	public void setAccessPermitted(java.lang.Integer accessPermitted);
+
+	public java.util.ArrayList<java.lang.String> getPlayerUris();
+
+	public void setPlayerUris(java.util.ArrayList<java.lang.String> playerUris);
+
 	public java.lang.String getEmbedIframe();
 
 	public void setEmbedIframe(java.lang.String embedIframe);
@@ -83,18 +107,6 @@ public interface Video extends VideoModel, PersistedModel {
 
 	public void setHasComments(boolean hasComments);
 
-	public java.lang.String getStreamUrl();
-
-	public void setStreamUrl(java.lang.String streamUrl);
-
-	public java.lang.String getStreamIosUrl();
-
-	public void setStreamIosUrl(java.lang.String streamIosUrl);
-
-	public java.lang.String getStreamAndroidUrl();
-
-	public void setStreamAndroidUrl(java.lang.String streamAndroidUrl);
-
 	public java.lang.String getUrl();
 
 	public void setUrl(java.lang.String url);
@@ -123,45 +135,37 @@ public interface Video extends VideoModel, PersistedModel {
 
 	public void setM4aFile(java.io.File m4aFile);
 
-	public java.lang.String getMp4OpenAccessDownloadLink();
+	public java.lang.String getMp4DownloadLink();
 
-	public void setMp4OpenAccessDownloadLink(
-		java.lang.String mp4OpenAccessDownloadLink);
+	public void setMp4DownloadLink(java.lang.String mp4DownloadLink);
 
-	public java.lang.String getPdfOpenAccessDownloadLink();
+	public java.lang.String getPdfDownloadLink();
 
-	public void setPdfOpenAccessDownloadLink(
-		java.lang.String pdfOpenAccessDownloadLink);
+	public void setPdfDownloadLink(java.lang.String pdfDownloadLink);
 
-	public java.lang.String getMp3OpenAccessDownloadLink();
+	public java.lang.String getMp3DownloadLink();
 
-	public void setMp3OpenAccessDownloadLink(
-		java.lang.String mp3OpenAccessDownloadLink);
+	public void setMp3DownloadLink(java.lang.String mp3DownloadLink);
 
-	public java.lang.String getM4vOpenAccessDownloadLink();
+	public java.lang.String getM4vDownloadLink();
 
-	public void setM4vOpenAccessDownloadLink(
-		java.lang.String m4vOpenAccessDownloadLink);
+	public void setM4vDownloadLink(java.lang.String m4vDownloadLink);
 
-	public java.lang.String getM4aOpenAccessDownloadLink();
+	public java.lang.String getM4aDownloadLink();
 
-	public void setM4aOpenAccessDownloadLink(
-		java.lang.String m4aOpenAccessDownloadLink);
+	public void setM4aDownloadLink(java.lang.String m4aDownloadLink);
 
-	public java.lang.String getFlvOpenAccessDownloadLink();
+	public java.lang.String getFlvDownloadLink();
 
-	public void setFlvOpenAccessDownloadLink(
-		java.lang.String flvOpenAccessDownloadLink);
+	public void setFlvDownloadLink(java.lang.String flvDownloadLink);
 
-	public java.lang.String getOggOpenAccessDownloadLink();
+	public java.lang.String getOggDownloadLink();
 
-	public void setOggOpenAccessDownloadLink(
-		java.lang.String oggOpenAccessDownloadLink);
+	public void setOggDownloadLink(java.lang.String oggDownloadLink);
 
-	public java.lang.String getWebmOpenAccessDownloadLink();
+	public java.lang.String getWebmDownloadLink();
 
-	public void setWebmOpenAccessDownloadLink(
-		java.lang.String webmOpenAccessDownloadLink);
+	public void setWebmDownloadLink(java.lang.String webmDownloadLink);
 
 	public java.io.File getFlvFile();
 

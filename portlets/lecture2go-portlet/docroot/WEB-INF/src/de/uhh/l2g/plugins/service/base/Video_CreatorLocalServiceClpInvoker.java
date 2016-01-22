@@ -127,6 +127,10 @@ public class Video_CreatorLocalServiceClpInvoker {
 		_methodParameterTypes158 = new String[] {
 				"java.lang.Long", "java.lang.Long"
 			};
+
+		_methodName159 = "getByVideo";
+
+		_methodParameterTypes159 = new String[] { "java.lang.Long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -250,6 +254,11 @@ public class Video_CreatorLocalServiceClpInvoker {
 				(java.lang.Long)arguments[1]);
 		}
 
+		if (_methodName159.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes159, parameterTypes)) {
+			return Video_CreatorLocalServiceUtil.getByVideo((java.lang.Long)arguments[0]);
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -295,4 +304,6 @@ public class Video_CreatorLocalServiceClpInvoker {
 	private String[] _methodParameterTypes157;
 	private String _methodName158;
 	private String[] _methodParameterTypes158;
+	private String _methodName159;
+	private String[] _methodParameterTypes159;
 }

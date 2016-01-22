@@ -283,6 +283,11 @@ public class LectureseriesLocalServiceUtil {
 			facultyId, producerId);
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getAll()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getAll();
+	}
+
 	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getAllLectureseriesWhithOpenaccessVideos() {
 		return getService().getAllLectureseriesWhithOpenaccessVideos();
 	}
@@ -308,23 +313,18 @@ public class LectureseriesLocalServiceUtil {
 		getService().updateOpenAccess(video, lectureseries);
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(
-		java.lang.Long institutionId, java.lang.Long parentInstitutionId,
-		java.util.ArrayList<java.lang.Long> termIds,
-		java.util.ArrayList<java.lang.Long> categoryIds,
-		java.util.ArrayList<java.lang.Long> creatorIds) {
-		return getService()
-				   .getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(institutionId,
-			parentInstitutionId, termIds, categoryIds, creatorIds);
+	public static void updateUploadAndGenerationDate()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().updateUploadAndGenerationDate();
 	}
 
 	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(
 		java.lang.Long institutionId, java.lang.Long parentInstitutionId,
 		java.lang.Long termId, java.lang.Long categoryId,
-		java.lang.Long creatorId) {
+		java.lang.Long creatorId, java.lang.String searchQuery) {
 		return getService()
 				   .getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(institutionId,
-			parentInstitutionId, termId, categoryId, creatorId);
+			parentInstitutionId, termId, categoryId, creatorId, searchQuery);
 	}
 
 	public static void clearService() {

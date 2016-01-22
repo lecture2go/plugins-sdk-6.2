@@ -24,7 +24,11 @@ public interface InstitutionFinder {
 	public java.util.List<de.uhh.l2g.plugins.model.Institution> findAllSortedAsTree(
 		int begin, int end);
 
+	public int findMaxSortByParent(long parentId);
+
+	public int findLockingElements(long institutionId);
+
 	public java.util.List<de.uhh.l2g.plugins.model.Institution> findInstitutionsByLectureseriesIdsAndVideoIds(
 		java.util.ArrayList<java.lang.Long> lectureseriesIds,
-		java.util.ArrayList<java.lang.Long> videoIds);
+		java.util.ArrayList<java.lang.Long> videoIds, java.lang.Long parentId);
 }

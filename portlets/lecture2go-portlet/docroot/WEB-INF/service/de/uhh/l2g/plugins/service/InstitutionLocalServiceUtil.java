@@ -281,6 +281,41 @@ public class InstitutionLocalServiceUtil {
 		return getService().getById(institutionId);
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.Institution> getByGroupId(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getByGroupId(groupId);
+	}
+
+	public static de.uhh.l2g.plugins.model.Institution getByGroupIdAndId(
+		long groupId, long institutionId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getByGroupIdAndId(groupId, institutionId);
+	}
+
+	public static de.uhh.l2g.plugins.model.Institution getRootByGroupId(
+		long companyId, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getRootByGroupId(companyId, groupId);
+	}
+
+	public static java.util.List<de.uhh.l2g.plugins.model.Institution> getByGroupIdAndParent(
+		long groupId, long parentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getByGroupIdAndParent(groupId, parentId);
+	}
+
+	public static java.util.List<de.uhh.l2g.plugins.model.Institution> getByGroupIdAndParent(
+		long groupId, long parentId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getByGroupIdAndParent(groupId, parentId, start, end);
+	}
+
+	public static int getByGroupIdAndParentCount(long groupId, long parentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getByGroupIdAndParentCount(groupId, parentId);
+	}
+
 	public static java.util.List<de.uhh.l2g.plugins.model.Institution> getByParentId(
 		long parentId, java.lang.String type)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -310,6 +345,16 @@ public class InstitutionLocalServiceUtil {
 		return getService().getAllSortedAsTree(begin, end);
 	}
 
+	public static int getMaxSortByParentId(long parentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getMaxSortByParentId(parentId);
+	}
+
+	public static int getLockingElements(long institutionId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getLockingElements(institutionId);
+	}
+
 	public static java.util.List<de.uhh.l2g.plugins.model.Institution> getInstitutionsFromLectureseriesIdsAndVideoIds(
 		java.util.ArrayList<java.lang.Long> lectureseriesIds,
 		java.util.ArrayList<java.lang.Long> videoIds) {
@@ -318,12 +363,62 @@ public class InstitutionLocalServiceUtil {
 			videoIds);
 	}
 
-	public static de.uhh.l2g.plugins.model.Institution addInstitution(
-		java.lang.String name, java.lang.String streamer,
+	public static java.util.List<de.uhh.l2g.plugins.model.Institution> getInstitutionsFromLectureseriesIdsAndVideoIds(
+		java.util.ArrayList<java.lang.Long> lectureseriesIds,
+		java.util.ArrayList<java.lang.Long> videoIds, java.lang.Long parentId) {
+		return getService()
+				   .getInstitutionsFromLectureseriesIdsAndVideoIds(lectureseriesIds,
+			videoIds, parentId);
+	}
+
+	public static long getDefaultInstitutionId(long companyId, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getDefaultInstitutionId(companyId, groupId);
+	}
+
+	/**
+	* Special handling for default entry
+	* Default has to be Top Level Institution, must be replaced while migrating
+	*
+	* TODO: remove Default when migrating data
+	*/
+	public static de.uhh.l2g.plugins.model.Institution addDefaultInstitution(
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().addInstitution(name, streamer, serviceContext);
+		return getService().addDefaultInstitution(serviceContext);
+	}
+
+	public static de.uhh.l2g.plugins.model.Institution addInstitution(
+		java.lang.String name, long hostId, long parentId, int sort,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addInstitution(name, hostId, parentId, sort, serviceContext);
+	}
+
+	public static de.uhh.l2g.plugins.model.Institution updateInstitution(
+		long institutionId, java.lang.String name, int sort,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateInstitution(institutionId, name, sort, serviceContext);
+	}
+
+	public static de.uhh.l2g.plugins.model.Institution deleteInstitution(
+		long institutionId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().deleteInstitution(institutionId, serviceContext);
+	}
+
+	public static de.uhh.l2g.plugins.model.Institution updateCounter()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().updateCounter();
 	}
 
 	public static void clearService() {

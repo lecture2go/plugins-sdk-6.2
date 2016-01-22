@@ -63,7 +63,7 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 		attributes.put("openAccess", getOpenAccess());
 		attributes.put("downloadLink", getDownloadLink());
 		attributes.put("metadataId", getMetadataId());
-		attributes.put("surl", getSurl());
+		attributes.put("secureFilename", getSecureFilename());
 		attributes.put("hits", getHits());
 		attributes.put("uploadDate", getUploadDate());
 		attributes.put("permittedToSegment", getPermittedToSegment());
@@ -72,6 +72,7 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 		attributes.put("termId", getTermId());
 		attributes.put("videoCreatorId", getVideoCreatorId());
 		attributes.put("tags", getTags());
+		attributes.put("password", getPassword());
 
 		return attributes;
 	}
@@ -162,10 +163,10 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 			setMetadataId(metadataId);
 		}
 
-		String surl = (String)attributes.get("surl");
+		String secureFilename = (String)attributes.get("secureFilename");
 
-		if (surl != null) {
-			setSurl(surl);
+		if (secureFilename != null) {
+			setSecureFilename(secureFilename);
 		}
 
 		Long hits = (Long)attributes.get("hits");
@@ -215,6 +216,12 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 
 		if (tags != null) {
 			setTags(tags);
+		}
+
+		String password = (String)attributes.get("password");
+
+		if (password != null) {
+			setPassword(password);
 		}
 	}
 
@@ -519,23 +526,23 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 	}
 
 	/**
-	* Returns the surl of this video.
+	* Returns the secure filename of this video.
 	*
-	* @return the surl of this video
+	* @return the secure filename of this video
 	*/
 	@Override
-	public java.lang.String getSurl() {
-		return _video.getSurl();
+	public java.lang.String getSecureFilename() {
+		return _video.getSecureFilename();
 	}
 
 	/**
-	* Sets the surl of this video.
+	* Sets the secure filename of this video.
 	*
-	* @param surl the surl of this video
+	* @param secureFilename the secure filename of this video
 	*/
 	@Override
-	public void setSurl(java.lang.String surl) {
-		_video.setSurl(surl);
+	public void setSecureFilename(java.lang.String secureFilename) {
+		_video.setSecureFilename(secureFilename);
 	}
 
 	/**
@@ -698,6 +705,26 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 		_video.setTags(tags);
 	}
 
+	/**
+	* Returns the password of this video.
+	*
+	* @return the password of this video
+	*/
+	@Override
+	public java.lang.String getPassword() {
+		return _video.getPassword();
+	}
+
+	/**
+	* Sets the password of this video.
+	*
+	* @param password the password of this video
+	*/
+	@Override
+	public void setPassword(java.lang.String password) {
+		_video.setPassword(password);
+	}
+
 	@Override
 	public boolean isNew() {
 		return _video.isNew();
@@ -800,6 +827,66 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_video.persist();
+	}
+
+	@Override
+	public java.lang.String getLectureseriesName() {
+		return _video.getLectureseriesName();
+	}
+
+	@Override
+	public void setLectureseriesName(java.lang.String lectureseriesName) {
+		_video.setLectureseriesName(lectureseriesName);
+	}
+
+	@Override
+	public java.lang.String getLectureseriesNumber() {
+		return _video.getLectureseriesNumber();
+	}
+
+	@Override
+	public void setLectureseriesNumber(java.lang.String lectureseriesNumber) {
+		_video.setLectureseriesNumber(lectureseriesNumber);
+	}
+
+	@Override
+	public java.lang.String getCreatorFullName() {
+		return _video.getCreatorFullName();
+	}
+
+	@Override
+	public void setCreatorFullName(java.lang.String creatorFullName) {
+		_video.setCreatorFullName(creatorFullName);
+	}
+
+	@Override
+	public java.lang.String getLectureseriesUrl() {
+		return _video.getLectureseriesUrl();
+	}
+
+	@Override
+	public void setLectureseriesUrl(java.lang.String lectureseriesUrl) {
+		_video.setLectureseriesUrl(lectureseriesUrl);
+	}
+
+	@Override
+	public java.lang.Integer getAccessPermitted() {
+		return _video.getAccessPermitted();
+	}
+
+	@Override
+	public void setAccessPermitted(java.lang.Integer accessPermitted) {
+		_video.setAccessPermitted(accessPermitted);
+	}
+
+	@Override
+	public java.util.ArrayList<java.lang.String> getPlayerUris() {
+		return _video.getPlayerUris();
+	}
+
+	@Override
+	public void setPlayerUris(java.util.ArrayList<java.lang.String> playerUris) {
+		_video.setPlayerUris(playerUris);
 	}
 
 	@Override
@@ -933,36 +1020,6 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 	}
 
 	@Override
-	public java.lang.String getStreamUrl() {
-		return _video.getStreamUrl();
-	}
-
-	@Override
-	public void setStreamUrl(java.lang.String streamUrl) {
-		_video.setStreamUrl(streamUrl);
-	}
-
-	@Override
-	public java.lang.String getStreamIosUrl() {
-		return _video.getStreamIosUrl();
-	}
-
-	@Override
-	public void setStreamIosUrl(java.lang.String streamIosUrl) {
-		_video.setStreamIosUrl(streamIosUrl);
-	}
-
-	@Override
-	public java.lang.String getStreamAndroidUrl() {
-		return _video.getStreamAndroidUrl();
-	}
-
-	@Override
-	public void setStreamAndroidUrl(java.lang.String streamAndroidUrl) {
-		_video.setStreamAndroidUrl(streamAndroidUrl);
-	}
-
-	@Override
 	public java.lang.String getUrl() {
 		return _video.getUrl();
 	}
@@ -1033,91 +1090,83 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 	}
 
 	@Override
-	public java.lang.String getMp4OpenAccessDownloadLink() {
-		return _video.getMp4OpenAccessDownloadLink();
+	public java.lang.String getMp4DownloadLink() {
+		return _video.getMp4DownloadLink();
 	}
 
 	@Override
-	public void setMp4OpenAccessDownloadLink(
-		java.lang.String mp4OpenAccessDownloadLink) {
-		_video.setMp4OpenAccessDownloadLink(mp4OpenAccessDownloadLink);
+	public void setMp4DownloadLink(java.lang.String mp4DownloadLink) {
+		_video.setMp4DownloadLink(mp4DownloadLink);
 	}
 
 	@Override
-	public java.lang.String getPdfOpenAccessDownloadLink() {
-		return _video.getPdfOpenAccessDownloadLink();
+	public java.lang.String getPdfDownloadLink() {
+		return _video.getPdfDownloadLink();
 	}
 
 	@Override
-	public void setPdfOpenAccessDownloadLink(
-		java.lang.String pdfOpenAccessDownloadLink) {
-		_video.setPdfOpenAccessDownloadLink(pdfOpenAccessDownloadLink);
+	public void setPdfDownloadLink(java.lang.String pdfDownloadLink) {
+		_video.setPdfDownloadLink(pdfDownloadLink);
 	}
 
 	@Override
-	public java.lang.String getMp3OpenAccessDownloadLink() {
-		return _video.getMp3OpenAccessDownloadLink();
+	public java.lang.String getMp3DownloadLink() {
+		return _video.getMp3DownloadLink();
 	}
 
 	@Override
-	public void setMp3OpenAccessDownloadLink(
-		java.lang.String mp3OpenAccessDownloadLink) {
-		_video.setMp3OpenAccessDownloadLink(mp3OpenAccessDownloadLink);
+	public void setMp3DownloadLink(java.lang.String mp3DownloadLink) {
+		_video.setMp3DownloadLink(mp3DownloadLink);
 	}
 
 	@Override
-	public java.lang.String getM4vOpenAccessDownloadLink() {
-		return _video.getM4vOpenAccessDownloadLink();
+	public java.lang.String getM4vDownloadLink() {
+		return _video.getM4vDownloadLink();
 	}
 
 	@Override
-	public void setM4vOpenAccessDownloadLink(
-		java.lang.String m4vOpenAccessDownloadLink) {
-		_video.setM4vOpenAccessDownloadLink(m4vOpenAccessDownloadLink);
+	public void setM4vDownloadLink(java.lang.String m4vDownloadLink) {
+		_video.setM4vDownloadLink(m4vDownloadLink);
 	}
 
 	@Override
-	public java.lang.String getM4aOpenAccessDownloadLink() {
-		return _video.getM4aOpenAccessDownloadLink();
+	public java.lang.String getM4aDownloadLink() {
+		return _video.getM4aDownloadLink();
 	}
 
 	@Override
-	public void setM4aOpenAccessDownloadLink(
-		java.lang.String m4aOpenAccessDownloadLink) {
-		_video.setM4aOpenAccessDownloadLink(m4aOpenAccessDownloadLink);
+	public void setM4aDownloadLink(java.lang.String m4aDownloadLink) {
+		_video.setM4aDownloadLink(m4aDownloadLink);
 	}
 
 	@Override
-	public java.lang.String getFlvOpenAccessDownloadLink() {
-		return _video.getFlvOpenAccessDownloadLink();
+	public java.lang.String getFlvDownloadLink() {
+		return _video.getFlvDownloadLink();
 	}
 
 	@Override
-	public void setFlvOpenAccessDownloadLink(
-		java.lang.String flvOpenAccessDownloadLink) {
-		_video.setFlvOpenAccessDownloadLink(flvOpenAccessDownloadLink);
+	public void setFlvDownloadLink(java.lang.String flvDownloadLink) {
+		_video.setFlvDownloadLink(flvDownloadLink);
 	}
 
 	@Override
-	public java.lang.String getOggOpenAccessDownloadLink() {
-		return _video.getOggOpenAccessDownloadLink();
+	public java.lang.String getOggDownloadLink() {
+		return _video.getOggDownloadLink();
 	}
 
 	@Override
-	public void setOggOpenAccessDownloadLink(
-		java.lang.String oggOpenAccessDownloadLink) {
-		_video.setOggOpenAccessDownloadLink(oggOpenAccessDownloadLink);
+	public void setOggDownloadLink(java.lang.String oggDownloadLink) {
+		_video.setOggDownloadLink(oggDownloadLink);
 	}
 
 	@Override
-	public java.lang.String getWebmOpenAccessDownloadLink() {
-		return _video.getWebmOpenAccessDownloadLink();
+	public java.lang.String getWebmDownloadLink() {
+		return _video.getWebmDownloadLink();
 	}
 
 	@Override
-	public void setWebmOpenAccessDownloadLink(
-		java.lang.String webmOpenAccessDownloadLink) {
-		_video.setWebmOpenAccessDownloadLink(webmOpenAccessDownloadLink);
+	public void setWebmDownloadLink(java.lang.String webmDownloadLink) {
+		_video.setWebmDownloadLink(webmDownloadLink);
 	}
 
 	@Override
