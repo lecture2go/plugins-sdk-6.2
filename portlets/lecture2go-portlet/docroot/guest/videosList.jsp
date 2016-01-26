@@ -196,32 +196,6 @@
 		</c:forEach>
 		</ul>
 	</liferay-ui:panel>
-
-	<!-- 	creator filter -->
-	<liferay-ui:panel extended="true" title="Person" id="creators">
-		<c:if test="${!hasCreatorFiltered && hasManyCreators}">
-			<div class="input-group">
-      			<input id="searchName" type="text" class="form-control" placeholder="Suche Person...">
-    		</div>
-		</c:if>
-		<ul class="creators">
-		<c:forEach items="<%=renderedCreators %>" var="creator">
-			<portlet:actionURL var="filterByCreator" name="addFilter">
-				<portlet:param name="jspPage" value="/guest/videosList.jsp" />
-				<portlet:param name="institutionId" value="<%=institutionId.toString() %>"/>
-				<portlet:param name="parentInstitutionId" value="<%=parentInstitutionId.toString() %>"/>
-				<portlet:param name="termId" value="<%=termId.toString() %>"/>
-				<portlet:param name="categoryId" value="<%=categoryId.toString() %>"/>
-				<portlet:param name="creatorId" value='${hasCreatorFiltered ? "0" : creator.creatorId}'/>
-				<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
-			</portlet:actionURL>
-			<li class="filter-menu"><div class="filter-menu-link"><a href="${filterByCreator}">${creator.lastName}, ${creator.jobTitle} ${creator.firstName} ${creator.middleName}</a> <span ${hasCreatorFiltered ? 'class=""' : ''}/></div></li>
-		</c:forEach>
-		</ul>
-		<c:if test="${hasManyCreators}">
-			<div id="loadMoreCreators">mehr...</div>
-		</c:if>
-	</liferay-ui:panel>
 </liferay-ui:panel-container>
 
 </div>
