@@ -11,7 +11,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
-import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -24,14 +23,12 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.service.permission.PortletPermission;
-import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import de.uhh.l2g.plugins.model.Coordinator;
@@ -385,7 +382,7 @@ public class AdminUserManagement extends MVCPortlet {
 				//Institutions Portlet
 				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), "lgadmininstitutionmanagement_WAR_lecture2goportlet", ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {ActionKeys.VIEW});
 				//Institutions Models 
-				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(u.getGroupId()), role.getRoleId(), new String[] {ActionKeys.VIEW, "VIEW_OWN_INSTITUTIONS"});
+				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(u.getGroupId()), role.getRoleId(), new String[] {ActionKeys.VIEW, "ADD_SUB_INSTITUTION_ENTRY", "ADD_HOSTS", "EDIT_HOSTS", "EDIT_ALL_INSTITUTIONS", "VIEW_OWN_INSTITUTIONS" ,"EDIT_OWN_INSTITUTIONS" ,"DELETE_INSTITUTIONS", "DELETE_SUB_INSTITUTIONS", "EDIT_ROOT_INSTITUTION", "ADD_INSTITUTION_ENTRY", "ADD_SUB_INSTITUTION_ENTRY"});
 				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution_Host.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(u.getGroupId()), role.getRoleId(), new String[] {ActionKeys.VIEW});
 				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Host.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(u.getGroupId()), role.getRoleId(), new String[] {ActionKeys.VIEW});
 			} catch (PortalException e1) {
@@ -432,24 +429,7 @@ public class AdminUserManagement extends MVCPortlet {
 		} catch (PortalException e) {
 			Role role = createRole("L2Go Admin", u);
 			//add default Permissions
-			try {
-				//User Portlet
-				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), "lgadmininstitutionmanagement_WAR_lecture2goportlet", ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {ActionKeys.VIEW, ActionKeys.UPDATE});	
-				//User Model: Add Producer Permission
-				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), User.class.getName(), ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {"ADD_L2GOADMIN","ADD_L2GOCOORDINATOR","ADD_L2GOPRODUCER","ADD_L2GOSTUDENT"});
-				
-				//Institutions Portlet
-				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), "lgadmininstitutionmanagement_WAR_lecture2goportlet", ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {ActionKeys.VIEW, "MANAGE_INSTITUTIONS","VIEW_HOSTS","MANAGE_HOSTS","VIEW_ALL_INSTITUTIONS"});
-				//General Entity Defaults 
-				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(u.getGroupId()), role.getRoleId(), new String[] {ActionKeys.VIEW, "VIEW_OWN_INSTITUTIONS"});
-				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution_Host.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(u.getGroupId()), role.getRoleId(), new String[] {ActionKeys.VIEW});
-				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Host.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(u.getGroupId()), role.getRoleId(), new String[] {ActionKeys.VIEW});
-				//Root Institution 
-				ResourcePermissionLocalServiceUtil.removeResourcePermission(u.getCompanyId(), Institution.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(InstitutionLocalServiceUtil.getRootByGroupId(u.getCompanyId(), u.getGroupId())), role.getRoleId(), "EDIT_INSTITUTION");
-			} catch (PortalException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			setL2GAdminPermissions(role, u);
 		}
 	}
 	
@@ -473,4 +453,30 @@ public class AdminUserManagement extends MVCPortlet {
 		role.setModifiedDate(date);
 		return RoleLocalServiceUtil.addRole(role);//save role to database	
 	}
+	
+	public void setL2GAdminPermissions(Role role, User u) throws SystemException{
+		try {
+            Layout imPage = LayoutLocalServiceUtil.getFriendlyURLLayout(u.getGroupId(), false, "/institution-management");
+          
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), "com.liferay.portal.model.Layout", ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(imPage.getPlid()), role.getRoleId(), new String[] {ActionKeys.VIEW, ActionKeys.UPDATE});	
+			//User Portlet
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), "lgadmininstitutionmanagement_WAR_lecture2goportlet", ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {ActionKeys.VIEW, ActionKeys.UPDATE});	
+			//User Model: Add Producer Permission
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), User.class.getName(), ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {"ADD_L2GOADMIN","ADD_L2GOCOORDINATOR","ADD_L2GOPRODUCER","ADD_L2GOSTUDENT"});
+			
+			//Institutions Portlet
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), "lgadmininstitutionmanagement_WAR_lecture2goportlet", ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {ActionKeys.VIEW, "VIEW_ALL_INSTITUTIONS", "VIEW_HOSTS", "ADD_INSTITUTIONS"});
+			//General Entity Defaults 
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution.class.getName(), ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {ActionKeys.VIEW, "ADD_SUB_INSTITUTION_ENTRY", "ADD_HOSTS", "EDIT_HOSTS", "EDIT_ALL_INSTITUTIONS", "VIEW_OWN_INSTITUTIONS" ,"EDIT_OWN_INSTITUTIONS" ,"DELETE_INSTITUTIONS", "DELETE_SUB_INSTITUTIONS", "EDIT_ROOT_INSTITUTION", "ADD_INSTITUTION_ENTRY", "ADD_SUB_INSTITUTION_ENTRY"});
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution_Host.class.getName(), ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {ActionKeys.VIEW});
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Host.class.getName(), ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {ActionKeys.VIEW});
+			//Root Institution 
+			ResourcePermissionLocalServiceUtil.removeResourcePermission(u.getCompanyId(), Institution.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(InstitutionLocalServiceUtil.getRootByGroupId(u.getCompanyId(), u.getGroupId())), role.getRoleId(), "EDIT_INSTITUTION");
+		} catch (PortalException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+	}
+	
 }

@@ -18,8 +18,7 @@
         <action-key>VIEW</action-key>
         <action-key>VIEW_ALL_INSTITUTIONS</action-key>
         <action-key>VIEW_HOSTS</action-key>
-        <action-key>MANAGE_INSTITUTIONS</action-key>
-        <action-key>MANAGE_HOSTS</action-key>
+        <action-key>ADD_INSTITUTIONS</action-key>
       </supports>
       <site-member-defaults>
       </site-member-defaults>
@@ -31,8 +30,9 @@
         <action-key>DELETE</action-key>
         <action-key>PERMISSIONS</action-key>
         <action-key>UPDATE</action-key>
-        <action-key>MANAGE_HOSTS</action-key>
-        <action-key>MANAGE_INSTITUTIONS</action-key>
+        <action-key>VIEW_ALL_INSTITUTIONS</action-key>
+        <action-key>VIEW_HOSTS</action-key>
+        <action-key>ADD_INSTITUTIONS</action-key>
       </guest-unsupported>
     </permissions>
   </portlet-resource>
@@ -49,11 +49,8 @@
     </portlet-ref>
     <permissions>
         <supports>
-	     	<action-key>ADD_INSTITUTION_ENTRY</action-key>
 	      	<action-key>ADD_SUB_INSTITUTION_ENTRY</action-key>
-	      	<action-key>VIEW_HOSTS</action-key>
 	      	<action-key>ADD_HOSTS</action-key>
-	      	<action-key>ADD_HOST_ENTRY</action-key>
 	      	<action-key>EDIT_HOSTS</action-key>
 	        <action-key>EDIT_ALL_INSTITUTIONS</action-key>
 	        <action-key>VIEW_OWN_INSTITUTIONS</action-key>
@@ -72,11 +69,8 @@
         <guest-defaults>
         </guest-defaults>
         <guest-unsupported>
-	     	<action-key>ADD_INSTITUTION_ENTRY</action-key>
 	      	<action-key>ADD_SUB_INSTITUTION_ENTRY</action-key>
-	      	<action-key>VIEW_HOSTS</action-key>
 	      	<action-key>ADD_HOSTS</action-key>
-	      	<action-key>ADD_HOST_ENTRY</action-key>
 	      	<action-key>EDIT_HOSTS</action-key>
 	        <action-key>EDIT_ALL_INSTITUTIONS</action-key>
 	        <action-key>VIEW_OWN_INSTITUTIONS</action-key>

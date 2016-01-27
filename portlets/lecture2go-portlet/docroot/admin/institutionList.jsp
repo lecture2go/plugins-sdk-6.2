@@ -87,7 +87,7 @@ int maxOrder = InstitutionLocalServiceUtil.getMaxSortByParentId(rootId)+1;
 <c:if test='<%=  permissionChecker.hasPermission(groupId, institutionPortletName, companyIdString, "PERMISSIONS") %>'>
 <%-- Permission for setting permissions regarding model on group/entity scope--%>
 
-<%--Global Permission for setting permissions regarding plugin on group scope--%>
+<%--Global Permission for setting permissions regarding plugin on company scope--%>
 Company Permissions:
 	<liferay-security:permissionsURL
 	    modelResource="<%= portletModel %>"
@@ -130,7 +130,7 @@ Root Institution Permissions:
 <%--ADD INSTITUTION--%>
 
 <%-- Permission on Portlet Scope --%>
-<c:if test='<%= permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "MANAGE_INSTITUTIONS") %>'>
+<c:if test='<%= permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "ADD_INSTITUTIONS") %>'>
 	<liferay-ui:panel title="Add Institution" collapsible="true" id="institutionSettings"
 					defaultState="open"
 					extended="<%= false %>"
@@ -166,7 +166,7 @@ Root Institution Permissions:
 
 
 <%--STREAMING SERVER SETTINGS AND LIST --%>
-<c:if test='<%= permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "MANAGE_HOSTS") %>'>
+<c:if test='<%= permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "VIEW_HOSTS") %>'>
 
 	 <liferay-ui:panel title="Streaming Server Options" collapsible="true" id="streamingServerSettings"
 			    	defaultState="open"
