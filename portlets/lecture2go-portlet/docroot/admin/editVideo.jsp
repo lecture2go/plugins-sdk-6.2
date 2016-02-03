@@ -133,16 +133,14 @@
 				
 				<div id="options">
 					<aui:select id="subInstitutionId" size="1" name="subInstitutionId" label="sub-institution">
-						<aui:option value="">select-sub-institution</aui:option>
+						<aui:option value="" selected="true">select-sub-institution</aui:option>
 					<%
 					Long subInstitutionId = new Long(0);
 					try{subInstitutionId = Video_InstitutionLocalServiceUtil.getByVideo(reqVideo.getVideoId()).get(0).getInstitutionId();}catch (Exception e){}
 					
 					for (Map.Entry<String, String> f : subInstitutions.entrySet()) {
 					if(f.getKey().equals(subInstitutionId.toString())){
-						%><aui:option value='<%=f.getKey()%>' selected="true"><%=f.getValue()%></aui:option>
-						<%}else{%>
-						<aui:option value='<%=f.getKey()%>'><%=f.getValue()%></aui:option>
+						%><aui:option value='<%=f.getKey()%>'><%=f.getValue()%></aui:option>
 						<%}
 					}%>
 					</aui:select>
@@ -170,7 +168,6 @@
 					</div>	
 								
 					<aui:select id="termId" size="1" name="termId" label="term">
-						<aui:option value="">select-term</aui:option>
 						<%for (int i = 0; i < semesters.size(); i++) {
 							if (reqVideo.getTermId()==semesters.get(i).getTermId()) {%>
 								<aui:option value='<%=semesters.get(i).getTermId()%>' selected="true"><%=semesters.get(i).getPrefix()+"&nbsp;"+semesters.get(i).getYear()%></aui:option>
@@ -180,8 +177,7 @@
 						}%>
 					</aui:select>
 	
-					<aui:select size="1" id="categoryId" name="categoryId" label="event-type" required="true">
-						<aui:option value="">select-category</aui:option>
+					<aui:select size="1" id="categoryId" name="categoryId" label="event-type">
 						<%
 						Long cId = new Long(0);
 						try{cId = Video_CategoryLocalServiceUtil.getByVideo(reqVideo.getVideoId()).get(0).getCategoryId();}catch(Exception e){}
@@ -197,7 +193,6 @@
 				</div>
 	
 				<aui:select size="1" name="language" label="language" required="false">
-					<aui:option value="">select-language</aui:option>
 					<%for (int i=0; i<languages.length; i++){
 						if (languages[i].getLanguage().equals(reqMetadata.getLanguage())) {%>
 							<aui:option value='<%=languages[i].getLanguage()%>' selected="true"><%=languages[i].getDisplayLanguage()%></aui:option>
@@ -259,6 +254,7 @@
 			</aui:form>
 		</aui:layout>
 	</aui:fieldset>
+
 
 <script type="text/javascript">
 var $options = $( "#options" );
@@ -765,10 +761,11 @@ AUI().use('aui-node',
       	   	 		var n = subInstitutionId.get(subInstitutionId.get('selectedIndex')).get('value');
       	    		var t = subInstitutionId.get(subInstitutionId.get('selectedIndex')).get('text')+"&nbsp;&nbsp;&nbsp;";
       	    		subInstitutions.append("<div id='"+n+"'> "+t+" <a class='icon-large icon-remove style='cursor:pointer;' onClick='document.getElementById(&quot;"+n+"&quot;).remove();'/><input id='<portlet:namespace></portlet:namespace>institutions' name='<portlet:namespace></portlet:namespace>institutions' value='"+n+"' type='hidden'/></div>");
+      	    		subInstitutionId.val( "" );
       			}
           }
      );
-    
+ 
   }
 );
 

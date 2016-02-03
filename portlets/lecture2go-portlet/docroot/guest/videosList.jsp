@@ -197,7 +197,8 @@
 		</ul>
 	</liferay-ui:panel>
 
-	<!-- 	creator filter -->
+	<%-- 	
+	creator filter 
 	<liferay-ui:panel extended="true" title="Person" id="creators">
 		<c:if test="${!hasCreatorFiltered && hasManyCreators}">
 			<div class="input-group">
@@ -222,6 +223,7 @@
 			<div id="loadMoreCreators">mehr...</div>
 		</c:if>
 	</liferay-ui:panel>
+	--%>
 </liferay-ui:panel-container>
 
 </div>
