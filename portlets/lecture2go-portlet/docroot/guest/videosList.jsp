@@ -84,13 +84,12 @@
 	}
 	
 	// we only process the first creators, because this list can be become quite large, the rest is rendered via javascript
-	
-	//List<Creator> renderedCreators = presentCreators;
-	//List<Creator> nonRenderedCreators = new  ArrayList<Creator>();
-	//if (presentCreators.size() > maxCreators) {
-	//	renderedCreators = presentCreators.subList(0, maxCreators-1);
-	//	nonRenderedCreators = presentCreators.subList(maxCreators, presentCreators.size());
-	//}
+	List<Creator> renderedCreators = presentCreators;
+	List<Creator> nonRenderedCreators = new  ArrayList<Creator>();
+	if (presentCreators.size() > maxCreators) {
+		renderedCreators = presentCreators.subList(0, maxCreators-1);
+		nonRenderedCreators = presentCreators.subList(maxCreators, presentCreators.size());
+	}
 	
 	List<Lectureseries> tempLectureseriesList = new ArrayList();
 	
@@ -198,7 +197,8 @@
 		</ul>
 	</liferay-ui:panel>
 
-	<%-- 	creator filter 
+	<%-- 	
+	creator filter 
 	<liferay-ui:panel extended="true" title="Person" id="creators">
 		<c:if test="${!hasCreatorFiltered && hasManyCreators}">
 			<div class="input-group">
@@ -222,7 +222,8 @@
 		<c:if test="${hasManyCreators}">
 			<div id="loadMoreCreators">mehr...</div>
 		</c:if>
-	</liferay-ui:panel>--%>
+	</liferay-ui:panel>
+	--%>
 </liferay-ui:panel-container>
 
 </div>
@@ -548,7 +549,6 @@
 </div>
 
 <script type="text/javascript">
-<%--
 $('#loadMoreCreators, #searchName').on("click", function () {
 	// this event is only fired once
 	$('#loadMoreCreators').hide();
@@ -567,7 +567,7 @@ $('#loadMoreCreators, #searchName').on("click", function () {
 		addRowToCreatorPanel(creatorList[i],parentInstitutionId,institutionId,termId,categoryId,searchQuery);
 	}
 });
---%>	
+	
 function addRowToCreatorPanel(creator,parentInstitutionId,institutionId,termId,categoryId,searchQuery){
 	var filterUrl = createFilterUrl(parentInstitutionId,institutionId,termId,categoryId,creator.id,searchQuery);
 	var row = "<li class='filter-menu'><div class='filter-menu-link'><a href=\"" + filterUrl + "\">" + creator.fullname + "</a> <span /></div></li>";
@@ -615,4 +615,6 @@ $( document ).ready(function() {
             });
     });
 });
+
+
 </script>
