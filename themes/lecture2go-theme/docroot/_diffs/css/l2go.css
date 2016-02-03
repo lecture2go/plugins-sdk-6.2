@@ -362,7 +362,7 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     width: 20em;
 }
 
-.view-320 #searchedvideo {
+ .view-320 #searchedvideo {
     width: 10em;
 }
 
@@ -1105,7 +1105,7 @@ thead, th {
 }
 
 #metadata-upload #creators div div select {
-    margin-left: 9%;
+    margin-left: 11%;
     margin-top: 10px;
 }
 
