@@ -124,7 +124,7 @@ public class AdminUserManagement extends MVCPortlet {
 		//l2go coordinator is logged in
 		boolean permissionCoordinator = permissionChecker.hasPermission(remoteUser.getGroupId(), User.class.getName(), remoteUser.getPrimaryKey(), "ADD_L2GOPRODUCER");		
 		Coordinator loggedInCoord = CoordinatorLocalServiceUtil.createCoordinator(remoteUser.getUserId());
-		if(permissionCoordinator){//logged in as coordinator
+		if(permissionCoordinator && !permissionAdmin){//logged in as coordinator
 			try{
 				loggedInCoord = CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId());
 				cfL.add(InstitutionLocalServiceUtil.getInstitution(loggedInCoord.getInstitutionId()));//institutions for coordinator
