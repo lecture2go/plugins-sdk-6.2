@@ -159,7 +159,7 @@
 						if(!ls.getNumber().equals(""))lName+=ls.getNumber()+" :";
 						if(!ls.getName().equals(""))lName+=ls.getName();
 						String vName = vid.getTitle();
-						if(vName.trim().equals(""))vName ="NOT TITLED";
+						if(vName.trim().equals(""))vName ="not-titled";
 					
 						if(!vid.getFilename().equals("")){%>
 						<aui:a  href="<%=url%>" target="blank">
@@ -169,7 +169,14 @@
 							<%=vName%>
 						</aui:a>
 					<%}
-					else{%> <%=vName%> <%}%>
+					else{%>
+						<aui:a  href="#">
+							<div class="video-image-wrapper">
+							    <img class="video-image-big" src="<%=vid.getImageMedium()%>"/>
+							</div>	
+							<%=vName%>
+						</aui:a>
+					<%}%>
 					<%if(!lName.equals("")){%>
 						<br/>
 						<%=lName%>
