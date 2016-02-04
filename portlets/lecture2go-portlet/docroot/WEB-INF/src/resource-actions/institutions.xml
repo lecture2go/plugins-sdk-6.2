@@ -94,9 +94,8 @@
     </portlet-ref>
     <permissions>
         <supports>
-            <action-key>ADD_HOST_ENTRY</action-key>
-            <action-key>EDIT_HOST_ENTRY</action-key>
             <action-key>ADD_HOSTS</action-key>
+            <action-key>EDIT_HOSTS</action-key>
             <action-key>DELETE</action-key>
             <action-key>PERMISSIONS</action-key>
             <action-key>UPDATE</action-key>
@@ -107,9 +106,8 @@
         <guest-defaults>
         </guest-defaults>
         <guest-unsupported>
-            <action-key>ADD_HOST_ENTRY</action-key>
-            <action-key>EDIT_HOST_ENTRY</action-key>
             <action-key>ADD_HOSTS</action-key>
+            <action-key>EDIT_HOSTS</action-key>
             <action-key>UPDATE</action-key>
             <action-key>PERMISSIONS</action-key>
             <action-key>DELETE</action-key>
@@ -125,13 +123,11 @@
     </portlet-ref>
     <permissions>
         <supports>
-
             <action-key>PERMISSIONS</action-key>
             <action-key>UPDATE</action-key>
             <action-key>ADD</action-key>
             <action-key>DELETE</action-key>
-            <action-key>VIEW</action-key>
-         
+            <action-key>VIEW</action-key>        
         </supports>
         <site-member-defaults>
         </site-member-defaults>

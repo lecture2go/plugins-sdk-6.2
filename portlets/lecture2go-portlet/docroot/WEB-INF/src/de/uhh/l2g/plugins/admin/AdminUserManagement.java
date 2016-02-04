@@ -16,6 +16,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
@@ -23,12 +25,12 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import de.uhh.l2g.plugins.model.Coordinator;
@@ -94,11 +96,15 @@ public class AdminUserManagement extends MVCPortlet {
 		}
 		request.setAttribute("reqProducer", reqProd);
 		
+		System.out.println(reqProd.getProducerId() +" "+ reqUser.getUserId() + " " + remoteUser.getUserId());
+		
 		// institutions
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
 		PermissionChecker permissionChecker = themeDisplay.getPermissionChecker();
 		
-		//l2go admin is logged in
+		//l2go admin is logged in 
+		//Remark: Test could be solved rolebased, current action is counter intuitive (ability to add admins 
+		//is generallaly expected to be independent from visibility of Institutions and Coord./Prod. Mapping))
 		boolean permissionAdmin = permissionChecker.hasPermission(remoteUser.getGroupId(), User.class.getName(), remoteUser.getPrimaryKey(), "ADD_L2GOADMIN");
 		List<Institution> cfL = new ArrayList<Institution>();//for coordinator
 		List<Institution> pfL = new ArrayList<Institution>();//for producer
@@ -129,14 +135,16 @@ public class AdminUserManagement extends MVCPortlet {
 		}
 		
 		//l2go coordinator is logged in
+		//check if current user can add producers... on site scope
 		boolean permissionCoordinator = permissionChecker.hasPermission(remoteUser.getGroupId(), User.class.getName(), remoteUser.getPrimaryKey(), "ADD_L2GOPRODUCER");		
 		Coordinator loggedInCoord = CoordinatorLocalServiceUtil.createCoordinator(remoteUser.getUserId());
 		if(permissionCoordinator){//logged in as coordinator
 			try{
 				loggedInCoord = CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId());
+				//add whole institution object which is assigned to coordinator
 				cfL.add(InstitutionLocalServiceUtil.getInstitution(loggedInCoord.getInstitutionId()));//institutions for coordinator
-				//coordinator and requested producer belong to different institutions
-				if(loggedInCoord.getInstitutionId()==reqProd.getInstitutionId())pfL=cfL;
+				//logged in is coordinator and requested producer belong to different institutions
+				if(loggedInCoord.getInstitutionId()==reqProd.getInstitutionId())pfL=cfL; //pfL = not assigned institutions
 				else {
 					if(reqProd.getInstitutionId()!=0){
 						Long instId = reqProd.getInstitutionId();
@@ -429,8 +437,9 @@ public class AdminUserManagement extends MVCPortlet {
 		} catch (PortalException e) {
 			Role role = createRole("L2Go Admin", u);
 			//add default Permissions
-			setL2GAdminPermissions(role, u);
+			setL2GBasePermissions(role, u);
 		}
+
 	}
 	
 	
@@ -454,29 +463,71 @@ public class AdminUserManagement extends MVCPortlet {
 		return RoleLocalServiceUtil.addRole(role);//save role to database	
 	}
 	
-	public void setL2GAdminPermissions(Role role, User u) throws SystemException{
+	
+	/**Permission Defaults on L2Go User Role creation
+	 * 
+	 * @param role - the Admin Role
+	 * @param u
+	 * @throws SystemException
+	 */
+	public void setL2GBasePermissions(Role role, User u) throws SystemException{
 		try {
-            Layout imPage = LayoutLocalServiceUtil.getFriendlyURLLayout(u.getGroupId(), false, "/institution-management");
-          
-			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), "com.liferay.portal.model.Layout", ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(imPage.getPlid()), role.getRoleId(), new String[] {ActionKeys.VIEW, ActionKeys.UPDATE});	
+			
+			//TODO: replace harcoded friendly-url element below, for dynmic portlet  page detection
+			
+			//Retrieve the Site Group, not personal Group to determine Role accesss, assumes Site(ScopeGroupId) is constant) 
+			Group guestGroup = GroupLocalServiceUtil.getGroup(u.getCompanyId(), GroupConstants.GUEST);
+			long guestGroupId = guestGroup.getGroupId();
+			
+			//Get layout to retrieve Plid for Portlet Page assumes title is constant and unique
+            Layout imPage = LayoutLocalServiceUtil.getFriendlyURLLayout(guestGroupId, false, "/institution-management");
+            
+			//Page Permission
+            ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), "com.liferay.portal.model.Layout", ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(imPage.getPlid()), role.getRoleId(), new String[] {ActionKeys.VIEW});	
+			
+			
+            //Portlet Permissions
 			//User Portlet
-			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), "lgadmininstitutionmanagement_WAR_lecture2goportlet", ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {ActionKeys.VIEW, ActionKeys.UPDATE});	
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), "lgadminusermanagement_WAR_lecture2goportlet", ResourceConstants.SCOPE_GROUP, String.valueOf(u.getUserId()), role.getRoleId(), new String[] {ActionKeys.VIEW});	
 			//User Model: Add Producer Permission
 			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), User.class.getName(), ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {"ADD_L2GOADMIN","ADD_L2GOCOORDINATOR","ADD_L2GOPRODUCER","ADD_L2GOSTUDENT"});
 			
 			//Institutions Portlet
-			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), "lgadmininstitutionmanagement_WAR_lecture2goportlet", ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {ActionKeys.VIEW, "VIEW_ALL_INSTITUTIONS", "VIEW_HOSTS", "ADD_INSTITUTIONS"});
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), "lgadmininstitutionmanagement_WAR_lecture2goportlet", ResourceConstants.SCOPE_GROUP, String.valueOf(guestGroupId), role.getRoleId(), new String[] {ActionKeys.VIEW, "VIEW_ALL_INSTITUTIONS", "VIEW_HOSTS", "ADD_INSTITUTIONS"});
 			//General Entity Defaults 
-			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution.class.getName(), ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {ActionKeys.VIEW, "ADD_SUB_INSTITUTION_ENTRY", "ADD_HOSTS", "EDIT_HOSTS", "EDIT_ALL_INSTITUTIONS", "VIEW_OWN_INSTITUTIONS" ,"EDIT_OWN_INSTITUTIONS" ,"DELETE_INSTITUTIONS", "DELETE_SUB_INSTITUTIONS", "EDIT_ROOT_INSTITUTION", "ADD_INSTITUTION_ENTRY", "ADD_SUB_INSTITUTION_ENTRY"});
-			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution_Host.class.getName(), ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {ActionKeys.VIEW});
-			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Host.class.getName(), ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {ActionKeys.VIEW});
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(guestGroupId), role.getRoleId(), new String[] {ActionKeys.VIEW, "ADD_SUB_INSTITUTION_ENTRY", "ADD_HOSTS", "EDIT_HOSTS", "EDIT_ALL_INSTITUTIONS", "VIEW_OWN_INSTITUTIONS" ,"EDIT_OWN_INSTITUTIONS" ,"DELETE_INSTITUTIONS", "DELETE_SUB_INSTITUTIONS", "EDIT_ROOT_INSTITUTION", "ADD_INSTITUTION_ENTRY", "ADD_SUB_INSTITUTION_ENTRY"});
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution_Host.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(guestGroupId), role.getRoleId(), new String[] {ActionKeys.VIEW});
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Host.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(guestGroupId), role.getRoleId(), new String[] {ActionKeys.VIEW});
+			
 			//Root Institution 
-			ResourcePermissionLocalServiceUtil.removeResourcePermission(u.getCompanyId(), Institution.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(InstitutionLocalServiceUtil.getRootByGroupId(u.getCompanyId(), u.getGroupId())), role.getRoleId(), "EDIT_INSTITUTION");
+			ResourcePermissionLocalServiceUtil.removeResourcePermission(u.getCompanyId(), Institution.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(InstitutionLocalServiceUtil.getRootByGroupId(u.getCompanyId(), guestGroupId)), role.getRoleId(), "EDIT_INSTITUTION");
+	
+			
+			
+			//Remove defaults for non L2G Users (https://github.com/liferay/liferay-portal/blob/master/portal-impl/src/resource-actions/sites.xml)
+			try {
+				Role guestRole = RoleLocalServiceUtil.getRole(u.getCompanyId(), "Guest");
+				ResourcePermissionLocalServiceUtil.removeResourcePermission(u.getCompanyId(), "com.liferay.portal.model.Layout", ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(imPage.getPlid()), guestRole.getRoleId(), ActionKeys.VIEW);
+				ResourcePermissionLocalServiceUtil.removeResourcePermission(u.getCompanyId(), "com.liferay.portal.model.Layout", ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(imPage.getPlid()), guestRole.getRoleId(), ActionKeys.ADD_DISCUSSION);
+			} catch (PortalException e) {
+				RoleLocalServiceUtil.checkSystemRoles();
+				e.printStackTrace();
+			}
+			try {
+				Role memberRole = RoleLocalServiceUtil.getRole(u.getCompanyId(), "Site Member");
+				ResourcePermissionLocalServiceUtil.removeResourcePermission(u.getCompanyId(), "com.liferay.portal.model.Layout", ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(imPage.getPlid()), memberRole.getRoleId(), ActionKeys.VIEW);
+				ResourcePermissionLocalServiceUtil.removeResourcePermission(u.getCompanyId(), "com.liferay.portal.model.Layout", ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(imPage.getPlid()), memberRole.getRoleId(), ActionKeys.ADD_DISCUSSION);
+				ResourcePermissionLocalServiceUtil.removeResourcePermission(u.getCompanyId(), "com.liferay.portal.model.Layout", ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(imPage.getPlid()), memberRole.getRoleId(), ActionKeys.CUSTOMIZE);
+			} catch (PortalException e) {
+				RoleLocalServiceUtil.checkSystemRoles();
+				e.printStackTrace();
+			}
+		
 		} catch (PortalException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
 	}
-	
+	 
 }
