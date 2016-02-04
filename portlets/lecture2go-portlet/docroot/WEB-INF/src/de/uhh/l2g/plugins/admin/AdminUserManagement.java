@@ -138,7 +138,7 @@ public class AdminUserManagement extends MVCPortlet {
 		//check if current user can add producers... on site scope
 		boolean permissionCoordinator = permissionChecker.hasPermission(remoteUser.getGroupId(), User.class.getName(), remoteUser.getPrimaryKey(), "ADD_L2GOPRODUCER");		
 		Coordinator loggedInCoord = CoordinatorLocalServiceUtil.createCoordinator(remoteUser.getUserId());
-		if(permissionCoordinator){//logged in as coordinator
+		if(permissionCoordinator && !permissionAdmin){//logged in as coordinator
 			try{
 				loggedInCoord = CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId());
 				//add whole institution object which is assigned to coordinator

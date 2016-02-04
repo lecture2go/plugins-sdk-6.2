@@ -99,11 +99,9 @@ public class TagcloudLocalServiceImpl extends TagcloudLocalServiceBaseImpl {
 		for(int i=0;i<tagCloudArrayString.size();i++) tagCloudString += tagCloudArrayString.get(i) +" ### ";
 		
 		Tagcloud tagcloud = new TagcloudImpl();
-		try {
+		try{
 			tagcloud = TagcloudLocalServiceUtil.getByObjectIdAndObjectClassType(objectId, className);
-		} catch (NoSuchTagcloudException e) {
-			e.printStackTrace();
-		}
+		}catch(NoSuchTagcloudException nste){}
 		
 		tagcloud.setTags(tagCloudString);
 		tagcloud.setObjectClassType(className);
