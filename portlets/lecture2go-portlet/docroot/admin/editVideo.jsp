@@ -108,7 +108,7 @@
 				<aui:input id="title" name="title" label="title" required="false" value="<%=reqVideo.getTitle()%>" />
 				
 				<aui:select size="1" name="crId" label="creators">
-					<aui:option value="">select-creator</aui:option>
+					<aui:option value="" selected="true">select-creator</aui:option>
 					<%for (int i = 0; i < creators.size(); i++) {
 						%><aui:option value='<%=creators.get(i).getCreatorId()%>'><%=creators.get(i).getJobTitle() + " "+creators.get(i).getLastName() + ", " + creators.get(i).getFirstName()%></aui:option><%
 					}%>	
@@ -750,6 +750,7 @@ AUI().use('aui-node',
   		        console.log(vars);
   		        $.template( "filesTemplate", $("#created") );
   		        $.tmpl( "filesTemplate", vars ).appendTo( "#creators" );
+  		     	crId.val( "" );
   			}
       	}
     );
