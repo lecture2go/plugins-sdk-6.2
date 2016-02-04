@@ -30,6 +30,7 @@
 		institutions = InstitutionLocalServiceUtil.getAllSortedAsTree(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 		permissionCoordinator = false;
 	}
+	
 	if(permissionCoordinator)institutions = InstitutionLocalServiceUtil.getByParent(CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getInstitutionId());
 
 	Locale[] languages = LanguageUtil.getAvailableLocales();
@@ -139,9 +140,9 @@
 					try{subInstitutionId = Video_InstitutionLocalServiceUtil.getByVideo(reqVideo.getVideoId()).get(0).getInstitutionId();}catch (Exception e){}
 					
 					for (Map.Entry<String, String> f : subInstitutions.entrySet()) {
-					if(f.getKey().equals(subInstitutionId.toString())){
-						%><aui:option value='<%=f.getKey()%>'><%=f.getValue()%></aui:option>
-						<%}
+						%>
+						<aui:option value='<%=f.getKey()%>'><%=f.getValue()%></aui:option>
+						<%
 					}%>
 					</aui:select>
 					
