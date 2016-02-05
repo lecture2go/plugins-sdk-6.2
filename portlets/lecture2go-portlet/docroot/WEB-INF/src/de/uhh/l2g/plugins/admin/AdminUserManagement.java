@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
@@ -25,6 +26,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
@@ -372,7 +374,22 @@ public class AdminUserManagement extends MVCPortlet {
 		return ret;
 	}
 	
-	public void initL2goRoles(User u) throws SystemException{
+	public void initL2goRoles(User u) throws SystemException, PortalException{
+		
+		//Retrieve Compnay and the Site Group, not the personal Group to determine Role Permission, assumes Site(ScopeGroupId) is constant) 
+		Group guestGroup = GroupLocalServiceUtil.getGroup(u.getCompanyId(), GroupConstants.GUEST);
+		long guestGroupId = guestGroup.getGroupId();		
+		Company c = CompanyLocalServiceUtil.getCompanyById(u.getCompanyId());
+		
+		//L2G Pages requiring role
+		//TODO: replace harcoded friendly-url element below, for dynmic portlet  page detection
+		//Get layout to retrieve Plid for Portlet Page assumes title is constant and unique
+        Layout imPage = LayoutLocalServiceUtil.getFriendlyURLLayout(guestGroupId, false, "/institution-management");
+        Layout uPage = LayoutLocalServiceUtil.getFriendlyURLLayout(guestGroupId, false, "/user-management");
+		//Remove defaults for non L2G Users (https://github.com/liferay/liferay-portal/blob/master/portal-impl/src/resource-actions/sites.xml)
+		setL2GDefaultRolesPermissions(c,imPage);
+		setL2GDefaultRolesPermissions(c,uPage);
+		
 		try {
 			RoleLocalServiceUtil.getRole(u.getCompanyId(), "L2Go Coordinator");//if role don't exist, go to catch block and create the role coordinator 
 		} catch (PortalException e) {
@@ -390,7 +407,7 @@ public class AdminUserManagement extends MVCPortlet {
 				//Institutions Portlet
 				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), "lgadmininstitutionmanagement_WAR_lecture2goportlet", ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {ActionKeys.VIEW});
 				//Institutions Models 
-				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(u.getGroupId()), role.getRoleId(), new String[] {ActionKeys.VIEW, "ADD_SUB_INSTITUTION_ENTRY", "ADD_HOSTS", "EDIT_HOSTS", "EDIT_ALL_INSTITUTIONS", "VIEW_OWN_INSTITUTIONS" ,"EDIT_OWN_INSTITUTIONS" ,"DELETE_INSTITUTIONS", "DELETE_SUB_INSTITUTIONS", "EDIT_ROOT_INSTITUTION", "ADD_INSTITUTION_ENTRY", "ADD_SUB_INSTITUTION_ENTRY"});
+				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(u.getGroupId()), role.getRoleId(), new String[] {ActionKeys.VIEW, "ADD_SUB_INSTITUTION_ENTRY", "ADD_HOSTS", "EDIT_HOSTS", "EDIT_ALL_INSTITUTIONS", "VIEW_OWN_INSTITUTIONS" ,"EDIT_OWN_INSTITUTIONS" ,"DELETE_INSTITUTIONS", "DELETE_SUB_INSTITUTIONS", "ADD_INSTITUTION_ENTRY", "ADD_SUB_INSTITUTION_ENTRY"});
 				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution_Host.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(u.getGroupId()), role.getRoleId(), new String[] {ActionKeys.VIEW});
 				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Host.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(u.getGroupId()), role.getRoleId(), new String[] {ActionKeys.VIEW});
 			} catch (PortalException e1) {
@@ -437,7 +454,8 @@ public class AdminUserManagement extends MVCPortlet {
 		} catch (PortalException e) {
 			Role role = createRole("L2Go Admin", u);
 			//add default Permissions
-			setL2GBasePermissions(role, u);
+			setL2GAdminPermissions(role, u, guestGroupId);
+			
 		}
 
 	}
@@ -466,21 +484,21 @@ public class AdminUserManagement extends MVCPortlet {
 	
 	/**Permission Defaults on L2Go User Role creation
 	 * 
+	 * Remark: Permission in Liferay are granted hierarchically Company > Group > Entity and cant't be revoked 
+	 * on a lower scope
+	 * 
+	 * Individiual Permissions only work when addResource is performed for each entity instance (Migration Portlet does not 
+	 * correctly add Resources for old entities yet)
+	 * 
 	 * @param role - the Admin Role
 	 * @param u
 	 * @throws SystemException
 	 */
-	public void setL2GBasePermissions(Role role, User u) throws SystemException{
+	public void setL2GAdminPermissions(Role role, User u, long layoutGroupId) throws SystemException{
 		try {
 			
-			//TODO: replace harcoded friendly-url element below, for dynmic portlet  page detection
 			
-			//Retrieve the Site Group, not personal Group to determine Role accesss, assumes Site(ScopeGroupId) is constant) 
-			Group guestGroup = GroupLocalServiceUtil.getGroup(u.getCompanyId(), GroupConstants.GUEST);
-			long guestGroupId = guestGroup.getGroupId();
-			
-			//Get layout to retrieve Plid for Portlet Page assumes title is constant and unique
-            Layout imPage = LayoutLocalServiceUtil.getFriendlyURLLayout(guestGroupId, false, "/institution-management");
+	        Layout imPage = LayoutLocalServiceUtil.getFriendlyURLLayout(layoutGroupId, false, "/institution-management");
             
 			//Page Permission
             ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), "com.liferay.portal.model.Layout", ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(imPage.getPlid()), role.getRoleId(), new String[] {ActionKeys.VIEW});	
@@ -488,44 +506,54 @@ public class AdminUserManagement extends MVCPortlet {
 			
             //Portlet Permissions
 			//User Portlet
-			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), "lgadminusermanagement_WAR_lecture2goportlet", ResourceConstants.SCOPE_GROUP, String.valueOf(u.getUserId()), role.getRoleId(), new String[] {ActionKeys.VIEW});	
-			//User Model: Add Producer Permission
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), "lgadminusermanagement_WAR_lecture2goportlet", ResourceConstants.SCOPE_GROUP, String.valueOf(layoutGroupId), role.getRoleId(), new String[] {ActionKeys.VIEW});	
+			//User Model: Add Permission
 			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), User.class.getName(), ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {"ADD_L2GOADMIN","ADD_L2GOCOORDINATOR","ADD_L2GOPRODUCER","ADD_L2GOSTUDENT"});
 			
 			//Institutions Portlet
-			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), "lgadmininstitutionmanagement_WAR_lecture2goportlet", ResourceConstants.SCOPE_GROUP, String.valueOf(guestGroupId), role.getRoleId(), new String[] {ActionKeys.VIEW, "VIEW_ALL_INSTITUTIONS", "VIEW_HOSTS", "ADD_INSTITUTIONS"});
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), "lgadmininstitutionmanagement_WAR_lecture2goportlet", ResourceConstants.SCOPE_GROUP, String.valueOf(layoutGroupId), role.getRoleId(), new String[] {ActionKeys.VIEW, "VIEW_ALL_INSTITUTIONS", "VIEW_HOSTS", "ADD_INSTITUTIONS"});
 			//General Entity Defaults 
-			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(guestGroupId), role.getRoleId(), new String[] {ActionKeys.VIEW, "ADD_SUB_INSTITUTION_ENTRY", "ADD_HOSTS", "EDIT_HOSTS", "EDIT_ALL_INSTITUTIONS", "VIEW_OWN_INSTITUTIONS" ,"EDIT_OWN_INSTITUTIONS" ,"DELETE_INSTITUTIONS", "DELETE_SUB_INSTITUTIONS", "EDIT_ROOT_INSTITUTION", "ADD_INSTITUTION_ENTRY", "ADD_SUB_INSTITUTION_ENTRY"});
-			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution_Host.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(guestGroupId), role.getRoleId(), new String[] {ActionKeys.VIEW});
-			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Host.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(guestGroupId), role.getRoleId(), new String[] {ActionKeys.VIEW});
-			
-			//Root Institution 
-			ResourcePermissionLocalServiceUtil.removeResourcePermission(u.getCompanyId(), Institution.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(InstitutionLocalServiceUtil.getRootByGroupId(u.getCompanyId(), guestGroupId)), role.getRoleId(), "EDIT_INSTITUTION");
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(layoutGroupId), role.getRoleId(), new String[] {ActionKeys.VIEW, "ADD_SUB_INSTITUTION_ENTRY", "ADD_HOSTS", "EDIT_HOSTS", "EDIT_ALL_INSTITUTIONS", "VIEW_OWN_INSTITUTIONS" ,"EDIT_OWN_INSTITUTIONS" ,"DELETE_INSTITUTIONS", "DELETE_SUB_INSTITUTIONS", "EDIT_ROOT_INSTITUTION", "ADD_INSTITUTION_ENTRY", "ADD_SUB_INSTITUTION_ENTRY"});
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution_Host.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(layoutGroupId), role.getRoleId(), new String[] {ActionKeys.VIEW});
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Host.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(layoutGroupId), role.getRoleId(), new String[] {ActionKeys.VIEW});
+						
 	
-			
-			
-			//Remove defaults for non L2G Users (https://github.com/liferay/liferay-portal/blob/master/portal-impl/src/resource-actions/sites.xml)
-			try {
-				Role guestRole = RoleLocalServiceUtil.getRole(u.getCompanyId(), "Guest");
-				ResourcePermissionLocalServiceUtil.removeResourcePermission(u.getCompanyId(), "com.liferay.portal.model.Layout", ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(imPage.getPlid()), guestRole.getRoleId(), ActionKeys.VIEW);
-				ResourcePermissionLocalServiceUtil.removeResourcePermission(u.getCompanyId(), "com.liferay.portal.model.Layout", ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(imPage.getPlid()), guestRole.getRoleId(), ActionKeys.ADD_DISCUSSION);
-			} catch (PortalException e) {
-				RoleLocalServiceUtil.checkSystemRoles();
-				e.printStackTrace();
-			}
-			try {
-				Role memberRole = RoleLocalServiceUtil.getRole(u.getCompanyId(), "Site Member");
-				ResourcePermissionLocalServiceUtil.removeResourcePermission(u.getCompanyId(), "com.liferay.portal.model.Layout", ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(imPage.getPlid()), memberRole.getRoleId(), ActionKeys.VIEW);
-				ResourcePermissionLocalServiceUtil.removeResourcePermission(u.getCompanyId(), "com.liferay.portal.model.Layout", ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(imPage.getPlid()), memberRole.getRoleId(), ActionKeys.ADD_DISCUSSION);
-				ResourcePermissionLocalServiceUtil.removeResourcePermission(u.getCompanyId(), "com.liferay.portal.model.Layout", ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(imPage.getPlid()), memberRole.getRoleId(), ActionKeys.CUSTOMIZE);
-			} catch (PortalException e) {
-				RoleLocalServiceUtil.checkSystemRoles();
-				e.printStackTrace();
-			}
 		
 		} catch (PortalException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+		}
+		
+	}
+	
+	/**Handle Permissions for default roles to restrict public pages for non LG_ Roles
+	 * 
+	 * By default Liferay adds permissions for pages (layouts) on individual scope
+	 * @param role
+	 * @param u
+	 * @param page
+	 * @throws SystemException
+	 * @throws PortalException
+	 */
+	public void setL2GDefaultRolesPermissions(Company c, Layout page) throws SystemException, PortalException{
+		
+		//Remove defaults for non L2G Users (https://github.com/liferay/liferay-portal/blob/master/portal-impl/src/resource-actions/sites.xml)
+		try {
+			Role guestRole = RoleLocalServiceUtil.getRole(c.getCompanyId(), "Guest");
+			ResourcePermissionLocalServiceUtil.removeResourcePermission(c.getCompanyId(), "com.liferay.portal.model.Layout", ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(page.getPlid()), guestRole.getRoleId(), ActionKeys.VIEW);
+			ResourcePermissionLocalServiceUtil.removeResourcePermission(c.getCompanyId(), "com.liferay.portal.model.Layout", ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(page.getPlid()), guestRole.getRoleId(), ActionKeys.ADD_DISCUSSION);
+		} catch (PortalException e) {
+			RoleLocalServiceUtil.checkSystemRoles();
+			e.printStackTrace();
+		}
+		try {
+			Role memberRole = RoleLocalServiceUtil.getRole(c.getCompanyId(), "Site Member");
+			ResourcePermissionLocalServiceUtil.removeResourcePermission(c.getCompanyId(), "com.liferay.portal.model.Layout", ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(page.getPlid()), memberRole.getRoleId(), ActionKeys.VIEW);
+			ResourcePermissionLocalServiceUtil.removeResourcePermission(c.getCompanyId(), "com.liferay.portal.model.Layout", ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(page.getPlid()), memberRole.getRoleId(), ActionKeys.ADD_DISCUSSION);
+			ResourcePermissionLocalServiceUtil.removeResourcePermission(c.getCompanyId(), "com.liferay.portal.model.Layout", ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(page.getPlid()), memberRole.getRoleId(), ActionKeys.CUSTOMIZE);
+		} catch (PortalException e) {
+			RoleLocalServiceUtil.checkSystemRoles();
+			e.printStackTrace();
 		}
 		
 	}
