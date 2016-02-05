@@ -70,7 +70,7 @@ public class VideoImpl extends VideoBaseImpl {
 		this.lectureseriesUrl = lectureseriesUrl;
 	}
 
-	private Integer accessPermitted;
+	private Integer accessPermitted = 0;
 	
 	public Integer getAccessPermitted() {
 		return accessPermitted;
