@@ -386,42 +386,28 @@ public class AdminUserManagement extends MVCPortlet {
 		//Get layout to retrieve Plid for Portlet Page assumes title is constant and unique
         Layout imPage = LayoutLocalServiceUtil.getFriendlyURLLayout(guestGroupId, false, "/institution-management");
         Layout uPage = LayoutLocalServiceUtil.getFriendlyURLLayout(guestGroupId, false, "/user-management");
-		//Remove defaults for non L2G Users (https://github.com/liferay/liferay-portal/blob/master/portal-impl/src/resource-actions/sites.xml)
-		setL2GDefaultRolesPermissions(c,imPage);
-		setL2GDefaultRolesPermissions(c,uPage);
+	
 		
 		try {
 			RoleLocalServiceUtil.getRole(u.getCompanyId(), "L2Go Coordinator");//if role don't exist, go to catch block and create the role coordinator 
 		} catch (PortalException e) {
 			// delete l2g coordinators from custom table
-			List<Coordinator> cL = CoordinatorLocalServiceUtil.getCoordinators(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+			/**List<Coordinator> cL = CoordinatorLocalServiceUtil.getCoordinators(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 			for (int i = 0; i < cL.size(); i++)
-				CoordinatorLocalServiceUtil.deleteCoordinator(cL.get(i));
+				CoordinatorLocalServiceUtil.deleteCoordinator(cL.get(i));*/
 			
 			Role role = createRole("L2Go Coordinator", u);
+			
 			//add default Permissions
-			try {
-				//User Model: Add Producer Permission
-				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), User.class.getName(), ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {"ADD_L2GOPRODUCER"});
-				
-				//Institutions Portlet
-				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), "lgadmininstitutionmanagement_WAR_lecture2goportlet", ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {ActionKeys.VIEW});
-				//Institutions Models 
-				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(u.getGroupId()), role.getRoleId(), new String[] {ActionKeys.VIEW, "ADD_SUB_INSTITUTION_ENTRY", "ADD_HOSTS", "EDIT_HOSTS", "EDIT_ALL_INSTITUTIONS", "VIEW_OWN_INSTITUTIONS" ,"EDIT_OWN_INSTITUTIONS" ,"DELETE_INSTITUTIONS", "DELETE_SUB_INSTITUTIONS", "ADD_INSTITUTION_ENTRY", "ADD_SUB_INSTITUTION_ENTRY"});
-				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution_Host.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(u.getGroupId()), role.getRoleId(), new String[] {ActionKeys.VIEW});
-				ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Host.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(u.getGroupId()), role.getRoleId(), new String[] {ActionKeys.VIEW});
-			} catch (PortalException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			setL2GCoordinatorPermissions(role, u, guestGroupId);
 		}
 		try {
 			RoleLocalServiceUtil.getRole(u.getCompanyId(), "L2Go Producer");
 		} catch (PortalException e) {
 			// delete l2g producer from custom table
-			List<Producer> cL = ProducerLocalServiceUtil.getProducers(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+			/**List<Producer> cL = ProducerLocalServiceUtil.getProducers(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 			for (int i = 0; i < cL.size(); i++)
-				ProducerLocalServiceUtil.deleteProducer(cL.get(i));
+				ProducerLocalServiceUtil.deleteProducer(cL.get(i)); */
 			Role role = createRole("L2Go Producer", u);
 			//add default Permissions
 			try {
@@ -456,6 +442,9 @@ public class AdminUserManagement extends MVCPortlet {
 			//add default Permissions
 			setL2GAdminPermissions(role, u, guestGroupId);
 			
+			//Remove defaults for non L2G Users (https://github.com/liferay/liferay-portal/blob/master/portal-impl/src/resource-actions/sites.xml)
+			setL2GDefaultRolesPermissions(c,imPage);
+			setL2GDefaultRolesPermissions(c,uPage);		
 		}
 
 	}
@@ -482,7 +471,7 @@ public class AdminUserManagement extends MVCPortlet {
 	}
 	
 	
-	/**Permission Defaults on L2Go User Role creation
+	/**Permission Defaults on L2Go Admin Role creation
 	 * 
 	 * Remark: Permission in Liferay are granted hierarchically Company > Group > Entity and cant't be revoked 
 	 * on a lower scope
@@ -498,11 +487,8 @@ public class AdminUserManagement extends MVCPortlet {
 		try {
 			
 			
-	        Layout imPage = LayoutLocalServiceUtil.getFriendlyURLLayout(layoutGroupId, false, "/institution-management");
-            
-			//Page Permission
-            ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), "com.liferay.portal.model.Layout", ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(imPage.getPlid()), role.getRoleId(), new String[] {ActionKeys.VIEW});	
-			
+			setPageViewPermission(u.getCompanyId(),layoutGroupId, role,"/institution-management");
+			setPageViewPermission(u.getCompanyId(),layoutGroupId, role,"/user-management");
 			
             //Portlet Permissions
 			//User Portlet
@@ -513,9 +499,49 @@ public class AdminUserManagement extends MVCPortlet {
 			//Institutions Portlet
 			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), "lgadmininstitutionmanagement_WAR_lecture2goportlet", ResourceConstants.SCOPE_GROUP, String.valueOf(layoutGroupId), role.getRoleId(), new String[] {ActionKeys.VIEW, "VIEW_ALL_INSTITUTIONS", "VIEW_HOSTS", "ADD_INSTITUTIONS"});
 			//General Entity Defaults 
-			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(layoutGroupId), role.getRoleId(), new String[] {ActionKeys.VIEW, "ADD_SUB_INSTITUTION_ENTRY", "ADD_HOSTS", "EDIT_HOSTS", "EDIT_ALL_INSTITUTIONS", "VIEW_OWN_INSTITUTIONS" ,"EDIT_OWN_INSTITUTIONS" ,"DELETE_INSTITUTIONS", "DELETE_SUB_INSTITUTIONS", "EDIT_ROOT_INSTITUTION", "ADD_INSTITUTION_ENTRY", "ADD_SUB_INSTITUTION_ENTRY"});
-			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution_Host.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(layoutGroupId), role.getRoleId(), new String[] {ActionKeys.VIEW});
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(layoutGroupId), role.getRoleId(), new String[] {ActionKeys.VIEW, "ADD_SUB_INSTITUTION_ENTRY", "ADD_HOSTS", "EDIT_HOSTS", "EDIT_ALL_INSTITUTIONS", "VIEW_OWN_INSTITUTIONS" ,"EDIT_OWN_INSTITUTIONS" ,"DELETE_INSTITUTIONS", "DELETE_SUB_INSTITUTIONS", "ADD_INSTITUTION_ENTRY", "ADD_SUB_INSTITUTION_ENTRY"});
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Host.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(layoutGroupId), role.getRoleId(), new String[] {ActionKeys.VIEW, ActionKeys.UPDATE, ActionKeys.DELETE, "ADD_HOST", "EDIT_HOST"});
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution_Host.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(layoutGroupId), role.getRoleId(), new String[] {ActionKeys.VIEW, ActionKeys.DELETE, "ADD_LINK"});
+						
+		
+		} catch (PortalException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+	}
+	
+	/**Permission Defaults on L2Go Coordinator Role creation
+	 * 
+	 * Remark: Permission in Liferay are granted hierarchically Company > Group > Entity and cant't be revoked 
+	 * on a lower scope
+	 * 
+	 * Individiual Permissions only work when addResource is performed for each entity instance (Migration Portlet does not 
+	 * correctly add Resources for old entities yet)
+	 * 
+	 * @param role - the Admin Role
+	 * @param u
+	 * @throws SystemException
+	 */
+	public void setL2GCoordinatorPermissions(Role role, User u, long layoutGroupId) throws SystemException{
+		try {
+			
+			
+			setPageViewPermission(u.getCompanyId(),layoutGroupId, role,"/institution-management");
+			setPageViewPermission(u.getCompanyId(),layoutGroupId, role,"/user-management");
+			
+            //Portlet Permissions
+			//User Portlet
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), "lgadminusermanagement_WAR_lecture2goportlet", ResourceConstants.SCOPE_GROUP, String.valueOf(layoutGroupId), role.getRoleId(), new String[] {ActionKeys.VIEW});	
+			//User Model: Add Permission
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), User.class.getName(), ResourceConstants.SCOPE_COMPANY, String.valueOf(u.getCompanyId()), role.getRoleId(), new String[] {"ADD_L2GOPRODUCER","ADD_L2GOSTUDENT"});
+			
+			//Institutions Portlet
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), "lgadmininstitutionmanagement_WAR_lecture2goportlet", ResourceConstants.SCOPE_GROUP, String.valueOf(layoutGroupId), role.getRoleId(), new String[] {ActionKeys.VIEW});
+			//General Entity Defaults 
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(layoutGroupId), role.getRoleId(), new String[] {ActionKeys.VIEW, "ADD_SUB_INSTITUTION_ENTRY", "VIEW_OWN_INSTITUTIONS" ,"EDIT_OWN_INSTITUTIONS", "DELETE_SUB_INSTITUTIONS", "ADD_SUB_INSTITUTION_ENTRY"});
 			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Host.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(layoutGroupId), role.getRoleId(), new String[] {ActionKeys.VIEW});
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution_Host.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(layoutGroupId), role.getRoleId(), new String[] {ActionKeys.VIEW});
 						
 	
 		
@@ -526,7 +552,11 @@ public class AdminUserManagement extends MVCPortlet {
 		
 	}
 	
+	
+	
 	/**Handle Permissions for default roles to restrict public pages for non LG_ Roles
+	 * 
+	 * All layout permissions are defined on individual scope for instances of layouts (identified by plid)
 	 * 
 	 * By default Liferay adds permissions for pages (layouts) on individual scope
 	 * @param role
@@ -557,5 +587,13 @@ public class AdminUserManagement extends MVCPortlet {
 		}
 		
 	}
-	 
+	
+	private void setPageViewPermission(long companyId, long groupId, Role role, String friendlyurl) throws PortalException, SystemException{
+ 
+		Layout imPage = LayoutLocalServiceUtil.getFriendlyURLLayout(groupId, false, friendlyurl);
+       
+		//Page Permission
+        ResourcePermissionLocalServiceUtil.setResourcePermissions(companyId, "com.liferay.portal.model.Layout", ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(imPage.getPlid()), role.getRoleId(), new String[] {ActionKeys.VIEW});			
+		
+	}
 }

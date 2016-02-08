@@ -97,7 +97,7 @@ public class ProducerLocalServiceImpl extends ProducerLocalServiceBaseImpl {
 		p.setLastName(u.getLastName());
 		p.setLastLoginDate(u.getLastLoginDate());
 		p.setEmailAddress(u.getEmailAddress());
-		p.setHomeDir(PropsUtil.get("lecture2go.media.repository")+"/"+HostLocalServiceUtil.getByHostId(p.getHostId()).getName()+"/"+p.getHomeDir());
+		p.setHomeDir(PropsUtil.get("lecture2go.media.repository")+"/"+HostLocalServiceUtil.getByHostId(p.getHostId()).getServerRoot()+"/"+p.getHomeDir());
 		return p;
 	}
 	

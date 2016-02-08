@@ -2,6 +2,7 @@
 <%@ page import="de.uhh.l2g.plugins.model.Institution" %>
 <%@ page import="com.liferay.portal.kernel.dao.search.ResultRow" %>
 <%@ page import="de.uhh.l2g.plugins.model.Host" %>
+<%@ page import="de.uhh.l2g.plugins.model.Institution_Host" %>
 <%@ page import="de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil" %>
 <%@ page import="de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil" %>
 <%@ page import="de.uhh.l2g.plugins.service.HostLocalServiceUtil" %>
@@ -42,13 +43,15 @@ long groupId = scopeGroupId;
 //Company Id of Application
 long companyId = themeDisplay.getLayout().getCompanyId();
 String companyIdString = String.valueOf(companyId);
+String groupIdString = String.valueOf(groupId);
 
 //Portlet Instance Id (can be string)
 String institutionPortletPrimKey = portletDisplay.getResourcePK();
 //On Model Level:
-String portletModel = "de.uhh.l2g.plugins.model.Institution";
-//On Entity Level:
-String institutionModel = "de.uhh.l2g.plugins.model.Institution";
+String institutionModel = Institution.class.getName();
+String hostModel = Host.class.getName();
+String institutionHostModel = Institution_Host.class.getName();
+
 
 %>
 
@@ -87,21 +90,21 @@ int maxOrder = InstitutionLocalServiceUtil.getMaxSortByParentId(rootId)+1;
 <c:if test='<%=  permissionChecker.hasPermission(groupId, institutionPortletName, companyIdString, "PERMISSIONS") %>'>
 <%-- Permission for setting permissions regarding model on group/entity scope--%>
 
-<%--Global Permission for setting permissions regarding plugin on company scope--%>
+<%--Model Permission for setting permissions on company scope--%>
 Company Permissions:
 	<liferay-security:permissionsURL
-	    modelResource="<%= portletModel %>"
-	    modelResourceDescription="Model Global"
+	    modelResource="<%= institutionModel %>"
+	    modelResourceDescription="<%= institutionModel  %>"
 	    resourcePrimKey="<%= companyIdString %>"
 	    var="globalmodelpermissionsURL" />
 
 	<liferay-ui:icon image="permissions" url="<%= globalmodelpermissionsURL %>" />
-<%--Permission for setting permissions regarding plugin on group scope--%>
+<%--Model Permission for setting permissions on group scope--%>
 Company Institution Permissions:
 	<liferay-security:permissionsURL
-	    modelResource="<%= Institution.class.getName()  %>"
+	    modelResource="<%= institutionModel %>"
 	    modelResourceDescription="Model Site"
-	    resourcePrimKey="<%= String.valueOf(companyId) %>"
+	    resourcePrimKey="<%= groupIdString %>"
 	    var="modelpermissionsURL" />
 
 	<liferay-ui:icon image="permissions" url="<%= modelpermissionsURL %>" />
@@ -109,22 +112,14 @@ Company Institution Permissions:
 <%--Permission for setting permissions regarding institution model on group scope--%>
 Group Institution Permissions:
 	<liferay-security:permissionsURL
-	    modelResource="<%= Institution.class.getName()  %>"
+	    modelResource="<%= hostModel  %>"
 	    modelResourceDescription="Model Site"
-	    resourcePrimKey="<%= String.valueOf(groupId) %>"
+	    resourcePrimKey="<%= groupIdString %>"
 	    var="institutionmodelpermissionsURL" />
 
 	<liferay-ui:icon image="permissions" url="<%= institutionmodelpermissionsURL %>" />
 	
-<%--Permission for setting permissions regarding concrete entity Root--%>
-Root Institution Permissions:
-		<liferay-security:permissionsURL
-	    modelResource="<%= Institution.class.getName() %>"
-	    modelResourceDescription="<%= root.getName() %>"
-	    resourcePrimKey="<%= String.valueOf(rootId) %>"
-	    var="rootentitypermissionsURL" />
 
-	<liferay-ui:icon image="permissions" url="<%= rootentitypermissionsURL %>" />
 </c:if>
 
 <%--ADD INSTITUTION--%>
@@ -173,7 +168,7 @@ Root Institution Permissions:
 			    	extended="<%= false %>"
 			    	persistState="<%= true %>">
 					<c:if  test='<%= permissionChecker.hasPermission(groupId, institutionModel, groupId, "ADD_HOSTS") %>'>
-	      
+	       
 						<aui:form action="<%= addStreamingServerURL %>" name="<portlet:namespace />fm" inlineLabel="true">
 						<aui:button-row>
 				 	    <aui:fieldset column="true">
