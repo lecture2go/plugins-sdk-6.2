@@ -1,9 +1,8 @@
 package de.uhh.l2g.plugins.guest;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -12,71 +11,110 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-
-import org.json.JSONArray;
-import org.json.JSONException;
+import javax.servlet.http.Cookie;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import de.uhh.l2g.plugins.NoSuchLicenseException;
 import de.uhh.l2g.plugins.NoSuchVideoException;
-import de.uhh.l2g.plugins.model.Category;
-import de.uhh.l2g.plugins.model.Creator;
-import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Lectureseries;
-import de.uhh.l2g.plugins.model.Lectureseries_Institution;
 import de.uhh.l2g.plugins.model.License;
 import de.uhh.l2g.plugins.model.Metadata;
 import de.uhh.l2g.plugins.model.Segment;
-import de.uhh.l2g.plugins.model.Tagcloud;
-import de.uhh.l2g.plugins.model.Term;
 import de.uhh.l2g.plugins.model.Video;
-import de.uhh.l2g.plugins.model.Video_Category;
-import de.uhh.l2g.plugins.model.Video_Creator;
 import de.uhh.l2g.plugins.model.Video_Institution;
 import de.uhh.l2g.plugins.model.Video_Lectureseries;
-import de.uhh.l2g.plugins.model.impl.CategoryImpl;
-import de.uhh.l2g.plugins.model.impl.CreatorImpl;
-import de.uhh.l2g.plugins.model.impl.InstitutionImpl;
 import de.uhh.l2g.plugins.model.impl.LectureseriesImpl;
 import de.uhh.l2g.plugins.model.impl.LicenseImpl;
 import de.uhh.l2g.plugins.model.impl.MetadataImpl;
-import de.uhh.l2g.plugins.model.impl.SegmentImpl;
-import de.uhh.l2g.plugins.model.impl.TagcloudImpl;
 import de.uhh.l2g.plugins.model.impl.VideoImpl;
-import de.uhh.l2g.plugins.model.impl.Video_CategoryImpl;
-import de.uhh.l2g.plugins.model.impl.Video_CreatorImpl;
-import de.uhh.l2g.plugins.model.impl.Video_InstitutionImpl;
-import de.uhh.l2g.plugins.model.impl.Video_LectureseriesImpl;
-import de.uhh.l2g.plugins.service.CategoryLocalServiceUtil;
-import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
-import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
-import de.uhh.l2g.plugins.service.Lectureseries_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LicenseLocalServiceUtil;
 import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
-import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
-import de.uhh.l2g.plugins.service.TagcloudLocalServiceUtil;
-import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
-import de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil;
-import de.uhh.l2g.plugins.service.Video_CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
-import de.uhh.l2g.plugins.util.FFmpegManager;
-import de.uhh.l2g.plugins.util.ProzessManager;
-
-//test comment 2
+import de.uhh.l2g.plugins.util.AutocompleteManager;
 
 public class OpenAccessVideos extends MVCPortlet {
-
+	@Override
+	public void serveResource( ResourceRequest resourceRequest, ResourceResponse resourceResponse ) throws IOException, PortletException {
+		String resourceID = resourceRequest.getResourceID();
+		String cmd = ParamUtil.getString(resourceRequest, Constants.CMD);
+		if (cmd.equals("get_search_words")) {
+			getSearchWords(resourceRequest, resourceResponse);
+		}
+		
+		try{
+			if(resourceID.equals("showSegments")){
+				String vId = ParamUtil.getString(resourceRequest, "videoId");
+				Long vID = new Long(vId);
+				com.liferay.portal.kernel.json.JSONArray ja = JSONFactoryUtil.createJSONArray();
+				//get segments for video and convert to json array
+				try {
+					List<Segment> sl= SegmentLocalServiceUtil.getSegmentsByVideoId(vID);
+					ListIterator<Segment> sIt = sl.listIterator();
+					while(sIt.hasNext()){
+						Segment s = sIt.next();
+						JSONObject jo = JSONFactoryUtil.createJSONObject();
+						jo.put("chapter", s.getChapter());
+						jo.put("description", s.getDescription());
+						jo.put("end", s.getEnd());
+						jo.put("image", s.getImage());
+						jo.put("number", s.getNumber());
+						jo.put("segmentId", s.getPrimaryKey());
+						jo.put("seconds", s.getSeconds());
+						jo.put("start", s.getStart());
+						jo.put("title", s.getTitle());
+						jo.put("userId", s.getUserId());
+						jo.put("videoId", s.getVideoId());
+						jo.put("previousSegmentId", SegmentLocalServiceUtil.getPreviusSegmentId(s.getSegmentId()));
+						ja.put(jo);
+					}
+					
+				} catch (PortalException e) {
+					e.printStackTrace();
+				} catch (SystemException e) {
+					e.printStackTrace();
+				}
+				writeJSON(resourceRequest, resourceResponse, ja);
+			}			
+		}catch (NullPointerException npe){}
+		
+	}
+	
+	private void getSearchWords(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws IOException, PortletException {
+		String searchWord = "";
+		String w = ParamUtil.getString(resourceRequest, "searchWord");
+		if(w.length()>=3)searchWord=w;
+		
+		AutocompleteManager acm = new AutocompleteManager();
+		List<String> arrStr = new ArrayList<String>();
+		
+		JSONArray wordsJSONArray = JSONFactoryUtil.createJSONArray();
+		JSONObject strJSON = null;
+		try {
+			arrStr = acm.getAutocompleteResults(searchWord);
+			for (int i=0; i<arrStr.size();i++) {
+				strJSON = JSONFactoryUtil.createJSONObject();
+				strJSON.put("word", arrStr.get(i));
+				wordsJSONArray.put(strJSON);
+			}
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		PrintWriter out = resourceResponse.getWriter();
+		out.println(wordsJSONArray);
+	}
+	
 	public void addFilter(ActionRequest request, ActionResponse response){
 		String jspPage = request.getParameter("jspPage");
 		Long institutionId = new Long(request.getParameter("institutionId"));
@@ -87,8 +125,8 @@ public class OpenAccessVideos extends MVCPortlet {
 		String searchQuery = "";
 		if (request.getParameter("searchQuery") != null) {
 			searchQuery = request.getParameter("searchQuery");
-		} 
-		
+		}
+
 		response.setRenderParameter("institutionId", institutionId+"");
 		response.setRenderParameter("parentInstitutionId", parentInstitutionId+"");
 		response.setRenderParameter("termId", termId+"");
@@ -200,14 +238,35 @@ public class OpenAccessVideos extends MVCPortlet {
 	    	if(video.getOpenAccess()==1){
 	    		video.setAccessPermitted(1);
 	    	}else{
-	    		if(video.getPassword().length()>0 || lectureseries.getPassword().length()>0){
+	    		//1. authentication by lecture series password
+	    		if(lectureseries.getPassword().length()>0){
 	    			String pwd ="";
 	    			if(lectureseries.getPassword().trim().length()>0)pwd=lectureseries.getPassword();
-	    			if(video.getPassword().trim().length()>0)pwd=video.getPassword();
 	    			//
 	    			if(password.equals(pwd))video.setAccessPermitted(1);
 	    			else video.setAccessPermitted(0);
 	    		}
+
+	    		//2. authentication by cookie
+	    		Cookie[] c = request.getCookies();
+	    		for(int i=0; i<c.length;i++){
+	    			Cookie coo = c[i];
+	    			String cooVal ="";
+	    			if(coo.getName().equals("L2G_LSID"))cooVal=c[i].getValue();
+	    			//has been already logged in
+	    			if(cooVal.equals(video.getLectureseriesId()+"")){
+	    				video.setAccessPermitted(1);
+	    			}
+	    		}
+	    		
+	    		//3. authentication by video password
+	    		if(video.getPassword().length()>0){
+	    			String pwd ="";
+	    			if(video.getPassword().trim().length()>0)pwd=video.getPassword();
+	    			//
+	    			if(password.equals(pwd))video.setAccessPermitted(1);
+	    			else video.setAccessPermitted(0);
+	    		}	    		
 	    	}
 	    }
 	    
@@ -225,69 +284,6 @@ public class OpenAccessVideos extends MVCPortlet {
 	    request.setAttribute("objectId",oid);
 	    
 		response.setRenderParameter("jspPage","/guest/videoDetails.jsp");
-	}
-	
-	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws PortletException, IOException {
-		String userID = resourceRequest.getRemoteUser();
-		Long userId = new Long(userID);
-		String resourceID = resourceRequest.getResourceID();
-		Long videoId = ParamUtil.getLong(resourceRequest, "videoId");
-		Video video = VideoLocalServiceUtil.getFullVideo(videoId);
-		
-		Metadata metadata = new MetadataImpl();
-		try {
-			Long metadataId = video.getMetadataId();
-			metadata = MetadataLocalServiceUtil.getMetadata(metadataId);
-		} catch (PortalException e) {
-			e.printStackTrace();
-		} catch (SystemException e) {
-			e.printStackTrace();
-		}
-		License license = new LicenseImpl();
-		try {
-			license = LicenseLocalServiceUtil.getByVideoId(video.getVideoId());
-		} catch (NoSuchLicenseException e1) {
-			e1.printStackTrace();
-		} catch (SystemException e1) {
-			e1.printStackTrace();
-		}
-		
-		
-		if(resourceID.equals("showSegments")){
-			String vId = ParamUtil.getString(resourceRequest, "videoId");
-			Long vID = new Long(vId);
-			com.liferay.portal.kernel.json.JSONArray ja = JSONFactoryUtil.createJSONArray();
-			//get segments for video and convert to json array
-			try {
-				List<Segment> sl= SegmentLocalServiceUtil.getSegmentsByVideoId(vID);
-				ListIterator<Segment> sIt = sl.listIterator();
-				while(sIt.hasNext()){
-					Segment s = sIt.next();
-					JSONObject jo = JSONFactoryUtil.createJSONObject();
-					jo.put("chapter", s.getChapter());
-					jo.put("description", s.getDescription());
-					jo.put("end", s.getEnd());
-					jo.put("image", s.getImage());
-					jo.put("number", s.getNumber());
-					jo.put("segmentId", s.getPrimaryKey());
-					jo.put("seconds", s.getSeconds());
-					jo.put("start", s.getStart());
-					jo.put("title", s.getTitle());
-					jo.put("userId", s.getUserId());
-					jo.put("videoId", s.getVideoId());
-					jo.put("previousSegmentId", SegmentLocalServiceUtil.getPreviusSegmentId(s.getSegmentId()));
-					ja.put(jo);
-				}
-				
-			} catch (PortalException e) {
-				e.printStackTrace();
-			} catch (SystemException e) {
-				e.printStackTrace();
-			}
-			
-			writeJSON(resourceRequest, resourceResponse, ja);
-		}
-		
 	}
 	
 }
