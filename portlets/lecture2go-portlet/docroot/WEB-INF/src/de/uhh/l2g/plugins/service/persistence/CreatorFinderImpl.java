@@ -139,6 +139,9 @@ public class CreatorFinderImpl extends BasePersistenceImpl<Creator> implements C
 		} else if (hasVideos) {
 			query += vquery;
 		}
+		else { ////surpress sql error on empty lists 
+			query += "SELECT creatorId FROM LG_Video_Creator WHERE videoId IN (0)";
+		}
 		
 		query += ") AS a JOIN LG_Creator AS c	ON a.creatorId = c.creatorId ORDER BY c.lastName";
 					

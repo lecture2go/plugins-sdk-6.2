@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.ListIterator;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -39,6 +40,7 @@ import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 public class AdminUserManagement extends MVCPortlet {
 
 	public void viewRole(ActionRequest request, ActionResponse response) throws SystemException, PortalException {
+		//updateUsersScreenName();
 		// logged in user
 		User remoteUser = UserLocalServiceUtil.getUser(new Long(request.getRemoteUser()));
 		
@@ -99,11 +101,15 @@ public class AdminUserManagement extends MVCPortlet {
 			List<User> allCoord = UserLocalServiceUtil.getRoleUsers(RoleLocalServiceUtil.getRole(remoteUser.getCompanyId(), "L2Go Coordinator").getRoleId()); 
 			List<Institution> assignedInstitutions = new ArrayList<Institution>();		
 			try{
-				for (int i = 0; i < allCoord.size(); i++)
-				assignedInstitutions.add(InstitutionLocalServiceUtil.getInstitution(CoordinatorLocalServiceUtil.getCoordinator(allCoord.get(i).getUserId()).getInstitutionId()));
+				for (int i = 0; i < allCoord.size(); i++){
+					Long cId = allCoord.get(i).getUserId();
+					Coordinator c = CoordinatorLocalServiceUtil.getCoordinator(cId);
+					Institution instId = InstitutionLocalServiceUtil.getInstitution(c.getInstitutionId());
+					assignedInstitutions.add(instId);
+				}
 			}catch(Exception e){}
 			List<Institution> notAssignedInstitutions = new ArrayList<Institution>();
-			for(int i = 0; i < allFacil.size(); i++){
+  			for(int i = 0; i < allFacil.size(); i++){
 				boolean assigned = false;
 				for (int j = 0; j < assignedInstitutions.size(); j++){
 					if(allFacil.get(i).equals(assignedInstitutions.get(j)) && allFacil.get(i).getInstitutionId()!=reqCoord.getInstitutionId())assigned=true;
@@ -118,15 +124,22 @@ public class AdminUserManagement extends MVCPortlet {
 		//l2go coordinator is logged in
 		boolean permissionCoordinator = permissionChecker.hasPermission(remoteUser.getGroupId(), User.class.getName(), remoteUser.getPrimaryKey(), "ADD_L2GOPRODUCER");		
 		Coordinator loggedInCoord = CoordinatorLocalServiceUtil.createCoordinator(remoteUser.getUserId());
-		if(permissionCoordinator){//logged in as coordinator
+		if(permissionCoordinator && !permissionAdmin){//logged in as coordinator
 			try{
 				loggedInCoord = CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId());
 				cfL.add(InstitutionLocalServiceUtil.getInstitution(loggedInCoord.getInstitutionId()));//institutions for coordinator
 				//coordinator and requested producer belong to different institutions
 				if(loggedInCoord.getInstitutionId()==reqProd.getInstitutionId())pfL=cfL;
 				else {
-					if(reqProd.getInstitutionId()!=0) pfL.add(InstitutionLocalServiceUtil.getInstitution(reqProd.getInstitutionId()));
-					else pfL.add(InstitutionLocalServiceUtil.getInstitution(loggedInCoord.getInstitutionId()));
+					if(reqProd.getInstitutionId()!=0){
+						Long instId = reqProd.getInstitutionId();
+						Institution inst = InstitutionLocalServiceUtil.getInstitution(instId);
+						pfL.add(inst);
+					}
+					else{
+						Institution inst = InstitutionLocalServiceUtil.getInstitution(loggedInCoord.getInstitutionId()); 
+						pfL.add(inst);
+					}
 				}
 			}catch(PortalException e){
 			}
@@ -152,6 +165,24 @@ public class AdminUserManagement extends MVCPortlet {
 		response.setRenderParameter("jspPage", "/admin/editL2GoRole.jsp");
 	}
 	
+	public void updateUsersScreenName(){
+		List<Producer> pl = new ArrayList<Producer>();
+		try {
+			pl = ProducerLocalServiceUtil.getAllProducers(0, 300);
+			ListIterator<Producer> pit = pl.listIterator();
+			while (pit.hasNext()){
+				Producer p = pit.next();
+				try {
+					User u = UserLocalServiceUtil.getUser(p.getProducerId());
+					UserLocalServiceUtil.updateScreenName(u.getUserId(), p.getHomeDir());
+				} catch (PortalException e) {
+					e.printStackTrace();
+				}
+			}
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+	}
 	public static List<Role> getL2GoRoles(User u) throws SystemException{
 		//prepare l2go roles
 		List<Role> l2goRoles = new ArrayList<Role>();
@@ -281,7 +312,7 @@ public class AdminUserManagement extends MVCPortlet {
 		// repository for producer
 		Host h = new HostImpl();
 		try{
-			h = Institution_HostLocalServiceUtil.getByInstitutionId(p.getInstitutionId());
+			h = Institution_HostLocalServiceUtil.getByInstitution(p.getInstitutionId());
 			// host to producer 
 			p.setHostId(h.getHostId());
 		}catch(Exception e){
@@ -301,9 +332,10 @@ public class AdminUserManagement extends MVCPortlet {
 	public static boolean createProducersRepository(Host host, Producer producer) throws IOException{
 		boolean ret = false;
 		File folder = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/");
+		Runtime runtime = Runtime.getRuntime();
 		if (!folder.exists()) {
+			//create repository for producer
 			if (folder.mkdir()) {
-				Runtime runtime = Runtime.getRuntime();
 				String[] cmdArray = {PropsUtil.get("lecture2go.shell.bin"), "-c", "chown nobody " + folder.getAbsolutePath() };
 				runtime.exec(cmdArray);
 				String[] cmdArray1 = { PropsUtil.get("lecture2go.shell.bin"), "-c", "chown nobody:nobody " + folder.getAbsolutePath() };
@@ -311,15 +343,16 @@ public class AdminUserManagement extends MVCPortlet {
 				String[] cmdArray2 = { PropsUtil.get("lecture2go.shell.bin"), "-c", "chmod 701 " + folder.getAbsolutePath() };
 				runtime.exec(cmdArray2);
 
-				File prodFolder = new File(PropsUtil.get("lecture2go.httpstreaming.video.repository") + "/" + producer.getInstitutionId() + "l2g" + producer.getHomeDir());
-				if (!prodFolder.exists()) {
-					String cmd = "ln -s " + folder.getAbsolutePath() + " " + prodFolder.getAbsolutePath();
-					runtime.exec(cmd);
-				}
 				ret = true;
 			}
 		}else{
 			ret = true;
+		}
+		//link to main server dir
+		File prodFolder = new File(PropsUtil.get("lecture2go.httpstreaming.video.repository") + "/" + producer.getInstitutionId() + "l2g" + producer.getHomeDir());
+		if (!prodFolder.exists()) {
+			String cmd = "ln -s " + folder.getAbsolutePath() + " " + prodFolder.getAbsolutePath();
+			runtime.exec(cmd);
 		}
 		return ret;
 	}

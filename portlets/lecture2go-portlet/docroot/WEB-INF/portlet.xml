@@ -163,6 +163,7 @@
         <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
+            <portlet-mode>view</portlet-mode>
         </supports>
         <resource-bundle>content.Language</resource-bundle>
         <portlet-info>

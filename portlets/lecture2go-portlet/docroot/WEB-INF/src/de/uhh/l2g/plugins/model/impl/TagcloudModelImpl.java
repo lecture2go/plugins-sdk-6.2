@@ -61,9 +61,9 @@ public class TagcloudModelImpl extends BaseModelImpl<Tagcloud>
 			{ "tagcloudId", Types.BIGINT },
 			{ "objectClassType", Types.VARCHAR },
 			{ "objectId", Types.BIGINT },
-			{ "tags", Types.VARCHAR }
+			{ "tags", Types.CLOB }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Tagcloud (tagcloudId LONG not null primary key,objectClassType VARCHAR(75) null,objectId LONG,tags STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Tagcloud (tagcloudId LONG not null primary key,objectClassType VARCHAR(75) null,objectId LONG,tags TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Tagcloud";
 	public static final String ORDER_BY_JPQL = " ORDER BY tagcloud.tagcloudId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Tagcloud.tagcloudId ASC";

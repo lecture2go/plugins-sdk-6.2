@@ -215,12 +215,17 @@ public class InstitutionFinderImpl extends BasePersistenceImpl<Institution> impl
 		} else if (hasVideos) {
 			query += vquery;
 		}
+		else { ////surpress sql error on empty lists 
+			query += "SELECT " + institutionQuery + " FROM LG_Video_Institution WHERE videoId IN (0)";
+		}
 
 		query += ") AS a JOIN LG_Institution AS i ON a." + institutionQuery + " = i.institutionId";
 
 		if (institutionsWanted) {
 			query += " WHERE i.parentId = " + parentId.toString();
 		}
+		
+		query += " ORDER BY sort";
 
 		return query;
 	}

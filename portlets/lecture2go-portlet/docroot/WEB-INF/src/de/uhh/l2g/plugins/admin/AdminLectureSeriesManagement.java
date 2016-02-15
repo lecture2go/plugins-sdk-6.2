@@ -52,6 +52,9 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 	
 	public void viewLectureseries(ActionRequest request, ActionResponse response) throws SystemException, PortalException {
 		// requested lectureseries
+		//TagcloudLocalServiceUtil.generateForAllLectureseries();
+		//LectureseriesLocalServiceUtil.updateUploadAndGenerationDate();
+		
 		long reqLectureseriesId = new Long(request.getParameterMap().get("lectureseriesId")[0]);
 		String backURL = request.getParameter("backURL");
 		Lectureseries reqLectureseries = LectureseriesLocalServiceUtil.getLectureseries(reqLectureseriesId);
@@ -94,8 +97,8 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 
 	public void editLectureseries(ActionRequest request, ActionResponse response) throws NumberFormatException, PortalException, SystemException{
 		//search tags
-		String tagCloudString = "";
-		
+		ArrayList<String> tagCloudArrayString = new ArrayList<String>();
+
 		Long lId = new Long(request.getParameter("lectureseriesId"));
 		String[] producers = request.getParameterValues("producers");
 		
@@ -106,7 +109,10 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		try{
 			semesterId = new Long(request.getParameter("semesterId"));
 			Term t = TermLocalServiceUtil.getTerm(semesterId);
-			tagCloudString += t.getPrefix()+ " ### "+t.getYear()+" ### "+t.getPrefix()+" "+t.getYear()+" ### ";			
+			tagCloudArrayString.add(t.getPrefix());
+			tagCloudArrayString.add(t.getYear());
+			tagCloudArrayString.add(t.getPrefix());
+			tagCloudArrayString.add(t.getPrefix()+" "+t.getYear());
 		}catch(Exception e){}
 		Long categoryId = new Long(0);
 		try{
@@ -147,7 +153,8 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			if(!Lectureseries_InstitutionLocalServiceUtil.institutionAssignedToLectureseries(lf))
 				Lectureseries_InstitutionLocalServiceUtil.addLectureseries_Institution(lf);
 			//
-			tagCloudString += inst.getName()+" ### "+parentInst.getName()+" ### ";
+			tagCloudArrayString.add(inst.getName());
+			tagCloudArrayString.add(parentInst.getName());
 		}
 
 		//new creators
@@ -183,7 +190,9 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 					Lectureseries_CreatorLocalServiceUtil.addLectureseries_Creator(lc);
 				}
 				Creator cr = CreatorLocalServiceUtil.getCreator(cId);
-				tagCloudString += cr.getFirstName()+" ### "+cr.getLastName()+" ### "+cr.getFullName()+" ### ";
+				tagCloudArrayString.add(cr.getFirstName());
+				tagCloudArrayString.add(cr.getLastName());
+				tagCloudArrayString.add(cr.getFullName());
 			}
 		}catch (NullPointerException e){}
 		//update producer link
@@ -207,25 +216,19 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		//category
 		Category ctgr = new CategoryImpl();
 		try{ctgr = CategoryLocalServiceUtil.getCategory(lectureseries.getCategoryId());}catch(Exception e){}			
-		tagCloudString += ctgr.getName()+" ### "+ lectureseries.getName() +" ### "+ lectureseries.getNumber()+" ### ";
-		
+		tagCloudArrayString.add(ctgr.getName());
+		tagCloudArrayString.add(lectureseries.getName());
+		tagCloudArrayString.add(lectureseries.getNumber());
+
 		//edit tag cloud
-		Tagcloud tagcloud = new TagcloudImpl();
-		try{
-			tagcloud = TagcloudLocalServiceUtil.getByObjectIdAndObjectClassType(lectureseries.getLectureseriesId(), lectureseries.getClass().getName());
-			tagcloud.setTags(tagCloudString);
-		}catch(de.uhh.l2g.plugins.NoSuchTagcloudException e){
-			tagcloud.setObjectId(lectureseries.getLectureseriesId());
-			tagcloud.setObjectClassType(lectureseries.getClass().getName());
-			tagcloud.setTags(tagCloudString);
-		}
-		TagcloudLocalServiceUtil.updateTagcloud(tagcloud);
+		TagcloudLocalServiceUtil.updateByObjectIdAndObjectClassType(tagCloudArrayString, lectureseries.getClass().getName(), lectureseries.getLectureseriesId());
 		//
 	}
 
 	public void addLectureseries(ActionRequest request, ActionResponse response) throws SystemException, PortalException {
 		//search tags
 		String tagCloudString = "";
+		ArrayList<String> tagCloudArrayString = new ArrayList<String>();
 		
 		String s = request.getParameter("longDesc");
 		String[] producers = request.getParameterValues("producers");
@@ -236,6 +239,7 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			semesterId = new Long(request.getParameter("semesterId"));
 			Term t = TermLocalServiceUtil.getTerm(semesterId);
 			tagCloudString += t.getPrefix()+ " ### "+t.getYear()+" ### "+t.getPrefix()+" "+t.getYear()+" ### ";
+			tagCloudArrayString.add(t.getPrefix()+" "+t.getYear());
 		}catch(Exception e){}
 		Long categoryId = new Long(0);
 		try{
@@ -274,7 +278,8 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			lf.setInstitutionId(inst.getInstitutionId());
 			lf.setInstitutionParentId(inst.getParentId());
 			Lectureseries_InstitutionLocalServiceUtil.addLectureseries_Institution(lf);
-			tagCloudString += inst.getName()+" ### "+parentInst.getName()+" ### ";
+			tagCloudArrayString.add(inst.getName());
+			tagCloudArrayString.add(parentInst.getName());
 		}
 
 		//new creators
@@ -310,7 +315,10 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 					Lectureseries_CreatorLocalServiceUtil.addLectureseries_Creator(lc);
 				}
 				Creator cr = CreatorLocalServiceUtil.getCreator(cId);
-				tagCloudString += cr.getFirstName()+" ### "+cr.getLastName()+" ### "+cr.getFullName()+" ### ";
+				tagCloudArrayString.add(cr.getFirstName());
+				tagCloudArrayString.add(cr.getLastName());
+				tagCloudArrayString.add(cr.getFullName());
+				
 			}
 		}catch (NullPointerException e){}
 		//link to producer
@@ -325,15 +333,15 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		Tagcloud tagcloud = new TagcloudImpl();
 		Category ctgr = new CategoryImpl();
 		try{ctgr = CategoryLocalServiceUtil.getCategory(newlect.getCategoryId());}catch(Exception e){}			
-		tagCloudString += ctgr.getName()+" ### "+ newlect.getName() +" ### "+ newlect.getNumber()+" ### ";
-
+		tagCloudArrayString.add(ctgr.getName());
+		tagCloudArrayString.add(newlect.getName());
+		tagCloudArrayString.add(newlect.getNumber());
+		
 		//Tag cloud
 		tagcloud.setTags(tagCloudString);
-		tagcloud.setObjectClassType(newlect.getClass().getName());
-		tagcloud.setObjectId(newlect.getLectureseriesId());
-		TagcloudLocalServiceUtil.addTagcloud(tagcloud);
+		TagcloudLocalServiceUtil.add(tagCloudArrayString, newlect.getClass().getName(), newlect.getLectureseriesId()); 
+
 		//
-		
 		request.setAttribute("institutions", institutions);
 		request.setAttribute("producers", producers);
 		request.setAttribute("backURL", backURL);

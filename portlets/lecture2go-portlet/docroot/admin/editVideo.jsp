@@ -30,6 +30,7 @@
 		institutions = InstitutionLocalServiceUtil.getAllSortedAsTree(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 		permissionCoordinator = false;
 	}
+	
 	if(permissionCoordinator)institutions = InstitutionLocalServiceUtil.getByParent(CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getInstitutionId());
 
 	Locale[] languages = LanguageUtil.getAvailableLocales();
@@ -57,7 +58,7 @@
     }else{
   	  $("#date-time-form").hide();
 	  $("#upload-form").fadeIn(1000); 	
-	  $("#tm").text(getDateTime());
+	  $("#<portlet:namespace/>lecture2go-date").val(getDateTime());
     }
     //
     $('#<portlet:namespace/>datetimepicker').datetimepicker({
@@ -73,8 +74,9 @@
   });
 </script>
 
+	<label class="edit-video-lable">upload</label>
 	<div id="date-time-form">
-		<aui:fieldset helpMessage="test" column="true" label="video-file-upload" >
+		<aui:fieldset helpMessage="test" column="true" label="" >
 			<aui:layout>
 				<aui:input id="datetimepicker" name="datetimepicker" label="chose-date-time-bevor-upload"/>
 				<aui:button-row>
@@ -83,9 +85,8 @@
 			</aui:layout>
 		</aui:fieldset>
 	</div>
-	
 	<div id="upload-form">
-		<aui:fieldset helpMessage="test" column="true" label="video-file-upload" >
+		<aui:fieldset helpMessage="test" column="true" label="" >
 			<aui:layout>
 				<div>
 					<input id="fileupload" type="file" name="files[]" data-url="/servlet-file-upload/upload" multiple/>
@@ -96,9 +97,6 @@
 					</div>
 					<table id="uploaded-files" class="table"></table>
 				</div>
-				
-				lecture2go-date <b id="tm"></b>
-				<br/><br/>
 			</aui:layout>
 		</aui:fieldset>
 	</div>
@@ -106,12 +104,23 @@
 	<aui:fieldset column="false" label="" >
 		<aui:layout>
 			<aui:form action="<%=actionURL%>" commandName="model" name="metadata">
-			   <%if(reqVideo.getCitation2go()==0){%>
-				  <aui:input name="citationAllowed" type="checkbox" label="citation allowed" id="citationAllowed"/>
-			   <%}else{%>
-				  <aui:input name="citationAllowed" type="checkbox" label="citation allowed" id="citationAllowed" checked="true"/>
-			   <%}%>
-			
+				<label class="edit-video-lable">metadata</label>
+				<div id="metadata-upload">
+				<aui:input id="title" name="title" label="title" required="false" value="<%=reqVideo.getTitle()%>" />
+				
+				<aui:select size="1" name="crId" label="creators">
+					<aui:option value="" selected="true">select-creator</aui:option>
+					<%for (int i = 0; i < creators.size(); i++) {
+						%><aui:option value='<%=creators.get(i).getCreatorId()%>'><%=creators.get(i).getJobTitle() + " "+creators.get(i).getLastName() + ", " + creators.get(i).getFirstName()%></aui:option><%
+					}%>	
+				</aui:select>	
+							
+				<div id="creators"></div>
+	
+				<a id="addCreator">
+				    add-new-creator <span class="icon-large icon-plus-sign"></span>
+				</a>
+								
 				<aui:select size="1" name="lectureseriesId" label="lectureseries" onChange="toggleLectureseries()">
 					<aui:option value="0">select-lecture-series</aui:option>
 					<%for (int i = 0; i < reqLectureseriesList.size(); i++) {
@@ -125,17 +134,15 @@
 				
 				<div id="options">
 					<aui:select id="subInstitutionId" size="1" name="subInstitutionId" label="sub-institution">
-						<aui:option value="">select-sub-institution</aui:option>
+						<aui:option value="" selected="true">select-sub-institution</aui:option>
 					<%
 					Long subInstitutionId = new Long(0);
 					try{subInstitutionId = Video_InstitutionLocalServiceUtil.getByVideo(reqVideo.getVideoId()).get(0).getInstitutionId();}catch (Exception e){}
 					
 					for (Map.Entry<String, String> f : subInstitutions.entrySet()) {
-					if(f.getKey().equals(subInstitutionId.toString())){
-						%><aui:option value='<%=f.getKey()%>' selected="true"><%=f.getValue()%></aui:option>
-						<%}else{%>
+						%>
 						<aui:option value='<%=f.getKey()%>'><%=f.getValue()%></aui:option>
-						<%}
+						<%
 					}%>
 					</aui:select>
 					
@@ -162,7 +169,6 @@
 					</div>	
 								
 					<aui:select id="termId" size="1" name="termId" label="term">
-						<aui:option value="">select-term</aui:option>
 						<%for (int i = 0; i < semesters.size(); i++) {
 							if (reqVideo.getTermId()==semesters.get(i).getTermId()) {%>
 								<aui:option value='<%=semesters.get(i).getTermId()%>' selected="true"><%=semesters.get(i).getPrefix()+"&nbsp;"+semesters.get(i).getYear()%></aui:option>
@@ -172,8 +178,7 @@
 						}%>
 					</aui:select>
 	
-					<aui:select size="1" id="categoryId" name="categoryId" label="event-type" required="true">
-						<aui:option value="">select-category</aui:option>
+					<aui:select size="1" id="categoryId" name="categoryId" label="event-type">
 						<%
 						Long cId = new Long(0);
 						try{cId = Video_CategoryLocalServiceUtil.getByVideo(reqVideo.getVideoId()).get(0).getCategoryId();}catch(Exception e){}
@@ -189,7 +194,6 @@
 				</div>
 	
 				<aui:select size="1" name="language" label="language" required="false">
-					<aui:option value="">select-language</aui:option>
 					<%for (int i=0; i<languages.length; i++){
 						if (languages[i].getLanguage().equals(reqMetadata.getLanguage())) {%>
 							<aui:option value='<%=languages[i].getLanguage()%>' selected="true"><%=languages[i].getDisplayLanguage()%></aui:option>
@@ -199,51 +203,48 @@
 					}%>				
 				</aui:select>
 				
-				<aui:input id="title" name="title" label="title" required="false" value="<%=reqVideo.getTitle()%>" />
+				<aui:input id="lecture2go-date" name="lecture2go-date" label="lecture2go-date" required="false" value="" />
 	
 				<aui:input name="tags" label="tags" required="false" value="<%=reqVideo.getTags()%>"/>
 	
 				<aui:input name="publisher" label="publisher" required="false" value="<%=reqMetadata.getPublisher()%>"/>
 				
-				<aui:select size="1" name="crId" label="creators">
-					<aui:option value="">select-creator</aui:option>
-					<%for (int i = 0; i < creators.size(); i++) {
-						%><aui:option value='<%=creators.get(i).getCreatorId()%>'><%=creators.get(i).getJobTitle() + " "+creators.get(i).getLastName() + ", " + creators.get(i).getFirstName()%></aui:option><%
-					}%>	
-				</aui:select>	
-							
-				<div id="creators"></div>
-	
-				<a id="addCreator">
-				    add-new-creator <span class="icon-large icon-plus-sign"></span>
-				</a>
-				<br/><br/>
-		
-				license
-				<br/>
-				<em>uhh-l2go</em>
-				<%if(reqLicense.getL2go()==1){%><aui:input name="license"  id="uhhl2go" value="uhhl2go" checked="true" type="radio"/><%}%>
-				<%if(reqLicense.getL2go()==0){%><aui:input name="license" id="uhhl2go" value="uhhl2go" type="radio"/><%}%>
-				lecture2go-licence <a href="/license" target="_blank"> details </a>	 	      	      
-				<br/><br/>
-				
-				<em>by-nc-sa</em>	
-				<%if(reqLicense.getCcbyncsa()==1){%><aui:input name="license" id="ccbyncsa" value="ccbyncsa" checked="true" type="radio" /><%}%>
-				<%if(reqLicense.getCcbyncsa()==0){%><aui:input name="license" id="ccbyncsa" value="ccbyncsa" type="radio"/><%}%>
-				creative-commons <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank"> details </a>
-				
-				<br/><br/>
-
-				<aui:input id="password" name="password" label="password" required="false" value="<%=reqVideo.getPassword()%>" />
-
-				<br/><br/>
-				
 				<aui:field-wrapper label="description">
-				    <liferay-ui:input-editor name="longDesc" toolbarSet="liferay-article" initMethod="initEditor" width="250" onChangeMethod="setDescriptionData" />
+				    <liferay-ui:input-editor  name="longDesc" toolbarSet="simple" initMethod="initEditor" onChangeMethod="setDescriptionData" cssClass="ta"/>
 				    <script type="text/javascript">
 				        function <portlet:namespace />initEditor() { return "<%= UnicodeFormatter.toString(reqMetadata.getDescription()) %>"; }
 				    </script>
 				</aui:field-wrapper>
+				</div>
+				
+				<div id="permissions">
+					<label class="edit-video-lable">permissions</label>
+					<div>
+						<aui:input id="password" name="password" label="password" required="false" value="<%=reqVideo.getPassword()%>" />
+					</div>
+					
+					<div id="c2g">
+						<%if(reqVideo.getCitation2go()==0){%>
+					  		<aui:input name="citationAllowed" type="checkbox" label="" id="citationAllowed">citation allowed</aui:input>
+					   	<%}else{%>
+						  <aui:input name="citationAllowed" type="checkbox" label="" id="citationAllowed" checked="true">citation allowed</aui:input>
+					    <%}%>
+					</div>
+				</div>
+				
+				<div id="license">
+					<label class="edit-video-lable">license</label>
+					<div>
+						<%if(reqLicense.getL2go()==1){%><aui:input name="license"  id="uhhl2go" label="" value="uhhl2go" checked="true" type="radio"/><%}%>
+						<%if(reqLicense.getL2go()==0){%><aui:input name="license" id="uhhl2go" label="" value="uhhl2go" type="radio"/><%}%>
+						<a href="/license" target="_blank">lecture2go-licence </a>	 	      	      
+					</div>	
+					<div>		
+						<%if(reqLicense.getCcbyncsa()==1){%><aui:input name="license" label="" id="ccbyncsa" value="ccbyncsa" checked="true" type="radio" /><%}%>
+						<%if(reqLicense.getCcbyncsa()==0){%><aui:input name="license" label="" id="ccbyncsa" value="ccbyncsa" type="radio"/><%}%>
+						<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank"> creative-commons </a>
+					</div>
+				</div>
 				
 				<aui:button-row>
 					<aui:button value="apply changes" onclick="applyAllMetadataChanges()"/>
@@ -254,6 +255,7 @@
 			</aui:form>
 		</aui:layout>
 	</aui:fieldset>
+
 
 <script type="text/javascript">
 var $options = $( "#options" );
@@ -749,6 +751,7 @@ AUI().use('aui-node',
   		        console.log(vars);
   		        $.template( "filesTemplate", $("#created") );
   		        $.tmpl( "filesTemplate", vars ).appendTo( "#creators" );
+  		     	crId.val( "" );
   			}
       	}
     );
@@ -763,7 +766,7 @@ AUI().use('aui-node',
       			}
           }
      );
-    
+ 
   }
 );
 

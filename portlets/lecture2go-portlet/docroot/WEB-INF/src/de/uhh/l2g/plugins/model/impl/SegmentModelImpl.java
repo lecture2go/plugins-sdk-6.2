@@ -64,12 +64,12 @@ public class SegmentModelImpl extends BaseModelImpl<Segment>
 			{ "videoId", Types.BIGINT },
 			{ "start_", Types.VARCHAR },
 			{ "title", Types.VARCHAR },
-			{ "description", Types.VARCHAR },
+			{ "description", Types.CLOB },
 			{ "end_", Types.VARCHAR },
 			{ "chapter", Types.INTEGER },
 			{ "userId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Segment (segmentId LONG not null primary key,videoId LONG,start_ VARCHAR(75) null,title VARCHAR(75) null,description VARCHAR(75) null,end_ VARCHAR(75) null,chapter INTEGER,userId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Segment (segmentId LONG not null primary key,videoId LONG,start_ VARCHAR(75) null,title STRING null,description TEXT null,end_ VARCHAR(75) null,chapter INTEGER,userId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Segment";
 	public static final String ORDER_BY_JPQL = " ORDER BY segment.start ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Segment.start_ ASC";

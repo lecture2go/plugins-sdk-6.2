@@ -96,7 +96,8 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 			HostModelImpl.FINDER_CACHE_ENABLED, HostImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] { Long.class.getName() },
-			HostModelImpl.GROUPID_COLUMN_BITMASK);
+			HostModelImpl.GROUPID_COLUMN_BITMASK |
+			HostModelImpl.SERVERROOT_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(HostModelImpl.ENTITY_CACHE_ENABLED,
 			HostModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
@@ -567,6 +568,540 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	}
 
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "host.groupId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYIDANDGROUPID =
+		new FinderPath(HostModelImpl.ENTITY_CACHE_ENABLED,
+			HostModelImpl.FINDER_CACHE_ENABLED, HostImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByCompanyIdAndGroupId",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYIDANDGROUPID =
+		new FinderPath(HostModelImpl.ENTITY_CACHE_ENABLED,
+			HostModelImpl.FINDER_CACHE_ENABLED, HostImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByCompanyIdAndGroupId",
+			new String[] { Long.class.getName(), Long.class.getName() },
+			HostModelImpl.COMPANYID_COLUMN_BITMASK |
+			HostModelImpl.GROUPID_COLUMN_BITMASK |
+			HostModelImpl.SERVERROOT_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYIDANDGROUPID = new FinderPath(HostModelImpl.ENTITY_CACHE_ENABLED,
+			HostModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCompanyIdAndGroupId",
+			new String[] { Long.class.getName(), Long.class.getName() });
+
+	/**
+	 * Returns all the hosts where companyId = &#63; and groupId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @return the matching hosts
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Host> findByCompanyIdAndGroupId(long companyId, long groupId)
+		throws SystemException {
+		return findByCompanyIdAndGroupId(companyId, groupId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the hosts where companyId = &#63; and groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.HostModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of hosts
+	 * @param end the upper bound of the range of hosts (not inclusive)
+	 * @return the range of matching hosts
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Host> findByCompanyIdAndGroupId(long companyId, long groupId,
+		int start, int end) throws SystemException {
+		return findByCompanyIdAndGroupId(companyId, groupId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the hosts where companyId = &#63; and groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.HostModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of hosts
+	 * @param end the upper bound of the range of hosts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching hosts
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Host> findByCompanyIdAndGroupId(long companyId, long groupId,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYIDANDGROUPID;
+			finderArgs = new Object[] { companyId, groupId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYIDANDGROUPID;
+			finderArgs = new Object[] {
+					companyId, groupId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<Host> list = (List<Host>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (Host host : list) {
+				if ((companyId != host.getCompanyId()) ||
+						(groupId != host.getGroupId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_HOST_WHERE);
+
+			query.append(_FINDER_COLUMN_COMPANYIDANDGROUPID_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_COMPANYIDANDGROUPID_GROUPID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(HostModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				qPos.add(groupId);
+
+				if (!pagination) {
+					list = (List<Host>)QueryUtil.list(q, getDialect(), start,
+							end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<Host>(list);
+				}
+				else {
+					list = (List<Host>)QueryUtil.list(q, getDialect(), start,
+							end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first host in the ordered set where companyId = &#63; and groupId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching host
+	 * @throws de.uhh.l2g.plugins.NoSuchHostException if a matching host could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Host findByCompanyIdAndGroupId_First(long companyId, long groupId,
+		OrderByComparator orderByComparator)
+		throws NoSuchHostException, SystemException {
+		Host host = fetchByCompanyIdAndGroupId_First(companyId, groupId,
+				orderByComparator);
+
+		if (host != null) {
+			return host;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", groupId=");
+		msg.append(groupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchHostException(msg.toString());
+	}
+
+	/**
+	 * Returns the first host in the ordered set where companyId = &#63; and groupId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching host, or <code>null</code> if a matching host could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Host fetchByCompanyIdAndGroupId_First(long companyId, long groupId,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<Host> list = findByCompanyIdAndGroupId(companyId, groupId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last host in the ordered set where companyId = &#63; and groupId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching host
+	 * @throws de.uhh.l2g.plugins.NoSuchHostException if a matching host could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Host findByCompanyIdAndGroupId_Last(long companyId, long groupId,
+		OrderByComparator orderByComparator)
+		throws NoSuchHostException, SystemException {
+		Host host = fetchByCompanyIdAndGroupId_Last(companyId, groupId,
+				orderByComparator);
+
+		if (host != null) {
+			return host;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", groupId=");
+		msg.append(groupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchHostException(msg.toString());
+	}
+
+	/**
+	 * Returns the last host in the ordered set where companyId = &#63; and groupId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching host, or <code>null</code> if a matching host could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Host fetchByCompanyIdAndGroupId_Last(long companyId, long groupId,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByCompanyIdAndGroupId(companyId, groupId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Host> list = findByCompanyIdAndGroupId(companyId, groupId,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the hosts before and after the current host in the ordered set where companyId = &#63; and groupId = &#63;.
+	 *
+	 * @param hostId the primary key of the current host
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next host
+	 * @throws de.uhh.l2g.plugins.NoSuchHostException if a host with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Host[] findByCompanyIdAndGroupId_PrevAndNext(long hostId,
+		long companyId, long groupId, OrderByComparator orderByComparator)
+		throws NoSuchHostException, SystemException {
+		Host host = findByPrimaryKey(hostId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Host[] array = new HostImpl[3];
+
+			array[0] = getByCompanyIdAndGroupId_PrevAndNext(session, host,
+					companyId, groupId, orderByComparator, true);
+
+			array[1] = host;
+
+			array[2] = getByCompanyIdAndGroupId_PrevAndNext(session, host,
+					companyId, groupId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Host getByCompanyIdAndGroupId_PrevAndNext(Session session,
+		Host host, long companyId, long groupId,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_HOST_WHERE);
+
+		query.append(_FINDER_COLUMN_COMPANYIDANDGROUPID_COMPANYID_2);
+
+		query.append(_FINDER_COLUMN_COMPANYIDANDGROUPID_GROUPID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(HostModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(companyId);
+
+		qPos.add(groupId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(host);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<Host> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the hosts where companyId = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByCompanyIdAndGroupId(long companyId, long groupId)
+		throws SystemException {
+		for (Host host : findByCompanyIdAndGroupId(companyId, groupId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(host);
+		}
+	}
+
+	/**
+	 * Returns the number of hosts where companyId = &#63; and groupId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @return the number of matching hosts
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByCompanyIdAndGroupId(long companyId, long groupId)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_COMPANYIDANDGROUPID;
+
+		Object[] finderArgs = new Object[] { companyId, groupId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_HOST_WHERE);
+
+			query.append(_FINDER_COLUMN_COMPANYIDANDGROUPID_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_COMPANYIDANDGROUPID_GROUPID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				qPos.add(groupId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_COMPANYIDANDGROUPID_COMPANYID_2 = "host.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_COMPANYIDANDGROUPID_GROUPID_2 = "host.groupId = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_H = new FinderPath(HostModelImpl.ENTITY_CACHE_ENABLED,
 			HostModelImpl.FINDER_CACHE_ENABLED, HostImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_H",
@@ -803,6 +1338,245 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 	private static final String _FINDER_COLUMN_G_H_GROUPID_2 = "host.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_H_HOSTID_2 = "host.hostId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_DEFAULTHOST = new FinderPath(HostModelImpl.ENTITY_CACHE_ENABLED,
+			HostModelImpl.FINDER_CACHE_ENABLED, HostImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByDefaultHost",
+			new String[] { Long.class.getName(), Long.class.getName() },
+			HostModelImpl.COMPANYID_COLUMN_BITMASK |
+			HostModelImpl.GROUPID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_DEFAULTHOST = new FinderPath(HostModelImpl.ENTITY_CACHE_ENABLED,
+			HostModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByDefaultHost",
+			new String[] { Long.class.getName(), Long.class.getName() });
+
+	/**
+	 * Returns the host where companyId = &#63; and groupId = &#63; or throws a {@link de.uhh.l2g.plugins.NoSuchHostException} if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @return the matching host
+	 * @throws de.uhh.l2g.plugins.NoSuchHostException if a matching host could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Host findByDefaultHost(long companyId, long groupId)
+		throws NoSuchHostException, SystemException {
+		Host host = fetchByDefaultHost(companyId, groupId);
+
+		if (host == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("companyId=");
+			msg.append(companyId);
+
+			msg.append(", groupId=");
+			msg.append(groupId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchHostException(msg.toString());
+		}
+
+		return host;
+	}
+
+	/**
+	 * Returns the host where companyId = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @return the matching host, or <code>null</code> if a matching host could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Host fetchByDefaultHost(long companyId, long groupId)
+		throws SystemException {
+		return fetchByDefaultHost(companyId, groupId, true);
+	}
+
+	/**
+	 * Returns the host where companyId = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching host, or <code>null</code> if a matching host could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Host fetchByDefaultHost(long companyId, long groupId,
+		boolean retrieveFromCache) throws SystemException {
+		Object[] finderArgs = new Object[] { companyId, groupId };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_DEFAULTHOST,
+					finderArgs, this);
+		}
+
+		if (result instanceof Host) {
+			Host host = (Host)result;
+
+			if ((companyId != host.getCompanyId()) ||
+					(groupId != host.getGroupId())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_HOST_WHERE);
+
+			query.append(_FINDER_COLUMN_DEFAULTHOST_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_DEFAULTHOST_GROUPID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				qPos.add(groupId);
+
+				List<Host> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_DEFAULTHOST,
+						finderArgs, list);
+				}
+				else {
+					if ((list.size() > 1) && _log.isWarnEnabled()) {
+						_log.warn(
+							"HostPersistenceImpl.fetchByDefaultHost(long, long, boolean) with parameters (" +
+							StringUtil.merge(finderArgs) +
+							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					}
+
+					Host host = list.get(0);
+
+					result = host;
+
+					cacheResult(host);
+
+					if ((host.getCompanyId() != companyId) ||
+							(host.getGroupId() != groupId)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_DEFAULTHOST,
+							finderArgs, host);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_DEFAULTHOST,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (Host)result;
+		}
+	}
+
+	/**
+	 * Removes the host where companyId = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @return the host that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Host removeByDefaultHost(long companyId, long groupId)
+		throws NoSuchHostException, SystemException {
+		Host host = findByDefaultHost(companyId, groupId);
+
+		return remove(host);
+	}
+
+	/**
+	 * Returns the number of hosts where companyId = &#63; and groupId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @return the number of matching hosts
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByDefaultHost(long companyId, long groupId)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_DEFAULTHOST;
+
+		Object[] finderArgs = new Object[] { companyId, groupId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_HOST_WHERE);
+
+			query.append(_FINDER_COLUMN_DEFAULTHOST_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_DEFAULTHOST_GROUPID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				qPos.add(groupId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_DEFAULTHOST_COMPANYID_2 = "host.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_DEFAULTHOST_GROUPID_2 = "host.groupId = ? AND host.defaultHost > 0";
 
 	public HostPersistenceImpl() {
 		setModelClass(Host.class);
@@ -820,6 +1594,9 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_H,
 			new Object[] { host.getGroupId(), host.getHostId() }, host);
+
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_DEFAULTHOST,
+			new Object[] { host.getCompanyId(), host.getGroupId() }, host);
 
 		host.resetOriginalValues();
 	}
@@ -900,6 +1677,13 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_H, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_H, args, host);
+
+			args = new Object[] { host.getCompanyId(), host.getGroupId() };
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_DEFAULTHOST, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_DEFAULTHOST, args,
+				host);
 		}
 		else {
 			HostModelImpl hostModelImpl = (HostModelImpl)host;
@@ -911,6 +1695,18 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_H, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_H, args, host);
+			}
+
+			if ((hostModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_DEFAULTHOST.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						host.getCompanyId(), host.getGroupId()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_DEFAULTHOST,
+					args, Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_DEFAULTHOST,
+					args, host);
 			}
 		}
 	}
@@ -932,6 +1728,22 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_H, args);
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_H, args);
+		}
+
+		args = new Object[] { host.getCompanyId(), host.getGroupId() };
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_DEFAULTHOST, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_DEFAULTHOST, args);
+
+		if ((hostModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_DEFAULTHOST.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					hostModelImpl.getOriginalCompanyId(),
+					hostModelImpl.getOriginalGroupId()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_DEFAULTHOST, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_DEFAULTHOST, args);
 		}
 	}
 
@@ -1086,6 +1898,28 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 			}
+
+			if ((hostModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYIDANDGROUPID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						hostModelImpl.getOriginalCompanyId(),
+						hostModelImpl.getOriginalGroupId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYIDANDGROUPID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYIDANDGROUPID,
+					args);
+
+				args = new Object[] {
+						hostModelImpl.getCompanyId(), hostModelImpl.getGroupId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYIDANDGROUPID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYIDANDGROUPID,
+					args);
+			}
 		}
 
 		EntityCacheUtil.putResult(HostModelImpl.ENTITY_CACHE_ENABLED,
@@ -1114,6 +1948,8 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 		hostImpl.setServerRoot(host.getServerRoot());
 		hostImpl.setName(host.getName());
 		hostImpl.setGroupId(host.getGroupId());
+		hostImpl.setCompanyId(host.getCompanyId());
+		hostImpl.setDefaultHost(host.getDefaultHost());
 
 		return hostImpl;
 	}

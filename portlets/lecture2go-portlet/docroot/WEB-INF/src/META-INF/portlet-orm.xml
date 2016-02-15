@@ -52,6 +52,8 @@
 			<basic name="serverRoot" />
 			<basic name="name" />
 			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="defaultHost" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -67,6 +69,7 @@
 			<basic name="level" />
 			<basic name="sort" />
 			<basic name="groupId" />
+			<basic name="companyId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -78,6 +81,7 @@
 			<basic name="institutionId" />
 			<basic name="hostId" />
 			<basic name="groupId" />
+			<basic name="companyId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -278,7 +282,9 @@
 			<id name="uploadId" />
 			<basic name="userId" />
 			<basic name="contentLength" />
-			<basic name="timestamp" />
+			<basic name="timestamp">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<basic name="status" />
 			<basic name="videoId" />
 			<transient name="modelAttributes" />
@@ -414,7 +420,10 @@
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.LectureseriesImpl" name="Lectureseries">
 		<table name="LG_Lectureseries" />
-		<attributes />
+		<attributes>
+			<transient name="numberOfVideos" />
+			<transient name="type" />
+		</attributes>
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.Lectureseries_CategoryImpl" name="Lectureseries_Category">
 		<table name="LG_Lectureseries_Category" />
@@ -485,6 +494,7 @@
 		<attributes>
 			<transient name="accessPermitted" />
 			<transient name="bitrate" />
+			<transient name="creatorFullName" />
 			<transient name="creators" />
 			<transient name="date" />
 			<transient name="embedHtml5" />
@@ -497,6 +507,8 @@
 			<transient name="image" />
 			<transient name="imageMedium" />
 			<transient name="imageSmall" />
+			<transient name="lectureseriesName" />
+			<transient name="lectureseriesNumber" />
 			<transient name="lectureseriesUrl" />
 			<transient name="m4aDownloadLink" />
 			<transient name="m4aFile" />

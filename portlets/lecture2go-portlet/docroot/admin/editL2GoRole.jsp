@@ -24,62 +24,71 @@
 <aui:form action="<%= editURL.toString() %>" method="post">
 	<aui:fieldset helpMessage="test" column="true" label='<%="l2go-roles-for "+reqUser.getFullName()%>'>
 		<aui:layout>
-			<c:if test='<%= permissionChecker.hasPermission(groupId,name,reqUser.getPrimaryKey(),"ADD_L2GOCOORDINATOR") %>'>
-				<aui:column>
-					<aui:select name="cfId" label="set-coordinator-for-institution">
-						<aui:option value="">select-institution</aui:option>
-						<%for (int i = 0; i < cInstitutions.size(); i++) {
-							if(cInstitutions.get(i).getInstitutionId()==reqCoordinator.getInstitutionId()){
-						%>	
-						<aui:option value='<%=cInstitutions.get(i).getInstitutionId()%>' selected="true"><%=cInstitutions.get(i).getName() %></aui:option>
-						<%}else{%>
-						<aui:option value='<%=cInstitutions.get(i).getInstitutionId()%>'><%=cInstitutions.get(i).getName() %></aui:option>
-						<%}
-						}%>
-					</aui:select>
-				</aui:column>
-			</c:if>
-			<c:if test='<%= permissionChecker.hasPermission(groupId,name,reqUser.getPrimaryKey(),"ADD_L2GOPRODUCER") %>'>
-				<aui:column>
-					<%
-					boolean dis = false;
-					if(loggedInCoordinator.getInstitutionId()!=reqProducer.getInstitutionId() && reqProducer.getInstitutionId()!=0 && !permissionChecker.hasPermission(groupId,name,reqUser.getPrimaryKey(),"ADD_L2GOCOORDINATOR"))dis=true;
-					%>
-					<aui:select name="pfId" label="set-producer-for-institution" disabled="<%=dis%>">
-						<aui:option value="">select-institution</aui:option>
-						<%for (int i = 0; i < pInstitutions.size(); i++) {
-							if(pInstitutions.get(i).getInstitutionId()==reqProducer.getInstitutionId()){
-						%>	
-						<aui:option value='<%=pInstitutions.get(i).getInstitutionId()%>' selected="true"><%=pInstitutions.get(i).getName() %></aui:option>
-						<%}else{%>
-						<aui:option value='<%=pInstitutions.get(i).getInstitutionId()%>'><%=pInstitutions.get(i).getName() %></aui:option>
-						<%}
-						}%>
-					</aui:select>
-				</aui:column>
-			</c:if>
-			<c:if test='<%= permissionChecker.hasPermission(groupId,name,reqUser.getPrimaryKey(),"ADD_L2GOSTUDENT") %>'>
-				<aui:column>
-					<%if(isStudent){%>
-					<aui:input type="checkbox" name="isStud" label="set-student-status" checked="true"/>
-					<%}else{%>
-					<aui:input type="checkbox" name="isStud" label="set-student-status"/>
-					<%}%>
-				</aui:column>
-			</c:if>
-			<c:if test='<%= permissionChecker.hasPermission(groupId,name,reqUser.getPrimaryKey(),"ADD_L2GOADMIN") %>'>
-				<aui:column>
-					<%if(isL2goAdmin){%>
-					<aui:input type="checkbox" name="isL2goAdmin" label="set-l2goadmin-status" checked="true"/>
-					<%}else{%>
-					<aui:input type="checkbox" name="isL2goAdmin" label="set-l2goadmin-status"/>
-					<%}%>			
-				</aui:column>
-			</c:if>
-			<aui:button-row>
-	      		<aui:button type="submit"/>
-	      		<aui:button type="cancel" value="cancel" href="<%=backURL%>"/>
-	    	</aui:button-row>	
+			<div id="metadata-upload">
+				<c:if test='<%= permissionChecker.hasPermission(groupId,name,reqUser.getPrimaryKey(),"ADD_L2GOCOORDINATOR") %>'>
+					<aui:column>
+						<aui:select name="cfId" label="set-coordinator-for-institution">
+							<aui:option value="">select-institution</aui:option>
+							<%for (int i = 0; i < cInstitutions.size(); i++) {
+								if(cInstitutions.get(i).getInstitutionId()==reqCoordinator.getInstitutionId()){
+							%>	
+							<aui:option value='<%=cInstitutions.get(i).getInstitutionId()%>' selected="true"><%=cInstitutions.get(i).getName() %></aui:option>
+							<%}else{%>
+							<aui:option value='<%=cInstitutions.get(i).getInstitutionId()%>'><%=cInstitutions.get(i).getName() %></aui:option>
+							<%}
+							}%>
+						</aui:select>
+					</aui:column>
+				</c:if>
+				<c:if test='<%= permissionChecker.hasPermission(groupId,name,reqUser.getPrimaryKey(),"ADD_L2GOPRODUCER") %>'>
+					<aui:column>
+						<%
+						boolean dis = false;
+						if(loggedInCoordinator.getInstitutionId()!=reqProducer.getInstitutionId() && reqProducer.getInstitutionId()!=0 && !permissionChecker.hasPermission(groupId,name,reqUser.getPrimaryKey(),"ADD_L2GOCOORDINATOR"))dis=true;
+						%>
+						<aui:select name="pfId" label="set-producer-for-institution" disabled="<%=dis%>">
+							<aui:option value="">select-institution</aui:option>
+							<%for (int i = 0; i < pInstitutions.size(); i++) {
+								if(pInstitutions.get(i).getInstitutionId()==reqProducer.getInstitutionId()){
+							%>	
+							<aui:option value='<%=pInstitutions.get(i).getInstitutionId()%>' selected="true"><%=pInstitutions.get(i).getName() %></aui:option>
+							<%}else{%>
+							<aui:option value='<%=pInstitutions.get(i).getInstitutionId()%>'><%=pInstitutions.get(i).getName() %></aui:option>
+							<%}
+							}%>
+						</aui:select>
+					</aui:column>
+				</c:if>
+				
+				<div id="usr-roles">
+					<div>
+						<c:if test='<%= permissionChecker.hasPermission(groupId,name,reqUser.getPrimaryKey(),"ADD_L2GOSTUDENT") %>'>
+								<%if(isStudent){%>
+								<aui:input type="checkbox" name="isStud" label="" checked="true"/>
+								<%}else{%>
+								<aui:input type="checkbox" name="isStud" label=""/>
+								<%}%>
+						</c:if>
+						set-student-status	      	      
+					</div>	
+					<div>		
+						<c:if test='<%= permissionChecker.hasPermission(groupId,name,reqUser.getPrimaryKey(),"ADD_L2GOADMIN") %>'>
+								<%if(isL2goAdmin){%>
+								<aui:input type="checkbox" name="isL2goAdmin" label="" checked="true"/>
+								<%}else{%>
+								<aui:input type="checkbox" name="isL2goAdmin" label=""/>
+								<%}%>			
+						</c:if>
+						set-l2g-admin-status
+					</div>
+				</div>
+				
+				
+				<aui:button-row>
+		      		<aui:button type="submit"/>
+		      		<aui:button type="cancel" value="cancel" href="<%=backURL%>"/>
+		    	</aui:button-row>	
+			</div>
 		</aui:layout>
 	</aui:fieldset>
 </aui:form>

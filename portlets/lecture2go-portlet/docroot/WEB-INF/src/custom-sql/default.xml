@@ -1,6 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <custom-sql>
 
+    <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.findVideosBySearchWordAndLectureseriesId">
+		<![CDATA[
+			SELECT v.* 
+			FROM LG_Video v 
+			INNER JOIN LG_Tagcloud as tag ON (v.videoId = tag.objectId) 
+			WHERE objectClassType="de.uhh.l2g.plugins.model.impl.VideoImpl" 
+			AND tag.tags LIKE ? 
+			AND v.lectureseriesId=?
+		]]>
+    </sql>
+
+    <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.findVideosBySearchWord">
+		<![CDATA[
+			SELECT DISTINCT LG_Video.* , LG_Lectureseries.name AS lectureseriesName, LG_Lectureseries.number_ AS lectureseriesNumber, LG_Creator.fullName AS creatorFullName
+			FROM LG_Video, LG_Metadata, LG_Lectureseries, LG_Institution, LG_Creator,  LG_Video_Creator
+			WHERE (
+				( 
+					LG_Video.openAccess=1 AND 
+			        LG_Video.metadataId = LG_Metadata.metadataId AND 
+			        LG_Video.lectureseriesId = LG_Lectureseries.lectureseriesId AND 
+			        LG_Video.rootInstitutionId=LG_Institution.institutionId AND
+			        LG_Video.videoId = LG_Video_Creator.videoId AND 
+			        LG_Creator.creatorId = LG_Video_Creator.creatorId
+				) 
+			    AND 
+			    ( 
+					( LG_Video.title LIKE ? ) OR 
+			        ( LG_Lectureseries.name LIKE ? ) OR 
+			        ( LG_Video.tags LIKE ? ) OR 
+			        ( LG_Lectureseries.number_ LIKE ? ) OR
+			        ( LG_Creator.fullName LIKE ? )
+				)
+			) 
+			ORDER BY LG_Video.generationDate DESC
+		]]>
+    </sql>
+
     <sql id="de.uhh.l2g.plugins.service.persistence.InstitutionFinder.findAllSortedAsTree">
 		<![CDATA[
 			SELECT myNode.institutionId, myNode.parentId, myNode.name, myNode.typ, myNode.www, myNode.level, myNode.sort,
@@ -38,32 +75,6 @@
 			 )
 			AS contents
 			WHERE Inst.institutionId = ?
-		]]>
-    </sql>
-        <sql id="de.uhh.l2g.plugins.service.persistence.HostFinder.findHostByInstitution">
-		<![CDATA[
-			SELECT myNode.institutionId, myNode.parentId, myNode.name, myNode.typ, myNode.www, myNode.level, myNode.sort,
-			IF(myParent.institutionId>=0, IF(myGrandparent.institutionId>=0,
-			CONCAT(myGrandparent.institutionId, '/', myParent.institutionId, '/', myNode.institutionId),
-			CONCAT('', myParent.institutionId, '/', myNode.institutionId)),
-			CONCAT( myNode.institutionId, '')) AS path
-			FROM LG_Institution AS myNode
-			LEFT JOIN LG_Institution AS myParent ON myNode.parentId = myParent.institutionId
-			LEFT JOIN LG_Institution AS myGrandparent ON myParent.parentId = myGrandparent.institutionId
-			ORDER BY path ASC
-		]]>
-    </sql>
-        <sql id="de.uhh.l2g.plugins.service.persistence.HostFinder.findAllServerSettingsByInstitution">
-		<![CDATA[
-			SELECT myNode.institutionId, myNode.parentId, myNode.name, myNode.typ, myNode.www, myNode.level, myNode.sort,
-			IF(myParent.institutionId>=0, IF(myGrandparent.institutionId>=0,
-			CONCAT(myGrandparent.institutionId, '/', myParent.institutionId, '/', myNode.institutionId),
-			CONCAT('', myParent.institutionId, '/', myNode.institutionId)),
-			CONCAT( myNode.institutionId, '')) AS path
-			FROM LG_Institution AS myNode
-			LEFT JOIN LG_Institution AS myParent ON myNode.parentId = myParent.institutionId
-			LEFT JOIN LG_Institution AS myGrandparent ON myParent.parentId = myGrandparent.institutionId
-			ORDER BY path ASC
 		]]>
     </sql>
 

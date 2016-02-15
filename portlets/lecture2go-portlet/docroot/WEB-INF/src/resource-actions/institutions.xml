@@ -10,57 +10,71 @@
     <portlet-name>lg-admin-institution-management</portlet-name>
     <permissions>
       <supports>
+        <action-key>ADD_TO_PAGE</action-key>
+        <action-key>CONFIGURATION</action-key>
         <action-key>DELETE</action-key>
         <action-key>PERMISSIONS</action-key>
         <action-key>UPDATE</action-key>
         <action-key>VIEW</action-key>
+        <action-key>VIEW_ALL_INSTITUTIONS</action-key>
+        <action-key>VIEW_HOSTS</action-key>
+        <action-key>ADD_INSTITUTIONS</action-key>
+
       </supports>
       <site-member-defaults>
-        <action-key>VIEW</action-key>
       </site-member-defaults>
       <guest-defaults>
-
       </guest-defaults>
-
       <guest-unsupported>
-      	<action-key>DELETE</action-key>
+        <action-key>ADD_TO_PAGE</action-key>
+        <action-key>CONFIGURATION</action-key>
+        <action-key>DELETE</action-key>
         <action-key>PERMISSIONS</action-key>
         <action-key>UPDATE</action-key>
+        <action-key>VIEW_ALL_INSTITUTIONS</action-key>
+        <action-key>VIEW_HOSTS</action-key>
+        <action-key>ADD_INSTITUTIONS</action-key>
       </guest-unsupported>
     </permissions>
   </portlet-resource>
 
-  <model-resource>
-    <model-name>de.uhh.l2g.plugins.model</model-name>
+    <model-resource>
+    <model-name>
+      de.uhh.l2g.plugins.model
+    </model-name>
     <portlet-ref>
-        <portlet-name>lg-admin-institution-management</portlet-name>
+      <portlet-name>lg-admin-institution-management</portlet-name>
     </portlet-ref>
     <permissions>
         <supports>
-            <action-key>ADD_INSTITUTION_ENTRY</action-key>
-            <action-key>ADD_SUB_INSTITUTION_ENTRY</action-key>
-            <action-key>EDIT_ROOT_INSTITUTION</action-key>
-            <action-key>ADD_HOST_ENTRY</action-key>
-            <action-key>EDIT_HOST_ENTRY</action-key>
-            <action-key>ADD_SERVER_TEMPLATE_ENTRY</action-key>
-            <action-key>EDIT_SERVER_TEMPLATE__ENTRY</action-key>
-            <action-key>VIEW_ALL_INSTITUTIONS</action-key>
-            <action-key>EDIT_ALL_INSTITUTIONS</action-key>
-            <action-key>VIEW_OWN_INSTITUTIONS</action-key>
-            <action-key>EDIT_OWN_INSTITUTIONS</action-key>
+     	<action-key>ADD_INSTITUTION_ENTRY</action-key>
+      	<action-key>ADD_SUB_INSTITUTION_ENTRY</action-key>
+      	<action-key>VIEW_HOSTS</action-key>
+      	<action-key>ADD_HOSTS</action-key>
+      	<action-key>EDIT_HOSTS</action-key>
+        <action-key>EDIT_ALL_INSTITUTIONS</action-key>
+        <action-key>VIEW_OWN_INSTITUTIONS</action-key>
+        <action-key>EDIT_OWN_INSTITUTIONS</action-key>
+        <action-key>DELETE_INSTITUTIONS</action-key>
+        <action-key>DELETE_SUB_INSTITUTIONS</action-key>
+        <action-key>EDIT_ROOT_INSTITUTION</action-key>
+        <action-key>PERMISSIONS</action-key>
+        <action-key>UPDATE</action-key>
+        <action-key>VIEW</action-key>
         </supports>
         <site-member-defaults>
             <action-key>ADD_SUB_INSTITUTION_ENTRY</action-key>
-            <action-key>ADD_HOST_ENTRY</action-key>
+            
         </site-member-defaults>
         <guest-defaults>
         </guest-defaults>
         <guest-unsupported>
             <action-key>ADD_INSTITUTION_ENTRY</action-key>
-            <action-key>ADD_HOST_ENTRY</action-key>
+            
         </guest-unsupported>
     </permissions>
-</model-resource>
+  </model-resource>
+
 
    <model-resource>
     <model-name>
@@ -70,24 +84,33 @@
       <portlet-name>lg-admin-institution-management</portlet-name>
     </portlet-ref>
     <permissions>
-      <supports>
-      	<action-key>ADD_INSTITUTION_ENTRY</action-key>
+        <supports>
+     	<action-key>ADD_INSTITUTION_ENTRY</action-key>
       	<action-key>ADD_SUB_INSTITUTION_ENTRY</action-key>
-        <action-key>DELETE</action-key>
+      	<action-key>VIEW_HOSTS</action-key>
+      	<action-key>ADD_HOSTS</action-key>
+      	<action-key>ADD_HOST_ENTRY</action-key>
+      	<action-key>EDIT_HOSTS</action-key>
+        <action-key>EDIT_ALL_INSTITUTIONS</action-key>
+        <action-key>VIEW_OWN_INSTITUTIONS</action-key>
+        <action-key>EDIT_OWN_INSTITUTIONS</action-key>
+        <action-key>DELETE_INSTITUTIONS</action-key>
+        <action-key>DELETE_SUB_INSTITUTIONS</action-key>
+        <action-key>EDIT_ROOT_INSTITUTION</action-key>
         <action-key>PERMISSIONS</action-key>
         <action-key>UPDATE</action-key>
         <action-key>VIEW</action-key>
-      </supports>
-      <site-member-defaults>
-        <action-key>VIEW</action-key>
-      </site-member-defaults>
-      <guest-defaults>
-      </guest-defaults>
-      <guest-unsupported>
-        <action-key>DELETE</action-key>
-        <action-key>PERMISSIONS</action-key>
-        <action-key>UPDATE</action-key>
-      </guest-unsupported>
+        </supports>
+        <site-member-defaults>
+            <action-key>ADD_SUB_INSTITUTION_ENTRY</action-key>
+            <action-key>ADD_HOSTS</action-key>
+        </site-member-defaults>
+        <guest-defaults>
+        </guest-defaults>
+        <guest-unsupported>
+            <action-key>ADD_INSTITUTION_ENTRY</action-key>
+            <action-key>ADD_HOSTS</action-key>
+        </guest-unsupported>
     </permissions>
   </model-resource>
 
@@ -99,32 +122,9 @@
     </portlet-ref>
     <permissions>
         <supports>
-            <action-key>DELETE</action-key>
-            <action-key>PERMISSIONS</action-key>
-            <action-key>UPDATE</action-key>
-            <action-key>VIEW</action-key>
-        </supports>
-        <site-member-defaults>
-       		 <action-key>VIEW</action-key>
-        </site-member-defaults>
-        <guest-defaults>
-        </guest-defaults>
-        <guest-unsupported>
-            <action-key>UPDATE</action-key>
-            <action-key>PERMISSIONS</action-key>
-            <action-key>DELETE</action-key>
-        </guest-unsupported>
-    </permissions>
-
-</model-resource>
-
-<model-resource>
-    <model-name>de.uhh.l2g.plugins.model.StreamingServerTemplate</model-name>
-    <portlet-ref>
-        <portlet-name>lg-admin-institution-management</portlet-name>
-    </portlet-ref>
-    <permissions>
-        <supports>
+            <action-key>ADD_HOST_ENTRY</action-key>
+            <action-key>EDIT_HOST_ENTRY</action-key>
+             <action-key>ADD_HOSTS</action-key>
             <action-key>DELETE</action-key>
             <action-key>PERMISSIONS</action-key>
             <action-key>UPDATE</action-key>
@@ -135,7 +135,9 @@
         <guest-defaults>
         </guest-defaults>
         <guest-unsupported>
-         	<action-key>VIEW</action-key>
+            <action-key>ADD_HOST_ENTRY</action-key>
+            <action-key>EDIT_HOST_ENTRY</action-key>
+             <action-key>ADD_HOSTS</action-key>
             <action-key>UPDATE</action-key>
             <action-key>PERMISSIONS</action-key>
             <action-key>DELETE</action-key>

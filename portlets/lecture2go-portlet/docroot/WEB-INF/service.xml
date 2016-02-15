@@ -60,8 +60,7 @@
         </finder>
     </entity>
     <entity name="Institution" local-service="true" remote-service="false">
-    	<column name="institutionId" type="long" primary="true"
-    		id-type="increment">
+    	<column name="institutionId" type="long" primary="true">
     	</column>
     	<column name="parentId" type="long"></column>
     	<column name="name" type="String"></column>
@@ -70,6 +69,7 @@
     	<column name="level" type="int"></column>
     	<column name="sort" type="int"></column>
         <column name="groupId" type="long"></column>
+        <column name="companyId" type="long"></column>
 		<order by="asc"> <order-column name="sort" />
 		</order>
     	<finder name="Parent" return-type="Collection">
@@ -131,12 +131,16 @@
             <finder-column name="parentId"></finder-column>
             <finder-column name="sort"></finder-column>
         </finder>
-        <finder name="TopLevel" return-type="Institution" where="parentId = 0">
+         <finder name="Root" return-type="Institution" where="parentId &lt; 1">
+            <finder-column name="companyId"></finder-column>
             <finder-column name="groupId"></finder-column>
         </finder>
         <finder name="G_I" return-type="Institution">
             <finder-column name="groupId"></finder-column>
             <finder-column name="institutionId"></finder-column>
+        </finder>
+        <finder name="CompanyId" return-type="Collection">
+            <finder-column name="companyId"></finder-column>
         </finder>
     </entity>
     <entity name="Lectureseries_Institution" local-service="true" remote-service="false">
@@ -198,8 +202,7 @@
         </finder>
     </entity>
     <entity name="Host" local-service="true" remote-service="false">
-    	<column name="hostId" primary="true" type="long"
-    		id-type="increment">
+    	<column name="hostId" type="long" primary="true">
     	</column>
     	<column name="protocol" type="String"></column>
     	<column name="streamer" type="String"></column>
@@ -207,30 +210,56 @@
     	<column name="serverRoot" type="String"></column>
     	<column name="name" type="String"></column>
 		<column name="groupId" type="long"></column>
+        <column name="companyId" type="long"></column>
+        <column name="defaultHost" type="int"></column>
+        <order by="asc"> <order-column name="serverRoot" />
+        </order>
 		<finder name="GroupId" return-type="Collection">
+            <finder-column name="groupId"></finder-column>
+        </finder>
+        <finder name="CompanyIdAndGroupId" return-type="Collection">
+       		<finder-column name="companyId"></finder-column>
             <finder-column name="groupId"></finder-column>
         </finder>
         <finder name="G_H" return-type="Host">
             <finder-column name="groupId"></finder-column>
             <finder-column name="hostId"></finder-column>
         </finder>
+        <finder name="DefaultHost" return-type="Host" where="defaultHost &gt; 0">
+            <finder-column name="companyId"></finder-column>
+            <finder-column name="groupId"></finder-column>
+        </finder>
     </entity>
     <entity name="Institution_Host" local-service="true" remote-service="false">
-        <column name="institutionHostId" type="long" primary="true" id-type="increment"></column>
+        <column name="institutionHostId" type="long" primary="true"></column>
         <column name="institutionId" type="long"></column>
         <column name="hostId" type="long"></column>
         <column name="groupId" type="long"></column>
-        <finder name="institutionId" return-type="Collection">
+        <column name="companyId" type="long"></column>
+        <finder name="institutionId" return-type="Collection" db-index="false">
             <finder-column name="institutionId" case-sensitive="false"></finder-column>
         </finder>
-        <finder name="hostId" return-type="Collection">
+        <finder name="hostId" return-type="Collection" db-index="false">
             <finder-column name="hostId"></finder-column>
         </finder>
         <finder name="G_H" unique="false" return-type="Collection">
             <finder-column name="groupId"></finder-column>
             <finder-column name="hostId"></finder-column>
         </finder>
-        <finder name="G_I" return-type="Institution_Host" unique="true">
+        <finder name="G_I" return-type="Institution_Host" unique="false" db-index="false">
+            <finder-column name="groupId"></finder-column>
+            <finder-column name="institutionId"></finder-column>
+        </finder>
+        <finder name="GroupId" return-type="Collection">
+            <finder-column name="groupId"></finder-column>
+        </finder>
+        <finder name="C_G_H" return-type="Collection">
+            <finder-column name="companyId"></finder-column>
+            <finder-column name="groupId"></finder-column>
+            <finder-column name="hostId"></finder-column>
+        </finder>
+        <finder name="C_G_I" return-type="Collection">
+            <finder-column name="companyId"></finder-column>
             <finder-column name="groupId"></finder-column>
             <finder-column name="institutionId"></finder-column>
         </finder>
@@ -314,7 +343,7 @@
         <column name="uploadId" type="long" primary="true" id-type="increment"></column>
         <column name="userId" type="long"></column>
         <column name="contentLength" type="long"></column>
-        <column name="timestamp" type="long"></column>
+        <column name="timestamp" type="Date"></column>
         <column name="status" type="int"></column>
         <column name="videoId" type="long"></column>
         <finder name="Video" return-type="Collection">
@@ -379,6 +408,9 @@
         </finder>
         <finder name="Password" return-type="Collection">
             <finder-column name="password"></finder-column>
+        </finder>
+        <finder name="OpenAccess" return-type="Collection">
+            <finder-column name="openAccess"></finder-column>
         </finder>
     </entity>
     <entity name="Video_Institution" local-service="true" remote-service="false">
@@ -497,8 +529,7 @@
     </entity>
     <entity name="Creator" local-service="true"
     	remote-service="false">
-    	<column name="creatorId" type="long" primary="true"
-    		id-type="increment">
+    	<column name="creatorId" type="long" primary="true" id-type="increment">
     	</column>
     	<column name="firstName" type="String"></column>
     	<column name="lastName" type="String"></column>
@@ -578,9 +609,8 @@
     <exceptions>
         <exception>HostName</exception>
         <exception>HostStreamer</exception>
-        <exception>HostStreamingServerTemplate</exception>
         <exception>InstitutionName</exception>
-        <exception>Institution_Host</exception>
+        <exception>Institution_HostHost</exception>
         <exception>Institution_HostInstitution</exception>
     </exceptions>
 

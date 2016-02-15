@@ -31,7 +31,99 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 	public static final String RESET_LECTURESERIES_FOR_VIDEOS = VideoFinder.class.getName() + ".resetLectureseriesForVideos";
 	public static final String FIND_LATES_OPEN_ACCESS_VIDEO_FOR_LECTURESERIES = VideoFinder.class.getName() + ".findLatestOpenAccessVideoForlectureseries";
 	public static final String FIND_VIDEO_FOR_SECURE_URL = VideoFinder.class.getName() + ".findVideoForSecureUrl";
+	public static final String FIND_VIDEOS_BY_SEARCH_WORD = VideoFinder.class.getName() + ".findVideosBySearchWord";
+	public static final String FIND_VIDEOS_BY_SEARCH_WORD_AND_LECTURESERIESID = VideoFinder.class.getName() + ".findVideosBySearchWordAndLectureseriesId";
 
+	public List<Video> findVideosBySearchWord(String word, int limit) {
+		word="%"+word+"%";
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(FIND_VIDEOS_BY_SEARCH_WORD);
+			SQLQuery q = session.createSQLQuery(sql);
+			q.addScalar("title", Type.STRING);
+			//custom fields
+			q.addScalar("lectureseriesName", Type.STRING);
+			q.addScalar("lectureseriesNumber", Type.STRING);
+			q.addScalar("creatorFullName", Type.STRING);
+			
+			q.setCacheable(false);
+			
+			QueryPos qPos = QueryPos.getInstance(q);
+			qPos.add(word);
+			qPos.add(word);
+			qPos.add(word);
+			qPos.add(word);
+			qPos.add(word);
+			
+			@SuppressWarnings("unchecked")
+			List <Object[]> l =  (List<Object[]>) QueryUtil.list(q, getDialect(), 0 , limit);
+			return assembleVideosSearchWord(l);
+		} catch (Exception e) {
+			try {
+				throw new SystemException(e);
+			} catch (SystemException se) {
+				se.printStackTrace();
+			}
+		} finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
+	public List<Video> findVideosBySearchWordAndLectureseriesId(String word, long lectureseriesId) {
+		word="%"+word+"%";
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(FIND_VIDEOS_BY_SEARCH_WORD_AND_LECTURESERIESID);
+			SQLQuery q = session.createSQLQuery(sql);
+			q.addScalar("videoId", Type.LONG);
+			q.addScalar("title", Type.STRING);
+			q.addScalar("lectureseriesId", Type.LONG);
+			q.addScalar("producerId", Type.LONG);
+			q.addScalar("containerFormat", Type.STRING);
+			q.addScalar("filename", Type.STRING);
+			q.addScalar("resolution", Type.STRING);
+			q.addScalar("duration", Type.STRING);
+			q.addScalar("hostId", Type.LONG);
+			q.addScalar("fileSize", Type.STRING);
+			q.addScalar("generationDate", Type.STRING);
+			q.addScalar("openAccess", Type.INTEGER);
+			q.addScalar("downloadLink", Type.INTEGER);
+			q.addScalar("metadataId", Type.LONG);
+			q.addScalar("secureFilename", Type.STRING);
+			q.addScalar("hits", Type.INTEGER);
+			q.addScalar("uploadDate", Type.STRING);
+			q.addScalar("permittedToSegment", Type.INTEGER);
+			q.addScalar("rootInstitutionId", Type.LONG);
+			q.addScalar("citation2go", Type.INTEGER);
+			q.addScalar("termId", Type.LONG);
+			q.addScalar("videoCreatorId", Type.LONG);
+			q.addScalar("tags", Type.STRING);
+			q.addScalar("password_", Type.STRING);
+			
+			q.setCacheable(false);
+			
+			QueryPos qPos = QueryPos.getInstance(q);
+			qPos.add(word);
+			qPos.add(lectureseriesId);
+			
+			@SuppressWarnings("unchecked")
+			List <Object[]> l =  (List<Object[]>) QueryUtil.list(q, getDialect(),com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+			return assembleVideos(l);
+		} catch (Exception e) {
+			try {
+				throw new SystemException(e);
+			} catch (SystemException se) {
+				se.printStackTrace();
+			}
+		} finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
 	public int unlinkLectureseriesFromVideos(Long lectureseriesId) {
 		Session session = null;
 		try {
@@ -110,54 +202,6 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 		return video;
 	}
 	
-	
-	public List<Video> findFilteredByInstitutionParentInstitutionTermCategoryCreator(Long institutionId, Long parentInstitutionId, ArrayList<Long> termIds, ArrayList<Long> categoryIds, ArrayList<Long> creatorIds) {
-		Session session = null;
-		try {
-			session = openSession();
-			String sql = sqlFilterForOpenAccessLectureseries(institutionId, parentInstitutionId, termIds, categoryIds, creatorIds);
-			SQLQuery q = session.createSQLQuery(sql);
-			q.addScalar("videoId", Type.LONG);
-			q.addScalar("title", Type.STRING);
-			q.addScalar("lectureseriesId", Type.LONG);
-			q.addScalar("producerId", Type.LONG);
-			q.addScalar("containerFormat", Type.STRING);
-			q.addScalar("filename", Type.STRING);
-			q.addScalar("resolution", Type.STRING);
-			q.addScalar("duration", Type.STRING);
-			q.addScalar("hostId", Type.LONG);
-			q.addScalar("fileSize", Type.STRING);
-			q.addScalar("generationDate", Type.STRING);
-			q.addScalar("openAccess", Type.INTEGER);
-			q.addScalar("downloadLink", Type.INTEGER);
-			q.addScalar("metadataId", Type.LONG);
-			q.addScalar("surl", Type.STRING);
-			q.addScalar("hits", Type.INTEGER);
-			q.addScalar("uploadDate", Type.STRING);
-			q.addScalar("permittedToSegment", Type.INTEGER);
-			q.addScalar("rootInstitutionId", Type.LONG);
-			q.addScalar("citation2go", Type.INTEGER);
-			q.addScalar("termId", Type.LONG);
-			q.addScalar("videoCreatorId", Type.LONG);
-			q.addScalar("tags", Type.STRING);
-			
-			q.setCacheable(false);
-			@SuppressWarnings("unchecked")
-			List <Object[]> l =  (List<Object[]>) QueryUtil.list(q, getDialect(),com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
-			return assembleVideos(l);
-		} catch (Exception e) {
-			try {
-				throw new SystemException(e);
-			} catch (SystemException se) {
-				se.printStackTrace();
-			}
-		} finally {
-			closeSession(session);
-		}
-		return null;
-	}
-	
-	
 	private List<Video> assembleVideos(List<Object[]> objectList){
 		List<Video> vl = new ArrayList<Video>();
 		for (Object[] video: objectList){
@@ -196,87 +240,25 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 			v.setTermId((Long)video[20]);
 			v.setVideoCreatorId((Long)video[21]);
 			v.setTags((String)video[22]);
+			v.setPassword((String)video[23]);
 			
 			vl.add(v);
 		}
 		return vl;
 	}
 	
-	private String sqlFilterForOpenAccessLectureseries(Long institutionId, Long institutionParentId, ArrayList<Long> termIds, List<Long> categoryIds, ArrayList<Long> creatorIds) {
-		// build query
-		String query =  "SELECT v.videoId, title, v.lectureseriesId, producerId, containerFormat, filename, resolution, duration, hostId, fileSize, generationDate, openAccess, downloadLink, metadataId, surl, hits, uploadDate, permittedToSegment, rootInstitutionId, citation2go, v.termId, v.videoCreatorId, tags ";
-			   query += "FROM LG_Video v ";
-
-		if (institutionId > 0 || institutionParentId > 0) {
-			query += "INNER JOIN LG_Video_Institution AS vi ON ( v.videoId = vi.videoId ) ";
-		}
-	
-		if (termIds.size() > 0) {
-			query += "INNER JOIN LG_Term AS t ON ( v.termId = t.termId ) ";
-		}
-		
-		if (creatorIds.size() > 0) {
-			query += "INNER JOIN LG_Video_Creator AS vc ON ( v.videoId = vc.videoId ) ";
-		}
-		
-		if (categoryIds.size() > 0) {
-			query += "INNER JOIN LG_Video_Category AS vcat ON ( v.videoId = vcat.videoId ) ";
-		}
-		
-		query += "WHERE v.openAccess=1 ";
-		
-		if (institutionId > 0 || institutionParentId > 0 || termIds.size() > 0 || categoryIds.size() > 0 || creatorIds.size() > 0) {
-			int i = 0;
-			if (termIds.size() > 0) {
-				query += "AND ";
-				ListIterator<Long> it = termIds.listIterator();
-				query += "( ";
-				while(it.hasNext()){
-					Long termId = it.next();
-					if(it.hasNext())query += "t.termId="+termId+" OR ";
-					else query += "t.termId="+termId+" ) ";
-				}
-				i++;
-			}
-
-			if (creatorIds.size() > 0) {
-				query += i > 0 ? "AND " : "";
-				query += "( ";
-				for(int j=0;j<creatorIds.size();j++){
-				Long creatorId = creatorIds.get(j);
-					if(j<(creatorIds.size()-1))query += "vc.creatorId="+creatorId+" OR ";
-					else query += "vc.creatorId="+creatorId+" ) ";
-				}
-				i++;				
-			}
+	private List<Video> assembleVideosSearchWord(List<Object[]> objectList){
+		List<Video> vl = new ArrayList<Video>();
+		for (Object[] video: objectList){
+			VideoImpl v = new VideoImpl();
+			v.setTitle((String)video[0]);
+			v.setLectureseriesName((String)video[1]);
+			v.setLectureseriesNumber((String)video[2]);
+			v.setCreatorFullName((String)video[3]);
 			
-			if (categoryIds.size() > 0) {
-				query += i > 0 ? "AND " : "";
-				ListIterator<Long> it = categoryIds.listIterator();
-				query += "( ";
-				while(it.hasNext()){
-					Long categoryId = it.next();
-					if(it.hasNext())query += "vcat.categoryId = "+categoryId + " OR ";
-					else query += "vcat.categoryId="+categoryId+" ) ";
-				}
-				i++;				
-			}
-
-			if (institutionId > 0) {
-				query += i > 0 ? "AND " : "";
-				query += "vi.institutionId = "+institutionId + " ";
-				i++;
-			}
-
-			if (institutionParentId > 0) {
-				query += i > 0 ? "AND " : "";
-				query += "vi.institutionParentId = "+institutionParentId + " ";
-				i++;
-			}
-
-			query += "GROUP BY v.videoId ORDER BY v.uploadDate DESC";
+			vl.add(v);
 		}
-	    return query;
+		return vl;
 	}
 	
 	public List<Video> findLatestVideos(){

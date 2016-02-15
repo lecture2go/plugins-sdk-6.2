@@ -14,14 +14,19 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
 import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.Video;
+import de.uhh.l2g.plugins.model.impl.VideoImpl;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
@@ -57,6 +62,11 @@ public class LectureseriesLocalServiceImpl extends LectureseriesLocalServiceBase
 			l = new ArrayList<Lectureseries>();
 		}
 		return l;
+	}
+	
+
+	public List<Lectureseries> getAll() throws SystemException{
+		return lectureseriesPersistence.findAll();
 	}
 	
 	public List<Lectureseries> getAllLectureseriesWhithOpenaccessVideos(){
@@ -101,11 +111,34 @@ public class LectureseriesLocalServiceImpl extends LectureseriesLocalServiceBase
 		}
 	}
 	
-	public List<Lectureseries> getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(Long institutionId, Long parentInstitutionId, ArrayList<Long> termIds, ArrayList<Long> categoryIds, ArrayList<Long> creatorIds, String searchQuery){
-		return LectureseriesFinderUtil.findFilteredByInstitutionParentInstitutionTermCategoryCreator(institutionId, parentInstitutionId, termIds, categoryIds, creatorIds, searchQuery);
+	public void updateUploadAndGenerationDate() throws SystemException{
+		List<Lectureseries> all = getAll();
+		ListIterator<Lectureseries> itAll = all.listIterator();
+		while(itAll.hasNext()){
+			Lectureseries l = itAll.next();
+			Video v = new VideoImpl();
+			try {
+				v = VideoLocalServiceUtil.getVideo(l.getLatestOpenAccessVideoId());
+				l.setLatestVideoGenerationDate(v.getGenerationDate());
+				if(v.getUploadDate()!=null)l.setLatestVideoUploadDate(v.getUploadDate());
+				else {
+					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH-mm");
+					Date d = new Date();
+					try {
+						d = format.parse(v.getGenerationDate());
+						l.setLatestVideoUploadDate(d);
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+				}
+				LectureseriesLocalServiceUtil.updateLectureseries(l);
+			} catch (PortalException e) {
+				e.printStackTrace();
+			}
+		}
 	}
-	
+		
 	public List<Lectureseries> getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(Long institutionId, Long parentInstitutionId, Long termId, Long categoryId, Long creatorId, String searchQuery){
-		return LectureseriesFinderUtil.findFilteredByInstitutionParentInstitutionTermCategoryCreator(institutionId, parentInstitutionId, termId, categoryId, creatorId, searchQuery);
+		return LectureseriesFinderUtil.findFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(institutionId, parentInstitutionId, termId, categoryId, creatorId, searchQuery);
 	}
 }

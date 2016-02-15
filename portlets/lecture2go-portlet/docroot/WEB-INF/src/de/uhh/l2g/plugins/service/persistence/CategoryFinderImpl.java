@@ -69,6 +69,9 @@ public class CategoryFinderImpl extends BasePersistenceImpl<Category> implements
 		} else if (hasVideos) {
 			query += vquery;
 		}
+		else { //surpress sql error on empty lists 
+			query += "SELECT categoryId FROM LG_Video_Category WHERE videoId IN (0)";
+		}
 		
 		query += ") AS a JOIN LG_Category AS t ON a.categoryId = t.categoryId";
 					

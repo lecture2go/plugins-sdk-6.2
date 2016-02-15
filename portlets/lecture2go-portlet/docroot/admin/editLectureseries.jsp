@@ -100,7 +100,7 @@
 <aui:form action="<%=actionURL%>" commandName="model">
 	<aui:fieldset helpMessage="test" column="true" label='<%=lName%>'>
 		<aui:layout>
-			
+			<div id="metadata-upload">
 			<aui:input name="number" label="number" required="true" value="<%=lNumber %>" />
 
 			<aui:input name="name" label="name" required="true" value="<%=lName%>"/>
@@ -167,7 +167,7 @@
 						%>
 						<div id='<%=p.getProducerId()%>'> 
 							<%=p.getLastName() +", "+p.getFirstName()+"&nbsp;&nbsp;&nbsp;" %> 
-							<a class="icon-large icon-remove"style='cursor:pointer;' onClick='document.getElementById("<%=p.getProducerId()%>").remove();'></a>
+							<a class="icon-large icon-remove" style='cursor:pointer;' onClick='document.getElementById("<%=p.getProducerId()%>").remove();'></a>
 							<aui:input type="hidden" name="producers" id="producers" value="<%=p.getProducerId()%>"/>
 						</div>
 						<%
@@ -177,7 +177,7 @@
 							
 			<aui:input name="shortDesc" label="short-description"  value="<%=lShortDesc%>"/>
 
-			<aui:select id="allSemesters" size="1" name="semesterId" label="semester">
+			<aui:select id="allSemesters" size="1" name="semesterId" label="semester" required="true">
 				<aui:option value="">select-semester</aui:option>
 				<%for (int i = 0; i < semesters.size(); i++) {
 					if (lSemester==semesters.get(i).getTermId()) {%>
@@ -205,7 +205,7 @@
 			<aui:input name="password" label="password" value="<%=lPassword%>"/>
 			
 			<aui:field-wrapper label="description">
-			    <liferay-ui:input-editor name="longDesc" toolbarSet="liferay-article" initMethod="initEditor" width="250" />
+			    <liferay-ui:input-editor name="longDesc" toolbarSet="simple" initMethod="initEditor" width="250" />
 			    <script type="text/javascript">
 			        function <portlet:namespace />initEditor() { return "<%= UnicodeFormatter.toString(lLongDesc) %>"; }
 			    </script>
@@ -215,6 +215,7 @@
 				<aui:button type="submit" onclick="<portlet:namespace />extractCodeFromEditor()"/>
 				<aui:button type="cancel" value="cancel" href="<%=backURL%>"/>
 			</aui:button-row>
+			</div>
 		</aui:layout>
 	</aui:fieldset>
 </aui:form>
@@ -307,7 +308,7 @@ function(A) {
   			if(producerId.get('value')>0){
   	   	 		var n = producerId.get(producerId.get('selectedIndex')).get('value');
   	    		var t = producerId.get(producerId.get('selectedIndex')).get('text')+"&nbsp;&nbsp;&nbsp;";
-  	  			contProduc.append("<div id='"+n+"'> "+t+" <a style='cursor:pointer;' onClick='document.getElementById(&quot;"+n+"&quot;).remove();'><b>X</b></a><input id='<portlet:namespace></portlet:namespace>producers' name='<portlet:namespace></portlet:namespace>producers' value='"+n+"' type='hidden'/></div>");
+  	  			contProduc.append("<div id='"+n+"'> "+t+" <a class='icon-large icon-remove' style='cursor:pointer;' onClick='document.getElementById(&quot;"+n+"&quot;).remove();'></a><input id='<portlet:namespace></portlet:namespace>producers' name='<portlet:namespace></portlet:namespace>producers' value='"+n+"' type='hidden'/></div>");
   			}
       	}
     );
@@ -330,7 +331,7 @@ function(A) {
   			if(institutionId.get('value')>0){
   	   	 		var n = institutionId.get(institutionId.get('selectedIndex')).get('value');
   	    		var t = institutionId.get(institutionId.get('selectedIndex')).get('text')+"&nbsp;&nbsp;&nbsp;";
-  	    		contFacil.append("<div id='"+n+"'> "+t+" <a style='cursor:pointer;' onClick='document.getElementById(&quot;"+n+"&quot;).remove();'><b>X</b></a><input id='<portlet:namespace></portlet:namespace>institutions' name='<portlet:namespace></portlet:namespace>institutions' value='"+n+"' type='hidden'/></div>");
+  	    		contFacil.append("<div id='"+n+"'> "+t+" <a class='icon-large icon-remove' style='cursor:pointer;' onClick='document.getElementById(&quot;"+n+"&quot;).remove();'></a><input id='<portlet:namespace></portlet:namespace>institutions' name='<portlet:namespace></portlet:namespace>institutions' value='"+n+"' type='hidden'/></div>");
   			}
       	}
     );
