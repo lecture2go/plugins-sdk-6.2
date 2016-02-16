@@ -88,38 +88,37 @@ int maxOrder = InstitutionLocalServiceUtil.getMaxSortByParentId(rootId)+1;
 
 <%--Permission Settings only available to authorized Roles on Company Level--%>
 <c:if test='<%=  permissionChecker.hasPermission(groupId, institutionPortletName, companyIdString, "PERMISSIONS") %>'>
-<%-- Permission for setting permissions regarding model on group/entity scope--%>
-
-<%--Model Permission for setting permissions on company scope--%>
-Company Permissions:
-	<liferay-security:permissionsURL
-	    modelResource="<%= institutionModel %>"
-	    modelResourceDescription="<%= institutionModel  %>"
-	    resourcePrimKey="<%= companyIdString %>"
-	    var="globalmodelpermissionsURL" />
-
-	<liferay-ui:icon image="permissions" url="<%= globalmodelpermissionsURL %>" />
+<%-- Permission for setting permissions regarding model on group scope--%>
+	
 <%--Model Permission for setting permissions on group scope--%>
-Company Institution Permissions:
-	<liferay-security:permissionsURL
-	    modelResource="<%= institutionModel %>"
-	    modelResourceDescription="Model Site"
-	    resourcePrimKey="<%= groupIdString %>"
-	    var="modelpermissionsURL" />
-
-	<liferay-ui:icon image="permissions" url="<%= modelpermissionsURL %>" />
-
-<%--Permission for setting permissions regarding institution model on group scope--%>
 Group Institution Permissions:
 	<liferay-security:permissionsURL
-	    modelResource="<%= hostModel  %>"
-	    modelResourceDescription="Model Site"
+	    modelResource="<%= institutionModel %>"
+	    modelResourceDescription="<%= institutionModel %>"
 	    resourcePrimKey="<%= groupIdString %>"
 	    var="institutionmodelpermissionsURL" />
 
 	<liferay-ui:icon image="permissions" url="<%= institutionmodelpermissionsURL %>" />
-	
 
+<%--Permission for setting permissions regarding institution model on group scope--%>
+Group Host Permissions:
+	<liferay-security:permissionsURL
+	    modelResource="<%= hostModel  %>"
+	    modelResourceDescription="<%= hostModel  %>"
+	    resourcePrimKey="<%= groupIdString %>"
+	    var="hostmodelpermissionsURL" />
+
+	<liferay-ui:icon image="permissions" url="<%= hostmodelpermissionsURL %>" />
+	
+<%--Permission for setting permissions regarding institution model on group scope--%>
+Group Institution_Host Permissions:
+	<liferay-security:permissionsURL
+	    modelResource="<%= institutionHostModel  %>"
+	    modelResourceDescription="<%= institutionHostModel  %>"
+	    resourcePrimKey="<%= groupIdString %>"
+	    var="institutionhostnmodelpermissionsURL" />
+
+	<liferay-ui:icon image="permissions" url="<%= institutionhostnmodelpermissionsURL %>" />
 </c:if>
 
 <%--ADD INSTITUTION--%>
@@ -202,8 +201,11 @@ Group Institution Permissions:
 				<liferay-ui:search-container-row
 				className="de.uhh.l2g.plugins.model.Host" modelVar="Hosts" rowVar="thisRow"
 				keyProperty="hostId"  escapedModel="<%= false %>" indexVar="k">
-
-        			<liferay-ui:search-container-column-text name="Host" >      			    
+					
+        			<liferay-ui:search-container-column-text name="Host" >
+        			<c:choose>
+        			<c:when  test='<%= permissionChecker.hasPermission(groupId, hostModel, groupId, "EDIT_HOST") %>'> 
+        		    			    
 		        			<portlet:actionURL name="deleteStreamingServer" var="deleteStreamingServerURL">
 		        				<c:choose>
 		        					<c:when test='<%=  HostLocalServiceUtil.getLockingElements(groupId, Hosts.getHostId()) < 1 %>'>
@@ -215,6 +217,7 @@ Group Institution Permissions:
 								</c:choose>
 								<portlet:param name="backURL" value="<%=String.valueOf(portletURL) %>"/>
 							</portlet:actionURL>
+					
 						<aui:form action="<%= updateStreamingServerURL %>" name="<portlet:namespace />fm">
 							<aui:fieldset>
 							
@@ -239,7 +242,7 @@ Group Institution Permissions:
 								<aui:input name="curStreamingServerId" type='hidden' inlineField="true" value = "<%= (new Long(Hosts.getHostId())).toString() %>"/>
 								<aui:button type="submit"></aui:button>
 								<c:choose>
-								<c:when test='<%=  HostLocalServiceUtil.getLockingElements(groupId, Hosts.getHostId()) < 1 %>'>
+								<c:when test='<%= permissionChecker.hasPermission(groupId, hostModel, groupId, ActionKeys.DELETE) & HostLocalServiceUtil.getLockingElements(groupId, Hosts.getHostId()) < 1%>'>
 									<aui:button name="delete" value="Löschen" type="button" href="<%=deleteStreamingServerURL.toString() %>" />
 								</c:when>
 								<c:otherwise>
@@ -250,6 +253,15 @@ Group Institution Permissions:
 								<liferay-ui:message key="<%= repDirectory %>" />/<liferay-ui:message key="<%= Hosts.getServerRoot() %>"/>
 							</aui:fieldset>
 						</aui:form>
+						</c:when>
+						<c:otherwise>
+						<liferay-ui:message key="<%= Hosts.getName() %>"></liferay-ui:message>
+						<liferay-ui:message key="<%= Hosts.getStreamer() %>"></liferay-ui:message>
+						<liferay-ui:message key="<%= String.valueOf(Hosts.getPort()) %>"></liferay-ui:message>
+						<liferay-ui:message key="<%= Hosts.getProtocol() %>"></liferay-ui:message>
+						<liferay-ui:message key="<%= repDirectory %>"></liferay-ui:message>
+						</c:otherwise>
+						</c:choose>
         			</liferay-ui:search-container-column-text>
 
         		</liferay-ui:search-container-row>
@@ -260,7 +272,8 @@ Group Institution Permissions:
 
 <%--ROOT INSTITUTION--%>
 <%--Permission regarding concrete instance of element, namely RootInstitution --%>
-<c:if  test='<%= permissionChecker.hasPermission(groupId, institutionModel, groupId, "EDIT_ROOT_INSTITUTION") %>'>
+<c:choose>
+<c:when  test='<%= permissionChecker.hasPermission(groupId, institutionModel, groupId, "EDIT_ROOT_INSTITUTION") %>'>
 	<liferay-ui:panel title="Top Level Institution" collapsible="true" id="rootInstitutionSettings"
 					defaultState="closed"
 					extended="<%= false %>"
@@ -274,11 +287,21 @@ Group Institution Permissions:
 		</aui:fieldset>
 	</aui:form>
 	</liferay-ui:panel>
-</c:if>
+</c:when>
+<c:otherwise>
+<%-- Display no title if user can#t see all of the hierarchy ---%>
+	<c:if  test='<%= permissionChecker.hasPermission(groupId, institutionPortletName, groupId, "VIEW_ALL_INSTIUTIONS") %>'>
+			<liferay-ui:message key="<%= root.getName() %>"></liferay-ui:message>
+	</c:if>
+</c:otherwise>
+</c:choose>
+
 
 <%--TOP LEVEL INSTITUTIONS--%>
 
 <%--<liferay-ui:panel title="List of Institutions" collapsible="false" id="outerList"> --%>
+<c:choose>
+<c:when  test='<%= permissionChecker.hasPermission(groupId, institutionPortletName, groupId, "VIEW_ALL_INSTIUTIONS") %>'>
 <liferay-ui:search-container searchContainer="<%= searchInstitutionContainer %>"
 curParam ="curOuter"
 orderByType="asc"
@@ -343,6 +366,19 @@ deltaConfigurable="true">
 				</c:if>
 			</aui:fieldset>
  		</aui:form>
+ 		</c:when>
+ 		<c:otherwise>
+ 		<%-- Display only "matching isntitution" --%>
+ 		
+ 		<%
+ 			if(
+ 					
+ 			//Institution institution = CoordinatorLocalServiceUtil.getInstitution();
+
+
+ 		%>
+ 		</c:otherwise>
+ 		</c:choose>
  		
  		<%--SUB INSTITUTIONS--%>
 		<liferay-ui:panel
@@ -409,12 +445,14 @@ deltaConfigurable="true">
 
 		</liferay-ui:panel>
 		<%--END: SUB INSTUTIONS--%>
+		
+		<c:if test='<%= permissionChecker.hasPermission(groupId, institutionPortletName, groupId, "VIEW_ALL_INSTIUTIONS") %>'>
 		</liferay-ui:search-container-column-text>
-
     	</liferay-ui:search-container-row>
 
    	 	<liferay-ui:search-iterator searchContainer="<%= searchInstitutionContainer %>" />
 		</liferay-ui:search-container>
+		</c:if>
 	<%--END: INSTITUTIONS--%>
 
 

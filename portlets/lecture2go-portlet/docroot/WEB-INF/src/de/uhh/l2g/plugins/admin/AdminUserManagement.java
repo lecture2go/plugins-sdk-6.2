@@ -552,6 +552,66 @@ public class AdminUserManagement extends MVCPortlet {
 		
 	}
 	
+	/**Permission Defaults on L2Go Coordinator Role creation
+	 * 
+	 * Remark: Permission in Liferay are granted hierarchically Company > Group > Entity and cant't be revoked 
+	 * on a lower scope
+	 * 
+	 * Individiual Permissions only work when addResource is performed for each entity instance (Migration Portlet does not 
+	 * correctly add Resources for old entities yet)
+	 * 
+	 * @param role - the Admin Role
+	 * @param u
+	 * @throws SystemException
+	 */
+	public void setL2GProducerPermissions(Role role, User u, long layoutGroupId) throws SystemException{
+		try {
+			
+				
+			//General Entity Defaults 
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(layoutGroupId), role.getRoleId(), new String[] {ActionKeys.VIEW});
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Host.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(layoutGroupId), role.getRoleId(), new String[] {ActionKeys.VIEW});
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution_Host.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(layoutGroupId), role.getRoleId(), new String[] {ActionKeys.VIEW});
+						
+	
+		
+		} catch (PortalException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+	}
+	
+	/**Permission Defaults on L2Go Coordinator Role creation
+	 * 
+	 * Remark: Permission in Liferay are granted hierarchically Company > Group > Entity and cant't be revoked 
+	 * on a lower scope
+	 * 
+	 * Individiual Permissions only work when addResource is performed for each entity instance (Migration Portlet does not 
+	 * correctly add Resources for old entities yet)
+	 * 
+	 * @param role - the Admin Role
+	 * @param u
+	 * @throws SystemException
+	 */
+	public void setL2GStudentPermissions(Role role, User u, long layoutGroupId) throws SystemException{
+		try {
+			
+			
+			//General Entity Defaults 
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(layoutGroupId), role.getRoleId(), new String[] {ActionKeys.VIEW});
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Host.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(layoutGroupId), role.getRoleId(), new String[] {ActionKeys.VIEW});
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(u.getCompanyId(), Institution_Host.class.getName(), ResourceConstants.SCOPE_GROUP, String.valueOf(layoutGroupId), role.getRoleId(), new String[] {ActionKeys.VIEW});
+						
+	
+		
+		} catch (PortalException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+	}
+	
 	
 	
 	/**Handle Permissions for default roles to restrict public pages for non LG_ Roles
@@ -581,6 +641,22 @@ public class AdminUserManagement extends MVCPortlet {
 			ResourcePermissionLocalServiceUtil.removeResourcePermission(c.getCompanyId(), "com.liferay.portal.model.Layout", ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(page.getPlid()), memberRole.getRoleId(), ActionKeys.VIEW);
 			ResourcePermissionLocalServiceUtil.removeResourcePermission(c.getCompanyId(), "com.liferay.portal.model.Layout", ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(page.getPlid()), memberRole.getRoleId(), ActionKeys.ADD_DISCUSSION);
 			ResourcePermissionLocalServiceUtil.removeResourcePermission(c.getCompanyId(), "com.liferay.portal.model.Layout", ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(page.getPlid()), memberRole.getRoleId(), ActionKeys.CUSTOMIZE);
+		} catch (PortalException e) {
+			RoleLocalServiceUtil.checkSystemRoles();
+			e.printStackTrace();
+		}		
+		try {
+			Role adminRole = RoleLocalServiceUtil.getRole(c.getCompanyId(), "Administrator");
+
+
+		} catch (PortalException e) {
+			RoleLocalServiceUtil.checkSystemRoles();
+			e.printStackTrace();
+		}
+		
+		try {
+			Role ownerRole = RoleLocalServiceUtil.getRole(c.getCompanyId(), "Owner");			
+
 		} catch (PortalException e) {
 			RoleLocalServiceUtil.checkSystemRoles();
 			e.printStackTrace();
