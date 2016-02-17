@@ -124,7 +124,7 @@
 			<portlet:param name="producerId" value='<%=producerId+""%>'/>
 			<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>	
 		</portlet:actionURL>	
-		<a href="<%=addVideoURL.toString()%>" target="_blank">
+		<a href="<%=addVideoURL.toString()%>">
 		    add-video <span class="icon-large icon-plus-sign"/>
 		</a>
 <%}%>
@@ -269,7 +269,7 @@
 					
 							
 					<a href="<%=removeURL.toString()%>">
-						<span class="icon-large icon-remove"></span>
+						<span class="icon-large icon-remove" onclick="confirm('really-delete-question')"></span>
 					</a>		
 					
 					<%if(vid.getFilename().length()>0){

@@ -111,14 +111,21 @@
 	pageContext.setAttribute("hasCreatorFiltered", hasCreatorFiltered);
 	pageContext.setAttribute("hasManyTerms", presentTerms.size() > maxTerms);
 	pageContext.setAttribute("hasManyCreators", presentCreators.size() > maxCreators);
+	
+	boolean resultSetEmpty = true;
+	if(presentParentInstitutions.size()>0||presentInstitutions.size()>0||presentTerms.size()>0||presentCategories.size()>0){
+		resultSetEmpty=false;
+	}
 		
 %>
 
 <div class="row-fluid">
-	<div class="span3">
+<%if(!resultSetEmpty){ %>
+<div class="span3">
 
 <liferay-ui:panel-container>
 	<!-- 	parentinstitution filter -->
+	<%if(presentParentInstitutions.size()>0){ %>
 	<liferay-ui:panel extended="true" title="Einrichtung">
 		<ul>
 		<c:forEach items="<%=presentParentInstitutions %>" var="parentInstitution">
@@ -135,9 +142,11 @@
 		</c:forEach>
 		</ul>
 	</liferay-ui:panel>
+	<%}%>
 	
  	<!-- 	institution filter  -->
 	<c:if test="${hasParentInstitutionFiltered}">
+	<%if(presentInstitutions.size()>0){ %>
 	<liferay-ui:panel extended="true" title="Bereich">
 		<ul>
 		<c:forEach items="<%=presentInstitutions %>" var="institution">
@@ -154,9 +163,11 @@
 		</c:forEach>
 		</ul>
 	</liferay-ui:panel>
+	<%}%>
 	</c:if>
 	
 	<!-- 	terms filter -->
+	<%if(presentTerms.size()>0){%>
 	<liferay-ui:panel extended="true" title="Semester">
 		<ul class="terms">
 		<c:forEach items="<%=presentTerms %>" var="term">
@@ -176,10 +187,11 @@
 			<div id="loadMoreTerms">mehr...</div>
 		</c:if>
 	</liferay-ui:panel>
-	
+	<%}%>
 
 	
 	<!-- 	category filter -->
+	<%if(presentCategories.size()>0){%>
 	<liferay-ui:panel extended="true" title="Kategorie">
 		<ul>
 		<c:forEach items="<%=presentCategories %>" var="category">
@@ -196,7 +208,7 @@
 		</c:forEach>
 		</ul>
 	</liferay-ui:panel>
-
+	<%}%>
 	<%-- 	
 	creator filter 
 	<liferay-ui:panel extended="true" title="Person" id="creators">
@@ -227,8 +239,10 @@
 </liferay-ui:panel-container>
 
 </div>
+<%}%>
 
-<div class="span9">
+<%if(!resultSetEmpty){%><div class="span9"><%}%>
+<%if(resultSetEmpty){%><div class="none"><%}%>
 		
 <portlet:actionURL var="filterBySearchQuery" name="addFilter">
 	<portlet:param name="jspPage" value="/guest/videosList.jsp" />
