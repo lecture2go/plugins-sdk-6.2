@@ -1,7 +1,6 @@
 <c:if test="${video.downloadLink==1}">
 <div id="down">
 		<!-- openaccess start -->
-		<c:if test="${video.openAccess==1}">
 			<div id="downloads">
 				<c:if test="${video.mp4File.isFile()==true}">
 					<div class="download">
@@ -50,7 +49,6 @@
 					</div>
 				</c:if>
 			</div>
-		</c:if>
 		<!-- openaccess end -->
 		<p class="smallitalic">download-text</p>
 </div>
