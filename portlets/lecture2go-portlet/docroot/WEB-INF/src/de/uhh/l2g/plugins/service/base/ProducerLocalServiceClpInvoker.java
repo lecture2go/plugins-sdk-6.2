@@ -126,21 +126,29 @@ public class ProducerLocalServiceClpInvoker {
 
 		_methodParameterTypes159 = new String[] { "long" };
 
-		_methodName160 = "getAllProducers";
+		_methodName160 = "getById";
 
-		_methodParameterTypes160 = new String[] { "int", "int" };
+		_methodParameterTypes160 = new String[] { "long" };
 
-		_methodName161 = "getProdUcer";
+		_methodName161 = "getInstitutionByProducer";
 
-		_methodParameterTypes161 = new String[] { "java.lang.Long" };
+		_methodParameterTypes161 = new String[] { "long" };
 
-		_methodName162 = "getAllProducerIds";
+		_methodName162 = "getAllProducers";
 
-		_methodParameterTypes162 = new String[] { "java.lang.Long" };
+		_methodParameterTypes162 = new String[] { "int", "int" };
 
-		_methodName163 = "getProducerIds";
+		_methodName163 = "getProdUcer";
 
-		_methodParameterTypes163 = new String[] { "java.lang.Long", "int", "int" };
+		_methodParameterTypes163 = new String[] { "java.lang.Long" };
+
+		_methodName164 = "getAllProducerIds";
+
+		_methodParameterTypes164 = new String[] { "java.lang.Long" };
+
+		_methodName165 = "getProducerIds";
+
+		_methodParameterTypes165 = new String[] { "java.lang.Long", "int", "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -261,22 +269,32 @@ public class ProducerLocalServiceClpInvoker {
 
 		if (_methodName160.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes160, parameterTypes)) {
-			return ProducerLocalServiceUtil.getAllProducers(((Integer)arguments[0]).intValue(),
-				((Integer)arguments[1]).intValue());
+			return ProducerLocalServiceUtil.getById(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName161.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes161, parameterTypes)) {
-			return ProducerLocalServiceUtil.getProdUcer((java.lang.Long)arguments[0]);
+			return ProducerLocalServiceUtil.getInstitutionByProducer(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName162.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
-			return ProducerLocalServiceUtil.getAllProducerIds((java.lang.Long)arguments[0]);
+			return ProducerLocalServiceUtil.getAllProducers(((Integer)arguments[0]).intValue(),
+				((Integer)arguments[1]).intValue());
 		}
 
 		if (_methodName163.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes163, parameterTypes)) {
+			return ProducerLocalServiceUtil.getProdUcer((java.lang.Long)arguments[0]);
+		}
+
+		if (_methodName164.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes164, parameterTypes)) {
+			return ProducerLocalServiceUtil.getAllProducerIds((java.lang.Long)arguments[0]);
+		}
+
+		if (_methodName165.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes165, parameterTypes)) {
 			return ProducerLocalServiceUtil.getProducerIds((java.lang.Long)arguments[0],
 				((Integer)arguments[1]).intValue(),
 				((Integer)arguments[2]).intValue());
@@ -335,4 +353,8 @@ public class ProducerLocalServiceClpInvoker {
 	private String[] _methodParameterTypes162;
 	private String _methodName163;
 	private String[] _methodParameterTypes163;
+	private String _methodName164;
+	private String[] _methodParameterTypes164;
+	private String _methodName165;
+	private String[] _methodParameterTypes165;
 }

@@ -50,7 +50,6 @@
     </portlet-ref>
     <permissions>
         <supports>
-	      	<action-key>ADD_SUB_INSTITUTION_ENTRY</action-key>
 	      	<action-key>ADD_HOSTS</action-key>
 	      	<action-key>EDIT_HOSTS</action-key>
 	        <action-key>EDIT_ALL_INSTITUTIONS</action-key>

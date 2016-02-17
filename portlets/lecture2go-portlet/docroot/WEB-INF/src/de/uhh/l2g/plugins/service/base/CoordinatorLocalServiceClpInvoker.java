@@ -117,6 +117,14 @@ public class CoordinatorLocalServiceClpInvoker {
 		_methodName157 = "getAllCoordinators";
 
 		_methodParameterTypes157 = new String[] { "int", "int" };
+
+		_methodName158 = "getById";
+
+		_methodParameterTypes158 = new String[] { "long" };
+
+		_methodName159 = "getInstitutionByCoordinator";
+
+		_methodParameterTypes159 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -226,6 +234,16 @@ public class CoordinatorLocalServiceClpInvoker {
 				((Integer)arguments[1]).intValue());
 		}
 
+		if (_methodName158.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes158, parameterTypes)) {
+			return CoordinatorLocalServiceUtil.getById(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName159.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes159, parameterTypes)) {
+			return CoordinatorLocalServiceUtil.getInstitutionByCoordinator(((Long)arguments[0]).longValue());
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -267,4 +285,8 @@ public class CoordinatorLocalServiceClpInvoker {
 	private String[] _methodParameterTypes151;
 	private String _methodName157;
 	private String[] _methodParameterTypes157;
+	private String _methodName158;
+	private String[] _methodParameterTypes158;
+	private String _methodName159;
+	private String[] _methodParameterTypes159;
 }

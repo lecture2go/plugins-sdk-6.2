@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
+import de.uhh.l2g.plugins.model.Coordinator;
+import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
@@ -82,6 +84,14 @@ public class ProducerLocalServiceImpl extends ProducerLocalServiceBaseImpl {
 	public int getProducersByHostIdCount(long hostId) throws SystemException{
 		int prods = producerPersistence.countByHost(hostId);
 		return prods;
+	}
+	
+	public Producer getById(long producerId) throws SystemException {
+		return producerPersistence.fetchByPrimaryKey(producerId);
+	}
+	
+	public Institution getInstitutionByProducer(long producerId) throws SystemException {
+		return institutionPersistence.fetchByPrimaryKey(getById(producerId).getInstitutionId());
 	}
 
 
