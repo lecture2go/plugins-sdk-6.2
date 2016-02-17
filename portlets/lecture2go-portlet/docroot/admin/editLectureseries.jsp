@@ -106,7 +106,7 @@
 			<aui:input name="name" label="name" required="true" value="<%=lName%>"/>
 
 			<aui:select size="1" name="categoryId" label="event-type" required="true">
-				<aui:option value=""></aui:option>
+				<aui:option value="">select-event-type</aui:option>
 				<%for (int i = 0; i < categories.size(); i++) {
 					if (categoryId==categories.get(i).getCategoryId()) {%>
 						<aui:option value='<%=categories.get(i).getCategoryId()%>' selected="true"><%=categories.get(i).getName()%></aui:option>
