@@ -269,7 +269,7 @@
 					
 							
 					<a href="<%=removeURL.toString()%>">
-						<span class="icon-large icon-remove" onclick="confirm('really-delete-question')"></span>
+						<span class="icon-large icon-remove" onclick="return confirm('really-delete-question')"></span>
 					</a>		
 					
 					<%if(vid.getFilename().length()>0){
