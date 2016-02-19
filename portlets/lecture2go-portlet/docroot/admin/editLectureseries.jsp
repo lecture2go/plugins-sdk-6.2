@@ -258,7 +258,7 @@
 				    </script>
 				</aui:field-wrapper>
 			<%}else{%>
-				<aui:input type="textarea" name="longDesc" value="<%=lLongDesc%>" label="description" readonly="true"/>
+				<%if(lLongDesc.trim().length()>0){%><aui:input type="textarea" name="longDesc" value="<%=lLongDesc%>" label="description" readonly="true"/><%}%>
 			<%}%>
 			<aui:button-row>
 				<aui:button type="submit" onclick="<portlet:namespace />extractCodeFromEditor()"/>
