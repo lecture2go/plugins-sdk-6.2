@@ -35,7 +35,6 @@
 	
 	if(permissionProducer){
 		Producer p = ProducerLocalServiceUtil.getProducer(remoteUser.getUserId());
-		if(institutionId==0)institutionId = p.getInstitutionId();
 		producerId = p.getProducerId();
 	}	
 %>
