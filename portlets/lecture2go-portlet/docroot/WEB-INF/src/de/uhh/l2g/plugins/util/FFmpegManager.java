@@ -419,9 +419,9 @@ public class FFmpegManager {
 		try {
 			String videopfad = "";
 			if (video.getOpenAccess()==1)
-				videopfad = PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/" + video.getFilename();
+				videopfad = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + video.getFilename();
 			else
-				videopfad = PropsUtil.get("lecture2go.media.repository") + "/" + host.getName() + "/" + producer.getHomeDir() + "/" + video.getSecureFilename();
+				videopfad = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + video.getSecureFilename();
 			FFmpegManager ffmpegp = new FFmpegManager(videopfad);
 			video.setDuration(ffmpegp.getVideoDuration());
 			video.setResolution(ffmpegp.getVideoResolution());

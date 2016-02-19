@@ -23,6 +23,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
 import de.uhh.l2g.plugins.model.Coordinator;
+import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.CoordinatorLocalServiceBaseImpl;
 
@@ -68,6 +69,14 @@ public class CoordinatorLocalServiceImpl extends CoordinatorLocalServiceBaseImpl
 	public List<Coordinator> getAllCoordinators(int begin, int end) throws SystemException{
 		List<Coordinator> coords = CoordinatorLocalServiceUtil.getCoordinators(begin, end);
 		return fillProps(coords);
+	}
+	
+	public Coordinator getById(long coordinatorId) throws SystemException {
+		return coordinatorPersistence.fetchByPrimaryKey(coordinatorId);
+	}
+	
+	public Institution getInstitutionByCoordinator(long coordinatorId) throws SystemException {
+		return institutionPersistence.fetchByPrimaryKey(getById(coordinatorId).getInstitutionId());
 	}
 	
 }

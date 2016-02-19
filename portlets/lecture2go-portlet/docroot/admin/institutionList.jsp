@@ -2,6 +2,7 @@
 <%@ page import="de.uhh.l2g.plugins.model.Institution" %>
 <%@ page import="com.liferay.portal.kernel.dao.search.ResultRow" %>
 <%@ page import="de.uhh.l2g.plugins.model.Host" %>
+<%@ page import="de.uhh.l2g.plugins.model.Institution_Host" %>
 <%@ page import="de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil" %>
 <%@ page import="de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil" %>
 <%@ page import="de.uhh.l2g.plugins.service.HostLocalServiceUtil" %>
@@ -42,64 +43,19 @@ long groupId = scopeGroupId;
 //Company Id of Application
 long companyId = themeDisplay.getLayout().getCompanyId();
 String companyIdString = String.valueOf(companyId);
+String groupIdString = String.valueOf(groupId);
 
 //Portlet Instance Id (can be string)
 String institutionPortletPrimKey = portletDisplay.getResourcePK();
 //On Model Level:
-String portletModel = "de.uhh.l2g.plugins.model";
-//On Entity Level:
-String institutionModel = "de.uhh.l2g.plugins.model.Institution";
+String institutionModel = Institution.class.getName();
+String hostModel = Host.class.getName();
+String institutionHostModel = Institution_Host.class.getName();
 
-//Definded Action Ids
-String actionId = "VIEW_ALL_INSTITUTIONS";
+
 %>
 
-<%--START: DEBUG INFO--%>
-Do you have the individual <i><liferay-ui:message key='<%= "action." + actionId %>' /></i> permission for this portlet (<%= groupId+" "+institutionPortletName+" "+institutionPortletPrimKey %>)?
 
-<strong>
-
-<c:choose>
-	<c:when test="<%= permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, actionId) %>">
-		Yes
-	</c:when>
-	<c:otherwise>
-		No
-	</c:otherwise>
-</c:choose>
-
-</strong>
-</br>
-Do you have the group based <i><liferay-ui:message key='<%= "action." + actionId %>' /></i> permission for this portlet (<%= groupId+" "+institutionPortletName+" "+groupId %>)?
-
-<strong>
-
-<c:choose>
-	<c:when test="<%= permissionChecker.hasPermission(groupId, institutionPortletName, groupId, actionId) %>">
-		Yes
-	</c:when>
-	<c:otherwise>
-		No
-	</c:otherwise>
-</c:choose>
-
-</strong>
-</br>
-Do you have the global <i><liferay-ui:message key='<%= "action." + actionId %>' /></i> permission for this portlet (<%= groupId+" "+institutionPortletName+" "+ companyIdString %>)?
-
-<strong>
-
-<c:choose>
-	<c:when test="<%= permissionChecker.hasPermission(groupId, institutionPortletName, companyIdString, actionId) %>">
-		Yes
-	</c:when>
-	<c:otherwise>
-		No
-	</c:otherwise>
-</c:choose>
-
-</strong>
-</br>
 
 <%--END: DEBUG INFO--%>
 <%
@@ -132,36 +88,37 @@ int maxOrder = InstitutionLocalServiceUtil.getMaxSortByParentId(rootId)+1;
 
 <%--Permission Settings only available to authorized Roles on Company Level--%>
 <c:if test='<%=  permissionChecker.hasPermission(groupId, institutionPortletName, companyIdString, "PERMISSIONS") %>'>
-<%-- Permission for setting permissions regarding model on group/entity scope--%>
-
-<%--Global Permission for setting permissions regarding model on group scope--%>
-Company Institution Permissions:
+<%-- Permission for setting permissions regarding model on group scope--%>
+	
+<%--Model Permission for setting permissions on group scope--%>
+Group Institution Permissions:
 	<liferay-security:permissionsURL
-	    modelResource="<%= portletModel %>"
-	    modelResourceDescription="Model Global"
-	    resourcePrimKey="<%= companyIdString %>"
-	    var="globalmodelpermissionsURL" />
+	    modelResource="<%= institutionModel %>"
+	    modelResourceDescription="<%= institutionModel %>"
+	    resourcePrimKey="<%= groupIdString %>"
+	    var="institutionmodelpermissionsURL" />
 
-	<liferay-ui:icon image="permissions" url="<%= globalmodelpermissionsURL %>" />
-<%--Permission for setting permissions regarding model on group scope--%>
-Institution Permissions:
+	<liferay-ui:icon image="permissions" url="<%= institutionmodelpermissionsURL %>" />
+
+<%--Permission for setting permissions regarding institution model on group scope--%>
+Group Host Permissions:
 	<liferay-security:permissionsURL
-	    modelResource="<%= portletModel %>"
-	    modelResourceDescription="Model Site"
-	    resourcePrimKey="<%= String.valueOf(groupId) %>"
-	    var="modelpermissionsURL" />
+	    modelResource="<%= hostModel  %>"
+	    modelResourceDescription="<%= hostModel  %>"
+	    resourcePrimKey="<%= groupIdString %>"
+	    var="hostmodelpermissionsURL" />
 
-	<liferay-ui:icon image="permissions" url="<%= modelpermissionsURL %>" />
+	<liferay-ui:icon image="permissions" url="<%= hostmodelpermissionsURL %>" />
+	
+<%--Permission for setting permissions regarding institution model on group scope--%>
+Group Institution_Host Permissions:
+	<liferay-security:permissionsURL
+	    modelResource="<%= institutionHostModel  %>"
+	    modelResourceDescription="<%= institutionHostModel  %>"
+	    resourcePrimKey="<%= groupIdString %>"
+	    var="institutionhostnmodelpermissionsURL" />
 
-<%--Permission for setting permissions regarding concrete entity Root--%>
-Root Institution Permissions:
-		<liferay-security:permissionsURL
-	    modelResource="<%= Institution.class.getName() %>"
-	    modelResourceDescription="<%= root.getName() %>"
-	    resourcePrimKey="<%= String.valueOf(rootId) %>"
-	    var="rootentitypermissionsURL" />
-
-	<liferay-ui:icon image="permissions" url="<%= rootentitypermissionsURL %>" />
+	<liferay-ui:icon image="permissions" url="<%= institutionhostnmodelpermissionsURL %>" />
 </c:if>
 
 <%--ADD INSTITUTION--%>
@@ -210,7 +167,7 @@ Root Institution Permissions:
 			    	extended="<%= false %>"
 			    	persistState="<%= true %>">
 					<c:if  test='<%= permissionChecker.hasPermission(groupId, institutionModel, groupId, "ADD_HOSTS") %>'>
-	      
+	       
 						<aui:form action="<%= addStreamingServerURL %>" name="<portlet:namespace />fm" inlineLabel="true">
 						<aui:button-row>
 				 	    <aui:fieldset column="true">
@@ -244,8 +201,11 @@ Root Institution Permissions:
 				<liferay-ui:search-container-row
 				className="de.uhh.l2g.plugins.model.Host" modelVar="Hosts" rowVar="thisRow"
 				keyProperty="hostId"  escapedModel="<%= false %>" indexVar="k">
-
-        			<liferay-ui:search-container-column-text name="Host" >      			    
+					
+        			<liferay-ui:search-container-column-text name="Host" >
+        			<c:choose>
+        			<c:when  test='<%= permissionChecker.hasPermission(groupId, hostModel, groupId, "EDIT_HOST") %>'> 
+        		    			    
 		        			<portlet:actionURL name="deleteStreamingServer" var="deleteStreamingServerURL">
 		        				<c:choose>
 		        					<c:when test='<%=  HostLocalServiceUtil.getLockingElements(groupId, Hosts.getHostId()) < 1 %>'>
@@ -257,6 +217,7 @@ Root Institution Permissions:
 								</c:choose>
 								<portlet:param name="backURL" value="<%=String.valueOf(portletURL) %>"/>
 							</portlet:actionURL>
+					
 						<aui:form action="<%= updateStreamingServerURL %>" name="<portlet:namespace />fm">
 							<aui:fieldset>
 							
@@ -281,7 +242,7 @@ Root Institution Permissions:
 								<aui:input name="curStreamingServerId" type='hidden' inlineField="true" value = "<%= (new Long(Hosts.getHostId())).toString() %>"/>
 								<aui:button type="submit"></aui:button>
 								<c:choose>
-								<c:when test='<%=  HostLocalServiceUtil.getLockingElements(groupId, Hosts.getHostId()) < 1 %>'>
+								<c:when test='<%= permissionChecker.hasPermission(groupId, hostModel, groupId, ActionKeys.DELETE) & HostLocalServiceUtil.getLockingElements(groupId, Hosts.getHostId()) < 1%>'>
 									<aui:button name="delete" value="Löschen" type="button" href="<%=deleteStreamingServerURL.toString() %>" />
 								</c:when>
 								<c:otherwise>
@@ -292,6 +253,15 @@ Root Institution Permissions:
 								<liferay-ui:message key="<%= repDirectory %>" />/<liferay-ui:message key="<%= Hosts.getServerRoot() %>"/>
 							</aui:fieldset>
 						</aui:form>
+						</c:when>
+						<c:otherwise>
+						<liferay-ui:message key="<%= Hosts.getName() %>"></liferay-ui:message>
+						<liferay-ui:message key="<%= Hosts.getStreamer() %>"></liferay-ui:message>
+						<liferay-ui:message key="<%= String.valueOf(Hosts.getPort()) %>"></liferay-ui:message>
+						<liferay-ui:message key="<%= Hosts.getProtocol() %>"></liferay-ui:message>
+						<liferay-ui:message key="<%= repDirectory %>"></liferay-ui:message>
+						</c:otherwise>
+						</c:choose>
         			</liferay-ui:search-container-column-text>
 
         		</liferay-ui:search-container-row>
@@ -300,25 +270,88 @@ Root Institution Permissions:
 		</liferay-ui:panel>
 </c:if>
 
+<%-- INSTITUTION LISTINGS --%>
+
+<% // Unfortunately JSP does not support nesting of <c:choose> when braking containers at arbitrary points
+   // Therefore Generate List and Root based on Permissions, instead of hiding non visible subsets
+   
+   	//Find out if user is connected with an institution
+    long userId =  Long.parseLong(request.getRemoteUser());
+    long ownInstitutionId = 0; //user is not attached to a conrete institution
+    
+    //Currently only this roles have fixed institution
+	if (request.isUserInRole("L2Go Coodinator")){
+	    	ownInstitutionId = CoordinatorLocalServiceUtil.getInstitutionByCoordinator(userId).getInstitutionId();
+	}
+	else{
+	    if (request.isUserInRole("L2Go Producer")){
+	   		ownInstitutionId = ProducerLocalServiceUtil.getInstitutionByProducer(userId).getInstitutionId();
+	    }
+	}
+	
+   long treeBaseId = InstitutionLocalServiceUtil.getDefaultInstitutionId(companyId, groupId);
+
+    if(permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "VIEW_ALL_INSTITUTIONS")){
+    	treeBaseId = rootId; //top level
+    }
+    else { //set User's institution
+	    treeBaseId = ownInstitutionId;
+    }
+    
+    Institution treeBase = InstitutionLocalServiceUtil.getByGroupIdAndId(groupId, treeBaseId);
+    int ownInstitutionMax = InstitutionLocalServiceUtil.getMaxSortByParentId(treeBaseId)+1;
+    System.out.println(ownInstitutionId+ " " +treeBaseId);
+   %>
+
 <%--ROOT INSTITUTION--%>
 <%--Permission regarding concrete instance of element, namely RootInstitution --%>
-<c:if  test='<%= permissionChecker.hasPermission(groupId, institutionModel, groupId, "EDIT_ROOT_INSTITUTION") %>'>
+<c:choose>
+<c:when  test='<%= permissionChecker.hasPermission(groupId, institutionModel, groupId, "EDIT_ROOT_INSTITUTION") %>'>
 	<liferay-ui:panel title="Top Level Institution" collapsible="true" id="rootInstitutionSettings"
 					defaultState="closed"
 					extended="<%= false %>"
 					persistState="<%= true %>">
 	<aui:form action="<%= updateRootInstitutionURL %>" name="<portlet:namespace />fm">
 		<aui:fieldset>
-				<aui:input name="rootInstitution" label="Top Level Institution" required="true" inlineField="true"  value = '<%= root.getName() %>'/>
-				<aui:input name="rootInstitutionId" type='hidden' inlineField="true" value = '<%= root.getInstitutionId() %>'/>
+				<aui:input name="rootInstitution" label="Top Level Institution" required="true" inlineField="true"  value = '<%= treeBase.getName() %>'/>
+				<aui:input name="rootInstitutionId" type='hidden' inlineField="true" value = '<%= treeBase.getInstitutionId() %>'/>
 				<aui:button type="submit"></aui:button>
 				<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button>
 		</aui:fieldset>
 	</aui:form>
 	</liferay-ui:panel>
+</c:when>
+<c:otherwise>
+<%-- Only display title if user can't edit all of the hierarchy ---%>
+<%-- 	<c:if  test='<%= permissionChecker.hasPermission(groupId, institutionPortletName, groupId, "VIEW_ALL_INSTITUTIONS") %>'> --%>
+			<liferay-ui:message key="<%= treeBase.getName() %>"></liferay-ui:message>
+<%-- 	</c:if> --%>
+</c:otherwise>
+</c:choose>
+
+<%--ADD SUB_INSTITUTION-- Only Required if user can't see full listing, but is allowed to mange own entries%>
+
+<%-- Permission on Portlet Scope --%>
+<c:if test='<%= !permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "VIEW_ALL_INSTITUTIONS") && permissionChecker.hasPermission(groupId, institutionModel, groupId, "ADD_SUB_INSTITUTION_ENTRY") %>'>
+	<liferay-ui:panel title="Add Sub Institution" collapsible="true" id="subInstitutionSettings"
+					defaultState="open"
+					extended="<%= false %>"
+					persistState="<%= true %>">
+	<aui:form action="<%= addSubInstitutionURL %>" name="<portlet:namespace />fm">
+
+			<aui:fieldset>
+					<aui:input name="subInstitution" label="SubInstitution Name" inlineField="true" />
+					<aui:input name="subInstitutionOrder" label="Order" inlineField="true" value='<%= ownInstitutionMax  %>'/>
+					<aui:input name='subInstitutionParentId' type='hidden' inlineField="true" value='<%= treeBase.getInstitutionId() %>'/>	
+					<aui:button type="submit" value="Add" ></aui:button>				
+	        </aui:fieldset>
+	</aui:form>
+	</liferay-ui:panel>
 </c:if>
 
+
 <%--TOP LEVEL INSTITUTIONS--%>
+
 
 <%--<liferay-ui:panel title="List of Institutions" collapsible="false" id="outerList"> --%>
 <liferay-ui:search-container searchContainer="<%= searchInstitutionContainer %>"
@@ -329,14 +362,15 @@ delta="20"
 iteratorURL="<%= outerURL %>"
 deltaConfigurable="true">
     <liferay-ui:search-container-results
-        results="<%=InstitutionLocalServiceUtil.getByGroupIdAndParent(groupId, rootId  , searchContainer.getStart(), searchContainer.getEnd())%>"
-        total="<%=InstitutionLocalServiceUtil.getByGroupIdAndParentCount(groupId, rootId)%>" />
+        results="<%=InstitutionLocalServiceUtil.getByGroupIdAndParent(groupId, treeBaseId, searchContainer.getStart(), searchContainer.getEnd())%>"
+        total="<%=InstitutionLocalServiceUtil.getByGroupIdAndParentCount(groupId, treeBaseId)%>" />
 
 <liferay-ui:search-container-row
         className="de.uhh.l2g.plugins.model.Institution" modelVar="institution"
         keyProperty="institutionId"  escapedModel="<%= false %>" indexVar="i">
 
         <%
+       
  			ResultRow container_row = (ResultRow)request.getAttribute("curOuter");
  			Institution institution_row = (Institution)row.getObject();
  			long institution_id = institution_row.getInstitutionId();
@@ -387,6 +421,10 @@ deltaConfigurable="true">
  		</aui:form>
  		
  		<%--SUB INSTITUTIONS--%>
+ 		<% 
+ 		//Only display second level if user has view all permission
+ 		%>
+ 		<c:if test='<%= permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "VIEW_ALL_INSTITUTIONS") %>'>
 		<liferay-ui:panel
 				defaultState="closed"
 				extended="<%= false %>"
@@ -397,7 +435,7 @@ deltaConfigurable="true">
 	 			<aui:fieldset>
 					<aui:input name="subInstitution" label="SubInstitution Name" inlineField="true" />
 					<aui:input name="subInstitutionOrder" label="Order" inlineField="true" value='<%= subInstitutionMax  %>'/>
-					<aui:input name='subInstitutionParentId' type='hidden' inlineField="true" value='<%= institution.getPrimaryKey() %>'/>
+					<aui:input name='subInstitutionParentId' type='hidden' inlineField="true" value='<%= institution_id %>'/>
 					
 					<aui:button type="submit" value="Add"></aui:button>
 				</aui:fieldset>
@@ -416,48 +454,61 @@ deltaConfigurable="true">
 				<liferay-ui:search-container-results
         			results="<%=InstitutionLocalServiceUtil.getByGroupIdAndParent(groupId, institution_id, searchContainer.getStart(), searchContainer.getEnd())%>"
         			total="<%=InstitutionLocalServiceUtil.getByGroupIdAndParentCount(groupId, institution_id)%>" />
-
-				<liferay-ui:search-container-row
-				className="de.uhh.l2g.plugins.model.Institution" modelVar="subInstitution" rowVar="thisRow"
-				keyProperty="institutionId"  escapedModel="<%= false %>" indexVar="j">
-
-        			<liferay-ui:search-container-column-text name="Institution" >
-	        			<portlet:actionURL name="deleteSubInstitution" var="deleteSubInstitutionURL">
-		 					<portlet:param name="innerListInstitutionId" value='<%= (new Long(subInstitution.getPrimaryKey())).toString() %>' />
-		 					<portlet:param name="innerListInstitutionParentId" value='<%= (new Long(institution.getPrimaryKey())).toString() %>' />
-							<portlet:param name="backURL" value="<%=String.valueOf(portletURL) %>"/>
-						</portlet:actionURL>
-						<aui:form action="<%= updateSubInstitutionURL %>" name="<portlet:namespace />fm">
-							<aui:fieldset>
-								<aui:input name="innerListInstitution" label="Institution Name" inlineField="true" value = "<%= subInstitution.getName() %>" />
-								<aui:input cssClass="smallInput" name="innerListOrder" label="Order" inlineField="true" value='<%= subInstitution.getSort() %>'/>
-								<aui:input name="innerListInstitutionId" type='hidden' inlineField="true" value = "<%= subInstitution.getPrimaryKey() %>"/>
-								<aui:button type="submit"></aui:button>
-								<c:choose>
-									<c:when test='<%=  InstitutionLocalServiceUtil.getLockingElements(subInstitution.getInstitutionId()) < 1 %>'>
-											<aui:button name="delete" value="Löschen" type="button" href="<%=deleteSubInstitutionURL.toString() %>" />
-									</c:when>
-									<c:otherwise>
-											<aui:button name="delete" value="Löschen" type="button" disabled="true" href="<%=deleteSubInstitutionURL.toString() %>" />								
-									</c:otherwise>
-								</c:choose>
-							</aui:fieldset>
-						</aui:form>
-        			</liferay-ui:search-container-column-text>
+					<liferay-ui:search-container-row
+					className="de.uhh.l2g.plugins.model.Institution" modelVar="subInstitution" rowVar="thisRow"
+					keyProperty="institutionId"  escapedModel="<%= false %>" indexVar="j">
+	
+					<c:choose>
+					<c:when  test='<%= permissionChecker.hasPermission(groupId, institutionModel, groupId, "EDIT_ALL_INSTITUTIONS") || (permissionChecker.hasPermission(groupId, institutionModel, groupId, "EDIT_OWN_INSTITUTIONS") && ownInstitutionId == institution_id ) %>'> 
+				
+	        			<liferay-ui:search-container-column-text name="Institution" >
+		        			<portlet:actionURL name="deleteSubInstitution" var="deleteSubInstitutionURL">
+			 					<portlet:param name="innerListInstitutionId" value='<%= (new Long(subInstitution.getPrimaryKey())).toString() %>' />
+			 					<portlet:param name="innerListInstitutionParentId" value='<%= (new Long(institution.getPrimaryKey())).toString() %>' />
+								<portlet:param name="backURL" value="<%=String.valueOf(portletURL) %>"/>
+							</portlet:actionURL>
+							<aui:form action="<%= updateSubInstitutionURL %>" name="<portlet:namespace />fm">
+								<aui:fieldset>
+									<aui:input name="innerListInstitution" label="Institution Name" inlineField="true" value = "<%= subInstitution.getName() %>" />
+									<aui:input cssClass="smallInput" name="innerListOrder" label="Order" inlineField="true" value='<%= subInstitution.getSort() %>'/>
+									<aui:input name="innerListInstitutionId" type='hidden' inlineField="true" value = "<%= subInstitution.getInstitutionId() %>"/>
+									<aui:button type="submit"></aui:button>
+									<c:if  test='<%= permissionChecker.hasPermission(groupId, institutionModel, groupId, "DELETE_SUB_INSTITUTIONS") %>'>
+										<c:choose>
+											<c:when test='<%=  InstitutionLocalServiceUtil.getLockingElements(subInstitution.getInstitutionId()) < 1 %>'>
+													<aui:button name="delete" value="Löschen" type="button" href="<%=deleteSubInstitutionURL.toString() %>" />
+											</c:when>
+											<c:otherwise>
+													<aui:button name="delete" value="Löschen" type="button" disabled="true" href="<%=deleteSubInstitutionURL.toString() %>" />								
+											</c:otherwise>
+										</c:choose>
+									</c:if>
+								</aui:fieldset>
+							</aui:form>
+        				</liferay-ui:search-container-column-text>
+        			</c:when>
+					<c:otherwise>
+						<liferay-ui:message key="<%= subInstitution.getName() %>"></liferay-ui:message>
+					</c:otherwise>
+					</c:choose>
 
         		</liferay-ui:search-container-row>
         	<liferay-ui:search-iterator searchContainer="<%= searchSubInstitutionContainer %>" />
 			</liferay-ui:search-container>
 
 		</liferay-ui:panel>
+		</c:if>
 		<%--END: SUB INSTUTIONS--%>
+
 		</liferay-ui:search-container-column-text>
 
     	</liferay-ui:search-container-row>
+   					
 
    	 	<liferay-ui:search-iterator searchContainer="<%= searchInstitutionContainer %>" />
 		</liferay-ui:search-container>
 	<%--END: INSTITUTIONS--%>
+	
 
 
 <%-- </liferay-ui:panel> --%>
