@@ -318,7 +318,6 @@
 			<basic name="rootInstitutionId" />
 			<basic name="citation2go" />
 			<basic name="termId" />
-			<basic name="videoCreatorId" />
 			<basic name="tags" />
 			<basic name="password">
 				<column name="PASSWORD_" />

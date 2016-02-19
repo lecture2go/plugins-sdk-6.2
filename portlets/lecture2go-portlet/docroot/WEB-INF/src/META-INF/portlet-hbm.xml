@@ -282,7 +282,6 @@
 		<property name="rootInstitutionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="citation2go" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="termId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="videoCreatorId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="tags" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="password" type="com.liferay.portal.dao.orm.hibernate.StringType" column="password_" />
 	</class>

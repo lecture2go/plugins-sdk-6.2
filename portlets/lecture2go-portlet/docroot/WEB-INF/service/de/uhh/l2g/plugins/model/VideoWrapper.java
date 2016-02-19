@@ -70,7 +70,6 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 		attributes.put("rootInstitutionId", getRootInstitutionId());
 		attributes.put("citation2go", getCitation2go());
 		attributes.put("termId", getTermId());
-		attributes.put("videoCreatorId", getVideoCreatorId());
 		attributes.put("tags", getTags());
 		attributes.put("password", getPassword());
 
@@ -204,12 +203,6 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 
 		if (termId != null) {
 			setTermId(termId);
-		}
-
-		Long videoCreatorId = (Long)attributes.get("videoCreatorId");
-
-		if (videoCreatorId != null) {
-			setVideoCreatorId(videoCreatorId);
 		}
 
 		String tags = (String)attributes.get("tags");
@@ -663,26 +656,6 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 	@Override
 	public void setTermId(long termId) {
 		_video.setTermId(termId);
-	}
-
-	/**
-	* Returns the video creator ID of this video.
-	*
-	* @return the video creator ID of this video
-	*/
-	@Override
-	public long getVideoCreatorId() {
-		return _video.getVideoCreatorId();
-	}
-
-	/**
-	* Sets the video creator ID of this video.
-	*
-	* @param videoCreatorId the video creator ID of this video
-	*/
-	@Override
-	public void setVideoCreatorId(long videoCreatorId) {
-		_video.setVideoCreatorId(videoCreatorId);
 	}
 
 	/**
