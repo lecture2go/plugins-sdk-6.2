@@ -384,8 +384,8 @@ public class AdminUserManagement extends MVCPortlet {
 		//L2G Pages requiring role
 		//TODO: replace harcoded friendly-url element below, for dynmic portlet  page detection
 		//Get layout to retrieve Plid for Portlet Page assumes title is constant and unique
-        Layout imPage = LayoutLocalServiceUtil.getFriendlyURLLayout(guestGroupId, false, "/institution-management");
-        Layout uPage = LayoutLocalServiceUtil.getFriendlyURLLayout(guestGroupId, false, "/user-management");
+        //Layout imPage = LayoutLocalServiceUtil.getFriendlyURLLayout(guestGroupId, false, "/institution-management");
+        //Layout uPage = LayoutLocalServiceUtil.getFriendlyURLLayout(guestGroupId, false, "/user-management");
 	
 		
 		try {
@@ -443,8 +443,8 @@ public class AdminUserManagement extends MVCPortlet {
 			setL2GAdminPermissions(role, u, guestGroupId);
 			
 			//Remove defaults for non L2G Users (https://github.com/liferay/liferay-portal/blob/master/portal-impl/src/resource-actions/sites.xml)
-			setL2GDefaultRolesPermissions(c,imPage);
-			setL2GDefaultRolesPermissions(c,uPage);		
+			//setL2GDefaultRolesPermissions(c,imPage);
+			//setL2GDefaultRolesPermissions(c,uPage);		
 		}
 
 	}
