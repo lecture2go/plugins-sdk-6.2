@@ -218,7 +218,7 @@
 			<%}%>							
 
 			<%if(readOnly){%>
-				<aui:input name="term" label="term" required="true" value='<%=TermLocalServiceUtil.getById(lSemester).getPrefix()+"&nbsp;"+TermLocalServiceUtil.getById(lSemester).getYear()%>' readonly="<%=readOnly%>"/>
+				<aui:input name="term" label="term" required="true" value='<%=TermLocalServiceUtil.getById(lSemester).getPrefix()+" "+TermLocalServiceUtil.getById(lSemester).getYear()%>' readonly="<%=readOnly%>"/>
 				<aui:input type="hidden" name="semesterId" value="<%=lSemester%>"/>
 			<%}else{%>
 				<aui:select id="allSemesters" size="1" name="semesterId" label="semester" required="true">
