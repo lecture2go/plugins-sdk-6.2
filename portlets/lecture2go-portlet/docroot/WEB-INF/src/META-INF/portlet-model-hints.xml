@@ -254,7 +254,6 @@
 		<field name="rootInstitutionId" type="long" />
 		<field name="citation2go" type="int" />
 		<field name="termId" type="long" />
-		<field name="videoCreatorId" type="long" />
 		<field name="tags" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
