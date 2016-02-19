@@ -23,12 +23,20 @@
 		institutions = InstitutionLocalServiceUtil.getAllSortedAsTree(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 		producers = ProducerLocalServiceUtil.getAllProducers(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 		permissionCoordinator = false;
+		permissionProducer = false;
 	}
 	
 	if(permissionCoordinator){
-		if(institutionId==0)institutionId = CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getInstitutionId();
-		institutions = InstitutionLocalServiceUtil.getByParent(CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getInstitutionId());
-		producers = ProducerLocalServiceUtil.getProducersByInstitutionId(CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getInstitutionId());
+		Coordinator c = CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId());
+		if(institutionId==0)institutionId = c.getInstitutionId();
+		institutions = InstitutionLocalServiceUtil.getByParent(c.getInstitutionId());
+		producers = ProducerLocalServiceUtil.getProducersByInstitutionId(c.getInstitutionId());
+	}	
+	
+	if(permissionProducer){
+		Producer p = ProducerLocalServiceUtil.getProducer(remoteUser.getUserId());
+		if(institutionId==0)institutionId = p.getInstitutionId();
+		producerId = p.getProducerId();
 	}	
 %>
 
@@ -38,6 +46,7 @@
 </portlet:renderURL>
 
 <aui:fieldset helpMessage="choose-filter" column="true">
+				<%if(permissionAdmin || permissionCoordinator){ %>
 						<portlet:renderURL var="sortByInstitution">
 							<portlet:param name="jspPage" value="/admin/lectureSeriesList.jsp" />
 							<portlet:param name="producerId" value="<%=producerId.toString()%>"/>
@@ -77,7 +86,7 @@
 								}%>
 							</aui:select>
 						</aui:form>	
-							
+				<%}%>		
 						<portlet:renderURL var="sortBySemester">
 							<portlet:param name="jspPage" value="/admin/lectureSeriesList.jsp" />
 							<portlet:param name="institutionId" value="<%=institutionId.toString()%>"/>
@@ -128,7 +137,7 @@
 <liferay-ui:search-container emptyResultsMessage="no-lectureseries-found" delta="10" iteratorURL="<%= portletURL %>">
 	<liferay-ui:search-container-results>
 		<%
-			tempLectureseriesList = LectureseriesLocalServiceUtil.getFilteredBySemesterFacultyProducer(statusId, semesterId, new Long(institutionId), new Long(producerId));
+			tempLectureseriesList = LectureseriesLocalServiceUtil.getFilteredByApprovedSemesterFacultyProducer(statusId, semesterId, new Long(institutionId), new Long(producerId));
 			results = ListUtil.subList(tempLectureseriesList, searchContainer.getStart(), searchContainer.getEnd());
 			total = tempLectureseriesList.size();
 			pageContext.setAttribute("results", results);
@@ -166,14 +175,15 @@
 						<portlet:param name="lectureseriesId" value='<%=""+lectser.getLectureseriesId()%>' />
 						<portlet:param name="backURL" value='<%=String.valueOf(portletURL)%>' />
 					</portlet:actionURL>
-					
-					<a href="<%=removeURL.toString()%>">
-						<span class="icon-large icon-remove"></span>
-					</a>
-
+					<%if(lectser.getNumberOfVideos()>0 || (permissionProducer && lectser.getApproved()==1)){ %>
+					<%}else{%>
+						<a href="<%=removeURL.toString()%>">
+							<span class="icon-large icon-remove" onclick="return confirm('really-delete-question')"></span>
+						</a>
+					<%}%>
 					<a href="<%=editURL.toString()%>">
-		   				<span class="icon-large icon-pencil"></span>
-					</a>
+				   		<span class="icon-large icon-pencil"></span>
+					</a>					
 				</div>
 			</div>
 		</liferay-ui:search-container-column-text>

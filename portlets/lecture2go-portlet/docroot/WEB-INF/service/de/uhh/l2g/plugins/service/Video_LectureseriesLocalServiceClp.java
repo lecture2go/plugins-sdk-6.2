@@ -128,9 +128,13 @@ public class Video_LectureseriesLocalServiceClp
 
 		_methodParameterTypes21 = new String[] { "java.lang.Long" };
 
-		_methodName22 = "updateOpenAccessByVideo";
+		_methodName22 = "getByLectureseries";
 
-		_methodParameterTypes22 = new String[] { "de.uhh.l2g.plugins.model.Video" };
+		_methodParameterTypes22 = new String[] { "java.lang.Long" };
+
+		_methodName23 = "updateOpenAccessByVideo";
+
+		_methodParameterTypes23 = new String[] { "de.uhh.l2g.plugins.model.Video" };
 	}
 
 	@Override
@@ -772,14 +776,44 @@ public class Video_LectureseriesLocalServiceClp
 	}
 
 	@Override
-	public java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> updateOpenAccessByVideo(
-		de.uhh.l2g.plugins.model.Video video)
+	public java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> getByLectureseries(
+		java.lang.Long lectureseriesId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName22,
 					_methodParameterTypes22,
+					new Object[] { ClpSerializer.translateInput(lectureseriesId) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries> updateOpenAccessByVideo(
+		de.uhh.l2g.plugins.model.Video video)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23,
 					new Object[] { ClpSerializer.translateInput(video) });
 		}
 		catch (Throwable t) {
@@ -846,4 +880,6 @@ public class Video_LectureseriesLocalServiceClp
 	private String[] _methodParameterTypes21;
 	private String _methodName22;
 	private String[] _methodParameterTypes22;
+	private String _methodName23;
+	private String[] _methodParameterTypes23;
 }

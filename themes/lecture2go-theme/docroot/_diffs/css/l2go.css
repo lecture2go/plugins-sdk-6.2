@@ -895,6 +895,18 @@ thead, th {
     border-color: #E0E0E0 -moz-use-text-color -moz-use-text-color;
 }
 
+#chapters .chaptertile input {
+    margin-left: 48%;
+    margin-top: -55px;
+    position: absolute;
+}
+
+#chapters .commenttile input {
+    margin-left: 13%;
+    margin-top: -37px;
+    position: absolute;
+}
+
 .aui .chaptertile:hover {
     background: #f3f3f3 none repeat scroll 0 0;
     cursor: pointer;
@@ -1354,4 +1366,10 @@ thead, th {
 #usr-roles > div {
     margin-left: 7px;
 }
-  
+
+#_lgadminvideomanagement_WAR_lecture2goportlet_apply-date-time {
+    float: left;
+    margin-left: 231px;
+    position: absolute;
+    margin-top: -56px;
+}

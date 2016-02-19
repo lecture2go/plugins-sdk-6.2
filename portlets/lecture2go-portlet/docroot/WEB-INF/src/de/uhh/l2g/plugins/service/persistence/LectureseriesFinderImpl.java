@@ -18,7 +18,9 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.Video;
+import de.uhh.l2g.plugins.model.Video_Lectureseries;
 import de.uhh.l2g.plugins.model.impl.LectureseriesImpl;
+import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 
 public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> implements LectureseriesFinder {
 
@@ -349,8 +351,11 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 				Date date = format.parse(string);
 				l.setLatestVideoUploadDate(date);
 			}catch (Exception e){}
-			try{l.setNumberOfVideos((Integer) lectser[14]);}catch (Exception e){}
-			//
+			try{
+				List<Video_Lectureseries> nV = Video_LectureseriesLocalServiceUtil.getByLectureseries(l.getLectureseriesId()); 
+				l.setNumberOfVideos(nV.size());
+			}catch (Exception e){}
+			// 
 			ll.add(l);
 		}
 		return ll;
