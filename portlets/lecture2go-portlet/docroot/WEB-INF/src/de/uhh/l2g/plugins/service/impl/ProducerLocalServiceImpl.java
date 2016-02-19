@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
+import de.uhh.l2g.plugins.model.Coordinator;
+import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
@@ -83,6 +85,14 @@ public class ProducerLocalServiceImpl extends ProducerLocalServiceBaseImpl {
 		int prods = producerPersistence.countByHost(hostId);
 		return prods;
 	}
+	
+	public Producer getById(long producerId) throws SystemException {
+		return producerPersistence.fetchByPrimaryKey(producerId);
+	}
+	
+	public Institution getInstitutionByProducer(long producerId) throws SystemException {
+		return institutionPersistence.fetchByPrimaryKey(getById(producerId).getInstitutionId());
+	}
 
 
 	public List<Producer> getAllProducers(int begin, int end) throws SystemException{
@@ -97,7 +107,7 @@ public class ProducerLocalServiceImpl extends ProducerLocalServiceBaseImpl {
 		p.setLastName(u.getLastName());
 		p.setLastLoginDate(u.getLastLoginDate());
 		p.setEmailAddress(u.getEmailAddress());
-		p.setHomeDir(PropsUtil.get("lecture2go.media.repository")+"/"+HostLocalServiceUtil.getByHostId(p.getHostId()).getName()+"/"+p.getHomeDir());
+		p.setHomeDir(PropsUtil.get("lecture2go.media.repository")+"/"+HostLocalServiceUtil.getByHostId(p.getHostId()).getServerRoot()+"/"+p.getHomeDir());
 		return p;
 	}
 	
