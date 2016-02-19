@@ -255,7 +255,7 @@ public interface LectureseriesLocalService extends BaseLocalService,
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getFilteredBySemesterFacultyProducer(
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getFilteredByApprovedSemesterFacultyProducer(
 		java.lang.Integer approved, java.lang.Long semester,
 		java.lang.Long facultyId, java.lang.Long producerId);
 

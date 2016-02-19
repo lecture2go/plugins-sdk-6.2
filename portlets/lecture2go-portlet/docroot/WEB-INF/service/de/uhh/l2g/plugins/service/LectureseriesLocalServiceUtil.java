@@ -275,12 +275,12 @@ public class LectureseriesLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getFilteredBySemesterFacultyProducer(
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getFilteredByApprovedSemesterFacultyProducer(
 		java.lang.Integer approved, java.lang.Long semester,
 		java.lang.Long facultyId, java.lang.Long producerId) {
 		return getService()
-				   .getFilteredBySemesterFacultyProducer(approved, semester,
-			facultyId, producerId);
+				   .getFilteredByApprovedSemesterFacultyProducer(approved,
+			semester, facultyId, producerId);
 	}
 
 	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getAll()

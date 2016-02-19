@@ -24,7 +24,7 @@
 			producers = ProducerLocalServiceUtil.getProducersByInstitutionId(institutionId);
 			if(producerId==0)tempVideosList = VideoLocalServiceUtil.getByRootInstitution(institutionId);
 			else {
-				lectureseries = LectureseriesLocalServiceUtil.getFilteredBySemesterFacultyProducer(1, new Long(0), new Long(0), producerId);
+				lectureseries = LectureseriesLocalServiceUtil.getFilteredByApprovedSemesterFacultyProducer(1, new Long(0), new Long(0), producerId);
 				if(lectureseriesId==0) tempVideosList = VideoLocalServiceUtil.getByProducer(producerId);
 				else tempVideosList = VideoLocalServiceUtil.getByProducerAndLectureseries(producerId, lectureseriesId);
 			}
@@ -39,7 +39,7 @@
 			Long institutionId = CoordinatorLocalServiceUtil.getCoordinator(coordinatorId).getInstitutionId();
 			producers = ProducerLocalServiceUtil.getProducersByInstitutionId(institutionId);
 			if(producerId>0){
-				lectureseries = LectureseriesLocalServiceUtil.getFilteredBySemesterFacultyProducer(1, new Long(0), new Long(0), producerId);
+				lectureseries = LectureseriesLocalServiceUtil.getFilteredByApprovedSemesterFacultyProducer(1, new Long(0), new Long(0), producerId);
 				if(lectureseriesId==0)tempVideosList = VideoLocalServiceUtil.getByProducer(producerId);
 				else tempVideosList = VideoLocalServiceUtil.getByProducerAndLectureseries(producerId, lectureseriesId);
 			}else{
@@ -50,7 +50,7 @@
 				producerId = remoteUser.getUserId();
 				if(lectureseriesId>0) tempVideosList = VideoLocalServiceUtil.getByProducerAndLectureseries(producerId, lectureseriesId);
 				else tempVideosList = VideoLocalServiceUtil.getByProducer(producerId);
-				lectureseries = LectureseriesLocalServiceUtil.getFilteredBySemesterFacultyProducer(1, new Long(0), new Long(0), producerId);
+				lectureseries = LectureseriesLocalServiceUtil.getFilteredByApprovedSemesterFacultyProducer(1, new Long(0), new Long(0), producerId);
 			}
 		}
 	}
@@ -269,7 +269,7 @@
 					
 							
 					<a href="<%=removeURL.toString()%>">
-						<span class="icon-large icon-remove" onclick="confirm('really-delete-question')"></span>
+						<span class="icon-large icon-remove" onclick="return confirm('really-delete-question')"></span>
 					</a>		
 					
 					<%if(vid.getFilename().length()>0){

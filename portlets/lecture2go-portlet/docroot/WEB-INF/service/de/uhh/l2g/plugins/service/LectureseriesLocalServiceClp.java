@@ -115,7 +115,7 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
 
-		_methodName19 = "getFilteredBySemesterFacultyProducer";
+		_methodName19 = "getFilteredByApprovedSemesterFacultyProducer";
 
 		_methodParameterTypes19 = new String[] {
 				"java.lang.Integer", "java.lang.Long", "java.lang.Long",
@@ -712,7 +712,7 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 	}
 
 	@Override
-	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getFilteredBySemesterFacultyProducer(
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getFilteredByApprovedSemesterFacultyProducer(
 		java.lang.Integer approved, java.lang.Long semester,
 		java.lang.Long facultyId, java.lang.Long producerId) {
 		Object returnObj = null;
