@@ -108,7 +108,7 @@
 	else {actionURL = addURL.toString();}
 
 	boolean readOnly = false;
-	if (permissionProducer && reqLectureseries.getApproved()==1) readOnly = true;
+	try{if (permissionProducer && reqLectureseries.getApproved()==1){ readOnly=true;}}catch(Exception e){}
 %>
 <aui:form action="<%=actionURL%>" commandName="model">
 	<aui:fieldset helpMessage="test" column="true" label='<%=lName%>'>
