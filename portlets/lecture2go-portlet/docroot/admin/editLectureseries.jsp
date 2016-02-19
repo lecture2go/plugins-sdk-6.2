@@ -106,7 +106,7 @@
 			<aui:input name="name" label="name" required="true" value="<%=lName%>"/>
 
 			<aui:select size="1" name="categoryId" label="event-type" required="true">
-				<aui:option value=""></aui:option>
+				<aui:option value="">select-event-type</aui:option>
 				<%for (int i = 0; i < categories.size(); i++) {
 					if (categoryId==categories.get(i).getCategoryId()) {%>
 						<aui:option value='<%=categories.get(i).getCategoryId()%>' selected="true"><%=categories.get(i).getName()%></aui:option>
@@ -137,7 +137,7 @@
 						%>
 						<div id='<%=f.getInstitutionId()%>'> 
 							<%=f.getName()+"&nbsp;&nbsp;&nbsp;" %> 
-							<a class="icon-large icon-remove" style='cursor:pointer;' onClick='document.getElementById("<%=f.getInstitutionId()%>").remove();'></a>
+							<a class="icon-large icon-remove" style='cursor:pointer;' onClick='document.getElementById("<%=f.getInstitutionId()%>").remove(); resetInstitution();'></a>
 							<aui:input type="hidden" name="institutions" id="institutions" value="<%=f.getInstitutionId()%>"/>
 						</div>
 						<%
@@ -167,7 +167,7 @@
 						%>
 						<div id='<%=p.getProducerId()%>'> 
 							<%=p.getLastName() +", "+p.getFirstName()+"&nbsp;&nbsp;&nbsp;" %> 
-							<a class="icon-large icon-remove" style='cursor:pointer;' onClick='document.getElementById("<%=p.getProducerId()%>").remove();'></a>
+							<a class="icon-large icon-remove" style='cursor:pointer;' onClick='document.getElementById("<%=p.getProducerId()%>").remove(); resetProducer();'></a>
 							<aui:input type="hidden" name="producers" id="producers" value="<%=p.getProducerId()%>"/>
 						</div>
 						<%
@@ -244,7 +244,7 @@
 <!-- Template -->
 <script type="text/x-jquery-tmpl" id="created">
    	<div id="<%="c${creatorId}"%>">
-    	<%="${fullName}"%> &nbsp; <a class="icon-large icon-remove" onclick="remb('<%="c${creatorId}"%>');"></a>
+    	<%="${fullName}"%> &nbsp; <a class="icon-large icon-remove" onclick="remb('<%="c${creatorId}"%>'); reseCreator();"></a>
 		<aui:input type="hidden" name="gender"/>
 		<input type="hidden" name="<portlet:namespace/>jobTitle" value="<%="${jobTitle}"%>"/>
 		<input type="hidden" name="<portlet:namespace/>firstName" value="<%="${firstName}"%>"/>
@@ -307,7 +307,7 @@ function(A) {
   			if(producerId.get('value')>0){
   	   	 		var n = producerId.get(producerId.get('selectedIndex')).get('value');
   	    		var t = producerId.get(producerId.get('selectedIndex')).get('text')+"&nbsp;&nbsp;&nbsp;";
-  	  			contProduc.append("<div id='"+n+"'> "+t+" <a class='icon-large icon-remove' style='cursor:pointer;' onClick='document.getElementById(&quot;"+n+"&quot;).remove();'></a><input id='<portlet:namespace></portlet:namespace>producers' name='<portlet:namespace></portlet:namespace>producers' value='"+n+"' type='hidden'/></div>");
+  	  			contProduc.append("<div id='"+n+"'> "+t+" <a class='icon-large icon-remove' style='cursor:pointer;' onClick='document.getElementById(&quot;"+n+"&quot;).remove(); resetProducer();'></a><input id='<portlet:namespace></portlet:namespace>producers' name='<portlet:namespace></portlet:namespace>producers' value='"+n+"' type='hidden'/></div>");
   			}
       	}
     );
@@ -330,7 +330,7 @@ function(A) {
   			if(institutionId.get('value')>0){
   	   	 		var n = institutionId.get(institutionId.get('selectedIndex')).get('value');
   	    		var t = institutionId.get(institutionId.get('selectedIndex')).get('text')+"&nbsp;&nbsp;&nbsp;";
-  	    		contFacil.append("<div id='"+n+"'> "+t+" <a class='icon-large icon-remove' style='cursor:pointer;' onClick='document.getElementById(&quot;"+n+"&quot;).remove();'></a><input id='<portlet:namespace></portlet:namespace>institutions' name='<portlet:namespace></portlet:namespace>institutions' value='"+n+"' type='hidden'/></div>");
+  	    		contFacil.append("<div id='"+n+"'> "+t+" <a class='icon-large icon-remove' style='cursor:pointer;' onClick='document.getElementById(&quot;"+n+"&quot;).remove(); resetInstitution();'></a><input id='<portlet:namespace></portlet:namespace>institutions' name='<portlet:namespace></portlet:namespace>institutions' value='"+n+"' type='hidden'/></div>");
   			}
       	}
     );
@@ -356,5 +356,28 @@ function getJSONCreator (data){
 	return ret;
 }
 
+
+function resetInstitution(){
+	var l = $(".facilCont div").length;
+    if(l==0){
+    	$('#<portlet:namespace/>institutionId').prop('selectedIndex',0);
+    }
+}
+
+
+function resetProducer(){
+	var l = $(".prodCont div").length;
+    if(l==0){
+    	$('#<portlet:namespace/>producerId').prop('selectedIndex',0);
+    }
+}
+
+
+function resetCreator(){
+	var l = $(".creators div").length;
+    if(l==0){
+    	$('#<portlet:namespace/>crId').prop('selectedIndex',0);
+    }
+}
 
 </script>

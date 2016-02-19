@@ -59,15 +59,16 @@
         // Hier wird der JW-Player initialisiert
         // Interessant ist hierbei, dass es mehrere Quellen geben kann
         jwplayer('player1').setup({
-            width: "647",
-            height: "372",
+            width: "100%",
+            aspectratio: "16:9",
+            image: "${reqVideo.image}",
             sources: [
-                  	{ file: playerUri1 },
-                	{ file: playerUri2 },
-                	{ file: playerUri3 },
-                	{ file: playerUri4 },
-                	{ file: playerUri5 },
-                  ],
+            	{ file: playerUri1 },
+            	{ file: playerUri2 },
+            	{ file: playerUri3 },
+            	{ file: playerUri4 },
+            	{ file: playerUri5 },
+            ],
             primary: "flash",
             androidhls: true,
 
@@ -260,27 +261,10 @@
             	}
             }
 
-            //$('#clipStartTime').val("").show();
-            //$('#clipEndTime').val("").show();
         });
-
-        //$('#serverInfo').html(server);
-
     });
 
 </script>
 
-
-
-<div>
-    <div id="player1"></div>
-
-    <a id="fullVideo" href="index.html" style="display: none;">Watch full video</a>
-
-    <input id="clipStartTime" style="display: none;" placeholder="Click to set start">
-    <input id="clipEndTime" style="display: none;"  placeholder="Click to set end">
-    <!-- 
-    <input id="clipLink" style="display: none;"  placeholder="Set start/end first">
-	-->
-</div>
+<div id="player1"></div>
 

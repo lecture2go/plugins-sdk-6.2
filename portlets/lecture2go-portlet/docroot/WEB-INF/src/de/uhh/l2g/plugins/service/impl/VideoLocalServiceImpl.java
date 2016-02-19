@@ -525,7 +525,8 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	}
 
 	public List<Video> getByLectureseriesAndOpenaccess(Long lectureseriesId, int openAccess) throws SystemException{
-		List<Video> vl = videoPersistence.findByLectureseriesAndOpenaccess(lectureseriesId, openAccess);
+		List<Video> vl = new ArrayList<Video>();
+		if(lectureseriesId!=0)vl=videoPersistence.findByLectureseriesAndOpenaccess(lectureseriesId, openAccess);
 		List<Video> rvl = new ArrayList<Video>();
 		ListIterator<Video> vli = vl.listIterator();
 		while(vli.hasNext()){
