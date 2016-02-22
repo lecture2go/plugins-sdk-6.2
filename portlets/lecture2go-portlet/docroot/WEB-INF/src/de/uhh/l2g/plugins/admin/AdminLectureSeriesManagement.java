@@ -17,6 +17,8 @@ import org.json.JSONArray;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import de.uhh.l2g.plugins.model.Category;
@@ -47,6 +49,7 @@ import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.util.Htaccess;
+import de.uhh.l2g.plugins.util.Lecture2GoRoleChecker;
 
 public class AdminLectureSeriesManagement extends MVCPortlet {
 	
@@ -96,6 +99,7 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 	}
 
 	public void editLectureseries(ActionRequest request, ActionResponse response) throws NumberFormatException, PortalException, SystemException{
+		User user = UserLocalServiceUtil.getUser(new Long(request.getRemoteUser()));
 		//search tags
 		ArrayList<String> tagCloudArrayString = new ArrayList<String>();
 
@@ -121,7 +125,10 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		
 		//update object
 		Lectureseries lectureseries = LectureseriesLocalServiceUtil.getLectureseries(lId);
-		lectureseries.setApproved(1);
+		//only for admin or coordinator can update this flag
+		if(new Lecture2GoRoleChecker().isCoordinator(user) || new Lecture2GoRoleChecker().isL2gAdmin(user)){
+			lectureseries.setApproved(1);
+		}
 		lectureseries.setNumber(request.getParameter("number"));
 		lectureseries.setCategoryId(categoryId);
 		lectureseries.setName(request.getParameter("name"));
