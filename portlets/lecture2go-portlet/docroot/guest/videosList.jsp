@@ -467,7 +467,8 @@
 											
 									        <div class="tags">
 									          <%
-									        	String cat =CategoryLocalServiceUtil.getById(lectser.getCategoryId()).getName();
+									        	String cat ="";
+									            try{cat=CategoryLocalServiceUtil.getById(lectser.getCategoryId()).getName();}catch(Exception e){}
 									        	List<Lectureseries_Institution> li = Lectureseries_InstitutionLocalServiceUtil.getByLectureseries(lectser.getLectureseriesId());
 									        	ListIterator<Lectureseries_Institution> liIt = li.listIterator();
 									          %>

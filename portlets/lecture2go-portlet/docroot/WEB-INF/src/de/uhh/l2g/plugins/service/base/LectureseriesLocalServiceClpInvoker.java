@@ -114,7 +114,7 @@ public class LectureseriesLocalServiceClpInvoker {
 
 		_methodParameterTypes151 = new String[] { "java.lang.String" };
 
-		_methodName156 = "getFilteredBySemesterFacultyProducer";
+		_methodName156 = "getFilteredByApprovedSemesterFacultyProducer";
 
 		_methodParameterTypes156 = new String[] {
 				"java.lang.Integer", "java.lang.Long", "java.lang.Long",
@@ -263,7 +263,7 @@ public class LectureseriesLocalServiceClpInvoker {
 
 		if (_methodName156.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes156, parameterTypes)) {
-			return LectureseriesLocalServiceUtil.getFilteredBySemesterFacultyProducer((java.lang.Integer)arguments[0],
+			return LectureseriesLocalServiceUtil.getFilteredByApprovedSemesterFacultyProducer((java.lang.Integer)arguments[0],
 				(java.lang.Long)arguments[1], (java.lang.Long)arguments[2],
 				(java.lang.Long)arguments[3]);
 		}
