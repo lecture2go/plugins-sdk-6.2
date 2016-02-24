@@ -19,6 +19,7 @@ import org.json.JSONArray;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
@@ -59,7 +60,6 @@ import de.uhh.l2g.plugins.util.EmailManager;
 import de.uhh.l2g.plugins.util.Htaccess;
 import de.uhh.l2g.plugins.util.HtmlManager;
 import de.uhh.l2g.plugins.util.Lecture2GoRoleChecker;
-import de.uhh.l2g.util.L2goPropsUtil;
 
 public class AdminLectureSeriesManagement extends MVCPortlet {
 	
@@ -393,14 +393,14 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 				String COORDEMAILADDRESS = c.getEmailAddress();				
 				String BODY2 = "coordinator" + " " + c.getFirstName() + " " + c.getLastName() + " " + "got-a-new-request-for-approval" + "  \n" + "lecture" + ": "  +newlect.getNumber() + ": " + newlect.getName();
 				// Send mail to Coordinator
-				em.sendEmail(L2goPropsUtil.get("lecture2go.response.email.address"), COORDEMAILADDRESS, HtmlManager.ISO88591toUTF8(SUBJECT), HtmlManager.ISO88591toUTF8(BODY));
+				em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), COORDEMAILADDRESS, HtmlManager.ISO88591toUTF8(SUBJECT), HtmlManager.ISO88591toUTF8(BODY));
 				// Send mail to L2Go
-				em.sendEmail(L2goPropsUtil.get("lecture2go.response.email.address"), L2goPropsUtil.get("lecture2go.response.email.address"), HtmlManager.ISO88591toUTF8(SUBJECT), HtmlManager.ISO88591toUTF8(BODY2));
+				em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), PropsUtil.get("lecture2go.response.email.address"), HtmlManager.ISO88591toUTF8(SUBJECT), HtmlManager.ISO88591toUTF8(BODY2));
 			}
 			// Send mail to Producer
 			String PRODEMAILADDRESS = p.getEmailAddress();
 			String BODY3 = "your-request-was-sent" +"  \n" + "lecture" +" :" + newlect.getNumber() + ": " + newlect.getName();
-			em.sendEmail(L2goPropsUtil.get("lecture2go.response.email.address"), PRODEMAILADDRESS, HtmlManager.ISO88591toUTF8(SUBJECT), HtmlManager.ISO88591toUTF8(BODY3));
+			em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), PRODEMAILADDRESS, HtmlManager.ISO88591toUTF8(SUBJECT), HtmlManager.ISO88591toUTF8(BODY3));
 		}	
 
 		//send an email to  administrator, if logged in as coordinator
@@ -412,7 +412,7 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			String SUBJECT = "new-lectureseries";
 			String BODY = "coordinator" +" "+ c.getFirstName() + " " + c.getLastName()+ " " + "has-entered-a-new-event" + " \n" + "lecture" +":" + newlect.getNumber() + ": " + newlect.getName();
 			// Send mail to L2Go
-			em.sendEmail(L2goPropsUtil.get("lecture2go.response.email.address"), L2goPropsUtil.get("lecture2go.response.email.address")  , HtmlManager.ISO88591toUTF8(SUBJECT), HtmlManager.ISO88591toUTF8(BODY));
+			em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), PropsUtil.get("lecture2go.response.email.address")  , HtmlManager.ISO88591toUTF8(SUBJECT), HtmlManager.ISO88591toUTF8(BODY));
 		}	
 	}
 	
