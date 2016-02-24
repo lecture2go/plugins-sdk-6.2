@@ -138,7 +138,7 @@
 				<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>
 				<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
 			</portlet:actionURL>
-			<li class="filter-menu"><div class="filter-menu-link"><a href="${filterByParentInstitution}">${parentInstitution.name}</a> <span ${hasParentInstitutionFiltered ? 'class=""' : ''}/></div></li>
+			<li class="filter-menu"><div class="filter-menu-link"><a href="${filterByParentInstitution}">${parentInstitution.name}<span ${hasParentInstitutionFiltered ? 'class="icon-large icon-remove"' : ''}></span></a></div></li>
 		</c:forEach>
 		</ul>
 	</liferay-ui:panel>
@@ -159,7 +159,7 @@
 				<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>
 				<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
 			</portlet:actionURL>
-			<li class="filter-menu"><div class="filter-menu-link"><a href="${filterByInstitution}">${institution.name}</a> <span ${hasInstitutionFiltered ? 'class=""' : ''}/></div></li>
+			<li class="filter-menu"><div class="filter-menu-link"><a href="${filterByInstitution}">${institution.name}<span ${hasInstitutionFiltered ? 'class="icon-large icon-remove"' : ''}></span></a></div></li>
 		</c:forEach>
 		</ul>
 	</liferay-ui:panel>
@@ -180,7 +180,7 @@
 				<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>
 				<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
 			</portlet:actionURL>
-			<li class="filter-menu"><div class="filter-menu-link"><a href="${filterByTerm}">${term.termName}</a> <span ${hasTermFiltered ? 'class=""' : ''}/></div></li>
+			<li class="filter-menu"><div class="filter-menu-link"><a href="${filterByTerm}">${term.termName}<span ${hasTermFiltered ? 'class="icon-large icon-remove"' : ''}></span></a></div></li>
 		</c:forEach>
 		</ul>
 		<c:if test="${hasManyTerms}">
@@ -204,7 +204,7 @@
 				<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>	
 				<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
 			</portlet:actionURL>
-			<li class="filter-menu"><div class="filter-menu-link"><a href="${filterByCategory}">${category.name}</a> <span ${hasCategoryFiltered ? 'class=""' : ''}/></div></li>
+			<li class="filter-menu"><div class="filter-menu-link"><a href="${filterByCategory}">${category.name} <span ${hasCategoryFiltered ? 'class="icon-large icon-remove"' : ''}></span></a></div></li>
 		</c:forEach>
 		</ul>
 	</liferay-ui:panel>
