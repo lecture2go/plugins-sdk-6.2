@@ -205,7 +205,7 @@ Group Institution_Host Permissions:
         			<liferay-ui:search-container-column-text name="Host" >
         			<c:choose>
         			<c:when  test='<%= permissionChecker.hasPermission(groupId, hostModel, groupId, "EDIT_HOST") %>'> 
-        		    			    
+        		    		<%--DELETE: For advanced security, this should only be generated if user is allowed to delete Hosts--%>	    
 		        			<portlet:actionURL name="deleteStreamingServer" var="deleteStreamingServerURL">
 		        				<c:choose>
 		        					<c:when test='<%=  HostLocalServiceUtil.getLockingElements(groupId, Hosts.getHostId()) < 1 %>'>
@@ -242,7 +242,8 @@ Group Institution_Host Permissions:
 								<aui:input name="curStreamingServerId" type='hidden' inlineField="true" value = "<%= (new Long(Hosts.getHostId())).toString() %>"/>
 								<aui:button type="submit"></aui:button>
 								<c:choose>
-								<c:when test='<%= permissionChecker.hasPermission(groupId, hostModel, groupId, ActionKeys.DELETE) & HostLocalServiceUtil.getLockingElements(groupId, Hosts.getHostId()) < 1%>'>
+								<%--DELETE --%>
+								<c:when test='<%= permissionChecker.hasPermission(groupId, hostModel, groupId, ActionKeys.DELETE) && HostLocalServiceUtil.getLockingElements(groupId, Hosts.getHostId()) < 1 && !(Hosts.getDefaultHost() > 0) %>'>
 									<aui:button name="delete" value="Löschen" type="button" href="<%=deleteStreamingServerURL.toString() %>" />
 								</c:when>
 								<c:otherwise>
@@ -300,7 +301,7 @@ Group Institution_Host Permissions:
     
     Institution treeBase = InstitutionLocalServiceUtil.getByGroupIdAndId(groupId, treeBaseId);
     int ownInstitutionMax = InstitutionLocalServiceUtil.getMaxSortByParentId(treeBaseId)+1;
-    System.out.println(ownInstitutionId+ " " +treeBaseId);
+   //System.out.println(ownInstitutionId+ " " +treeBaseId);
    %>
 
 <%--ROOT INSTITUTION--%>
@@ -332,7 +333,7 @@ Group Institution_Host Permissions:
 <%--ADD SUB_INSTITUTION-- Only Required if user can't see full listing, but is allowed to mange own entries%>
 
 <%-- Permission on Portlet Scope --%>
-<c:if test='<%= !permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "VIEW_ALL_INSTITUTIONS") && permissionChecker.hasPermission(groupId, institutionModel, groupId, "ADD_SUB_INSTITUTION_ENTRY") %>'>
+<c:if test='<%= !permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "VIEW_ALL_INSTITUTIONS") && permissionChecker.hasPermission(groupId, institutionModel, groupId, "ADD_SUB_INSTITUTION_ENTRY") && ownInstitutionId > 0 %>'>
 	<liferay-ui:panel title="Add Sub Institution" collapsible="true" id="subInstitutionSettings"
 					defaultState="open"
 					extended="<%= false %>"
