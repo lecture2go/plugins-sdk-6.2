@@ -278,7 +278,7 @@
         <column name="coordinatorId" type="long" primary="true"></column>
         <column name="institutionId" type="long"></column>
         <column name="officeId" type="long"></column>
-        <finder name="Institution" return-type="Collection">
+        <finder name="Institution" return-type="Coordinator">
             <finder-column name="institutionId"></finder-column>
         </finder>
         <finder name="Office" return-type="Collection">
