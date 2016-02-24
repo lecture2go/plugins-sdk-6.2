@@ -85,8 +85,15 @@ public class CoordinatorLocalServiceImpl extends CoordinatorLocalServiceBaseImpl
 		Coordinator c = new CoordinatorImpl();
 		try {
 			c = coordinatorPersistence.findByInstitution(institutionId);
+			User u = UserLocalServiceUtil.getUser(c.getCoordinatorId());
+			c.setEmailAddress(u.getEmailAddress());
+			c.setFirstName(u.getFirstName());
+			c.setLastName(u.getLastName());
+			c.setLastLoginDate(u.getLastLoginDate());
 		} catch (NoSuchCoordinatorException e) {
-			//
+			e.printStackTrace();
+		} catch (PortalException e) {
+			e.printStackTrace();
 		} 
 		return c;
 	}
