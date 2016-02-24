@@ -1,10 +1,12 @@
 package de.uhh.l2g.plugins.admin;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -22,6 +24,7 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import de.uhh.l2g.plugins.model.Category;
+import de.uhh.l2g.plugins.model.Coordinator;
 import de.uhh.l2g.plugins.model.Creator;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Lectureseries;
@@ -30,26 +33,33 @@ import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.model.Tagcloud;
 import de.uhh.l2g.plugins.model.Term;
 import de.uhh.l2g.plugins.model.impl.CategoryImpl;
+import de.uhh.l2g.plugins.model.impl.CoordinatorImpl;
 import de.uhh.l2g.plugins.model.impl.CreatorImpl;
 import de.uhh.l2g.plugins.model.impl.InstitutionImpl;
 import de.uhh.l2g.plugins.model.impl.LectureseriesImpl;
 import de.uhh.l2g.plugins.model.impl.Lectureseries_CreatorImpl;
 import de.uhh.l2g.plugins.model.impl.Lectureseries_InstitutionImpl;
+import de.uhh.l2g.plugins.model.impl.ProducerImpl;
 import de.uhh.l2g.plugins.model.impl.Producer_LectureseriesImpl;
 import de.uhh.l2g.plugins.model.impl.TagcloudImpl;
 import de.uhh.l2g.plugins.service.CategoryLocalServiceUtil;
+import de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Lectureseries_CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Lectureseries_InstitutionLocalServiceUtil;
+import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Producer_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.TagcloudLocalServiceUtil;
 import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
+import de.uhh.l2g.plugins.util.EmailManager;
 import de.uhh.l2g.plugins.util.Htaccess;
+import de.uhh.l2g.plugins.util.HtmlManager;
 import de.uhh.l2g.plugins.util.Lecture2GoRoleChecker;
+import de.uhh.l2g.util.L2goPropsUtil;
 
 public class AdminLectureSeriesManagement extends MVCPortlet {
 	
@@ -229,10 +239,20 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 
 		//edit tag cloud
 		TagcloudLocalServiceUtil.updateByObjectIdAndObjectClassType(tagCloudArrayString, lectureseries.getClass().getName(), lectureseries.getLectureseriesId());
-		//
+		
+		//send an email to the coordinator and administrator, if logged in as producer
+		if(new Lecture2GoRoleChecker().isProducer(user)){
+			//
+		}		
+		//send an email to the producer, if logged in as an coordinator or administrator
+		if (new Lecture2GoRoleChecker().isL2gAdmin(user) ||  new Lecture2GoRoleChecker().isCoordinator(user)){
+			//
+		}		
 	}
 
-	public void addLectureseries(ActionRequest request, ActionResponse response) throws SystemException, PortalException {
+	public void addLectureseries(ActionRequest request, ActionResponse response) throws SystemException, PortalException, UnsupportedEncodingException {
+		User user = UserLocalServiceUtil.getUser(new Long(request.getRemoteUser()));
+		EmailManager em = new EmailManager();
 		//search tags
 		String tagCloudString = "";
 		ArrayList<String> tagCloudArrayString = new ArrayList<String>();
@@ -352,6 +372,48 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		request.setAttribute("institutions", institutions);
 		request.setAttribute("producers", producers);
 		request.setAttribute("backURL", backURL);
+		//send an email to coordinator and administrator, if logged in as producer
+		if(new Lecture2GoRoleChecker().isProducer(user)){
+			//get producer details
+			Producer p = new ProducerImpl();
+			p = ProducerLocalServiceUtil.getProdUcer(user.getUserId());//full object "getProdUser()"
+			Coordinator c = new CoordinatorImpl();
+			// Subject
+			String SUBJECT = "new-request-for-approval";
+			String BODY = "you-have-a-new-request-for-approval" + " \n" + "lecture : " + newlect.getNumber() + ": " + newlect.getName();
+			//if coordinator exists
+			boolean coordExists = false;
+			// Coordinator for this Producer
+			try{
+				c = CoordinatorLocalServiceUtil.getByInstitution(p.getInstitutionId());
+				if(c.getCoordinatorId()>0)coordExists = true;
+			}catch(NoSuchElementException e){}
+			//check 
+			if(coordExists){
+				String COORDEMAILADDRESS = c.getEmailAddress();				
+				String BODY2 = "coordinator" + " " + c.getFirstName() + " " + c.getLastName() + " " + "got-a-new-request-for-approval" + "  \n" + "lecture" + ": "  +newlect.getNumber() + ": " + newlect.getName();
+				// Send mail to Coordinator
+				em.sendEmail(L2goPropsUtil.get("lecture2go.response.email.address"), COORDEMAILADDRESS, HtmlManager.ISO88591toUTF8(SUBJECT), HtmlManager.ISO88591toUTF8(BODY));
+				// Send mail to L2Go
+				em.sendEmail(L2goPropsUtil.get("lecture2go.response.email.address"), L2goPropsUtil.get("lecture2go.response.email.address"), HtmlManager.ISO88591toUTF8(SUBJECT), HtmlManager.ISO88591toUTF8(BODY2));
+			}
+			// Send mail to Producer
+			String PRODEMAILADDRESS = p.getEmailAddress();
+			String BODY3 = "your-request-was-sent" +"  \n" + "lecture" +" :" + newlect.getNumber() + ": " + newlect.getName();
+			em.sendEmail(L2goPropsUtil.get("lecture2go.response.email.address"), PRODEMAILADDRESS, HtmlManager.ISO88591toUTF8(SUBJECT), HtmlManager.ISO88591toUTF8(BODY3));
+		}	
+
+		//send an email to  administrator, if logged in as coordinator
+		if(new Lecture2GoRoleChecker().isCoordinator(user)){
+			//get coordinator details
+			Coordinator c = new CoordinatorImpl();
+			c = CoordinatorLocalServiceUtil.getById(user.getUserId());
+			// Subject
+			String SUBJECT = "new-lectureseries";
+			String BODY = "coordinator" +" "+ c.getFirstName() + " " + c.getLastName()+ " " + "has-entered-a-new-event" + " \n" + "lecture" +":" + newlect.getNumber() + ": " + newlect.getName();
+			// Send mail to L2Go
+			em.sendEmail(L2goPropsUtil.get("lecture2go.response.email.address"), L2goPropsUtil.get("lecture2go.response.email.address")  , HtmlManager.ISO88591toUTF8(SUBJECT), HtmlManager.ISO88591toUTF8(BODY));
+		}	
 	}
 	
 	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws PortletException, IOException {
