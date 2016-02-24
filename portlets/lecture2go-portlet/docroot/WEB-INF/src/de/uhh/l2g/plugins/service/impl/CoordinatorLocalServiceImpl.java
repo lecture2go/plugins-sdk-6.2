@@ -22,8 +22,10 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
+import de.uhh.l2g.plugins.NoSuchCoordinatorException;
 import de.uhh.l2g.plugins.model.Coordinator;
 import de.uhh.l2g.plugins.model.Institution;
+import de.uhh.l2g.plugins.model.impl.CoordinatorImpl;
 import de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.CoordinatorLocalServiceBaseImpl;
 
@@ -77,6 +79,23 @@ public class CoordinatorLocalServiceImpl extends CoordinatorLocalServiceBaseImpl
 	
 	public Institution getInstitutionByCoordinator(long coordinatorId) throws SystemException {
 		return institutionPersistence.fetchByPrimaryKey(getById(coordinatorId).getInstitutionId());
+	}
+	
+	public Coordinator getByInstitution(long institutionId) throws SystemException {
+		Coordinator c = new CoordinatorImpl();
+		try {
+			c = coordinatorPersistence.findByInstitution(institutionId);
+			User u = UserLocalServiceUtil.getUser(c.getCoordinatorId());
+			c.setEmailAddress(u.getEmailAddress());
+			c.setFirstName(u.getFirstName());
+			c.setLastName(u.getLastName());
+			c.setLastLoginDate(u.getLastLoginDate());
+		} catch (NoSuchCoordinatorException e) {
+			e.printStackTrace();
+		} catch (PortalException e) {
+			e.printStackTrace();
+		} 
+		return c;
 	}
 	
 }
