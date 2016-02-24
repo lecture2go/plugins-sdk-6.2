@@ -660,7 +660,7 @@ thead, th {
 }
 
 .filter-menu {
-    border-bottom: 1px solid #F6F6F6 !important
+    border-bottom: 1px solid #F6F6F6 !important;
 }
 
 .generation-date {
@@ -1377,4 +1377,10 @@ thead, th {
 #_lgadminlectureseriesmanagement_WAR_lecture2goportlet_longDesc {
     width: 509px;
     height: 200px;
+}
+
+div.filter-menu-link span.icon-large.icon-remove {
+    margin-top: 4px;
+    float: right;
+    margin-right: 8px;
 }
