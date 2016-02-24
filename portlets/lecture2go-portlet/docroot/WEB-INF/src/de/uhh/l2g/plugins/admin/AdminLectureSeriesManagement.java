@@ -108,8 +108,9 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		}		
 	}
 
-	public void editLectureseries(ActionRequest request, ActionResponse response) throws NumberFormatException, PortalException, SystemException{
+	public void editLectureseries(ActionRequest request, ActionResponse response) throws NumberFormatException, PortalException, SystemException, UnsupportedEncodingException{
 		User user = UserLocalServiceUtil.getUser(new Long(request.getRemoteUser()));
+		EmailManager em = new EmailManager();
 		//search tags
 		ArrayList<String> tagCloudArrayString = new ArrayList<String>();
 
@@ -240,14 +241,48 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		//edit tag cloud
 		TagcloudLocalServiceUtil.updateByObjectIdAndObjectClassType(tagCloudArrayString, lectureseries.getClass().getName(), lectureseries.getLectureseriesId());
 		
-		//send an email to the coordinator and administrator, if logged in as producer
+		//send an email to coordinator and administrator, if logged in as producer
 		if(new Lecture2GoRoleChecker().isProducer(user)){
-			//
-		}		
-		//send an email to the producer, if logged in as an coordinator or administrator
-		if (new Lecture2GoRoleChecker().isL2gAdmin(user) ||  new Lecture2GoRoleChecker().isCoordinator(user)){
-			//
-		}		
+			//get producer details
+			Producer p = new ProducerImpl();
+			p = ProducerLocalServiceUtil.getProdUcer(user.getUserId());//full object "getProdUser()"
+			Coordinator c = new CoordinatorImpl();
+			// Subject
+			String SUBJECT = "lecture-series-edited";
+			String BODY = "lecture-series-edited-by-user" + " \n" + "lecture : " + lectureseries.getNumber() + ": " + lectureseries.getName();
+			//if coordinator exists
+			boolean coordExists = false;
+			// Coordinator for this Producer
+			try{
+				c = CoordinatorLocalServiceUtil.getByInstitution(p.getInstitutionId());
+				if(c.getCoordinatorId()>0)coordExists = true;
+			}catch(NoSuchElementException e){}
+			//check 
+			if(coordExists){
+				String COORDEMAILADDRESS = c.getEmailAddress();				
+				String BODY2 = "coordinator" + " " + c.getFirstName() + " " + c.getLastName() + " " + "lecture-series-edited-by-user" + "  \n" + "lecture" + ": "  +lectureseries.getNumber() + ": " + lectureseries.getName();
+				// Send mail to Coordinator
+				em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), COORDEMAILADDRESS, HtmlManager.ISO88591toUTF8(SUBJECT), HtmlManager.ISO88591toUTF8(BODY));
+				// Send mail to L2Go
+				em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), PropsUtil.get("lecture2go.response.email.address"), HtmlManager.ISO88591toUTF8(SUBJECT), HtmlManager.ISO88591toUTF8(BODY2));
+			}
+			// Send mail to Producer
+			String PRODEMAILADDRESS = p.getEmailAddress();
+			String BODY3 = "lecture-series-edited-coordinator-notified" +"  \n" + "lecture" +" :" + lectureseries.getNumber() + ": " + lectureseries.getName();
+			em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), PRODEMAILADDRESS, HtmlManager.ISO88591toUTF8(SUBJECT), HtmlManager.ISO88591toUTF8(BODY3));
+		}	
+
+		//send an email to  administrator, if logged in as coordinator
+		if(new Lecture2GoRoleChecker().isCoordinator(user)){
+			//get coordinator details
+			Coordinator c = new CoordinatorImpl();
+			c = CoordinatorLocalServiceUtil.getById(user.getUserId());
+			// Subject
+			String SUBJECT = "new-lectureseries";
+			String BODY = "coordinator" +" "+ c.getFirstName() + " " + c.getLastName()+ " " + "has-entered-a-new-event" + " \n" + "lecture" +":" + lectureseries.getNumber() + ": " + lectureseries.getName();
+			// Send mail to L2Go
+			em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), PropsUtil.get("lecture2go.response.email.address")  , HtmlManager.ISO88591toUTF8(SUBJECT), HtmlManager.ISO88591toUTF8(BODY));
+		}	
 	}
 
 	public void addLectureseries(ActionRequest request, ActionResponse response) throws SystemException, PortalException, UnsupportedEncodingException {
