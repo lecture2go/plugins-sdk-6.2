@@ -2,3 +2,15 @@
 	visibility: hidden;
 	display: none;
 }
+
+.view-320 .admintile.wide {
+    margin: 0 -9px 0 3px;
+    width: 100%;
+}
+
+.view-320 .video-image-wrapper {
+    float: none;
+    height: 110px;
+    margin-right: 8px;
+    max-width: 250px;
+}
