@@ -384,8 +384,8 @@ public class AdminUserManagement extends MVCPortlet {
 		//L2G Pages requiring role
 		//TODO: replace hardcoded friendly-url element below, for dynamic request page detection
 		//Get layout to retrieve Plid for Portlet Page assumes title is constant and unique
-        Layout imPage = LayoutLocalServiceUtil.getFriendlyURLLayout(guestGroupId, false, "/institution-management");
-        Layout uPage = LayoutLocalServiceUtil.getFriendlyURLLayout(guestGroupId, false, "/user-management");
+        Layout imPage = LayoutLocalServiceUtil.getFriendlyURLLayout(guestGroupId, false, "/institutions");
+        Layout uPage = LayoutLocalServiceUtil.getFriendlyURLLayout(guestGroupId, false, "/users");
 	
 		
 		try {

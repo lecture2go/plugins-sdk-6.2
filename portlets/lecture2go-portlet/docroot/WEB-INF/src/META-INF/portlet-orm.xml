@@ -277,22 +277,6 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.UploadModelImpl">
-		<attributes>
-			<id name="uploadId" />
-			<basic name="userId" />
-			<basic name="contentLength" />
-			<basic name="timestamp">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="status" />
-			<basic name="videoId" />
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-			<transient name="userUuid" />
-		</attributes>
-	</mapped-superclass>
 	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.VideoModelImpl">
 		<attributes>
 			<id name="videoId" />
@@ -483,10 +467,6 @@
 		<attributes>
 			<transient name="fullName" />
 		</attributes>
-	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.UploadImpl" name="Upload">
-		<table name="LG_Upload" />
-		<attributes />
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.VideoImpl" name="Video">
 		<table name="LG_Video" />

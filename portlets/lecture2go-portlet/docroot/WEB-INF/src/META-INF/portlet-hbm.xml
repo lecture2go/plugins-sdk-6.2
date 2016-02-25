@@ -22,7 +22,6 @@
 	<import class="de.uhh.l2g.plugins.model.Sys" />
 	<import class="de.uhh.l2g.plugins.model.Tagcloud" />
 	<import class="de.uhh.l2g.plugins.model.Term" />
-	<import class="de.uhh.l2g.plugins.model.Upload" />
 	<import class="de.uhh.l2g.plugins.model.Video" />
 	<import class="de.uhh.l2g.plugins.model.Video_Category" />
 	<import class="de.uhh.l2g.plugins.model.Video_Creator" />
@@ -245,17 +244,6 @@
 		<property name="prefix" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="year" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="translation" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-	</class>
-	<class name="de.uhh.l2g.plugins.model.impl.UploadImpl" table="LG_Upload">
-		<cache usage="read-write" />
-		<id name="uploadId" type="long">
-			<generator class="increment" />
-		</id>
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="contentLength" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="timestamp" type="org.hibernate.type.TimestampType" />
-		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="videoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.VideoImpl" table="LG_Video">
 		<cache usage="read-write" />

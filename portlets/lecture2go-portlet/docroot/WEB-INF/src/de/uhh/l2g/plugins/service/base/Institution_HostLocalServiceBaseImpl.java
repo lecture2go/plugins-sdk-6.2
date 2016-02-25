@@ -59,7 +59,6 @@ import de.uhh.l2g.plugins.service.persistence.SysPersistence;
 import de.uhh.l2g.plugins.service.persistence.TagcloudPersistence;
 import de.uhh.l2g.plugins.service.persistence.TermFinder;
 import de.uhh.l2g.plugins.service.persistence.TermPersistence;
-import de.uhh.l2g.plugins.service.persistence.UploadPersistence;
 import de.uhh.l2g.plugins.service.persistence.VideoFinder;
 import de.uhh.l2g.plugins.service.persistence.VideoPersistence;
 import de.uhh.l2g.plugins.service.persistence.Video_CategoryPersistence;
@@ -1171,43 +1170,6 @@ public abstract class Institution_HostLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the upload local service.
-	 *
-	 * @return the upload local service
-	 */
-	public de.uhh.l2g.plugins.service.UploadLocalService getUploadLocalService() {
-		return uploadLocalService;
-	}
-
-	/**
-	 * Sets the upload local service.
-	 *
-	 * @param uploadLocalService the upload local service
-	 */
-	public void setUploadLocalService(
-		de.uhh.l2g.plugins.service.UploadLocalService uploadLocalService) {
-		this.uploadLocalService = uploadLocalService;
-	}
-
-	/**
-	 * Returns the upload persistence.
-	 *
-	 * @return the upload persistence
-	 */
-	public UploadPersistence getUploadPersistence() {
-		return uploadPersistence;
-	}
-
-	/**
-	 * Sets the upload persistence.
-	 *
-	 * @param uploadPersistence the upload persistence
-	 */
-	public void setUploadPersistence(UploadPersistence uploadPersistence) {
-		this.uploadPersistence = uploadPersistence;
-	}
-
-	/**
 	 * Returns the video local service.
 	 *
 	 * @return the video local service
@@ -1720,10 +1682,6 @@ public abstract class Institution_HostLocalServiceBaseImpl
 	protected TermPersistence termPersistence;
 	@BeanReference(type = TermFinder.class)
 	protected TermFinder termFinder;
-	@BeanReference(type = de.uhh.l2g.plugins.service.UploadLocalService.class)
-	protected de.uhh.l2g.plugins.service.UploadLocalService uploadLocalService;
-	@BeanReference(type = UploadPersistence.class)
-	protected UploadPersistence uploadPersistence;
 	@BeanReference(type = de.uhh.l2g.plugins.service.VideoLocalService.class)
 	protected de.uhh.l2g.plugins.service.VideoLocalService videoLocalService;
 	@BeanReference(type = VideoPersistence.class)
