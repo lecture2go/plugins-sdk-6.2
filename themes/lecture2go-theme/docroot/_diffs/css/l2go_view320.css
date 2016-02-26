@@ -14,3 +14,8 @@
     margin-right: 8px;
     max-width: 250px;
 }
+
+.view-320 .add-link {
+	visibility: hidden;
+	display: none;
+}
