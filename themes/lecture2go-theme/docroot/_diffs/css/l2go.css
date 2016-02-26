@@ -449,6 +449,7 @@ a.list-group-item:hover, a.list-group-item:focus {
 
 .aui #my-tab-content {
     min-height: auto;
+    width: 600px;
 }
 
 #term {
@@ -731,10 +732,10 @@ thead, th {
 }
 
 .meta-title {
-    margin-top: 38px;
     font-size: 22px;
     font-weight: 900;
-    line-height: 20px;
+    line-height: 25px;
+    margin-top: 38px;
 }
 
 .meta-description {
@@ -793,9 +794,8 @@ thead, th {
 }
 
 #metadata > p.smallitalic {
-    margin-top: 250px;
-    margin-left: 0px;
     font-style: italic;
+    margin-left: 0;
 }
 
 #metadata ul > li {
@@ -843,11 +843,8 @@ thead, th {
     margin-bottom: 0px;
 }
 
-#down > p.smallitalic {
-    float: left;
+p.smallitalic {
     font-style: italic;
-    margin-top: 53px;
-    position: absolute;
 }
 
 #qr {

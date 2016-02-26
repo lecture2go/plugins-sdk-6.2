@@ -1,4 +1,5 @@
 <div id="metadata">
+	<p class="smallitalic">embed-conditions</p>
 	<form name="embedForm" id="embedForm">
 		<!-- embed start -->
 			<div class="sharetile">
@@ -46,14 +47,15 @@
 				</div>
 		</c:if>
 		<!-- citation2go allowed end-->		
+		
+		<!-- Facebook Twitter Google+ -->
+		<div class="sharetile">
+			<p class="tileheading">social-media</p>
+			<div id="socialshareprivacy"></div>
+		</div>
+		<!-- Facebook Twitter Google+ Ende -->
 	</form>
 		
-	<!-- Facebook Twitter Google+ -->
-	<div class="sharetile">
-		<p class="tileheading">social-media</p>
-		<div id="socialshareprivacy"></div>
-	</div>
-
 	<script type="text/javascript">
 		$('#socialshareprivacy').socialSharePrivacy({
 			services : {
@@ -63,8 +65,6 @@
 			}
 		});
 	</script>
-	
-	<p class="smallitalic">embed-conditions</p>
 	
 	<%@ include file="/guest/includeQR.jsp" %>
 </div>

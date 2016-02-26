@@ -19,3 +19,41 @@
 	visibility: hidden;
 	display: none;
 }
+
+.view-320 .col-md-5 {
+    right: 0;
+    top: 10px;
+    position: relative;
+    width: 100%;
+}
+
+.view-320 .player {
+    width: 100%;
+}
+
+.view-320 .meta-video-info {
+    width: 100%;
+}
+
+.view-320 #qr {
+    display: none;
+    visibility: hidden;
+}
+
+.view-320 .aui #my-tab-content {
+    min-height: auto;
+    width: 500px;
+}
+
+.view-320 .path {
+    font-size: 11px;
+    width: 100%;
+}
+
+.view-320 .sharetile {
+    width: 100%;
+}
+
+.view-320 #metadata input {
+    width: 100%;
+}

@@ -20,3 +20,36 @@
 	display: none;
 }
 
+.view-480 .col-md-5 {
+    right: 0;
+    top: 10px;
+    position: relative;
+    width: 100%;
+}
+
+.view-480 .player {
+    width: 100%;
+}
+
+.view-480 .meta-video-info {
+    width: 100%;
+}
+
+.view-480 #qr {
+    display: none;
+    visibility: hidden;
+}
+
+.view-480 .aui #my-tab-content {
+    min-height: auto;
+    width: 500px;
+}
+
+.view-480 .path {
+    font-size: 11px;
+    width: 100%;
+}
+
+.view-480 .sharetile {
+    width: 22%;
+}
