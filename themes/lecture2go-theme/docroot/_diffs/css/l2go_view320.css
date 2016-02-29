@@ -55,7 +55,7 @@
 }
 
 .view-320 #metadata input {
-    width: 100%;
+    width: 270px;
 }
 
 .view-320 .metainfo-small.related {
@@ -126,3 +126,9 @@
 .view-320 .commenttile {
     margin-left: 10px;
 }
+
+.view-320 #tabs > li#down {
+    display: none;
+    visibility: hidden;
+}
+

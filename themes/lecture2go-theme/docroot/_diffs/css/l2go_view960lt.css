@@ -1,0 +1,55 @@
+.view-lt960 .admintile.wide.icons {
+	visibility: hidden;
+	display: none;
+}
+
+.view-lt960 .admintile.wide {
+    margin: 0 -9px 0 3px;
+    width: 100%;
+}
+   
+.view-lt960 .video-image-wrapper {
+    float: none;
+    height: 110px;
+    margin-right: 8px;
+    max-width: 250px;
+}
+
+.view-lt960 .add-link {
+	visibility: hidden;
+	display: none;
+}
+
+.view-lt960 .col-md-5 {
+    right: 0;
+    top: 30px;
+    position: relative;
+    width: 100%;
+}
+
+.view-lt960 .player {
+    width: 100%;
+}
+
+.view-lt960 .meta-video-info {
+    width: 100%;
+}
+
+.view-lt960 #qr {
+    display: none;
+    visibility: hidden;
+}
+
+.view-lt960 .aui #my-tab-content {
+    min-height: auto;
+    width: 500px;
+}
+
+.view-lt960 .path {
+    font-size: 11px;
+    width: 100%;
+}
+
+.view-lt960 .metainfo {
+    width: 100%;
+}
