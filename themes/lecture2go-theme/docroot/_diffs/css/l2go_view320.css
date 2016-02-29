@@ -40,7 +40,7 @@
     visibility: hidden;
 }
 
-.view-320 #my-tab-content {
+.view-320 .aui #my-tab-content {
     min-height: auto;
     width: 500px;
 }
@@ -84,6 +84,7 @@
     padding-bottom: 7px;
     vertical-align: middle;
     width: 65px;
+    height: 33px;
 }
 
 
