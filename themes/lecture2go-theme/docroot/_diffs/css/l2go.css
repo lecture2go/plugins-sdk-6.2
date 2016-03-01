@@ -26,70 +26,12 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     display: none;
 }
 
-.view-720 .taglib-page-iterator .lfr-pagination-buttons {
-    visibility: hidden;
-    padding: 0px;
-    margin: 0px;
-    height: 0px;
-    width: 0px;
-}
-
-.view-320 .taglib-page-iterator .lfr-pagination-buttons {
-    visibility: hidden;
-    padding: 0px;
-    margin: 0px;
-    height: 0px;
-    width: 0px;
-}
-
-.view-720 .row-fluid .span3 {
-    margin: 0px;
-    padding: 0px;
-    float: left;
-}
-
-.view-480 .row-fluid .span3 {
-    width: 100%;
-}
-
-.view-480 .row-fluid .span9 {
-    width: 100%;
-}
-
-.view-480 .taglib-page-iterator {
-    clear: both;
-    height: auto;
-    overflow: hidden;
-    width: auto;
-    height: 49px;
-}
-
-.view-960 input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
+input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     float: right;
     height: 24px;
     margin: -20px 0px 0px;
     width: 400px;
     opacity: 0.6;
-}
-
-.view-720 input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
-    width: 320px;
-    float: right;
-    margin:0px;
-}
-
-.view-480 input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
-    width: 320px;
-    margin: 0;
-}
-
-.view-320 input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
-    width: 237px;
-    margin: 0;
-}
-
-.view-320 .yui3-aclist-content {
-    width: 249px;
 }
 
 .allcreators {
@@ -344,18 +286,6 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     white-space: nowrap;
     font-size: small;
     width: 40em;
-}
-
-.view-720 #searchedvideo {
-    width: 30em;
-}
-
-.view-480 #searchedvideo {
-    width: 20em;
-}
-
- .view-320 #searchedvideo {
-    width: 10em;
 }
 
 a.list-group-item:hover, a.list-group-item:focus {

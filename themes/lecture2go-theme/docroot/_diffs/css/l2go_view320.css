@@ -132,3 +132,23 @@
     visibility: hidden;
 }
 
+.view-320 .taglib-page-iterator .lfr-pagination-buttons {
+    visibility: hidden;
+    padding: 0px;
+    margin: 0px;
+    height: 0px;
+    width: 0px;
+}
+
+.view-320 input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
+    width: 237px;
+    margin: 0;
+}
+
+.view-320 .yui3-aclist-content {
+    width: 249px;
+}
+
+.view-320 #searchedvideo {
+    width: 10em;
+}

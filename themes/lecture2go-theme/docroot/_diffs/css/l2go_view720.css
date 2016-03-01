@@ -118,3 +118,27 @@
 .view-720 .commenttile {
     margin-left: 10px;
 }
+
+.view-720 .row-fluid .span3 {
+    margin: 0px;
+    padding: 0px;
+    float: left;
+}
+
+.view-720 .taglib-page-iterator .lfr-pagination-buttons {
+    visibility: hidden;
+    padding: 0px;
+    margin: 0px;
+    height: 0px;
+    width: 0px;
+}
+
+.view-720 #searchedvideo {
+    width: 30em;
+}
+
+.view-720 input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
+    width: 320px;
+    float: right;
+    margin:0px;
+}
