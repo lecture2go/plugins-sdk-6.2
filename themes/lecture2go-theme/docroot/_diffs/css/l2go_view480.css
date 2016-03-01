@@ -57,3 +57,9 @@
 .view-480 .metainfo {
     width: 100%;
 }
+
+
+.view-480 #tabs > li#down {
+    display: none;
+    visibility: hidden;
+}
