@@ -59,22 +59,6 @@
     width: 270px;
 }
 
-.view-720 .metainfo-small.related {
-    margin-left: 1px;
-}
-
-.view-720 .video-image-wrapper-small.related {
-    float: none;
-    height: 38px;
-    margin-top: 2px;
-    width: auto;
-}
-
-.view-720 .video-image.related {
-    min-height: 30px;
-    width: auto;
-}
-
 .view-720 .metainfo {
     width: 100%;
 }
