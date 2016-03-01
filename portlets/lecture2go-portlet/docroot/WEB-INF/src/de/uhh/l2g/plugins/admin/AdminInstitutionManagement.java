@@ -15,6 +15,10 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.ResourcePermission;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.util.PortalUtil;
@@ -26,10 +30,58 @@ import de.uhh.l2g.plugins.model.Institution_Host;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
+import de.uhh.l2g.plugins.util.PermissionManager;
 
 public class AdminInstitutionManagement extends MVCPortlet {
 
 
+	/**Set default permissions (assumes fixed role names)
+	 * 
+	 * @param pm - PermissionManager 
+	 * @throws PortalException 
+	 * @throws SystemException 
+	 */
+	private void setDefaultPermissions(PermissionManager pm) throws SystemException, PortalException{
+		
+		//Remove view permission for Guest and edit for ordinary Site Members
+		pm.removeL2GLayoutViewPermission("Guest");
+		pm.removeL2GLayoutPermissions("Site Member", new String[] { ActionKeys.ADD_DISCUSSION, ActionKeys.CUSTOMIZE });
+		
+		//Remove Advanced Permissions for Owner (Owner should be Administrator anyway)
+		
+		//Allow View Permission for higher L2GRoles
+		pm.setL2GLayoutViewPermission("L2Go Admin");
+		pm.setL2GLayoutViewPermission("L2Go Coordinator");
+		
+		//Allow almost all Portlet operations for L2Go admin
+		pm.setL2GPortletPermissions("L2Go Admin",  new String[] {ActionKeys.VIEW, "VIEW_ALL_INSTITUTIONS", "VIEW_HOSTS", "ADD_INSTITUTIONS"});		
+		pm.setL2GPortletPermissions("L2Go Coordinator", ActionKeys.VIEW);
+		
+		//Entities on Model Level 
+		pm.removeL2GEntityPermissions("Site Member", Institution.class.getName(), new String[] { ActionKeys.VIEW});
+		pm.removeL2GEntityPermissions("Site Member", Institution_Host.class.getName(), new String[] { ActionKeys.VIEW});
+		pm.removeL2GEntityPermissions("Site Member", Host.class.getName(), new String[] { ActionKeys.VIEW });
+		
+		pm.setL2GEntityPermissions("L2Go Admin", Institution.class.getName(), new String[] {ActionKeys.VIEW, "ADD_SUB_INSTITUTION_ENTRY", "ADD_HOSTS", "EDIT_HOSTS", "EDIT_ALL_INSTITUTIONS" ,"EDIT_OWN_INSTITUTIONS" ,"DELETE_INSTITUTIONS", "DELETE_SUB_INSTITUTIONS", "ADD_SUB_INSTITUTION_ENTRY"});
+		pm.setL2GEntityPermissions("L2Go Coordinator", Institution.class.getName(), new String[] {ActionKeys.VIEW, "ADD_SUB_INSTITUTION_ENTRY","EDIT_OWN_INSTITUTIONS", "DELETE_SUB_INSTITUTIONS", "ADD_SUB_INSTITUTION_ENTRY"});
+		//
+		pm.setL2GEntityViewPermissions("L2Go Producer", Institution.class.getName());
+		pm.setL2GEntityViewPermissions("L2Go Student", Institution.class.getName());
+		
+		pm.setL2GEntityPermissions("L2Go Admin", Institution_Host.class.getName(), new String[] {ActionKeys.VIEW, ActionKeys.DELETE, "ADD_LINK"});
+		pm.setL2GEntityViewPermissions("L2Go Coordinator", Institution_Host.class.getName());
+		
+		pm.setL2GEntityViewPermissions("L2Go Producer", Institution_Host.class.getName());
+		pm.setL2GEntityViewPermissions("L2Go Student", Institution_Host.class.getName());
+		
+		pm.setL2GEntityPermissions("L2Go Admin", Host.class.getName(), new String[] {ActionKeys.VIEW, ActionKeys.UPDATE, ActionKeys.DELETE, "ADD_HOST", "EDIT_HOST"});
+		pm.setL2GEntityPermissions("L2Go Coordinator", Host.class.getName(), new String[] {ActionKeys.VIEW});
+		
+		pm.setL2GEntityViewPermissions("L2Go Producer", Host.class.getName());
+		pm.setL2GEntityViewPermissions("L2Go Student", Host.class.getName());
+				
+	}
+	
 	@Override
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException, IOException {
 
@@ -39,10 +91,16 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 			long groupId = serviceContext.getScopeGroupId();
 			long companyId = serviceContext.getCompanyId();
-			//groupId = 0;
-
+			
+			System.out.println(serviceContext.getPlid()+" "+serviceContext.getPortletId()+" ");
+			
 			long institutionId = ParamUtil.getLong(renderRequest, "institutionId");
 			long hostId = ParamUtil.getLong(renderRequest, "hostId");
+			
+			//Check if default Permissions are set for Admin, else generate defaults anew
+			PermissionManager pm = new PermissionManager(serviceContext);
+			ResourcePermission rp = pm.getPermissionforRole("L2Go Admin");
+			if (rp == null) setDefaultPermissions(pm);
 
 			long defaultHostId = 0;
 			long defaultInstitutionId = 0;
@@ -64,9 +122,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		    //System.out.println("Default Institution: "+defaultInstitutionId);
 		    if (defaultInstitutionId == 0) {
 		    	defaultInstitutionId = InstitutionLocalServiceUtil.addDefaultInstitution(serviceContext).getInstitutionId();
-		    	
-		    	
-		    	
+		    			    	
 			    //Add default Link if new institution has been added 
 		    	Institution_Host defaultInstitution_Host = Institution_HostLocalServiceUtil.addEntry(defaultInstitutionId, defaultHostId, serviceContext);
 		    	SessionMessages.add(renderRequest, "entryAdded");
@@ -83,10 +139,6 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		    	institutionId = institutions.get(0).getInstitutionId();
 	        }
 		    
-		    //System.out.println(institutionId+" "+groupId+" "+institutions.toString());
-		    //System.out.println(hostId+" "+groupId+" "+host.toString());
-
-		    //System.out.println(StreamingServerTemplateLocalServiceUtil.getDefaultServersByGroupId(groupId));
 		    renderRequest.setAttribute("institutionId", institutionId);
 		    renderRequest.setAttribute("hostId", hostId);
 
@@ -401,6 +453,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 
 	}
+
 
 
 /** public void viewStreamingServerList(ActionRequest request, ActionResponse response) throws PortalException, SystemException {

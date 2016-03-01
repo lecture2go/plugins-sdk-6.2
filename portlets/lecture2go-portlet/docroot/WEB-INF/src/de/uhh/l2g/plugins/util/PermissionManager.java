@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -58,7 +59,10 @@ public class PermissionManager {
 	
 private ServiceContext context;
 
-
+     /**Simplifies add and remove Permissions given Portlet
+      * 
+      * @param serviceContext
+      */
      public PermissionManager(ServiceContext serviceContext) {
     	 
     	 context = serviceContext;
@@ -82,9 +86,11 @@ private ServiceContext context;
 			context = serviceContext;	
      }
      
-     /**Generate ServiceContext from Plid, PortletId and User 
+     /**Generate ServiceContext from Plid, PortletId and User (Use with Caution!)
       * 
       * If ServiceContext is not retrieved from Request we have no PortletId
+      * 
+      * Current estimate does not support multi-portlet pages!
       * 
       * @param plid - LayoutId
       * @param pId - portletId
@@ -116,7 +122,80 @@ private ServiceContext context;
      }
      
      
-     /**Grant Permission on Portlet to Role (Model/Group)
+     /**Retrives Portlet Permission if set or null
+      * 
+      * @param roleName
+      * @return
+      * @throws SystemException
+      */
+     public ResourcePermission getPermissionforRole(String roleName) throws SystemException{
+ 		String pId = context.getPortletId();
+ 		if (context.getPortletId().equals("")) pId = getL2GPortletByPlid(context.getPlid());
+    	 
+    	 Role role = null;
+    	 try{
+  	    	role = RoleLocalServiceUtil.getRole(context.getCompanyId(), roleName);
+ 		} catch (PortalException e) {
+ 			System.out.println("Could not retieve Role "+roleName+" ");
+ 			e.printStackTrace();
+ 		}   	   		
+    	 ResourcePermission rp = ResourcePermissionLocalServiceUtil.fetchResourcePermission(context.getCompanyId(), pId, ResourceConstants.SCOPE_GROUP, String.valueOf(context.getScopeGroupId()), role.getRoleId());   	
+		 return rp;	
+     }
+     
+     
+ 
+      
+      /**Grant View Permission on Entity/Model to Role (Model/Group)
+  	 * 
+  	 * @param roleName
+  	 * @param entityName
+  	 * @param entityName
+  	 * @param serviceContext
+  	 * @throws SystemException
+  	 * @throws PortalException
+  	 */
+  	public void setL2GEntityViewPermissions(String roleName, String entityName) throws SystemException, PortalException {
+  	
+  	    try{
+  	    	Role role = RoleLocalServiceUtil.getRole(context.getCompanyId(), roleName);	
+  			ResourcePermissionLocalServiceUtil.setResourcePermissions(context.getCompanyId(), entityName, ResourceConstants.SCOPE_GROUP, String.valueOf(context.getScopeGroupId()), role.getRoleId(), new String[] {ActionKeys.VIEW});
+  	
+  		} catch (PortalException e) {
+  			System.out.println("Could not set Permission for "+roleName+" on entity "+entityName+". ("+context.getGuestOrUserId()+")");
+  			e.printStackTrace();
+  		}
+  					
+  	}	
+  	
+	/**Remove Permissions on Entity/Model to Role (Model/Group)
+ 	 * 
+ 	 * @param roleName
+ 	 * @param entityName
+ 	 * @param entityName
+ 	 * @param serviceContext
+ 	 * @throws SystemException
+ 	 * @throws PortalException
+ 	 */
+ 	public void removeL2GEntityVieWPermissions(String roleName, String entityName) throws SystemException, PortalException {
+ 	
+ 	    try{
+ 	    	Role role = RoleLocalServiceUtil.getRole(context.getCompanyId(), roleName);	
+ 	    	
+ 		
+ 		    ResourcePermissionLocalServiceUtil.removeResourcePermission(context.getCompanyId(), entityName, ResourceConstants.SCOPE_GROUP, String.valueOf(context.getScopeGroupId()), role.getRoleId(), ActionKeys.VIEW);
+ 		
+ 	
+ 		} catch (PortalException e) {
+ 			System.out.println("Could not remove Permissions for "+roleName+" on entity "+entityName+". ("+context.getGuestOrUserId()+")");
+ 			e.printStackTrace();
+ 		}
+ 					
+ 	}
+     
+     
+     
+     /**Grant Permission on Entity/Model to Role (Model/Group)
  	 * 
  	 * @param roleName
  	 * @param entityName
@@ -136,9 +215,11 @@ private ServiceContext context;
  			e.printStackTrace();
  		}
  					
- 	}	
+ 	}
  	
-	/**Grant Permissions on Portlet to Role (Model/Group)
+	
+ 	
+	/**Grant Permissions on Entity/Model to Role (Model/Group)
 	 * 
 	 * @param roleName
 	 * @param entityName
@@ -161,7 +242,7 @@ private ServiceContext context;
 	}	
 	
 	
-	/**Remove Permissions on Portlet to Role (Model/Group)
+	/**Remove Permissions on Entity/Model to Role (Model/Group)
 	 * 
 	 * @param roleName
 	 * @param entityName
@@ -185,7 +266,7 @@ private ServiceContext context;
 		}
 					
 	}
-	/**Remove Permissions on Portlet to Role (Model/Group)
+	/**Remove Permissions on Entity/Model to Role (Model/Group)
 	 * 
 	 * @param roleName
 	 * @param entityName
