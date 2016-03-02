@@ -30,7 +30,6 @@
 		institutions = InstitutionLocalServiceUtil.getAllSortedAsTree(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 		permissionCoordinator = false;
 	}
-	
 	if(permissionCoordinator)institutions = InstitutionLocalServiceUtil.getByParent(CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getInstitutionId());
 
 	Locale[] languages = LanguageUtil.getAvailableLocales();
@@ -55,6 +54,7 @@
     if(isFirstUpload()==1 && getDateTime().length==0){
    	  	$("#date-time-form").fadeIn(1000);
     	$("#upload-form").hide();
+    	$("#l2gdate").hide();
     }else{
   	  $("#date-time-form").hide();
 	  $("#upload-form").fadeIn(1000); 	
@@ -109,7 +109,7 @@
 				<aui:input id="title" name="title" label="title" required="false" value="<%=reqVideo.getTitle()%>" />
 				
 				<aui:select size="1" name="crId" label="creators">
-					<aui:option value="" selected="true">select-creator</aui:option>
+					<aui:option value="">select-creator</aui:option>
 					<%for (int i = 0; i < creators.size(); i++) {
 						%><aui:option value='<%=creators.get(i).getCreatorId()%>'><%=creators.get(i).getJobTitle() + " "+creators.get(i).getLastName() + ", " + creators.get(i).getFirstName()%></aui:option><%
 					}%>	
@@ -140,9 +140,9 @@
 					try{subInstitutionId = Video_InstitutionLocalServiceUtil.getByVideo(reqVideo.getVideoId()).get(0).getInstitutionId();}catch (Exception e){}
 					
 					for (Map.Entry<String, String> f : subInstitutions.entrySet()) {
-						%>
-						<aui:option value='<%=f.getKey()%>'><%=f.getValue()%></aui:option>
-						<%
+					if(f.getKey().equals(subInstitutionId.toString())){
+						%><aui:option value='<%=f.getKey()%>'><%=f.getValue()%></aui:option>
+						<%}
 					}%>
 					</aui:select>
 					
@@ -203,7 +203,7 @@
 					}%>				
 				</aui:select>
 				
-				<aui:input id="lecture2go-date" name="lecture2go-date" label="lecture2go-date" required="false" value="" />
+				<div id="l2gdate"><aui:input id="lecture2go-date" name="lecture2go-date" label="lecture2go-date" required="false" value="" /></div>
 	
 				<aui:input name="tags" label="tags" required="false" value="<%=reqVideo.getTags()%>"/>
 	
@@ -247,8 +247,8 @@
 				</div>
 				
 				<aui:button-row>
-					<aui:button value="apply changes" onclick="applyAllMetadataChanges()"/>
-					<aui:button type="cancel" value="cancel" href="<%=backURL%>"/>
+					<aui:button value="apply-changes" onclick="applyAllMetadataChanges()"/>
+					<aui:button type="cancel" value="go-to-overview" href="<%=backURL%>"/>
 				</aui:button-row>
 				
 				<aui:input name="videoId" type="hidden" value="<%=reqVideo.getVideoId()%>"/>
@@ -354,7 +354,8 @@ $(function () {
 
 function fileUploadAllowed(data){
 	var ret = false;
-    var acceptFileTypes = /(mp4|mp3)$/i;//file types
+    var acceptFileTypes = /(mp4|mp3)$/i;//allowed file types
+    
     data.forEach(function(entry) {
     	console.log(entry['type']);
     	if(acceptFileTypes.test(entry['type'])){
@@ -540,6 +541,7 @@ function applyAllMetadataChanges(){
 				    updateCreators();
 				    updateSubInstitutions();
 				    updateMetadata();//last place, important!
+				    alert("changes-applied");
 			}
 	);
 }
@@ -567,7 +569,7 @@ function updateDescription(data){
 }
 
 function deleteFile(fileName){
-	if(confirm("really? you want to remove this file? ")){
+	if(confirm("really-delete-question")){
 		$.ajax({
 		    url: '<%=deleteFileURL.toString()%>',
 		    method: 'POST',
@@ -589,6 +591,8 @@ function deleteFile(fileName){
 		      	  	$('#date-time-form').fadeIn( 500 );
 		    	  	$("#upload-form").hide(); 
 		        }
+		        //hide date fild
+		        $("#l2gdate").hide();
 		    }
 		});	
 	}
@@ -660,6 +664,8 @@ function applyDateTime(){
 				  $('#date-time-form').hide();
 				  $("#upload-form").fadeIn(500); 	
 				  $("#tm").text(getDateTime());
+				  $("#<portlet:namespace/>lecture2go-date").val(genDate);
+				  $("#l2gdate").fadeIn(1000);
 			  }
 	  })
 }
@@ -751,7 +757,6 @@ AUI().use('aui-node',
   		        console.log(vars);
   		        $.template( "filesTemplate", $("#created") );
   		        $.tmpl( "filesTemplate", vars ).appendTo( "#creators" );
-  		     	crId.val( "" );
   			}
       	}
     );

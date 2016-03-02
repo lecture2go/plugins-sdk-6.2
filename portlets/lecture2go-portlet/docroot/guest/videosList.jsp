@@ -111,14 +111,21 @@
 	pageContext.setAttribute("hasCreatorFiltered", hasCreatorFiltered);
 	pageContext.setAttribute("hasManyTerms", presentTerms.size() > maxTerms);
 	pageContext.setAttribute("hasManyCreators", presentCreators.size() > maxCreators);
+	
+	boolean resultSetEmpty = true;
+	if(presentParentInstitutions.size()>0||presentInstitutions.size()>0||presentTerms.size()>0||presentCategories.size()>0){
+		resultSetEmpty=false;
+	}
 		
 %>
 
 <div class="row-fluid">
-	<div class="span3">
+<%if(!resultSetEmpty){ %>
+<div class="span3">
 
 <liferay-ui:panel-container>
 	<!-- 	parentinstitution filter -->
+	<%if(presentParentInstitutions.size()>0){ %>
 	<liferay-ui:panel extended="true" title="Einrichtung">
 		<ul>
 		<c:forEach items="<%=presentParentInstitutions %>" var="parentInstitution">
@@ -131,13 +138,15 @@
 				<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>
 				<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
 			</portlet:actionURL>
-			<li class="filter-menu"><div class="filter-menu-link"><a href="${filterByParentInstitution}">${parentInstitution.name}</a> <span ${hasParentInstitutionFiltered ? 'class=""' : ''}/></div></li>
+			<li class="filter-menu"><div class="filter-menu-link"><a href="${filterByParentInstitution}">${parentInstitution.name}<span ${hasParentInstitutionFiltered ? 'class="icon-large icon-remove"' : ''}></span></a></div></li>
 		</c:forEach>
 		</ul>
 	</liferay-ui:panel>
+	<%}%>
 	
  	<!-- 	institution filter  -->
 	<c:if test="${hasParentInstitutionFiltered}">
+	<%if(presentInstitutions.size()>0){ %>
 	<liferay-ui:panel extended="true" title="Bereich">
 		<ul>
 		<c:forEach items="<%=presentInstitutions %>" var="institution">
@@ -150,13 +159,15 @@
 				<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>
 				<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
 			</portlet:actionURL>
-			<li class="filter-menu"><div class="filter-menu-link"><a href="${filterByInstitution}">${institution.name}</a> <span ${hasInstitutionFiltered ? 'class=""' : ''}/></div></li>
+			<li class="filter-menu"><div class="filter-menu-link"><a href="${filterByInstitution}">${institution.name}<span ${hasInstitutionFiltered ? 'class="icon-large icon-remove"' : ''}></span></a></div></li>
 		</c:forEach>
 		</ul>
 	</liferay-ui:panel>
+	<%}%>
 	</c:if>
 	
 	<!-- 	terms filter -->
+	<%if(presentTerms.size()>0){%>
 	<liferay-ui:panel extended="true" title="Semester">
 		<ul class="terms">
 		<c:forEach items="<%=presentTerms %>" var="term">
@@ -169,17 +180,18 @@
 				<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>
 				<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
 			</portlet:actionURL>
-			<li class="filter-menu"><div class="filter-menu-link"><a href="${filterByTerm}">${term.termName}</a> <span ${hasTermFiltered ? 'class=""' : ''}/></div></li>
+			<li class="filter-menu"><div class="filter-menu-link"><a href="${filterByTerm}">${term.termName}<span ${hasTermFiltered ? 'class="icon-large icon-remove"' : ''}></span></a></div></li>
 		</c:forEach>
 		</ul>
 		<c:if test="${hasManyTerms}">
 			<div id="loadMoreTerms">mehr...</div>
 		</c:if>
 	</liferay-ui:panel>
-	
+	<%}%>
 
 	
 	<!-- 	category filter -->
+	<%if(presentCategories.size()>0){%>
 	<liferay-ui:panel extended="true" title="Kategorie">
 		<ul>
 		<c:forEach items="<%=presentCategories %>" var="category">
@@ -192,11 +204,11 @@
 				<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>	
 				<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
 			</portlet:actionURL>
-			<li class="filter-menu"><div class="filter-menu-link"><a href="${filterByCategory}">${category.name}</a> <span ${hasCategoryFiltered ? 'class=""' : ''}/></div></li>
+			<li class="filter-menu"><div class="filter-menu-link"><a href="${filterByCategory}">${category.name} <span ${hasCategoryFiltered ? 'class="icon-large icon-remove"' : ''}></span></a></div></li>
 		</c:forEach>
 		</ul>
 	</liferay-ui:panel>
-
+	<%}%>
 	<%-- 	
 	creator filter 
 	<liferay-ui:panel extended="true" title="Person" id="creators">
@@ -227,8 +239,10 @@
 </liferay-ui:panel-container>
 
 </div>
+<%}%>
 
-<div class="span9">
+<%if(!resultSetEmpty){%><div class="span9"><%}%>
+<%if(resultSetEmpty){%><div class="none"><%}%>
 		
 <portlet:actionURL var="filterBySearchQuery" name="addFilter">
 	<portlet:param name="jspPage" value="/guest/videosList.jsp" />
@@ -453,7 +467,8 @@
 											
 									        <div class="tags">
 									          <%
-									        	String cat =CategoryLocalServiceUtil.getById(lectser.getCategoryId()).getName();
+									        	String cat ="";
+									            try{cat=CategoryLocalServiceUtil.getById(lectser.getCategoryId()).getName();}catch(Exception e){}
 									        	List<Lectureseries_Institution> li = Lectureseries_InstitutionLocalServiceUtil.getByLectureseries(lectser.getLectureseriesId());
 									        	ListIterator<Lectureseries_Institution> liIt = li.listIterator();
 									          %>

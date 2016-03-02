@@ -218,14 +218,6 @@
 		<field name="year" type="String" />
 		<field name="translation" type="String" />
 	</model>
-	<model name="de.uhh.l2g.plugins.model.Upload">
-		<field name="uploadId" type="long" />
-		<field name="userId" type="long" />
-		<field name="contentLength" type="long" />
-		<field name="timestamp" type="Date" />
-		<field name="status" type="int" />
-		<field name="videoId" type="long" />
-	</model>
 	<model name="de.uhh.l2g.plugins.model.Video">
 		<field name="videoId" type="long" />
 		<field name="title" type="String">
@@ -254,7 +246,6 @@
 		<field name="rootInstitutionId" type="long" />
 		<field name="citation2go" type="int" />
 		<field name="termId" type="long" />
-		<field name="videoCreatorId" type="long" />
 		<field name="tags" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>

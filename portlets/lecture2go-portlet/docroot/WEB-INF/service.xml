@@ -278,7 +278,7 @@
         <column name="coordinatorId" type="long" primary="true"></column>
         <column name="institutionId" type="long"></column>
         <column name="officeId" type="long"></column>
-        <finder name="Institution" return-type="Collection">
+        <finder name="Institution" return-type="Coordinator">
             <finder-column name="institutionId"></finder-column>
         </finder>
         <finder name="Office" return-type="Collection">
@@ -339,17 +339,6 @@
             <finder-column name="userId"></finder-column>
         </finder>
     </entity>
-    <entity name="Upload" local-service="true" remote-service="false">
-        <column name="uploadId" type="long" primary="true" id-type="increment"></column>
-        <column name="userId" type="long"></column>
-        <column name="contentLength" type="long"></column>
-        <column name="timestamp" type="Date"></column>
-        <column name="status" type="int"></column>
-        <column name="videoId" type="long"></column>
-        <finder name="Video" return-type="Collection">
-            <finder-column name="videoId"></finder-column>
-        </finder>
-    </entity>
     <entity name="Video" local-service="true" remote-service="false">
         <column name="videoId" type="long" primary="true" id-type="increment"></column>
         <column name="title" type="String"></column>
@@ -372,7 +361,6 @@
         <column name="rootInstitutionId" type="long"></column>
         <column name="citation2go" type="int"></column>
         <column name="termId" type="long"></column>
-        <column name="videoCreatorId" type="long"></column>
         <column name="tags" type="String"></column>
         <column name="password" type="String"></column>
         <order by="desc">

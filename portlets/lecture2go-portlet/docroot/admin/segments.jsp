@@ -17,41 +17,37 @@ String backURL = request.getAttribute("backURL").toString();
 <aui:fieldset helpMessage="test" column="true" label='<%=reqVideo.getTitle()%>'>
 	<aui:layout>
 		<aui:form action="<%=addSegmentURL.toString()%>" commandName="model" name="segments" id="segments">
-		
-			<div class="player">
+			<div class="player-wide">
 				<%@ include file="player/includePlayer.html"%>
 			</div>
-			
-		    <aui:input name="segment" value="1" type="radio" label="chapter" id="chapter" checked="true"/>	
-	
-		    <aui:input name="segment" value="0" type="radio" label="comment" id="comment"/>	
-			
-			<aui:input name="chortTitle" label="short title" required="true" id="chortTitle"/>
-	
-			<aui:input name="segmentBegin" label="segment begin" required="true" id="timeStart" readonly="true"/>
-	
-			<aui:input name="segmentEnd" label="segment end" required="true" id="timeEnd" readonly="true"/>
-			
-			<div id="iav">
-				<aui:input name="text" type="textarea" label="text" autoSize="true" id="text"/>
+			<div id="set-segments">
+				<aui:input name="segment" value="1" type="radio" label="chapter" id="chapter" checked="true"/>	
+				
+				<aui:input name="segment" value="0" type="radio" label="comment" id="comment"/>	
+
+				<aui:input name="chortTitle" label="short title" required="true" id="chortTitle"/>
+		
+				<aui:input name="segmentBegin" label="segment begin" required="true" id="timeStart" readonly="true"/>
+		
+				<aui:input name="segmentEnd" label="segment end" required="true" id="timeEnd" readonly="true"/>
+				
+				<div id="iav">
+					<aui:input name="text" type="textarea" label="text" autoSize="true" id="text"/>
+				</div>
+				
+				<aui:input name="videoId" type="hidden" value="<%=reqVideo.getVideoId()%>"/>
+				<div id="ignore"><aui:input type="text" name="dummy" required="true"/></div>
+				
+				<aui:button-row>
+					<aui:button type="submit" value="add segment" onClick="addSegment()" />
+					<aui:button type="cancel" value="cancel" href="<%=backURL%>"/>
+				</aui:button-row>
 			</div>
-			
-			<aui:input name="videoId" type="hidden" value="<%=reqVideo.getVideoId()%>"/>
-			<div id="ignore"><aui:input type="text" name="dummy" required="true"/></div>
-			
-			<aui:button-row>
-				<aui:button type="submit" value="add segment" onClick="addSegment()" />
-			</aui:button-row>
-			
-			<aui:button-row>
-				<aui:button type="cancel" value="cancel" href="<%=backURL%>"/>
-			</aui:button-row>
 		</aui:form>
 	</aui:layout>
 </aui:fieldset>
-
-<div id="chapters" style="overflow: auto; width:750px; height:350px; font-size: 1.2em;">
-</div>
+<br/>
+<div id="chapters"/>
 
 <liferay-portlet:resourceURL id="showSegments" var="segmentsURL" />
 <script type="text/javascript">
@@ -65,7 +61,6 @@ String backURL = request.getAttribute("backURL").toString();
 	    success: function(data, textStatus, jqXHR) {
 	        // since we are using jQuery, you don't need to parse response
 	        drawSegmentRow(data);
-	        console.log(data);
 	    }
 	});	
 
@@ -111,29 +106,29 @@ String backURL = request.getAttribute("backURL").toString();
 	function drawRow(segment) {
 	    if(segment.chapter==1){
 	    	newRow='<div class="chaptertile" id="' + segment.segmentId + '" begin="' + segment.start + '" end="' + segment.end + '">'+
-			'<a><img class="imgsmall" title="watch this chapter" src="'+segment.image+'"></a>'+
+			'<a><img width="130px" height="63px" class="imgsmall" title="watch this chapter" src="'+segment.image+'"></a>'+
 			'<span>'+segment.start +' - '+segment.end+'</span><br/>'+
 			'<a><span>'+segment.title+'</span></a>';
 		}else{
 			newRow='<div class="commenttile" id="'+segment.segmentId+'" onload="alert('+segment.segmentId+')">'+
     		'<div>'+
 			'<b id="pf1_'+segment.segmentId+'">'+
-    		'<input type="image" height="10" width="10" src="/lecture2go-portlet/img/commentOff.png" title="comment on" alt="comment on" id="showr'+segment.segmentId+'" onclick="showSegment('+segment.segmentId+')"/>'+
+    		'<span class="icon-small icon-plus" id="showr'+segment.segmentId+'" onclick="showSegment('+segment.segmentId+')"/>'+
     		'</b>'+
     		'<b id="pf2_'+segment.segmentId+'">'+
-    		'<input type="image" height="10" width="10" src="/lecture2go-portlet/img/commentOn.png" title=" comment off" alt="comment off" id="hidr'+segment.segmentId+'" onclick="hideSegment('+segment.segmentId+')"/>'+
+    		'<span class="icon-small icon-minus" id="hidr'+segment.segmentId+'" onclick="hideSegment('+segment.segmentId+')"/>'+
     		'</b>'+
     		'<span class="fs8">'+segment.start+'</span>'+
-    		'<a><iavst class="white" begin="'+segment.start+'" end="'+segment.end+'"><span style="font-size:11px;">'+segment.title+'</span></iavst></a>'+
+    		'<a><iavst class="white" begin="'+segment.start+'" end="'+segment.end+'"><span>'+segment.title+'</span></iavst></a>'+
     		'</div>';
     		if(segment.description >""){
     			newRow=newRow+'<b id="iav'+segment.segmentId+'"><span class="fs10"><div id="description"><em>'+segment.description+'</em></div></span></b>';
     		}
 		}
-		if(segment.userId==<%=remoteUser.getUserId()%>){
-			newRow=newRow+'<input type="image" src="/lecture2go-portlet/img/delete.png" alt="delete" onclick="deleteSegment('+segment.segmentId+')" >';
-		}
+		newRow=newRow+'<input type="image" src="/lecture2go-portlet/img/delete.png" alt="delete" onclick="deleteSegment('+segment.segmentId+')" >';
+		
 		newRow=newRow+'</div>';
+		
 		if(segment.chapter!=1){
 			newRow=newRow+'<script>YUI().use("node-base", function(Y) {Y.on("available", loadSegment('+segment.segmentId+'), "#'+segment.segmentId+'")})<\/script>';
 		}
@@ -186,12 +181,7 @@ String backURL = request.getAttribute("backURL").toString();
 							     var segment = this.get('responseData');
 							        setTimeout(function() {
 							        	drawRow(segment);
-							        	
-							        	var inputDelete = A.one('#' + segment.segmentId).one("input[alt='delete']");
-							        	inputDelete.on("click", deleteSegment(segment.segmentId));
-							        	
-							        	
-							        }, 1000)
+							        }, 2000)
 							   }
 						}
 					});	

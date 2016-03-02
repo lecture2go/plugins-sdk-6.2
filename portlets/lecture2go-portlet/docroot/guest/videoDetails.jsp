@@ -155,7 +155,7 @@
 			    <c:if test="${relatedVideos.size()<=1}"><div class="metainfo-wide"></c:if>
 					<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
 					    <c:if test="${video.downloadLink==1}">
-						    <li><a href="#download" data-toggle="tab">Download</a></li>
+						    <li id="down"><a href="#download" data-toggle="tab">Download</a></li>
 					    </c:if>
 					    <%if(video.getOpenAccess()==1){%>
 					   	 	<li><a href="#share" data-toggle="tab">Share</a></li>

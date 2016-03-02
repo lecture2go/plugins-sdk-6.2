@@ -99,7 +99,6 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 			q.addScalar("rootInstitutionId", Type.LONG);
 			q.addScalar("citation2go", Type.INTEGER);
 			q.addScalar("termId", Type.LONG);
-			q.addScalar("videoCreatorId", Type.LONG);
 			q.addScalar("tags", Type.STRING);
 			q.addScalar("password_", Type.STRING);
 			
@@ -238,9 +237,8 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 			v.setRootInstitutionId((Long)video[18]);
 			v.setCitation2go((Integer)video[19]);
 			v.setTermId((Long)video[20]);
-			v.setVideoCreatorId((Long)video[21]);
-			v.setTags((String)video[22]);
-			v.setPassword((String)video[23]);
+			v.setTags((String)video[21]);
+			v.setPassword((String)video[22]);
 			
 			vl.add(v);
 		}

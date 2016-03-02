@@ -379,13 +379,13 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				if(objectVideo.getOpenAccess()==1){
 					embedHtml5="<video width='647' height='373' controls><source src='"+PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+objectVideo.getPreffix()+".mp4"+"' type='video/mp4'>Your browser does not support the video tag.</video>";
 				}else{
-					embedHtml5="<video width='647' height='373' controls><source src='"+PropsUtil.get("lecture2go.downloadserver.web.root")+"/videorep/"+objectHost.getName()+"/"+objectProducer.getHomeDir()+"/"+objectVideo.getSecureUrl()+"' type='video/mp4'>Your browser does not support the video tag.</video>";
+					embedHtml5="<video width='647' height='373' controls><source src='"+PropsUtil.get("lecture2go.downloadserver.web.root")+"/videorep/"+objectHost.getServerRoot()+"/"+objectProducer.getHomeDir()+"/"+objectVideo.getSecureUrl()+"' type='video/mp4'>Your browser does not support the video tag.</video>";
 				}
 			}else{
 				if(objectVideo.getOpenAccess()==1){
 					embedHtml5="<audio controls><source src='"+PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+objectVideo.getPreffix()+".mp3"+"' type='audio/mpeg'>Your browser does not support the audio element.</audio>";
 				}else{
-					embedHtml5="<audio controls><source src='"+PropsUtil.get("lecture2go.downloadserver.web.root")+"/videorep/"+objectHost.getName()+"/"+objectProducer.getHomeDir()+"/"+objectVideo.getSecureUrl()+"' type='audio/mpeg'>Your browser does not support the audio element.</audio>";
+					embedHtml5="<audio controls><source src='"+PropsUtil.get("lecture2go.downloadserver.web.root")+"/videorep/"+objectHost.getServerRoot()+"/"+objectProducer.getHomeDir()+"/"+objectVideo.getSecureUrl()+"' type='audio/mpeg'>Your browser does not support the audio element.</audio>";
 				}				
 			}
 		}
@@ -525,7 +525,8 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	}
 
 	public List<Video> getByLectureseriesAndOpenaccess(Long lectureseriesId, int openAccess) throws SystemException{
-		List<Video> vl = videoPersistence.findByLectureseriesAndOpenaccess(lectureseriesId, openAccess);
+		List<Video> vl = new ArrayList<Video>();
+		if(lectureseriesId!=0)vl=videoPersistence.findByLectureseriesAndOpenaccess(lectureseriesId, openAccess);
 		List<Video> rvl = new ArrayList<Video>();
 		ListIterator<Video> vli = vl.listIterator();
 		while(vli.hasNext()){
