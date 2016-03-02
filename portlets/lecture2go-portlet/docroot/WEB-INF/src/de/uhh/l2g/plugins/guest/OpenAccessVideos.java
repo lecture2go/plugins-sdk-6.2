@@ -94,7 +94,7 @@ public class OpenAccessVideos extends MVCPortlet {
 	private void getSearchWords(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws IOException, PortletException {
 		String searchWord = "";
 		String w = ParamUtil.getString(resourceRequest, "searchWord");
-		if(w.length()>=3)searchWord=w;
+		searchWord=w;
 		
 		AutocompleteManager acm = new AutocompleteManager();
 		List<String> arrStr = new ArrayList<String>();

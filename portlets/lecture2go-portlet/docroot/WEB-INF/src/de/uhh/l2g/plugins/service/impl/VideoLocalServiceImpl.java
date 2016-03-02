@@ -593,6 +593,10 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	public List<Video> getBySearchWord(String word, int limit) throws SystemException{
 		return VideoFinderUtil.findVideosBySearchWord(word, limit);
 	}	
+	
+	public List<Video> getByAllSearchWords() throws SystemException{
+		return VideoFinderUtil.findVideosByAllSearchWords();
+	}	
 
 	public List<Video> getBySearchWordAndLectureseriesId(String word, Long lectureseriesId) throws SystemException{
 		return VideoFinderUtil.findVideosBySearchWordAndLectureseriesId(word, lectureseriesId);

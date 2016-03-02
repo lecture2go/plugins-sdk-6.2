@@ -43,14 +43,14 @@ public class AutocompleteManager {
 	}
 	
 
+	private static List<Video> videoList = new ArrayList<Video>();
 	public List<String> getAutocompleteResults(String search) throws SystemException {
 
 		List<String> resultList = new ArrayList<String>();
-		List<Video> videoList = new ArrayList<Video>();
 
 		if (search != null) {
 			if (search.trim().length() > 1) {
-				videoList = VideoLocalServiceUtil.getBySearchWord(search,_autocompSearchLimit);
+				if(videoList.size()==0)videoList = VideoLocalServiceUtil.getByAllSearchWords();
 				
 				for (Video video : videoList) {
 					
@@ -74,10 +74,11 @@ public class AutocompleteManager {
 						resultList.add(tags);
 					
 					}
-					/** Limit the number of result strings for ajax request to 10 */
+					/** Limit the number of result strings for ajax request to 10 
 					if (resultList.size() >= 7) {
 						break;
 					}
+					*/
 				}
 			}
 		}
