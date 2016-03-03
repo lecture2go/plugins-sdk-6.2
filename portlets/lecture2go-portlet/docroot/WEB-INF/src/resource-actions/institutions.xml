@@ -35,6 +35,10 @@
         <action-key>VIEW_HOSTS</action-key>
         <action-key>ADD_INSTITUTIONS</action-key>
       </guest-unsupported>
+      <owner-defaults>
+      		<action-key>VIEW</action-key>
+      		 <action-key>DELETE</action-key>
+      </owner-defaults>
     </permissions>
   </portlet-resource>
 

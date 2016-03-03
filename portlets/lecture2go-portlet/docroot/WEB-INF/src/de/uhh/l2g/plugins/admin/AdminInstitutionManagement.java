@@ -35,7 +35,7 @@ import de.uhh.l2g.plugins.util.PermissionManager;
 public class AdminInstitutionManagement extends MVCPortlet {
 
 
-	/**Set default permissions (assumes fixed role names)
+	/**Set default permissions (assumes fixed and unique role names)
 	 * 
 	 * @param pm - PermissionManager 
 	 * @throws PortalException 
@@ -46,8 +46,9 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		//Remove view permission for Guest and edit for ordinary Site Members
 		pm.removeL2GLayoutViewPermission("Guest");
 		pm.removeL2GLayoutPermissions("Site Member", new String[] { ActionKeys.ADD_DISCUSSION, ActionKeys.CUSTOMIZE });
-		
+				
 		//Remove Advanced Permissions for Owner (Owner should be Administrator anyway)
+		pm.removeL2GLayoutPermissions("Owner", new String[] { ActionKeys.CUSTOMIZE, ActionKeys.CONFIGURATION, ActionKeys.PERMISSIONS });
 		
 		//Allow View Permission for higher L2GRoles
 		pm.setL2GLayoutViewPermission("L2Go Admin");

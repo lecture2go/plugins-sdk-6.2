@@ -54,12 +54,24 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.util.PortletKeys;
 
 
+/**Simplifies add and remove Permissions programmatically (per Portlet)
+ * 
+ * Fixes Scope to beeing constant over all L2Go Portlets (currently L2G resources support Group&Company Scope)
 
+ * Works with Role Name, for clarity and human readableness of permissions Setting
+ * Could be rewritten easily by passing Role Object directly to reduce one layer of possible failure (i.e. retrieve RoleId)
+ *
+ * Remark: Permission in Liferay are granted hierarchically Company > Group > Entity and cant't be revoked 
+ * on a lower scope
+ * 
+ * Individiual Permissions only work when addResource is performed for each entity instance (Migration Portlet does not 
+ * correctly add Resources for old entities yet)
+ */
 public class PermissionManager {
 	
 private ServiceContext context;
 
-     /**Simplifies add and remove Permissions given Portlet
+     /**Initiate new Manager Instance by Portlet Context
       * 
       * @param serviceContext
       */
@@ -535,5 +547,47 @@ private ServiceContext context;
 	    
 	}
 	
+	/** Auxiliary Function to Set Layout(Page) View Permission based on Page "friendlyURL"
+	 *  
+	 *  Usable if Page has no Portlet Representation in Backend but a constant name
+	 * @param companyId
+	 * @param groupId
+	 * @param role
+	 * @param friendlyurl
+	 * @throws PortalException
+	 * @throws SystemException
+	 */
+	@SuppressWarnings("unused")
+	private static void setPageViewPermissionByFriendlyUrl(long companyId, long groupId, Role role, String friendlyurl) throws PortalException, SystemException{
+		 
+		Layout imPage = LayoutLocalServiceUtil.getFriendlyURLLayout(groupId, false, friendlyurl);
+       
+		//Page Permission
+        ResourcePermissionLocalServiceUtil.setResourcePermissions(companyId, "com.liferay.portal.model.Layout", ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(imPage.getPlid()), role.getRoleId(), new String[] {ActionKeys.VIEW});			
+		
+	}
+	
+	/** Auxiliary Function to Remove Layout(Page) View Permission based on Page "friendlyURL"
+	 *  
+	 *  Usable if Page has no Portlet Representation in Backend but a constant name
+	 *  
+	 * @param companyId
+	 * @param groupId
+	 * @param role
+	 * @param friendlyurl
+	 * @throws PortalException
+	 * @throws SystemException
+	 */
+	@SuppressWarnings("unused")
+	private static void removePageViewPermissionByFriendlyUrl(long companyId, long groupId, Role role, String friendlyurl) throws PortalException, SystemException{
+		 
+		Layout imPage = LayoutLocalServiceUtil.getFriendlyURLLayout(groupId, false, friendlyurl);
+       
+		//Page Permission
+		ResourcePermissionLocalServiceUtil.removeResourcePermission(companyId, "com.liferay.portal.model.Layout", ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(imPage.getPlid()), role.getRoleId(), ActionKeys.VIEW);
+
+	
+		
+	}
 
 }
