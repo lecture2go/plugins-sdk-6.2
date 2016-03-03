@@ -34,11 +34,11 @@
 			        ( LG_Creator.fullName > "" )
 				)
 			) 
-			ORDER BY LG_Video.generationDate DESC
+			GROUP BY LG_Video.videoId ORDER BY LG_Video.generationDate DESC
 		]]>
     </sql>
 
-    <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.findVideosBySearchWord">
+    <sql id="de.uhh.l2g.plugins.service.persistences.VideoFinder.findVideosBySearchWord">
 		<![CDATA[
 			SELECT DISTINCT LG_Video.* , LG_Lectureseries.name AS lectureseriesName, LG_Lectureseries.number_ AS lectureseriesNumber, LG_Creator.fullName AS creatorFullName
 			FROM LG_Video, LG_Metadata, LG_Lectureseries, LG_Institution, LG_Creator,  LG_Video_Creator
