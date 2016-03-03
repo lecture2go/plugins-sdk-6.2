@@ -60,19 +60,14 @@ public class AutocompleteManager {
 					String lecturer = video.getCreatorFullName().trim();
 					String tags = video.getTags().trim();
 					
-//					if (title.toLowerCase().contains(search.toLowerCase()) && !resultList.contains(title)){
-						if(!resultList.contains(title))resultList.add(title);
-						
-//					}else if (series.toLowerCase().contains(search.toLowerCase()) && !resultList.contains(series)){
-						if(!resultList.contains(series))resultList.add(series);
+					if(!isDuplicate(resultList, title))resultList.add(title);
 					
-//					}else if (lecturer.toLowerCase().contains(search.toLowerCase()) && !resultList.contains(lecturer)){
-						if(!resultList.contains(lecturer))resultList.add(lecturer);
+					if(!isDuplicate(resultList, series))resultList.add(series);
 					
-//					}else if (tags.toLowerCase().contains(search.toLowerCase()) && !resultList.contains(tags)){
-						if(!resultList.contains(tags))resultList.add(tags);
+					if(!isDuplicate(resultList, lecturer))resultList.add(lecturer);
 					
-//					}
+					if(!isDuplicate(resultList, tags))resultList.add(tags);
+					
 					/** Limit the number of result strings for ajax request to 10 
 					if (resultList.size() >= 10) {
 						break;
@@ -83,6 +78,17 @@ public class AutocompleteManager {
 		}
 
 		return resultList;
+	}
+	
+	private boolean isDuplicate(List<String> resultList, String word){
+		boolean ret = false;
+		for(String w : resultList){
+			if(w.equals(word)){
+				System.out.println("Duplicated: " + word);
+				ret=true;
+			}
+		}
+		return ret;
 	}
 
 }
