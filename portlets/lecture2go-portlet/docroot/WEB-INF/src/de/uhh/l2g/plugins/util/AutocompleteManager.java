@@ -42,7 +42,7 @@ public class AutocompleteManager {
 	}
 	
 	
-	public static List<String> getAutocompleteResults() throws SystemException {
+	public static synchronized List<String> getAutocompleteResults() throws SystemException {
 		List<String> resultList = new ArrayList<String>();
 		List<Video> videoList = new ArrayList<Video>();	
 		if (videoList.size() == 0) videoList = VideoLocalServiceUtil.getByAllSearchWords();
@@ -69,7 +69,7 @@ public class AutocompleteManager {
 		return resultList;
 	}
 	
-	public static boolean generateAutocompleteResults() throws SystemException {
+	public static synchronized boolean generateAutocompleteResults() throws SystemException {
 		OpenAccessVideos.wordsJSONArray = JSONFactoryUtil.createJSONArray();
 		boolean retu = false;
 		List<String> arrStr = new ArrayList<String>();
