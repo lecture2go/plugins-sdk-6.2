@@ -93,27 +93,6 @@ public class OpenAccessVideos extends MVCPortlet {
 	
 	public static JSONArray wordsJSONArray = JSONFactoryUtil.createJSONArray();
 	private void getSearchWords(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws IOException, PortletException {
-		String searchWord = "";
-		String w = ParamUtil.getString(resourceRequest, "searchWord");
-		searchWord=w;
-		
-		AutocompleteManager acm = new AutocompleteManager();
-		List<String> arrStr = new ArrayList<String>();
-		
-		if(wordsJSONArray.length()==0){
-			JSONObject strJSON = null;
-			try {
-				arrStr = acm.getAutocompleteResults(searchWord);
-				for (int i=0; i<arrStr.size();i++) {
-					strJSON = JSONFactoryUtil.createJSONObject();
-					strJSON.put("word", arrStr.get(i));
-					wordsJSONArray.put(strJSON);
-				}
-			} catch (SystemException e) {
-				e.printStackTrace();
-			}
-		}
-		
 		PrintWriter out = resourceResponse.getWriter();
 		out.println(wordsJSONArray);
 	}

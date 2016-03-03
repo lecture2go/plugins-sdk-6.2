@@ -56,6 +56,7 @@ import de.uhh.l2g.plugins.service.TagcloudLocalServiceUtil;
 import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
+import de.uhh.l2g.plugins.util.AutocompleteManager;
 import de.uhh.l2g.plugins.util.EmailManager;
 import de.uhh.l2g.plugins.util.Htaccess;
 import de.uhh.l2g.plugins.util.HtmlManager;
@@ -105,7 +106,14 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			response.sendRedirect(backURL);
 		} catch (IOException e) {
 			e.printStackTrace();
-		}		
+		}	
+		
+		//generate new JSON date for auto complete functionality
+		try {
+			AutocompleteManager.generateAutocompleteResults();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void editLectureseries(ActionRequest request, ActionResponse response) throws NumberFormatException, PortalException, SystemException, UnsupportedEncodingException{
@@ -283,6 +291,13 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			// Send mail to L2Go
 			em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), PropsUtil.get("lecture2go.response.email.address")  , HtmlManager.ISO88591toUTF8(SUBJECT), HtmlManager.ISO88591toUTF8(BODY));
 		}	
+		
+		//generate new JSON date for auto complete functionality
+		try {
+			AutocompleteManager.generateAutocompleteResults();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void addLectureseries(ActionRequest request, ActionResponse response) throws SystemException, PortalException, UnsupportedEncodingException {
@@ -449,6 +464,13 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			// Send mail to L2Go
 			em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), PropsUtil.get("lecture2go.response.email.address")  , HtmlManager.ISO88591toUTF8(SUBJECT), HtmlManager.ISO88591toUTF8(BODY));
 		}	
+		
+		//generate new JSON date for auto complete functionality
+		try {
+			AutocompleteManager.generateAutocompleteResults();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws PortletException, IOException {

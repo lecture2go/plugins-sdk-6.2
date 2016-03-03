@@ -29,6 +29,7 @@ import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import de.uhh.l2g.plugins.NoSuchLicenseException;
 import de.uhh.l2g.plugins.NoSuchTagcloudException;
+import de.uhh.l2g.plugins.guest.OpenAccessVideos;
 import de.uhh.l2g.plugins.model.Category;
 import de.uhh.l2g.plugins.model.Creator;
 import de.uhh.l2g.plugins.model.Institution;
@@ -75,6 +76,7 @@ import de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
+import de.uhh.l2g.plugins.util.AutocompleteManager;
 import de.uhh.l2g.plugins.util.FFmpegManager;
 import de.uhh.l2g.plugins.util.ProzessManager;
 import de.uhh.l2g.plugins.util.Security;
@@ -271,6 +273,12 @@ public class AdminVideoManagement extends MVCPortlet {
 		TagcloudLocalServiceUtil.add(tagCloudArrayString, video.getClass().getName(), video.getVideoId());
 		//
 		String backURL = request.getParameter("backURL");
+		//generate new JSON date for auto complete functionality
+		try {
+			AutocompleteManager.generateAutocompleteResults();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
 		request.setAttribute("backURL", backURL);
 		response.setRenderParameter("jspPage", "/admin/editVideo.jsp");
 	}
@@ -503,6 +511,12 @@ public class AdminVideoManagement extends MVCPortlet {
 			}
 			
 			JSONObject json = JSONFactoryUtil.createJSONObject();
+			//generate new JSON date for auto complete functionality
+			try {
+				AutocompleteManager.generateAutocompleteResults();
+			} catch (SystemException e) {
+				e.printStackTrace();
+			}
 			writeJSON(resourceRequest, resourceResponse, json);
 		}
 
@@ -911,6 +925,12 @@ public class AdminVideoManagement extends MVCPortlet {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		//generate new JSON date for auto complete functionality
+		try {
+			AutocompleteManager.generateAutocompleteResults();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void lockVideo(ActionRequest request, ActionResponse response){
@@ -932,6 +952,12 @@ public class AdminVideoManagement extends MVCPortlet {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		//generate new JSON date for auto complete functionality
+		try {
+			AutocompleteManager.generateAutocompleteResults();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void unlockVideo(ActionRequest request, ActionResponse response){
@@ -951,6 +977,12 @@ public class AdminVideoManagement extends MVCPortlet {
 		try {
 			response.sendRedirect(backURL);
 		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		//generate new JSON date for auto complete functionality
+		try {
+			AutocompleteManager.generateAutocompleteResults();
+		} catch (SystemException e) {
 			e.printStackTrace();
 		}
 	}
