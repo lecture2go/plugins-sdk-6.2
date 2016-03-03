@@ -43,9 +43,8 @@ public class AutocompleteManager {
 	}
 	
 
-	private static List<Video> videoList = new ArrayList<Video>();
 	public List<String> getAutocompleteResults(String search) throws SystemException {
-
+		List<Video> videoList = new ArrayList<Video>();
 		List<String> resultList = new ArrayList<String>();
 
 		if (search != null) {
@@ -62,16 +61,16 @@ public class AutocompleteManager {
 					String tags = video.getTags().trim();
 					
 //					if (title.toLowerCase().contains(search.toLowerCase()) && !resultList.contains(title)){
-						resultList.add(title);
-					
+						if(!resultList.contains(title))resultList.add(title);
+						
 //					}else if (series.toLowerCase().contains(search.toLowerCase()) && !resultList.contains(series)){
-						resultList.add(series);
+						if(!resultList.contains(series))resultList.add(series);
 					
 //					}else if (lecturer.toLowerCase().contains(search.toLowerCase()) && !resultList.contains(lecturer)){
-						resultList.add(lecturer);
+						if(!resultList.contains(lecturer))resultList.add(lecturer);
 					
 //					}else if (tags.toLowerCase().contains(search.toLowerCase()) && !resultList.contains(tags)){
-						resultList.add(tags);
+						if(!resultList.contains(tags))resultList.add(tags);
 					
 //					}
 					/** Limit the number of result strings for ajax request to 10 
