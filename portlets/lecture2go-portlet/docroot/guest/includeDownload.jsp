@@ -1,4 +1,5 @@
 <c:if test="${video.downloadLink==1}">
+<p class="smallitalic">download-text</p>
 <div id="down">
 		<!-- openaccess start -->
 			<div id="downloads">
@@ -50,6 +51,5 @@
 				</c:if>
 			</div>
 		<!-- openaccess end -->
-		<p class="smallitalic">download-text</p>
 </div>
 </c:if>

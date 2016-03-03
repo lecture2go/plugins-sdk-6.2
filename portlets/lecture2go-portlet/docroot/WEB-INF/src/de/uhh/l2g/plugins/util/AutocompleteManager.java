@@ -44,13 +44,12 @@ public class AutocompleteManager {
 	
 
 	public List<String> getAutocompleteResults(String search) throws SystemException {
-
-		List<String> resultList = new ArrayList<String>();
 		List<Video> videoList = new ArrayList<Video>();
+		List<String> resultList = new ArrayList<String>();
 
 		if (search != null) {
 			if (search.trim().length() > 1) {
-				videoList = VideoLocalServiceUtil.getBySearchWord(search,_autocompSearchLimit);
+				if(videoList.size()==0)videoList = VideoLocalServiceUtil.getByAllSearchWords();
 				
 				for (Video video : videoList) {
 					
@@ -61,28 +60,35 @@ public class AutocompleteManager {
 					String lecturer = video.getCreatorFullName().trim();
 					String tags = video.getTags().trim();
 					
-					if (title.toLowerCase().contains(search.toLowerCase()) && !resultList.contains(title)){
-						resultList.add(title);
+					if(!isDuplicate(resultList, title))resultList.add(title);
 					
-					}else if (series.toLowerCase().contains(search.toLowerCase()) && !resultList.contains(series)){
-						resultList.add(series);
+					if(!isDuplicate(resultList, series))resultList.add(series);
 					
-					}else if (lecturer.toLowerCase().contains(search.toLowerCase()) && !resultList.contains(lecturer)){
-						resultList.add(lecturer);
+					if(!isDuplicate(resultList, lecturer))resultList.add(lecturer);
 					
-					}else if (tags.toLowerCase().contains(search.toLowerCase()) && !resultList.contains(tags)){
-						resultList.add(tags);
+					if(!isDuplicate(resultList, tags))resultList.add(tags);
 					
-					}
-					/** Limit the number of result strings for ajax request to 10 */
-					if (resultList.size() >= 7) {
+					/** Limit the number of result strings for ajax request to 10 
+					if (resultList.size() >= 10) {
 						break;
-					}
+					}*/
+					
 				}
 			}
 		}
 
 		return resultList;
+	}
+	
+	private boolean isDuplicate(List<String> resultList, String word){
+		boolean ret = false;
+		for(String w : resultList){
+			if(w.equals(word)){
+				System.out.println("Duplicated: " + word);
+				ret=true;
+			}
+		}
+		return ret;
 	}
 
 }

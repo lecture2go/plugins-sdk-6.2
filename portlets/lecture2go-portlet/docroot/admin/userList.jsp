@@ -59,7 +59,7 @@
 		<liferay-ui:search-container-column-text name="name">
 		  <div class="adminrow wide">
 			<div class="admintile wide">
-				<aui:a  href="<%=editURL.toString()%>"><%=usr.getFullName()%></aui:a>
+				<strong><%=usr.getFullName()%></strong>
 				<br/>
 				<%
 				List<Role> roles = usr.getRoles();

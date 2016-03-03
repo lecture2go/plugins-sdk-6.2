@@ -186,9 +186,13 @@ public class VideoLocalServiceClpInvoker {
 
 		_methodParameterTypes169 = new String[] { "java.lang.String", "int" };
 
-		_methodName170 = "getBySearchWordAndLectureseriesId";
+		_methodName170 = "getByAllSearchWords";
 
-		_methodParameterTypes170 = new String[] {
+		_methodParameterTypes170 = new String[] {  };
+
+		_methodName171 = "getBySearchWordAndLectureseriesId";
+
+		_methodParameterTypes171 = new String[] {
 				"java.lang.String", "java.lang.Long"
 			};
 	}
@@ -396,6 +400,11 @@ public class VideoLocalServiceClpInvoker {
 
 		if (_methodName170.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes170, parameterTypes)) {
+			return VideoLocalServiceUtil.getByAllSearchWords();
+		}
+
+		if (_methodName171.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes171, parameterTypes)) {
 			return VideoLocalServiceUtil.getBySearchWordAndLectureseriesId((java.lang.String)arguments[0],
 				(java.lang.Long)arguments[1]);
 		}
@@ -477,4 +486,6 @@ public class VideoLocalServiceClpInvoker {
 	private String[] _methodParameterTypes169;
 	private String _methodName170;
 	private String[] _methodParameterTypes170;
+	private String _methodName171;
+	private String[] _methodParameterTypes171;
 }

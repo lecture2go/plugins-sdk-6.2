@@ -8,7 +8,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -32,8 +31,36 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 	public static final String FIND_LATES_OPEN_ACCESS_VIDEO_FOR_LECTURESERIES = VideoFinder.class.getName() + ".findLatestOpenAccessVideoForlectureseries";
 	public static final String FIND_VIDEO_FOR_SECURE_URL = VideoFinder.class.getName() + ".findVideoForSecureUrl";
 	public static final String FIND_VIDEOS_BY_SEARCH_WORD = VideoFinder.class.getName() + ".findVideosBySearchWord";
+	public static final String FIND_VIDEOS_BY_ALL_SEARCH_WORDS = VideoFinder.class.getName() + ".findAllSearchWords";
 	public static final String FIND_VIDEOS_BY_SEARCH_WORD_AND_LECTURESERIESID = VideoFinder.class.getName() + ".findVideosBySearchWordAndLectureseriesId";
 
+	public List<Video> findVideosByAllSearchWords() {
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(FIND_VIDEOS_BY_ALL_SEARCH_WORDS);
+			SQLQuery q = session.createSQLQuery(sql);
+			q.addScalar("title", Type.STRING);
+			//custom fields
+			q.addScalar("lectureseriesName", Type.STRING);
+			q.addScalar("lectureseriesNumber", Type.STRING);
+			q.addScalar("creatorFullName", Type.STRING);
+			q.setCacheable(false);
+			@SuppressWarnings("unchecked")
+			List <Object[]> l =  (List<Object[]>) QueryUtil.list(q, getDialect(), com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+			return assembleVideosSearchWord(l);
+		} catch (Exception e) {
+			try {
+				throw new SystemException(e);
+			} catch (SystemException se) {
+				se.printStackTrace();
+			}
+		} finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
 	public List<Video> findVideosBySearchWord(String word, int limit) {
 		word="%"+word+"%";
 		Session session = null;

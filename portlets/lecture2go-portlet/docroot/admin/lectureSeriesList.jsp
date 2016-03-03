@@ -129,7 +129,7 @@
 						</aui:form>
 </aui:fieldset>
 <br/>
-<a href="<%=addLectureseriesURL.toString()%>">
+<a href="<%=addLectureseriesURL.toString()%>" class="add-link">
     add-new-lectureseries <span class="icon-large icon-plus-sign"/>
 </a>
 				
@@ -152,7 +152,7 @@
 		<liferay-ui:search-container-column-text name="name">
 			<div class="adminrow wide">
 				<div class="admintile wide">
-					<aui:a  href="<%=editURL.toString()%>"><%=lectser.getName()%></aui:a>
+					<strong><%=lectser.getName()%></strong>
 					<br/>
 					<%
 					List<Long> pIds = new ArrayList<Long>();
