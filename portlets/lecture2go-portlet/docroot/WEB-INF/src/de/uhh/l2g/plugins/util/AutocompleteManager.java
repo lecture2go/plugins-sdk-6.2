@@ -61,24 +61,24 @@ public class AutocompleteManager {
 					String lecturer = video.getCreatorFullName().trim();
 					String tags = video.getTags().trim();
 					
-					if (title.toLowerCase().contains(search.toLowerCase()) && !resultList.contains(title)){
+//					if (title.toLowerCase().contains(search.toLowerCase()) && !resultList.contains(title)){
 						resultList.add(title);
 					
-					}else if (series.toLowerCase().contains(search.toLowerCase()) && !resultList.contains(series)){
+//					}else if (series.toLowerCase().contains(search.toLowerCase()) && !resultList.contains(series)){
 						resultList.add(series);
 					
-					}else if (lecturer.toLowerCase().contains(search.toLowerCase()) && !resultList.contains(lecturer)){
+//					}else if (lecturer.toLowerCase().contains(search.toLowerCase()) && !resultList.contains(lecturer)){
 						resultList.add(lecturer);
 					
-					}else if (tags.toLowerCase().contains(search.toLowerCase()) && !resultList.contains(tags)){
+//					}else if (tags.toLowerCase().contains(search.toLowerCase()) && !resultList.contains(tags)){
 						resultList.add(tags);
 					
-					}
+//					}
 					/** Limit the number of result strings for ajax request to 10 
-					if (resultList.size() >= 7) {
+					if (resultList.size() >= 10) {
 						break;
-					}
-					*/
+					}*/
+					
 				}
 			}
 		}
