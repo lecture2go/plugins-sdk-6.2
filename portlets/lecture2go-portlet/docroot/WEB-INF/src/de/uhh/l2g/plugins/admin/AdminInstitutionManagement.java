@@ -45,10 +45,10 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		
 		//Remove view permission for Guest and edit for ordinary Site Members
 		pm.removeL2GLayoutViewPermission("Guest");
-		pm.removeL2GLayoutPermissions("Site Member", new String[] { ActionKeys.ADD_DISCUSSION, ActionKeys.CUSTOMIZE });
+		pm.removeL2GLayoutPermissions("Site Member", new String[] { ActionKeys.VIEW, ActionKeys.ADD_DISCUSSION, ActionKeys.CUSTOMIZE });
 				
 		//Remove Advanced Permissions for Owner (Owner should be Administrator anyway)
-		pm.removeL2GLayoutPermissions("Owner", new String[] { ActionKeys.CUSTOMIZE, ActionKeys.CONFIGURATION, ActionKeys.PERMISSIONS });
+		pm.removeL2GLayoutPermissions("Owner", new String[] { ActionKeys.CUSTOMIZE, ActionKeys.PERMISSIONS });
 		
 		//Allow View Permission for higher L2GRoles
 		pm.setL2GLayoutViewPermission("L2Go Admin");
@@ -57,6 +57,10 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		//Allow almost all Portlet operations for L2Go admin
 		pm.setL2GPortletPermissions("L2Go Admin",  new String[] {ActionKeys.VIEW, "VIEW_ALL_INSTITUTIONS", "VIEW_HOSTS", "ADD_INSTITUTIONS"});		
 		pm.setL2GPortletPermissions("L2Go Coordinator", ActionKeys.VIEW);
+		// Remove for normal Member
+		pm.removeL2GPortletPermissions("Site Member", ActionKeys.VIEW);
+		// Remove for Owner
+		pm.removeL2GPortletPermissions("Owner",  new String[] {"VIEW_ALL_INSTITUTIONS", "VIEW_HOSTS", "ADD_INSTITUTIONS"});
 		
 		//Entities on Model Level 
 		pm.removeL2GEntityPermissions("Site Member", Institution.class.getName(), new String[] { ActionKeys.VIEW});
