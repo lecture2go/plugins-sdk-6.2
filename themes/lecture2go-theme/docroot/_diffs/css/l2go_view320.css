@@ -32,6 +32,7 @@
 }
 
 .view-320 .meta-video-info {
+    margin-top: -30px;
     width: 100%;
 }
 
@@ -46,8 +47,8 @@
 }
 
 .view-320 .path {
-    font-size: 11px;
-    width: 100%;
+    display: none;
+    visibility: hidden;
 }
 
 .view-320 .sharetile {
@@ -151,4 +152,12 @@
 
 .view-320 #searchedvideo {
     width: 10em;
+}
+
+.view-320 .label.label-light {
+    display: none;
+}
+
+.view-320 .license {
+    display: none;
 }

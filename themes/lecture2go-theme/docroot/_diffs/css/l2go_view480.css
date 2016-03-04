@@ -32,6 +32,7 @@
 }
 
 .view-480 .meta-video-info {
+    margin-top: -30px;
     width: 100%;
 }
 
@@ -46,8 +47,8 @@
 }
 
 .view-480 .path {
-    font-size: 11px;
-    width: 100%;
+    display: none;
+    visibility: hidden;
 }
 
 .view-480 .sharetile {
@@ -86,4 +87,12 @@
 
 .view-480 #searchedvideo {
     width: 20em;
+}
+
+.view-480 .label.label-light {
+    display: none;
+}
+
+.view-480 .license {
+    display: none;
 }
