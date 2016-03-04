@@ -594,12 +594,45 @@
             <finder-column name="objectId"></finder-column>
         </finder>
     </entity>
+    <entity name="Statistics" local-service="true"
+    	remote-service="false">
+
+    	<column name="statisticsId" type="long" primary="true"></column>
+	    <column name="groupId" type="long"></column>
+    	<column name="companyId" type="long"></column>
+        <column name="publicVideos" type="int"></column>
+        <column name="privateVideos" type="int"></column>
+        <column name="autofillRow" type="int"></column>
+    	<column name="userId" type="long"></column>
+    	<column name="userName" type="String"></column>
+    	<column name="createDate" type="Date"></column>
+    	<column name="modifiedDate" type="Date"></column>
+        <finder name="StatisticsId" return-type="Statistics">
+            <finder-column name="statisticsId"></finder-column>
+        </finder>
+        <finder name="C_G_S" return-type="Statistics">
+            <finder-column name="companyId"></finder-column>
+            <finder-column name="groupId"></finder-column>
+            <finder-column name="statisticsId"></finder-column>
+        </finder>
+        <finder name="C_G_D" return-type="Statistics">
+            <finder-column name="companyId"></finder-column>
+            <finder-column name="groupId"></finder-column>
+            <finder-column name="createDate"></finder-column>
+        </finder>
+        <finder name="C_G" return-type="Collection">
+            <finder-column name="companyId"></finder-column>
+            <finder-column name="groupId"></finder-column>
+        </finder>
+    </entity>
     <exceptions>
         <exception>HostName</exception>
         <exception>HostStreamer</exception>
         <exception>InstitutionName</exception>
         <exception>Institution_HostHost</exception>
         <exception>Institution_HostInstitution</exception>
+        <exception>StatisticsValue</exception>
+        <exception>StatisticsDate</exception>
     </exceptions>
 
 
