@@ -69,7 +69,8 @@ public class Institution_HostLocalServiceImpl
 }
 
 	public Host getByInstitutionId(long institutionId) throws SystemException, PortalException {
-			long hId = institution_HostPersistence.findByG_I(0,institutionId).getHostId();
+		    //Assumes there is at most one Host per Institution with uniqueId
+			long hId = institution_HostPersistence.findByinstitutionId(institutionId).get(0).getHostId();
 
 			Host h = HostLocalServiceUtil.getByHostId(hId);
 			return h;
