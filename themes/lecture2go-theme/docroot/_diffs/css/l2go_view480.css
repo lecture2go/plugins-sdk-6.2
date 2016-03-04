@@ -46,8 +46,8 @@
 }
 
 .view-480 .path {
-    font-size: 11px;
-    width: 100%;
+    display: none;
+    visibility: hidden;
 }
 
 .view-480 .sharetile {
