@@ -22,6 +22,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
@@ -50,6 +51,12 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.CreatorLocalServiceUtil} to access the creator local service.
 	 */
 
+	public List<Creator> getAllCreators() throws SystemException{
+		List<Creator> cl = new ArrayList<Creator>();
+		cl = creatorPersistence.findAll();
+		return cl;
+	}
+	
 	public List<Creator> getCreatorsByLectureseriesId(Long lectureseriesId){
 		List<Creator> cl = CreatorFinderUtil.findCreatorsByLectureseries(lectureseriesId);
 		return cl;
@@ -132,4 +139,11 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 	public List<Creator> getCreatorsFromLectureseriesIdsAndVideoIds(ArrayList<Long> lectureseriesIds, ArrayList<Long> videoIds) {
 		return CreatorFinderUtil.findCreatorsByLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds);
 	}
+	
+	public void deleteById(Long id) throws NoSuchModelException, SystemException{
+		video_CreatorPersistence.removeByCreator(id);
+		lectureseries_CreatorPersistence.removeByCreator(id);
+		creatorPersistence.remove(id);
+	}
+	
 }

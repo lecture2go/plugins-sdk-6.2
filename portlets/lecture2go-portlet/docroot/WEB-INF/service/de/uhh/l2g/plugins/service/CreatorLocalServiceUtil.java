@@ -271,6 +271,11 @@ public class CreatorLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.Creator> getAllCreators()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getAllCreators();
+	}
+
 	public static java.util.List<de.uhh.l2g.plugins.model.Creator> getCreatorsByLectureseriesId(
 		java.lang.Long lectureseriesId) {
 		return getService().getCreatorsByLectureseriesId(lectureseriesId);
@@ -309,6 +314,12 @@ public class CreatorLocalServiceUtil {
 		return getService()
 				   .getCreatorsFromLectureseriesIdsAndVideoIds(lectureseriesIds,
 			videoIds);
+	}
+
+	public static void deleteById(java.lang.Long id)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteById(id);
 	}
 
 	public static void clearService() {

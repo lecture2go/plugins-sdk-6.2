@@ -110,35 +110,43 @@ public class CreatorLocalServiceClp implements CreatorLocalService {
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
 
-		_methodName19 = "getCreatorsByLectureseriesId";
+		_methodName19 = "getAllCreators";
 
-		_methodParameterTypes19 = new String[] { "java.lang.Long" };
+		_methodParameterTypes19 = new String[] {  };
 
-		_methodName20 = "getCreatorsByVideoId";
+		_methodName20 = "getCreatorsByLectureseriesId";
 
 		_methodParameterTypes20 = new String[] { "java.lang.Long" };
 
-		_methodName21 = "getJSONCreatorsByVideoId";
+		_methodName21 = "getCreatorsByVideoId";
 
 		_methodParameterTypes21 = new String[] { "java.lang.Long" };
 
-		_methodName22 = "getJSONCreatorsByLectureseriesId";
+		_methodName22 = "getJSONCreatorsByVideoId";
 
 		_methodParameterTypes22 = new String[] { "java.lang.Long" };
 
-		_methodName23 = "getJSONCreator";
+		_methodName23 = "getJSONCreatorsByLectureseriesId";
 
 		_methodParameterTypes23 = new String[] { "java.lang.Long" };
 
-		_methodName24 = "getByFullName";
+		_methodName24 = "getJSONCreator";
 
-		_methodParameterTypes24 = new String[] { "java.lang.String" };
+		_methodParameterTypes24 = new String[] { "java.lang.Long" };
 
-		_methodName25 = "getCreatorsFromLectureseriesIdsAndVideoIds";
+		_methodName25 = "getByFullName";
 
-		_methodParameterTypes25 = new String[] {
+		_methodParameterTypes25 = new String[] { "java.lang.String" };
+
+		_methodName26 = "getCreatorsFromLectureseriesIdsAndVideoIds";
+
+		_methodParameterTypes26 = new String[] {
 				"java.util.ArrayList", "java.util.ArrayList"
 			};
+
+		_methodName27 = "deleteById";
+
+		_methodParameterTypes27 = new String[] { "java.lang.Long" };
 	}
 
 	@Override
@@ -688,13 +696,41 @@ public class CreatorLocalServiceClp implements CreatorLocalService {
 	}
 
 	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Creator> getAllCreators()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName19,
+					_methodParameterTypes19, new Object[] {  });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<de.uhh.l2g.plugins.model.Creator>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public java.util.List<de.uhh.l2g.plugins.model.Creator> getCreatorsByLectureseriesId(
 		java.lang.Long lectureseriesId) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName19,
-					_methodParameterTypes19,
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20,
 					new Object[] { ClpSerializer.translateInput(lectureseriesId) });
 		}
 		catch (Throwable t) {
@@ -718,8 +754,8 @@ public class CreatorLocalServiceClp implements CreatorLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName20,
-					_methodParameterTypes20,
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21,
 					new Object[] { ClpSerializer.translateInput(videoId) });
 		}
 		catch (Throwable t) {
@@ -742,8 +778,8 @@ public class CreatorLocalServiceClp implements CreatorLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName21,
-					_methodParameterTypes21,
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22,
 					new Object[] { ClpSerializer.translateInput(videoId) });
 		}
 		catch (Throwable t) {
@@ -767,8 +803,8 @@ public class CreatorLocalServiceClp implements CreatorLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName22,
-					_methodParameterTypes22,
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23,
 					new Object[] { ClpSerializer.translateInput(lectureseriesId) });
 		}
 		catch (Throwable t) {
@@ -793,8 +829,8 @@ public class CreatorLocalServiceClp implements CreatorLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName23,
-					_methodParameterTypes23,
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24,
 					new Object[] { ClpSerializer.translateInput(creatorId) });
 		}
 		catch (Throwable t) {
@@ -827,8 +863,8 @@ public class CreatorLocalServiceClp implements CreatorLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24,
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
 					new Object[] { ClpSerializer.translateInput(fullName) });
 		}
 		catch (Throwable t) {
@@ -857,8 +893,8 @@ public class CreatorLocalServiceClp implements CreatorLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25,
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
 					new Object[] {
 						ClpSerializer.translateInput(lectureseriesIds),
 						
@@ -878,6 +914,36 @@ public class CreatorLocalServiceClp implements CreatorLocalService {
 		}
 
 		return (java.util.List<de.uhh.l2g.plugins.model.Creator>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public void deleteById(java.lang.Long id)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			_invokableLocalService.invokeMethod(_methodName27,
+				_methodParameterTypes27,
+				new Object[] { ClpSerializer.translateInput(id) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.NoSuchModelException) {
+				throw (com.liferay.portal.NoSuchModelException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
 	}
 
 	private InvokableLocalService _invokableLocalService;
@@ -931,4 +997,8 @@ public class CreatorLocalServiceClp implements CreatorLocalService {
 	private String[] _methodParameterTypes24;
 	private String _methodName25;
 	private String[] _methodParameterTypes25;
+	private String _methodName26;
+	private String[] _methodParameterTypes26;
+	private String _methodName27;
+	private String[] _methodParameterTypes27;
 }
