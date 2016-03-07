@@ -14,6 +14,12 @@
 
 package de.uhh.l2g.plugins.model.impl;
 
+import java.io.Serializable;
+import java.sql.Types;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -23,20 +29,11 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
-
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 
 import de.uhh.l2g.plugins.model.Upload;
 import de.uhh.l2g.plugins.model.UploadModel;
-
-import java.io.Serializable;
-
-import java.sql.Types;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * The base model implementation for the Upload service. Represents a row in the &quot;LG_Upload&quot; database table, with each column mapped to a property of this class.
