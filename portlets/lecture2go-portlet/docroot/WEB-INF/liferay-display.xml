@@ -5,6 +5,7 @@
 	<category name="Lecture2Go">
 		<portlet id="lg-admin-video-management"/>
 		<portlet id="lg-admin-user-management"/>
+		<portlet id="lg-admin-creators-management"/>
 		<portlet id="lg-admin-lecture-series-management"/>
         <portlet id="lg-admin-institution-management"></portlet>
         <portlet id="lg-open-access-videos"></portlet>

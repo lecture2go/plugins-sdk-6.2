@@ -14,9 +14,9 @@
 
 package de.uhh.l2g.plugins.service.base;
 
-import de.uhh.l2g.plugins.service.UploadLocalServiceUtil;
-
 import java.util.Arrays;
+
+import de.uhh.l2g.plugins.service.UploadLocalServiceUtil;
 
 /**
  * @author Iavor Sturm
