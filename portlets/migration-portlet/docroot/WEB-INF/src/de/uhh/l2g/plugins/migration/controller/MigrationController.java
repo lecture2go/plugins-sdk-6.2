@@ -58,7 +58,6 @@ import de.uhh.l2g.plugins.migration.mapper.ProducerLectureseriesMapper;
 import de.uhh.l2g.plugins.migration.mapper.ProducerMapper;
 import de.uhh.l2g.plugins.migration.mapper.SegmentMapper;
 import de.uhh.l2g.plugins.migration.mapper.TermMapper;
-import de.uhh.l2g.plugins.migration.mapper.UploadMapper;
 import de.uhh.l2g.plugins.migration.mapper.UserIDMapper;
 import de.uhh.l2g.plugins.migration.mapper.VideoCategoryMapper;
 import de.uhh.l2g.plugins.migration.mapper.VideoCreatorMapper;
@@ -81,7 +80,7 @@ import de.uhh.l2g.plugins.migration.model.LegacyOffice;
 import de.uhh.l2g.plugins.migration.model.LegacyProducer;
 import de.uhh.l2g.plugins.migration.model.LegacyProducerLectureseries;
 import de.uhh.l2g.plugins.migration.model.LegacySegment;
-import de.uhh.l2g.plugins.migration.model.LegacyUpload;
+import de.uhh.l2g.plugins.migration.model.LegacyStatistics;
 import de.uhh.l2g.plugins.migration.model.LegacyVideoHitlist;
 import de.uhh.l2g.plugins.migration.model.LegacyUser;
 import de.uhh.l2g.plugins.migration.model.LegacyVideo;
@@ -102,7 +101,7 @@ import de.uhh.l2g.plugins.migration.service.LegacyOfficeLocalServiceUtil;
 import de.uhh.l2g.plugins.migration.service.LegacyProducerLectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.migration.service.LegacyProducerLocalServiceUtil;
 import de.uhh.l2g.plugins.migration.service.LegacySegmentLocalServiceUtil;
-import de.uhh.l2g.plugins.migration.service.LegacyUploadLocalServiceUtil;
+import de.uhh.l2g.plugins.migration.service.LegacyStatisticsLocalServiceUtil;
 import de.uhh.l2g.plugins.migration.service.LegacyVideoHitlistLocalServiceUtil;
 import de.uhh.l2g.plugins.migration.service.LegacyUserLocalServiceUtil;
 import de.uhh.l2g.plugins.migration.service.LegacyVideoFacilityLocalServiceUtil;
@@ -125,8 +124,8 @@ import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.model.Producer_Lectureseries;
 import de.uhh.l2g.plugins.model.Segment;
 import de.uhh.l2g.plugins.model.Sys;
+import de.uhh.l2g.plugins.model.Statistics;
 import de.uhh.l2g.plugins.model.Term;
-import de.uhh.l2g.plugins.model.Upload;
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.Video_Category;
 import de.uhh.l2g.plugins.model.Video_Creator;
@@ -153,7 +152,7 @@ import de.uhh.l2g.plugins.service.Producer_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
 import de.uhh.l2g.plugins.service.SysLocalServiceUtil;
 import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
-import de.uhh.l2g.plugins.service.UploadLocalServiceUtil;
+import de.uhh.l2g.plugins.service.StatisticsLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_CreatorLocalServiceUtil;
@@ -281,7 +280,7 @@ public class MigrationController {
         model.addAttribute("categoryEntrieSize62", CategoryLocalServiceUtil.getCategoriesCount());
         model.addAttribute("videohitlistEntrieSize62", VideohitlistLocalServiceUtil.getVideohitlistsCount());
         model.addAttribute("lastvideolistEntrieSize62", LastvideolistLocalServiceUtil.getLastvideolistsCount());
-        model.addAttribute("statisticsEntrieSize", LegacyUploadLocalServiceUtil.getLegacyStatisticsCount());
+        model.addAttribute("statisticsEntrieSize", LegacyStatisticsLocalServiceUtil.getLegacyStatisticsCount());
 
         // Mapping Entries
         model.addAttribute("lectureSeriesInstitutionEntrieSize62", Lectureseries_InstitutionLocalServiceUtil.getLectureseries_InstitutionsCount());
@@ -865,14 +864,14 @@ public class MigrationController {
     
     @RequestMapping(params = "action=migrateStatistics")
     public void migrateStatistics(ActionRequest request) throws FileNotFoundException {
-    	// Load Legacy Uploads
+    	// Load Legacy Statisticss
     	logInfo("Call migrateStatistics");
-    	String uploadOkflag = ok;
+    	String statisticsOkflag = ok;
 		List<LegacyStatistics> statistics;
 		try {
 			statistics = LegacyStatisticsLocalServiceUtil.getLegacyStatistics(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-			for (LegacyUpload stat: statistics) {
-				migrateUpload(stat, companyId);
+			for (LegacyStatistics stat: statistics) {
+				migrateStatistics(stat, companyId);
 			} 
 	    	logInfo("Migration / Update of:" + statistics.size() + "Legacy statistics sucessfull!");
 	        portletLog.info("Migration / Update of:" + statistics.size() + " Legacy statistics successfull!!");
@@ -883,7 +882,7 @@ public class MigrationController {
 	        statisticsOkflag = failed;
 		}
 		request.setAttribute("logInfoString", logInfoString);
-		request.setAttribute("uploadOkflag", uploadOkflag);
+		request.setAttribute("statisticsOkflag", statisticsOkflag);
     }
     
     @RequestMapping(params = "action=migrateOffices")
@@ -1085,7 +1084,7 @@ public class MigrationController {
 			
     	
 		} catch (SystemException e1) {
-			logInfo("Migration of uploads failed. Can not read Source Data");
+			logInfo("Migration of lastvideolist failed. Can not read Source Data");
 			lastvideolistOkflag = failed;
 		}
 		request.setAttribute("logInfoString", logInfoString);		
@@ -1144,7 +1143,7 @@ public class MigrationController {
 	        portletLog.info("Migration / Update of:" + lectureseriesFacilities.size() + " Legacy lectureseriesFacilities successfull!!");				
     	
 		} catch (SystemException e1) {
-			logInfo("Migration of uploads failed. Can not read Source Data");
+			logInfo("Migration of lecturseriesfcacilities failed. Can not read Source Data");
 			lectureseriesFacilitiesOkflag = failed;
 		}
 		request.setAttribute("logInfoString", logInfoString);		
@@ -1170,7 +1169,7 @@ public class MigrationController {
 	        portletLog.info("Migration / Update of:" + videoFacilities.size() + " Legacy videoFacilities successfull!!");			
     	
 		} catch (SystemException e1) {
-			logInfo("Migration of uploads failed. Can not read Source Data");
+			logInfo("Migration of videoinstitution failed. Can not read Source Data");
 			videoInstitutionOkflag = failed;
 		}
 		request.setAttribute("logInfoString", logInfoString);		
@@ -1194,7 +1193,7 @@ public class MigrationController {
 	        
 	        
 		} catch (SystemException e1) {
-			logInfo("Migration of uploads failed. Can not read Source Data");
+			logInfo("Migration of producerlectureries failed. Can not read Source Data");
 			producerLectureseriesOkflag = failed;
 		}
 		request.setAttribute("logInfoString", logInfoString);		
@@ -1219,7 +1218,7 @@ public class MigrationController {
 	        
 	        
 		} catch (SystemException e1) {
-			logInfo("Migration of uploads failed. Can not read Source Data");
+			logInfo("Migration of institutionhost failed. Can not read Source Data");
 			institutionHostOkflag = failed;
 		}
 		request.setAttribute("institutionHostOkflag", institutionHostOkflag);
@@ -1662,14 +1661,14 @@ public class MigrationController {
     */
     
     private void migrateStatistics(LegacyStatistics legacyStatistics, long companyId) throws SystemException {
-    	Upload upload = null;
+    	Statistics statistics = null;
     	try {
-    		upload = StatisticsLocalServiceUtil.getStatistics(legacyStatistics.getId());
-    		upload = StatisticsMapper.mapStatistics(legacyStatistics, statistics,companyId);
+    		statistics = StatisticsLocalServiceUtil.getStatistics(legacyStatistics.getId());
+    		statistics = StatisticsMapper.mapStatistics(legacyStatistics, statistics,companyId);
 			log.debug("Statistics UPDATE:" +statistics);
 			StatisticsLocalServiceUtil.updateStatistics(statistics);
 		} catch (Exception e) {
-			statistics = StatisticsLocalServiceUtil.createUpload(legacyStatistics.getId());
+			statistics = StatisticsLocalServiceUtil.createStatistics(legacyStatistics.getId());
 			statistics = StatisticsMapper.mapStatistics(legacyStatistics, statistics, companyId);
 			log.debug("Statistics NEW:" +statistics);
 			StatisticsLocalServiceUtil.addStatistics(statistics);

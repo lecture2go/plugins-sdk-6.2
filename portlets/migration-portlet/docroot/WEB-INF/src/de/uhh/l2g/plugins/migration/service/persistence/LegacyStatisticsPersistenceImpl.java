@@ -328,10 +328,10 @@ public class LegacyStatisticsPersistenceImpl extends BasePersistenceImpl<LegacyS
 		legacyStatisticsImpl.setPrimaryKey(legacyStatistics.getPrimaryKey());
 
 		legacyStatisticsImpl.setId(legacyStatistics.getId());
-		legacyStatisticsImpl.setPublic(legacyStatistics.getPublic());
-		legacyStatisticsImpl.setPrivate(legacyStatistics.getPrivate());
+		legacyStatisticsImpl.setPublic_(legacyStatistics.getPublic_());
+		legacyStatisticsImpl.setPrivate_(legacyStatistics.getPrivate_());
 		legacyStatisticsImpl.setAutofill(legacyStatistics.getAutofill());
-		legacyStatisticsImpl.setDate(legacyStatistics.getDate());
+		legacyStatisticsImpl.setDate_(legacyStatistics.getDate_());
 
 		return legacyStatisticsImpl;
 	}
@@ -654,7 +654,7 @@ public class LegacyStatisticsPersistenceImpl extends BasePersistenceImpl<LegacyS
 				PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
 	private static Log _log = LogFactoryUtil.getLog(LegacyStatisticsPersistenceImpl.class);
 	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"id", "public", "private", "date"
+				"id"
 			});
 	private static LegacyStatistics _nullLegacyStatistics = new LegacyStatisticsImpl() {
 			@Override
