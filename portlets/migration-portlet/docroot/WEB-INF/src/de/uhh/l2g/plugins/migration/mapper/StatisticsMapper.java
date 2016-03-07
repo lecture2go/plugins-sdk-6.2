@@ -3,6 +3,9 @@ package de.uhh.l2g.plugins.migration.mapper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import de.uhh.l2g.plugins.migration.model.LegacyStatistics;
+import de.uhh.l2g.plugins.model.Statistics;
+
 
 public class StatisticsMapper {
 	static final Log log = LogFactoryUtil.getLog(StatisticsMapper.class);; 
@@ -12,10 +15,10 @@ public class StatisticsMapper {
 			log.warn("can't execute method with null values - return statistics as null value");
 			return null;
 		}
-		statistics.setPrivateVideo(legacyStatistics.getPrivate());
-		statistics.setPublicVideo(legacyStatistics.getPublic());
-		statistics.setTimestamp(legacyStatistics.getTimestamp());
-		statistics.setUserId(UserIDMapper.getNewUserId(legacyStatistics.getUserId(), companyId));
+		statistics.setPrivateVideos(legacyStatistics.getPrivate_());
+		statistics.setPublicVideos(legacyStatistics.getPublic_());
+		statistics.setModifiedDate(legacyStatistics.getDate_());
+		statistics.setAutofillRow(legacyStatistics.getAutofill());
 		return statistics;
 	} 
 

@@ -70,7 +70,6 @@ public class StatisticsLocalServiceImpl
 
 	public Statistics getByStatisticsId(long statisticsId) throws SystemException, PortalException {
 			Statistics statistics = statisticsPersistence.findByStatisticsId(statisticsId);
-			
 			return statistics;
 	}
 	
@@ -78,7 +77,7 @@ public class StatisticsLocalServiceImpl
 		Statistics statistics = statisticsPersistence.findByStatisticsId(statisticsId);
 		
 		return statistics;
-}
+	}
 
 	
 	/**

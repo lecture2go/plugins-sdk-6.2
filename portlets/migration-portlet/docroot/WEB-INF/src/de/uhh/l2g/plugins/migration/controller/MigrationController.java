@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 
 
 
+
 import com.liferay.counter.model.Counter;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
@@ -57,6 +58,7 @@ import de.uhh.l2g.plugins.migration.mapper.OfficeMapper;
 import de.uhh.l2g.plugins.migration.mapper.ProducerLectureseriesMapper;
 import de.uhh.l2g.plugins.migration.mapper.ProducerMapper;
 import de.uhh.l2g.plugins.migration.mapper.SegmentMapper;
+import de.uhh.l2g.plugins.migration.mapper.StatisticsMapper;
 import de.uhh.l2g.plugins.migration.mapper.TermMapper;
 import de.uhh.l2g.plugins.migration.mapper.UserIDMapper;
 import de.uhh.l2g.plugins.migration.mapper.VideoCategoryMapper;
@@ -280,7 +282,7 @@ public class MigrationController {
         model.addAttribute("categoryEntrieSize62", CategoryLocalServiceUtil.getCategoriesCount());
         model.addAttribute("videohitlistEntrieSize62", VideohitlistLocalServiceUtil.getVideohitlistsCount());
         model.addAttribute("lastvideolistEntrieSize62", LastvideolistLocalServiceUtil.getLastvideolistsCount());
-        model.addAttribute("statisticsEntrieSize", LegacyStatisticsLocalServiceUtil.getLegacyStatisticsCount());
+        model.addAttribute("statisticsEntrieSize", LegacyStatisticsLocalServiceUtil.getLegacyStatisticsesCount());
 
         // Mapping Entries
         model.addAttribute("lectureSeriesInstitutionEntrieSize62", Lectureseries_InstitutionLocalServiceUtil.getLectureseries_InstitutionsCount());
@@ -295,7 +297,7 @@ public class MigrationController {
         model.addAttribute("creatorEntrieSize62", CreatorLocalServiceUtil.getCreatorsCount());
         model.addAttribute("lectureseriesCreatorEntrieSize62", Lectureseries_CreatorLocalServiceUtil.getLectureseries_CreatorsCount());
         model.addAttribute("videoCreatorEntrieSize62", Video_CreatorLocalServiceUtil.getVideo_CreatorsCount());
-        model.addAttribute("statisticsEntrieSize62", StatisticsLocalServiceUtil.getStatisticsCount());
+        model.addAttribute("statisticsEntrieSize62", StatisticsLocalServiceUtil.getStatisticsesCount());
         
         model.addAttribute("logInfoString", logInfoString);
         
@@ -869,7 +871,7 @@ public class MigrationController {
     	String statisticsOkflag = ok;
 		List<LegacyStatistics> statistics;
 		try {
-			statistics = LegacyStatisticsLocalServiceUtil.getLegacyStatistics(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			statistics = LegacyStatisticsLocalServiceUtil.getLegacyStatisticses(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 			for (LegacyStatistics stat: statistics) {
 				migrateStatistics(stat, companyId);
 			} 
