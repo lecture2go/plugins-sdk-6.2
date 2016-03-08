@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
-import de.uhh.l2g.plugins.model.Coordinator;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;

@@ -1318,3 +1318,22 @@ div.filter-menu-link span.icon-large.icon-remove {
     padding-left: 0px;
     padding-right: 0px;
 }
+
+.aui a:focus {
+    outline: none;
+}
+
+.aui .dropdown-menu > li > a:hover, .aui .dropdown-menu > li > a:focus, .aui .dropdown-submenu:hover > a, .aui .dropdown-submenu:focus > a {
+    text-decoration: none;
+}
+
+.aui .dockbar .navbar-inner .nav > li > a, .aui .dockbar .navbar-inner .nav > li a:focus, .aui .dockbar-split .dockbar .navbar-inner .nav > li > a, .aui .dockbar-split .dockbar .navbar-inner .nav > li a:focus {
+    border: medium none;
+    padding: 0px;
+}
+
+.aui .control-group {
+    float: left;
+    margin-right: 10px;
+    margin-top: 11px;
+}
