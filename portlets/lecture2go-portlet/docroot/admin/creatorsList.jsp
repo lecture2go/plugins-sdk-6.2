@@ -68,7 +68,7 @@
 						<aui:input name="lastName" value="<%=creator.getLastName()%>" type="text" label=""/>
 						<aui:input name="creatorId" value="<%=creator.getCreatorId()%>" type="hidden"/>
 					</div>
-					<div class="admintile wide icons">
+					<div class="admintile wide icons creators">
 							<a href="<%=removeURL.toString()%>">
 								<span class="icon-large icon-remove" onclick="return confirm('really-delete-question')"></span>
 							</a>
