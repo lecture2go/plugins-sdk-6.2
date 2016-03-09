@@ -110,7 +110,7 @@ public class TermLocalServiceClpInvoker {
 
 		_methodName152 = "getAllSemesters";
 
-		_methodParameterTypes152 = new String[] { "int", "int" };
+		_methodParameterTypes152 = new String[] {  };
 
 		_methodName153 = "getById";
 
@@ -121,6 +121,10 @@ public class TermLocalServiceClpInvoker {
 		_methodParameterTypes154 = new String[] {
 				"java.util.ArrayList", "java.util.ArrayList"
 			};
+
+		_methodName155 = "deleteById";
+
+		_methodParameterTypes155 = new String[] { "java.lang.Long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -226,8 +230,7 @@ public class TermLocalServiceClpInvoker {
 
 		if (_methodName152.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes152, parameterTypes)) {
-			return TermLocalServiceUtil.getAllSemesters(((Integer)arguments[0]).intValue(),
-				((Integer)arguments[1]).intValue());
+			return TermLocalServiceUtil.getAllSemesters();
 		}
 
 		if (_methodName153.equals(name) &&
@@ -239,6 +242,13 @@ public class TermLocalServiceClpInvoker {
 				Arrays.deepEquals(_methodParameterTypes154, parameterTypes)) {
 			return TermLocalServiceUtil.getTermsFromLectureseriesIdsAndVideoIds((java.util.ArrayList<java.lang.Long>)arguments[0],
 				(java.util.ArrayList<java.lang.Long>)arguments[1]);
+		}
+
+		if (_methodName155.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes155, parameterTypes)) {
+			TermLocalServiceUtil.deleteById((java.lang.Long)arguments[0]);
+
+			return null;
 		}
 
 		throw new UnsupportedOperationException();
@@ -286,4 +296,6 @@ public class TermLocalServiceClpInvoker {
 	private String[] _methodParameterTypes153;
 	private String _methodName154;
 	private String[] _methodParameterTypes154;
+	private String _methodName155;
+	private String[] _methodParameterTypes155;
 }
