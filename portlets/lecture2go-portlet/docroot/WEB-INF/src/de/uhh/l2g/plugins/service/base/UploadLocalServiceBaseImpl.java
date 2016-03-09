@@ -14,6 +14,11 @@
 
 package de.uhh.l2g.plugins.service.base;
 
+import java.io.Serializable;
+import java.util.List;
+
+import javax.sql.DataSource;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -67,12 +72,6 @@ import de.uhh.l2g.plugins.service.persistence.Video_CreatorPersistence;
 import de.uhh.l2g.plugins.service.persistence.Video_InstitutionPersistence;
 import de.uhh.l2g.plugins.service.persistence.Video_LectureseriesPersistence;
 import de.uhh.l2g.plugins.service.persistence.VideohitlistPersistence;
-
-import java.io.Serializable;
-
-import java.util.List;
-
-import javax.sql.DataSource;
 
 /**
  * Provides the base implementation for the upload local service.

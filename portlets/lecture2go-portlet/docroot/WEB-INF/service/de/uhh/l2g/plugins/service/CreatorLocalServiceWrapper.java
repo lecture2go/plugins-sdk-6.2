@@ -281,6 +281,12 @@ public class CreatorLocalServiceWrapper implements CreatorLocalService,
 	}
 
 	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Creator> getAllCreators()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _creatorLocalService.getAllCreators();
+	}
+
+	@Override
 	public java.util.List<de.uhh.l2g.plugins.model.Creator> getCreatorsByLectureseriesId(
 		java.lang.Long lectureseriesId) {
 		return _creatorLocalService.getCreatorsByLectureseriesId(lectureseriesId);
@@ -323,6 +329,13 @@ public class CreatorLocalServiceWrapper implements CreatorLocalService,
 		java.util.ArrayList<java.lang.Long> videoIds) {
 		return _creatorLocalService.getCreatorsFromLectureseriesIdsAndVideoIds(lectureseriesIds,
 			videoIds);
+	}
+
+	@Override
+	public void deleteById(java.lang.Long id)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_creatorLocalService.deleteById(id);
 	}
 
 	/**

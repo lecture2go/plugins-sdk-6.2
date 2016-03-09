@@ -1,6 +1,7 @@
 package de.uhh.l2g.plugins.util;
 
 import java.io.UnsupportedEncodingException;
+
 import com.josephoconnell.html.HTMLInputFilter;
 
 /**

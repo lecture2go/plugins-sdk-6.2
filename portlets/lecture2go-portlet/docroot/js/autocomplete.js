@@ -1,8 +1,6 @@
-
 AUI().use('autocomplete-list','aui-base','aui-io-request','autocomplete-filters','autocomplete-highlighters',
 			function (A) {
-				A.one('#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery').show();
-				var testData;
+				var testData="";
 				new A.AutoCompleteList({
 					allowBrowserAutocomplete: 'true',
 					activateFirstItem: 'true',
@@ -12,10 +10,10 @@ AUI().use('autocomplete-list','aui-base','aui-io-request','autocomplete-filters'
 					resultHighlighter: 'phraseMatch',
 					resultFilters:['phraseMatch'],
 					source: function(){
-						console.log("===");
-						console.log("source: function(): ");
+						//console.log("===");
+						//console.log("source: function(): ");
 						var inputValue=A.one("#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery").get('value');
-						console.log("inputValue: " + inputValue);
+						//console.log("inputValue: " + inputValue);
 						var myAjaxRequest=A.io.request('/web/vod/l2go?p_p_id=lgopenaccessvideos_WAR_lecture2goportlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_cacheability=cacheLevelPage&p_p_col_id=column-1&p_p_col_count=1&_lgopenaccessvideos_WAR_lecture2goportlet_cmd=get_search_words',
 						{
 							dataType: 'json',
@@ -27,11 +25,11 @@ AUI().use('autocomplete-list','aui-base','aui-io-request','autocomplete-filters'
 						   		success:function(){
 						   			 var data=this.get('responseData');
 						   			 testData=data;
-						   			console.log("testData: " + testData);
-						   		}
+						   			 }
 						  	}
 						});
 						myAjaxRequest.start();
-						return testData;},
+						return testData;}
 					});
+				A.one('#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery').show();
 			});
