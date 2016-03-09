@@ -280,10 +280,9 @@ public class TermLocalServiceWrapper implements TermLocalService,
 	}
 
 	@Override
-	public java.util.List<de.uhh.l2g.plugins.model.Term> getAllSemesters(
-		int begin, int end)
+	public java.util.List<de.uhh.l2g.plugins.model.Term> getAllSemesters()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _termLocalService.getAllSemesters(begin, end);
+		return _termLocalService.getAllSemesters();
 	}
 
 	@Override
@@ -299,6 +298,13 @@ public class TermLocalServiceWrapper implements TermLocalService,
 		java.util.ArrayList<java.lang.Long> videoIds) {
 		return _termLocalService.getTermsFromLectureseriesIdsAndVideoIds(lectureseriesIds,
 			videoIds);
+	}
+
+	@Override
+	public void deleteById(java.lang.Long id)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_termLocalService.deleteById(id);
 	}
 
 	/**

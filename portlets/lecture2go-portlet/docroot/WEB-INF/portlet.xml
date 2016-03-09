@@ -130,7 +130,7 @@
   
   <portlet>
         <portlet-name>lg-admin-creators-management</portlet-name>
-        <display-name>L2Go Institution Management</display-name>
+        <display-name>L2Go Creators Management</display-name>
         <portlet-class>de.uhh.l2g.plugins.admin.CreatorsManagement</portlet-class>
         <init-param>
             <name>view-template</name>
@@ -150,6 +150,31 @@
             <title>L2Go Creators Management</title>
             <short-title>L2Go Creators Management</short-title>
             <keywords>L2Go Creators Management</keywords>
+        </portlet-info>
+  </portlet>
+  
+  <portlet>
+        <portlet-name>lg-admin-terms-management</portlet-name>
+        <display-name>L2Go Terms Management</display-name>
+        <portlet-class>de.uhh.l2g.plugins.admin.TermsManagement</portlet-class>
+        <init-param>
+            <name>view-template</name>
+            <value>/admin/termsList.jsp</value>
+        </init-param>
+        <init-param>
+            <name>add-process-action-success-action</name>
+            <value>false</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>view</portlet-mode>
+        </supports>
+        <resource-bundle>content.Language</resource-bundle>
+        <portlet-info>
+            <title>L2Go Terms Management</title>
+            <short-title>L2Go Terms Management</short-title>
+            <keywords>L2Go Terms Management</keywords>
         </portlet-info>
   </portlet>
     

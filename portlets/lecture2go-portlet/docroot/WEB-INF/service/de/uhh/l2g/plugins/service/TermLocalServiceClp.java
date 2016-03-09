@@ -110,7 +110,7 @@ public class TermLocalServiceClp implements TermLocalService {
 
 		_methodName19 = "getAllSemesters";
 
-		_methodParameterTypes19 = new String[] { "int", "int" };
+		_methodParameterTypes19 = new String[] {  };
 
 		_methodName20 = "getById";
 
@@ -121,6 +121,10 @@ public class TermLocalServiceClp implements TermLocalService {
 		_methodParameterTypes21 = new String[] {
 				"java.util.ArrayList", "java.util.ArrayList"
 			};
+
+		_methodName22 = "deleteById";
+
+		_methodParameterTypes22 = new String[] { "java.lang.Long" };
 	}
 
 	@Override
@@ -669,14 +673,13 @@ public class TermLocalServiceClp implements TermLocalService {
 	}
 
 	@Override
-	public java.util.List<de.uhh.l2g.plugins.model.Term> getAllSemesters(
-		int begin, int end)
+	public java.util.List<de.uhh.l2g.plugins.model.Term> getAllSemesters()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName19,
-					_methodParameterTypes19, new Object[] { begin, end });
+					_methodParameterTypes19, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -761,6 +764,36 @@ public class TermLocalServiceClp implements TermLocalService {
 		return (java.util.List<de.uhh.l2g.plugins.model.Term>)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public void deleteById(java.lang.Long id)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			_invokableLocalService.invokeMethod(_methodName22,
+				_methodParameterTypes22,
+				new Object[] { ClpSerializer.translateInput(id) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.NoSuchModelException) {
+				throw (com.liferay.portal.NoSuchModelException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -804,4 +837,6 @@ public class TermLocalServiceClp implements TermLocalService {
 	private String[] _methodParameterTypes20;
 	private String _methodName21;
 	private String[] _methodParameterTypes21;
+	private String _methodName22;
+	private String[] _methodParameterTypes22;
 }
