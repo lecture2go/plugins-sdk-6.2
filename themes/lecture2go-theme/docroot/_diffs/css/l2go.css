@@ -412,10 +412,18 @@ thead, th {
 }
 
 .aui .btn {
-    background-image: linear-gradient(to bottom, rgb(227, 227, 227), rgb(227, 227, 227));
-    border-width: 0px;
+    background-image: linear-gradient(to bottom, #ddd, #ddd);
+    border-radius: 0;
+    border-width: 0;
+    color: #484848;
     margin-right: 10px;
-    border-radius: 0px;
+}
+
+.aui .btn-primary {
+    background-color: #50a2f5;
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    text-shadow: 0;
 }
 
 .aui .btn .caret {
@@ -1336,4 +1344,18 @@ div.filter-menu-link span.icon-large.icon-remove {
     float: left;
     margin-right: 10px;
     margin-top: 11px;
+}
+
+.admintile.wide.icons.creators {
+    float: right;
+    margin-right: 8px;
+    margin-top: 10px;
+    width: 94px;
+}
+
+.admintile.wide.icons.creators > button {
+    font-size: 12px;
+    height: 26px;
+    margin-left: -3px;
+    padding: 0 7px;
 }
