@@ -408,11 +408,11 @@
     <td><c:out value="${creatorOkflag}" escapeXml="false" /></td>
     <td></td>
   </tr> 
-    <tr>
+  <tr>
     <td>Statistics</td>
     <td><c:out value="${statisticsEntrieSize}" /></td>
     <td><c:out value="${statisticsEntrieSize62}" /></td>
-    <td><a href="<c:out value="${executeStatisticsMigrationUrl}" />"><liferay-ui:message key="migrate" /></a></td>
+    <td><a href="<c:out value="${executeStatisticsUrl}" />"><liferay-ui:message key="migrate" /></a></td>
     <td><c:out value="${statisticsokflag}" escapeXml="false" /></td>
     <td></td>
   </tr>
