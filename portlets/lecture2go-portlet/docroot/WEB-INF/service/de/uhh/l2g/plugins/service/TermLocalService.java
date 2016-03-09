@@ -250,8 +250,7 @@ public interface TermLocalService extends BaseLocalService, InvokableLocalServic
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<de.uhh.l2g.plugins.model.Term> getAllSemesters(
-		int begin, int end)
+	public java.util.List<de.uhh.l2g.plugins.model.Term> getAllSemesters()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -263,4 +262,8 @@ public interface TermLocalService extends BaseLocalService, InvokableLocalServic
 	public java.util.List<de.uhh.l2g.plugins.model.Term> getTermsFromLectureseriesIdsAndVideoIds(
 		java.util.ArrayList<java.lang.Long> lectureseriesIds,
 		java.util.ArrayList<java.lang.Long> videoIds);
+
+	public void deleteById(java.lang.Long id)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException;
 }
