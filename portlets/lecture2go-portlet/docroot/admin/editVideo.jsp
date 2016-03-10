@@ -41,7 +41,7 @@
 	List<Creator> creators = new ArrayList<Creator>();
 	try{creators = CreatorLocalServiceUtil.getCreators(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);}catch (NullPointerException e){}
 	List<Term> semesters = new ArrayList<Term>(); 
-	try{semesters = TermLocalServiceUtil.getAllSemesters(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);}catch(Exception e){}
+	try{semesters = TermLocalServiceUtil.getAllSemesters();}catch(Exception e){}
 	List<Category> categories = new ArrayList<Category>();
 	try{categories = CategoryLocalServiceUtil.getAllCategories(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);}catch(Exception e){}
 
