@@ -1,27 +1,24 @@
 <%@include file="/init.jsp"%>
 
 <%
-	long groupId = themeDisplay.getLayout().getGroupId();
-	String name = User.class.getName();
-	User u = UserLocalServiceUtil.getUser(new Long (request.getRemoteUser()));
-	List<Creator> tempCreatorsList = new ArrayList();
-	tempCreatorsList = CreatorLocalServiceUtil.getAllCreators();
+	List<Term> tempTermList = new ArrayList();
+	tempTermList = TermLocalServiceUtil.getAllSemesters();
 	PortletURL portletURL = renderResponse.createRenderURL();
 %>
 
-<liferay-ui:search-container emptyResultsMessage="no-creators-found" delta="10" iteratorURL="<%= portletURL %>">
+<liferay-ui:search-container emptyResultsMessage="no-terms-found" delta="10" iteratorURL="<%= portletURL %>">
 	<liferay-ui:search-container-results>
 		<%
-			results = ListUtil.subList(tempCreatorsList, searchContainer.getStart(), searchContainer.getEnd());
-			total = tempCreatorsList.size();
+			results = ListUtil.subList(tempTermList, searchContainer.getStart(), searchContainer.getEnd());
+			total = tempTermList.size();
 			pageContext.setAttribute("results", results);
 			pageContext.setAttribute("total", total);
 		%>
 	</liferay-ui:search-container-results>
 
-	<liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.Creator" keyProperty="creatorId" modelVar="creator">
+	<liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.Term" keyProperty="termId" modelVar="term">
 		<%
-			String creatorId = creator.getCreatorId()+"";
+			String termId = term.getTermId()+"";
 			String delta = "";
 			String cur = "";
 			try{new Long(delta = request.getParameterMap().get("delta")[0]).toString();}catch(Exception e){}
@@ -32,14 +29,14 @@
 		%>
 								
 		<portlet:actionURL name="edit" var="editURL">
-			<portlet:param name="creatorId" value='<%=creatorId%>' />
+			<portlet:param name="termId" value='<%=termId%>' />
 			<portlet:param name="delta" value='<%=delta%>' />
 			<portlet:param name="cur" value='<%=cur%>' />
 			<portlet:param name="backURL" value='<%=backURL.toString()%>' />
 		</portlet:actionURL>
 		
 		<portlet:actionURL name="delete" var="removeURL">
-			<portlet:param name="creatorId" value='<%=creatorId%>' />
+			<portlet:param name="termId" value='<%=termId%>' />
 			<portlet:param name="delta" value='<%=delta%>' />
 			<portlet:param name="cur" value='<%=cur%>' />
 			<portlet:param name="backURL" value='<%=backURL.toString()%>' />
@@ -49,24 +46,9 @@
 			<aui:form action="<%=editURL%>" commandName="model">
 				  <div class="adminrow wide">
 					<div class="admintile wide">
-						<aui:select size="1" name="jobTitle" label="">
-								<aui:option value="0">please-choose-title</aui:option>
-								<%
-								String[] l =  LanguageUtil.get(pageContext, "creator-titles").split(",");
-								for(int i=0; i<l.length; i++){
-									String title = l[i];
-									%><aui:option value='<%=title%>'><%=title%></aui:option><%
-									if (title.trim().equals(creator.getJobTitle().trim())) {%>
-										<aui:option value='<%=title%>' selected="true"><%=title%></aui:option>
-									<%} else {%>
-										<aui:option value='<%=title%>'><%=title%></aui:option>
-									<%}
-								}
-								%>
-						</aui:select>				
-						<aui:input name="firstName" value="<%=creator.getFirstName()%>" type="text" label=""/>
-						<aui:input name="lastName" value="<%=creator.getLastName()%>" type="text" label=""/>
-						<aui:input name="creatorId" value="<%=creator.getCreatorId()%>" type="hidden"/>
+						<aui:input name="prefix" value="<%=term.getPrefix()%>" type="text" label=""/>
+						<aui:input name="year" value="<%=term.getYear()%>" type="text" label=""/>
+						<aui:input name="termId" value="<%=term.getTermId()%>" type="hidden"/>
 					</div>
 					<div class="admintile wide icons creators">
 							<a href="<%=removeURL.toString()%>">
