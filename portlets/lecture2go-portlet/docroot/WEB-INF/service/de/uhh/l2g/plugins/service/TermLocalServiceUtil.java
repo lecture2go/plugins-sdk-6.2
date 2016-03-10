@@ -271,10 +271,9 @@ public class TermLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.Term> getAllSemesters(
-		int begin, int end)
+	public static java.util.List<de.uhh.l2g.plugins.model.Term> getAllSemesters()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getAllSemesters(begin, end);
+		return getService().getAllSemesters();
 	}
 
 	public static de.uhh.l2g.plugins.model.Term getById(java.lang.Long termId)
@@ -289,6 +288,12 @@ public class TermLocalServiceUtil {
 		return getService()
 				   .getTermsFromLectureseriesIdsAndVideoIds(lectureseriesIds,
 			videoIds);
+	}
+
+	public static void deleteById(java.lang.Long id)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteById(id);
 	}
 
 	public static void clearService() {

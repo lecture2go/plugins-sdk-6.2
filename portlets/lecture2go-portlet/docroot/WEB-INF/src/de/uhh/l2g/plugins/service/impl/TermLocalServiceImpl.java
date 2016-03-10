@@ -45,9 +45,9 @@ public class TermLocalServiceImpl extends TermLocalServiceBaseImpl {
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.TermLocalServiceUtil} to access the term local service.
 	 */
 	
-	public List<Term> getAllSemesters(int begin, int end) throws SystemException {
+	public List<Term> getAllSemesters() throws SystemException {
 		List<Term> sl = new ArrayList<Term>();
-		sl = termPersistence.findAll(begin, end);
+		sl = termPersistence.findAll();
 		return sl;
 	}
 	
@@ -58,5 +58,9 @@ public class TermLocalServiceImpl extends TermLocalServiceBaseImpl {
 	
 	public List<Term> getTermsFromLectureseriesIdsAndVideoIds(ArrayList<Long> lectureseriesIds, ArrayList<Long> videoIds) {
 		return TermFinderUtil.findTermsByLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds);
+	}
+	
+	public void deleteById(Long id) throws NoSuchModelException, SystemException{
+		termPersistence.remove(id);
 	}
 }
