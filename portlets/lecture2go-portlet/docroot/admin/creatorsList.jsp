@@ -7,8 +7,45 @@
 	List<Creator> tempCreatorsList = new ArrayList();
 	tempCreatorsList = CreatorLocalServiceUtil.getAllCreators();
 	PortletURL portletURL = renderResponse.createRenderURL();
+
+	String delta = "";
+	String cur = "";
+	
+	try{new Long(delta = request.getParameterMap().get("delta")[0]).toString();}catch(Exception e){}
+	try{new Long(cur = request.getParameterMap().get("cur")[0]).toString();}catch(Exception e){}
+	
+	PortletURL backURL = portletURL;
+	backURL.setParameter("delta", delta);
+	backURL.setParameter("cur", cur);
 %>
 
+<portlet:actionURL name="add" var="addURL">
+	<portlet:param name="delta" value='<%=delta%>' />
+	<portlet:param name="cur" value='<%=cur%>' />
+	<portlet:param name="backURL" value='<%=backURL.toString()%>' />
+</portlet:actionURL>
+		
+<aui:fieldset column="false" label="" >
+	<aui:layout>
+			<aui:form action="<%=addURL%>" commandName="model" name="metadata">
+				<div class="add-new-creator-term-object">
+					<aui:select size="1" name="jobTitle" label="job-title">
+						<aui:option value="0">please-choose-title</aui:option>
+							<%
+							String[] l =  LanguageUtil.get(pageContext, "creator-titles").split(",");
+							for(int i=0; i<l.length; i++){
+								String title = l[i];
+								%><aui:option value='<%=title%>'><%=title%></aui:option>
+							<%}%>
+					</aui:select>				
+					<aui:input name="firstName" value="" type="text" label="first-name"/>
+					<aui:input name="lastName" value="" type="text" label="last-name"/>
+					<aui:button type="submit" value="add" id="add"/>
+				</div>
+			</aui:form>
+	</aui:layout>
+</aui:fieldset>
+	
 <liferay-ui:search-container emptyResultsMessage="no-creators-found" delta="10" iteratorURL="<%= portletURL %>">
 	<liferay-ui:search-container-results>
 		<%
@@ -20,17 +57,7 @@
 	</liferay-ui:search-container-results>
 
 	<liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.Creator" keyProperty="creatorId" modelVar="creator">
-		<%
-			String creatorId = creator.getCreatorId()+"";
-			String delta = "";
-			String cur = "";
-			try{new Long(delta = request.getParameterMap().get("delta")[0]).toString();}catch(Exception e){}
-			try{new Long(cur = request.getParameterMap().get("cur")[0]).toString();}catch(Exception e){}
-			PortletURL backURL = portletURL;
-			backURL.setParameter("delta", delta);
-			backURL.setParameter("cur", cur);
-		%>
-								
+		<% String creatorId = creator.getCreatorId()+""; %>
 		<portlet:actionURL name="edit" var="editURL">
 			<portlet:param name="creatorId" value='<%=creatorId%>' />
 			<portlet:param name="delta" value='<%=delta%>' />
@@ -72,7 +99,7 @@
 							<a href="<%=removeURL.toString()%>">
 								<span class="icon-large icon-remove" onclick="return confirm('really-delete-question')"></span>
 							</a>
-							<aui:button type="submit"/>
+							<aui:button type="submit" value="edit"/>
 					</div>
 				</div>
 			</aui:form>
