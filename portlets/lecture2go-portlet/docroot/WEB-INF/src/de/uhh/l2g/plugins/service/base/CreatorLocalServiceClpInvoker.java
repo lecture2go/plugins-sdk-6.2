@@ -110,75 +110,43 @@ public class CreatorLocalServiceClpInvoker {
 
 		_methodParameterTypes151 = new String[] { "java.lang.String" };
 
-<<<<<<< HEAD
-		_methodName156 = "getCreatorsByLectureseriesId";
-=======
-		_methodName152 = "getAllCreators";
+		_methodName156 = "getAllCreators";
 
-		_methodParameterTypes152 = new String[] {  };
+		_methodParameterTypes156 = new String[] {  };
 
-		_methodName153 = "getCreatorsByLectureseriesId";
-
-		_methodParameterTypes153 = new String[] { "java.lang.Long" };
-
-		_methodName154 = "getCreatorsByVideoId";
-
-		_methodParameterTypes154 = new String[] { "java.lang.Long" };
-
-		_methodName155 = "getJSONCreatorsByVideoId";
-
-		_methodParameterTypes155 = new String[] { "java.lang.Long" };
-
-		_methodName156 = "getJSONCreatorsByLectureseriesId";
->>>>>>> refs/heads/origin-master
-
-		_methodParameterTypes156 = new String[] { "java.lang.Long" };
-
-<<<<<<< HEAD
-		_methodName157 = "getCreatorsByVideoId";
-=======
-		_methodName157 = "getJSONCreator";
->>>>>>> refs/heads/origin-master
+		_methodName157 = "getCreatorsByLectureseriesId";
 
 		_methodParameterTypes157 = new String[] { "java.lang.Long" };
 
-<<<<<<< HEAD
-		_methodName158 = "getJSONCreatorsByVideoId";
-=======
-		_methodName158 = "getByFullName";
->>>>>>> refs/heads/origin-master
+		_methodName158 = "getCreatorsByVideoId";
 
-<<<<<<< HEAD
 		_methodParameterTypes158 = new String[] { "java.lang.Long" };
 
-		_methodName159 = "getJSONCreatorsByLectureseriesId";
+		_methodName159 = "getJSONCreatorsByVideoId";
 
 		_methodParameterTypes159 = new String[] { "java.lang.Long" };
 
-		_methodName160 = "getJSONCreator";
+		_methodName160 = "getJSONCreatorsByLectureseriesId";
 
 		_methodParameterTypes160 = new String[] { "java.lang.Long" };
 
-		_methodName161 = "getByFullName";
+		_methodName161 = "getJSONCreator";
 
-		_methodParameterTypes161 = new String[] { "java.lang.String" };
+		_methodParameterTypes161 = new String[] { "java.lang.Long" };
 
-		_methodName162 = "getCreatorsFromLectureseriesIdsAndVideoIds";
+		_methodName162 = "getByFullName";
 
-		_methodParameterTypes162 = new String[] {
-=======
-		_methodParameterTypes158 = new String[] { "java.lang.String" };
+		_methodParameterTypes162 = new String[] { "java.lang.String" };
 
-		_methodName159 = "getCreatorsFromLectureseriesIdsAndVideoIds";
+		_methodName163 = "getCreatorsFromLectureseriesIdsAndVideoIds";
 
-		_methodParameterTypes159 = new String[] {
->>>>>>> refs/heads/origin-master
+		_methodParameterTypes163 = new String[] {
 				"java.util.ArrayList", "java.util.ArrayList"
 			};
 
-		_methodName160 = "deleteById";
+		_methodName164 = "deleteById";
 
-		_methodParameterTypes160 = new String[] { "java.lang.Long" };
+		_methodParameterTypes164 = new String[] { "java.lang.Long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -282,83 +250,49 @@ public class CreatorLocalServiceClpInvoker {
 			return null;
 		}
 
-<<<<<<< HEAD
-=======
-		if (_methodName152.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes152, parameterTypes)) {
-			return CreatorLocalServiceUtil.getAllCreators();
-		}
-
-		if (_methodName153.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes153, parameterTypes)) {
-			return CreatorLocalServiceUtil.getCreatorsByLectureseriesId((java.lang.Long)arguments[0]);
-		}
-
-		if (_methodName154.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes154, parameterTypes)) {
-			return CreatorLocalServiceUtil.getCreatorsByVideoId((java.lang.Long)arguments[0]);
-		}
-
-		if (_methodName155.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes155, parameterTypes)) {
-			return CreatorLocalServiceUtil.getJSONCreatorsByVideoId((java.lang.Long)arguments[0]);
-		}
-
->>>>>>> refs/heads/origin-master
 		if (_methodName156.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes156, parameterTypes)) {
-<<<<<<< HEAD
-			return CreatorLocalServiceUtil.getCreatorsByLectureseriesId((java.lang.Long)arguments[0]);
-=======
-			return CreatorLocalServiceUtil.getJSONCreatorsByLectureseriesId((java.lang.Long)arguments[0]);
->>>>>>> refs/heads/origin-master
+			return CreatorLocalServiceUtil.getAllCreators();
 		}
 
 		if (_methodName157.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes157, parameterTypes)) {
-<<<<<<< HEAD
-			return CreatorLocalServiceUtil.getCreatorsByVideoId((java.lang.Long)arguments[0]);
-=======
-			return CreatorLocalServiceUtil.getJSONCreator((java.lang.Long)arguments[0]);
->>>>>>> refs/heads/origin-master
+			return CreatorLocalServiceUtil.getCreatorsByLectureseriesId((java.lang.Long)arguments[0]);
 		}
 
 		if (_methodName158.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes158, parameterTypes)) {
-<<<<<<< HEAD
-			return CreatorLocalServiceUtil.getJSONCreatorsByVideoId((java.lang.Long)arguments[0]);
+			return CreatorLocalServiceUtil.getCreatorsByVideoId((java.lang.Long)arguments[0]);
 		}
 
 		if (_methodName159.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes159, parameterTypes)) {
-			return CreatorLocalServiceUtil.getJSONCreatorsByLectureseriesId((java.lang.Long)arguments[0]);
+			return CreatorLocalServiceUtil.getJSONCreatorsByVideoId((java.lang.Long)arguments[0]);
 		}
 
 		if (_methodName160.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes160, parameterTypes)) {
-			return CreatorLocalServiceUtil.getJSONCreator((java.lang.Long)arguments[0]);
+			return CreatorLocalServiceUtil.getJSONCreatorsByLectureseriesId((java.lang.Long)arguments[0]);
 		}
 
 		if (_methodName161.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes161, parameterTypes)) {
-			return CreatorLocalServiceUtil.getByFullName((java.lang.String)arguments[0]);
+			return CreatorLocalServiceUtil.getJSONCreator((java.lang.Long)arguments[0]);
 		}
 
 		if (_methodName162.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
-=======
 			return CreatorLocalServiceUtil.getByFullName((java.lang.String)arguments[0]);
 		}
 
-		if (_methodName159.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes159, parameterTypes)) {
->>>>>>> refs/heads/origin-master
+		if (_methodName163.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes163, parameterTypes)) {
 			return CreatorLocalServiceUtil.getCreatorsFromLectureseriesIdsAndVideoIds((java.util.ArrayList<java.lang.Long>)arguments[0],
 				(java.util.ArrayList<java.lang.Long>)arguments[1]);
 		}
 
-		if (_methodName160.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes160, parameterTypes)) {
+		if (_methodName164.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes164, parameterTypes)) {
 			CreatorLocalServiceUtil.deleteById((java.lang.Long)arguments[0]);
 
 			return null;
@@ -413,11 +347,12 @@ public class CreatorLocalServiceClpInvoker {
 	private String[] _methodParameterTypes159;
 	private String _methodName160;
 	private String[] _methodParameterTypes160;
-<<<<<<< HEAD
 	private String _methodName161;
 	private String[] _methodParameterTypes161;
 	private String _methodName162;
 	private String[] _methodParameterTypes162;
-=======
->>>>>>> refs/heads/origin-master
+	private String _methodName163;
+	private String[] _methodParameterTypes163;
+	private String _methodName164;
+	private String[] _methodParameterTypes164;
 }
