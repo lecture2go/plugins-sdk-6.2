@@ -42,7 +42,6 @@ import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
-import de.uhh.l2g.plugins.util.AutocompleteManager;
 
 public class OpenAccessVideos extends MVCPortlet {
 	@Override
@@ -91,26 +90,8 @@ public class OpenAccessVideos extends MVCPortlet {
 		
 	}
 	
+	public static JSONArray wordsJSONArray = JSONFactoryUtil.createJSONArray();
 	private void getSearchWords(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws IOException, PortletException {
-		String searchWord = "";
-		String w = ParamUtil.getString(resourceRequest, "searchWord");
-		if(w.length()>=3)searchWord=w;
-		
-		AutocompleteManager acm = new AutocompleteManager();
-		List<String> arrStr = new ArrayList<String>();
-		
-		JSONArray wordsJSONArray = JSONFactoryUtil.createJSONArray();
-		JSONObject strJSON = null;
-		try {
-			arrStr = acm.getAutocompleteResults(searchWord);
-			for (int i=0; i<arrStr.size();i++) {
-				strJSON = JSONFactoryUtil.createJSONObject();
-				strJSON.put("word", arrStr.get(i));
-				wordsJSONArray.put(strJSON);
-			}
-		} catch (SystemException e) {
-			e.printStackTrace();
-		}
 		PrintWriter out = resourceResponse.getWriter();
 		out.println(wordsJSONArray);
 	}

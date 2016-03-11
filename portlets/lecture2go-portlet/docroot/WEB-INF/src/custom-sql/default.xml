@@ -12,7 +12,33 @@
 		]]>
     </sql>
 
-    <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.findVideosBySearchWord">
+    <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.findAllSearchWords">
+		<![CDATA[
+			SELECT DISTINCT LG_Video.* , LG_Lectureseries.name AS lectureseriesName, LG_Lectureseries.number_ AS lectureseriesNumber, LG_Creator.fullName AS creatorFullName
+			FROM LG_Video, LG_Metadata, LG_Lectureseries, LG_Institution, LG_Creator,  LG_Video_Creator
+			WHERE (
+				( 
+					LG_Video.openAccess=1 AND 
+			        LG_Video.metadataId = LG_Metadata.metadataId AND 
+			        LG_Video.lectureseriesId = LG_Lectureseries.lectureseriesId AND 
+			        LG_Video.rootInstitutionId=LG_Institution.institutionId AND
+			        LG_Video.videoId = LG_Video_Creator.videoId AND 
+			        LG_Creator.creatorId = LG_Video_Creator.creatorId
+				) 
+			    AND 
+			    ( 
+					( LG_Video.title > "" ) OR 
+			        ( LG_Lectureseries.name > "" ) OR 
+			        ( LG_Video.tags > "" ) OR 
+			        ( LG_Lectureseries.number_ > "" ) OR
+			        ( LG_Creator.fullName > "" )
+				)
+			) 
+			GROUP BY LG_Video.videoId ORDER BY LG_Video.generationDate DESC
+		]]>
+    </sql>
+
+    <sql id="de.uhh.l2g.plugins.service.persistences.VideoFinder.findVideosBySearchWord">
 		<![CDATA[
 			SELECT DISTINCT LG_Video.* , LG_Lectureseries.name AS lectureseriesName, LG_Lectureseries.number_ AS lectureseriesNumber, LG_Creator.fullName AS creatorFullName
 			FROM LG_Video, LG_Metadata, LG_Lectureseries, LG_Institution, LG_Creator,  LG_Video_Creator

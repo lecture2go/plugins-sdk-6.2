@@ -14,17 +14,16 @@
 
 package de.uhh.l2g.plugins.model.impl;
 
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.model.CacheModel;
-
-import de.uhh.l2g.plugins.model.Upload;
-
 import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-
 import java.util.Date;
+
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.model.CacheModel;
+
+import de.uhh.l2g.plugins.model.Upload;
 
 /**
  * The cache model class for representing Upload in entity cache.

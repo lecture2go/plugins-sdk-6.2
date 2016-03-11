@@ -15,15 +15,19 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.Video;
+import de.uhh.l2g.plugins.model.Video_Creator;
 import de.uhh.l2g.plugins.model.impl.VideoImpl;
+import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Video_CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.util.VideoGenerationDateComparator;
 
 public class VideoFinderImpl extends BasePersistenceImpl<Video> implements VideoFinder {
@@ -32,8 +36,37 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 	public static final String FIND_LATES_OPEN_ACCESS_VIDEO_FOR_LECTURESERIES = VideoFinder.class.getName() + ".findLatestOpenAccessVideoForlectureseries";
 	public static final String FIND_VIDEO_FOR_SECURE_URL = VideoFinder.class.getName() + ".findVideoForSecureUrl";
 	public static final String FIND_VIDEOS_BY_SEARCH_WORD = VideoFinder.class.getName() + ".findVideosBySearchWord";
+	public static final String FIND_VIDEOS_BY_ALL_SEARCH_WORDS = VideoFinder.class.getName() + ".findAllSearchWords";
 	public static final String FIND_VIDEOS_BY_SEARCH_WORD_AND_LECTURESERIESID = VideoFinder.class.getName() + ".findVideosBySearchWordAndLectureseriesId";
 
+	public List<Video> findVideosByAllSearchWords() {
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(FIND_VIDEOS_BY_ALL_SEARCH_WORDS);
+			SQLQuery q = session.createSQLQuery(sql);
+			q.addScalar("title", Type.STRING);
+			//custom fields
+			q.addScalar("lectureseriesName", Type.STRING);
+			q.addScalar("lectureseriesNumber", Type.STRING);
+			q.addScalar("creatorFullName", Type.STRING);
+			q.addScalar("videoId", Type.LONG);
+			q.setCacheable(false);
+			@SuppressWarnings("unchecked")
+			List <Object[]> l =  (List<Object[]>) QueryUtil.list(q, getDialect(), com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+			return assembleVideosSearchWord(l);
+		} catch (Exception e) {
+			try {
+				throw new SystemException(e);
+			} catch (SystemException se) {
+				se.printStackTrace();
+			}
+		} finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
 	public List<Video> findVideosBySearchWord(String word, int limit) {
 		word="%"+word+"%";
 		Session session = null;
@@ -46,7 +79,7 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 			q.addScalar("lectureseriesName", Type.STRING);
 			q.addScalar("lectureseriesNumber", Type.STRING);
 			q.addScalar("creatorFullName", Type.STRING);
-			
+			q.addScalar("videoId", Type.LONG);
 			q.setCacheable(false);
 			
 			QueryPos qPos = QueryPos.getInstance(q);
@@ -245,7 +278,7 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 		return vl;
 	}
 	
-	private List<Video> assembleVideosSearchWord(List<Object[]> objectList){
+	private List<Video> assembleVideosSearchWord(List<Object[]> objectList) {
 		List<Video> vl = new ArrayList<Video>();
 		for (Object[] video: objectList){
 			VideoImpl v = new VideoImpl();
@@ -253,7 +286,22 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 			v.setLectureseriesName((String)video[1]);
 			v.setLectureseriesNumber((String)video[2]);
 			v.setCreatorFullName((String)video[3]);
-			
+			v.setVideoId((Long)video[4]);
+			//creators
+			List<Video_Creator> vc;
+			try {
+				vc = Video_CreatorLocalServiceUtil.getByVideo(v.getVideoId());
+				ListIterator<Video_Creator> vci = vc.listIterator();
+				String creators ="";
+				while(vci.hasNext()){
+					creators+="###"+CreatorLocalServiceUtil.getCreator(vci.next().getCreatorId()).getFullName();
+				}
+				v.setCreators(creators);
+			} catch (SystemException e) {
+				e.printStackTrace();
+			} catch (PortalException e) {
+				e.printStackTrace();
+			}
 			vl.add(v);
 		}
 		return vl;

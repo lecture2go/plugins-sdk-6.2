@@ -1,4 +1,4 @@
-/*.view-320 .admintile.wide.icons {
+.view-320 .admintile.wide.icons {
 	visibility: hidden;
 	display: none;
 }
@@ -32,6 +32,7 @@
 }
 
 .view-320 .meta-video-info {
+    margin-top: -30px;
     width: 100%;
 }
 
@@ -46,8 +47,8 @@
 }
 
 .view-320 .path {
-    font-size: 11px;
-    width: 100%;
+    display: none;
+    visibility: hidden;
 }
 
 .view-320 .sharetile {
@@ -146,10 +147,23 @@
 }
 
 .view-320 .yui3-aclist-content {
-    width: 249px;
+    width: 249px; 
 }
 
 .view-320 #searchedvideo {
     width: 10em;
 }
-*/
+
+.view-320 .label.label-light {
+    display: none;
+}
+
+.view-320 .license {
+    display: none;
+}
+
+.view-320 .add-new-creator-term-object {
+    display: none;
+    visibility: hidden;
+}
+>>>>>>> refs/remotes/origin@lecture2go/master

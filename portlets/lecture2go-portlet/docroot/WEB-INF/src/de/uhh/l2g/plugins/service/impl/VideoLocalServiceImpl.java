@@ -89,6 +89,11 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	public Video getLatestOpenAccessVideoForLectureseries(Long lectureseriesId) {
 		return VideoFinderUtil.findLatestOpenAccessVideoForLectureseries(lectureseriesId);
 	}
+	
+	public List<Video> getByTerm(Long termId) throws SystemException {
+		List<Video> vl = videoPersistence.findByTerm(termId);
+		return vl;
+	}
 
 	public int unlinkLectureseriesFromVideos(Long lectureseriesId) {
 		return VideoFinderUtil.unlinkLectureseriesFromVideos(lectureseriesId);
@@ -592,6 +597,10 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 
 	public List<Video> getBySearchWord(String word, int limit) throws SystemException{
 		return VideoFinderUtil.findVideosBySearchWord(word, limit);
+	}	
+	
+	public List<Video> getByAllSearchWords() throws SystemException{
+		return VideoFinderUtil.findVideosByAllSearchWords();
 	}	
 
 	public List<Video> getBySearchWordAndLectureseriesId(String word, Long lectureseriesId) throws SystemException{

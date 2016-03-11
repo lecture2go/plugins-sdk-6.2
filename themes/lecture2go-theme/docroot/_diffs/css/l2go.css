@@ -409,10 +409,18 @@ thead, th {
 }
 
 .aui .btn {
-    background-image: linear-gradient(to bottom, rgb(227, 227, 227), rgb(227, 227, 227));
-    border-width: 0px;
+    background-image: linear-gradient(to bottom, #ddd, #ddd);
+    border-radius: 0;
+    border-width: 0;
+    color: #484848;
     margin-right: 10px;
-    border-radius: 0px;
+}
+
+.aui .btn-primary {
+    background-color: #50a2f5;
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    text-shadow: 0;
 }
 
 .aui .btn .caret {
@@ -1318,8 +1326,7 @@ div.filter-menu-link span.icon-large.icon-remove {
     padding-right: 0px;
 }
 
-/**/
-
+/*Bastian Start*/
 
 .aui #navigation .nav li {
 	border-radius: 2px;
@@ -1390,16 +1397,6 @@ div.filter-menu-link span.icon-large.icon-remove {
     margin-top: 6px;
 }
 
-/*
-.aui .row-fluid .span9 {
-    width: 75.4681%;
-}
-
-.aui .row-fluid [class*="span"] {
-    margin-left: 1.128%;
-}
-*/
-
 .aui .portlet-dockbar {
     display: block !important;
 }
@@ -1447,8 +1444,6 @@ div.filter-menu-link span.icon-large.icon-remove {
     color: #4d4d4d;
 }
 
-
-
 /* max-width: 979px */
 @media (max-width: 979px) {
 	
@@ -1457,7 +1452,6 @@ div.filter-menu-link span.icon-large.icon-remove {
 	}
 	
 }
-
 
 /* max-width: 719px */
 @media (max-width: 767px) {
@@ -1540,4 +1534,70 @@ div.filter-menu-link span.icon-large.icon-remove {
     	line-height: 14px;
 	}
     
+}
+
+/*Bastian Ende*/
+
+.aui a:focus {
+    outline: none;
+}
+
+.aui .dropdown-menu > li > a:hover, .aui .dropdown-menu > li > a:focus, .aui .dropdown-submenu:hover > a, .aui .dropdown-submenu:focus > a {
+    text-decoration: none;
+}
+
+.aui .dockbar .navbar-inner .nav > li > a, .aui .dockbar .navbar-inner .nav > li a:focus, .aui .dockbar-split .dockbar .navbar-inner .nav > li > a, .aui .dockbar-split .dockbar .navbar-inner .nav > li a:focus {
+    border: medium none;
+    padding: 0px;
+}
+
+.aui .control-group {
+    float: left;
+    margin-right: 10px;
+    margin-top: 11px;
+}
+
+.admintile.wide.icons.creators {
+    float: right;
+    margin-right: 8px;
+    margin-top: 10px;
+    width: 97px;
+}
+
+.admintile.wide.icons.creators > button {
+    font-size: 12px;
+    height: 26px;
+    margin-left: -3px;
+    padding: 0 7px;
+}
+
+.admintile.wide.icons.creators {
+    float: right;
+    margin-right: 8px;
+    margin-top: 10px;
+    width: 97px;
+}
+
+.add-new-creator-term-object {
+    float: left;
+    margin-bottom: 55px;
+}
+
+.add-new-creator-term-object button {
+    margin-top: 36px;
+}
+
+.undertile.wide {
+    float: left;
+    font-size: 10px;
+    margin-left: 4px;
+    width: 100%;
+}
+
+.undertile.wide > b {
+    font-weight: 600;
+}
+
+.undertile.wide > p {
+    line-height: 2px;
 }
