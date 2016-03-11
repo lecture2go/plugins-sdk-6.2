@@ -17,6 +17,7 @@
 	PortletURL backURL = portletURL;
 	backURL.setParameter("delta", delta);
 	backURL.setParameter("cur", cur);
+	String[] ct =  LanguageUtil.get(pageContext, "creator-titles").split(",");
 %>
 
 <portlet:actionURL name="add" var="addURL">
@@ -30,11 +31,10 @@
 			<aui:form action="<%=addURL%>" commandName="model" name="metadata">
 				<div class="add-new-creator-term-object">
 					<aui:select size="1" name="jobTitle" label="job-title">
-						<aui:option value="0">please-choose-title</aui:option>
+						<aui:option value="0">please-choose-job-title</aui:option>
 							<%
-							String[] l =  LanguageUtil.get(pageContext, "creator-titles").split(",");
-							for(int i=0; i<l.length; i++){
-								String title = l[i];
+							for(int i=0; i<ct.length; i++){
+								String title = ct[i];
 								%><aui:option value='<%=title%>'><%=title%></aui:option>
 							<%}%>
 					</aui:select>				
@@ -43,7 +43,7 @@
 					<aui:button type="submit" value="add" id="add"/>
 				</div>
 			</aui:form>
-	</aui:layout>
+	</aui:layout> 
 </aui:fieldset>
 	
 <liferay-ui:search-container emptyResultsMessage="no-creators-found" delta="10" iteratorURL="<%= portletURL %>">
@@ -77,13 +77,11 @@
 				  <div class="adminrow wide">
 					<div class="admintile wide">
 						<aui:select size="1" name="jobTitle" label="">
-								<aui:option value="0">please-choose-title</aui:option>
+								<aui:option value="0">please-choose-job-title</aui:option>
 								<%
-								String[] l =  LanguageUtil.get(pageContext, "creator-titles").split(",");
-								for(int i=0; i<l.length; i++){
-									String title = l[i];
-									%><aui:option value='<%=title%>'><%=title%></aui:option><%
-									if (title.trim().equals(creator.getJobTitle().trim())) {%>
+								for(int i=0; i<ct.length; i++){
+									String title = ct[i];
+									if (creator.getJobTitle().trim().equals(title.trim())) {%>
 										<aui:option value='<%=title%>' selected="true"><%=title%></aui:option>
 									<%} else {%>
 										<aui:option value='<%=title%>'><%=title%></aui:option>
@@ -100,6 +98,30 @@
 								<span class="icon-large icon-remove" onclick="return confirm('really-delete-question')"></span>
 							</a>
 							<aui:button type="submit"/>
+					</div>
+					<div class="undertile wide">
+					<%
+						List<Video_Creator> vc = Video_CreatorLocalServiceUtil.getByCreator(creator.getCreatorId()); 
+						ListIterator<Video_Creator> vci = vc.listIterator(); 
+						if(vc.size()>0){
+							%><b>video-s</b><%
+							while(vci.hasNext()){
+								Video_Creator v_c = vci.next();
+								Video v = VideoLocalServiceUtil.getVideo(v_c.getVideoId());
+								  %><p><%=v.getTitle()+" -- id: "+v.getVideoId()%></p><%
+							} 							
+						}
+						List<Lectureseries_Creator> lc = Lectureseries_CreatorLocalServiceUtil.getByCreator(creator.getCreatorId()); 
+						ListIterator<Lectureseries_Creator> lci = lc.listIterator();  
+						if(lc.size()>0){
+							%><b>lecture-series</b><%
+							while(lci.hasNext()){
+								Lectureseries_Creator l_c = lci.next();
+								Lectureseries l = LectureseriesLocalServiceUtil.getLectureseries(l_c.getLectureseriesId());
+								  %><p><%=l.getName()+" -- id: "+l.getLectureseriesId()%></p><%
+							}
+						}
+					%>
 					</div>
 				</div>
 			</aui:form>

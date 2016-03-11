@@ -138,24 +138,28 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 
 		_methodParameterTypes23 = new String[] { "de.uhh.l2g.plugins.model.Video" };
 
-		_methodName24 = "getByLatestVideoId";
+		_methodName24 = "getByTerm";
 
 		_methodParameterTypes24 = new String[] { "java.lang.Long" };
 
-		_methodName25 = "updateOpenAccess";
+		_methodName25 = "getByLatestVideoId";
 
-		_methodParameterTypes25 = new String[] {
+		_methodParameterTypes25 = new String[] { "java.lang.Long" };
+
+		_methodName26 = "updateOpenAccess";
+
+		_methodParameterTypes26 = new String[] {
 				"de.uhh.l2g.plugins.model.Video",
 				"de.uhh.l2g.plugins.model.Lectureseries"
 			};
 
-		_methodName26 = "updateUploadAndGenerationDate";
+		_methodName27 = "updateUploadAndGenerationDate";
 
-		_methodParameterTypes26 = new String[] {  };
+		_methodParameterTypes27 = new String[] {  };
 
-		_methodName27 = "getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString";
+		_methodName28 = "getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString";
 
-		_methodParameterTypes27 = new String[] {
+		_methodParameterTypes28 = new String[] {
 				"java.lang.Long", "java.lang.Long", "java.lang.Long",
 				"java.lang.Long", "java.lang.Long", "java.lang.String"
 			};
@@ -845,14 +849,44 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 	}
 
 	@Override
-	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getByLatestVideoId(
-		java.lang.Long latestVideoId)
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getByTerm(
+		java.lang.Long termId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName24,
 					_methodParameterTypes24,
+					new Object[] { ClpSerializer.translateInput(termId) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<de.uhh.l2g.plugins.model.Lectureseries>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getByLatestVideoId(
+		java.lang.Long latestVideoId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
 					new Object[] { ClpSerializer.translateInput(latestVideoId) });
 		}
 		catch (Throwable t) {
@@ -879,8 +913,8 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 		de.uhh.l2g.plugins.model.Lectureseries lectureseries)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			_invokableLocalService.invokeMethod(_methodName25,
-				_methodParameterTypes25,
+			_invokableLocalService.invokeMethod(_methodName26,
+				_methodParameterTypes26,
 				new Object[] {
 					ClpSerializer.translateInput(video),
 					
@@ -908,8 +942,8 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 	public void updateUploadAndGenerationDate()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			_invokableLocalService.invokeMethod(_methodName26,
-				_methodParameterTypes26, new Object[] {  });
+			_invokableLocalService.invokeMethod(_methodName27,
+				_methodParameterTypes27, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -936,8 +970,8 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27,
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28,
 					new Object[] {
 						ClpSerializer.translateInput(institutionId),
 						
@@ -1022,4 +1056,6 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 	private String[] _methodParameterTypes26;
 	private String _methodName27;
 	private String[] _methodParameterTypes27;
+	private String _methodName28;
+	private String[] _methodParameterTypes28;
 }

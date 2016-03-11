@@ -72,6 +72,23 @@
 							</a>
 							<aui:button type="submit"/>
 					</div>
+					<div class="undertile wide">
+					<%
+						List<Video> vl = VideoLocalServiceUtil.getByTerm(term.getTermId());
+						ListIterator<Video> vli = vl.listIterator(); 
+						int count1 = vl.size();
+						if(count1>0){
+							%><b><%=count1%></b> video-s<br/><%
+						}
+						
+						List<Lectureseries> ll = LectureseriesLocalServiceUtil.getByTerm(term.getTermId()); 
+						ListIterator<Lectureseries> lli = ll.listIterator();  
+						int count2 = ll.size();
+						if(count2>0){
+							%><b><%=count2%></b> lecture-series<%
+						}
+					%>
+					</div>					
 				</div>
 			</aui:form>
 		</liferay-ui:search-container-column-text>
