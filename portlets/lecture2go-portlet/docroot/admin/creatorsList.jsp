@@ -99,7 +99,7 @@
 							<a href="<%=removeURL.toString()%>">
 								<span class="icon-large icon-remove" onclick="return confirm('really-delete-question')"></span>
 							</a>
-							<aui:button type="submit" value="edit"/>
+							<aui:button type="submit"/>
 					</div>
 				</div>
 			</aui:form>
