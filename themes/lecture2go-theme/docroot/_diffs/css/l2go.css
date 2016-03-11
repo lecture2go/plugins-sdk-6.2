@@ -1375,3 +1375,18 @@ div.filter-menu-link span.icon-large.icon-remove {
 .add-new-creator-term-object button {
     margin-top: 36px;
 }
+
+.undertile.wide {
+    float: left;
+    font-size: 10px;
+    margin-left: 4px;
+    width: 100%;
+}
+
+.undertile.wide > b {
+    font-weight: 600;
+}
+
+.undertile.wide > p {
+    line-height: 2px;
+}
