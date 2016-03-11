@@ -58,4 +58,8 @@ public class Lectureseries_CreatorLocalServiceImpl
 	public List<Lectureseries_Creator> getByLectureseriesIdAndCreatorId(Long lectureseriesId, Long creatorId) throws SystemException{
 		return lectureseries_CreatorPersistence.findByLectureseriesCreator(lectureseriesId, creatorId);
 	}
+	
+	public List<Lectureseries_Creator> getByCreator(Long creatorId) throws SystemException{
+		return lectureseries_CreatorPersistence.findByCreator(creatorId);
+	}
 }
