@@ -4,13 +4,14 @@
 
 input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     width: 320px;
-    margin: 0px;
+    margin:0px;
 }
-
+/**
 .view-960 #banner {
     background: rgba(0, 0, 0, 0) url("/lecture2go-theme/images/logo_l2go.png") no-repeat scroll right 0 top 0 / 130px auto;
+    margin-right: -6px;
 } 
-
+**/	
 .taglib-page-iterator .lfr-pagination-buttons {
     visibility: hidden;
 	padding: 0px;
@@ -80,7 +81,8 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
   top: 8px; 
   width: 200px; 
   height: 100px; 
-  background-color: #000000; 
+  background-color: 
+  #000000; 
   opacity: .1;
   z-index: 95;
 }
@@ -90,7 +92,8 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
   top: 5px; 
   width: 60px; 
   height: 30px; 
-  background-color: #000000; 
+  background-color: 
+  #000000; 
   opacity: .1;
   z-index: 95;
 }
@@ -128,7 +131,7 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 }
 
 .metainfo {
-    width: 100%;
+    width: 70%;
 }
 
 #metadata {
@@ -374,7 +377,7 @@ a.list-group-item:hover, a.list-group-item:focus {
 
 #term {
     font-size: smaller;
-    margin-left: 85%;
+    margin-left: 101%;
     width: 100px;
 }
 
@@ -586,11 +589,6 @@ thead, th {
 
 .filter-menu-link {
     margin-left: 10px;
-    background: #f3f3f3 none repeat scroll 0 0;
-}
-
-.aui .accordion .accordion-group .toggler-content-expanded {
-    background: #f3f3f3 none repeat scroll 0 0;
 }
 
 .filter-menu {
@@ -630,7 +628,6 @@ thead, th {
 
 .lectureseries-title {
     font-weight: 600;
-    max-width: 98%;
 }
 
 .title-text {
@@ -640,7 +637,7 @@ thead, th {
 
 .toggler-content-wrapper {
     overflow: hidden;
-    /*padding-bottom: 8px;*/
+    padding-bottom: 8px;
 }
 
 .related-lectureseries-name {
@@ -1211,6 +1208,10 @@ p.smallitalic {
     margin-left: -7px;
     padding: 0;
     visibility: hidden;
+}
+
+#heading {
+    margin-top: -30px;
 }
 
 .aui .dockbar-split .dockbar .navbar-inner .nav-account-controls {
