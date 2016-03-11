@@ -9,10 +9,10 @@
 }
    
 .view-480 .video-image-wrapper {
-    float: none;
+    /* float: none; */
     height: 110px;
     margin-right: 8px;
-    max-width: 250px;
+    /* max-width: 250px; */
 }
 
 .view-480 .add-link {
