@@ -1,7 +1,5 @@
-<%@page import="de.uhh.l2g.plugins.model.Lectureseries_Institution"%>
-<%@page import="java.util.ListIterator"%>
 <%@include file="/init.jsp"%>
-
+ 
 <%
 	// defines how many terms and creators are shown initially	
 	int maxTerms	= 4;
