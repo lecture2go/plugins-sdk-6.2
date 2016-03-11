@@ -126,3 +126,8 @@
     float: right;
     margin:0px;
 }
+
+.view-720 .add-new-creator-term-object {
+    display: none;
+    visibility: hidden;
+}
