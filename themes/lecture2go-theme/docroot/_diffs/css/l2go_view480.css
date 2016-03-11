@@ -1,0 +1,89 @@
+.view-480 .admintile.wide.icons {
+	visibility: hidden;
+	display: none;
+}
+
+.view-480 .admintile.wide {
+    margin: 0 -9px 0 3px;
+    width: 100%;
+}
+   
+.view-480 .video-image-wrapper {
+    float: none;
+    height: 110px;
+    margin-right: 8px;
+    max-width: 250px;
+}
+
+.view-480 .add-link {
+	visibility: hidden;
+	display: none;
+}
+
+.view-480 .col-md-5 {
+    right: 0;
+    top: 30px;
+    position: relative;
+    width: 100%;
+}
+
+.view-480 .player {
+    width: 100%;
+}
+
+.view-480 .meta-video-info {
+    width: 100%;
+}
+
+.view-480 #qr {
+    display: none;
+    visibility: hidden;
+}
+
+.view-480 .aui #my-tab-content {
+    min-height: auto;
+    width: 500px;
+}
+
+.view-480 .path {
+    font-size: 11px;
+    width: 100%;
+}
+
+.view-480 .sharetile {
+    width: 22%;
+}
+
+.view-480 .metainfo {
+    width: 100%;
+}
+
+.view-480 #tabs > li#down {
+    display: none;
+    visibility: hidden;
+}
+
+.view-480 .row-fluid .span3 {
+    width: 100%;
+}
+
+.view-480 .row-fluid .span9 {
+    width: 100%;
+}
+
+.view-480 .taglib-page-iterator {
+    clear: both;
+    height: auto;
+    overflow: hidden;
+    width: auto;
+    height: 49px;
+}
+
+.view-480 input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
+    width: 320px;
+    margin: 0;
+}
+
+.view-480 #searchedvideo {
+    width: 20em;
+}

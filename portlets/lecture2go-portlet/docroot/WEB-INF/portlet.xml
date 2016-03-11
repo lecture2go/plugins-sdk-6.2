@@ -4,7 +4,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
 	version="2.0">
-	
 	<portlet>
      	<portlet-name>lg-open-access-videos</portlet-name>
      	<display-name>Open Access Videos</display-name>
@@ -28,16 +27,7 @@
 	      	<keywords>Open Access Videos</keywords>
 	    </portlet-info>
 	    <security-role-ref>
-	      	<role-name>administrator</role-name>
-	    </security-role-ref>
-	    <security-role-ref>
-	     	<role-name>guest</role-name>
-	    </security-role-ref>
-	    <security-role-ref>
-	      	<role-name>power-user</role-name>
-	    </security-role-ref>
-	    <security-role-ref>
-	      	<role-name>user</role-name>
+	      	<role-name>guest</role-name>
 	    </security-role-ref>
     </portlet>
 	
@@ -63,18 +53,6 @@
 	      	<short-title>L2Go Video Management</short-title>
 	      	<keywords>L2Go Video Management</keywords>
 	    </portlet-info>
-	    <security-role-ref>
-	      	<role-name>administrator</role-name>
-	    </security-role-ref>
-	    <security-role-ref>
-	     	<role-name>guest</role-name>
-	    </security-role-ref>
-	    <security-role-ref>
-	      	<role-name>power-user</role-name>
-	    </security-role-ref>
-	    <security-role-ref>
-	      	<role-name>user</role-name>
-	    </security-role-ref>
     </portlet>
     	
 	<portlet>
@@ -99,18 +77,6 @@
 	      	<short-title>L2Go Lecture Series Management</short-title>
 	      	<keywords>L2Go Lecture Series Management</keywords>
 	    </portlet-info>
-	    <security-role-ref>
-	      	<role-name>administrator</role-name>
-	    </security-role-ref>
-	    <security-role-ref>
-	     	<role-name>guest</role-name>
-	    </security-role-ref>
-	    <security-role-ref>
-	      	<role-name>power-user</role-name>
-	    </security-role-ref>
-	    <security-role-ref>
-	      	<role-name>user</role-name>
-	    </security-role-ref>
     </portlet> 
   
     <portlet>
@@ -135,18 +101,6 @@
 	      	<short-title>L2Go User Management</short-title>
 	      	<keywords>L2Go User Management</keywords>
 	    </portlet-info>
-	    <security-role-ref>
-	      	<role-name>administrator</role-name>
-	    </security-role-ref>
-	    <security-role-ref>
-	     	<role-name>guest</role-name>
-	    </security-role-ref>
-	    <security-role-ref>
-	      	<role-name>power-user</role-name>
-	    </security-role-ref>
-	    <security-role-ref>
-	      	<role-name>user</role-name>
-	    </security-role-ref>
   </portlet>
     <portlet>
         <portlet-name>lg-admin-institution-management</portlet-name>
@@ -171,18 +125,5 @@
             <short-title>L2Go Institution Management</short-title>
             <keywords>L2Go Institution Management</keywords>
         </portlet-info>
-        <security-role-ref>
-            <role-name>administrator</role-name>
-        </security-role-ref>
-        <security-role-ref>
-            <role-name>guest</role-name>
-        </security-role-ref>
-        <security-role-ref>
-            <role-name>power-user</role-name>
-        </security-role-ref>
-        <security-role-ref>
-            <role-name>user</role-name>
-        </security-role-ref>
     </portlet>
-
 </portlet-app>

@@ -350,13 +350,6 @@ public class ProzessManager {
 		
 		LicenseLocalServiceUtil.deleteByVideoId(video.getVideoId());
 
-		//delete upload info
-		try {
-			UploadLocalServiceUtil.deleteByVideoId(video.getVideoId());
-		} catch (SystemException e1) {
-			e1.printStackTrace();
-		}
-		
 		// delete video from videohitlist
 		try {
 			VideohitlistLocalServiceUtil.deleteByVideoId(video.getVideoId());

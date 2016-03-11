@@ -19,7 +19,6 @@
 
 		<header-portlet-javascript>/js/jquery.datetimepicker.js</header-portlet-javascript>
 		<header-portlet-javascript>/player/jwplayer/jwplayer.js</header-portlet-javascript>
-		<header-portlet-javascript>/js/autocomplete.js</header-portlet-javascript>
 	</portlet>
 	
 	<portlet>
