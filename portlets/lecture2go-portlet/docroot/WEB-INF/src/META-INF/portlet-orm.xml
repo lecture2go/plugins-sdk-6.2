@@ -24,6 +24,9 @@
 			<id name="coordinatorId" />
 			<basic name="institutionId" />
 			<basic name="officeId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
 	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.CreatorModelImpl">
@@ -51,15 +54,7 @@
 			<basic name="groupId" />
 			<basic name="companyId" />
 			<basic name="defaultHost" />
-			<transient name="cachedModel" />
-			<transient name="creatorId" />
-			<transient name="firstName" />
-			<transient name="fullName" />
-			<transient name="gender" />
-			<transient name="jobTitle" />
-			<transient name="lastName" />
-			<transient name="middleName" />
-			<transient name="new" />
+			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 		</attributes>
@@ -87,6 +82,9 @@
 			<basic name="hostId" />
 			<basic name="groupId" />
 			<basic name="companyId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
 	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.LastvideolistModelImpl">
@@ -296,6 +294,9 @@
 			<basic name="prefix" />
 			<basic name="year" />
 			<basic name="translation" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
 	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.VideoModelImpl">

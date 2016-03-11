@@ -119,9 +119,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 			//Initialize if needed
 			if (isInitialized  == false) {
-		
-				    List<Institution_Host> institution_host = Institution_HostLocalServiceUtil.getByGroupId(groupId);
-				    
+		 
 				    HostLocalServiceUtil.updateCounter();
 				    Institution_HostLocalServiceUtil.updateCounter();
 				    InstitutionLocalServiceUtil.updateCounter();
@@ -148,6 +146,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		    
 
 		    List<Institution> institutions = InstitutionLocalServiceUtil.getByGroupId(groupId);
+		    List<Institution_Host> institution_host = Institution_HostLocalServiceUtil.getByGroupId(groupId);
 		    List<Host> host = HostLocalServiceUtil.getByGroupId(groupId);
 
 		    if (!(institutionId > 0)) {
