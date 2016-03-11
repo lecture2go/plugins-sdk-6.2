@@ -150,37 +150,43 @@ public class Institution_HostLocalServiceClpInvoker {
 
 		_methodParameterTypes164 = new String[] { "long", "long", "long" };
 
-		_methodName166 = "addDefaultEntry";
+		_methodName166 = "getDefaultInstitutionHostId";
 
-		_methodParameterTypes166 = new String[] {  };
+		_methodParameterTypes166 = new String[] { "long", "long" };
 
-		_methodName167 = "addEntry";
+		_methodName167 = "addDefaultInstitutionHost";
 
 		_methodParameterTypes167 = new String[] {
 				"long", "long", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName168 = "updateEntry";
+		_methodName168 = "addEntry";
 
 		_methodParameterTypes168 = new String[] {
 				"long", "long", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName169 = "deleteLinkById";
+		_methodName169 = "updateEntry";
 
 		_methodParameterTypes169 = new String[] {
+				"long", "long", "com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName170 = "deleteLinkById";
+
+		_methodParameterTypes170 = new String[] {
 				"long", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName170 = "deleteLinkByInstitution";
+		_methodName171 = "deleteLinkByInstitution";
 
-		_methodParameterTypes170 = new String[] {
+		_methodParameterTypes171 = new String[] {
 				"de.uhh.l2g.plugins.model.Institution", "long", "long"
 			};
 
-		_methodName171 = "updateCounter";
+		_methodName172 = "updateCounter";
 
-		_methodParameterTypes171 = new String[] {  };
+		_methodParameterTypes172 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -339,40 +345,46 @@ public class Institution_HostLocalServiceClpInvoker {
 
 		if (_methodName166.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes166, parameterTypes)) {
-			Institution_HostLocalServiceUtil.addDefaultEntry();
-
-			return null;
+			return Institution_HostLocalServiceUtil.getDefaultInstitutionHostId(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
 		}
 
 		if (_methodName167.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes167, parameterTypes)) {
-			return Institution_HostLocalServiceUtil.addEntry(((Long)arguments[0]).longValue(),
+			return Institution_HostLocalServiceUtil.addDefaultInstitutionHost(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(com.liferay.portal.service.ServiceContext)arguments[2]);
 		}
 
 		if (_methodName168.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes168, parameterTypes)) {
-			return Institution_HostLocalServiceUtil.updateEntry(((Long)arguments[0]).longValue(),
+			return Institution_HostLocalServiceUtil.addEntry(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(com.liferay.portal.service.ServiceContext)arguments[2]);
 		}
 
 		if (_methodName169.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes169, parameterTypes)) {
-			return Institution_HostLocalServiceUtil.deleteLinkById(((Long)arguments[0]).longValue(),
-				(com.liferay.portal.service.ServiceContext)arguments[1]);
+			return Institution_HostLocalServiceUtil.updateEntry(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[2]);
 		}
 
 		if (_methodName170.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes170, parameterTypes)) {
+			return Institution_HostLocalServiceUtil.deleteLinkById(((Long)arguments[0]).longValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[1]);
+		}
+
+		if (_methodName171.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes171, parameterTypes)) {
 			return Institution_HostLocalServiceUtil.deleteLinkByInstitution((de.uhh.l2g.plugins.model.Institution)arguments[0],
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue());
 		}
 
-		if (_methodName171.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes171, parameterTypes)) {
+		if (_methodName172.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes172, parameterTypes)) {
 			return Institution_HostLocalServiceUtil.updateCounter();
 		}
 
@@ -445,4 +457,6 @@ public class Institution_HostLocalServiceClpInvoker {
 	private String[] _methodParameterTypes170;
 	private String _methodName171;
 	private String[] _methodParameterTypes171;
+	private String _methodName172;
+	private String[] _methodParameterTypes172;
 }

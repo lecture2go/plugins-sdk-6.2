@@ -69,7 +69,7 @@
 	        <action-key>EDIT_OWN_INSTITUTIONS</action-key>
 	        <action-key>DELETE_INSTITUTIONS</action-key>
 	        <action-key>DELETE_SUB_INSTITUTIONS</action-key>
-	        <action-key>EDIT_ROOT_INSTITUTION</action-key>
+	        <action-key>EDIT_TREE_ROOT</action-key>
 	 
 	      	<action-key>ADD_SUB_INSTITUTION_ENTRY</action-key>
 	        <action-key>PERMISSIONS</action-key>
@@ -90,7 +90,7 @@
 	        <action-key>EDIT_OWN_INSTITUTIONS</action-key>
 	        <action-key>DELETE_INSTITUTIONS</action-key>
 	        <action-key>DELETE_SUB_INSTITUTIONS</action-key>
-	        <action-key>EDIT_ROOT_INSTITUTION</action-key>
+	        <action-key>EDIT_TREE_ROOT</action-key>
 	        
 	      	<action-key>ADD_SUB_INSTITUTION_ENTRY</action-key>
 	        <action-key>PERMISSIONS</action-key>

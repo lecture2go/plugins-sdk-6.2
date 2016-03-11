@@ -93,47 +93,58 @@ public class AdminInstitutionManagement extends MVCPortlet {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			         Institution.class.getName(), renderRequest);
 
+			//was this portlet allready initialized with default values?
+			boolean isInitialized = true;
+			
 			long groupId = serviceContext.getScopeGroupId();
 			long companyId = serviceContext.getCompanyId();
 			
-			System.out.println(serviceContext.getPlid()+" "+serviceContext.getPortletId()+" ");
+			//System.out.println(serviceContext.getPlid()+" "+serviceContext.getPortletId()+" ");
 			
 			long institutionId = ParamUtil.getLong(renderRequest, "institutionId");
 			long hostId = ParamUtil.getLong(renderRequest, "hostId");
 			
-			//Check if default Permissions are set for Admin, else generate defaults anew
+			
+			//Check if default Permissions are Set for this Context (requires L2G Roles)
+			//Delete L2Go Admin to trigger re-initialzation
+			
+			//TODO: More sophisticated Default 
 			PermissionManager pm = new PermissionManager(serviceContext);
 			ResourcePermission rp = pm.getPermissionforRole("L2Go Admin");
-			if (rp == null) setDefaultPermissions(pm);
+			if (rp == null) {
+				setDefaultPermissions(pm);
+				//Now we can expect we do not have any defaults at all yet
+				isInitialized = false;
+			}
 
-			long defaultHostId = 0;
-			long defaultInstitutionId = 0;
-
-
-		    List<Institution_Host> institution_host = Institution_HostLocalServiceUtil.getByGroupId(groupId);
-		    
-		    HostLocalServiceUtil.updateCounter();
-		    Institution_HostLocalServiceUtil.updateCounter();
-		    InstitutionLocalServiceUtil.updateCounter();
-		    
-		    //Add default host if empty or default entry does not exist
-		    defaultHostId = HostLocalServiceUtil.getDefaultHostId(companyId,groupId);
-		    //System.out.println("Default Host: "+defaultHostId);
-		    if (defaultHostId == 0) defaultHostId = HostLocalServiceUtil.addDefaultHost(serviceContext).getHostId();
-
-		    //new Tree Root for Institution if empty
-		    defaultInstitutionId = InstitutionLocalServiceUtil.getDefaultInstitutionId(companyId,groupId);
-		    //System.out.println("Default Institution: "+defaultInstitutionId);
-		    if (defaultInstitutionId == 0) {
-		    	defaultInstitutionId = InstitutionLocalServiceUtil.addDefaultInstitution(serviceContext).getInstitutionId();
-		    			    	
-			    //Add default Link if new institution has been added 
-		    	Institution_Host defaultInstitution_Host = Institution_HostLocalServiceUtil.addEntry(defaultInstitutionId, defaultHostId, serviceContext);
-		    	SessionMessages.add(renderRequest, "entryAdded");
-		    	long defaultInstitution_HostId = defaultInstitution_Host.getPrimaryKey();
-		    	//System.out.println("Default Institution_Host: "+defaultInstitution_HostId);
-		    }
-		    
+			//Initialize if needed
+			if (isInitialized  == false) {
+		
+				    List<Institution_Host> institution_host = Institution_HostLocalServiceUtil.getByGroupId(groupId);
+				    
+				    HostLocalServiceUtil.updateCounter();
+				    Institution_HostLocalServiceUtil.updateCounter();
+				    InstitutionLocalServiceUtil.updateCounter();
+				    
+				    //Add default host if empty or default entry does not exist
+				    long defaultHostId = HostLocalServiceUtil.getDefaultHostId(companyId,groupId);
+				    //System.out.println("Default Host: "+defaultHostId);
+				    if (defaultHostId == 0) defaultHostId = HostLocalServiceUtil.addDefaultHost(serviceContext).getHostId();
+		
+				    //new Tree Root for Institution if empty
+				    long defaultInstitutionId = InstitutionLocalServiceUtil.getDefaultInstitutionId(companyId,groupId);
+				    //System.out.println("Default Institution: "+defaultInstitutionId);
+				    
+				    if (defaultInstitutionId == 0) {
+				    	defaultInstitutionId = InstitutionLocalServiceUtil.addDefaultInstitution(serviceContext).getInstitutionId();
+				    }			    	
+					//Add default Link for Top Level if not exists (non functional for analogy - relies on institution having exactly one fixed host)
+				    long defaultInstitutionHostId = Institution_HostLocalServiceUtil.getDefaultInstitutionHostId(companyId,groupId);
+				    if (defaultInstitutionHostId == 0) {		  
+				       defaultInstitutionHostId = Institution_HostLocalServiceUtil.addDefaultInstitutionHost(defaultInstitutionId,defaultHostId,serviceContext);
+				    }
+				    	//System.out.println("Default Institution_Host: "+defaultInstitutionHostId);		
+			}
 		    
 
 		    List<Institution> institutions = InstitutionLocalServiceUtil.getByGroupId(groupId);
@@ -141,6 +152,9 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 		    if (!(institutionId > 0)) {
 		    	institutionId = institutions.get(0).getInstitutionId();
+	        }
+		    if (!(hostId > 0)) {
+		    	hostId = 0;
 	        }
 		    
 		    renderRequest.setAttribute("institutionId", institutionId);
@@ -190,7 +204,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 	}
 
-	/** Works analogous to addInstitution, but is sperate method to enforce restrictions*/
+	/** Works analogous to addInstitution, but is separate method to enforce restrictions*/
 	public void addSubInstitution(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
 
 
@@ -223,21 +237,21 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 
 	}
-	public void updateRootInstitution(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
+	public void updateTreeRoot(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
 
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Institution.class.getName(), request);
 
-		String name = ParamUtil.getString(request, "rootInstitution");
-		long institutionId = ParamUtil.getLong(request, "rootInstitutionId");
+		String name = ParamUtil.getString(request, "treeRoot");
+		long institutionId = ParamUtil.getLong(request, "treeRootId");
 		//long selectedInstitutionId = ParamUtil.getLong(request, "selectedInstitutionId");
 		//System.out.println("Root: "+ institutionId);
 		try {
 			InstitutionLocalServiceUtil.updateInstitution(
 					institutionId, name, 1, serviceContext);
 
-			SessionMessages.add(request,"request_processed", "root-institution-entry-updated");
+			SessionMessages.add(request,"request_processed", "tree-root-entry-updated");
 
 			// response.setRenderParameter("mvcPath",
 		     //         "/admin/institutionList.jsp");
