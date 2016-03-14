@@ -96,4 +96,28 @@
 
 		<add-default-resource>true</add-default-resource>
 	</portlet>
+	
+	<portlet>
+   	 <portlet-name>lg-admin-thread-management</portlet-name>
+   	 	<icon>/icon.png</icon>
+   	 	<scheduler-entry>  
+     		<scheduler-event-listener-class>de.uhh.l2g.plugins.util.StatisticsScheduler</scheduler-event-listener-class>  
+         		<trigger>  
+         			<cron>  
+         			  <cron-trigger-value>*/5 * * * * * *</cron-trigger-value>  
+         			</cron>  
+ 			</trigger>   
+   		</scheduler-entry> 
+   	   	<instanceable>false</instanceable>
+		<private-request-attributes>false</private-request-attributes>
+
+		<header-portlet-javascript>/js/jquery-2.1.4.min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/jquery.tmpl.min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/jquery-ui-1.11.1.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/bootstrap.min.js</header-portlet-javascript>
+		
+   		<add-default-resource>true</add-default-resource>
+   	
+	 </portlet>
+	
 </liferay-portlet-app>
