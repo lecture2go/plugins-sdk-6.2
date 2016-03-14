@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalServiceUtil;
 
 import de.uhh.l2g.plugins.StatisticsDateException;
 import de.uhh.l2g.plugins.StatisticsValueException;
@@ -80,64 +81,13 @@ public class StatisticsLocalServiceImpl
 	}
 
 	
-	/**
-	public Host getByInstitution(long institutionId) throws SystemException, PortalException {
-		long hid = statisticsPersistence.findByinstitutionId(institutionId).iterator().next().getHostId(); 
-		Host h = HostLocalServiceUtil.getByHostId(hid);
-		return h;
-	}
 
-	
-	public Host getByGroupIdAndInstitutionId(long companyId, long groupId, long institutionId) throws SystemException, PortalException {
-		Statistics iH = statisticsPersistence.fetchByG_I(groupId, institutionId);
-		if (iH != null){
-				long hId = iH.getHostId();
-				Host h = HostLocalServiceUtil.getByGroupIdAndHostId(groupId,hId);
-				return h;
-		}
-		else return HostLocalServiceUtil.getByDefault(companyId, groupId);
-	}
-	
-	public Statistics getLinkByGroupIdAndInstitutionId(long groupId, long institutionId) throws SystemException, PortalException {
-		Statistics ih = statisticsPersistence.findByG_I(groupId, institutionId);
-		return ih;
-	}
-
-	public List<Institution> getByGroupIdAndHostId(long groupId, long hostId) throws SystemException, PortalException {
-		List<Statistics> linkList = statisticsPersistence.findByG_H(groupId, hostId);
-		List<Institution> institutions = null;
-
-		for (Statistics link : linkList) {
-			long iId = link.getInstitutionId();
-			Institution i = InstitutionLocalServiceUtil.getByGroupIdAndId(groupId,iId);
-			institutions.add(i);
-		}
-		return institutions;
-	}
-
-	public List<Statistics> getListByGroupIdAndHostId(long groupId, long hostId) throws SystemException, PortalException {
-		List<Statistics> institution_host = statisticsPersistence.findByG_H(groupId, hostId);
-		return institution_host;
-	}
-	public int getByGroupIdAndHostIdCount(long groupId, long hostId) throws SystemException, PortalException {
-		int institution_host = statisticsPersistence.countByG_H(groupId, hostId);
-		return institution_host;
-	}
-
-	// Actually this should never give a list because, there can be only one host per isntitution
-	public List<Statistics> getListByGroupIdAndInstitutionId(long companyId, long groupId, long institutionId) throws SystemException, PortalException {
-		List<Statistics> institution_host = (List<Statistics>) statisticsPersistence.findByC_G_I(companyId, groupId, institutionId);
-		return institution_host;
-	}
-	
-	* */
-
-	/** TODO: Maximum one host per institution
+	/** TODO: 
 	 *
 	 * */
 	protected void validate(long privateVideos, long publicVideos, Date date) throws PortalException {
 
-		if (Validator.isNull(privateVideos)) {
+		if (Validator.isNull(privateVideos) || Validator.isNull(publicVideos)) {
 	       throw new StatisticsValueException();
 		 }
 
@@ -159,19 +109,26 @@ public class StatisticsLocalServiceImpl
 		long companyId = serviceContext.getCompanyId();
 		
 		User user = userPersistence.findByPrimaryKey(userId);
+		
+		Date now = new Date();
 
-		//validate(institutionId, hostId);
+		validate(privateVideos, publicVideos, now);
 
 		long statisticsId = counterLocalService.increment(Statistics.class.getName());
 
 		Statistics statistics = statisticsPersistence.create(statisticsId);
 
+		//Anonymous values for debug/consitency check: Stats should be added by System only
+		statistics.setUserId(userId);
+		statistics.setUserName(UserLocalServiceUtil.getUser(userId).getLogin());
+		statistics.setCreateDate(serviceContext.getCreateDate(now));
+		statistics.setModifiedDate(serviceContext.getModifiedDate(now));
+		
+		
 		statistics.setGroupId(groupId);
 		statistics.setCompanyId(companyId);
 		statistics.setPrivateVideos(privateVideos);
 		statistics.setPublicVideos(publicVideos);
-		//System.out.println ("Link: " +institutionId +" "+hostId);
-		//System.out.println ("Link Contents: "+ statistics.toString());
 
 		statistics.setExpandoBridgeAttributes(serviceContext);
 		
@@ -193,7 +150,10 @@ public class StatisticsLocalServiceImpl
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		// System.out.println ("Link: " +institutionId +" "+hostId);
-		//validate(institutionId, hostId);
+		Date now = new Date();
+
+		validate(privateVideos, publicVideos, now);
+
 
 		Statistics statistics = getByStatisticsId(companyId, groupId, statisticsId);
 		//System.out.println ("Link Contents: "+ statistics.toString());
@@ -201,6 +161,8 @@ public class StatisticsLocalServiceImpl
 		statistics.setGroupId(groupId);
 		statistics.setPrivateVideos(privateVideos);
 		statistics.setPublicVideos(publicVideos);
+		
+		statistics.setModifiedDate(serviceContext.getModifiedDate(now));
 
 		statistics.setExpandoBridgeAttributes(serviceContext);
 
