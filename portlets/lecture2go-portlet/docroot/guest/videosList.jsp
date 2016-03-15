@@ -1,5 +1,7 @@
+<%@page import="de.uhh.l2g.plugins.model.Lectureseries_Institution"%>
+<%@page import="java.util.ListIterator"%>
 <%@include file="/init.jsp"%>
- 
+
 <%
 	// defines how many terms and creators are shown initially	
 	int maxTerms	= 4;
@@ -303,7 +305,7 @@
 								if(isVideo){
 									%>
 							        <a href="<%=view1URL%>">
-								       <div class="videotile metainfolist ">
+								       <div class="videotile metainfo ">
 									        <div class="video-image-wrapper">
 									          <img class="video-image-big" src="<%=vidDummy.getImageMedium()%>"/>
 									        </div>
@@ -375,7 +377,7 @@
 							        
 							        <a href="<%=view2URL%>">
 							          <span class="badge"><%=videoCount%></span>
-								       <div class="videotile metainfolist ">
+								       <div class="videotile metainfo ">
 									        <div class="video-image-wrapper">
 									          <img class="video-image-big layered-paper" src="<%=vidDummy.getImageMedium()%>"/>
 									          <span class="tri"></span>
@@ -432,7 +434,7 @@
 								%>
 							        <a href="<%=view1URL%>">
 							          <span class="badge"><%=videoCount%></span>
-								       <div class="videotile metainfolist ">
+								       <div class="videotile metainfo ">
 									        <div class="video-image-wrapper">
 									          <img class="video-image-big layered-paper" src="<%=vidDummy.getImageMedium()%>"/>
 									          <span class="tri"></span>
@@ -508,7 +510,7 @@
 								</portlet:actionURL>				
 								<li class="videotile small">
 									<a href="<%=vURL%>">
-										<div class="videotile metainfolist small">
+										<div class="videotile metainfo small">
 											<div class="video-image-wrapper-small">
 												<img class="video-image" src="<%=v.getImageSmall()%>">
 											</div>

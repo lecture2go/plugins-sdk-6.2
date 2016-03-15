@@ -74,7 +74,7 @@
 	
 	List<Term> semesters = new ArrayList<Term>(); 
 	try{
-		semesters = TermLocalServiceUtil.getAllSemesters();
+		semesters = TermLocalServiceUtil.getAllSemesters(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 	}catch(Exception e){}
 	 
 	List<Category> categories = new ArrayList<Category>();

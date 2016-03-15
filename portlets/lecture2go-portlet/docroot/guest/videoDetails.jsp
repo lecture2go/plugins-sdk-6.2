@@ -1,3 +1,4 @@
+<%@page import="java.util.ListIterator"%>
 <%@include file="/init.jsp"%>
 
 <jsp:useBean id="video" type="de.uhh.l2g.plugins.model.Video" scope="request" />
