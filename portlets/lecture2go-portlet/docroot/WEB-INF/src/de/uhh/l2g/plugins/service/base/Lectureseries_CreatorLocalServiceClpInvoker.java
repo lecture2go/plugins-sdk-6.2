@@ -131,10 +131,6 @@ public class Lectureseries_CreatorLocalServiceClpInvoker {
 		_methodParameterTypes155 = new String[] {
 				"java.lang.Long", "java.lang.Long"
 			};
-
-		_methodName156 = "getByCreator";
-
-		_methodParameterTypes156 = new String[] { "java.lang.Long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -261,11 +257,6 @@ public class Lectureseries_CreatorLocalServiceClpInvoker {
 				(java.lang.Long)arguments[1]);
 		}
 
-		if (_methodName156.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes156, parameterTypes)) {
-			return Lectureseries_CreatorLocalServiceUtil.getByCreator((java.lang.Long)arguments[0]);
-		}
-
 		throw new UnsupportedOperationException();
 	}
 
@@ -313,6 +304,4 @@ public class Lectureseries_CreatorLocalServiceClpInvoker {
 	private String[] _methodParameterTypes154;
 	private String _methodName155;
 	private String[] _methodParameterTypes155;
-	private String _methodName156;
-	private String[] _methodParameterTypes156;
 }

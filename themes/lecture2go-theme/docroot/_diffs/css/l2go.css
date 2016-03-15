@@ -1350,7 +1350,7 @@ div.filter-menu-link span.icon-large.icon-remove {
     float: right;
     margin-right: 8px;
     margin-top: 10px;
-    width: 97px;
+    width: 94px;
 }
 
 .admintile.wide.icons.creators > button {
@@ -1358,35 +1358,4 @@ div.filter-menu-link span.icon-large.icon-remove {
     height: 26px;
     margin-left: -3px;
     padding: 0 7px;
-}
-
-.admintile.wide.icons.creators {
-    float: right;
-    margin-right: 8px;
-    margin-top: 10px;
-    width: 97px;
-}
-
-.add-new-creator-term-object {
-    float: left;
-    margin-bottom: 55px;
-}
-
-.add-new-creator-term-object button {
-    margin-top: 36px;
-}
-
-.undertile.wide {
-    float: left;
-    font-size: 10px;
-    margin-left: 4px;
-    width: 100%;
-}
-
-.undertile.wide > b {
-    font-weight: 600;
-}
-
-.undertile.wide > p {
-    line-height: 2px;
 }

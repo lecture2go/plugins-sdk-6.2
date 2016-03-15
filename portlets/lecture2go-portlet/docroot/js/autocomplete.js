@@ -17,7 +17,9 @@ AUI().use('autocomplete-list','aui-base','aui-io-request','autocomplete-filters'
 				var data = this.get('responseData');
 				if (data.length == 0) {
 					cachedVideoStrings = testData;
+					console.log("test-data");
 				} else {
+					console.log("tha real deal!");
 					cachedVideoStrings = data;
 				}
 				createAutocomplete();
@@ -40,7 +42,7 @@ AUI().use('autocomplete-list','aui-base','aui-io-request','autocomplete-filters'
 			resultFilters:['phraseMatch'],
 			source: cachedVideoStrings
 		});
-		console.log("na?");
+		
 		A.one('#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery').show();
 	}
 });

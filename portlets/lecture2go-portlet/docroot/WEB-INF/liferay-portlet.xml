@@ -32,16 +32,6 @@
 	</portlet>
 	
 	<portlet>
-		<portlet-name>lg-admin-user-management</portlet-name>
-		<instanceable>false</instanceable>
-		<private-request-attributes>false</private-request-attributes>
-
-		<header-portlet-javascript>/js/jquery-1.11.1.min.js</header-portlet-javascript>
-		<header-portlet-javascript>/js/jquery.tmpl.min.js</header-portlet-javascript>
-		<header-portlet-javascript>/js/jquery-ui-1.10.3.custom.min.js</header-portlet-javascript>
-	</portlet>
-	
-	<portlet>
 		<portlet-name>lg-admin-terms-management</portlet-name>
 		<instanceable>false</instanceable>
 		<private-request-attributes>false</private-request-attributes>
@@ -79,6 +69,7 @@
 		<header-portlet-javascript>/js/qrc.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/jquery.cookie.js</header-portlet-javascript>
 		<header-portlet-javascript>/player/jwplayer/jwplayer.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/autocomplete.js</header-portlet-javascript>
 	</portlet>
 
 	<portlet>

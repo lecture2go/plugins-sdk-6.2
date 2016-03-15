@@ -301,12 +301,6 @@ public class LectureseriesLocalServiceUtil {
 		return getService().getAllForVideo(video);
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getByTerm(
-		java.lang.Long termId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getByTerm(termId);
-	}
-
 	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getByLatestVideoId(
 		java.lang.Long latestVideoId)
 		throws com.liferay.portal.kernel.exception.SystemException {
