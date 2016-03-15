@@ -42,7 +42,7 @@ AUI().use('autocomplete-list','aui-base','aui-io-request','autocomplete-filters'
 			resultFilters:['phraseMatch'],
 			source: cachedVideoStrings
 		});
-		console.log("na?");
+		
 		A.one('#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery').show();
 	}
 });
