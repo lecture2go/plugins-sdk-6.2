@@ -166,3 +166,7 @@
     display: none;
     visibility: hidden;
 }
+
+.view-320 .meta-description {
+    display: none;
+}

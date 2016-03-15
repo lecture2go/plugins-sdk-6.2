@@ -379,22 +379,12 @@ a.list-group-item:hover, a.list-group-item:focus {
 	overflow: hidden; 
 }
 
-#term {
-    font-size: smaller;
-    margin-left: 92%;
-    width: 100px;
-}
-
 .tileheading {
     font-size: 17px;
 }
 
 thead, th {
     display: none;
-}
-
-.aui .table {
-    border-radius: 0px;
 }
 
 .aui .accordion {
@@ -433,11 +423,6 @@ thead, th {
 .aui .btn .caret {
     margin-top: 9px;
     margin-left: 8px;
-}
-
-.aui .dropdown-menu {
-    border: 0px solid rgba(0, 0, 0, 0.2);
-    border-radius: 0px;
 }
 
 .aui em.smallitalic {
@@ -631,7 +616,8 @@ thead, th {
 }
 
 .lectureseries-title {
-    font-weight: 600;
+	font-weight: 600;
+	font-size: 16px;
 }
 
 .title-text {
@@ -928,9 +914,6 @@ p.smallitalic {
     float: right;
 }
 
-.aui .control-group {
-    margin: 11px 0 0 0;
-}
 
 .adminrow.wide:hover {
     background-color: #eaeaea;
@@ -1339,11 +1322,6 @@ div.filter-menu-link span.icon-large.icon-remove {
     text-decoration: none;
 }
 
-.aui .dockbar .navbar-inner .nav > li > a, .aui .dockbar .navbar-inner .nav > li a:focus, .aui .dockbar-split .dockbar .navbar-inner .nav > li > a, .aui .dockbar-split .dockbar .navbar-inner .nav > li a:focus {
-    border: medium none;
-    padding: 0px;
-}
-
 .aui .control-group {
     float: left;
     margin-right: 10px;
@@ -1431,10 +1409,6 @@ div.filter-menu-link span.icon-large.icon-remove {
 	padding: 0 0 6px 18px;
 }
 
-.aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle::after, .aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle::before {
-    margin: 0;
-}
-
 .aui .accordion-group.lfr-panel-extended .accordion-heading {
     background: #dddddd none repeat scroll 0 0;
     border-color: dddddd;
@@ -1460,26 +1434,25 @@ div.filter-menu-link span.icon-large.icon-remove {
 }
 
 .tags {
-	max-width: 97%;
+}
+
+.tags > span {
+    float: left;
+    margin: 1px;
+}
+
+.videotile.metainfolist > b {
+    font-size: 12px;
+    margin-right: 13px;
 }
 
 .logo {
     margin-left: 4px;
 }
 
-.videotile.wide {
-    background-color: #f9f9f9;
-    border-radius: 2px;
-}
-
 .aui .label {
     border-radius: 2px;
 }
-
-.aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle::after, .aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle::before {
-    color: #737373;
-}
-
 
 .aui .badge {
     border-radius: 2px;
@@ -1517,18 +1490,6 @@ div.filter-menu-link span.icon-large.icon-remove {
     margin-left: 0% !important;
 	}
 	
-	.lectureseries-title {
-    font-weight: 200;
-    font-size: 14px;
-	}
-	
-	#term {
-		float:left;
-		margin-left: 0%;
-		width: 68%;
-		padding: 4px 0;
-	}
-	
 	.label {
 		float: left;
 	}
@@ -1558,23 +1519,15 @@ div.filter-menu-link span.icon-large.icon-remove {
 /* Handy */
 @media (max-width: 479px) {
 	
-	#term {
-		width: 96%;
-	    padding: 4px 0;
-	}
-	
-	.lectureseries-title {
-	    font-weight: 600;
-	    font-size: 16px;
-	}
-	
 	.video-image-big {
     	display: none;
     }
     
     .tags {
-    	font-size: smaller;
-    }
+	    display: none;
+	    font-size: smaller;
+	    visibility: hidden;
+	}
     
     .video-image-wrapper {
 	    float: left;
@@ -1583,10 +1536,6 @@ div.filter-menu-link span.icon-large.icon-remove {
 	    margin-right: 0;
     }
     
-    .videotile.wide {
-	    min-height: 150px;
-	}
-	
 	.aui .label {
     	line-height: 14px;
 	}
