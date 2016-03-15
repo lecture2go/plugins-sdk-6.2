@@ -7,8 +7,45 @@
 	List<Creator> tempCreatorsList = new ArrayList();
 	tempCreatorsList = CreatorLocalServiceUtil.getAllCreators();
 	PortletURL portletURL = renderResponse.createRenderURL();
+
+	String delta = "";
+	String cur = "";
+	
+	try{new Long(delta = request.getParameterMap().get("delta")[0]).toString();}catch(Exception e){}
+	try{new Long(cur = request.getParameterMap().get("cur")[0]).toString();}catch(Exception e){}
+	
+	PortletURL backURL = portletURL;
+	backURL.setParameter("delta", delta);
+	backURL.setParameter("cur", cur);
+	String[] ct =  LanguageUtil.get(pageContext, "creator-titles").split(",");
 %>
 
+<portlet:actionURL name="add" var="addURL">
+	<portlet:param name="delta" value='<%=delta%>' />
+	<portlet:param name="cur" value='<%=cur%>' />
+	<portlet:param name="backURL" value='<%=backURL.toString()%>' />
+</portlet:actionURL>
+		
+<aui:fieldset column="false" label="" >
+	<aui:layout>
+			<aui:form action="<%=addURL%>" commandName="model" name="metadata">
+				<div class="add-new-creator-term-object">
+					<aui:select size="1" name="jobTitle" label="job-title">
+						<aui:option value="0">please-choose-job-title</aui:option>
+							<%
+							for(int i=0; i<ct.length; i++){
+								String title = ct[i];
+								%><aui:option value='<%=title%>'><%=title%></aui:option>
+							<%}%>
+					</aui:select>				
+					<aui:input name="firstName" value="" type="text" label="first-name"/>
+					<aui:input name="lastName" value="" type="text" label="last-name"/>
+					<aui:button type="submit" value="add" id="add"/>
+				</div>
+			</aui:form>
+	</aui:layout> 
+</aui:fieldset>
+	
 <liferay-ui:search-container emptyResultsMessage="no-creators-found" delta="10" iteratorURL="<%= portletURL %>">
 	<liferay-ui:search-container-results>
 		<%
@@ -20,17 +57,7 @@
 	</liferay-ui:search-container-results>
 
 	<liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.Creator" keyProperty="creatorId" modelVar="creator">
-		<%
-			String creatorId = creator.getCreatorId()+"";
-			String delta = "";
-			String cur = "";
-			try{new Long(delta = request.getParameterMap().get("delta")[0]).toString();}catch(Exception e){}
-			try{new Long(cur = request.getParameterMap().get("cur")[0]).toString();}catch(Exception e){}
-			PortletURL backURL = portletURL;
-			backURL.setParameter("delta", delta);
-			backURL.setParameter("cur", cur);
-		%>
-								
+		<% String creatorId = creator.getCreatorId()+""; %>
 		<portlet:actionURL name="edit" var="editURL">
 			<portlet:param name="creatorId" value='<%=creatorId%>' />
 			<portlet:param name="delta" value='<%=delta%>' />
@@ -50,13 +77,11 @@
 				  <div class="adminrow wide">
 					<div class="admintile wide">
 						<aui:select size="1" name="jobTitle" label="">
-								<aui:option value="0">please-choose-title</aui:option>
+								<aui:option value="0">please-choose-job-title</aui:option>
 								<%
-								String[] l =  LanguageUtil.get(pageContext, "creator-titles").split(",");
-								for(int i=0; i<l.length; i++){
-									String title = l[i];
-									%><aui:option value='<%=title%>'><%=title%></aui:option><%
-									if (title.trim().equals(creator.getJobTitle().trim())) {%>
+								for(int i=0; i<ct.length; i++){
+									String title = ct[i];
+									if (creator.getJobTitle().trim().equals(title.trim())) {%>
 										<aui:option value='<%=title%>' selected="true"><%=title%></aui:option>
 									<%} else {%>
 										<aui:option value='<%=title%>'><%=title%></aui:option>
@@ -79,21 +104,21 @@
 						List<Video_Creator> vc = Video_CreatorLocalServiceUtil.getByCreator(creator.getCreatorId()); 
 						ListIterator<Video_Creator> vci = vc.listIterator(); 
 						if(vc.size()>0){
-							%><b>video-s</b><br/><%
+							%><b>video-s</b><%
 							while(vci.hasNext()){
 								Video_Creator v_c = vci.next();
 								Video v = VideoLocalServiceUtil.getVideo(v_c.getVideoId());
-								  %><%=v.getTitle()+" -- id: "+v.getVideoId()%><br/><%
+								  %><p><%=v.getTitle()+" -- id: "+v.getVideoId()%></p><%
 							} 							
 						}
 						List<Lectureseries_Creator> lc = Lectureseries_CreatorLocalServiceUtil.getByCreator(creator.getCreatorId()); 
 						ListIterator<Lectureseries_Creator> lci = lc.listIterator();  
 						if(lc.size()>0){
-							%><b>lecture-series</b><br/><%
+							%><b>lecture-series</b><%
 							while(lci.hasNext()){
 								Lectureseries_Creator l_c = lci.next();
 								Lectureseries l = LectureseriesLocalServiceUtil.getLectureseries(l_c.getLectureseriesId());
-								  %><%=l.getName()+" -- id: "+l.getLectureseriesId()%><br/><%
+								  %><p><%=l.getName()+" -- id: "+l.getLectureseriesId()%></p><%
 							}
 						}
 					%>

@@ -59,4 +59,8 @@ public class Video_CreatorLocalServiceImpl
 		return video_CreatorPersistence.findByVideo(videoId);
 	}
 	
+	public List<Video_Creator> getByCreator(Long creatorId) throws SystemException{
+		return video_CreatorPersistence.findByCreator(creatorId);
+	}
+	
 }

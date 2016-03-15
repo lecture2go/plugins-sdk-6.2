@@ -130,6 +130,10 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     width: 100%;
 }
 
+.metainfolist {
+    width: 100%;
+}
+
 .metainfo {
     width: 70%;
 }
@@ -377,7 +381,7 @@ a.list-group-item:hover, a.list-group-item:focus {
 
 #term {
     font-size: smaller;
-    margin-left: 101%;
+    margin-left: 92%;
     width: 100px;
 }
 
@@ -1350,7 +1354,7 @@ div.filter-menu-link span.icon-large.icon-remove {
     float: right;
     margin-right: 8px;
     margin-top: 10px;
-    width: 94px;
+    width: 97px;
 }
 
 .admintile.wide.icons.creators > button {
@@ -1359,3 +1363,234 @@ div.filter-menu-link span.icon-large.icon-remove {
     margin-left: -3px;
     padding: 0 7px;
 }
+
+.admintile.wide.icons.creators {
+    float: right;
+    margin-right: 8px;
+    margin-top: 10px;
+    width: 97px;
+}
+
+.add-new-creator-term-object {
+    float: left;
+    margin-bottom: 55px;
+}
+
+.add-new-creator-term-object button {
+    margin-top: 36px;
+}
+
+.undertile.wide {
+    float: left;
+    font-size: 10px;
+    margin-left: 4px;
+    width: 100%;
+}
+
+.undertile.wide > b {
+    font-weight: 600;
+}
+
+.undertile.wide > p {
+    line-height: 2px;
+}
+
+
+
+
+
+
+/*Bastian Start*/
+/*
+.filter-menu-link {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: #fff;
+    border-image: none;
+    border-style: solid;
+    border-width: 0 0 1px;
+    color: #4e4e4e;
+    display: block;
+    font-family: TheSansUHH,sans-serif;
+    font-size: 14px;
+    font-weight: 200;
+    padding: 0px 0px 0px 10px;
+    text-decoration: none;
+}
+
+.aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle {
+    background-color: #fff;
+    border-left: 0px solid #fff !important;
+}
+*/   
+
+.title-text {
+	float: left;
+	padding: 0 0 6px 18px;
+}
+
+.aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle::after, .aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle::before {
+    margin: 0;
+}
+
+.aui .accordion-group.lfr-panel-extended .accordion-heading {
+    background: #dddddd none repeat scroll 0 0;
+    border-color: dddddd;
+    border-style: none;
+    border-width: 0 0 1px;
+}
+
+.aui .accordion {
+    margin-top: 6px;
+}
+
+.aui .portlet-dockbar {
+    display: block !important;
+}
+
+.aui h1 {
+    font-size: 38px !important;
+}
+
+.aui h2 {
+    display: none;
+    font-size: 31px !important;
+}
+
+.tags {
+	max-width: 97%;
+}
+
+.logo {
+    margin-left: 4px;
+}
+
+.videotile.wide {
+    background-color: #f9f9f9;
+    border-radius: 2px;
+}
+
+.aui .label {
+    border-radius: 2px;
+}
+
+.aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle::after, .aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle::before {
+    color: #737373;
+}
+
+
+.aui .badge {
+    border-radius: 2px;
+    background-color: #737373;
+}
+
+.aui body {
+    color: #4d4d4d;
+}
+
+.aui a {
+    color: #4d4d4d;
+}
+
+#term {
+	float:left;
+	margin-left: 0%;
+	width: 68%;
+	padding: 4px 0;
+}
+
+/* max-width: 979px */
+@media (max-width: 979px) {
+	
+	.aui .table th, .aui .table td {
+    	line-height: 19px;
+	}
+	
+}
+
+/* max-width: 719px */
+@media (max-width: 767px) {
+	
+	.aui .row-fluid [class*="span"] {
+    margin-left: 0% !important;
+	}
+	
+	.lectureseries-title {
+    font-weight: 200;
+    font-size: 14px;
+	}
+	
+	#term {
+		float:left;
+		margin-left: 0%;
+		width: 68%;
+		padding: 4px 0;
+	}
+	
+	.label {
+		float: left;
+	}
+	
+	.video-image-wrapper {
+    	max-width: 30%;
+	}
+	
+	.aui .label {
+    	margin: 1px 1px 0 0;
+	}
+	
+	.aui body {
+		line-height: 32px;
+	}
+	
+	.aui .logo, .aui .logo:hover {
+	    height: 46px;
+	    width: 156px;
+	}
+	
+	.aui .label {
+    	line-height: 12px;
+	}
+	
+}
+/* Handy */
+@media (max-width: 479px) {
+	
+	#term {
+		width: 96%;
+	    padding: 4px 0;
+	}
+	
+	.lectureseries-title {
+	    font-weight: 600;
+	    font-size: 16px;
+	}
+	
+	.video-image-big {
+    	display: none;
+    }
+    
+    .tags {
+    	font-size: smaller;
+    }
+    
+    .video-image-wrapper {
+	    float: left;
+	    min-height: 110px;
+	    height: 100%;
+	    margin-right: 0;
+    }
+    
+    .videotile.wide {
+	    min-height: 150px;
+	}
+	
+	.aui .label {
+    	line-height: 14px;
+	}
+    
+}
+
+/*Bastian Ende*/

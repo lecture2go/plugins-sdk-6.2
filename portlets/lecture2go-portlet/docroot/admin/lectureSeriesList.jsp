@@ -5,7 +5,7 @@
 	List<Producer> producers = new ArrayList<Producer>();
 	
 	List<Lectureseries> tempLectureseriesList = new ArrayList();
-	List<Term> semesters = TermLocalServiceUtil.getAllSemesters(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+	List<Term> semesters = TermLocalServiceUtil.getAllSemesters();
 	
 	Long institutionId = ServletRequestUtils.getLongParameter(request, "institutionId", 0);
 	
