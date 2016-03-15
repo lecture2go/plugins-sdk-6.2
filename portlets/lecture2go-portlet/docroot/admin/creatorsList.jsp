@@ -7,18 +7,7 @@
 	List<Creator> tempCreatorsList = new ArrayList();
 	tempCreatorsList = CreatorLocalServiceUtil.getAllCreators();
 	PortletURL portletURL = renderResponse.createRenderURL();
-
-	String delta = "";
-	String cur = "";
-	
-	try{new Long(delta = request.getParameterMap().get("delta")[0]).toString();}catch(Exception e){}
-	try{new Long(cur = request.getParameterMap().get("cur")[0]).toString();}catch(Exception e){}
-	
-	PortletURL backURL = portletURL;
-	backURL.setParameter("delta", delta);
-	backURL.setParameter("cur", cur);
-	String[] ct =  LanguageUtil.get(pageContext, "creator-titles").split(",");
-%>
+	%>
 
 <portlet:actionURL name="add" var="addURL">
 	<portlet:param name="delta" value='<%=delta%>' />
@@ -104,21 +93,21 @@
 						List<Video_Creator> vc = Video_CreatorLocalServiceUtil.getByCreator(creator.getCreatorId()); 
 						ListIterator<Video_Creator> vci = vc.listIterator(); 
 						if(vc.size()>0){
-							%><b>video-s</b><%
+							%><b>video-s</b><br/><%
 							while(vci.hasNext()){
 								Video_Creator v_c = vci.next();
 								Video v = VideoLocalServiceUtil.getVideo(v_c.getVideoId());
-								  %><p><%=v.getTitle()+" -- id: "+v.getVideoId()%></p><%
+								  %><%=v.getTitle()+" -- id: "+v.getVideoId()%><br/><%
 							} 							
 						}
 						List<Lectureseries_Creator> lc = Lectureseries_CreatorLocalServiceUtil.getByCreator(creator.getCreatorId()); 
 						ListIterator<Lectureseries_Creator> lci = lc.listIterator();  
 						if(lc.size()>0){
-							%><b>lecture-series</b><%
+							%><b>lecture-series</b><br/><%
 							while(lci.hasNext()){
 								Lectureseries_Creator l_c = lci.next();
 								Lectureseries l = LectureseriesLocalServiceUtil.getLectureseries(l_c.getLectureseriesId());
-								  %><p><%=l.getName()+" -- id: "+l.getLectureseriesId()%></p><%
+								  %><%=l.getName()+" -- id: "+l.getLectureseriesId()%><br/><%
 							}
 						}
 					%>
