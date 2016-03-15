@@ -89,11 +89,6 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	public Video getLatestOpenAccessVideoForLectureseries(Long lectureseriesId) {
 		return VideoFinderUtil.findLatestOpenAccessVideoForLectureseries(lectureseriesId);
 	}
-	
-	public List<Video> getByTerm(Long termId) throws SystemException {
-		List<Video> vl = videoPersistence.findByTerm(termId);
-		return vl;
-	}
 
 	public int unlinkLectureseriesFromVideos(Long lectureseriesId) {
 		return VideoFinderUtil.unlinkLectureseriesFromVideos(lectureseriesId);

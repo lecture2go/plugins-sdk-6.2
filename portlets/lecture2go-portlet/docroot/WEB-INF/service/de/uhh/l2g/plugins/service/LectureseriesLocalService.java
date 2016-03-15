@@ -274,11 +274,6 @@ public interface LectureseriesLocalService extends BaseLocalService,
 		de.uhh.l2g.plugins.model.Video video);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getByTerm(
-		java.lang.Long termId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getByLatestVideoId(
 		java.lang.Long latestVideoId)
 		throws com.liferay.portal.kernel.exception.SystemException;

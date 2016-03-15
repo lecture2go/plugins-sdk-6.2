@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import de.uhh.l2g.plugins.model.Term;
-import de.uhh.l2g.plugins.model.impl.TermImpl;
 import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
 
 public class TermsManagement extends MVCPortlet {
@@ -22,21 +21,6 @@ public class TermsManagement extends MVCPortlet {
 		//
 	}
 		
-	public void add(ActionRequest request, ActionResponse response) throws SystemException, PortalException{
-		String backURL = request.getParameterMap().get("backURL")[0];
-		String y=request.getParameter("year");
-		String p=request.getParameter("prefix");
-		Term term = new TermImpl();
-		term.setYear(y);
-		term.setPrefix(p);
-		TermLocalServiceUtil.addTerm(term);
-		try {
-			response.sendRedirect(backURL);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}		
-	}
-	
 	public void edit(ActionRequest request, ActionResponse response) throws SystemException, PortalException{
 		long reqTermId = new Long(request.getParameterMap().get("termId")[0]);
 		String backURL = request.getParameterMap().get("backURL")[0];

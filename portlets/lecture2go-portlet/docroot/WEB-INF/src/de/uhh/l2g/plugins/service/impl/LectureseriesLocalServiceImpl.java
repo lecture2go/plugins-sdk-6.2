@@ -81,11 +81,6 @@ public class LectureseriesLocalServiceImpl extends LectureseriesLocalServiceBase
 		return LectureseriesFinderUtil.findAllLectureseriesForVideo(video);
 	}
 	
-	
-	public List<Lectureseries> getByTerm(Long termId) throws SystemException{
-		return lectureseriesPersistence.findByTerm(termId);
-	} 
-	
 	public List<Lectureseries> getByLatestVideoId(Long latestVideoId) throws SystemException{
 		return lectureseriesPersistence.findByLatestOpenAccessVideo(latestVideoId);
 	} 

@@ -17,7 +17,9 @@ AUI().use('autocomplete-list','aui-base','aui-io-request','autocomplete-filters'
 				var data = this.get('responseData');
 				if (data.length == 0) {
 					cachedVideoStrings = testData;
+					console.log("test-data");
 				} else {
+					console.log("tha real deal!");
 					cachedVideoStrings = data;
 				}
 				createAutocomplete();
