@@ -3,6 +3,7 @@ AUI().use('autocomplete-list','aui-base','aui-io-request','autocomplete-filters'
 	
 	// fetch video list from server
 	var cachedVideoStrings;
+	var ac;
 	var testData = [{"word":"Test eins !"}, {"word":"testtestestetstesrt"}, {"word":"Rattattataatestattatat"}, {"word":"Flabber flabber bumm  test bumm bumm!"}, {"word":"Ach das test ja interessant!"}, {"word":"Tomatestensalat"}, {"word":"Test 778"}];
 	var inputValue=A.one("#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery").get('value');
 	var myAjaxRequest=A.io.request('/web/vod/l2go?p_p_id=lgopenaccessvideos_WAR_lecture2goportlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_cacheability=cacheLevelPage&p_p_col_id=column-1&p_p_col_count=1&_lgopenaccessvideos_WAR_lecture2goportlet_cmd=get_search_words',
@@ -17,9 +18,7 @@ AUI().use('autocomplete-list','aui-base','aui-io-request','autocomplete-filters'
 				var data = this.get('responseData');
 				if (data.length == 0) {
 					cachedVideoStrings = testData;
-					console.log("test-data");
 				} else {
-					console.log("tha real deal!");
 					cachedVideoStrings = data;
 				}
 				createAutocomplete();
@@ -30,7 +29,7 @@ AUI().use('autocomplete-list','aui-base','aui-io-request','autocomplete-filters'
 
 	//	create autocomplete-list
 	function createAutocomplete () {
-		new A.AutoCompleteList({
+		ac = new A.AutoCompleteList({
 			allowBrowserAutocomplete: false,
 			activateFirstItem: false,
 			inputNode: '#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery',
@@ -44,5 +43,13 @@ AUI().use('autocomplete-list','aui-base','aui-io-request','autocomplete-filters'
 		});
 		
 		A.one('#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery').show();
+	    var aclist = A.one('.yui3-aclist');
+	    var list = aclist.one('.yui3-aclist-list');
+	    list.delegate('mouseenter', function (event) {
+	    	console.log( "ddd: " + event.currentTarget.getAttribute('data-text') );
+	    	var ci = A.one(event.currentTarget);
+	    	ac.selectItem(ci);
+	    }, 'li');
+		
 	}
 });
