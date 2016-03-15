@@ -1436,9 +1436,9 @@ div.filter-menu-link span.icon-large.icon-remove {
 }
 
 .aui .accordion-group.lfr-panel-extended .accordion-heading {
-    background: #fff none repeat scroll 0 0;
-    border-color: #c4c4c4;
-    border-style: solid;
+    background: #dddddd none repeat scroll 0 0;
+    border-color: dddddd;
+    border-style: none;
     border-width: 0 0 1px;
 }
 
