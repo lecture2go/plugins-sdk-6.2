@@ -303,7 +303,7 @@
 								if(isVideo){
 									%>
 							        <a href="<%=view1URL%>">
-								       <div class="videotile metainfo ">
+								       <div class="videotile metainfolist ">
 									        <div class="video-image-wrapper">
 									          <img class="video-image-big" src="<%=vidDummy.getImageMedium()%>"/>
 									        </div>
@@ -331,10 +331,8 @@
 												<%=fullname1 %>
 											</div>		
 																	
-											<div id="term">
-												<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
-											</div>
 											
+											<b><%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %></b>
 									        <div class="tags">
 									          <%
 									        	String cat = "";
@@ -375,7 +373,7 @@
 							        
 							        <a href="<%=view2URL%>">
 							          <span class="badge"><%=videoCount%></span>
-								       <div class="videotile metainfo ">
+								       <div class="videotile metainfolist ">
 									        <div class="video-image-wrapper">
 									          <img class="video-image-big layered-paper" src="<%=vidDummy.getImageMedium()%>"/>
 									          <span class="tri"></span>
@@ -403,10 +401,8 @@
 												<%=fullname1%>
 											</div>		
 																	
-											<div id="term">
-												<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
-											</div>
 											
+											<b><%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %></b>
 									        <div class="tags">
 									          <%
 									        	String cat =CategoryLocalServiceUtil.getById(lectser.getCategoryId()).getName();
@@ -432,7 +428,7 @@
 								%>
 							        <a href="<%=view1URL%>">
 							          <span class="badge"><%=videoCount%></span>
-								       <div class="videotile metainfo ">
+								       <div class="videotile metainfolist ">
 									        <div class="video-image-wrapper">
 									          <img class="video-image-big layered-paper" src="<%=vidDummy.getImageMedium()%>"/>
 									          <span class="tri"></span>
@@ -459,10 +455,8 @@
 												<%=fullname2%>
 											</div>		
 																	
-											<div id="term">
-												<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
-											</div>
 											
+									        <b><%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %></b>
 									        <div class="tags">
 									          <%
 									        	String cat ="";
@@ -508,7 +502,7 @@
 								</portlet:actionURL>				
 								<li class="videotile small">
 									<a href="<%=vURL%>">
-										<div class="videotile metainfo small">
+										<div class="videotile metainfolist small">
 											<div class="video-image-wrapper-small">
 												<img class="video-image" src="<%=v.getImageSmall()%>">
 											</div>

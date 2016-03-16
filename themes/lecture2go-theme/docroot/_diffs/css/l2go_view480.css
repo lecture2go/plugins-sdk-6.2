@@ -9,10 +9,10 @@
 }
    
 .view-480 .video-image-wrapper {
-    float: none;
+    /* float: none; */
     height: 110px;
     margin-right: 8px;
-    max-width: 250px;
+    /* max-width: 250px; */
 }
 
 .view-480 .add-link {
@@ -95,4 +95,13 @@
 
 .view-480 .license {
     display: none;
+}
+
+.view-480 .add-new-creator-term-object {
+    display: none;
+    visibility: hidden;
+}
+
+.view-720 #metadata input {
+    width: 112px;
 }
