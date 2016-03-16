@@ -81,8 +81,11 @@
 }
 
 .view-480 input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
-    width: 320px;
-    margin: 0;
+    float: left;
+    margin-left: 0;
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;
 }
 
 .view-480 #searchedvideo {
@@ -102,6 +105,10 @@
     visibility: hidden;
 }
 
-.view-720 #metadata input {
-    width: 112px;
+.view-480 #metadata input {
+    width: 100%;
+}
+
+.view-480 #content {
+    margin-top: 4%;
 }

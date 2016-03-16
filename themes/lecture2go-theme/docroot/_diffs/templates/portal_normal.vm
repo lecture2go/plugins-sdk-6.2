@@ -54,6 +54,7 @@ $theme.include($body_top_include)
 		</form>
 	</div>
 	<div id="content">
+		<div id="search-container"></div>
 		<nav id="breadcrumbs">#breadcrumbs()</nav>
 
 		#if ($selectable)
