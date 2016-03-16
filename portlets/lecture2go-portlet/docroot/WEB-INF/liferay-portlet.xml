@@ -100,11 +100,14 @@
 	<portlet>
    	 <portlet-name>lg-admin-thread-management</portlet-name>
    	 	<icon>/icon.png</icon>
-   	 	<scheduler-entry>  
-     		<scheduler-event-listener-class>de.uhh.l2g.plugins.util.StatisticsScheduler</scheduler-event-listener-class>  
+   	 	<scheduler-entry> 
+   	 	    <scheduler-description>
+      		This scheduler is used to collect Statistical Data from Database
+  		 	</scheduler-description> 
+  			<scheduler-event-listener-class>de.uhh.l2g.plugins.util.StatisticsScheduler</scheduler-event-listener-class>  
          		<trigger>  
          			<cron>  
-         			  <cron-trigger-value>*/5 * * * * * *</cron-trigger-value>  
+         			  <cron-trigger-value>0 0 1 * * ?</cron-trigger-value>  
          			</cron>  
  			</trigger>   
    		</scheduler-entry> 

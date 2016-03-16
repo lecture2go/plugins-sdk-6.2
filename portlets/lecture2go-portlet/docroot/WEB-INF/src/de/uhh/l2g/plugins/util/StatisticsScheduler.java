@@ -1,11 +1,4 @@
 package de.uhh.l2g.plugins.util;
-
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.messaging.MessageListenerException;
-
-import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
-
 /***************************************************************************
  * The Lecture2Go software is based on the liferay portal 6.1.1
  * <http://www.liferay.com>
@@ -39,17 +32,41 @@ import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  ***************************************************************************/
 
-/**There is no built-in time based sheduler in Java 
- * Statistics would be more reliable on doing snapshot at concrete time (ideally arround midnight) 
+import java.util.Map;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.messaging.MessageListenerException;
+
+import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
+
+/** Statistics is less shaky when running job at concrete time (ideally around midnight) 
+ *  There is no built-in time based scheduler in Java, though Quartz is build-in for liferay 6.2
  * (https://quartz-scheduler.org/)
+ * It setting work pretty much like cron and are configured in liferay-portlet.xml
+ * http://www.quartz-scheduler.org/documentation/quartz-1.x/tutorials/crontrigger
  */
 /**
- * The Class VideoStatisticsThread.
- */
+ * The Class VideoStatisticsSheduler.
+*/
 public class StatisticsScheduler implements MessageListener {  
-    public void receive(Message arg0) throws MessageListenerException {  
-     // TODO Auto-generated method stub : your job code  
-     //Write code : what you want to execute on timely basis.  
-    	System.out.println("Testing liferay corn every 5 minutes");
- }  
+	
+	  private static final Log LOG  = LogFactoryUtil.getLog(StatisticsScheduler.class);	
+    
+    @Override
+    public void receive(Message message) throws MessageListenerException {
+       //Here is the buisness logic to be written as per your requirement
+       LOG.info("scheduler running...");
+       
+       Map<String, Object> map = message.getValues();
+       for (Map.Entry<String, Object> entry : map.entrySet())
+       {
+           LOG.info(entry.getKey() + "/" + entry.getValue());
+        
+       }
+    }
  } 
+
+ 
