@@ -1183,6 +1183,10 @@ p.smallitalic {
     border-bottom: 1px solid #f3f3f3;
 }
 
+.add-new-creator-term-object #add {
+    margin-top: 25px;
+}
+
 .aui #navigation .nav .dropdown-menu > li a {
     background: #F9F9F9 url("https://www.uni-hamburg.de/assets/rot_navi-fdf29d5b8f2a0c0cff02298385c1450f.png") no-repeat scroll 9px 9px !important;
     border-color: #DDD;
