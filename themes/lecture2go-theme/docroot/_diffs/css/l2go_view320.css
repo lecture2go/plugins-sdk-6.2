@@ -142,8 +142,11 @@
 }
 
 .view-320 input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
-    width: 237px;
-    margin: 0;
+    float: left;
+    margin-left: 0;
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;
 }
 
 .view-320 .yui3-aclist-content {
@@ -169,4 +172,8 @@
 
 .view-320 .meta-description {
     display: none;
+}
+
+.view-320 #content {
+    margin-top: 13%;
 }

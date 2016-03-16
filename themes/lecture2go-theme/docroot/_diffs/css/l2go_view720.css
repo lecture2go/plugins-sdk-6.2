@@ -56,7 +56,7 @@
 }
 
 .view-720 #metadata input {
-    width: 243px;
+    width: 100%;
 }
 
 .view-720 .metainfo {
@@ -122,12 +122,18 @@
 }
 
 .view-720 input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
-    width: 320px;
-    float: right;
-    margin:0px;
+    float: left;
+    margin-left: 0;
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;
 }
 
 .view-720 .add-new-creator-term-object {
     display: none;
     visibility: hidden;
+}
+
+.view-720 #content {
+    margin-top: 2%;
 }
