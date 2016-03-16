@@ -9,7 +9,7 @@
 }
 
 .view-320 .video-image-wrapper {
-    float: none;
+    /* float: none; */
     height: 110px;
     margin-right: 8px;
     max-width: 250px;
@@ -147,7 +147,7 @@
 }
 
 .view-320 .yui3-aclist-content {
-    width: 249px;
+    width: 249px; 
 }
 
 .view-320 #searchedvideo {
@@ -159,5 +159,14 @@
 }
 
 .view-320 .license {
+    display: none;
+}
+
+.view-320 .add-new-creator-term-object {
+    display: none;
+    visibility: hidden;
+}
+
+.view-320 .meta-description {
     display: none;
 }
