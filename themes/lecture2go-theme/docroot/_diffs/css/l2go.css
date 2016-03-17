@@ -1207,6 +1207,10 @@ p.smallitalic {
     content: "";
 }
 
+.dropdown-toggle > i {
+    visibility: hidden;
+}
+
 .aui .modify-pages .lfr-nav-item .lfr-nav-child-toggle {
     margin-left: -7px;
     padding: 0;
@@ -1215,14 +1219,6 @@ p.smallitalic {
 
 #heading {
     margin-top: -30px;
-}
-
-.aui .dockbar-split .dockbar .navbar-inner .nav-account-controls {
-    background: transparent none repeat scroll 0 0;
-    border: 0 solid #ddd;
-    margin-right: 13px;
-    margin-top: -3px;
-    right: 0;
 }
 
 .aui .dockbar-split .dockbar .navbar-inner .nav li.dropdown.open > .dropdown-toggle {
@@ -1238,13 +1234,20 @@ p.smallitalic {
     background: transparent none repeat scroll 0 0;
     border: medium none;
     font-size: 11px;
-    padding: 0px 0px 3px 20px;
+    padding: 3px 0px 3px 20px;
 }
 
 .aui .dockbar-split .dockbar .navbar-inner .nav-account-controls > li > a, .aui .dockbar-split .dockbar .navbar-inner .nav-account-controls li.open > a {
     color: #4e4e4e;
     margin-right: 0px;
     padding: 0;
+}
+
+.aui .dockbar-split .dockbar .navbar-inner .nav-account-controls {
+    background: transparent none repeat scroll 0 0;
+    border: 0 solid #ddd;
+    margin-right: 1%;
+    right: 0;
 }
 
 .aui .dockbar.navbar .nav > li > a, .aui .dockbar.navbar .nav > li a:focus {
