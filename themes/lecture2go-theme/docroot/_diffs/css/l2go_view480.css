@@ -83,6 +83,7 @@
 .view-480 input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     float: left;
     margin-left: 0;
+    margin-top: -22px;
     padding-left: 0;
     padding-right: 0;
     width: 100%;
@@ -111,4 +112,9 @@
 
 .view-480 #content {
     margin-top: 4%;
+}
+
+.view-480 .row-fluid .span9 {
+    float: left;
+    width: 100%;
 }

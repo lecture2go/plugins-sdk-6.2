@@ -144,6 +144,7 @@
 .view-320 input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     float: left;
     margin-left: 0;
+    margin-top: -9%;
     padding-left: 0;
     padding-right: 0;
     width: 100%;
@@ -175,5 +176,14 @@
 }
 
 .view-320 #content {
-    margin-top: 13%;
+    margin-top: 10%;
+}
+
+.view-320 .aui .row-fluid [class*="span"]:first-child {
+    margin-top: -10px;
+}
+
+.view-320 .row-fluid .span9 {
+    float: left;
+    width: 100%;
 }

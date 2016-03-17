@@ -25,7 +25,7 @@
 input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     float: right;
     height: 24px;
-    margin: -20px 0 6px;
+    margin: -58px 0 6px;
     opacity: 0.6;
     width: 400px;
 }
@@ -159,6 +159,7 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 
 #metadata-upload {
     float: left;
+    margin-top: 14px;
 }
 
 .path {
@@ -720,7 +721,7 @@ thead, th {
     height: 20px;
     font-size: 13px;
     padding: 1px;
-    width: 136px;
+    width: 100%;
     margin: 0px 0px 0px 8px !important;
 }
 
@@ -1080,9 +1081,9 @@ p.smallitalic {
     margin-right: 14px;
 }
 
-#permissions div.control-group.form-inline input {
+#c2g input {
     margin-left: 120px;
-    margin-top: 5px;
+    margin-top: 18px;
     position: absolute;
 }
 
@@ -1095,12 +1096,12 @@ p.smallitalic {
     float: left;
     margin-bottom: 43px;
     margin-right: 41px;
-    margin-top: -12px;
+    margin-top: 0;
 }
 
 #license input {
     line-height: 28px;
-    margin-bottom: -33px;
+    margin-top: 0;
 }
 
 #license div a {
@@ -1146,7 +1147,7 @@ p.smallitalic {
 }
 
 #c2g {
-    margin-top: 6px;
+    margin-top: 0;
 }
 
 #uploaded-files > tbody > tr > td {
@@ -1337,10 +1338,9 @@ div.filter-menu-link span.icon-large.icon-remove {
     text-decoration: none;
 }
 
-.aui .control-group {
+#license .control-group.form-inline {
     float: left;
-    margin-right: 10px;
-    margin-top: 0px;
+    margin-top: 0;
 }
 
 .admintile.wide.icons.creators {
@@ -1388,9 +1388,6 @@ div.filter-menu-link span.icon-large.icon-remove {
     line-height: 2px;
 }
 
-#metadata input {
-    width: 100%;
-}
 
 /*Bastian Start*/
 /*

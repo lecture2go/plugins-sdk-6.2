@@ -124,6 +124,7 @@
 .view-720 input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     float: left;
     margin-left: 0;
+    margin-top: -22px;
     padding-left: 0;
     padding-right: 0;
     width: 100%;
@@ -136,4 +137,8 @@
 
 .view-720 #content {
     margin-top: 2%;
+}
+
+.view-720 .row-fluid .span9 {
+    float: left;
 }
