@@ -32,15 +32,25 @@ package de.uhh.l2g.plugins.util;
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  ***************************************************************************/
 
+import java.util.List;
 import java.util.Map;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerEntry;
+import com.liferay.portal.kernel.scheduler.SchedulerException;
+import com.liferay.portal.kernel.scheduler.StorageType;
+import com.liferay.portal.kernel.scheduler.Trigger;
+import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 
-import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
+
 
 /** Statistics is less shaky when running job at concrete time (ideally around midnight) 
  *  There is no built-in time based scheduler in Java, though Quartz is build-in for liferay 6.2
@@ -54,11 +64,15 @@ import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 public class StatisticsScheduler implements MessageListener {  
 	
 	  private static final Log LOG  = LogFactoryUtil.getLog(StatisticsScheduler.class);	
-    
+	  private static final String schedulerName  = StatisticsScheduler.class.getName(); 
+	  private static Trigger trigger;
+	  private static SchedulerResponse response;
+	  
+	  
     @Override
     public void receive(Message message) throws MessageListenerException {
-       //Here is the buisness logic to be written as per your requirement
-       LOG.info("scheduler running...");
+       //Debug Information on running job
+       LOG.info("Statistics Scheduler running...");
        
        Map<String, Object> map = message.getValues();
        for (Map.Entry<String, Object> entry : map.entrySet())
@@ -67,6 +81,54 @@ public class StatisticsScheduler implements MessageListener {
         
        }
     }
- } 
+    
+	
+    /**Get Job by Name (assumes group name and storage type are constant)
+     * 
+     * @param schedulerName
+     * @throws Exception
+     */
+	public static void startCron()throws Exception{
+			
+		try {  		
+			      String groupName = response.getGroupName();  
+			      StorageType storageType = response.getStorageType(); 
+			      String description = response.getDescription();
+			      String destinationName = response.getDestinationName();
+			      Message message = response.getMessage();
+			       	Map<String, Object> map = response.getMessage().getValues();  
+			      	  String portletId = map.get("PORTLET_ID").toString();
+			      	  int exceptionsMaxSize = Integer.valueOf(map.get("EXCEPTIONS_MAX_SIZE").toString());
+			      LOG.info("Scheduling :" + schedulerName);  
+			      SchedulerEngineHelperUtil.schedule(trigger, storageType, description, destinationName, message, exceptionsMaxSize);     
+			      
+			  
+			 } catch (SchedulerException e) {  
+			   LOG.warn(e);  
+			 } 
+	}
+    
+    
+    public static void stopCron()throws Exception{
+		try {  
+			  List<SchedulerResponse> scheduledJobs = SchedulerEngineHelperUtil.getScheduledJobs();  
+			  for (SchedulerResponse resp : scheduledJobs) {  
+			    if (resp.getJobName().equalsIgnoreCase(schedulerName)) {  
+			      String groupName = resp.getGroupName();  
+			      StorageType storageType = resp.getStorageType(); 
+			      //Keep those values
+			      trigger = resp.getTrigger();
+			      response = resp;
+			      LOG.info("Unscheduling :" + schedulerName +trigger.toString());  
+			      SchedulerEngineHelperUtil.unschedule(schedulerName, groupName, storageType);  
+			    }  
+			 }  
+			 } catch (SchedulerException e) {  
+			  LOG.warn(e);  
+			 } 
+	}
+    
+}
+ 
 
  
