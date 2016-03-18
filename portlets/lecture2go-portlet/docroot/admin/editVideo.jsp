@@ -818,7 +818,7 @@ function getJSONCreator (data){
 	<div id="nc<%="${counter}"%>">
 	<aui:input type="hidden" name="gender"/>
 	<aui:select size="1" name="jobTitle" label="">
-		<aui:option value=""></aui:option>
+		<aui:option value="">choose-job-title</aui:option>
 		<%
 		String[] l =  LanguageUtil.get(pageContext, "creator-titles").split(",");
 		for(int i=0; i<l.length; i++){

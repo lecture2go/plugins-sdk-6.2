@@ -25,7 +25,7 @@
 input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     float: right;
     height: 24px;
-    margin: -12px 0 6px;
+    margin: -58px 0 6px;
     opacity: 0.6;
     width: 400px;
 }
@@ -159,6 +159,7 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 
 #metadata-upload {
     float: left;
+    margin-top: 14px;
 }
 
 .path {
@@ -307,6 +308,15 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     width: 40em;
 }
 
+.aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle::after, .aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle::before {
+    color: #484848;
+    float: right;
+    font-size: 18px;
+    margin: 3px 5px 0 0;
+    opacity: 1;
+    padding: 0;
+}
+
 a.list-group-item:hover, a.list-group-item:focus {
     color: #555;
     text-decoration: none;
@@ -379,15 +389,6 @@ a.list-group-item:hover, a.list-group-item:focus {
     border-color: #ddd;
 }
 
-.aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle::after, .aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle::before {
-    color: #484848;
-    float: right;
-    font-size: 18px;
-    margin: 9px 5px 0 0;
-    opacity: 1;
-    padding: 0;
-}
-
 .aui #my-tab-content {
 	min-height: 0px;
 	width: auto;
@@ -400,10 +401,6 @@ a.list-group-item:hover, a.list-group-item:focus {
 
 thead, th {
     display: none;
-}
-
-.aui .accordion {
-    margin-bottom: 20px;
 }
 
 .aui .accordion-group.lfr-panel-extended {
@@ -635,10 +632,6 @@ thead, th {
 	font-size: 16px;
 }
 
-.title-text {
-    font-size: 15px;
-    color: rgb(72, 72, 72) !important;
-}
 
 .toggler-content-wrapper {
     overflow: hidden;
@@ -720,7 +713,7 @@ thead, th {
     height: 20px;
     font-size: 13px;
     padding: 1px;
-    width: 136px;
+    width: 100%;
     margin: 0px 0px 0px 8px !important;
 }
 
@@ -936,8 +929,8 @@ p.smallitalic {
 }
 
 .adminrow.wide {
-    background-color: #F3F3F3;
-    border-top: 1px solid #DDD;
+    background-color: #f3f3f3;
+    border-top: 1px solid #eee;
 }
 
 .lfr-search-container {
@@ -988,6 +981,16 @@ p.smallitalic {
     border: 0 solid rgba(0, 172, 255, 0.8);
     outline: 0px auto rgba(82, 168, 236, 0.6);
     outline-offset: -2px;
+}
+
+.add-new-creator-term-object .control-group {
+    float: left;
+    margin: 0 6px 0 0;
+}
+
+.admintile.wide .control-group {
+    float: left;
+    margin: 0 6px 0 0;
 }
 
 .aui select, .aui input[type="file"] {
@@ -1080,10 +1083,15 @@ p.smallitalic {
     margin-right: 14px;
 }
 
-#permissions div.control-group.form-inline input {
+#c2g input {
     margin-left: 120px;
-    margin-top: 5px;
+    margin-top: 18px;
     position: absolute;
+}
+
+#c2g-generate input {
+    margin-left: 120px;
+    margin-top: 18px;
 }
 
 #license {
@@ -1095,12 +1103,12 @@ p.smallitalic {
     float: left;
     margin-bottom: 43px;
     margin-right: 41px;
-    margin-top: -12px;
+    margin-top: 0;
 }
 
 #license input {
     line-height: 28px;
-    margin-bottom: -33px;
+    margin-top: 0;
 }
 
 #license div a {
@@ -1146,7 +1154,7 @@ p.smallitalic {
 }
 
 #c2g {
-    margin-top: 6px;
+    margin-top: 0;
 }
 
 #uploaded-files > tbody > tr > td {
@@ -1210,6 +1218,10 @@ p.smallitalic {
     content: "";
 }
 
+.dropdown-toggle > i {
+    visibility: hidden;
+}
+
 .aui .modify-pages .lfr-nav-item .lfr-nav-child-toggle {
     margin-left: -7px;
     padding: 0;
@@ -1218,14 +1230,6 @@ p.smallitalic {
 
 #heading {
     margin-top: -30px;
-}
-
-.aui .dockbar-split .dockbar .navbar-inner .nav-account-controls {
-    background: transparent none repeat scroll 0 0;
-    border: 0 solid #ddd;
-    margin-right: 13px;
-    margin-top: -3px;
-    right: 0;
 }
 
 .aui .dockbar-split .dockbar .navbar-inner .nav li.dropdown.open > .dropdown-toggle {
@@ -1241,13 +1245,20 @@ p.smallitalic {
     background: transparent none repeat scroll 0 0;
     border: medium none;
     font-size: 11px;
-    padding: 0px 0px 3px 20px;
+    padding: 3px 0px 3px 20px;
 }
 
 .aui .dockbar-split .dockbar .navbar-inner .nav-account-controls > li > a, .aui .dockbar-split .dockbar .navbar-inner .nav-account-controls li.open > a {
     color: #4e4e4e;
     margin-right: 0px;
     padding: 0;
+}
+
+.aui .dockbar-split .dockbar .navbar-inner .nav-account-controls {
+    background: transparent none repeat scroll 0 0;
+    border: 0 solid #ddd;
+    margin-right: 1%;
+    right: 0;
 }
 
 .aui .dockbar.navbar .nav > li > a, .aui .dockbar.navbar .nav > li a:focus {
@@ -1341,10 +1352,9 @@ div.filter-menu-link span.icon-large.icon-remove {
     text-decoration: none;
 }
 
-.aui .control-group {
+#license .control-group.form-inline {
     float: left;
-    margin-right: 10px;
-    margin-top: 0px;
+    margin-top: 0;
 }
 
 .admintile.wide.icons.creators {
@@ -1392,8 +1402,12 @@ div.filter-menu-link span.icon-large.icon-remove {
     line-height: 2px;
 }
 
-#metadata input {
-    width: 100%;
+.title-text {
+    float: left;
+    margin-top: 4px;
+    padding: 0 0 4px;
+    font-size: 15px;
+    color: rgb(72, 72, 72) !important;    
 }
 
 /*Bastian Start*/
@@ -1422,11 +1436,6 @@ div.filter-menu-link span.icon-large.icon-remove {
 }
 */   
 
-.title-text {
-	float: left;
-	padding: 0 0 6px 18px;
-}
-
 .aui .accordion-group.lfr-panel-extended .accordion-heading {
     background: #dddddd none repeat scroll 0 0;
     border-color: dddddd;
@@ -1435,7 +1444,7 @@ div.filter-menu-link span.icon-large.icon-remove {
 }
 
 .aui .accordion {
-    margin-top: 6px;
+    margin-bottom: 20px;
 }
 
 .aui .portlet-dockbar {

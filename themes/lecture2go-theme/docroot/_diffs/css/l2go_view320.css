@@ -51,6 +51,11 @@
     visibility: hidden;
 }
 
+.view-320 .path-wide {
+    display: none;
+    visibility: hidden;
+}
+
 .view-320 .sharetile {
     margin-bottom: 7px;
 }
@@ -144,10 +149,10 @@
 .view-320 input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     float: left;
     margin-left: 0;
+    margin-top: -9%;
     padding-left: 0;
     padding-right: 0;
     width: 100%;
-    margin-top: 22px;
 }
 
 .view-320 .yui3-aclist-content {
@@ -176,5 +181,15 @@
 }
 
 .view-320 #content {
+    margin-top: 10%;
+}
+
+.view-320 .aui .row-fluid [class*="span"]:first-child {
+    margin-top: -10px;
+}
+
+.view-320 .row-fluid .span9 {
+    float: left;
+    width: 100%;
     margin-top: 13%;
 }
