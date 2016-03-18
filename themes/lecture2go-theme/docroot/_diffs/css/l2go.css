@@ -308,6 +308,15 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     width: 40em;
 }
 
+.aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle::after, .aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle::before {
+    color: #484848;
+    float: right;
+    font-size: 18px;
+    margin: 3px 5px 0 0;
+    opacity: 1;
+    padding: 0;
+}
+
 a.list-group-item:hover, a.list-group-item:focus {
     color: #555;
     text-decoration: none;
@@ -380,15 +389,6 @@ a.list-group-item:hover, a.list-group-item:focus {
     border-color: #ddd;
 }
 
-.aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle::after, .aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle::before {
-    color: #484848;
-    float: right;
-    font-size: 18px;
-    margin: 9px 5px 0 0;
-    opacity: 1;
-    padding: 0;
-}
-
 .aui #my-tab-content {
 	min-height: 0px;
 	width: auto;
@@ -401,10 +401,6 @@ a.list-group-item:hover, a.list-group-item:focus {
 
 thead, th {
     display: none;
-}
-
-.aui .accordion {
-    margin-bottom: 20px;
 }
 
 .aui .accordion-group.lfr-panel-extended {
@@ -636,10 +632,6 @@ thead, th {
 	font-size: 16px;
 }
 
-.title-text {
-    font-size: 15px;
-    color: rgb(72, 72, 72) !important;
-}
 
 .toggler-content-wrapper {
     overflow: hidden;
@@ -1189,6 +1181,10 @@ p.smallitalic {
     border-bottom: 1px solid #f3f3f3;
 }
 
+.add-new-creator-term-object #add {
+    margin-top: 25px;
+}
+
 .aui #navigation .nav .dropdown-menu > li a {
     background: #F9F9F9 url("https://www.uni-hamburg.de/assets/rot_navi-fdf29d5b8f2a0c0cff02298385c1450f.png") no-repeat scroll 9px 9px !important;
     border-color: #DDD;
@@ -1396,6 +1392,13 @@ div.filter-menu-link span.icon-large.icon-remove {
     line-height: 2px;
 }
 
+.title-text {
+    float: left;
+    margin-top: 4px;
+    padding: 0 0 4px;
+    font-size: 15px;
+    color: rgb(72, 72, 72) !important;    
+}
 
 /*Bastian Start*/
 /*
@@ -1423,11 +1426,6 @@ div.filter-menu-link span.icon-large.icon-remove {
 }
 */   
 
-.title-text {
-	float: left;
-	padding: 0 0 6px 18px;
-}
-
 .aui .accordion-group.lfr-panel-extended .accordion-heading {
     background: #dddddd none repeat scroll 0 0;
     border-color: dddddd;
@@ -1436,7 +1434,7 @@ div.filter-menu-link span.icon-large.icon-remove {
 }
 
 .aui .accordion {
-    margin-top: 6px;
+    margin-bottom: 20px;
 }
 
 .aui .portlet-dockbar {

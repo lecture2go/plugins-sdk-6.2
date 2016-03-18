@@ -51,6 +51,11 @@
     visibility: hidden;
 }
 
+.view-320 .path-wide {
+    display: none;
+    visibility: hidden;
+}
+
 .view-320 .sharetile {
     margin-bottom: 7px;
 }
@@ -186,4 +191,5 @@
 .view-320 .row-fluid .span9 {
     float: left;
     width: 100%;
+    margin-top: 13%;
 }

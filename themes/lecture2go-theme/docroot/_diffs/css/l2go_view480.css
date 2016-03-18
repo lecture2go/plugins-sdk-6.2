@@ -51,6 +51,12 @@
     visibility: hidden;
 }
 
+
+.view-480 .path-wide {
+    display: none;
+    visibility: hidden;
+}
+
 .view-480 .sharetile {
     width: 22%;
 }
@@ -83,7 +89,7 @@
 .view-480 input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     float: left;
     margin-left: 0;
-    margin-top: -22px;
+    margin-top: -4%;
     padding-left: 0;
     padding-right: 0;
     width: 100%;
