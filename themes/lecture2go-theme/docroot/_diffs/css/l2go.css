@@ -1087,6 +1087,11 @@ p.smallitalic {
     position: absolute;
 }
 
+#c2g-generate input {
+    margin-left: 120px;
+    margin-top: 18px;
+}
+
 #license {
     float: left;
     width: 100%;
