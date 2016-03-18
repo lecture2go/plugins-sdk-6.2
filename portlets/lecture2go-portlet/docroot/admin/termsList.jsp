@@ -59,6 +59,15 @@
 		</portlet:actionURL>		
 		
 		<liferay-ui:search-container-column-text name="name">
+		<%
+			List<Video> vl = VideoLocalServiceUtil.getByTerm(term.getTermId());
+			ListIterator<Video> vli = vl.listIterator(); 
+			int count1 = vl.size();
+
+			List<Lectureseries> ll = LectureseriesLocalServiceUtil.getByTerm(term.getTermId()); 
+			ListIterator<Lectureseries> lli = ll.listIterator();  
+			int count2 = ll.size();
+		%>
 			<aui:form action="<%=editURL%>" commandName="model">
 				  <div class="adminrow wide">
 					<div class="admintile wide">
@@ -67,23 +76,19 @@
 						<aui:input name="termId" value="<%=term.getTermId()%>" type="hidden"/>
 					</div>
 					<div class="admintile wide icons creators">
+						<%if(count1==0 && count2==0){%>
 							<a href="<%=removeURL.toString()%>">
 								<span class="icon-large icon-remove" onclick="return confirm('really-delete-question')"></span>
 							</a>
-							<aui:button type="submit"/>
+						<%}%>
+						<aui:button type="submit"/>
 					</div>
 					<div class="undertile wide">
+
 					<%
-						List<Video> vl = VideoLocalServiceUtil.getByTerm(term.getTermId());
-						ListIterator<Video> vli = vl.listIterator(); 
-						int count1 = vl.size();
 						if(count1>0){
 							%><b><%=count1%></b> video-s<br/><%
 						}
-						
-						List<Lectureseries> ll = LectureseriesLocalServiceUtil.getByTerm(term.getTermId()); 
-						ListIterator<Lectureseries> lli = ll.listIterator();  
-						int count2 = ll.size();
 						if(count2>0){
 							%><b><%=count2%></b> lecture-series<%
 						}
