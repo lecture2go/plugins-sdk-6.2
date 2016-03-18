@@ -929,8 +929,8 @@ p.smallitalic {
 }
 
 .adminrow.wide {
-    background-color: #F3F3F3;
-    border-top: 1px solid #DDD;
+    background-color: #f3f3f3;
+    border-top: 1px solid #eee;
 }
 
 .lfr-search-container {
@@ -981,6 +981,16 @@ p.smallitalic {
     border: 0 solid rgba(0, 172, 255, 0.8);
     outline: 0px auto rgba(82, 168, 236, 0.6);
     outline-offset: -2px;
+}
+
+.add-new-creator-term-object .control-group {
+    float: left;
+    margin: 0 6px 0 0;
+}
+
+.admintile.wide .control-group {
+    float: left;
+    margin: 0 6px 0 0;
 }
 
 .aui select, .aui input[type="file"] {
