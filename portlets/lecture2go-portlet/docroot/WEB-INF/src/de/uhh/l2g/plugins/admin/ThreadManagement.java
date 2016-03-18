@@ -53,15 +53,16 @@ public class ThreadManagement extends MVCPortlet {
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException, IOException {
 
 		
+		StatisticsScheduler scheduler = new StatisticsScheduler(StatisticsScheduler.class.getName());
 	    try {
-			StatisticsScheduler.stopCron();
+	    	scheduler.stopCron();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+      
 	    try {
-	    	StatisticsScheduler.startCron();
+	    	scheduler.startCron();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -40,9 +40,7 @@ import javax.portlet.ActionResponse;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
@@ -54,35 +52,23 @@ import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 
 
 
-/** Statistics is less flawed when running job at concrete time (ideally around midnight)  
- *  
- * The Class StatisticsSheduler.
+/** Statistics is less shaky when running job at concrete time (ideally around midnight) 
+ *  There is no built-in time based scheduler in Java, though Quartz is build-in for liferay 6.2
+ * (https://quartz-scheduler.org/)
+ * It setting work pretty much like cron and are configured in liferay-portlet.xml
+ * http://www.quartz-scheduler.org/documentation/quartz-1.x/tutorials/crontrigger
  */
-@SuppressWarnings("serial")
-public class StatisticsScheduler extends PortletScheduler implements MessageListener {  
+/**
+ * The Class VideoStatisticsSheduler.
+*/
+public class ThreadManager  {  
 	
-	  
-    public StatisticsScheduler(){
-    	super(StatisticsScheduler.class.getName());
-	    super.schedulerName = StatisticsScheduler.class.getName();
-	    super.LOG = LogFactoryUtil.getLog(PortletScheduler.class.getName());
-    }
-    
-	public StatisticsScheduler(String schedulerClassName) {
-		super(schedulerClassName);
-	}
 
-	@Override
-    public void receive(Message message) throws MessageListenerException {
-       //Debug Information on running job          
-       Map<String, Object> map = message.getValues();
-       
-       String portletId = map.toString();
-       LOG.info("Statistics Scheduler running... " + portletId);
+    public ThreadManager(){
     }
     
-  
-    
+
+
 }
  
 
