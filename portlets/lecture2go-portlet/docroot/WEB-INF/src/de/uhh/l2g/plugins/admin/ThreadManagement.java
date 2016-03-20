@@ -55,16 +55,14 @@ public class ThreadManagement extends MVCPortlet {
 		
 		StatisticsScheduler scheduler = new StatisticsScheduler(StatisticsScheduler.class.getName());
 	    try {
-	    	scheduler.stopCron();
+	    	scheduler.stop();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
       
 	    try {
-	    	scheduler.startCron();
+	    	scheduler.start();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

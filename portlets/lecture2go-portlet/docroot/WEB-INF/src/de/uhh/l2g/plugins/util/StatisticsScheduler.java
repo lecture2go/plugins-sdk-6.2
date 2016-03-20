@@ -32,25 +32,13 @@ package de.uhh.l2g.plugins.util;
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  ***************************************************************************/
 
-import java.util.List;
 import java.util.Map;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-
-import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
-import com.liferay.portal.kernel.scheduler.SchedulerException;
-import com.liferay.portal.kernel.scheduler.StorageType;
-import com.liferay.portal.kernel.scheduler.Trigger;
-import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
+import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 
 
 
@@ -63,22 +51,23 @@ public class StatisticsScheduler extends PortletScheduler implements MessageList
 	
 	  
     public StatisticsScheduler(){
-    	super(StatisticsScheduler.class.getName());
-	    super.schedulerName = StatisticsScheduler.class.getName();
-	    super.LOG = LogFactoryUtil.getLog(PortletScheduler.class.getName());
+    	super();
     }
     
 	public StatisticsScheduler(String schedulerClassName) {
-		super(schedulerClassName);
+		super(StatisticsScheduler.class.getName());
+	    this.schedulerName = StatisticsScheduler.class.getName();
+	    this.LOG = LogFactoryUtil.getLog(StatisticsScheduler.class.getName());
 	}
 
 	@Override
     public void receive(Message message) throws MessageListenerException {
-       //Debug Information on running job          
-       Map<String, Object> map = message.getValues();
-       
-       String portletId = map.toString();
-       LOG.info("Statistics Scheduler running... " + portletId);
+       //Debug Information on running job 
+	   LOG.info("Message :" + message.toString());
+	   Map<String, Object> map = message.getValues();
+     
+       String values = map.toString();
+       LOG.info("Statistics Scheduler running... " + values);
     }
     
   

@@ -47,11 +47,14 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
+import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
+import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
 
@@ -63,6 +66,7 @@ import com.liferay.portal.service.ClassNameLocalServiceUtil;
  * It setting work pretty much like cron and are configured in liferay-portlet.xml
  * http://www.quartz-scheduler.org/documentation/quartz-1.x/tutorials/crontrigger
  * 
+ * Unfortunately Liferay Scheduler Configuration comes without start/stop/pause/resume functionality
  * This Class uses the Liferay Quartz Scheduler as specified within <scheduler-entry> 
  * and adds start/stop functionility to it until server restart
  */
@@ -72,8 +76,11 @@ import com.liferay.portal.service.ClassNameLocalServiceUtil;
 @SuppressWarnings("serial")
 public class PortletScheduler extends SchedulerResponse implements MessageListener {  
 	
+	 
 	  protected Log LOG;	
 	  protected String schedulerName; 
+	  protected String destination;
+	  protected final String DEST = DestinationNames.SCHEDULER_DISPATCH;
 	
 	
 	  public PortletScheduler(){
@@ -97,14 +104,39 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 			      this.setGroupName(resp.getGroupName());  
 			      this.setStorageType(resp.getStorageType()); 
 			      this.setDescription(resp.getDescription());
-			      this.setDestinationName(resp.getDestinationName());
 			      this.setMessage(resp.getMessage());
 			      this.setTrigger(resp.getTrigger());
 			      
-			      this.LOG.info("Initilizing :" + this.schedulerName +" "+ this.getTrigger().toString());    }  
-			 }  
+			      LOG.info("Copy Portlet Information: "+this.getMessage().toString());
+			      Map<String, Object> map = this.getMessage().getValues();
+			      
+		      	  //this.getMessage().copyFrom(resp.getMessage());		
+		      	  
+			      //Fill this message with portlet specific data
+		      	  this.getMessage().put(SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME, map.get("MESSAGE_LISTENER_CLASS_NAME").toString());
+		      	  this.getMessage().put(SchedulerEngine.PORTLET_ID, map.get("PORTLET_ID").toString());
+			      if (map.get("DESTINATION_NAME") != null) {
+			    	  this.destination = map.get("DESTINATION_NAME").toString();
+			    	  this.getMessage().put(SchedulerEngine.DESTINATION_NAME, map.get("DESTINATION_NAME").toString());
+			    	  this.setDestinationName(map.get("DESTINATION_NAME").toString());
+			    	  this.getMessage().setDestinationName(map.get("DESTINATION_NAME").toString());
+			      }
+			      else{
+			    	LOG.info("Destination not available yet. Setting to " + DEST);
+			    	this.destination = DEST;
+			    	this.getMessage().put(SchedulerEngine.DESTINATION_NAME, DEST);
+			    	this.setDestinationName(DEST);
+			    	this.getMessage().getValues().put(SchedulerEngine.DESTINATION_NAME, DEST);
+			    	this.getMessage().setDestinationName(DEST);
+			      }
+			      //this.getMessage().put(SchedulerEngine.DESTINATION_NAME,  this.destination);
+		          //this.setDestinationName(this.destination);
+			    
+			     // LOG.info("Initilizing :" + this.schedulerName +" "+ this.getTrigger().toString());    
+			    }   
+			  }
 			 } catch (SchedulerException e) {  
-				 this.LOG.warn(e);  
+				 LOG.warn(e);  
 			 } 		
 	}
 	  
@@ -120,45 +152,52 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
     	   this.LOG.info(entry.getKey() + "/" + entry.getValue());
         
        }
+       
     }
     
     
     /**
      * @throws ClassNotFoundException 
+     * @throws SchedulerException 
      * @throws Exception 
      * @throws InstantiationException 
      * 
      * 
      */
-	public void startCron() throws ClassNotFoundException {
-			
+	public void start() throws ClassNotFoundException {	
 		try {  		
 			    
-			      Message message = this.getMessage();
 			       	Map<String, Object> map = this.getMessage().getValues();  
 			      	  String portletId = map.get("PORTLET_ID").toString();
+			      	  String listenerName = map.get("MESSAGE_LISTENER_CLASS_NAME").toString();
 			      	  int exceptionsMaxSize = Integer.valueOf(map.get("EXCEPTIONS_MAX_SIZE").toString());
+			      
+			      LOG.info("Message :" + this.getMessage().getString(SchedulerEngine.PORTLET_ID) +" "+ this.getMessage().getString(SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME)+ " "+this.getMessage().getString(SchedulerEngine.DESTINATION_NAME)); 
 			     
-			      LOG.info("Scheduling :" + this.schedulerName +" "+ this.getTrigger().toString());  
- 			      //Register Listener for correct Class
-			      Class<?> listenerClass = Class.forName(this.schedulerName);	
+			      TriggerState state = SchedulerEngineHelperUtil.getJobState(this.getJobName(), this.getGroupName(), this.getStorageType());
 			      
-			      LOG.info("Registering :" + listenerClass.getName());
-			      
-				  MessageBusUtil.registerMessageListener(this.getDestinationName(), (MessageListener)  listenerClass.newInstance());
-	      
-			      SchedulerEngineHelperUtil.schedule(this.getTrigger(), this.getStorageType(), this.getDescription(), this.getDestinationName(), this.getMessage(), exceptionsMaxSize);     
-			      
+			      if (state.equals(TriggerState.UNSCHEDULED)){
+			    	  LOG.info("Scheduling :" + this.schedulerName +" "+ this.getTrigger().toString());  
+			    	  LOG.info("New Message "+this.getMessage().toString());
+			   
+			    	  //Register Listener for  Class (this will register your class to all messages for destinationName)
+			    	  //Class<?> listenerClass = Class.forName(this.schedulerName);	
+			    	  //LOG.info("Registering :" + listenerClass.getName());
+			    	  // MessageBusUtil.registerMessageListener(this.getDestinationName(), (MessageListener)  listenerClass.newInstance());
+	                  
+			    	  ClassLoader classLoader = PortletClassLoaderUtil.getClassLoader(portletId); //Where portletID is not null
+			    	  Class<MessageListener> messageListener = (Class<MessageListener>) classLoader.loadClass(this.schedulerName);
+			    	  this.getMessage().put(SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME, messageListener.getName());
+			    	  
+			    	  SchedulerEngineHelperUtil.schedule(this.getTrigger(), this.getStorageType(), this.getDescription(), this.destination, this.getMessage(), exceptionsMaxSize);     
+			      }
+			      else{
+			    	  LOG.warn("Scheduler could not be scheduled beacuse it was in state "+state);
+			      }
 			  
 			 } catch (SchedulerException e) {  
 			   LOG.warn(e);  
-			 } catch (InstantiationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalArgumentException e) {
+			 } catch (IllegalArgumentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (SecurityException e) {
@@ -171,17 +210,32 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
      * 
      * 
      */
-    public void stopCron(){
+    public void stop(){
 		try {  
-			 
+			
+			    LOG.info("Message :" + this.getMessage().toString()); 
+		       	Map<String, Object> map = this.getMessage().getValues();  
+		      	  String portletId = map.get("PORTLET_ID").toString();
+		      	  String listenerName = map.get("MESSAGE_LISTENER_CLASS_NAME").toString();		      		    
+		      	
+		      LOG.info("Message :" + portletId +" "+ listenerName); 
+		      
+		      TriggerState state = SchedulerEngineHelperUtil.getJobState(this.getJobName(), this.getGroupName(), this.getStorageType());
+		      
+		      if (state.equals(TriggerState.NORMAL)){
 			      this.LOG.info("Unscheduling :" + this.schedulerName +" "+ this.getTrigger().toString());  
 			      SchedulerEngineHelperUtil.unschedule(this.getJobName(), this.getGroupName(), this.getStorageType());  
-			    
+		      }
+		      else{
+		    	 LOG.warn("Scheduler could not be unscheduled beacuse it was in state "+state); 
+		      }
 			  
 			 } catch (SchedulerException e) {  
-				 this.LOG.warn(e);  
+				 LOG.warn(e);  
 			 } 
 	}
+    
+    
     
 }
  
