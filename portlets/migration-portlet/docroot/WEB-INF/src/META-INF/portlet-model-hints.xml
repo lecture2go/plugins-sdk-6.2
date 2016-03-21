@@ -177,13 +177,12 @@
 		<field name="chapter" type="int" />
 		<field name="userId" type="long" />
 	</model>
-	<model name="de.uhh.l2g.plugins.migration.model.LegacyUpload">
-		<field name="id" type="long" />
-		<field name="userId" type="long" />
-		<field name="contentLength" type="long" />
-		<field name="timestamp" type="Date" />
-		<field name="status" type="int" />
-		<field name="videoId" type="long" />
+	<model name="de.uhh.l2g.plugins.migration.model.LegacyStatistics">
+		<field name="id" type="int" />
+		<field name="public_" type="int" />
+		<field name="private_" type="int" />
+		<field name="autofill" type="int" />
+		<field name="date_" type="Date" />
 	</model>
 	<model name="de.uhh.l2g.plugins.migration.model.LegacyUser">
 		<field name="userId" type="long" />

@@ -304,22 +304,20 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacyUploadModelImpl">
+	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacyStatisticsModelImpl">
 		<attributes>
 			<id name="id">
 				<column name="ID_" />
 			</id>
-			<basic name="userId" />
-			<basic name="contentLength" />
-			<basic name="timestamp">
+			<basic name="public_" />
+			<basic name="private_" />
+			<basic name="autofill" />
+			<basic name="date_">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
-			<basic name="status" />
-			<basic name="videoId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
-			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
 	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacyUserModelImpl">
@@ -501,8 +499,8 @@
 		<table name="segment" />
 		<attributes />
 	</entity>
-	<entity class="de.uhh.l2g.plugins.migration.model.impl.LegacyUploadImpl" name="LegacyUpload">
-		<table name="upload" />
+	<entity class="de.uhh.l2g.plugins.migration.model.impl.LegacyStatisticsImpl" name="LegacyStatistics">
+		<table name="videostats" />
 		<attributes />
 	</entity>
 	<entity class="de.uhh.l2g.plugins.migration.model.impl.LegacyUserImpl" name="LegacyUser">

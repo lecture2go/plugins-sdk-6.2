@@ -243,6 +243,28 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.StatisticsModelImpl">
+		<attributes>
+			<id name="statisticsId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="publicVideos" />
+			<basic name="privateVideos" />
+			<basic name="autofillRow" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.SysModelImpl">
 		<attributes>
 			<id name="sysId" />
@@ -453,6 +475,10 @@
 			<transient name="previusSegmentId" />
 			<transient name="seconds" />
 		</attributes>
+	</entity>
+	<entity class="de.uhh.l2g.plugins.model.impl.StatisticsImpl" name="Statistics">
+		<table name="LG_Statistics" />
+		<attributes />
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.SysImpl" name="Sys">
 		<table name="LG_Sys" />
