@@ -1,5 +1,6 @@
 .view-720 element.style {
-    width: 100%;
+    width: auto;
+    max-width: 720px;
 }
 
 .view-720 .admintile.wide {

@@ -1,5 +1,6 @@
 .view-320 element.style {
-    width: 100%;
+    width: auto;
+    max-width: 320px;
 }
 
 .view-320 .admintile.wide.icons {
