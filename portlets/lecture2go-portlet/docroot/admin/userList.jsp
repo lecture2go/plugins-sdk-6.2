@@ -6,7 +6,7 @@
 	User u = UserLocalServiceUtil.getUser(new Long (request.getRemoteUser()));
 	List<User> tempUserList = new ArrayList();
 	AdminUserManagement aum = new AdminUserManagement();
-	aum.initL2goRoles(u,renderRequest); //init roles
+	aum.initL2goRoles(u); //init roles
 	List<Role> l2goRoles = aum.getL2GoRoles(u);
 	Integer roleId = 0;
 	try{tempUserList=UserLocalServiceUtil.getRoleUsers(new Integer(request.getParameter("roleId")));}

@@ -1189,8 +1189,6 @@ p.smallitalic {
 .aui #navigation .nav .dropdown-menu > li {
     background: #f9f9f9 none repeat scroll 0 0 !important;
     border-bottom: 1px solid #f3f3f3;
-    border-radius: 0;
-    z-index: 23452345;
 }
 
 .add-new-creator-term-object #add {
@@ -1198,19 +1196,17 @@ p.smallitalic {
 }
 
 .aui #navigation .nav .dropdown-menu > li a {
-    background: #f9f9f9 url("https://www.uni-hamburg.de/assets/rot_navi-fdf29d5b8f2a0c0cff02298385c1450f.png") no-repeat scroll 9px 9px !important;
-    border-color: #ddd;
-    border-radius: 0;
+    background: #F9F9F9 url("https://www.uni-hamburg.de/assets/rot_navi-fdf29d5b8f2a0c0cff02298385c1450f.png") no-repeat scroll 9px 9px !important;
+    border-color: #DDD;
     border-style: solid;
     border-width: 1px;
-    color: #4e4e4e;
+    color: #4E4E4E;
     display: block;
-    font-size: 12px;
-    margin-left: 2px;
-    margin-top: -2px;
-    padding-left: 29px;
-    text-align: left;
     text-decoration: none;
+    font-size: 12px;
+    padding-left: 28px;
+    margin-left: 0px;
+    text-align: left;
 }
 
 .aui #navigation .nav .dropdown-menu > li a:hover {

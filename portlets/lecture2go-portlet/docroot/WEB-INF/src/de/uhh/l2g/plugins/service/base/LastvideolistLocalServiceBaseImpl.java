@@ -55,7 +55,6 @@ import de.uhh.l2g.plugins.service.persistence.ProducerFinder;
 import de.uhh.l2g.plugins.service.persistence.ProducerPersistence;
 import de.uhh.l2g.plugins.service.persistence.Producer_LectureseriesPersistence;
 import de.uhh.l2g.plugins.service.persistence.SegmentPersistence;
-import de.uhh.l2g.plugins.service.persistence.StatisticsPersistence;
 import de.uhh.l2g.plugins.service.persistence.SysPersistence;
 import de.uhh.l2g.plugins.service.persistence.TagcloudPersistence;
 import de.uhh.l2g.plugins.service.persistence.TermFinder;
@@ -1042,44 +1041,6 @@ public abstract class LastvideolistLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the statistics local service.
-	 *
-	 * @return the statistics local service
-	 */
-	public de.uhh.l2g.plugins.service.StatisticsLocalService getStatisticsLocalService() {
-		return statisticsLocalService;
-	}
-
-	/**
-	 * Sets the statistics local service.
-	 *
-	 * @param statisticsLocalService the statistics local service
-	 */
-	public void setStatisticsLocalService(
-		de.uhh.l2g.plugins.service.StatisticsLocalService statisticsLocalService) {
-		this.statisticsLocalService = statisticsLocalService;
-	}
-
-	/**
-	 * Returns the statistics persistence.
-	 *
-	 * @return the statistics persistence
-	 */
-	public StatisticsPersistence getStatisticsPersistence() {
-		return statisticsPersistence;
-	}
-
-	/**
-	 * Sets the statistics persistence.
-	 *
-	 * @param statisticsPersistence the statistics persistence
-	 */
-	public void setStatisticsPersistence(
-		StatisticsPersistence statisticsPersistence) {
-		this.statisticsPersistence = statisticsPersistence;
-	}
-
-	/**
 	 * Returns the sys local service.
 	 *
 	 * @return the sys local service
@@ -1707,10 +1668,6 @@ public abstract class LastvideolistLocalServiceBaseImpl
 	protected de.uhh.l2g.plugins.service.SegmentLocalService segmentLocalService;
 	@BeanReference(type = SegmentPersistence.class)
 	protected SegmentPersistence segmentPersistence;
-	@BeanReference(type = de.uhh.l2g.plugins.service.StatisticsLocalService.class)
-	protected de.uhh.l2g.plugins.service.StatisticsLocalService statisticsLocalService;
-	@BeanReference(type = StatisticsPersistence.class)
-	protected StatisticsPersistence statisticsPersistence;
 	@BeanReference(type = de.uhh.l2g.plugins.service.SysLocalService.class)
 	protected de.uhh.l2g.plugins.service.SysLocalService sysLocalService;
 	@BeanReference(type = SysPersistence.class)

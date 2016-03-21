@@ -21,6 +21,7 @@
         <action-key>ADD_INSTITUTIONS</action-key>
       </supports>
       <site-member-defaults>
+      	<action-key>VIEW</action-key>
       </site-member-defaults>
       <guest-defaults>
       </guest-defaults>
@@ -34,19 +35,6 @@
         <action-key>VIEW_HOSTS</action-key>
         <action-key>ADD_INSTITUTIONS</action-key>
       </guest-unsupported>
-      <layout-manager>
-        <action-key>ADD_TO_PAGE</action-key>
-        <action-key>CONFIGURATION</action-key>
-        <action-key>DELETE</action-key>
-        <action-key>UPDATE</action-key>
-        <action-key>VIEW</action-key>
-      </layout-manager>
-      <owner-defaults>
-      	<action-key>VIEW</action-key>
-      	<action-key>UPDATE</action-key>
-      	<action-key>CONFIGURATION</action-key>
-      	<action-key>DELETE</action-key>
-      </owner-defaults>
     </permissions>
   </portlet-resource>
 
@@ -69,7 +57,7 @@
 	        <action-key>EDIT_OWN_INSTITUTIONS</action-key>
 	        <action-key>DELETE_INSTITUTIONS</action-key>
 	        <action-key>DELETE_SUB_INSTITUTIONS</action-key>
-	        <action-key>EDIT_TREE_ROOT</action-key>
+	        <action-key>EDIT_ROOT_INSTITUTION</action-key>
 	 
 	      	<action-key>ADD_SUB_INSTITUTION_ENTRY</action-key>
 	        <action-key>PERMISSIONS</action-key>
@@ -90,7 +78,7 @@
 	        <action-key>EDIT_OWN_INSTITUTIONS</action-key>
 	        <action-key>DELETE_INSTITUTIONS</action-key>
 	        <action-key>DELETE_SUB_INSTITUTIONS</action-key>
-	        <action-key>EDIT_TREE_ROOT</action-key>
+	        <action-key>EDIT_ROOT_INSTITUTION</action-key>
 	        
 	      	<action-key>ADD_SUB_INSTITUTION_ENTRY</action-key>
 	        <action-key>PERMISSIONS</action-key>

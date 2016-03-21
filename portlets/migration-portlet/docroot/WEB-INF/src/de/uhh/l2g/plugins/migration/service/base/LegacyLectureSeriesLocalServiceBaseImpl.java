@@ -49,7 +49,7 @@ import de.uhh.l2g.plugins.migration.service.persistence.LegacyOfficePersistence;
 import de.uhh.l2g.plugins.migration.service.persistence.LegacyProducerLectureseriesPersistence;
 import de.uhh.l2g.plugins.migration.service.persistence.LegacyProducerPersistence;
 import de.uhh.l2g.plugins.migration.service.persistence.LegacySegmentPersistence;
-import de.uhh.l2g.plugins.migration.service.persistence.LegacyStatisticsPersistence;
+import de.uhh.l2g.plugins.migration.service.persistence.LegacyUploadPersistence;
 import de.uhh.l2g.plugins.migration.service.persistence.LegacyUserPersistence;
 import de.uhh.l2g.plugins.migration.service.persistence.LegacyVideoFacilityPersistence;
 import de.uhh.l2g.plugins.migration.service.persistence.LegacyVideoHitlistPersistence;
@@ -909,41 +909,41 @@ public abstract class LegacyLectureSeriesLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the legacy statistics local service.
+	 * Returns the legacy upload local service.
 	 *
-	 * @return the legacy statistics local service
+	 * @return the legacy upload local service
 	 */
-	public de.uhh.l2g.plugins.migration.service.LegacyStatisticsLocalService getLegacyStatisticsLocalService() {
-		return legacyStatisticsLocalService;
+	public de.uhh.l2g.plugins.migration.service.LegacyUploadLocalService getLegacyUploadLocalService() {
+		return legacyUploadLocalService;
 	}
 
 	/**
-	 * Sets the legacy statistics local service.
+	 * Sets the legacy upload local service.
 	 *
-	 * @param legacyStatisticsLocalService the legacy statistics local service
+	 * @param legacyUploadLocalService the legacy upload local service
 	 */
-	public void setLegacyStatisticsLocalService(
-		de.uhh.l2g.plugins.migration.service.LegacyStatisticsLocalService legacyStatisticsLocalService) {
-		this.legacyStatisticsLocalService = legacyStatisticsLocalService;
+	public void setLegacyUploadLocalService(
+		de.uhh.l2g.plugins.migration.service.LegacyUploadLocalService legacyUploadLocalService) {
+		this.legacyUploadLocalService = legacyUploadLocalService;
 	}
 
 	/**
-	 * Returns the legacy statistics persistence.
+	 * Returns the legacy upload persistence.
 	 *
-	 * @return the legacy statistics persistence
+	 * @return the legacy upload persistence
 	 */
-	public LegacyStatisticsPersistence getLegacyStatisticsPersistence() {
-		return legacyStatisticsPersistence;
+	public LegacyUploadPersistence getLegacyUploadPersistence() {
+		return legacyUploadPersistence;
 	}
 
 	/**
-	 * Sets the legacy statistics persistence.
+	 * Sets the legacy upload persistence.
 	 *
-	 * @param legacyStatisticsPersistence the legacy statistics persistence
+	 * @param legacyUploadPersistence the legacy upload persistence
 	 */
-	public void setLegacyStatisticsPersistence(
-		LegacyStatisticsPersistence legacyStatisticsPersistence) {
-		this.legacyStatisticsPersistence = legacyStatisticsPersistence;
+	public void setLegacyUploadPersistence(
+		LegacyUploadPersistence legacyUploadPersistence) {
+		this.legacyUploadPersistence = legacyUploadPersistence;
 	}
 
 	/**
@@ -1338,10 +1338,10 @@ public abstract class LegacyLectureSeriesLocalServiceBaseImpl
 	protected de.uhh.l2g.plugins.migration.service.LegacySegmentLocalService legacySegmentLocalService;
 	@BeanReference(type = LegacySegmentPersistence.class)
 	protected LegacySegmentPersistence legacySegmentPersistence;
-	@BeanReference(type = de.uhh.l2g.plugins.migration.service.LegacyStatisticsLocalService.class)
-	protected de.uhh.l2g.plugins.migration.service.LegacyStatisticsLocalService legacyStatisticsLocalService;
-	@BeanReference(type = LegacyStatisticsPersistence.class)
-	protected LegacyStatisticsPersistence legacyStatisticsPersistence;
+	@BeanReference(type = de.uhh.l2g.plugins.migration.service.LegacyUploadLocalService.class)
+	protected de.uhh.l2g.plugins.migration.service.LegacyUploadLocalService legacyUploadLocalService;
+	@BeanReference(type = LegacyUploadPersistence.class)
+	protected LegacyUploadPersistence legacyUploadPersistence;
 	@BeanReference(type = de.uhh.l2g.plugins.migration.service.LegacyUserLocalService.class)
 	protected de.uhh.l2g.plugins.migration.service.LegacyUserLocalService legacyUserLocalService;
 	@BeanReference(type = LegacyUserPersistence.class)
