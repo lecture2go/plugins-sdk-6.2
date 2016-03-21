@@ -31,7 +31,7 @@
 		<c:if test="${video.citation2go==1}">
 				<div class="sharetile">
 					<p class="tileheading">citation2go</p>
-					<div id="c2g">
+					<div id="c2g-generate">
 						<ul>
 							<li>
 								<aui:input name="timeStart" label="citation-start" required="false" id="timeStart" readonly="true"/>

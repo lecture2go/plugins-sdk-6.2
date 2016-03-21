@@ -1,3 +1,7 @@
+.view-480 element.style {
+    width: 100%;
+}
+
 .view-480 .admintile.wide.icons {
 	visibility: hidden;
 	display: none;
@@ -51,6 +55,12 @@
     visibility: hidden;
 }
 
+
+.view-480 .path-wide {
+    display: none;
+    visibility: hidden;
+}
+
 .view-480 .sharetile {
     width: 22%;
 }
@@ -81,8 +91,16 @@
 }
 
 .view-480 input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
-    width: 320px;
-    margin: 0;
+    float: left;
+    margin-left: 0;
+    margin-top: 2%;
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;
+}
+
+.view-480 .meta-description {
+    display: none;
 }
 
 .view-480 #searchedvideo {
@@ -102,6 +120,20 @@
     visibility: hidden;
 }
 
-.view-720 #metadata input {
-    width: 112px;
+.view-480 #metadata input {
+    width: 100%;
 }
+
+.view-480 #content {
+    margin-top: 4%;
+}
+
+.view-480 .row-fluid .span9 {
+    float: left;
+    width: 100%;
+}
+
+.view-480 #banner {
+    background: rgba(0, 0, 0, 0) url("") no-repeat scroll right 0 top 0 / 130px auto;
+    margin-right: -6px;
+} 

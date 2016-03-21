@@ -123,3 +123,6 @@
     visibility: hidden;
 }
 
+.view-lt960 #metadata input {
+    width: 100%;
+}

@@ -1,3 +1,7 @@
+.view-720 element.style {
+    width: 100%;
+}
+
 .view-720 .admintile.wide {
     margin: 0 -9px 0 3px;
     width: 100%;
@@ -56,7 +60,7 @@
 }
 
 .view-720 #metadata input {
-    width: 243px;
+    width: 100%;
 }
 
 .view-720 .metainfo {
@@ -122,12 +126,28 @@
 }
 
 .view-720 input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
-    width: 320px;
-    float: right;
-    margin:0px;
+    float: left;
+    margin-left: 0;
+    margin-top: 2%;
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;
 }
 
 .view-720 .add-new-creator-term-object {
     display: none;
     visibility: hidden;
 }
+
+.view-720 #content {
+    margin-top: 2%;
+}
+
+.view-720 .row-fluid .span9 {
+    float: left;
+}
+
+.view-720 #banner {
+    background: rgba(0, 0, 0, 0) url("") no-repeat scroll right 0 top 0 / 130px auto;
+    margin-right: -6px;
+} 
