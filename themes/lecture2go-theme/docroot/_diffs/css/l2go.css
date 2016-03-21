@@ -1,17 +1,13 @@
 .yui3-aclist-content {
-    width: 327px;
+    width: 98.5%;
 }
 
-element.style {
-    width: 327px;
-}
 
-/**
-.view-960 #banner {
+#banner {
     background: rgba(0, 0, 0, 0) url("/lecture2go-theme/images/logo_l2go.png") no-repeat scroll right 0 top 0 / 130px auto;
     margin-right: -6px;
 } 
-**/	
+	
 .taglib-page-iterator .lfr-pagination-buttons {
     visibility: hidden;
 	padding: 0px;

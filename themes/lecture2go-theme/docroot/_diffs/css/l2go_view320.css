@@ -159,10 +159,6 @@
     width: 100%;
 }
 
-.view-320 .yui3-aclist-content {
-    width: 249px; 
-}
-
 .view-320 #searchedvideo {
     width: 10em;
 }
@@ -197,3 +193,8 @@
     width: 100%;
     margin-top: 13%;
 }
+
+.view-320 #banner {
+    background: rgba(0, 0, 0, 0) url("") no-repeat scroll right 0 top 0 / 130px auto;
+    margin-right: -6px;
+} 
