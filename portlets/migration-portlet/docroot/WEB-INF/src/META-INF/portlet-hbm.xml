@@ -18,7 +18,7 @@
 	<import class="de.uhh.l2g.plugins.migration.model.LegacyProducer" />
 	<import class="de.uhh.l2g.plugins.migration.model.LegacyProducerLectureseries" />
 	<import class="de.uhh.l2g.plugins.migration.model.LegacySegment" />
-	<import class="de.uhh.l2g.plugins.migration.model.LegacyStatistics" />
+	<import class="de.uhh.l2g.plugins.migration.model.LegacyUpload" />
 	<import class="de.uhh.l2g.plugins.migration.model.LegacyUser" />
 	<import class="de.uhh.l2g.plugins.migration.model.LegacyVideo" />
 	<import class="de.uhh.l2g.plugins.migration.model.LegacyVideoFacility" />
@@ -238,15 +238,16 @@
 		<property name="chapter" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
-	<class name="de.uhh.l2g.plugins.migration.model.impl.LegacyStatisticsImpl" table="videostats">
+	<class name="de.uhh.l2g.plugins.migration.model.impl.LegacyUploadImpl" table="upload">
 		<cache usage="read-write" />
-		<id name="id" column="id_" type="int">
+		<id name="id" column="id_" type="long">
 			<generator class="assigned" />
 		</id>
-		<property name="public_" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="private_" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="autofill" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="date_" type="org.hibernate.type.TimestampType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="contentLength" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="timestamp" type="org.hibernate.type.TimestampType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="videoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.migration.model.impl.LegacyUserImpl" table="User_">
 		<cache usage="read-write" />

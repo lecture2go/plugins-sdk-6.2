@@ -859,7 +859,7 @@
 
 	@each $prefix in $prefixes {
 		::#{$prefix}selection {
-			background: #2AAAE6;
+			background: #c90219;
 			color: #FFF;
 
 			@include text-shadow(-1px -1px rgba(0, 0, 0, 0.3));

@@ -26,7 +26,7 @@
 <portlet:actionURL name="addStreamingServer" var="addStreamingServerURL"></portlet:actionURL>
 <portlet:actionURL name="deleteStreamingServer" var="deletetreamingServerURL"></portlet:actionURL>
 <portlet:actionURL name="updateStreamingServer" var="updateStreamingServerURL"></portlet:actionURL>
-<portlet:actionURL name="updateTreeRoot" var="updateTreeRootURL"></portlet:actionURL>
+<portlet:actionURL name="updateRootInstitution" var="updateRootInstitutionURL"></portlet:actionURL>
 
 
 <%
@@ -304,18 +304,18 @@ Group Institution_Host Permissions:
    //System.out.println(ownInstitutionId+ " " +treeBaseId);
    %>
 
-<%--TREE ROOT (INSTITUTION)--%>
-<%--Permission regarding concrete instance of element, namely Tree Root (not applicable as long as Resources are not migrated) --%>
+<%--ROOT INSTITUTION--%>
+<%--Permission regarding concrete instance of element, namely RootInstitution --%>
 <c:choose>
-<c:when  test='<%= permissionChecker.hasPermission(groupId, institutionModel, groupId, "EDIT_TREE_ROOT") %>'>
-	<liferay-ui:panel title="Top Level Institution" collapsible="true" id="treeRootSettings"
+<c:when  test='<%= permissionChecker.hasPermission(groupId, institutionModel, groupId, "EDIT_ROOT_INSTITUTION") %>'>
+	<liferay-ui:panel title="Top Level Institution" collapsible="true" id="rootInstitutionSettings"
 					defaultState="closed"
 					extended="<%= false %>"
 					persistState="<%= true %>">
-	<aui:form action="<%= updateTreeRootURL %>" name="<portlet:namespace />fm">
+	<aui:form action="<%= updateRootInstitutionURL %>" name="<portlet:namespace />fm">
 		<aui:fieldset>
-				<aui:input name="treeRoot" label="Top Level Institution" required="true" inlineField="true"  value = '<%= treeBase.getName() %>'/>
-				<aui:input name="treeRootId" type='hidden' inlineField="true" value = '<%= treeBase.getInstitutionId() %>'/>
+				<aui:input name="rootInstitution" label="Top Level Institution" required="true" inlineField="true"  value = '<%= treeBase.getName() %>'/>
+				<aui:input name="rootInstitutionId" type='hidden' inlineField="true" value = '<%= treeBase.getInstitutionId() %>'/>
 				<aui:button type="submit"></aui:button>
 				<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button>
 		</aui:fieldset>

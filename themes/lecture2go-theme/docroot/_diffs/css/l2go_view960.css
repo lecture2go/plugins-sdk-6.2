@@ -1,3 +1,7 @@
-.view-960 #metadata input {
-    width: 100%;
+@media (min-width: 979px) {
+
+	#metadata input {
+    	width: 100%;
+	}
+
 }

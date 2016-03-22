@@ -1,8 +1,3 @@
-.yui3-aclist-content {
-    width: 98.5%;
-}
-
-
 #banner {
     background: rgba(0, 0, 0, 0) url("/lecture2go-theme/images/logo_l2go.png") no-repeat scroll right 0 top 0 / 130px auto;
     margin-right: -6px;
@@ -1175,20 +1170,11 @@ p.smallitalic {
     font-family: inherit !important;
 }
 
-.aui .dropdown-menu {
-    border-bottom: 4px solid #888 !important;
-    border-left: 1px solid transparent !important;
-    border-right: 1px solid transparent !important;
-    box-shadow: none;
-    margin-left: -2px !important;
-    width: auto;
-    padding-top: 1px;
-    padding-bottom: 1px;
-}
-
 .aui #navigation .nav .dropdown-menu > li {
     background: #f9f9f9 none repeat scroll 0 0 !important;
     border-bottom: 1px solid #f3f3f3;
+    border-radius: 0;
+    z-index: 23452345;
 }
 
 .add-new-creator-term-object #add {
@@ -1196,17 +1182,19 @@ p.smallitalic {
 }
 
 .aui #navigation .nav .dropdown-menu > li a {
-    background: #F9F9F9 url("https://www.uni-hamburg.de/assets/rot_navi-fdf29d5b8f2a0c0cff02298385c1450f.png") no-repeat scroll 9px 9px !important;
-    border-color: #DDD;
+    background: #f9f9f9 url("https://www.uni-hamburg.de/assets/rot_navi-fdf29d5b8f2a0c0cff02298385c1450f.png") no-repeat scroll 9px 9px !important;
+    border-color: #ddd;
+    border-radius: 0;
     border-style: solid;
     border-width: 1px;
-    color: #4E4E4E;
+    color: #4e4e4e;
     display: block;
-    text-decoration: none;
     font-size: 12px;
-    padding-left: 28px;
-    margin-left: 0px;
+    margin-left: 2px;
+    margin-top: -2px;
+    padding-left: 29px;
     text-align: left;
+    text-decoration: none;
 }
 
 .aui #navigation .nav .dropdown-menu > li a:hover {
@@ -1334,11 +1322,6 @@ div.filter-menu-link span.icon-large.icon-remove {
     display: none;
 }
 
-.aui .navbar-fixed-top, .aui .navbar-fixed-bottom, .aui .navbar-static-top {
-    margin-left: 0px;
-    margin-right: 0px;
-}
-
 .aui body {
     padding-left: 0px;
     padding-right: 0px;
@@ -1352,9 +1335,24 @@ div.filter-menu-link span.icon-large.icon-remove {
     text-decoration: none;
 }
 
+.aui .dropdown-menu {
+    border-left: 1px solid transparent !important;
+    border-right: 1px solid transparent !important;
+    box-shadow: none;
+    margin-left: -3px !important;
+    padding-bottom: 1px;
+    padding-top: 3px;
+    width: 100.5%;
+}
+
 #license .control-group.form-inline {
     float: left;
     margin-top: 0;
+}
+
+.aui .navbar-fixed-top, .aui .navbar-fixed-bottom, .aui .navbar-static-top {
+    margin-left: 0;
+    margin-right: 12px;
 }
 
 .admintile.wide.icons.creators {
@@ -1565,7 +1563,7 @@ div.filter-menu-link span.icon-large.icon-remove {
     
 	.aui .label {
     	line-height: 14px;
-	}
+	}	
     
 }
 

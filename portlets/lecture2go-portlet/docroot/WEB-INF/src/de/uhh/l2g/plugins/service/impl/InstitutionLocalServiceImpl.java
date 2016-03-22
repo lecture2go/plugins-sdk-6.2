@@ -38,7 +38,6 @@ import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Institution_Host;
 import de.uhh.l2g.plugins.service.ClpSerializer;
-import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.InstitutionLocalServiceBaseImpl;
@@ -283,12 +282,6 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		defaultInstitution.setExpandoBridgeAttributes(serviceContext);
 
 		institutionPersistence.update(defaultInstitution);
-		
-		//add default host if set
-		long hostId = HostLocalServiceUtil.getDefaultHostId(companyId, groupId);
-		if (hostId > 0){
-			Institution_HostLocalServiceUtil.addEntry(institutionId, hostId, serviceContext);
-		}
 
 		resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
 				Institution.class.getName(), institutionId, false, true, true);
