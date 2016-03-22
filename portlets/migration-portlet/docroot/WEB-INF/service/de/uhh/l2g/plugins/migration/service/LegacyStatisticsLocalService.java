@@ -25,72 +25,72 @@ import com.liferay.portal.service.InvokableLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
 
 /**
- * Provides the local service interface for LegacyUpload. Methods of this
+ * Provides the local service interface for LegacyStatistics. Methods of this
  * service will not have security checks based on the propagated JAAS
  * credentials because this service can only be accessed from within the same
  * VM.
  *
  * @author unihh
- * @see LegacyUploadLocalServiceUtil
- * @see de.uhh.l2g.plugins.migration.service.base.LegacyUploadLocalServiceBaseImpl
- * @see de.uhh.l2g.plugins.migration.service.impl.LegacyUploadLocalServiceImpl
+ * @see LegacyStatisticsLocalServiceUtil
+ * @see de.uhh.l2g.plugins.migration.service.base.LegacyStatisticsLocalServiceBaseImpl
+ * @see de.uhh.l2g.plugins.migration.service.impl.LegacyStatisticsLocalServiceImpl
  * @generated
  */
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
-public interface LegacyUploadLocalService extends BaseLocalService,
+public interface LegacyStatisticsLocalService extends BaseLocalService,
 	InvokableLocalService, PersistedModelLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link LegacyUploadLocalServiceUtil} to access the legacy upload local service. Add custom service methods to {@link de.uhh.l2g.plugins.migration.service.impl.LegacyUploadLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link LegacyStatisticsLocalServiceUtil} to access the legacy statistics local service. Add custom service methods to {@link de.uhh.l2g.plugins.migration.service.impl.LegacyStatisticsLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 
 	/**
-	* Adds the legacy upload to the database. Also notifies the appropriate model listeners.
+	* Adds the legacy statistics to the database. Also notifies the appropriate model listeners.
 	*
-	* @param legacyUpload the legacy upload
-	* @return the legacy upload that was added
+	* @param legacyStatistics the legacy statistics
+	* @return the legacy statistics that was added
 	* @throws SystemException if a system exception occurred
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public de.uhh.l2g.plugins.migration.model.LegacyUpload addLegacyUpload(
-		de.uhh.l2g.plugins.migration.model.LegacyUpload legacyUpload)
+	public de.uhh.l2g.plugins.migration.model.LegacyStatistics addLegacyStatistics(
+		de.uhh.l2g.plugins.migration.model.LegacyStatistics legacyStatistics)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Creates a new legacy upload with the primary key. Does not add the legacy upload to the database.
+	* Creates a new legacy statistics with the primary key. Does not add the legacy statistics to the database.
 	*
-	* @param id the primary key for the new legacy upload
-	* @return the new legacy upload
+	* @param id the primary key for the new legacy statistics
+	* @return the new legacy statistics
 	*/
-	public de.uhh.l2g.plugins.migration.model.LegacyUpload createLegacyUpload(
-		long id);
+	public de.uhh.l2g.plugins.migration.model.LegacyStatistics createLegacyStatistics(
+		int id);
 
 	/**
-	* Deletes the legacy upload with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the legacy statistics with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param id the primary key of the legacy upload
-	* @return the legacy upload that was removed
-	* @throws PortalException if a legacy upload with the primary key could not be found
+	* @param id the primary key of the legacy statistics
+	* @return the legacy statistics that was removed
+	* @throws PortalException if a legacy statistics with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public de.uhh.l2g.plugins.migration.model.LegacyUpload deleteLegacyUpload(
-		long id)
+	public de.uhh.l2g.plugins.migration.model.LegacyStatistics deleteLegacyStatistics(
+		int id)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Deletes the legacy upload from the database. Also notifies the appropriate model listeners.
+	* Deletes the legacy statistics from the database. Also notifies the appropriate model listeners.
 	*
-	* @param legacyUpload the legacy upload
-	* @return the legacy upload that was removed
+	* @param legacyStatistics the legacy statistics
+	* @return the legacy statistics that was removed
 	* @throws SystemException if a system exception occurred
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public de.uhh.l2g.plugins.migration.model.LegacyUpload deleteLegacyUpload(
-		de.uhh.l2g.plugins.migration.model.LegacyUpload legacyUpload)
+	public de.uhh.l2g.plugins.migration.model.LegacyStatistics deleteLegacyStatistics(
+		de.uhh.l2g.plugins.migration.model.LegacyStatistics legacyStatistics)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
@@ -111,7 +111,7 @@ public interface LegacyUploadLocalService extends BaseLocalService,
 	* Performs a dynamic query on the database and returns a range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.migration.model.impl.LegacyUploadModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.migration.model.impl.LegacyStatisticsModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -129,7 +129,7 @@ public interface LegacyUploadLocalService extends BaseLocalService,
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.migration.model.impl.LegacyUploadModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.migration.model.impl.LegacyStatisticsModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -171,20 +171,20 @@ public interface LegacyUploadLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public de.uhh.l2g.plugins.migration.model.LegacyUpload fetchLegacyUpload(
-		long id) throws com.liferay.portal.kernel.exception.SystemException;
+	public de.uhh.l2g.plugins.migration.model.LegacyStatistics fetchLegacyStatistics(
+		int id) throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the legacy upload with the primary key.
+	* Returns the legacy statistics with the primary key.
 	*
-	* @param id the primary key of the legacy upload
-	* @return the legacy upload
-	* @throws PortalException if a legacy upload with the primary key could not be found
+	* @param id the primary key of the legacy statistics
+	* @return the legacy statistics
+	* @throws PortalException if a legacy statistics with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public de.uhh.l2g.plugins.migration.model.LegacyUpload getLegacyUpload(
-		long id)
+	public de.uhh.l2g.plugins.migration.model.LegacyStatistics getLegacyStatistics(
+		int id)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -196,42 +196,42 @@ public interface LegacyUploadLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns a range of all the legacy uploads.
+	* Returns a range of all the legacy statisticses.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.migration.model.impl.LegacyUploadModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.migration.model.impl.LegacyStatisticsModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of legacy uploads
-	* @param end the upper bound of the range of legacy uploads (not inclusive)
-	* @return the range of legacy uploads
+	* @param start the lower bound of the range of legacy statisticses
+	* @param end the upper bound of the range of legacy statisticses (not inclusive)
+	* @return the range of legacy statisticses
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<de.uhh.l2g.plugins.migration.model.LegacyUpload> getLegacyUploads(
+	public java.util.List<de.uhh.l2g.plugins.migration.model.LegacyStatistics> getLegacyStatisticses(
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the number of legacy uploads.
+	* Returns the number of legacy statisticses.
 	*
-	* @return the number of legacy uploads
+	* @return the number of legacy statisticses
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getLegacyUploadsCount()
+	public int getLegacyStatisticsesCount()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the legacy upload in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Updates the legacy statistics in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param legacyUpload the legacy upload
-	* @return the legacy upload that was updated
+	* @param legacyStatistics the legacy statistics
+	* @return the legacy statistics that was updated
 	* @throws SystemException if a system exception occurred
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public de.uhh.l2g.plugins.migration.model.LegacyUpload updateLegacyUpload(
-		de.uhh.l2g.plugins.migration.model.LegacyUpload legacyUpload)
+	public de.uhh.l2g.plugins.migration.model.LegacyStatistics updateLegacyStatistics(
+		de.uhh.l2g.plugins.migration.model.LegacyStatistics legacyStatistics)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
