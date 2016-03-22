@@ -20,29 +20,30 @@ import com.liferay.portal.service.InvokableLocalService;
  * @author unihh
  * @generated
  */
-public class LegacyUploadLocalServiceClp implements LegacyUploadLocalService {
-	public LegacyUploadLocalServiceClp(
+public class LegacyStatisticsLocalServiceClp
+	implements LegacyStatisticsLocalService {
+	public LegacyStatisticsLocalServiceClp(
 		InvokableLocalService invokableLocalService) {
 		_invokableLocalService = invokableLocalService;
 
-		_methodName0 = "addLegacyUpload";
+		_methodName0 = "addLegacyStatistics";
 
 		_methodParameterTypes0 = new String[] {
-				"de.uhh.l2g.plugins.migration.model.LegacyUpload"
+				"de.uhh.l2g.plugins.migration.model.LegacyStatistics"
 			};
 
-		_methodName1 = "createLegacyUpload";
+		_methodName1 = "createLegacyStatistics";
 
-		_methodParameterTypes1 = new String[] { "long" };
+		_methodParameterTypes1 = new String[] { "int" };
 
-		_methodName2 = "deleteLegacyUpload";
+		_methodName2 = "deleteLegacyStatistics";
 
-		_methodParameterTypes2 = new String[] { "long" };
+		_methodParameterTypes2 = new String[] { "int" };
 
-		_methodName3 = "deleteLegacyUpload";
+		_methodName3 = "deleteLegacyStatistics";
 
 		_methodParameterTypes3 = new String[] {
-				"de.uhh.l2g.plugins.migration.model.LegacyUpload"
+				"de.uhh.l2g.plugins.migration.model.LegacyStatistics"
 			};
 
 		_methodName4 = "dynamicQuery";
@@ -81,30 +82,30 @@ public class LegacyUploadLocalServiceClp implements LegacyUploadLocalService {
 				"com.liferay.portal.kernel.dao.orm.Projection"
 			};
 
-		_methodName10 = "fetchLegacyUpload";
+		_methodName10 = "fetchLegacyStatistics";
 
-		_methodParameterTypes10 = new String[] { "long" };
+		_methodParameterTypes10 = new String[] { "int" };
 
-		_methodName11 = "getLegacyUpload";
+		_methodName11 = "getLegacyStatistics";
 
-		_methodParameterTypes11 = new String[] { "long" };
+		_methodParameterTypes11 = new String[] { "int" };
 
 		_methodName12 = "getPersistedModel";
 
 		_methodParameterTypes12 = new String[] { "java.io.Serializable" };
 
-		_methodName13 = "getLegacyUploads";
+		_methodName13 = "getLegacyStatisticses";
 
 		_methodParameterTypes13 = new String[] { "int", "int" };
 
-		_methodName14 = "getLegacyUploadsCount";
+		_methodName14 = "getLegacyStatisticsesCount";
 
 		_methodParameterTypes14 = new String[] {  };
 
-		_methodName15 = "updateLegacyUpload";
+		_methodName15 = "updateLegacyStatistics";
 
 		_methodParameterTypes15 = new String[] {
-				"de.uhh.l2g.plugins.migration.model.LegacyUpload"
+				"de.uhh.l2g.plugins.migration.model.LegacyStatistics"
 			};
 
 		_methodName16 = "getBeanIdentifier";
@@ -117,15 +118,16 @@ public class LegacyUploadLocalServiceClp implements LegacyUploadLocalService {
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacyUpload addLegacyUpload(
-		de.uhh.l2g.plugins.migration.model.LegacyUpload legacyUpload)
+	public de.uhh.l2g.plugins.migration.model.LegacyStatistics addLegacyStatistics(
+		de.uhh.l2g.plugins.migration.model.LegacyStatistics legacyStatistics)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName0,
 					_methodParameterTypes0,
-					new Object[] { ClpSerializer.translateInput(legacyUpload) });
+					new Object[] { ClpSerializer.translateInput(
+							legacyStatistics) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -143,12 +145,12 @@ public class LegacyUploadLocalServiceClp implements LegacyUploadLocalService {
 			}
 		}
 
-		return (de.uhh.l2g.plugins.migration.model.LegacyUpload)ClpSerializer.translateOutput(returnObj);
+		return (de.uhh.l2g.plugins.migration.model.LegacyStatistics)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacyUpload createLegacyUpload(
-		long id) {
+	public de.uhh.l2g.plugins.migration.model.LegacyStatistics createLegacyStatistics(
+		int id) {
 		Object returnObj = null;
 
 		try {
@@ -167,12 +169,12 @@ public class LegacyUploadLocalServiceClp implements LegacyUploadLocalService {
 			}
 		}
 
-		return (de.uhh.l2g.plugins.migration.model.LegacyUpload)ClpSerializer.translateOutput(returnObj);
+		return (de.uhh.l2g.plugins.migration.model.LegacyStatistics)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacyUpload deleteLegacyUpload(
-		long id)
+	public de.uhh.l2g.plugins.migration.model.LegacyStatistics deleteLegacyStatistics(
+		int id)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -201,19 +203,20 @@ public class LegacyUploadLocalServiceClp implements LegacyUploadLocalService {
 			}
 		}
 
-		return (de.uhh.l2g.plugins.migration.model.LegacyUpload)ClpSerializer.translateOutput(returnObj);
+		return (de.uhh.l2g.plugins.migration.model.LegacyStatistics)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacyUpload deleteLegacyUpload(
-		de.uhh.l2g.plugins.migration.model.LegacyUpload legacyUpload)
+	public de.uhh.l2g.plugins.migration.model.LegacyStatistics deleteLegacyStatistics(
+		de.uhh.l2g.plugins.migration.model.LegacyStatistics legacyStatistics)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName3,
 					_methodParameterTypes3,
-					new Object[] { ClpSerializer.translateInput(legacyUpload) });
+					new Object[] { ClpSerializer.translateInput(
+							legacyStatistics) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -231,7 +234,7 @@ public class LegacyUploadLocalServiceClp implements LegacyUploadLocalService {
 			}
 		}
 
-		return (de.uhh.l2g.plugins.migration.model.LegacyUpload)ClpSerializer.translateOutput(returnObj);
+		return (de.uhh.l2g.plugins.migration.model.LegacyStatistics)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
@@ -432,8 +435,8 @@ public class LegacyUploadLocalServiceClp implements LegacyUploadLocalService {
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacyUpload fetchLegacyUpload(
-		long id) throws com.liferay.portal.kernel.exception.SystemException {
+	public de.uhh.l2g.plugins.migration.model.LegacyStatistics fetchLegacyStatistics(
+		int id) throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
@@ -456,12 +459,12 @@ public class LegacyUploadLocalServiceClp implements LegacyUploadLocalService {
 			}
 		}
 
-		return (de.uhh.l2g.plugins.migration.model.LegacyUpload)ClpSerializer.translateOutput(returnObj);
+		return (de.uhh.l2g.plugins.migration.model.LegacyStatistics)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacyUpload getLegacyUpload(
-		long id)
+	public de.uhh.l2g.plugins.migration.model.LegacyStatistics getLegacyStatistics(
+		int id)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -490,7 +493,7 @@ public class LegacyUploadLocalServiceClp implements LegacyUploadLocalService {
 			}
 		}
 
-		return (de.uhh.l2g.plugins.migration.model.LegacyUpload)ClpSerializer.translateOutput(returnObj);
+		return (de.uhh.l2g.plugins.migration.model.LegacyStatistics)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
@@ -529,7 +532,7 @@ public class LegacyUploadLocalServiceClp implements LegacyUploadLocalService {
 	}
 
 	@Override
-	public java.util.List<de.uhh.l2g.plugins.migration.model.LegacyUpload> getLegacyUploads(
+	public java.util.List<de.uhh.l2g.plugins.migration.model.LegacyStatistics> getLegacyStatisticses(
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -554,11 +557,11 @@ public class LegacyUploadLocalServiceClp implements LegacyUploadLocalService {
 			}
 		}
 
-		return (java.util.List<de.uhh.l2g.plugins.migration.model.LegacyUpload>)ClpSerializer.translateOutput(returnObj);
+		return (java.util.List<de.uhh.l2g.plugins.migration.model.LegacyStatistics>)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public int getLegacyUploadsCount()
+	public int getLegacyStatisticsesCount()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
@@ -586,15 +589,16 @@ public class LegacyUploadLocalServiceClp implements LegacyUploadLocalService {
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.migration.model.LegacyUpload updateLegacyUpload(
-		de.uhh.l2g.plugins.migration.model.LegacyUpload legacyUpload)
+	public de.uhh.l2g.plugins.migration.model.LegacyStatistics updateLegacyStatistics(
+		de.uhh.l2g.plugins.migration.model.LegacyStatistics legacyStatistics)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName15,
 					_methodParameterTypes15,
-					new Object[] { ClpSerializer.translateInput(legacyUpload) });
+					new Object[] { ClpSerializer.translateInput(
+							legacyStatistics) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -612,7 +616,7 @@ public class LegacyUploadLocalServiceClp implements LegacyUploadLocalService {
 			}
 		}
 
-		return (de.uhh.l2g.plugins.migration.model.LegacyUpload)ClpSerializer.translateOutput(returnObj);
+		return (de.uhh.l2g.plugins.migration.model.LegacyStatistics)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override

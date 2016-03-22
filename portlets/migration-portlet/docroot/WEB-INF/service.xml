@@ -254,16 +254,7 @@
 		<column name="facilityId" type="long" />
 		<column name="citation2go" type="int" />
   </entity>
-  
-   <entity name="LegacyUpload" uuid="false" local-service="true" remote-service="false" data-source="anotherDataSource" session-factory="anotherSessionFactory" table="upload" tx-manager="anotherTransactionManager">
-		<column name="id" type="long" primary="true" />
-		<column name="userId" type="long"/>
-		<column name="contentLength" type="long" />
-		<column name="timestamp" type="Date" />
-		<column name="status" type="int" />
-		<column name="videoId" type="long" />
-  </entity>  
-  
+   
   
   <!-- other Entities -->
  <entity name="LegacyOffice" uuid="false" local-service="true" remote-service="false" data-source="anotherDataSource" session-factory="anotherSessionFactory" table="office" tx-manager="anotherTransactionManager">
@@ -386,7 +377,16 @@
   <entity name="LegacyLastVideoList" uuid="false" local-service="true" remote-service="false" data-source="anotherDataSource" session-factory="anotherSessionFactory" table="lastvideolist" tx-manager="anotherTransactionManager">
         <column name="id" type="int" primary="true" id-type="increment"></column>
         <column name="videoId" type="long"></column>
-  </entity>                    
+  </entity>    
+  
+   <entity name="LegacyStatistics" uuid="false" local-service="true" remote-service="false" data-source="anotherDataSource" session-factory="anotherSessionFactory" table="videostats" tx-manager="anotherTransactionManager">
+	    <column name="id" type="int" primary="true"></column>
+	    <column name="public_" type="int"></column>
+        <column name="private_" type="int"></column>
+        <column name="autofill" type="int"></column>
+		<column name="date_" type="Date"></column>
+
+  </entity>                  
   
   
  <!-- to be migrated? if yess there is some inconsistency with the ID..  

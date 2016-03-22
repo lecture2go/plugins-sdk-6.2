@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
@@ -69,7 +70,8 @@ public class Institution_HostLocalServiceImpl
 }
 
 	public Host getByInstitutionId(long institutionId) throws SystemException, PortalException {
-			long hId = institution_HostPersistence.findByG_I(0,institutionId).getHostId();
+		    //Assumes there is at most one Host per Institution with uniqueId
+			long hId = institution_HostPersistence.findByinstitutionId(institutionId).get(0).getHostId();
 
 			Host h = HostLocalServiceUtil.getByHostId(hId);
 			return h;
@@ -139,9 +141,29 @@ public class Institution_HostLocalServiceImpl
 
 	}
 	
-	public void addDefaultEntry(){
-		
-		
+	/**Assume one Institution has at most one Host that remains constant*/
+	public long getDefaultInstitutionHostId(long companyId, long groupId) {
+	List<Institution_Host> defaults = null;
+	    	
+	Institution defaultInstitution;
+	try {
+		defaultInstitution = institutionPersistence.fetchByRoot(companyId, groupId, false);
+		defaults = institution_HostPersistence.findByC_G_I(companyId, groupId, defaultInstitution.getInstitutionId());
+	} catch (SystemException e) {
+		//TODO: 
+		e.printStackTrace();
+	}	    			
+	if (defaults.size() > 0) return defaults.get(0).getInstitutionHostId();
+	else return 0;
+	}
+	
+	/** if not added with Institution
+	 * 
+	 * @throws SystemException 
+	 * @throws PortalException */
+	public long addDefaultInstitutionHost(long defaultInstitutionId, long defaultHostId, ServiceContext serviceContext) throws PortalException, SystemException{
+    	Institution_Host defaultInstitution_Host = Institution_HostLocalServiceUtil.addEntry(defaultInstitutionId, defaultHostId, serviceContext);
+    	return defaultInstitution_Host.getInstitutionHostId();
 	}
 
 	public Institution_Host addEntry(long institutionId, long hostId, ServiceContext serviceContext) throws SystemException, PortalException {

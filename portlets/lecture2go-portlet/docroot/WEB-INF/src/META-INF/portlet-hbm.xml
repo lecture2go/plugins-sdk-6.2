@@ -19,6 +19,7 @@
 	<import class="de.uhh.l2g.plugins.model.Producer" />
 	<import class="de.uhh.l2g.plugins.model.Producer_Lectureseries" />
 	<import class="de.uhh.l2g.plugins.model.Segment" />
+	<import class="de.uhh.l2g.plugins.model.Statistics" />
 	<import class="de.uhh.l2g.plugins.model.Sys" />
 	<import class="de.uhh.l2g.plugins.model.Tagcloud" />
 	<import class="de.uhh.l2g.plugins.model.Term" />
@@ -216,6 +217,21 @@
 		<property name="end" type="com.liferay.portal.dao.orm.hibernate.StringType" column="end_" />
 		<property name="chapter" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="de.uhh.l2g.plugins.model.impl.StatisticsImpl" table="LG_Statistics">
+		<cache usage="read-write" />
+		<id name="statisticsId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="publicVideos" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="privateVideos" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="autofillRow" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.SysImpl" table="LG_Sys">
 		<cache usage="read-write" />
