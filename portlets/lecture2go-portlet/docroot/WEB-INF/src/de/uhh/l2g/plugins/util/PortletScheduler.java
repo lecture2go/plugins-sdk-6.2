@@ -115,6 +115,8 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 			      //Fill this message with portlet specific data
 		      	  this.getMessage().put(SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME, map.get("MESSAGE_LISTENER_CLASS_NAME").toString());
 		      	  this.getMessage().put(SchedulerEngine.PORTLET_ID, map.get("PORTLET_ID").toString());
+		          this.getMessage().put(SchedulerEngine.MESSAGE_LISTENER_UUID, map.get("MESSAGE_LISTENER_UUID").toString());
+		          
 			      if (map.get("DESTINATION_NAME") != null) {
 			    	  this.destination = map.get("DESTINATION_NAME").toString();
 			    	  this.getMessage().put(SchedulerEngine.DESTINATION_NAME, map.get("DESTINATION_NAME").toString());
@@ -158,13 +160,14 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
     
     /**
      * @throws ClassNotFoundException 
+     * @throws IllegalAccessException 
      * @throws SchedulerException 
      * @throws Exception 
      * @throws InstantiationException 
      * 
      * 
      */
-	public void start() throws ClassNotFoundException {	
+	public void start() throws ClassNotFoundException, InstantiationException, IllegalAccessException {	
 		try {  		
 			    
 			       	Map<String, Object> map = this.getMessage().getValues();  
@@ -179,6 +182,7 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 			      if (state.equals(TriggerState.UNSCHEDULED)){
 			    	  LOG.info("Scheduling :" + this.schedulerName +" "+ this.getTrigger().toString());  
 			    	  LOG.info("New Message "+this.getMessage().toString());
+			    	
 			   
 			    	  //Register Listener for  Class (this will register your class to all messages for destinationName)
 			    	  //Class<?> listenerClass = Class.forName(this.schedulerName);	
@@ -187,6 +191,8 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 	                  
 			    	  ClassLoader classLoader = PortletClassLoaderUtil.getClassLoader(portletId); //Where portletID is not null
 			    	  Class<MessageListener> messageListener = (Class<MessageListener>) classLoader.loadClass(this.schedulerName);
+			    	  MessageBusUtil.registerMessageListener(this.getDestinationName(), (MessageListener)  messageListener.newInstance());
+	                  
 			    	  this.getMessage().put(SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME, messageListener.getName());
 			    	  
 			    	  SchedulerEngineHelperUtil.schedule(this.getTrigger(), this.getStorageType(), this.getDescription(), this.destination, this.getMessage(), exceptionsMaxSize);     
