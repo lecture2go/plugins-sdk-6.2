@@ -1,4 +1,11 @@
-@media (max-width: 479px) {
+@media  (min-width: 320px) and (max-width: 479px) {
+
+	.video-image-wrapper {
+    	height: 33px !important;
+    	margin-right: 8px;
+    	max-width: 67px;
+	}
+
 	element.style {
 	    width: auto;
 	    max-width: 320px;
@@ -14,13 +21,6 @@
 	    width: 100%;
 	}
 	
-	.video-image-wrapper {
-	    /* float: none; */
-	    height: 110px;
-	    margin-right: 8px;
-	    max-width: 250px;
-	}
-	
 	.add-link {
 		visibility: hidden;
 		display: none;
@@ -28,28 +28,25 @@
 	
 	.col-md-5 {
 	    right: 0;
-	    top: 30px;
 	    position: relative;
 	    width: 100%;
 	}
-	
+
+	.video-image-big {
+    	height: auto !important;
+	}
+
 	.player {
 	    width: 100%;
 	}
 	
 	.meta-video-info {
-	    margin-top: -30px;
 	    width: 100%;
 	}
 	
 	#qr {
 	    display: none;
 	    visibility: hidden;
-	}
-	
-	.aui #my-tab-content {
-	    min-height: auto;
-	    width: 500px;
 	}
 	
 	.path {
@@ -63,7 +60,7 @@
 	}
 	
 	.sharetile {
-	    margin-bottom: 7px;
+	    width: 100%;
 	}
 	
 	#metadata input {
@@ -186,10 +183,6 @@
 	    margin-top: 10%;
 	}
 	
-	.aui .row-fluid [class*="span"]:first-child {
-	    margin-top: -10px;
-	}
-	
 	.row-fluid .span9 {
 	    float: left;
 	    width: 100%;
@@ -200,4 +193,5 @@
 	    background: rgba(0, 0, 0, 0) url("") no-repeat scroll right 0 top 0 / 130px auto;
 	    margin-right: -6px;
 	}
+	
 }

@@ -10,6 +10,10 @@
     height: 0px;
     width: 0px;
 }
+
+.aui [class*="span"], .aui .uneditable-input[class*="span"], .aui .row-fluid [class*="span"] {
+    float: left;
+}
  
 .taglib-search-iterator-page-iterator-top {
     margin-bottom: 15px;
@@ -339,7 +343,7 @@ a.list-group-item:hover, a.list-group-item:focus {
 
 .sharetile {
     float: left;
-    width: auto;
+    width: 133px;
     height: auto;
     margin-left: 23px;
     padding-left: 5px;
@@ -633,8 +637,8 @@ thead, th {
     padding-bottom: 8px;
 }
 
-.related-lectureseries-name {
-	margin-bottom: 10px;
+.aui .nav {
+    margin-bottom: 0px;
 }
 
 .col-md-5 {
@@ -659,7 +663,6 @@ thead, th {
     font-size: 22px;
     font-weight: 900;
     line-height: 25px;
-    margin-top: 38px;
 }
 
 .meta-description {
@@ -671,7 +674,6 @@ thead, th {
 .meta-creators {
     font-size: 12px;
     font-weight: 100;
-    margin-top: 4px;
 }
 
 .meta-date {
@@ -1325,6 +1327,7 @@ div.filter-menu-link span.icon-large.icon-remove {
 .aui body {
     padding-left: 0px;
     padding-right: 0px;
+ 	color: #4d4d4d;
 }
 
 .aui a:focus {
@@ -1409,30 +1412,6 @@ div.filter-menu-link span.icon-large.icon-remove {
 }
 
 /*Bastian Start*/
-/*
-.filter-menu-link {
-    -moz-border-bottom-colors: none;
-    -moz-border-left-colors: none;
-    -moz-border-right-colors: none;
-    -moz-border-top-colors: none;
-    border-color: #fff;
-    border-image: none;
-    border-style: solid;
-    border-width: 0 0 1px;
-    color: #4e4e4e;
-    display: block;
-    font-family: TheSansUHH,sans-serif;
-    font-size: 14px;
-    font-weight: 200;
-    padding: 0px 0px 0px 10px;
-    text-decoration: none;
-}
-
-.aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle {
-    background-color: #fff;
-    border-left: 0px solid #fff !important;
-}
-*/   
 
 .aui .accordion-group.lfr-panel-extended .accordion-heading {
     background: #dddddd none repeat scroll 0 0;
@@ -1484,10 +1463,6 @@ div.filter-menu-link span.icon-large.icon-remove {
     background-color: #737373;
 }
 
-.aui body {
-    color: #4d4d4d;
-}
-
 .aui a {
     color: #4d4d4d;
 }
@@ -1527,10 +1502,6 @@ div.filter-menu-link span.icon-large.icon-remove {
     	margin: 1px 1px 0 0;
 	}
 	
-	.aui body {
-		line-height: 32px;
-	}
-	
 	.aui .logo, .aui .logo:hover {
 	    height: 46px;
 	    width: 156px;
@@ -1544,22 +1515,11 @@ div.filter-menu-link span.icon-large.icon-remove {
 /* Handy */
 @media (max-width: 479px) {
 	
-	.video-image-big {
-    	display: none;
-    }
-    
     .tags {
 	    display: none;
 	    font-size: smaller;
 	    visibility: hidden;
 	}
-    
-    .video-image-wrapper {
-	    float: left;
-	    min-height: 110px;
-	    height: 100%;
-	    margin-right: 0;
-    }
     
 	.aui .label {
     	line-height: 14px;

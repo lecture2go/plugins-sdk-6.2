@@ -1,4 +1,5 @@
-@media (max-width: 979px) {
+@media (min-width: 768px) and (max-width: 979px) {
+		
 	element.style {
 	    width: auto;
 	    max-width: 720px;
@@ -16,7 +17,6 @@
 	
 	.col-md-5 {
 	    right: 0;
-	    top: 30px;
 	    position: relative;
 	    width: 100%;
 	}
@@ -54,11 +54,6 @@
 	.path {
 	    font-size: 11px;
 	    width: 100%;
-	}
-	
-	.sharetile {
-	    margin-bottom: 7px;
-	    max-width: 240px;
 	}
 	
 	#metadata input {
