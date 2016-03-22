@@ -54,6 +54,13 @@ public class ThreadManagement extends MVCPortlet {
 
 		
 		StatisticsScheduler scheduler = new StatisticsScheduler(StatisticsScheduler.class.getName());
+		
+		/*  try {
+		    	scheduler.killAll();
+		    	
+			} catch (Exception e) {
+				e.printStackTrace();
+			} */
 	    try {
 	    	scheduler.stop();
 		} catch (Exception e) {
@@ -64,7 +71,19 @@ public class ThreadManagement extends MVCPortlet {
 	    	scheduler.start();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}  
+	}
+	
+	
+	public void init() throws PortletException{
+		super.init();
+		StatisticsScheduler scheduler = new StatisticsScheduler(StatisticsScheduler.class.getName());
+		/*   try {
+		    	scheduler.stopAll();
+			} catch (Exception e) {
+				e.printStackTrace();
+			} */
+	       
 	}
 	
 }

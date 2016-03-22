@@ -74,12 +74,8 @@ public class StatisticsScheduler extends PortletScheduler implements MessageList
        LOG.info("Statistics Scheduler running... " + values);
     }
 	
-	public void start() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SchedulerException{
-  	   //MessageBusUtil.registerMessageListener(this.getDestinationName(), (MessageListener)  new StatisticsScheduler());
-        
-		int exceptionsMaxSize = super.init();
-	 	SchedulerEngineHelperUtil.schedule(this.getTrigger(), this.getStorageType(), this.getDescription(), this.destination, this.getMessage(), exceptionsMaxSize);     
-		   
+	public void start(){
+		super.start();
 	}
 	
 	public void stop() {
