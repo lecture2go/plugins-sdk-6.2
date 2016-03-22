@@ -36,9 +36,13 @@ import java.util.Map;
 
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
+import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerException;
 
 
 
@@ -69,7 +73,20 @@ public class StatisticsScheduler extends PortletScheduler implements MessageList
        String values = map.toString();
        LOG.info("Statistics Scheduler running... " + values);
     }
-    
+	
+	public void start() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SchedulerException{
+  	   //MessageBusUtil.registerMessageListener(this.getDestinationName(), (MessageListener)  new StatisticsScheduler());
+        
+		int exceptionsMaxSize = super.init();
+	 	SchedulerEngineHelperUtil.schedule(this.getTrigger(), this.getStorageType(), this.getDescription(), this.destination, this.getMessage(), exceptionsMaxSize);     
+		   
+	}
+	
+	public void stop() {
+		super.stop();
+	}
+
+
   
     
 }

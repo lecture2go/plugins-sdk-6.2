@@ -32,31 +32,19 @@ package de.uhh.l2g.plugins.util;
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  ***************************************************************************/
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
-import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
-import com.liferay.portal.kernel.scheduler.StorageType;
-import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
-import com.liferay.portal.service.ClassNameLocalServiceUtil;
 
 
 
@@ -80,7 +68,7 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 	  protected Log LOG;	
 	  protected String schedulerName; 
 	  protected String destination;
-	  protected final String DEST = DestinationNames.SCHEDULER_DISPATCH;
+	  protected final String DEST = "l2g/Scheduler";
 	
 	
 	  public PortletScheduler(){
@@ -167,13 +155,14 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
      * 
      * 
      */
-	public void start() throws ClassNotFoundException, InstantiationException, IllegalAccessException {	
+	protected int init() throws ClassNotFoundException, InstantiationException, IllegalAccessException {	
+		int exceptionsMaxSize = 0;
 		try {  		
 			    
 			       	Map<String, Object> map = this.getMessage().getValues();  
 			      	  String portletId = map.get("PORTLET_ID").toString();
 			      	  String listenerName = map.get("MESSAGE_LISTENER_CLASS_NAME").toString();
-			      	  int exceptionsMaxSize = Integer.valueOf(map.get("EXCEPTIONS_MAX_SIZE").toString());
+			      	  exceptionsMaxSize = Integer.valueOf(map.get("EXCEPTIONS_MAX_SIZE").toString());
 			      
 			      LOG.info("Message :" + this.getMessage().getString(SchedulerEngine.PORTLET_ID) +" "+ this.getMessage().getString(SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME)+ " "+this.getMessage().getString(SchedulerEngine.DESTINATION_NAME)); 
 			     
@@ -189,13 +178,9 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 			    	  //LOG.info("Registering :" + listenerClass.getName());
 			    	  // MessageBusUtil.registerMessageListener(this.getDestinationName(), (MessageListener)  listenerClass.newInstance());
 	                  
-			    	  ClassLoader classLoader = PortletClassLoaderUtil.getClassLoader(portletId); //Where portletID is not null
-			    	  Class<MessageListener> messageListener = (Class<MessageListener>) classLoader.loadClass(this.schedulerName);
-			    	  MessageBusUtil.registerMessageListener(this.getDestinationName(), (MessageListener)  messageListener.newInstance());
-	                  
-			    	  this.getMessage().put(SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME, messageListener.getName());
-			    	  
-			    	  SchedulerEngineHelperUtil.schedule(this.getTrigger(), this.getStorageType(), this.getDescription(), this.destination, this.getMessage(), exceptionsMaxSize);     
+			    	 // this.getMessage().put(SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME, messageListener.getName());
+			     	  //SchedulerEngineHelperUtil.schedule(this.getTrigger(), this.getStorageType(), this.getDescription(), this.destination, this.getMessage(), exceptionsMaxSize);     
+					 
 			      }
 			      else{
 			    	  LOG.warn("Scheduler could not be scheduled beacuse it was in state "+state);
@@ -204,19 +189,18 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 			 } catch (SchedulerException e) {  
 			   LOG.warn(e);  
 			 } catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				 LOG.warn(e); 				
 			} catch (SecurityException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
+				LOG.warn(e); 
+			}
+		return exceptionsMaxSize; 
 	}
     
     /** Stops Scheduler 
      * 
      * 
      */
-    public void stop(){
+    protected void stop(){
 		try {  
 			
 			    LOG.info("Message :" + this.getMessage().toString()); 
