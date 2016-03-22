@@ -14,27 +14,27 @@
 
 package de.uhh.l2g.plugins.migration.service.impl;
 
-import de.uhh.l2g.plugins.migration.service.base.LegacyUploadLocalServiceBaseImpl;
+import de.uhh.l2g.plugins.migration.service.base.LegacyStatisticsLocalServiceBaseImpl;
 
 /**
- * The implementation of the legacy upload local service.
+ * The implementation of the legacy statistics local service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link de.uhh.l2g.plugins.migration.service.LegacyUploadLocalService} interface.
+ * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link de.uhh.l2g.plugins.migration.service.LegacyStatisticsLocalService} interface.
  *
  * <p>
  * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
  * </p>
  *
  * @author unihh
- * @see de.uhh.l2g.plugins.migration.service.base.LegacyUploadLocalServiceBaseImpl
- * @see de.uhh.l2g.plugins.migration.service.LegacyUploadLocalServiceUtil
+ * @see de.uhh.l2g.plugins.migration.service.base.LegacyStatisticsLocalServiceBaseImpl
+ * @see de.uhh.l2g.plugins.migration.service.LegacyStatisticsLocalServiceUtil
  */
-public class LegacyUploadLocalServiceImpl
-	extends LegacyUploadLocalServiceBaseImpl {
+public class LegacyStatisticsLocalServiceImpl
+	extends LegacyStatisticsLocalServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.migration.service.LegacyUploadLocalServiceUtil} to access the legacy upload local service.
+	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.migration.service.LegacyStatisticsLocalServiceUtil} to access the legacy statistics local service.
 	 */
 }

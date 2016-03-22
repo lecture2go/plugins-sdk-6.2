@@ -19,21 +19,21 @@ import com.liferay.portal.NoSuchModelException;
 /**
  * @author unihh
  */
-public class NoSuchLegacyUploadException extends NoSuchModelException {
+public class NoSuchLegacyStatisticsException extends NoSuchModelException {
 
-	public NoSuchLegacyUploadException() {
+	public NoSuchLegacyStatisticsException() {
 		super();
 	}
 
-	public NoSuchLegacyUploadException(String msg) {
+	public NoSuchLegacyStatisticsException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchLegacyUploadException(String msg, Throwable cause) {
+	public NoSuchLegacyStatisticsException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSuchLegacyUploadException(Throwable cause) {
+	public NoSuchLegacyStatisticsException(Throwable cause) {
 		super(cause);
 	}
 

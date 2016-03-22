@@ -102,61 +102,61 @@ public class SegmentLocalServiceClpInvoker {
 				"de.uhh.l2g.plugins.model.Segment"
 			};
 
-		_methodName146 = "getBeanIdentifier";
+		_methodName150 = "getBeanIdentifier";
 
-		_methodParameterTypes146 = new String[] {  };
+		_methodParameterTypes150 = new String[] {  };
 
-		_methodName147 = "setBeanIdentifier";
+		_methodName151 = "setBeanIdentifier";
 
-		_methodParameterTypes147 = new String[] { "java.lang.String" };
+		_methodParameterTypes151 = new String[] { "java.lang.String" };
 
-		_methodName152 = "deleteThumbhailsFromSegments";
+		_methodName156 = "deleteThumbhailsFromSegments";
 
-		_methodParameterTypes152 = new String[] { "java.util.List" };
+		_methodParameterTypes156 = new String[] { "java.util.List" };
 
-		_methodName153 = "deleteThumbhailsFromSegment";
+		_methodName157 = "deleteThumbhailsFromSegment";
 
-		_methodParameterTypes153 = new String[] {
+		_methodParameterTypes157 = new String[] {
 				"de.uhh.l2g.plugins.model.Segment"
 			};
 
-		_methodName154 = "getSegmentsByVideoId";
+		_methodName158 = "getSegmentsByVideoId";
 
-		_methodParameterTypes154 = new String[] { "java.lang.Long" };
+		_methodParameterTypes158 = new String[] { "java.lang.Long" };
 
-		_methodName155 = "getSegmentById";
-
-		_methodParameterTypes155 = new String[] { "java.lang.Long" };
-
-		_methodName156 = "fillWithProperties";
-
-		_methodParameterTypes156 = new String[] {
-				"de.uhh.l2g.plugins.model.Segment"
-			};
-
-		_methodName157 = "deleteByVideoId";
-
-		_methodParameterTypes157 = new String[] { "java.lang.Long" };
-
-		_methodName158 = "createSegment";
-
-		_methodParameterTypes158 = new String[] {
-				"de.uhh.l2g.plugins.model.Segment"
-			};
-
-		_methodName159 = "removeSegment";
+		_methodName159 = "getSegmentById";
 
 		_methodParameterTypes159 = new String[] { "java.lang.Long" };
 
-		_methodName160 = "getPreviusSegment";
+		_methodName160 = "fillWithProperties";
 
 		_methodParameterTypes160 = new String[] {
 				"de.uhh.l2g.plugins.model.Segment"
 			};
 
-		_methodName161 = "getPreviusSegmentId";
+		_methodName161 = "deleteByVideoId";
 
 		_methodParameterTypes161 = new String[] { "java.lang.Long" };
+
+		_methodName162 = "createSegment";
+
+		_methodParameterTypes162 = new String[] {
+				"de.uhh.l2g.plugins.model.Segment"
+			};
+
+		_methodName163 = "removeSegment";
+
+		_methodParameterTypes163 = new String[] { "java.lang.Long" };
+
+		_methodName164 = "getPreviusSegment";
+
+		_methodParameterTypes164 = new String[] {
+				"de.uhh.l2g.plugins.model.Segment"
+			};
+
+		_methodName165 = "getPreviusSegmentId";
+
+		_methodParameterTypes165 = new String[] { "java.lang.Long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -248,71 +248,71 @@ public class SegmentLocalServiceClpInvoker {
 			return SegmentLocalServiceUtil.updateSegment((de.uhh.l2g.plugins.model.Segment)arguments[0]);
 		}
 
-		if (_methodName146.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes146, parameterTypes)) {
+		if (_methodName150.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes150, parameterTypes)) {
 			return SegmentLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName147.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes147, parameterTypes)) {
+		if (_methodName151.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes151, parameterTypes)) {
 			SegmentLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName152.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes152, parameterTypes)) {
+		if (_methodName156.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes156, parameterTypes)) {
 			SegmentLocalServiceUtil.deleteThumbhailsFromSegments((java.util.List<de.uhh.l2g.plugins.model.Segment>)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName153.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes153, parameterTypes)) {
-			SegmentLocalServiceUtil.deleteThumbhailsFromSegment((de.uhh.l2g.plugins.model.Segment)arguments[0]);
-
-			return null;
-		}
-
-		if (_methodName154.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes154, parameterTypes)) {
-			return SegmentLocalServiceUtil.getSegmentsByVideoId((java.lang.Long)arguments[0]);
-		}
-
-		if (_methodName155.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes155, parameterTypes)) {
-			return SegmentLocalServiceUtil.getSegmentById((java.lang.Long)arguments[0]);
-		}
-
-		if (_methodName156.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes156, parameterTypes)) {
-			return SegmentLocalServiceUtil.fillWithProperties((de.uhh.l2g.plugins.model.Segment)arguments[0]);
-		}
-
 		if (_methodName157.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes157, parameterTypes)) {
-			SegmentLocalServiceUtil.deleteByVideoId((java.lang.Long)arguments[0]);
+			SegmentLocalServiceUtil.deleteThumbhailsFromSegment((de.uhh.l2g.plugins.model.Segment)arguments[0]);
 
 			return null;
 		}
 
 		if (_methodName158.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes158, parameterTypes)) {
-			return SegmentLocalServiceUtil.createSegment((de.uhh.l2g.plugins.model.Segment)arguments[0]);
+			return SegmentLocalServiceUtil.getSegmentsByVideoId((java.lang.Long)arguments[0]);
 		}
 
 		if (_methodName159.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes159, parameterTypes)) {
-			return SegmentLocalServiceUtil.removeSegment((java.lang.Long)arguments[0]);
+			return SegmentLocalServiceUtil.getSegmentById((java.lang.Long)arguments[0]);
 		}
 
 		if (_methodName160.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes160, parameterTypes)) {
-			return SegmentLocalServiceUtil.getPreviusSegment((de.uhh.l2g.plugins.model.Segment)arguments[0]);
+			return SegmentLocalServiceUtil.fillWithProperties((de.uhh.l2g.plugins.model.Segment)arguments[0]);
 		}
 
 		if (_methodName161.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes161, parameterTypes)) {
+			SegmentLocalServiceUtil.deleteByVideoId((java.lang.Long)arguments[0]);
+
+			return null;
+		}
+
+		if (_methodName162.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
+			return SegmentLocalServiceUtil.createSegment((de.uhh.l2g.plugins.model.Segment)arguments[0]);
+		}
+
+		if (_methodName163.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes163, parameterTypes)) {
+			return SegmentLocalServiceUtil.removeSegment((java.lang.Long)arguments[0]);
+		}
+
+		if (_methodName164.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes164, parameterTypes)) {
+			return SegmentLocalServiceUtil.getPreviusSegment((de.uhh.l2g.plugins.model.Segment)arguments[0]);
+		}
+
+		if (_methodName165.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes165, parameterTypes)) {
 			return SegmentLocalServiceUtil.getPreviusSegmentId((java.lang.Long)arguments[0]);
 		}
 
@@ -351,18 +351,10 @@ public class SegmentLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName146;
-	private String[] _methodParameterTypes146;
-	private String _methodName147;
-	private String[] _methodParameterTypes147;
-	private String _methodName152;
-	private String[] _methodParameterTypes152;
-	private String _methodName153;
-	private String[] _methodParameterTypes153;
-	private String _methodName154;
-	private String[] _methodParameterTypes154;
-	private String _methodName155;
-	private String[] _methodParameterTypes155;
+	private String _methodName150;
+	private String[] _methodParameterTypes150;
+	private String _methodName151;
+	private String[] _methodParameterTypes151;
 	private String _methodName156;
 	private String[] _methodParameterTypes156;
 	private String _methodName157;
@@ -375,4 +367,12 @@ public class SegmentLocalServiceClpInvoker {
 	private String[] _methodParameterTypes160;
 	private String _methodName161;
 	private String[] _methodParameterTypes161;
+	private String _methodName162;
+	private String[] _methodParameterTypes162;
+	private String _methodName163;
+	private String[] _methodParameterTypes163;
+	private String _methodName164;
+	private String[] _methodParameterTypes164;
+	private String _methodName165;
+	private String[] _methodParameterTypes165;
 }

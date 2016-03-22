@@ -17,18 +17,18 @@ package de.uhh.l2g.plugins.migration.model;
 import com.liferay.portal.model.PersistedModel;
 
 /**
- * The extended model interface for the LegacyUpload service. Represents a row in the &quot;upload&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the LegacyStatistics service. Represents a row in the &quot;videostats&quot; database table, with each column mapped to a property of this class.
  *
  * @author unihh
- * @see LegacyUploadModel
- * @see de.uhh.l2g.plugins.migration.model.impl.LegacyUploadImpl
- * @see de.uhh.l2g.plugins.migration.model.impl.LegacyUploadModelImpl
+ * @see LegacyStatisticsModel
+ * @see de.uhh.l2g.plugins.migration.model.impl.LegacyStatisticsImpl
+ * @see de.uhh.l2g.plugins.migration.model.impl.LegacyStatisticsModelImpl
  * @generated
  */
-public interface LegacyUpload extends LegacyUploadModel, PersistedModel {
+public interface LegacyStatistics extends LegacyStatisticsModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link de.uhh.l2g.plugins.migration.model.impl.LegacyUploadImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to {@link de.uhh.l2g.plugins.migration.model.impl.LegacyStatisticsImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 }

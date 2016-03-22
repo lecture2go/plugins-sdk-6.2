@@ -17,18 +17,18 @@ package de.uhh.l2g.plugins.migration.service.persistence;
 import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.SystemException;
 
-import de.uhh.l2g.plugins.migration.model.LegacyUpload;
-import de.uhh.l2g.plugins.migration.service.LegacyUploadLocalServiceUtil;
+import de.uhh.l2g.plugins.migration.model.LegacyStatistics;
+import de.uhh.l2g.plugins.migration.service.LegacyStatisticsLocalServiceUtil;
 
 /**
  * @author unihh
  * @generated
  */
-public abstract class LegacyUploadActionableDynamicQuery
+public abstract class LegacyStatisticsActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
-	public LegacyUploadActionableDynamicQuery() throws SystemException {
-		setBaseLocalService(LegacyUploadLocalServiceUtil.getService());
-		setClass(LegacyUpload.class);
+	public LegacyStatisticsActionableDynamicQuery() throws SystemException {
+		setBaseLocalService(LegacyStatisticsLocalServiceUtil.getService());
+		setClass(LegacyStatistics.class);
 
 		setClassLoader(de.uhh.l2g.plugins.migration.service.ClpSerializer.class.getClassLoader());
 
