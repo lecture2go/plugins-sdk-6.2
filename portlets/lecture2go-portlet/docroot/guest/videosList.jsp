@@ -279,7 +279,7 @@
 							       							fullname1 += clvi.next().getFullName();
 							       							if(clv.size()>1 && clvi.hasNext()) fullname1+=", ";
 								    					}else{
-								    						fullname1+="et al.";
+								    						fullname1+="u. a.";
 															break;
 								    					}
 								    					j++;
@@ -349,7 +349,7 @@
 						       							fullname1 += cli1.next().getFullName();
 						       							if(cl1.size()>1 && cli1.hasNext()) fullname1+=", ";
 							    					}else{
-							    						fullname1+="et al.";
+							    						fullname1+="u. a.";
 														break;
 							    					}
 		              								i++;
@@ -403,7 +403,7 @@
 						       							fullname2 += cli.next().getFullName();
 						       							if(cl.size()>1 && cli.hasNext()) fullname2+=", ";
 							    					}else{
-							    						fullname2+="et al.";
+							    						fullname2+="u. a.";
 														break;
 							    					}
 		              								i++;
@@ -477,7 +477,7 @@
 							       							fullname3 += cvi.next().getFullName();
 							       							if(cv.size()>1 && cvi.hasNext()) fullname3+=", ";
 								    					}else{
-								    						fullname3+="et al.";
+								    						fullname3+="u. a.";
 															break;
 								    					}
 			              								i++;
@@ -526,6 +526,21 @@ $( document ).ready(function() {
 	    $('ul.terms > li').show();
 	    $('#loadMoreTerms').hide();
 	});
+	
+	// checks if the panel needs collapsing/expanding on page load and on resize
+    checkForToggleFilterPanel();
+    $(window).resize(checkForToggleFilterPanel);
 });
+
+function checkForToggleFilterPanel(){
+    if ($( window ).width() <= 767){
+        $('.toggler-content-expanded').addClass('toggler-content-collapsed smallViewContent').removeClass('toggler-content-expanded');
+        $('.toggler-header-expanded').addClass('toggler-header-collapsed smallViewHeader').removeClass('toggler-header-expanded');
+    }
+    else if ($( window ).width() > 767){
+        $('.smallViewContent').addClass('toggler-content-expanded').removeClass('toggler-content-collapsed smallViewContent');
+        $('.smallViewHeader').addClass('toggler-header-expanded').removeClass('toggler-header-collapsed smallViewHeader');
+    }
+}
 
 </script>
