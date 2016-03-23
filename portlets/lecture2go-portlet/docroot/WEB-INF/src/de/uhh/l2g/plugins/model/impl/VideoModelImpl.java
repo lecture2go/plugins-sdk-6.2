@@ -106,8 +106,9 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	public static long PASSWORD_COLUMN_BITMASK = 16L;
 	public static long PRODUCERID_COLUMN_BITMASK = 32L;
 	public static long ROOTINSTITUTIONID_COLUMN_BITMASK = 64L;
-	public static long UPLOADDATE_COLUMN_BITMASK = 128L;
-	public static long VIDEOID_COLUMN_BITMASK = 256L;
+	public static long TERMID_COLUMN_BITMASK = 128L;
+	public static long UPLOADDATE_COLUMN_BITMASK = 256L;
+	public static long VIDEOID_COLUMN_BITMASK = 512L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Video"));
 
@@ -646,7 +647,19 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 
 	@Override
 	public void setTermId(long termId) {
+		_columnBitmask |= TERMID_COLUMN_BITMASK;
+
+		if (!_setOriginalTermId) {
+			_setOriginalTermId = true;
+
+			_originalTermId = _termId;
+		}
+
 		_termId = termId;
+	}
+
+	public long getOriginalTermId() {
+		return _originalTermId;
 	}
 
 	@Override
@@ -834,6 +847,10 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		videoModelImpl._originalRootInstitutionId = videoModelImpl._rootInstitutionId;
 
 		videoModelImpl._setOriginalRootInstitutionId = false;
+
+		videoModelImpl._originalTermId = videoModelImpl._termId;
+
+		videoModelImpl._setOriginalTermId = false;
 
 		videoModelImpl._originalPassword = videoModelImpl._password;
 
@@ -1156,6 +1173,8 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	private boolean _setOriginalRootInstitutionId;
 	private int _citation2go;
 	private long _termId;
+	private long _originalTermId;
+	private boolean _setOriginalTermId;
 	private String _tags;
 	private String _password;
 	private String _originalPassword;

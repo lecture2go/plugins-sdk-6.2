@@ -1,163 +1,197 @@
-.view-320 .admintile.wide.icons {
-	visibility: hidden;
-	display: none;
-}
+@media  (min-width: 320px) and (max-width: 479px) {
 
-.view-320 .admintile.wide {
-    margin: 0 -9px 0 3px;
-    width: 100%;
-}
+	.video-image-wrapper {
+    	height: 33px !important;
+    	margin-right: 8px;
+    	max-width: 67px;
+	}
 
-.view-320 .video-image-wrapper {
-    float: none;
-    height: 110px;
-    margin-right: 8px;
-    max-width: 250px;
-}
+	element.style {
+	    width: auto;
+	    max-width: 320px;
+	}
+	
+	.admintile.wide.icons {
+		visibility: hidden;
+		display: none;
+	}
+	
+	.admintile.wide {
+	    margin: 0 -9px 0 3px;
+	    width: 100%;
+	}
+	
+	.add-link {
+		visibility: hidden;
+		display: none;
+	}
+	
+	.col-md-5 {
+	    right: 0;
+	    position: relative;
+	    width: 100%;
+	}
 
-.view-320 .add-link {
-	visibility: hidden;
-	display: none;
-}
+	.video-image-big {
+    	height: auto !important;
+	}
 
-.view-320 .col-md-5 {
-    right: 0;
-    top: 30px;
-    position: relative;
-    width: 100%;
-}
-
-.view-320 .player {
-    width: 100%;
-}
-
-.view-320 .meta-video-info {
-    margin-top: -30px;
-    width: 100%;
-}
-
-.view-320 #qr {
-    display: none;
-    visibility: hidden;
-}
-
-.view-320 .aui #my-tab-content {
-    min-height: auto;
-    width: 500px;
-}
-
-.view-320 .path {
-    display: none;
-    visibility: hidden;
-}
-
-.view-320 .sharetile {
-    margin-bottom: 7px;
-}
-
-.view-320 #metadata input {
-    width: 270px;
-}
-
-.view-320 .metainfo-small.related {
-    margin-left: 1px;
-}
-
-.view-320 .video-image-wrapper-small.related {
-    float: none;
-    height: 38px;
-    margin-top: 2px;
-    width: auto;
-}
-
-.view-320 .video-image.related {
-    min-height: 30px;
-    width: auto;
-}
-
-.view-320 .metainfo {
-    width: 100%;
-}
-
-.view-320 img.imgsmall {
-    border: 0 none;
-    height: auto;
-    padding-bottom: 7px;
-    vertical-align: middle;
-    width: 65px;
-    height: 33px;
-}
-
-
-.view-320 .chaptertile {
-    border-color: #e0e0e0;
-    border-style: solid none none;
-    border-width: 1px 0 0 !important;
-    height: 58px;
-    padding: 2px 0 5px;
-}
-
-
-
-.view-320 .chaptertile span {
-    float: left;
-    font-size: 9px;
-    margin-left: -75px;
-    margin-top: 45px;
-    padding-left: 10px;
-    position: absolute;
-}
-
-.view-320 .chaptertile span {
-    float: left;
-    font-size: 9px;
-    margin-left: -75px;
-    margin-top: 45px;
-    padding-left: 10px;
-    position: absolute;
-}
-
-.view-320 .chaptertile a span {
-    font-size: 12px;
-    margin-left: -1px;
-    margin-top: -6px;
-    padding: 0;
-}
-
-.view-320 .commenttile {
-    margin-left: 10px;
-}
-
-.view-320 #tabs > li#down {
-    display: none;
-    visibility: hidden;
-}
-
-.view-320 .taglib-page-iterator .lfr-pagination-buttons {
-    visibility: hidden;
-    padding: 0px;
-    margin: 0px;
-    height: 0px;
-    width: 0px;
-}
-
-.view-320 input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
-    width: 237px;
-    margin: 0;
-}
-
-.view-320 .yui3-aclist-content {
-    width: 249px;
-}
-
-.view-320 #searchedvideo {
-    width: 10em;
-}
-
-.view-320 .label.label-light {
-    display: none;
-}
-
-.view-320 .license {
-    display: none;
+	.player {
+	    width: 100%;
+	}
+	
+	.meta-video-info {
+	    width: 100%;
+	}
+	
+	#qr {
+	    display: none;
+	    visibility: hidden;
+	}
+	
+	.path {
+	    display: none;
+	    visibility: hidden;
+	}
+	
+	.path-wide {
+	    display: none;
+	    visibility: hidden;
+	}
+	
+	.sharetile {
+	    width: 100%;
+	}
+	
+	#metadata input {
+	    width: 270px;
+	}
+	
+	.metainfo-small.related {
+	    margin-left: 1px;
+	}
+	
+	.video-image-wrapper-small.related {
+	    float: none;
+	    height: 38px;
+	    margin-top: 2px;
+	    width: auto;
+	}
+	
+	.video-image.related {
+	    min-height: 30px;
+	    width: auto;
+	}
+	
+	.metainfo {
+	    width: 100%;
+	}
+	
+	img.imgsmall {
+	    border: 0 none;
+	    height: auto;
+	    padding-bottom: 7px;
+	    vertical-align: middle;
+	    width: 65px;
+	    height: 33px;
+	}
+	
+	
+	.chaptertile {
+	    border-color: #e0e0e0;
+	    border-style: solid none none;
+	    border-width: 1px 0 0 !important;
+	    height: 58px;
+	    padding: 2px 0 5px;
+	}
+	
+	
+	
+	.chaptertile span {
+	    float: left;
+	    font-size: 9px;
+	    margin-left: -75px;
+	    margin-top: 45px;
+	    padding-left: 10px;
+	    position: absolute;
+	}
+	
+	.chaptertile span {
+	    float: left;
+	    font-size: 9px;
+	    margin-left: -75px;
+	    margin-top: 45px;
+	    padding-left: 10px;
+	    position: absolute;
+	}
+	
+	.chaptertile a span {
+	    font-size: 12px;
+	    margin-left: -1px;
+	    margin-top: -6px;
+	    padding: 0;
+	}
+	
+	.commenttile {
+	    margin-left: 10px;
+	}
+	
+	#tabs > li#down {
+	    display: none;
+	    visibility: hidden;
+	}
+	
+	.taglib-page-iterator .lfr-pagination-buttons {
+	    visibility: hidden;
+	    padding: 0px;
+	    margin: 0px;
+	    height: 0px;
+	    width: 0px;
+	}
+	
+	input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
+	    float: left;
+	    margin-left: 0;
+	    margin-top: 4%;
+	    padding-left: 0;
+	    padding-right: 0;
+	    width: 100%;
+	}
+	
+	#searchedvideo {
+	    width: 10em;
+	}
+	
+	.label.label-light {
+	    display: none;
+	}
+	
+	.license {
+	    display: none;
+	}
+	
+	.add-new-creator-term-object {
+	    display: none;
+	    visibility: hidden;
+	}
+	
+	.meta-description {
+	    display: none;
+	}
+	
+	#content {
+	    margin-top: 10%;
+	}
+	
+	.row-fluid .span9 {
+	    float: left;
+	    width: 100%;
+	    margin-top: 13%;
+	}
+	
+	#banner {
+	    background: rgba(0, 0, 0, 0) url("") no-repeat scroll right 0 top 0 / 130px auto;
+	    margin-right: -6px;
+	}
+	
 }

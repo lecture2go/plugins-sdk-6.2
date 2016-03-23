@@ -33,11 +33,6 @@
 	<portlet:param name="action" value="migrateVideos" />
 </portlet:actionURL>
 
-<portlet:actionURL var="executeUploadMigrationUrl">
-	<portlet:param name="action" value="migrateUploads" />
-</portlet:actionURL>
-
-
 <portlet:actionURL var="executeMigrateOfficeUrl">
 	<portlet:param name="action" value="migrateOffices" />
 </portlet:actionURL>
@@ -108,6 +103,9 @@
 	<portlet:param name="action" value="migrateCreator" />
 </portlet:actionURL>
 
+<portlet:actionURL var="executeStatisticsUrl">
+	<portlet:param name="action" value="migrateStatistics" />
+</portlet:actionURL>
 
 <portlet:actionURL var="updateCounterTableValuesUrl">
 	<portlet:param name="action" value="migrateCounterTableValues" />
@@ -188,14 +186,6 @@
     <td><c:out value="${videoEntrieSize62}" /></td>
     <td><a href="<c:out value="${executeVideoMigrationUrl}" />"><liferay-ui:message key="migrate" /></td>
     <td><c:out value="${videoOkflag}" escapeXml="false" /></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>Upload</td>
-    <td><c:out value="${uploadEntrieSize}" /></td>
-    <td><c:out value="${uploadEntrieSize62}" /></td>
-    <td><a href="<c:out value="${executeUploadMigrationUrl}" />"><liferay-ui:message key="migrate" /></a></td>
-    <td><c:out value="${uploadOkflag}" escapeXml="false" /></td>
     <td></td>
   </tr>
 </table> 
@@ -418,6 +408,14 @@
     <td><c:out value="${creatorOkflag}" escapeXml="false" /></td>
     <td></td>
   </tr> 
+  <tr>
+    <td>Statistics</td>
+    <td><c:out value="${statisticsEntrieSize}" /></td>
+    <td><c:out value="${statisticsEntrieSize62}" /></td>
+    <td><a href="<c:out value="${executeStatisticsUrl}" />"><liferay-ui:message key="migrate" /></a></td>
+    <td><c:out value="${statisticsokflag}" escapeXml="false" /></td>
+    <td></td>
+  </tr>
   <tr>
     <td> Update Counter Table Values</td>
     <td>--</td>

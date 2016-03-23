@@ -346,7 +346,7 @@ $dockbarOpenGradientEnd: #e9e9e9;
 			li {
 				background: linear-gradient(180deg, #b1b2b4 0%, #737373 100%);
     			border-radius: 0px;
-    			margin: 0px 1px;
+    			margin: 0 1px 2px 0;
     			height: 33px;
     			line-height: 33px;
     			text-align: center;
@@ -710,7 +710,7 @@ $dockbarOpenGradientEnd: #e9e9e9;
 	/* ---------- Extras ---------- */
 
 	#navigation {
-		margin-top: 30px;
+		margin-top: 0px;
 	
 		.nav {
 			li {
@@ -887,7 +887,6 @@ $dockbarOpenGradientEnd: #e9e9e9;
 		background: #ddd;
 	}
 	
-
 
 	/* ---------- IE8 ---------- */
 
