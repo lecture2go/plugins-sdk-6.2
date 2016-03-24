@@ -1,4 +1,4 @@
-@media (min-width: 480px) and (max-width: 767px) {
+@media (min-width: 480px) and (max-width: 719px) {
 		
 	element.style {
 	    width: auto;
@@ -87,15 +87,6 @@
 	    height: 49px;
 	}
 	
-	input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
-	    float: left;
-	    margin-left: 0;
-	    margin-top: 2%;
-	    padding-left: 0;
-	    padding-right: 0;
-	    width: 100%;
-	}
-	
 	.meta-description {
 	    display: none;
 	}
@@ -121,10 +112,6 @@
 	    width: 100%;
 	}
 	
-	#content {
-	    margin-top: 4%;
-	}
-	
 	.row-fluid .span9 {
 	    float: left;
 	    width: 100%;
@@ -134,4 +121,19 @@
 	    background: rgba(0, 0, 0, 0) url("") no-repeat scroll right 0 top 0 / 130px auto;
 	    margin-right: -6px;
 	} 
+	
+	input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
+	    float: left;
+	    margin: 24px 0 4px;
+	    width: 99.8%;
+	}
+	
+	.aui #navigation.open .navbar-inner {
+    	border-radius: 0;
+    	padding: 0 5px 0 1px;
+	}
+	
+	.aui .dockbar-split .dockbar, .aui .dockbar {
+    	margin-right: 14px;
+	}
 }

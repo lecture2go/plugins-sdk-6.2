@@ -1,8 +1,7 @@
 #banner {
-    background: rgba(0, 0, 0, 0) url("/lecture2go-theme/images/logo_l2go.png") no-repeat scroll right 0 top 0 / 130px auto;
-    margin-right: -6px;
-} 
-	
+    background: rgba(0, 0, 0, 0) url("/lecture2go-theme/images/logo_l2go.png") no-repeat scroll right -4px top 9px / 113px auto;
+}
+
 .taglib-page-iterator .lfr-pagination-buttons {
     visibility: hidden;
 	padding: 0px;
@@ -33,9 +32,9 @@
 input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     float: right;
     height: 24px;
-    margin: -16px 0 6px;
-    opacity: 0.6;
     width: 313px;
+    margin: 2px 0;
+    padding: 4px 0;
 }
 
 #myToggler .toggler-header-collapsed:hover .video-image-overlay, #myToggler .toggler-header-collapsed:hover .tri, #myToggler .toggler-header-expanded .video-image-overlay, #myToggler .toggler-header-expanded .tri {
@@ -185,7 +184,6 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 
 .meta-video-info-wide{
 	width: 100%;
-	margin-top: -30px;
 }
 
 .list-group.toggler-content-collapsed.content > li {
@@ -200,6 +198,14 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     background-color: #f6f6f6;
 }
 
+#meta-share input.option1 {
+    background-color: #ddd;
+    border: medium none;
+    color: #484848;
+    font-size: 14px;
+    height: 27px;
+    margin-top: -15px;
+}
 
 .creator-small2 {
     font-size: 11px;
@@ -540,6 +546,7 @@ thead, th {
 .aui .table {
     border-radius: 0px;
     border: 0px;
+    margin-bottom: 0px;
 }
 
 .aui #tabs {
@@ -629,12 +636,6 @@ thead, th {
 .lectureseries-title {
 	font-weight: 600;
 	font-size: 16px;
-}
-
-
-.toggler-content-wrapper {
-    overflow: hidden;
-    padding-bottom: 8px;
 }
 
 .aui .nav {
@@ -748,17 +749,9 @@ thead, th {
     font-size: 13px;
 }
 
-#meta-share input.option1 {
-    height: 27px;
-    font-size: 12px;
-    margin-top: -15px;
-    background-color: #E3E3E3;
-    border: none;
-    color:#575757;
-}
-
 #meta-share input.option1:hover {
-    background-color: #CCC;
+    background-color: #e5331c none repeat scroll 0 0;
+    color:white;
 }
 
 #meta-share {
@@ -1010,10 +1003,6 @@ p.smallitalic {
 #searchName {
     margin-left: 3px;
     margin-top: 3px;
-}
-
-#content {
-    margin-top: 10px;
 }
 
 #metadata-upload div {
@@ -1421,15 +1410,11 @@ div.filter-menu-link span.icon-large.icon-remove {
 }
 
 .aui .accordion {
-    margin-bottom: 20px;
+    margin-bottom: 0px;
 }
 
 .aui .portlet-dockbar {
     display: block !important;
-}
-
-.aui h1 {
-    font-size: 38px !important;
 }
 
 .aui h2 {

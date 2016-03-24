@@ -108,7 +108,7 @@
 <liferay-ui:panel-container>
 	<!-- 	parentinstitution filter -->
 	<%if(presentParentInstitutions.size()>0){ %>
-	<liferay-ui:panel extended="true" title="Einrichtung">
+	<liferay-ui:panel extended="true" title="institution">
 		<ul>
 		<c:forEach items="<%=presentParentInstitutions %>" var="parentInstitution">
 			<portlet:actionURL var="filterByParentInstitution" name="addFilter">
@@ -129,7 +129,7 @@
  	<!-- 	institution filter  -->
 	<c:if test="${hasParentInstitutionFiltered}">
 	<%if(presentInstitutions.size()>0){ %>
-	<liferay-ui:panel extended="true" title="Bereich">
+	<liferay-ui:panel extended="true" title="sub-institution">
 		<ul>
 		<c:forEach items="<%=presentInstitutions %>" var="institution">
 			<portlet:actionURL var="filterByInstitution" name="addFilter">
@@ -150,7 +150,7 @@
 	
 	<!-- 	terms filter -->
 	<%if(presentTerms.size()>0){%>
-	<liferay-ui:panel extended="true" title="Semester">
+	<liferay-ui:panel extended="true" title="term">
 		<ul class="terms">
 		<c:forEach items="<%=presentTerms %>" var="term">
 			<portlet:actionURL var="filterByTerm" name="addFilter">
@@ -174,7 +174,7 @@
 	
 	<!-- 	category filter -->
 	<%if(presentCategories.size()>0){%>
-	<liferay-ui:panel extended="true" title="Kategorie">
+	<liferay-ui:panel extended="true" title="category">
 		<ul>
 		<c:forEach items="<%=presentCategories %>" var="category">
     		<portlet:actionURL var="filterByCategory" name="addFilter">
