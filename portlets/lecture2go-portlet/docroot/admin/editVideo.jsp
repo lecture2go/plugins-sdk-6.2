@@ -73,7 +73,7 @@
     });
   });
 </script>
-
+<div class="noresponsive">
 	<label class="edit-video-lable">upload</label>
 	<div id="date-time-form">
 		<aui:fieldset helpMessage="test" column="true" label="" >
@@ -255,7 +255,7 @@
 			</aui:form>
 		</aui:layout>
 	</aui:fieldset>
-
+</div>
 
 <script type="text/javascript">
 var $options = $( "#options" );

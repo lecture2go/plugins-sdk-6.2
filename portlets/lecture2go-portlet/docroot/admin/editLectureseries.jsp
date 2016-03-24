@@ -110,6 +110,7 @@
 	boolean readOnly = false;
 	try{if (permissionProducer && reqLectureseries.getApproved()==1){ readOnly=true;}}catch(Exception e){}
 %>
+<div class="noresponsive">
 <aui:form action="<%=actionURL%>" commandName="model">
 	<aui:fieldset helpMessage="test" column="true" label='<%=lName%>'>
 		<aui:layout>
@@ -268,6 +269,7 @@
 		</aui:layout>
 	</aui:fieldset>
 </aui:form>
+</div>
 
 <!-- Template -->
 <script type="text/x-jquery-tmpl" id="newCreator">

@@ -10,6 +10,12 @@
     width: 0px;
 }
 
+.aui .btn:hover, .aui .btn:focus {
+    background-position: 0 45px;
+    text-decoration: none;
+    transition: none 0s ease 0s ;
+}
+
 .aui [class*="span"], .aui .uneditable-input[class*="span"], .aui .row-fluid [class*="span"] {
     float: left;
 }
@@ -204,7 +210,23 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     color: #484848;
     font-size: 14px;
     height: 27px;
+    margin-bottom: 0;
     margin-top: -15px;
+}
+
+.sharetile {
+    border-left: 3px solid #b1b1b1;
+    float: left;
+    height: auto;
+    margin-left: 23px;
+    margin-top: 2px;
+    padding-left: 5px;
+    padding-right: 8px;
+}
+
+.aui .btn:hover, .aui .btn:focus, .aui .btn:active, .aui .btn.active, .aui .btn.disabled, .aui .btn[disabled] {
+    background-color: #d81b1b;
+    color: white;
 }
 
 .creator-small2 {
@@ -345,16 +367,6 @@ a.list-group-item:hover, a.list-group-item:focus {
 
 .search {
     margin-top: -30px;
-}
-
-.sharetile {
-    float: left;
-    width: 133px;
-    height: auto;
-    margin-left: 23px;
-    padding-left: 5px;
-    border-left: 3px solid #B1B1B1;
-    padding-right: 8px;
 }
 
 #socialshareprivacy {
@@ -750,8 +762,8 @@ thead, th {
 }
 
 #meta-share input.option1:hover {
-    background-color: #e5331c none repeat scroll 0 0;
-    color:white;
+    background: #e5331c none repeat scroll 0 0;
+    color: white;
 }
 
 #meta-share {

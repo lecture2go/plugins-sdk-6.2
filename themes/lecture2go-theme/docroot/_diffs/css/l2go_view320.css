@@ -1,5 +1,8 @@
 @media  (min-width: 320px) and (max-width: 479px) {
-
+	.noresponsive{
+		display:none;
+	}
+	
 	.video-image-wrapper {
     	height: 33px !important;
     	margin-right: 8px;
