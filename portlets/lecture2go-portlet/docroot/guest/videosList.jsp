@@ -3,13 +3,14 @@
 <%
 	// defines how many terms and creators are shown initially	
 	int maxTerms	= 4;
-	int maxCreators = 10;
 
 	// get all filter-requests
 	Long parentInstitutionId 	= ServletRequestUtils.getLongParameter(request, "parentInstitutionId", 0);
 	Long institutionId 			= ServletRequestUtils.getLongParameter(request, "institutionId", 0);
 	Long termId 				= ServletRequestUtils.getLongParameter(request, "termId", 0);
 	Long categoryId 			= ServletRequestUtils.getLongParameter(request, "categoryId", 0);
+	
+	// TODO: creators are removed, the creatorId temporary exists for compatibility
 	Long creatorId 				= ServletRequestUtils.getLongParameter(request, "creatorId", 0);
 
 	String searchQuery			= ServletRequestUtils.getStringParameter(request, "searchQuery", "");
@@ -19,7 +20,6 @@
 	boolean hasParentInstitutionFiltered 	= (parentInstitutionId != 0);
 	boolean hasTermFiltered 				= (termId != 0);
 	boolean hasCategoryFiltered				= (categoryId != 0);
-	boolean hasCreatorFiltered  			= (creatorId != 0);
 	boolean isSearched						= (searchQuery.trim().length()>0);
 
 	// the institution is dependent on the parentinstitution, do not allow institution-filters without parentinstitution-filter
@@ -74,20 +74,6 @@
 	} else {
 		presentCategories = CategoryLocalServiceUtil.getCategoriesFromLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds);
 	}
-
-	if (hasCreatorFiltered) {
-		presentCreators.add(CreatorLocalServiceUtil.getCreator(creatorId));
-	} else {
-		presentCreators = CreatorLocalServiceUtil.getCreatorsFromLectureseriesIdsAndVideoIds(lectureseriesIds,videoIds);
-	}
-	
-	// we only process the first creators, because this list can be become quite large, the rest is rendered via javascript
-	List<Creator> renderedCreators = presentCreators;
-	List<Creator> nonRenderedCreators = new  ArrayList<Creator>();
-	if (presentCreators.size() > maxCreators) {
-		renderedCreators = presentCreators.subList(0, maxCreators-1);
-		nonRenderedCreators = presentCreators.subList(maxCreators, presentCreators.size());
-	}
 	
 	List<Lectureseries> tempLectureseriesList = new ArrayList();
 	
@@ -106,9 +92,7 @@
 	pageContext.setAttribute("hasInstitutionFiltered", hasInstitutionFiltered);
 	pageContext.setAttribute("hasTermFiltered", hasTermFiltered);
 	pageContext.setAttribute("hasCategoryFiltered", hasCategoryFiltered);
-	pageContext.setAttribute("hasCreatorFiltered", hasCreatorFiltered);
 	pageContext.setAttribute("hasManyTerms", presentTerms.size() > maxTerms);
-	pageContext.setAttribute("hasManyCreators", presentCreators.size() > maxCreators);
 	
 	boolean resultSetEmpty = true;
 	if(presentParentInstitutions.size()>0||presentInstitutions.size()>0||presentTerms.size()>0||presentCategories.size()>0){
@@ -124,7 +108,7 @@
 <liferay-ui:panel-container>
 	<!-- 	parentinstitution filter -->
 	<%if(presentParentInstitutions.size()>0){ %>
-	<liferay-ui:panel extended="true" title="Einrichtung">
+	<liferay-ui:panel extended="true" title="institution">
 		<ul>
 		<c:forEach items="<%=presentParentInstitutions %>" var="parentInstitution">
 			<portlet:actionURL var="filterByParentInstitution" name="addFilter">
@@ -145,7 +129,7 @@
  	<!-- 	institution filter  -->
 	<c:if test="${hasParentInstitutionFiltered}">
 	<%if(presentInstitutions.size()>0){ %>
-	<liferay-ui:panel extended="true" title="Bereich">
+	<liferay-ui:panel extended="true" title="sub-institution">
 		<ul>
 		<c:forEach items="<%=presentInstitutions %>" var="institution">
 			<portlet:actionURL var="filterByInstitution" name="addFilter">
@@ -166,7 +150,7 @@
 	
 	<!-- 	terms filter -->
 	<%if(presentTerms.size()>0){%>
-	<liferay-ui:panel extended="true" title="Semester">
+	<liferay-ui:panel extended="true" title="term">
 		<ul class="terms">
 		<c:forEach items="<%=presentTerms %>" var="term">
 			<portlet:actionURL var="filterByTerm" name="addFilter">
@@ -190,7 +174,7 @@
 	
 	<!-- 	category filter -->
 	<%if(presentCategories.size()>0){%>
-	<liferay-ui:panel extended="true" title="Kategorie">
+	<liferay-ui:panel extended="true" title="category">
 		<ul>
 		<c:forEach items="<%=presentCategories %>" var="category">
     		<portlet:actionURL var="filterByCategory" name="addFilter">
@@ -207,33 +191,6 @@
 		</ul>
 	</liferay-ui:panel>
 	<%}%>
-	<%-- 	
-	creator filter 
-	<liferay-ui:panel extended="true" title="Person" id="creators">
-		<c:if test="${!hasCreatorFiltered && hasManyCreators}">
-			<div class="input-group">
-      			<input id="searchName" type="text" class="form-control" placeholder="Suche Person...">
-    		</div>
-		</c:if>
-		<ul class="creators">
-		<c:forEach items="<%=renderedCreators %>" var="creator">
-			<portlet:actionURL var="filterByCreator" name="addFilter">
-				<portlet:param name="jspPage" value="/guest/videosList.jsp" />
-				<portlet:param name="institutionId" value="<%=institutionId.toString() %>"/>
-				<portlet:param name="parentInstitutionId" value="<%=parentInstitutionId.toString() %>"/>
-				<portlet:param name="termId" value="<%=termId.toString() %>"/>
-				<portlet:param name="categoryId" value="<%=categoryId.toString() %>"/>
-				<portlet:param name="creatorId" value='${hasCreatorFiltered ? "0" : creator.creatorId}'/>
-				<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
-			</portlet:actionURL>
-			<li class="filter-menu"><div class="filter-menu-link"><a href="${filterByCreator}">${creator.lastName}, ${creator.jobTitle} ${creator.firstName} ${creator.middleName}</a> <span ${hasCreatorFiltered ? 'class=""' : ''}/></div></li>
-		</c:forEach>
-		</ul>
-		<c:if test="${hasManyCreators}">
-			<div id="loadMoreCreators">mehr...</div>
-		</c:if>
-	</liferay-ui:panel>
-	--%>
 </liferay-ui:panel-container>
 
 </div>
@@ -322,7 +279,7 @@
 							       							fullname1 += clvi.next().getFullName();
 							       							if(clv.size()>1 && clvi.hasNext()) fullname1+=", ";
 								    					}else{
-								    						fullname1+="ET. AL";
+								    						fullname1+="u. a.";
 															break;
 								    					}
 								    					j++;
@@ -392,7 +349,7 @@
 						       							fullname1 += cli1.next().getFullName();
 						       							if(cl1.size()>1 && cli1.hasNext()) fullname1+=", ";
 							    					}else{
-							    						fullname1+="ET. AL";
+							    						fullname1+="u. a.";
 														break;
 							    					}
 		              								i++;
@@ -446,7 +403,7 @@
 						       							fullname2 += cli.next().getFullName();
 						       							if(cl.size()>1 && cli.hasNext()) fullname2+=", ";
 							    					}else{
-							    						fullname2+="ET. AL";
+							    						fullname2+="u. a.";
 														break;
 							    					}
 		              								i++;
@@ -520,7 +477,7 @@
 							       							fullname3 += cvi.next().getFullName();
 							       							if(cv.size()>1 && cvi.hasNext()) fullname3+=", ";
 								    					}else{
-								    						fullname3+="ET. AL";
+								    						fullname3+="u. a.";
 															break;
 								    					}
 			              								i++;
@@ -556,42 +513,6 @@
 </div>
 
 <script type="text/javascript">
-$('#loadMoreCreators, #searchName').on("click", function () {
-	// this event is only fired once
-	$('#loadMoreCreators').hide();
-	$('#searchName').off("click");
-	var creatorList = [ 
-	        		<% for(Creator creator: nonRenderedCreators) {%><%="{id:\"" + creator.getCreatorId() + "\", fullname: \"" + creator.getLastName() + ", " + creator.getJobTitle() + " " + creator.getFirstName() + " " + creator.getMiddleName() + "\"},"%><% } %> 
-	        		];
-	var parentInstitutionId = <%=parentInstitutionId.toString() %>;
-    var institutionId = <%=institutionId.toString() %>;
-    var termId = <%=termId.toString() %>;
-    var categoryId = <%=categoryId.toString() %>;
-    var searchQuery = "<%=searchQuery %>";
-    	
-	var arrayLength = creatorList.length;
-	for (var i = 0; i < arrayLength; i++) {
-		addRowToCreatorPanel(creatorList[i],parentInstitutionId,institutionId,termId,categoryId,searchQuery);
-	}
-});
-	
-function addRowToCreatorPanel(creator,parentInstitutionId,institutionId,termId,categoryId,searchQuery){
-	var filterUrl = createFilterUrl(parentInstitutionId,institutionId,termId,categoryId,creator.id,searchQuery);
-	var row = "<li class='filter-menu'><div class='filter-menu-link'><a href=\"" + filterUrl + "\">" + creator.fullname + "</a> <span /></div></li>";
-	$("#creators").find("ul").append(row);
-}
-
-function createFilterUrl(parentInstitutionId,institutionId,termId,categoryId,creatorId,searchQuery){
-	var filterUrl = 
-		"/web/vod/l2go/-/get/" + 
-		institutionId + "/" +
-		parentInstitutionId + "/" + 
-		categoryId + "/" +
-		creatorId + "/" +
-		termId + "/" +
-		searchQuery;
-	return filterUrl;
-}
 
 $( document ).ready(function() {
 	//turn off autocomplete
@@ -606,22 +527,20 @@ $( document ).ready(function() {
 	    $('#loadMoreTerms').hide();
 	});
 	
-	// search in the creator list
-	$("#searchName").keyup(function(){
-        // get the search input
-        var searchName = $(this).val();
-            // loop all creators
-            $(".creators li").each(function(){
-                // if the the search query does not match (case insensitive), hide it
-                if ($(this).text().search(new RegExp(searchName, "i")) < 0) {
-                    $(this).hide();
-                // if the search query matches, show the item
-                } else {
-                    $(this).show();
-                }
-            });
-    });
+	// checks if the panel needs collapsing/expanding on page load and on resize
+    checkForToggleFilterPanel();
+    $(window).resize(checkForToggleFilterPanel);
 });
 
+function checkForToggleFilterPanel(){
+    if ($( window ).width() <= 767){
+        $('.toggler-content-expanded').addClass('toggler-content-collapsed smallViewContent').removeClass('toggler-content-expanded');
+        $('.toggler-header-expanded').addClass('toggler-header-collapsed smallViewHeader').removeClass('toggler-header-expanded');
+    }
+    else if ($( window ).width() > 767){
+        $('.smallViewContent').addClass('toggler-content-expanded').removeClass('toggler-content-collapsed smallViewContent');
+        $('.smallViewHeader').addClass('toggler-header-expanded').removeClass('toggler-header-collapsed smallViewHeader');
+    }
+}
 
 </script>

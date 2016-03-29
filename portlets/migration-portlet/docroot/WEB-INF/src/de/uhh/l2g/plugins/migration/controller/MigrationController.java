@@ -1429,6 +1429,10 @@ public class MigrationController {
     	String firstName =""; 
     	String lastName ="";
     	String jobTitle = extractSpecialJobTitle(person);
+    	String specialJobTitle ="";
+    	if (!jobTitle.isEmpty()) {
+    		specialJobTitle = jobTitle;
+    	}
     	person = person.replace(jobTitle, "");
     	String middleName ="";
     	String gender ="";
@@ -1543,7 +1547,13 @@ public class MigrationController {
 		}		
 		
 		Creator creator = null;
-    	String fullName= person;
+		
+		String fullName;
+		if (!specialJobTitle.isEmpty()) {
+			fullName = specialJobTitle + person;
+		} else {
+			fullName= person;
+		}
     	try {
     		
     		
@@ -2191,11 +2201,13 @@ public class MigrationController {
     		titles.add("Sekretariat Prof. Dr.");
     		titles.add("Prof. Dr. habil.");
     		titles.add("PD Dr. habil.");
+    		titles.add("PD Dr.");
     		titles.add("Dr. phil. habil.");
     		titles.add("Prof. em. Dr.");
     		titles.add("Prof. Dr. Dr.");
     		titles.add("Prof. Dr.");
     		titles.add("Leal et al.");
+    		titles.add("Dr.-Ing.");
     		
     		for (String title : titles) {
 	    		if (fullString.contains(title)) {

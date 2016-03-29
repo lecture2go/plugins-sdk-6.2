@@ -1,14 +1,23 @@
 #banner {
-    background: rgba(0, 0, 0, 0) url("/lecture2go-theme/images/logo_l2go.png") no-repeat scroll right 0 top 0 / 130px auto;
-    margin-right: -6px;
-} 
-	
+    background: rgba(0, 0, 0, 0) url("/lecture2go-theme/images/logo_l2go.png") no-repeat scroll right -4px top 9px / 113px auto;
+}
+
 .taglib-page-iterator .lfr-pagination-buttons {
     visibility: hidden;
 	padding: 0px;
     margin: 0px;
     height: 0px;
     width: 0px;
+}
+
+.aui .btn:hover, .aui .btn:focus {
+    background-position: 0 45px;
+    text-decoration: none;
+    transition: none 0s ease 0s ;
+}
+
+.aui [class*="span"], .aui .uneditable-input[class*="span"], .aui .row-fluid [class*="span"] {
+    float: left;
 }
  
 .taglib-search-iterator-page-iterator-top {
@@ -29,9 +38,9 @@
 input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     float: right;
     height: 24px;
-    margin: -16px 0 6px;
-    opacity: 0.6;
     width: 313px;
+    margin: 2px 0;
+    padding: 4px 0;
 }
 
 #myToggler .toggler-header-collapsed:hover .video-image-overlay, #myToggler .toggler-header-collapsed:hover .tri, #myToggler .toggler-header-expanded .video-image-overlay, #myToggler .toggler-header-expanded .tri {
@@ -181,7 +190,6 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 
 .meta-video-info-wide{
 	width: 100%;
-	margin-top: -30px;
 }
 
 .list-group.toggler-content-collapsed.content > li {
@@ -196,6 +204,30 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     background-color: #f6f6f6;
 }
 
+#meta-share input.option1 {
+    background-color: #ddd;
+    border: medium none;
+    color: #484848;
+    font-size: 14px;
+    height: 27px;
+    margin-bottom: 0;
+    margin-top: -15px;
+}
+
+.sharetile {
+    border-left: 3px solid #b1b1b1;
+    float: left;
+    height: auto;
+    margin-left: 23px;
+    margin-top: 2px;
+    padding-left: 5px;
+    padding-right: 8px;
+}
+
+.aui .btn:hover, .aui .btn:focus, .aui .btn:active, .aui .btn.active, .aui .btn.disabled, .aui .btn[disabled] {
+    background-color: #d81b1b;
+    color: white;
+}
 
 .creator-small2 {
     font-size: 11px;
@@ -335,16 +367,6 @@ a.list-group-item:hover, a.list-group-item:focus {
 
 .search {
     margin-top: -30px;
-}
-
-.sharetile {
-    float: left;
-    width: auto;
-    height: auto;
-    margin-left: 23px;
-    padding-left: 5px;
-    border-left: 3px solid #B1B1B1;
-    padding-right: 8px;
 }
 
 #socialshareprivacy {
@@ -536,6 +558,7 @@ thead, th {
 .aui .table {
     border-radius: 0px;
     border: 0px;
+    margin-bottom: 0px;
 }
 
 .aui #tabs {
@@ -627,14 +650,8 @@ thead, th {
 	font-size: 16px;
 }
 
-
-.toggler-content-wrapper {
-    overflow: hidden;
-    padding-bottom: 8px;
-}
-
-.related-lectureseries-name {
-	margin-bottom: 10px;
+.aui .nav {
+    margin-bottom: 0px;
 }
 
 .col-md-5 {
@@ -659,7 +676,6 @@ thead, th {
     font-size: 22px;
     font-weight: 900;
     line-height: 25px;
-    margin-top: 38px;
 }
 
 .meta-description {
@@ -671,7 +687,6 @@ thead, th {
 .meta-creators {
     font-size: 12px;
     font-weight: 100;
-    margin-top: 4px;
 }
 
 .meta-date {
@@ -746,17 +761,9 @@ thead, th {
     font-size: 13px;
 }
 
-#meta-share input.option1 {
-    height: 27px;
-    font-size: 12px;
-    margin-top: -15px;
-    background-color: #E3E3E3;
-    border: none;
-    color:#575757;
-}
-
 #meta-share input.option1:hover {
-    background-color: #CCC;
+    background: #e5331c none repeat scroll 0 0;
+    color: white;
 }
 
 #meta-share {
@@ -1008,10 +1015,6 @@ p.smallitalic {
 #searchName {
     margin-left: 3px;
     margin-top: 3px;
-}
-
-#content {
-    margin-top: 10px;
 }
 
 #metadata-upload div {
@@ -1325,6 +1328,7 @@ div.filter-menu-link span.icon-large.icon-remove {
 .aui body {
     padding-left: 0px;
     padding-right: 0px;
+ 	color: #4d4d4d;
 }
 
 .aui a:focus {
@@ -1409,30 +1413,6 @@ div.filter-menu-link span.icon-large.icon-remove {
 }
 
 /*Bastian Start*/
-/*
-.filter-menu-link {
-    -moz-border-bottom-colors: none;
-    -moz-border-left-colors: none;
-    -moz-border-right-colors: none;
-    -moz-border-top-colors: none;
-    border-color: #fff;
-    border-image: none;
-    border-style: solid;
-    border-width: 0 0 1px;
-    color: #4e4e4e;
-    display: block;
-    font-family: TheSansUHH,sans-serif;
-    font-size: 14px;
-    font-weight: 200;
-    padding: 0px 0px 0px 10px;
-    text-decoration: none;
-}
-
-.aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle {
-    background-color: #fff;
-    border-left: 0px solid #fff !important;
-}
-*/   
 
 .aui .accordion-group.lfr-panel-extended .accordion-heading {
     background: #dddddd none repeat scroll 0 0;
@@ -1442,15 +1422,11 @@ div.filter-menu-link span.icon-large.icon-remove {
 }
 
 .aui .accordion {
-    margin-bottom: 20px;
+    margin-bottom: 0px;
 }
 
 .aui .portlet-dockbar {
     display: block !important;
-}
-
-.aui h1 {
-    font-size: 38px !important;
 }
 
 .aui h2 {
@@ -1482,10 +1458,6 @@ div.filter-menu-link span.icon-large.icon-remove {
 .aui .badge {
     border-radius: 2px;
     background-color: #737373;
-}
-
-.aui body {
-    color: #4d4d4d;
 }
 
 .aui a {
@@ -1527,10 +1499,6 @@ div.filter-menu-link span.icon-large.icon-remove {
     	margin: 1px 1px 0 0;
 	}
 	
-	.aui body {
-		line-height: 32px;
-	}
-	
 	.aui .logo, .aui .logo:hover {
 	    height: 46px;
 	    width: 156px;
@@ -1544,22 +1512,11 @@ div.filter-menu-link span.icon-large.icon-remove {
 /* Handy */
 @media (max-width: 479px) {
 	
-	.video-image-big {
-    	display: none;
-    }
-    
     .tags {
 	    display: none;
 	    font-size: smaller;
 	    visibility: hidden;
 	}
-    
-    .video-image-wrapper {
-	    float: left;
-	    min-height: 110px;
-	    height: 100%;
-	    margin-right: 0;
-    }
     
 	.aui .label {
     	line-height: 14px;

@@ -32,11 +32,10 @@
 				.navbar-inner {
 					@include border-radius(0px);
 
-					 padding: 0 3px 0 1px;
-
 					.nav-collapse {
 						height: auto;
 						overflow: visible;
+						margin-bottom: 5px;
 					}
 				}
 			}
@@ -52,8 +51,7 @@
 			position: relative;
 			z-index: 401;
 			background-color: #444444 !important;
-			margin-top: 22px;
-			
+
 			.info-items {
 				height: auto;
 				position: static;

@@ -1,7 +1,25 @@
-@media (min-width: 979px) {
-
+@media (min-width: 960px) {
+	.aui .row-fluid .span9 {
+	    width: 74%;
+	}
+	
+	.aui .row-fluid .span3 {
+	    width: 25%;
+	}	
+	
+	.aui .row-fluid [class*="span"] {
+	    margin-left: 1%;
+	}
+	
 	#metadata input {
     	width: 100%;
 	}
 
+	input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
+	    float: right;
+	    height: 24px;
+	    margin: -12px 0 2px;
+	    padding: 4px 0;
+	    width: 313px;
+	}
 }
