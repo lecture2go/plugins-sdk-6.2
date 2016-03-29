@@ -34,6 +34,7 @@ package de.uhh.l2g.plugins.util;
 
 import java.util.Map;
 
+import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
@@ -52,7 +53,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerException;
  */
 @SuppressWarnings("serial")
 public class StatisticsScheduler extends PortletScheduler implements MessageListener {  
-	
+	private static Log LOG;	
 	  
     public StatisticsScheduler(){
     	super();
@@ -61,7 +62,7 @@ public class StatisticsScheduler extends PortletScheduler implements MessageList
 	public StatisticsScheduler(String schedulerClassName) {
 		super(StatisticsScheduler.class.getName());
 	    this.schedulerName = StatisticsScheduler.class.getName();
-	    this.LOG = LogFactoryUtil.getLog(StatisticsScheduler.class.getName());
+	    LOG = LogFactoryUtil.getLog(StatisticsScheduler.class.getName());
 	}
 
 	@Override
@@ -69,13 +70,18 @@ public class StatisticsScheduler extends PortletScheduler implements MessageList
        //Debug Information on running job 
 	   LOG.info("Message :" + message.toString());
 	   Map<String, Object> map = message.getValues();
+	   
+	   LOG.info(message.get(SchedulerEngine.DESTINATION_NAME) +" "+
+			   message.getDestinationName() +" "+
+			   message.getValues().get(SchedulerEngine.DESTINATION_NAME)+" "+
+   	message.getDestinationName());
      
        String values = map.toString();
        LOG.info("Statistics Scheduler running... " + values);
     }
 	
-	public void start(){
-		super.start();
+	public void start() {
+        super.start();
 	}
 	
 	public void stop() {
