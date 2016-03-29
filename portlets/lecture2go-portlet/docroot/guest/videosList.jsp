@@ -108,7 +108,7 @@
 <liferay-ui:panel-container>
 	<!-- 	parentinstitution filter -->
 	<%if(presentParentInstitutions.size()>0){ %>
-	<liferay-ui:panel extended="true" title="institution">
+	<liferay-ui:panel extended="true" title="Einrichtung" cssClass='${hasParentInstitutionFiltered ? "filtered" : "notFiltered"}'>
 		<ul>
 		<c:forEach items="<%=presentParentInstitutions %>" var="parentInstitution">
 			<portlet:actionURL var="filterByParentInstitution" name="addFilter">
@@ -129,7 +129,7 @@
  	<!-- 	institution filter  -->
 	<c:if test="${hasParentInstitutionFiltered}">
 	<%if(presentInstitutions.size()>0){ %>
-	<liferay-ui:panel extended="true" title="sub-institution">
+	<liferay-ui:panel extended="true" title="Bereich" cssClass='${hasInstitutionFiltered ? "filtered" : "notFiltered"}'>
 		<ul>
 		<c:forEach items="<%=presentInstitutions %>" var="institution">
 			<portlet:actionURL var="filterByInstitution" name="addFilter">
@@ -150,7 +150,7 @@
 	
 	<!-- 	terms filter -->
 	<%if(presentTerms.size()>0){%>
-	<liferay-ui:panel extended="true" title="term">
+	<liferay-ui:panel extended="true" title="Semester" cssClass='${hasTermFiltered ? "filtered" : "notFiltered"}'>
 		<ul class="terms">
 		<c:forEach items="<%=presentTerms %>" var="term">
 			<portlet:actionURL var="filterByTerm" name="addFilter">
@@ -174,7 +174,7 @@
 	
 	<!-- 	category filter -->
 	<%if(presentCategories.size()>0){%>
-	<liferay-ui:panel extended="true" title="category">
+	<liferay-ui:panel extended="true" title="Kategorie" cssClass='${hasCategoryFiltered ? "filtered" : "notFiltered"}'>
 		<ul>
 		<c:forEach items="<%=presentCategories %>" var="category">
     		<portlet:actionURL var="filterByCategory" name="addFilter">
@@ -527,15 +527,19 @@ $( document ).ready(function() {
 	    $('#loadMoreTerms').hide();
 	});
 	
-	// checks if the panel needs collapsing/expanding on page load and on resize
-    checkForToggleFilterPanel();
-    $(window).resize(checkForToggleFilterPanel);
+	// toggles the panel if necessary
+    toggleFilterPanel();
+    $(window).resize(toggleFilterPanel);
 });
 
-function checkForToggleFilterPanel(){
+function toggleFilterPanel(){
     if ($( window ).width() <= 767){
-        $('.toggler-content-expanded').addClass('toggler-content-collapsed smallViewContent').removeClass('toggler-content-expanded');
-        $('.toggler-header-expanded').addClass('toggler-header-collapsed smallViewHeader').removeClass('toggler-header-expanded');
+    	// only fire once
+    	if (!$('.notFiltered').children().hasClass('smallViewContent')) {
+    		// we utilize the find() method because the divs to be changed do not necessarily have the same hierarchy
+    		$('.notFiltered').find('.toggler-content-expanded').addClass('toggler-content-collapsed smallViewContent').removeClass('toggler-content-expanded');
+    		$('.notFiltered').find('.toggler-header-expanded').addClass('toggler-header-collapsed smallViewHeader').removeClass('toggler-header-expanded');
+       	}
     }
     else if ($( window ).width() > 767){
         $('.smallViewContent').addClass('toggler-content-expanded').removeClass('toggler-content-collapsed smallViewContent');
