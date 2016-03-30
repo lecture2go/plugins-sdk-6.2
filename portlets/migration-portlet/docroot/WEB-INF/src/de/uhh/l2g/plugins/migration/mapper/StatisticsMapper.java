@@ -18,6 +18,7 @@ public class StatisticsMapper {
 		statistics.setPrivateVideos(legacyStatistics.getPrivate_());
 		statistics.setPublicVideos(legacyStatistics.getPublic_());
 		statistics.setModifiedDate(legacyStatistics.getDate_());
+		statistics.setCreateDate(legacyStatistics.getDate_());
 		statistics.setAutofillRow(legacyStatistics.getAutofill());
 		return statistics;
 	} 
