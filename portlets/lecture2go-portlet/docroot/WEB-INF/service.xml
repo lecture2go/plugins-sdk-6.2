@@ -659,11 +659,6 @@
         <column name="currentPubPercent" type="int"></column>
         <column name="currentPrivPercent" type="int"></column>
         <column name="intervalName" type="String"></column>
-
-    	<order by="asc">
-    		<order-column name="field1"></order-column>
-    	</order>
-
     	<!-- Finder methods -->
     </entity>
     <exceptions>
