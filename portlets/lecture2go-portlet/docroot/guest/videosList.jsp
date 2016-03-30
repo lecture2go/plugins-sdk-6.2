@@ -286,10 +286,10 @@
 							        				}
 							           			%>
 												<%=fullname1 %>
+												<br/>
+												<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
 											</div>		
 																	
-											
-											<b><%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %></b>
 									        <div class="tags">
 									          <%
 									        	String cat = "";
@@ -356,10 +356,10 @@
 	              								}
 												%>
 												<%=fullname1%>
+												<br/>
+												<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>												
 											</div>		
-																	
-											
-											<b><%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %></b>
+
 									        <div class="tags">
 									          <%
 									        	String cat =CategoryLocalServiceUtil.getById(lectser.getCategoryId()).getName();
@@ -410,10 +410,11 @@
 	              								}
 												%>
 												<%=fullname2%>
+												<br/>
+												<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
 											</div>		
 																	
 											
-									        <b><%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %></b>
 									        <div class="tags">
 									          <%
 									        	String cat ="";

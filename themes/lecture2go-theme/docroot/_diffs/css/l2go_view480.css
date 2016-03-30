@@ -2,10 +2,9 @@
 	.noresponsive{
 		display:none;
 	}
-		
-	element.style {
-	    width: auto;
-	    max-width: 480px;
+	
+	.sharetile {
+	    width: 131px;
 	}
 	
 	.admintile.wide.icons {

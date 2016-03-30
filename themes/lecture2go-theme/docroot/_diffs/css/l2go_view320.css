@@ -3,17 +3,6 @@
 		display:none;
 	}
 	
-	.video-image-wrapper {
-    	height: 33px !important;
-    	margin-right: 8px;
-    	max-width: 67px;
-	}
-
-	element.style {
-	    width: auto;
-	    max-width: 320px;
-	}
-	
 	.admintile.wide.icons {
 		visibility: hidden;
 		display: none;
@@ -74,6 +63,13 @@
 	    margin-left: 1px;
 	}
 	
+	.video-image-wrapper-small {
+	    float: none;
+	    height: auto;
+	    margin-right: 8px;
+    	max-width: 60px;
+	}
+
 	.video-image-wrapper-small.related {
 	    float: none;
 	    height: 38px;
@@ -198,4 +194,37 @@
 	.aui .dockbar-split .dockbar, .aui .dockbar {
     	margin-right: 12px;
 	}
+	
+	.videotile.wide {
+    	height: auto;
+	}
+	
+	.video-image-wrapper {
+	    float: none;
+	    height: auto !important;
+	    margin-bottom: 5px;
+	}
+	
+	.lectureseries-title {
+	    font-size: 14px;
+	}
+	
+	#searchedvideos {
+	    margin-left: 10px;
+	}
+	
+	.creator-small2 {
+	    display: none;
+	}	
+
+	.title-small {
+	    font-size: 11px;
+	    width: 100%;
+	}
+	
+	.metainfo-small {
+	    margin-left: 0;
+	    margin-top: 3px;
+	}
+	
 }

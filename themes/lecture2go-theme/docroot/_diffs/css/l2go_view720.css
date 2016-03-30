@@ -12,9 +12,8 @@
 	    margin-left: 1%;
 	}
 	
-	element.style {
-	    width: auto;
-	    max-width: 720px;
+	.sharetile {
+	    width: 131px;
 	}
 	
 	.admintile.wide {
