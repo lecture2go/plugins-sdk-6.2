@@ -628,6 +628,44 @@
             <finder-column name="groupId"></finder-column>
         </finder>
     </entity>
+    <entity name="VideoStatistic" local-service="true" remote-service="true">
+
+    	<!-- PK fields -->
+
+    	<column name="videoStatisticId" type="long" primary="true"></column>
+
+    	<!-- Group instance -->
+
+    	<column name="groupId" type="long"></column>
+
+    	<!-- Audit fields -->
+
+    	<column name="companyId" type="long"></column>
+    	<column name="createDate" type="Date"></column>
+    	<column name="modifiedDate" type="Date"></column>
+
+    	<!-- Other fields -->
+
+    	<!-- Order -->
+        <column name="compareDate" type="Date"></column>
+        <column name="totalVideos" type="long"></column>
+        <column name="publicVideos" type="long"></column>
+        <column name="privateVideos" type="long"></column>
+        <column name="currentTotal" type="long"></column>
+        <column name="currentPublic" type="long"></column>
+        <column name="currentPrivate" type="long"></column>
+        <column name="pubPercent" type="int"></column>
+        <column name="privPercent" type="int"></column>
+        <column name="currentPubPercent" type="int"></column>
+        <column name="currentPrivPercent" type="int"></column>
+        <column name="intervalName" type="String"></column>
+
+    	<order by="asc">
+    		<order-column name="field1"></order-column>
+    	</order>
+
+    	<!-- Finder methods -->
+    </entity>
     <exceptions>
         <exception>HostName</exception>
         <exception>HostStreamer</exception>
@@ -637,6 +675,7 @@
         <exception>StatisticsValue</exception>
         <exception>StatisticsDate</exception>
     </exceptions>
+
 
 
 

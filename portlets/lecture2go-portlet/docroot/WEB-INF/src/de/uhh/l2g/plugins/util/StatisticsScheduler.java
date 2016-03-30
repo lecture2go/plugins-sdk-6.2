@@ -57,6 +57,7 @@ public class StatisticsScheduler extends PortletScheduler implements MessageList
 	  
     public StatisticsScheduler(){
     	super();
+    	LOG = LogFactoryUtil.getLog(StatisticsScheduler.class.getName());
     }
     
 	public StatisticsScheduler(String schedulerClassName) {
@@ -67,16 +68,20 @@ public class StatisticsScheduler extends PortletScheduler implements MessageList
 
 	@Override
     public void receive(Message message) throws MessageListenerException {
+		String values = "No values";
        //Debug Information on running job 
-	   LOG.info("Message :" + message.toString());
-	   Map<String, Object> map = message.getValues();
+	   if (message != null ) {
+		   LOG.info("Message :" + message.toString());
 	   
-	   LOG.info(message.get(SchedulerEngine.DESTINATION_NAME) +" "+
+		   Map<String, Object> map = message.getValues();
+	   
+		   LOG.info(message.get(SchedulerEngine.DESTINATION_NAME) +" "+
 			   message.getDestinationName() +" "+
 			   message.getValues().get(SchedulerEngine.DESTINATION_NAME)+" "+
-   	message.getDestinationName());
+			   message.getDestinationName());
      
-       String values = map.toString();
+		   values = map.toString();
+	   }
        LOG.info("Statistics Scheduler running... " + values);
     }
 	

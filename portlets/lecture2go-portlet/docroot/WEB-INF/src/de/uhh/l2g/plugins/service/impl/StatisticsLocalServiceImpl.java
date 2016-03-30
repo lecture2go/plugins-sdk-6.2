@@ -42,7 +42,10 @@ import de.uhh.l2g.plugins.service.StatisticsLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.StatisticsLocalServiceBaseImpl;
 
 /**
- * The implementation of the institution_ host local service.
+ * The implementation of the daily satitistics record table
+ * 
+ * Combining records by time intervals is done in views, modelled by its own Entity like below
+ * https://www.liferay.com/de/community/wiki/-/wiki/Main/Working+with+Database+Views+in+Liferay
  *
  * <p>
  * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link de.uhh.l2g.plugins.service.StatisticsLocalService} interface.
