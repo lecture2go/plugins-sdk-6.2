@@ -529,22 +529,20 @@ $( document ).ready(function() {
 	
 	// toggles the panel if necessary
     toggleFilterPanel();
-    $(window).resize(toggleFilterPanel);
 });
 
 function toggleFilterPanel(){
-    if ($( window ).width() <= 767){
-    	// only fire once
-    	if (!$('.notFiltered').children().hasClass('smallViewContent')) {
-    		// we utilize the find() method because the divs to be changed do not necessarily have the same hierarchy
-    		$('.notFiltered').find('.toggler-content-expanded').addClass('toggler-content-collapsed smallViewContent').removeClass('toggler-content-expanded');
-    		$('.notFiltered').find('.toggler-header-expanded').addClass('toggler-header-collapsed smallViewHeader').removeClass('toggler-header-expanded');
-       	}
-    }
-    else if ($( window ).width() > 767){
-        $('.smallViewContent').addClass('toggler-content-expanded').removeClass('toggler-content-collapsed smallViewContent');
-        $('.smallViewHeader').addClass('toggler-header-expanded').removeClass('toggler-header-collapsed smallViewHeader');
-    }
+	mediaCheck({
+		  media: '(max-width: 767px)',
+		  entry: function() {
+		    $('.notFiltered').find('.toggler-content-expanded').addClass('toggler-content-collapsed').removeClass('toggler-content-expanded');
+    		$('.notFiltered').find('.toggler-header-expanded').addClass('toggler-header-collapsed').removeClass('toggler-header-expanded');
+		  },
+		  exit: function() {
+			$('.notFiltered').find('.toggler-content-collapsed').addClass('toggler-content-expanded').removeClass('toggler-content-collapsed');
+		  	$('.notFiltered').find('.toggler-header-collapsed').addClass('toggler-header-expanded').removeClass('toggler-header-collapsed');
+		  }
+		});
 }
 
 </script>
