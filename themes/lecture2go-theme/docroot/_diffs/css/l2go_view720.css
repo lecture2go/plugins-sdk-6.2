@@ -84,35 +84,10 @@
 	    height: 33px;
 	}
 	
-	
-	.chaptertile {
-	    border-color: #e0e0e0 -moz-use-text-color -moz-use-text-color;
-	    border-style: solid none none;
-	    border-width: 1px 0 0 !important;
-	    height: 58px;
-	    padding: 2px 0 5px;
+	.aui .chaptertile a span {
+	    margin-top: -50px;
 	}
-	
-	.chaptertile span {
-	    float: left;
-	    font-size: 9px;
-	    margin-left: -75px;
-	    margin-top: 45px;
-	    padding-left: 10px;
-	    position: absolute;
-	}
-	
-	.chaptertile a span {
-	    font-size: 12px;
-	    margin-left: -1px;
-	    margin-top: -6px;
-	    padding: 0;
-	}
-	
-	.commenttile {
-	    margin-left: 10px;
-	}
-	
+
 	.row-fluid .span3 {
 	    margin: 0px;
 	    padding: 0px;
@@ -149,6 +124,7 @@
 	    float: left;
 	    margin: 24px 0 4px;
 	    width: 99.8%;
+	    height: 24px;
 	}
 	
 	.aui .logo, .aui .logo:hover {

@@ -490,7 +490,6 @@
 		              							%>
 		              							<%=fullname3%>
 		              							<div class="generation-date"><%=date%></div>
-		              							<div class="duration"><%=dur%></div>
 		              						</em>
 	              						</div>
 									</a>

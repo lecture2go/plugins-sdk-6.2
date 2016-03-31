@@ -35,14 +35,6 @@
 	font-size: smaller;
 }
 
-input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
-    float: right;
-    height: 24px;
-    width: 313px;
-    margin: 2px 0;
-    padding: 4px 0;
-}
-
 #myToggler .toggler-header-collapsed:hover .video-image-overlay, #myToggler .toggler-header-collapsed:hover .tri, #myToggler .toggler-header-expanded .video-image-overlay, #myToggler .toggler-header-expanded .tri {
     visibility: visible;
 }
@@ -138,6 +130,7 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 }
 
 .metainfo-small {
+    line-height: 20px;
     margin-left: 67px;
 }
 
@@ -239,10 +232,10 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 }
 
 .video-image {
+    margin-left: 2px;
+    max-height: 30px !important;
     position: relative;
     width: 60px;
-    max-height: 37px !important;
-    margin-left: 2px;
 }
 
 .video-image.related {
@@ -406,12 +399,6 @@ a.list-group-item:hover, a.list-group-item:focus {
     border-color: #ddd;
 }
 
-.aui #my-tab-content {
-	min-height: 0px;
-	width: auto;
-	overflow: hidden; 
-}
-
 .tileheading {
     font-size: 17px;
 }
@@ -477,13 +464,22 @@ thead, th {
     margin-right: 15px;
 }
 
+#uploaded-files > tbody > tr > td {
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 0;
+    margin-right: 0;
+    margin-top: 0;
+    padding: 0;
+    width: 100% !important;
+}
+
 .title-small {
-    font-weight: 600 !important;
     font-size: 13px;
-    margin-bottom: 0px;
-    padding: 0px;
+    font-weight: 600 !important;
     line-height: 17px;
-    width: 50%;
+    margin-bottom: -5px;
+    padding: 0;
+    width: 80%;
 }
 
 .title-small.related {
@@ -614,9 +610,15 @@ thead, th {
     border-bottom: 1px solid #F6F6F6 !important;
 }
 
+.aui li {
+    line-height: 23px;
+}
+
 .generation-date {
     float: right;
+    font-size: 10px;
     margin-right: 2%;
+    margin-top: 4px;
 }
 
 .duration {
@@ -855,6 +857,13 @@ p.smallitalic {
     font-size: 12px;
 }
 
+.format {
+    color: #d81b1b;
+    font-size: 10px;
+    line-height: 5px;
+    padding: 0;
+}
+
 .aui .chaptertile.active {
     color: #D81B1B;
     background: #fff none repeat scroll 0% 0%;
@@ -944,13 +953,6 @@ p.smallitalic {
     font-family: TheSansUHH,sans-serif;
 }
 
-.format {
-    font-size: 10px;
-    padding: 0px;
-    line-height: 5px;
-    color: #B19292;
-}
-
 .aui select {
     -moz-appearance: none;
     background-color: #DDD;
@@ -972,6 +974,21 @@ p.smallitalic {
 	box-sizing: border-box;
 	-webkit-appearance: none;
 	-moz-appearance: none;
+}
+
+input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
+    float: right;
+    height: 19px;
+    margin: -12px 0 2px;
+    padding: 4px 0;
+    width: 313px;
+}
+
+.aui #my-tab-content {
+	margin-top: 1px;
+	min-height: 0;
+	overflow: hidden;
+	width: auto;
 }
 
 .aui select > option {
@@ -1155,10 +1172,6 @@ p.smallitalic {
     margin-top: 0;
 }
 
-#uploaded-files > tbody > tr > td {
-    width: 100% !important;
-}
-
 .prodCont {
     margin-left: 20%;
     width: 56% !important;
@@ -1329,6 +1342,11 @@ div.filter-menu-link span.icon-large.icon-remove {
     padding-left: 0px;
     padding-right: 0px;
  	color: #4d4d4d;
+ 	font-size: 12px
+}
+
+.aui .navbar .nav {
+    font-size: 15px;
 }
 
 .aui a:focus {
