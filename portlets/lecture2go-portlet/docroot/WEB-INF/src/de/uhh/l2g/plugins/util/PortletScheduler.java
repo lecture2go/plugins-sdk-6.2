@@ -32,6 +32,7 @@ package de.uhh.l2g.plugins.util;
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  ***************************************************************************/
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -45,10 +46,14 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
+import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.scheduler.messaging.ReceiverKey;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
+import com.liferay.portal.model.Portlet;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 
 
 
@@ -180,7 +185,7 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 			       	if (map.containsKey(SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME)) listenerName = map.get(SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME).toString();
 			    	if (map.containsKey(SchedulerEngine.EXCEPTIONS_MAX_SIZE)) exceptionsMaxSize = Integer.valueOf(map.get(SchedulerEngine.EXCEPTIONS_MAX_SIZE).toString());
 			      
-			      	  LOG.info("Message :" + this.getMessage().getString(SchedulerEngine.PORTLET_ID) +" "+ this.getMessage().getString(SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME)+ " "+this.getMessage().getString(SchedulerEngine.DESTINATION_NAME)); 
+			      	  LOG.info("Message :" + portletId +" "+ listenerName + " "+this.getDestinationName()); 
 			     
 			      	  TriggerState state = SchedulerEngineHelperUtil.getJobState(this.getJobName(), this.getGroupName(), this.getStorageType());
 			      
@@ -190,7 +195,9 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 			      		  this.getMessage().put(SchedulerEngine.RECEIVER_KEY, this.getMessage().getValues().get(SchedulerEngine.RECEIVER_KEY).toString());
 			      		  LOG.info("Scheduling :" + this.schedulerName +" "+ this.getTrigger().toString());  
 			      		  LOG.info("New Message "+this.getMessage().toString());
-
+			      		  
+			   	       Thread thread = Thread.currentThread();
+				       LOG.info("Thread :" + thread.getContextClassLoader() + thread.toString());
 
 			      		 //SchedulerEngineHelperUtil.update(this.getTrigger(), this.getStorageType());
 			      		  SchedulerEngineHelperUtil.schedule(this.getTrigger(), this.getStorageType(), this.getDescription(), this.destination, this.getMessage(), exceptionsMaxSize);     
@@ -238,8 +245,13 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
     	        	  TriggerState state = SchedulerEngineHelperUtil.getJobState(resp.getJobName(), resp.getGroupName(), resp.getStorageType());
 		      
     	        	  if (state.equals(TriggerState.NORMAL)){
-    	        		  LOG.info("Unscheduling :" + this.schedulerName +" "+ resp.getTrigger().toString());  
-    	        		  SchedulerEngineHelperUtil.delete(resp.getJobName(), resp.getGroupName(), resp.getStorageType()); 
+    	        		  
+    	       	       Thread thread = Thread.currentThread();
+    	    	       LOG.info("Thread :" + thread.getContextClassLoader() + thread.toString());
+    	    	       
+    	        		  LOG.info("Unscheduling :" + this.schedulerName +" "+ resp.getTrigger().toString()); 
+    	        		  SchedulerEngineHelperUtil.unschedule(resp.getJobName(), resp.getGroupName(), resp.getStorageType());
+      	  				  SchedulerEngineHelperUtil.delete(resp.getJobName(), resp.getGroupName(), resp.getStorageType()); 
     	        		  
     	        	  }
     	        	  else{
@@ -264,7 +276,7 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 				scheduledJobs = SchedulerEngineHelperUtil.getScheduledJobs();
     	  		for (SchedulerResponse resp : scheduledJobs) {  
     	  			if (resp.getJobName().equalsIgnoreCase(this.schedulerName)) { 
-    	  				SchedulerEngineHelperUtil.unschedule(this.schedulerName, this.schedulerName, resp.getStorageType());
+    	  				SchedulerEngineHelperUtil.unschedule(resp.getJobName(), resp.getGroupName(), resp.getStorageType());
     	  			}  	  			
     	  		}
     	  		LOG.warn("Removed all Schedulers associated with "+this.schedulerName);
@@ -288,8 +300,8 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 				scheduledJobs = SchedulerEngineHelperUtil.getScheduledJobs();
     	  		for (SchedulerResponse resp : scheduledJobs) {  
     	  			if (resp.getJobName().equalsIgnoreCase(this.schedulerName)) { 
-    	  				SchedulerEngineHelperUtil.unschedule(this.schedulerName, this.schedulerName, resp.getStorageType());
-    	  				SchedulerEngineHelperUtil.delete(this.schedulerName, this.schedulerName, resp.getStorageType());
+    	  				SchedulerEngineHelperUtil.unschedule(resp.getJobName(), resp.getGroupName(), resp.getStorageType());
+    	  				SchedulerEngineHelperUtil.delete(resp.getJobName(), resp.getGroupName(), resp.getStorageType());
     	  			}  	  			
     	  		}
     	  		LOG.warn("Removed all Schedulers associated with "+this.schedulerName);
@@ -303,29 +315,62 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
     }
     
     public static List<PortletScheduler> ListSchedulers(){
-    	List<PortletScheduler> schedulers = null;
-    	int i=0;
+    	List<PortletScheduler> schedulers = new LinkedList<PortletScheduler>();
+    	PortletScheduler psch = null;
+    	int i=1;
     	 try {
 				List<SchedulerResponse> scheduledJobs = SchedulerEngineHelperUtil.getScheduledJobs();
  	  		    for (SchedulerResponse resp : scheduledJobs) {  
- 	  		    	if (resp.getJobName().contains("l2g")){
- 	  		    	schedulers.add(new PortletScheduler(resp.getJobName()));
+ 	  		    	if (resp != null && resp.getJobName().contains("l2g")){
+ 	  		    		psch = new PortletScheduler();
+ 	
 	 	  		    	LOG.info(resp.toString());
-	 	  		    	schedulers.get(i).setJobName(resp.getJobName());
-	 	  		    	schedulers.get(i).setGroupName(resp.getGroupName());  
-	 	  		    	schedulers.get(i).setStorageType(resp.getStorageType()); 
-	 	  		    	schedulers.get(i).setDescription(resp.getDescription());
-	 	  		    	schedulers.get(i).setMessage(resp.getMessage());
-	 	  		    	schedulers.get(i).setTrigger(resp.getTrigger());
+	 	  		    	psch.setJobName(resp.getJobName());
+	 	  		    	psch.setGroupName(resp.getGroupName());  
+	 	  		    	psch.setStorageType(resp.getStorageType()); 
+	 	  		    	psch.setDescription(resp.getDescription());
+	 	  		    	psch.setMessage(resp.getMessage());
+	 	  		    	psch.setTrigger(resp.getTrigger());
 	 	  		        TriggerState state = SchedulerEngineHelperUtil.getJobState(resp.getJobName(), resp.getGroupName(), resp.getStorageType());
+	 	  		        schedulers.add(psch);
+	 	  		        LOG.info(psch.getJobName());
  	  		    	}
  	  		        
  	  		    }
+ 	  		    
     	  }catch (SchedulerException e) {
    			  LOG.error("Could not retrieve ScheduledJobs");
    		  }
 		return schedulers; 
     }
+     
+ 
+    /**		if (PropsValues.SCHEDULER_ENABLED) {
+			List<SchedulerEntry> schedulerEntries =
+				portlet.getSchedulerEntries();
+
+			if ((schedulerEntries != null) && !schedulerEntries.isEmpty()) {
+				for (SchedulerEntry schedulerEntry : schedulerEntries) {
+					SchedulerEngineHelperUtil.unschedule(
+						schedulerEntry, StorageType.MEMORY_CLUSTERED);
+				}
+			}
+		}
+     * 
+     * @param portletId
+     * @return
+     */
+     public static List<SchedulerEntry> ListSchedulerEntriess(String portletId){
+    	 Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
+    	 List<SchedulerEntry> jobs = new LinkedList<SchedulerEntry>();
+    	 
+    	 jobs = portlet.getSchedulerEntries();
+		    for (SchedulerEntry job : jobs) {  
+		    	LOG.info(job.toString());
+		    }
+    	 
+    	 return jobs;
+    	 }
 }
  
 

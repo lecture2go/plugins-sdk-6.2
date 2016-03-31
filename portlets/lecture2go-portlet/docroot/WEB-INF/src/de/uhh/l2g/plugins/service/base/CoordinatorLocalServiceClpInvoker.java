@@ -106,29 +106,29 @@ public class CoordinatorLocalServiceClpInvoker {
 				"de.uhh.l2g.plugins.model.Coordinator"
 			};
 
-		_methodName150 = "getBeanIdentifier";
+		_methodName158 = "getBeanIdentifier";
 
-		_methodParameterTypes150 = new String[] {  };
+		_methodParameterTypes158 = new String[] {  };
 
-		_methodName151 = "setBeanIdentifier";
+		_methodName159 = "setBeanIdentifier";
 
-		_methodParameterTypes151 = new String[] { "java.lang.String" };
+		_methodParameterTypes159 = new String[] { "java.lang.String" };
 
-		_methodName157 = "getAllCoordinators";
+		_methodName165 = "getAllCoordinators";
 
-		_methodParameterTypes157 = new String[] { "int", "int" };
+		_methodParameterTypes165 = new String[] { "int", "int" };
 
-		_methodName158 = "getById";
+		_methodName166 = "getById";
 
-		_methodParameterTypes158 = new String[] { "long" };
+		_methodParameterTypes166 = new String[] { "long" };
 
-		_methodName159 = "getInstitutionByCoordinator";
+		_methodName167 = "getInstitutionByCoordinator";
 
-		_methodParameterTypes159 = new String[] { "long" };
+		_methodParameterTypes167 = new String[] { "long" };
 
-		_methodName160 = "getByInstitution";
+		_methodName168 = "getByInstitution";
 
-		_methodParameterTypes160 = new String[] { "long" };
+		_methodParameterTypes168 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -220,36 +220,36 @@ public class CoordinatorLocalServiceClpInvoker {
 			return CoordinatorLocalServiceUtil.updateCoordinator((de.uhh.l2g.plugins.model.Coordinator)arguments[0]);
 		}
 
-		if (_methodName150.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes150, parameterTypes)) {
+		if (_methodName158.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes158, parameterTypes)) {
 			return CoordinatorLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName151.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes151, parameterTypes)) {
+		if (_methodName159.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes159, parameterTypes)) {
 			CoordinatorLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName157.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes157, parameterTypes)) {
+		if (_methodName165.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes165, parameterTypes)) {
 			return CoordinatorLocalServiceUtil.getAllCoordinators(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
-		if (_methodName158.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes158, parameterTypes)) {
+		if (_methodName166.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes166, parameterTypes)) {
 			return CoordinatorLocalServiceUtil.getById(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName159.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes159, parameterTypes)) {
+		if (_methodName167.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes167, parameterTypes)) {
 			return CoordinatorLocalServiceUtil.getInstitutionByCoordinator(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName160.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes160, parameterTypes)) {
+		if (_methodName168.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes168, parameterTypes)) {
 			return CoordinatorLocalServiceUtil.getByInstitution(((Long)arguments[0]).longValue());
 		}
 
@@ -288,16 +288,16 @@ public class CoordinatorLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName150;
-	private String[] _methodParameterTypes150;
-	private String _methodName151;
-	private String[] _methodParameterTypes151;
-	private String _methodName157;
-	private String[] _methodParameterTypes157;
 	private String _methodName158;
 	private String[] _methodParameterTypes158;
 	private String _methodName159;
 	private String[] _methodParameterTypes159;
-	private String _methodName160;
-	private String[] _methodParameterTypes160;
+	private String _methodName165;
+	private String[] _methodParameterTypes165;
+	private String _methodName166;
+	private String[] _methodParameterTypes166;
+	private String _methodName167;
+	private String[] _methodParameterTypes167;
+	private String _methodName168;
+	private String[] _methodParameterTypes168;
 }

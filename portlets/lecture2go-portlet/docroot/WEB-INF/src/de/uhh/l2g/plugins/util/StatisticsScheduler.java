@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerException;
 @SuppressWarnings("serial")
 public class StatisticsScheduler extends PortletScheduler implements MessageListener {  
 	private static Log LOG;	
+	private PortletScheduler ps;
 	  
     public StatisticsScheduler(){
     	super();
@@ -72,7 +73,9 @@ public class StatisticsScheduler extends PortletScheduler implements MessageList
        //Debug Information on running job 
 	   if (message != null ) {
 		   LOG.info("Message :" + message.toString());
-	   
+	       Thread thread = Thread.currentThread();
+	       LOG.info("Thread :" + thread.getContextClassLoader());
+	       LOG.info("Thread :" +  thread.toString());
 		   Map<String, Object> map = message.getValues();
 	   
 		   LOG.info(message.get(SchedulerEngine.DESTINATION_NAME) +" "+
