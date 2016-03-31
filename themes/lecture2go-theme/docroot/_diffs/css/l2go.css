@@ -13,7 +13,6 @@
 .aui .btn:hover, .aui .btn:focus {
     background-position: 0 45px;
     text-decoration: none;
-    transition: none 0s ease 0s ;
 }
 
 .aui [class*="span"], .aui .uneditable-input[class*="span"], .aui .row-fluid [class*="span"] {
@@ -60,7 +59,6 @@
 
 .video-image-big:hover {
     opacity: 1;
-    transition: opacity 0.3s ease 0s;
 }
 
 .video-image-overlay {
@@ -126,7 +124,6 @@
 
 .video-image-wrapper-small.related:hover {
 	 opacity: 1;
-	 transition: opacity 0.3s ease 0s;
 }
 
 .metainfo-small {
@@ -229,6 +226,9 @@
 
 .creator-small2.related {
     font-size: 12px;
+    line-height: 15px;
+    margin: 0;
+    padding: 0;
 }
 
 .video-image {
@@ -453,7 +453,6 @@ thead, th {
     border: 1px solid #DDD;
     border-radius: 0px;
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.055);
-    transition: all 0.2s ease-in-out 0s;
     height: 150px;
     width: 250px;
     float: left;
@@ -483,6 +482,7 @@ thead, th {
 }
 
 .title-small.related {
+    margin-bottom: auto;
     width: 100%;
 }
 
@@ -703,7 +703,7 @@ thead, th {
 }
 
 .date.related {
-    font-size: 10px;
+    font-size: 9px;
 }
 
 #_lgopenaccessvideos_WAR_lecture2goportlet_timeStart {
@@ -786,13 +786,11 @@ p.smallitalic {
     opacity: 0.1;
     margin-left: -33px;
     overflow: hidden;
-    transition: opacity 0.3s ease 0s;
 }
 
 #qr:hover {
     cursor: none;
     opacity: 0.9;
-    transition: opacity 0.3s ease 0s;
 }
 
 #embedForm {

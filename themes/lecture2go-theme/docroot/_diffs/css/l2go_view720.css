@@ -116,8 +116,7 @@
 	}
 	
 	#banner {
-	    background: rgba(0, 0, 0, 0) url("") no-repeat scroll right 0 top 0 / 130px auto;
-	    margin-top: -6px;
+	    background: none;
 	} 
 	
 	input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {

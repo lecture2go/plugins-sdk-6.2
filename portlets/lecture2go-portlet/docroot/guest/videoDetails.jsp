@@ -346,7 +346,7 @@
 										</div>
 										<div class="metainfo-small related">
 												<div class="title-small related"><%=vid.getTitle()%></div>
-							          			<em class="creator-small2 related">
+							          			<p class="creator-small2 related">
 												<%
 						       						String fullname="";
 							        				String date = "";
@@ -367,7 +367,7 @@
 							        				}
 							           			%>
 												<%=fullname %>
-							           			</em>
+							           			</p>
 								           		<div class="date related"><%=date%></div> 
 						            	</div>
 									</a>

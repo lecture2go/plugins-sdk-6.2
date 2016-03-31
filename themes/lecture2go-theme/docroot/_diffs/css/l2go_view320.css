@@ -239,6 +239,19 @@
 	    min-height: auto;
 	}
 
+	.meta-title {
+    	font-size: 15px;
+    	font-weight: 900;
+    	line-height: 17px;
+	}
+	
+	.title-small {
+    	font-size: 11px;
+    	line-height: 14px;
+    	margin: 5px 0 0;
+    	width: 100%;
+	}
+
 	#searchedvideos {
 	    margin-left: 10px;
 	}
@@ -246,13 +259,7 @@
 	.creator-small2 {
 	    display: none;
 	}	
-
-	.title-small {
-	    font-size: 11px;
-	    margin: -5px 0 0;
-	    width: 100%;
-	}
-	
+   
 	.metainfo-small {
 	    margin-left: 0;
 	    margin-top: 3px;
