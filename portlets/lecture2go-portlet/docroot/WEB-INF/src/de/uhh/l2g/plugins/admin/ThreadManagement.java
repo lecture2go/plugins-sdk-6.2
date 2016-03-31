@@ -28,6 +28,7 @@ import com.liferay.util.bridges.mvc.MVCPortlet;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Institution_Host;
+import de.uhh.l2g.plugins.model.Statistic;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
@@ -53,12 +54,15 @@ public class ThreadManagement extends MVCPortlet {
 	@Override
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException, IOException {
         
-		
+		try {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			         Statistic.class.getName(), renderRequest);
+
 		
 
-		//PortletScheduler.ListSchedulers();
-		PortletScheduler.ListSchedulerEntriess("lgadminthreadmanagement_WAR_lecture2goportlet");
-		StatisticsScheduler scheduler = new StatisticsScheduler(StatisticsScheduler.class.getName());
+			//PortletScheduler.ListSchedulers();
+			//PortletScheduler.ListSchedulerEntriess(serviceContext.getPortletId());
+			StatisticsScheduler scheduler = new StatisticsScheduler(StatisticsScheduler.class.getName(), serviceContext);
 		/*	  try {
 		    	scheduler.killAll();
 		    	
@@ -77,6 +81,13 @@ public class ThreadManagement extends MVCPortlet {
 			e.printStackTrace();
 		}  
 
+		} catch (PortalException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (SystemException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 	
 	public void init() throws PortletException{

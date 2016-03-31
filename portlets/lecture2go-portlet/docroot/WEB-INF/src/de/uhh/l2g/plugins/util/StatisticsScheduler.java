@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
+import com.liferay.portal.service.ServiceContext;
 
 
 
@@ -61,31 +62,17 @@ public class StatisticsScheduler extends PortletScheduler implements MessageList
     	LOG = LogFactoryUtil.getLog(StatisticsScheduler.class.getName());
     }
     
-	public StatisticsScheduler(String schedulerClassName) {
-		super(StatisticsScheduler.class.getName());
-	    this.schedulerName = StatisticsScheduler.class.getName();
+	public StatisticsScheduler(String schedulerClassName, ServiceContext serviceContext) {
+		super(StatisticsScheduler.class.getName(), serviceContext);
+	    this.schedulerClassName = StatisticsScheduler.class.getName();
 	    LOG = LogFactoryUtil.getLog(StatisticsScheduler.class.getName());
 	}
 
 	@Override
     public void receive(Message message) throws MessageListenerException {
-		String values = "No values";
-       //Debug Information on running job 
-	   if (message != null ) {
-		   LOG.info("Message :" + message.toString());
-	       Thread thread = Thread.currentThread();
-	       LOG.info("Thread :" + thread.getContextClassLoader());
-	       LOG.info("Thread :" +  thread.toString());
-		   Map<String, Object> map = message.getValues();
+	   super.receive(message);
 	   
-		   LOG.info(message.get(SchedulerEngine.DESTINATION_NAME) +" "+
-			   message.getDestinationName() +" "+
-			   message.getValues().get(SchedulerEngine.DESTINATION_NAME)+" "+
-			   message.getDestinationName());
-     
-		   values = map.toString();
-	   }
-       LOG.info("Statistics Scheduler running... " + values);
+	   //Do Job
     }
 	
 	public void start() {
