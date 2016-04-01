@@ -181,6 +181,15 @@
 		<field name="lectureseriesId" type="long" />
 		<field name="producerId" type="long" />
 	</model>
+	<model name="de.uhh.l2g.plugins.model.ScheduledThread">
+		<field name="scheduledThreadId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
 	<model name="de.uhh.l2g.plugins.model.Segment">
 		<field name="segmentId" type="long" />
 		<field name="videoId" type="long" />

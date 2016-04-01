@@ -18,6 +18,7 @@
 	<import class="de.uhh.l2g.plugins.model.Office" />
 	<import class="de.uhh.l2g.plugins.model.Producer" />
 	<import class="de.uhh.l2g.plugins.model.Producer_Lectureseries" />
+	<import class="de.uhh.l2g.plugins.model.ScheduledThread" />
 	<import class="de.uhh.l2g.plugins.model.Segment" />
 	<import class="de.uhh.l2g.plugins.model.Statistic" />
 	<import class="de.uhh.l2g.plugins.model.Sys" />
@@ -205,6 +206,18 @@
 		</id>
 		<property name="lectureseriesId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="producerId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="de.uhh.l2g.plugins.model.impl.ScheduledThreadImpl" table="LG_ScheduledThread">
+		<cache usage="read-write" />
+		<id name="scheduledThreadId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.SegmentImpl" table="LG_Segment">
 		<cache usage="read-write" />

@@ -628,7 +628,7 @@
             <finder-column name="groupId"></finder-column>
         </finder>
     </entity>
-    <entity name="VideoStatistic" local-service="true" remote-service="true">
+    <entity name="VideoStatistic" local-service="true" remote-service="false">
 
     	<!-- PK fields -->
 
@@ -660,6 +660,25 @@
         <column name="currentPrivPercent" type="int"></column>
         <column name="intervalName" type="String"></column>
     	<!-- Finder methods -->
+    </entity>
+    <entity name="ScheduledThread" local-service="true"
+    	remote-service="false">
+
+    	<!-- PK fields -->
+
+    	<column name="scheduledThreadId" type="long" primary="true"></column>
+
+    	<!-- Group instance -->
+
+    	<column name="groupId" type="long"></column>
+
+    	<!-- Audit fields -->
+
+    	<column name="companyId" type="long"></column>
+    	<column name="userId" type="long"></column>
+    	<column name="userName" type="String"></column>
+    	<column name="createDate" type="Date"></column>
+    	<column name="modifiedDate" type="Date"></column>
     </entity>
     <exceptions>
         <exception>HostName</exception>

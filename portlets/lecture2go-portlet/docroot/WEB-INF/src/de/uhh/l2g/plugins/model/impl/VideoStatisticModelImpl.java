@@ -15,7 +15,6 @@
 package de.uhh.l2g.plugins.model.impl;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
-import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -29,16 +28,13 @@ import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 
 import de.uhh.l2g.plugins.model.VideoStatistic;
 import de.uhh.l2g.plugins.model.VideoStatisticModel;
-import de.uhh.l2g.plugins.model.VideoStatisticSoap;
 
 import java.io.Serializable;
 
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -54,7 +50,6 @@ import java.util.Map;
  * @see de.uhh.l2g.plugins.model.VideoStatisticModel
  * @generated
  */
-@JSON(strict = true)
 public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 	implements VideoStatisticModel {
 	/*
@@ -96,61 +91,6 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 				"value.object.finder.cache.enabled.de.uhh.l2g.plugins.model.VideoStatistic"),
 			true);
 	public static final boolean COLUMN_BITMASK_ENABLED = false;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 */
-	public static VideoStatistic toModel(VideoStatisticSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		VideoStatistic model = new VideoStatisticImpl();
-
-		model.setVideoStatisticId(soapModel.getVideoStatisticId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setCompareDate(soapModel.getCompareDate());
-		model.setTotalVideos(soapModel.getTotalVideos());
-		model.setPublicVideos(soapModel.getPublicVideos());
-		model.setPrivateVideos(soapModel.getPrivateVideos());
-		model.setCurrentTotal(soapModel.getCurrentTotal());
-		model.setCurrentPublic(soapModel.getCurrentPublic());
-		model.setCurrentPrivate(soapModel.getCurrentPrivate());
-		model.setPubPercent(soapModel.getPubPercent());
-		model.setPrivPercent(soapModel.getPrivPercent());
-		model.setCurrentPubPercent(soapModel.getCurrentPubPercent());
-		model.setCurrentPrivPercent(soapModel.getCurrentPrivPercent());
-		model.setIntervalName(soapModel.getIntervalName());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 */
-	public static List<VideoStatistic> toModels(VideoStatisticSoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<VideoStatistic> models = new ArrayList<VideoStatistic>(soapModels.length);
-
-		for (VideoStatisticSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.VideoStatistic"));
 
@@ -318,7 +258,6 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 		}
 	}
 
-	@JSON
 	@Override
 	public long getVideoStatisticId() {
 		return _videoStatisticId;
@@ -329,7 +268,6 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 		_videoStatisticId = videoStatisticId;
 	}
 
-	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -340,7 +278,6 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 		_groupId = groupId;
 	}
 
-	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -351,7 +288,6 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 		_companyId = companyId;
 	}
 
-	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -362,7 +298,6 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 		_createDate = createDate;
 	}
 
-	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -373,7 +308,6 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 		_modifiedDate = modifiedDate;
 	}
 
-	@JSON
 	@Override
 	public Date getCompareDate() {
 		return _compareDate;
@@ -384,7 +318,6 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 		_compareDate = compareDate;
 	}
 
-	@JSON
 	@Override
 	public long getTotalVideos() {
 		return _totalVideos;
@@ -395,7 +328,6 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 		_totalVideos = totalVideos;
 	}
 
-	@JSON
 	@Override
 	public long getPublicVideos() {
 		return _publicVideos;
@@ -406,7 +338,6 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 		_publicVideos = publicVideos;
 	}
 
-	@JSON
 	@Override
 	public long getPrivateVideos() {
 		return _privateVideos;
@@ -417,7 +348,6 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 		_privateVideos = privateVideos;
 	}
 
-	@JSON
 	@Override
 	public long getCurrentTotal() {
 		return _currentTotal;
@@ -428,7 +358,6 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 		_currentTotal = currentTotal;
 	}
 
-	@JSON
 	@Override
 	public long getCurrentPublic() {
 		return _currentPublic;
@@ -439,7 +368,6 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 		_currentPublic = currentPublic;
 	}
 
-	@JSON
 	@Override
 	public long getCurrentPrivate() {
 		return _currentPrivate;
@@ -450,7 +378,6 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 		_currentPrivate = currentPrivate;
 	}
 
-	@JSON
 	@Override
 	public int getPubPercent() {
 		return _pubPercent;
@@ -461,7 +388,6 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 		_pubPercent = pubPercent;
 	}
 
-	@JSON
 	@Override
 	public int getPrivPercent() {
 		return _privPercent;
@@ -472,7 +398,6 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 		_privPercent = privPercent;
 	}
 
-	@JSON
 	@Override
 	public int getCurrentPubPercent() {
 		return _currentPubPercent;
@@ -483,7 +408,6 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 		_currentPubPercent = currentPubPercent;
 	}
 
-	@JSON
 	@Override
 	public int getCurrentPrivPercent() {
 		return _currentPrivPercent;
@@ -494,7 +418,6 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 		_currentPrivPercent = currentPrivPercent;
 	}
 
-	@JSON
 	@Override
 	public String getIntervalName() {
 		if (_intervalName == null) {
