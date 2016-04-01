@@ -15,6 +15,11 @@
     text-decoration: none;
 }
 
+p.smallitalic {
+    font-size: 9px;
+    font-style: italic;
+}
+
 .aui [class*="span"], .aui .uneditable-input[class*="span"], .aui .row-fluid [class*="span"] {
     float: left;
 }
@@ -23,6 +28,10 @@
     margin-bottom: 15px;
     visibility: hidden;
     display: none;
+}
+
+.aui .btn:hover, .aui .btn:focus {
+    transition: none 0s ease 0s ;
 }
 
 .aui .row-fluid [class*="span"]:first-child {
@@ -217,6 +226,15 @@
 .aui .btn:hover, .aui .btn:focus, .aui .btn:active, .aui .btn.active, .aui .btn.disabled, .aui .btn[disabled] {
     background-color: #d81b1b;
     color: white;
+}
+
+#uploaded-files > tbody > tr > td {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 0;
+    margin-right: 0;
+    margin-top: 0;
+    padding: 0;
+    width: 100% !important;
 }
 
 .creator-small2 {
@@ -461,15 +479,6 @@ thead, th {
 .badge {
     float: right;
     margin-right: 15px;
-}
-
-#uploaded-files > tbody > tr > td {
-    border-bottom: 1px solid #ddd;
-    margin-bottom: 0;
-    margin-right: 0;
-    margin-top: 0;
-    padding: 0;
-    width: 100% !important;
 }
 
 .title-small {
@@ -774,10 +783,6 @@ thead, th {
     width: 229px;
     padding-bottom: 0px;
     margin-bottom: 0px;
-}
-
-p.smallitalic {
-    font-style: italic;
 }
 
 #qr {
