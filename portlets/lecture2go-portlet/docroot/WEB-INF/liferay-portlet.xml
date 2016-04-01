@@ -107,7 +107,7 @@
   			<scheduler-event-listener-class>de.uhh.l2g.plugins.util.StatisticsScheduler</scheduler-event-listener-class>  
          		<trigger>  
          			<cron>  
-         			  <cron-trigger-value>0 * * * * ?</cron-trigger-value>  
+         			  <cron-trigger-value>0 */5 * * * ?</cron-trigger-value>  
          			</cron>  
  			</trigger>   
    		</scheduler-entry> 

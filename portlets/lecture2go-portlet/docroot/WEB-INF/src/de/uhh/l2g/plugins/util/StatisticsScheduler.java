@@ -70,9 +70,12 @@ public class StatisticsScheduler extends PortletScheduler implements MessageList
 
 	@Override
     public void receive(Message message) throws MessageListenerException {
-	   super.receive(message);
-	   
-	   //Do Job
+	   //uncoment for further debug messages
+	   //super.receive(message);
+		LOG.info("Statistics Scheduler running "+message.getValues().get(SchedulerEngine.JOB_NAME).toString()+"...");
+	   //Do Job....
+		
+		LOG.info("Statistics Scheduler finished.");
     }
 	
 	public void start() {

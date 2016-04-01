@@ -38,6 +38,8 @@
 	<bean id="de.uhh.l2g.plugins.service.persistence.ProducerFinder" class="de.uhh.l2g.plugins.service.persistence.ProducerFinderImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.Producer_LectureseriesLocalService" class="de.uhh.l2g.plugins.service.impl.Producer_LectureseriesLocalServiceImpl" />
 	<bean id="de.uhh.l2g.plugins.service.persistence.Producer_LectureseriesPersistence" class="de.uhh.l2g.plugins.service.persistence.Producer_LectureseriesPersistenceImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.ScheduledThreadLocalService" class="de.uhh.l2g.plugins.service.impl.ScheduledThreadLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.ScheduledThreadPersistence" class="de.uhh.l2g.plugins.service.persistence.ScheduledThreadPersistenceImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.SegmentLocalService" class="de.uhh.l2g.plugins.service.impl.SegmentLocalServiceImpl" />
 	<bean id="de.uhh.l2g.plugins.service.persistence.SegmentPersistence" class="de.uhh.l2g.plugins.service.persistence.SegmentPersistenceImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.StatisticLocalService" class="de.uhh.l2g.plugins.service.impl.StatisticLocalServiceImpl" />
@@ -64,6 +66,5 @@
 	<bean id="de.uhh.l2g.plugins.service.VideohitlistLocalService" class="de.uhh.l2g.plugins.service.impl.VideohitlistLocalServiceImpl" />
 	<bean id="de.uhh.l2g.plugins.service.persistence.VideohitlistPersistence" class="de.uhh.l2g.plugins.service.persistence.VideohitlistPersistenceImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.VideoStatisticLocalService" class="de.uhh.l2g.plugins.service.impl.VideoStatisticLocalServiceImpl" />
-	<bean id="de.uhh.l2g.plugins.service.VideoStatisticService" class="de.uhh.l2g.plugins.service.impl.VideoStatisticServiceImpl" />
 	<bean id="de.uhh.l2g.plugins.service.persistence.VideoStatisticPersistence" class="de.uhh.l2g.plugins.service.persistence.VideoStatisticPersistenceImpl" parent="basePersistence" />
 </beans>

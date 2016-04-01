@@ -54,6 +54,7 @@ import de.uhh.l2g.plugins.service.persistence.OfficePersistence;
 import de.uhh.l2g.plugins.service.persistence.ProducerFinder;
 import de.uhh.l2g.plugins.service.persistence.ProducerPersistence;
 import de.uhh.l2g.plugins.service.persistence.Producer_LectureseriesPersistence;
+import de.uhh.l2g.plugins.service.persistence.ScheduledThreadPersistence;
 import de.uhh.l2g.plugins.service.persistence.SegmentPersistence;
 import de.uhh.l2g.plugins.service.persistence.StatisticFinder;
 import de.uhh.l2g.plugins.service.persistence.StatisticPersistence;
@@ -1000,6 +1001,44 @@ public abstract class OfficeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the scheduled thread local service.
+	 *
+	 * @return the scheduled thread local service
+	 */
+	public de.uhh.l2g.plugins.service.ScheduledThreadLocalService getScheduledThreadLocalService() {
+		return scheduledThreadLocalService;
+	}
+
+	/**
+	 * Sets the scheduled thread local service.
+	 *
+	 * @param scheduledThreadLocalService the scheduled thread local service
+	 */
+	public void setScheduledThreadLocalService(
+		de.uhh.l2g.plugins.service.ScheduledThreadLocalService scheduledThreadLocalService) {
+		this.scheduledThreadLocalService = scheduledThreadLocalService;
+	}
+
+	/**
+	 * Returns the scheduled thread persistence.
+	 *
+	 * @return the scheduled thread persistence
+	 */
+	public ScheduledThreadPersistence getScheduledThreadPersistence() {
+		return scheduledThreadPersistence;
+	}
+
+	/**
+	 * Sets the scheduled thread persistence.
+	 *
+	 * @param scheduledThreadPersistence the scheduled thread persistence
+	 */
+	public void setScheduledThreadPersistence(
+		ScheduledThreadPersistence scheduledThreadPersistence) {
+		this.scheduledThreadPersistence = scheduledThreadPersistence;
+	}
+
+	/**
 	 * Returns the segment local service.
 	 *
 	 * @return the segment local service
@@ -1486,25 +1525,6 @@ public abstract class OfficeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the video statistic remote service.
-	 *
-	 * @return the video statistic remote service
-	 */
-	public de.uhh.l2g.plugins.service.VideoStatisticService getVideoStatisticService() {
-		return videoStatisticService;
-	}
-
-	/**
-	 * Sets the video statistic remote service.
-	 *
-	 * @param videoStatisticService the video statistic remote service
-	 */
-	public void setVideoStatisticService(
-		de.uhh.l2g.plugins.service.VideoStatisticService videoStatisticService) {
-		this.videoStatisticService = videoStatisticService;
-	}
-
-	/**
 	 * Returns the video statistic persistence.
 	 *
 	 * @return the video statistic persistence
@@ -1773,6 +1793,10 @@ public abstract class OfficeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected de.uhh.l2g.plugins.service.Producer_LectureseriesLocalService producer_LectureseriesLocalService;
 	@BeanReference(type = Producer_LectureseriesPersistence.class)
 	protected Producer_LectureseriesPersistence producer_LectureseriesPersistence;
+	@BeanReference(type = de.uhh.l2g.plugins.service.ScheduledThreadLocalService.class)
+	protected de.uhh.l2g.plugins.service.ScheduledThreadLocalService scheduledThreadLocalService;
+	@BeanReference(type = ScheduledThreadPersistence.class)
+	protected ScheduledThreadPersistence scheduledThreadPersistence;
 	@BeanReference(type = de.uhh.l2g.plugins.service.SegmentLocalService.class)
 	protected de.uhh.l2g.plugins.service.SegmentLocalService segmentLocalService;
 	@BeanReference(type = SegmentPersistence.class)
@@ -1825,8 +1849,6 @@ public abstract class OfficeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected VideohitlistPersistence videohitlistPersistence;
 	@BeanReference(type = de.uhh.l2g.plugins.service.VideoStatisticLocalService.class)
 	protected de.uhh.l2g.plugins.service.VideoStatisticLocalService videoStatisticLocalService;
-	@BeanReference(type = de.uhh.l2g.plugins.service.VideoStatisticService.class)
-	protected de.uhh.l2g.plugins.service.VideoStatisticService videoStatisticService;
 	@BeanReference(type = VideoStatisticPersistence.class)
 	protected VideoStatisticPersistence videoStatisticPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

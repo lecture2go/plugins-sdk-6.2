@@ -12,6 +12,7 @@ import javax.portlet.RenderResponse;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -28,6 +29,7 @@ import com.liferay.util.bridges.mvc.MVCPortlet;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Institution_Host;
+import de.uhh.l2g.plugins.model.ScheduledThread;
 import de.uhh.l2g.plugins.model.Statistic;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
@@ -56,9 +58,8 @@ public class ThreadManagement extends MVCPortlet {
         
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			         Statistic.class.getName(), renderRequest);
+			         ScheduledThread.class.getName(), renderRequest);
 
-		
 
 			//PortletScheduler.ListSchedulers();
 			//PortletScheduler.ListSchedulerEntriess(serviceContext.getPortletId());
@@ -69,24 +70,77 @@ public class ThreadManagement extends MVCPortlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			} */
-	 try {
-	    	scheduler.stop();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-     
-	    try {
-	    	scheduler.start();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}  
+	
+	    } catch (Exception e) {
+	    	throw new PortletException(e);
+	    }
 
-		} catch (PortalException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (SystemException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		super.render(renderRequest, renderResponse);
+	 
+	}
+	
+	public void startThread(ActionRequest request, ActionResponse response){
+		try {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+					ScheduledThread.class.getName(), request);
+			 
+			  String schedulerClassName = ParamUtil.getString(request, "schedulerName");
+			
+			  //Use the correct Message Consumer 
+			  ClassLoader classLoader = PortletClassLoaderUtil.getClassLoader(serviceContext.getPortletId()); //Where portletID is not null
+			  PortletScheduler scheduler = (PortletScheduler) classLoader.loadClass(schedulerClassName).newInstance();
+			  
+			  scheduler.start();
+
+		 } catch (Exception e) {
+			SessionErrors.add(request, e.getClass().getName());
+			PortalUtil.copyRequestParameters(request, response);
+
+			response.setRenderParameter("mvcPath",
+					"/admin/threads.jsp");
+		}
+	}
+	
+	public void stopThread(ActionRequest request, ActionResponse response){		
+		try {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+					ScheduledThread.class.getName(), request);
+			  String schedulerClassName = ParamUtil.getString(request, "schedulerName");
+				
+			  //Use the correct Message Consumer 
+			  ClassLoader classLoader = PortletClassLoaderUtil.getClassLoader(serviceContext.getPortletId()); //Where portletID is not null
+			  PortletScheduler scheduler = (PortletScheduler) classLoader.loadClass(schedulerClassName).newInstance();
+			  
+			  scheduler.stop();
+
+		 } catch (Exception e) {
+			SessionErrors.add(request, e.getClass().getName());
+			PortalUtil.copyRequestParameters(request, response);
+
+			response.setRenderParameter("mvcPath",
+					"/admin/threads.jsp");
+		}
+	}
+	
+	public void killAll(ActionRequest request, ActionResponse response){
+		try {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+					ScheduledThread.class.getName(), request);
+			
+			  String schedulerClassName = ParamUtil.getString(request, "schedulerName");
+				
+			  //Use the correct Message Consumer 
+			  ClassLoader classLoader = PortletClassLoaderUtil.getClassLoader(serviceContext.getPortletId()); //Where portletID is not null
+			  PortletScheduler scheduler = (PortletScheduler) classLoader.loadClass(schedulerClassName).newInstance();
+			  
+			  scheduler.killAll();
+
+		 } catch (Exception e) {
+			SessionErrors.add(request, e.getClass().getName());
+			PortalUtil.copyRequestParameters(request, response);
+
+			response.setRenderParameter("mvcPath",
+					"/admin/threads.jsp");
 		}
 	}
 	

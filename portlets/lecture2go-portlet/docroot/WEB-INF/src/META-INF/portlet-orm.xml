@@ -223,6 +223,25 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.ScheduledThreadModelImpl">
+		<attributes>
+			<id name="scheduledThreadId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.SegmentModelImpl">
 		<attributes>
 			<id name="segmentId" />
@@ -495,6 +514,10 @@
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.Producer_LectureseriesImpl" name="Producer_Lectureseries">
 		<table name="LG_Producer_Lectureseries" />
+		<attributes />
+	</entity>
+	<entity class="de.uhh.l2g.plugins.model.impl.ScheduledThreadImpl" name="ScheduledThread">
+		<table name="LG_ScheduledThread" />
 		<attributes />
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.SegmentImpl" name="Segment">
