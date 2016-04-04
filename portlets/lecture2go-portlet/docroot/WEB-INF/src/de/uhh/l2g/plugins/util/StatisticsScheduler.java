@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.service.ServiceContext;
 
 
-
 /** Statistics is less flawed when running job at concrete time (ideally around midnight)  
  *  
  * The Class StatisticsSheduler.
@@ -55,7 +54,7 @@ import com.liferay.portal.service.ServiceContext;
 @SuppressWarnings("serial")
 public class StatisticsScheduler extends PortletScheduler implements MessageListener {  
 	private static Log LOG;	
-	private PortletScheduler ps;
+	
 	  
     public StatisticsScheduler(){
     	super();
@@ -86,7 +85,9 @@ public class StatisticsScheduler extends PortletScheduler implements MessageList
 		super.stop();
 	}
 
-
+	public void init(String schedulerClassName, String portletId) {
+        super.initScheduler(schedulerClassName,portletId);
+	}
   
     
 }

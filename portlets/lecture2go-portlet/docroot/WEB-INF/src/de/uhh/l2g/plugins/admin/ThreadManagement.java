@@ -63,7 +63,7 @@ public class ThreadManagement extends MVCPortlet {
 
 			//PortletScheduler.ListSchedulers();
 			//PortletScheduler.ListSchedulerEntriess(serviceContext.getPortletId());
-			StatisticsScheduler scheduler = new StatisticsScheduler(StatisticsScheduler.class.getName(), serviceContext);
+			//StatisticsScheduler scheduler = new StatisticsScheduler(StatisticsScheduler.class.getName(), serviceContext);
 		/*	  try {
 		    	scheduler.killAll();
 		    	
@@ -85,16 +85,20 @@ public class ThreadManagement extends MVCPortlet {
 					ScheduledThread.class.getName(), request);
 			 
 			  String schedulerClassName = ParamUtil.getString(request, "schedulerName");
-			
-			  //Use the correct Message Consumer 
+			 
+			  //Make sure to use the appropriate Message Consumer 
 			  ClassLoader classLoader = PortletClassLoaderUtil.getClassLoader(serviceContext.getPortletId()); //Where portletID is not null
 			  PortletScheduler scheduler = (PortletScheduler) classLoader.loadClass(schedulerClassName).newInstance();
-			  
+			  scheduler.initScheduler(schedulerClassName, serviceContext.getPortletId());
+			  System.out.println(scheduler.getPortletId());
 			  scheduler.start();
 
 		 } catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
 			PortalUtil.copyRequestParameters(request, response);
+			
+			System.out.println(e.getClass().getName());
+			e.printStackTrace();
 
 			response.setRenderParameter("mvcPath",
 					"/admin/threads.jsp");
@@ -107,16 +111,22 @@ public class ThreadManagement extends MVCPortlet {
 					ScheduledThread.class.getName(), request);
 			  String schedulerClassName = ParamUtil.getString(request, "schedulerName");
 				
-			  //Use the correct Message Consumer 
+			 //Make sure to use the appropriate Message Consumer 
 			  ClassLoader classLoader = PortletClassLoaderUtil.getClassLoader(serviceContext.getPortletId()); //Where portletID is not null
 			  PortletScheduler scheduler = (PortletScheduler) classLoader.loadClass(schedulerClassName).newInstance();
+			  
+			  scheduler.initScheduler(schedulerClassName, serviceContext.getPortletId());
+			  System.out.println(scheduler.getPortletId());
 			  
 			  scheduler.stop();
 
 		 } catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
 			PortalUtil.copyRequestParameters(request, response);
-
+			
+			System.out.println(e.getClass().getName());
+			e.printStackTrace();
+			
 			response.setRenderParameter("mvcPath",
 					"/admin/threads.jsp");
 		}
