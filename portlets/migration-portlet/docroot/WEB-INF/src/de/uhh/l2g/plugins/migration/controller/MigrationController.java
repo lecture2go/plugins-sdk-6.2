@@ -1559,7 +1559,7 @@ public class MigrationController {
     		
     		//find by lectureSeries.EventType 
     		ClassLoader classLoader = (ClassLoader)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),"portletClassLoader");
-    		DynamicQuery query = DynamicQueryFactoryUtil.forClass(Creator.class, classLoader).add(PropertyFactoryUtil.forName("fullName").eq(person));
+    		DynamicQuery query = DynamicQueryFactoryUtil.forClass(Creator.class, classLoader).add(PropertyFactoryUtil.forName("fullName").eq(fullName));
     		List<Creator> creators = CreatorLocalServiceUtil.dynamicQuery(query);
 	    		if (creators.size() > 0) {
 	    			creator = creators.get(0);

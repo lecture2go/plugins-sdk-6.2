@@ -2,10 +2,9 @@
 	.noresponsive{
 		display:none;
 	}
-		
-	element.style {
-	    width: auto;
-	    max-width: 480px;
+	
+	.sharetile {
+	    width: 131px;
 	}
 	
 	.admintile.wide.icons {
@@ -129,6 +128,7 @@
 	    float: left;
 	    margin: 24px 0 4px;
 	    width: 99.8%;
+	    height: 24px;
 	}
 	
 	.aui #navigation.open .navbar-inner {
@@ -136,6 +136,11 @@
     	padding: 0 5px 0 1px;
 	}
 	
+	.meta-title {
+    	font-size: 15px;
+    	font-weight: 900;
+    	line-height: 17px;
+	}
 	.aui .dockbar-split .dockbar, .aui .dockbar {
     	margin-right: 14px;
 	}

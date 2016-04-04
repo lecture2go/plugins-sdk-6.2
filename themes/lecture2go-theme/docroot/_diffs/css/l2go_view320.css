@@ -3,17 +3,6 @@
 		display:none;
 	}
 	
-	.video-image-wrapper {
-    	height: 33px !important;
-    	margin-right: 8px;
-    	max-width: 67px;
-	}
-
-	element.style {
-	    width: auto;
-	    max-width: 320px;
-	}
-	
 	.admintile.wide.icons {
 		visibility: hidden;
 		display: none;
@@ -74,6 +63,13 @@
 	    margin-left: 1px;
 	}
 	
+	.video-image-wrapper-small {
+	    float: none;
+	    height: auto;
+	    margin-right: 8px;
+    	max-width: 60px;
+	}
+
 	.video-image-wrapper-small.related {
 	    float: none;
 	    height: 38px;
@@ -189,6 +185,7 @@
 	    float: left;
 	    margin: 24px 0 4px;
 	    width: 99.8%;
+	    height: 24px;
 	}
 	
 	.aui #navigation.open .navbar-inner {
@@ -198,4 +195,74 @@
 	.aui .dockbar-split .dockbar, .aui .dockbar {
     	margin-right: 12px;
 	}
+	
+	.videotile.wide {
+    	height: auto;
+	}
+	
+	.video-image-wrapper {
+	    float: none;
+	    height: auto !important;
+	    margin-bottom: 5px;
+	}
+	
+	.lectureseries-title {
+	    font-size: 14px;
+	}
+	
+	.aui .chaptertile a span {
+	    font-size: 12px;
+	    padding: 0;
+	    margin-left: 0;
+    	margin-top: -10px;
+	}
+	
+	.aui .chaptertile span {
+    	font-size: 8px;
+    	margin-top: 44px;
+	}
+
+	.aui img.imgsmall {
+    	height: auto;
+    	max-width: 65px;
+	}
+	
+	.title-small.related {
+    	margin-bottom: -5px;
+    	margin-top: -11px;
+    	padding: 0;
+   	 	width: 100%;
+	}
+
+	.videotile.small.related {
+	    height: auto;
+	    min-height: auto;
+	}
+
+	.meta-title {
+    	font-size: 15px;
+    	font-weight: 900;
+    	line-height: 17px;
+	}
+	
+	.title-small {
+    	font-size: 11px;
+    	line-height: 14px;
+    	margin: 5px 0 0;
+    	width: 100%;
+	}
+
+	#searchedvideos {
+	    margin-left: 10px;
+	}
+	
+	.creator-small2 {
+	    display: none;
+	}	
+   
+	.metainfo-small {
+	    margin-left: 0;
+	    margin-top: 3px;
+	}
+	
 }

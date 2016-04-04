@@ -154,14 +154,14 @@
 			    <c:if test="${relatedVideos.size()<=1}"><div class="metainfo-wide"></c:if>
 					<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
 					    <c:if test="${video.downloadLink==1}">
-						    <li id="down"><a href="#download" data-toggle="tab">Download</a></li>
+						    <li id="down"><a href="#download" data-toggle="tab"><liferay-ui:message key="download"/></a></li>
 					    </c:if>
 					    <%if(video.getOpenAccess()==1){%>
-					   	 	<li><a href="#share" data-toggle="tab">Share</a></li>
+					   	 	<li><a href="#share" data-toggle="tab"><liferay-ui:message key="share"/></a></li>
 					    <%}%>
-					    <li><a href="#support" data-toggle="tab">Support</a></li>
+					    <li><a href="#support" data-toggle="tab"><liferay-ui:message key="support"/></a></li>
 					    <%if(video.isHasChapters()){ %>
-					    	<li><a href="#chapters" data-toggle="tab">Chapters</a></li>
+					    	<li><a href="#chapters" data-toggle="tab"><liferay-ui:message key="chapters"/></a></li>
 					    <%}%>				    
 					</ul>
 					    
@@ -324,7 +324,7 @@
 				%>
 			    	<div class="related">
 						<div class="col-md-5">
-						    <div class="related-lectureseries-name">lecture-series &nbsp;<a target="_blank" class="icon-small icon-rss" href="${video.mp4RssLink}"></a> </div>
+						    <div class="related-lectureseries-name"><liferay-ui:message key="lecture-series"/> &nbsp;<a target="_blank" class="icon-small icon-rss" href="${video.mp4RssLink}"></a> </div>
 							<ul class="ul-related">
 								<li class="placeholder"></li>
 								<%
@@ -346,7 +346,7 @@
 										</div>
 										<div class="metainfo-small related">
 												<div class="title-small related"><%=vid.getTitle()%></div>
-							          			<em class="creator-small2 related">
+							          			<p class="creator-small2 related">
 												<%
 						       						String fullname="";
 							        				String date = "";
@@ -367,7 +367,7 @@
 							        				}
 							           			%>
 												<%=fullname %>
-							           			</em>
+							           			</p>
 								           		<div class="date related"><%=date%></div> 
 						            	</div>
 									</a>

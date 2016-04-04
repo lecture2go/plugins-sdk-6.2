@@ -108,7 +108,7 @@
 <liferay-ui:panel-container>
 	<!-- 	parentinstitution filter -->
 	<%if(presentParentInstitutions.size()>0){ %>
-	<liferay-ui:panel extended="true" title="Einrichtung" cssClass='${hasParentInstitutionFiltered ? "filtered" : "notFiltered"}'>
+	<liferay-ui:panel extended="true" title="institution" cssClass='${hasParentInstitutionFiltered ? "filtered" : "notFiltered"}'>
 		<ul>
 		<c:forEach items="<%=presentParentInstitutions %>" var="parentInstitution">
 			<portlet:actionURL var="filterByParentInstitution" name="addFilter">
@@ -129,7 +129,7 @@
  	<!-- 	institution filter  -->
 	<c:if test="${hasParentInstitutionFiltered}">
 	<%if(presentInstitutions.size()>0){ %>
-	<liferay-ui:panel extended="true" title="Bereich" cssClass='${hasInstitutionFiltered ? "filtered" : "notFiltered"}'>
+	<liferay-ui:panel extended="true" title="sub-institution" cssClass='${hasInstitutionFiltered ? "filtered" : "notFiltered"}'>
 		<ul>
 		<c:forEach items="<%=presentInstitutions %>" var="institution">
 			<portlet:actionURL var="filterByInstitution" name="addFilter">
@@ -150,7 +150,7 @@
 	
 	<!-- 	terms filter -->
 	<%if(presentTerms.size()>0){%>
-	<liferay-ui:panel extended="true" title="Semester" cssClass='${hasTermFiltered ? "filtered" : "notFiltered"}'>
+	<liferay-ui:panel extended="true" title="term" cssClass='${hasTermFiltered ? "filtered" : "notFiltered"}'>
 		<ul class="terms">
 		<c:forEach items="<%=presentTerms %>" var="term">
 			<portlet:actionURL var="filterByTerm" name="addFilter">
@@ -174,7 +174,7 @@
 	
 	<!-- 	category filter -->
 	<%if(presentCategories.size()>0){%>
-	<liferay-ui:panel extended="true" title="Kategorie" cssClass='${hasCategoryFiltered ? "filtered" : "notFiltered"}'>
+	<liferay-ui:panel extended="true" title="category" cssClass='${hasCategoryFiltered ? "filtered" : "notFiltered"}'>
 		<ul>
 		<c:forEach items="<%=presentCategories %>" var="category">
     		<portlet:actionURL var="filterByCategory" name="addFilter">
@@ -286,10 +286,10 @@
 							        				}
 							           			%>
 												<%=fullname1 %>
+												<br/>
+												<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
 											</div>		
 																	
-											
-											<b><%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %></b>
 									        <div class="tags">
 									          <%
 									        	String cat = "";
@@ -356,10 +356,10 @@
 	              								}
 												%>
 												<%=fullname1%>
+												<br/>
+												<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>												
 											</div>		
-																	
-											
-											<b><%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %></b>
+
 									        <div class="tags">
 									          <%
 									        	String cat =CategoryLocalServiceUtil.getById(lectser.getCategoryId()).getName();
@@ -410,10 +410,11 @@
 	              								}
 												%>
 												<%=fullname2%>
+												<br/>
+												<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
 											</div>		
 																	
 											
-									        <b><%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %></b>
 									        <div class="tags">
 									          <%
 									        	String cat ="";
@@ -489,7 +490,6 @@
 		              							%>
 		              							<%=fullname3%>
 		              							<div class="generation-date"><%=date%></div>
-		              							<div class="duration"><%=dur%></div>
 		              						</em>
 	              						</div>
 									</a>
@@ -529,22 +529,20 @@ $( document ).ready(function() {
 	
 	// toggles the panel if necessary
     toggleFilterPanel();
-    $(window).resize(toggleFilterPanel);
 });
 
 function toggleFilterPanel(){
-    if ($( window ).width() <= 767){
-    	// only fire once
-    	if (!$('.notFiltered').children().hasClass('smallViewContent')) {
-    		// we utilize the find() method because the divs to be changed do not necessarily have the same hierarchy
-    		$('.notFiltered').find('.toggler-content-expanded').addClass('toggler-content-collapsed smallViewContent').removeClass('toggler-content-expanded');
-    		$('.notFiltered').find('.toggler-header-expanded').addClass('toggler-header-collapsed smallViewHeader').removeClass('toggler-header-expanded');
-       	}
-    }
-    else if ($( window ).width() > 767){
-        $('.smallViewContent').addClass('toggler-content-expanded').removeClass('toggler-content-collapsed smallViewContent');
-        $('.smallViewHeader').addClass('toggler-header-expanded').removeClass('toggler-header-collapsed smallViewHeader');
-    }
+	mediaCheck({
+		  media: '(max-width: 767px)',
+		  entry: function() {
+		    $('.notFiltered').find('.toggler-content-expanded').addClass('toggler-content-collapsed').removeClass('toggler-content-expanded');
+    		$('.notFiltered').find('.toggler-header-expanded').addClass('toggler-header-collapsed').removeClass('toggler-header-expanded');
+		  },
+		  exit: function() {
+			$('.notFiltered').find('.toggler-content-collapsed').addClass('toggler-content-expanded').removeClass('toggler-content-collapsed');
+		  	$('.notFiltered').find('.toggler-header-collapsed').addClass('toggler-header-expanded').removeClass('toggler-header-collapsed');
+		  }
+		});
 }
 
 </script>
