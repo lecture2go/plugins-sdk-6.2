@@ -597,10 +597,10 @@
             <finder-column name="objectId"></finder-column>
         </finder>
     </entity>
-    <entity name="Statistics" local-service="true"
+    <entity name="Statistic" local-service="true"
     	remote-service="false">
 
-    	<column name="statisticsId" type="long" primary="true"></column>
+    	<column name="statisticId" type="long" primary="true"></column>
 	    <column name="groupId" type="long"></column>
     	<column name="companyId" type="long"></column>
         <column name="publicVideos" type="int"></column>
@@ -610,15 +610,15 @@
     	<column name="userName" type="String"></column>
     	<column name="createDate" type="Date"></column>
     	<column name="modifiedDate" type="Date"></column>
-        <finder name="StatisticsId" return-type="Statistics">
-            <finder-column name="statisticsId"></finder-column>
+        <finder name="StatisticId" return-type="Statistic">
+            <finder-column name="statisticId"></finder-column>
         </finder>
-        <finder name="C_G_S" return-type="Statistics">
+        <finder name="C_G_S" return-type="Statistic">
             <finder-column name="companyId"></finder-column>
             <finder-column name="groupId"></finder-column>
-            <finder-column name="statisticsId"></finder-column>
+            <finder-column name="statisticId"></finder-column>
         </finder>
-        <finder name="C_G_D" return-type="Statistics">
+        <finder name="C_G_D" return-type="Statistic">
             <finder-column name="companyId"></finder-column>
             <finder-column name="groupId"></finder-column>
             <finder-column name="createDate"></finder-column>
@@ -628,15 +628,68 @@
             <finder-column name="groupId"></finder-column>
         </finder>
     </entity>
+    <entity name="VideoStatistic" local-service="true" remote-service="false">
+
+    	<!-- PK fields -->
+
+    	<column name="videoStatisticId" type="long" primary="true"></column>
+
+    	<!-- Group instance -->
+
+    	<column name="groupId" type="long"></column>
+
+    	<!-- Audit fields -->
+
+    	<column name="companyId" type="long"></column>
+    	<column name="createDate" type="Date"></column>
+    	<column name="modifiedDate" type="Date"></column>
+
+    	<!-- Other fields -->
+
+    	<!-- Order -->
+        <column name="compareDate" type="Date"></column>
+        <column name="totalVideos" type="long"></column>
+        <column name="publicVideos" type="long"></column>
+        <column name="privateVideos" type="long"></column>
+        <column name="currentTotal" type="long"></column>
+        <column name="currentPublic" type="long"></column>
+        <column name="currentPrivate" type="long"></column>
+        <column name="pubPercent" type="int"></column>
+        <column name="privPercent" type="int"></column>
+        <column name="currentPubPercent" type="int"></column>
+        <column name="currentPrivPercent" type="int"></column>
+        <column name="intervalName" type="String"></column>
+    	<!-- Finder methods -->
+    </entity>
+    <entity name="ScheduledThread" local-service="true"
+    	remote-service="false">
+
+    	<!-- PK fields -->
+
+    	<column name="scheduledThreadId" type="long" primary="true"></column>
+
+    	<!-- Group instance -->
+
+    	<column name="groupId" type="long"></column>
+
+    	<!-- Audit fields -->
+
+    	<column name="companyId" type="long"></column>
+    	<column name="userId" type="long"></column>
+    	<column name="userName" type="String"></column>
+    	<column name="createDate" type="Date"></column>
+    	<column name="modifiedDate" type="Date"></column>
+    </entity>
     <exceptions>
         <exception>HostName</exception>
         <exception>HostStreamer</exception>
         <exception>InstitutionName</exception>
         <exception>Institution_HostHost</exception>
         <exception>Institution_HostInstitution</exception>
-        <exception>StatisticsValue</exception>
-        <exception>StatisticsDate</exception>
+        <exception>StatisticValue</exception>
+        <exception>StatisticDate</exception>
     </exceptions>
+
 
 
 

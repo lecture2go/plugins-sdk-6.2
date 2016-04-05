@@ -41,7 +41,7 @@ import de.uhh.l2g.plugins.migration.model.LegacyOfficeClp;
 import de.uhh.l2g.plugins.migration.model.LegacyProducerClp;
 import de.uhh.l2g.plugins.migration.model.LegacyProducerLectureseriesClp;
 import de.uhh.l2g.plugins.migration.model.LegacySegmentClp;
-import de.uhh.l2g.plugins.migration.model.LegacyStatisticsClp;
+import de.uhh.l2g.plugins.migration.model.LegacyStatisticClp;
 import de.uhh.l2g.plugins.migration.model.LegacyUserClp;
 import de.uhh.l2g.plugins.migration.model.LegacyVideoClp;
 import de.uhh.l2g.plugins.migration.model.LegacyVideoFacilityClp;
@@ -188,8 +188,8 @@ public class ClpSerializer {
 			return translateInputLegacySegment(oldModel);
 		}
 
-		if (oldModelClassName.equals(LegacyStatisticsClp.class.getName())) {
-			return translateInputLegacyStatistics(oldModel);
+		if (oldModelClassName.equals(LegacyStatisticClp.class.getName())) {
+			return translateInputLegacyStatistic(oldModel);
 		}
 
 		if (oldModelClassName.equals(LegacyUserClp.class.getName())) {
@@ -387,10 +387,10 @@ public class ClpSerializer {
 		return newModel;
 	}
 
-	public static Object translateInputLegacyStatistics(BaseModel<?> oldModel) {
-		LegacyStatisticsClp oldClpModel = (LegacyStatisticsClp)oldModel;
+	public static Object translateInputLegacyStatistic(BaseModel<?> oldModel) {
+		LegacyStatisticClp oldClpModel = (LegacyStatisticClp)oldModel;
 
-		BaseModel<?> newModel = oldClpModel.getLegacyStatisticsRemoteModel();
+		BaseModel<?> newModel = oldClpModel.getLegacyStatisticRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -1048,8 +1048,8 @@ public class ClpSerializer {
 		}
 
 		if (oldModelClassName.equals(
-					"de.uhh.l2g.plugins.migration.model.impl.LegacyStatisticsImpl")) {
-			return translateOutputLegacyStatistics(oldModel);
+					"de.uhh.l2g.plugins.migration.model.impl.LegacyStatisticImpl")) {
+			return translateOutputLegacyStatistic(oldModel);
 		}
 		else if (oldModelClassName.endsWith("Clp")) {
 			try {
@@ -1393,8 +1393,8 @@ public class ClpSerializer {
 		}
 
 		if (className.equals(
-					"de.uhh.l2g.plugins.migration.NoSuchLegacyStatisticsException")) {
-			return new de.uhh.l2g.plugins.migration.NoSuchLegacyStatisticsException();
+					"de.uhh.l2g.plugins.migration.NoSuchLegacyStatisticException")) {
+			return new de.uhh.l2g.plugins.migration.NoSuchLegacyStatisticException();
 		}
 
 		if (className.equals(
@@ -1585,12 +1585,12 @@ public class ClpSerializer {
 		return newModel;
 	}
 
-	public static Object translateOutputLegacyStatistics(BaseModel<?> oldModel) {
-		LegacyStatisticsClp newModel = new LegacyStatisticsClp();
+	public static Object translateOutputLegacyStatistic(BaseModel<?> oldModel) {
+		LegacyStatisticClp newModel = new LegacyStatisticClp();
 
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
-		newModel.setLegacyStatisticsRemoteModel(oldModel);
+		newModel.setLegacyStatisticRemoteModel(oldModel);
 
 		return newModel;
 	}

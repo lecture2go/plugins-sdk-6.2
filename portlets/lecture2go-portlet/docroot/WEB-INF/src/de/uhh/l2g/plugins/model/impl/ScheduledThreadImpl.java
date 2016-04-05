@@ -15,20 +15,20 @@
 package de.uhh.l2g.plugins.model.impl;
 
 /**
- * The extended model implementation for the Statistics service. Represents a row in the &quot;LG_Statistics&quot; database table, with each column mapped to a property of this class.
+ * The extended model implementation for the ScheduledThread service. Represents a row in the &quot;LG_ScheduledThread&quot; database table, with each column mapped to a property of this class.
  *
  * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link de.uhh.l2g.plugins.model.Statistics} interface.
+ * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link de.uhh.l2g.plugins.model.ScheduledThread} interface.
  * </p>
  *
  * @author Iavor Sturm
  */
-public class StatisticsImpl extends StatisticsBaseImpl {
+public class ScheduledThreadImpl extends ScheduledThreadBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this class directly. All methods that expect a statistics model instance should use the {@link de.uhh.l2g.plugins.model.Statistics} interface instead.
+	 * Never reference this class directly. All methods that expect a scheduled thread model instance should use the {@link de.uhh.l2g.plugins.model.ScheduledThread} interface instead.
 	 */
-	public StatisticsImpl() {
+	public ScheduledThreadImpl() {
 	}
 }

@@ -49,7 +49,7 @@ import de.uhh.l2g.plugins.migration.service.persistence.LegacyOfficePersistence;
 import de.uhh.l2g.plugins.migration.service.persistence.LegacyProducerLectureseriesPersistence;
 import de.uhh.l2g.plugins.migration.service.persistence.LegacyProducerPersistence;
 import de.uhh.l2g.plugins.migration.service.persistence.LegacySegmentPersistence;
-import de.uhh.l2g.plugins.migration.service.persistence.LegacyStatisticsPersistence;
+import de.uhh.l2g.plugins.migration.service.persistence.LegacyStatisticPersistence;
 import de.uhh.l2g.plugins.migration.service.persistence.LegacyUserPersistence;
 import de.uhh.l2g.plugins.migration.service.persistence.LegacyVideoFacilityPersistence;
 import de.uhh.l2g.plugins.migration.service.persistence.LegacyVideoHitlistPersistence;
@@ -914,41 +914,41 @@ public abstract class LegacyLectureSeriesFacilityLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the legacy statistics local service.
+	 * Returns the legacy statistic local service.
 	 *
-	 * @return the legacy statistics local service
+	 * @return the legacy statistic local service
 	 */
-	public de.uhh.l2g.plugins.migration.service.LegacyStatisticsLocalService getLegacyStatisticsLocalService() {
-		return legacyStatisticsLocalService;
+	public de.uhh.l2g.plugins.migration.service.LegacyStatisticLocalService getLegacyStatisticLocalService() {
+		return legacyStatisticLocalService;
 	}
 
 	/**
-	 * Sets the legacy statistics local service.
+	 * Sets the legacy statistic local service.
 	 *
-	 * @param legacyStatisticsLocalService the legacy statistics local service
+	 * @param legacyStatisticLocalService the legacy statistic local service
 	 */
-	public void setLegacyStatisticsLocalService(
-		de.uhh.l2g.plugins.migration.service.LegacyStatisticsLocalService legacyStatisticsLocalService) {
-		this.legacyStatisticsLocalService = legacyStatisticsLocalService;
+	public void setLegacyStatisticLocalService(
+		de.uhh.l2g.plugins.migration.service.LegacyStatisticLocalService legacyStatisticLocalService) {
+		this.legacyStatisticLocalService = legacyStatisticLocalService;
 	}
 
 	/**
-	 * Returns the legacy statistics persistence.
+	 * Returns the legacy statistic persistence.
 	 *
-	 * @return the legacy statistics persistence
+	 * @return the legacy statistic persistence
 	 */
-	public LegacyStatisticsPersistence getLegacyStatisticsPersistence() {
-		return legacyStatisticsPersistence;
+	public LegacyStatisticPersistence getLegacyStatisticPersistence() {
+		return legacyStatisticPersistence;
 	}
 
 	/**
-	 * Sets the legacy statistics persistence.
+	 * Sets the legacy statistic persistence.
 	 *
-	 * @param legacyStatisticsPersistence the legacy statistics persistence
+	 * @param legacyStatisticPersistence the legacy statistic persistence
 	 */
-	public void setLegacyStatisticsPersistence(
-		LegacyStatisticsPersistence legacyStatisticsPersistence) {
-		this.legacyStatisticsPersistence = legacyStatisticsPersistence;
+	public void setLegacyStatisticPersistence(
+		LegacyStatisticPersistence legacyStatisticPersistence) {
+		this.legacyStatisticPersistence = legacyStatisticPersistence;
 	}
 
 	/**
@@ -1343,10 +1343,10 @@ public abstract class LegacyLectureSeriesFacilityLocalServiceBaseImpl
 	protected de.uhh.l2g.plugins.migration.service.LegacySegmentLocalService legacySegmentLocalService;
 	@BeanReference(type = LegacySegmentPersistence.class)
 	protected LegacySegmentPersistence legacySegmentPersistence;
-	@BeanReference(type = de.uhh.l2g.plugins.migration.service.LegacyStatisticsLocalService.class)
-	protected de.uhh.l2g.plugins.migration.service.LegacyStatisticsLocalService legacyStatisticsLocalService;
-	@BeanReference(type = LegacyStatisticsPersistence.class)
-	protected LegacyStatisticsPersistence legacyStatisticsPersistence;
+	@BeanReference(type = de.uhh.l2g.plugins.migration.service.LegacyStatisticLocalService.class)
+	protected de.uhh.l2g.plugins.migration.service.LegacyStatisticLocalService legacyStatisticLocalService;
+	@BeanReference(type = LegacyStatisticPersistence.class)
+	protected LegacyStatisticPersistence legacyStatisticPersistence;
 	@BeanReference(type = de.uhh.l2g.plugins.migration.service.LegacyUserLocalService.class)
 	protected de.uhh.l2g.plugins.migration.service.LegacyUserLocalService legacyUserLocalService;
 	@BeanReference(type = LegacyUserPersistence.class)
