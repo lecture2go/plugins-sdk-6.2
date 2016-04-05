@@ -54,14 +54,17 @@ import de.uhh.l2g.plugins.service.persistence.OfficePersistence;
 import de.uhh.l2g.plugins.service.persistence.ProducerFinder;
 import de.uhh.l2g.plugins.service.persistence.ProducerPersistence;
 import de.uhh.l2g.plugins.service.persistence.Producer_LectureseriesPersistence;
+import de.uhh.l2g.plugins.service.persistence.ScheduledThreadPersistence;
 import de.uhh.l2g.plugins.service.persistence.SegmentPersistence;
-import de.uhh.l2g.plugins.service.persistence.StatisticsPersistence;
+import de.uhh.l2g.plugins.service.persistence.StatisticFinder;
+import de.uhh.l2g.plugins.service.persistence.StatisticPersistence;
 import de.uhh.l2g.plugins.service.persistence.SysPersistence;
 import de.uhh.l2g.plugins.service.persistence.TagcloudPersistence;
 import de.uhh.l2g.plugins.service.persistence.TermFinder;
 import de.uhh.l2g.plugins.service.persistence.TermPersistence;
 import de.uhh.l2g.plugins.service.persistence.VideoFinder;
 import de.uhh.l2g.plugins.service.persistence.VideoPersistence;
+import de.uhh.l2g.plugins.service.persistence.VideoStatisticPersistence;
 import de.uhh.l2g.plugins.service.persistence.Video_CategoryPersistence;
 import de.uhh.l2g.plugins.service.persistence.Video_CreatorPersistence;
 import de.uhh.l2g.plugins.service.persistence.Video_InstitutionPersistence;
@@ -998,6 +1001,44 @@ public abstract class LicenseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the scheduled thread local service.
+	 *
+	 * @return the scheduled thread local service
+	 */
+	public de.uhh.l2g.plugins.service.ScheduledThreadLocalService getScheduledThreadLocalService() {
+		return scheduledThreadLocalService;
+	}
+
+	/**
+	 * Sets the scheduled thread local service.
+	 *
+	 * @param scheduledThreadLocalService the scheduled thread local service
+	 */
+	public void setScheduledThreadLocalService(
+		de.uhh.l2g.plugins.service.ScheduledThreadLocalService scheduledThreadLocalService) {
+		this.scheduledThreadLocalService = scheduledThreadLocalService;
+	}
+
+	/**
+	 * Returns the scheduled thread persistence.
+	 *
+	 * @return the scheduled thread persistence
+	 */
+	public ScheduledThreadPersistence getScheduledThreadPersistence() {
+		return scheduledThreadPersistence;
+	}
+
+	/**
+	 * Sets the scheduled thread persistence.
+	 *
+	 * @param scheduledThreadPersistence the scheduled thread persistence
+	 */
+	public void setScheduledThreadPersistence(
+		ScheduledThreadPersistence scheduledThreadPersistence) {
+		this.scheduledThreadPersistence = scheduledThreadPersistence;
+	}
+
+	/**
 	 * Returns the segment local service.
 	 *
 	 * @return the segment local service
@@ -1035,41 +1076,59 @@ public abstract class LicenseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the statistics local service.
+	 * Returns the statistic local service.
 	 *
-	 * @return the statistics local service
+	 * @return the statistic local service
 	 */
-	public de.uhh.l2g.plugins.service.StatisticsLocalService getStatisticsLocalService() {
-		return statisticsLocalService;
+	public de.uhh.l2g.plugins.service.StatisticLocalService getStatisticLocalService() {
+		return statisticLocalService;
 	}
 
 	/**
-	 * Sets the statistics local service.
+	 * Sets the statistic local service.
 	 *
-	 * @param statisticsLocalService the statistics local service
+	 * @param statisticLocalService the statistic local service
 	 */
-	public void setStatisticsLocalService(
-		de.uhh.l2g.plugins.service.StatisticsLocalService statisticsLocalService) {
-		this.statisticsLocalService = statisticsLocalService;
+	public void setStatisticLocalService(
+		de.uhh.l2g.plugins.service.StatisticLocalService statisticLocalService) {
+		this.statisticLocalService = statisticLocalService;
 	}
 
 	/**
-	 * Returns the statistics persistence.
+	 * Returns the statistic persistence.
 	 *
-	 * @return the statistics persistence
+	 * @return the statistic persistence
 	 */
-	public StatisticsPersistence getStatisticsPersistence() {
-		return statisticsPersistence;
+	public StatisticPersistence getStatisticPersistence() {
+		return statisticPersistence;
 	}
 
 	/**
-	 * Sets the statistics persistence.
+	 * Sets the statistic persistence.
 	 *
-	 * @param statisticsPersistence the statistics persistence
+	 * @param statisticPersistence the statistic persistence
 	 */
-	public void setStatisticsPersistence(
-		StatisticsPersistence statisticsPersistence) {
-		this.statisticsPersistence = statisticsPersistence;
+	public void setStatisticPersistence(
+		StatisticPersistence statisticPersistence) {
+		this.statisticPersistence = statisticPersistence;
+	}
+
+	/**
+	 * Returns the statistic finder.
+	 *
+	 * @return the statistic finder
+	 */
+	public StatisticFinder getStatisticFinder() {
+		return statisticFinder;
+	}
+
+	/**
+	 * Sets the statistic finder.
+	 *
+	 * @param statisticFinder the statistic finder
+	 */
+	public void setStatisticFinder(StatisticFinder statisticFinder) {
+		this.statisticFinder = statisticFinder;
 	}
 
 	/**
@@ -1447,6 +1506,44 @@ public abstract class LicenseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the video statistic local service.
+	 *
+	 * @return the video statistic local service
+	 */
+	public de.uhh.l2g.plugins.service.VideoStatisticLocalService getVideoStatisticLocalService() {
+		return videoStatisticLocalService;
+	}
+
+	/**
+	 * Sets the video statistic local service.
+	 *
+	 * @param videoStatisticLocalService the video statistic local service
+	 */
+	public void setVideoStatisticLocalService(
+		de.uhh.l2g.plugins.service.VideoStatisticLocalService videoStatisticLocalService) {
+		this.videoStatisticLocalService = videoStatisticLocalService;
+	}
+
+	/**
+	 * Returns the video statistic persistence.
+	 *
+	 * @return the video statistic persistence
+	 */
+	public VideoStatisticPersistence getVideoStatisticPersistence() {
+		return videoStatisticPersistence;
+	}
+
+	/**
+	 * Sets the video statistic persistence.
+	 *
+	 * @param videoStatisticPersistence the video statistic persistence
+	 */
+	public void setVideoStatisticPersistence(
+		VideoStatisticPersistence videoStatisticPersistence) {
+		this.videoStatisticPersistence = videoStatisticPersistence;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -1696,14 +1793,20 @@ public abstract class LicenseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected de.uhh.l2g.plugins.service.Producer_LectureseriesLocalService producer_LectureseriesLocalService;
 	@BeanReference(type = Producer_LectureseriesPersistence.class)
 	protected Producer_LectureseriesPersistence producer_LectureseriesPersistence;
+	@BeanReference(type = de.uhh.l2g.plugins.service.ScheduledThreadLocalService.class)
+	protected de.uhh.l2g.plugins.service.ScheduledThreadLocalService scheduledThreadLocalService;
+	@BeanReference(type = ScheduledThreadPersistence.class)
+	protected ScheduledThreadPersistence scheduledThreadPersistence;
 	@BeanReference(type = de.uhh.l2g.plugins.service.SegmentLocalService.class)
 	protected de.uhh.l2g.plugins.service.SegmentLocalService segmentLocalService;
 	@BeanReference(type = SegmentPersistence.class)
 	protected SegmentPersistence segmentPersistence;
-	@BeanReference(type = de.uhh.l2g.plugins.service.StatisticsLocalService.class)
-	protected de.uhh.l2g.plugins.service.StatisticsLocalService statisticsLocalService;
-	@BeanReference(type = StatisticsPersistence.class)
-	protected StatisticsPersistence statisticsPersistence;
+	@BeanReference(type = de.uhh.l2g.plugins.service.StatisticLocalService.class)
+	protected de.uhh.l2g.plugins.service.StatisticLocalService statisticLocalService;
+	@BeanReference(type = StatisticPersistence.class)
+	protected StatisticPersistence statisticPersistence;
+	@BeanReference(type = StatisticFinder.class)
+	protected StatisticFinder statisticFinder;
 	@BeanReference(type = de.uhh.l2g.plugins.service.SysLocalService.class)
 	protected de.uhh.l2g.plugins.service.SysLocalService sysLocalService;
 	@BeanReference(type = SysPersistence.class)
@@ -1744,6 +1847,10 @@ public abstract class LicenseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected de.uhh.l2g.plugins.service.VideohitlistLocalService videohitlistLocalService;
 	@BeanReference(type = VideohitlistPersistence.class)
 	protected VideohitlistPersistence videohitlistPersistence;
+	@BeanReference(type = de.uhh.l2g.plugins.service.VideoStatisticLocalService.class)
+	protected de.uhh.l2g.plugins.service.VideoStatisticLocalService videoStatisticLocalService;
+	@BeanReference(type = VideoStatisticPersistence.class)
+	protected VideoStatisticPersistence videoStatisticPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)

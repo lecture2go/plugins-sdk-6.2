@@ -379,7 +379,7 @@
         <column name="videoId" type="long"></column>
   </entity>    
   
-   <entity name="LegacyStatistics" uuid="false" local-service="true" remote-service="false" data-source="anotherDataSource" session-factory="anotherSessionFactory" table="videostats" tx-manager="anotherTransactionManager">
+   <entity name="LegacyStatistic" uuid="false" local-service="true" remote-service="false" data-source="anotherDataSource" session-factory="anotherSessionFactory" table="videostats" tx-manager="anotherTransactionManager">
 	    <column name="id" type="int" primary="true"></column>
 	    <column name="public_" type="int"></column>
         <column name="private_" type="int"></column>

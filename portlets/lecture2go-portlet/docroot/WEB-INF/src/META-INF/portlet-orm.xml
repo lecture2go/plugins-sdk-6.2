@@ -223,6 +223,25 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.ScheduledThreadModelImpl">
+		<attributes>
+			<id name="scheduledThreadId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.SegmentModelImpl">
 		<attributes>
 			<id name="segmentId" />
@@ -243,9 +262,9 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.StatisticsModelImpl">
+	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.StatisticModelImpl">
 		<attributes>
-			<id name="statisticsId" />
+			<id name="statisticId" />
 			<basic name="groupId" />
 			<basic name="companyId" />
 			<basic name="publicVideos" />
@@ -388,6 +407,36 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.VideoStatisticModelImpl">
+		<attributes>
+			<id name="videoStatisticId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="compareDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="totalVideos" />
+			<basic name="publicVideos" />
+			<basic name="privateVideos" />
+			<basic name="currentTotal" />
+			<basic name="currentPublic" />
+			<basic name="currentPrivate" />
+			<basic name="pubPercent" />
+			<basic name="privPercent" />
+			<basic name="currentPubPercent" />
+			<basic name="currentPrivPercent" />
+			<basic name="intervalName" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
 	<entity class="de.uhh.l2g.plugins.model.impl.CategoryImpl" name="Category">
 		<table name="LG_Category" />
 		<attributes />
@@ -467,6 +516,10 @@
 		<table name="LG_Producer_Lectureseries" />
 		<attributes />
 	</entity>
+	<entity class="de.uhh.l2g.plugins.model.impl.ScheduledThreadImpl" name="ScheduledThread">
+		<table name="LG_ScheduledThread" />
+		<attributes />
+	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.SegmentImpl" name="Segment">
 		<table name="LG_Segment" />
 		<attributes>
@@ -476,8 +529,8 @@
 			<transient name="seconds" />
 		</attributes>
 	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.StatisticsImpl" name="Statistics">
-		<table name="LG_Statistics" />
+	<entity class="de.uhh.l2g.plugins.model.impl.StatisticImpl" name="Statistic">
+		<table name="LG_Statistic" />
 		<attributes />
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.SysImpl" name="Sys">
@@ -563,6 +616,10 @@
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.VideohitlistImpl" name="Videohitlist">
 		<table name="LG_Videohitlist" />
+		<attributes />
+	</entity>
+	<entity class="de.uhh.l2g.plugins.model.impl.VideoStatisticImpl" name="VideoStatistic">
+		<table name="LG_VideoStatistic" />
 		<attributes />
 	</entity>
 </entity-mappings>

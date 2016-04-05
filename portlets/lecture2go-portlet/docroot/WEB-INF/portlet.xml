@@ -184,7 +184,7 @@
         <portlet-class>de.uhh.l2g.plugins.admin.ThreadManagement</portlet-class>
         <init-param>
             <name>view-template</name>
-            <value>/admin/editThread.jsp</value>
+            <value>/admin/threads.jsp</value>
         </init-param>
         <init-param>
             <name>add-process-action-success-action</name>

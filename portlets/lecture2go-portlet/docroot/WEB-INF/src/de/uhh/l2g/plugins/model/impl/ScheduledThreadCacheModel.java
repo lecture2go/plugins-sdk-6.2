@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 
-import de.uhh.l2g.plugins.model.Statistics;
+import de.uhh.l2g.plugins.model.ScheduledThread;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -28,30 +28,24 @@ import java.io.ObjectOutput;
 import java.util.Date;
 
 /**
- * The cache model class for representing Statistics in entity cache.
+ * The cache model class for representing ScheduledThread in entity cache.
  *
  * @author Iavor Sturm
- * @see Statistics
+ * @see ScheduledThread
  * @generated
  */
-public class StatisticsCacheModel implements CacheModel<Statistics>,
+public class ScheduledThreadCacheModel implements CacheModel<ScheduledThread>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(15);
 
-		sb.append("{statisticsId=");
-		sb.append(statisticsId);
+		sb.append("{scheduledThreadId=");
+		sb.append(scheduledThreadId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
 		sb.append(companyId);
-		sb.append(", publicVideos=");
-		sb.append(publicVideos);
-		sb.append(", privateVideos=");
-		sb.append(privateVideos);
-		sb.append(", autofillRow=");
-		sb.append(autofillRow);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -66,51 +60,45 @@ public class StatisticsCacheModel implements CacheModel<Statistics>,
 	}
 
 	@Override
-	public Statistics toEntityModel() {
-		StatisticsImpl statisticsImpl = new StatisticsImpl();
+	public ScheduledThread toEntityModel() {
+		ScheduledThreadImpl scheduledThreadImpl = new ScheduledThreadImpl();
 
-		statisticsImpl.setStatisticsId(statisticsId);
-		statisticsImpl.setGroupId(groupId);
-		statisticsImpl.setCompanyId(companyId);
-		statisticsImpl.setPublicVideos(publicVideos);
-		statisticsImpl.setPrivateVideos(privateVideos);
-		statisticsImpl.setAutofillRow(autofillRow);
-		statisticsImpl.setUserId(userId);
+		scheduledThreadImpl.setScheduledThreadId(scheduledThreadId);
+		scheduledThreadImpl.setGroupId(groupId);
+		scheduledThreadImpl.setCompanyId(companyId);
+		scheduledThreadImpl.setUserId(userId);
 
 		if (userName == null) {
-			statisticsImpl.setUserName(StringPool.BLANK);
+			scheduledThreadImpl.setUserName(StringPool.BLANK);
 		}
 		else {
-			statisticsImpl.setUserName(userName);
+			scheduledThreadImpl.setUserName(userName);
 		}
 
 		if (createDate == Long.MIN_VALUE) {
-			statisticsImpl.setCreateDate(null);
+			scheduledThreadImpl.setCreateDate(null);
 		}
 		else {
-			statisticsImpl.setCreateDate(new Date(createDate));
+			scheduledThreadImpl.setCreateDate(new Date(createDate));
 		}
 
 		if (modifiedDate == Long.MIN_VALUE) {
-			statisticsImpl.setModifiedDate(null);
+			scheduledThreadImpl.setModifiedDate(null);
 		}
 		else {
-			statisticsImpl.setModifiedDate(new Date(modifiedDate));
+			scheduledThreadImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		statisticsImpl.resetOriginalValues();
+		scheduledThreadImpl.resetOriginalValues();
 
-		return statisticsImpl;
+		return scheduledThreadImpl;
 	}
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		statisticsId = objectInput.readLong();
+		scheduledThreadId = objectInput.readLong();
 		groupId = objectInput.readLong();
 		companyId = objectInput.readLong();
-		publicVideos = objectInput.readInt();
-		privateVideos = objectInput.readInt();
-		autofillRow = objectInput.readInt();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -120,12 +108,9 @@ public class StatisticsCacheModel implements CacheModel<Statistics>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(statisticsId);
+		objectOutput.writeLong(scheduledThreadId);
 		objectOutput.writeLong(groupId);
 		objectOutput.writeLong(companyId);
-		objectOutput.writeInt(publicVideos);
-		objectOutput.writeInt(privateVideos);
-		objectOutput.writeInt(autofillRow);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -139,12 +124,9 @@ public class StatisticsCacheModel implements CacheModel<Statistics>,
 		objectOutput.writeLong(modifiedDate);
 	}
 
-	public long statisticsId;
+	public long scheduledThreadId;
 	public long groupId;
 	public long companyId;
-	public int publicVideos;
-	public int privateVideos;
-	public int autofillRow;
 	public long userId;
 	public String userName;
 	public long createDate;
