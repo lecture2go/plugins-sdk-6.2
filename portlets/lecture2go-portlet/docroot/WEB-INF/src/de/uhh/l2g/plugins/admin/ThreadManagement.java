@@ -157,7 +157,6 @@ public class ThreadManagement extends MVCPortlet {
 	}
 	
 	public void destroy(){
-		PortalUtil.
 		super.destroy();
 		
 	}
