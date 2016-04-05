@@ -1426,7 +1426,7 @@ public class MigrationController {
 	private Creator createSingleCreator(String person) throws SystemException {
 
 		
-    	String firstName =""; 
+		String firstName =""; 
     	String lastName ="";
     	String jobTitle = extractSpecialJobTitle(person);
     	String specialJobTitle ="";
@@ -1434,6 +1434,7 @@ public class MigrationController {
     		specialJobTitle = jobTitle;
     	}
     	person = person.replace(jobTitle, "");
+    	person = person.trim();
     	String middleName ="";
     	String gender ="";
     	
@@ -1493,7 +1494,7 @@ public class MigrationController {
 			if (jobTitle.isEmpty() &&  containsTitle(tmp) ) {
 				jobTitle = jobTitle + " " + nameAndJobArray[2];
 			} else {
-				lastName = nameAndJobArray[2];
+				lastName += nameAndJobArray[2];
 			}
 		}
 		
@@ -1528,10 +1529,10 @@ public class MigrationController {
 				if (firstName.isEmpty()) {
 					firstName = nameAndJobArray[2];
 				} else {
-					if (containsParticle(nameAndJobArray[1])) {
-						lastName = nameAndJobArray[1] + " ";
+					if (containsParticle(nameAndJobArray[2])) {
+						lastName = nameAndJobArray[2] + " ";
 					} else {
-						middleName = middleName +" " +nameAndJobArray[1];
+						middleName = middleName +" " +nameAndJobArray[2];
 					}
 	
 				}				
@@ -1542,7 +1543,7 @@ public class MigrationController {
 			if (jobTitle.isEmpty() &&  containsTitle(tmp) ) {
 				jobTitle = jobTitle + " " + nameAndJobArray[2];
 			} else {
-					lastName = nameAndJobArray[3];
+					lastName += nameAndJobArray[3];
 			}			
 		}		
 		
@@ -1550,7 +1551,7 @@ public class MigrationController {
 		
 		String fullName;
 		if (!specialJobTitle.isEmpty()) {
-			fullName = specialJobTitle + person;
+			fullName = specialJobTitle + " " + person;
 		} else {
 			fullName= person;
 		}
@@ -1583,7 +1584,7 @@ public class MigrationController {
 
 
 	private boolean containsParticle(String tmp) {
-		return tmp.equalsIgnoreCase("von")|| tmp.equalsIgnoreCase("van") || tmp.equalsIgnoreCase("v.") || tmp.equalsIgnoreCase("de") || tmp.equalsIgnoreCase("del")   || tmp.equalsIgnoreCase("der")  ;
+		return tmp.contains("von")|| tmp.contains("van") || tmp.contains("v.") || tmp.contains("de") || tmp.contains("del")   || tmp.contains("der")  ;
 	}
 
 
@@ -2193,6 +2194,7 @@ public class MigrationController {
     		titles.add("Prof. Dr. Dr. h.c. mult."); 
     		titles.add("Prof. Dr. Dr. h.c.");        		
     		titles.add("Prof. Dr. rer. nat.");
+    		titles.add("Prof. Dr.-Ing.");
     		titles.add("Priv. Doz. Dr.");
     		titles.add("(Hamburg) PD Dr.");
     		titles.add("(Hannover) PD Dr.");
@@ -2208,6 +2210,7 @@ public class MigrationController {
     		titles.add("Prof. Dr.");
     		titles.add("Leal et al.");
     		titles.add("Dr.-Ing.");
+    		
     		
     		for (String title : titles) {
 	    		if (fullString.contains(title)) {
