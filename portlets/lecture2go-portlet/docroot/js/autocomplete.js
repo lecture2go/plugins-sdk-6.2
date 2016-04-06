@@ -41,7 +41,7 @@ AUI().use('autocomplete-list','aui-base','aui-io-request','autocomplete-filters'
 			resultFilters:['phraseMatch'],
 			source: cachedVideoStrings
 		});
-  
+
 		A.one('#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery').show();
 	    var aclist = A.one('.yui3-aclist');
 	    var list = aclist.one('.yui3-aclist-list');
@@ -52,7 +52,8 @@ AUI().use('autocomplete-list','aui-base','aui-io-request','autocomplete-filters'
 	    }, 'li');
 	    
 	    document.ac.on("select", function (event) {
-	    	console.log("select" + event.itemNode.text);
+	    	console.log("select " + event.itemNode.text());
+	    	$("#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery").val(event.itemNode.text());
 	    	$("#_lgopenaccessvideos_WAR_lecture2goportlet_fm").submit();
 	    });
 	    
