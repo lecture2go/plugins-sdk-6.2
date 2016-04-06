@@ -50,7 +50,13 @@ AUI().use('autocomplete-list','aui-base','aui-io-request','autocomplete-filters'
 	    	var ci = A.one(event.currentTarget);
 	    	aclist.selectItem(ci);
 	    }, 'li');
-	    var ev; document.ac.on("hoveredItemChange", function (event) {ev=event;});
+	    
+	    document.ac.on("select", function (event) {
+	    	console.log("select" + event.itemNode.text);
+	    	$("#_lgopenaccessvideos_WAR_lecture2goportlet_fm").submit();
+	    });
+	    
+	    document.ac.on("hoveredItemChange", function (event) {window.ev=event;});
 	    
 	    
 	}
