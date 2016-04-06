@@ -304,7 +304,11 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
+<<<<<<< HEAD
+	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacyStatisticsModelImpl">
+=======
 	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacyStatisticModelImpl">
+>>>>>>> refs/remotes/lecture2go/master
 		<attributes>
 			<id name="id">
 				<column name="ID_" />
@@ -499,7 +503,11 @@
 		<table name="segment" />
 		<attributes />
 	</entity>
+<<<<<<< HEAD
+	<entity class="de.uhh.l2g.plugins.migration.model.impl.LegacyStatisticsImpl" name="LegacyStatistics">
+=======
 	<entity class="de.uhh.l2g.plugins.migration.model.impl.LegacyStatisticImpl" name="LegacyStatistic">
+>>>>>>> refs/remotes/lecture2go/master
 		<table name="videostats" />
 		<attributes />
 	</entity>
