@@ -79,7 +79,7 @@
 		<header-portlet-javascript>/js/qrc.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/jquery.cookie.js</header-portlet-javascript>
 		<header-portlet-javascript>/player/jwplayer/jwplayer.js</header-portlet-javascript>
-		<header-portlet-javascript>/js/autocomplete.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/mediaCheck-min.js</header-portlet-javascript>
 	</portlet>
 
 	<portlet>
@@ -108,7 +108,7 @@
   			<scheduler-event-listener-class>de.uhh.l2g.plugins.util.StatisticsScheduler</scheduler-event-listener-class>  
          		<trigger>  
          			<cron>  
-         			  <cron-trigger-value>0 * * * * ?</cron-trigger-value>  
+         			  <cron-trigger-value>0 0 */1 * * ?</cron-trigger-value>  
          			</cron>  
  			</trigger>   
    		</scheduler-entry> 

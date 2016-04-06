@@ -21,6 +21,7 @@
 	<portlet:param name="backURL" value='<%=backURL%>' />
 </portlet:actionURL>
 
+<div class="noresponsive">
 <aui:form action="<%= editURL.toString() %>" method="post">
 	<aui:fieldset helpMessage="test" column="true" label='<%="l2go-roles-for "+reqUser.getFullName()%>'>
 		<aui:layout>
@@ -92,3 +93,4 @@
 		</aui:layout>
 	</aui:fieldset>
 </aui:form>
+</div>

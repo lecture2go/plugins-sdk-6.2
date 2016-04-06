@@ -50,7 +50,8 @@ AUI().use('autocomplete-list','aui-base','aui-io-request','autocomplete-filters'
 	    	var ci = A.one(event.currentTarget);
 	    	aclist.selectItem(ci);
 	    }, 'li');
-	    var ev; document.ac.on("hoveredItemChange", function (event) {ev=event);});
+	    var ev; document.ac.on("hoveredItemChange", function (event) {ev=event;});
+	    
 	    
 	}
 });

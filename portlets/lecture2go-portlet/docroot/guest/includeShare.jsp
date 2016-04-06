@@ -1,13 +1,13 @@
 <div id="metadata">
-	<p class="smallitalic">embed-conditions</p>
+	<p class="smallitalic"><liferay-ui:message key="embed-conditions"/></p>
 	<form name="embedForm" id="embedForm">
 		<!-- embed start -->
 			<div class="sharetile">
-				<p class="tileheading">links</p>
+				<p class="tileheading"><liferay-ui:message key="links"/></p>
 				<div id="urls">
 					<ul>
 						<li>
-							<aui:input name="embed_code3" label="url" required="false" id="embed_code3" readonly="true" value="${video.url}" onclick="document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_embed_code3.focus();document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_embed_code3.select();"/>
+							<aui:input name="embed_code3" label="video-url" required="false" id="embed_code3" readonly="true" value="${video.url}" onclick="document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_embed_code3.focus();document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_embed_code3.select();"/>
 						</li>
 						<li>
 							<aui:input name="embed_code" label="embed-iframe" required="false" id="embed_code" readonly="true" value="${video.embedIframe}" onclick="document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_embed_code.focus();document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_embed_code.select();"/>
@@ -30,7 +30,7 @@
 		<!-- citation2go allowed -->
 		<c:if test="${video.citation2go==1}">
 				<div class="sharetile">
-					<p class="tileheading">citation2go</p>
+					<p class="tileheading"><liferay-ui:message key="citation2go"/></p>
 					<div id="c2g-generate">
 						<ul>
 							<li>
@@ -50,7 +50,7 @@
 		
 		<!-- Facebook Twitter Google+ -->
 		<div class="sharetile">
-			<p class="tileheading">social-media</p>
+			<p class="tileheading"><liferay-ui:message key="social-media"/></p>
 			<div id="socialshareprivacy"></div>
 		</div>
 		<!-- Facebook Twitter Google+ Ende -->

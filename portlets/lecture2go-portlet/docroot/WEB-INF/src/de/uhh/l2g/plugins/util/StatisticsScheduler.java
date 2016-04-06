@@ -34,6 +34,7 @@ package de.uhh.l2g.plugins.util;
 
 import java.util.Map;
 
+import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
@@ -43,7 +44,7 @@ import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
-
+import com.liferay.portal.service.ServiceContext;
 
 
 /** Statistics is less flawed when running job at concrete time (ideally around midnight)  
@@ -52,41 +53,41 @@ import com.liferay.portal.kernel.scheduler.SchedulerException;
  */
 @SuppressWarnings("serial")
 public class StatisticsScheduler extends PortletScheduler implements MessageListener {  
+	private static Log LOG;	
 	
 	  
     public StatisticsScheduler(){
     	super();
+    	LOG = LogFactoryUtil.getLog(StatisticsScheduler.class.getName());
     }
     
-	public StatisticsScheduler(String schedulerClassName) {
-		super(StatisticsScheduler.class.getName());
-	    this.schedulerName = StatisticsScheduler.class.getName();
-	    this.LOG = LogFactoryUtil.getLog(StatisticsScheduler.class.getName());
+	public StatisticsScheduler(String schedulerClassName, ServiceContext serviceContext) {
+		super(StatisticsScheduler.class.getName(), serviceContext);
+	    this.schedulerClassName = StatisticsScheduler.class.getName();
+	    LOG = LogFactoryUtil.getLog(StatisticsScheduler.class.getName());
 	}
 
 	@Override
     public void receive(Message message) throws MessageListenerException {
-       //Debug Information on running job 
-	   LOG.info("Message :" + message.toString());
-	   Map<String, Object> map = message.getValues();
-     
-       String values = map.toString();
-       LOG.info("Statistics Scheduler running... " + values);
+	   //uncoment for further debug messages
+	   //super.receive(message);
+		LOG.info("Statistics Scheduler running "+message.getValues().get(SchedulerEngine.JOB_NAME).toString()+"...");
+	   //Do Job....
+		
+		LOG.info("Statistics Scheduler finished.");
     }
 	
-	public void start() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SchedulerException{
-  	   //MessageBusUtil.registerMessageListener(this.getDestinationName(), (MessageListener)  new StatisticsScheduler());
-        
-		int exceptionsMaxSize = super.init();
-	 	SchedulerEngineHelperUtil.schedule(this.getTrigger(), this.getStorageType(), this.getDescription(), this.destination, this.getMessage(), exceptionsMaxSize);     
-		   
+	public void start() {
+        super.start();
 	}
 	
 	public void stop() {
 		super.stop();
 	}
 
-
+	public void init(String schedulerClassName, String portletId) {
+        super.initScheduler(schedulerClassName,portletId);
+	}
   
     
 }

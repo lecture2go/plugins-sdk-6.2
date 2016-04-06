@@ -13,7 +13,7 @@
 <%
 String backURL = request.getAttribute("backURL").toString();
 %>
-
+<div class="noresponsive">
 <aui:fieldset helpMessage="test" column="true" label='<%=reqVideo.getTitle()%>'>
 	<aui:layout>
 		<aui:form action="<%=addSegmentURL.toString()%>" commandName="model" name="segments" id="segments">
@@ -48,6 +48,7 @@ String backURL = request.getAttribute("backURL").toString();
 </aui:fieldset>
 <br/>
 <div id="chapters"/>
+</div>
 
 <liferay-portlet:resourceURL id="showSegments" var="segmentsURL" />
 <script type="text/javascript">
