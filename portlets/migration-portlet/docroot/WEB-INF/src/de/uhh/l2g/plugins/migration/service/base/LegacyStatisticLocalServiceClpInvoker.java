@@ -12,33 +12,37 @@
  * details.
  */
 
-package de.uhh.l2g.plugins.service.base;
+package de.uhh.l2g.plugins.migration.service.base;
+
+import de.uhh.l2g.plugins.migration.service.LegacyStatisticLocalServiceUtil;
 
 import java.util.Arrays;
 
-import de.uhh.l2g.plugins.service.UploadLocalServiceUtil;
-
 /**
- * @author Iavor Sturm
+ * @author unihh
  * @generated
  */
-public class UploadLocalServiceClpInvoker {
-	public UploadLocalServiceClpInvoker() {
-		_methodName0 = "addUpload";
+public class LegacyStatisticLocalServiceClpInvoker {
+	public LegacyStatisticLocalServiceClpInvoker() {
+		_methodName0 = "addLegacyStatistic";
 
-		_methodParameterTypes0 = new String[] { "de.uhh.l2g.plugins.model.Upload" };
+		_methodParameterTypes0 = new String[] {
+				"de.uhh.l2g.plugins.migration.model.LegacyStatistic"
+			};
 
-		_methodName1 = "createUpload";
+		_methodName1 = "createLegacyStatistic";
 
-		_methodParameterTypes1 = new String[] { "long" };
+		_methodParameterTypes1 = new String[] { "int" };
 
-		_methodName2 = "deleteUpload";
+		_methodName2 = "deleteLegacyStatistic";
 
-		_methodParameterTypes2 = new String[] { "long" };
+		_methodParameterTypes2 = new String[] { "int" };
 
-		_methodName3 = "deleteUpload";
+		_methodName3 = "deleteLegacyStatistic";
 
-		_methodParameterTypes3 = new String[] { "de.uhh.l2g.plugins.model.Upload" };
+		_methodParameterTypes3 = new String[] {
+				"de.uhh.l2g.plugins.migration.model.LegacyStatistic"
+			};
 
 		_methodName4 = "dynamicQuery";
 
@@ -76,85 +80,83 @@ public class UploadLocalServiceClpInvoker {
 				"com.liferay.portal.kernel.dao.orm.Projection"
 			};
 
-		_methodName10 = "fetchUpload";
+		_methodName10 = "fetchLegacyStatistic";
 
-		_methodParameterTypes10 = new String[] { "long" };
+		_methodParameterTypes10 = new String[] { "int" };
 
-		_methodName11 = "getUpload";
+		_methodName11 = "getLegacyStatistic";
 
-		_methodParameterTypes11 = new String[] { "long" };
+		_methodParameterTypes11 = new String[] { "int" };
 
 		_methodName12 = "getPersistedModel";
 
 		_methodParameterTypes12 = new String[] { "java.io.Serializable" };
 
-		_methodName13 = "getUploads";
+		_methodName13 = "getLegacyStatistics";
 
 		_methodParameterTypes13 = new String[] { "int", "int" };
 
-		_methodName14 = "getUploadsCount";
+		_methodName14 = "getLegacyStatisticsCount";
 
 		_methodParameterTypes14 = new String[] {  };
 
-		_methodName15 = "updateUpload";
+		_methodName15 = "updateLegacyStatistic";
 
-		_methodParameterTypes15 = new String[] { "de.uhh.l2g.plugins.model.Upload" };
+		_methodParameterTypes15 = new String[] {
+				"de.uhh.l2g.plugins.migration.model.LegacyStatistic"
+			};
 
-		_methodName150 = "getBeanIdentifier";
+		_methodName112 = "getBeanIdentifier";
 
-		_methodParameterTypes150 = new String[] {  };
+		_methodParameterTypes112 = new String[] {  };
 
-		_methodName151 = "setBeanIdentifier";
+		_methodName113 = "setBeanIdentifier";
 
-		_methodParameterTypes151 = new String[] { "java.lang.String" };
-
-		_methodName156 = "deleteByVideoId";
-
-		_methodParameterTypes156 = new String[] { "java.lang.Long" };
+		_methodParameterTypes113 = new String[] { "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
 		Object[] arguments) throws Throwable {
 		if (_methodName0.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes0, parameterTypes)) {
-			return UploadLocalServiceUtil.addUpload((de.uhh.l2g.plugins.model.Upload)arguments[0]);
+			return LegacyStatisticLocalServiceUtil.addLegacyStatistic((de.uhh.l2g.plugins.migration.model.LegacyStatistic)arguments[0]);
 		}
 
 		if (_methodName1.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes1, parameterTypes)) {
-			return UploadLocalServiceUtil.createUpload(((Long)arguments[0]).longValue());
+			return LegacyStatisticLocalServiceUtil.createLegacyStatistic(((Integer)arguments[0]).intValue());
 		}
 
 		if (_methodName2.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes2, parameterTypes)) {
-			return UploadLocalServiceUtil.deleteUpload(((Long)arguments[0]).longValue());
+			return LegacyStatisticLocalServiceUtil.deleteLegacyStatistic(((Integer)arguments[0]).intValue());
 		}
 
 		if (_methodName3.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes3, parameterTypes)) {
-			return UploadLocalServiceUtil.deleteUpload((de.uhh.l2g.plugins.model.Upload)arguments[0]);
+			return LegacyStatisticLocalServiceUtil.deleteLegacyStatistic((de.uhh.l2g.plugins.migration.model.LegacyStatistic)arguments[0]);
 		}
 
 		if (_methodName4.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes4, parameterTypes)) {
-			return UploadLocalServiceUtil.dynamicQuery();
+			return LegacyStatisticLocalServiceUtil.dynamicQuery();
 		}
 
 		if (_methodName5.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes5, parameterTypes)) {
-			return UploadLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0]);
+			return LegacyStatisticLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0]);
 		}
 
 		if (_methodName6.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes6, parameterTypes)) {
-			return UploadLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0],
+			return LegacyStatisticLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0],
 				((Integer)arguments[1]).intValue(),
 				((Integer)arguments[2]).intValue());
 		}
 
 		if (_methodName7.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes7, parameterTypes)) {
-			return UploadLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0],
+			return LegacyStatisticLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0],
 				((Integer)arguments[1]).intValue(),
 				((Integer)arguments[2]).intValue(),
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[3]);
@@ -162,61 +164,54 @@ public class UploadLocalServiceClpInvoker {
 
 		if (_methodName8.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes8, parameterTypes)) {
-			return UploadLocalServiceUtil.dynamicQueryCount((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0]);
+			return LegacyStatisticLocalServiceUtil.dynamicQueryCount((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0]);
 		}
 
 		if (_methodName9.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes9, parameterTypes)) {
-			return UploadLocalServiceUtil.dynamicQueryCount((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0],
+			return LegacyStatisticLocalServiceUtil.dynamicQueryCount((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0],
 				(com.liferay.portal.kernel.dao.orm.Projection)arguments[1]);
 		}
 
 		if (_methodName10.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes10, parameterTypes)) {
-			return UploadLocalServiceUtil.fetchUpload(((Long)arguments[0]).longValue());
+			return LegacyStatisticLocalServiceUtil.fetchLegacyStatistic(((Integer)arguments[0]).intValue());
 		}
 
 		if (_methodName11.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes11, parameterTypes)) {
-			return UploadLocalServiceUtil.getUpload(((Long)arguments[0]).longValue());
+			return LegacyStatisticLocalServiceUtil.getLegacyStatistic(((Integer)arguments[0]).intValue());
 		}
 
 		if (_methodName12.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes12, parameterTypes)) {
-			return UploadLocalServiceUtil.getPersistedModel((java.io.Serializable)arguments[0]);
+			return LegacyStatisticLocalServiceUtil.getPersistedModel((java.io.Serializable)arguments[0]);
 		}
 
 		if (_methodName13.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes13, parameterTypes)) {
-			return UploadLocalServiceUtil.getUploads(((Integer)arguments[0]).intValue(),
+			return LegacyStatisticLocalServiceUtil.getLegacyStatistics(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
 		if (_methodName14.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes14, parameterTypes)) {
-			return UploadLocalServiceUtil.getUploadsCount();
+			return LegacyStatisticLocalServiceUtil.getLegacyStatisticsCount();
 		}
 
 		if (_methodName15.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes15, parameterTypes)) {
-			return UploadLocalServiceUtil.updateUpload((de.uhh.l2g.plugins.model.Upload)arguments[0]);
+			return LegacyStatisticLocalServiceUtil.updateLegacyStatistic((de.uhh.l2g.plugins.migration.model.LegacyStatistic)arguments[0]);
 		}
 
-		if (_methodName150.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes150, parameterTypes)) {
-			return UploadLocalServiceUtil.getBeanIdentifier();
+		if (_methodName112.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes112, parameterTypes)) {
+			return LegacyStatisticLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName151.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes151, parameterTypes)) {
-			UploadLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
-
-			return null;
-		}
-
-		if (_methodName156.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes156, parameterTypes)) {
-			UploadLocalServiceUtil.deleteByVideoId((java.lang.Long)arguments[0]);
+		if (_methodName113.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes113, parameterTypes)) {
+			LegacyStatisticLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
@@ -256,10 +251,8 @@ public class UploadLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName150;
-	private String[] _methodParameterTypes150;
-	private String _methodName151;
-	private String[] _methodParameterTypes151;
-	private String _methodName156;
-	private String[] _methodParameterTypes156;
+	private String _methodName112;
+	private String[] _methodParameterTypes112;
+	private String _methodName113;
+	private String[] _methodParameterTypes113;
 }

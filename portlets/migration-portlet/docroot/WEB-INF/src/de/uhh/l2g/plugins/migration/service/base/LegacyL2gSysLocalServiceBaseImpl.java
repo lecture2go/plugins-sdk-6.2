@@ -49,7 +49,11 @@ import de.uhh.l2g.plugins.migration.service.persistence.LegacyOfficePersistence;
 import de.uhh.l2g.plugins.migration.service.persistence.LegacyProducerLectureseriesPersistence;
 import de.uhh.l2g.plugins.migration.service.persistence.LegacyProducerPersistence;
 import de.uhh.l2g.plugins.migration.service.persistence.LegacySegmentPersistence;
+<<<<<<< HEAD
 import de.uhh.l2g.plugins.migration.service.persistence.LegacyStatisticsPersistence;
+=======
+import de.uhh.l2g.plugins.migration.service.persistence.LegacyStatisticPersistence;
+>>>>>>> refs/remotes/lecture2go/master
 import de.uhh.l2g.plugins.migration.service.persistence.LegacyUserPersistence;
 import de.uhh.l2g.plugins.migration.service.persistence.LegacyVideoFacilityPersistence;
 import de.uhh.l2g.plugins.migration.service.persistence.LegacyVideoHitlistPersistence;
@@ -908,41 +912,95 @@ public abstract class LegacyL2gSysLocalServiceBaseImpl
 	}
 
 	/**
+<<<<<<< HEAD
 	 * Returns the legacy statistics local service.
+=======
+	 * Returns the legacy statistic local service.
+>>>>>>> refs/remotes/lecture2go/master
 	 *
+<<<<<<< HEAD
 	 * @return the legacy statistics local service
+=======
+	 * @return the legacy statistic local service
+>>>>>>> refs/remotes/lecture2go/master
 	 */
+<<<<<<< HEAD
 	public de.uhh.l2g.plugins.migration.service.LegacyStatisticsLocalService getLegacyStatisticsLocalService() {
 		return legacyStatisticsLocalService;
+=======
+	public de.uhh.l2g.plugins.migration.service.LegacyStatisticLocalService getLegacyStatisticLocalService() {
+		return legacyStatisticLocalService;
+>>>>>>> refs/remotes/lecture2go/master
 	}
 
 	/**
+<<<<<<< HEAD
 	 * Sets the legacy statistics local service.
+=======
+	 * Sets the legacy statistic local service.
+>>>>>>> refs/remotes/lecture2go/master
 	 *
+<<<<<<< HEAD
 	 * @param legacyStatisticsLocalService the legacy statistics local service
+=======
+	 * @param legacyStatisticLocalService the legacy statistic local service
+>>>>>>> refs/remotes/lecture2go/master
 	 */
+<<<<<<< HEAD
 	public void setLegacyStatisticsLocalService(
 		de.uhh.l2g.plugins.migration.service.LegacyStatisticsLocalService legacyStatisticsLocalService) {
 		this.legacyStatisticsLocalService = legacyStatisticsLocalService;
+=======
+	public void setLegacyStatisticLocalService(
+		de.uhh.l2g.plugins.migration.service.LegacyStatisticLocalService legacyStatisticLocalService) {
+		this.legacyStatisticLocalService = legacyStatisticLocalService;
+>>>>>>> refs/remotes/lecture2go/master
 	}
 
 	/**
+<<<<<<< HEAD
 	 * Returns the legacy statistics persistence.
+=======
+	 * Returns the legacy statistic persistence.
+>>>>>>> refs/remotes/lecture2go/master
 	 *
+<<<<<<< HEAD
 	 * @return the legacy statistics persistence
+=======
+	 * @return the legacy statistic persistence
+>>>>>>> refs/remotes/lecture2go/master
 	 */
+<<<<<<< HEAD
 	public LegacyStatisticsPersistence getLegacyStatisticsPersistence() {
 		return legacyStatisticsPersistence;
+=======
+	public LegacyStatisticPersistence getLegacyStatisticPersistence() {
+		return legacyStatisticPersistence;
+>>>>>>> refs/remotes/lecture2go/master
 	}
 
 	/**
+<<<<<<< HEAD
 	 * Sets the legacy statistics persistence.
+=======
+	 * Sets the legacy statistic persistence.
+>>>>>>> refs/remotes/lecture2go/master
 	 *
+<<<<<<< HEAD
 	 * @param legacyStatisticsPersistence the legacy statistics persistence
+=======
+	 * @param legacyStatisticPersistence the legacy statistic persistence
+>>>>>>> refs/remotes/lecture2go/master
 	 */
+<<<<<<< HEAD
 	public void setLegacyStatisticsPersistence(
 		LegacyStatisticsPersistence legacyStatisticsPersistence) {
 		this.legacyStatisticsPersistence = legacyStatisticsPersistence;
+=======
+	public void setLegacyStatisticPersistence(
+		LegacyStatisticPersistence legacyStatisticPersistence) {
+		this.legacyStatisticPersistence = legacyStatisticPersistence;
+>>>>>>> refs/remotes/lecture2go/master
 	}
 
 	/**
@@ -1337,10 +1395,17 @@ public abstract class LegacyL2gSysLocalServiceBaseImpl
 	protected de.uhh.l2g.plugins.migration.service.LegacySegmentLocalService legacySegmentLocalService;
 	@BeanReference(type = LegacySegmentPersistence.class)
 	protected LegacySegmentPersistence legacySegmentPersistence;
+<<<<<<< HEAD
 	@BeanReference(type = de.uhh.l2g.plugins.migration.service.LegacyStatisticsLocalService.class)
 	protected de.uhh.l2g.plugins.migration.service.LegacyStatisticsLocalService legacyStatisticsLocalService;
 	@BeanReference(type = LegacyStatisticsPersistence.class)
 	protected LegacyStatisticsPersistence legacyStatisticsPersistence;
+=======
+	@BeanReference(type = de.uhh.l2g.plugins.migration.service.LegacyStatisticLocalService.class)
+	protected de.uhh.l2g.plugins.migration.service.LegacyStatisticLocalService legacyStatisticLocalService;
+	@BeanReference(type = LegacyStatisticPersistence.class)
+	protected LegacyStatisticPersistence legacyStatisticPersistence;
+>>>>>>> refs/remotes/lecture2go/master
 	@BeanReference(type = de.uhh.l2g.plugins.migration.service.LegacyUserLocalService.class)
 	protected de.uhh.l2g.plugins.migration.service.LegacyUserLocalService legacyUserLocalService;
 	@BeanReference(type = LegacyUserPersistence.class)
