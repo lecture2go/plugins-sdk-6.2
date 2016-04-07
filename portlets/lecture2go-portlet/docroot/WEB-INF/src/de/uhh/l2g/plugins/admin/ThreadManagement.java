@@ -147,8 +147,7 @@ public class ThreadManagement extends MVCPortlet {
 		}
 	}
 	
-	public void init() throws PortletException{
-	
+	public void init() throws PortletException{	
 		super.init();
 		
 		/*Drop table LG_VideoStatistics and initialize view
@@ -157,7 +156,8 @@ public class ThreadManagement extends MVCPortlet {
 	}
 	
 	public void destroy(){
-		super.destroy();	
+		System.out.println(this.getPortletName());
+		super.destroy();
 	}
 	
 }

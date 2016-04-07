@@ -279,7 +279,7 @@ Group Institution_Host Permissions:
    	//Find out if user is connected with an institution
     long userId =  Long.parseLong(request.getRemoteUser());
     long ownInstitutionId = 0; //user is not attached to a conrete institution
-    
+    System.out.println(userId);
     //Currently only this roles have fixed institution
 	if (request.isUserInRole("L2Go Coodinator")){
 	    	ownInstitutionId = CoordinatorLocalServiceUtil.getInstitutionByCoordinator(userId).getInstitutionId();
@@ -301,7 +301,7 @@ Group Institution_Host Permissions:
     
     Institution treeBase = InstitutionLocalServiceUtil.getByGroupIdAndId(groupId, treeBaseId);
     int ownInstitutionMax = InstitutionLocalServiceUtil.getMaxSortByParentId(treeBaseId)+1;
-   //System.out.println(ownInstitutionId+ " " +treeBaseId);
+    System.out.println(ownInstitutionId+ " " +treeBaseId);
    %>
 
 <%--TREE ROOT (INSTITUTION)--%>
@@ -323,10 +323,8 @@ Group Institution_Host Permissions:
 	</liferay-ui:panel>
 </c:when>
 <c:otherwise>
-<%-- Only display title if user can't edit all of the hierarchy ---%>
-<%-- 	<c:if  test='<%= permissionChecker.hasPermission(groupId, institutionPortletName, groupId, "VIEW_ALL_INSTITUTIONS") %>'> --%>
-			<liferay-ui:message key="<%= treeBase.getName() %>"></liferay-ui:message>
-<%-- 	</c:if> --%>
+			<liferay-ui:message key="<%= treeBase.getName() %>"></liferay-ui:message> 
+
 </c:otherwise>
 </c:choose>
 
