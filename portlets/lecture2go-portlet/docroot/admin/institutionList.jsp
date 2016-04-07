@@ -279,7 +279,8 @@ Group Institution_Host Permissions:
    	//Find out if user is connected with an institution
     long userId =  Long.parseLong(request.getRemoteUser());
     long ownInstitutionId = 0; //user is not attached to a conrete institution
-    System.out.println(userId);
+    System.out.println(request.isUserInRole("L2Go Coodinator"));
+   
     //Currently only this roles have fixed institution
 	if (request.isUserInRole("L2Go Coodinator")){
 	    	ownInstitutionId = CoordinatorLocalServiceUtil.getInstitutionByCoordinator(userId).getInstitutionId();
