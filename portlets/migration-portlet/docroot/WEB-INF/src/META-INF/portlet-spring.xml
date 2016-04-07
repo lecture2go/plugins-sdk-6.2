@@ -81,8 +81,13 @@
 		<property name="dataSource" ref="anotherDataSource" />
 		<property name="sessionFactory" ref="anotherSessionFactory" />
 	</bean>
+<<<<<<< HEAD
+	<bean id="de.uhh.l2g.plugins.migration.service.LegacyStatisticsLocalService" class="de.uhh.l2g.plugins.migration.service.impl.LegacyStatisticsLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.migration.service.persistence.LegacyStatisticsPersistence" class="de.uhh.l2g.plugins.migration.service.persistence.LegacyStatisticsPersistenceImpl" parent="basePersistence">
+=======
 	<bean id="de.uhh.l2g.plugins.migration.service.LegacyStatisticLocalService" class="de.uhh.l2g.plugins.migration.service.impl.LegacyStatisticLocalServiceImpl" />
 	<bean id="de.uhh.l2g.plugins.migration.service.persistence.LegacyStatisticPersistence" class="de.uhh.l2g.plugins.migration.service.persistence.LegacyStatisticPersistenceImpl" parent="basePersistence">
+>>>>>>> refs/remotes/lecture2go/master
 		<property name="dataSource" ref="anotherDataSource" />
 		<property name="sessionFactory" ref="anotherSessionFactory" />
 	</bean>

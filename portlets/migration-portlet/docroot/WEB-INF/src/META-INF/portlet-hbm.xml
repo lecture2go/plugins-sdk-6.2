@@ -18,7 +18,11 @@
 	<import class="de.uhh.l2g.plugins.migration.model.LegacyProducer" />
 	<import class="de.uhh.l2g.plugins.migration.model.LegacyProducerLectureseries" />
 	<import class="de.uhh.l2g.plugins.migration.model.LegacySegment" />
+<<<<<<< HEAD
+	<import class="de.uhh.l2g.plugins.migration.model.LegacyStatistics" />
+=======
 	<import class="de.uhh.l2g.plugins.migration.model.LegacyStatistic" />
+>>>>>>> refs/remotes/lecture2go/master
 	<import class="de.uhh.l2g.plugins.migration.model.LegacyUser" />
 	<import class="de.uhh.l2g.plugins.migration.model.LegacyVideo" />
 	<import class="de.uhh.l2g.plugins.migration.model.LegacyVideoFacility" />
@@ -238,7 +242,11 @@
 		<property name="chapter" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
+<<<<<<< HEAD
+	<class name="de.uhh.l2g.plugins.migration.model.impl.LegacyStatisticsImpl" table="videostats">
+=======
 	<class name="de.uhh.l2g.plugins.migration.model.impl.LegacyStatisticImpl" table="videostats">
+>>>>>>> refs/remotes/lecture2go/master
 		<cache usage="read-write" />
 		<id name="id" column="id_" type="int">
 			<generator class="assigned" />
