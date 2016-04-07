@@ -177,11 +177,7 @@
 		<field name="chapter" type="int" />
 		<field name="userId" type="long" />
 	</model>
-<<<<<<< HEAD
-	<model name="de.uhh.l2g.plugins.migration.model.LegacyStatistics">
-=======
 	<model name="de.uhh.l2g.plugins.migration.model.LegacyStatistic">
->>>>>>> refs/remotes/lecture2go/master
 		<field name="id" type="int" />
 		<field name="public_" type="int" />
 		<field name="private_" type="int" />

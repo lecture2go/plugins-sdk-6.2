@@ -1,6 +1,6 @@
-<%@include file="/init.jsp"%>
+<%@include file="/init.jsp" %>
 <%@ page import="de.uhh.l2g.plugins.util.PortletScheduler" %>
-<%@ page import="com.liferay.portal.kernel.scheduler.SchedulerEntry;" %>
+<%@ page import="com.liferay.portal.kernel.scheduler.SchedulerEntry" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 
@@ -19,30 +19,29 @@ List<PortletScheduler> portletScheduler = PortletScheduler.ListSchedulers();
 	   <br>
 	    <br>
 	     <br>
-	 
-<%  int iC = 0;
-for(SchedulerEntry job : scheduledJobs) { 
-    String schedulerPanelId = "panel"+ String.valueOf(iC);
-    iC++;
+
+	<%  int iC = 0;
+	for(SchedulerEntry job : scheduledJobs) { 
+	    String schedulerPanelId = "panel"+ String.valueOf(iC);
+ 	    iC++;
     %>	
-	<liferay-ui:panel title="<%= job.getEventListenerClass() %>" collapsible="true" id="<%= schedulerPanelId  %>"
+		<liferay-ui:panel title="<%= job.getEventListenerClass() %>" collapsible="true" id="<%= schedulerPanelId  %>"
 						defaultState="open"
 						extended="<%= false %>"
 						persistState="<%= true %>">     
 				<aui:form action="<%= startThreadURL %>" name="<portlet:namespace />fm">         
-					<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= "de.uhh.l2g.plugins.util.StatisticsScheduler" %>'/>
+					<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= job.getEventListenerClass() %>'/>
 					<aui:button type="submit" value="Start" ></aui:button>
 				</aui:form>
 				<aui:form action="<%= stopThreadURL %>" name="<portlet:namespace />fm">         
-					<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= "de.uhh.l2g.plugins.util.StatisticsScheduler" %>'/>
+					<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= job.getEventListenerClass() %>'/>
 					<aui:button type="submit" value="Stop" ></aui:button>
 				</aui:form>
-	</liferay-ui:panel>
-<% } %>
+		</liferay-ui:panel>
+	<% } %>
 
-
-<% for(PortletScheduler ps : portletScheduler) {  %>
-	
+   <br>
+<% for(PortletScheduler ps : portletScheduler) {  %>	
 	<liferay-ui:message key="<%= ps.getJobName() %>"></liferay-ui:message>
 <% } %>
 
