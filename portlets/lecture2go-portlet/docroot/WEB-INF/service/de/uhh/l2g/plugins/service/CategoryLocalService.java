@@ -269,8 +269,4 @@ public interface CategoryLocalService extends BaseLocalService,
 	public java.util.List<de.uhh.l2g.plugins.model.Category> getCategoriesFromLectureseriesIdsAndVideoIds(
 		java.util.ArrayList<java.lang.Long> lectureseriesIds,
 		java.util.ArrayList<java.lang.Long> videoIds);
-
-	public void deleteById(java.lang.Long id)
-		throws com.liferay.portal.NoSuchModelException,
-			com.liferay.portal.kernel.exception.SystemException;
 }

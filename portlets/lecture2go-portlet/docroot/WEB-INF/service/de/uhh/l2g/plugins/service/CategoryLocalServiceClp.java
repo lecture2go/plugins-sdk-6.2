@@ -131,10 +131,6 @@ public class CategoryLocalServiceClp implements CategoryLocalService {
 		_methodParameterTypes22 = new String[] {
 				"java.util.ArrayList", "java.util.ArrayList"
 			};
-
-		_methodName23 = "deleteById";
-
-		_methodParameterTypes23 = new String[] { "java.lang.Long" };
 	}
 
 	@Override
@@ -806,36 +802,6 @@ public class CategoryLocalServiceClp implements CategoryLocalService {
 		return (java.util.List<de.uhh.l2g.plugins.model.Category>)ClpSerializer.translateOutput(returnObj);
 	}
 
-	@Override
-	public void deleteById(java.lang.Long id)
-		throws com.liferay.portal.NoSuchModelException,
-			com.liferay.portal.kernel.exception.SystemException {
-		try {
-			_invokableLocalService.invokeMethod(_methodName23,
-				_methodParameterTypes23,
-				new Object[] { ClpSerializer.translateInput(id) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.NoSuchModelException) {
-				throw (com.liferay.portal.NoSuchModelException)t;
-			}
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-	}
-
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -881,6 +847,4 @@ public class CategoryLocalServiceClp implements CategoryLocalService {
 	private String[] _methodParameterTypes21;
 	private String _methodName22;
 	private String[] _methodParameterTypes22;
-	private String _methodName23;
-	private String[] _methodParameterTypes23;
 }

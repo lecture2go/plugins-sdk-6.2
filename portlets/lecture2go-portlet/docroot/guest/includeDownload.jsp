@@ -1,3 +1,4 @@
+<div id="metadata">
 <c:if test="${video.downloadLink==1}">
 <p class="smallitalic"><liferay-ui:message key="download-text"/></p>
 <div id="down">
@@ -53,3 +54,4 @@
 		<!-- openaccess end -->
 </div>
 </c:if>
+</div>

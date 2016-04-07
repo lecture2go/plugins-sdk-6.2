@@ -131,10 +131,6 @@ public class CategoryLocalServiceClpInvoker {
 		_methodParameterTypes169 = new String[] {
 				"java.util.ArrayList", "java.util.ArrayList"
 			};
-
-		_methodName170 = "deleteById";
-
-		_methodParameterTypes170 = new String[] { "java.lang.Long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -260,13 +256,6 @@ public class CategoryLocalServiceClpInvoker {
 				(java.util.ArrayList<java.lang.Long>)arguments[1]);
 		}
 
-		if (_methodName170.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes170, parameterTypes)) {
-			CategoryLocalServiceUtil.deleteById((java.lang.Long)arguments[0]);
-
-			return null;
-		}
-
 		throw new UnsupportedOperationException();
 	}
 
@@ -314,6 +303,4 @@ public class CategoryLocalServiceClpInvoker {
 	private String[] _methodParameterTypes168;
 	private String _methodName169;
 	private String[] _methodParameterTypes169;
-	private String _methodName170;
-	private String[] _methodParameterTypes170;
 }

@@ -866,7 +866,7 @@ public class MigrationController {
     
     @RequestMapping(params = "action=migrateStatistic")
     public void migrateStatistic(ActionRequest request) throws FileNotFoundException {
-    	// Load Legacy Statistic
+    	// Load Legacy Statistics
     	logInfo("Call migrateStatistic");
     	String statisticOkflag = ok;
 		List<LegacyStatistic> statistic;

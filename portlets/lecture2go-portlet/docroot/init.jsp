@@ -85,7 +85,6 @@
 <%@page import="de.uhh.l2g.plugins.service.SegmentLocalServiceUtil"%>
 <%@page import="de.uhh.l2g.plugins.service.Video_CreatorLocalServiceUtil"%>
 <%@page import="de.uhh.l2g.plugins.service.Lectureseries_CreatorLocalServiceUtil"%>
-<%@page import="de.uhh.l2g.plugins.model.Video_Category"%>
 
 <%@page import="de.uhh.l2g.plugins.NoSuchMetadataException"%>
 <%@page import="de.uhh.l2g.plugins.service.MetadataLocalServiceUtil"%>

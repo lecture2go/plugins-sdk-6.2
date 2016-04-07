@@ -1,4 +1,10 @@
 @media (min-width: 960px) {
+	
+	#metadata {
+    	float: left;
+    	width: 93%;
+	}
+	
 	.aui .row-fluid .span9 {
 	    width: 74%;
 	}

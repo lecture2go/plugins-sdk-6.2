@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -42,8 +41,6 @@ import de.uhh.l2g.plugins.util.ThreadManager;
 
 public class ThreadManagement extends MVCPortlet {
 
-	
-
 
 	/**Set default permissions (assumes fixed and unique role names)
 	 * 
@@ -62,7 +59,17 @@ public class ThreadManagement extends MVCPortlet {
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			         ScheduledThread.class.getName(), renderRequest);
-        
+
+
+			//PortletScheduler.ListSchedulers();
+			//PortletScheduler.ListSchedulerEntriess(serviceContext.getPortletId());
+			//StatisticsScheduler scheduler = new StatisticsScheduler(StatisticsScheduler.class.getName(), serviceContext);
+		/*	  try {
+		    	scheduler.killAll();
+		    	
+			} catch (Exception e) {
+				e.printStackTrace();
+			} */
 	
 	    } catch (Exception e) {
 	    	throw new PortletException(e);
@@ -147,7 +154,8 @@ public class ThreadManagement extends MVCPortlet {
 		}
 	}
 	
-	public void init() throws PortletException{	
+	public void init() throws PortletException{
+	
 		super.init();
 		
 		/*Drop table LG_VideoStatistics and initialize view
@@ -156,8 +164,10 @@ public class ThreadManagement extends MVCPortlet {
 	}
 	
 	public void destroy(){
-		System.out.println(this.getPortletName());
 		super.destroy();
+		
 	}
 	
 }
+
+	

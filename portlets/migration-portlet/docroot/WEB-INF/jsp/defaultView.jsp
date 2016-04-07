@@ -103,8 +103,8 @@
 	<portlet:param name="action" value="migrateCreator" />
 </portlet:actionURL>
 
-<portlet:actionURL var="executeStatisticUrl">
-	<portlet:param name="action" value="migrateStatistic" />
+<portlet:actionURL var="executeStatisticsUrl">
+	<portlet:param name="action" value="migrateStatistics" />
 </portlet:actionURL>
 
 <portlet:actionURL var="updateCounterTableValuesUrl">
@@ -409,11 +409,11 @@
     <td></td>
   </tr> 
   <tr>
-    <td>Statistic</td>
-    <td><c:out value="${statisticEntrieSize}" /></td>
-    <td><c:out value="${statisticEntrieSize62}" /></td>
-    <td><a href="<c:out value="${executeStatisticUrl}" />"><liferay-ui:message key="migrate" /></a></td>
-    <td><c:out value="${statisticokflag}" escapeXml="false" /></td>
+    <td>Statistics</td>
+    <td><c:out value="${statisticsEntrieSize}" /></td>
+    <td><c:out value="${statisticsEntrieSize62}" /></td>
+    <td><a href="<c:out value="${executeStatisticsUrl}" />"><liferay-ui:message key="migrate" /></a></td>
+    <td><c:out value="${statisticsokflag}" escapeXml="false" /></td>
     <td></td>
   </tr>
   <tr>

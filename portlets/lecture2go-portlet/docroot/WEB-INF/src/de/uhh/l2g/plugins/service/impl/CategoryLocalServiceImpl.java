@@ -64,8 +64,4 @@ public class CategoryLocalServiceImpl extends CategoryLocalServiceBaseImpl {
 		return CategoryFinderUtil.findCategoriesByLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds);
 	}
 	
-	public void deleteById(Long id) throws NoSuchModelException, SystemException{
-		categoryPersistence.remove(id);
-	}
-	
 }
