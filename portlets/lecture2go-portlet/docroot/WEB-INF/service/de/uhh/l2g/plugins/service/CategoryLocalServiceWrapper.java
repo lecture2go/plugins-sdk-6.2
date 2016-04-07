@@ -311,6 +311,13 @@ public class CategoryLocalServiceWrapper implements CategoryLocalService,
 			videoIds);
 	}
 
+	@Override
+	public void deleteById(java.lang.Long id)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_categoryLocalService.deleteById(id);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
