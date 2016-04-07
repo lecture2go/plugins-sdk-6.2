@@ -483,6 +483,9 @@
         <column name="languageId" type="String"></column>
         <column name="name" type="String"></column>
         <column name="translation" type="String"></column>
+        <order by="desc">
+            <order-column name="categoryId" order-by="desc"></order-column>
+        </order>
         <finder name="Name" return-type="Collection">
             <finder-column name="name"></finder-column>
         </finder>
