@@ -34,11 +34,7 @@ import de.uhh.l2g.plugins.migration.service.LegacyOfficeLocalServiceUtil;
 import de.uhh.l2g.plugins.migration.service.LegacyProducerLectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.migration.service.LegacyProducerLocalServiceUtil;
 import de.uhh.l2g.plugins.migration.service.LegacySegmentLocalServiceUtil;
-<<<<<<< HEAD
-import de.uhh.l2g.plugins.migration.service.LegacyStatisticsLocalServiceUtil;
-=======
 import de.uhh.l2g.plugins.migration.service.LegacyStatisticLocalServiceUtil;
->>>>>>> refs/remotes/lecture2go/master
 import de.uhh.l2g.plugins.migration.service.LegacyUserLocalServiceUtil;
 import de.uhh.l2g.plugins.migration.service.LegacyVideoFacilityLocalServiceUtil;
 import de.uhh.l2g.plugins.migration.service.LegacyVideoHitlistLocalServiceUtil;
@@ -91,11 +87,7 @@ public class ClpMessageListener extends BaseMessageListener {
 
 			LegacySegmentLocalServiceUtil.clearService();
 
-<<<<<<< HEAD
-			LegacyStatisticsLocalServiceUtil.clearService();
-=======
 			LegacyStatisticLocalServiceUtil.clearService();
->>>>>>> refs/remotes/lecture2go/master
 
 			LegacyUserLocalServiceUtil.clearService();
 
