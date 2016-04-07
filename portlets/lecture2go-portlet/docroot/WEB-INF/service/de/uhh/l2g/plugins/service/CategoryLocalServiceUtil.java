@@ -301,6 +301,12 @@ public class CategoryLocalServiceUtil {
 			videoIds);
 	}
 
+	public static void deleteById(java.lang.Long id)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteById(id);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}
