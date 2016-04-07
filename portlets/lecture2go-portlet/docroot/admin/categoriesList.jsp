@@ -47,14 +47,14 @@
 			String catIdString = catIdLong+""; 
 		%>
 		<portlet:actionURL name="edit" var="editURL">
-			<portlet:param name="termId" value='<%=catIdString%>' />
+			<portlet:param name="categoryId" value='<%=catIdString%>' />
 			<portlet:param name="delta" value='<%=delta%>' />
 			<portlet:param name="cur" value='<%=cur%>' />
 			<portlet:param name="backURL" value='<%=backURL.toString()%>' />
 		</portlet:actionURL>
 		
 		<portlet:actionURL name="delete" var="removeURL">
-			<portlet:param name="termId" value='<%=catIdString%>' />
+			<portlet:param name="categoryId" value='<%=catIdString%>' />
 			<portlet:param name="delta" value='<%=delta%>' />
 			<portlet:param name="cur" value='<%=cur%>' />
 			<portlet:param name="backURL" value='<%=backURL.toString()%>' />
