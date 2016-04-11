@@ -28,4 +28,14 @@
 	    padding: 4px 0;
 	    width: 313px;
 	}
+	
+	.aui .dockbar-split .dockbar, .aui .dockbar {
+    	display: none;
+	}
+	
+	.aui #navigation {
+	    display: table !important;
+	    margin-top: 0;
+	    visibility: visible !important;
+	}
 }

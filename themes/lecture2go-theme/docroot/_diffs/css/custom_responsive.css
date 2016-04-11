@@ -51,7 +51,7 @@
 			position: relative;
 			z-index: 401;
 			background-color: #444444 !important;
-
+			 			
 			.info-items {
 				height: auto;
 				position: static;
@@ -69,11 +69,11 @@
 					padding: 6px 8px;
 
 					&:hover {
-						background-color: #c90219;
+						background-color: #444444;
 					}
 
 					&.open {
-						background-color: #F5AF45;
+						background-color: #444444;
 					}
 				}
 
