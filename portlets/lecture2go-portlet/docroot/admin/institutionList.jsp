@@ -52,6 +52,11 @@ String institutionModel = Institution.class.getName();
 String hostModel = Host.class.getName();
 String institutionHostModel = Institution_Host.class.getName();
 
+//RoleIds
+long adminRoleId = RoleLocalServiceUtil.getRole(companyId, "L2Go Admin").getRoleId();
+long coordinatorRoleId = RoleLocalServiceUtil.getRole(companyId, "L2Go Coordinator").getRoleId();
+long producerRoleId = RoleLocalServiceUtil.getRole(companyId, "L2Go Producer").getRoleId();
+long studentRoleId = RoleLocalServiceUtil.getRole(companyId, "L2Go Student").getRoleId();
 
 %>
 
@@ -279,14 +284,13 @@ Group Institution_Host Permissions:
    	//Find out if user is connected with an institution
     long userId =  Long.parseLong(request.getRemoteUser());
     long ownInstitutionId = 0; //user is not attached to a conrete institution
-    System.out.println(request.isUserInRole("L2Go Coodinator"));
    
     //Currently only this roles have fixed institution
-	if (request.isUserInRole("L2Go Coodinator")){
+	if (UserLocalServiceUtil.hasRoleUser(coordinatorRoleId, userId)){
 	    	ownInstitutionId = CoordinatorLocalServiceUtil.getInstitutionByCoordinator(userId).getInstitutionId();
 	}
 	else{
-	    if (request.isUserInRole("L2Go Producer")){
+	    if (UserLocalServiceUtil.hasRoleUser(producerRoleId, userId)){
 	   		ownInstitutionId = ProducerLocalServiceUtil.getInstitutionByProducer(userId).getInstitutionId();
 	    }
 	}
@@ -302,7 +306,7 @@ Group Institution_Host Permissions:
     
     Institution treeBase = InstitutionLocalServiceUtil.getByGroupIdAndId(groupId, treeBaseId);
     int ownInstitutionMax = InstitutionLocalServiceUtil.getMaxSortByParentId(treeBaseId)+1;
-    System.out.println(ownInstitutionId+ " " +treeBaseId);
+
    %>
 
 <%--TREE ROOT (INSTITUTION)--%>
@@ -329,7 +333,7 @@ Group Institution_Host Permissions:
 </c:otherwise>
 </c:choose>
 
-<%--ADD SUB_INSTITUTION-- Only Required if user can't see full listing, but is allowed to mange own entries%>
+<%--ADD SUB_INSTITUTION-- Only Required if user can't see full listing, but is allowed to mange own entries --%>
 
 <%-- Permission on Portlet Scope --%>
 <c:if test='<%= !permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "VIEW_ALL_INSTITUTIONS") && permissionChecker.hasPermission(groupId, institutionModel, groupId, "ADD_SUB_INSTITUTION_ENTRY") && ownInstitutionId > 0 %>'>
@@ -372,21 +376,22 @@ deltaConfigurable="true">
         <%
        
  			ResultRow container_row = (ResultRow)request.getAttribute("curOuter");
- 			Institution institution_row = (Institution)row.getObject();
- 			long institution_id = institution_row.getInstitutionId();
- 			String id_row = "Inst"+String.valueOf(institution_row.getInstitutionId());
- 			String curParam_row = "curInner"+String.valueOf(institution_row.getInstitutionId());
- 			long outerOrder = institution_row.getSort();
- 			Host curHost = Institution_HostLocalServiceUtil.getByGroupIdAndInstitutionId(companyId, groupId, institution_row.getInstitutionId());
+ 			//Institution institution_row = (Institution)row.getObject();
+ 			//long institution_id = institution.getInstitutionId();
+ 			String id_row = "Inst"+String.valueOf(institution.getInstitutionId());
+ 			String curParam_row = "curInner"+String.valueOf(institution.getInstitutionId());
+ 			long outerOrder = institution.getSort();
+ 			Host curHost = Institution_HostLocalServiceUtil.getByGroupIdAndInstitutionId(companyId, groupId, institution.getInstitutionId());
  			String curHostName = "Default";
  			if (curHost != null && curHost.getDefaultHost() < 1 ) curHostName = curHost.getName();
+
  			
- 			int subInstitutionMax = InstitutionLocalServiceUtil.getMaxSortByParentId(institution_id)+1;
+ 			int subInstitutionMax = InstitutionLocalServiceUtil.getMaxSortByParentId(institution.getPrimaryKey())+1;
 
 
  		%>
 
- 		 <liferay-ui:search-container-row-parameter name="rowId" value="<%= institution_row.toString() %>"/>
+ 		 <liferay-ui:search-container-row-parameter name="rowId" value="<%= institution.toString() %>"/>
 
         <liferay-ui:search-container-column-text name="Institution">
 
@@ -400,7 +405,10 @@ deltaConfigurable="true">
  			<aui:fieldset>
 				<aui:input name="outerListInstitution" label="Institution Name" inlineField="true" value = "<%= institution.getName() %>" />
 				<aui:input name="outerListOrder" label="Order" inlineField="true" value='<%= institution.getSort() %>'/>
-				<aui:input name="outerListStreamer" label="Streamer" inlineField="true" value = "<%= curHostName %>" disabled="true"/>
+				<%-- Only display streamer if user is allowed to view host and institution is child of top level --%>
+				<c:if test='<%= permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "VIEW_HOSTS") && institution.getParentId() == rootId %>'>
+						<aui:input name="outerListStreamer" label="Streamer" inlineField="true" value = "<%= curHostName %>" disabled="true"/>
+				</c:if>
 				<aui:input name="outerListInstitutionId" type='hidden' inlineField="true" value = "<%= institution.getPrimaryKey() %>"/>
 				<aui:input name="outerListHostId" type='hidden' inlineField="true" value = "<%= curHost.getPrimaryKey() %>"/>
 
@@ -435,7 +443,7 @@ deltaConfigurable="true">
 	 			<aui:fieldset>
 					<aui:input name="subInstitution" label="SubInstitution Name" inlineField="true" />
 					<aui:input name="subInstitutionOrder" label="Order" inlineField="true" value='<%= subInstitutionMax  %>'/>
-					<aui:input name='subInstitutionParentId' type='hidden' inlineField="true" value='<%= institution_id %>'/>
+					<aui:input name='subInstitutionParentId' type='hidden' inlineField="true" value='<%= institution.getPrimaryKey() %>'/>
 					
 					<aui:button type="submit" value="Add"></aui:button>
 				</aui:fieldset>
@@ -452,14 +460,14 @@ deltaConfigurable="true">
 
 
 				<liferay-ui:search-container-results
-        			results="<%=InstitutionLocalServiceUtil.getByGroupIdAndParent(groupId, institution_id, searchContainer.getStart(), searchContainer.getEnd())%>"
-        			total="<%=InstitutionLocalServiceUtil.getByGroupIdAndParentCount(groupId, institution_id)%>" />
+        			results="<%=InstitutionLocalServiceUtil.getByGroupIdAndParent(groupId, institution.getPrimaryKey(), searchContainer.getStart(), searchContainer.getEnd())%>"
+        			total="<%=InstitutionLocalServiceUtil.getByGroupIdAndParentCount(groupId, institution.getPrimaryKey())%>" />
 					<liferay-ui:search-container-row
 					className="de.uhh.l2g.plugins.model.Institution" modelVar="subInstitution" rowVar="thisRow"
 					keyProperty="institutionId"  escapedModel="<%= false %>" indexVar="j">
 	
 					<c:choose>
-					<c:when  test='<%= permissionChecker.hasPermission(groupId, institutionModel, groupId, "EDIT_ALL_INSTITUTIONS") || (permissionChecker.hasPermission(groupId, institutionModel, groupId, "EDIT_OWN_INSTITUTIONS") && ownInstitutionId == institution_id ) %>'> 
+					<c:when  test='<%= permissionChecker.hasPermission(groupId, institutionModel, groupId, "EDIT_ALL_INSTITUTIONS") || (permissionChecker.hasPermission(groupId, institutionModel, groupId, "EDIT_OWN_INSTITUTIONS") && ownInstitutionId == institution.getPrimaryKey() ) %>'> 
 				
 	        			<liferay-ui:search-container-column-text name="Institution" >
 		        			<portlet:actionURL name="deleteSubInstitution" var="deleteSubInstitutionURL">

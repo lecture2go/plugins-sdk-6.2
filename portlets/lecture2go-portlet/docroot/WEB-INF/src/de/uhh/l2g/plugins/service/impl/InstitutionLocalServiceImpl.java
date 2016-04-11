@@ -206,7 +206,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 				 }
 				 subInstitution.setSort(curPos + increment);
 				 institutionPersistence.update(subInstitution);
-				// System.out.println(subInstitution.getInstitutionId() +" "+ subInstitution.getName()+ " " + curPos + " " + increment+ " " +validPosition);
+				 //System.out.println(subInstitution.getInstitutionId() +" "+ subInstitution.getName()+ " " + curPos + " " + increment+ " " +validPosition);
 				 curPos++;
 
 			}
@@ -367,11 +367,11 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 
 			institution.setExpandoBridgeAttributes(serviceContext);
 
-			System.out.println(institutionId+" "+institution.getPrimaryKey() );
+			//System.out.println(institutionId+" "+institution.getPrimaryKey() );
 
 			institutionPersistence.update(institution);
 			//refresh order
-			reorderChildren(institution);
+			reorderChildren(getById(institution.getParentId()));
 			
 			//Refresh LinkTable Resources if existing
 			try{
