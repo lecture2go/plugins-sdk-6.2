@@ -1,7 +1,6 @@
 package de.uhh.l2g.plugins.admin;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -11,34 +10,17 @@ import javax.portlet.RenderResponse;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
-import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.model.ResourceConstants;
-import com.liferay.portal.model.ResourcePermission;
-import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.service.PortletLocalServiceUtil;
-import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
-import de.uhh.l2g.plugins.model.Host;
-import de.uhh.l2g.plugins.model.Institution;
-import de.uhh.l2g.plugins.model.Institution_Host;
 import de.uhh.l2g.plugins.model.ScheduledThread;
-import de.uhh.l2g.plugins.model.Statistic;
-import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
-import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
-import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
 import de.uhh.l2g.plugins.util.PermissionManager;
 import de.uhh.l2g.plugins.util.PortletScheduler;
-import de.uhh.l2g.plugins.util.StatisticsScheduler;
-import de.uhh.l2g.plugins.util.ThreadManager;
 
 public class ThreadManagement extends MVCPortlet {
 
@@ -125,7 +107,7 @@ public class ThreadManagement extends MVCPortlet {
 		}
 	}
 	
-	public void killAll(ActionRequest request, ActionResponse response){
+	public void killAllThreads(ActionRequest request, ActionResponse response){
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 					ScheduledThread.class.getName(), request);
@@ -147,6 +129,10 @@ public class ThreadManagement extends MVCPortlet {
 		}
 	}
 	
+	/**
+	 * 
+	 * TODO: Remove duplicates from List befor the can be scheduled, or correctly remove allready unscheduled Entries
+	 */
 	public void init() throws PortletException{	
 		super.init();
 		
