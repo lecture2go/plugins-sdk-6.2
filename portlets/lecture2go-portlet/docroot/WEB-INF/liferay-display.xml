@@ -11,5 +11,6 @@
         <portlet id="lg-admin-institution-management"></portlet>
         <portlet id="lg-admin-thread-management"></portlet>
         <portlet id="lg-open-access-videos"></portlet>
+        <portlet id="lg-admin-category-management"></portlet>
 	</category>
 </display>

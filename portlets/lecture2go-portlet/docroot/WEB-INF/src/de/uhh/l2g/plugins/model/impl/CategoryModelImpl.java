@@ -66,8 +66,8 @@ public class CategoryModelImpl extends BaseModelImpl<Category>
 		};
 	public static final String TABLE_SQL_CREATE = "create table LG_Category (categoryId LONG not null primary key,parentId LONG,languageId VARCHAR(75) null,name VARCHAR(75) null,translation VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Category";
-	public static final String ORDER_BY_JPQL = " ORDER BY category.categoryId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY LG_Category.categoryId ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY category.categoryId DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY LG_Category.categoryId DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -171,6 +171,8 @@ public class CategoryModelImpl extends BaseModelImpl<Category>
 
 	@Override
 	public void setCategoryId(long categoryId) {
+		_columnBitmask = -1L;
+
 		_categoryId = categoryId;
 	}
 
@@ -283,17 +285,25 @@ public class CategoryModelImpl extends BaseModelImpl<Category>
 
 	@Override
 	public int compareTo(Category category) {
-		long primaryKey = category.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		if (getCategoryId() < category.getCategoryId()) {
+			value = -1;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
+		else if (getCategoryId() > category.getCategoryId()) {
+			value = 1;
 		}
 		else {
-			return 0;
+			value = 0;
 		}
+
+		value = value * -1;
+
+		if (value != 0) {
+			return value;
+		}
+
+		return 0;
 	}
 
 	@Override

@@ -12,6 +12,10 @@
 		display: none;
 	}
 	
+	#metadata {
+	    width: 100%;
+	}
+	
 	.admintile.wide {
 	    margin: 0 -9px 0 3px;
 	    width: 100%;
@@ -124,13 +128,6 @@
 	    margin-right: -6px;
 	} 
 	
-	input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
-	    float: left;
-	    margin: 24px 0 4px;
-	    width: 99.8%;
-	    height: 24px;
-	}
-	
 	.aui #navigation.open .navbar-inner {
     	border-radius: 0;
     	padding: 0 5px 0 1px;
@@ -140,8 +137,5 @@
     	font-size: 15px;
     	font-weight: 900;
     	line-height: 17px;
-	}
-	.aui .dockbar-split .dockbar, .aui .dockbar {
-    	margin-right: 14px;
 	}
 }

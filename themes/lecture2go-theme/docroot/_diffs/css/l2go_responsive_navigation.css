@@ -1,0 +1,110 @@
+@media (min-width: 0px) and (max-width: 960px) {	
+	
+	.aui #navigation .nav li{
+		background: rgba(0, 0, 0, 0) linear-gradient(180deg, #f3f3f3 0%, #f3f3f3 100%) repeat scroll 0 0;
+		border-radius: 0;
+		height: 38px;
+		line-height: 31px;
+		margin: 0 1px 1px 0;
+		min-width: 148px;
+		text-align: left;
+	}
+		
+	.aui #navigation .nav li.active > a {
+	    background-color: #d81b1b;
+	    background-image: linear-gradient(180deg, #e40613 0%, #e40613 100%);
+	    height: 38px;
+	    padding-left: 30px;
+	    padding-top: 3px;
+	    color: #fff;
+	}
+
+	.aui #navigation .nav li.open > a {
+	    background-color: #d81b1b;
+	    background-image: linear-gradient(180deg, #e5331c 0%, #c90219 100%);
+	    border-radius: 0;
+	    color: #fff;
+	    height: 38px;
+	    padding-left: 30px;
+	    padding-top: 3px;
+	}
+
+	.aui .btn [class^="icon-"], .aui .btn [class*=" icon-"] {
+    	margin-top: -1px;
+	}
+
+	.aui #navigation .navbar-inner li a {
+	    color: #444;
+	    font-weight: normal;
+	    padding-left: 30px;
+	    padding-top: 4px;
+	}
+	
+	.aui .dockbar-split .dockbar .navbar-inner .btn-navbar, .aui .dockbar .navbar-inner .btn-navbar {
+    	background: #444444 none repeat scroll 0 0 !important;
+    	margin: 0;
+    	padding-top: 6px !important;
+	}
+
+	.navbar .container .btn-navbar {
+	    margin-bottom: 0;
+	}	
+	
+	.aui .dockbar-split .dockbar .navbar-inner .btn-navbar:hover, .aui .dockbar .navbar-inner .btn-navbar {
+    	background-color: #444444;
+	}
+	
+	.aui .dockbar .navbar-inner .container .btn-navbar .user-avatar-image {
+	    top: 0;
+	}
+	
+	#wrapper #heading .site-title img {
+	    margin-left: 13px;
+	    margin-top: 35px;
+	    width: auto;
+	}
+
+	.user-avatar-image {
+	    margin-top: 0 !important;
+	    padding: 0;
+	    width: 22px !important;
+	}
+	
+	#wrapper {
+    	background-color: #fff;
+	    max-width: 1400px;
+    	padding: 0;
+    	width: 96%;	
+	}
+
+	.aui .navbar-inner::before, .aui .navbar-inner::after {
+	    float: left;
+	}
+	
+	input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
+	    float: left;
+	    margin: 3px 0 4px;
+	    width: 100%;
+	    height: 24px;
+	}
+	
+	element.style {
+	    width: 100%;
+	}
+	
+	.aui #navigation .nav .dropdown-menu {
+	    background-color: transparent;
+	}
+	
+	.dropdown-menu.child-menu {
+    	background: transparent none repeat scroll 0 0 !important;
+    	width: 100% !important;
+	}
+	
+	.aui .dockbar-split .dockbar, .aui .dockbar {
+	    background-color: #444444 !important;
+	    margin-right: 5%;
+	    margin-top: 40px;
+	}
+
+}

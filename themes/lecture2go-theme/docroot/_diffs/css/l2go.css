@@ -10,6 +10,15 @@
     width: 0px;
 }
 
+.aui #navigation .nav .dropdown-menu > li {
+    background: #f9f9f9 none repeat scroll 0 0 !important;
+    border-bottom: 1px solid #f3f3f3;
+    border-radius: 0;
+    margin-top: -1px;
+    width: 70%;
+    z-index: 23452345;
+}
+
 .aui .btn:hover, .aui .btn:focus {
     background-position: 0 45px;
     text-decoration: none;
@@ -85,15 +94,6 @@ p.smallitalic {
     padding: 0;
 }
 
-.aui #navigation .nav li.open > a {
-    background-color: #d81b1b;
-    background-image: linear-gradient(180deg, #e5331c 0%, #c90219 100%);
-    border-radius: 0;
-    color: #fff;
-    height: 33px;
-    padding: 0;
-}
-
 #video-list .list-group-item:hover .overlay {
   position: absolute; 
   top: 8px; 
@@ -122,7 +122,6 @@ p.smallitalic {
     max-width: 60px;
     height: 30px;
 }
-
 
 .video-image-wrapper-small.related {
     max-width: 113px;
@@ -1189,13 +1188,6 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     font-family: inherit !important;
 }
 
-.aui #navigation .nav .dropdown-menu > li {
-    background: #f9f9f9 none repeat scroll 0 0 !important;
-    border-bottom: 1px solid #f3f3f3;
-    border-radius: 0;
-    z-index: 23452345;
-}
-
 .add-new-creator-term-object #add {
     margin-top: 25px;
 }
@@ -1288,11 +1280,6 @@ input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     visibility: hidden;
 }
 
-.user-avatar-image {
-    display: none;
-    visibility: hidden;
-}
-
 .dockbar-user-notifications {
     display: none;
     visibility: hidden;
@@ -1345,7 +1332,7 @@ div.filter-menu-link span.icon-large.icon-remove {
     padding-left: 0px;
     padding-right: 0px;
  	color: #4d4d4d;
- 	font-size: 12px
+ 	font-size: 13px
 }
 
 .aui .navbar .nav {

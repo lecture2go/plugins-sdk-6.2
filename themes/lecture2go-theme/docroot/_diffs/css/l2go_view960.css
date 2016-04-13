@@ -1,4 +1,10 @@
 @media (min-width: 960px) {
+	
+	#metadata {
+    	float: left;
+    	width: 93%;
+	}
+	
 	.aui .row-fluid .span9 {
 	    width: 74%;
 	}
@@ -21,5 +27,15 @@
 	    margin: -12px 0 2px;
 	    padding: 4px 0;
 	    width: 313px;
+	}
+	
+	.aui .dockbar-split .dockbar, .aui .dockbar {
+    	display: none;
+	}
+	
+	.aui #navigation {
+	    display: table !important;
+	    margin-top: 0;
+	    visibility: visible !important;
 	}
 }
