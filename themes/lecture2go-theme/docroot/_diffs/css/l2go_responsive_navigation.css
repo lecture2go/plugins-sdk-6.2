@@ -1,5 +1,44 @@
 @media (min-width: 0px) and (max-width: 960px) {	
+	#heading .meta {
+	    display: none;
+	    visibility: hidden;
+	}
 	
+	#wrapper {
+	    padding: 0;
+	}
+
+	#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
+	    border-left: medium none;
+	    border-right: 0 none;
+	    float: right;
+	    padding: 4px 0;
+	    width: 100%;
+	}
+	
+	.search {
+    	margin-top: 33px;
+	}
+	
+	.aui #navigation.open .navbar-inner .nav-collapse {
+	    height: auto;
+	    margin-bottom: -32px;
+	    overflow: visible;
+	}	
+	
+	.search input.button {
+	    border-left: 0 none;
+	    border-right: 0 none;
+	    float: right;
+	    height: 30px;
+	    margin-right: 1px;
+	    margin-top: -39px;
+	}
+	
+	.aui .portlet-borderless-container {
+    	padding: 0;
+	}
+
 	.aui #navigation .nav li{
 		background: rgba(0, 0, 0, 0) linear-gradient(180deg, #f3f3f3 0%, #f3f3f3 100%) repeat scroll 0 0;
 		border-radius: 0;
@@ -41,7 +80,7 @@
 	}
 	
 	.aui .dockbar-split .dockbar .navbar-inner .btn-navbar, .aui .dockbar .navbar-inner .btn-navbar {
-    	background: #444444 none repeat scroll 0 0 !important;
+    	background: #fff none repeat scroll 0 0 !important;
     	margin: 0;
     	padding-top: 6px !important;
 	}
@@ -70,22 +109,8 @@
 	    width: 22px !important;
 	}
 	
-	#wrapper {
-    	background-color: #fff;
-	    max-width: 1400px;
-    	padding: 0;
-    	width: 96%;	
-	}
-
 	.aui .navbar-inner::before, .aui .navbar-inner::after {
 	    float: left;
-	}
-	
-	input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
-	    float: left;
-	    margin: 3px 0 4px;
-	    width: 100%;
-	    height: 24px;
 	}
 	
 	element.style {
@@ -107,4 +132,20 @@
 	    margin-top: 40px;
 	}
 
+	.aui .dockbar-split .dockbar .navbar-inner {
+	    background: #fff none repeat scroll 0 0;
+	}
+
+	.navbar-inner {
+	    background: #fff none repeat scroll 0 0 !important;
+	}
+	
+	.aui .dockbar.navbar .navbar-inner {
+    	min-height: 0;
+	}
+	
+	.aui .dockbar .navbar-inner .container .btn-navbar {
+    	color: #444;
+	}
+	
 }

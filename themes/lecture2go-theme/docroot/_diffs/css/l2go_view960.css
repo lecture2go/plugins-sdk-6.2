@@ -1,10 +1,67 @@
 @media (min-width: 960px) {
+	#banner {
+	    background: rgba(0, 0, 0, 0) url("/lecture2go-theme/images/logo_l2go.png") no-repeat scroll right -3px top -8px / 159px auto;
+	}
+
+	#wrapper {
+	    background-color: #fff;
+	    max-width: 1100px;
+	    padding: 0 16px;
+	    width: 100%;
+	}
+
+	.aui .row-fluid::before, .aui .row-fluid::after {
+	    margin-top: 5px;
+	}
+	
+	#content {
+    	margin-top: 10px;
+	}
+	
+	.aui #navigation .nav li {
+	    height: 34px;
+	}
+
+	.aui .container-fluid::before, .aui .container-fluid::after {
+	    content: "";
+	    display: table;
+	    line-height: 0;
+	    padding: 25px 25px 20px;
+	    max-width: 998px;
+	}
+
+	.search input.button {
+	    float: right;
+	    height: 25px;
+	    margin-right: -313px;
+	    margin-top: -6px;
+	}
+	
+	#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
+	    float: right;
+	    height: 19px;
+	    margin: -8px 0 2px;
+	    padding: 4px 0 4px 4px;
+	    width: 309px;
+	}
 	
 	#metadata {
     	float: left;
     	width: 93%;
 	}
 	
+	#heading .meta {
+	    float: right;
+	    font-size: 11px;
+	    line-height: 13px;
+	    margin-right: 2px;
+	    margin-top: -87px;
+	}
+	
+	.aui .portlet-borderless-container {
+    	padding: 0;
+	}
+
 	.aui .row-fluid .span9 {
 	    width: 74%;
 	}
@@ -21,14 +78,6 @@
     	width: 100%;
 	}
 
-	input#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
-	    float: right;
-	    height: 19px;
-	    margin: -12px 0 2px;
-	    padding: 4px 0;
-	    width: 313px;
-	}
-	
 	.aui .dockbar-split .dockbar, .aui .dockbar {
     	display: none;
 	}
