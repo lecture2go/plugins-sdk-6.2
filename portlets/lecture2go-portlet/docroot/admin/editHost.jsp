@@ -1,6 +1,4 @@
-
-
-
+<div class="noresponsive">
         		<c:when  test='<%= permissionChecker.hasPermission(groupId, hostModel, groupId, "EDIT_HOST") %>'> 
         		    		<%--DELETE: For advanced security, this should only be generated if user is allowed to delete Hosts--%>	    
 		        			<portlet:actionURL name="deleteStreamingServer" var="deleteStreamingServerURL">
@@ -14,7 +12,6 @@
 								</c:choose>
 								<portlet:param name="backURL" value="<%=String.valueOf(portletURL) %>"/>
 							</portlet:actionURL>
-					
 						<aui:form action="<%= updateStreamingServerURL %>" name="<portlet:namespace />fm">
 							<aui:fieldset>
 							
@@ -25,17 +22,11 @@
 							<% }
 							else {
 							%>
-			
 								<aui:input name="curStreamingServerName" label="StreamingServer Name" inlineField="true" value = "<%= Hosts.getName() %>" />
-								
 							<%}%>
-							
 								<aui:input name="curStreamingServerIP" label="IP" inlineField="true" value = "<%= Hosts.getStreamer() %>" />				
 								<aui:input name="curStreamingServerPort" label="Port" inlineField="true" value = "<%= Hosts.getPort() %>" />
 								<aui:input name="curStreamingServerProtocol" label="Protocol" inlineField="true" value = "<%= Hosts.getProtocol() %>" />
-								
-								<%-- <aui:input name="curStreamingServerRoot" label="Root Directory" inlineField="true" disabled="true" value = "<%= Hosts.getServerRoot() %>" /> --%>
-								
 								<aui:input name="curStreamingServerId" type='hidden' inlineField="true" value = "<%= (new Long(Hosts.getHostId())).toString() %>"/>
 								<aui:button type="submit"></aui:button>
 								<c:choose>
@@ -60,3 +51,4 @@
 						<liferay-ui:message key="<%= repDirectory %>"></liferay-ui:message>
 					</c:otherwise>
 				</c:choose>
+</div>

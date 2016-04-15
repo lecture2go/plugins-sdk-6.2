@@ -19,9 +19,10 @@
 						#set ($nav_item_caret='<span class="lfr-nav-child-toggle"><i class="icon-caret-down"></i></span>')
 						#set ($nav_item_css_class="$nav_item_css_class dropdown")
 						#set ($nav_item_link_css_class="dropdown-toggle")
+						#set ($has_child_css_class="has-child")
 					#end
 
-					<li class="$nav_item_css_class" id="layout_$nav_item.getLayoutId()" $nav_item_attr_selected role="presentation">
+					<li class="$nav_item_css_class $has_child_css_class " id="layout_$nav_item.getLayoutId()" $nav_item_attr_selected role="presentation">
 						<a aria-labelledby="layout_$nav_item.getLayoutId()" $nav_item_attr_has_popup class="$nav_item_link_css_class" href="$nav_item.getURL()" $nav_item.getTarget() role="menuitem">
 							<span>$nav_item.icon() $nav_item.getName() $nav_item_caret</span>
 						</a>
@@ -44,6 +45,23 @@
 							</ul>
 						#end
 					</li>
+					
+					#if ($nav_item.hasChildren())
+							#foreach ($nav_child in $nav_item.getChildren())
+								#set ($nav_child_attr_selected="")
+								#set ($nav_child_css_class="lfr-nav-item")
+								
+								#if ($nav_child.isSelected())
+									#set ($nav_child_attr_selected="aria-selected='true'")
+									#set ($nav_child_css_class="selected")
+								#end
+
+								<li class="responsive_li_item $nav_child_css_class" id="layout_$nav_child.getLayoutId()" $nav_child_attr_selected role="presentation">
+									<a aria-labelledby="layout_$nav_child.getLayoutId()" href="$nav_child.getURL()" $nav_child.getTarget() role="menuitem">$nav_child.getName()</a>
+								</li>
+							#end
+					#end
+											
 				#end
 			</ul>
 		</div>

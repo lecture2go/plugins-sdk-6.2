@@ -9,6 +9,11 @@
 	    padding: 0 16px;
 	    width: 100%;
 	}
+	
+	.responsive_li_item {
+   	 	display: none;
+    	visibility: hidden;
+	}
 
 	.aui .row-fluid::before, .aui .row-fluid::after {
 	    margin-top: 5px;

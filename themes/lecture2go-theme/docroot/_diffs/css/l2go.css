@@ -6,6 +6,21 @@
     width: 0px;
 }
 
+.span3 .accordion-inner li {
+    background-color: #f3f3f3 !important;
+    border-color: #fff #f3f3f3 #d4d4d4 !important;
+    border-style: solid !important;
+    border-width: 1px !important;
+    line-height: 27px;
+}
+
+.aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle {
+    background-color: #a4a5a6;
+    color: #000;
+    font-weight: 900;
+    padding: 0 3px 20px 6px;
+}
+
 #qr {
     height: 450px;
     margin-left: -33px;
@@ -20,20 +35,33 @@
 }
 
 .aui #navigation .nav .dropdown-menu > li a {
-    background: #f9f9f9 url("https://www.uni-hamburg.de/assets/rot_navi-fdf29d5b8f2a0c0cff02298385c1450f.png") no-repeat scroll 9px 9px !important;
-    border-color: #ddd;
+    background: #f9f9f9 url("/lecture2go-portlet/img/rot_navi-pfeil-rechts.png") no-repeat scroll 9px 11px !important;
+    border-color: #ddd #ddd -moz-use-text-color;
     border-radius: 0;
-    border-style: solid;
+    border-style: solid solid none;
     border-width: 1px;
     color: #4e4e4e;
     display: block;
+    font-family: TheSansUHH,sans-serif !important;
     font-size: 12px;
-    margin-left: 2px;
-    margin-top: -2px;
+    margin-left: 3px;
+    margin-top: -3px;
     padding-left: 29px;
     text-align: left;
     text-decoration: none;
     width: 100%;
+}
+
+.aui .dropdown-menu {
+    border-bottom: 3px solid #4e4e4e !important;
+    border-left: 0 solid transparent !important;
+    border-right: 0 solid transparent !important;
+    box-shadow: none;
+    margin-bottom: -1px !important;
+    margin-left: -3px !important;
+    margin-top: 3px !important;
+    padding: 0;
+    width: 184px;
 }
 
 .aui #navigation .nav .dropdown-menu > li {
@@ -371,15 +399,6 @@ p.smallitalic {
     width: 40em;
 }
 
-.aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle::after, .aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle::before {
-    color: #484848;
-    float: right;
-    font-size: 18px;
-    margin: 3px 5px 0 0;
-    opacity: 1;
-    padding: 0;
-}
-
 a.list-group-item:hover, a.list-group-item:focus {
     color: #555;
     text-decoration: none;
@@ -428,18 +447,16 @@ a.list-group-item:hover, a.list-group-item:focus {
     border-top: 1px solid #E5E5E5;
 }
 
-.aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle {
-    background-color: rgb(221, 221, 221);
-    border-left: 3px solid #DDD !important;
-    font-weight: 900;
-    padding: 0px 3px 20px 6px;
-    color: #000;
-}
-
 .aui .accordion-group .toggler-content-expanded .accordion-inner {
     border-width: 0px 0px 0px 3px;
     border-style: solid;
     border-color: #ddd;
+}
+
+.aui .accordion-group.lfr-panel-extended .accordion-heading {
+    background: #a4a5a6 none repeat scroll 0 0;
+    border-style: none;
+    border-width: 0 0 1px;
 }
 
 .tileheading {
@@ -638,10 +655,6 @@ thead, th {
 
 .filter-menu {
     border-bottom: 1px solid #F6F6F6 !important;
-}
-
-.aui li {
-    line-height: 23px;
 }
 
 .generation-date {
@@ -1205,8 +1218,15 @@ thead, th {
 
 
 .aui #navigation .nav .dropdown-menu > li a:hover {
-    background: #ddd url("https://www.uni-hamburg.de/assets/rot_navi-fdf29d5b8f2a0c0cff02298385c1450f.png") no-repeat scroll 9px 9px !important;
+    background: #ddd url("/lecture2go-portlet/img/rot_navi-pfeil-rechts.png") no-repeat scroll 9px 11px !important;
     text-decoration: none;
+}
+
+.aui .badge {
+    background-color: #4d4d4d;
+    border-radius: 20px;
+    padding-left: 7px;
+    padding-right: 7px;
 }
 
 .aui .icon-caret-down::before {
@@ -1342,16 +1362,6 @@ div.filter-menu-link span.icon-large.icon-remove {
     text-decoration: none;
 }
 
-.aui .dropdown-menu {
-    border-left: 1px solid transparent !important;
-    border-right: 1px solid transparent !important;
-    box-shadow: none;
-    margin-left: -3px !important;
-    padding-bottom: 1px;
-    padding-top: 3px;
-    width: 100.5%;
-}
-
 #license .control-group.form-inline {
     float: left;
     margin-top: 0;
@@ -1407,22 +1417,26 @@ div.filter-menu-link span.icon-large.icon-remove {
     line-height: 2px;
 }
 
+.aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle::after, .aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle::before {
+    background-color: #a4a5a6;
+    color: #fff;
+    float: right;
+    font-size: 18px;
+    margin: 3px 5px 0 0;
+    opacity: 1;
+    padding: 0;
+}
+
 .title-text {
+    color: #fff !important;
     float: left;
+    font-size: 14px;
     margin-top: 4px;
-    padding: 0 0 4px;
-    font-size: 15px;
-    color: rgb(72, 72, 72) !important;    
+    padding: 0 8px 4px;
+    text-shadow: 1px 1px 1px #777777 !important;
 }
 
 /*Bastian Start*/
-
-.aui .accordion-group.lfr-panel-extended .accordion-heading {
-    background: #dddddd none repeat scroll 0 0;
-    border-color: dddddd;
-    border-style: none;
-    border-width: 0 0 1px;
-}
 
 .aui .accordion {
     margin-bottom: 0px;
@@ -1452,15 +1466,6 @@ div.filter-menu-link span.icon-large.icon-remove {
 
 .logo {
     margin-left: 4px;
-}
-
-.aui .label {
-    border-radius: 2px;
-}
-
-.aui .badge {
-    border-radius: 2px;
-    background-color: #737373;
 }
 
 .aui a {

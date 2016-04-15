@@ -14,12 +14,8 @@ List<PortletScheduler> portletScheduler = PortletScheduler.ListSchedulers();
 <portlet:actionURL name="startThread" var="startThreadURL"></portlet:actionURL>
 <portlet:actionURL name="stopThread" var="stopThreadURL"></portlet:actionURL>
 <portlet:actionURL name="killAllThreads" var="killAllThreadsURL"></portlet:actionURL>
-	       
-	 <br>  
-	  <br>
-	   <br>
-	    <br>
-	     <br>
+
+<div class="noresponsive">	       
 
 	<%  int iC = 0;
 	for(SchedulerEntry job : scheduledJobs) { 
@@ -56,3 +52,4 @@ List<PortletScheduler> portletScheduler = PortletScheduler.ListSchedulers();
 				</aui:form>
 		</liferay-ui:panel>
 <% } %>
+</div>

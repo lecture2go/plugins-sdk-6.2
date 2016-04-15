@@ -3,6 +3,10 @@
 		display:none;
 	}
 	
+	.aui .accordion-group.lfr-panel-extended {
+	    padding-bottom: 0;
+	}
+	
 	.sharetile {
 	    width: 131px;
 	}
