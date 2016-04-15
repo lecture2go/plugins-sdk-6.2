@@ -6,6 +6,8 @@
 <%@ page import="de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil" %>
 <%@ page import="de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil" %>
 <%@ page import="de.uhh.l2g.plugins.service.HostLocalServiceUtil" %>
+<%@ page import="de.uhh.l2g.plugins.admin.AdminInstitutionManagement" %>
+<%@ page import="de.uhh.l2g.plugins.admin.AdminUserManagement" %>
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
@@ -13,7 +15,7 @@
 <%!com.liferay.portal.kernel.dao.search.SearchContainer<Institution> searchSubInstitutionContainer = null;%>
 <%!com.liferay.portal.kernel.dao.search.SearchContainer<Host> searchHostContainer = null;%>
 
-<liferay-ui:success key="success" message="saved-successfully"/>
+<liferay-ui:success key="success" message="request_processed"/>
 <liferay-ui:error key="host-or-institution-error" message="host-or-institution-error"/>
 <liferay-ui:error key="no-roles-error" message="roles-not-configured" />
 
@@ -60,12 +62,12 @@ String institutionHostModel = Institution_Host.class.getName();
 		long coordinatorRoleId = 0;
 		long producerRoleId = 0;
 		long studentRoleId = 0; 
-Role admin = RoleLocalServiceUtil.fetchRole(companyId, "L2Go Admin");
+Role admin = RoleLocalServiceUtil.fetchRole(companyId, AdminUserManagement.L2G_ADMIN);
 	if (admin != null){
-		adminRoleId = RoleLocalServiceUtil.getRole(companyId, "L2Go Admin").getRoleId();
-		coordinatorRoleId = RoleLocalServiceUtil.getRole(companyId, "L2Go Coordinator").getRoleId();
-		producerRoleId = RoleLocalServiceUtil.getRole(companyId, "L2Go Producer").getRoleId();
-		studentRoleId = RoleLocalServiceUtil.getRole(companyId, "L2Go Student").getRoleId();
+		adminRoleId = RoleLocalServiceUtil.getRole(companyId, AdminUserManagement.L2G_ADMIN).getRoleId();
+		coordinatorRoleId = RoleLocalServiceUtil.getRole(companyId, AdminUserManagement.L2G_COORDINATOR).getRoleId();
+		producerRoleId = RoleLocalServiceUtil.getRole(companyId, AdminUserManagement.L2G_PRODUCER).getRoleId();
+		studentRoleId = RoleLocalServiceUtil.getRole(companyId, AdminUserManagement.L2G_STUDENT).getRoleId();
 	}
 	
 
@@ -84,6 +86,7 @@ portletURL.setParameter("institutionId", institutionId+"");
 portletURL.setParameter("hostId", hostId+"");
 
 String repDirectory = PropsUtil.get("lecture2go.media.repository");
+
 //Get Top Level institution of current scope
 Institution root = InstitutionLocalServiceUtil.getRootByGroupId(companyId, groupId);
 long rootId = root.getInstitutionId();
@@ -142,20 +145,20 @@ Group Institution_Host Permissions:
 
 <%-- Permission on Portlet Scope --%>
 <c:if test='<%= permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "ADD_INSTITUTIONS") %>'>
-	<liferay-ui:panel title="Add Institution" collapsible="true" id="institutionSettings"
+	<liferay-ui:panel title="add-institution" collapsible="true" id="institutionSettings"
 					defaultState="open"
 					extended="<%= false %>"
 					persistState="<%= true %>">
 	<aui:form action="<%= addInstitutionURL %>" name="<portlet:namespace />fm">
 
 			<aui:fieldset>
-				<aui:input name="institution" label="Name" required="true" inlineField="true"/>
-	            <aui:select name="serverselect" id="selecthost" label="Streaming Server" inlineField="true">
+				<aui:input name="institution" label="institution-name" required="true" inlineField="true"/>
+	            <aui:select name="serverselect" id="select-streamer" label="streaming-server-name" inlineField="true">
 				<%
 						for(Host host : hostList){
 							if (host.getDefaultHost() > 0) {
 				%>
-							<aui:option label="Default" value="<%= host.getHostId() %>"></aui:option>
+							<aui:option label="default" value="<%= host.getHostId() %>"></aui:option>
 				<%			}
 							else {
 							%>
@@ -165,10 +168,10 @@ Group Institution_Host Permissions:
 							}
 				 } %>
 	            </aui:select>
-	            <aui:input name="order" label="Order" inlineField="true" value='<%= maxOrder %>'/>
+	            <aui:input name="order" label="order" inlineField="true" value='<%= maxOrder %>'/>
 	            <aui:input name='institutionId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "institutionId") %>'/>
 	            <aui:input name='parent' type='hidden' inlineField="true" value='<%= rootId %>'/>
-				<aui:button type="submit" value="Add" ></aui:button>
+				<aui:button type="submit" value="add" ></aui:button>
 	<%-- 			<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button> --%>
 	        </aui:fieldset>
 	</aui:form>
@@ -179,7 +182,7 @@ Group Institution_Host Permissions:
 <%--STREAMING SERVER SETTINGS AND LIST --%>
 <c:if test='<%= permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "VIEW_HOSTS") %>'>
 
-	 <liferay-ui:panel title="Streaming Server Options" collapsible="true" id="streamingServerSettings"
+	 <liferay-ui:panel title="streaming-server-options" collapsible="true" id="streamingServerSettings"
 			    	defaultState="open"
 			    	extended="<%= false %>"
 			    	persistState="<%= true %>">
@@ -188,11 +191,11 @@ Group Institution_Host Permissions:
 						<aui:form action="<%= addStreamingServerURL %>" name="<portlet:namespace />fm" inlineLabel="true">
 						<aui:button-row>
 				 	    <aui:fieldset column="true">
-							<aui:input label="StreamingServer Name" name="name" required="true" inlineField="true"></aui:input>
-				 	        <aui:input label="Streaming Server Domain or IP" name="ip" inlineField="true" value='<%= defaultHost.getStreamer() %>'></aui:input>
-				 	        <aui:input label="Port" name="port" inlineField="true" value='<%= defaultHost.getPort() %>'></aui:input>
-				 	        <aui:input label="Protocol" name="protocol" inlineField="true" value='<%= defaultHost.getProtocol() %>'></aui:input>
-				 	        <aui:input label="Root Directory" name="serverroot" inlineField="true" value='<%= defaultHost.getServerRoot() %>'></aui:input>
+							<aui:input label="streaming-server-name" name="name" required="true" inlineField="true"></aui:input>
+				 	        <aui:input label="streaming-server-domain-or-ip" name="ip" inlineField="true" value='<%= defaultHost.getStreamer() %>'></aui:input>
+				 	        <aui:input label="port" name="port" inlineField="true" value='<%= defaultHost.getPort() %>'></aui:input>
+				 	        <aui:input label="protocol" name="protocol" inlineField="true" value='<%= defaultHost.getProtocol() %>'></aui:input>
+				 	       <%-- <aui:input label="root-directory" name="serverroot" inlineField="true" value='<%= defaultHost.getServerRoot() %>'></aui:input> --%>
 				 	        <aui:input name='hostId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "hostId") %>'/>
 				 	        <aui:button type="submit"></aui:button>
 							<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button>
@@ -240,19 +243,19 @@ Group Institution_Host Permissions:
 							
 							<%	if (Hosts.getDefaultHost() > 0) {
 							%>
-								<aui:input name="curStreamingServerName" label="StreamingServer Name" inlineField="true" value = "Default" />
+								<aui:input name="curStreamingServerName" label="streaming-server-name" inlineField="true" value = "Default" />
 								
 							<% }
 							else {
 							%>
 			
-								<aui:input name="curStreamingServerName" label="StreamingServer Name" inlineField="true" value = "<%= Hosts.getName() %>" />
+								<aui:input name="curStreamingServerName" label="streaming-server-name" inlineField="true" value = "<%= Hosts.getName() %>" />
 								
 							<%}%>
 							
-								<aui:input name="curStreamingServerIP" label="IP" inlineField="true" value = "<%= Hosts.getStreamer() %>" />				
-								<aui:input name="curStreamingServerPort" label="Port" inlineField="true" value = "<%= Hosts.getPort() %>" />
-								<aui:input name="curStreamingServerProtocol" label="Protocol" inlineField="true" value = "<%= Hosts.getProtocol() %>" />
+								<aui:input name="curStreamingServerIP" label="ip" inlineField="true" value = "<%= Hosts.getStreamer() %>" />				
+								<aui:input name="curStreamingServerPort" label="port" inlineField="true" value = "<%= Hosts.getPort() %>" />
+								<aui:input name="curStreamingServerProtocol" label="protocol" inlineField="true" value = "<%= Hosts.getProtocol() %>" />
 								
 								<%-- <aui:input name="curStreamingServerRoot" label="Root Directory" inlineField="true" disabled="true" value = "<%= Hosts.getServerRoot() %>" /> --%>
 								
@@ -261,10 +264,10 @@ Group Institution_Host Permissions:
 								<c:choose>
 								<%--DELETE --%>
 								<c:when test='<%= permissionChecker.hasPermission(groupId, hostModel, groupId, ActionKeys.DELETE) && HostLocalServiceUtil.getLockingElements(groupId, Hosts.getHostId()) < 1 && !(Hosts.getDefaultHost() > 0) %>'>
-									<aui:button name="delete" value="Löschen" type="button" href="<%=deleteStreamingServerURL.toString() %>" />
+									<aui:button name="delete" value="delete" type="button" href="<%=deleteStreamingServerURL.toString() %>" />
 								</c:when>
 								<c:otherwise>
-									<aui:button name="delete" value="Löschen" type="button" disabled="true" href="<%=deleteStreamingServerURL.toString() %>" />								
+									<aui:button name="delete" value="delete" type="button" disabled="true" href="<%=deleteStreamingServerURL.toString() %>" />								
 								</c:otherwise>
 								</c:choose>
 								</br>
@@ -325,13 +328,13 @@ Group Institution_Host Permissions:
 <%--Permission regarding concrete instance of element, namely Tree Root (not applicable as long as Resources are not migrated) --%>
 <c:choose>
 <c:when  test='<%= permissionChecker.hasPermission(groupId, institutionModel, groupId, "EDIT_TREE_ROOT") %>'>
-	<liferay-ui:panel title="Top Level Institution" collapsible="true" id="treeRootSettings"
+	<liferay-ui:panel title="top-level-institution" collapsible="true" id="treeRootSettings"
 					defaultState="closed"
 					extended="<%= false %>"
 					persistState="<%= true %>">
 	<aui:form action="<%= updateTreeRootURL %>" name="<portlet:namespace />fm">
 		<aui:fieldset>
-				<aui:input name="treeRoot" label="Top Level Institution" required="true" inlineField="true"  value = '<%= treeBase.getName() %>'/>
+				<aui:input name="treeRoot" label="top-level-institution" required="true" inlineField="true"  value = '<%= treeBase.getName() %>'/>
 				<aui:input name="treeRootId" type='hidden' inlineField="true" value = '<%= treeBase.getInstitutionId() %>'/>
 				<aui:button type="submit"></aui:button>
 				<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button>
@@ -349,17 +352,17 @@ Group Institution_Host Permissions:
 
 <%-- Permission on Portlet Scope --%>
 <c:if test='<%= !permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "VIEW_ALL_INSTITUTIONS") && permissionChecker.hasPermission(groupId, institutionModel, groupId, "ADD_SUB_INSTITUTION_ENTRY") && ownInstitutionId > 0 %>'>
-	<liferay-ui:panel title="Add Sub Institution" collapsible="true" id="subInstitutionSettings"
+	<liferay-ui:panel title="add-sub-institution" collapsible="true" id="subInstitutionSettings"
 					defaultState="open"
 					extended="<%= false %>"
 					persistState="<%= true %>">
 	<aui:form action="<%= addSubInstitutionURL %>" name="<portlet:namespace />fm">
 
 			<aui:fieldset>
-					<aui:input name="subInstitution" label="SubInstitution Name" inlineField="true" />
-					<aui:input name="subInstitutionOrder" label="Order" inlineField="true" value='<%= ownInstitutionMax  %>'/>
+					<aui:input name="subInstitution" label="sub-institution-name" inlineField="true" />
+					<aui:input name="subInstitutionOrder" label="order" inlineField="true" value='<%= ownInstitutionMax  %>'/>
 					<aui:input name='subInstitutionParentId' type='hidden' inlineField="true" value='<%= treeBase.getInstitutionId() %>'/>	
-					<aui:button type="submit" value="Add" ></aui:button>				
+					<aui:button type="submit" value="add" ></aui:button>				
 	        </aui:fieldset>
 	</aui:form>
 	</liferay-ui:panel>
@@ -394,7 +397,7 @@ deltaConfigurable="true">
  			String curParam_row = "curInner"+String.valueOf(institution.getInstitutionId());
  			long outerOrder = institution.getSort();
  			Host curHost = Institution_HostLocalServiceUtil.getByGroupIdAndInstitutionId(companyId, groupId, institution.getInstitutionId());
- 			String curHostName = "Default";
+ 			String curHostName = AdminInstitutionManagement.DEFAULT_STREAMER;
  			if (curHost != null && curHost.getDefaultHost() < 1 ) curHostName = curHost.getName();
 
  			
@@ -415,11 +418,11 @@ deltaConfigurable="true">
 
  		<aui:form action="<%= updateInstitutionURL %>" name="<portlet:namespace />fm">
  			<aui:fieldset>
-				<aui:input name="outerListInstitution" label="Institution Name" inlineField="true" value = "<%= institution.getName() %>" />
-				<aui:input name="outerListOrder" label="Order" inlineField="true" value='<%= institution.getSort() %>'/>
+				<aui:input name="outerListInstitution" label="institution-name" inlineField="true" value = "<%= institution.getName() %>" />
+				<aui:input name="outerListOrder" label="order" inlineField="true" value='<%= institution.getSort() %>'/>
 				<%-- Only display streamer if user is allowed to view host and institution is child of top level --%>
 				<c:if test='<%= permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "VIEW_HOSTS") && institution.getParentId() == rootId %>'>
-						<aui:input name="outerListStreamer" label="Streamer" inlineField="true" value = "<%= curHostName %>" disabled="true"/>
+						<aui:input name="outerListStreamer" label="streaming-server-name" inlineField="true" value = "<%= curHostName %>" disabled="true"/>
 				</c:if>
 				<aui:input name="outerListInstitutionId" type='hidden' inlineField="true" value = "<%= institution.getPrimaryKey() %>"/>
 				<aui:input name="outerListHostId" type='hidden' inlineField="true" value = "<%= curHost.getPrimaryKey() %>"/>
@@ -430,10 +433,10 @@ deltaConfigurable="true">
 				<c:if  test='<%= permissionChecker.hasPermission(groupId, institutionModel, groupId, "DELETE_INSTITUTIONS") %>'>
 					<c:choose>
 					<c:when test='<%=  InstitutionLocalServiceUtil.getLockingElements(institution.getInstitutionId()) < 1 %>'>
-								<aui:button name="delete" value="Löschen" type="button" href="<%=deleteInstitutionURL.toString() %>" />
+								<aui:button name="delete" value="delete" type="button" href="<%=deleteInstitutionURL.toString() %>" />
 					</c:when>
 					<c:otherwise>
-								<aui:button name="delete" value="Löschen" type="button" disabled="true" href="<%=deleteInstitutionURL.toString() %>" />								
+								<aui:button name="delete" value="delete" type="button" disabled="true" href="<%=deleteInstitutionURL.toString() %>" />								
 					</c:otherwise>
 					</c:choose>
 				</c:if>
@@ -450,14 +453,14 @@ deltaConfigurable="true">
 				extended="<%= false %>"
 				id="<%= id_row %>"
 				persistState="<%= true %>"
-				title="SubInstitutions" >
+				title="sub-institutions" >
 			<aui:form action="<%= addSubInstitutionURL %>" name="<portlet:namespace />fm">
 	 			<aui:fieldset>
-					<aui:input name="subInstitution" label="SubInstitution Name" inlineField="true" />
-					<aui:input name="subInstitutionOrder" label="Order" inlineField="true" value='<%= subInstitutionMax  %>'/>
+					<aui:input name="subInstitution" label="sub-institution-name" inlineField="true" />
+					<aui:input name="subInstitutionOrder" label="order" inlineField="true" value='<%= subInstitutionMax  %>'/>
 					<aui:input name='subInstitutionParentId' type='hidden' inlineField="true" value='<%= institution.getPrimaryKey() %>'/>
 					
-					<aui:button type="submit" value="Add"></aui:button>
+					<aui:button type="submit" value="add"></aui:button>
 				</aui:fieldset>
  			</aui:form>
 
@@ -489,17 +492,17 @@ deltaConfigurable="true">
 							</portlet:actionURL>
 							<aui:form action="<%= updateSubInstitutionURL %>" name="<portlet:namespace />fm">
 								<aui:fieldset>
-									<aui:input name="innerListInstitution" label="Institution Name" inlineField="true" value = "<%= subInstitution.getName() %>" />
-									<aui:input cssClass="smallInput" name="innerListOrder" label="Order" inlineField="true" value='<%= subInstitution.getSort() %>'/>
+									<aui:input name="innerListInstitution" label="sub-institution-name" inlineField="true" value = "<%= subInstitution.getName() %>" />
+									<aui:input cssClass="smallInput" name="innerListOrder" label="order" inlineField="true" value='<%= subInstitution.getSort() %>'/>
 									<aui:input name="innerListInstitutionId" type='hidden' inlineField="true" value = "<%= subInstitution.getInstitutionId() %>"/>
 									<aui:button type="submit"></aui:button>
 									<c:if  test='<%= permissionChecker.hasPermission(groupId, institutionModel, groupId, "DELETE_SUB_INSTITUTIONS") %>'>
 										<c:choose>
 											<c:when test='<%=  InstitutionLocalServiceUtil.getLockingElements(subInstitution.getInstitutionId()) < 1 %>'>
-													<aui:button name="delete" value="Löschen" type="button" href="<%=deleteSubInstitutionURL.toString() %>" />
+													<aui:button name="delete" value="delete" type="button" href="<%=deleteSubInstitutionURL.toString() %>" />
 											</c:when>
 											<c:otherwise>
-													<aui:button name="delete" value="Löschen" type="button" disabled="true" href="<%=deleteSubInstitutionURL.toString() %>" />								
+													<aui:button name="delete" value="delete" type="button" disabled="true" href="<%=deleteSubInstitutionURL.toString() %>" />								
 											</c:otherwise>
 										</c:choose>
 									</c:if>

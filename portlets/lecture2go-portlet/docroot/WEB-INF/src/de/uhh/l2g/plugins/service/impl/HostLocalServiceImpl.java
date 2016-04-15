@@ -33,6 +33,7 @@ import com.liferay.portal.service.ServiceContext;
 
 import de.uhh.l2g.plugins.HostNameException;
 import de.uhh.l2g.plugins.HostStreamerException;
+import de.uhh.l2g.plugins.admin.AdminInstitutionManagement;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.service.ClpSerializer;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
@@ -153,8 +154,8 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 		
 		Host defaultHost = hostPersistence.create(hostId);
 
-		//Empty name marks default
-		defaultHost.setName("");
+		
+		defaultHost.setName(AdminInstitutionManagement.DEFAULT_STREAMER);
 		defaultHost.setGroupId(groupId);
 		defaultHost.setCompanyId(companyId);
 		//Load from Portal Properties
@@ -184,7 +185,7 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 	}
 
 	public Host addHost(String name, String streamLocation, 
-			String protocol, String serverRoot, int port,
+			String protocol, int port,
 			ServiceContext serviceContext) throws SystemException, PortalException {
 
 		long groupId = serviceContext.getScopeGroupId();
