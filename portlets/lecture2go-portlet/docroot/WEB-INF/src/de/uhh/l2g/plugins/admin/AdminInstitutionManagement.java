@@ -16,8 +16,10 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
+import com.liferay.portal.model.Role;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.util.PortalUtil;
@@ -106,19 +108,23 @@ public class AdminInstitutionManagement extends MVCPortlet {
 			
 			
 			//Check if default Permissions are Set for this Context (requires L2G Roles)
-			//Delete L2Go Admin to trigger re-initialzation
-			
-			//TODO: More sophisticated Default 
-			PermissionManager pm = new PermissionManager(serviceContext);
-			ResourcePermission rp = pm.getPermissionforRole("L2Go Admin");
-			if (rp == null) {
-				setDefaultPermissions(pm);
-				//Now we can expect we do not have any defaults at all yet
-				isInitialized = false;
+			//Delete Permissions for admin from DB to reset
+			Role admin = RoleLocalServiceUtil.fetchRole(companyId, "L2Go Admin");
+			if (admin != null){
+				//TODO: More sophisticated Default 
+				PermissionManager pm = new PermissionManager(serviceContext);
+				ResourcePermission rp = pm.getPermissionforRole("L2Go Admin");
+				if (rp == null) {
+					setDefaultPermissions(pm);
+					//Now we can expect we don't have any defaults at all yet
+					isInitialized = false;
+				}
+			}else {
+				SessionErrors.add(renderRequest,"no-roles-error");
 			}
 
 			//Initialize if needed
-			if (isInitialized  == false) {
+			if (isInitialized  == false || admin == null) {
 		 
 				    HostLocalServiceUtil.updateCounter();
 				    Institution_HostLocalServiceUtil.updateCounter();

@@ -13,7 +13,9 @@
 <%!com.liferay.portal.kernel.dao.search.SearchContainer<Institution> searchSubInstitutionContainer = null;%>
 <%!com.liferay.portal.kernel.dao.search.SearchContainer<Host> searchHostContainer = null;%>
 
+<liferay-ui:success key="success" message="saved-successfully"/>
 <liferay-ui:error key="host-or-institution-error" message="host-or-institution-error"/>
+<liferay-ui:error key="no-roles-error" message="roles-not-configured" />
 
 <portlet:renderURL var="viewURL"><portlet:param name="jspPage" value="/admin/institutionList.jsp" /></portlet:renderURL>
 <liferay-portlet:renderURL varImpl="outerURL"><portlet:param name="jspPage" value="/admin/institutionList.jsp" /></liferay-portlet:renderURL>
@@ -52,11 +54,20 @@ String institutionModel = Institution.class.getName();
 String hostModel = Host.class.getName();
 String institutionHostModel = Institution_Host.class.getName();
 
+
 //RoleIds
-long adminRoleId = RoleLocalServiceUtil.getRole(companyId, "L2Go Admin").getRoleId();
-long coordinatorRoleId = RoleLocalServiceUtil.getRole(companyId, "L2Go Coordinator").getRoleId();
-long producerRoleId = RoleLocalServiceUtil.getRole(companyId, "L2Go Producer").getRoleId();
-long studentRoleId = RoleLocalServiceUtil.getRole(companyId, "L2Go Student").getRoleId();
+		long adminRoleId = 0;
+		long coordinatorRoleId = 0;
+		long producerRoleId = 0;
+		long studentRoleId = 0; 
+Role admin = RoleLocalServiceUtil.fetchRole(companyId, "L2Go Admin");
+	if (admin != null){
+		adminRoleId = RoleLocalServiceUtil.getRole(companyId, "L2Go Admin").getRoleId();
+		coordinatorRoleId = RoleLocalServiceUtil.getRole(companyId, "L2Go Coordinator").getRoleId();
+		producerRoleId = RoleLocalServiceUtil.getRole(companyId, "L2Go Producer").getRoleId();
+		studentRoleId = RoleLocalServiceUtil.getRole(companyId, "L2Go Student").getRoleId();
+	}
+	
 
 %>
 

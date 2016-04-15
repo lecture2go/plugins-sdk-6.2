@@ -148,7 +148,7 @@ private ServiceContext context;
     	 try{
   	    	role = RoleLocalServiceUtil.getRole(context.getCompanyId(), roleName);
  		} catch (PortalException e) {
- 			System.out.println("Could not retieve Role "+roleName+" ");
+ 			System.out.println("Could not retrieve Role "+roleName+". Please, make sure that User Managemt Portlet has been initilized.");
  			e.printStackTrace();
  		}   	   		
     	 ResourcePermission rp = ResourcePermissionLocalServiceUtil.fetchResourcePermission(context.getCompanyId(), pId, ResourceConstants.SCOPE_GROUP, String.valueOf(context.getScopeGroupId()), role.getRoleId());   	
