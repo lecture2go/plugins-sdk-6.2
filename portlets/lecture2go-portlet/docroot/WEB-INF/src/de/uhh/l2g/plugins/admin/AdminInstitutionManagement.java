@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
@@ -45,46 +46,46 @@ public class AdminInstitutionManagement extends MVCPortlet {
 	private void setDefaultPermissions(PermissionManager pm) throws SystemException, PortalException{
 		
 		//Remove view permission for Guest and edit for ordinary Site Members
-		pm.removeL2GLayoutViewPermission("Guest");
-		pm.removeL2GLayoutPermissions("Site Member", new String[] { ActionKeys.VIEW, ActionKeys.ADD_DISCUSSION, ActionKeys.CUSTOMIZE });
+		pm.removeL2GLayoutViewPermission(RoleConstants.GUEST);
+		pm.removeL2GLayoutPermissions(RoleConstants.SITE_MEMBER, new String[] { ActionKeys.VIEW, ActionKeys.ADD_DISCUSSION, ActionKeys.CUSTOMIZE });
 				
 		//Remove Advanced Permissions for Owner (Owner should be Administrator anyway)
-		pm.removeL2GLayoutPermissions("Owner", new String[] { ActionKeys.CUSTOMIZE, ActionKeys.PERMISSIONS });
+		pm.removeL2GLayoutPermissions(RoleConstants.OWNER, new String[] { ActionKeys.CUSTOMIZE, ActionKeys.PERMISSIONS });
 		
 		//Allow View Permission for higher L2GRoles
-		pm.setL2GLayoutViewPermission("L2Go Admin");
-		pm.setL2GLayoutViewPermission("L2Go Coordinator");
+		pm.setL2GLayoutViewPermission(AdminUserManagement.L2G_ADMIN);
+		pm.setL2GLayoutViewPermission(AdminUserManagement.L2G_COORDINATOR);
 		
 		//Allow almost all Portlet operations for L2Go admin
-		pm.setL2GPortletPermissions("L2Go Admin",  new String[] {ActionKeys.VIEW, "VIEW_ALL_INSTITUTIONS", "VIEW_HOSTS", "ADD_INSTITUTIONS"});		
-		pm.setL2GPortletPermissions("L2Go Coordinator", ActionKeys.VIEW);
+		pm.setL2GPortletPermissions(AdminUserManagement.L2G_ADMIN,  new String[] {ActionKeys.VIEW, "VIEW_ALL_INSTITUTIONS", "VIEW_HOSTS", "ADD_INSTITUTIONS"});		
+		pm.setL2GPortletPermissions(AdminUserManagement.L2G_COORDINATOR, ActionKeys.VIEW);
 		// Remove for normal Member
-		pm.removeL2GPortletPermissions("Site Member", ActionKeys.VIEW);
+		pm.removeL2GPortletPermissions(RoleConstants.SITE_MEMBER, ActionKeys.VIEW);
 		// Remove for Owner
-		pm.removeL2GPortletPermissions("Owner",  new String[] {"VIEW_ALL_INSTITUTIONS", "VIEW_HOSTS", "ADD_INSTITUTIONS"});
+		pm.removeL2GPortletPermissions(RoleConstants.OWNER,  new String[] {"VIEW_ALL_INSTITUTIONS", "VIEW_HOSTS", "ADD_INSTITUTIONS"});
 		
 		//Entities on Model Level 
-		pm.removeL2GEntityPermissions("Site Member", Institution.class.getName(), new String[] { ActionKeys.VIEW});
-		pm.removeL2GEntityPermissions("Site Member", Institution_Host.class.getName(), new String[] { ActionKeys.VIEW});
-		pm.removeL2GEntityPermissions("Site Member", Host.class.getName(), new String[] { ActionKeys.VIEW });
+		pm.removeL2GEntityPermissions(RoleConstants.SITE_MEMBER, Institution.class.getName(), new String[] { ActionKeys.VIEW});
+		pm.removeL2GEntityPermissions(RoleConstants.SITE_MEMBER, Institution_Host.class.getName(), new String[] { ActionKeys.VIEW});
+		pm.removeL2GEntityPermissions(RoleConstants.SITE_MEMBER, Host.class.getName(), new String[] { ActionKeys.VIEW });
 		
-		pm.setL2GEntityPermissions("L2Go Admin", Institution.class.getName(), new String[] {ActionKeys.VIEW, "ADD_SUB_INSTITUTION_ENTRY", "ADD_HOSTS", "EDIT_HOSTS", "EDIT_ALL_INSTITUTIONS" ,"EDIT_OWN_INSTITUTIONS" ,"DELETE_INSTITUTIONS", "DELETE_SUB_INSTITUTIONS", "ADD_SUB_INSTITUTION_ENTRY"});
-		pm.setL2GEntityPermissions("L2Go Coordinator", Institution.class.getName(), new String[] {ActionKeys.VIEW, "ADD_SUB_INSTITUTION_ENTRY","EDIT_OWN_INSTITUTIONS", "DELETE_SUB_INSTITUTIONS", "ADD_SUB_INSTITUTION_ENTRY"});
+		pm.setL2GEntityPermissions(AdminUserManagement.L2G_ADMIN, Institution.class.getName(), new String[] {ActionKeys.VIEW, "ADD_SUB_INSTITUTION_ENTRY", "ADD_HOSTS", "EDIT_HOSTS", "EDIT_ALL_INSTITUTIONS" ,"EDIT_OWN_INSTITUTIONS" ,"DELETE_INSTITUTIONS", "DELETE_SUB_INSTITUTIONS", "ADD_SUB_INSTITUTION_ENTRY"});
+		pm.setL2GEntityPermissions(AdminUserManagement.L2G_COORDINATOR, Institution.class.getName(), new String[] {ActionKeys.VIEW, "ADD_SUB_INSTITUTION_ENTRY","EDIT_OWN_INSTITUTIONS", "DELETE_SUB_INSTITUTIONS", "ADD_SUB_INSTITUTION_ENTRY"});
 		//
-		pm.setL2GEntityViewPermissions("L2Go Producer", Institution.class.getName());
-		pm.setL2GEntityViewPermissions("L2Go Student", Institution.class.getName());
+		pm.setL2GEntityViewPermissions(AdminUserManagement.L2G_PRODUCER, Institution.class.getName());
+		pm.setL2GEntityViewPermissions(AdminUserManagement.L2G_STUDENT, Institution.class.getName());
 		
-		pm.setL2GEntityPermissions("L2Go Admin", Institution_Host.class.getName(), new String[] {ActionKeys.VIEW, ActionKeys.DELETE, "ADD_LINK"});
-		pm.setL2GEntityViewPermissions("L2Go Coordinator", Institution_Host.class.getName());
+		pm.setL2GEntityPermissions(AdminUserManagement.L2G_ADMIN, Institution_Host.class.getName(), new String[] {ActionKeys.VIEW, ActionKeys.DELETE, "ADD_LINK"});
+		pm.setL2GEntityViewPermissions(AdminUserManagement.L2G_COORDINATOR, Institution_Host.class.getName());
 		
-		pm.setL2GEntityViewPermissions("L2Go Producer", Institution_Host.class.getName());
-		pm.setL2GEntityViewPermissions("L2Go Student", Institution_Host.class.getName());
+		pm.setL2GEntityViewPermissions(AdminUserManagement.L2G_PRODUCER, Institution_Host.class.getName());
+		pm.setL2GEntityViewPermissions(AdminUserManagement.L2G_STUDENT, Institution_Host.class.getName());
 		
-		pm.setL2GEntityPermissions("L2Go Admin", Host.class.getName(), new String[] {ActionKeys.VIEW, ActionKeys.UPDATE, ActionKeys.DELETE, "ADD_HOST", "EDIT_HOST"});
-		pm.setL2GEntityPermissions("L2Go Coordinator", Host.class.getName(), new String[] {ActionKeys.VIEW});
+		pm.setL2GEntityPermissions(AdminUserManagement.L2G_ADMIN, Host.class.getName(), new String[] {ActionKeys.VIEW, ActionKeys.UPDATE, ActionKeys.DELETE, "ADD_HOST", "EDIT_HOST"});
+		pm.setL2GEntityPermissions(AdminUserManagement.L2G_COORDINATOR, Host.class.getName(), new String[] {ActionKeys.VIEW});
 		
-		pm.setL2GEntityViewPermissions("L2Go Producer", Host.class.getName());
-		pm.setL2GEntityViewPermissions("L2Go Student", Host.class.getName());
+		pm.setL2GEntityViewPermissions(AdminUserManagement.L2G_PRODUCER, Host.class.getName());
+		pm.setL2GEntityViewPermissions(AdminUserManagement.L2G_STUDENT, Host.class.getName());
 				
 	}
 	
@@ -109,11 +110,11 @@ public class AdminInstitutionManagement extends MVCPortlet {
 			
 			//Check if default Permissions are Set for this Context (requires L2G Roles)
 			//Delete Permissions for admin from DB to reset
-			Role admin = RoleLocalServiceUtil.fetchRole(companyId, "L2Go Admin");
+			Role admin = RoleLocalServiceUtil.fetchRole(companyId, AdminUserManagement.L2G_ADMIN);
 			if (admin != null){
 				//TODO: More sophisticated Default 
 				PermissionManager pm = new PermissionManager(serviceContext);
-				ResourcePermission rp = pm.getPermissionforRole("L2Go Admin");
+				ResourcePermission rp = pm.getPermissionforRole(AdminUserManagement.L2G_ADMIN);
 				if (rp == null) {
 					setDefaultPermissions(pm);
 					//Now we can expect we don't have any defaults at all yet
