@@ -100,13 +100,13 @@ public class AdminInstitutionManagement extends MVCPortlet {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			         Institution.class.getName(), renderRequest);
 
-			//was this portlet allready initialized with default values?
+			//was this portlet allready initialized with default values? True fo a fully insatlled system
 			boolean isInitialized = true;
 			
 			long groupId = serviceContext.getScopeGroupId();
 			long companyId = serviceContext.getCompanyId();
 			
-			//System.out.println(serviceContext.getPlid()+" "+serviceContext.getPortletId()+" ");
+			LOG.debug("plid "+serviceContext.getPlid()+", portletId "+serviceContext.getPortletId()+" ");
 			
 			long institutionId = ParamUtil.getLong(renderRequest, "institutionId");
 			long hostId = ParamUtil.getLong(renderRequest, "hostId");
@@ -114,6 +114,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 			
 			//Check if default Permissions are Set for this Context (requires L2G Roles)
 			//Delete Permissions for admin from DB to reset
+			LOG.debug("Initialize Permissions");
 			Role admin = RoleLocalServiceUtil.fetchRole(companyId, AdminUserManagement.L2G_ADMIN);
 			if (admin != null){
 				//TODO: More sophisticated Default 
@@ -125,24 +126,27 @@ public class AdminInstitutionManagement extends MVCPortlet {
 					isInitialized = false;
 				}
 			}else {
+				isInitialized = false;
 				SessionErrors.add(renderRequest,"no-roles-error");
 			}
-
+			
 			//Initialize if needed
+			LOG.debug("Initialize Service Builder Tables" +isInitialized);
 			if (isInitialized  == false || admin == null) {
 		 
 				    HostLocalServiceUtil.updateCounter();
 				    Institution_HostLocalServiceUtil.updateCounter();
 				    InstitutionLocalServiceUtil.updateCounter();
 				    
+				    LOG.debug("Updated Counter values!");
 				    //Add default host if empty or default entry does not exist
 				    long defaultHostId = HostLocalServiceUtil.getDefaultHostId(companyId,groupId);
-				    //System.out.println("Default Host: "+defaultHostId);
+				    LOG.debug("Default Host: "+defaultHostId);
 				    if (defaultHostId == 0) defaultHostId = HostLocalServiceUtil.addDefaultHost(serviceContext).getHostId();
 		
 				    //new Tree Root for Institution if empty
 				    long defaultInstitutionId = InstitutionLocalServiceUtil.getDefaultInstitutionId(companyId,groupId);
-				    //System.out.println("Default Institution: "+defaultInstitutionId);
+				    LOG.debug("Default Institution: "+defaultInstitutionId);
 				    
 				    if (defaultInstitutionId == 0) {
 				    	defaultInstitutionId = InstitutionLocalServiceUtil.addDefaultInstitution(serviceContext).getInstitutionId();
@@ -152,29 +156,33 @@ public class AdminInstitutionManagement extends MVCPortlet {
 				    if (defaultInstitutionHostId == 0) {		  
 				       defaultInstitutionHostId = Institution_HostLocalServiceUtil.addDefaultInstitutionHost(defaultInstitutionId,defaultHostId,serviceContext);
 				    }
-				    	//System.out.println("Default Institution_Host: "+defaultInstitutionHostId);		
+				    LOG.debug("Default Institution_Host: "+defaultInstitutionHostId);
+				    	
 			}
 		    
-
+				
 		    List<Institution> institutions = InstitutionLocalServiceUtil.getByGroupId(groupId);
 		    List<Institution_Host> institution_host = Institution_HostLocalServiceUtil.getByGroupId(groupId);
 		    List<Host> host = HostLocalServiceUtil.getByGroupId(groupId);
 
 		    if (!(institutionId > 0)) {
-		    	institutionId = institutions.get(0).getInstitutionId();
+		    	institutionId = 0;
+		    	//institutionId = institutions.get(0).getInstitutionId();
 	        }
 		    if (!(hostId > 0)) {
 		    	hostId = 0;
 	        }
-		    
+	    
 		    renderRequest.setAttribute("institutionId", institutionId);
 		    renderRequest.setAttribute("hostId", hostId);
 
-		    } catch (Exception e) {
+		    } 
+			catch (Exception e) {
+		    	SessionErrors.add(renderRequest, e.getClass().getName());
 		    	LOG.error("Failed rendering "+AdminInstitutionManagement.class.getName(), e);
 		    	throw new PortletException(e);
 		    }
-
+            
 		super.render(renderRequest, renderResponse);
 
 

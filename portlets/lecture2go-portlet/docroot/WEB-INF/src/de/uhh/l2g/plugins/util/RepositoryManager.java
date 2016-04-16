@@ -42,6 +42,8 @@ import com.liferay.counter.model.Counter;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import de.uhh.l2g.plugins.model.Host;
@@ -52,6 +54,7 @@ import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 
 public class RepositoryManager {
 	
+	private static final Log LOG = LogFactoryUtil.getLog(RepositoryManager.class.getName());
 	//get runtime
 	/** The run cmd. */
 	static Runtime runCmd = Runtime.getRuntime();
@@ -65,15 +68,24 @@ public class RepositoryManager {
 	public static void createFolder(String path) throws IOException{
 		File folder = new File(path);
 		String shell = PropsUtil.get("lecture2go.shell.bin");
-		if (shell == null) shell ="bash";
-		//TODO: Props Util guide
-		if(folder.mkdirs()){
-			String[] cmdArray = {shell, "-cr", "chown nobody " + folder.getAbsolutePath() };
-			runCmd.exec(cmdArray);
-			String[] cmdArray1 = {shell, "-cr", "chown nobody:nobody " + folder.getAbsolutePath() };
-			runCmd.exec(cmdArray1);
-			String[] cmdArray2 =  {shell, "-cr", "chmod 701 " + folder.getAbsolutePath() };
-			runCmd.exec(cmdArray2);
+		if (shell == null) {
+			LOG.error("Shell not configured! Check paramter lecture2go.shell.bin in your portal properties");
+		}
+		else {
+		String OS = System.getProperty("os.name");
+		if (!OS.startsWith("Windows")){
+				if(folder.mkdirs()){
+					String[] cmdArray = {shell, "-cr", "chown nobody " + folder.getAbsolutePath() };
+					runCmd.exec(cmdArray);
+					String[] cmdArray1 = {shell, "-cr", "chown nobody:nobody " + folder.getAbsolutePath() };
+					runCmd.exec(cmdArray1);
+					String[] cmdArray2 =  {shell, "-cr", "chmod 701 " + folder.getAbsolutePath() };
+					runCmd.exec(cmdArray2);
+				}
+			}
+			else{
+				LOG.warn("Directory settings not supported by Operating System");
+			}
 		}
 	}
 	
