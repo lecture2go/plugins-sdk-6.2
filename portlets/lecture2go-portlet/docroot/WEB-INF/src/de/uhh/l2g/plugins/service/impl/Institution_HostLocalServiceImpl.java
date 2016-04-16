@@ -272,7 +272,7 @@ public class Institution_HostLocalServiceImpl
 		        return institution_Host;
 
 		    }
-	   public Institution_Host updateCounter() throws SystemException, PortalException {
+	   public long updateCounter() throws SystemException, PortalException {
 		   Counter counter;
 	   			// Initialize counter with a default value liferay suggests
 				CounterLocalServiceUtil.increment(Institution_Host.class.getName());
@@ -283,12 +283,13 @@ public class Institution_HostLocalServiceImpl
 				DynamicQuery query = DynamicQueryFactoryUtil.forClass(Institution_Host.class,classLoader).addOrder(OrderFactoryUtil.desc("institutionHostId"));
 				query.setLimit(0,1);
 				List<Institution_Host> institution_hosts = Institution_HostLocalServiceUtil.dynamicQuery(query);
-				Institution_Host institution_host = institution_hosts.get(0);
+				long institution_hostId = 0;
+				if(institution_hosts.size() > 0) institution_hostId = institution_hosts.get(0).getInstitutionHostId();
 				
 				//write Counter
-				if (institution_host != null) counter.setCurrentId(institution_host.getInstitutionHostId());
+				if (institution_hostId > 0) counter.setCurrentId(institution_hostId);
 				CounterLocalServiceUtil.updateCounter(counter);
-				return institution_host;
+				return institution_hostId;
 					
 		   
 	   }

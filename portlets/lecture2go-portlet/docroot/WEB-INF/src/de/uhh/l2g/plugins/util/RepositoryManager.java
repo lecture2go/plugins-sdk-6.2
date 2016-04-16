@@ -64,12 +64,15 @@ public class RepositoryManager {
 	 */
 	public static void createFolder(String path) throws IOException{
 		File folder = new File(path);
+		String shell = PropsUtil.get("lecture2go.shell.bin");
+		if (shell == null) shell ="bash";
+		//TODO: Props Util guide
 		if(folder.mkdirs()){
-			String[] cmdArray = {PropsUtil.get("lecture2go.shell.bin"), "-cr", "chown nobody " + folder.getAbsolutePath() };
+			String[] cmdArray = {shell, "-cr", "chown nobody " + folder.getAbsolutePath() };
 			runCmd.exec(cmdArray);
-			String[] cmdArray1 = { PropsUtil.get("lecture2go.shell.bin"), "-cr", "chown nobody:nobody " + folder.getAbsolutePath() };
+			String[] cmdArray1 = {shell, "-cr", "chown nobody:nobody " + folder.getAbsolutePath() };
 			runCmd.exec(cmdArray1);
-			String[] cmdArray2 = { PropsUtil.get("lecture2go.shell.bin"), "-cr", "chmod 701 " + folder.getAbsolutePath() };
+			String[] cmdArray2 =  {shell, "-cr", "chmod 701 " + folder.getAbsolutePath() };
 			runCmd.exec(cmdArray2);
 		}
 	}
@@ -200,6 +203,7 @@ public class RepositoryManager {
 	 */
 	public static String prepareServerRoot(long hostId){
 		String base = PropsUtil.get("lecture2go.default.serverRoot");
+		if (base == null || base.isEmpty()) return "";
 		
 		String[] segs = base.split(Pattern.quote( "_" ) );
 

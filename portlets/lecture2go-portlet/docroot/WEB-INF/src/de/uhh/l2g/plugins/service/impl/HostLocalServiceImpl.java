@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceConstants;
@@ -159,10 +160,10 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 		defaultHost.setGroupId(groupId);
 		defaultHost.setCompanyId(companyId);
 		//Load from Portal Properties
-		defaultHost.setStreamer(PropsUtil.get("lecture2go.default.streamingHost"));
-		defaultHost.setProtocol(PropsUtil.get("lecture2go.default.streamingProtocol"));
-		defaultHost.setServerRoot(PropsUtil.get("lecture2go.default.serverRoot"));
-		defaultHost.setPort(Integer.valueOf(PropsUtil.get("lecture2go.default.streamingPort")));
+		defaultHost.setStreamer(GetterUtil.getString(PropsUtil.get("lecture2go.default.streamingHost")));
+		defaultHost.setProtocol(GetterUtil.getString(PropsUtil.get("lecture2go.default.streamingProtocol")));
+		defaultHost.setServerRoot(GetterUtil.getString(PropsUtil.get("lecture2go.default.serverRoot")));
+		defaultHost.setPort(Integer.valueOf(GetterUtil.getInteger(PropsUtil.get("lecture2go.default.streamingPort"))));
 		defaultHost.setDefaultHost(1);
 		
 		defaultHost.setExpandoBridgeAttributes(serviceContext);
@@ -289,7 +290,7 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 
 		    }
 	   
-	   public Host updateCounter() throws SystemException, PortalException {
+	   public long updateCounter() throws SystemException, PortalException {
 		   Counter counter;
 	   			// Initialize counter with a default value liferay suggests
 				CounterLocalServiceUtil.increment(Host.class.getName());
@@ -300,15 +301,16 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 				DynamicQuery query = DynamicQueryFactoryUtil.forClass(Host.class,classLoader).addOrder(OrderFactoryUtil.desc("hostId"));
 				query.setLimit(0,1);
 				List<Host> hosts = HostLocalServiceUtil.dynamicQuery(query);
-				Host host = hosts.get(0);
+				long hostId = 0;
+				if (hosts.size() > 0) hostId = hosts.get(0).getHostId();
 				
 				//Check back with real directory
-				long newHostId = java.lang.Math.max(RepositoryManager.getMaximumRealServerRootId(),host.getHostId());
+				long newHostId = java.lang.Math.max(RepositoryManager.getMaximumRealServerRootId(),hostId);
 				//write Counter
-				if (host != null) counter.setCurrentId(newHostId);
+				counter.setCurrentId(newHostId);
 				CounterLocalServiceUtil.updateCounter(counter);
 				
-				return host;
+				return newHostId;
 					
 		   
 	   }
