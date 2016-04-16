@@ -28,6 +28,7 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
+import de.uhh.l2g.plugins.NoPropertyException;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Institution_Host;
@@ -129,35 +130,38 @@ public class AdminInstitutionManagement extends MVCPortlet {
 				isInitialized = false;
 				SessionErrors.add(renderRequest,"no-roles-error");
 			}
-			
+		    
 			//Initialize if needed
-			LOG.debug("Initialize Service Builder Tables" +isInitialized);
-			if (isInitialized  == false || admin == null) {
-		 
-				    HostLocalServiceUtil.updateCounter();
-				    Institution_HostLocalServiceUtil.updateCounter();
-				    InstitutionLocalServiceUtil.updateCounter();
-				    
-				    LOG.debug("Updated Counter values!");
-				    //Add default host if empty or default entry does not exist
-				    long defaultHostId = HostLocalServiceUtil.getDefaultHostId(companyId,groupId);
-				    LOG.debug("Default Host: "+defaultHostId);
-				    if (defaultHostId == 0) defaultHostId = HostLocalServiceUtil.addDefaultHost(serviceContext).getHostId();
+			LOG.info("Initialize Service Builder Tables beacause initialized is " +isInitialized);
+			if (isInitialized  == false) {
 		
-				    //new Tree Root for Institution if empty
-				    long defaultInstitutionId = InstitutionLocalServiceUtil.getDefaultInstitutionId(companyId,groupId);
-				    LOG.debug("Default Institution: "+defaultInstitutionId);
-				    
-				    if (defaultInstitutionId == 0) {
-				    	defaultInstitutionId = InstitutionLocalServiceUtil.addDefaultInstitution(serviceContext).getInstitutionId();
-				    }			    	
-					//Add default Link for Top Level if not exists (non functional for analogy - relies on institution having exactly one fixed host)
-				    long defaultInstitutionHostId = Institution_HostLocalServiceUtil.getDefaultInstitutionHostId(companyId,groupId);
-				    if (defaultInstitutionHostId == 0) {		  
-				       defaultInstitutionHostId = Institution_HostLocalServiceUtil.addDefaultInstitutionHost(defaultInstitutionId,defaultHostId,serviceContext);
-				    }
-				    LOG.debug("Default Institution_Host: "+defaultInstitutionHostId);
-				    	
+				    LOG.debug("Updating Counter values!");
+				    long cIH =Institution_HostLocalServiceUtil.updateCounter();
+					long cH = HostLocalServiceUtil.updateCounter();
+					long cI = InstitutionLocalServiceUtil.updateCounter();
+									    
+					//
+					if (cIH == 0 || cH==0 || cI == 0){
+						
+					    //Add default host if empty or default entry does not exist
+					    long defaultHostId = HostLocalServiceUtil.getDefaultHostId(companyId,groupId);
+					    LOG.debug("Default Host: "+defaultHostId);
+					    if (defaultHostId == 0) defaultHostId = HostLocalServiceUtil.addDefaultHost(serviceContext).getHostId();
+			
+					    //new Tree Root for Institution if empty
+					    long defaultInstitutionId = InstitutionLocalServiceUtil.getDefaultInstitutionId(companyId,groupId);
+					    LOG.debug("Default Institution: "+defaultInstitutionId);
+					    
+					    if (defaultInstitutionId == 0) {
+					    	defaultInstitutionId = InstitutionLocalServiceUtil.addDefaultInstitution(serviceContext).getInstitutionId();
+					    }			    	
+						//Add default Link for Top Level if not exists (non functional for analogy - relies on institution having exactly one fixed host)
+					    long defaultInstitutionHostId = Institution_HostLocalServiceUtil.getDefaultInstitutionHostId(companyId,groupId);
+					    if (defaultInstitutionHostId == 0) {		  
+					       defaultInstitutionHostId = Institution_HostLocalServiceUtil.addDefaultInstitutionHost(defaultInstitutionId,defaultHostId,serviceContext);
+					    }
+					    LOG.debug("Default Institution_Host: "+defaultInstitutionHostId);
+					}	
 			}
 		    
 				
@@ -176,7 +180,12 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		    renderRequest.setAttribute("institutionId", institutionId);
 		    renderRequest.setAttribute("hostId", hostId);
 
-		    } 
+		    }
+		    catch (NoPropertyException e) {
+		    	SessionErrors.add(renderRequest, "no-property-error");
+		    	LOG.error("Failed retrieving crucial settings from portal properties", e);
+		    	throw new PortletException(e);
+		    }
 			catch (Exception e) {
 		    	SessionErrors.add(renderRequest, e.getClass().getName());
 		    	LOG.error("Failed rendering "+AdminInstitutionManagement.class.getName(), e);
@@ -206,7 +215,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 	         SessionMessages.add(request, "request_processed", "institution-entry-added");
 
-	        // response.setRenderParameter("institutionId", Long.toString(institutionId));
+	       //response.setRenderParameter("institutionId", Long.toString(institutionId));
 
 	       } catch (Exception e) {
 	         SessionErrors.add(request, e.getClass().getName());
@@ -239,7 +248,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 	         SessionMessages.add(request, "request_processed", "subinstitution-entry-added");
 
-	        // response.setRenderParameter("institutionId", Long.toString(institutionId));
+	        //response.setRenderParameter("institutionId", Long.toString(institutionId));
 
 	       } catch (Exception e) {
 	         SessionErrors.add(request, e.getClass().getName());
@@ -268,8 +277,8 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 			SessionMessages.add(request,"request_processed", "tree-root-entry-updated");
 
-			// response.setRenderParameter("mvcPath",
-		     //         "/admin/institutionList.jsp");
+			response.setRenderParameter("mvcPath",
+		              "/admin/institutionList.jsp");
 
 		} catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
@@ -299,7 +308,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 				SessionMessages.add(request, "request_processed", "institution-entry-updated");
 
 				// response.setRenderParameter("mvcPath",
-			     //         "/admin/institutionList.jsp");
+			    //         "/admin/institutionList.jsp");
 
 			} catch (Exception e) {
 				SessionErrors.add(request, e.getClass().getName());

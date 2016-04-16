@@ -37,6 +37,7 @@ import com.liferay.portal.service.ServiceContext;
 
 import de.uhh.l2g.plugins.HostNameException;
 import de.uhh.l2g.plugins.HostStreamerException;
+import de.uhh.l2g.plugins.NoPropertyException;
 import de.uhh.l2g.plugins.admin.AdminInstitutionManagement;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.service.ClpSerializer;
@@ -179,7 +180,7 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
         }
         if (protocol.isEmpty()) {
         	protocol = SYS_PROTOCOL;
-        	LOG.error("Portal property lecture2go.default.streamingProtocol not set. Using System dafault!");
+        	LOG.error("Portal property lecture2go.default.streamingProtocol not set. Using System default!");
         }
         if (serverRoot.isEmpty()){
         	serverRoot = SYS_ROOT;
@@ -187,7 +188,7 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
         }
         if (port == 0){
         	port = SYS_PORT;
-        	LOG.error("Portal property lecture2go.default.streamingPort not set. Using System deafult!");
+        	LOG.error("Portal property lecture2go.default.streamingPort not set. Using System default!");
         }
 		defaultHost.setStreamer(streamer);
 		defaultHost.setProtocol(protocol);
@@ -199,13 +200,18 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 
 		hostPersistence.update(defaultHost);
 		
-		
-		try {
-			
+		String repository = GetterUtil.getString(PropsUtil.get("lecture2go.media.repository"));
+		if (repository.isEmpty()) {
+			LOG.error("Portal property lecture2go.media.repository not set. This must be set before installation!");
+			throw new NoPropertyException();
+		}
+		try {	
 			RepositoryManager.createFolder(PropsUtil.get("lecture2go.media.repository")+"/"+ defaultHost.getServerRoot());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} 
+		catch (NoPropertyException e) {
+			LOG.error("System property not configured!", e);
+		}catch (IOException e) {
+			LOG.error("Folder creation failed!", e);
 		}
 
 		resourceLocalService.addResources(user.getCompanyId(), groupId, userId,

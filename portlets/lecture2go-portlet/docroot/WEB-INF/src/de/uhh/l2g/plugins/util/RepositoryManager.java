@@ -44,8 +44,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 
+import de.uhh.l2g.plugins.NoPropertyException;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
@@ -59,22 +61,29 @@ public class RepositoryManager {
 	/** The run cmd. */
 	static Runtime runCmd = Runtime.getRuntime();
 	
+    public static final String SYS_ROOT = "lg_0000";
+    public static final String SYS_SERVER = "localhost";
+    public static final String SYS_PROTOCOL = "http";
+    public static final int SYS_PORT = 80;
+	
 	/**
 	 * Creates the folder.
 	 *
 	 * @param path the path
 	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws PortalException 
 	 */
 	public static void createFolder(String path) throws IOException{
 		File folder = new File(path);
-		String shell = PropsUtil.get("lecture2go.shell.bin");
-		if (shell == null) {
-			LOG.error("Shell not configured! Check paramter lecture2go.shell.bin in your portal properties");
-		}
-		else {
+		String shell = GetterUtil.getString(PropsUtil.get("lecture2go.shell.bin"));
 		String OS = System.getProperty("os.name");
 		if (!OS.startsWith("Windows")){
-				if(folder.mkdirs()){
+			if (shell == null) {
+				folder.mkdirs();
+				LOG.error("Shell not configured! Check paramter lecture2go.shell.bin in your portal properties");
+			}
+			else {
+				if(folder.mkdirs()){}
 					String[] cmdArray = {shell, "-cr", "chown nobody " + folder.getAbsolutePath() };
 					runCmd.exec(cmdArray);
 					String[] cmdArray1 = {shell, "-cr", "chown nobody:nobody " + folder.getAbsolutePath() };
@@ -83,10 +92,11 @@ public class RepositoryManager {
 					runCmd.exec(cmdArray2);
 				}
 			}
-			else{
-				LOG.warn("Directory settings not supported by Operating System");
-			}
+		else{
+			folder.mkdirs();
+			LOG.warn("Security settings not supported by Operating System");
 		}
+		
 	}
 	
 	/**
@@ -214,7 +224,7 @@ public class RepositoryManager {
 	 * @return the directory name
 	 */
 	public static String prepareServerRoot(long hostId){
-		String base = PropsUtil.get("lecture2go.default.serverRoot");
+		String base = GetterUtil.getString(PropsUtil.get("lecture2go.default.serverRoot"),SYS_ROOT);
 		if (base == null || base.isEmpty()) return "";
 		
 		String[] segs = base.split(Pattern.quote( "_" ) );
@@ -229,6 +239,7 @@ public class RepositoryManager {
 			for (int i = 1; i <= positions; i++){
 				numbering = numbering+String.valueOf((int)Math.floor(id/(Math.pow(10,positions-i))));
 				id = (int) (id % (Math.pow(10,positions-i)));
+				LOG.info(numbering);
 			}
 			return prefix+"_"+numbering;
 		}

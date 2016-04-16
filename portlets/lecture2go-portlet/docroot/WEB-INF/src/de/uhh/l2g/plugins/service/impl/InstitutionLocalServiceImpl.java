@@ -371,7 +371,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 
 			institutionPersistence.update(institution);
 			//refresh order
-			reorderChildren(getById(institution.getParentId()));
+			if(institution.getParentId()>0) reorderChildren(getById(institution.getParentId()));
 			
 			//Refresh LinkTable Resources if existing
 			try{
