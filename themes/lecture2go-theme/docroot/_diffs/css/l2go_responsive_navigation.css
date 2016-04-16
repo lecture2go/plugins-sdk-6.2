@@ -1,7 +1,31 @@
-@media (min-width: 0px) and (max-width: 960px) {	
+@media (min-width: 320px) and (max-width: 960px) {	
+	 
 	#heading .meta {
 	    display: none;
 	    visibility: hidden;
+	}
+	
+	.span3 .accordion-inner li {
+	    font-size: 14px;
+	    min-height: 38px;
+	    line-height: 38px;
+	}
+
+	div.filter-menu-link span.icon-large.icon-remove {
+	    margin-top: 9px;
+	}
+
+	#loadMoreTerms, #loadMoreCreators {
+	    color: #c90219;
+	    cursor: pointer;
+	    font-size: 14px;
+	    height: 38px;
+	    line-height: 38px;
+	    margin-left: 28px;
+	}
+
+	.aui .accordion {
+	    margin-bottom: 7px;
 	}
 	
 	#wrapper {
@@ -18,9 +42,10 @@
 	#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 	    border-left: medium none;
 	    border-right: 0 none;
-	    float: right;
 	    padding: 4px 0;
-	    width: 100%;
+	    width: 100% !important;
+	    min-width:320px;
+	 	max-width:959px;
 	}
 	
 	.aui #navigation .nav .dropdown-menu > li a:hover {
