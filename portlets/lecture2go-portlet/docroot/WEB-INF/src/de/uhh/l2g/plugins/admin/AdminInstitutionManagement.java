@@ -118,30 +118,36 @@ public class AdminInstitutionManagement extends MVCPortlet {
 			LOG.debug("Initialize Permissions");
 			Role admin = RoleLocalServiceUtil.fetchRole(companyId, AdminUserManagement.L2G_ADMIN);
 			if (admin != null){
-				//TODO: More sophisticated Default 
+				//Check if Permission is set for L2go Admin Role and Context
 				PermissionManager pm = new PermissionManager(serviceContext);
 				ResourcePermission rp = pm.getPermissionforRole(AdminUserManagement.L2G_ADMIN);
 				if (rp == null) {
 					setDefaultPermissions(pm);
-					//Now we can expect we don't have any defaults at all yet
+					//In this case we are probably missing other defaults too, but UserPortlet has been triggered
 					isInitialized = false;
 				}
 			}else {
+				//This means User Portlet has not been initialized yet (we can't generate default permissions yet)
 				isInitialized = false;
 				SessionErrors.add(renderRequest,"no-roles-error");
 			}
+			
+			//We need to initialize DB if there are no values for root Institution and default Host
+			//We need to verify counters to check if DB has been changed from remote (Migration, manual Additions) or stale folders
+			
+			//Set to zero if empty/otherwise synchronize with DB
+		    LOG.info("Updating Counter values!");
+		   
+			long cH = HostLocalServiceUtil.updateCounter();
+			long cI = InstitutionLocalServiceUtil.updateCounter();
+			long cIH  = Institution_HostLocalServiceUtil.updateCounter();
 		    
 			//Initialize if needed
 			LOG.info("Initialize Service Builder Tables beacause initialized is " +isInitialized);
 			if (isInitialized  == false) {
-		
-				    LOG.debug("Updating Counter values!");
-				    long cIH =Institution_HostLocalServiceUtil.updateCounter();
-					long cH = HostLocalServiceUtil.updateCounter();
-					long cI = InstitutionLocalServiceUtil.updateCounter();
 									    
-					//
-					if (cIH == 0 || cH==0 || cI == 0){
+					//In case table is empty we'll have 0 counter
+					if (cH==0 || cI ==0 || cIH == 0){
 						
 					    //Add default host if empty or default entry does not exist
 					    long defaultHostId = HostLocalServiceUtil.getDefaultHostId(companyId,groupId);
