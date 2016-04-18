@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceConstants;
@@ -70,7 +72,8 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 	 * de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil} to access the
 	 * institution local service.
 	 */
-
+	protected static Log LOG = LogFactoryUtil.getLog(Institution.class.getName());	
+	 
 	public Institution getById(long institutionId) throws SystemException {
 		return institutionPersistence.fetchByPrimaryKey(institutionId);
 	}
@@ -402,7 +405,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		   		Institution institution = getInstitution(institutionId);
 
 		   	    //Check if Institution is empty, i.e. no  subfacilities, lecture series, videos, and members
-		        if (getLockingElements(institutionId) < 1){
+		        if (getLockingElements(institutionId) < 2){
 
 			        resourceLocalService.deleteResource(serviceContext.getCompanyId(),
 			        		Institution.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
@@ -435,24 +438,30 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		  }
 	
 	   public long updateCounter() throws SystemException, PortalException {
-		   Counter counter;
-	   			// Initialize counter with a default value liferay suggests
-				CounterLocalServiceUtil.increment(Institution.class.getName());
-				counter = CounterLocalServiceUtil.getCounter(Institution.class.getName());
-	   
+
+		        //get current Counter
+				Counter counter = CounterLocalServiceUtil.getCounter(Institution.class.getName());
+	            LOG.debug(counter.getCurrentId());
+	            int count = InstitutionLocalServiceUtil.getInstitutionsCount();
+	            LOG.debug(count);
+	            long institutionId = 0; //actual maxId
+	            
 				//Retrieve actual table data
-				ClassLoader classLoader = (ClassLoader)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),"portletClassLoader");    		
-				DynamicQuery query = DynamicQueryFactoryUtil.forClass(Institution.class,classLoader).addOrder(OrderFactoryUtil.desc("institutionId"));
-				query.setLimit(0,1);
-				List<Institution> institutions = InstitutionLocalServiceUtil.dynamicQuery(query);
-				long institutionId = 0;
-				if (institutions.size() > 0)institutionId = institutions.get(0).getInstitutionId();
-				
-				//write Counter
-				counter.setCurrentId(institutionId);
-				CounterLocalServiceUtil.updateCounter(counter);
-				
-				return institutionId;
+	            if (count > 0){ //our db is filled... with something at least
+					ClassLoader classLoader = (ClassLoader)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),"portletClassLoader");    		
+					DynamicQuery query = DynamicQueryFactoryUtil.forClass(Institution.class,classLoader).addOrder(OrderFactoryUtil.desc("institutionId"));
+					query.setLimit(0,1);
+					List<Institution> institutions = InstitutionLocalServiceUtil.dynamicQuery(query);
+					
+					if (institutions.size() > 0)institutionId = institutions.get(0).getInstitutionId();
+	            }
+		        LOG.debug(institutionId);
+				//Update Counter if asynchronous with estimated value or data reseted
+		        if (counter.getCurrentId() <  institutionId || institutionId == 0){
+		        	counter.setCurrentId(institutionId);
+		        	CounterLocalServiceUtil.updateCounter(counter);
+		        }
+				return counter.getCurrentId();
 					
 		   
 	   }

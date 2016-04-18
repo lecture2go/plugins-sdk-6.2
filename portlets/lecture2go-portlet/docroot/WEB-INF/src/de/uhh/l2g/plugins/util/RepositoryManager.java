@@ -94,7 +94,7 @@ public class RepositoryManager {
 			}
 		else{
 			folder.mkdirs();
-			LOG.warn("Security settings not supported by Operating System");
+			LOG.warn("Security settings not supported by operating System");
 		}
 		
 	}
@@ -239,7 +239,7 @@ public class RepositoryManager {
 			for (int i = 1; i <= positions; i++){
 				numbering = numbering+String.valueOf((int)Math.floor(id/(Math.pow(10,positions-i))));
 				id = (int) (id % (Math.pow(10,positions-i)));
-				LOG.info(numbering);
+				LOG.debug(numbering);
 			}
 			return prefix+"_"+numbering;
 		}
@@ -260,6 +260,10 @@ public class RepositoryManager {
 		Counter hcounter = CounterLocalServiceUtil.getCounter(Host.class.getName());
 		long hId =  hcounter.getCurrentId();    //directory numbering will overflow for large values...
 		String curRootDir = prepareServerRoot(hId);
+		if (PropsUtil.get("lecture2go.media.repository").isEmpty()){ 
+			LOG.error("Portal Property lecture2go.media.repository not set. This property is required before instalation!");
+			throw new NoPropertyException();
+		}
 		File folder = new File(PropsUtil.get("lecture2go.media.repository")+"/"+curRootDir);
 		while(folder.isDirectory()){
 			hId++;
