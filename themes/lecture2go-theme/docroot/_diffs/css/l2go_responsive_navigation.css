@@ -42,10 +42,12 @@
 	#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 	    border-left: medium none;
 	    border-right: 0 none;
+	    float: left;
+	    max-width: inherit !important;
+	    min-width: 320px;
 	    padding: 4px 0;
+	    position: relative;
 	    width: 100% !important;
-	    min-width:320px;
-	 	max-width:959px;
 	}
 	
 	.aui #navigation .nav .dropdown-menu > li a:hover {
@@ -78,8 +80,9 @@
 	    border-right: 0 none;
 	    float: right;
 	    height: 30px;
-	    margin-right: 1px;
 	    margin-top: -39px;
+	    position: relative;
+	    z-index: 2147483647 !important;
 	}
 	
 	.aui #navigation .nav li.active.has-child > a {
