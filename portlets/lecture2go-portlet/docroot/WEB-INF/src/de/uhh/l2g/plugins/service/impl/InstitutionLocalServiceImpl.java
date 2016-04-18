@@ -371,7 +371,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 
 			institutionPersistence.update(institution);
 			//refresh order
-			reorderChildren(getById(institution.getParentId()));
+			if(institution.getParentId()>0) reorderChildren(getById(institution.getParentId()));
 			
 			//Refresh LinkTable Resources if existing
 			try{
@@ -434,7 +434,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 
 		  }
 	
-	   public Institution updateCounter() throws SystemException, PortalException {
+	   public long updateCounter() throws SystemException, PortalException {
 		   Counter counter;
 	   			// Initialize counter with a default value liferay suggests
 				CounterLocalServiceUtil.increment(Institution.class.getName());
@@ -445,13 +445,14 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 				DynamicQuery query = DynamicQueryFactoryUtil.forClass(Institution.class,classLoader).addOrder(OrderFactoryUtil.desc("institutionId"));
 				query.setLimit(0,1);
 				List<Institution> institutions = InstitutionLocalServiceUtil.dynamicQuery(query);
-				Institution institution = institutions.get(0);
+				long institutionId = 0;
+				if (institutions.size() > 0)institutionId = institutions.get(0).getInstitutionId();
 				
 				//write Counter
-				if (institution != null) counter.setCurrentId(institution.getInstitutionId());
+				counter.setCurrentId(institutionId);
 				CounterLocalServiceUtil.updateCounter(counter);
 				
-				return institution;
+				return institutionId;
 					
 		   
 	   }

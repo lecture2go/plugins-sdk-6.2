@@ -272,23 +272,29 @@ public class Institution_HostLocalServiceImpl
 		        return institution_Host;
 
 		    }
-	   public Institution_Host updateCounter() throws SystemException, PortalException {
-		   Counter counter;
-	   			// Initialize counter with a default value liferay suggests
-				CounterLocalServiceUtil.increment(Institution_Host.class.getName());
-				counter = CounterLocalServiceUtil.getCounter(Institution_Host.class.getName());
-	   
-				//Retrieve actual table data
-				ClassLoader classLoader = (ClassLoader)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),"portletClassLoader");    		
-				DynamicQuery query = DynamicQueryFactoryUtil.forClass(Institution_Host.class,classLoader).addOrder(OrderFactoryUtil.desc("institutionHostId"));
-				query.setLimit(0,1);
-				List<Institution_Host> institution_hosts = Institution_HostLocalServiceUtil.dynamicQuery(query);
-				Institution_Host institution_host = institution_hosts.get(0);
-				
+	   public long updateCounter() throws SystemException, PortalException {
+		   Counter counter = CounterLocalServiceUtil.getCounter(Institution_Host.class.getName());
+		        int count = Institution_HostLocalServiceUtil.getInstitution_HostsCount();
+		        long institution_hostId = 0; //if empty
+	   			
+		        if (count>0){
+			        // Initialize counter with a default value liferay suggests
+					CounterLocalServiceUtil.increment(Institution_Host.class.getName());
+					counter = CounterLocalServiceUtil.getCounter(Institution_Host.class.getName());
+		   
+					//Retrieve actual table data
+					ClassLoader classLoader = (ClassLoader)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),"portletClassLoader");    		
+					DynamicQuery query = DynamicQueryFactoryUtil.forClass(Institution_Host.class,classLoader).addOrder(OrderFactoryUtil.desc("institutionHostId"));
+					query.setLimit(0,1);
+					List<Institution_Host> institution_hosts = Institution_HostLocalServiceUtil.dynamicQuery(query);
+					institution_hostId = 0;
+					if(institution_hosts.size() > 0) institution_hostId = institution_hosts.get(0).getInstitutionHostId();
+			    }
+		        
 				//write Counter
-				if (institution_host != null) counter.setCurrentId(institution_host.getInstitutionHostId());
+				counter.setCurrentId(institution_hostId);
 				CounterLocalServiceUtil.updateCounter(counter);
-				return institution_host;
+				return institution_hostId;
 					
 		   
 	   }

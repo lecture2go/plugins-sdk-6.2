@@ -202,7 +202,7 @@ public class StatisticLocalServiceImpl
 		    }
 	   
 
-	   public Statistic updateCounter() throws SystemException, PortalException {
+	   public long updateCounter() throws SystemException, PortalException {
 		   Counter counter;
 	   			// Initialize counter with a default value liferay suggests
 				CounterLocalServiceUtil.increment(Statistic.class.getName());
@@ -213,12 +213,13 @@ public class StatisticLocalServiceImpl
 				DynamicQuery query = DynamicQueryFactoryUtil.forClass(Statistic.class,classLoader).addOrder(OrderFactoryUtil.desc("statisticId"));
 				query.setLimit(0,1);
 				List<Statistic> lStatistic = StatisticLocalServiceUtil.dynamicQuery(query);
-				Statistic statistic = lStatistic.get(0);
+				long statisticId = 0;
+				if(lStatistic.size()> 0) statisticId = lStatistic.get(0).getStatisticId();
 				
 				//write Counter
-				if (statistic != null) counter.setCurrentId(statistic.getStatisticId());
+				counter.setCurrentId(statisticId);
 				CounterLocalServiceUtil.updateCounter(counter);
-				return statistic;
+				return statisticId;
 					
 		   
 	   }

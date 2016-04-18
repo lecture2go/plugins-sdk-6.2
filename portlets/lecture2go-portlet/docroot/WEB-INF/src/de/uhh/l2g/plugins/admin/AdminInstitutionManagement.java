@@ -11,12 +11,15 @@ import javax.portlet.RenderResponse;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
@@ -25,6 +28,7 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
+import de.uhh.l2g.plugins.NoPropertyException;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Institution_Host;
@@ -32,9 +36,11 @@ import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
 import de.uhh.l2g.plugins.util.PermissionManager;
+import de.uhh.l2g.plugins.util.PortletScheduler;
 
 public class AdminInstitutionManagement extends MVCPortlet {
-
+	 protected static Log LOG = LogFactoryUtil.getLog(AdminInstitutionManagement.class.getName());	
+	 public static final String DEFAULT_STREAMER = "Default";
 
 	/**Set default permissions (assumes fixed and unique role names)
 	 * 
@@ -45,46 +51,46 @@ public class AdminInstitutionManagement extends MVCPortlet {
 	private void setDefaultPermissions(PermissionManager pm) throws SystemException, PortalException{
 		
 		//Remove view permission for Guest and edit for ordinary Site Members
-		pm.removeL2GLayoutViewPermission("Guest");
-		pm.removeL2GLayoutPermissions("Site Member", new String[] { ActionKeys.VIEW, ActionKeys.ADD_DISCUSSION, ActionKeys.CUSTOMIZE });
+		pm.removeL2GLayoutViewPermission(RoleConstants.GUEST);
+		pm.removeL2GLayoutPermissions(RoleConstants.SITE_MEMBER, new String[] { ActionKeys.VIEW, ActionKeys.ADD_DISCUSSION, ActionKeys.CUSTOMIZE });
 				
 		//Remove Advanced Permissions for Owner (Owner should be Administrator anyway)
-		pm.removeL2GLayoutPermissions("Owner", new String[] { ActionKeys.CUSTOMIZE, ActionKeys.PERMISSIONS });
+		pm.removeL2GLayoutPermissions(RoleConstants.OWNER, new String[] { ActionKeys.CUSTOMIZE, ActionKeys.PERMISSIONS });
 		
 		//Allow View Permission for higher L2GRoles
-		pm.setL2GLayoutViewPermission("L2Go Admin");
-		pm.setL2GLayoutViewPermission("L2Go Coordinator");
+		pm.setL2GLayoutViewPermission(AdminUserManagement.L2G_ADMIN);
+		pm.setL2GLayoutViewPermission(AdminUserManagement.L2G_COORDINATOR);
 		
 		//Allow almost all Portlet operations for L2Go admin
-		pm.setL2GPortletPermissions("L2Go Admin",  new String[] {ActionKeys.VIEW, "VIEW_ALL_INSTITUTIONS", "VIEW_HOSTS", "ADD_INSTITUTIONS"});		
-		pm.setL2GPortletPermissions("L2Go Coordinator", ActionKeys.VIEW);
+		pm.setL2GPortletPermissions(AdminUserManagement.L2G_ADMIN,  new String[] {ActionKeys.VIEW, "VIEW_ALL_INSTITUTIONS", "VIEW_HOSTS", "ADD_INSTITUTIONS"});		
+		pm.setL2GPortletPermissions(AdminUserManagement.L2G_COORDINATOR, ActionKeys.VIEW);
 		// Remove for normal Member
-		pm.removeL2GPortletPermissions("Site Member", ActionKeys.VIEW);
+		pm.removeL2GPortletPermissions(RoleConstants.SITE_MEMBER, ActionKeys.VIEW);
 		// Remove for Owner
-		pm.removeL2GPortletPermissions("Owner",  new String[] {"VIEW_ALL_INSTITUTIONS", "VIEW_HOSTS", "ADD_INSTITUTIONS"});
+		pm.removeL2GPortletPermissions(RoleConstants.OWNER,  new String[] {"VIEW_ALL_INSTITUTIONS", "VIEW_HOSTS", "ADD_INSTITUTIONS"});
 		
 		//Entities on Model Level 
-		pm.removeL2GEntityPermissions("Site Member", Institution.class.getName(), new String[] { ActionKeys.VIEW});
-		pm.removeL2GEntityPermissions("Site Member", Institution_Host.class.getName(), new String[] { ActionKeys.VIEW});
-		pm.removeL2GEntityPermissions("Site Member", Host.class.getName(), new String[] { ActionKeys.VIEW });
+		pm.removeL2GEntityPermissions(RoleConstants.SITE_MEMBER, Institution.class.getName(), new String[] { ActionKeys.VIEW});
+		pm.removeL2GEntityPermissions(RoleConstants.SITE_MEMBER, Institution_Host.class.getName(), new String[] { ActionKeys.VIEW});
+		pm.removeL2GEntityPermissions(RoleConstants.SITE_MEMBER, Host.class.getName(), new String[] { ActionKeys.VIEW });
 		
-		pm.setL2GEntityPermissions("L2Go Admin", Institution.class.getName(), new String[] {ActionKeys.VIEW, "ADD_SUB_INSTITUTION_ENTRY", "ADD_HOSTS", "EDIT_HOSTS", "EDIT_ALL_INSTITUTIONS" ,"EDIT_OWN_INSTITUTIONS" ,"DELETE_INSTITUTIONS", "DELETE_SUB_INSTITUTIONS", "ADD_SUB_INSTITUTION_ENTRY"});
-		pm.setL2GEntityPermissions("L2Go Coordinator", Institution.class.getName(), new String[] {ActionKeys.VIEW, "ADD_SUB_INSTITUTION_ENTRY","EDIT_OWN_INSTITUTIONS", "DELETE_SUB_INSTITUTIONS", "ADD_SUB_INSTITUTION_ENTRY"});
+		pm.setL2GEntityPermissions(AdminUserManagement.L2G_ADMIN, Institution.class.getName(), new String[] {ActionKeys.VIEW, "ADD_SUB_INSTITUTION_ENTRY", "ADD_HOSTS", "EDIT_HOSTS", "EDIT_ALL_INSTITUTIONS" ,"EDIT_OWN_INSTITUTIONS" ,"DELETE_INSTITUTIONS", "DELETE_SUB_INSTITUTIONS", "ADD_SUB_INSTITUTION_ENTRY"});
+		pm.setL2GEntityPermissions(AdminUserManagement.L2G_COORDINATOR, Institution.class.getName(), new String[] {ActionKeys.VIEW, "ADD_SUB_INSTITUTION_ENTRY","EDIT_OWN_INSTITUTIONS", "DELETE_SUB_INSTITUTIONS", "ADD_SUB_INSTITUTION_ENTRY"});
 		//
-		pm.setL2GEntityViewPermissions("L2Go Producer", Institution.class.getName());
-		pm.setL2GEntityViewPermissions("L2Go Student", Institution.class.getName());
+		pm.setL2GEntityViewPermissions(AdminUserManagement.L2G_PRODUCER, Institution.class.getName());
+		pm.setL2GEntityViewPermissions(AdminUserManagement.L2G_STUDENT, Institution.class.getName());
 		
-		pm.setL2GEntityPermissions("L2Go Admin", Institution_Host.class.getName(), new String[] {ActionKeys.VIEW, ActionKeys.DELETE, "ADD_LINK"});
-		pm.setL2GEntityViewPermissions("L2Go Coordinator", Institution_Host.class.getName());
+		pm.setL2GEntityPermissions(AdminUserManagement.L2G_ADMIN, Institution_Host.class.getName(), new String[] {ActionKeys.VIEW, ActionKeys.DELETE, "ADD_LINK"});
+		pm.setL2GEntityViewPermissions(AdminUserManagement.L2G_COORDINATOR, Institution_Host.class.getName());
 		
-		pm.setL2GEntityViewPermissions("L2Go Producer", Institution_Host.class.getName());
-		pm.setL2GEntityViewPermissions("L2Go Student", Institution_Host.class.getName());
+		pm.setL2GEntityViewPermissions(AdminUserManagement.L2G_PRODUCER, Institution_Host.class.getName());
+		pm.setL2GEntityViewPermissions(AdminUserManagement.L2G_STUDENT, Institution_Host.class.getName());
 		
-		pm.setL2GEntityPermissions("L2Go Admin", Host.class.getName(), new String[] {ActionKeys.VIEW, ActionKeys.UPDATE, ActionKeys.DELETE, "ADD_HOST", "EDIT_HOST"});
-		pm.setL2GEntityPermissions("L2Go Coordinator", Host.class.getName(), new String[] {ActionKeys.VIEW});
+		pm.setL2GEntityPermissions(AdminUserManagement.L2G_ADMIN, Host.class.getName(), new String[] {ActionKeys.VIEW, ActionKeys.UPDATE, ActionKeys.DELETE, "ADD_HOST", "EDIT_HOST"});
+		pm.setL2GEntityPermissions(AdminUserManagement.L2G_COORDINATOR, Host.class.getName(), new String[] {ActionKeys.VIEW});
 		
-		pm.setL2GEntityViewPermissions("L2Go Producer", Host.class.getName());
-		pm.setL2GEntityViewPermissions("L2Go Student", Host.class.getName());
+		pm.setL2GEntityViewPermissions(AdminUserManagement.L2G_PRODUCER, Host.class.getName());
+		pm.setL2GEntityViewPermissions(AdminUserManagement.L2G_STUDENT, Host.class.getName());
 				
 	}
 	
@@ -95,13 +101,13 @@ public class AdminInstitutionManagement extends MVCPortlet {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			         Institution.class.getName(), renderRequest);
 
-			//was this portlet allready initialized with default values?
+			//was this portlet allready initialized with default values? True fo a fully insatlled system
 			boolean isInitialized = true;
 			
 			long groupId = serviceContext.getScopeGroupId();
 			long companyId = serviceContext.getCompanyId();
 			
-			//System.out.println(serviceContext.getPlid()+" "+serviceContext.getPortletId()+" ");
+			LOG.debug("plid "+serviceContext.getPlid()+", portletId "+serviceContext.getPortletId()+" ");
 			
 			long institutionId = ParamUtil.getLong(renderRequest, "institutionId");
 			long hostId = ParamUtil.getLong(renderRequest, "hostId");
@@ -109,97 +115,111 @@ public class AdminInstitutionManagement extends MVCPortlet {
 			
 			//Check if default Permissions are Set for this Context (requires L2G Roles)
 			//Delete Permissions for admin from DB to reset
-			Role admin = RoleLocalServiceUtil.fetchRole(companyId, "L2Go Admin");
+			LOG.debug("Initialize Permissions");
+			Role admin = RoleLocalServiceUtil.fetchRole(companyId, AdminUserManagement.L2G_ADMIN);
 			if (admin != null){
 				//TODO: More sophisticated Default 
 				PermissionManager pm = new PermissionManager(serviceContext);
-				ResourcePermission rp = pm.getPermissionforRole("L2Go Admin");
+				ResourcePermission rp = pm.getPermissionforRole(AdminUserManagement.L2G_ADMIN);
 				if (rp == null) {
 					setDefaultPermissions(pm);
 					//Now we can expect we don't have any defaults at all yet
 					isInitialized = false;
 				}
 			}else {
+				isInitialized = false;
 				SessionErrors.add(renderRequest,"no-roles-error");
 			}
-
+		    
 			//Initialize if needed
-			if (isInitialized  == false || admin == null) {
-		 
-				    HostLocalServiceUtil.updateCounter();
-				    Institution_HostLocalServiceUtil.updateCounter();
-				    InstitutionLocalServiceUtil.updateCounter();
-				    
-				    //Add default host if empty or default entry does not exist
-				    long defaultHostId = HostLocalServiceUtil.getDefaultHostId(companyId,groupId);
-				    //System.out.println("Default Host: "+defaultHostId);
-				    if (defaultHostId == 0) defaultHostId = HostLocalServiceUtil.addDefaultHost(serviceContext).getHostId();
+			LOG.info("Initialize Service Builder Tables beacause initialized is " +isInitialized);
+			if (isInitialized  == false) {
 		
-				    //new Tree Root for Institution if empty
-				    long defaultInstitutionId = InstitutionLocalServiceUtil.getDefaultInstitutionId(companyId,groupId);
-				    //System.out.println("Default Institution: "+defaultInstitutionId);
-				    
-				    if (defaultInstitutionId == 0) {
-				    	defaultInstitutionId = InstitutionLocalServiceUtil.addDefaultInstitution(serviceContext).getInstitutionId();
-				    }			    	
-					//Add default Link for Top Level if not exists (non functional for analogy - relies on institution having exactly one fixed host)
-				    long defaultInstitutionHostId = Institution_HostLocalServiceUtil.getDefaultInstitutionHostId(companyId,groupId);
-				    if (defaultInstitutionHostId == 0) {		  
-				       defaultInstitutionHostId = Institution_HostLocalServiceUtil.addDefaultInstitutionHost(defaultInstitutionId,defaultHostId,serviceContext);
-				    }
-				    	//System.out.println("Default Institution_Host: "+defaultInstitutionHostId);		
+				    LOG.debug("Updating Counter values!");
+				    long cIH =Institution_HostLocalServiceUtil.updateCounter();
+					long cH = HostLocalServiceUtil.updateCounter();
+					long cI = InstitutionLocalServiceUtil.updateCounter();
+									    
+					//
+					if (cIH == 0 || cH==0 || cI == 0){
+						
+					    //Add default host if empty or default entry does not exist
+					    long defaultHostId = HostLocalServiceUtil.getDefaultHostId(companyId,groupId);
+					    LOG.debug("Default Host: "+defaultHostId);
+					    if (defaultHostId == 0) defaultHostId = HostLocalServiceUtil.addDefaultHost(serviceContext).getHostId();
+			
+					    //new Tree Root for Institution if empty
+					    long defaultInstitutionId = InstitutionLocalServiceUtil.getDefaultInstitutionId(companyId,groupId);
+					    LOG.debug("Default Institution: "+defaultInstitutionId);
+					    
+					    if (defaultInstitutionId == 0) {
+					    	defaultInstitutionId = InstitutionLocalServiceUtil.addDefaultInstitution(serviceContext).getInstitutionId();
+					    }			    	
+						//Add default Link for Top Level if not exists (non functional for analogy - relies on institution having exactly one fixed host)
+					    long defaultInstitutionHostId = Institution_HostLocalServiceUtil.getDefaultInstitutionHostId(companyId,groupId);
+					    if (defaultInstitutionHostId == 0) {		  
+					       defaultInstitutionHostId = Institution_HostLocalServiceUtil.addDefaultInstitutionHost(defaultInstitutionId,defaultHostId,serviceContext);
+					    }
+					    LOG.debug("Default Institution_Host: "+defaultInstitutionHostId);
+					}	
 			}
 		    
-
+				
 		    List<Institution> institutions = InstitutionLocalServiceUtil.getByGroupId(groupId);
 		    List<Institution_Host> institution_host = Institution_HostLocalServiceUtil.getByGroupId(groupId);
 		    List<Host> host = HostLocalServiceUtil.getByGroupId(groupId);
 
 		    if (!(institutionId > 0)) {
-		    	institutionId = institutions.get(0).getInstitutionId();
+		    	institutionId = 0;
+		    	//institutionId = institutions.get(0).getInstitutionId();
 	        }
 		    if (!(hostId > 0)) {
 		    	hostId = 0;
 	        }
-		    
+	    
 		    renderRequest.setAttribute("institutionId", institutionId);
 		    renderRequest.setAttribute("hostId", hostId);
 
-		    } catch (Exception e) {
-		    	  System.out.println(e.getClass().getName());
-			         e.printStackTrace();
+		    }
+		    catch (NoPropertyException e) {
+		    	SessionErrors.add(renderRequest, "no-property-error");
+		    	LOG.error("Failed retrieving crucial settings from portal properties", e);
 		    	throw new PortletException(e);
 		    }
-
+			catch (Exception e) {
+		    	SessionErrors.add(renderRequest, e.getClass().getName());
+		    	LOG.error("Failed rendering "+AdminInstitutionManagement.class.getName(), e);
+		    	throw new PortletException(e);
+		    }
+            
 		super.render(renderRequest, renderResponse);
 
 
 	}
 
 	public void addInstitution(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
-
+		String institutionName =""; 
 
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 		         Institution.class.getName(), request);
 
-			String name = ParamUtil.getString(request, "institution");
+			institutionName = ParamUtil.getString(request, "institution");
 			long hostId = ParamUtil.getLong(request, "serverselect");
 			long parentId = ParamUtil.getLong(request, "parent");
 			int sort = ParamUtil.getInteger(request, "order");
 
 
 	         InstitutionLocalServiceUtil.addInstitution(
-	              name, hostId, parentId, sort, serviceContext);
+	        		 institutionName, hostId, parentId, sort, serviceContext);
 
 	         SessionMessages.add(request, "request_processed", "institution-entry-added");
 
-	        // response.setRenderParameter("institutionId", Long.toString(institutionId));
+	       //response.setRenderParameter("institutionId", Long.toString(institutionId));
 
 	       } catch (Exception e) {
 	         SessionErrors.add(request, e.getClass().getName());
-	         System.out.println(e.getClass().getName());
-	         e.printStackTrace();
+	         LOG.error("Failed adding Institution "+institutionName, e);
 	         PortalUtil.copyRequestParameters(request, response);
 
 	         response.setRenderParameter("mvcPath",
@@ -211,29 +231,28 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 	/** Works analogous to addInstitution, but is separate method to enforce restrictions*/
 	public void addSubInstitution(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
-
+        String institutionName = "";
 
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 		         Institution.class.getName(), request);
 
-			String name = ParamUtil.getString(request, "subInstitution");
+			institutionName = ParamUtil.getString(request, "subInstitution");
 			long hostId = 0;
 			long parentId = ParamUtil.getLong(request, "subInstitutionParentId");
 			int sort = ParamUtil.getInteger(request, "subInstitutionOrder");
 
 
 	         InstitutionLocalServiceUtil.addInstitution(
-	              name, hostId, parentId, sort, serviceContext);
+	        		 institutionName, hostId, parentId, sort, serviceContext);
 
 	         SessionMessages.add(request, "request_processed", "subinstitution-entry-added");
 
-	        // response.setRenderParameter("institutionId", Long.toString(institutionId));
+	        //response.setRenderParameter("institutionId", Long.toString(institutionId));
 
 	       } catch (Exception e) {
 	         SessionErrors.add(request, e.getClass().getName());
-	         System.out.println(e.getClass().getName());
-	         e.printStackTrace();
+	         LOG.error("Failed adding Sub-Institution "+institutionName, e);
 	         PortalUtil.copyRequestParameters(request, response);
 
 	         response.setRenderParameter("mvcPath",
@@ -248,23 +267,22 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Institution.class.getName(), request);
 
-		String name = ParamUtil.getString(request, "treeRoot");
+		String institutionName = ParamUtil.getString(request, "treeRoot");
 		long institutionId = ParamUtil.getLong(request, "treeRootId");
 		//long selectedInstitutionId = ParamUtil.getLong(request, "selectedInstitutionId");
-		//System.out.println("Root: "+ institutionId);
+		LOG.info("Root: "+ institutionId);
 		try {
 			InstitutionLocalServiceUtil.updateInstitution(
-					institutionId, name, 1, serviceContext);
+					institutionId, institutionName, 1, serviceContext);
 
 			SessionMessages.add(request,"request_processed", "tree-root-entry-updated");
 
-			// response.setRenderParameter("mvcPath",
-		     //         "/admin/institutionList.jsp");
+			response.setRenderParameter("mvcPath",
+		              "/admin/institutionList.jsp");
 
 		} catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
-			System.out.println(e.getClass().getName());
-			e.printStackTrace();
+	        LOG.error("Failed updating top level institution name ", e);
 			PortalUtil.copyRequestParameters(request, response);
 
 			response.setRenderParameter("mvcPath",
@@ -282,7 +300,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 			long institutionId = ParamUtil.getLong(request, "outerListInstitutionId");
 			int sort = ParamUtil.getInteger(request, "outerListOrder");
 			//long selectedInstitutionId = ParamUtil.getLong(request, "selectedInstitutionId");
-			//System.out.println(institutionId);
+			LOG.info("Updating "+institutionId);
 			try {
 				InstitutionLocalServiceUtil.updateInstitution(
 						institutionId, name, sort, serviceContext);
@@ -290,12 +308,11 @@ public class AdminInstitutionManagement extends MVCPortlet {
 				SessionMessages.add(request, "request_processed", "institution-entry-updated");
 
 				// response.setRenderParameter("mvcPath",
-			     //         "/admin/institutionList.jsp");
+			    //         "/admin/institutionList.jsp");
 
 			} catch (Exception e) {
 				SessionErrors.add(request, e.getClass().getName());
-				System.out.println(e.getClass().getName());
-				e.printStackTrace();
+				LOG.error("Failed updating Institution", e);
 				PortalUtil.copyRequestParameters(request, response);
 
 				response.setRenderParameter("mvcPath",
@@ -309,15 +326,14 @@ public class AdminInstitutionManagement extends MVCPortlet {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 					Institution.class.getName(), request);
 
-			String name = ParamUtil.getString(request, "innerListInstitution");
-			long hostId = ParamUtil.getLong(request, "innerListHostId");
+			String institutionName = ParamUtil.getString(request, "innerListInstitution");
 			long institutionId = ParamUtil.getLong(request, "innerListInstitutionId");
 			int sort = ParamUtil.getInteger(request, "innerListOrder");
 			//long selectedInstitutionId = ParamUtil.getLong(request, "selectedInstitutionId");
-			//System.out.println(institutionId);
+			LOG.info("Updating "+institutionId);
 			try {
 				InstitutionLocalServiceUtil.updateInstitution(
-						institutionId, name, sort, serviceContext);
+						institutionId, institutionName, sort, serviceContext);
 
 				SessionMessages.add(request, "request_processed", "subinstitution-entry-updated");
 			
@@ -326,8 +342,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 			} catch (Exception e) {
 				SessionErrors.add(request, e.getClass().getName());
-				System.out.println(e.getClass().getName());
-				e.printStackTrace();
+				LOG.error("Failed updating SubInstitution", e);
 				PortalUtil.copyRequestParameters(request, response);
 
 				response.setRenderParameter("mvcPath",
@@ -341,7 +356,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		    long institutionId = ParamUtil.getLong(request, "outerListInstitutionId");
 		   // long selectedInstitutionId = ParamUtil.getLong(request, "institutionId");
 
-		    //System.out.println("Delete "+institutionId);
+		    LOG.info("Deleting "+institutionId);
 		    try {
 
 		       ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -354,18 +369,22 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		       SessionMessages.add(request, "request_processed", "institution-entry-deleted");
 
 		    } catch (Exception e) {
-		    	 System.out.println(e.getClass().getName());
-		         e.printStackTrace();
 		       SessionErrors.add(request, e.getClass().getName());
+		       LOG.error("Failed deleting Institution", e);
+			   PortalUtil.copyRequestParameters(request, response);
+
+			   response.setRenderParameter("mvcPath",
+						"/admin/institutionList.jsp");
 		    }
 		}
 
+		
 		public void deleteSubInstitution (ActionRequest request, ActionResponse response) {
 
 		    long institutionId = ParamUtil.getLong(request, "innerListInstitutionId");
 		    long parentId = ParamUtil.getLong(request, "innerListInstitutionParentId");
 		    
-		    //System.out.println("Try to remove "+ institutionId +" in "+parentId);
+		    LOG.info("Trying to remove "+ institutionId +" in "+parentId);
 
 		    try {
 
@@ -379,32 +398,39 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		       SessionMessages.add(request, "request_processed", "subnstitution-entry-deleted");
 
 		    } catch (Exception e) {
-		    	  System.out.println(e.getClass().getName());
-			         e.printStackTrace();
 		       SessionErrors.add(request, e.getClass().getName());
+		       LOG.error("Failed deleting SubInstitution", e);
+		       
+			   PortalUtil.copyRequestParameters(request, response);
+
+			   response.setRenderParameter("mvcPath",
+						"/admin/institutionList.jsp");
 		    }
 		}
 
 		public void deleteStreamingServer (ActionRequest request, ActionResponse response) {
 
 		    long hostId = ParamUtil.getLong(request, "curStreamingServerId");
-
+		    LOG.info("Trying to remove "+ hostId);
 		    try {
      
 		       ServiceContext serviceContext = ServiceContextFactory.getInstance(
 		        Host.class.getName(), request);
 
-		                    response.setRenderParameter("hostId", Long.toString(hostId));
+		        //response.setRenderParameter("hostId", Long.toString(hostId));
 
-		      if(hostId > 0) HostLocalServiceUtil.deleteHost(hostId, serviceContext);
+		       if(hostId > 0) HostLocalServiceUtil.deleteHost(hostId, serviceContext);
 		       
 		       SessionMessages.add(request, "request_processed", "streamer-entry-deleted");
 
 
 		    } catch (Exception e) {
-		    	  System.out.println(e.getClass().getName());
-			         e.printStackTrace();
 		       SessionErrors.add(request, e.getClass().getName());
+		       LOG.error("Failed deleting Streaming Server", e);
+			   PortalUtil.copyRequestParameters(request, response);
+
+			   response.setRenderParameter("mvcPath",
+						"/admin/institutionList.jsp");
 		    }
 		}
 
@@ -415,26 +441,23 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Host.class.getName(), request);
 
-		String name = ParamUtil.getString(request, "name");
+		String hostName = ParamUtil.getString(request, "name");
 		String ip = ParamUtil.getString(request, "ip");
 		String protocol = ParamUtil.getString(request, "protocol");
-		String serverRoot = ParamUtil.getString(request, "serverroot");
 		int port = ParamUtil.getInteger(request, "port");
-
+		LOG.info("Trying to add "+ hostName+ ": "+ip);
 		try {
 			
-			HostLocalServiceUtil.addHost(name, ip, protocol, serverRoot, port, serviceContext);
+			HostLocalServiceUtil.addHost(hostName, ip, protocol, port, serviceContext);
 			
 			SessionMessages.add(request, "request_processed", "streamer-entry-added");
 
 
-			// response.setRenderParameter("institutionId",
-			//      Long.toString(institutionId));
+		// response.setRenderParameter("hostId", Long.toString(hostId));
 
 		} catch (Exception e) {
         SessionErrors.add(request, e.getClass().getName());
-        System.out.println(e.getClass().getName());
-        e.printStackTrace();
+        LOG.error("Failed adding Streaming Server", e);
         PortalUtil.copyRequestParameters(request, response);
 
          response.setRenderParameter("mvcPath",
@@ -445,19 +468,17 @@ public class AdminInstitutionManagement extends MVCPortlet {
 	}
 		public void updateStreamingServer(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
 
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Host.class.getName(), request);
 		
-
-		String name = ParamUtil.getString(request, "curStreamingServerName");
+		String hostName = ParamUtil.getString(request, "curStreamingServerName");
 		String ip = ParamUtil.getString(request, "curStreamingServerIP");
 		int port = ParamUtil.getInteger(request, "curStreamingServerPort");
 		long hostId = ParamUtil.getLong(request, "curStreamingServerId");
 		String protocol = ParamUtil.getString(request, "curStreamingServerProtocol");
-
+		LOG.info("Trying to update "+ hostName+ ": "+ip);
 		try {
-			HostLocalServiceUtil.updateHost(hostId, name, ip, protocol, port, serviceContext);
+			HostLocalServiceUtil.updateHost(hostId, hostName, ip, protocol, port, serviceContext);
 
 			SessionMessages.add(request, "request_processed", "streamer-entry-updated");
 
@@ -465,13 +486,12 @@ public class AdminInstitutionManagement extends MVCPortlet {
 			//      Long.toString(institutionId));
 
 		} catch (Exception e) {
-        SessionErrors.add(request, e.getClass().getName());
-        System.out.println(e.getClass().getName());
-        e.printStackTrace();
-        PortalUtil.copyRequestParameters(request, response);
+	        SessionErrors.add(request, e.getClass().getName());
+	        LOG.error("Failed updating Streaming Server", e);
+	        PortalUtil.copyRequestParameters(request, response);
 
-         response.setRenderParameter("mvcPath",
-              "/admin/institutionList.jsp");
+	         response.setRenderParameter("mvcPath",
+	              "/admin/institutionList.jsp");
        }
 
 

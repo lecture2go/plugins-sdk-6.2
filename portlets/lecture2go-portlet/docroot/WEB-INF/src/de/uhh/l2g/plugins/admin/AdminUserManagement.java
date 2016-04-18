@@ -23,6 +23,7 @@ import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -53,6 +54,11 @@ import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 import de.uhh.l2g.plugins.util.PermissionManager;
 
 public class AdminUserManagement extends MVCPortlet {
+	public static final String L2G = "L2Go";
+	public static final String L2G_ADMIN = "L2Go Admin";
+	public static final String L2G_COORDINATOR = "L2Go Coordinator";
+	public static final String L2G_PRODUCER = "L2Go Producer";
+	public static final String L2G_STUDENT = "L2Go Student";
 
 	public void viewRole(ActionRequest request, ActionResponse response) throws SystemException, PortalException {
 		//updateUsersScreenName();
@@ -71,12 +77,12 @@ public class AdminUserManagement extends MVCPortlet {
 		//check whether user is l2go coordinator
 		boolean isL2goCoordinator = false;
 		for (int i = 0; i < reqUser.getRoles().size(); i++)
-			if(reqUser.getRoles().get(i).getName().equals("L2Go Coordinator")) isL2goCoordinator = true;
+			if(reqUser.getRoles().get(i).getName().equals(L2G_COORDINATOR)) isL2goCoordinator = true;
 		
 		Coordinator reqCoord = CoordinatorLocalServiceUtil.createCoordinator(reqUserId);
 		//not coordinator
 		if(!isL2goCoordinator){
-			deleteL2GoRole("L2Go Coordinator", reqUser);
+			deleteL2GoRole(L2G_COORDINATOR, reqUser);
 		}else{
 		//is coordinator
 			try {
@@ -89,11 +95,11 @@ public class AdminUserManagement extends MVCPortlet {
 		//check whether user is l2go coordinator
 		boolean isL2goProducer = false;
 		for (int i = 0; i < reqUser.getRoles().size(); i++)
-			if(reqUser.getRoles().get(i).getName().equals("L2Go Producer")) isL2goProducer = true;
+			if(reqUser.getRoles().get(i).getName().equals(L2G_PRODUCER)) isL2goProducer = true;
 		// producer
 		Producer reqProd = ProducerLocalServiceUtil.createProducer(reqUserId);		
 		if(!isL2goProducer){
-			deleteL2GoRole("L2Go Producer", reqUser);
+			deleteL2GoRole(L2G_PRODUCER, reqUser);
 		}else{
 			try {
 				reqProd = ProducerLocalServiceUtil.getProducer(reqUserId);
@@ -117,7 +123,7 @@ public class AdminUserManagement extends MVCPortlet {
 		
 		if(permissionAdmin){//logged in as l2go admin
 			List<Institution> allFacil = InstitutionLocalServiceUtil.getByLevel(1);//all institutions for coordinator drop down menu
-			List<User> allCoord = UserLocalServiceUtil.getRoleUsers(RoleLocalServiceUtil.getRole(remoteUser.getCompanyId(), "L2Go Coordinator").getRoleId()); 
+			List<User> allCoord = UserLocalServiceUtil.getRoleUsers(RoleLocalServiceUtil.getRole(remoteUser.getCompanyId(), L2G_COORDINATOR).getRoleId()); 
 			List<Institution> assignedInstitutions = new ArrayList<Institution>();		
 			try{
 				for (int i = 0; i < allCoord.size(); i++){
@@ -173,13 +179,13 @@ public class AdminUserManagement extends MVCPortlet {
 		boolean isStudent = false;
 		List<Role> rl = reqUser.getRoles(); 
 		for (int i = 0; i < rl.size(); i++)
-			if(reqUser.getRoles().get(i).getName().equals("L2Go Student")) isStudent = true;
+			if(reqUser.getRoles().get(i).getName().equals(L2G_STUDENT)) isStudent = true;
 		request.setAttribute("isStudent", isStudent);
 		
 		//check whether user is l2go admin
 		boolean isL2goAdmin = false;
 		for (int i = 0; i < reqUser.getRoles().size(); i++)
-			if(reqUser.getRoles().get(i).getName().equals("L2Go Admin")) isL2goAdmin = true;
+			if(reqUser.getRoles().get(i).getName().equals(L2G_ADMIN)) isL2goAdmin = true;
 		request.setAttribute("isL2goAdmin", isL2goAdmin);
 		String backURL = request.getParameter("backURL");		
 		request.setAttribute("backURL", backURL);
@@ -210,7 +216,7 @@ public class AdminUserManagement extends MVCPortlet {
 		List<Role> allRoles = RoleLocalServiceUtil.getRoles(u.getCompanyId());
 		for(int i = 0; i < allRoles.size(); i++){
 			Role r = allRoles.get(i);
-			if(r.getName().contains("L2Go")){
+			if(r.getName().contains(L2G)){
 				l2goRoles.add(r);
 			}
 		}
@@ -227,7 +233,7 @@ public class AdminUserManagement extends MVCPortlet {
 				handleCoordinatorRequest(request);
 			else {
 				// delete role for user
-				deleteL2GoRole("L2Go Coordinator", u);
+				deleteL2GoRole(L2G_COORDINATOR, u);
 			}			
 		}catch(NullPointerException npe){}
 		// coordinator request --- end
@@ -238,24 +244,24 @@ public class AdminUserManagement extends MVCPortlet {
 				handleProducerRequest(request);
 			else {
 				// delete role for user
-				deleteL2GoRole("L2Go Producer", u);
+				deleteL2GoRole(L2G_PRODUCER, u);
 			}
 		}catch(NullPointerException npe){}
 		// producer request --- end		
 		
 		// student request --- start
 		if (request.getParameter("isStud").equals("true"))
-			addL2GoRole("L2Go Student", u);
+			addL2GoRole(L2G_STUDENT, u);
 		else
-			deleteL2GoRole("L2Go Student", u);
+			deleteL2GoRole(L2G_STUDENT, u);
 		// student request --- end	
 		
 		// l2go admin request --- start
 		try{//parameter is null for not authorized user to use this function
 			if (request.getParameter("isL2goAdmin").equals("true"))
-				addL2GoRole("L2Go Admin", u);
+				addL2GoRole(L2G_ADMIN, u);
 			else
-				deleteL2GoRole("L2Go Admin", u);
+				deleteL2GoRole(L2G_ADMIN, u);
 		}catch(NullPointerException npe){}
 		// l2go admin request --- end
 		String backURL = request.getParameter("backURL");
@@ -270,12 +276,12 @@ public class AdminUserManagement extends MVCPortlet {
 		Role r = RoleLocalServiceUtil.getRole(u.getCompanyId(), n);
 		RoleLocalServiceUtil.deleteUserRole(u.getUserId(), r);
 		UserLocalServiceUtil.deleteRoleUser(r.getRoleId(), u.getUserId());		
-		if(n.equals("L2Go Coordinator")){
+		if(n.equals(L2G_COORDINATOR)){
 			// remove role from l2go coordinator table, because empty
 			if (CoordinatorLocalServiceUtil.fetchCoordinator(u.getUserId()) != null)
 				CoordinatorLocalServiceUtil.deleteCoordinator(u.getUserId());			
 		}
-		if(n.equals("L2Go Producer")){
+		if(n.equals(L2G_PRODUCER)){
 			// remove role from l2go producer table, because empty
 			Producer p = ProducerLocalServiceUtil.fetchProducer(u.getUserId());
 			if ( p != null) {
@@ -308,7 +314,7 @@ public class AdminUserManagement extends MVCPortlet {
 		}
 
 		// add role to user
-		addL2GoRole("L2Go Coordinator", u);
+		addL2GoRole(L2G_COORDINATOR, u);
 		
 		// save role to l2go coordinator table
 		c.setCoordinatorId(u.getUserId());
@@ -343,8 +349,8 @@ public class AdminUserManagement extends MVCPortlet {
 			// add or update entry
 			ProducerLocalServiceUtil.updateProducer(p);				
 			// finaly add role to user
-			addL2GoRole("L2Go Producer", u);
-			UserLocalServiceUtil.addRoleUser(RoleLocalServiceUtil.getRole(u.getCompanyId(), "L2Go Producer").getRoleId(), u.getUserId());	
+			addL2GoRole(L2G_PRODUCER, u);
+			UserLocalServiceUtil.addRoleUser(RoleLocalServiceUtil.getRole(u.getCompanyId(), L2G_PRODUCER).getRoleId(), u.getUserId());	
 		}else{
 			SessionErrors.add(request, "system-permissions-error");
 		}
@@ -388,41 +394,41 @@ public class AdminUserManagement extends MVCPortlet {
 		PermissionManager pm = new PermissionManager(serviceContext);
 	
 		try {
-			RoleLocalServiceUtil.getRole(u.getCompanyId(), "L2Go Coordinator");//if role don't exist, go to catch block and create the role coordinator 
+			RoleLocalServiceUtil.getRole(u.getCompanyId(), L2G_COORDINATOR);//if role don't exist, go to catch block and create the role coordinator 
 		} catch (PortalException e) {
 			// delete l2g coordinators from custom table
 			/**List<Coordinator> cL = CoordinatorLocalServiceUtil.getCoordinators(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 			for (int i = 0; i < cL.size(); i++)
 				CoordinatorLocalServiceUtil.deleteCoordinator(cL.get(i));*/
 			
-			Role role = createRole("L2Go Coordinator", u);
+			Role role = createRole(L2G_COORDINATOR, u);
 			
 			//add default Permissions
 			setL2GCoordinatorPermissions(role, pm);
 		}
 		try {
-			RoleLocalServiceUtil.getRole(u.getCompanyId(), "L2Go Producer");
+			RoleLocalServiceUtil.getRole(u.getCompanyId(), L2G_PRODUCER);
 		} catch (PortalException e) {
 			// delete l2g producer from custom table
 			/**List<Producer> cL = ProducerLocalServiceUtil.getProducers(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 			for (int i = 0; i < cL.size(); i++)
 				ProducerLocalServiceUtil.deleteProducer(cL.get(i)); */
-			Role role = createRole("L2Go Producer", u);
+			Role role = createRole(L2G_PRODUCER, u);
 			//add default Permissions
 			setL2GProducerPermissions(role, pm);
 
 		}
 		try {
-			RoleLocalServiceUtil.getRole(u.getCompanyId(), "L2Go Student");
+			RoleLocalServiceUtil.getRole(u.getCompanyId(), L2G_STUDENT);
 		} catch (PortalException e) {
-			Role role = createRole("L2Go Student", u);
+			Role role = createRole(L2G_STUDENT, u);
 			//add default Permissions
 			setL2GStudentPermissions(role, pm);				
 		}
 		try {
-			RoleLocalServiceUtil.getRole(u.getCompanyId(), "L2Go Admin");
+			RoleLocalServiceUtil.getRole(u.getCompanyId(), L2G_ADMIN);
 		} catch (PortalException e) {
-			Role role = createRole("L2Go Admin", u);
+			Role role = createRole(L2G_ADMIN, u);
 			//add default Permissions
 			setL2GAdminPermissions(role, pm);
 			
@@ -569,21 +575,21 @@ public class AdminUserManagement extends MVCPortlet {
 		
 		//Remove defaults for non L2G Users (https://github.com/liferay/liferay-portal/blob/master/portal-impl/src/resource-actions/sites.xml)
 		try {
-			pm.removeL2GLayoutPermissions("Guest", new String[] {ActionKeys.VIEW, ActionKeys.ADD_DISCUSSION});
+			pm.removeL2GLayoutPermissions(RoleConstants.GUEST, new String[] {ActionKeys.VIEW, ActionKeys.ADD_DISCUSSION});
 			} catch (PortalException e) {
 			RoleLocalServiceUtil.checkSystemRoles();
 			e.printStackTrace();
 		}
 		try {
 			
-			pm.removeL2GLayoutPermissions("Site Member", new String[] {ActionKeys.VIEW, ActionKeys.ADD_DISCUSSION, ActionKeys.CUSTOMIZE});
+			pm.removeL2GLayoutPermissions(RoleConstants.SITE_MEMBER, new String[] {ActionKeys.VIEW, ActionKeys.ADD_DISCUSSION, ActionKeys.CUSTOMIZE});
 		} catch (PortalException e) {
 			RoleLocalServiceUtil.checkSystemRoles();
 			e.printStackTrace();
 		}		
         //Permission of this role should be removed iff L2G Layout Admin should be seperated from OmniAdmin Role
 		try {
-			pm.removeL2GLayoutPermissions("Guest", new String[] {ActionKeys.VIEW, ActionKeys.ADD_DISCUSSION});	
+			pm.removeL2GLayoutPermissions(RoleConstants.GUEST, new String[] {ActionKeys.VIEW, ActionKeys.ADD_DISCUSSION});	
 
 		} catch (PortalException e) {
 			RoleLocalServiceUtil.checkSystemRoles();

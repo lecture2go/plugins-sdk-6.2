@@ -691,6 +691,7 @@
         <exception>Institution_HostInstitution</exception>
         <exception>StatisticValue</exception>
         <exception>StatisticDate</exception>
+        <exception>NoProperty</exception>
     </exceptions>
 
 
