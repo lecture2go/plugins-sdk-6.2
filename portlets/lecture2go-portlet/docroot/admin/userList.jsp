@@ -40,77 +40,78 @@
 			</aui:select>
 		</aui:form>
 	</aui:fieldset>
-</div>
-<liferay-ui:search-container emptyResultsMessage="no-l2go-roles-found" delta="10" iteratorURL="<%= portletURL %>">
-	<liferay-ui:search-container-results>
-		<%
-			results = ListUtil.subList(tempUserList, searchContainer.getStart(), searchContainer.getEnd());
-			total = tempUserList.size();
-			pageContext.setAttribute("results", results);
-			pageContext.setAttribute("total", total);
-		%>
-	</liferay-ui:search-container-results>
 
-	<liferay-ui:search-container-row className="com.liferay.portal.model.User" keyProperty="userId" modelVar="usr">
-		<portlet:actionURL name="viewRole" var="editURL">
-			<portlet:param name="userId" value="<%= String.valueOf(usr.getUserId())%>" />
-			<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>
-		</portlet:actionURL>
-		<liferay-ui:search-container-column-text name="name">
-		  <div class="adminrow wide">
-			<div class="admintile wide">
-				<strong><%=usr.getFullName()%></strong>
-				<br/>
-				<%
-				List<Role> roles = usr.getRoles();
-				String n = "";
-				for (int i = 0; i < roles.size(); i++) {
-					//check for l2g role
-					String rn = roles.get(i).getName();
-					if(rn.contains("L2Go Coordinator")){
-						long fId = new Long(0);
-						try{ fId=CoordinatorLocalServiceUtil.getCoordinator(usr.getUserId()).getInstitutionId(); }catch (Exception e){}
-						String fN = "";
-						try{
-							fN= InstitutionLocalServiceUtil.getInstitution(fId).getName(); 
-							n+="coordinator-for "+ fN+"<br/>";
-						}catch (Exception e){}
-					}
-					if(rn.contains("L2Go Producer")){
-						long fId = new Long(0);
-						try{fId = ProducerLocalServiceUtil.getProducer(usr.getUserId()).getInstitutionId();}catch (Exception e){}
-						String fN = "";
-						try{
-							fN= InstitutionLocalServiceUtil.getInstitution(fId).getName(); 
-							n+="producer-for "+ fN+"<br/>";
-						}catch (Exception e){}
-					}
-					if(!rn.contains("L2Go Producer") && !rn.contains("L2Go Coordinator")){
-						n+=rn+"<br/>";
-					}
-				}%>
-			<%=n%>
-			</div>
-			<div class="admintile wide icons">
-				<%if(permissionAdmin){
-					%>
-					 <a href="<%=editURL.toString()%>">
-			   		 	<span class="icon-large icon-pencil"></span>
-					 </a>			
+	<liferay-ui:search-container emptyResultsMessage="no-l2go-roles-found" delta="10" iteratorURL="<%= portletURL %>">
+		<liferay-ui:search-container-results>
+			<%
+				results = ListUtil.subList(tempUserList, searchContainer.getStart(), searchContainer.getEnd());
+				total = tempUserList.size();
+				pageContext.setAttribute("results", results);
+				pageContext.setAttribute("total", total);
+			%>
+		</liferay-ui:search-container-results>
+	
+		<liferay-ui:search-container-row className="com.liferay.portal.model.User" keyProperty="userId" modelVar="usr">
+			<portlet:actionURL name="viewRole" var="editURL">
+				<portlet:param name="userId" value="<%= String.valueOf(usr.getUserId())%>" />
+				<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>
+			</portlet:actionURL>
+			<liferay-ui:search-container-column-text name="name">
+			  <div class="adminrow wide">
+				<div class="admintile wide">
+					<strong><%=usr.getFullName()%></strong>
+					<br/>
 					<%
-				}else{
-					if(new Lecture2GoRoleChecker().isProducer(usr) || new Lecture2GoRoleChecker().isStudent(usr)){
-					 %>
-					 <a href="<%=editURL.toString()%>">
-			   		 	<span class="icon-large icon-pencil"></span>
-					 </a>
-					 <%
-					}
-				 }%>
+					List<Role> roles = usr.getRoles();
+					String n = "";
+					for (int i = 0; i < roles.size(); i++) {
+						//check for l2g role
+						String rn = roles.get(i).getName();
+						if(rn.contains("L2Go Coordinator")){
+							long fId = new Long(0);
+							try{ fId=CoordinatorLocalServiceUtil.getCoordinator(usr.getUserId()).getInstitutionId(); }catch (Exception e){}
+							String fN = "";
+							try{
+								fN= InstitutionLocalServiceUtil.getInstitution(fId).getName(); 
+								n+="coordinator-for "+ fN+"<br/>";
+							}catch (Exception e){}
+						}
+						if(rn.contains("L2Go Producer")){
+							long fId = new Long(0);
+							try{fId = ProducerLocalServiceUtil.getProducer(usr.getUserId()).getInstitutionId();}catch (Exception e){}
+							String fN = "";
+							try{
+								fN= InstitutionLocalServiceUtil.getInstitution(fId).getName(); 
+								n+="producer-for "+ fN+"<br/>";
+							}catch (Exception e){}
+						}
+						if(!rn.contains("L2Go Producer") && !rn.contains("L2Go Coordinator")){
+							n+=rn+"<br/>";
+						}
+					}%>
+				<%=n%>
+				</div>
+				<div class="admintile wide icons">
+					<%if(permissionAdmin){
+						%>
+						 <a href="<%=editURL.toString()%>">
+				   		 	<span class="icon-large icon-pencil"></span>
+						 </a>			
+						<%
+					}else{
+						if(new Lecture2GoRoleChecker().isProducer(usr) || new Lecture2GoRoleChecker().isStudent(usr)){
+						 %>
+						 <a href="<%=editURL.toString()%>">
+				   		 	<span class="icon-large icon-pencil"></span>
+						 </a>
+						 <%
+						}
+					 }%>
+				</div>
 			</div>
-		</div>
-		</liferay-ui:search-container-column-text>
-	</liferay-ui:search-container-row>
-
-	<liferay-ui:search-iterator />
-</liferay-ui:search-container>
+			</liferay-ui:search-container-column-text>
+		</liferay-ui:search-container-row>
+	
+		<liferay-ui:search-iterator />
+	</liferay-ui:search-container>
+</div>

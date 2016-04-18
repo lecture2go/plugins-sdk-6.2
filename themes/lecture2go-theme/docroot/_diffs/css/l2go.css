@@ -439,7 +439,7 @@ a.list-group-item:hover, a.list-group-item:focus {
 #loadMoreTerms, #loadMoreCreators {
     cursor: pointer;
     margin-left: 15px;
-    color: rgb(249, 14, 14);
+    color: #c90219;
 }
 
 .aui .accordion-inner {
