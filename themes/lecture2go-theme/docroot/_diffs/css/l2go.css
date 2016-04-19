@@ -6,6 +6,11 @@
     width: 0px;
 }
 
+.meta-date {
+    font-size: 9px;
+    font-style: normal !important;
+}
+
 .span3 .accordion-inner li {
     background-color: #f3f3f3 !important;
     border-color: #fff #f3f3f3 #d4d4d4 !important;
@@ -742,13 +747,6 @@ thead, th {
 .meta-creators {
     font-size: 12px;
     font-weight: 100;
-}
-
-.meta-date {
-    font-style: normal !important;
-    color: #AEAEAE;
-    line-height: 10px;
-    font-size: 10px;
 }
 
 .col-md-7 {
