@@ -100,7 +100,6 @@ List<Host> hostList = HostLocalServiceUtil.getByGroupId(groupId);
 //System.out.println(hostList.toString());
 //Get StreamingServer Defaults
 Host defaultHost = HostLocalServiceUtil.getByDefault(companyId, groupId);
-
 //Sort preset for first level Institutions
 int maxOrder = InstitutionLocalServiceUtil.getMaxSortByParentId(rootId)+1;
 
@@ -179,7 +178,7 @@ Group Institution_Host Permissions:
 	</liferay-ui:panel>
 </c:if>
 
-
+<%if (defaultHost != null) {%>
 <%--STREAMING SERVER SETTINGS AND LIST --%>
 <c:if test='<%= permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "VIEW_HOSTS") %>'>
 
@@ -291,7 +290,9 @@ Group Institution_Host Permissions:
 			</liferay-ui:search-container>
 		</liferay-ui:panel>
 </c:if>
-
+<%} else {%>
+<liferay-ui:message key="refresh-to-load-defaults"></liferay-ui:message> 
+<%}%>
 <%-- INSTITUTION LISTINGS --%>
 
 <% // Unfortunately JSP does not support nesting of <c:choose> when braking containers at arbitrary points

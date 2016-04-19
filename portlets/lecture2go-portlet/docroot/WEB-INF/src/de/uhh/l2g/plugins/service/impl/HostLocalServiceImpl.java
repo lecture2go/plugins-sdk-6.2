@@ -25,9 +25,11 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -176,19 +178,19 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 		int port = Integer.valueOf(GetterUtil.getInteger(PropsUtil.get("lecture2go.default.streamingPort")));
         
 		if (streamer.isEmpty()) {
-        	streamer = SYS_SERVER;
+        	streamer = RepositoryManager.SYS_SERVER;
         	LOG.error("Portal property lecture2go.default.streamingHost not set. Using default!");
         }
         if (protocol.isEmpty()) {
-        	protocol = SYS_PROTOCOL;
+        	protocol = RepositoryManager.SYS_PROTOCOL;
         	LOG.error("Portal property lecture2go.default.streamingProtocol not set. Using default!");
         }
         if (serverRoot.isEmpty()){
-        	serverRoot = SYS_ROOT;
+        	serverRoot = RepositoryManager.SYS_ROOT;
         	LOG.error("Portal property lecture2go.default.serverRoot not set. Using default!");
         }
         if (port == 0){
-        	port = SYS_PORT;
+        	port = RepositoryManager.SYS_PORT;
         	LOG.error("Portal property lecture2go.default.streamingPort not set. Using default!");
         }
 		defaultHost.setStreamer(streamer);
@@ -318,6 +320,8 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 			        host = deleteHost(hostId);
 		        }
 		        else{
+		        	String message = LanguageUtil.format(serviceContext.getLocale(), "There are {0} objects still refering to this institution", l);
+		        	SessionMessages.add(serviceContext.getRequest(),"deletion-locked", message);
 		        	System.out.println("Could not delete Host because it is still used by "+ l +" Institutions");
 		        }
 		        return host;

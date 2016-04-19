@@ -325,7 +325,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		if (parentId > 0 && parentId < Long.MAX_VALUE) institution.setLevel(parent.getLevel()+1);
 		else institution.setLevel(0);
 		
-		if(sort == 0) sort = 1;
+		if(sort <= 0) sort = 1;
 		institution.setSort(updateSort(institution,sort));
 
 		institution.setExpandoBridgeAttributes(serviceContext);
@@ -365,7 +365,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 			institution.setGroupId(groupId);
 			institution.setCompanyId(companyId);
 
-			if(sort == 0) sort = 1;
+			if(sort <= 0) sort = 1;
 			institution.setSort(updateSort(institution,sort));
 
 			institution.setExpandoBridgeAttributes(serviceContext);
