@@ -12,5 +12,6 @@
         <portlet id="lg-admin-thread-management"></portlet>
         <portlet id="lg-open-access-videos"></portlet>
         <portlet id="lg-admin-category-management"></portlet>
+        <portlet id="lg-front-page"></portlet>
 	</category>
 </display>

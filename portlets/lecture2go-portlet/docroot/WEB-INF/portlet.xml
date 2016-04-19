@@ -5,6 +5,33 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
 	version="2.0">
 	<portlet>
+     	<portlet-name>lg-front-page</portlet-name>
+     	<display-name>L2Go Frontpage</display-name>
+     	<portlet-class>de.uhh.l2g.plugins.guest.FrontPage</portlet-class>
+	    <init-param>
+	      	<name>view-template</name>
+	      	<value>/guest/frontPage.jsp</value>
+	    </init-param>
+	    <init-param>
+	      	<name>add-process-action-success-action</name>
+	      	<value>false</value>
+	    </init-param>
+	    <expiration-cache>0</expiration-cache>
+	    <supports>
+	      	<mime-type>text/html</mime-type>
+	    </supports>
+	    <resource-bundle>content.Language</resource-bundle>
+	    <portlet-info>
+	      	<title>L2Go Frontpage</title>
+	      	<short-title>L2Go Frontpage</short-title>
+	      	<keywords>L2Go Frontpage</keywords>
+	    </portlet-info>
+	    <security-role-ref>
+	      	<role-name>guest</role-name>
+	    </security-role-ref>
+    </portlet>
+	
+	<portlet>
      	<portlet-name>lg-open-access-videos</portlet-name>
      	<display-name>Open Access Videos</display-name>
      	<portlet-class>de.uhh.l2g.plugins.guest.OpenAccessVideos</portlet-class>
