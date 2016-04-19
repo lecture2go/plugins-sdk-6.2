@@ -14,6 +14,16 @@
     line-height: 27px;
 }
 
+#usr-roles div > div > input {
+    margin-top: 10px;
+    position: absolute;
+}
+
+#addCreator {
+    float: left;
+    margin-left: 20%;
+}
+
 .aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle {
     background-color: #a4a5a6;
     color: #000;
@@ -1095,10 +1105,6 @@ thead, th {
     margin-top: 10px;
 }
 
-#addCreator {
-    margin-left: 20%;
-}
-
 #metadata-upload select {
     width: 50%;
 }
@@ -1314,11 +1320,6 @@ thead, th {
     font-size: 11px;
     padding: 0;
     margin-right: 3px
-}
-
-#usr-roles div > div > input {
-    margin-left: -5%;
-    position: absolute;
 }
 
 #usr-roles > div {

@@ -79,7 +79,7 @@
 						<div class="admintile wide icons creators">
 							<%if(count1==0 && count2==0){%>
 								<a href="<%=removeURL.toString()%>">
-									<span class="icon-large icon-remove" onclick="return confirm('really-delete-question')"></span>
+									<span class="icon-large icon-remove" onclick="return confirm('<liferay-ui:message key="really-delete-question"/>')"></span>
 								</a>
 							<%}%>
 							<aui:button type="submit"/>
@@ -88,10 +88,10 @@
 	
 						<%
 							if(count1>0){
-								%><b><%=count1%></b> video-s<br/><%
+								%><b><%=count1%></b> <liferay-ui:message key="video-s"/> <br/><%
 							}
 							if(count2>0){
-								%><b><%=count2%></b> lecture-series<%
+								%><b><%=count2%></b> <liferay-ui:message key="lecture-series-s"/> <%
 							}
 						%>
 						</div>					

@@ -57,7 +57,7 @@
 	
 %>
 <div class="noresponsive">
-	<aui:fieldset helpMessage="choose-filter" column="true">
+	<aui:fieldset helpMessage="" column="true">
 				<%if(permissionAdmin){%>
 								<portlet:renderURL var="sortByCoordinator">
 									<portlet:param name="jspPage" value="/admin/videosList.jsp" />
@@ -66,7 +66,7 @@
 								</portlet:renderURL>
 								<aui:form action="<%= sortByCoordinator.toString() %>" method="post">
 									<aui:select name="coordinatorId" label="" onChange="submit();">
-										<aui:option value="">select-coordinator</aui:option>
+										<aui:option value=""><liferay-ui:message key="select-coordinator"/></aui:option>
 										<%for (int i = 0; i < coordinators.size(); i++) {
 											if(coordinators.get(i).getCoordinatorId()==coordinatorId){%>
 												<aui:option value='<%=coordinators.get(i).getCoordinatorId()%>' selected="true"><%=coordinators.get(i).getLastName()+", "+coordinators.get(i).getFirstName()%></aui:option>
@@ -85,7 +85,7 @@
 								</portlet:renderURL>
 								<aui:form action="<%= sortByProducer.toString() %>" method="post">
 									<aui:select name="producerId" label="" onChange="submit();">
-										<aui:option value="">select-producer</aui:option>
+										<aui:option value=""><liferay-ui:message key="select-producer"/></aui:option>
 										<%for (int i = 0; i < producers.size(); i++) {
 											if(producers.get(i).getProducerId()==producerId){%>
 												<aui:option value='<%=producers.get(i).getProducerId()%>' selected="true"><%=producers.get(i).getLastName()+", "+producers.get(i).getFirstName()%></aui:option>
@@ -104,7 +104,7 @@
 								</portlet:renderURL>
 								<aui:form action="<%= sortByLectureseries.toString() %>" method="post">
 									<aui:select name="lectureseriesId" label="" onChange="submit();">
-										<aui:option value="">select-lecture-series</aui:option>
+										<aui:option value=""><liferay-ui:message key="select-lecture-series"/></aui:option>
 										<%for (int i = 0; i < lectureseries.size(); i++) {
 											if(lectureseries.get(i).getLectureseriesId()==lectureseriesId){%>
 												<aui:option value='<%=lectureseries.get(i).getLectureseriesId()%>' selected="true"><%=lectureseries.get(i).getName()%></aui:option>
@@ -125,7 +125,7 @@
 				<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>	
 			</portlet:actionURL>	
 			<a href="<%=addVideoURL.toString()%>" class="add-link">
-			    add-video <span class="icon-large icon-plus-sign"/>
+			    <liferay-ui:message key="add-video"/> <span class="icon-large icon-plus-sign"/>
 			</a>
 	<%}%>
 	
@@ -159,7 +159,7 @@
 							if(!ls.getNumber().equals(""))lName+=ls.getNumber()+" :";
 							if(!ls.getName().equals(""))lName+=ls.getName();
 							String vName = vid.getTitle();
-							if(vName.trim().equals(""))vName ="not-titled";
+							if(vName.trim().equals(""))vName =LanguageUtil.get(pageContext, "no-title");
 						
 							if(!vid.getFilename().equals("")){%>
 							<aui:a  href="<%=url%>" target="blank">
@@ -186,42 +186,42 @@
 						if(!vid.getFilename().equals("")){
 							%><div class="format"><%
 							if(vid.getMp4File().isFile()){%>
-								mp4 &nbsp;
+								<liferay-ui:message key="mp4-video"/> &nbsp;
 							<%}
 							
 							if(vid.getMp3File().isFile()){%>
-								mp3 &nbsp;
+								<liferay-ui:message key="mp3-audio"/> &nbsp;
 							<%}
 							
 							if(vid.getM4aFile().isFile()){%>
-								m4a &nbsp;
+								<liferay-ui:message key="m4a-audio"/> &nbsp;
 							<%}
 							
 							if(vid.getM4vFile().isFile()){%>
-								m4v &nbsp;
+								<liferay-ui:message key="m4v-video"/> &nbsp;
 							<%}
 							
 							if(vid.getFlvFile().isFile()){%>
-								flv &nbsp;
+								<liferay-ui:message key="flv-video"/> &nbsp;
 							<%}
 							
 							if(vid.getOggFile().isFile()){%>
-								ogg &nbsp;
+								<liferay-ui:message key="ogg-video"/> &nbsp;
 							<%}
 							
 							if(vid.getWebmFile().isFile()){%>
-								webm &nbsp;
+								<liferay-ui:message key="webm-video"/> &nbsp;
 							<%}
 							
 							if(vid.getPdfFile().isFile()){%>
-								pdf &nbsp;
+								<liferay-ui:message key="pdf-text"/> &nbsp;
 							<%}%>
 							</div>
 							<em> 
 								<br/>
 								<%=vid.getDate()%> 
 								<br/>
-								hits: <%=vid.getHits()%>
+								<liferay-ui:message key="hits"/>: <%=vid.getHits()%>
 							</em>
 						<%}%>
 						</div>
@@ -266,10 +266,9 @@
 							<portlet:param name="videoId" value="<%= primKey%>" />
 							<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>	
 						</portlet:actionURL>
-						
 								
 						<a href="<%=removeURL.toString()%>">
-							<span class="icon-large icon-remove" onclick="return confirm('really-delete-question')"></span>
+							<span class="icon-large icon-remove" onclick="return confirm('<liferay-ui:message key="really-delete-question"/>')"></span>
 						</a>		
 						
 						<%if(vid.getFilename().length()>0){
