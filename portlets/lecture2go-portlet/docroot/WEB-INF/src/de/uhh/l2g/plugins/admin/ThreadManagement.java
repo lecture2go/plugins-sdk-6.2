@@ -107,19 +107,21 @@ public class ThreadManagement extends MVCPortlet {
 		}
 	}
 	
-	public void killAllThreads(ActionRequest request, ActionResponse response){
+	public void removeAllJobs(ActionRequest request, ActionResponse response){
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 					ScheduledThread.class.getName(), request);
 			
 			  String schedulerClassName = ParamUtil.getString(request, "schedulerName");
-				
-			  //Use the correct Message Consumer 
-			  ClassLoader classLoader = PortletClassLoaderUtil.getClassLoader(serviceContext.getPortletId()); //Where portletID is not null
-			  PortletScheduler scheduler = (PortletScheduler) classLoader.loadClass(schedulerClassName).newInstance();
+			  if (schedulerClassName.isEmpty()){
+				  PortletScheduler.removeAllPortletSchedulerJobs();
+			  }
+			  else{	//Use the correct Message Consumer 
+			  	ClassLoader classLoader = PortletClassLoaderUtil.getClassLoader(serviceContext.getPortletId()); //Where portletID is not null
+			  	PortletScheduler scheduler = (PortletScheduler) classLoader.loadClass(schedulerClassName).newInstance();
 			  
-			  scheduler.killAll();
-
+			  	scheduler.removeAllJobs();
+			  }
 		 } catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
 			PortalUtil.copyRequestParameters(request, response);
@@ -143,6 +145,7 @@ public class ThreadManagement extends MVCPortlet {
 	
 	public void destroy(){
 		System.out.println(this.getPortletName());
+	//	PortletScheduler.ListSchedulerEntries(this.getPortletName());
 		super.destroy();
 	}
 	
