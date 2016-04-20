@@ -61,7 +61,7 @@ public class RepositoryManager {
 	/** The run cmd. */
 	static Runtime runCmd = Runtime.getRuntime();
 	
-    public static final String SYS_ROOT = "lg_0000";
+    public static final String SYS_ROOT = "vh_0000";
     public static final String SYS_SERVER = "localhost";
     public static final String SYS_PROTOCOL = "http";
     public static final int SYS_PORT = 80;

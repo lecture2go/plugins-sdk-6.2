@@ -336,6 +336,7 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 		        Counter counter = CounterLocalServiceUtil.getCounter(Host.class.getName());
 		        LOG.debug(counter.getCurrentId());
 	   			//check Host Count (if 1 it is supposed to be default host)
+		        LOG.info("It's strongly suggested to set portal property: counter.increment."+Host.class.getName()+"=1");
 		        int count = HostLocalServiceUtil.getHostsCount();
 		        LOG.debug(count); 
 		        long newHostId = 0; //Reset if table is empty

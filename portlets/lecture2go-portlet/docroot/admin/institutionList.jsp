@@ -9,6 +9,7 @@
 <%@ page import="de.uhh.l2g.plugins.admin.AdminInstitutionManagement" %>
 <%@ page import="de.uhh.l2g.plugins.admin.AdminUserManagement" %>
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %>
+<%@ page import="com.liferay.portal.kernel.util.GetterUtil" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%!com.liferay.portal.kernel.dao.search.SearchContainer<Institution> searchInstitutionContainer = null;%>
@@ -90,7 +91,7 @@ String repDirectory = PropsUtil.get("lecture2go.media.repository");
 
 //Get Top Level institution of current scope
 Institution root = InstitutionLocalServiceUtil.getRootByGroupId(companyId, groupId);
-long rootId = root.getInstitutionId();
+long rootId = GetterUtil.getLong(root.getInstitutionId());
 
 //Get First Level institution List
 List<Institution> institutions = InstitutionLocalServiceUtil.getByGroupIdAndParent(groupId,rootId);
@@ -291,7 +292,7 @@ Group Institution_Host Permissions:
 		</liferay-ui:panel>
 </c:if>
 <%} else {%>
-<liferay-ui:message key="refresh-to-load-defaults"></liferay-ui:message> 
+<liferay-ui:message key="streamer-defaults-not-configured"></liferay-ui:message> 
 <%}%>
 <%-- INSTITUTION LISTINGS --%>
 

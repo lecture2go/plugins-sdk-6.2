@@ -142,11 +142,13 @@ public class AdminInstitutionManagement extends MVCPortlet {
 			long cI = InstitutionLocalServiceUtil.updateCounter();
 			long cIH  = Institution_HostLocalServiceUtil.updateCounter();
 		    
+
+			//Initialize if needed
+			//Trigger new init by deleting this test, removing Role or removing ResourcePermissions for this context from DB
 			if (isInitialized  == false) {
 				//Initialize if needed
-				LOG.info("Initialize Service Builder Tables beacause initialized is " +isInitialized);
-									    
-					//In case table is empty we'll have 0 counter
+				LOG.info("Initialize Service Builder Tables beacause the portlet seems to be unconfigured. isInitialized:" +isInitialized);
+				
 						
 					    //Add default host if empty or default entry does not exist
 					    long defaultHostId = HostLocalServiceUtil.getDefaultHostId(companyId,groupId);
@@ -166,7 +168,6 @@ public class AdminInstitutionManagement extends MVCPortlet {
 					       defaultInstitutionHostId = Institution_HostLocalServiceUtil.addDefaultInstitutionHost(defaultInstitutionId,defaultHostId,serviceContext);
 					    }
 					    LOG.debug("Default Institution_Host: "+defaultInstitutionHostId);
-						
 			}
 		    
 				
