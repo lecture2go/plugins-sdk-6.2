@@ -28,16 +28,22 @@ List<PortletScheduler> portletScheduler = PortletScheduler.ListSchedulers();
 <liferay-ui:message key="ScheduledJobs: die eigentlichen Quartz Jobs, nur sie haben ein SchedulerResponse mit Job-Status"></liferay-ui:message>
 <%-- This list all unique schedulers --%>
 <% 
-	String state = "";
+    TriggerState state = null;
 	for(PortletScheduler ps : portletScheduler) {  	
-	state = SchedulerEngineHelperUtil.getJobState(ps.getJobName(), ps.getJobName(), StorageType.MEMORY_CLUSTERED).toString();
+	state = SchedulerEngineHelperUtil.getJobState(ps.getJobName(), ps.getJobName(), StorageType.MEMORY_CLUSTERED);
 %>
 	<liferay-ui:message key="<%= ps.getJobName() %>"></liferay-ui:message> 
-	<liferay-ui:message key="<%= state %>"></liferay-ui:message>  
+	<liferay-ui:message key="<%= state.toString() %>"></liferay-ui:message>  
 
         
- <% } %>
-   
+ 
+ 
+ <% if (state.equals(TriggerState.UNSCHEDULED) && scheduledJobs.isEmpty()) {	%>
+ 	<aui:form action="<%= startJobURL %>" name="<portlet:namespace />fm">         
+		<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= ps.getJobName() %>'/>
+		<aui:button type="submit" value="Start" ></aui:button>
+	</aui:form>
+ <% } %>   
      <br>
 	<liferay-ui:message key="SchedulerEntries: Liferays Scheduler Liste"></liferay-ui:message>
 	<%-- This lists all added Entry instances  --%>
@@ -66,8 +72,8 @@ List<PortletScheduler> portletScheduler = PortletScheduler.ListSchedulers();
 					<aui:button type="submit" value="Stop" ></aui:button>
 				</aui:form>
 				<aui:form action="<%= startJobURL %>" name="<portlet:namespace />fm">         
-					<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= job.getEventListenerClass() %>'/>
-					<aui:button type="submit" value="Start" ></aui:button>
+						<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= job.getEventListenerClass() %>'/>
+						<aui:button type="submit" value="Start" ></aui:button>
 				</aui:form>
 				<liferay-ui:message key="Updated den Trigger(Timer) (noch nicht implentiert))"></liferay-ui:message>
 				<aui:form action="<%= updateJobURL %>" name="<portlet:namespace />fm">         
@@ -81,7 +87,7 @@ List<PortletScheduler> portletScheduler = PortletScheduler.ListSchedulers();
 				</aui:form>
 		</liferay-ui:panel>
 	<% } %>
-	       
+<% } %>	       
 		
 		<liferay-ui:panel title="Manage" collapsible="true" id="managePanelId"
 						defaultState="open"

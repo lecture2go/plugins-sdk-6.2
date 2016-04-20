@@ -26,10 +26,9 @@ public class FacilityMapper {
 		if (legacyFacility.getParentId() == 0){
 			try {
 				Institution prevRoot = InstitutionLocalServiceUtil.getRootByGroupId(companyId, groupId);
-				if(prevRoot != null){ InstitutionLocalServiceUtil.deleteInstitution(prevRoot);
+				InstitutionLocalServiceUtil.deleteInstitution(prevRoot);
 				//also clean Link
 				Institution_HostLocalServiceUtil.deleteLinkByInstitution(prevRoot, groupId, companyId);
-				}
 			
 			} catch (Exception e) {
 		         System.out.println(e.getClass().getName());

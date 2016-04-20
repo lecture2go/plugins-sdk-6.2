@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
+import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.scheduler.messaging.ReceiverKey;
@@ -79,8 +80,9 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 	  protected String destination;
 	  protected String receiverKey;
 	  
-	 // protected final String DEST = "l2g/Scheduler";
+	  //keep this constants 
 	  protected final String DEST = DestinationNames.SCHEDULER_DISPATCH;
+	  protected final StorageType STOR = StorageType.MEMORY_CLUSTERED;
 	  
 	  //This has to be kept unique
 	  protected SchedulerEntry schedulerEntry;	  
@@ -299,30 +301,34 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 			       	}
 			       	else{
 			       			LOG.info("Scheduler message not available! Assemble empty entry with defaults...");
-			       			//TODO: assemble message from things we know
+			       			//TODO: assemble message from things we know - SchedulerRespons should be available here
+			       			SchedulerResponse rp = SchedulerEngineHelperUtil.getScheduledJob(this.schedulerClassName, this.schedulerClassName, this.STOR);
 			       			Message m = new Message();
+			       			m.copyFrom(rp.getMessage());
 			       			m.put(SchedulerEngine.PORTLET_ID, GetterUtil.getString(this.portletId));
 			       			m.put(SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME, GetterUtil.getString(this.schedulerClassName));
 			       			m.put(SchedulerEngine.EXCEPTIONS_MAX_SIZE, 0);
 			       			this.setMessage(m);
+			       			this.setTrigger(rp.getTrigger());
 			       			
 			       	}
-			      	  TriggerState state = SchedulerEngineHelperUtil.getJobState(this.getJobName(), this.getGroupName(), this.getStorageType());
+			      	  TriggerState state = SchedulerEngineHelperUtil.getJobState(this.schedulerClassName, this.schedulerClassName, this.STOR);
 			      
 			      	  if (state != null && state.equals(TriggerState.UNSCHEDULED)){
 			      		  this.getMessage().put(SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME, this.schedulerClassName);
-			      		  this.getMessage().setDestinationName(this.getMessage().getValues().get(SchedulerEngine.DESTINATION_NAME).toString());
+			      		  this.getMessage().setDestinationName(this.DEST);
 			      		  this.getMessage().put(SchedulerEngine.RECEIVER_KEY, this.getMessage().getValues().get(SchedulerEngine.RECEIVER_KEY).toString());
 			      		  
 			      		  LOG.info("Scheduling :" + this.schedulerClassName +" ");  
 			      		  LOG.info("New Message "+this.getMessage().toString());
 			      		  
-			   	       Thread thread = Thread.currentThread();
-				       LOG.info("Thread :" + thread.getContextClassLoader() + thread.toString());
+			      		  Thread thread = Thread.currentThread();
+			      		  LOG.info("Thread :" + thread.getContextClassLoader() + thread.toString());
 
 			      		 //SchedulerEngineHelperUtil.update(this.getTrigger(), this.getStorageType());
-			      		 // SchedulerEngineHelperUtil.schedule(this.getTrigger(), this.getStorageType(), this.getDescription(), this.destination, this.getMessage(), exceptionsMaxSize);     
-				       	 SchedulerEngineHelperUtil.schedule(schedulerEntry, this.getStorageType(), portletId, exceptionsMaxSize);
+			      		
+			      	 	  if(schedulerEntry == null)  SchedulerEngineHelperUtil.schedule(this.getTrigger(), this.STOR, this.getDescription(), this.DEST, this.getMessage(), exceptionsMaxSize);     
+			      	 	  else SchedulerEngineHelperUtil.schedule(schedulerEntry, this.STOR, portletId, exceptionsMaxSize);
 			      	  }
 			      	  else {
 			      		 if (state == null) LOG.error("Could not find Job with Name: "+this.schedulerClassName);
