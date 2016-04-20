@@ -109,7 +109,7 @@
 						<a href="#"><img title="cc-license-click-for-info" src="/lecture2go-portlet/img/lizenz_cc.png" /></a> 		
 				 	  <%}%>       
 				   </div>
-			       <div class="label label-light">${video.hits} views</div>			  
+			       <div class="label label-light">${video.hits} <liferay-ui:message key="views"/></div>			  
 			  </div>
 			  
 			  <c:if test="${relatedVideos.size()>1}"> <div class="meta-video-info"></c:if>

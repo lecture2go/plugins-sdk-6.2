@@ -44,7 +44,7 @@
 	<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>
 </portlet:renderURL>
 <div class="noresponsive">
-	<aui:fieldset helpMessage="choose-filter" column="true">
+	<aui:fieldset helpMessage='<liferay-ui:message key="choose-filter"/>' column="true">
 					<%if(permissionAdmin || permissionCoordinator){ %>
 							<portlet:renderURL var="sortByInstitution">
 								<portlet:param name="jspPage" value="/admin/lectureSeriesList.jsp" />
@@ -54,7 +54,7 @@
 							</portlet:renderURL>
 							<aui:form action="<%= sortByInstitution.toString() %>" method="post">
 								<aui:select name="institutionId" label="" onChange="submit();">
-									<aui:option value="">select-institution</aui:option>
+									<aui:option value=""><liferay-ui:message key="select-institution"/></aui:option>
 									<%for (Map.Entry<String, String> f : institutions.entrySet()) {
 											if(f.getKey().equals(institutionId.toString())){
 												%>
@@ -74,7 +74,7 @@
 							</portlet:renderURL>
 							<aui:form action="<%=sortByProducer.toString() %>" method="post">
 								<aui:select name="producerId" label="" onChange="submit();">
-									<aui:option value="">select-producer</aui:option>
+									<aui:option value=""><liferay-ui:message key="select-producer"/></aui:option>
 									<%for (int i = 0; i < producers.size(); i++) {
 											if(producers.get(i).getProducerId()==producerId){
 												%>
@@ -94,7 +94,7 @@
 							</portlet:renderURL>
 							<aui:form action="<%= sortBySemester.toString() %>" method="post">
 								<aui:select name="semesterId" label="" onChange="submit();">
-									<aui:option value="">select-semester</aui:option>
+									<aui:option value=""><liferay-ui:message key="select-semester"/></aui:option>
 									<%for (int i = 0; i < semesters.size(); i++) {
 											if(semesterId==semesters.get(i).getTermId()){
 												%>
@@ -114,26 +114,26 @@
 							</portlet:renderURL>
 							<aui:form action="<%= sortByStatus.toString() %>" method="post">
 								<aui:select name="statusId" label="" onChange="submit();">
-									<aui:option value="3">select-status</aui:option>
+									<aui:option value="3"><liferay-ui:message key="select-status"/></aui:option>
 											<%if(statusId==0){%>
-												<aui:option value='0' selected="true">approved-false</aui:option>
+												<aui:option value='0' selected="true"><liferay-ui:message key="approved-false"/></aui:option>
 											<%}else{%>
-												<aui:option value='0'>approved-false</aui:option>
+												<aui:option value='0'><liferay-ui:message key="approved-false"/></aui:option>
 											<%}%>				
 											<%if(statusId==1){%>
-												<aui:option value='1' selected="true">approved-true</aui:option>
+												<aui:option value='1' selected="true"><liferay-ui:message key="approved-true"/></aui:option>
 											<%}else{%>
-												<aui:option value='1'>approved-true</aui:option>
+												<aui:option value='1'><liferay-ui:message key="approved-true"/></aui:option>
 											<%}%>
 								</aui:select>
 							</aui:form>
 	</aui:fieldset>
 	<br/>
 	<a href="<%=addLectureseriesURL.toString()%>" class="add-link">
-	    add-new-lectureseries <span class="icon-large icon-plus-sign"/>
+	    <liferay-ui:message key="add-new-lectureseries"/> <span class="icon-large icon-plus-sign"/>
 	</a>
 					
-	<liferay-ui:search-container emptyResultsMessage="no-lectureseries-found" delta="10" iteratorURL="<%= portletURL %>">
+	<liferay-ui:search-container emptyResultsMessage='<liferay-ui:message key="no-lectureseries-found"/>' delta="10" iteratorURL="<%= portletURL %>">
 		<liferay-ui:search-container-results>
 			<%
 				tempLectureseriesList = LectureseriesLocalServiceUtil.getFilteredByApprovedSemesterFacultyProducer(statusId, semesterId, new Long(institutionId), new Long(producerId));
@@ -177,7 +177,7 @@
 						<%if(lectser.getNumberOfVideos()>0 || (permissionProducer && lectser.getApproved()==1)){ %>
 						<%}else{%>
 							<a href="<%=removeURL.toString()%>">
-								<span class="icon-large icon-remove" onclick="return confirm('really-delete-question')"></span>
+								<span class="icon-large icon-remove" onclick="return confirm('<liferay-ui:message key="really-delete-question"/>')"></span>
 							</a>
 						<%}%>
 						<a href="<%=editURL.toString()%>">

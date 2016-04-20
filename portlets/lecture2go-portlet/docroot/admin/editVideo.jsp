@@ -74,11 +74,11 @@
   });
 </script>
 <div class="noresponsive">
-	<label class="edit-video-lable">upload</label>
+	<label class="edit-video-lable"><liferay-ui:message key="upload"/></label>
 	<div id="date-time-form">
 		<aui:fieldset helpMessage="test" column="true" label="" >
 			<aui:layout>
-				<aui:input id="datetimepicker" name="datetimepicker" label="chose-date-time-bevor-upload"/>
+				<aui:input id="datetimepicker" name="datetimepicker" label="select-date-time-bevor-upload"/>
 				<aui:button-row>
 					<aui:button id="apply-date-time" name="apply-date-time" value="apply-date-time" onClick="applyDateTime();"/>
 				</aui:button-row>
@@ -104,12 +104,12 @@
 	<aui:fieldset column="false" label="" >
 		<aui:layout>
 			<aui:form action="<%=actionURL%>" commandName="model" name="metadata">
-				<label class="edit-video-lable">metadata</label>
+				<label class="edit-video-lable"><liferay-ui:message key="metadata"/></label>
 				<div id="metadata-upload">
 				<aui:input id="title" name="title" label="title" required="false" value="<%=reqVideo.getTitle()%>" />
 				
 				<aui:select size="1" name="crId" label="creators">
-					<aui:option value="">select-creator</aui:option>
+					<aui:option value=""><liferay-ui:message key="select-creator"/></aui:option>
 					<%for (int i = 0; i < creators.size(); i++) {
 						%><aui:option value='<%=creators.get(i).getCreatorId()%>'><%=creators.get(i).getJobTitle() + " "+creators.get(i).getLastName() + ", " + creators.get(i).getFirstName()%></aui:option><%
 					}%>	
@@ -118,11 +118,11 @@
 				<div id="creators"></div>
 	
 				<a id="addCreator">
-				    add-new-creator <span class="icon-large icon-plus-sign"></span>
+				    <liferay-ui:message key="add-new-creator"/> <span class="icon-large icon-plus-sign"></span>
 				</a>
 								
-				<aui:select size="1" name="lectureseriesId" label="lectureseries" onChange="toggleLectureseries()">
-					<aui:option value="0">select-lecture-series</aui:option>
+				<aui:select size="1" name="lectureseriesId" label="lecture-series" onChange="toggleLectureseries()">
+					<aui:option value="0"><liferay-ui:message key="select-lecture-series"/></aui:option>
 					<%for (int i = 0; i < reqLectureseriesList.size(); i++) {
 						if(reqLectureseriesList.get(i).getLectureseriesId()==reqVideo.getLectureseriesId()){%>
 							<aui:option value='<%=reqLectureseriesList.get(i).getLectureseriesId()%>' selected="true"><%=reqLectureseriesList.get(i).getName()%></aui:option>
@@ -134,7 +134,7 @@
 				
 				<div id="options">
 					<aui:select id="subInstitutionId" size="1" name="subInstitutionId" label="sub-institution">
-						<aui:option value="" selected="true">select-sub-institution</aui:option>
+						<aui:option value="" selected="true"><liferay-ui:message key="select-lecture-series"/></aui:option>
 					<%
 					Long subInstitutionId = new Long(0);
 					try{subInstitutionId = Video_InstitutionLocalServiceUtil.getByVideo(reqVideo.getVideoId()).get(0).getInstitutionId();}catch (Exception e){}
@@ -218,31 +218,31 @@
 				</div>
 				
 				<div id="permissions">
-					<label class="edit-video-lable">permissions</label>
+					<label class="edit-video-lable"><liferay-ui:message key="permissions"/></label>
 					<div>
 						<aui:input id="password" name="password" label="password" required="false" value="<%=reqVideo.getPassword()%>" />
 					</div>
 					
 					<div id="c2g">
 						<%if(reqVideo.getCitation2go()==0){%>
-					  		<aui:input name="citationAllowed" type="checkbox" label="" id="citationAllowed">citation allowed</aui:input>
+					  		<aui:input name="citationAllowed" type="checkbox" label="" id="citationAllowed"><liferay-ui:message key="citation-allowed"/></aui:input>
 					   	<%}else{%>
-						  <aui:input name="citationAllowed" type="checkbox" label="" id="citationAllowed" checked="true">citation allowed</aui:input>
+						  <aui:input name="citationAllowed" type="checkbox" label="" id="citationAllowed" checked="true"><liferay-ui:message key="citation-allowed"/></aui:input>
 					    <%}%>
 					</div>
 				</div>
 				
 				<div id="license">
-					<label class="edit-video-lable">license</label>
+					<label class="edit-video-lable"><liferay-ui:message key="license"/></label>
 					<div>
 						<%if(reqLicense.getL2go()==1){%><aui:input name="license"  id="uhhl2go" label="" value="uhhl2go" checked="true" type="radio"/><%}%>
 						<%if(reqLicense.getL2go()==0){%><aui:input name="license" id="uhhl2go" label="" value="uhhl2go" type="radio"/><%}%>
-						<a href="/license" target="_blank">lecture2go-licence </a>	 	      	      
+						<a href="/license" target="_blank"><liferay-ui:message key="lecture2go-licence"/> </a>	 	      	      
 					</div>	
 					<div>		
 						<%if(reqLicense.getCcbyncsa()==1){%><aui:input name="license" label="" id="ccbyncsa" value="ccbyncsa" checked="true" type="radio" /><%}%>
 						<%if(reqLicense.getCcbyncsa()==0){%><aui:input name="license" label="" id="ccbyncsa" value="ccbyncsa" type="radio"/><%}%>
-						<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank"> creative-commons </a>
+						<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank"> <liferay-ui:message key="creative-commons"/> </a>
 					</div>
 				</div>
 				
@@ -569,7 +569,7 @@ function updateDescription(data){
 }
 
 function deleteFile(fileName){
-	if(confirm("really-delete-question")){
+	if(confirm('<liferay-ui:message key="really-delete-question"/>')){
 		$.ajax({
 		    url: '<%=deleteFileURL.toString()%>',
 		    method: 'POST',

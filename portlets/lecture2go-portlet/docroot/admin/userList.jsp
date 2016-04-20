@@ -21,7 +21,7 @@
 	<aui:fieldset helpMessage="choose-filter" column="true">
 		<aui:form action="<%= allRoles.toString() %>" method="post">
 			<aui:select name="roleId" label="" onChange="submit();">
-				<aui:option value="">select-l2go-role</aui:option>
+				<aui:option value=""><liferay-ui:message key="select-l2go-role"/></aui:option>
 				<%for (int i = 0; i < l2goRoles.size(); i++) {
 					//check for permissions
 					boolean permission = false;
@@ -73,7 +73,7 @@
 							String fN = "";
 							try{
 								fN= InstitutionLocalServiceUtil.getInstitution(fId).getName(); 
-								n+="coordinator-for "+ fN+"<br/>";
+								n+= LanguageUtil.get(pageContext, "coordinator-for") +" "+ fN+"<br/>";
 							}catch (Exception e){}
 						}
 						if(rn.contains("L2Go Producer")){
@@ -82,7 +82,7 @@
 							String fN = "";
 							try{
 								fN= InstitutionLocalServiceUtil.getInstitution(fId).getName(); 
-								n+="producer-for "+ fN+"<br/>";
+								n+= LanguageUtil.get(pageContext, "producer-for")+" "+fN+"<br/>";
 							}catch (Exception e){}
 						}
 						if(!rn.contains("L2Go Producer") && !rn.contains("L2Go Coordinator")){

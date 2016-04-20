@@ -6,12 +6,27 @@
     width: 0px;
 }
 
+.meta-date {
+    font-size: 9px;
+    font-style: normal !important;
+}
+
 .span3 .accordion-inner li {
     background-color: #f3f3f3 !important;
     border-color: #fff #f3f3f3 #d4d4d4 !important;
     border-style: solid !important;
     border-width: 1px !important;
     line-height: 27px;
+}
+
+#usr-roles div > div > input {
+    margin-top: 10px;
+    position: absolute;
+}
+
+#addCreator {
+    float: left;
+    margin-left: 20%;
 }
 
 .aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle {
@@ -734,13 +749,6 @@ thead, th {
     font-weight: 100;
 }
 
-.meta-date {
-    font-style: normal !important;
-    color: #AEAEAE;
-    line-height: 10px;
-    font-size: 10px;
-}
-
 .col-md-7 {
     margin-top: 0px;
 }
@@ -1095,10 +1103,6 @@ thead, th {
     margin-top: 10px;
 }
 
-#addCreator {
-    margin-left: 20%;
-}
-
 #metadata-upload select {
     width: 50%;
 }
@@ -1314,11 +1318,6 @@ thead, th {
     font-size: 11px;
     padding: 0;
     margin-right: 3px
-}
-
-#usr-roles div > div > input {
-    margin-left: -5%;
-    position: absolute;
 }
 
 #usr-roles > div {

@@ -32,7 +32,7 @@
 				<aui:form action="<%=addURL%>" commandName="model" name="metadata">
 					<div class="add-new-creator-term-object">
 						<aui:select size="1" name="jobTitle" label="job-title">
-							<aui:option value="0">please-choose-job-title</aui:option>
+							<aui:option value="0"><liferay-ui:message key="please-choose-job-title"/></aui:option>
 								<%
 								for(int i=0; i<ct.length; i++){
 									String title = ct[i];
@@ -78,7 +78,7 @@
 					  <div class="adminrow wide">
 						<div class="admintile wide">
 							<aui:select size="1" name="jobTitle" label="">
-									<aui:option value="0">please-choose-job-title</aui:option>
+									<aui:option value="0"><liferay-ui:message key="please-choose-job-title"/></aui:option>
 									<%
 									for(int i=0; i<ct.length; i++){
 										String title = ct[i];
@@ -96,7 +96,7 @@
 						</div>
 						<div class="admintile wide icons creators">
 								<a href="<%=removeURL.toString()%>">
-									<span class="icon-large icon-remove" onclick="return confirm('really-delete-question')"></span>
+									<span class="icon-large icon-remove" onclick="return confirm('<liferay-ui:message key="really-delete-question"/>')"></span>
 								</a>
 								<aui:button type="submit"/>
 						</div>
@@ -105,7 +105,7 @@
 							List<Video_Creator> vc = Video_CreatorLocalServiceUtil.getByCreator(creator.getCreatorId()); 
 							ListIterator<Video_Creator> vci = vc.listIterator(); 
 							if(vc.size()>0){
-								%><b>video-s</b><%
+								%><b><liferay-ui:message key="video-s"/></b><%
 								while(vci.hasNext()){
 									Video_Creator v_c = vci.next();
 									Video v = VideoLocalServiceUtil.getVideo(v_c.getVideoId());
@@ -115,7 +115,7 @@
 							List<Lectureseries_Creator> lc = Lectureseries_CreatorLocalServiceUtil.getByCreator(creator.getCreatorId()); 
 							ListIterator<Lectureseries_Creator> lci = lc.listIterator();  
 							if(lc.size()>0){
-								%><b>lecture-series</b><%
+								%><b><liferay-ui:message key="lecture-series"/></b><%
 								while(lci.hasNext()){
 									Lectureseries_Creator l_c = lci.next();
 									Lectureseries l = LectureseriesLocalServiceUtil.getLectureseries(l_c.getLectureseriesId());
