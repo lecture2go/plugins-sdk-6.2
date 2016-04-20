@@ -106,7 +106,7 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 	  }
 		  
 	
-
+     
 	  public PortletScheduler(){
 		  this.schedulerClassName = PortletScheduler.class.getName();
 		  PortletScheduler.LOG = LogFactoryUtil.getLog(PortletScheduler.class.getName());
