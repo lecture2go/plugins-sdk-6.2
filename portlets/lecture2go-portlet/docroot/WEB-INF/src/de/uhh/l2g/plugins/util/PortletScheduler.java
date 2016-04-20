@@ -149,7 +149,7 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
    	 	//Fetch List of Schedulers started on portlet initialization
    	 	jobs = portlet.getSchedulerEntries();
 		for (SchedulerEntry job : jobs) {  
-			//Grab schedulers associated with given Class 
+			//Grab first scheduler associated with given Class 
 		    if (schedulerEntry == null && job.getEventListenerClass().equalsIgnoreCase(this.schedulerClassName)){
 		    		LOG.info(job.toString());
 		    		schedulerEntry = job;
@@ -216,8 +216,8 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 		    		
 		    		
 		    }
-		    else { //remove redundant jobs registered to same listening class
-		    	if (job.getEventListenerClass().equalsIgnoreCase(this.schedulerClassName)) {
+		    else { //TODO: remove redundant jobs registered to same listening class
+		    	/**if (job.getEventListenerClass().equalsIgnoreCase(this.schedulerClassName)) {
 		    			try {
 		    		
 		    			LOG.warn("Multiple runnging Jobs found for same Scheduled Task! Trying to remove duplicates...");
@@ -227,8 +227,8 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 						//SchedulerEngineHelperUtil.addJob(trigger, storageType, description, destinationName, message, messageListenerClassName, portletId, exceptionsMaxSize);
 					} catch (SchedulerException e) {
 						LOG.error("Failed to remove job duplicates, please restart application server!",e);
-					}
-		    	}
+					} 
+		    	}*/
 		    }
 		 }
     	
@@ -256,7 +256,20 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 	       LOG.info("Portlet Scheduler running... " + values);
     }
     
-    
+
+	public void pause() throws SchedulerException {	
+		 LOG.info("Pausing... :" + GetterUtil.getString(this.schedulerClassName));
+      	 SchedulerEngineHelperUtil.pause(this.schedulerClassName, this.schedulerClassName,  this.getStorageType()); 
+	}
+	public void resume() throws SchedulerException {
+		 LOG.info("Resuming... :" + GetterUtil.getString(this.schedulerClassName));
+     	 SchedulerEngineHelperUtil.resume(this.schedulerClassName, this.schedulerClassName, this.getStorageType());
+	}
+	
+	public void update() throws SchedulerException {
+		 LOG.info("Updating... :" + GetterUtil.getString(this.schedulerClassName));
+    	 SchedulerEngineHelperUtil.update(this.getTrigger(), this.getStorageType());
+	}
     /**
      * @throws ClassNotFoundException 
      * @throws IllegalAccessException 
@@ -267,7 +280,6 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
      * 
      */
 	public void start() {	
-		if (this.get != null){
 		int exceptionsMaxSize = 0;
 		try {  		
 				if (this.getMessage() != null){
@@ -286,16 +298,18 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 			       		LOG.info("Message :" + portletId +" "+ listenerName + " "+this.destination); 
 			       	}
 			       	else{
-			       			LOG.error("Scheduler message not available! Assemble empty entry...");
+			       			LOG.info("Scheduler message not available! Assemble empty entry with defaults...");
 			       			//TODO: assemble message from things we know
 			       			Message m = new Message();
-			       			//m.put(, value);
+			       			m.put(SchedulerEngine.PORTLET_ID, GetterUtil.getString(this.portletId));
+			       			m.put(SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME, GetterUtil.getString(this.schedulerClassName));
+			       			m.put(SchedulerEngine.EXCEPTIONS_MAX_SIZE, 0);
 			       			this.setMessage(m);
 			       			
 			       	}
 			      	  TriggerState state = SchedulerEngineHelperUtil.getJobState(this.getJobName(), this.getGroupName(), this.getStorageType());
 			      
-			      	  if (state == null || state.equals(TriggerState.UNSCHEDULED)){
+			      	  if (state != null && state.equals(TriggerState.UNSCHEDULED)){
 			      		  this.getMessage().put(SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME, this.schedulerClassName);
 			      		  this.getMessage().setDestinationName(this.getMessage().getValues().get(SchedulerEngine.DESTINATION_NAME).toString());
 			      		  this.getMessage().put(SchedulerEngine.RECEIVER_KEY, this.getMessage().getValues().get(SchedulerEngine.RECEIVER_KEY).toString());
@@ -310,18 +324,21 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 			      		 // SchedulerEngineHelperUtil.schedule(this.getTrigger(), this.getStorageType(), this.getDescription(), this.destination, this.getMessage(), exceptionsMaxSize);     
 				       	 SchedulerEngineHelperUtil.schedule(schedulerEntry, this.getStorageType(), portletId, exceptionsMaxSize);
 			      	  }
+			      	  else {
+			      		 if (state == null) LOG.error("Could not find Job with Name: "+this.schedulerClassName);
+			      		 else{
+			      			LOG.info("Could not schedule Job with State: "+state);
+			      		 }
+			      	  }
 			  
 			 	} catch (SchedulerException e) {  
 			 		LOG.warn("", e);  
 			 	} catch (IllegalArgumentException e) {
 			 		LOG.warn(e); 				
 			   }
-		   }
-		   {
-			   LOG.error("Could not retrieve Job instance!"); 
-		   }
+		  }
 		
-	}
+	
     
     /** Stops Scheduler 
      * 
@@ -354,10 +371,9 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
     	    	       LOG.info("Thread :" + thread.getContextClassLoader() + thread.toString());
     	    	       
     	        		  LOG.info("Unscheduling :" + this.schedulerClassName +" "+ resp.getTrigger().toString()); 
-    	        		  //SchedulerEngineHelperUtil.unschedule(resp.getJobName(), resp.getGroupName(), resp.getStorageType());
-      	  				  //SchedulerEngineHelperUtil.delete(resp.getJobName(), resp.getGroupName(), resp.getStorageType()); 
     	        		  SchedulerEngineHelperUtil.unschedule(schedulerEntry, resp.getStorageType());
-    	        		  SchedulerEngineHelperUtil.delete(schedulerEntry, resp.getStorageType());
+    	        		  //TODO: Check Workaround
+    	        		  this.removeFromEntries();
     	        	  }
     	        	  else{
     	        		  LOG.warn("Scheduler could not be unscheduled beacuse it was in state "+state); 
@@ -370,7 +386,49 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 			 } 
 	}
     
-    /**Unschedules and deletes all Jobs associated with this Listener Class' 
+    public void delete(){
+    	try {  
+    		
+    		List<SchedulerResponse> scheduledJobs = SchedulerEngineHelperUtil.getScheduledJobs();  
+
+    		 for (SchedulerResponse resp : scheduledJobs) {  
+    	          if (resp.getJobName().equalsIgnoreCase(this.schedulerClassName)) {  
+    	        	  
+    	        	  LOG.info("Stopping :" + resp.toString()); 
+    	        	  Map<String, Object> map = resp.getMessage().getValues(); 
+    	        	  
+    			      String portletId = "";
+    			      String listenerName = "";
+    			 
+    			      if (map.containsKey(SchedulerEngine.PORTLET_ID)) portletId = map.get(SchedulerEngine.PORTLET_ID).toString();
+    			      if (map.containsKey(SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME)) listenerName = map.get(SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME).toString();
+      
+    	        	  LOG.info("Associated to :" + portletId +" "+ listenerName+" "+this.destination); 
+		      
+    	        	  TriggerState state = SchedulerEngineHelperUtil.getJobState(resp.getJobName(), resp.getGroupName(), resp.getStorageType());
+		      
+    	        	  if (state.equals(TriggerState.NORMAL)){
+    	        		  
+    	       	       Thread thread = Thread.currentThread();
+    	    	       LOG.info("Thread :" + thread.getContextClassLoader() + thread.toString());
+    	    	       
+    	        		  LOG.info("Unscheduling :" + this.schedulerClassName +" "+ resp.getTrigger().toString()); 
+    	        		  SchedulerEngineHelperUtil.delete(schedulerEntry, resp.getStorageType());
+    	        		  //TODO: Check Workaround
+    	        		  this.removeFromEntries();
+    	        	  }
+    	        	  else{
+    	        		  LOG.warn("Scheduler could not be unscheduled beacuse it was in state "+state); 
+    	        	  }
+    	          } 
+    			}
+			  
+			 } catch (SchedulerException e) {  
+				 LOG.warn("Failed to unschedule job"+ this.schedulerClassName, e);  
+			 } 
+	}
+    
+    /**Unschedules all Jobs associated with this Listener Class' 
      * 
      * Assumes Job and Group Name are equal
      */
@@ -475,6 +533,12 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 		return schedulers; 
     }
      
+          public void removeFromEntries(){
+        	  Portlet portlet = PortletLocalServiceUtil.getPortletById(this.portletId);
+        	 // List<SchedulerEntry> schedulerEntries =
+      		 //		portlet.getSchedulerEntries();
+        	  portlet.getSchedulerEntries().remove(this.schedulerEntry);
+          }
  
     /**		if (PropsValues.SCHEDULER_ENABLED) {
 			List<SchedulerEntry> schedulerEntries =
@@ -511,6 +575,7 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
     	 return myJobs;
     	 }
      
+
    
      
      
