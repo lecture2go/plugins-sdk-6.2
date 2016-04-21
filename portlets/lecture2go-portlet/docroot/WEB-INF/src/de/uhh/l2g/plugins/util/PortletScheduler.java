@@ -80,7 +80,7 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 	  protected String destination;
 	  protected String receiverKey;
 	  
-	  //keep this constants 
+	  //Assumed as Constants (requires further implementaion for dynamics)
 	  protected final String DEST = DestinationNames.SCHEDULER_DISPATCH;
 	  protected final StorageType STOR = StorageType.MEMORY_CLUSTERED;
 	  
@@ -218,7 +218,8 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 		    		
 		    		
 		    }
-		    else { //TODO: remove redundant jobs registered to same listening class
+		    else { //TODO: Remove duplicate SchedulerEntries 
+		    	LOG.warn("Multiple runnging Jobs found for same Scheduled Task! ...");
 		    	/**if (job.getEventListenerClass().equalsIgnoreCase(this.schedulerClassName)) {
 		    			try {
 		    		
@@ -272,19 +273,30 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 		 LOG.info("Updating... :" + GetterUtil.getString(this.schedulerClassName));
     	 SchedulerEngineHelperUtil.update(this.getTrigger(), this.getStorageType());
 	}
-    /**
+	
+    /**Schedule unscheduled Scheduler (requires valid SchedulerEntry Data && Message Date)
+     * 
+     * There is no Issue in Liferay Tracker about this: 
+     * Manually assembling. Message, Trigger and Job from previously "working" Job, in order to use 
+     * 
+     * SchedulerEngineHelperUtil.schedule(Trigger, StorageType, Description, Destination, Message, exceptionsMaxSize);   
+     *   
+     * currently (6.2 GA 4 - GA 6) fails to register the MessageListener correctly for a single consumer. 
+     * This might be a configuration detail issue, which is not documented in liferays SchedulerEngineHelperUtil, 
+     * but source investigation does not reveal any  				       	
+     * 
+     * Therefore a SchedulerEntry must be available in Memory, to schedule an unscheduled Job
+     * 
      * @throws ClassNotFoundException 
      * @throws IllegalAccessException 
      * @throws SchedulerException 
      * @throws Exception 
-     * @throws InstantiationException 
-     * 
-     * 
+     * @throws InstantiationException      * 
      */
 	public void start() {	
 		int exceptionsMaxSize = 0;
+		if (this.getMessage() != null && this.schedulerEntry != null){
 		try {  		
-				if (this.getMessage() != null){
 			         String messageText = GetterUtil.getString((this.getMessage().toString()));
 			         LOG.info("Starting :" + messageText); 
 			       	
@@ -298,21 +310,8 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 			       		if (map.containsKey(SchedulerEngine.EXCEPTIONS_MAX_SIZE)) exceptionsMaxSize = Integer.valueOf(map.get(SchedulerEngine.EXCEPTIONS_MAX_SIZE).toString());
 			        
 			       		LOG.info("Message :" + portletId +" "+ listenerName + " "+this.destination); 
-			       	}
-			       	else{
-			       			LOG.info("Scheduler message not available! Assemble empty entry with defaults...");
-			       			//TODO: assemble message from things we know - SchedulerRespons should be available here
-			       			SchedulerResponse rp = SchedulerEngineHelperUtil.getScheduledJob(this.schedulerClassName, this.schedulerClassName, this.STOR);
-			       			Message m = new Message();
-			       			m.copyFrom(rp.getMessage());
-			       			m.put(SchedulerEngine.PORTLET_ID, GetterUtil.getString(this.portletId));
-			       			m.put(SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME, GetterUtil.getString(this.schedulerClassName));
-			       			m.put(SchedulerEngine.EXCEPTIONS_MAX_SIZE, 0);
-			       			this.setMessage(m);
-			       			this.setTrigger(rp.getTrigger());
-			       			
-			       	}
-			      	  TriggerState state = SchedulerEngineHelperUtil.getJobState(this.schedulerClassName, this.schedulerClassName, this.STOR);
+			       	
+			       		TriggerState state = SchedulerEngineHelperUtil.getJobState(this.getJobName(), this.getGroupName(), this.getStorageType());
 			      
 			      	  if (state != null && state.equals(TriggerState.UNSCHEDULED)){
 			      		  this.getMessage().put(SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME, this.schedulerClassName);
@@ -322,13 +321,11 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 			      		  LOG.info("Scheduling :" + this.schedulerClassName +" ");  
 			      		  LOG.info("New Message "+this.getMessage().toString());
 			      		  
-			      		  Thread thread = Thread.currentThread();
-			      		  LOG.info("Thread :" + thread.getContextClassLoader() + thread.toString());
-
-			      		 //SchedulerEngineHelperUtil.update(this.getTrigger(), this.getStorageType());
-			      		
-			      	 	  if(schedulerEntry == null)  SchedulerEngineHelperUtil.schedule(this.getTrigger(), this.STOR, this.getDescription(), this.DEST, this.getMessage(), exceptionsMaxSize);     
-			      	 	  else SchedulerEngineHelperUtil.schedule(schedulerEntry, this.STOR, portletId, exceptionsMaxSize);
+			   	       Thread thread = Thread.currentThread();
+				       LOG.info("Thread :" + thread.getContextClassLoader() + thread.toString());
+				       	 
+				     //SchedulerEngineHelperUtil.update(this.getTrigger(), this.getStorageType());		
+			      	  SchedulerEngineHelperUtil.schedule(schedulerEntry, this.getStorageType(), portletId, exceptionsMaxSize);
 			      	  }
 			      	  else {
 			      		 if (state == null) LOG.error("Could not find Job with Name: "+this.schedulerClassName);
@@ -342,6 +339,9 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 			 	} catch (IllegalArgumentException e) {
 			 		LOG.warn(e); 				
 			   }
+			}else{
+				LOG.error("Could not retrieve valid SchedulerEntry or Message for: "+this.schedulerClassName);
+			}
 		  }
 		
 	
