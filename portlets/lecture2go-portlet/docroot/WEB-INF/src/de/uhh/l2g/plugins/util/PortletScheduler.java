@@ -36,22 +36,31 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
+import com.liferay.portal.kernel.portlet.PortletBag;
+import com.liferay.portal.kernel.portlet.PortletBagPool;
+import com.liferay.portal.kernel.scheduler.CronTrigger;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
+import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerState;
+import com.liferay.portal.kernel.scheduler.TriggerType;
 import com.liferay.portal.kernel.scheduler.messaging.ReceiverKey;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -80,7 +89,7 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 	  protected String destination;
 	  protected String receiverKey;
 	  
-	  //Assumed as Constants (requires further implementaion for dynamics)
+	  //Assumed as Constants (requires further implementation for dynamics)
 	  protected final String DEST = DestinationNames.SCHEDULER_DISPATCH;
 	  protected final StorageType STOR = StorageType.MEMORY_CLUSTERED;
 	  
@@ -109,13 +118,15 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 	  }
 		  
 	
-     
+     /**Create empty scheduler for ClassLoader
+      * 
+      */
 	  public PortletScheduler(){
 		  this.schedulerClassName = PortletScheduler.class.getName();
 		  PortletScheduler.LOG = LogFactoryUtil.getLog(PortletScheduler.class.getName());
 		  
 	  }
-		 /** Initializes Scheduler Entry and Message by gathering information from Context and SchedulerEngine
+		/** Init Scheduler Entry and Message by gathering information from Context and SchedulerEngine
        * 
        * @param schedulerClassName
        * @param serviceContext
@@ -124,7 +135,7 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 		  this(schedulerClassName, serviceContext.getPortletId());
 		  
 	  }
-	 /** Initializes Scheduler Entry and Message by gathering information from PortletId and SchedulerEngine
+	 /** Init Scheduler Entry and Message by gathering information from PortletId and SchedulerEngine
 	  *  
 	  *  
 	  * @param schedulerClassName
@@ -134,7 +145,6 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 		this.schedulerClassName = schedulerClassName;
 		LOG = LogFactoryUtil.getLog(schedulerClassName);
 		
-	
 		initScheduler(schedulerClassName,portletId);
 
 	}
@@ -148,7 +158,10 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
    	    this.schedulerClassName = schedulerClassName;
    	    this.portletId = portletId;
    	    
-   	 	//Fetch List of Schedulers started on portlet initialization
+   	    //Get Quartz Job (Unique for ClassName!)
+   	    assembleMessageFromResponses();
+   	    
+   	 	//Fetch List of Schedulers started on portlet initialization (maybe we do have a Trigger,...)
    	 	jobs = portlet.getSchedulerEntries();
 		for (SchedulerEntry job : jobs) {  
 			//Grab first scheduler associated with given Class 
@@ -160,83 +173,107 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 						this.generalTrigger = job.getTrigger();
 					} catch (SchedulerException t) {
 						LOG.warn(t);
-					}
-		     
-		    		//Now collect response data to assemble scheduler message		    		
-		    		try {  
-		  			  List<SchedulerResponse> scheduledJobs = SchedulerEngineHelperUtil.getScheduledJobs();  
-		  			  for (SchedulerResponse resp : scheduledJobs) {  
-		  				//LOG.info(resp.getJobName()+resp.getDestinationName() );
-		  			    if (resp.getJobName().equalsIgnoreCase(this.schedulerClassName)) { 
-		  			    	
-		  			      this.setJobName(resp.getJobName());
-		  			      this.setGroupName(resp.getGroupName());  
-		  			      this.setStorageType(resp.getStorageType()); 
-		  			      this.setDescription(resp.getDescription());
-		  			      this.setMessage(resp.getMessage());
-		  			      this.setTrigger(resp.getTrigger());
-		  			      
-		  			      if (this.getMessage() == null) this.setMessage(new Message());
-		  			      LOG.info("Job found. Copy Portlet Information: "+this.getMessage().toString());
-		  			      Map<String, Object> map = this.getMessage().getValues();
-		  			     			      	  
-		  			      //Fill this message with portlet specific data
-		  				  if (map.containsKey(SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME)) this.getMessage().put(SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME, map.get(SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME).toString());
-		  		      	  if (map.containsKey(SchedulerEngine.PORTLET_ID)) this.getMessage().put(SchedulerEngine.PORTLET_ID, map.get(SchedulerEngine.PORTLET_ID).toString());
-		  		          if (map.containsKey(SchedulerEngine.MESSAGE_LISTENER_UUID)) this.getMessage().put(SchedulerEngine.MESSAGE_LISTENER_UUID, map.get(SchedulerEngine.MESSAGE_LISTENER_UUID).toString());
-		  		          
-		  		         LOG.info(this.getMessage().get(SchedulerEngine.DESTINATION_NAME) +" "+
-		  		        		  this.getMessage().getDestinationName() +" "+
-		  		        		  this.getMessage().getValues().get(SchedulerEngine.DESTINATION_NAME)+" "+
-		  		        		  this.getMessage().getDestinationName()); 
-		  		          
-		  			      if (map.containsKey("MESSAGE_LISTENER_CLASS_NAME") && map.get("DESTINATION_NAME") != null) {
-		  			    	  this.destination = map.get("DESTINATION_NAME").toString();
-		  			    	  //this.getMessage().put(SchedulerEngine.DESTINATION_NAME, map.get("DESTINATION_NAME").toString());
-		  			    	  this.getMessage().getValues().put(SchedulerEngine.DESTINATION_NAME, map.get("DESTINATION_NAME").toString());
-		  			    	  this.getMessage().setDestinationName(this.getMessage().getValues().get(SchedulerEngine.DESTINATION_NAME).toString());
-		  			      		 
-		  			      }
-		  			      else{
-		  			    	LOG.info("Destination not available yet. Setting to " + DEST);
-		  			    	this.destination = DEST;
-		  			    	//this.getMessage().put(SchedulerEngine.DESTINATION_NAME, DEST);
-		  			    	this.getMessage().getValues().put(SchedulerEngine.DESTINATION_NAME, DEST);
-		  			    	this.getMessage().setDestinationName(this.getMessage().getValues().get(SchedulerEngine.DESTINATION_NAME).toString());
-		  		      		 
-		  			      }
-		  			      //new ReceiverKey(this.getJobName(), this.getGroupName())
-		  			      //this.getMessage().put(SchedulerEngine.RECEIVER_KEY, "com.liferay.portal.kernel.scheduler.messaging.ReceiverKey@f1a2001c");
-		  			      LOG.info("ReceiverKey: "+new ReceiverKey(this.getJobName(), this.getGroupName())); 
-		  			      TriggerState state = SchedulerEngineHelperUtil.getJobState(this.getJobName(), this.getGroupName(), this.getStorageType());   
-		  			      LOG.info(state);
-		  			    }   
-		  			  }
-		  			 } catch (SchedulerException e) {  
-		  				 LOG.warn(e);  
-		  			 } 		
-		    		
+					}	
 		    		
 		    }
 		    else { //TODO: Remove duplicate SchedulerEntries 
-		    	LOG.warn("Multiple runnging Jobs found for same Scheduled Task! ...");
-		    	/**if (job.getEventListenerClass().equalsIgnoreCase(this.schedulerClassName)) {
-		    			try {
-		    		
-		    			LOG.warn("Multiple runnging Jobs found for same Scheduled Task! Trying to remove duplicates...");
-						//SchedulerEngineHelperUtil.unschedule(job, this.getStorageType());
-						SchedulerEngineHelperUtil.delete(job, this.getStorageType());
-						//TODO: re-add and schedule single copy
-						//SchedulerEngineHelperUtil.addJob(trigger, storageType, description, destinationName, message, messageListenerClassName, portletId, exceptionsMaxSize);
-					} catch (SchedulerException e) {
-						LOG.error("Failed to remove job duplicates, please restart application server!",e);
-					} 
-		    	}*/
+		    	LOG.warn("Multiple runnging Jobs found for same Scheduled Task! Removing ...");
+		    	removeFromEntries(job);
 		    }
+  
+		 }
+		 //Check if we got what we've been looking for
+		 if (schedulerEntry == null) {
+			 LOG.warn("No SchedulerEntry found for this Job. Generating new Entry...");
+			 PortletBag portletBag = PortletBagPool.get(portletId);
+			 ServletContext servletContext = portletBag.getServletContext();
+			 
+			 String cron = GetterUtil.getString(servletContext.getInitParameter("cron-trigger-value"));
+			 String description = GetterUtil.getString(servletContext.getInitParameter("scheduler-description"));
+			 this.generalTrigger = new CronTrigger(this.schedulerClassName, this.schedulerClassName, cron);
+
+			 SchedulerEntry entry = new SchedulerEntryImpl();
+			 entry.setDescription(description);
+			 entry.setEventListenerClass(this.schedulerClassName);
+			 entry.setTriggerType(TriggerType.CRON);
+			 entry.setTriggerValue(cron);
+			 this.schedulerEntry = entry;
+			 portlet.getSchedulerEntries().add(entry);
+			 //TODO:  assemble it to have all information like below
+			 //, description=This scheduler is used to collect Statistical Data from Database, eventListenerClass=de.uhh.l2g.plugins.util.StatisticsScheduler, propertyKey=, timeUnit=null, trigger={cronText=0 */1 * * * ?, {endDate=null, groupName=de.uhh.l2g.plugins.util.StatisticsScheduler, jobName=de.uhh.l2g.plugins.util.StatisticsScheduler, startDate=null, triggerType=CRON}}, triggerType=CRON, triggerValue=0 */1 * * * ?}
+			 try {
+				SchedulerEngineHelperUtil.addJob(this.generalTrigger, this.STOR, description, this.DEST, this.getMessage(), this.schedulerClassName, portletId, 0);
+			} catch (SchedulerException e) {
+				 LOG.error("Failed adding Scheduler!");
+			}
 		 }
     	
     }
 	  
+    /** Crowds this Scheduler with ResponseMessage Data
+     * 
+     * Unique iff (jobName == schedulerClassName == groupName && storageType == STOR)
+     * 
+     * @return PortletScheduler 
+     */
+    public PortletScheduler assembleMessageFromResponses(){
+    	
+    	//These should be unique if everything is configured by liferay default
+		try {  
+			  List<SchedulerResponse> scheduledJobs = SchedulerEngineHelperUtil.getScheduledJobs();  
+			  for (SchedulerResponse resp : scheduledJobs) {  
+				//LOG.info(resp.getJobName()+resp.getDestinationName() );
+			    if (resp.getJobName().equalsIgnoreCase(this.schedulerClassName)) { 
+			    	
+			      this.setJobName(resp.getJobName());
+			      this.setGroupName(resp.getGroupName());  
+			      this.setStorageType(resp.getStorageType()); 
+			      this.setDescription(resp.getDescription());
+			      this.setMessage(resp.getMessage());
+			      this.setTrigger(resp.getTrigger());
+			      
+			      if (this.getMessage() == null) this.setMessage(new Message());
+			      LOG.info("Job found. Copy Portlet Information: "+this.getMessage().toString());
+			      Map<String, Object> map = this.getMessage().getValues();
+			     			      	  
+			      //Fill this message with portlet specific data
+				  if (map.containsKey(SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME)) this.getMessage().put(SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME, map.get(SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME).toString());
+		      	  if (map.containsKey(SchedulerEngine.PORTLET_ID)) this.getMessage().put(SchedulerEngine.PORTLET_ID, map.get(SchedulerEngine.PORTLET_ID).toString());
+		          if (map.containsKey(SchedulerEngine.MESSAGE_LISTENER_UUID)) this.getMessage().put(SchedulerEngine.MESSAGE_LISTENER_UUID, map.get(SchedulerEngine.MESSAGE_LISTENER_UUID).toString());
+		          
+		         LOG.info(this.getMessage().get(SchedulerEngine.DESTINATION_NAME) +" "+
+		        		  this.getMessage().getDestinationName() +" "+
+		        		  this.getMessage().getValues().get(SchedulerEngine.DESTINATION_NAME)+" "+
+		        		  this.getMessage().getDestinationName()); 
+		          
+			      if (map.containsKey("MESSAGE_LISTENER_CLASS_NAME") && map.get("DESTINATION_NAME") != null) {
+			    	  this.destination = map.get("DESTINATION_NAME").toString();
+			    	  //this.getMessage().put(SchedulerEngine.DESTINATION_NAME, map.get("DESTINATION_NAME").toString());
+			    	  this.getMessage().getValues().put(SchedulerEngine.DESTINATION_NAME, map.get("DESTINATION_NAME").toString());
+			    	  this.getMessage().setDestinationName(this.getMessage().getValues().get(SchedulerEngine.DESTINATION_NAME).toString());
+			      		 
+			      }
+			      else{
+			    	LOG.info("Destination not available yet. Setting to " + DEST);
+			    	this.destination = DEST;
+			    	//this.getMessage().put(SchedulerEngine.DESTINATION_NAME, DEST);
+			    	this.getMessage().getValues().put(SchedulerEngine.DESTINATION_NAME, DEST);
+			    	this.getMessage().setDestinationName(this.getMessage().getValues().get(SchedulerEngine.DESTINATION_NAME).toString());
+		      		 
+			      }
+			      //new ReceiverKey(this.getJobName(), this.getGroupName())
+			      //this.getMessage().put(SchedulerEngine.RECEIVER_KEY, "com.liferay.portal.kernel.scheduler.messaging.ReceiverKey@f1a2001c");
+			      LOG.info("ReceiverKey: "+new ReceiverKey(this.getJobName(), this.getGroupName())); 
+			      TriggerState state = SchedulerEngineHelperUtil.getJobState(this.getJobName(), this.getGroupName(), this.getStorageType());   
+			      LOG.info(state);
+			    }   
+			  }
+			 } catch (SchedulerException e) {  
+				 LOG.warn(e);  
+			 } 
+    	
+    	return this;  	
+    }
 
 	@Override
     public void receive(Message message) throws MessageListenerException {
@@ -281,11 +318,14 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
      * 
      * SchedulerEngineHelperUtil.schedule(Trigger, StorageType, Description, Destination, Message, exceptionsMaxSize);   
      *   
-     * currently (6.2 GA 4 - GA 6) fails to register the MessageListener correctly for a single consumer. 
+     * Currently (6.2 GA 4 - GA 6) also fails to register the MessageListener correctly for a single consumer. 
      * This might be a configuration detail issue, which is not documented in liferays SchedulerEngineHelperUtil, 
-     * but source investigation does not reveal any  				       	
+     * at first sight source investigation does not reveal conclusive hints.
+     * 
+     * Though the more complicated issue is that Quartz does persist the Job on UNSCHEDULE but not the Trigger.				       	
      * 
      * Therefore a SchedulerEntry must be available in Memory, to schedule an unscheduled Job
+     * Liferay SchedulerEntry however does persit the Trigger... but does not check for duplicates on deploy.
      * 
      * @throws ClassNotFoundException 
      * @throws IllegalAccessException 
@@ -295,7 +335,6 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
      */
 	public void start() {	
 		int exceptionsMaxSize = 0;
-		if (this.getMessage() != null && this.schedulerEntry != null){
 		try {  		
 			         String messageText = GetterUtil.getString((this.getMessage().toString()));
 			         LOG.info("Starting :" + messageText); 
@@ -310,9 +349,10 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 			       		if (map.containsKey(SchedulerEngine.EXCEPTIONS_MAX_SIZE)) exceptionsMaxSize = Integer.valueOf(map.get(SchedulerEngine.EXCEPTIONS_MAX_SIZE).toString());
 			        
 			       		LOG.info("Message :" + portletId +" "+ listenerName + " "+this.destination); 
-			       	
+			       	    
+			       		if(this.getTrigger() == null) this.setTrigger(this.generalTrigger);
 			       		TriggerState state = SchedulerEngineHelperUtil.getJobState(this.getJobName(), this.getGroupName(), this.getStorageType());
-			      
+			       		LOG.info("Trigger :" + state);
 			      	  if (state != null && state.equals(TriggerState.UNSCHEDULED)){
 			      		  this.getMessage().put(SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME, this.schedulerClassName);
 			      		  this.getMessage().setDestinationName(this.DEST);
@@ -323,9 +363,9 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 			      		  
 			   	       Thread thread = Thread.currentThread();
 				       LOG.info("Thread :" + thread.getContextClassLoader() + thread.toString());
-				       	 
-				     //SchedulerEngineHelperUtil.update(this.getTrigger(), this.getStorageType());		
-			      	  SchedulerEngineHelperUtil.schedule(schedulerEntry, this.getStorageType(), portletId, exceptionsMaxSize);
+				      
+				       if(this.schedulerEntry != null) SchedulerEngineHelperUtil.schedule(schedulerEntry, this.getStorageType(), portletId, exceptionsMaxSize);
+				       else SchedulerEngineHelperUtil.schedule(this.getTrigger(), this.getStorageType(), this.getDescription(), this.getDestinationName(), this.getMessage(), exceptionsMaxSize);
 			      	  }
 			      	  else {
 			      		 if (state == null) LOG.error("Could not find Job with Name: "+this.schedulerClassName);
@@ -339,9 +379,6 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 			 	} catch (IllegalArgumentException e) {
 			 		LOG.warn(e); 				
 			   }
-			}else{
-				LOG.error("Could not retrieve valid SchedulerEntry or Message for: "+this.schedulerClassName);
-			}
 		  }
 		
 	
@@ -379,6 +416,8 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
     	        		  LOG.info("Unscheduling :" + this.schedulerClassName +" "+ resp.getTrigger().toString()); 
     	        		  SchedulerEngineHelperUtil.unschedule(schedulerEntry, resp.getStorageType());
     	        		  //TODO: Check Workaround
+    	        		  //This removes the SchedulerEntry from Liferay's Scheduler List so it is not started aditionally on re-deploy
+    	        		  //BUT, removing this entry will also destroy our Trigger (as Quartz unschedule(), removes the Trigger from QuartzJob
     	        		  this.removeFromEntries();
     	        	  }
     	        	  else{
@@ -392,6 +431,9 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 			 } 
 	}
     
+    /**Deletes the Scheduler thoroughly until restart!
+     * 
+     */
     public void delete(){
     	try {  
     		
@@ -420,7 +462,8 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
     	    	       
     	        		  LOG.info("Unscheduling :" + this.schedulerClassName +" "+ resp.getTrigger().toString()); 
     	        		  SchedulerEngineHelperUtil.delete(schedulerEntry, resp.getStorageType());
-    	        		  //TODO: Check Workaround
+    	        		  //This removes the SchedulerEntry from Liferay's Scheduler List so it is not started aditionally on re-deploy
+    	        		  //Removing this entry will also destroy our Trigger (as Quartz unschedule(), removes the Trigger from QuartzJob
     	        		  this.removeFromEntries();
     	        	  }
     	        	  else{
@@ -495,7 +538,6 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 				scheduledJobs = SchedulerEngineHelperUtil.getScheduledJobs();
     	  		for (SchedulerResponse resp : scheduledJobs) {  
     	  			if (resp.getJobName().startsWith(PortletScheduler.class.getPackage().getName())) { 
-    	  				SchedulerEngineHelperUtil.unschedule(resp.getJobName(), resp.getGroupName(), resp.getStorageType());
     	  				SchedulerEngineHelperUtil.delete(resp.getJobName(), resp.getGroupName(), resp.getStorageType());
     	  			}  	  			
     	  		}
@@ -538,15 +580,29 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
    		  }
 		return schedulers; 
     }
-     
+         
+    	  /**Removes this Scheduler's SchedulerEntry from Liferay's List
+    	   * 
+    	   */
           public void removeFromEntries(){
         	  Portlet portlet = PortletLocalServiceUtil.getPortletById(this.portletId);
         	 // List<SchedulerEntry> schedulerEntries =
       		 //		portlet.getSchedulerEntries();
         	  portlet.getSchedulerEntries().remove(this.schedulerEntry);
           }
+          
+    	  /**Removes this Scheduler's SchedulerEntry from Liferay's List
+    	   * 
+    	   */
+          public void removeFromEntries(SchedulerEntry entry){
+        	  Portlet portlet = PortletLocalServiceUtil.getPortletById(this.portletId);
+        	 // List<SchedulerEntry> schedulerEntries =
+      		 //		portlet.getSchedulerEntries();
+        	  portlet.getSchedulerEntries().remove(entry);
+          }
  
-    /**		if (PropsValues.SCHEDULER_ENABLED) {
+    /**	From HotDeployListener (this one should do garbage collect, but fails if a scheduler is UNSCHEDULED allready)
+     * 	if (PropsValues.SCHEDULER_ENABLED) {
 			List<SchedulerEntry> schedulerEntries =
 				portlet.getSchedulerEntries();
 
@@ -580,72 +636,7 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
     	 
     	 return myJobs;
     	 }
-     
-
-   
-     
-     
-     /** Retrieve initialization Data form List of scheduled Jobs
-	  *  
-	  * 
-	 public PortletScheduler(String schedulerClassName){
-		this.schedulerClassName = schedulerClassName;
-		LOG = LogFactoryUtil.getLog(schedulerClassName);
-		 
-		try {  
-			  List<SchedulerResponse> scheduledJobs = SchedulerEngineHelperUtil.getScheduledJobs();  
-			  for (SchedulerResponse resp : scheduledJobs) {  
-				LOG.info(resp.getJobName()+resp.getDestinationName() );
-			    if (resp.getJobName().equalsIgnoreCase(this.schedulerClassName)) { 
-			    	
-			      this.setJobName(resp.getJobName());
-			      this.setGroupName(resp.getGroupName());  
-			      this.setStorageType(resp.getStorageType()); 
-			      this.setDescription(resp.getDescription());
-			      this.setMessage(resp.getMessage());
-			      this.setTrigger(resp.getTrigger());
-			      
-			      if (this.getMessage() == null) this.setMessage(new Message());
-			      LOG.info("Job found. Copy Portlet Information: "+this.getMessage().toString());
-			      Map<String, Object> map = this.getMessage().getValues();
-			     			      	  
-			      //Fill this message with portlet specific data
-				  if (map.containsKey(SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME)) this.getMessage().put(SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME, map.get(SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME).toString());
-		      	  if (map.containsKey(SchedulerEngine.PORTLET_ID)) this.getMessage().put(SchedulerEngine.PORTLET_ID, map.get(SchedulerEngine.PORTLET_ID).toString());
-		          if (map.containsKey(SchedulerEngine.MESSAGE_LISTENER_UUID)) this.getMessage().put(SchedulerEngine.MESSAGE_LISTENER_UUID, map.get(SchedulerEngine.MESSAGE_LISTENER_UUID).toString());
-		          
-		          LOG.info(this.getMessage().get(SchedulerEngine.DESTINATION_NAME) +" "+
-		        		  this.getMessage().getDestinationName() +" "+
-		        		  this.getMessage().getValues().get(SchedulerEngine.DESTINATION_NAME)+" "+
-		        		  this.getMessage().getDestinationName());
-		          
-			      if (map.containsKey("MESSAGE_LISTENER_CLASS_NAME") && map.get("DESTINATION_NAME") != null) {
-			    	  this.destination = map.get("DESTINATION_NAME").toString();
-			    	  //this.getMessage().put(SchedulerEngine.DESTINATION_NAME, map.get("DESTINATION_NAME").toString());
-			    	  this.getMessage().getValues().put(SchedulerEngine.DESTINATION_NAME, map.get("DESTINATION_NAME").toString());
-			    	  this.getMessage().setDestinationName(this.getMessage().getValues().get(SchedulerEngine.DESTINATION_NAME).toString());
-			      		 
-			      }
-			      else{
-			    	LOG.info("Destination not available yet. Setting to " + DEST);
-			    	this.destination = DEST;
-			    	//this.getMessage().put(SchedulerEngine.DESTINATION_NAME, DEST);
-			    	this.getMessage().getValues().put(SchedulerEngine.DESTINATION_NAME, DEST);
-			    	this.getMessage().setDestinationName(this.getMessage().getValues().get(SchedulerEngine.DESTINATION_NAME).toString());
-		      		 
-			      }
-			      //new ReceiverKey(this.getJobName(), this.getGroupName())
-			      //this.getMessage().put(SchedulerEngine.RECEIVER_KEY, "com.liferay.portal.kernel.scheduler.messaging.ReceiverKey@f1a2001c");
-			      LOG.info("ReceiverKey: "+new ReceiverKey(this.getJobName(), this.getGroupName())); 
-			      TriggerState state = SchedulerEngineHelperUtil.getJobState(this.getJobName(), this.getGroupName(), this.getStorageType());   
-			      LOG.info(state);
-			    }   
-			  }
-			 } catch (SchedulerException e) {  
-				 LOG.warn(e);  
-			 }
-			 } */		
-	
+     	
 }
  
 
