@@ -117,6 +117,10 @@ public class VideohitlistLocalServiceClpInvoker {
 		_methodName166 = "deleteByVideoId";
 
 		_methodParameterTypes166 = new String[] { "java.lang.Long" };
+
+		_methodName167 = "deleteAll";
+
+		_methodParameterTypes167 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -227,6 +231,13 @@ public class VideohitlistLocalServiceClpInvoker {
 			return null;
 		}
 
+		if (_methodName167.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes167, parameterTypes)) {
+			VideohitlistLocalServiceUtil.deleteAll();
+
+			return null;
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -268,4 +279,6 @@ public class VideohitlistLocalServiceClpInvoker {
 	private String[] _methodParameterTypes161;
 	private String _methodName166;
 	private String[] _methodParameterTypes166;
+	private String _methodName167;
+	private String[] _methodParameterTypes167;
 }

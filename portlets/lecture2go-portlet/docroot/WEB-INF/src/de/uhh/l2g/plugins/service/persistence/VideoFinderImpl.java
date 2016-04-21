@@ -38,7 +38,58 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 	public static final String FIND_VIDEOS_BY_SEARCH_WORD = VideoFinder.class.getName() + ".findVideosBySearchWord";
 	public static final String FIND_VIDEOS_BY_ALL_SEARCH_WORDS = VideoFinder.class.getName() + ".findAllSearchWords";
 	public static final String FIND_VIDEOS_BY_SEARCH_WORD_AND_LECTURESERIESID = VideoFinder.class.getName() + ".findVideosBySearchWordAndLectureseriesId";
+	public static final String FIND_VIDEOS_BY_HITS = VideoFinder.class.getName() + ".findVideosByHits";
 
+	public List<Video> findVideosByHits(long hits) {
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(FIND_VIDEOS_BY_HITS);
+			SQLQuery q = session.createSQLQuery(sql);
+			q.addScalar("videoId", Type.LONG);
+			q.addScalar("title", Type.STRING);
+			q.addScalar("lectureseriesId", Type.LONG);
+			q.addScalar("producerId", Type.LONG);
+			q.addScalar("containerFormat", Type.STRING);
+			q.addScalar("filename", Type.STRING);
+			q.addScalar("resolution", Type.STRING);
+			q.addScalar("duration", Type.STRING);
+			q.addScalar("hostId", Type.LONG);
+			q.addScalar("fileSize", Type.STRING);
+			q.addScalar("generationDate", Type.STRING);
+			q.addScalar("openAccess", Type.INTEGER);
+			q.addScalar("downloadLink", Type.INTEGER);
+			q.addScalar("metadataId", Type.LONG);
+			q.addScalar("secureFilename", Type.STRING);
+			q.addScalar("hits", Type.INTEGER);
+			q.addScalar("uploadDate", Type.STRING);
+			q.addScalar("permittedToSegment", Type.INTEGER);
+			q.addScalar("rootInstitutionId", Type.LONG);
+			q.addScalar("citation2go", Type.INTEGER);
+			q.addScalar("termId", Type.LONG);
+			q.addScalar("tags", Type.STRING);
+			q.addScalar("password_", Type.STRING);
+			
+			q.setCacheable(false);
+			
+			QueryPos qPos = QueryPos.getInstance(q);
+			qPos.add(hits);
+			
+			@SuppressWarnings("unchecked")
+			List <Object[]> l =  (List<Object[]>) QueryUtil.list(q, getDialect(),com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+			return assembleVideos(l);
+		} catch (Exception e) {
+			try {
+				throw new SystemException(e);
+			} catch (SystemException se) {
+				se.printStackTrace();
+			}
+		} finally {
+			closeSession(session);
+		}
+		return null;		
+	}
+	
 	public List<Video> findVideosByAllSearchWords() {
 		Session session = null;
 		try {
@@ -262,7 +313,7 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 				String s = (video[16])+"";
 				date = (Date) formatter.parse(s);
 			} catch (ParseException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}			
 			//
 			v.setUploadDate(date);

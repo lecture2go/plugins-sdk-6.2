@@ -43,4 +43,9 @@ public class VideohitlistLocalServiceImpl
 	public void deleteByVideoId(Long videoId) throws SystemException{
 		videohitlistPersistence.removeByVideo(videoId);
 	}
+	
+	public void deleteAll() throws SystemException{
+		videohitlistPersistence.removeAll();
+	}
+	
 }

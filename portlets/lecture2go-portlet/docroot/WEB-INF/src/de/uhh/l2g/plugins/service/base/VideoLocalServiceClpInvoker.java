@@ -199,6 +199,14 @@ public class VideoLocalServiceClpInvoker {
 		_methodParameterTypes186 = new String[] {
 				"java.lang.String", "java.lang.Long"
 			};
+
+		_methodName187 = "getByHits";
+
+		_methodParameterTypes187 = new String[] { "java.lang.Long" };
+
+		_methodName188 = "getByHits";
+
+		_methodParameterTypes188 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -418,6 +426,16 @@ public class VideoLocalServiceClpInvoker {
 				(java.lang.Long)arguments[1]);
 		}
 
+		if (_methodName187.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes187, parameterTypes)) {
+			return VideoLocalServiceUtil.getByHits((java.lang.Long)arguments[0]);
+		}
+
+		if (_methodName188.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes188, parameterTypes)) {
+			return VideoLocalServiceUtil.getByHits();
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -499,4 +517,8 @@ public class VideoLocalServiceClpInvoker {
 	private String[] _methodParameterTypes185;
 	private String _methodName186;
 	private String[] _methodParameterTypes186;
+	private String _methodName187;
+	private String[] _methodParameterTypes187;
+	private String _methodName188;
+	private String[] _methodParameterTypes188;
 }
