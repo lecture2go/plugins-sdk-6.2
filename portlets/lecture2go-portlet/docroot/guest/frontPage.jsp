@@ -6,11 +6,21 @@ Long termId = new Long(0);
 Long categoryId = new Long(0);
 Long creatorId = new Long(0);
 String searchQuery = "";
-// get filtered lectureseries and single videos
-// differentiate returned lectureseries in real lectureseries and fake video lectureseries (openAccessVideoId is negative on videos)
-List<Lectureseries> latest = LectureseriesLocalServiceUtil.getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(institutionId, parentInstitutionId, termId, categoryId, creatorId, searchQuery);
 
-%>
+//get latest 
+//-lecture series = lectureseriesId>0
+//-videos = lectureseriesId<0
+//example -> top 10
+List<Lectureseries> latest = LectureseriesLocalServiceUtil.getLatest(10);
+
+//get popular videos
+//example -> top 10
+List<Video> popular = VideoLocalServiceUtil.getPopular(10);
+
+//get all root (1st level) institutions with open access videos
+List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutionsByOpenAccessVideos();
+
+%> 
 <div class="teaser">
 	<div class="info">
 		<div class="pageDescription">

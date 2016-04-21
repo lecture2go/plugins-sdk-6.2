@@ -25,10 +25,18 @@ public interface LectureseriesFinder {
 
 	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findAllLectureseriesWhithOpenaccessVideos();
 
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findLatest(
+		int limit);
+
 	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(
 		java.lang.Long institutionId, java.lang.Long parentInstitutionId,
 		java.lang.Long termId, java.lang.Long categoryId,
 		java.lang.Long creatorId, java.lang.String searchQuery);
+
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(
+		java.lang.Long institutionId, java.lang.Long parentInstitutionId,
+		java.lang.Long termId, java.lang.Long categoryId,
+		java.lang.Long creatorId, java.lang.String searchQuery, int limit);
 
 	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> findFilteredByApprovedSemesterFacultyProducer(
 		java.lang.Integer approved, java.lang.Long termId,

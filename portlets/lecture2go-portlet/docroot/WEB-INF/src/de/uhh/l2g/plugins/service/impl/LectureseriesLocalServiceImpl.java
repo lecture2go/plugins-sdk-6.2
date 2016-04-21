@@ -146,4 +146,8 @@ public class LectureseriesLocalServiceImpl extends LectureseriesLocalServiceBase
 	public List<Lectureseries> getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(Long institutionId, Long parentInstitutionId, Long termId, Long categoryId, Long creatorId, String searchQuery){
 		return LectureseriesFinderUtil.findFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(institutionId, parentInstitutionId, termId, categoryId, creatorId, searchQuery);
 	}
+	
+	public List<Lectureseries> getLatest(int limit){
+		return LectureseriesFinderUtil.findLatest(limit); 
+	}	
 }

@@ -129,6 +129,9 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		return vl;
 	}
 	
+	public List<Video> getPopular(int limit){
+		return VideoFinderUtil.findPopular(limit);
+	}
 	
 	public List<Video> getLatestVideos(){
 		return VideoFinderUtil.findLatestVideos();

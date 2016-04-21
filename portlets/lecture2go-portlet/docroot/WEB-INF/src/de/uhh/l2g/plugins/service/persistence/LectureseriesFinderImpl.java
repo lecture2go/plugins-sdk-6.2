@@ -136,6 +136,13 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 		return null;		
 	}
 	
+	public List<Lectureseries> findLatest(int limit) {
+		return findFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(new Long(0), new Long(0), new Long(0), new Long(0), new Long(0), "", limit);
+	}
+	
+	public List<Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(Long institutionId, Long parentInstitutionId, Long termId, Long categoryId, Long creatorId, String searchQuery) {
+		return findFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(institutionId, parentInstitutionId, termId, categoryId, creatorId, searchQuery, 0);
+	}
 	/**
 	 * Queries the database for data by single filter id's
 	 * @param institutionId
@@ -145,8 +152,14 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 	 * @param creatorId
 	 * @return a list with lectureseries which fit to the given filters
 	 */
-	public List<Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(Long institutionId, Long parentInstitutionId, Long termId, Long categoryId, Long creatorId, String searchQuery) {
-
+	public List<Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(Long institutionId, Long parentInstitutionId, Long termId, Long categoryId, Long creatorId, String searchQuery, int limit) {
+		int start =com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS;
+		int stop =com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS;
+		if (limit>0){
+			start=0;
+			stop = limit;
+		}
+		//
 		Session session = null;
 		try {
 			session = openSession();
@@ -186,7 +199,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			}
 			
 			@SuppressWarnings("unchecked")
-			List <Object[]> l =  (List<Object[]>) QueryUtil.list(q, getDialect(),com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+			List <Object[]> l =  (List<Object[]>) QueryUtil.list(q, getDialect(),start , stop);
 			return assembleLectureseries(l);
 		} catch (Exception e) {
 			try {
