@@ -301,12 +301,6 @@ public class InstitutionLocalServiceWrapper implements InstitutionLocalService,
 	}
 
 	@Override
-	public java.util.List<de.uhh.l2g.plugins.model.Institution> getRootInstitutionsByOpenAccessVideos()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _institutionLocalService.getRootInstitutionsByOpenAccessVideos();
-	}
-
-	@Override
 	public de.uhh.l2g.plugins.model.Institution getByGroupIdAndId(
 		long groupId, long institutionId)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -457,7 +451,7 @@ public class InstitutionLocalServiceWrapper implements InstitutionLocalService,
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Institution updateCounter()
+	public long updateCounter()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _institutionLocalService.updateCounter();

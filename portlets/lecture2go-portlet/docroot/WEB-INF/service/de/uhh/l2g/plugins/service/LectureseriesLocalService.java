@@ -295,4 +295,8 @@ public interface LectureseriesLocalService extends BaseLocalService,
 		java.lang.Long institutionId, java.lang.Long parentInstitutionId,
 		java.lang.Long termId, java.lang.Long categoryId,
 		java.lang.Long creatorId, java.lang.String searchQuery);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getLatest(
+		int limit);
 }

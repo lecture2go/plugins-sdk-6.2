@@ -354,6 +354,12 @@ public class LectureseriesLocalServiceWrapper
 			parentInstitutionId, termId, categoryId, creatorId, searchQuery);
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getLatest(
+		int limit) {
+		return _lectureseriesLocalService.getLatest(limit);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

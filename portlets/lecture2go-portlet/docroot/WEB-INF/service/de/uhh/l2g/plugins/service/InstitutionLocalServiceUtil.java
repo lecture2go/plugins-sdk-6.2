@@ -415,7 +415,7 @@ public class InstitutionLocalServiceUtil {
 		return getService().deleteInstitution(institutionId, serviceContext);
 	}
 
-	public static de.uhh.l2g.plugins.model.Institution updateCounter()
+	public static long updateCounter()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().updateCounter();

@@ -122,103 +122,99 @@ public class InstitutionLocalServiceClpInvoker {
 
 		_methodParameterTypes167 = new String[] { "long" };
 
-		_methodName168 = "getRootInstitutionsByOpenAccessVideos";
+		_methodName168 = "getByGroupIdAndId";
 
-		_methodParameterTypes168 = new String[] {  };
+		_methodParameterTypes168 = new String[] { "long", "long" };
 
-		_methodName169 = "getByGroupIdAndId";
+		_methodName169 = "getRootByGroupId";
 
 		_methodParameterTypes169 = new String[] { "long", "long" };
 
-		_methodName170 = "getRootByGroupId";
+		_methodName170 = "getByGroupIdAndParent";
 
 		_methodParameterTypes170 = new String[] { "long", "long" };
 
 		_methodName171 = "getByGroupIdAndParent";
 
-		_methodParameterTypes171 = new String[] { "long", "long" };
+		_methodParameterTypes171 = new String[] { "long", "long", "int", "int" };
 
-		_methodName172 = "getByGroupIdAndParent";
+		_methodName172 = "getByGroupIdAndParentCount";
 
-		_methodParameterTypes172 = new String[] { "long", "long", "int", "int" };
+		_methodParameterTypes172 = new String[] { "long", "long" };
 
-		_methodName173 = "getByGroupIdAndParentCount";
+		_methodName173 = "getByParentId";
 
-		_methodParameterTypes173 = new String[] { "long", "long" };
+		_methodParameterTypes173 = new String[] { "long", "java.lang.String" };
 
-		_methodName174 = "getByParentId";
+		_methodName174 = "getByParent";
 
-		_methodParameterTypes174 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes174 = new String[] { "long" };
 
-		_methodName175 = "getByParent";
+		_methodName175 = "getByLevel";
 
-		_methodParameterTypes175 = new String[] { "long" };
+		_methodParameterTypes175 = new String[] { "int" };
 
-		_methodName176 = "getByLevel";
+		_methodName176 = "getByLectureseriesId";
 
-		_methodParameterTypes176 = new String[] { "int" };
+		_methodParameterTypes176 = new String[] { "long", "int", "int" };
 
-		_methodName177 = "getByLectureseriesId";
+		_methodName177 = "getAllSortedAsTree";
 
-		_methodParameterTypes177 = new String[] { "long", "int", "int" };
+		_methodParameterTypes177 = new String[] { "int", "int" };
 
-		_methodName178 = "getAllSortedAsTree";
+		_methodName178 = "getMaxSortByParentId";
 
-		_methodParameterTypes178 = new String[] { "int", "int" };
+		_methodParameterTypes178 = new String[] { "long" };
 
-		_methodName179 = "getMaxSortByParentId";
+		_methodName179 = "getLockingElements";
 
 		_methodParameterTypes179 = new String[] { "long" };
 
-		_methodName180 = "getLockingElements";
+		_methodName180 = "getInstitutionsFromLectureseriesIdsAndVideoIds";
 
-		_methodParameterTypes180 = new String[] { "long" };
+		_methodParameterTypes180 = new String[] {
+				"java.util.ArrayList", "java.util.ArrayList"
+			};
 
 		_methodName181 = "getInstitutionsFromLectureseriesIdsAndVideoIds";
 
 		_methodParameterTypes181 = new String[] {
-				"java.util.ArrayList", "java.util.ArrayList"
-			};
-
-		_methodName182 = "getInstitutionsFromLectureseriesIdsAndVideoIds";
-
-		_methodParameterTypes182 = new String[] {
 				"java.util.ArrayList", "java.util.ArrayList", "java.lang.Long"
 			};
 
-		_methodName189 = "getDefaultInstitutionId";
+		_methodName188 = "getDefaultInstitutionId";
 
-		_methodParameterTypes189 = new String[] { "long", "long" };
+		_methodParameterTypes188 = new String[] { "long", "long" };
 
-		_methodName190 = "addDefaultInstitution";
+		_methodName189 = "addDefaultInstitution";
 
-		_methodParameterTypes190 = new String[] {
+		_methodParameterTypes189 = new String[] {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName191 = "addInstitution";
+		_methodName190 = "addInstitution";
 
-		_methodParameterTypes191 = new String[] {
+		_methodParameterTypes190 = new String[] {
 				"java.lang.String", "long", "long", "int",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName192 = "updateInstitution";
+		_methodName191 = "updateInstitution";
 
-		_methodParameterTypes192 = new String[] {
+		_methodParameterTypes191 = new String[] {
 				"long", "java.lang.String", "int",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName193 = "deleteInstitution";
+		_methodName192 = "deleteInstitution";
 
-		_methodParameterTypes193 = new String[] {
+		_methodParameterTypes192 = new String[] {
 				"long", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName194 = "updateCounter";
+		_methodName193 = "updateCounter";
 
-		_methodParameterTypes194 = new String[] {  };
+		_methodParameterTypes193 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -334,106 +330,101 @@ public class InstitutionLocalServiceClpInvoker {
 
 		if (_methodName168.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes168, parameterTypes)) {
-			return InstitutionLocalServiceUtil.getRootInstitutionsByOpenAccessVideos();
+			return InstitutionLocalServiceUtil.getByGroupIdAndId(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
 		}
 
 		if (_methodName169.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes169, parameterTypes)) {
-			return InstitutionLocalServiceUtil.getByGroupIdAndId(((Long)arguments[0]).longValue(),
+			return InstitutionLocalServiceUtil.getRootByGroupId(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue());
 		}
 
 		if (_methodName170.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes170, parameterTypes)) {
-			return InstitutionLocalServiceUtil.getRootByGroupId(((Long)arguments[0]).longValue(),
+			return InstitutionLocalServiceUtil.getByGroupIdAndParent(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue());
 		}
 
 		if (_methodName171.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes171, parameterTypes)) {
 			return InstitutionLocalServiceUtil.getByGroupIdAndParent(((Long)arguments[0]).longValue(),
-				((Long)arguments[1]).longValue());
-		}
-
-		if (_methodName172.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes172, parameterTypes)) {
-			return InstitutionLocalServiceUtil.getByGroupIdAndParent(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Integer)arguments[2]).intValue(),
 				((Integer)arguments[3]).intValue());
 		}
 
-		if (_methodName173.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes173, parameterTypes)) {
+		if (_methodName172.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes172, parameterTypes)) {
 			return InstitutionLocalServiceUtil.getByGroupIdAndParentCount(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue());
 		}
 
-		if (_methodName174.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes174, parameterTypes)) {
+		if (_methodName173.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes173, parameterTypes)) {
 			return InstitutionLocalServiceUtil.getByParentId(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1]);
 		}
 
+		if (_methodName174.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes174, parameterTypes)) {
+			return InstitutionLocalServiceUtil.getByParent(((Long)arguments[0]).longValue());
+		}
+
 		if (_methodName175.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes175, parameterTypes)) {
-			return InstitutionLocalServiceUtil.getByParent(((Long)arguments[0]).longValue());
+			return InstitutionLocalServiceUtil.getByLevel(((Integer)arguments[0]).intValue());
 		}
 
 		if (_methodName176.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes176, parameterTypes)) {
-			return InstitutionLocalServiceUtil.getByLevel(((Integer)arguments[0]).intValue());
-		}
-
-		if (_methodName177.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes177, parameterTypes)) {
 			return InstitutionLocalServiceUtil.getByLectureseriesId(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				((Integer)arguments[2]).intValue());
 		}
 
-		if (_methodName178.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes178, parameterTypes)) {
+		if (_methodName177.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes177, parameterTypes)) {
 			return InstitutionLocalServiceUtil.getAllSortedAsTree(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
+		if (_methodName178.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes178, parameterTypes)) {
+			return InstitutionLocalServiceUtil.getMaxSortByParentId(((Long)arguments[0]).longValue());
+		}
+
 		if (_methodName179.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes179, parameterTypes)) {
-			return InstitutionLocalServiceUtil.getMaxSortByParentId(((Long)arguments[0]).longValue());
+			return InstitutionLocalServiceUtil.getLockingElements(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName180.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes180, parameterTypes)) {
-			return InstitutionLocalServiceUtil.getLockingElements(((Long)arguments[0]).longValue());
+			return InstitutionLocalServiceUtil.getInstitutionsFromLectureseriesIdsAndVideoIds((java.util.ArrayList<java.lang.Long>)arguments[0],
+				(java.util.ArrayList<java.lang.Long>)arguments[1]);
 		}
 
 		if (_methodName181.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes181, parameterTypes)) {
 			return InstitutionLocalServiceUtil.getInstitutionsFromLectureseriesIdsAndVideoIds((java.util.ArrayList<java.lang.Long>)arguments[0],
-				(java.util.ArrayList<java.lang.Long>)arguments[1]);
-		}
-
-		if (_methodName182.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes182, parameterTypes)) {
-			return InstitutionLocalServiceUtil.getInstitutionsFromLectureseriesIdsAndVideoIds((java.util.ArrayList<java.lang.Long>)arguments[0],
 				(java.util.ArrayList<java.lang.Long>)arguments[1],
 				(java.lang.Long)arguments[2]);
 		}
 
-		if (_methodName189.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes189, parameterTypes)) {
+		if (_methodName188.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes188, parameterTypes)) {
 			return InstitutionLocalServiceUtil.getDefaultInstitutionId(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue());
 		}
 
-		if (_methodName190.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes190, parameterTypes)) {
+		if (_methodName189.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes189, parameterTypes)) {
 			return InstitutionLocalServiceUtil.addDefaultInstitution((com.liferay.portal.service.ServiceContext)arguments[0]);
 		}
 
-		if (_methodName191.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes191, parameterTypes)) {
+		if (_methodName190.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes190, parameterTypes)) {
 			return InstitutionLocalServiceUtil.addInstitution((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(),
@@ -441,22 +432,22 @@ public class InstitutionLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[4]);
 		}
 
-		if (_methodName192.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes192, parameterTypes)) {
+		if (_methodName191.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes191, parameterTypes)) {
 			return InstitutionLocalServiceUtil.updateInstitution(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1],
 				((Integer)arguments[2]).intValue(),
 				(com.liferay.portal.service.ServiceContext)arguments[3]);
 		}
 
-		if (_methodName193.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes193, parameterTypes)) {
+		if (_methodName192.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes192, parameterTypes)) {
 			return InstitutionLocalServiceUtil.deleteInstitution(((Long)arguments[0]).longValue(),
 				(com.liferay.portal.service.ServiceContext)arguments[1]);
 		}
 
-		if (_methodName194.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes194, parameterTypes)) {
+		if (_methodName193.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes193, parameterTypes)) {
 			return InstitutionLocalServiceUtil.updateCounter();
 		}
 
@@ -531,8 +522,8 @@ public class InstitutionLocalServiceClpInvoker {
 	private String[] _methodParameterTypes180;
 	private String _methodName181;
 	private String[] _methodParameterTypes181;
-	private String _methodName182;
-	private String[] _methodParameterTypes182;
+	private String _methodName188;
+	private String[] _methodParameterTypes188;
 	private String _methodName189;
 	private String[] _methodParameterTypes189;
 	private String _methodName190;
@@ -543,6 +534,4 @@ public class InstitutionLocalServiceClpInvoker {
 	private String[] _methodParameterTypes192;
 	private String _methodName193;
 	private String[] _methodParameterTypes193;
-	private String _methodName194;
-	private String[] _methodParameterTypes194;
 }

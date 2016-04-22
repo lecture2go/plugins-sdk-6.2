@@ -18,6 +18,8 @@ package de.uhh.l2g.plugins.service.persistence;
  * @author Iavor Sturm
  */
 public interface InstitutionFinder {
+	public java.util.List<de.uhh.l2g.plugins.model.Institution> findRootInstitutionsByOpenAccessVideos();
+
 	public java.util.List<de.uhh.l2g.plugins.model.Institution> findByLectureseriesId(
 		long lectureseriesId, int begin, int end);
 
