@@ -24,7 +24,38 @@ public class InstitutionFinderImpl extends BasePersistenceImpl<Institution> impl
 	public static final String FIND_FROM_LECTURESERIES = InstitutionFinder.class.getName() + ".findByLectureseriesId";
 	public static final String FIND_MAX_SORT_BY_PARENT = InstitutionFinder.class.getName() + ".findMaxSortByParent";
 	public static final String FIND_LOCKING_ELEMENTS = InstitutionFinder.class.getName() + ".findLockingElements";
-
+	public static final String FIND_ROOT_INSTITUTIONS_BY_OPEN_ACCESS_VIDEOS = InstitutionFinder.class.getName() + ".findRootInstitutionsByOpenAccessVideos";
+	
+	public List<Institution> findRootInstitutionsByOpenAccessVideos() {
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(FIND_ROOT_INSTITUTIONS_BY_OPEN_ACCESS_VIDEOS);
+			SQLQuery q = session.createSQLQuery(sql);
+			q.addScalar("institutionId", Type.LONG);
+			q.addScalar("parentId", Type.INTEGER);
+			q.addScalar("name", Type.STRING);
+			q.addScalar("typ", Type.STRING);
+			q.addScalar("www", Type.STRING);
+			q.addScalar("level", Type.INTEGER);
+			q.addScalar("sort", Type.INTEGER);
+			q.addScalar("path", Type.STRING);
+			q.setCacheable(false);
+			@SuppressWarnings("unchecked")
+			List <Object[]> fl =  (List<Object[]>) QueryUtil.list(q, getDialect(), com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+			return assembleInstitutionsWithPath(fl);
+		} catch (Exception e) {
+			try {
+				throw new SystemException(e);
+			} catch (SystemException se) {
+				se.printStackTrace();
+			}
+		} finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
 	public List<Institution> findByLectureseriesId(long lectureseriesId, int begin, int end) {
 		Session session = null;
 		try {
@@ -55,8 +86,6 @@ public class InstitutionFinderImpl extends BasePersistenceImpl<Institution> impl
 		}
 		return null;
 	}
-
-
 
 	public List<Institution> findAllSortedAsTree(int begin, int end) {
 		Session session = null;

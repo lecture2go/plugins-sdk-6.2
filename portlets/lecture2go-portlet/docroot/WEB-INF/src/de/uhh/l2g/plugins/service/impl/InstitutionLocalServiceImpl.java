@@ -405,7 +405,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		   		Institution institution = getInstitution(institutionId);
 
 		   	    //Check if Institution is empty, i.e. no  subfacilities, lecture series, videos, and members
-		        if (getLockingElements(institutionId) < 2){
+		        if (getLockingElements(institutionId) < 1){
 
 			        resourceLocalService.deleteResource(serviceContext.getCompanyId(),
 			        		Institution.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
@@ -447,6 +447,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 	            long institutionId = 0; //actual maxId
 	            
 				//Retrieve actual table data
+
 	            if (count > 0){ //our db is filled... with something at least
 					ClassLoader classLoader = (ClassLoader)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),"portletClassLoader");    		
 					DynamicQuery query = DynamicQueryFactoryUtil.forClass(Institution.class,classLoader).addOrder(OrderFactoryUtil.desc("institutionId"));
@@ -463,7 +464,6 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		        }
 				return counter.getCurrentId();
 					
-		   
 	   }
 
 
