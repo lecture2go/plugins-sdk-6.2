@@ -207,8 +207,8 @@
   
   <portlet>
         <portlet-name>lg-admin-thread-management</portlet-name>
-        <display-name>L2Go Threads Management</display-name>
-        <portlet-class>de.uhh.l2g.plugins.admin.ThreadsManagement</portlet-class>
+        <display-name>L2Go Thread Management</display-name>
+        <portlet-class>de.uhh.l2g.plugins.admin.ThreadManagement</portlet-class>
         <init-param>
             <name>view-template</name>
             <value>/admin/threads.jsp</value>
@@ -224,9 +224,9 @@
         </supports>
         <resource-bundle>content.Language</resource-bundle>
         <portlet-info>
-            <title>L2Go Threads Management</title>
-            <short-title>L2Go Threads Management</short-title>
-            <keywords>L2Go Threads Management</keywords>
+            <title>L2Go Thread Management</title>
+            <short-title>L2Go Thread Management</short-title>
+            <keywords>L2Go Thread Management</keywords>
         </portlet-info>
   </portlet>
   
