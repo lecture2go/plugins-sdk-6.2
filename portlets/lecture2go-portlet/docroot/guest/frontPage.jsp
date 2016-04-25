@@ -21,7 +21,7 @@ ListIterator<Video> pli = popular.listIterator();
 
 //get all root (1st level) institutions with open access videos
 List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutionsByOpenAccessVideos();
-
+ 
 %> 
 <div class="teaser">
 	<div class="info">
