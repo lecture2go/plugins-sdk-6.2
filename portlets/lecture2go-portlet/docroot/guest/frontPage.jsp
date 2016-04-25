@@ -21,7 +21,6 @@ ListIterator<Video> pli = popular.listIterator();
 
 //get all root (1st level) institutions with open access videos
 List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutionsByOpenAccessVideos();
-ListIterator<Institution> ili = institutions.listIterator();
 
 %> 
 <div class="teaser">
@@ -80,20 +79,7 @@ ListIterator<Institution> ili = institutions.listIterator();
 				<%
 			}
 		%>
-	</p>
-
-	<h4><liferay-ui:message key="open-access-institutions"/></h4>
-  	<p>
-		<%
-			while(ili.hasNext()){
-				Institution inst = ili.next();
-				%> 
-					institution object --> name: <%=inst.getName() %>				
-					<br/>
-				<%
-			}
-		%>
-	</p>
+	</p> 
 </div>
 
 <script>

@@ -81,8 +81,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 
 
 	public List<Institution> getRootInstitutionsByOpenAccessVideos() throws SystemException {
-		List<Institution> ret = InstitutionFinderUtil.findRootInstitutionsByOpenAccessVideos();
-		return ret; 
+		return InstitutionFinderUtil.findRootInstitutionsByOpenAccessVideos(); 
 	}
 	
 	public Institution getByGroupIdAndId(long groupId, long institutionId) throws SystemException {

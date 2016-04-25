@@ -39,10 +39,11 @@ public class InstitutionFinderImpl extends BasePersistenceImpl<Institution> impl
 			q.addScalar("www", Type.STRING);
 			q.addScalar("level", Type.INTEGER);
 			q.addScalar("sort", Type.INTEGER);
+			q.addScalar("path", Type.STRING);
 			q.setCacheable(false);
 			@SuppressWarnings("unchecked")
 			List <Object[]> fl =  (List<Object[]>) QueryUtil.list(q, getDialect(), com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
-			return assembleInstitutions(fl);
+			return assembleInstitutionsWithPath(fl);
 		} catch (Exception e) {
 			try {
 				throw new SystemException(e);
