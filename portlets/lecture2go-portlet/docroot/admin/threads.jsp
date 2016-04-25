@@ -28,7 +28,6 @@
 <liferay-portlet:resourceURL id="triggerVideohitlistThread" var="triggerVideohitlistThread" />
 
 <div class="noresponsive">	       
-<<<<<<< HEAD
 
 <liferay-ui:message key="ScheduledJobs: die eigentlichen Quartz Jobs, nur sie haben ein SchedulerResponse mit Job-Status"></liferay-ui:message>
 <%-- This list all unique schedulers --%>
