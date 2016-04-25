@@ -70,7 +70,12 @@ public class ThreadManagement extends MVCPortlet {
 	 
 	}
 	
-	public void startJob(ActionRequest request, ActionResponse response){
+	/**Schedule an unscheuled Job (requires readable config)
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	public void scheduleJob(ActionRequest request, ActionResponse response){
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 					ScheduledThread.class.getName(), request);
@@ -81,7 +86,7 @@ public class ThreadManagement extends MVCPortlet {
 			  ClassLoader classLoader = PortletClassLoaderUtil.getClassLoader(serviceContext.getPortletId()); //Where portletID is not null
 			  PortletScheduler scheduler = (PortletScheduler) classLoader.loadClass(schedulerClassName).newInstance();
 			  scheduler.initScheduler(schedulerClassName, serviceContext.getPortletId());
-			  System.out.println(scheduler.getPortletId());
+			  //System.out.println(scheduler.getPortletId());
 			  scheduler.start();
 
 		 } catch (Exception e) {
@@ -96,6 +101,11 @@ public class ThreadManagement extends MVCPortlet {
 		}
 	}
 	
+	/**Resume a paused job (works with each scheduler in memory)
+	 * 
+	 * @param request
+	 * @param response
+	 */
 	public void resumeJob(ActionRequest request, ActionResponse response){
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -107,7 +117,7 @@ public class ThreadManagement extends MVCPortlet {
 			  ClassLoader classLoader = PortletClassLoaderUtil.getClassLoader(serviceContext.getPortletId()); //Where portletID is not null
 			  PortletScheduler scheduler = (PortletScheduler) classLoader.loadClass(schedulerClassName).newInstance();
 			  scheduler.initScheduler(schedulerClassName, serviceContext.getPortletId());
-			  System.out.println(scheduler.getPortletId());
+			  //System.out.println(scheduler.getPortletId());
 			  scheduler.resume();
 
 		 } catch (Exception e) {
@@ -121,6 +131,12 @@ public class ThreadManagement extends MVCPortlet {
 					"/admin/jobs.jsp");
 		}
 	}
+	
+	/**Pauses running Job (works with each scheduler in memory)
+	 * 
+	 * @param request
+	 * @param response
+	 */
 	public void pauseJob(ActionRequest request, ActionResponse response){		
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -132,7 +148,7 @@ public class ThreadManagement extends MVCPortlet {
 			  PortletScheduler scheduler = (PortletScheduler) classLoader.loadClass(schedulerClassName).newInstance();
 			  
 			  scheduler.initScheduler(schedulerClassName, serviceContext.getPortletId());
-			  System.out.println(scheduler.getPortletId());
+			  //System.out.println(scheduler.getPortletId());
 			  
 			  scheduler.pause();
 
@@ -148,6 +164,14 @@ public class ThreadManagement extends MVCPortlet {
 		}
 	}
 	
+	/**Update Job (updates Trigger (the timing Element) of Job in memory)
+	 * (Does nothing at the moment!)
+	 * 
+	 * TODO: dynamic input with DB persitence
+	 * 
+	 * @param request
+	 * @param response
+	 */
 	public void updateJob(ActionRequest request, ActionResponse response){		
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -159,7 +183,7 @@ public class ThreadManagement extends MVCPortlet {
 			  PortletScheduler scheduler = (PortletScheduler) classLoader.loadClass(schedulerClassName).newInstance();
 			  
 			  scheduler.initScheduler(schedulerClassName, serviceContext.getPortletId());
-			  System.out.println(scheduler.getPortletId());
+			  //System.out.println(scheduler.getPortletId());
 			  
 			  scheduler.update();
 
@@ -174,7 +198,14 @@ public class ThreadManagement extends MVCPortlet {
 					"/admin/jobs.jsp");
 		}
 	}
-	public void stopJob(ActionRequest request, ActionResponse response){		
+	
+	/**Unchedules a Job from memory (keeps SchedulerEntry record)
+	 * 
+	 * WARN: currently causes Liferay to duplicate Job on redeploy, if unschedule fails on unregister
+	 * @param request
+	 * @param response
+	 */
+	public void unscheduleJob(ActionRequest request, ActionResponse response){		
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 					ScheduledThread.class.getName(), request);
@@ -187,7 +218,7 @@ public class ThreadManagement extends MVCPortlet {
 			  scheduler.initScheduler(schedulerClassName, serviceContext.getPortletId());
 			  System.out.println(scheduler.getPortletId());
 			  
-			  scheduler.stop();
+			  scheduler.unschedule();
 
 		 } catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
@@ -201,6 +232,11 @@ public class ThreadManagement extends MVCPortlet {
 		}
 	}
 	
+	/**Unchedules and removes a Job from memory (can only be (re)scheduled with readable config)
+	 * 
+	 * @param request
+	 * @param response
+	 */
 	public void removeJob(ActionRequest request, ActionResponse response){		
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(

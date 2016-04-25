@@ -185,11 +185,12 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 			 LOG.warn("No SchedulerEntry found for this Job. Generating new Entry...");
 			 PortletBag portletBag = PortletBagPool.get(portletId);
 			 ServletContext servletContext = portletBag.getServletContext();
-			 
+		
 			 String cron = GetterUtil.getString(servletContext.getInitParameter("cron-trigger-value"));
 			 String description = GetterUtil.getString(servletContext.getInitParameter("scheduler-description"));
 			 this.generalTrigger = new CronTrigger(this.schedulerClassName, this.schedulerClassName, cron);
-
+			 
+			 LOG.info("Building Trigger: "+ cron);
 			 SchedulerEntry entry = new SchedulerEntryImpl();
 			 entry.setDescription(description);
 			 entry.setEventListenerClass(this.schedulerClassName);
@@ -381,7 +382,7 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 		
 	
     
-    /** Stops Scheduler 
+    /** Stops Scheduler (unschedules and clears memory)
      * 
      * 
      */
@@ -429,7 +430,55 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 			 } 
 	}
     
-    /**Deletes the Scheduler thoroughly until restart!
+    /** Unschedules Quartz Job but keeps SchedulerEntry in Memory
+     *  (Scheduler will be not correctly (re)deployed if in state UNSCHEDULED
+     * 
+     */
+    public void unschedule(){
+    	try {  
+    		
+    		List<SchedulerResponse> scheduledJobs = SchedulerEngineHelperUtil.getScheduledJobs();  
+
+    		 for (SchedulerResponse resp : scheduledJobs) {  
+    	          if (resp.getJobName().equalsIgnoreCase(this.schedulerClassName)) {  
+    	        	  
+    	        	  LOG.info("Stopping :" + resp.toString()); 
+    	        	  Map<String, Object> map = resp.getMessage().getValues(); 
+    	        	  
+    			      String portletId = "";
+    			      String listenerName = "";
+    			 
+    			      if (map.containsKey(SchedulerEngine.PORTLET_ID)) portletId = map.get(SchedulerEngine.PORTLET_ID).toString();
+    			      if (map.containsKey(SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME)) listenerName = map.get(SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME).toString();
+      
+    	        	  LOG.info("Associated to :" + portletId +" "+ listenerName+" "+this.destination); 
+		      
+    	        	  TriggerState state = SchedulerEngineHelperUtil.getJobState(resp.getJobName(), resp.getGroupName(), resp.getStorageType());
+		      
+    	        	  if (state.equals(TriggerState.NORMAL)){
+    	        		  
+    	       	       Thread thread = Thread.currentThread();
+    	    	       LOG.info("Thread :" + thread.getContextClassLoader() + thread.toString());
+    	    	       
+    	        		  LOG.info("Unscheduling :" + this.schedulerClassName +" "+ resp.getTrigger().toString()); 
+    	        		  SchedulerEngineHelperUtil.unschedule(schedulerEntry, resp.getStorageType());
+    	        		  //TODO: Check Workaround
+    	        		  //This removes the SchedulerEntry from Liferay's Scheduler List so it is not started aditionally on re-deploy
+    	        		  //BUT, removing this entry will also destroy our Trigger (as Quartz unschedule(), removes the Trigger from QuartzJob
+    	        		  this.removeFromEntries();
+    	        	  }
+    	        	  else{
+    	        		  LOG.warn("Scheduler could not be unscheduled beacuse it was in state "+state); 
+    	        	  }
+    	          } 
+    			}
+			  
+			 } catch (SchedulerException e) {  
+				 LOG.warn("Failed to unschedule job"+ this.schedulerClassName, e);  
+			 } 
+	}
+    
+    /**Deletes the Scheduler thoroughly until server restart!
      * 
      */
     public void delete(){
@@ -526,7 +575,7 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
     	  }    
     }
     
-    /**Unschedules and deletes all Jobs associated with this Listener Class' 
+    /**Deletes all Jobs associated with this Listener Class' 
      * 
      * Assumes Job and Group Name are equal
      */
@@ -634,6 +683,7 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
     	 
     	 return myJobs;
     	 }
+
      	
 }
  

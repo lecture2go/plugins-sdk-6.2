@@ -17,8 +17,8 @@
  
 <portlet:renderURL var="viewURL"><portlet:param name="jspPage" value="/admin/jobs.jsp" /></portlet:renderURL>
 
-<portlet:actionURL name="startJob" var="startJobURL"></portlet:actionURL>
-<portlet:actionURL name="stopJob" var="stopJobURL"></portlet:actionURL>
+<portlet:actionURL name="scheduleJob" var="scheduleJobURL"></portlet:actionURL>
+<portlet:actionURL name="unscheduleJob" var="unscheduleJobURL"></portlet:actionURL>
 <portlet:actionURL name="resumeJob" var="resumeJobURL"></portlet:actionURL>
 <portlet:actionURL name="pauseJob" var="pauseJobURL"></portlet:actionURL>
 <portlet:actionURL name="updateJob" var="updateJobURL"></portlet:actionURL>
@@ -47,9 +47,9 @@
  
  
  <% 	if (state.equals(TriggerState.UNSCHEDULED) && scheduledJobs.isEmpty()) {	%>
- 			<aui:form action="<%= startJobURL %>" name="<portlet:namespace />fm">         
+ 			<aui:form action="<%= scheduleJobURL %>" name="<portlet:namespace />fm">         
 				<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= ps.getJobName() %>'/>
-				<aui:button type="submit" value="Start" ></aui:button>
+				<aui:button type="submit" value="Schedule" ></aui:button>
 			</aui:form>
 		 <% } %>   
     	 <br>
@@ -75,13 +75,13 @@
 					<aui:button type="submit" value="Resume" ></aui:button>
 				</aui:form>  
 				<liferay-ui:message key="Schedule/Unschedule funktioniert nur mit SchedulerEntry (hier funktioniert unregister nicht korrekt))"></liferay-ui:message>
-				<aui:form action="<%= stopJobURL %>" name="<portlet:namespace />fm">         
+				<aui:form action="<%= unscheduleJobURL %>" name="<portlet:namespace />fm">         
 					<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= job.getEventListenerClass() %>'/>
-					<aui:button type="submit" value="Stop" ></aui:button>
+					<aui:button type="submit" value="Unschedule" ></aui:button>
 				</aui:form>
-				<aui:form action="<%= startJobURL %>" name="<portlet:namespace />fm">         
+				<aui:form action="<%= scheduleJobURL %>" name="<portlet:namespace />fm">         
 						<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= job.getEventListenerClass() %>'/>
-						<aui:button type="submit" value="Start" ></aui:button>
+						<aui:button type="submit" value="Schedule" ></aui:button>
 				</aui:form>
 				<liferay-ui:message key="Updated den Trigger(Timer) (noch nicht implentiert))"></liferay-ui:message>
 				<aui:form action="<%= updateJobURL %>" name="<portlet:namespace />fm">         
