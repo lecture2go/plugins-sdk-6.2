@@ -97,7 +97,7 @@ public class ThreadManagement extends MVCPortlet {
 			e.printStackTrace();
 
 			response.setRenderParameter("mvcPath",
-					"/admin/jobs.jsp");
+					"/admin/threads.jsp");
 		}
 	}
 	
@@ -128,7 +128,7 @@ public class ThreadManagement extends MVCPortlet {
 			e.printStackTrace();
 
 			response.setRenderParameter("mvcPath",
-					"/admin/jobs.jsp");
+					"/admin/threads.jsp");
 		}
 	}
 	
@@ -160,7 +160,7 @@ public class ThreadManagement extends MVCPortlet {
 			e.printStackTrace();
 			
 			response.setRenderParameter("mvcPath",
-					"/admin/jobs.jsp");
+					"/admin/threads.jsp");
 		}
 	}
 	
@@ -195,7 +195,7 @@ public class ThreadManagement extends MVCPortlet {
 			e.printStackTrace();
 			
 			response.setRenderParameter("mvcPath",
-					"/admin/jobs.jsp");
+					"/admin/threads.jsp");
 		}
 	}
 	
@@ -228,7 +228,7 @@ public class ThreadManagement extends MVCPortlet {
 			e.printStackTrace();
 			
 			response.setRenderParameter("mvcPath",
-					"/admin/jobs.jsp");
+					"/admin/threads.jsp");
 		}
 	}
 	
@@ -260,7 +260,7 @@ public class ThreadManagement extends MVCPortlet {
 			e.printStackTrace();
 			
 			response.setRenderParameter("mvcPath",
-					"/admin/jobs.jsp");
+					"/admin/threads.jsp");
 		}
 	}
 	
@@ -284,7 +284,7 @@ public class ThreadManagement extends MVCPortlet {
 			PortalUtil.copyRequestParameters(request, response);
 
 			response.setRenderParameter("mvcPath",
-					"/admin/jobs.jsp");
+					"/admin/threads.jsp");
 		}
 	}
 	

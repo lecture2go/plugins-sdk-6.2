@@ -11,11 +11,13 @@
 
 <%
 	String actionURL = "";
-	List<SchedulerEntry> scheduledJobs = PortletScheduler.ListSchedulerEntries(portletDisplay.getRootPortletId());
+	//liferay's list
+	List<SchedulerEntry> schedulerEntries = PortletScheduler.ListSchedulerEntries(portletDisplay.getRootPortletId());
+	//quartz jobs
 	List<PortletScheduler> portletScheduler = PortletScheduler.ListSchedulers();
 %>
  
-<portlet:renderURL var="viewURL"><portlet:param name="jspPage" value="/admin/jobs.jsp" /></portlet:renderURL>
+<portlet:renderURL var="viewURL"><portlet:param name="jspPage" value="/admin/threads.jsp" /></portlet:renderURL>
 
 <portlet:actionURL name="scheduleJob" var="scheduleJobURL"></portlet:actionURL>
 <portlet:actionURL name="unscheduleJob" var="unscheduleJobURL"></portlet:actionURL>
@@ -30,14 +32,20 @@
 <div class="noresponsive">	       
 
 <liferay-ui:message key="ScheduledJobs: die eigentlichen Quartz Jobs, nur sie haben ein SchedulerResponse mit Job-Status"></liferay-ui:message>
+<br>
 <%-- This list all unique schedulers --%>
 <% 
     TriggerState state = null;
+	Trigger trigger = null;
+	String schedulerPanelId = "panel";
     String cron = "";
+    int iC = 0;
 	for(PortletScheduler ps : portletScheduler) {  	
 		state = SchedulerEngineHelperUtil.getJobState(ps.getJobName(), ps.getJobName(), StorageType.MEMORY_CLUSTERED);
-		Trigger trigger = ps.getTrigger();
+		trigger = ps.getTrigger();
 		if (trigger != null) cron = trigger.getTriggerContent().toString(); 
+  		schedulerPanelId = "panel"+ String.valueOf(iC);
+   		iC++;  
 %>
 		<liferay-ui:message key="<%= ps.getJobName() %>"></liferay-ui:message> 
 		<liferay-ui:message key="<%= state.toString() %>"></liferay-ui:message> 
@@ -46,20 +54,19 @@
         
  
  
- <% 	if (state.equals(TriggerState.UNSCHEDULED) && scheduledJobs.isEmpty()) {	%>
+ <% 	if (state.equals(TriggerState.UNSCHEDULED) && schedulerEntries.isEmpty()) {	%>
  			<aui:form action="<%= scheduleJobURL %>" name="<portlet:namespace />fm">         
 				<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= ps.getJobName() %>'/>
 				<aui:button type="submit" value="Schedule" ></aui:button>
 			</aui:form>
 		 <% } %>   
     	 <br>
-		<liferay-ui:message key="SchedulerEntries: Liferays Scheduler Liste"></liferay-ui:message>
 		<%-- This lists all added Entry instances  --%>
-		<%  int iC = 0;
+		<%  
 
-			for(SchedulerEntry job : scheduledJobs) { 
-	  		String schedulerPanelId = "panel"+ String.valueOf(iC);
-	   		iC++;  
+		for(SchedulerEntry job : schedulerEntries) { 	
+			if (job.getEventListenerClass().equalsIgnoreCase(ps.getJobName())){ //only display relevant entries
+				
    		 %>	
 		<liferay-ui:panel title="<%= job.getEventListenerClass() %>" collapsible="true" id="<%= schedulerPanelId  %>"
 						defaultState="open"
@@ -94,7 +101,8 @@
 					<aui:button type="submit" value="Remove" ></aui:button>
 				</aui:form>
 		</liferay-ui:panel>
-
+		<br>
+		<% } %>
 	<% } %>
 <% } %>	       
 		
@@ -107,6 +115,11 @@
 					<aui:button type="submit" value="removeAllJobs" ></aui:button>
 				</aui:form>
 		</liferay-ui:panel>
+		
+		
+		<% for(SchedulerEntry job : schedulerEntries) {  %>
+		<liferay-ui:message key="<%= job.getEventListenerClass() %>"></liferay-ui:message> 
+		<% } %>
 </div>
 
 
