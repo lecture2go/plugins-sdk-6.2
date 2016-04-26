@@ -82,6 +82,10 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		return institutionPersistence.findByGroupId(groupId);
 	}
 
+	public List<Institution> getRootInstitutionsByOpenAccessVideos() throws SystemException {
+		return InstitutionFinderUtil.findRootInstitutionsByOpenAccessVideos(); 
+	}
+	
 	public Institution getByGroupIdAndId(long groupId, long institutionId) throws SystemException {
 		return institutionPersistence.fetchByG_I(groupId, institutionId);
 	}
@@ -465,6 +469,5 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 				return counter.getCurrentId();
 					
 	   }
-
 
 }
