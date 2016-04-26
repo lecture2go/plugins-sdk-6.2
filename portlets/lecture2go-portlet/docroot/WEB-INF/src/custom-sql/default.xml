@@ -3,7 +3,7 @@
 
     <sql id="de.uhh.l2g.plugins.service.persistence.InstitutionFinder.findRootInstitutionsByOpenAccessVideos">
 		<![CDATA[
-			SELECT i.* FROM LG_Institution i,  LG_Video v WHERE (v.openAccess=1 AND i.institutionId = v.rootInstitutionId) GROUP BY v.rootInstitutionId
+			SELECT distinct i2.* FROM LG_Video v JOIN LG_Video_Institution vi ON v.videoId=vi.videoId JOIN LG_Institution i ON vi.institutionId= i.institutionId JOIN (SELECT * FROM LG_Institution) i2 ON i.parentId=i2.institutionId WHERE v.openAccess=1 ORDER BY sort
 		]]>
     </sql>
     
