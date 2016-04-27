@@ -1,120 +1,139 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<hint-collection name="LongText">
+	<hint-collection name="TEXTAREA">
 		<hint name="max-length">2000000</hint>
 	</hint-collection>
-	<model name="de.uhh.l2g.plugins.migration.model.LegacyAddress">
-		<field name="addressId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="classNameId" type="long" />
-		<field name="classPK" type="long" />
-		<field name="street1" type="String" />
-		<field name="street2" type="String" />
-		<field name="street3" type="String" />
-		<field name="city" type="String" />
-		<field name="zip" type="String" />
-		<field name="regionId" type="long" />
-		<field name="countryId" type="long" />
-		<field name="typeId" type="int" />
-		<field name="mailing" type="boolean" />
-		<field name="primary" type="boolean" />
+	<hint-collection name="SHORTTEXT">
+		<hint name="max-length">4000</hint>
+	</hint-collection>
+	<model name="de.uhh.l2g.plugins.model.Category">
+		<field name="categoryId" type="long" />
+		<field name="parentId" type="long" />
+		<field name="languageId" type="String" />
+		<field name="name" type="String" />
+		<field name="translation" type="String" />
 	</model>
-	<model name="de.uhh.l2g.plugins.migration.model.LegacyContact">
-		<field name="contactId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="accountId" type="long" />
-		<field name="parentContactId" type="long" />
-		<field name="firstName" type="String" />
-		<field name="middleName" type="String" />
-		<field name="lastName" type="String" />
-		<field name="prefixId" type="int" />
-		<field name="suffixId" type="int" />
-		<field name="male" type="boolean" />
-		<field name="birthday" type="Date" />
-		<field name="smsSn" type="String" />
-		<field name="aimSn" type="String" />
-		<field name="facebookSn" type="String" />
-		<field name="icqSn" type="String" />
-		<field name="jabberSn" type="String" />
-		<field name="msnSn" type="String" />
-		<field name="mySpaceSn" type="String" />
-		<field name="skypeSn" type="String" />
-		<field name="twitterSn" type="String" />
-		<field name="ymSn" type="String" />
-		<field name="employeeStatusId" type="String" />
-		<field name="employeeNumber" type="String" />
-		<field name="jobTitle" type="String" />
-		<field name="jobClass" type="String" />
-		<field name="hoursOfOperation" type="String" />
-	</model>
-	<model name="de.uhh.l2g.plugins.migration.model.LegacyCoordinator">
-		<field name="userId" type="long" />
-		<field name="facilityId" type="long" />
+	<model name="de.uhh.l2g.plugins.model.Coordinator">
+		<field name="coordinatorId" type="long" />
+		<field name="institutionId" type="long" />
 		<field name="officeId" type="long" />
 	</model>
-	<model name="de.uhh.l2g.plugins.migration.model.LegacyFacility">
-		<field name="id" type="long" />
+	<model name="de.uhh.l2g.plugins.model.Creator">
+		<field name="creatorId" type="long" />
+		<field name="firstName" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
+		<field name="lastName" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
+		<field name="middleName" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
+		<field name="jobTitle" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
+		<field name="gender" type="String" />
+		<field name="fullName" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Host">
+		<field name="hostId" type="long" />
+		<field name="protocol" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
+		<field name="streamer" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
+		<field name="port" type="int" />
+		<field name="serverRoot" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
+		<field name="name" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="defaultHost" type="int" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Institution">
+		<field name="institutionId" type="long" />
 		<field name="parentId" type="long" />
-		<field name="name" type="String" />
-		<field name="typ" type="String" />
-		<field name="www" type="String" />
+		<field name="name" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
+		<field name="typ" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
+		<field name="www" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
 		<field name="level" type="int" />
 		<field name="sort" type="int" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
 	</model>
-	<model name="de.uhh.l2g.plugins.migration.model.LegacyFacilityHost">
-		<field name="facilityHostId" type="long" />
-		<field name="facilityId" type="long" />
+	<model name="de.uhh.l2g.plugins.model.Institution_Host">
+		<field name="institutionHostId" type="long" />
+		<field name="institutionId" type="long" />
 		<field name="hostId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
 	</model>
-	<model name="de.uhh.l2g.plugins.migration.model.LegacyHost">
-		<field name="id" type="long" />
-		<field name="protokoll" type="String" />
-		<field name="streamer" type="String" />
-		<field name="port" type="int" />
-		<field name="serverRoot" type="String" />
-		<field name="name" type="String" />
-	</model>
-	<model name="de.uhh.l2g.plugins.migration.model.LegacyL2gSys">
-		<field name="id" type="int" />
-		<field name="version" type="String" />
-		<field name="setupwizard" type="int" />
-	</model>
-	<model name="de.uhh.l2g.plugins.migration.model.LegacyLastVideoList">
-		<field name="id" type="int" />
+	<model name="de.uhh.l2g.plugins.model.Lastvideolist">
+		<field name="lastvideolistId" type="int" />
 		<field name="videoId" type="long" />
 	</model>
-	<model name="de.uhh.l2g.plugins.migration.model.LegacyLectureSeries">
+	<model name="de.uhh.l2g.plugins.model.Lectureseries">
 		<field name="number" type="String" />
-		<field name="eventType" type="String" />
-		<field name="eventCategory" type="String" />
-		<field name="name" type="String" />
-		<field name="shortDesc" type="String" />
-		<field name="semesterName" type="String" />
-		<field name="language" type="String" />
-		<field name="facultyName" type="String" />
-		<field name="instructorsString" type="String" />
-		<field name="id" type="long" />
-		<field name="password" type="String" />
-		<field name="approved" type="int" />
-		<field name="longDesc" type="String" />
-	</model>
-	<model name="de.uhh.l2g.plugins.migration.model.LegacyLectureSeriesFacility">
-		<field name="lectureseriesFacilityId" type="long" />
-		<field name="facilityId" type="long" />
+		<field name="eventType" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
+		<field name="categoryId" type="long" />
+		<field name="name" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
+		<field name="shortDesc" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="termId" type="long" />
+		<field name="language" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
+		<field name="facultyName" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
 		<field name="lectureseriesId" type="long" />
-		<field name="isLinkFrom" type="long" />
+		<field name="password" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
+		<field name="approved" type="int" />
+		<field name="longDesc" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="latestOpenAccessVideoId" type="long" />
+		<field name="latestVideoUploadDate" type="Date" />
+		<field name="latestVideoGenerationDate" type="String" />
 	</model>
-	<model name="de.uhh.l2g.plugins.migration.model.LegacyLicense">
-		<field name="id" type="long" />
+	<model name="de.uhh.l2g.plugins.model.Lectureseries_Category">
+		<field name="lectureseriesCategoryId" type="long" />
+		<field name="categoryId" type="long" />
+		<field name="lectureseriesId" type="long" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Lectureseries_Creator">
+		<field name="lectureseriesCreatorId" type="long" />
+		<field name="lectureseriesId" type="long" />
+		<field name="creatorId" type="long" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Lectureseries_Institution">
+		<field name="lectureseriesInstitutionId" type="long" />
+		<field name="lectureseriesId" type="long" />
+		<field name="institutionId" type="long" />
+		<field name="institutionParentId" type="long" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.License">
+		<field name="licenseId" type="long" />
 		<field name="videoId" type="long" />
 		<field name="ccby" type="int" />
 		<field name="ccbybc" type="int" />
@@ -124,134 +143,182 @@
 		<field name="ccbync" type="int" />
 		<field name="l2go" type="int" />
 	</model>
-	<model name="de.uhh.l2g.plugins.migration.model.LegacyMetadata">
-		<field name="id" type="long" />
-		<field name="URLID" type="String" />
-		<field name="format" type="String" />
+	<model name="de.uhh.l2g.plugins.model.Metadata">
+		<field name="metadataId" type="long" />
 		<field name="type" type="String" />
 		<field name="language" type="String" />
-		<field name="title" type="String" />
-		<field name="subject" type="String" />
-		<field name="coverage" type="String" />
-		<field name="description" type="String" />
-		<field name="creator" type="String" />
-		<field name="publisher" type="String" />
-		<field name="contributor" type="String" />
-		<field name="rightsHolder" type="String" />
+		<field name="title" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
+		<field name="subject" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="publisher" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
 	</model>
-	<model name="de.uhh.l2g.plugins.migration.model.LegacyOffice">
-		<field name="id" type="long" />
-		<field name="name" type="String">
-			<hint-collection name="LongText" />
-		</field>
-		<field name="www" type="String">
-			<hint-collection name="LongText" />
-		</field>
-		<field name="email" type="String">
-			<hint-collection name="LongText" />
-		</field>
-		<field name="facilityId" type="long" />
+	<model name="de.uhh.l2g.plugins.model.Office">
+		<field name="officeId" type="long" />
+		<field name="name" type="String" />
+		<field name="www" type="String" />
+		<field name="email" type="String" />
+		<field name="institutionId" type="long" />
 	</model>
-	<model name="de.uhh.l2g.plugins.migration.model.LegacyProducer">
-		<field name="id" type="long" />
+	<model name="de.uhh.l2g.plugins.model.Producer">
+		<field name="producerId" type="long" />
 		<field name="idNum" type="String" />
 		<field name="homeDir" type="String" />
-		<field name="userId" type="long" />
 		<field name="hostId" type="long" />
-		<field name="facilityId" type="long" />
+		<field name="institutionId" type="long" />
 		<field name="numberOfProductions" type="long" />
 		<field name="approved" type="int" />
 	</model>
-	<model name="de.uhh.l2g.plugins.migration.model.LegacyProducerLectureseries">
-		<field name="id" type="long" />
-		<field name="producerId" type="long" />
+	<model name="de.uhh.l2g.plugins.model.Producer_Lectureseries">
+		<field name="producerLectureseriesId" type="long" />
 		<field name="lectureseriesId" type="long" />
+		<field name="producerId" type="long" />
 	</model>
-	<model name="de.uhh.l2g.plugins.migration.model.LegacySegment">
-		<field name="id" type="long" />
+	<model name="de.uhh.l2g.plugins.model.ScheduledThread">
+		<field name="scheduledThreadId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Segment">
+		<field name="segmentId" type="long" />
 		<field name="videoId" type="long" />
 		<field name="start" type="String" />
-		<field name="title" type="String" />
-		<field name="description" type="String" />
+		<field name="title" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
 		<field name="end" type="String" />
 		<field name="chapter" type="int" />
 		<field name="userId" type="long" />
 	</model>
-	<model name="de.uhh.l2g.plugins.migration.model.LegacyStatistic">
-		<field name="id" type="int" />
-		<field name="public_" type="int" />
-		<field name="private_" type="int" />
-		<field name="autofill" type="int" />
-		<field name="date_" type="Date" />
-	</model>
-	<model name="de.uhh.l2g.plugins.migration.model.LegacyUser">
-		<field name="userId" type="long" />
+	<model name="de.uhh.l2g.plugins.model.Statistic">
+		<field name="statisticId" type="long" />
+		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
+		<field name="publicVideos" type="int" />
+		<field name="privateVideos" type="int" />
+		<field name="autofillRow" type="int" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="defaultUser" type="boolean" />
-		<field name="contactId" type="long" />
-		<field name="password" type="String" />
-		<field name="passwordEncrypted" type="boolean" />
-		<field name="passwordReset" type="boolean" />
-		<field name="passwordModifiedDate" type="Date" />
-		<field name="reminderQueryQuestion" type="String" />
-		<field name="reminderQueryAnswer" type="String" />
-		<field name="graceLoginCount" type="int" />
-		<field name="screenName" type="String" />
-		<field name="emailAddress" type="String" />
-		<field name="openId" type="String" />
-		<field name="portraitId" type="long" />
-		<field name="languageId" type="String" />
-		<field name="timeZoneId" type="String" />
-		<field name="greeting" type="String" />
-		<field name="comments" type="String" />
-		<field name="loginDate" type="Date" />
-		<field name="loginIP" type="String" />
-		<field name="lastLoginDate" type="Date" />
-		<field name="lastLoginIP" type="String" />
-		<field name="lastFailedLoginDate" type="Date" />
-		<field name="failedLoginAttempts" type="int" />
-		<field name="lockout" type="boolean" />
-		<field name="lockoutDate" type="Date" />
-		<field name="agreedToTermsOfUse" type="boolean" />
-		<field name="active" type="boolean" />
 	</model>
-	<model name="de.uhh.l2g.plugins.migration.model.LegacyVideo">
-		<field name="id" type="long" />
-		<field name="title" type="String" />
-		<field name="tags" type="String" />
+	<model name="de.uhh.l2g.plugins.model.Sys">
+		<field name="sysId" type="int" />
+		<field name="version" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
+		<field name="setupWizard" type="int" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Tagcloud">
+		<field name="tagcloudId" type="long" />
+		<field name="objectClassType" type="String" />
+		<field name="objectId" type="long" />
+		<field name="tags" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Term">
+		<field name="termId" type="long" />
+		<field name="parentId" type="long" />
+		<field name="languageId" type="String" />
+		<field name="prefix" type="String" />
+		<field name="year" type="String" />
+		<field name="translation" type="String" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Video">
+		<field name="videoId" type="long" />
+		<field name="title" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>
 		<field name="lectureseriesId" type="long" />
-		<field name="ownerId" type="long" />
 		<field name="producerId" type="long" />
 		<field name="containerFormat" type="String" />
-		<field name="filename" type="String" />
+		<field name="filename" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
 		<field name="resolution" type="String" />
 		<field name="duration" type="String" />
 		<field name="hostId" type="long" />
-		<field name="textId" type="long" />
 		<field name="fileSize" type="String" />
 		<field name="generationDate" type="String" />
 		<field name="openAccess" type="int" />
-		<field name="downloadLink" type="int" />
+		<field name="downloadLink" type="int">
+			<hint-collection name="SHORTTEXT" />
+		</field>
 		<field name="metadataId" type="long" />
-		<field name="surl" type="String" />
+		<field name="secureFilename" type="String" />
 		<field name="hits" type="long" />
 		<field name="uploadDate" type="Date" />
 		<field name="permittedToSegment" type="int" />
-		<field name="facilityId" type="long" />
+		<field name="rootInstitutionId" type="long" />
 		<field name="citation2go" type="int" />
+		<field name="termId" type="long" />
+		<field name="tags" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="password" type="String" />
 	</model>
-	<model name="de.uhh.l2g.plugins.migration.model.LegacyVideoFacility">
-		<field name="videoFacilityId" type="long" />
+	<model name="de.uhh.l2g.plugins.model.Video_Category">
+		<field name="videoCategoryId" type="long" />
 		<field name="videoId" type="long" />
-		<field name="facilityId" type="long" />
+		<field name="categoryId" type="long" />
 	</model>
-	<model name="de.uhh.l2g.plugins.migration.model.LegacyVideoHitlist">
-		<field name="id" type="long" />
-		<field name="hitsperday" type="long" />
-		<field name="hitsperweek" type="long" />
-		<field name="hitspermonth" type="long" />
-		<field name="hitsperyear" type="long" />
+	<model name="de.uhh.l2g.plugins.model.Video_Creator">
+		<field name="videoCreatorId" type="long" />
+		<field name="creatorId" type="long" />
+		<field name="videoId" type="long" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Video_Institution">
+		<field name="videoInstitutionId" type="long" />
+		<field name="videoId" type="long" />
+		<field name="institutionId" type="long" />
+		<field name="institutionParentId" type="long" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Video_Lectureseries">
+		<field name="videoLectureseriesId" type="long" />
+		<field name="videoId" type="long" />
+		<field name="lectureseriesId" type="long" />
+		<field name="openAccess" type="int" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Videohitlist">
+		<field name="videohitlistId" type="long" />
+		<field name="hitsPerDay" type="long" />
+		<field name="hitsPerWeek" type="long" />
+		<field name="hitsPerMonth" type="long" />
+		<field name="hitsPerYear" type="long" />
+		<field name="videoId" type="long" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.VideoStatistic">
+		<field name="videoStatisticId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="compareDate" type="Date" />
+		<field name="totalVideos" type="long" />
+		<field name="publicVideos" type="long" />
+		<field name="privateVideos" type="long" />
+		<field name="currentTotal" type="long" />
+		<field name="currentPublic" type="long" />
+		<field name="currentPrivate" type="long" />
+		<field name="pubPercent" type="int" />
+		<field name="privPercent" type="int" />
+		<field name="currentPubPercent" type="int" />
+		<field name="currentPrivPercent" type="int" />
+		<field name="intervalName" type="String" />
 	</model>
 </model-hints>
