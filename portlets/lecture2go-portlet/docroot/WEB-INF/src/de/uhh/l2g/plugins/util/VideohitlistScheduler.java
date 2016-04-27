@@ -1,6 +1,7 @@
 package de.uhh.l2g.plugins.util;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
@@ -19,6 +20,7 @@ public final class VideohitlistScheduler extends PortletScheduler implements Mes
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private static Log LOG;	
 	
     public VideohitlistScheduler(){
     	super();

@@ -11,13 +11,15 @@
 
 <%
 	String actionURL = "";
-	//liferay's list
+	//liferay's scheduler entry ist
 	List<SchedulerEntry> schedulerEntries = PortletScheduler.ListSchedulerEntries(portletDisplay.getRootPortletId());
-	//quartz jobs
+	//quartz responses/jobs
 	List<PortletScheduler> portletScheduler = PortletScheduler.ListSchedulers();
 %>
  
 <portlet:renderURL var="viewURL"><portlet:param name="jspPage" value="/admin/threads.jsp" /></portlet:renderURL>
+
+<liferay-ui:success key="request_processed" message="request_processed"/>
 
 <portlet:actionURL name="scheduleJob" var="scheduleJobURL"></portlet:actionURL>
 <portlet:actionURL name="unscheduleJob" var="unscheduleJobURL"></portlet:actionURL>
@@ -35,19 +37,22 @@
 <br>
 <%-- This list all unique schedulers --%>
 <% 
+    //Initialize parameters
     TriggerState state = null;
 	Trigger trigger = null;
 	String schedulerPanelId = "panel";
     String cron = "";
     int iC = 0;
-	for(PortletScheduler ps : portletScheduler) {  	
-		state = SchedulerEngineHelperUtil.getJobState(ps.getJobName(), ps.getJobName(), StorageType.MEMORY_CLUSTERED);
-		trigger = ps.getTrigger();
+    
+    //Do for each Quartz Response 
+	for(PortletScheduler job : portletScheduler) {  	
+		state = SchedulerEngineHelperUtil.getJobState(job.getJobName(), job.getJobName(), StorageType.MEMORY_CLUSTERED);
+		trigger = job.getTrigger();
 		if (trigger != null) cron = trigger.getTriggerContent().toString(); 
   		schedulerPanelId = "panel"+ String.valueOf(iC);
    		iC++;  
 %>
-		<liferay-ui:message key="<%= ps.getJobName() %>"></liferay-ui:message> 
+		<liferay-ui:message key="<%= job.getJobName() %>"></liferay-ui:message> 
 		<liferay-ui:message key="<%= state.toString() %>"></liferay-ui:message> 
 		<liferay-ui:message key="<%= cron %>"></liferay-ui:message> 
 
@@ -56,48 +61,48 @@
  
  <% 	if (state.equals(TriggerState.UNSCHEDULED) && schedulerEntries.isEmpty()) {	%>
  			<aui:form action="<%= scheduleJobURL %>" name="<portlet:namespace />fm">         
-				<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= ps.getJobName() %>'/>
+				<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= job.getJobName() %>'/>
 				<aui:button type="submit" value="Schedule" ></aui:button>
 			</aui:form>
 		 <% } %>   
     	 <br>
 		<%-- This lists all added Entry instances  --%>
 		<%  
-
-		for(SchedulerEntry job : schedulerEntries) { 	
-			if (job.getEventListenerClass().equalsIgnoreCase(ps.getJobName())){ //only display relevant entries
+        //Do for each Entry in Liferay's Scheduler List
+		for(SchedulerEntry entry : schedulerEntries) { 	
+			if (entry.getEventListenerClass().equalsIgnoreCase(job.getJobName())){ //only display relevant entries
 				
    		 %>	
-		<liferay-ui:panel title="<%= job.getEventListenerClass() %>" collapsible="true" id="<%= schedulerPanelId  %>"
+		<liferay-ui:panel title="<%= entry.getEventListenerClass() %>" collapsible="true" id="<%= schedulerPanelId  %>"
 						defaultState="open"
 						extended="<%= false %>"
 						persistState="<%= true %>">  
 				<liferay-ui:message key="Mit Pause/Resume funktioniert die Standardsyntax über JobName"></liferay-ui:message>
 				<aui:form action="<%= pauseJobURL %>" name="<portlet:namespace />fm">         
-					<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= job.getEventListenerClass() %>'/>
+					<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= entry.getEventListenerClass() %>'/>
 					<aui:button type="submit" value="Pause" ></aui:button>
 				</aui:form> 
 				<aui:form action="<%= resumeJobURL %>" name="<portlet:namespace />fm">         
-					<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= job.getEventListenerClass() %>'/>
+					<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= entry.getEventListenerClass() %>'/>
 					<aui:button type="submit" value="Resume" ></aui:button>
 				</aui:form>  
 				<liferay-ui:message key="Schedule/Unschedule funktioniert nur mit SchedulerEntry (hier funktioniert unregister nicht korrekt))"></liferay-ui:message>
 				<aui:form action="<%= unscheduleJobURL %>" name="<portlet:namespace />fm">         
-					<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= job.getEventListenerClass() %>'/>
+					<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= entry.getEventListenerClass() %>'/>
 					<aui:button type="submit" value="Unschedule" ></aui:button>
 				</aui:form>
 				<aui:form action="<%= scheduleJobURL %>" name="<portlet:namespace />fm">         
-						<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= job.getEventListenerClass() %>'/>
+						<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= entry.getEventListenerClass() %>'/>
 						<aui:button type="submit" value="Schedule" ></aui:button>
 				</aui:form>
 				<liferay-ui:message key="Updated den Trigger(Timer) (noch nicht implentiert))"></liferay-ui:message>
 				<aui:form action="<%= updateJobURL %>" name="<portlet:namespace />fm">         
-					<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= job.getEventListenerClass() %>'/>
+					<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= entry.getEventListenerClass() %>'/>
 					<aui:button type="submit" value="Update" ></aui:button>
 				</aui:form>
 				<liferay-ui:message key="Delete Job, entfernt den Quartz Job vollständig, aber nicht den SchedulerEntry"></liferay-ui:message>
 				<aui:form action="<%= removeJobURL %>" name="<portlet:namespace />fm">         
-					<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= job.getEventListenerClass() %>'/>
+					<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= entry.getEventListenerClass() %>'/>
 					<aui:button type="submit" value="Remove" ></aui:button>
 				</aui:form>
 		</liferay-ui:panel>
@@ -117,8 +122,18 @@
 		</liferay-ui:panel>
 		
 		
-		<% for(SchedulerEntry job : schedulerEntries) {  %>
-		<liferay-ui:message key="<%= job.getEventListenerClass() %>"></liferay-ui:message> 
+		<liferay-ui:message key="Debug Info: Scheduler will only function correctly if both list are synchronized"></liferay-ui:message>
+		<br>
+		<liferay-ui:message key="SchedulerEntries:"></liferay-ui:message>
+		<br>
+		<% for(SchedulerEntry entry : schedulerEntries) {  %>
+		<liferay-ui:message key="<%= entry.getEventListenerClass() %>"></liferay-ui:message> 
+		<% } %>
+		<br>
+		<liferay-ui:message key="SchedulerResponses:"></liferay-ui:message>
+		<% for(PortletScheduler job: portletScheduler) {  %>
+		<br>
+		<liferay-ui:message key="<%=job.getJobName() %>"></liferay-ui:message> 
 		<% } %>
 </div>
 
