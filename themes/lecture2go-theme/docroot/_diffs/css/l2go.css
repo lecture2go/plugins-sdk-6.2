@@ -1532,3 +1532,85 @@ div.filter-menu-link span.icon-large.icon-remove {
 }
 
 /*Bastian Ende*/
+
+#_lgadmininstitutionmanagement_WAR_lecture2goportlet_outerListOrder {
+    width: 22px;
+}
+#_lgadmininstitutionmanagement_WAR_lecture2goportlet_order {
+    width: 22px;
+}
+
+#_lgadmininstitutionmanagement_WAR_lecture2goportlet_outerListStreamer {
+    width: 55px;
+}
+
+#institutionSettings input{
+	float:left;
+	margin-right: 10px;
+}
+
+#institutionSettings button.btn {
+    margin-top: 55px;
+}
+
+#_lgadmininstitutionmanagement_WAR_lecture2goportlet_fm button {
+    margin-top: 26px;
+}
+
+#_lgadmininstitutionmanagement_WAR_lecture2goportlet_curStreamingServerProtocol {
+    width: 70px;
+}
+
+#_lgadmininstitutionmanagement_WAR_lecture2goportlet_protocol {
+    width: 70px;
+}
+
+#_lgadmininstitutionmanagement_WAR_lecture2goportlet_curStreamingServerPort {
+    width: 30px;
+}
+
+#_lgadmininstitutionmanagement_WAR_lecture2goportlet_port {
+    width: 30px;
+}
+
+#_lgadmininstitutionmanagement_WAR_lecture2goportlet_curStreamingServerIP {
+    width: 165px;
+}
+
+#_lgadmininstitutionmanagement_WAR_lecture2goportlet_ip {
+    width: 165px;
+}
+
+#_lgadmininstitutionmanagement_WAR_lecture2goportlet_curStreamingServerName {
+    width: 100px;
+}
+
+#_lgadmininstitutionmanagement_WAR_lecture2goportlet_serverroot {
+    width: 100px;
+}
+
+#_lgadmininstitutionmanagement_WAR_lecture2goportlet_fm .control-group {
+    float: left;
+    margin: 0 10px 10px;
+}
+
+.fieldset.add-streaming-server {
+    margin-top: 30px;
+}
+
+.fieldset.add-institution {
+    margin-top: 10px;
+}
+
+.aui .sub-inst.accordion-group .toggler-content-expanded {
+    border: 0px !important;
+}
+
+.aui .sub-inst.accordion-group .toggler-content-expanded {
+    border: 0 none !important;
+    margin-left: 117px;
+}
+
+.sub-inst .title-text {
+    margin-top: -3px;
+}
