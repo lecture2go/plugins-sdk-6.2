@@ -7,157 +7,200 @@
 			<access>PROPERTY</access>
 		</persistence-unit-defaults>
 	</persistence-unit-metadata>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.CategoryModelImpl">
+	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacyAddressModelImpl">
 		<attributes>
-			<id name="categoryId" />
-			<basic name="parentId" />
-			<basic name="languageId" />
-			<basic name="name" />
-			<basic name="translation" />
+			<id name="addressId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="classNameId" />
+			<basic name="classPK" />
+			<basic name="street1" />
+			<basic name="street2" />
+			<basic name="street3" />
+			<basic name="city" />
+			<basic name="zip" />
+			<basic name="regionId" />
+			<basic name="countryId" />
+			<basic name="typeId" />
+			<basic name="mailing" />
+			<basic name="primary">
+				<column name="PRIMARY_" />
+			</basic>
+			<transient name="className" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.CoordinatorModelImpl">
+	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacyContactModelImpl">
 		<attributes>
-			<id name="coordinatorId" />
-			<basic name="institutionId" />
+			<id name="contactId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="accountId" />
+			<basic name="parentContactId" />
+			<basic name="firstName" />
+			<basic name="middleName" />
+			<basic name="lastName" />
+			<basic name="prefixId" />
+			<basic name="suffixId" />
+			<basic name="male" />
+			<basic name="birthday">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="smsSn" />
+			<basic name="aimSn" />
+			<basic name="facebookSn" />
+			<basic name="icqSn" />
+			<basic name="jabberSn" />
+			<basic name="msnSn" />
+			<basic name="mySpaceSn" />
+			<basic name="skypeSn" />
+			<basic name="twitterSn" />
+			<basic name="ymSn" />
+			<basic name="employeeStatusId" />
+			<basic name="employeeNumber" />
+			<basic name="jobTitle" />
+			<basic name="jobClass" />
+			<basic name="hoursOfOperation" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacyCoordinatorModelImpl">
+		<attributes>
+			<id name="userId" />
+			<basic name="facilityId" />
 			<basic name="officeId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.CreatorModelImpl">
+	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacyFacilityModelImpl">
 		<attributes>
-			<id name="creatorId" />
-			<basic name="firstName" />
-			<basic name="lastName" />
-			<basic name="middleName" />
-			<basic name="jobTitle" />
-			<basic name="gender" />
-			<basic name="fullName" />
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.HostModelImpl">
-		<attributes>
-			<id name="hostId" />
-			<basic name="protocol" />
-			<basic name="streamer" />
-			<basic name="port" />
-			<basic name="serverRoot" />
-			<basic name="name" />
-			<basic name="groupId" />
-			<basic name="companyId" />
-			<basic name="defaultHost" />
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.InstitutionModelImpl">
-		<attributes>
-			<id name="institutionId" />
+			<id name="id">
+				<column name="ID_" />
+			</id>
 			<basic name="parentId" />
 			<basic name="name" />
 			<basic name="typ" />
 			<basic name="www" />
 			<basic name="level" />
 			<basic name="sort" />
-			<basic name="groupId" />
-			<basic name="companyId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.Institution_HostModelImpl">
+	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacyFacilityHostModelImpl">
 		<attributes>
-			<id name="institutionHostId" />
-			<basic name="institutionId" />
+			<id name="facilityHostId" />
+			<basic name="facilityId" />
 			<basic name="hostId" />
-			<basic name="groupId" />
-			<basic name="companyId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.LastvideolistModelImpl">
+	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacyHostModelImpl">
 		<attributes>
-			<id name="lastvideolistId" />
+			<id name="id">
+				<column name="ID_" />
+			</id>
+			<basic name="protokoll" />
+			<basic name="streamer" />
+			<basic name="port" />
+			<basic name="serverRoot" />
+			<basic name="name" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacyL2gSysModelImpl">
+		<attributes>
+			<id name="id">
+				<column name="ID_" />
+			</id>
+			<basic name="version" />
+			<basic name="setupwizard" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacyLastVideoListModelImpl">
+		<attributes>
+			<id name="id">
+				<column name="ID_" />
+			</id>
 			<basic name="videoId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.LectureseriesModelImpl">
+	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacyLectureSeriesModelImpl">
 		<attributes>
-			<id name="lectureseriesId" />
+			<id name="id">
+				<column name="ID_" />
+			</id>
 			<basic name="number">
 				<column name="NUMBER_" />
 			</basic>
 			<basic name="eventType" />
-			<basic name="categoryId" />
+			<basic name="eventCategory" />
 			<basic name="name" />
 			<basic name="shortDesc" />
-			<basic name="termId" />
+			<basic name="semesterName" />
 			<basic name="language" />
 			<basic name="facultyName" />
+			<basic name="instructorsString" />
 			<basic name="password">
 				<column name="PASSWORD_" />
 			</basic>
 			<basic name="approved" />
 			<basic name="longDesc" />
-			<basic name="latestOpenAccessVideoId" />
-			<basic name="latestVideoUploadDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="latestVideoGenerationDate" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.Lectureseries_CategoryModelImpl">
+	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacyLectureSeriesFacilityModelImpl">
 		<attributes>
-			<id name="lectureseriesCategoryId" />
-			<basic name="categoryId" />
+			<id name="lectureseriesFacilityId" />
+			<basic name="facilityId" />
 			<basic name="lectureseriesId" />
+			<basic name="isLinkFrom" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.Lectureseries_CreatorModelImpl">
+	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacyLicenseModelImpl">
 		<attributes>
-			<id name="lectureseriesCreatorId" />
-			<basic name="lectureseriesId" />
-			<basic name="creatorId" />
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.Lectureseries_InstitutionModelImpl">
-		<attributes>
-			<id name="lectureseriesInstitutionId" />
-			<basic name="lectureseriesId" />
-			<basic name="institutionId" />
-			<basic name="institutionParentId" />
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.LicenseModelImpl">
-		<attributes>
-			<id name="licenseId" />
+			<id name="id">
+				<column name="ID_" />
+			</id>
 			<basic name="videoId" />
 			<basic name="ccby" />
 			<basic name="ccbybc" />
@@ -171,80 +214,79 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.MetadataModelImpl">
+	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacyMetadataModelImpl">
 		<attributes>
-			<id name="metadataId" />
+			<id name="id">
+				<column name="ID_" />
+			</id>
+			<basic name="URLID" />
+			<basic name="format" />
 			<basic name="type">
 				<column name="TYPE_" />
 			</basic>
 			<basic name="language" />
 			<basic name="title" />
 			<basic name="subject" />
+			<basic name="coverage" />
 			<basic name="description" />
+			<basic name="creator" />
 			<basic name="publisher" />
+			<basic name="contributor" />
+			<basic name="rightsHolder" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.OfficeModelImpl">
+	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacyOfficeModelImpl">
 		<attributes>
-			<id name="officeId" />
+			<id name="id">
+				<column name="ID_" />
+			</id>
 			<basic name="name" />
 			<basic name="www" />
 			<basic name="email" />
-			<basic name="institutionId" />
+			<basic name="facilityId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.ProducerModelImpl">
+	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacyProducerModelImpl">
 		<attributes>
-			<id name="producerId" />
+			<id name="id">
+				<column name="ID_" />
+			</id>
 			<basic name="idNum" />
 			<basic name="homeDir" />
+			<basic name="userId" />
 			<basic name="hostId" />
-			<basic name="institutionId" />
+			<basic name="facilityId" />
 			<basic name="numberOfProductions" />
 			<basic name="approved" />
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.Producer_LectureseriesModelImpl">
-		<attributes>
-			<id name="producerLectureseriesId" />
-			<basic name="lectureseriesId" />
-			<basic name="producerId" />
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.ScheduledThreadModelImpl">
-		<attributes>
-			<id name="scheduledThreadId" />
-			<basic name="groupId" />
-			<basic name="companyId" />
-			<basic name="userId" />
-			<basic name="userName" />
-			<basic name="createDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="modifiedDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.SegmentModelImpl">
+	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacyProducerLectureseriesModelImpl">
 		<attributes>
-			<id name="segmentId" />
+			<id name="id">
+				<column name="ID_" />
+			</id>
+			<basic name="producerId" />
+			<basic name="lectureseriesId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacySegmentModelImpl">
+		<attributes>
+			<id name="id">
+				<column name="ID_" />
+			</id>
 			<basic name="videoId" />
 			<basic name="start">
 				<column name="START_" />
@@ -262,21 +304,72 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.StatisticModelImpl">
+	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacyStatisticModelImpl">
 		<attributes>
-			<id name="statisticId" />
-			<basic name="groupId" />
+			<id name="id">
+				<column name="ID_" />
+			</id>
+			<basic name="public_" />
+			<basic name="private_" />
+			<basic name="autofill" />
+			<basic name="date_">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacyUserModelImpl">
+		<attributes>
+			<id name="userId" />
 			<basic name="companyId" />
-			<basic name="publicVideos" />
-			<basic name="privateVideos" />
-			<basic name="autofillRow" />
-			<basic name="userId" />
-			<basic name="userName" />
 			<basic name="createDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="modifiedDate">
 				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="defaultUser" />
+			<basic name="contactId" />
+			<basic name="password">
+				<column name="PASSWORD_" />
+			</basic>
+			<basic name="passwordEncrypted" />
+			<basic name="passwordReset" />
+			<basic name="passwordModifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="reminderQueryQuestion" />
+			<basic name="reminderQueryAnswer" />
+			<basic name="graceLoginCount" />
+			<basic name="screenName" />
+			<basic name="emailAddress" />
+			<basic name="openId" />
+			<basic name="portraitId" />
+			<basic name="languageId" />
+			<basic name="timeZoneId" />
+			<basic name="greeting" />
+			<basic name="comments" />
+			<basic name="loginDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="loginIP" />
+			<basic name="lastLoginDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="lastLoginIP" />
+			<basic name="lastFailedLoginDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="failedLoginAttempts" />
+			<basic name="lockout" />
+			<basic name="lockoutDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="agreedToTermsOfUse" />
+			<basic name="active">
+				<column name="ACTIVE_" />
 			</basic>
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
@@ -284,342 +377,146 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.SysModelImpl">
+	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacyVideoModelImpl">
 		<attributes>
-			<id name="sysId" />
-			<basic name="version" />
-			<basic name="setupWizard" />
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.TagcloudModelImpl">
-		<attributes>
-			<id name="tagcloudId" />
-			<basic name="objectClassType" />
-			<basic name="objectId" />
-			<basic name="tags" />
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.TermModelImpl">
-		<attributes>
-			<id name="termId" />
-			<basic name="parentId" />
-			<basic name="languageId" />
-			<basic name="prefix" />
-			<basic name="year" />
-			<basic name="translation" />
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.VideoModelImpl">
-		<attributes>
-			<id name="videoId" />
+			<id name="id">
+				<column name="ID_" />
+			</id>
 			<basic name="title" />
+			<basic name="tags" />
 			<basic name="lectureseriesId" />
+			<basic name="ownerId" />
 			<basic name="producerId" />
 			<basic name="containerFormat" />
 			<basic name="filename" />
 			<basic name="resolution" />
 			<basic name="duration" />
 			<basic name="hostId" />
+			<basic name="textId" />
 			<basic name="fileSize" />
 			<basic name="generationDate" />
 			<basic name="openAccess" />
 			<basic name="downloadLink" />
 			<basic name="metadataId" />
-			<basic name="secureFilename" />
+			<basic name="surl" />
 			<basic name="hits" />
 			<basic name="uploadDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="permittedToSegment" />
-			<basic name="rootInstitutionId" />
+			<basic name="facilityId" />
 			<basic name="citation2go" />
-			<basic name="termId" />
-			<basic name="tags" />
-			<basic name="password">
-				<column name="PASSWORD_" />
-			</basic>
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.Video_CategoryModelImpl">
+	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacyVideoFacilityModelImpl">
 		<attributes>
-			<id name="videoCategoryId" />
+			<id name="videoFacilityId" />
 			<basic name="videoId" />
-			<basic name="categoryId" />
+			<basic name="facilityId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.Video_CreatorModelImpl">
+	<mapped-superclass class="de.uhh.l2g.plugins.migration.model.impl.LegacyVideoHitlistModelImpl">
 		<attributes>
-			<id name="videoCreatorId" />
-			<basic name="creatorId" />
-			<basic name="videoId" />
+			<id name="id">
+				<column name="ID_" />
+			</id>
+			<basic name="hitsperday" />
+			<basic name="hitsperweek" />
+			<basic name="hitspermonth" />
+			<basic name="hitsperyear" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.Video_InstitutionModelImpl">
-		<attributes>
-			<id name="videoInstitutionId" />
-			<basic name="videoId" />
-			<basic name="institutionId" />
-			<basic name="institutionParentId" />
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.Video_LectureseriesModelImpl">
-		<attributes>
-			<id name="videoLectureseriesId" />
-			<basic name="videoId" />
-			<basic name="lectureseriesId" />
-			<basic name="openAccess" />
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.VideohitlistModelImpl">
-		<attributes>
-			<id name="videohitlistId" />
-			<basic name="hitsPerDay" />
-			<basic name="hitsPerWeek" />
-			<basic name="hitsPerMonth" />
-			<basic name="hitsPerYear" />
-			<basic name="videoId" />
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.VideoStatisticModelImpl">
-		<attributes>
-			<id name="videoStatisticId" />
-			<basic name="groupId" />
-			<basic name="companyId" />
-			<basic name="createDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="modifiedDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="compareDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="totalVideos" />
-			<basic name="publicVideos" />
-			<basic name="privateVideos" />
-			<basic name="currentTotal" />
-			<basic name="currentPublic" />
-			<basic name="currentPrivate" />
-			<basic name="pubPercent" />
-			<basic name="privPercent" />
-			<basic name="currentPubPercent" />
-			<basic name="currentPrivPercent" />
-			<basic name="intervalName" />
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
-	<entity class="de.uhh.l2g.plugins.model.impl.CategoryImpl" name="Category">
-		<table name="LG_Category" />
+	<entity class="de.uhh.l2g.plugins.migration.model.impl.LegacyAddressImpl" name="LegacyAddress">
+		<table name="Address" />
 		<attributes />
 	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.CoordinatorImpl" name="Coordinator">
-		<table name="LG_Coordinator" />
-		<attributes>
-			<transient name="emailAddress" />
-			<transient name="firstName" />
-			<transient name="lastLoginDate" />
-			<transient name="lastName" />
-		</attributes>
-	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.CreatorImpl" name="Creator">
-		<table name="LG_Creator" />
+	<entity class="de.uhh.l2g.plugins.migration.model.impl.LegacyContactImpl" name="LegacyContact">
+		<table name="Contact_" />
 		<attributes />
 	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.HostImpl" name="Host">
-		<table name="LG_Host" />
+	<entity class="de.uhh.l2g.plugins.migration.model.impl.LegacyCoordinatorImpl" name="LegacyCoordinator">
+		<table name="coordinator" />
 		<attributes />
 	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.InstitutionImpl" name="Institution">
-		<table name="LG_Institution" />
-		<attributes>
-			<transient name="path" />
-		</attributes>
-	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.Institution_HostImpl" name="Institution_Host">
-		<table name="LG_Institution_Host" />
+	<entity class="de.uhh.l2g.plugins.migration.model.impl.LegacyFacilityImpl" name="LegacyFacility">
+		<table name="facility" />
 		<attributes />
 	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.LastvideolistImpl" name="Lastvideolist">
-		<table name="LG_Lastvideolist" />
+	<entity class="de.uhh.l2g.plugins.migration.model.impl.LegacyFacilityHostImpl" name="LegacyFacilityHost">
+		<table name="facility_host" />
 		<attributes />
 	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.LectureseriesImpl" name="Lectureseries">
-		<table name="LG_Lectureseries" />
-		<attributes>
-			<transient name="numberOfVideos" />
-			<transient name="type" />
-		</attributes>
-	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.Lectureseries_CategoryImpl" name="Lectureseries_Category">
-		<table name="LG_Lectureseries_Category" />
+	<entity class="de.uhh.l2g.plugins.migration.model.impl.LegacyHostImpl" name="LegacyHost">
+		<table name="host" />
 		<attributes />
 	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.Lectureseries_CreatorImpl" name="Lectureseries_Creator">
-		<table name="LG_Lectureseries_Creator" />
+	<entity class="de.uhh.l2g.plugins.migration.model.impl.LegacyL2gSysImpl" name="LegacyL2gSys">
+		<table name="l2gsys" />
 		<attributes />
 	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.Lectureseries_InstitutionImpl" name="Lectureseries_Institution">
-		<table name="LG_Lectureseries_Institution" />
+	<entity class="de.uhh.l2g.plugins.migration.model.impl.LegacyLastVideoListImpl" name="LegacyLastVideoList">
+		<table name="lastvideolist" />
 		<attributes />
 	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.LicenseImpl" name="License">
-		<table name="LG_License" />
+	<entity class="de.uhh.l2g.plugins.migration.model.impl.LegacyLectureSeriesImpl" name="LegacyLectureSeries">
+		<table name="lectureseries" />
 		<attributes />
 	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.MetadataImpl" name="Metadata">
-		<table name="LG_Metadata" />
+	<entity class="de.uhh.l2g.plugins.migration.model.impl.LegacyLectureSeriesFacilityImpl" name="LegacyLectureSeriesFacility">
+		<table name="lectureseries_facility" />
 		<attributes />
 	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.OfficeImpl" name="Office">
-		<table name="LG_Office" />
+	<entity class="de.uhh.l2g.plugins.migration.model.impl.LegacyLicenseImpl" name="LegacyLicense">
+		<table name="license" />
 		<attributes />
 	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.ProducerImpl" name="Producer">
-		<table name="LG_Producer" />
-		<attributes>
-			<transient name="emailAddress" />
-			<transient name="firstName" />
-			<transient name="lastLoginDate" />
-			<transient name="lastName" />
-		</attributes>
-	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.Producer_LectureseriesImpl" name="Producer_Lectureseries">
-		<table name="LG_Producer_Lectureseries" />
+	<entity class="de.uhh.l2g.plugins.migration.model.impl.LegacyMetadataImpl" name="LegacyMetadata">
+		<table name="metadata" />
 		<attributes />
 	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.ScheduledThreadImpl" name="ScheduledThread">
-		<table name="LG_ScheduledThread" />
+	<entity class="de.uhh.l2g.plugins.migration.model.impl.LegacyOfficeImpl" name="LegacyOffice">
+		<table name="office" />
 		<attributes />
 	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.SegmentImpl" name="Segment">
-		<table name="LG_Segment" />
-		<attributes>
-			<transient name="image" />
-			<transient name="number" />
-			<transient name="previusSegmentId" />
-			<transient name="seconds" />
-		</attributes>
-	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.StatisticImpl" name="Statistic">
-		<table name="LG_Statistic" />
+	<entity class="de.uhh.l2g.plugins.migration.model.impl.LegacyProducerImpl" name="LegacyProducer">
+		<table name="producer" />
 		<attributes />
 	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.SysImpl" name="Sys">
-		<table name="LG_Sys" />
+	<entity class="de.uhh.l2g.plugins.migration.model.impl.LegacyProducerLectureseriesImpl" name="LegacyProducerLectureseries">
+		<table name="producer_lectureseries" />
 		<attributes />
 	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.TagcloudImpl" name="Tagcloud">
-		<table name="LG_Tagcloud" />
+	<entity class="de.uhh.l2g.plugins.migration.model.impl.LegacySegmentImpl" name="LegacySegment">
+		<table name="segment" />
 		<attributes />
 	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.TermImpl" name="Term">
-		<table name="LG_Term" />
-		<attributes>
-			<transient name="fullName" />
-		</attributes>
-	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.VideoImpl" name="Video">
-		<table name="LG_Video" />
-		<attributes>
-			<transient name="accessPermitted" />
-			<transient name="bitrate" />
-			<transient name="creatorFullName" />
-			<transient name="creators" />
-			<transient name="date" />
-			<transient name="embedHtml5" />
-			<transient name="embedIframe" />
-			<transient name="flvDownloadLink" />
-			<transient name="flvFile" />
-			<transient name="flvRssLink" />
-			<transient name="hasChapters" />
-			<transient name="hasComments" />
-			<transient name="image" />
-			<transient name="imageMedium" />
-			<transient name="imageSmall" />
-			<transient name="lectureseriesName" />
-			<transient name="lectureseriesNumber" />
-			<transient name="lectureseriesUrl" />
-			<transient name="m4aDownloadLink" />
-			<transient name="m4aFile" />
-			<transient name="m4aRssLink" />
-			<transient name="m4vDownloadLink" />
-			<transient name="m4vFile" />
-			<transient name="m4vRssLink" />
-			<transient name="mp3DownloadLink" />
-			<transient name="mp3File" />
-			<transient name="mp3RssLink" />
-			<transient name="mp4DownloadLink" />
-			<transient name="mp4File" />
-			<transient name="mp4RssLink" />
-			<transient name="oggDownloadLink" />
-			<transient name="oggFile" />
-			<transient name="oggRssLink" />
-			<transient name="pdfDownloadLink" />
-			<transient name="pdfFile" />
-			<transient name="playerUris" />
-			<transient name="secureUrl" />
-			<transient name="shortName" />
-			<transient name="shortTitle" />
-			<transient name="simpleDate" />
-			<transient name="url" />
-			<transient name="vttChapterFile" />
-			<transient name="vttThumbsFilde" />
-			<transient name="webmDownloadLink" />
-			<transient name="webmFile" />
-			<transient name="webmRssLink" />
-		</attributes>
-	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.Video_CategoryImpl" name="Video_Category">
-		<table name="LG_Video_Category" />
+	<entity class="de.uhh.l2g.plugins.migration.model.impl.LegacyStatisticImpl" name="LegacyStatistic">
+		<table name="videostats" />
 		<attributes />
 	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.Video_CreatorImpl" name="Video_Creator">
-		<table name="LG_Video_Creator" />
+	<entity class="de.uhh.l2g.plugins.migration.model.impl.LegacyUserImpl" name="LegacyUser">
+		<table name="User_" />
 		<attributes />
 	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.Video_InstitutionImpl" name="Video_Institution">
-		<table name="LG_Video_Institution" />
+	<entity class="de.uhh.l2g.plugins.migration.model.impl.LegacyVideoImpl" name="LegacyVideo">
+		<table name="video" />
 		<attributes />
 	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.Video_LectureseriesImpl" name="Video_Lectureseries">
-		<table name="LG_Video_Lectureseries" />
+	<entity class="de.uhh.l2g.plugins.migration.model.impl.LegacyVideoFacilityImpl" name="LegacyVideoFacility">
+		<table name="video_facility" />
 		<attributes />
 	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.VideohitlistImpl" name="Videohitlist">
-		<table name="LG_Videohitlist" />
-		<attributes />
-	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.VideoStatisticImpl" name="VideoStatistic">
-		<table name="LG_VideoStatistic" />
+	<entity class="de.uhh.l2g.plugins.migration.model.impl.LegacyVideoHitlistImpl" name="LegacyVideoHitlist">
+		<table name="videohitlist" />
 		<attributes />
 	</entity>
 </entity-mappings>
