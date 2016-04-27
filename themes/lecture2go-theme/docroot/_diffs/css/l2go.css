@@ -1598,7 +1598,7 @@ div.filter-menu-link span.icon-large.icon-remove {
     margin-top: 30px;
 }
 
-.fieldset.add-institution {
+.fieldset.add-institution.add-streaming-server {
     margin-top: 10px;
 }
 
@@ -1611,6 +1611,31 @@ div.filter-menu-link span.icon-large.icon-remove {
     margin-left: 117px;
 }
 
+.sub-inst {
+    font-size: 12px;
+    margin-left: 111px;
+    margin-top: -22px;
+}
+
 .sub-inst .title-text {
-    margin-top: -3px;
+    margin-top: -2px;
+}
+
+.sub-inst .taglib-page-iterator {
+    margin-left: 10px;
+}
+
+#streamingServerSettings {
+    margin-left: 112px;
+    margin-top: -43px;
+}
+
+#streamingServerSettings .accordion-heading.toggler-header.toggler-header-expanded {
+    margin-left: -6px;
+    margin-top: 3px;
+}
+
+div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-collapsed {
+    margin-left: -6px;
+    margin-top: 3px;
 }
