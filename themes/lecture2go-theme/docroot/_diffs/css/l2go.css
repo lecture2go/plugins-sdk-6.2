@@ -1618,7 +1618,7 @@ div.filter-menu-link span.icon-large.icon-remove {
 }
 
 .sub-inst .title-text {
-    margin-top: -2px;
+    margin-top: -1px;
 }
 
 .sub-inst .taglib-page-iterator {
@@ -1638,4 +1638,20 @@ div.filter-menu-link span.icon-large.icon-remove {
 div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-collapsed {
     margin-left: -6px;
     margin-top: 3px;
+}
+
+.sub-inst .title-text {
+    color: #444 !important;
+    float: left;
+    font-size: 14px;
+    padding: 0 8px 4px;
+    text-shadow: 0 0 0 #777777 !important;
+}
+
+fieldset.fieldset.add-streaming-server div.layout {
+    margin-top: -22px;
+}
+
+.sub-inst .alert.alert-info {
+    margin-left: 10px !important;
 }
