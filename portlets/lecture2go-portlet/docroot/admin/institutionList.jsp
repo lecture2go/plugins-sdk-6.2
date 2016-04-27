@@ -337,28 +337,4 @@ long studentRoleId = RoleLocalServiceUtil.getRole(companyId, "L2Go Student").get
 			</liferay-ui:panel>
 		<%}%>
 	<%--STREAMING SERVER END--%>	
-	
-<aui:fieldset column="false" label="permissions" cssClass="add-streaming-server" >
-	<aui:layout>
-		<%--Permission Settings only available to authorized Roles on Company Level--%>
-		<c:if test='<%=  permissionChecker.hasPermission(groupId, institutionPortletName, companyIdString, "PERMISSIONS") %>'>
-			<%-- Permission for setting permissions regarding model on group scope--%>
-			
-			<%--Model Permission for setting permissions on group scope--%>
-			Group Institution Permissions:
-			<liferay-security:permissionsURL modelResource="<%= institutionModel %>" modelResourceDescription="<%= institutionModel %>" resourcePrimKey="<%= groupIdString %>" var="institutionmodelpermissionsURL" />
-			<liferay-ui:icon image="permissions" url="<%= institutionmodelpermissionsURL %>" />
-		
-			<%--Permission for setting permissions regarding institution model on group scope--%>
-			Group Host Permissions:
-			<liferay-security:permissionsURL modelResource="<%= hostModel  %>" modelResourceDescription="<%= hostModel  %>" resourcePrimKey="<%= groupIdString %>" var="hostmodelpermissionsURL" />
-			<liferay-ui:icon image="permissions" url="<%= hostmodelpermissionsURL %>" />
-			
-			<%--Permission for setting permissions regarding institution model on group scope--%>
-			Group Institution_Host Permissions:
-			<liferay-security:permissionsURL modelResource="<%= institutionHostModel  %>" modelResourceDescription="<%= institutionHostModel  %>" resourcePrimKey="<%= groupIdString %>" var="institutionhostnmodelpermissionsURL" />
-			<liferay-ui:icon image="permissions" url="<%= institutionhostnmodelpermissionsURL %>" />
-		</c:if>
-	</aui:layout>
-</aui:fieldset>
 </div>
