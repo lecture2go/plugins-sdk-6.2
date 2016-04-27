@@ -1,8 +1,6 @@
 package de.uhh.l2g.plugins.admin;
 
 import java.io.IOException;
-<<<<<<< HEAD
-=======
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,7 +9,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
->>>>>>> refs/remotes/lecture2go/master
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -32,15 +29,12 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import de.uhh.l2g.plugins.model.ScheduledThread;
-<<<<<<< HEAD
-=======
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.Videohitlist;
 import de.uhh.l2g.plugins.model.impl.VideohitlistImpl;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideohitlistLocalServiceUtil;
 import de.uhh.l2g.plugins.service.impl.VideoLocalServiceImpl;
->>>>>>> refs/remotes/lecture2go/master
 import de.uhh.l2g.plugins.util.PermissionManager;
 import de.uhh.l2g.plugins.util.PortletScheduler;
 
@@ -166,8 +160,6 @@ public class ThreadManagement extends MVCPortlet {
 	public void destroy(){
 		System.out.println(this.getPortletName());
 		super.destroy();
-<<<<<<< HEAD
-=======
 	}
 	private static Long HITS=new Long(20);
 	
@@ -222,7 +214,6 @@ public class ThreadManagement extends MVCPortlet {
 	private long calcHitsPro(long einheit, long hits){
 		if(einheit>=1)return (long) (hits/einheit); //Hits pro Einheit (tag, woche, monat, jahr...)
 		else return hits; //else: Das Video ist noch kein volles Jahr vollen Monat etc alt.
->>>>>>> refs/remotes/lecture2go/master
 	}
 	
 	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws PortletException, IOException {

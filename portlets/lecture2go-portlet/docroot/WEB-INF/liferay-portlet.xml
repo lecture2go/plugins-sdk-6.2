@@ -121,13 +121,6 @@
 	   	 	    <scheduler-description>This scheduler is used to collect Statistical Data from Database</scheduler-description> 
   				<scheduler-event-listener-class>de.uhh.l2g.plugins.util.StatisticsScheduler</scheduler-event-listener-class>  
          		<trigger>  
-<<<<<<< HEAD
-         			<cron>  
-         			  <cron-trigger-value>0 */1 * * * ?</cron-trigger-value>  
-         			</cron>  
- 			</trigger>   
-   		</scheduler-entry> 
-=======
          			<cron><cron-trigger-value>0 */1 * * * ?</cron-trigger-value></cron>  
  				</trigger>   
    			</scheduler-entry> 
@@ -138,7 +131,6 @@
          			<cron><cron-trigger-value>0 */1 * * * ?</cron-trigger-value></cron>  
  				</trigger>   
    			</scheduler-entry> 
->>>>>>> refs/remotes/lecture2go/master
    	   	<instanceable>false</instanceable>
 		<private-request-attributes>false</private-request-attributes>
 

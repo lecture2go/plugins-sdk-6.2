@@ -15,19 +15,6 @@
 <portlet:actionURL name="startThread" var="startThreadURL"></portlet:actionURL>
 <portlet:actionURL name="stopThread" var="stopThreadURL"></portlet:actionURL>
 <portlet:actionURL name="killAllThreads" var="killAllThreadsURL"></portlet:actionURL>
-<<<<<<< HEAD
-	       
-	 <br>  
-	  <br>
-	   <br>
-	    <br>
-	     <br>
-
-	<%  int iC = 0;
-	for(SchedulerEntry job : scheduledJobs) { 
-	    String schedulerPanelId = "panel"+ String.valueOf(iC);
- 	    iC++;
-=======
 
 <liferay-portlet:resourceURL id="triggerVideohitlistThread" var="triggerVideohitlistThread" />
 
@@ -36,28 +23,7 @@
 		for(SchedulerEntry job : scheduledJobs) { 
 	    	String schedulerPanelId = "panel"+ String.valueOf(iC);
  	    	iC++;
->>>>>>> refs/remotes/lecture2go/master
     %>	
-<<<<<<< HEAD
-		<liferay-ui:panel title="<%= job.getEventListenerClass() %>" collapsible="true" id="<%= schedulerPanelId  %>"
-						defaultState="open"
-						extended="<%= false %>"
-						persistState="<%= true %>">     
-				<aui:form action="<%= startThreadURL %>" name="<portlet:namespace />fm">         
-					<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= job.getEventListenerClass() %>'/>
-					<aui:button type="submit" value="Start" ></aui:button>
-				</aui:form>
-				<aui:form action="<%= stopThreadURL %>" name="<portlet:namespace />fm">         
-					<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= job.getEventListenerClass() %>'/>
-					<aui:button type="submit" value="Stop" ></aui:button>
-				</aui:form>
-		</liferay-ui:panel>
-	<% } %>
-
-   <br>
-<% for(PortletScheduler ps : portletScheduler) {  %>	
-	<liferay-ui:message key="<%= ps.getJobName() %>"></liferay-ui:message>
-=======
 		<liferay-ui:panel title="<%= job.getEventListenerClass() %>" collapsible="true" id="<%= schedulerPanelId  %>" defaultState="open" extended="false" persistState="true">     
 			<aui:form action="<%= startThreadURL %>" name="<portlet:namespace />fm">         
 				<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= job.getEventListenerClass() %>'/>
@@ -88,21 +54,7 @@
 </aui:fieldset>
 	
 </div>
->>>>>>> refs/remotes/lecture2go/master
 
-<<<<<<< HEAD
-
-		<liferay-ui:panel title="Manage" collapsible="true" id="managePanelId"
-						defaultState="open"
-						extended="<%= false %>"
-						persistState="<%= true %>">     
-				<aui:form action="<%= killAllThreadsURL %>" name="<portlet:namespace />fm">         
-					<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= ps.getJobName() %>'/>
-					<aui:button type="submit" value="killAll" ></aui:button>
-				</aui:form>
-		</liferay-ui:panel>
-<% } %>
-=======
 <script type="text/javascript">
 function triggerVideohitlistThread(){
 	AUI().use('aui-io-request', 'aui-node',
@@ -124,4 +76,3 @@ function triggerVideohitlistThread(){
 }
 </script>
 -->
->>>>>>> refs/remotes/lecture2go/master
