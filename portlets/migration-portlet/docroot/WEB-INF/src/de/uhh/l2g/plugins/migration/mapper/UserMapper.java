@@ -12,7 +12,8 @@ public class UserMapper {
         user.setCompanyId(companyId);
         user.setJobTitle(legacyContact.getJobTitle()); // function in company
         user.setPasswordEncrypted(true);
-        user.setPassword(legacyUser.getPassword());
+        user.setPassword("{SHA}"+legacyUser.getPassword());
+        user.setPasswordReset(true);
         user.setFirstName(legacyContact.getFirstName());
         user.setLastName(legacyContact.getLastName());
         user.setScreenName(legacyUser.getScreenName());

@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <custom-sql>
 
+    <sql id="de.uhh.l2g.plugins.service.persistence.InstitutionFinder.findRootInstitutionsByOpenAccessVideos">
+		<![CDATA[
+			SELECT distinct i2.* FROM LG_Video v JOIN LG_Video_Institution vi ON v.videoId=vi.videoId JOIN LG_Institution i ON vi.institutionId= i.institutionId JOIN (SELECT * FROM LG_Institution) i2 ON i.parentId=i2.institutionId WHERE v.openAccess=1 ORDER BY sort
+		]]>
+    </sql>
+    
+    <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.findPopularVideos">
+		<![CDATA[
+			SELECT v.* 
+			FROM LG_Video v, LG_Videohitlist vhl  
+			WHERE v.videoId=vhl.videoId 
+			ORDER BY hits DESC 
+		]]>
+    </sql>
+    
+    <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.findVideosByHits">
+		<![CDATA[
+			SELECT v.* 
+			FROM LG_Video v  
+			WHERE hits>? 
+			ORDER BY hits DESC 
+		]]>
+    </sql>
+    
     <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.findVideosBySearchWordAndLectureseriesId">
 		<![CDATA[
 			SELECT v.* 

@@ -1,12 +1,25 @@
 package de.uhh.l2g.plugins.admin;
 
 import java.io.IOException;
+<<<<<<< HEAD
+=======
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.TimeZone;
+>>>>>>> refs/remotes/lecture2go/master
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -19,6 +32,15 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import de.uhh.l2g.plugins.model.ScheduledThread;
+<<<<<<< HEAD
+=======
+import de.uhh.l2g.plugins.model.Video;
+import de.uhh.l2g.plugins.model.Videohitlist;
+import de.uhh.l2g.plugins.model.impl.VideohitlistImpl;
+import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
+import de.uhh.l2g.plugins.service.VideohitlistLocalServiceUtil;
+import de.uhh.l2g.plugins.service.impl.VideoLocalServiceImpl;
+>>>>>>> refs/remotes/lecture2go/master
 import de.uhh.l2g.plugins.util.PermissionManager;
 import de.uhh.l2g.plugins.util.PortletScheduler;
 
@@ -144,6 +166,73 @@ public class ThreadManagement extends MVCPortlet {
 	public void destroy(){
 		System.out.println(this.getPortletName());
 		super.destroy();
+<<<<<<< HEAD
+=======
+	}
+	private static Long HITS=new Long(20);
+	
+	public void createPopularVideoList() throws SystemException {
+		List<Video> returnList = new ArrayList<Video>();
+		//1.get open access videos with more than 20 clicks 
+		returnList = VideoLocalServiceUtil.getByHits(HITS);
+		//2.truncate table videohitlist
+		VideohitlistLocalServiceUtil.deleteAll();
+		//3.fill table with data
+		Calendar calendar = new GregorianCalendar(); 
+		calendar.setTimeZone( TimeZone.getTimeZone("CET") );
+		long msnow = calendar.getTimeInMillis();
+
+		Date d1 = new Date();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH-mm");
+
+		for(Video v : returnList){
+			try {
+				d1 = df.parse(v.getGenerationDate()); 
+				long ms1   = d1.getTime();
+				long hits = v.getHits();
+				long timeinms = msnow - ms1;
+
+				// Durschnittswerte berechnen
+				//Berechne alter des Videos in...
+				long days = timeinms / (1000*60*60*24); //...Tagen
+				long week = timeinms / (1000*60*60*24*7); //...Wochen
+				long month = timeinms / 2628000000l; //....Monaten
+				long year = timeinms / (2628000000l*12l); //....Jahren
+				
+				//Berechne die Hits pro...
+				long clicksperday = calcHitsPro(days, hits);
+				long clicksperweek = calcHitsPro(week, hits);
+				long clickspermonth = calcHitsPro(month, hits);
+				long clicksperyear = calcHitsPro(year, hits);
+
+				Videohitlist vhl = new VideohitlistImpl();
+				vhl.setVideoId(v.getVideoId());
+				vhl.setHitsPerDay(clicksperday);
+				vhl.setHitsPerWeek(clicksperweek);
+				vhl.setHitsPerMonth(clickspermonth);
+				vhl.setHitsPerYear(clicksperyear);
+				//save
+				VideohitlistLocalServiceUtil.addVideohitlist(vhl);
+				}catch (ParseException e) {
+					System.out.println("Simple Date Parsen Error!!");
+				}
+		}
+	}	
+	
+	private long calcHitsPro(long einheit, long hits){
+		if(einheit>=1)return (long) (hits/einheit); //Hits pro Einheit (tag, woche, monat, jahr...)
+		else return hits; //else: Das Video ist noch kein volles Jahr vollen Monat etc alt.
+>>>>>>> refs/remotes/lecture2go/master
 	}
 	
+	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws PortletException, IOException {
+		String resourceID = resourceRequest.getResourceID();
+		if(resourceID.equals("triggerVideohitlistThread")){		
+			try {
+				createPopularVideoList();
+			} catch (SystemException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }

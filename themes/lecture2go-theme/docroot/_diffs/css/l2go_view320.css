@@ -3,6 +3,10 @@
 		display:none;
 	}
 	
+	.aui .accordion-group.lfr-panel-extended {
+	    padding-bottom: 0;
+	}
+	
 	.admintile.wide.icons {
 		visibility: hidden;
 		display: none;
@@ -257,5 +261,4 @@
 	    margin-left: 0;
 	    margin-top: 3px;
 	}
-	
 }

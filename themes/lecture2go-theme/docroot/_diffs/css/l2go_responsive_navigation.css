@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @media (min-width: 0px) and (max-width: 960px) {	
 	
 	.aui #navigation .nav li{
@@ -107,4 +108,279 @@
 	    margin-top: 40px;
 	}
 
+=======
+@media (min-width: 320px) and (max-width: 960px) {	
+	 
+	#heading .meta {
+	    display: none;
+	    visibility: hidden;
+	}
+	
+	.span3 .accordion-inner li {
+	    font-size: 14px;
+	    min-height: 38px;
+	    line-height: 38px;
+	}
+
+	div.filter-menu-link span.icon-large.icon-remove {
+	    margin-top: 9px;
+	}
+
+	#loadMoreTerms, #loadMoreCreators {
+	    color: #c90219;
+	    cursor: pointer;
+	    font-size: 14px;
+	    height: 38px;
+	    line-height: 38px;
+	    margin-left: 28px;
+	}
+
+	.aui .accordion {
+	    margin-bottom: 7px;
+	}
+	
+	#wrapper {
+	    padding: 0;
+	}
+
+	.responsive_li_item {
+	    display: block;
+	    font-family: TheSansUHH,sans-serif !important;
+	    padding-left: 30px;
+	    visibility: visible;
+	}
+	
+	#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
+	    border-left: medium none;
+	    border-right: 0 none;
+	    float: left;
+	    max-width: inherit !important;
+	    min-width: 320px;
+	    padding: 4px 0;
+	    position: relative;
+	    width: 100% !important;
+	}
+	
+	.aui #navigation .nav .dropdown-menu > li a:hover {
+    	background: #ddd url("/lecture2go-portlet/img/rot_navi-pfeil-rechts.png") no-repeat scroll 9px 13px !important;
+		line-height: 29px;
+	}
+
+	.aui #navigation .nav .dropdown-menu > li a {
+    	background: #f9f9f9 url("/lecture2go-portlet/img/rot_navi-pfeil-rechts.png") no-repeat scroll 9px 13px !important;
+    	line-height: 29px;
+	}
+
+		
+	.search {
+    	margin-top: 33px;
+	}
+	
+	.aui .portlet-borderless-container {
+    	padding: 0;
+	}
+
+	.columns-1 {
+	    padding-left: 5px;
+	    padding-right: 5px;
+	}
+
+	.responsive_li_item a:hover {
+	    background: transparent none repeat scroll 0 0 !important;
+	    color: #444 !important;
+	    height: 33px;
+	}
+
+	.search input.button {
+	    border-left: 0 none;
+	    border-right: 0 none;
+	    float: right;
+	    height: 30px;
+	    margin-top: -39px;
+	    position: relative;
+	    z-index: 2147483647 !important;
+	}
+	
+	.aui #navigation .nav li.active.has-child > a {
+	    background: #e40613 url("/lecture2go-portlet/img/pfeil-weiss-unten.png") no-repeat scroll 15px 13px;
+	    color: #fff;
+	    height: 35px;
+	    padding-left: 30px;
+	    padding-top: 3px;
+	}
+
+	.aui #navigation .nav li.active.has-child > a:hover {
+	    background: #e40613 url("/lecture2go-portlet/img/pfeil-weiss-unten.png") no-repeat scroll 15px 13px !important;
+	}
+
+	.aui #navigation .nav li {
+	    background: rgba(0, 0, 0, 0) linear-gradient(180deg, #f3f3f3 0%, #f3f3f3 100%) repeat scroll 0 0;
+	    border-radius: 0;
+	    height: 38px;
+	    line-height: 31px;
+	    margin: 0 1px 1px 0;
+	    min-width: 148px;
+	    text-align: left;
+	}
+
+	.title-text {
+	    margin-top: 8px;
+	}
+	
+	.aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle::after, .aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle::before {
+	    margin: 9px 5px 0 0;
+	}
+	
+	.aui .accordion-group.lfr-panel-extended .accordion-heading {
+	    height: 38px;
+	}
+
+	#meta-share input.option1 {
+	    height: 38px;
+	    width: 70%;
+	}
+
+	.journal-content-article {
+	    padding: 5px;
+	}
+	
+	.aui #navigation .nav li.lfr-nav-item.dropdown.has-child {
+	    background: #f3f3f3 url("/lecture2go-portlet/img/pfeil-schwarz-unten.png") no-repeat scroll 15px 13px !important;
+	}
+
+	.aui #navigation .nav li.lfr-nav-item.dropdown.has-child:hover {
+	    background: #f3f3f3 url("/lecture2go-portlet/img/pfeil-schwarz-unten.png") no-repeat scroll 15px 13px !important;
+	}
+		
+	.responsive_li_item.selected {
+    	background: #e3e3e3 none repeat scroll 0 0 !important;
+	}
+	
+	.dropdown-menu.child-menu {
+	    display: none;
+	    visibility: hidden;
+	}
+	
+	.aui #navigation .nav li.open > a {
+	    background-color: #d81b1b;
+	    background-image: linear-gradient(180deg, #e5331c 0%, #c90219 100%);
+	    border-radius: 0;
+	    color: #fff;
+	    height: 38px;
+	    padding-left: 30px;
+	    padding-top: 3px;
+	}
+
+	.aui #navigation.open .navbar-inner .nav-collapse {
+	    margin-bottom: -27px;
+	    margin-left: -1px;
+	}
+
+	.responsive_li_item:hover {
+   	 	background: #e3e3e3 none repeat scroll 0 0 !important;
+   	 	height: 33px;
+	}
+	
+	.aui .btn [class^="icon-"], .aui .btn [class*=" icon-"] {
+    	margin-top: -1px;
+	}
+
+	.aui .dockbar-split .dockbar .navbar-inner .btn-navbar, .aui .dockbar .navbar-inner .btn-navbar {
+    	background: #fff none repeat scroll 0 0 !important;
+    	margin: 0;
+    	padding-top: 6px !important;
+	}
+
+	.aui #navigation li .dropdown-toggle:hover {
+	    background: #e40613 url("/lecture2go-portlet/img/pfeil-schwarz-unten.png") no-repeat scroll 15px 13px !important;
+	    border: 0 none;
+	}
+
+	.aui #navigation .nav .dropdown-menu > li {
+	    margin: 0;
+	    padding: 0;
+	    width: 50%;
+	}
+
+	.aui #navigation .nav .dropdown-menu > li {
+	    margin: 0;
+	    padding: 0;
+	    width: 50%;
+	}
+	
+	.navbar .container .btn-navbar {
+	    margin-bottom: 0;
+	}	
+	
+	.aui .dockbar-split .dockbar .navbar-inner .btn-navbar:hover, .aui .dockbar .navbar-inner .btn-navbar {
+    	background-color: #444444;
+	}
+	
+	.aui .dockbar .navbar-inner .container .btn-navbar .user-avatar-image {
+	    top: 0;
+	}
+	
+	.aui #navigation .nav li.active > a {
+	    background-color: #d81b1b;
+	    background-image: linear-gradient(180deg, #e40613 0%, #e40613 100%);
+	    color: #fff;
+	    height: 35px;
+	    padding-left: 30px;
+	    padding-top: 3px;
+	}
+
+	#wrapper #heading .site-title img {
+	    margin-left: 13px;
+	    margin-top: 35px;
+	    width: auto;
+	}
+
+	.user-avatar-image {
+	    margin-top: 0 !important;
+	    padding: 0;
+	    width: 22px !important;
+	}
+	
+	.aui .navbar-inner::before, .aui .navbar-inner::after {
+	    float: left;
+	}
+	
+	element.style {
+	    width: 100%;
+	}
+	
+	.aui #navigation .nav .dropdown-menu {
+	    background-color: transparent;
+	}
+	
+	.aui .dockbar-split .dockbar, .aui .dockbar {
+	    background-color: #444444 !important;
+	    margin-right: 5%;
+	    margin-top: 40px;
+	}
+
+	.aui .dockbar-split .dockbar .navbar-inner {
+	    background: #fff none repeat scroll 0 0;
+	}
+
+	.navbar-inner {
+	    background: #fff none repeat scroll 0 0 !important;
+	}
+	
+	.aui #navigation .navbar-inner li a {
+	    color: #444;
+	    font-weight: normal;
+	    padding-left: 30px;
+	    padding-top: 3px;
+	}
+
+	.aui .dockbar.navbar .navbar-inner {
+    	min-height: 0;
+	}
+	
+	.aui .dockbar .navbar-inner .container .btn-navbar {
+    	color: #444;
+	}
+	
+>>>>>>> refs/remotes/lecture2go/master
 }

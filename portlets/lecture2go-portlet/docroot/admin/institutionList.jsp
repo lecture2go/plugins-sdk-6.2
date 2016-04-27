@@ -126,6 +126,7 @@ Group Institution_Host Permissions:
 	<liferay-ui:icon image="permissions" url="<%= institutionhostnmodelpermissionsURL %>" />
 </c:if>
 
+<div class="noresponsive">
 <%--ADD INSTITUTION--%>
 
 <%-- Permission on Portlet Scope --%>
@@ -520,3 +521,4 @@ deltaConfigurable="true">
 
 
 <%-- </liferay-ui:panel> --%>
+</div>

@@ -23,19 +23,19 @@
 
 <div class="noresponsive">
 <aui:form action="<%= editURL.toString() %>" method="post">
-	<aui:fieldset helpMessage="test" column="true" label='<%="l2go-roles-for "+reqUser.getFullName()%>'>
+	<aui:fieldset helpMessage="" column="true" label='<%=LanguageUtil.get(pageContext, "l2go-roles-for")+" "+reqUser.getFullName()%>'>
 		<aui:layout>
 			<div id="metadata-upload">
 				<c:if test='<%= permissionChecker.hasPermission(groupId,name,reqUser.getPrimaryKey(),"ADD_L2GOCOORDINATOR") %>'>
 					<aui:column>
-						<aui:select name="cfId" label="set-coordinator-for-institution">
-							<aui:option value="">select-institution</aui:option>
+						<aui:select name="cfId" label="">
+							<aui:option value=""><liferay-ui:message key="set-coordinator-for-institution"/></aui:option>
 							<%for (int i = 0; i < cInstitutions.size(); i++) {
 								if(cInstitutions.get(i).getInstitutionId()==reqCoordinator.getInstitutionId()){
 							%>	
-							<aui:option value='<%=cInstitutions.get(i).getInstitutionId()%>' selected="true"><%=cInstitutions.get(i).getName() %></aui:option>
+							<aui:option value='<%=cInstitutions.get(i).getInstitutionId()%>' selected="true"><liferay-ui:message key="coordinator-for"/> <%=cInstitutions.get(i).getName() %></aui:option>
 							<%}else{%>
-							<aui:option value='<%=cInstitutions.get(i).getInstitutionId()%>'><%=cInstitutions.get(i).getName() %></aui:option>
+							<aui:option value='<%=cInstitutions.get(i).getInstitutionId()%>'><liferay-ui:message key="coordinator-for"/> <%=cInstitutions.get(i).getName() %></aui:option>
 							<%}
 							}%>
 						</aui:select>
@@ -47,14 +47,14 @@
 						boolean dis = false;
 						if(loggedInCoordinator.getInstitutionId()!=reqProducer.getInstitutionId() && reqProducer.getInstitutionId()!=0 && !permissionChecker.hasPermission(groupId,name,reqUser.getPrimaryKey(),"ADD_L2GOCOORDINATOR"))dis=true;
 						%>
-						<aui:select name="pfId" label="set-producer-for-institution" disabled="<%=dis%>">
-							<aui:option value="">select-institution</aui:option>
+						<aui:select name="pfId" label="" disabled="<%=dis%>">
+							<aui:option value=""><liferay-ui:message key="set-producer-for-institution"/></aui:option>
 							<%for (int i = 0; i < pInstitutions.size(); i++) {
 								if(pInstitutions.get(i).getInstitutionId()==reqProducer.getInstitutionId()){
 							%>	
-							<aui:option value='<%=pInstitutions.get(i).getInstitutionId()%>' selected="true"><%=pInstitutions.get(i).getName() %></aui:option>
+							<aui:option value='<%=pInstitutions.get(i).getInstitutionId()%>' selected="true"><liferay-ui:message key="producer-for"/> <%=pInstitutions.get(i).getName() %></aui:option>
 							<%}else{%>
-							<aui:option value='<%=pInstitutions.get(i).getInstitutionId()%>'><%=pInstitutions.get(i).getName() %></aui:option>
+							<aui:option value='<%=pInstitutions.get(i).getInstitutionId()%>'><liferay-ui:message key="producer-for"/> <%=pInstitutions.get(i).getName() %></aui:option>
 							<%}
 							}%>
 						</aui:select>
@@ -70,7 +70,7 @@
 								<aui:input type="checkbox" name="isStud" label=""/>
 								<%}%>
 						</c:if>
-						set-student-status	      	      
+						<liferay-ui:message key="set-student-status"/>	      	      
 					</div>	
 					<div>		
 						<c:if test='<%= permissionChecker.hasPermission(groupId,name,reqUser.getPrimaryKey(),"ADD_L2GOADMIN") %>'>
@@ -80,7 +80,7 @@
 								<aui:input type="checkbox" name="isL2goAdmin" label=""/>
 								<%}%>			
 						</c:if>
-						set-l2g-admin-status
+						<liferay-ui:message key="set-l2g-admin-status"/>
 					</div>
 				</div>
 				

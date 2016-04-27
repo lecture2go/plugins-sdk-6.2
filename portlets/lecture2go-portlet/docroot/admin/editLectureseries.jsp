@@ -129,7 +129,7 @@
 
 			<%if(!readOnly){%>
 				<aui:select size="1" name="categoryId" label="event-type" required="true">
-					<aui:option value="">select-event-type</aui:option>
+					<aui:option value=""><liferay-ui:message key="select-event-type"/></aui:option>
 					<%for (int i = 0; i < categories.size(); i++) {
 						if (categoryId==categories.get(i).getCategoryId()) {%>
 							<aui:option value='<%=categories.get(i).getCategoryId()%>' selected="true"><%=categories.get(i).getName()%></aui:option>
@@ -145,7 +145,7 @@
 			
 			<%if(!permissionProducer){%>
 				<aui:select size="1" name="institutionId" label="institution" required="true">
-					<aui:option value="">select-institution</aui:option>
+					<aui:option value=""><liferay-ui:message key="select-institution"/></aui:option>
 					<%for (Map.Entry<String, String> f : institutions.entrySet()) {
 					boolean dis=true; 
 					if(f.getValue().startsWith("----") || permissionCoordinator)dis=false;
@@ -180,7 +180,7 @@
 			
 			<%if(!permissionProducer){%>	
 				<aui:select size="1" name="producerId" label="producer" required="true" helpMessage="please-add-at-lest-one-producer">
-					<aui:option value="">select-producer</aui:option>
+					<aui:option value=""><liferay-ui:message key="select-producer"/></aui:option>
 					<%for (int i = 0; i < producers.size(); i++) {
 						Long z = new Long(0);
 						if(pIds.size()>0) z = new Long(pIds.get(0)+"");
@@ -235,7 +235,7 @@
 			
 			<%if(!readOnly){%>
 				<aui:select size="1" name="crId" label="creators">
-					<aui:option value="">select-creator</aui:option>
+					<aui:option value=""><liferay-ui:message key="select-creator"/></aui:option>
 					<%for (int i = 0; i < creators.size(); i++) {
 						%><aui:option value='<%=creators.get(i).getCreatorId()%>'><%=creators.get(i).getJobTitle() + " "+creators.get(i).getLastName() + ", " + creators.get(i).getFirstName()%></aui:option><%
 					}%>	
@@ -244,7 +244,7 @@
 				<div id="creators"></div>
 			
 				<a id="addCreator">
-				    add-new-creator <span class="icon-large icon-plus-sign"></span>
+				    <liferay-ui:message key="add-new-creator"/> <span class="icon-large icon-plus-sign"></span>
 				</a>
 				<br/><br/>
 			<%}%>

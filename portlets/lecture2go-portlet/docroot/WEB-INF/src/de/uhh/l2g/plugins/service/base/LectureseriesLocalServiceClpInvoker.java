@@ -162,6 +162,10 @@ public class LectureseriesLocalServiceClpInvoker {
 				"java.lang.Long", "java.lang.Long", "java.lang.Long",
 				"java.lang.Long", "java.lang.Long", "java.lang.String"
 			};
+
+		_methodName176 = "getLatest";
+
+		_methodParameterTypes176 = new String[] { "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -325,6 +329,11 @@ public class LectureseriesLocalServiceClpInvoker {
 				(java.lang.String)arguments[5]);
 		}
 
+		if (_methodName176.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes176, parameterTypes)) {
+			return LectureseriesLocalServiceUtil.getLatest(((Integer)arguments[0]).intValue());
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -384,4 +393,6 @@ public class LectureseriesLocalServiceClpInvoker {
 	private String[] _methodParameterTypes174;
 	private String _methodName175;
 	private String[] _methodParameterTypes175;
+	private String _methodName176;
+	private String[] _methodParameterTypes176;
 }

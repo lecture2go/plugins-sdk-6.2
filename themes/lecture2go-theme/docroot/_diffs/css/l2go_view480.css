@@ -3,6 +3,10 @@
 		display:none;
 	}
 	
+	.aui .accordion-group.lfr-panel-extended {
+	    padding-bottom: 0;
+	}
+	
 	.sharetile {
 	    width: 131px;
 	}
@@ -10,6 +14,10 @@
 	.admintile.wide.icons {
 		visibility: hidden;
 		display: none;
+	}
+	
+	#metadata {
+	    width: 100%;
 	}
 	
 	#metadata {

@@ -333,6 +333,11 @@ public class LectureseriesLocalServiceUtil {
 			parentInstitutionId, termId, categoryId, creatorId, searchQuery);
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getLatest(
+		int limit) {
+		return getService().getLatest(limit);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

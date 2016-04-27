@@ -1,5 +1,8 @@
 @media (min-width: 720px) and (max-width: 959px) {
-
+	.noresponsive{
+		display:none;
+	}
+	
 	.aui .row-fluid .span9 {
 	    width: 74%;
 	}

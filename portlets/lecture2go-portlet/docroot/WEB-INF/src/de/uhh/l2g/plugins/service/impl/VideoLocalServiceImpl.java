@@ -129,6 +129,9 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		return vl;
 	}
 	
+	public List<Video> getPopular(int limit){
+		return VideoFinderUtil.findPopular(limit);
+	}
 	
 	public List<Video> getLatestVideos(){
 		return VideoFinderUtil.findLatestVideos();
@@ -606,4 +609,13 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	public List<Video> getBySearchWordAndLectureseriesId(String word, Long lectureseriesId) throws SystemException{
 		return VideoFinderUtil.findVideosBySearchWordAndLectureseriesId(word, lectureseriesId);
 	}	
+	
+	public List<Video> getByHits(Long hits){
+		return VideoFinderUtil.findVideosByHits(hits);
+	}
+	
+	public List<Video> getByHits(){
+		return VideoFinderUtil.findVideosByHits(0);
+	}
+	
 }
