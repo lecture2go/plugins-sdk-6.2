@@ -1,12 +1,4 @@
 @media (min-width: 960px) {
-<<<<<<< HEAD
-	
-	#metadata {
-    	float: left;
-    	width: 93%;
-	}
-	
-=======
 	#banner {
 	    background: rgba(0, 0, 0, 0) url("/lecture2go-theme/images/logo_l2go.png") no-repeat scroll right -3px top -8px / 159px auto;
 	}
@@ -75,7 +67,6 @@
     	padding: 0;
 	}
 
->>>>>>> refs/remotes/lecture2go/master
 	.aui .row-fluid .span9 {
 	    width: 74%;
 	}
@@ -92,16 +83,6 @@
     	width: 100%;
 	}
 
-	.aui .dockbar-split .dockbar, .aui .dockbar {
-    	display: none;
-	}
-	
-	.aui #navigation {
-	    display: table !important;
-	    margin-top: 0;
-	    visibility: visible !important;
-	}
-	
 	.aui .dockbar-split .dockbar, .aui .dockbar {
     	display: none;
 	}

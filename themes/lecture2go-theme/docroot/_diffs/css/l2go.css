@@ -88,15 +88,6 @@
     z-index: 23452345;
 }
 
-.aui #navigation .nav .dropdown-menu > li {
-    background: #f9f9f9 none repeat scroll 0 0 !important;
-    border-bottom: 1px solid #f3f3f3;
-    border-radius: 0;
-    margin-top: -1px;
-    width: 70%;
-    z-index: 23452345;
-}
-
 .aui .btn:hover, .aui .btn:focus {
     background-position: 0 45px;
     text-decoration: none;
@@ -1359,7 +1350,7 @@ div.filter-menu-link span.icon-large.icon-remove {
     padding-left: 0px;
     padding-right: 0px;
  	color: #4d4d4d;
- 	font-size: 13px
+ 	font-size: 12px
 }
 
 .aui a:focus {
