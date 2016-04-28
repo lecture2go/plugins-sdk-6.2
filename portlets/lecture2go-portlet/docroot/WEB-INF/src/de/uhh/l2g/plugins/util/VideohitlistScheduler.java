@@ -58,8 +58,8 @@ public final class VideohitlistScheduler extends PortletScheduler implements Mes
 		LOG.info("Videohitlist Scheduler stop.");
 	}
 
-	public void init(String schedulerClassName, String portletId) {
-        super.initScheduler(schedulerClassName,portletId);
+	public void init(String schedulerClassName, ServiceContext serviceContext) {
+        super.initScheduler(schedulerClassName,serviceContext);
 	}
 
 }

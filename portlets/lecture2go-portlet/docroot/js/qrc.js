@@ -567,12 +567,14 @@ function setupqr() {
     ht = 395;
     mp = document.getElementById("mapcanv");
     var elem = document.getElementById("qrcanv");
-    qrc = elem.getContext("2d");
-    qrc.canvas.width = wd;
-    qrc.canvas.height = ht;
-    qrc.fillStyle = "#eee";
-    qrc.fillRect(0, 0, wd, ht);
-    doqr(window.location.href)
+    if (elem != null) {
+    	qrc = elem.getContext("2d");
+    	qrc.canvas.width = wd;
+    	qrc.canvas.height = ht;
+    	qrc.fillStyle = "#eee";
+    	qrc.fillRect(0, 0, wd, ht);
+    	doqr(window.location.href)
+    }
 }
 
 function doqr(url) {

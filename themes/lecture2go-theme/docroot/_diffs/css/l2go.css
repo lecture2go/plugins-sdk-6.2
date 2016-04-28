@@ -936,10 +936,6 @@ thead, th {
     padding-bottom: 15px;
 }
 
-.admintile.wide.icons > a {
-    margin-left: 3px;
-}
-
 .admintile.wide.icons {
     width: 15%;
 }
@@ -961,15 +957,22 @@ thead, th {
     font-weight: 700;
 }
 
+.admintile.wide.icons > a {
+    float: right;
+    padding: 3px;
+}
+
 .admintile.wide em {
     font-size: 11px;
     font-style: normal;
 }
 
-.admintile.wide.icons > a {
-    float: right;
+.admintile.wide.icons.creators > button {
+    font-size: 12px;
+    height: 26px;
+    margin-left: -3px;
+    padding: 0 7px;
 }
-
 
 .adminrow.wide:hover {
     background-color: #eaeaea;
@@ -1378,13 +1381,6 @@ div.filter-menu-link span.icon-large.icon-remove {
     width: 97px;
 }
 
-.admintile.wide.icons.creators > button {
-    font-size: 12px;
-    height: 26px;
-    margin-left: -3px;
-    padding: 0 7px;
-}
-
 .admintile.wide.icons.creators {
     float: right;
     margin-right: 8px;
@@ -1404,12 +1400,15 @@ div.filter-menu-link span.icon-large.icon-remove {
 .undertile.wide {
     float: left;
     font-size: 10px;
+    line-height: 13px;
     margin-left: 4px;
     width: 100%;
 }
 
 .undertile.wide > b {
     font-weight: 600;
+    line-height: 20px;
+    margin-bottom: 12px;
 }
 
 .undertile.wide > p {
@@ -1532,3 +1531,126 @@ div.filter-menu-link span.icon-large.icon-remove {
 }
 
 /*Bastian Ende*/
+
+#_lgadmininstitutionmanagement_WAR_lecture2goportlet_outerListOrder {
+    width: 22px;
+}
+#_lgadmininstitutionmanagement_WAR_lecture2goportlet_order {
+    width: 22px;
+}
+
+#_lgadmininstitutionmanagement_WAR_lecture2goportlet_outerListStreamer {
+    width: 55px;
+}
+
+#institutionSettings input{
+	float:left;
+	margin-right: 10px;
+}
+
+#institutionSettings button.btn {
+    margin-top: 55px;
+}
+
+#_lgadmininstitutionmanagement_WAR_lecture2goportlet_fm button {
+    margin-top: 26px;
+}
+
+#_lgadmininstitutionmanagement_WAR_lecture2goportlet_curStreamingServerProtocol {
+    width: 70px;
+}
+
+#_lgadmininstitutionmanagement_WAR_lecture2goportlet_protocol {
+    width: 70px;
+}
+
+#_lgadmininstitutionmanagement_WAR_lecture2goportlet_curStreamingServerPort {
+    width: 30px;
+}
+
+#_lgadmininstitutionmanagement_WAR_lecture2goportlet_port {
+    width: 30px;
+}
+
+#_lgadmininstitutionmanagement_WAR_lecture2goportlet_curStreamingServerIP {
+    width: 165px;
+}
+
+#_lgadmininstitutionmanagement_WAR_lecture2goportlet_ip {
+    width: 165px;
+}
+
+#_lgadmininstitutionmanagement_WAR_lecture2goportlet_curStreamingServerName {
+    width: 100px;
+}
+
+#_lgadmininstitutionmanagement_WAR_lecture2goportlet_serverroot {
+    width: 100px;
+}
+
+#_lgadmininstitutionmanagement_WAR_lecture2goportlet_fm .control-group {
+    float: left;
+    margin: 0 10px 10px;
+}
+
+.fieldset.add-streaming-server {
+    margin-top: 30px;
+}
+
+.fieldset.add-institution.add-streaming-server {
+    margin-top: 10px;
+}
+
+.aui .sub-inst.accordion-group .toggler-content-expanded {
+    border: 0px !important;
+}
+
+.aui .sub-inst.accordion-group .toggler-content-expanded {
+    border: 0 none !important;
+    margin-left: 117px;
+}
+
+.sub-inst {
+    font-size: 12px;
+    margin-left: 111px;
+    margin-top: -22px;
+}
+
+.sub-inst .title-text {
+    margin-top: -1px;
+}
+
+.sub-inst .taglib-page-iterator {
+    margin-left: 10px;
+}
+
+#streamingServerSettings {
+    margin-left: 112px;
+    margin-top: -43px;
+}
+
+#streamingServerSettings .accordion-heading.toggler-header.toggler-header-expanded {
+    margin-left: -6px;
+    margin-top: 3px;
+}
+
+div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-collapsed {
+    margin-left: -6px;
+    margin-top: 3px;
+}
+
+.sub-inst .title-text {
+    color: #444 !important;
+    float: left;
+    font-size: 14px;
+    padding: 0 8px 4px;
+    text-shadow: 0 0 0 #777777 !important;
+}
+
+fieldset.fieldset.add-streaming-server div.layout {
+    margin-top: -22px;
+}
+
+.sub-inst .alert.alert-info {
+    margin-left: 10px !important;
+}
