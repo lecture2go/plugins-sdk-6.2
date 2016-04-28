@@ -48,6 +48,10 @@ public class ResourcesImporterHotDeployMessageListener
 
 		ServletContext servletContext = ServletContextPool.get(
 			servletContextName);
+		
+		if (servletContext == null) {
+						return;
+		}
 
 		PluginPackageProperties pluginPackageProperties =
 			new PluginPackageProperties(servletContext);

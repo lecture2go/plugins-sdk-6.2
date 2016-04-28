@@ -25,6 +25,12 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceConstants;
@@ -33,6 +39,8 @@ import com.liferay.portal.service.ServiceContext;
 
 import de.uhh.l2g.plugins.HostNameException;
 import de.uhh.l2g.plugins.HostStreamerException;
+import de.uhh.l2g.plugins.NoPropertyException;
+import de.uhh.l2g.plugins.admin.AdminInstitutionManagement;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.service.ClpSerializer;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
@@ -61,6 +69,11 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.HostLocalServiceUtil} to access the host local service.
 	 */
 
+    protected static Log LOG = LogFactoryUtil.getLog(Host.class.getName());	
+    protected static final String SYS_ROOT = "vh_0000";
+    protected static final String SYS_SERVER = "localhost";
+    protected static final String SYS_PROTOCOL = "http";
+    protected static final int SYS_PORT = 80;
 
 	public Host getByInstitution(long institutionId) throws SystemException{
 		Host h = null;
@@ -153,28 +166,53 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 		
 		Host defaultHost = hostPersistence.create(hostId);
 
-		//Empty name marks default
-		defaultHost.setName("");
+		LOG.debug("Writing Host");
+		defaultHost.setName(AdminInstitutionManagement.DEFAULT_STREAMER);
 		defaultHost.setGroupId(groupId);
 		defaultHost.setCompanyId(companyId);
+		
 		//Load from Portal Properties
-		defaultHost.setStreamer(PropsUtil.get("lecture2go.default.streamingHost"));
-		defaultHost.setProtocol(PropsUtil.get("lecture2go.default.streamingProtocol"));
-		defaultHost.setServerRoot(PropsUtil.get("lecture2go.default.serverRoot"));
-		defaultHost.setPort(Integer.valueOf(PropsUtil.get("lecture2go.default.streamingPort")));
+		String streamer = GetterUtil.getString(PropsUtil.get("lecture2go.default.streamingHost"));
+		String protocol =GetterUtil.getString(PropsUtil.get("lecture2go.default.streamingProtocol"));
+		String serverRoot = GetterUtil.getString(PropsUtil.get("lecture2go.default.serverRoot"));
+		int port = Integer.valueOf(GetterUtil.getInteger(PropsUtil.get("lecture2go.default.streamingPort")));
+        
+		if (streamer.isEmpty()) {
+        	streamer = RepositoryManager.SYS_SERVER;
+        	LOG.error("Portal property lecture2go.default.streamingHost not set. Using default!");
+        }
+        if (protocol.isEmpty()) {
+        	protocol = RepositoryManager.SYS_PROTOCOL;
+        	LOG.error("Portal property lecture2go.default.streamingProtocol not set. Using default!");
+        }
+        if (serverRoot.isEmpty()){
+        	serverRoot = RepositoryManager.SYS_ROOT;
+        	LOG.error("Portal property lecture2go.default.serverRoot not set. Using default!");
+        }
+        if (port == 0){
+        	port = RepositoryManager.SYS_PORT;
+        	LOG.error("Portal property lecture2go.default.streamingPort not set. Using default!");
+        }
+		defaultHost.setStreamer(streamer);
+		defaultHost.setProtocol(protocol);
+		defaultHost.setServerRoot(serverRoot);
+		defaultHost.setPort(port);
 		defaultHost.setDefaultHost(1);
 		
 		defaultHost.setExpandoBridgeAttributes(serviceContext);
 
 		hostPersistence.update(defaultHost);
 		
-		//Create Directory
-		try {
-			
+		String repository = GetterUtil.getString(PropsUtil.get("lecture2go.media.repository"));
+		if (repository.isEmpty()) {
+			LOG.error("Portal property lecture2go.media.repository not set. This path must be specified set before installation!");
+			throw new NoPropertyException();
+		}
+		try {	
 			RepositoryManager.createFolder(PropsUtil.get("lecture2go.media.repository")+"/"+ defaultHost.getServerRoot());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} 
+		catch (IOException e) {
+			LOG.error("Folder creation failed!", e);
 		}
 
 		resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
@@ -184,7 +222,7 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 	}
 
 	public Host addHost(String name, String streamLocation, 
-			String protocol, String serverRoot, int port,
+			String protocol, int port,
 			ServiceContext serviceContext) throws SystemException, PortalException {
 
 		long groupId = serviceContext.getScopeGroupId();
@@ -282,32 +320,50 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 			        host = deleteHost(hostId);
 		        }
 		        else{
+		        	String message = LanguageUtil.format(serviceContext.getLocale(), "There are {0} objects still refering to this institution", l);
+		        	SessionMessages.add(serviceContext.getRequest(),"deletion-locked", message);
 		        	System.out.println("Could not delete Host because it is still used by "+ l +" Institutions");
 		        }
 		        return host;
 
 		    }
 	   
-	   public Host updateCounter() throws SystemException, PortalException {
-		   Counter counter;
-	   			// Initialize counter with a default value liferay suggests
-				CounterLocalServiceUtil.increment(Host.class.getName());
-				counter = CounterLocalServiceUtil.getCounter(Host.class.getName());
-	   
-				//Retrieve actual table data
-				ClassLoader classLoader = (ClassLoader)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),"portletClassLoader");    		
-				DynamicQuery query = DynamicQueryFactoryUtil.forClass(Host.class,classLoader).addOrder(OrderFactoryUtil.desc("hostId"));
-				query.setLimit(0,1);
-				List<Host> hosts = HostLocalServiceUtil.dynamicQuery(query);
-				Host host = hosts.get(0);
+	   /** 
+	    * 
+	    */
+	   public long updateCounter() throws SystemException, PortalException {
+		        //current counter
+		        Counter counter = CounterLocalServiceUtil.getCounter(Host.class.getName());
+		        LOG.debug(counter.getCurrentId());
+	   			//check Host Count (if 1 it is supposed to be default host)
+		        if (GetterUtil.getString(PropsUtil.get("counter.increment")).isEmpty()); {
+		        	LOG.info("It's strongly suggested to set portal property: counter.increment."+Host.class.getName()+"=1");
+		        }
+		        int count = HostLocalServiceUtil.getHostsCount();
+		        LOG.debug(count); 
+		        long newHostId = 0; //Reset if table is empty
+		        long hostId = 0;   //the actual Id value
+		        
+		        if (count > 0){ //our db is filled... with something at least
+		        	
+					//Retrieve actual table data
+					ClassLoader classLoader = (ClassLoader)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),"portletClassLoader");    		
+					DynamicQuery query = DynamicQueryFactoryUtil.forClass(Host.class,classLoader).addOrder(OrderFactoryUtil.desc("hostId"));
+					query.setLimit(0,1);
+					List<Host> hosts = HostLocalServiceUtil.dynamicQuery(query);
+					if (hosts.size() > 0) hostId = hosts.get(0).getHostId(); //current maximum Id
 				
-				//Check back with real directory
-				long newHostId = java.lang.Math.max(RepositoryManager.getMaximumRealServerRootId(),host.getHostId());
-				//write Counter
-				if (host != null) counter.setCurrentId(newHostId);
-				CounterLocalServiceUtil.updateCounter(counter);
+		        }
+				//Check back with real directory (there might be old directories, our DB does not know or remember)
+				newHostId = java.lang.Math.max(RepositoryManager.getMaximumRealServerRootId(),hostId);
+		        LOG.debug(newHostId);
+				//Increment Counter if assynchrone with estimated value or data reseted
+				if (counter.getCurrentId() <  newHostId || newHostId == 0){
+					counter.setCurrentId(newHostId);
+					CounterLocalServiceUtil.updateCounter(counter);
+				}
 				
-				return host;
+				return counter.getCurrentId();
 					
 		   
 	   }

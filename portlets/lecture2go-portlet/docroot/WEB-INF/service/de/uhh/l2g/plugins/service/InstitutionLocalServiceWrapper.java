@@ -457,7 +457,7 @@ public class InstitutionLocalServiceWrapper implements InstitutionLocalService,
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Institution updateCounter()
+	public long updateCounter()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _institutionLocalService.updateCounter();

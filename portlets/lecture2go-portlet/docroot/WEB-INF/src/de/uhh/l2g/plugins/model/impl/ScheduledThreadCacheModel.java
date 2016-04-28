@@ -38,7 +38,7 @@ public class ScheduledThreadCacheModel implements CacheModel<ScheduledThread>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{scheduledThreadId=");
 		sb.append(scheduledThreadId);
@@ -54,6 +54,10 @@ public class ScheduledThreadCacheModel implements CacheModel<ScheduledThread>,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", schedulerClassName=");
+		sb.append(schedulerClassName);
+		sb.append(", cronText=");
+		sb.append(cronText);
 		sb.append("}");
 
 		return sb.toString();
@@ -89,6 +93,20 @@ public class ScheduledThreadCacheModel implements CacheModel<ScheduledThread>,
 			scheduledThreadImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (schedulerClassName == null) {
+			scheduledThreadImpl.setSchedulerClassName(StringPool.BLANK);
+		}
+		else {
+			scheduledThreadImpl.setSchedulerClassName(schedulerClassName);
+		}
+
+		if (cronText == null) {
+			scheduledThreadImpl.setCronText(StringPool.BLANK);
+		}
+		else {
+			scheduledThreadImpl.setCronText(cronText);
+		}
+
 		scheduledThreadImpl.resetOriginalValues();
 
 		return scheduledThreadImpl;
@@ -103,6 +121,8 @@ public class ScheduledThreadCacheModel implements CacheModel<ScheduledThread>,
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		schedulerClassName = objectInput.readUTF();
+		cronText = objectInput.readUTF();
 	}
 
 	@Override
@@ -122,6 +142,20 @@ public class ScheduledThreadCacheModel implements CacheModel<ScheduledThread>,
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		if (schedulerClassName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(schedulerClassName);
+		}
+
+		if (cronText == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(cronText);
+		}
 	}
 
 	public long scheduledThreadId;
@@ -131,4 +165,6 @@ public class ScheduledThreadCacheModel implements CacheModel<ScheduledThread>,
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public String schedulerClassName;
+	public String cronText;
 }

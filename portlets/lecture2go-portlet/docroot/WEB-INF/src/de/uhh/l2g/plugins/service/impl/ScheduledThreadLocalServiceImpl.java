@@ -14,6 +14,18 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import java.util.Date;
+
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalServiceUtil;
+
+import de.uhh.l2g.plugins.NoSuchScheduledThreadException;
+import de.uhh.l2g.plugins.model.ScheduledThread;
+import de.uhh.l2g.plugins.model.Statistic;
 import de.uhh.l2g.plugins.service.base.ScheduledThreadLocalServiceBaseImpl;
 
 /**
@@ -39,4 +51,93 @@ public class ScheduledThreadLocalServiceImpl
 	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.ScheduledThreadLocalServiceUtil} to access the scheduled thread local service.
 	 */
+
+	private ScheduledThread getBySchedulerName(String schedulerClassName) throws SystemException {
+		
+		return scheduledThreadPersistence.fetchBySchedulerClassName(schedulerClassName);
+	}
+
+	public String getCronBySchedulerName(String schedulerClassName) throws SystemException {
+	
+			try {
+				return GetterUtil.getString(scheduledThreadPersistence.findBySchedulerClassName(schedulerClassName).getCronText());
+			} catch (NoSuchScheduledThreadException e) {
+				return "";
+			}
+		
+	}
+	
+	public ScheduledThread addScheduledThread(String schedulerClassName, String cronText, ServiceContext serviceContext) throws SystemException, PortalException {
+
+		long groupId = serviceContext.getScopeGroupId();
+		long userId = serviceContext.getUserId();
+		long companyId = serviceContext.getCompanyId();
+		
+		User user = userPersistence.findByPrimaryKey(userId);
+		
+		Date now = new Date();
+
+
+		long scheduleId = counterLocalService.increment(ScheduledThread.class.getName());
+
+		ScheduledThread schedule = scheduledThreadPersistence.create(scheduleId);
+
+		//Generate Anonymous values for debug/consistency check: should be added by System only
+		//schedule.setUserId(userId);
+		//schedule.setUserName(UserLocalServiceUtil.getUser(userId).getLogin());
+		//schedule.setCreateDate(serviceContext.getCreateDate(now));
+		//schedule.setModifiedDate(serviceContext.getModifiedDate(now));
+		
+		
+		//schedule.setGroupId(groupId);
+		//schedule.setCompanyId(companyId);
+		
+		schedule.setSchedulerClassName(schedulerClassName);
+		schedule.setCronText(cronText);
+
+		schedule.setExpandoBridgeAttributes(serviceContext);
+		
+		scheduledThreadPersistence.update(schedule);
+
+		//resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
+		//ScheduledThread.class.getName(), scheduleId, false, true, true);
+
+
+		return schedule;
+
+	}
+	
+	public ScheduledThread updateScheduledThread(String schedulerClassName, String cronText, ServiceContext serviceContext) throws SystemException, PortalException {
+
+		long companyId = serviceContext.getCompanyId();
+		long groupId = serviceContext.getScopeGroupId();
+		long userId = serviceContext.getUserId();
+
+		User user = userPersistence.findByPrimaryKey(userId);
+		//LOG.info("Update: " +schedulerClassName +" "+cronText);
+		//Date now = new Date();
+
+		//Both Must be filled
+		//validate(schedulerClassName,cronText);
+
+
+		ScheduledThread schedule = getBySchedulerName(schedulerClassName);
+		//System.out.println ("Link Contents: "+ statistic.toString());
+
+		
+		schedule.setCronText(cronText);
+	
+		//schedule.setModifiedDate(serviceContext.getModifiedDate(now));
+
+		schedule.setExpandoBridgeAttributes(serviceContext);
+
+		scheduledThreadPersistence.update(schedule);
+
+	//	resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
+	//		       Statistic.class.getName(), statisticId, false, true, true);
+
+
+		return schedule;
+
+	}
 }

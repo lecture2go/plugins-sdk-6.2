@@ -121,14 +121,14 @@
 	   	 	    <scheduler-description>This scheduler is used to collect Statistical Data from Database</scheduler-description> 
   				<scheduler-event-listener-class>de.uhh.l2g.plugins.util.StatisticsScheduler</scheduler-event-listener-class>  
          		<trigger>  
-         			<cron><cron-trigger-value>0 */1 * * * ?</cron-trigger-value></cron>  
+         			<cron><cron-trigger-value>0 */5 * * * ?</cron-trigger-value></cron>  
  				</trigger>   
    			</scheduler-entry> 
     	 	<scheduler-entry> 
 	   	 	    <scheduler-description>This scheduler is used to update the popular video list in database</scheduler-description> 
   				<scheduler-event-listener-class>de.uhh.l2g.plugins.util.VideohitlistScheduler</scheduler-event-listener-class>  
          		<trigger>  
-         			<cron><cron-trigger-value>0 */1 * * * ?</cron-trigger-value></cron>  
+         			<cron><cron-trigger-value>0 */15 * * * ?</cron-trigger-value></cron>  
  				</trigger>   
    			</scheduler-entry> 
    	   	<instanceable>false</instanceable>
