@@ -184,7 +184,8 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 			    			this.triggerState = SchedulerEngineHelperUtil.getJobState(job.getEventListenerClass(), job.getEventListenerClass(), this.getStorageType());
 			    		    String persistCron = ScheduledThreadLocalServiceUtil.getCronBySchedulerName(job.getEventListenerClass());
 							if (persistCron == null || persistCron.isEmpty()) ScheduledThreadLocalServiceUtil.addScheduledThread(schedulerClassName, currentCron, serviceContext);
-							//TODO: make Trigger dynamic
+							//Overwrite if we encounter new value (assume PortletScheduler Names are unique)
+							if (!persistCron.equals(currentCron) && ! currentCron.isEmpty()) ScheduledThreadLocalServiceUtil.updateScheduledThread(schedulerClassName, currentCron, serviceContext);
 			    		}
 					} catch (SchedulerException t) {
 						LOG.warn(t);

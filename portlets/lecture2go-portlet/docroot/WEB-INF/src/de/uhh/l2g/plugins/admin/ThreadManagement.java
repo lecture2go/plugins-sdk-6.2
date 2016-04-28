@@ -142,6 +142,7 @@ public class ThreadManagement extends MVCPortlet {
 			  ClassLoader classLoader = PortletClassLoaderUtil.getClassLoader(serviceContext.getPortletId()); //Where portletID is not null
 			  PortletScheduler scheduler = (PortletScheduler) classLoader.loadClass(schedulerClassName).newInstance();
 			  scheduler.initScheduler(schedulerClassName, serviceContext);
+			  
 			  //System.out.println(scheduler.getPortletId());
 			  scheduler.resume();
 
@@ -224,7 +225,7 @@ public class ThreadManagement extends MVCPortlet {
 		}
 	}
 	
-	/**Unchedules a Job from memory (keeps SchedulerEntry record)
+	/**Unchedules a Job from memory (deletes SchedulerEntry record)
 	 * 
 	 * WARN: currently causes Liferay to duplicate Job on redeploy, if unschedule fails on unregister
 	 * @param request
@@ -257,7 +258,7 @@ public class ThreadManagement extends MVCPortlet {
 		}
 	}
 	
-	/**Unchedules and removes a Job from memory (can only be (re)scheduled with readable config)
+	/**Unchedules and removes a Job from memory (Trigger remains in DB)
 	 * 
 	 * @param request
 	 * @param response
