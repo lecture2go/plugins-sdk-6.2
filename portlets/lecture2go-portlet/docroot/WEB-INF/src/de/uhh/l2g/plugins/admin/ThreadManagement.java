@@ -23,6 +23,11 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.model.ResourcePermission;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.util.PortalUtil;
@@ -51,7 +56,11 @@ public class ThreadManagement extends MVCPortlet {
 	 */
 	private void setDefaultPermissions(PermissionManager pm) throws SystemException, PortalException{
 		
-
+		//Remove view permission for Guest and edit for ordinary Site Members
+		pm.removeL2GLayoutViewPermission(RoleConstants.GUEST);
+		pm.removeL2GLayoutPermissions(RoleConstants.SITE_MEMBER, new String[] { ActionKeys.VIEW, ActionKeys.ADD_DISCUSSION, ActionKeys.CUSTOMIZE });
+		
+		pm.setL2GLayoutViewPermission(AdminUserManagement.L2G_ADMIN);
 	}
 	
 	@Override
@@ -60,6 +69,22 @@ public class ThreadManagement extends MVCPortlet {
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			         ScheduledThread.class.getName(), renderRequest);
+			
+			//Check if default Permissions are Set for this Context (requires L2G Roles)
+			//Delete Permissions for admin from DB to reset
+			//LOG.debug("Initialize Permissions");
+			Role admin = RoleLocalServiceUtil.fetchRole(serviceContext.getCompanyId(), AdminUserManagement.L2G_ADMIN);
+			if (admin != null){
+				//Check if Permission is set for L2go Admin Role and Context
+				PermissionManager pm = new PermissionManager(serviceContext);
+				ResourcePermission rp = pm.getPermissionforRole(AdminUserManagement.L2G_ADMIN);
+				if (rp == null) {
+					setDefaultPermissions(pm);
+				}
+			}else {
+				//This means User Portlet has not been initialized yet (we can't generate default permissions yet)
+				SessionErrors.add(renderRequest,"no-roles-error");
+			}
         
 	
 	    } catch (Exception e) {
@@ -70,7 +95,7 @@ public class ThreadManagement extends MVCPortlet {
 	 
 	}
 	
-	/**Schedule an unscheuled Job (requires readable config)
+	/**Schedule an unscheduled Job (requires readable config)
 	 * 
 	 * @param request
 	 * @param response
@@ -85,8 +110,8 @@ public class ThreadManagement extends MVCPortlet {
 			  //Make sure to use the appropriate Message Consumer 
 			  ClassLoader classLoader = PortletClassLoaderUtil.getClassLoader(serviceContext.getPortletId()); //Where portletID is not null
 			  PortletScheduler scheduler = (PortletScheduler) classLoader.loadClass(schedulerClassName).newInstance();
-			  scheduler.initScheduler(schedulerClassName, serviceContext.getPortletId());
-			  //System.out.println(scheduler.getPortletId());
+			  scheduler.initScheduler(schedulerClassName, serviceContext);
+			 
 			  scheduler.start();
 
 		 } catch (Exception e) {
@@ -116,7 +141,7 @@ public class ThreadManagement extends MVCPortlet {
 			  //Make sure to use the appropriate Message Consumer 
 			  ClassLoader classLoader = PortletClassLoaderUtil.getClassLoader(serviceContext.getPortletId()); //Where portletID is not null
 			  PortletScheduler scheduler = (PortletScheduler) classLoader.loadClass(schedulerClassName).newInstance();
-			  scheduler.initScheduler(schedulerClassName, serviceContext.getPortletId());
+			  scheduler.initScheduler(schedulerClassName, serviceContext);
 			  //System.out.println(scheduler.getPortletId());
 			  scheduler.resume();
 
@@ -147,7 +172,7 @@ public class ThreadManagement extends MVCPortlet {
 			  ClassLoader classLoader = PortletClassLoaderUtil.getClassLoader(serviceContext.getPortletId()); //Where portletID is not null
 			  PortletScheduler scheduler = (PortletScheduler) classLoader.loadClass(schedulerClassName).newInstance();
 			  
-			  scheduler.initScheduler(schedulerClassName, serviceContext.getPortletId());
+			  scheduler.initScheduler(schedulerClassName, serviceContext);
 			  //System.out.println(scheduler.getPortletId());
 			  
 			  scheduler.pause();
@@ -182,7 +207,7 @@ public class ThreadManagement extends MVCPortlet {
 			  ClassLoader classLoader = PortletClassLoaderUtil.getClassLoader(serviceContext.getPortletId()); //Where portletID is not null
 			  PortletScheduler scheduler = (PortletScheduler) classLoader.loadClass(schedulerClassName).newInstance();
 			  
-			  scheduler.initScheduler(schedulerClassName, serviceContext.getPortletId());
+			  scheduler.initScheduler(schedulerClassName, serviceContext);
 			  //System.out.println(scheduler.getPortletId());
 			  
 			  scheduler.update();
@@ -215,7 +240,7 @@ public class ThreadManagement extends MVCPortlet {
 			  ClassLoader classLoader = PortletClassLoaderUtil.getClassLoader(serviceContext.getPortletId()); //Where portletID is not null
 			  PortletScheduler scheduler = (PortletScheduler) classLoader.loadClass(schedulerClassName).newInstance();
 			  
-			  scheduler.initScheduler(schedulerClassName, serviceContext.getPortletId());
+			  scheduler.initScheduler(schedulerClassName, serviceContext);
 			  System.out.println(scheduler.getPortletId());
 			  
 			  scheduler.unschedule();
@@ -247,7 +272,7 @@ public class ThreadManagement extends MVCPortlet {
 			  ClassLoader classLoader = PortletClassLoaderUtil.getClassLoader(serviceContext.getPortletId()); //Where portletID is not null
 			  PortletScheduler scheduler = (PortletScheduler) classLoader.loadClass(schedulerClassName).newInstance();
 			  
-			  scheduler.initScheduler(schedulerClassName, serviceContext.getPortletId());
+			  scheduler.initScheduler(schedulerClassName, serviceContext);
 			  System.out.println(scheduler.getPortletId());
 			  
 			  scheduler.stop();

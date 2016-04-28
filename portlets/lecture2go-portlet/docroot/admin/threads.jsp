@@ -59,7 +59,7 @@
         
  
  
- <% 	if (state.equals(TriggerState.UNSCHEDULED) && schedulerEntries.isEmpty()) {	%>
+ <% 	if (state.equals(TriggerState.UNSCHEDULED)) {	%>
  			<aui:form action="<%= scheduleJobURL %>" name="<portlet:namespace />fm">         
 				<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= job.getJobName() %>'/>
 				<aui:button type="submit" value="Schedule" ></aui:button>

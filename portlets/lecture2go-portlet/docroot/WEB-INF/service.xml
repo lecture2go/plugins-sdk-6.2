@@ -667,9 +667,8 @@
     <entity name="ScheduledThread" local-service="true"
     	remote-service="false">
 
-    	<!-- PK fields -->
-
-    	<column name="scheduledThreadId" type="long" primary="true"></column>
+  		<!-- PK fields -->
+  		<column name="scheduledThreadId" type="long" primary="true"></column>
 
     	<!-- Group instance -->
 
@@ -682,6 +681,17 @@
     	<column name="userName" type="String"></column>
     	<column name="createDate" type="Date"></column>
     	<column name="modifiedDate" type="Date"></column>
+
+ 
+    	<column name="schedulerClassName" type="String"></column>
+    	<column name="cronText" type="String"></column>
+    	<finder name="SchedulerClassName"
+    		return-type="ScheduledThread">
+    		<finder-column name="schedulerClassName"></finder-column>
+    	</finder>
+
+
+    
     </entity>
     <exceptions>
         <exception>HostName</exception>
