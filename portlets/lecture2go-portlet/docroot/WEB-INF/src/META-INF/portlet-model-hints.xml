@@ -189,6 +189,8 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="schedulerClassName" type="String" />
+		<field name="cronText" type="String" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Segment">
 		<field name="segmentId" type="long" />

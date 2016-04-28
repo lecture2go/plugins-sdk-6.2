@@ -1461,7 +1461,7 @@ public class InstitutionLocalServiceClp implements InstitutionLocalService {
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Institution updateCounter()
+	public long updateCounter()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -1490,7 +1490,7 @@ public class InstitutionLocalServiceClp implements InstitutionLocalService {
 			}
 		}
 
-		return (de.uhh.l2g.plugins.model.Institution)ClpSerializer.translateOutput(returnObj);
+		return ((Long)returnObj).longValue();
 	}
 
 	private InvokableLocalService _invokableLocalService;

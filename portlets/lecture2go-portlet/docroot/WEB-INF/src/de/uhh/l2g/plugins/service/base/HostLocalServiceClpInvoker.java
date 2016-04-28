@@ -158,8 +158,7 @@ public class HostLocalServiceClpInvoker {
 
 		_methodParameterTypes178 = new String[] {
 				"java.lang.String", "java.lang.String", "java.lang.String",
-				"java.lang.String", "int",
-				"com.liferay.portal.service.ServiceContext"
+				"int", "com.liferay.portal.service.ServiceContext"
 			};
 
 		_methodName179 = "updateHost";
@@ -348,9 +347,8 @@ public class HostLocalServiceClpInvoker {
 				Arrays.deepEquals(_methodParameterTypes178, parameterTypes)) {
 			return HostLocalServiceUtil.addHost((java.lang.String)arguments[0],
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
-				(java.lang.String)arguments[3],
-				((Integer)arguments[4]).intValue(),
-				(com.liferay.portal.service.ServiceContext)arguments[5]);
+				((Integer)arguments[3]).intValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[4]);
 		}
 
 		if (_methodName179.equals(name) &&
