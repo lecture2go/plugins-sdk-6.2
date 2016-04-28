@@ -88,10 +88,10 @@
 	
 						<%
 							if(count1>0){
-								%><b><%=count1%></b> <liferay-ui:message key="video-s"/> <br/><%
+								%><p><b><%=count1%></b> <liferay-ui:message key="video-s"/></p><%
 							}
 							if(count2>0){
-								%><b><%=count2%></b> <liferay-ui:message key="lecture-series-s"/> <%
+								%><p><b><%=count2%></b> <liferay-ui:message key="lecture-series-s"/></p><%
 							}
 						%>
 						</div>					

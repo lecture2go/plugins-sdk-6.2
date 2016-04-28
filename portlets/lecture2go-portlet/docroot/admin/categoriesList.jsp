@@ -83,7 +83,7 @@
 						<div class="undertile wide">
 						<%
 							if(count>0){
-								%><b><%=count%></b> <liferay-ui:message key="video-s"/><br/><%
+								%><p><b><%=count%></b> <liferay-ui:message key="video-s"/></p><%
 							}
 						%>
 						</div>					

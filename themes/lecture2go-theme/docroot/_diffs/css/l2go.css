@@ -945,14 +945,6 @@ thead, th {
     width: 85%;
 }
 
-.admintile.wide.icons.creators > button {
-    font-size: 12px;
-    height: 26px;
-    margin-left: -3px;
-    margin-top: -16px;
-    padding: 0 7px;
-}
-
 .admintile {
     border-top: 0px solid #EAEAEA;
     float: left;
@@ -967,12 +959,19 @@ thead, th {
 
 .admintile.wide.icons > a {
     float: right;
-    margin-top: -5px;
+    padding: 3px;
 }
 
 .admintile.wide em {
     font-size: 11px;
     font-style: normal;
+}
+
+.admintile.wide.icons.creators > button {
+    font-size: 12px;
+    height: 26px;
+    margin-left: -3px;
+    padding: 0 7px;
 }
 
 .adminrow.wide:hover {
@@ -1403,7 +1402,6 @@ div.filter-menu-link span.icon-large.icon-remove {
     font-size: 10px;
     line-height: 13px;
     margin-left: 4px;
-    margin-top: -10px;
     width: 100%;
 }
 
