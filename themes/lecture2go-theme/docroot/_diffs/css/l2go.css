@@ -606,17 +606,23 @@ thead, th {
     border-left: 0px solid #FFF;
 }
 
-.aui .table th, .aui .table td {
-    margin: 0px;
-    border-bottom: 0px solid #FFF;
-    border-top: 0px none;
-    padding: 0px 0px 7px 0px;
-}
-
 .aui .table {
     border-radius: 0px;
     border: 0px;
     margin-bottom: 0px;
+}
+
+.admintile.wide.icons.creators > button {
+    font-size: 12px;
+    height: 26px;
+    padding: 0 7px;
+    float: right;
+}
+
+#c2g input {
+    margin-left: 135px;
+    margin-top: 17px;
+    position: absolute;
 }
 
 .aui #tabs {
@@ -967,13 +973,6 @@ thead, th {
     font-style: normal;
 }
 
-.admintile.wide.icons.creators > button {
-    font-size: 12px;
-    height: 26px;
-    margin-left: -3px;
-    padding: 0 7px;
-}
-
 .adminrow.wide:hover {
     background-color: #eaeaea;
     height: 100%;
@@ -1019,6 +1018,13 @@ thead, th {
 #heading {
    	margin-top: -30px;
    	padding-bottom: 7px;
+}
+
+.aui .table th, .aui .table td {
+    border-bottom: 0 solid #fff;
+    border-top: 0 none;
+    margin: 0;
+    padding: 0 0 3px;
 }
 	
 .aui #my-tab-content {
@@ -1129,12 +1135,6 @@ thead, th {
     float: left;
     line-height: 47px;
     margin-right: 14px;
-}
-
-#c2g input {
-    margin-left: 120px;
-    margin-top: 18px;
-    position: absolute;
 }
 
 #c2g-generate input {
