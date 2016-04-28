@@ -67,9 +67,11 @@ public class ScheduledThreadModelImpl extends BaseModelImpl<ScheduledThread>
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP }
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "schedulerClassName", Types.VARCHAR },
+			{ "cronText", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_ScheduledThread (scheduledThreadId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table LG_ScheduledThread (scheduledThreadId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,schedulerClassName VARCHAR(75) null,cronText VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table LG_ScheduledThread";
 	public static final String ORDER_BY_JPQL = " ORDER BY scheduledThread.scheduledThreadId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_ScheduledThread.scheduledThreadId ASC";
@@ -82,7 +84,11 @@ public class ScheduledThreadModelImpl extends BaseModelImpl<ScheduledThread>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.finder.cache.enabled.de.uhh.l2g.plugins.model.ScheduledThread"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.ScheduledThread"),
+			true);
+	public static long SCHEDULERCLASSNAME_COLUMN_BITMASK = 1L;
+	public static long SCHEDULEDTHREADID_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.ScheduledThread"));
 
@@ -130,6 +136,8 @@ public class ScheduledThreadModelImpl extends BaseModelImpl<ScheduledThread>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("schedulerClassName", getSchedulerClassName());
+		attributes.put("cronText", getCronText());
 
 		return attributes;
 	}
@@ -176,6 +184,18 @@ public class ScheduledThreadModelImpl extends BaseModelImpl<ScheduledThread>
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String schedulerClassName = (String)attributes.get("schedulerClassName");
+
+		if (schedulerClassName != null) {
+			setSchedulerClassName(schedulerClassName);
+		}
+
+		String cronText = (String)attributes.get("cronText");
+
+		if (cronText != null) {
+			setCronText(cronText);
 		}
 	}
 
@@ -265,6 +285,50 @@ public class ScheduledThreadModelImpl extends BaseModelImpl<ScheduledThread>
 	}
 
 	@Override
+	public String getSchedulerClassName() {
+		if (_schedulerClassName == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _schedulerClassName;
+		}
+	}
+
+	@Override
+	public void setSchedulerClassName(String schedulerClassName) {
+		_columnBitmask |= SCHEDULERCLASSNAME_COLUMN_BITMASK;
+
+		if (_originalSchedulerClassName == null) {
+			_originalSchedulerClassName = _schedulerClassName;
+		}
+
+		_schedulerClassName = schedulerClassName;
+	}
+
+	public String getOriginalSchedulerClassName() {
+		return GetterUtil.getString(_originalSchedulerClassName);
+	}
+
+	@Override
+	public String getCronText() {
+		if (_cronText == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _cronText;
+		}
+	}
+
+	@Override
+	public void setCronText(String cronText) {
+		_cronText = cronText;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
+	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			ScheduledThread.class.getName(), getPrimaryKey());
@@ -298,6 +362,8 @@ public class ScheduledThreadModelImpl extends BaseModelImpl<ScheduledThread>
 		scheduledThreadImpl.setUserName(getUserName());
 		scheduledThreadImpl.setCreateDate(getCreateDate());
 		scheduledThreadImpl.setModifiedDate(getModifiedDate());
+		scheduledThreadImpl.setSchedulerClassName(getSchedulerClassName());
+		scheduledThreadImpl.setCronText(getCronText());
 
 		scheduledThreadImpl.resetOriginalValues();
 
@@ -348,6 +414,11 @@ public class ScheduledThreadModelImpl extends BaseModelImpl<ScheduledThread>
 
 	@Override
 	public void resetOriginalValues() {
+		ScheduledThreadModelImpl scheduledThreadModelImpl = this;
+
+		scheduledThreadModelImpl._originalSchedulerClassName = scheduledThreadModelImpl._schedulerClassName;
+
+		scheduledThreadModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -388,12 +459,28 @@ public class ScheduledThreadModelImpl extends BaseModelImpl<ScheduledThread>
 			scheduledThreadCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		scheduledThreadCacheModel.schedulerClassName = getSchedulerClassName();
+
+		String schedulerClassName = scheduledThreadCacheModel.schedulerClassName;
+
+		if ((schedulerClassName != null) && (schedulerClassName.length() == 0)) {
+			scheduledThreadCacheModel.schedulerClassName = null;
+		}
+
+		scheduledThreadCacheModel.cronText = getCronText();
+
+		String cronText = scheduledThreadCacheModel.cronText;
+
+		if ((cronText != null) && (cronText.length() == 0)) {
+			scheduledThreadCacheModel.cronText = null;
+		}
+
 		return scheduledThreadCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{scheduledThreadId=");
 		sb.append(getScheduledThreadId());
@@ -409,6 +496,10 @@ public class ScheduledThreadModelImpl extends BaseModelImpl<ScheduledThread>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", schedulerClassName=");
+		sb.append(getSchedulerClassName());
+		sb.append(", cronText=");
+		sb.append(getCronText());
 		sb.append("}");
 
 		return sb.toString();
@@ -416,7 +507,7 @@ public class ScheduledThreadModelImpl extends BaseModelImpl<ScheduledThread>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.ScheduledThread");
@@ -450,6 +541,14 @@ public class ScheduledThreadModelImpl extends BaseModelImpl<ScheduledThread>
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>schedulerClassName</column-name><column-value><![CDATA[");
+		sb.append(getSchedulerClassName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>cronText</column-name><column-value><![CDATA[");
+		sb.append(getCronText());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -468,5 +567,9 @@ public class ScheduledThreadModelImpl extends BaseModelImpl<ScheduledThread>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private String _schedulerClassName;
+	private String _originalSchedulerClassName;
+	private String _cronText;
+	private long _columnBitmask;
 	private ScheduledThread _escapedModel;
 }

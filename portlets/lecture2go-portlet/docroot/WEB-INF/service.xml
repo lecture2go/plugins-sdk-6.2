@@ -681,7 +681,6 @@
     	<column name="userName" type="String"></column>
     	<column name="createDate" type="Date"></column>
     	<column name="modifiedDate" type="Date"></column>
-
  
     	<column name="schedulerClassName" type="String"></column>
     	<column name="cronText" type="String"></column>
