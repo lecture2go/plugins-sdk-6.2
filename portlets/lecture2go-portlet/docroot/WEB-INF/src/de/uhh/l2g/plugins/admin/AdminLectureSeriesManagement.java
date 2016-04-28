@@ -109,11 +109,11 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		}	
 		
 		//generate new JSON date for auto complete functionality
-		try {
-			AutocompleteManager.generateAutocompleteResults();
-		} catch (SystemException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			AutocompleteManager.generateAutocompleteResults();
+//		} catch (SystemException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	public void editLectureseries(ActionRequest request, ActionResponse response) throws NumberFormatException, PortalException, SystemException, UnsupportedEncodingException{
@@ -293,11 +293,11 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		}	
 		
 		//generate new JSON date for auto complete functionality
-		try {
-			AutocompleteManager.generateAutocompleteResults();
-		} catch (SystemException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			AutocompleteManager.generateAutocompleteResults();
+//		} catch (SystemException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	public void addLectureseries(ActionRequest request, ActionResponse response) throws SystemException, PortalException, UnsupportedEncodingException {
@@ -466,11 +466,11 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		}	
 		
 		//generate new JSON date for auto complete functionality
-		try {
-			AutocompleteManager.generateAutocompleteResults();
-		} catch (SystemException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			AutocompleteManager.generateAutocompleteResults();
+//		} catch (SystemException e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws PortletException, IOException {

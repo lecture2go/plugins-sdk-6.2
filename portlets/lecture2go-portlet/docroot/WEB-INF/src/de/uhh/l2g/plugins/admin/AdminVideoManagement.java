@@ -270,11 +270,11 @@ public class AdminVideoManagement extends MVCPortlet {
 		//
 		String backURL = request.getParameter("backURL");
 		//generate new JSON date for auto complete functionality
-		try {
-			AutocompleteManager.generateAutocompleteResults();
-		} catch (SystemException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			AutocompleteManager.generateAutocompleteResults();
+//		} catch (SystemException e) {
+//			e.printStackTrace();
+//		}
 		request.setAttribute("backURL", backURL);
 		response.setRenderParameter("jspPage", "/admin/editVideo.jsp");
 	}
@@ -508,11 +508,11 @@ public class AdminVideoManagement extends MVCPortlet {
 			
 			JSONObject json = JSONFactoryUtil.createJSONObject();
 			//generate new JSON date for auto complete functionality
-			try {
-				AutocompleteManager.generateAutocompleteResults();
-			} catch (SystemException e) {
-				e.printStackTrace();
-			}
+//			try {
+//				AutocompleteManager.generateAutocompleteResults();
+//			} catch (SystemException e) {
+//				e.printStackTrace();
+//			}
 			writeJSON(resourceRequest, resourceResponse, json);
 		}
 
@@ -922,11 +922,11 @@ public class AdminVideoManagement extends MVCPortlet {
 			e.printStackTrace();
 		}
 		//generate new JSON date for auto complete functionality
-		try {
-			AutocompleteManager.generateAutocompleteResults();
-		} catch (SystemException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			AutocompleteManager.generateAutocompleteResults();
+//		} catch (SystemException e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	public void lockVideo(ActionRequest request, ActionResponse response){
@@ -949,11 +949,11 @@ public class AdminVideoManagement extends MVCPortlet {
 			e.printStackTrace();
 		}
 		//generate new JSON date for auto complete functionality
-		try {
-			AutocompleteManager.generateAutocompleteResults();
-		} catch (SystemException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			AutocompleteManager.generateAutocompleteResults();
+//		} catch (SystemException e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	public void unlockVideo(ActionRequest request, ActionResponse response){
@@ -976,11 +976,11 @@ public class AdminVideoManagement extends MVCPortlet {
 			e.printStackTrace();
 		}
 		//generate new JSON date for auto complete functionality
-		try {
-			AutocompleteManager.generateAutocompleteResults();
-		} catch (SystemException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			AutocompleteManager.generateAutocompleteResults();
+//		} catch (SystemException e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	public void activateDownload(ActionRequest request, ActionResponse response) throws SystemException, PortalException{

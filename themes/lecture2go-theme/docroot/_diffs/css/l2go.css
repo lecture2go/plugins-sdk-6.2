@@ -11,6 +11,14 @@
     font-style: normal !important;
 }
 
+.admintile.wide.icons.creators > button {
+    float: right;
+    font-size: 12px;
+    height: 26px;
+    margin-left: -3px;
+    padding: 0 7px;
+}
+
 .span3 .accordion-inner li {
     background-color: #f3f3f3 !important;
     border-color: #fff #f3f3f3 #d4d4d4 !important;
@@ -610,13 +618,6 @@ thead, th {
     border-radius: 0px;
     border: 0px;
     margin-bottom: 0px;
-}
-
-.admintile.wide.icons.creators > button {
-    font-size: 12px;
-    height: 26px;
-    padding: 0 7px;
-    float: right;
 }
 
 #c2g input {

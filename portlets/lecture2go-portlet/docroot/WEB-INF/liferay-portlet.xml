@@ -131,6 +131,13 @@
          			<cron><cron-trigger-value>0 */1 * * * ?</cron-trigger-value></cron>  
  				</trigger>   
    			</scheduler-entry> 
+   	 		<scheduler-entry> 
+	   	 	    <scheduler-description>This scheduler is used to update the popular video list in database</scheduler-description> 
+  				<scheduler-event-listener-class>de.uhh.l2g.plugins.util.AutocompleteScheduler</scheduler-event-listener-class>  
+         		<trigger>  
+         			<cron><cron-trigger-value>0 */7 * * * ?</cron-trigger-value></cron>  
+ 				</trigger>   
+   			</scheduler-entry> 
    	   	<instanceable>false</instanceable>
 		<private-request-attributes>false</private-request-attributes>
 

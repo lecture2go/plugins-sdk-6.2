@@ -21,7 +21,7 @@ public class AutocompleteManager {
 	public void setDaoBeanFactory(XmlBeanFactory daoBeanFactory) {
 		this.daoBeanFactory = daoBeanFactory;
 	}
-
+	
 	public XmlBeanFactory getDaoBeanFactory() {
 		return daoBeanFactory;
 	}
@@ -69,23 +69,18 @@ public class AutocompleteManager {
 		return resultList;
 	}
 	
-	public static synchronized boolean generateAutocompleteResults() throws SystemException {
+	public static synchronized boolean generateAutocompleteResults() throws SystemException  {
 		OpenAccessVideos.wordsJSONArray = JSONFactoryUtil.createJSONArray();
-		boolean retu = false;
 		List<String> arrStr = new ArrayList<String>();
-			JSONObject strJSON = null;
-			try {
-				arrStr = getAutocompleteResults();
-				for (String str : arrStr) {
-					strJSON = JSONFactoryUtil.createJSONObject();
-					strJSON.put("word", str);
-					OpenAccessVideos.wordsJSONArray.put(strJSON);
-				}
-				retu = true;
-			} catch (SystemException e) {
-				e.printStackTrace();
-			}
-		return retu;
+		JSONObject strJSON = null;
+		arrStr = getAutocompleteResults();
+		for (String str : arrStr) {
+			strJSON = JSONFactoryUtil.createJSONObject();
+			strJSON.put("word", str);
+			OpenAccessVideos.wordsJSONArray.put(strJSON);
+			//System.out.println(str);
+		}
+		return true;
 	}
 	
 	private static boolean isDuplicate(List<String> resultList, String word){
