@@ -38,6 +38,8 @@ import javax.portlet.PortletRequest;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.ResourceConstants;
@@ -64,36 +66,40 @@ import com.liferay.portal.util.PortletKeys;
  * Remark: Permission in Liferay are granted hierarchically Company > Group > Entity and cant't be revoked 
  * on a lower scope
  * 
- * Individiual Permissions only work when addResource is performed for each entity instance (Migration Portlet does not 
+ * Individual Permissions only work when addResource is performed for each entity instance (Migration Portlet does not 
  * correctly add Resources for old entities yet)
  */
 public class PermissionManager {
-	
+
+protected static Log LOG;	
 private ServiceContext context;
 
-     /**Initiate new Manager Instance by Portlet Context
+     /**Initiate new Manager Instance by Service Context
       * 
       * @param serviceContext
       */
      public PermissionManager(ServiceContext serviceContext) {
-    	 
+    	 LOG = LogFactoryUtil.getLog(PermissionManager.class.getName());
     	 context = serviceContext;
 	
      }
      
+     /**Initiate new Manager Instance by Request and Class Name
+      * 
+      * @param portletRequest
+      * @param className
+      */
      public PermissionManager(PortletRequest portletRequest, String className) {
-    	 
+    	LOG = LogFactoryUtil.getLog(PermissionManager.class.getName()); 
  	    ServiceContext serviceContext = null;
 		
 			try {
 				serviceContext = ServiceContextFactory.getInstance(
 					         className, portletRequest);
 			} catch (PortalException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				LOG.warn("Could not generate Service Context for "+className, e);
 			} catch (SystemException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				LOG.warn("Could not generate Service Context", e);
 			}
 			context = serviceContext;	
      }
@@ -102,7 +108,7 @@ private ServiceContext context;
       * 
       * If ServiceContext is not retrieved from Request we have no PortletId
       * 
-      * Current estimate does not support multi-portlet pages!
+      * Current estimate does not support multi-portlet pages! 
       * 
       * @param plid - LayoutId
       * @param pId - portletId
@@ -110,34 +116,34 @@ private ServiceContext context;
       * @throws PortalException
       * @throws SystemException
       */
-     public PermissionManager(Long plid, User u) throws PortalException, SystemException{
-    	 
-    	 Layout layout = null;
-    	 try {
-			layout  = LayoutLocalServiceUtil.fetchLayout(plid);
-		 } catch (SystemException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		 }
-    	 
-    	 ServiceContext serviceContext = new ServiceContext();
-    	 
-    	 //Data from Layout
-    	 serviceContext.setScopeGroupId(layout.getGroupId());
-    	 serviceContext.setCompanyId(layout.getCompanyId());
-    	 serviceContext.setPlid(layout.getPlid());
-    	    	   
-    	 //Data from User
-    	 serviceContext.setUserId(u.getUserId());
-    	 	 
-    	 context = serviceContext;
+     public PermissionManager(Long plid, User u){
+    	 LOG = LogFactoryUtil.getLog(PermissionManager.class.getName());
+	     Layout layout = null;
+	    	 try {
+				layout  = LayoutLocalServiceUtil.fetchLayout(plid);
+			 } catch (SystemException e) {
+				LOG.warn("Layout not found for "+plid, e);
+			 }
+	    	 
+	    	 ServiceContext serviceContext = new ServiceContext();
+	    	 
+	    	 //Data from Layout
+	    	 serviceContext.setScopeGroupId(layout.getGroupId());
+	    	 serviceContext.setCompanyId(layout.getCompanyId());
+	    	 serviceContext.setPlid(layout.getPlid());
+	    	    	   
+	    	 //Data from User
+	    	 serviceContext.setUserId(u.getUserId());
+	    	 	 
+	    	 context = serviceContext;
+  
      }
      
      
-     /**Retrives Portlet Permission if set or null
+     /**Retrieves Portlet Permission if set or null
       * 
       * @param roleName
-      * @return
+      * @return ResourcePermission
       * @throws SystemException
       */
      public ResourcePermission getPermissionforRole(String roleName) throws SystemException{
@@ -148,8 +154,7 @@ private ServiceContext context;
     	 try{
   	    	role = RoleLocalServiceUtil.getRole(context.getCompanyId(), roleName);
  		} catch (PortalException e) {
- 			System.out.println("Could not retieve Role "+roleName+" ");
- 			e.printStackTrace();
+ 			LOG.warn("Could not retrieve Role "+roleName+". Please, make sure that User Managemt Portlet has been initilized.", e);
  		}   	   		
     	 ResourcePermission rp = ResourcePermissionLocalServiceUtil.fetchResourcePermission(context.getCompanyId(), pId, ResourceConstants.SCOPE_GROUP, String.valueOf(context.getScopeGroupId()), role.getRoleId());   	
 		 return rp;	
@@ -174,8 +179,7 @@ private ServiceContext context;
   			ResourcePermissionLocalServiceUtil.setResourcePermissions(context.getCompanyId(), entityName, ResourceConstants.SCOPE_GROUP, String.valueOf(context.getScopeGroupId()), role.getRoleId(), new String[] {ActionKeys.VIEW});
   	
   		} catch (PortalException e) {
-  			System.out.println("Could not set Permission for "+roleName+" on entity "+entityName+". ("+context.getGuestOrUserId()+")");
-  			e.printStackTrace();
+  			LOG.warn("Could not set Permission for "+roleName+" on entity "+entityName+". ("+context.getGuestOrUserId()+")", e);
   		}
   					
   	}	
@@ -192,20 +196,15 @@ private ServiceContext context;
  	public void removeL2GEntityVieWPermissions(String roleName, String entityName) throws SystemException, PortalException {
  	
  	    try{
- 	    	Role role = RoleLocalServiceUtil.getRole(context.getCompanyId(), roleName);	
- 	    	
- 		
+ 	    	Role role = RoleLocalServiceUtil.getRole(context.getCompanyId(), roleName);			
  		    ResourcePermissionLocalServiceUtil.removeResourcePermission(context.getCompanyId(), entityName, ResourceConstants.SCOPE_GROUP, String.valueOf(context.getScopeGroupId()), role.getRoleId(), ActionKeys.VIEW);
- 		
  	
  		} catch (PortalException e) {
- 			System.out.println("Could not remove Permissions for "+roleName+" on entity "+entityName+". ("+context.getGuestOrUserId()+")");
- 			e.printStackTrace();
+ 			LOG.warn("Could not remove Permissions for "+roleName+" on entity "+entityName+". ("+context.getGuestOrUserId()+")", e);
  		}
  					
  	}
-     
-     
+          
      
      /**Grant Permission on Entity/Model to Role (Model/Group)
  	 * 
@@ -223,8 +222,7 @@ private ServiceContext context;
  			ResourcePermissionLocalServiceUtil.setResourcePermissions(context.getCompanyId(), entityName, ResourceConstants.SCOPE_GROUP, String.valueOf(context.getScopeGroupId()), role.getRoleId(), new String[] {action});
  	
  		} catch (PortalException e) {
- 			System.out.println("Could not set Permission for "+roleName+" on entity "+entityName+". ("+context.getGuestOrUserId()+")");
- 			e.printStackTrace();
+ 			LOG.warn("Could not set Permission for "+roleName+" on entity "+entityName+". ("+context.getGuestOrUserId()+")", e);
  		}
  					
  	}
@@ -247,8 +245,7 @@ private ServiceContext context;
 			ResourcePermissionLocalServiceUtil.setResourcePermissions(context.getCompanyId(), entityName, ResourceConstants.SCOPE_GROUP, String.valueOf(context.getScopeGroupId()), role.getRoleId(), actions);
 	
 		} catch (PortalException e) {
-			System.out.println("Could not set Permissions for "+roleName+" on entity "+entityName+". ("+context.getGuestOrUserId()+")");
-			e.printStackTrace();
+			LOG.warn("Could not set Permissions for "+roleName+" on entity "+entityName+". ("+context.getGuestOrUserId()+")", e);
 		}
 					
 	}	
@@ -267,14 +264,11 @@ private ServiceContext context;
 	
 	    try{
 	    	Role role = RoleLocalServiceUtil.getRole(context.getCompanyId(), roleName);	
-	    	
 		
 		    ResourcePermissionLocalServiceUtil.removeResourcePermission(context.getCompanyId(), entityName, ResourceConstants.SCOPE_GROUP, String.valueOf(context.getScopeGroupId()), role.getRoleId(), action);
-		
-	
+
 		} catch (PortalException e) {
-			System.out.println("Could not remove Permissions for "+roleName+" on entity "+entityName+". ("+context.getGuestOrUserId()+")");
-			e.printStackTrace();
+			LOG.warn("Could not remove Permissions for "+roleName+" on entity "+entityName+". ("+context.getGuestOrUserId()+")", e);
 		}
 					
 	}
@@ -297,8 +291,7 @@ private ServiceContext context;
 			}
 	
 		} catch (PortalException e) {
-			System.out.println("Could not remove Permissions for "+roleName+" on entity "+entityName+". ("+context.getGuestOrUserId()+")");
-			e.printStackTrace();
+			LOG.warn("Could not remove Permissions for "+roleName+" on entity "+entityName+". ("+context.getGuestOrUserId()+")", e);
 		}
 					
 	}
@@ -323,8 +316,7 @@ private ServiceContext context;
 			ResourcePermissionLocalServiceUtil.setResourcePermissions(context.getCompanyId(), pId, ResourceConstants.SCOPE_GROUP, String.valueOf(context.getScopeGroupId()), role.getRoleId(), new String[] {action});
 		
 		} catch (PortalException e) {
-			System.out.println("Could not set Permission for "+roleName+" on Portlet "+ pId+". ("+context.getGuestOrUserId()+")");
-			e.printStackTrace();
+			LOG.warn("Could not set Permission for "+roleName+" on Portlet "+ pId+". ("+context.getGuestOrUserId()+")", e);
 		}
 	}
 	
@@ -348,8 +340,7 @@ private ServiceContext context;
 			ResourcePermissionLocalServiceUtil.setResourcePermissions(context.getCompanyId(), pId, ResourceConstants.SCOPE_GROUP, String.valueOf(context.getScopeGroupId()), role.getRoleId(), actions);
 		
 		} catch (PortalException e) {
-			System.out.println("Could not set Permissions for "+roleName+" on Portlet "+ pId+". ("+context.getGuestOrUserId()+")");
-			e.printStackTrace();
+			LOG.warn("Could not set Permissions for "+roleName+" on Portlet "+ pId+". ("+context.getGuestOrUserId()+")", e);
 		}
 	}
 	
@@ -373,8 +364,7 @@ private ServiceContext context;
 
 		
 		} catch (PortalException e) {
-			System.out.println("Could not remove Permissions for "+roleName+" on Portlet "+ pId+". ("+context.getGuestOrUserId()+")");
-			e.printStackTrace();
+			LOG.warn("Could not remove Permissions for "+roleName+" on Portlet "+ pId+". ("+context.getGuestOrUserId()+")", e);
 		}
 	}
 	
@@ -398,8 +388,7 @@ private ServiceContext context;
 			}
 		
 		} catch (PortalException e) {
-			System.out.println("Could not remove Permissions for "+roleName+" on Portlet "+ pId+". ("+context.getGuestOrUserId()+")");
-			e.printStackTrace();
+			LOG.warn("Could not remove Permissions for "+roleName+" on Portlet "+ pId+". ("+context.getGuestOrUserId()+")", e);
 		}
 	}
 	
@@ -418,8 +407,7 @@ private ServiceContext context;
 			ResourcePermissionLocalServiceUtil.setResourcePermissions(context.getCompanyId(), "com.liferay.portal.model.Layout", ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(context.getPlid()), role.getRoleId(), new String[] {ActionKeys.VIEW});			
 		
 		} catch (PortalException e) {
-			System.out.println("Could not set View Permission for "+roleName+" on Page "+ context.getLayoutURL()+". ("+context.getGuestOrUserId()+")");
-			e.printStackTrace();
+			LOG.warn("Could not set View Permission for "+roleName+" on Page "+ context.getLayoutURL()+". ("+context.getGuestOrUserId()+")", e);
 		}	
 	}
 	
@@ -438,8 +426,7 @@ private ServiceContext context;
 			ResourcePermissionLocalServiceUtil.removeResourcePermission(context.getCompanyId(), "com.liferay.portal.model.Layout", ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(context.getPlid()), role.getRoleId(), ActionKeys.VIEW);
 				
 		} catch (PortalException e) {
-			System.out.println("Could not remove View Permission for "+roleName+" on Page "+ context.getLayoutURL()+". ("+context.getGuestOrUserId()+")");
-			e.printStackTrace();
+			LOG.warn("Could not remove View Permission for "+roleName+" on Page "+ context.getLayoutURL()+". ("+context.getGuestOrUserId()+")", e);
 		}	
 	}
 	
@@ -459,8 +446,7 @@ private ServiceContext context;
 			ResourcePermissionLocalServiceUtil.setResourcePermissions(context.getCompanyId(), "com.liferay.portal.model.Layout", ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(context.getPlid()), role.getRoleId(), new String[] {action});			
 		
 		} catch (PortalException e) {
-			System.out.println("Could not set Permission for "+roleName+" on Page "+ context.getLayoutURL()+". ("+context.getGuestOrUserId()+")");
-			e.printStackTrace();
+			LOG.warn("Could not set Permission for "+roleName+" on Page "+ context.getLayoutURL()+". ("+context.getGuestOrUserId()+")", e);
 		}	
 	 }
 	
@@ -480,8 +466,7 @@ private ServiceContext context;
 			ResourcePermissionLocalServiceUtil.setResourcePermissions(context.getCompanyId(), "com.liferay.portal.model.Layout", ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(context.getPlid()), role.getRoleId(), actions);			
 		
 		} catch (PortalException e) {
-			System.out.println("Could not set Permissions for "+roleName+" on Page "+ context.getLayoutURL()+". ("+context.getGuestOrUserId()+")");
-			e.printStackTrace();
+			LOG.warn("Could not set Permissions for "+roleName+" on Page "+ context.getLayoutURL()+". ("+context.getGuestOrUserId()+")", e);
 		}	
 	 }
 	
@@ -500,8 +485,7 @@ private ServiceContext context;
 			ResourcePermissionLocalServiceUtil.removeResourcePermission(context.getCompanyId(), "com.liferay.portal.model.Layout", ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(context.getPlid()), role.getRoleId(), action);
 		
 		} catch (PortalException e) {
-			System.out.println("Could not remove Permissions for "+roleName+" on Page "+ context.getLayoutURL()+". ("+context.getGuestOrUserId()+")");
-			e.printStackTrace();
+			LOG.warn("Could not remove Permissions for "+roleName+" on Page "+ context.getLayoutURL()+". ("+context.getGuestOrUserId()+")", e);
 		}
 	}
 	/**Remove Permissions on Layout/Individual
@@ -519,8 +503,7 @@ private ServiceContext context;
 				ResourcePermissionLocalServiceUtil.removeResourcePermission(context.getCompanyId(), "com.liferay.portal.model.Layout", ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(context.getPlid()), role.getRoleId(), actions[i]);
 			}		
 		} catch (PortalException e) {
-			System.out.println("Could not remove Permission for "+roleName+" on Page "+ context.getLayoutURL()+". ("+context.getGuestOrUserId()+")");
-			e.printStackTrace();
+			LOG.warn("Could not remove Permission for "+roleName+" on Page "+ context.getLayoutURL()+". ("+context.getGuestOrUserId()+")", e);
 		}
 	}
 	
@@ -542,6 +525,7 @@ private ServiceContext context;
 	    	if (p.getPortletId().startsWith("lg")) portletId = p.getPortletId();
 	     i++;
 	    }	
+	    if (portletId.equalsIgnoreCase("")) LOG.warn("No Portlet for "+plid);
 	    
 	    return portletId;
 	    

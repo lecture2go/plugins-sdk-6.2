@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
@@ -33,6 +35,7 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 
 import de.uhh.l2g.plugins.StatisticDateException;
 import de.uhh.l2g.plugins.StatisticValueException;
+import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Statistic;
 import de.uhh.l2g.plugins.service.ClpSerializer;
@@ -40,6 +43,7 @@ import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.StatisticLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.StatisticLocalServiceBaseImpl;
+import de.uhh.l2g.plugins.util.RepositoryManager;
 
 /**
  * The implementation of the daily satitistics record table
@@ -61,6 +65,7 @@ import de.uhh.l2g.plugins.service.base.StatisticLocalServiceBaseImpl;
 public class StatisticLocalServiceImpl
 	extends StatisticLocalServiceBaseImpl {
 
+	 protected static Log LOG = LogFactoryUtil.getLog(Statistic.class.getName());	
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -152,7 +157,7 @@ public class StatisticLocalServiceImpl
 		long userId = serviceContext.getUserId();
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		// System.out.println ("Link: " +institutionId +" "+hostId);
+		LOG.info("Input: " +privateVideos +" "+publicVideos);
 		Date now = new Date();
 
 		validate(privateVideos, publicVideos, now);
@@ -187,10 +192,7 @@ public class StatisticLocalServiceImpl
 		   		long groupId = serviceContext.getScopeGroupId();
 		   		long userId = serviceContext.getUserId();
 
-
-
 				statistic = deleteStatistic(statisticId);
-
 
 				statistic.setExpandoBridgeAttributes(serviceContext);
 				resourceLocalService.deleteResource(serviceContext.getCompanyId(),
@@ -202,25 +204,34 @@ public class StatisticLocalServiceImpl
 		    }
 	   
 
-	   public Statistic updateCounter() throws SystemException, PortalException {
-		   Counter counter;
-	   			// Initialize counter with a default value liferay suggests
-				CounterLocalServiceUtil.increment(Statistic.class.getName());
-				counter = CounterLocalServiceUtil.getCounter(Statistic.class.getName());
-	   
+	   public long updateCounter() throws SystemException, PortalException {
+	        //current counter
+	        Counter counter = CounterLocalServiceUtil.getCounter(Statistic.class.getName());
+	        LOG.debug(counter.getCurrentId());
+  			//check Host Count (if 1 it is supposed to be default statistic)
+	        int count = HostLocalServiceUtil.getHostsCount();
+	        LOG.debug(count); 
+	        long newHostId = 0; //Reset if table is empty
+	        long statisticId = 0;   //the actual Id value
+	        
+	        if (count > 0){ //our db is filled... with something at least
+	        	
 				//Retrieve actual table data
 				ClassLoader classLoader = (ClassLoader)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),"portletClassLoader");    		
 				DynamicQuery query = DynamicQueryFactoryUtil.forClass(Statistic.class,classLoader).addOrder(OrderFactoryUtil.desc("statisticId"));
 				query.setLimit(0,1);
-				List<Statistic> lStatistic = StatisticLocalServiceUtil.dynamicQuery(query);
-				Statistic statistic = lStatistic.get(0);
-				
-				//write Counter
-				if (statistic != null) counter.setCurrentId(statistic.getStatisticId());
+				List<Statistic> statistics = StatisticLocalServiceUtil.dynamicQuery(query);
+				if (statistics.size() > 0) statisticId = statistics.get(0).getStatisticId(); //current maximum Id
+			
+	        }
+
+	        LOG.debug(statisticId);
+			//Increment Counter if assynchrone with estimated value or data reseted
+			if (counter.getCurrentId() <  statisticId || statisticId == 0){
+				counter.setCurrentId(statisticId);
 				CounterLocalServiceUtil.updateCounter(counter);
-				return statistic;
-					
-		   
-	   }
+			}			
+			return counter.getCurrentId();
+	   	}  	   
 
 }

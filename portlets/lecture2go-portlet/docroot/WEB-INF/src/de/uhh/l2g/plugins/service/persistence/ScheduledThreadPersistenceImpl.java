@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -30,8 +31,10 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
@@ -82,6 +85,263 @@ public class ScheduledThreadPersistenceImpl extends BasePersistenceImpl<Schedule
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(ScheduledThreadModelImpl.ENTITY_CACHE_ENABLED,
 			ScheduledThreadModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
+	public static final FinderPath FINDER_PATH_FETCH_BY_SCHEDULERCLASSNAME = new FinderPath(ScheduledThreadModelImpl.ENTITY_CACHE_ENABLED,
+			ScheduledThreadModelImpl.FINDER_CACHE_ENABLED,
+			ScheduledThreadImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchBySchedulerClassName",
+			new String[] { String.class.getName() },
+			ScheduledThreadModelImpl.SCHEDULERCLASSNAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_SCHEDULERCLASSNAME = new FinderPath(ScheduledThreadModelImpl.ENTITY_CACHE_ENABLED,
+			ScheduledThreadModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countBySchedulerClassName", new String[] { String.class.getName() });
+
+	/**
+	 * Returns the scheduled thread where schedulerClassName = &#63; or throws a {@link de.uhh.l2g.plugins.NoSuchScheduledThreadException} if it could not be found.
+	 *
+	 * @param schedulerClassName the scheduler class name
+	 * @return the matching scheduled thread
+	 * @throws de.uhh.l2g.plugins.NoSuchScheduledThreadException if a matching scheduled thread could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ScheduledThread findBySchedulerClassName(String schedulerClassName)
+		throws NoSuchScheduledThreadException, SystemException {
+		ScheduledThread scheduledThread = fetchBySchedulerClassName(schedulerClassName);
+
+		if (scheduledThread == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("schedulerClassName=");
+			msg.append(schedulerClassName);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchScheduledThreadException(msg.toString());
+		}
+
+		return scheduledThread;
+	}
+
+	/**
+	 * Returns the scheduled thread where schedulerClassName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param schedulerClassName the scheduler class name
+	 * @return the matching scheduled thread, or <code>null</code> if a matching scheduled thread could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ScheduledThread fetchBySchedulerClassName(String schedulerClassName)
+		throws SystemException {
+		return fetchBySchedulerClassName(schedulerClassName, true);
+	}
+
+	/**
+	 * Returns the scheduled thread where schedulerClassName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param schedulerClassName the scheduler class name
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching scheduled thread, or <code>null</code> if a matching scheduled thread could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ScheduledThread fetchBySchedulerClassName(
+		String schedulerClassName, boolean retrieveFromCache)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { schedulerClassName };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_SCHEDULERCLASSNAME,
+					finderArgs, this);
+		}
+
+		if (result instanceof ScheduledThread) {
+			ScheduledThread scheduledThread = (ScheduledThread)result;
+
+			if (!Validator.equals(schedulerClassName,
+						scheduledThread.getSchedulerClassName())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_SCHEDULEDTHREAD_WHERE);
+
+			boolean bindSchedulerClassName = false;
+
+			if (schedulerClassName == null) {
+				query.append(_FINDER_COLUMN_SCHEDULERCLASSNAME_SCHEDULERCLASSNAME_1);
+			}
+			else if (schedulerClassName.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_SCHEDULERCLASSNAME_SCHEDULERCLASSNAME_3);
+			}
+			else {
+				bindSchedulerClassName = true;
+
+				query.append(_FINDER_COLUMN_SCHEDULERCLASSNAME_SCHEDULERCLASSNAME_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindSchedulerClassName) {
+					qPos.add(schedulerClassName);
+				}
+
+				List<ScheduledThread> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_SCHEDULERCLASSNAME,
+						finderArgs, list);
+				}
+				else {
+					if ((list.size() > 1) && _log.isWarnEnabled()) {
+						_log.warn(
+							"ScheduledThreadPersistenceImpl.fetchBySchedulerClassName(String, boolean) with parameters (" +
+							StringUtil.merge(finderArgs) +
+							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					}
+
+					ScheduledThread scheduledThread = list.get(0);
+
+					result = scheduledThread;
+
+					cacheResult(scheduledThread);
+
+					if ((scheduledThread.getSchedulerClassName() == null) ||
+							!scheduledThread.getSchedulerClassName()
+												.equals(schedulerClassName)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_SCHEDULERCLASSNAME,
+							finderArgs, scheduledThread);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_SCHEDULERCLASSNAME,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (ScheduledThread)result;
+		}
+	}
+
+	/**
+	 * Removes the scheduled thread where schedulerClassName = &#63; from the database.
+	 *
+	 * @param schedulerClassName the scheduler class name
+	 * @return the scheduled thread that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ScheduledThread removeBySchedulerClassName(String schedulerClassName)
+		throws NoSuchScheduledThreadException, SystemException {
+		ScheduledThread scheduledThread = findBySchedulerClassName(schedulerClassName);
+
+		return remove(scheduledThread);
+	}
+
+	/**
+	 * Returns the number of scheduled threads where schedulerClassName = &#63;.
+	 *
+	 * @param schedulerClassName the scheduler class name
+	 * @return the number of matching scheduled threads
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countBySchedulerClassName(String schedulerClassName)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_SCHEDULERCLASSNAME;
+
+		Object[] finderArgs = new Object[] { schedulerClassName };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_SCHEDULEDTHREAD_WHERE);
+
+			boolean bindSchedulerClassName = false;
+
+			if (schedulerClassName == null) {
+				query.append(_FINDER_COLUMN_SCHEDULERCLASSNAME_SCHEDULERCLASSNAME_1);
+			}
+			else if (schedulerClassName.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_SCHEDULERCLASSNAME_SCHEDULERCLASSNAME_3);
+			}
+			else {
+				bindSchedulerClassName = true;
+
+				query.append(_FINDER_COLUMN_SCHEDULERCLASSNAME_SCHEDULERCLASSNAME_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindSchedulerClassName) {
+					qPos.add(schedulerClassName);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_SCHEDULERCLASSNAME_SCHEDULERCLASSNAME_1 =
+		"scheduledThread.schedulerClassName IS NULL";
+	private static final String _FINDER_COLUMN_SCHEDULERCLASSNAME_SCHEDULERCLASSNAME_2 =
+		"scheduledThread.schedulerClassName = ?";
+	private static final String _FINDER_COLUMN_SCHEDULERCLASSNAME_SCHEDULERCLASSNAME_3 =
+		"(scheduledThread.schedulerClassName IS NULL OR scheduledThread.schedulerClassName = '')";
 
 	public ScheduledThreadPersistenceImpl() {
 		setModelClass(ScheduledThread.class);
@@ -96,6 +356,10 @@ public class ScheduledThreadPersistenceImpl extends BasePersistenceImpl<Schedule
 	public void cacheResult(ScheduledThread scheduledThread) {
 		EntityCacheUtil.putResult(ScheduledThreadModelImpl.ENTITY_CACHE_ENABLED,
 			ScheduledThreadImpl.class, scheduledThread.getPrimaryKey(),
+			scheduledThread);
+
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_SCHEDULERCLASSNAME,
+			new Object[] { scheduledThread.getSchedulerClassName() },
 			scheduledThread);
 
 		scheduledThread.resetOriginalValues();
@@ -155,6 +419,8 @@ public class ScheduledThreadPersistenceImpl extends BasePersistenceImpl<Schedule
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache(scheduledThread);
 	}
 
 	@Override
@@ -165,6 +431,57 @@ public class ScheduledThreadPersistenceImpl extends BasePersistenceImpl<Schedule
 		for (ScheduledThread scheduledThread : scheduledThreads) {
 			EntityCacheUtil.removeResult(ScheduledThreadModelImpl.ENTITY_CACHE_ENABLED,
 				ScheduledThreadImpl.class, scheduledThread.getPrimaryKey());
+
+			clearUniqueFindersCache(scheduledThread);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(ScheduledThread scheduledThread) {
+		if (scheduledThread.isNew()) {
+			Object[] args = new Object[] { scheduledThread.getSchedulerClassName() };
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_SCHEDULERCLASSNAME,
+				args, Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_SCHEDULERCLASSNAME,
+				args, scheduledThread);
+		}
+		else {
+			ScheduledThreadModelImpl scheduledThreadModelImpl = (ScheduledThreadModelImpl)scheduledThread;
+
+			if ((scheduledThreadModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_SCHEDULERCLASSNAME.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						scheduledThread.getSchedulerClassName()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_SCHEDULERCLASSNAME,
+					args, Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_SCHEDULERCLASSNAME,
+					args, scheduledThread);
+			}
+		}
+	}
+
+	protected void clearUniqueFindersCache(ScheduledThread scheduledThread) {
+		ScheduledThreadModelImpl scheduledThreadModelImpl = (ScheduledThreadModelImpl)scheduledThread;
+
+		Object[] args = new Object[] { scheduledThread.getSchedulerClassName() };
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SCHEDULERCLASSNAME,
+			args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_SCHEDULERCLASSNAME,
+			args);
+
+		if ((scheduledThreadModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_SCHEDULERCLASSNAME.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					scheduledThreadModelImpl.getOriginalSchedulerClassName()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SCHEDULERCLASSNAME,
+				args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_SCHEDULERCLASSNAME,
+				args);
 		}
 	}
 
@@ -303,13 +620,16 @@ public class ScheduledThreadPersistenceImpl extends BasePersistenceImpl<Schedule
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (isNew || !ScheduledThreadModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		EntityCacheUtil.putResult(ScheduledThreadModelImpl.ENTITY_CACHE_ENABLED,
 			ScheduledThreadImpl.class, scheduledThread.getPrimaryKey(),
 			scheduledThread);
+
+		clearUniqueFindersCache(scheduledThread);
+		cacheUniqueFindersCache(scheduledThread);
 
 		return scheduledThread;
 	}
@@ -331,6 +651,8 @@ public class ScheduledThreadPersistenceImpl extends BasePersistenceImpl<Schedule
 		scheduledThreadImpl.setUserName(scheduledThread.getUserName());
 		scheduledThreadImpl.setCreateDate(scheduledThread.getCreateDate());
 		scheduledThreadImpl.setModifiedDate(scheduledThread.getModifiedDate());
+		scheduledThreadImpl.setSchedulerClassName(scheduledThread.getSchedulerClassName());
+		scheduledThreadImpl.setCronText(scheduledThread.getCronText());
 
 		return scheduledThreadImpl;
 	}
@@ -642,9 +964,12 @@ public class ScheduledThreadPersistenceImpl extends BasePersistenceImpl<Schedule
 	}
 
 	private static final String _SQL_SELECT_SCHEDULEDTHREAD = "SELECT scheduledThread FROM ScheduledThread scheduledThread";
+	private static final String _SQL_SELECT_SCHEDULEDTHREAD_WHERE = "SELECT scheduledThread FROM ScheduledThread scheduledThread WHERE ";
 	private static final String _SQL_COUNT_SCHEDULEDTHREAD = "SELECT COUNT(scheduledThread) FROM ScheduledThread scheduledThread";
+	private static final String _SQL_COUNT_SCHEDULEDTHREAD_WHERE = "SELECT COUNT(scheduledThread) FROM ScheduledThread scheduledThread WHERE ";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "scheduledThread.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ScheduledThread exists with the primary key ";
+	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ScheduledThread exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = GetterUtil.getBoolean(PropsUtil.get(
 				PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
 	private static Log _log = LogFactoryUtil.getLog(ScheduledThreadPersistenceImpl.class);

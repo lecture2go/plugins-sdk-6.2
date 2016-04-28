@@ -1,6 +1,7 @@
 package de.uhh.l2g.plugins.util;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
@@ -19,6 +20,7 @@ public final class VideohitlistScheduler extends PortletScheduler implements Mes
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private static Log LOG;	
 	
     public VideohitlistScheduler(){
     	super();
@@ -56,8 +58,8 @@ public final class VideohitlistScheduler extends PortletScheduler implements Mes
 		LOG.info("Videohitlist Scheduler stop.");
 	}
 
-	public void init(String schedulerClassName, String portletId) {
-        super.initScheduler(schedulerClassName,portletId);
+	public void init(String schedulerClassName, ServiceContext serviceContext) {
+        super.initScheduler(schedulerClassName,serviceContext);
 	}
 
 }
