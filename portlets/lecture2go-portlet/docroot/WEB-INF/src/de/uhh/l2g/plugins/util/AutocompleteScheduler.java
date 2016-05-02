@@ -8,8 +8,6 @@ import com.liferay.portal.kernel.messaging.MessageListenerException;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.service.ServiceContext;
 
-import de.uhh.l2g.plugins.admin.ThreadManagement;
-
 /**
  * The Class DatabaseThread.
  */
@@ -53,10 +51,6 @@ public final class AutocompleteScheduler extends PortletScheduler implements Mes
 	public void stop() {
 		super.stop();
 		LOG.info("Autocomplete Scheduler stop.");
-	}
-
-	public void init(String schedulerClassName, String portletId) {
-        super.initScheduler(schedulerClassName,portletId);
 	}
 
 }

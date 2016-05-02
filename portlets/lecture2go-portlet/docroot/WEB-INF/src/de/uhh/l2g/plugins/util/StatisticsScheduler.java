@@ -32,18 +32,12 @@ package de.uhh.l2g.plugins.util;
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  ***************************************************************************/
 
-import java.util.Map;
-
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
-import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
-import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.service.ServiceContext;
 
 
@@ -84,11 +78,6 @@ public class StatisticsScheduler extends PortletScheduler implements MessageList
 	public void stop() {
 		super.stop();
 	}
-
-	public void init(String schedulerClassName, String portletId) {
-        super.initScheduler(schedulerClassName,portletId);
-	}
-  
     
 }
  
