@@ -144,9 +144,7 @@ public class PortletScheduler extends SchedulerResponse implements MessageListen
 	 public PortletScheduler(String schedulerClassName, ServiceContext serviceContext){
 		this.schedulerClassName = schedulerClassName;
 		LOG = LogFactoryUtil.getLog(schedulerClassName);
-		
 		initScheduler(schedulerClassName, serviceContext);
-
 	}
 	 
 	/**Reads Scheduler entries from Portlet Preferences
