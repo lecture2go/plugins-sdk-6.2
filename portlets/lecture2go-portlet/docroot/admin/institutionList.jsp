@@ -111,8 +111,8 @@ Role admin = RoleLocalServiceUtil.fetchRole(companyId, AdminUserManagement.L2G_A
 				<aui:layout>
 					<aui:form action="<%= addInstitutionURL %>" name="fm">
 							<aui:fieldset>
-				<aui:input name="institution" label="institution-name" required="true" inlineField="true"/>
-	            <aui:select name="serverselect" id="select-streamer" label="streaming-server-name" inlineField="true">
+								<aui:input name="institution" label="institution" required="true" inlineField="true"/>
+	            				<aui:select name="serverselect" id="select-streamer" label="streaming-server-name" inlineField="true">
 									<%
 										for(Host host : hostList){
 											if (host.getDefaultHost() > 0) {
@@ -127,7 +127,7 @@ Role admin = RoleLocalServiceUtil.fetchRole(companyId, AdminUserManagement.L2G_A
 								 		} 
 								 	%>
 					            </aui:select>
-	            <aui:input name="order" label="order" inlineField="true" value='<%= maxOrder %>'/>
+	           				 	<aui:input name="order" label="order" inlineField="true" value='<%= maxOrder %>'/>
 					            <aui:input name='institutionId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "institutionId") %>'/>
 					            <aui:input name='parent' type='hidden' inlineField="true" value='<%= rootId %>'/>
 								<aui:button type="submit" value="add" ></aui:button>
@@ -211,7 +211,7 @@ Role admin = RoleLocalServiceUtil.fetchRole(companyId, AdminUserManagement.L2G_A
 								<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>
 							</portlet:actionURL>
 							
- 						<aui:form action="<%= updateInstitutionURL %>" name="<portlet:namespace />fm">
+ 							<aui:form action="<%= updateInstitutionURL %>" name="<portlet:namespace />fm">
 					 			<aui:fieldset>
 									<aui:input name="outerListInstitution" label="institution-name" inlineField="true" value = "<%= institution.getName() %>" />
 									<aui:input name="outerListOrder" label="order" inlineField="true" value='<%= institution.getSort() %>'/>
@@ -375,9 +375,9 @@ Role admin = RoleLocalServiceUtil.fetchRole(companyId, AdminUserManagement.L2G_A
 					persistState="<%= false %>">
 	<aui:form action="<%= updateTreeRootURL %>" name="<portlet:namespace />fm">
 		<aui:fieldset>
-				<aui:input name="treeRoot" label="top-level-institution" required="true" inlineField="true"  value = '<%= treeBase.getName() %>'/>
-				<aui:input name="treeRootId" type='hidden' inlineField="true" value = '<%= treeBase.getInstitutionId() %>'/>
-				<aui:button type="submit" value="save"></aui:button>
+			<aui:input name="treeRoot" label="top-level-institution" required="true" inlineField="true"  value = '<%= treeBase.getName() %>'/>
+			<aui:input name="treeRootId" type='hidden' inlineField="true" value = '<%= treeBase.getInstitutionId() %>'/>
+			<aui:button type="submit" value="save"></aui:button>
 		</aui:fieldset>
 	</aui:form>
 	</liferay-ui:panel>
