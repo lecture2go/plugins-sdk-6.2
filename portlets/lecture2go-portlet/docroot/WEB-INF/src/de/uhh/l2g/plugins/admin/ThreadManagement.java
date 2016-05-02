@@ -39,7 +39,6 @@ import de.uhh.l2g.plugins.model.Videohitlist;
 import de.uhh.l2g.plugins.model.impl.VideohitlistImpl;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideohitlistLocalServiceUtil;
-import de.uhh.l2g.plugins.service.impl.VideoLocalServiceImpl;
 import de.uhh.l2g.plugins.util.PermissionManager;
 import de.uhh.l2g.plugins.util.PortletScheduler;
 
@@ -121,8 +120,7 @@ public class ThreadManagement extends MVCPortlet {
 			System.out.println(e.getClass().getName());
 			e.printStackTrace();
 
-			response.setRenderParameter("mvcPath",
-					"/admin/threads.jsp");
+			response.setRenderParameter("mvcPath", "/admin/threads.jsp");
 		}
 	}
 	
@@ -185,8 +183,7 @@ public class ThreadManagement extends MVCPortlet {
 			System.out.println(e.getClass().getName());
 			e.printStackTrace();
 			
-			response.setRenderParameter("mvcPath",
-					"/admin/threads.jsp");
+			response.setRenderParameter("mvcPath", "/admin/threads.jsp");
 		}
 	}
 	
@@ -220,8 +217,7 @@ public class ThreadManagement extends MVCPortlet {
 			System.out.println(e.getClass().getName());
 			e.printStackTrace();
 			
-			response.setRenderParameter("mvcPath",
-					"/admin/threads.jsp");
+			response.setRenderParameter("mvcPath", "/admin/threads.jsp");
 		}
 	}
 	
@@ -253,8 +249,7 @@ public class ThreadManagement extends MVCPortlet {
 			System.out.println(e.getClass().getName());
 			e.printStackTrace();
 			
-			response.setRenderParameter("mvcPath",
-					"/admin/threads.jsp");
+			response.setRenderParameter("mvcPath", "/admin/threads.jsp");
 		}
 	}
 	
@@ -285,8 +280,7 @@ public class ThreadManagement extends MVCPortlet {
 			System.out.println(e.getClass().getName());
 			e.printStackTrace();
 			
-			response.setRenderParameter("mvcPath",
-					"/admin/threads.jsp");
+			response.setRenderParameter("mvcPath", "/admin/threads.jsp");
 		}
 	}
 	
@@ -309,8 +303,7 @@ public class ThreadManagement extends MVCPortlet {
 			SessionErrors.add(request, e.getClass().getName());
 			PortalUtil.copyRequestParameters(request, response);
 
-			response.setRenderParameter("mvcPath",
-					"/admin/threads.jsp");
+			response.setRenderParameter("mvcPath", "/admin/threads.jsp");
 		}
 	}
 	
