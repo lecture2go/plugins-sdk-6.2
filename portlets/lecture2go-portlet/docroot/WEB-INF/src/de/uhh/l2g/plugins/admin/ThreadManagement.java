@@ -111,7 +111,7 @@ public class ThreadManagement extends MVCPortlet {
 			  PortletScheduler scheduler = (PortletScheduler) classLoader.loadClass(schedulerClassName).newInstance();
 			  scheduler.initScheduler(schedulerClassName, serviceContext);
 			 
-			  scheduler.start();
+			  scheduler.schedule();
 
 		 } catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
@@ -253,52 +253,33 @@ public class ThreadManagement extends MVCPortlet {
 		}
 	}
 	
-	/**Unchedules and removes a Job from memory (Trigger remains in DB)
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	public void removeJob(ActionRequest request, ActionResponse response){		
-		try {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-					ScheduledThread.class.getName(), request);
-			  String schedulerClassName = ParamUtil.getString(request, "schedulerName");
-				
-			 //Make sure to use the appropriate Message Consumer 
-			  ClassLoader classLoader = PortletClassLoaderUtil.getClassLoader(serviceContext.getPortletId()); //Where portletID is not null
-			  PortletScheduler scheduler = (PortletScheduler) classLoader.loadClass(schedulerClassName).newInstance();
-			  
-			  scheduler.initScheduler(schedulerClassName, serviceContext);
-			  System.out.println(scheduler.getPortletId());
-			  
-			  scheduler.stop();
-
-		 } catch (Exception e) {
-			SessionErrors.add(request, e.getClass().getName());
-			PortalUtil.copyRequestParameters(request, response);
-			
-			System.out.println(e.getClass().getName());
-			e.printStackTrace();
-			
-			response.setRenderParameter("mvcPath", "/admin/threads.jsp");
-		}
-	}
 	
 	public void removeAllJobs(ActionRequest request, ActionResponse response){
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 					ScheduledThread.class.getName(), request);
 			
-			  String schedulerClassName = ParamUtil.getString(request, "schedulerName");
-			  if (schedulerClassName.isEmpty()){
-				  PortletScheduler.removeAllPortletSchedulerJobs();
-			  }
-			  else{	//Use the correct Message Consumer 
-			  	ClassLoader classLoader = PortletClassLoaderUtil.getClassLoader(serviceContext.getPortletId()); //Where portletID is not null
-			  	PortletScheduler scheduler = (PortletScheduler) classLoader.loadClass(schedulerClassName).newInstance();
-			  
-			  	scheduler.removeAllJobs();
-			  }
+
+				 PortletScheduler.removeAllJobs(serviceContext.getPortletId());
+			
+
+		 } catch (Exception e) {
+			SessionErrors.add(request, e.getClass().getName());
+			PortalUtil.copyRequestParameters(request, response);
+
+			response.setRenderParameter("mvcPath", "/admin/threads.jsp");
+		}
+	}
+	
+	public void pauseAllJobs(ActionRequest request, ActionResponse response){
+		try {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+					ScheduledThread.class.getName(), request);
+			
+
+				 PortletScheduler.pauseAllJobs();
+			
+
 		 } catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
 			PortalUtil.copyRequestParameters(request, response);
@@ -308,8 +289,8 @@ public class ThreadManagement extends MVCPortlet {
 	}
 	
 	/**
+	 * TODO: generate Statistics View
 	 * 
-	 * TODO: Remove duplicates from List before the can be scheduled, or correctly remove allready unscheduled Entries
 	 */
 	public void init() throws PortletException{	
 		super.init();

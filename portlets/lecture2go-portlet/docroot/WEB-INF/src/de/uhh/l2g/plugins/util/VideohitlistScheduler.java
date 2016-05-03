@@ -49,12 +49,12 @@ public final class VideohitlistScheduler extends PortletScheduler implements Mes
     }	
 	
 	public void start() {
-        super.start();
+        super.schedule();
         LOG.info("Videohitlist Scheduler start.");
 	}
 	
 	public void stop() {
-		super.stop();
+		super.unschedule();
 		LOG.info("Videohitlist Scheduler stop.");
 	}
 
