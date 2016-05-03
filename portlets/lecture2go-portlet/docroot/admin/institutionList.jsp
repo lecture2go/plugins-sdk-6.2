@@ -69,12 +69,7 @@ Role admin = RoleLocalServiceUtil.fetchRole(companyId, AdminUserManagement.L2G_A
 		producerRoleId = RoleLocalServiceUtil.getRole(companyId, AdminUserManagement.L2G_PRODUCER).getRoleId();
 		studentRoleId = RoleLocalServiceUtil.getRole(companyId, AdminUserManagement.L2G_STUDENT).getRoleId();
 	}
-	
-
 %>
-
-
-
 <%--END: DEBUG INFO--%>
 <%
 	//Current Selection in Request Object
@@ -102,8 +97,6 @@ Role admin = RoleLocalServiceUtil.fetchRole(companyId, AdminUserManagement.L2G_A
 	//Sort preset for first level Institutions
 	int maxOrder = InstitutionLocalServiceUtil.getMaxSortByParentId(rootId)+1;
 %>
-
-
 <div class="noresponsive">
 		<%--INSTITUTIONS START--%>
 		<c:if test='<%= permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "ADD_INSTITUTIONS") %>'>

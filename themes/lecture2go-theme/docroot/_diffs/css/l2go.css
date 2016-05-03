@@ -959,6 +959,13 @@ thead, th {
     font-size: 13px;
 }
 
+.admintile.wide.icons.creators {
+    float: right;
+    margin-right: 8px;
+    margin-top: 10px;
+    width: 120px;
+}
+
 .admintile.wide > a {
     font-size: 14px;
     font-weight: 700;
@@ -1373,20 +1380,6 @@ div.filter-menu-link span.icon-large.icon-remove {
 .aui .navbar-fixed-top, .aui .navbar-fixed-bottom, .aui .navbar-static-top {
     margin-left: 0;
     margin-right: 12px;
-}
-
-.admintile.wide.icons.creators {
-    float: right;
-    margin-right: 8px;
-    margin-top: 10px;
-    width: 97px;
-}
-
-.admintile.wide.icons.creators {
-    float: right;
-    margin-right: 8px;
-    margin-top: 10px;
-    width: 97px;
 }
 
 .add-new-creator-term-object {
