@@ -53,4 +53,8 @@ public final class AutocompleteScheduler extends PortletScheduler implements Mes
 		LOG.info("Autocomplete Scheduler stop.");
 	}
 
+	public void init(String schedulerClassName, ServiceContext serviceContext) {
+        super.initScheduler(schedulerClassName,serviceContext);
+	}
+
 }
