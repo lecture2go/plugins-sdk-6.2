@@ -44,12 +44,12 @@ public final class AutocompleteScheduler extends PortletScheduler implements Mes
     }	
 	
 	public void start() {
-        super.start();
+        super.schedule();
         LOG.info("Autocomplete Scheduler start.");
 	}
 	
 	public void stop() {
-		super.stop();
+		super.unschedule();
 		LOG.info("Autocomplete Scheduler stop.");
 	}
 

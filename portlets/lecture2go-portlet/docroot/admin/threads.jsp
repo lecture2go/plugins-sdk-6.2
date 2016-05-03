@@ -28,6 +28,7 @@
 <portlet:actionURL name="updateJob" var="updateJobURL"></portlet:actionURL>
 <portlet:actionURL name="removeJob" var="removeJobURL"></portlet:actionURL>
 <portlet:actionURL name="removeAllJobs" var="removeAllJobsURL"></portlet:actionURL>
+<portlet:actionURL name="pauseAllJobs" var="pauseAllJobsURL"></portlet:actionURL>
 
 <liferay-portlet:resourceURL id="triggerVideohitlistThread" var="triggerVideohitlistThread" />
 
@@ -86,24 +87,15 @@
 					<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= entry.getEventListenerClass() %>'/>
 					<aui:button type="submit" value="Resume" ></aui:button>
 				</aui:form>  
-				<liferay-ui:message key="Schedule/Unschedule funktioniert nur mit SchedulerEntry (hier funktioniert unregister nicht korrekt))"></liferay-ui:message>
+				<liferay-ui:message key="Schedule/Unschedule funktioniert jetzt mit Trigger in Datenbank"></liferay-ui:message>
 				<aui:form action="<%= unscheduleJobURL %>" name="<portlet:namespace />fm">         
 					<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= entry.getEventListenerClass() %>'/>
 					<aui:button type="submit" value="Unschedule" ></aui:button>
-				</aui:form>
-				<aui:form action="<%= scheduleJobURL %>" name="<portlet:namespace />fm">         
-						<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= entry.getEventListenerClass() %>'/>
-						<aui:button type="submit" value="Schedule" ></aui:button>
 				</aui:form>
 				<liferay-ui:message key="Updated den Trigger(Timer) (noch nicht implentiert))"></liferay-ui:message>
 				<aui:form action="<%= updateJobURL %>" name="<portlet:namespace />fm">         
 					<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= entry.getEventListenerClass() %>'/>
 					<aui:button type="submit" value="Update" ></aui:button>
-				</aui:form>
-				<liferay-ui:message key="Delete Job, entfernt den Quartz Job vollständig, aber nicht den SchedulerEntry"></liferay-ui:message>
-				<aui:form action="<%= removeJobURL %>" name="<portlet:namespace />fm">         
-					<aui:input name='schedulerName' type='hidden' inlineField="true" value='<%= entry.getEventListenerClass() %>'/>
-					<aui:button type="submit" value="Remove" ></aui:button>
 				</aui:form>
 		</liferay-ui:panel>
 		<br>
@@ -114,7 +106,11 @@
 		<liferay-ui:panel title="Manage" collapsible="true" id="managePanelId"
 						defaultState="open"
 						extended="<%= false %>"
-						persistState="<%= true %>">     
+						persistState="<%= true %>">   
+				<aui:form action="<%= pauseAllJobsURL %>" name="<portlet:namespace />fm">         
+					<aui:input name='schedulerName' type='hidden' inlineField="true" value=''/>
+					<aui:button type="submit" value="pauseAllJobs" ></aui:button>
+				</aui:form>  
 				<aui:form action="<%= removeAllJobsURL %>" name="<portlet:namespace />fm">         
 					<aui:input name='schedulerName' type='hidden' inlineField="true" value=''/>
 					<aui:button type="submit" value="removeAllJobs" ></aui:button>

@@ -72,11 +72,11 @@ public class StatisticsScheduler extends PortletScheduler implements MessageList
     }
 	
 	public void start() {
-        super.start();
+        super.schedule();
 	}
 	
 	public void stop() {
-		super.stop();
+		super.unschedule();
 	}
     
 }
