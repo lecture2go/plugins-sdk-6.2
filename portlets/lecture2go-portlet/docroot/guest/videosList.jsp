@@ -463,31 +463,31 @@
 												<img class="video-image" src="<%=v.getImageSmall()%>">
 											</div>
 										</div>
+										<%
+											List<Creator> cv = CreatorLocalServiceUtil.getCreatorsByVideoId(v.getVideoId());
+											ListIterator<Creator> cvi = cl.listIterator();										
+		              						int i=0;
+		              						String fullname3="";
+		              						while(cvi.hasNext()){
+			              						if(i<2){
+							       					fullname3 += cvi.next().getFullName();
+							       					if(cv.size()>1 && cvi.hasNext()) fullname3+=", ";
+								    			}else{
+								    				fullname3+="u. a.";
+													break;
+								    			}
+			              						i++;
+		              						}
+		              						String date = "";
+		              						String dur = "";
+		              						try{ date = v.getDate().trim();}catch(Exception e){}
+		              						try{ dur = v.getDuration().trim().substring(0, 8);}catch(Exception e){}
+		              					%>
 										<div class="metainfo-small">
-											<div class="title-small"><%=v.getTitle()%></div>
-		              						<em class="creator-small2">
-												<%
-													List<Creator> cv = CreatorLocalServiceUtil.getCreatorsByVideoId(v.getVideoId());
-													ListIterator<Creator> cvi = cl.listIterator();										
-		              								int i=0;
-		              								String fullname3="";
-		              								while(cvi.hasNext()){
-			              								if(i<2){
-							       							fullname3 += cvi.next().getFullName();
-							       							if(cv.size()>1 && cvi.hasNext()) fullname3+=", ";
-								    					}else{
-								    						fullname3+="u. a.";
-															break;
-								    					}
-			              								i++;
-		              								}
-		              								String date = "";
-		              								String dur = "";
-		              								try{ date = v.getDate().trim();}catch(Exception e){}
-		              								try{ dur = v.getDuration().trim().substring(0, 8);}catch(Exception e){}
-		              							%>
-		              							<%=fullname3%>
 		              							<div class="generation-date"><%=date%></div>
+												<div class="title-small"><%=v.getTitle()%></div>		              							
+			              						<em class="creator-small2">		              							
+		              							<%=fullname3%>
 		              						</em>
 	              						</div>
 									</a>

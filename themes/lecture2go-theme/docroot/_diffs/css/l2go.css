@@ -6,6 +6,12 @@
     width: 0px;
 }
 
+.metainfo-small {
+    line-height: 20px;
+    margin-left: 67px;
+    min-height: 45px;
+}
+
 .meta-date {
     font-size: 9px;
     font-style: normal !important;
@@ -209,11 +215,6 @@ p.smallitalic {
 
 .video-image-wrapper-small.related:hover {
 	 opacity: 1;
-}
-
-.metainfo-small {
-    line-height: 20px;
-    margin-left: 67px;
 }
 
 .metainfo-small.related {
