@@ -53,7 +53,7 @@
 		<tr><td>
 		<div class="adminrow wide">
 			<div class="admintile wide">
-				<liferay-ui:message key="<%= job.getJobName() %>"/> 
+				<h6><liferay-ui:message key="<%= job.getJobName() %>"/></h6> 
 			</div>
 			<div class="admintile wide icons creators">
 		 		<%
