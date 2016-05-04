@@ -14,11 +14,13 @@
 	
 	PortletURL portletURL = renderResponse.createRenderURL();
 	portletURL.setParameter("roleId", request.getParameter("roleId")+"");
+	String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 %>
 
 <portlet:renderURL var="allRoles"><portlet:param name="jspPage" value="/admin/userList.jsp" /></portlet:renderURL>
 <div class="noresponsive">
-	<aui:fieldset helpMessage="choose-filter" column="true">
+	<label class="edit-video-lable"><%=pageName%></label>
+	<aui:fieldset helpMessage="choose-filter" column="true" cssClass="list">
 		<aui:form action="<%= allRoles.toString() %>" method="post">
 			<aui:select name="roleId" label="" onChange="submit();">
 				<aui:option value=""><liferay-ui:message key="select-l2go-role"/></aui:option>

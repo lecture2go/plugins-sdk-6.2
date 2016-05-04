@@ -34,6 +34,7 @@
 <%@page import="javax.portlet.PortletException"%>
 <%@page import="org.apache.jasper.JasperException"%>
 
+<%@page import="com.liferay.portal.theme.ThemeDisplay" %>
 <%@page import="com.liferay.portal.util.PortalUtil"%>
 <%@page import="com.liferay.portal.kernel.util.HtmlUtil"%>
 <%@page import="com.liferay.portal.kernel.util.ParamUtil"%>

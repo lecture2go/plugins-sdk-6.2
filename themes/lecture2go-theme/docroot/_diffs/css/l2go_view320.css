@@ -11,10 +11,11 @@
 		visibility: hidden;
 		display: none;
 	}
-	
+
 	#metadata {
 	    width: 100%;
 	}
+	
 	.admintile.wide {
 	    margin: 0 -9px 0 3px;
 	    width: 100%;
@@ -258,7 +259,14 @@
 	}	
    
 	.metainfo-small {
+	    height: auto !important;
 	    margin-left: 0;
 	    margin-top: 3px;
+	    min-height: auto !important;
+	}
+	
+	.generation-date {
+	    display: none;
+	    visibility: hidden;
 	}
 }

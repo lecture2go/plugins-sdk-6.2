@@ -58,23 +58,20 @@ String hostModel = Host.class.getName();
 String institutionHostModel = Institution_Host.class.getName();
 
 //RoleIds
-		long adminRoleId = 0;
-		long coordinatorRoleId = 0;
-		long producerRoleId = 0;
-		long studentRoleId = 0; 
+long adminRoleId = 0;
+long coordinatorRoleId = 0;
+long producerRoleId = 0;
+long studentRoleId = 0; 
+
 Role admin = RoleLocalServiceUtil.fetchRole(companyId, AdminUserManagement.L2G_ADMIN);
-	if (admin != null){
-		adminRoleId = RoleLocalServiceUtil.getRole(companyId, AdminUserManagement.L2G_ADMIN).getRoleId();
-		coordinatorRoleId = RoleLocalServiceUtil.getRole(companyId, AdminUserManagement.L2G_COORDINATOR).getRoleId();
-		producerRoleId = RoleLocalServiceUtil.getRole(companyId, AdminUserManagement.L2G_PRODUCER).getRoleId();
-		studentRoleId = RoleLocalServiceUtil.getRole(companyId, AdminUserManagement.L2G_STUDENT).getRoleId();
-	}
-	
-
+if (admin != null){
+	adminRoleId = RoleLocalServiceUtil.getRole(companyId, AdminUserManagement.L2G_ADMIN).getRoleId();
+	coordinatorRoleId = RoleLocalServiceUtil.getRole(companyId, AdminUserManagement.L2G_COORDINATOR).getRoleId();
+	producerRoleId = RoleLocalServiceUtil.getRole(companyId, AdminUserManagement.L2G_PRODUCER).getRoleId();
+	studentRoleId = RoleLocalServiceUtil.getRole(companyId, AdminUserManagement.L2G_STUDENT).getRoleId();
+}
+String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 %>
-
-
-
 <%--END: DEBUG INFO--%>
 <%
 	//Current Selection in Request Object
@@ -102,13 +99,11 @@ Role admin = RoleLocalServiceUtil.fetchRole(companyId, AdminUserManagement.L2G_A
 	//Sort preset for first level Institutions
 	int maxOrder = InstitutionLocalServiceUtil.getMaxSortByParentId(rootId)+1;
 %>
-
-
 <div class="noresponsive">
 		<%--INSTITUTIONS START--%>
 		<c:if test='<%= permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "ADD_INSTITUTIONS") %>'>
-			<aui:fieldset column="false" label="institutions" cssClass="add-institution" >
-				<aui:layout>
+			<aui:fieldset column="false" label="<%=pageName%>" cssClass="add-institution" >
+				<aui:layout cssClass="aist">
 					<aui:form action="<%= addInstitutionURL %>" name="fm">
 							<aui:fieldset>
 								<aui:input name="institution" label="institution" required="true" inlineField="true"/>

@@ -6,6 +6,17 @@
     width: 0px;
 }
 
+.metainfo-small {
+    line-height: 20px;
+    margin-left: 67px;
+    min-height: 45px;
+}
+
+fieldset.fieldset.add-streaming-server div.layout {
+    margin-left: -11px;
+    margin-top: -40px;
+}
+
 .meta-date {
     font-size: 9px;
     font-style: normal !important;
@@ -209,11 +220,6 @@ p.smallitalic {
 
 .video-image-wrapper-small.related:hover {
 	 opacity: 1;
-}
-
-.metainfo-small {
-    line-height: 20px;
-    margin-left: 67px;
 }
 
 .metainfo-small.related {
@@ -1375,20 +1381,6 @@ div.filter-menu-link span.icon-large.icon-remove {
     margin-right: 12px;
 }
 
-.admintile.wide.icons.creators {
-    float: right;
-    margin-right: 8px;
-    margin-top: 10px;
-    width: 97px;
-}
-
-.admintile.wide.icons.creators {
-    float: right;
-    margin-right: 8px;
-    margin-top: 10px;
-    width: 97px;
-}
-
 .add-new-creator-term-object {
     float: left;
     margin-bottom: 55px;
@@ -1648,8 +1640,11 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
     text-shadow: 0 0 0 #777777 !important;
 }
 
-fieldset.fieldset.add-streaming-server div.layout {
-    margin-top: -22px;
+.admintile.wide.icons.creators {
+    float: right;
+    margin-right: 8px;
+    margin-top: 0;
+    width: 120px;
 }
 
 .sub-inst .alert.alert-info {

@@ -12,6 +12,7 @@
 	PortletURL backURL = portletURL;
 	backURL.setParameter("delta", delta);
 	backURL.setParameter("cur", cur);
+	String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 %>
 
 <portlet:actionURL name="add" var="addURL">
@@ -20,7 +21,8 @@
 	<portlet:param name="backURL" value='<%=backURL.toString()%>' />
 </portlet:actionURL>
 
-<div class="noresponsive">		
+<div class="noresponsive">	
+	<label class="edit-video-lable"><%=pageName%></label>	
 	<aui:fieldset column="false" label="" >
 		<aui:layout>
 				<aui:form action="<%=addURL%>" commandName="model" name="metadata">
