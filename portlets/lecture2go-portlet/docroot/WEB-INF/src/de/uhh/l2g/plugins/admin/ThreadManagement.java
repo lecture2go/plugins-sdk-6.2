@@ -289,22 +289,14 @@ public class ThreadManagement extends MVCPortlet {
 	}
 	
 	/**
-	 * TODO: generate Statistics View
+	 * Statistics View is initilized in Statistic Management
 	 * 
 	 */
 	public void init() throws PortletException{	
-		super.init();
-		
-		/*Drop table LG_VideoStatistics and initialize view
-		 * 
-		 */
+		super.init();		
 	}
 	
-	public void destroy(){
-	//	System.out.println(this.getPortletName());
-	//	PortletScheduler.ListSchedulerEntries(this.getPortletName());
-		super.destroy();
-	}
+
 	private static Long HITS=new Long(20);
 	
 	public void createPopularVideoList() throws SystemException {

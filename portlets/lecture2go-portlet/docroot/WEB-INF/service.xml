@@ -663,6 +663,10 @@
         <column name="currentPrivPercent" type="int"></column>
         <column name="intervalName" type="String"></column>
     	<!-- Finder methods -->
+        <finder name="CompanyIdAndGroupId" return-type="Collection">
+            <finder-column name="groupId"></finder-column>
+            <finder-column name="companyId"></finder-column>
+        </finder>
     </entity>
     <entity name="ScheduledThread" local-service="true"
     	remote-service="false">
