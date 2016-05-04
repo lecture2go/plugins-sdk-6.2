@@ -16,6 +16,7 @@
 	List<PortletScheduler> portletScheduler = PortletScheduler.ListSchedulers();
 	//Portlet URL
 	PortletURL portletURL = renderResponse.createRenderURL();
+	String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 %>
  
 <portlet:renderURL var="viewURL"><portlet:param name="jspPage" value="/admin/threads.jsp" /></portlet:renderURL>
@@ -30,7 +31,9 @@
 
 <liferay-portlet:resourceURL id="triggerVideohitlistThread" var="triggerVideohitlistThread" />
 
-<div class="noresponsive">	       
+<div class="noresponsive">	  
+<label class="edit-video-lable"><%=pageName%></label>
+<br/><br/>
 <%-- This list all unique schedulers --%>
 	<% 
     //Initialize parameters

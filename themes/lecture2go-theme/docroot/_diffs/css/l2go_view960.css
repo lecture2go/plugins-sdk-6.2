@@ -6,6 +6,10 @@
 	.aui .row-fluid::before, .aui .row-fluid::after {
 	    margin-top: 30px;
 	}
+	
+	fieldset.list {
+    	margin-top: -22px;
+	}
 
 	#wrapper {
 	    background-color: #fff;
@@ -27,6 +31,16 @@
 	    height: 34px;
 	}
 
+	.aist {
+	    margin-bottom: 30px;
+	    margin-left: -9px;
+	}
+	
+	.admintile.wide em p {
+    	font-size: 10px;
+    	margin-top: -8px;
+	}
+	
 	.search input.button {
 	    float: right;
 	    height: 24px;

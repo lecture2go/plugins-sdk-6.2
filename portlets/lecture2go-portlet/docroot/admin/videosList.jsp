@@ -54,10 +54,11 @@
 			}
 		}
 	}
-	
+	String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 %>
 <div class="noresponsive">
-	<aui:fieldset helpMessage="" column="true">
+	<label class="edit-video-lable"><%=pageName%></label>
+	<aui:fieldset helpMessage="" column="true" cssClass="list">
 				<%if(permissionAdmin){%>
 								<portlet:renderURL var="sortByCoordinator">
 									<portlet:param name="jspPage" value="/admin/videosList.jsp" />
@@ -220,8 +221,9 @@
 							<em> 
 								<br/>
 								<%=vid.getDate()%> 
-								<br/>
-								<liferay-ui:message key="hits"/>: <%=vid.getHits()%>
+								<p>
+									<liferay-ui:message key="hits"/>: <%=vid.getHits()%>
+								</p>
 							</em>
 						<%}%>
 						</div>

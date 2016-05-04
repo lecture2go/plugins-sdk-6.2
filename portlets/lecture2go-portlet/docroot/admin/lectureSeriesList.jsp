@@ -36,7 +36,8 @@
 	if(permissionProducer){
 		Producer p = ProducerLocalServiceUtil.getProducer(remoteUser.getUserId());
 		producerId = p.getProducerId();
-	}	
+	}
+	String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 %>
 
 <portlet:renderURL var="addLectureseriesURL">
@@ -44,7 +45,8 @@
 	<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>
 </portlet:renderURL>
 <div class="noresponsive">
-	<aui:fieldset helpMessage='<liferay-ui:message key="choose-filter"/>' column="true">
+	<label class="edit-video-lable"><%=pageName%></label>
+	<aui:fieldset helpMessage='<liferay-ui:message key="choose-filter"/>' column="true" cssClass="list">
 					<%if(permissionAdmin || permissionCoordinator){ %>
 							<portlet:renderURL var="sortByInstitution">
 								<portlet:param name="jspPage" value="/admin/lectureSeriesList.jsp" />
