@@ -965,13 +965,6 @@ thead, th {
     font-size: 13px;
 }
 
-.admintile.wide.icons.creators {
-    float: right;
-    margin-right: 8px;
-    margin-top: 10px;
-    width: 120px;
-}
-
 .admintile.wide > a {
     font-size: 14px;
     font-weight: 700;
@@ -1645,6 +1638,13 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
     font-size: 14px;
     padding: 0 8px 4px;
     text-shadow: 0 0 0 #777777 !important;
+}
+
+.admintile.wide.icons.creators {
+    float: right;
+    margin-right: 8px;
+    margin-top: 0;
+    width: 120px;
 }
 
 .sub-inst .alert.alert-info {
