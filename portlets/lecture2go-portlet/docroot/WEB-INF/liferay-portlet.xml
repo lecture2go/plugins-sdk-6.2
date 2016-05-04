@@ -101,8 +101,22 @@
 	<portlet>
    	 <portlet-name>lg-admin-institution-management</portlet-name>
    	 	<icon>/icon.png</icon>
-  	    <configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
 
+  	    <instanceable>false</instanceable>
+		<private-request-attributes>false</private-request-attributes>
+
+		<header-portlet-javascript>/js/jquery-2.1.4.min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/jquery.tmpl.min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/jquery-ui-1.11.1.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/bootstrap.min.js</header-portlet-javascript>
+
+		<add-default-resource>true</add-default-resource>
+	</portlet>
+	
+		<portlet>
+   	 <portlet-name>lg-statistic-management</portlet-name>
+   	 	<icon>/icon.png</icon>
+   	 	
   	    <instanceable>false</instanceable>
 		<private-request-attributes>false</private-request-attributes>
 

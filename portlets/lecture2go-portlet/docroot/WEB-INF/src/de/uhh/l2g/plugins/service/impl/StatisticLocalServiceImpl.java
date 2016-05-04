@@ -19,6 +19,7 @@ import java.util.List;
 
 import com.liferay.counter.model.Counter;
 import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -43,12 +44,13 @@ import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.StatisticLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.StatisticLocalServiceBaseImpl;
+import de.uhh.l2g.plugins.service.persistence.StatisticFinderUtil;
 import de.uhh.l2g.plugins.util.RepositoryManager;
 
 /**
  * The implementation of the daily satitistics record table
  * 
- * Combining records by time intervals is done in views, modelled by its own Entity like below
+ * Combining records by time intervals is done in views, modeled by its own Entity like below
  * https://www.liferay.com/de/community/wiki/-/wiki/Main/Working+with+Database+Views+in+Liferay
  *
  * <p>
@@ -88,9 +90,25 @@ public class StatisticLocalServiceImpl
 		return statistic;
 	}
 
+	/** Drop table via custom query
+	 * 
+	 * https://web.liferay.com/de/community/wiki/-/wiki/Main/Working+with+Database+Views+in+Liferay
+	 */
+	public boolean removeVideoStatisticDefaultTable(){
+		StatisticFinderUtil.removeVideoStatisticTable();
+		return true;	
+	}
 	
+	/**Add Database View with same Name
+	 * 
+	 */
+	public boolean addVideoStatisticView(){
+		StatisticFinderUtil.createVideoStatisticView();
+		return true;
+	
+	}
 
-	/** TODO: 
+	/** 
 	 *
 	 * */
 	protected void validate(long privateVideos, long publicVideos, Date date) throws PortalException {
@@ -105,8 +123,42 @@ public class StatisticLocalServiceImpl
 
 	}
 	
-	public void addDefaultEntry(){
+	public Statistic addDefaultEntry(ServiceContext serviceContext) throws SystemException, PortalException{
+		long groupId = serviceContext.getScopeGroupId();
+		long userId = serviceContext.getUserId();
+		long companyId = serviceContext.getCompanyId();
 		
+		User user = userPersistence.findByPrimaryKey(userId);
+		
+		Date now = new Date(0);
+
+		validate(0, 0, now);
+
+		long statisticId = counterLocalService.increment(Statistic.class.getName());
+
+		Statistic statistic = statisticPersistence.create(statisticId);
+
+		//Anonymous values for debug/consitency check: Stats should be added by System only
+		statistic.setUserId(userId);
+		statistic.setUserName(UserLocalServiceUtil.getUser(userId).getLogin());
+		statistic.setCreateDate(serviceContext.getCreateDate(now));
+		statistic.setModifiedDate(serviceContext.getModifiedDate(now));
+		
+		
+		statistic.setGroupId(groupId);
+		statistic.setCompanyId(companyId);
+		statistic.setPrivateVideos(0);
+		statistic.setPublicVideos(0);
+
+		statistic.setExpandoBridgeAttributes(serviceContext);
+		
+		statisticPersistence.update(statistic);
+
+		resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
+			       Statistic.class.getName(), statisticId, false, true, true);
+
+
+		return statistic;
 		
 	}
 

@@ -254,5 +254,30 @@
             <keywords>L2Go Category Management</keywords>
         </portlet-info>
   </portlet> 
+  
+    <portlet>
+        <portlet-name>lg-statistic-management</portlet-name>
+        <display-name>L2Go Statistic Management</display-name>
+        <portlet-class>de.uhh.l2g.plugins.admin.StatisticManagement</portlet-class>
+        <init-param>
+            <name>view-template</name>
+            <value>/admin/statistic.jsp</value>
+        </init-param>
+        <init-param>
+            <name>add-process-action-success-action</name>
+            <value>false</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>view</portlet-mode>
+        </supports>
+        <resource-bundle>content.Language</resource-bundle>
+        <portlet-info>
+            <title>L2Go Statistic Management</title>
+            <short-title>L2Go Statistic Management</short-title>
+            <keywords>L2Go Statistic Management</keywords>
+        </portlet-info>
+  </portlet>
     
 </portlet-app>

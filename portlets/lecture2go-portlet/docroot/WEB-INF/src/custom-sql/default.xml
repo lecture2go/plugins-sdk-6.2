@@ -204,14 +204,14 @@
     
     <sql id="de.uhh.l2g.plugins.service.persistence.StatisticFinder.removeVideoStatisticTable">
 		<![CDATA[
-			
+			DROP TABLE IF EXISTS LG_VideoStatistic
 		]]>
 	</sql>
 		
 	<sql id="de.uhh.l2g.plugins.service.persistence.StatisticFinder.createVideoStatisticView">
 		<![CDATA[
-	CREATE 
-	VIEW `LG_VideoStatisticView` AS
+	CREATE OR REPLACE
+	VIEW `LG_VideoStatistic` AS
     SELECT 
         (TO_DAYS(NOW()) - TO_DAYS(`LG_Statistic`.`createDate`)) AS `videoStatisticId`,
         (SELECT 
@@ -331,12 +331,12 @@
         `LG_Statistic`
     WHERE
         (TO_DAYS(NOW()) - TO_DAYS(`LG_Statistic`.`createDate`)) IN (SELECT 
-                `LG_Statistic`.`statisticsId`
+                `LG_Statistic`.`statisticId`
             FROM
                 `LG_Statistic`
             WHERE
-                (`LG_Statistic`.`statisticsId` <= 366)
-            ORDER BY `LG_Statistic`.`statisticsId`)
+                (`LG_Statistic`.`statisticId` <= 366)
+            ORDER BY `LG_Statistic`.`statisticId`)
     GROUP BY (TO_DAYS(NOW()) - TO_DAYS(`LG_Statistic`.`createDate`)) DESC
     ORDER BY `LG_Statistic`.`createDate` DESC
 		]]>
