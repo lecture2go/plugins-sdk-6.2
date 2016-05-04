@@ -12,11 +12,6 @@
     min-height: 45px;
 }
 
-.date.related {
-    font-size: 9px;
-    margin-top: -5px;
-}
-
 fieldset.fieldset.add-streaming-server div.layout {
     margin-left: -11px;
     margin-top: -40px;
@@ -769,6 +764,10 @@ thead, th {
 
 .col-md-7 {
     margin-top: 0px;
+}
+
+.date.related {
+    font-size: 9px;
 }
 
 #_lgopenaccessvideos_WAR_lecture2goportlet_timeStart {
