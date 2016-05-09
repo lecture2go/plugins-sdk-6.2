@@ -431,6 +431,8 @@
 									          	}
 									          %>
 									        </div>   
+									        --> here sub elements form lecture
+									        
 								        </div>
 							        </a>
 								<%	
