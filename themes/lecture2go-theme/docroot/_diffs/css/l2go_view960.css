@@ -3,7 +3,7 @@
 	    background: rgba(0, 0, 0, 0) url("/lecture2go-theme/images/logo_l2go.png") no-repeat scroll right -3px top -8px / 159px auto;
 	}
 
-	.catalogue-container .row-fluid::before, .aui .row-fluid::after {
+	.aui .row-fluid::before, .aui .row-fluid::after {
 	    margin-top: 30px;
 	}
 	
@@ -45,7 +45,7 @@
 	    float: right;
 	    height: 24px;
 	    margin-right: -313px;
-	    margin-top: 3px;
+	    margin-top: -28px;
 	}
 	
 	.aui .container-fluid::before, .aui .container-fluid::after {
@@ -59,7 +59,7 @@
 	#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 	    float: right;
 	    height: 19px;
-	    margin: 0 0 2px;
+	    margin: -30px 0 2px;
 	    padding: 4px 0 4px 4px;
 	    width: 309px;
 	}
@@ -81,15 +81,15 @@
     	padding: 0;
 	}
 
-	.catalogue-container .row-fluid .span9 {
+	.aui .row-fluid .span9 {
 	    width: 74%;
 	}
 	
-	.catalogue-container .row-fluid .span3 {
+	.aui .row-fluid .span3 {
 	    width: 25%;
 	}	
 	
-	.catalogue-container .row-fluid [class*="span"] {
+	.aui .row-fluid [class*="span"] {
 	    margin-left: 1%;
 	}
 	
