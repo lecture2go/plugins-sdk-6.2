@@ -330,7 +330,6 @@
 									</portlet:actionURL>
 							        
 							        <a href="<%=view2URL%>">
-							          <span class="badge"><%=videoCount%></span>
 								       <div class="videotile metainfolist ">
 									        <div class="video-image-wrapper">
 									          <img class="video-image-big layered-paper" src="<%=vidDummy.getImageMedium()%>"/>
