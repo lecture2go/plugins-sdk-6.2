@@ -100,99 +100,100 @@
 	}
 		
 %>
-
-<div class="row-fluid">
-<%if(!resultSetEmpty){ %>
-	<div class="span3">
-		<liferay-ui:panel-container>
-			<!-- 	parentinstitution filter -->
-			<%if(presentParentInstitutions.size()>0){ %>
-			<liferay-ui:panel extended="true" title="institution" cssClass='${hasParentInstitutionFiltered ? "filtered" : "notFiltered"}'>
-				<ul>
-				<c:forEach items="<%=presentParentInstitutions %>" var="parentInstitution">
-					<portlet:actionURL var="filterByParentInstitution" name="addFilter">
-						<portlet:param name="jspPage" value="/guest/videosList.jsp" />
-						<portlet:param name="parentInstitutionId" value='${hasParentInstitutionFiltered ? "0" : parentInstitution.institutionId}'/>
-						<portlet:param name="institutionId" value="<%=institutionId.toString() %>"/>				
-						<portlet:param name="termId" value="<%=termId.toString() %>"/>
-						<portlet:param name="categoryId" value="<%=categoryId.toString() %>"/>
-						<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>
-						<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
-					</portlet:actionURL>
-					<li class="filter-menu"><a href="${filterByParentInstitution}"><div class="filter-menu-link">${parentInstitution.name}<span ${hasParentInstitutionFiltered ? 'class="icon-large icon-remove"' : ''}></span></div></a></li>
-				</c:forEach>
-				</ul>
-			</liferay-ui:panel>
-			<%}%>
-			
-		 	<!-- 	institution filter  -->
-			<c:if test="${hasParentInstitutionFiltered}">
-			<%if(presentInstitutions.size()>0){ %>
-			<liferay-ui:panel extended="true" title="sub-institution" cssClass='${hasInstitutionFiltered ? "filtered" : "notFiltered"}'>
-				<ul>
-				<c:forEach items="<%=presentInstitutions %>" var="institution">
-					<portlet:actionURL var="filterByInstitution" name="addFilter">
-						<portlet:param name="jspPage" value="/guest/videosList.jsp" />
-						<portlet:param name="parentInstitutionId" value="<%=parentInstitutionId.toString() %>"/>
-						<portlet:param name="institutionId" value='${hasInstitutionFiltered ? "0" : institution.institutionId}'/>
-						<portlet:param name="termId" value="<%=termId.toString() %>"/>
-						<portlet:param name="categoryId" value="<%=categoryId.toString() %>"/>
-						<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>
-						<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
-					</portlet:actionURL>
-					<li class="filter-menu"><a href="${filterByInstitution}"><div class="filter-menu-link">${institution.name}<span ${hasInstitutionFiltered ? 'class="icon-large icon-remove"' : ''}></span></div></a></li>
-				</c:forEach>
-				</ul>
-			</liferay-ui:panel>
-			<%}%>
-			</c:if>
-			
-			<!-- 	terms filter -->
-			<%if(presentTerms.size()>0){%>
-			<liferay-ui:panel extended="true" title="term" cssClass='${hasTermFiltered ? "filtered" : "notFiltered"}'>
-				<ul class="terms">
-				<c:forEach items="<%=presentTerms %>" var="term">
-					<portlet:actionURL var="filterByTerm" name="addFilter">
-						<portlet:param name="jspPage" value="/guest/videosList.jsp" />
-						<portlet:param name="institutionId" value="<%=institutionId.toString() %>"/>
-						<portlet:param name="parentInstitutionId" value="<%=parentInstitutionId.toString() %>"/>	
-						<portlet:param name="termId" value='${hasTermFiltered ? "0" : term.termId}'/>
-						<portlet:param name="categoryId" value="<%=categoryId.toString() %>"/>
-						<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>
-						<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
-					</portlet:actionURL>
-					<li class="filter-menu"><a href="${filterByTerm}"><div class="filter-menu-link">${term.termName}<span ${hasTermFiltered ? 'class="icon-large icon-remove"' : ''}></span></div></a></li>
-				</c:forEach>
-				</ul>
-				<c:if test="${hasManyTerms}">
-					<div id="loadMoreTerms">mehr...</div>
+<div class="catalogue-container">
+	<div class="row-fluid">
+	<%if(!resultSetEmpty){ %>
+		<div class="span3">
+			<liferay-ui:panel-container>
+				<!-- 	parentinstitution filter -->
+				<%if(presentParentInstitutions.size()>0){ %>
+				<liferay-ui:panel extended="true" title="institution" cssClass='${hasParentInstitutionFiltered ? "filtered" : "notFiltered"}'>
+					<ul>
+					<c:forEach items="<%=presentParentInstitutions %>" var="parentInstitution">
+						<portlet:actionURL var="filterByParentInstitution" name="addFilter">
+							<portlet:param name="jspPage" value="/guest/videosList.jsp" />
+							<portlet:param name="parentInstitutionId" value='${hasParentInstitutionFiltered ? "0" : parentInstitution.institutionId}'/>
+							<portlet:param name="institutionId" value="<%=institutionId.toString() %>"/>				
+							<portlet:param name="termId" value="<%=termId.toString() %>"/>
+							<portlet:param name="categoryId" value="<%=categoryId.toString() %>"/>
+							<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>
+							<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
+						</portlet:actionURL>
+						<li class="filter-menu"><a href="${filterByParentInstitution}"><div class="filter-menu-link">${parentInstitution.name}<span ${hasParentInstitutionFiltered ? 'class="icon-large icon-remove"' : ''}></span></div></a></li>
+					</c:forEach>
+					</ul>
+				</liferay-ui:panel>
+				<%}%>
+				
+			 	<!-- 	institution filter  -->
+				<c:if test="${hasParentInstitutionFiltered}">
+				<%if(presentInstitutions.size()>0){ %>
+				<liferay-ui:panel extended="true" title="sub-institution" cssClass='${hasInstitutionFiltered ? "filtered" : "notFiltered"}'>
+					<ul>
+					<c:forEach items="<%=presentInstitutions %>" var="institution">
+						<portlet:actionURL var="filterByInstitution" name="addFilter">
+							<portlet:param name="jspPage" value="/guest/videosList.jsp" />
+							<portlet:param name="parentInstitutionId" value="<%=parentInstitutionId.toString() %>"/>
+							<portlet:param name="institutionId" value='${hasInstitutionFiltered ? "0" : institution.institutionId}'/>
+							<portlet:param name="termId" value="<%=termId.toString() %>"/>
+							<portlet:param name="categoryId" value="<%=categoryId.toString() %>"/>
+							<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>
+							<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
+						</portlet:actionURL>
+						<li class="filter-menu"><a href="${filterByInstitution}"><div class="filter-menu-link">${institution.name}<span ${hasInstitutionFiltered ? 'class="icon-large icon-remove"' : ''}></span></div></a></li>
+					</c:forEach>
+					</ul>
+				</liferay-ui:panel>
+				<%}%>
 				</c:if>
-			</liferay-ui:panel>
-			<%}%>
-		
+				
+				<!-- 	terms filter -->
+				<%if(presentTerms.size()>0){%>
+				<liferay-ui:panel extended="true" title="term" cssClass='${hasTermFiltered ? "filtered" : "notFiltered"}'>
+					<ul class="terms">
+					<c:forEach items="<%=presentTerms %>" var="term">
+						<portlet:actionURL var="filterByTerm" name="addFilter">
+							<portlet:param name="jspPage" value="/guest/videosList.jsp" />
+							<portlet:param name="institutionId" value="<%=institutionId.toString() %>"/>
+							<portlet:param name="parentInstitutionId" value="<%=parentInstitutionId.toString() %>"/>	
+							<portlet:param name="termId" value='${hasTermFiltered ? "0" : term.termId}'/>
+							<portlet:param name="categoryId" value="<%=categoryId.toString() %>"/>
+							<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>
+							<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
+						</portlet:actionURL>
+						<li class="filter-menu"><a href="${filterByTerm}"><div class="filter-menu-link">${term.termName}<span ${hasTermFiltered ? 'class="icon-large icon-remove"' : ''}></span></div></a></li>
+					</c:forEach>
+					</ul>
+					<c:if test="${hasManyTerms}">
+						<div id="loadMoreTerms">mehr...</div>
+					</c:if>
+				</liferay-ui:panel>
+				<%}%>
 			
-			<!-- 	category filter -->
-			<%if(presentCategories.size()>0){%>
-			<liferay-ui:panel extended="true" title="category" cssClass='${hasCategoryFiltered ? "filtered" : "notFiltered"}'>
-				<ul>
-				<c:forEach items="<%=presentCategories %>" var="category">
-		    		<portlet:actionURL var="filterByCategory" name="addFilter">
-						<portlet:param name="jspPage" value="/guest/videosList.jsp" />
-						<portlet:param name="institutionId" value="<%=institutionId.toString() %>"/>
-						<portlet:param name="parentInstitutionId" value="<%=parentInstitutionId.toString() %>"/>
-						<portlet:param name="termId" value="<%=termId.toString() %>"/>
-						<portlet:param name="categoryId" value='${hasCategoryFiltered ? "0" : category.categoryId}'/>
-						<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>	
-						<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
-					</portlet:actionURL>
-					<li class="filter-menu"><a href="${filterByCategory}"><div class="filter-menu-link">${category.name} <span ${hasCategoryFiltered ? 'class="icon-large icon-remove"' : ''}></span></div></a></li>
-				</c:forEach>
-				</ul>
-			</liferay-ui:panel>
-			<%}%>
-		</liferay-ui:panel-container>
-	</div>
-<%}%>
+				
+				<!-- 	category filter -->
+				<%if(presentCategories.size()>0){%>
+				<liferay-ui:panel extended="true" title="category" cssClass='${hasCategoryFiltered ? "filtered" : "notFiltered"}'>
+					<ul>
+					<c:forEach items="<%=presentCategories %>" var="category">
+			    		<portlet:actionURL var="filterByCategory" name="addFilter">
+							<portlet:param name="jspPage" value="/guest/videosList.jsp" />
+							<portlet:param name="institutionId" value="<%=institutionId.toString() %>"/>
+							<portlet:param name="parentInstitutionId" value="<%=parentInstitutionId.toString() %>"/>
+							<portlet:param name="termId" value="<%=termId.toString() %>"/>
+							<portlet:param name="categoryId" value='${hasCategoryFiltered ? "0" : category.categoryId}'/>
+							<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>	
+							<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
+						</portlet:actionURL>
+						<li class="filter-menu"><a href="${filterByCategory}"><div class="filter-menu-link">${category.name} <span ${hasCategoryFiltered ? 'class="icon-large icon-remove"' : ''}></span></div></a></li>
+					</c:forEach>
+					</ul>
+				</liferay-ui:panel>
+				<%}%>
+			</liferay-ui:panel-container>
+		<!-- span3 -->
+		</div>
+	<%}%>
 
 <%if(!resultSetEmpty){%><div class="span9"><%}%>
 <%if(resultSetEmpty){%><div class="none"><%}%>
@@ -238,10 +239,11 @@
 			List<Video> vl = new ArrayList<Video>();
 			ListIterator<Video> vli = vl.listIterator();
 
-			if(videoCount>0 && isSearched){
-				//get videos by search word and lecture series
+			if (videoCount > 0 && isSearched) {
+				// get videos by search word and lecture series
 				vl = VideoLocalServiceUtil.getBySearchWordAndLectureseriesId(searchQuery, new Long(oId));
-			}else{
+			} else {
+				// get all videos of the lecture series
 				vl = VideoLocalServiceUtil.getByLectureseries(new Long(oId));
 			}
 			vli = vl.listIterator();
@@ -315,6 +317,7 @@
 							        </a>
 							    	<%									
 								}else{
+									// single Video without lecture series
 									Video v = new VideoImpl();
 									v = vl.get(0);
 									String vId = v.getVideoId()+"";
@@ -327,7 +330,6 @@
 									</portlet:actionURL>
 							        
 							        <a href="<%=view2URL%>">
-							          <span class="badge"><%=videoCount%></span>
 								       <div class="videotile metainfolist ">
 									        <div class="video-image-wrapper">
 									          <img class="video-image-big layered-paper" src="<%=vidDummy.getImageMedium()%>"/>
@@ -380,6 +382,7 @@
 							    	<%										
 								}
 							}else{
+								// multiple videos in lecture series
 								%>
 							        <a href="<%=view1URL%>">
 							          <span class="badge"><%=videoCount%></span>
@@ -436,11 +439,15 @@
 								<%	
 							}
 						%>
+				<!-- videotile  -->
 				</div>
 				
 				<!-- sublist for searched videos -->
-				<%if(videoCount>1 && isSearched){ %>
-					<div id="searchedvideos">
+				<%
+					String videoDivTitle = "";
+				if (videoCount>1) {
+					if (isSearched) { videoDivTitle = "searchedvideos"; } else { videoDivTitle = "allvideos"; }%>
+					<div id="<%=videoDivTitle%>">
 							<button id="<%="b"+oId%>" >
 								<span class="lfr-icon-menu-text">
 									<i class="icon-large icon-chevron-down"></i>
@@ -496,9 +503,10 @@
 							<%}%>
 							</ul>
 							<script>
-							$("<%="#b"+oId%>").click(function() {
-								$("<%="#p"+oId%>").slideToggle("slow");
-							});
+								$("<%="#b"+oId%>").click(function() {
+									$(this).toggleClass("rotated");
+									$("<%="#p"+oId%>").slideToggle("slow");
+								});
 							</script>
 						</div>
 				<%}%>
@@ -506,8 +514,11 @@
 	</liferay-ui:search-container-row>
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
-
-</div>
+		<!-- span9 -->
+		</div>
+	<!-- row-fluid -->
+	</div>
+<!-- catalogue-container -->
 </div>
 
 <script type="text/javascript">
