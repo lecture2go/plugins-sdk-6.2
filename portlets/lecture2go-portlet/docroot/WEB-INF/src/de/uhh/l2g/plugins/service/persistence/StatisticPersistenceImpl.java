@@ -1792,15 +1792,15 @@ public class StatisticPersistenceImpl extends BasePersistenceImpl<Statistic>
 		statisticImpl.setNew(statistic.isNew());
 		statisticImpl.setPrimaryKey(statistic.getPrimaryKey());
 
-		statisticImpl.setStatisticId(statistic.getStatisticId());
-		statisticImpl.setGroupId(statistic.getGroupId());
-		statisticImpl.setCompanyId(statistic.getCompanyId());
+		statisticImpl.setCreateDate(statistic.getCreateDate());
 		statisticImpl.setPublicVideos(statistic.getPublicVideos());
 		statisticImpl.setPrivateVideos(statistic.getPrivateVideos());
 		statisticImpl.setAutofillRow(statistic.getAutofillRow());
+		statisticImpl.setStatisticId(statistic.getStatisticId());
+		statisticImpl.setGroupId(statistic.getGroupId());
+		statisticImpl.setCompanyId(statistic.getCompanyId());
 		statisticImpl.setUserId(statistic.getUserId());
 		statisticImpl.setUserName(statistic.getUserName());
-		statisticImpl.setCreateDate(statistic.getCreateDate());
 		statisticImpl.setModifiedDate(statistic.getModifiedDate());
 
 		return statisticImpl;

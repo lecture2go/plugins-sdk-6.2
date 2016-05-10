@@ -61,18 +61,18 @@ public class StatisticModelImpl extends BaseModelImpl<Statistic>
 	 */
 	public static final String TABLE_NAME = "LG_Statistic";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "statisticId", Types.BIGINT },
-			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
+			{ "createDate", Types.TIMESTAMP },
 			{ "publicVideos", Types.INTEGER },
 			{ "privateVideos", Types.INTEGER },
 			{ "autofillRow", Types.INTEGER },
+			{ "statisticId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
-			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Statistic (statisticId LONG not null primary key,groupId LONG,companyId LONG,publicVideos INTEGER,privateVideos INTEGER,autofillRow INTEGER,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Statistic (createDate DATE null,publicVideos INTEGER,privateVideos INTEGER,autofillRow INTEGER,statisticId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,modifiedDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Statistic";
 	public static final String ORDER_BY_JPQL = " ORDER BY statistic.statisticId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Statistic.statisticId ASC";
@@ -132,15 +132,15 @@ public class StatisticModelImpl extends BaseModelImpl<Statistic>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("statisticId", getStatisticId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
+		attributes.put("createDate", getCreateDate());
 		attributes.put("publicVideos", getPublicVideos());
 		attributes.put("privateVideos", getPrivateVideos());
 		attributes.put("autofillRow", getAutofillRow());
+		attributes.put("statisticId", getStatisticId());
+		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 
 		return attributes;
@@ -148,22 +148,10 @@ public class StatisticModelImpl extends BaseModelImpl<Statistic>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long statisticId = (Long)attributes.get("statisticId");
+		Date createDate = (Date)attributes.get("createDate");
 
-		if (statisticId != null) {
-			setStatisticId(statisticId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
+		if (createDate != null) {
+			setCreateDate(createDate);
 		}
 
 		Integer publicVideos = (Integer)attributes.get("publicVideos");
@@ -184,6 +172,24 @@ public class StatisticModelImpl extends BaseModelImpl<Statistic>
 			setAutofillRow(autofillRow);
 		}
 
+		Long statisticId = (Long)attributes.get("statisticId");
+
+		if (statisticId != null) {
+			setStatisticId(statisticId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long userId = (Long)attributes.get("userId");
 
 		if (userId != null) {
@@ -196,17 +202,61 @@ public class StatisticModelImpl extends BaseModelImpl<Statistic>
 			setUserName(userName);
 		}
 
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
 		Date modifiedDate = (Date)attributes.get("modifiedDate");
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
 		}
+	}
+
+	@Override
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	@Override
+	public void setCreateDate(Date createDate) {
+		_columnBitmask |= CREATEDATE_COLUMN_BITMASK;
+
+		if (_originalCreateDate == null) {
+			_originalCreateDate = _createDate;
+		}
+
+		_createDate = createDate;
+	}
+
+	public Date getOriginalCreateDate() {
+		return _originalCreateDate;
+	}
+
+	@Override
+	public int getPublicVideos() {
+		return _publicVideos;
+	}
+
+	@Override
+	public void setPublicVideos(int publicVideos) {
+		_publicVideos = publicVideos;
+	}
+
+	@Override
+	public int getPrivateVideos() {
+		return _privateVideos;
+	}
+
+	@Override
+	public void setPrivateVideos(int privateVideos) {
+		_privateVideos = privateVideos;
+	}
+
+	@Override
+	public int getAutofillRow() {
+		return _autofillRow;
+	}
+
+	@Override
+	public void setAutofillRow(int autofillRow) {
+		_autofillRow = autofillRow;
 	}
 
 	@Override
@@ -276,36 +326,6 @@ public class StatisticModelImpl extends BaseModelImpl<Statistic>
 	}
 
 	@Override
-	public int getPublicVideos() {
-		return _publicVideos;
-	}
-
-	@Override
-	public void setPublicVideos(int publicVideos) {
-		_publicVideos = publicVideos;
-	}
-
-	@Override
-	public int getPrivateVideos() {
-		return _privateVideos;
-	}
-
-	@Override
-	public void setPrivateVideos(int privateVideos) {
-		_privateVideos = privateVideos;
-	}
-
-	@Override
-	public int getAutofillRow() {
-		return _autofillRow;
-	}
-
-	@Override
-	public void setAutofillRow(int autofillRow) {
-		_autofillRow = autofillRow;
-	}
-
-	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -338,26 +358,6 @@ public class StatisticModelImpl extends BaseModelImpl<Statistic>
 	@Override
 	public void setUserName(String userName) {
 		_userName = userName;
-	}
-
-	@Override
-	public Date getCreateDate() {
-		return _createDate;
-	}
-
-	@Override
-	public void setCreateDate(Date createDate) {
-		_columnBitmask |= CREATEDATE_COLUMN_BITMASK;
-
-		if (_originalCreateDate == null) {
-			_originalCreateDate = _createDate;
-		}
-
-		_createDate = createDate;
-	}
-
-	public Date getOriginalCreateDate() {
-		return _originalCreateDate;
 	}
 
 	@Override
@@ -401,15 +401,15 @@ public class StatisticModelImpl extends BaseModelImpl<Statistic>
 	public Object clone() {
 		StatisticImpl statisticImpl = new StatisticImpl();
 
-		statisticImpl.setStatisticId(getStatisticId());
-		statisticImpl.setGroupId(getGroupId());
-		statisticImpl.setCompanyId(getCompanyId());
+		statisticImpl.setCreateDate(getCreateDate());
 		statisticImpl.setPublicVideos(getPublicVideos());
 		statisticImpl.setPrivateVideos(getPrivateVideos());
 		statisticImpl.setAutofillRow(getAutofillRow());
+		statisticImpl.setStatisticId(getStatisticId());
+		statisticImpl.setGroupId(getGroupId());
+		statisticImpl.setCompanyId(getCompanyId());
 		statisticImpl.setUserId(getUserId());
 		statisticImpl.setUserName(getUserName());
-		statisticImpl.setCreateDate(getCreateDate());
 		statisticImpl.setModifiedDate(getModifiedDate());
 
 		statisticImpl.resetOriginalValues();
@@ -463,6 +463,8 @@ public class StatisticModelImpl extends BaseModelImpl<Statistic>
 	public void resetOriginalValues() {
 		StatisticModelImpl statisticModelImpl = this;
 
+		statisticModelImpl._originalCreateDate = statisticModelImpl._createDate;
+
 		statisticModelImpl._originalStatisticId = statisticModelImpl._statisticId;
 
 		statisticModelImpl._setOriginalStatisticId = false;
@@ -475,8 +477,6 @@ public class StatisticModelImpl extends BaseModelImpl<Statistic>
 
 		statisticModelImpl._setOriginalCompanyId = false;
 
-		statisticModelImpl._originalCreateDate = statisticModelImpl._createDate;
-
 		statisticModelImpl._columnBitmask = 0;
 	}
 
@@ -484,17 +484,26 @@ public class StatisticModelImpl extends BaseModelImpl<Statistic>
 	public CacheModel<Statistic> toCacheModel() {
 		StatisticCacheModel statisticCacheModel = new StatisticCacheModel();
 
-		statisticCacheModel.statisticId = getStatisticId();
+		Date createDate = getCreateDate();
 
-		statisticCacheModel.groupId = getGroupId();
-
-		statisticCacheModel.companyId = getCompanyId();
+		if (createDate != null) {
+			statisticCacheModel.createDate = createDate.getTime();
+		}
+		else {
+			statisticCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		statisticCacheModel.publicVideos = getPublicVideos();
 
 		statisticCacheModel.privateVideos = getPrivateVideos();
 
 		statisticCacheModel.autofillRow = getAutofillRow();
+
+		statisticCacheModel.statisticId = getStatisticId();
+
+		statisticCacheModel.groupId = getGroupId();
+
+		statisticCacheModel.companyId = getCompanyId();
 
 		statisticCacheModel.userId = getUserId();
 
@@ -504,15 +513,6 @@ public class StatisticModelImpl extends BaseModelImpl<Statistic>
 
 		if ((userName != null) && (userName.length() == 0)) {
 			statisticCacheModel.userName = null;
-		}
-
-		Date createDate = getCreateDate();
-
-		if (createDate != null) {
-			statisticCacheModel.createDate = createDate.getTime();
-		}
-		else {
-			statisticCacheModel.createDate = Long.MIN_VALUE;
 		}
 
 		Date modifiedDate = getModifiedDate();
@@ -531,24 +531,24 @@ public class StatisticModelImpl extends BaseModelImpl<Statistic>
 	public String toString() {
 		StringBundler sb = new StringBundler(21);
 
-		sb.append("{statisticId=");
-		sb.append(getStatisticId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
+		sb.append("{createDate=");
+		sb.append(getCreateDate());
 		sb.append(", publicVideos=");
 		sb.append(getPublicVideos());
 		sb.append(", privateVideos=");
 		sb.append(getPrivateVideos());
 		sb.append(", autofillRow=");
 		sb.append(getAutofillRow());
+		sb.append(", statisticId=");
+		sb.append(getStatisticId());
+		sb.append(", groupId=");
+		sb.append(getGroupId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
 		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
 		sb.append("}");
@@ -565,16 +565,8 @@ public class StatisticModelImpl extends BaseModelImpl<Statistic>
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>statisticId</column-name><column-value><![CDATA[");
-		sb.append(getStatisticId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
+			"<column><column-name>createDate</column-name><column-value><![CDATA[");
+		sb.append(getCreateDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>publicVideos</column-name><column-value><![CDATA[");
@@ -589,16 +581,24 @@ public class StatisticModelImpl extends BaseModelImpl<Statistic>
 		sb.append(getAutofillRow());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>statisticId</column-name><column-value><![CDATA[");
+		sb.append(getStatisticId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>groupId</column-name><column-value><![CDATA[");
+		sb.append(getGroupId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
 		sb.append(getUserId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
@@ -614,6 +614,11 @@ public class StatisticModelImpl extends BaseModelImpl<Statistic>
 	private static Class<?>[] _escapedModelInterfaces = new Class[] {
 			Statistic.class
 		};
+	private Date _createDate;
+	private Date _originalCreateDate;
+	private int _publicVideos;
+	private int _privateVideos;
+	private int _autofillRow;
 	private long _statisticId;
 	private long _originalStatisticId;
 	private boolean _setOriginalStatisticId;
@@ -623,14 +628,9 @@ public class StatisticModelImpl extends BaseModelImpl<Statistic>
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
-	private int _publicVideos;
-	private int _privateVideos;
-	private int _autofillRow;
 	private long _userId;
 	private String _userUuid;
 	private String _userName;
-	private Date _createDate;
-	private Date _originalCreateDate;
 	private Date _modifiedDate;
 	private long _columnBitmask;
 	private Statistic _escapedModel;

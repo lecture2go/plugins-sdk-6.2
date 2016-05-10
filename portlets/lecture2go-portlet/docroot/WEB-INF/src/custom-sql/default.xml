@@ -210,135 +210,36 @@
 		
 	<sql id="de.uhh.l2g.plugins.service.persistence.StatisticFinder.createVideoStatisticView">
 		<![CDATA[
-	CREATE OR REPLACE
-	VIEW `LG_VideoStatistic` AS
-    SELECT 
-        (TO_DAYS(NOW()) - TO_DAYS(`LG_Statistic`.`createDate`)) AS `videoStatisticId`,
-        (SELECT 
-                (CASE (TO_DAYS(NOW()) - TO_DAYS(`LG_Statistic`.`createDate`))
-                        WHEN 0 THEN 'TODAY'
-                        WHEN (TO_DAYS(NOW()) - TO_DAYS((NOW() - INTERVAL 1 DAY))) THEN 'DAY'
-                        WHEN (TO_DAYS(NOW()) - TO_DAYS((NOW() - INTERVAL 1 WEEK))) THEN 'WEEK'
-                        WHEN (TO_DAYS(NOW()) - TO_DAYS((NOW() - INTERVAL 1 MONTH))) THEN 'MONTH'
-                        WHEN (TO_DAYS(NOW()) - TO_DAYS((NOW() - INTERVAL 6 MONTH))) THEN 'HALF YEAR'
-                        WHEN (TO_DAYS(NOW()) - TO_DAYS((NOW() - INTERVAL 1 YEAR))) THEN 'YEAR'
-                        ELSE ''
-                    END)
-            ) AS `intervalName`,
-        MAX(`LG_Statistic`.`createDate`) AS `compareDate`,
-        (SELECT 
-                `s1`.`publicVideos`
-            FROM
-                `LG_Statistic` `s1`
-            WHERE
-                (((TO_DAYS(NOW()) - TO_DAYS(`s1`.`createDate`)) = `videoStatisticId`)
-                    AND (`s1`.`createDate` = MAX(`LG_Statistic`.`createDate`)))) AS `publicVideos`,
-        (SELECT 
-                `s1`.`privateVideos`
-            FROM
-                `LG_Statistic` `s1`
-            WHERE
-                (((TO_DAYS(NOW()) - TO_DAYS(`s1`.`createDate`)) = `videoStatisticId`)
-                    AND (`s1`.`createDate` = MAX(`LG_Statistic`.`createDate`)))) AS `privateVideos`,
-        (SELECT 
-                (`s1`.`privateVideos` + `s1`.`publicVideos`)
-            FROM
-                `LG_Statistic` `s1`
-            WHERE
-                (((TO_DAYS(NOW()) - TO_DAYS(`s1`.`createDate`)) = `videoStatisticId`)
-                    AND (`s1`.`createDate` = MAX(`LG_Statistic`.`createDate`)))) AS `totalVideos`,
-        (SELECT 
-                TRUNCATE((ROUND((`s1`.`publicVideos` / (`s1`.`privateVideos` + `s1`.`publicVideos`)),
-                                2) * 100),
-                        0)
-            FROM
-                `LG_Statistic` `s1`
-            WHERE
-                (((TO_DAYS(NOW()) - TO_DAYS(`s1`.`createDate`)) = `videoStatisticId`)
-                    AND (`s1`.`createDate` = MAX(`LG_Statistic`.`createDate`)))) AS `pubPercent`,
-        (SELECT 
-                TRUNCATE((ROUND((`s1`.`privateVideos` / (`s1`.`privateVideos` + `s1`.`publicVideos`)),
-                                2) * 100),
-                        0)
-            FROM
-                `LG_Statistic` `s1`
-            WHERE
-                (((TO_DAYS(NOW()) - TO_DAYS(`s1`.`createDate`)) = `videoStatisticId`)
-                    AND (`s1`.`createDate` = MAX(`LG_Statistic`.`createDate`)))) AS `privPercent`,
-        NOW() AS `createDate`,
-        NOW() AS `modifiedDate`,
-        (SELECT 
-                COUNT(0)
-            FROM
-                `LG_Video`
-            WHERE
-                ((`LG_Video`.`openAccess` = 1)
-                    AND (`LG_Video`.`filename` IS NOT NULL))) AS `currentPublic`,
-        (SELECT 
-                COUNT(0)
-            FROM
-                `LG_Video`
-            WHERE
-                ((`LG_Video`.`openAccess` = 0)
-                    AND (`LG_Video`.`filename` IS NOT NULL))) AS `currentPrivate`,
-        (SELECT 
-                COUNT(0)
-            FROM
-                `LG_Video`
-            WHERE
-                ((1 = 1)
-                    AND (`LG_Video`.`filename` IS NOT NULL))) AS `currentTotal`,
-        (SELECT 
-                TRUNCATE((ROUND((`currentPublic` / (`currentPrivate` + `currentPublic`)),
-                                2) * 100),
-                        0)
-            FROM
-                `LG_Statistic` `s1`
-            WHERE
-                (((TO_DAYS(NOW()) - TO_DAYS(`s1`.`createDate`)) = `videoStatisticId`)
-                    AND (`s1`.`createDate` = MAX(`LG_Statistic`.`createDate`)))) AS `curPubPercent`,
-        (SELECT 
-                TRUNCATE((ROUND((`currentPrivate` / (`currentPrivate` + `currentPublic`)),
-                                2) * 100),
-                        0)
-            FROM
-                `LG_Statistic` `s1`
-            WHERE
-                (((TO_DAYS(NOW()) - TO_DAYS(`s1`.`createDate`)) = `videoStatisticId`)
-                    AND (`s1`.`createDate` = MAX(`LG_Statistic`.`createDate`)))) AS `curPrivPercent`,
-        (SELECT 
-                (`currentPublic` - `s1`.`publicVideos`)
-            FROM
-                `LG_Statistic` `s1`
-            WHERE
-                (((TO_DAYS(NOW()) - TO_DAYS(`s1`.`createDate`)) = `videoStatisticId`)
-                    AND (`s1`.`createDate` = MAX(`LG_Statistic`.`createDate`)))) AS `publicDiff`,
-        (SELECT 
-                (`currentPrivate` - `s1`.`privateVideos`)
-            FROM
-                `LG_Statistic` `s1`
-            WHERE
-                (((TO_DAYS(NOW()) - TO_DAYS(`s1`.`createDate`)) = `videoStatisticId`)
-                    AND (`s1`.`createDate` = MAX(`LG_Statistic`.`createDate`)))) AS `privateDiff`,
-        (SELECT 
-                (`currentTotal` - (`s1`.`privateVideos` + `s1`.`publicVideos`))
-            FROM
-                `LG_Statistic` `s1`
-            WHERE
-                (((TO_DAYS(NOW()) - TO_DAYS(`s1`.`createDate`)) = `videoStatisticId`)
-                    AND (`s1`.`createDate` = MAX(`LG_Statistic`.`createDate`)))) AS `totalDiff`
-    FROM
-        `LG_Statistic`
-    WHERE
-        (TO_DAYS(NOW()) - TO_DAYS(`LG_Statistic`.`createDate`)) IN (SELECT 
-                `LG_Statistic`.`statisticId`
-            FROM
-                `LG_Statistic`
-            WHERE
-                (`LG_Statistic`.`statisticId` <= 366)
-            ORDER BY `LG_Statistic`.`statisticId`)
-    GROUP BY (TO_DAYS(NOW()) - TO_DAYS(`LG_Statistic`.`createDate`)) DESC
-    ORDER BY `LG_Statistic`.`createDate` DESC
+			CREATE OR REPLACE 
+			VIEW LG_VideoStatistic AS 
+			SELECT DATEDIFF(NOW(),LG_Statistic.createDate ) AS dateDiff, 
+			(SELECT CASE DATEDIFF(NOW(),LG_Statistic.createDate) WHEN 0 THEN 0 WHEN DATEDIFF(NOW(),DATE_SUB(NOW(),INTERVAL 1 DAY)) THEN 1 WHEN DATEDIFF(NOW(),DATE_SUB(NOW(),INTERVAL 1 WEEK)) THEN 2 WHEN DATEDIFF(NOW(),DATE_SUB(NOW(),INTERVAL 1 MONTH)) THEN 3  WHEN DATEDIFF(NOW(),DATE_SUB(NOW(),INTERVAL 1 YEAR)) THEN 4  ELSE NULL END) AS timespanId, 
+			MAX(LG_Statistic.createDate) AS maxDate,  
+			(SELECT s1.publicVideos FROM LG_Statistic s1 WHERE DATEDIFF(NOW(),s1.createDate) = dateDiff AND s1.createDate = MAX(LG_Statistic.createDate) )AS public, 
+			(SELECT s1.privateVideos FROM LG_Statistic s1 WHERE DATEDIFF(NOW(),s1.createDate) = dateDiff AND s1.createDate = MAX(LG_Statistic.createDate) )AS private, 
+			(SELECT s1.privateVideos+s1.publicVideos FROM LG_Statistic s1 WHERE DATEDIFF(NOW(),s1.createDate) = dateDiff AND s1.createDate = MAX(LG_Statistic.createDate))AS total,  
+			(SELECT TRUNCATE(ROUND((s1.publicVideos)/(s1.privateVideos+s1.publicVideos),2)*100,0) FROM LG_Statistic s1 WHERE DATEDIFF(NOW(),s1.createDate) = dateDiff AND s1.createDate = MAX(LG_Statistic.createDate))AS pubPercent, 
+			(SELECT TRUNCATE(ROUND((s1.privateVideos)/(s1.privateVideos+s1.publicVideos),2)*100,0) FROM LG_Statistic s1 WHERE DATEDIFF(NOW(),s1.createDate) = dateDiff AND s1.createDate = MAX(LG_Statistic.createDate) )AS privPercent,  
+			NOW() AS current, 
+			(SELECT COUNT(*) FROM LG_Video WHERE openAccess = 1 AND filename IS NOT NULL) AS currentPublic, 
+			(SELECT COUNT(*) FROM LG_Video WHERE openAccess = 0 AND filename IS NOT NULL) AS currentPrivate, 
+			(SELECT COUNT(*) FROM LG_Video WHERE 1=1 AND filename IS NOT NULL) AS currentTotal, 
+			(SELECT TRUNCATE(ROUND((currentPublic)/(currentPrivate+currentPublic),2)*100,0) FROM LG_Statistic s1 WHERE DATEDIFF(NOW(),s1.createDate) = dateDiff AND s1.createDate = MAX(LG_Statistic.createDate)) AS curPubPercent, 
+			(SELECT TRUNCATE(ROUND((currentPrivate)/(currentPrivate+currentPublic),2)*100,0) FROM LG_Statistic s1 WHERE DATEDIFF(NOW(),s1.createDate) = dateDiff AND s1.createDate = MAX(LG_Statistic.createDate)) AS curPrivPercent, 
+			(SELECT currentPublic-s1.publicVideos FROM LG_Statistic s1 WHERE DATEDIFF(NOW(),s1.createDate) = dateDiff AND s1.createDate = MAX(LG_Statistic.createDate)) AS publicDiff, 
+			(SELECT currentPrivate-s1.privateVideos FROM LG_Statistic s1 WHERE DATEDIFF(NOW(),s1.createDate) = dateDiff AND s1.createDate = MAX(LG_Statistic.createDate)) AS privateDiff, 
+			(SELECT currentTotal-(s1.privateVideos+s1.publicVideos) FROM LG_Statistic s1 WHERE DATEDIFF(NOW(),s1.createDate) = dateDiff AND s1.createDate = MAX(LG_Statistic.createDate))AS totalDiff 
+			FROM LG_Video 
+			JOIN LG_Statistic on (1=1 AND(  
+				DATEDIFF(NOW(),LG_Statistic.createDate ) = 0 OR  
+				DATEDIFF(NOW(),LG_Statistic.createDate ) = DATEDIFF(NOW(),DATE_SUB(NOW(),INTERVAL 1 DAY))  OR  
+				DATEDIFF(NOW(),LG_Statistic.createDate ) = DATEDIFF(NOW(),DATE_SUB(NOW(),INTERVAL 1 WEEK))  OR  
+				DATEDIFF(NOW(),LG_Statistic.createDate ) = DATEDIFF(NOW(),DATE_SUB(NOW(),INTERVAL 1 MONTH))  OR 
+				DATEDIFF(NOW(),LG_Statistic.createDate ) = DATEDIFF(NOW(),DATE_SUB(NOW(),INTERVAL 1 YEAR)) 
+			)) 
+			GROUP BY dateDiff DESC 
+			ORDER BY createDate DESC
 		]]>
     </sql>
+		
 </custom-sql>

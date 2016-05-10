@@ -90,7 +90,12 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.finder.cache.enabled.de.uhh.l2g.plugins.model.VideoStatistic"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.VideoStatistic"),
+			true);
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long VIDEOSTATISTICID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.VideoStatistic"));
 
@@ -275,7 +280,19 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 
 	@Override
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
 		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	@Override
@@ -285,7 +302,19 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 
 	@Override
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@Override
@@ -433,6 +462,10 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 		_intervalName = intervalName;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
@@ -527,6 +560,17 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 
 	@Override
 	public void resetOriginalValues() {
+		VideoStatisticModelImpl videoStatisticModelImpl = this;
+
+		videoStatisticModelImpl._originalGroupId = videoStatisticModelImpl._groupId;
+
+		videoStatisticModelImpl._setOriginalGroupId = false;
+
+		videoStatisticModelImpl._originalCompanyId = videoStatisticModelImpl._companyId;
+
+		videoStatisticModelImpl._setOriginalCompanyId = false;
+
+		videoStatisticModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -728,7 +772,11 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 		};
 	private long _videoStatisticId;
 	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private Date _compareDate;
@@ -743,5 +791,6 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 	private int _currentPubPercent;
 	private int _currentPrivPercent;
 	private String _intervalName;
+	private long _columnBitmask;
 	private VideoStatistic _escapedModel;
 }

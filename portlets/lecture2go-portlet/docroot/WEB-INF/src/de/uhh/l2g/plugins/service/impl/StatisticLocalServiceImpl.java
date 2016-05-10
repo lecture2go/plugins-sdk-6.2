@@ -108,6 +108,12 @@ public class StatisticLocalServiceImpl
 	
 	}
 
+	public int rebuildVideoStatsTable(){
+		//add new statistic entry
+		return StatisticFinderUtil.addNewStatisticEntry();
+	}
+	
+	
 	/** 
 	 *
 	 * */

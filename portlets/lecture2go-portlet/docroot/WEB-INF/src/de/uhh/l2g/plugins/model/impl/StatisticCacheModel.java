@@ -40,24 +40,24 @@ public class StatisticCacheModel implements CacheModel<Statistic>,
 	public String toString() {
 		StringBundler sb = new StringBundler(21);
 
-		sb.append("{statisticId=");
-		sb.append(statisticId);
-		sb.append(", groupId=");
-		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
+		sb.append("{createDate=");
+		sb.append(createDate);
 		sb.append(", publicVideos=");
 		sb.append(publicVideos);
 		sb.append(", privateVideos=");
 		sb.append(privateVideos);
 		sb.append(", autofillRow=");
 		sb.append(autofillRow);
+		sb.append(", statisticId=");
+		sb.append(statisticId);
+		sb.append(", groupId=");
+		sb.append(groupId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
 		sb.append(userName);
-		sb.append(", createDate=");
-		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
 		sb.append("}");
@@ -69,12 +69,19 @@ public class StatisticCacheModel implements CacheModel<Statistic>,
 	public Statistic toEntityModel() {
 		StatisticImpl statisticImpl = new StatisticImpl();
 
-		statisticImpl.setStatisticId(statisticId);
-		statisticImpl.setGroupId(groupId);
-		statisticImpl.setCompanyId(companyId);
+		if (createDate == Long.MIN_VALUE) {
+			statisticImpl.setCreateDate(null);
+		}
+		else {
+			statisticImpl.setCreateDate(new Date(createDate));
+		}
+
 		statisticImpl.setPublicVideos(publicVideos);
 		statisticImpl.setPrivateVideos(privateVideos);
 		statisticImpl.setAutofillRow(autofillRow);
+		statisticImpl.setStatisticId(statisticId);
+		statisticImpl.setGroupId(groupId);
+		statisticImpl.setCompanyId(companyId);
 		statisticImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -82,13 +89,6 @@ public class StatisticCacheModel implements CacheModel<Statistic>,
 		}
 		else {
 			statisticImpl.setUserName(userName);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			statisticImpl.setCreateDate(null);
-		}
-		else {
-			statisticImpl.setCreateDate(new Date(createDate));
 		}
 
 		if (modifiedDate == Long.MIN_VALUE) {
@@ -105,27 +105,28 @@ public class StatisticCacheModel implements CacheModel<Statistic>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		statisticId = objectInput.readLong();
-		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
+		createDate = objectInput.readLong();
 		publicVideos = objectInput.readInt();
 		privateVideos = objectInput.readInt();
 		autofillRow = objectInput.readInt();
+		statisticId = objectInput.readLong();
+		groupId = objectInput.readLong();
+		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
-		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(statisticId);
-		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
+		objectOutput.writeLong(createDate);
 		objectOutput.writeInt(publicVideos);
 		objectOutput.writeInt(privateVideos);
 		objectOutput.writeInt(autofillRow);
+		objectOutput.writeLong(statisticId);
+		objectOutput.writeLong(groupId);
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -135,18 +136,17 @@ public class StatisticCacheModel implements CacheModel<Statistic>,
 			objectOutput.writeUTF(userName);
 		}
 
-		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 	}
 
-	public long statisticId;
-	public long groupId;
-	public long companyId;
+	public long createDate;
 	public int publicVideos;
 	public int privateVideos;
 	public int autofillRow;
+	public long statisticId;
+	public long groupId;
+	public long companyId;
 	public long userId;
 	public String userName;
-	public long createDate;
 	public long modifiedDate;
 }
