@@ -419,6 +419,9 @@ p.smallitalic {
     border: medium none;
 }
 
+#searchedvideos > button.rotated, #allvideos > button.rotated {
+	transform: rotate(180deg);
+}
 #searchedvideo {
     display: block;
     overflow: hidden;
