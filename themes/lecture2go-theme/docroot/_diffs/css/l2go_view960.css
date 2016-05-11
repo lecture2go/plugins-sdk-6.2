@@ -3,12 +3,9 @@
 	    background: rgba(0, 0, 0, 0) url("/lecture2go-theme/images/logo_l2go.png") no-repeat scroll right -3px top -8px / 159px auto;
 	}
 
-	.aui .row-fluid::before, .aui .row-fluid::after {
+	#main-content,
+	.catalogue-container {
 	    margin-top: 30px;
-	}
-	
-	fieldset.list {
-    	margin-top: -22px;
 	}
 
 	#wrapper {
@@ -81,15 +78,15 @@
     	padding: 0;
 	}
 
-	.aui .row-fluid .span9 {
+	.catalogue-container .row-fluid .span9 {
 	    width: 74%;
 	}
 	
-	.aui .row-fluid .span3 {
+	.catalogue-container .row-fluid .span3 {
 	    width: 25%;
 	}	
 	
-	.aui .row-fluid [class*="span"] {
+	.catalogue-container .row-fluid [class*="span"] {
 	    margin-left: 1%;
 	}
 	

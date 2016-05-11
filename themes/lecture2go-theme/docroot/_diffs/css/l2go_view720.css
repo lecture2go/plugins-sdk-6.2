@@ -3,15 +3,15 @@
 		display:none;
 	}
 	
-	.aui .row-fluid .span9 {
+	.catalogue-container .row-fluid .span9 {
 	    width: 74%;
 	}
 	
-	.aui .row-fluid .span3 {
+	.catalogue-container .row-fluid .span3 {
 	    width: 25%;
 	}	
 	
-	.aui .row-fluid [class*="span"] {
+	.catalogue-container .row-fluid [class*="span"] {
 	    margin-left: 1%;
 	}
 	
@@ -95,7 +95,7 @@
 	    margin-top: -50px;
 	}
 
-	.row-fluid .span3 {
+	.catalogue-container .row-fluid .span3 {
 	    margin: 0px;
 	    padding: 0px;
 	    float: left;
@@ -118,7 +118,7 @@
 	    visibility: hidden;
 	}
 	
-	.row-fluid .span9 {
+	.catalogue-container .row-fluid .span9 {
 	    float: left;
 	}
 	
