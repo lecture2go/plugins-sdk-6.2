@@ -62,9 +62,34 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 		return cl;
 	}
 	
+	public String getCommaSeparatedCreatorsByLectureseriesIdAndMaxCreators(Long lectureseriesId, int maxCreators){
+		List<Creator> creatorList = getCreatorsByLectureseriesId(lectureseriesId);
+		String creators = createCommaSeparatedStringFromCreatorList(creatorList, maxCreators);
+		return creators;
+	}
+	
 	public List<Creator> getCreatorsByVideoId(Long videoId){
 		List<Creator> cl = CreatorFinderUtil.findCreatorsByVideo(videoId);
 		return cl;
+	}
+	
+	public String getCommaSeparatedCreatorsByVideoIdAndMaxCreators(Long videoId, int maxCreators){
+		List<Creator> creatorList = getCreatorsByVideoId(videoId);
+		String creators = createCommaSeparatedStringFromCreatorList(creatorList, maxCreators);
+		return creators;
+	}
+	
+	private String createCommaSeparatedStringFromCreatorList(List<Creator> creatorList, int maxCreators) {
+		List<String> creatorFullnameList = new ArrayList<String>();
+		for (Creator creator: creatorList) { 
+			creatorFullnameList.add(creator.getFullName());
+		}
+
+		String creators = com.liferay.portal.kernel.util.StringUtil.merge(creatorFullnameList,", ");
+		if (creatorFullnameList.size() > maxCreators) {
+			creators += " u.a.";
+		}
+		return creators;
 	}
 	
 	public JSONArray getJSONCreatorsByVideoId(Long videoId){

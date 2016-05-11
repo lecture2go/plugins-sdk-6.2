@@ -319,13 +319,8 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		}
 		
 		//creators
-		List<Creator> cl = CreatorLocalServiceUtil.getCreatorsByVideoId(videoId);
-		String cS = "";
-		ListIterator<Creator> cli = cl.listIterator();
-		while(cli.hasNext()){
-			cS+=cli.next().getFullName()+"; ";
-		}
-		objectVideo.setCreators(cS);
+		String creators = CreatorLocalServiceUtil.getCommaSeparatedCreatorsByVideoIdAndMaxCreators(videoId,3);
+		objectVideo.setCreators(creators);
 		
 		//get download Links 
 		@SuppressWarnings("unused")

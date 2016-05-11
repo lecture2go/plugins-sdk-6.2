@@ -1669,3 +1669,335 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 .sub-inst .alert.alert-info {
     margin-left: 10px !important;
 }
+
+
+/*** FRONT PAGE ***/
+
+
+.front-page-teaser {
+	margin-top: -28px;
+	position: relative;
+}
+
+/*** front page background-video specific ***/
+	
+.bg-video-container {
+	position: relative;
+	width: 100%;
+	display: inline-block;
+	/* line-height 0 to avoid empty space after inline-block element */
+	line-height: 0;
+}
+
+#bg-vid {
+	width: 100%;
+}
+
+.dark-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;   
+    height: 100%; 
+    background-color: #000000;
+    opacity: .75;
+}
+
+/*** end: front page background-video specific  ***/
+
+.l2go-info {
+	left:15%;
+	width:63%;
+	top:10%;
+	position: absolute;
+}
+
+.l2go-info > .catalogue-button {
+	display: none;
+}
+
+.l2go-description {
+	font-family: TheSansUHH,sans-serif;
+    font-size: 14px;
+	color: #fff;
+	margin-bottom: 40px;
+}
+
+.l2go-description a {
+	color: #fff;
+	text-decoration: underline;
+}
+
+.big-search > .search {
+    position: relative;
+    /* reset the margins */
+    margin: 0 0 0 180px;
+    /* TODO: we cut the parts which are bigger than the parent div with overflow: hidden (Where is this coming from??)*/
+    overflow: hidden;
+}
+
+.big-search > .search input.button {
+    clear: both;
+    float: none;
+    height: 25px;
+    position: absolute;
+    right: 0;
+    padding: 2px;
+    margin: 0;
+    bottom: 0;
+}
+
+.big-search #_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
+	float:none;
+	margin: 0;
+	margin-left: 0;
+	width: 100%;
+}
+
+.big-search .filter-facility-button {
+	float: left;
+	width: 180px;
+	margin: 0;
+	height: 29px;
+	color: #ffffff;
+    background-color: #282828;
+    background-image: none;
+    box-shadow: none;
+} 
+
+.big-search .filter-facility-button:hover, 
+.big-search .filter-facility-button:focus, 
+.big-search .filter-facility-button:active {
+	background-color: #323232;
+}
+
+.filter-facility-menu {
+	padding: 5px 5px 10px 20px;
+	display: none;
+	background-color: #d9d7d7;
+	z-index: 9999;
+	position: absolute;
+	width: 100%;
+}
+
+.filter-facility-menu li {
+	margin: 5px 0;
+}
+
+.l2go-info  .catalogue-button {
+    height: 40px;
+    background: #d81b1b;
+    color: #ffffff;
+    width: 100%;
+	/* ignore the 20px padding from filter-facility-menu to fill the whole space */
+	margin: 25px -20px 0 -20px;
+}
+
+.video-box-list-container {
+	width: 95%;
+	margin: auto;	
+}
+
+/* this flex container with wrap is used to resize the grids, so all have the same height */
+.row-fluid.video-box-list { 
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display:  flex;
+	flex-wrap: wrap;
+}
+
+.row-fluid.video-box-list > [class*='span'] { 
+	display: flex; 
+	flex-direction: column;
+}
+
+.video-box { 
+	background-color: #F6F6F6; 
+	padding: 7px; 
+}
+
+
+/*** carousel specific ***/
+
+.video-box-list-container .carousel-control {
+    position: absolute;
+    top: 110px;
+    left: -40px;
+    font-size: 30px;
+    font-weight: 100;
+    line-height: 30px;
+    color: #999999;
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: none;
+    margin: 0;
+    opacity: 1;
+}
+
+.video-box-list-container .carousel-control:hover,
+.video-box-list-container .carousel-control:focus,
+.video-box-list-container .carousel-control:active
+{
+	color: #aaaaaa;
+}
+
+.video-box-list-container .carousel-control.right {
+	left: auto;
+    right: -40px;
+}
+
+/*** end: carousel specific  ***/
+
+/* keep the video-box-image at 16:9 (the padding-top) */
+.video-box-image {
+    position: relative;
+	padding-top: 56.25%;
+}
+
+.video-box-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.video-box {
+	position: relative;
+}
+
+.video-box-date {
+	margin: 0 0 5px 0;
+}
+
+
+.video-box-content .title-small {
+	width: 100%;
+	margin-bottom: 3px;
+}
+
+.video-box-content .creator-small2 {
+    margin: 0 0 5px 0;
+    font-size: 12px;
+}
+
+.video-box-content .lectureseries-small {
+    margin: 0 0 20px 0;
+    padding: 0;
+}
+
+.video-box-content .label {
+	position:absolute;
+	bottom: 5px;
+	text-overflow: ellipsis;
+  	max-width: 180px;
+  	overflow: hidden;
+
+}
+
+/* without video
+.front-page-teaser {
+	background-size: cover;
+	background-image: linear-gradient(
+      rgba(0, 0, 0, 0.6), 
+      rgba(0, 0, 0, 0.6)
+    ),
+    url(/lecture2go-portlet/img/background_still.png);
+	background-repeat: no-repeat;
+	height: 400px;
+	padding-top: 60px;
+	margin-top: 0;
+	position: relative;
+}
+
+*/
+
+@media (max-width: 959px) {
+
+	/* hide for mobile view */
+    .bg-video-container,
+    .big-search .filter-facility-button,
+    .filter-facility-menu  {
+		display: none;
+	}
+
+	/* use a background-image and no video on mobile devices */
+    .front-page-teaser {
+		background-size: cover;
+		background-image: linear-gradient(
+	      rgba(0, 0, 0, 0.6), 
+	      rgba(0, 0, 0, 0.6)
+	    ),
+	    url(/lecture2go-portlet/img/background_still.png);
+		background-repeat: no-repeat;
+		height: 250px;
+		padding-top: 60px;
+		margin-top: 0;
+		position: relative;
+	}
+
+    .l2go-info {
+      	left:5%;
+      	width:90%;
+      	top: 5%;
+    }
+
+    .l2go-info .catalogue-button {
+		display: block;
+		position: absolute;
+		left: 20%;
+		width: 60%;
+		margin: auto;
+		/* reduce the padding to give the text more place in small views */
+		padding: 0;
+	}
+
+	.video-box-list-container {
+		width: 100%;
+		margin: 0;
+	}
+
+	.row-fluid.video-box-list > [class*='span'] { 
+		flex-direction: row; 
+	}
+
+	.video-box {
+		padding: 5px;
+		margin-bottom: 5px;
+	}
+
+	.video-box-date {
+		/* change the flexbox order */
+		order: 99;
+		/* center vertically */
+		transform: translateY(50%);
+	}
+
+	.video-box-image-container { 
+  		flex: 0 0 113px;
+  		margin-right: 7px;
+	}
+
+	.video-box-content {
+		font-size: 11px;
+		/* the video-box-content takes all the leftover space between the video-box-image and the video-box-date */
+		flex-grow: 1;
+	}
+
+	.video-box-content .creator-small2 {
+		display:block;
+		font-size: 11px;
+	}	
+
+	.video-box-content .lectureseries-small {
+	    padding: 0;
+	}
+
+	.video-box-date .date {
+	    font-size: 11px;
+	}
+}
+
+/*** END FRONT PAGE ***/
