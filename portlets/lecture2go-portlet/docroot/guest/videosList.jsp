@@ -209,7 +209,7 @@
 </portlet:actionURL>		
 
 		
-<liferay-ui:search-container emptyResultsMessage="no-lectureseries-found" delta="15" iteratorURL="<%=portletURL %>" >
+<liferay-ui:search-container emptyResultsMessage="no-lectureseries-found" delta="10" iteratorURL="<%=portletURL %>" >
 	<liferay-ui:search-container-results>
 		<%
 			tempLectureseriesList = reqLectureseries;
@@ -239,11 +239,12 @@
 			List<Video> vl = new ArrayList<Video>();
 			ListIterator<Video> vli = vl.listIterator();
 
-			if(videoCount>0 && isSearched){
-				//get videos by search word and lecture series
+			if (videoCount > 0 && isSearched) {
+				// get videos by search word and lecture series
 				vl = VideoLocalServiceUtil.getBySearchWordAndLectureseriesId(searchQuery, new Long(oId));
-			}else{
-				vl = VideoLocalServiceUtil.getByLectureseries(new Long(oId));
+			} else {
+				// get all videos of the lecture series
+				vl = VideoLocalServiceUtil.getByLectureseriesAndOpenaccess(new Long(oId), 1);
 			}
 			vli = vl.listIterator();
 		%>
@@ -316,6 +317,7 @@
 							        </a>
 							    	<%									
 								}else{
+									// single Video without lecture series
 									Video v = new VideoImpl();
 									v = vl.get(0);
 									String vId = v.getVideoId()+"";
@@ -328,7 +330,6 @@
 									</portlet:actionURL>
 							        
 							        <a href="<%=view2URL%>">
-							          <span class="badge"><%=videoCount%></span>
 								       <div class="videotile metainfolist ">
 									        <div class="video-image-wrapper">
 									          <img class="video-image-big layered-paper" src="<%=vidDummy.getImageMedium()%>"/>
@@ -381,6 +382,7 @@
 							    	<%										
 								}
 							}else{
+								// multiple videos in lecture series
 								%>
 							        <a href="<%=view1URL%>">
 							          <span class="badge"><%=videoCount%></span>
@@ -441,8 +443,11 @@
 				</div>
 				
 				<!-- sublist for searched videos -->
-				<%if(videoCount>1 && isSearched){ %>
-					<div id="searchedvideos">
+				<%
+					String videoDivTitle = "";
+				if (videoCount>1) {
+					if (isSearched) { videoDivTitle = "searchedvideos"; } else { videoDivTitle = "allvideos"; }%>
+					<div id="<%=videoDivTitle%>">
 							<button id="<%="b"+oId%>" >
 								<span class="lfr-icon-menu-text">
 									<i class="icon-large icon-chevron-down"></i>
@@ -498,9 +503,10 @@
 							<%}%>
 							</ul>
 							<script>
-							$("<%="#b"+oId%>").click(function() {
-								$("<%="#p"+oId%>").slideToggle("slow");
-							});
+								$("<%="#b"+oId%>").click(function() {
+									$(this).toggleClass("rotated");
+									$("<%="#p"+oId%>").slideToggle("slow");
+								});
 							</script>
 						</div>
 				<%}%>
