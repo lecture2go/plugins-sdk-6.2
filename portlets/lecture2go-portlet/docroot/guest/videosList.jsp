@@ -209,7 +209,7 @@
 </portlet:actionURL>		
 
 		
-<liferay-ui:search-container emptyResultsMessage="no-lectureseries-found" delta="15" iteratorURL="<%=portletURL %>" >
+<liferay-ui:search-container emptyResultsMessage="no-lectureseries-found" delta="10" iteratorURL="<%=portletURL %>" >
 	<liferay-ui:search-container-results>
 		<%
 			tempLectureseriesList = reqLectureseries;
@@ -244,7 +244,7 @@
 				vl = VideoLocalServiceUtil.getBySearchWordAndLectureseriesId(searchQuery, new Long(oId));
 			} else {
 				// get all videos of the lecture series
-				vl = VideoLocalServiceUtil.getByLectureseries(new Long(oId));
+				vl = VideoLocalServiceUtil.getByLectureseriesAndOpenaccess(new Long(oId), 1);
 			}
 			vli = vl.listIterator();
 		%>
