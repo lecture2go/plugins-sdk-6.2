@@ -12,6 +12,25 @@
     min-height: 45px;
 }
 
+#searchedvideos, #allvideos {
+    margin-left: 60px;
+    background-color: #F3F3F3;
+    margin-top: 0px;
+    border-bottom: 1px solid #F3F3F3 !important;
+}
+
+#searchedvideos > button, #allvideos > button {
+    float: right;
+    margin-top: -25px;
+    margin-right: 3px;
+    background-color: transparent;
+    border: medium none;
+}
+
+#searchedvideos > button.rotated, #allvideos > button.rotated {
+	transform: rotate(180deg);
+}
+
 fieldset.fieldset.add-streaming-server div.layout {
     margin-left: -11px;
     margin-top: -40px;
@@ -402,25 +421,6 @@ p.smallitalic {
     float: right;
     padding: 0px;
     color: #E2001A;
-}
-
-#searchedvideos {
-    margin-left: 60px;
-    background-color: #F3F3F3;
-    margin-top: 0px;
-    border-bottom: 1px solid #F3F3F3 !important;
-}
-
-#searchedvideos > button {
-    float: right;
-    margin-top: -25px;
-    margin-right: 3px;
-    background-color: transparent;
-    border: medium none;
-}
-
-#searchedvideos > button.rotated, #allvideos > button.rotated {
-	transform: rotate(180deg);
 }
 
 #searchedvideo {
