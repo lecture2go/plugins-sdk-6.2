@@ -404,14 +404,14 @@ p.smallitalic {
     color: #E2001A;
 }
 
-#searchedvideos, #allvideos {
+#searchedvideos {
     margin-left: 60px;
     background-color: #F3F3F3;
     margin-top: 0px;
     border-bottom: 1px solid #F3F3F3 !important;
 }
 
-#searchedvideos > button, #allvideos > button {
+#searchedvideos > button {
     float: right;
     margin-top: -25px;
     margin-right: 3px;

@@ -85,11 +85,11 @@
 	    visibility: hidden;
 	}
 	
-	.catalogue-container .row-fluid .span3 {
+	.row-fluid .span3 {
 	    width: 100%;
 	}
 	
-	.catalogue-container .row-fluid .span9 {
+	.row-fluid .span9 {
 	    width: 100%;
 	}
 	
@@ -126,7 +126,7 @@
 	    width: 100%;
 	}
 	
-	.catalogue-container .row-fluid .span9 {
+	.row-fluid .span9 {
 	    float: left;
 	    width: 100%;
 	}
