@@ -3,12 +3,9 @@
 	    background: rgba(0, 0, 0, 0) url("/lecture2go-theme/images/logo_l2go.png") no-repeat scroll right -3px top -8px / 159px auto;
 	}
 
-	.catalogue-container .row-fluid::before, .aui .row-fluid::after {
+	#main-content,
+	.catalogue-container {
 	    margin-top: 30px;
-	}
-	
-	fieldset.list {
-    	margin-top: -22px;
 	}
 
 	#wrapper {
@@ -45,7 +42,7 @@
 	    float: right;
 	    height: 24px;
 	    margin-right: -313px;
-	    margin-top: 3px;
+	    margin-top: -27px;
 	}
 	
 	.aui .container-fluid::before, .aui .container-fluid::after {
@@ -59,7 +56,7 @@
 	#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 	    float: right;
 	    height: 19px;
-	    margin: 0 0 2px;
+	    margin: -30px 0 2px;
 	    padding: 4px 0 4px 4px;
 	    width: 309px;
 	}
