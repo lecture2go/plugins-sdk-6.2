@@ -906,6 +906,10 @@ public class VideoStatisticPersistenceImpl extends BasePersistenceImpl<VideoStat
 		videoStatisticImpl.setCurrentPubPercent(videoStatistic.getCurrentPubPercent());
 		videoStatisticImpl.setCurrentPrivPercent(videoStatistic.getCurrentPrivPercent());
 		videoStatisticImpl.setIntervalName(videoStatistic.getIntervalName());
+		videoStatisticImpl.setPublicDiff(videoStatistic.getPublicDiff());
+		videoStatisticImpl.setPrivateDiff(videoStatistic.getPrivateDiff());
+		videoStatisticImpl.setTotalDiff(videoStatistic.getTotalDiff());
+		videoStatisticImpl.setDateDiff(videoStatistic.getDateDiff());
 
 		return videoStatisticImpl;
 	}

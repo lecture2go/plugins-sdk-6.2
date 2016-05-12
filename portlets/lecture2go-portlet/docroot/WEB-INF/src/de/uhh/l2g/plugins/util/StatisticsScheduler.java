@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
-import com.liferay.portal.service.ServiceContext;
 
 import de.uhh.l2g.plugins.service.StatisticLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
@@ -53,21 +52,12 @@ import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 @SuppressWarnings("serial")
 public class StatisticsScheduler extends PortletScheduler implements MessageListener {  
 	private static Log LOG;	
-	private ServiceContext serviceContext;	
-	
 	  
     public StatisticsScheduler(){
     	super();
     	LOG = LogFactoryUtil.getLog(StatisticsScheduler.class.getName());
     }
     
-	public StatisticsScheduler(String schedulerClassName, ServiceContext serviceContext) {
-		super(StatisticsScheduler.class.getName(), serviceContext);
-	    this.schedulerClassName = StatisticsScheduler.class.getName();
-	    LOG = LogFactoryUtil.getLog(StatisticsScheduler.class.getName());
-	    this.serviceContext = serviceContext;
-	}
-
 	@Override
     public void receive(Message message) throws MessageListenerException {
 	   //uncoment for further debug messages
@@ -79,8 +69,8 @@ public class StatisticsScheduler extends PortletScheduler implements MessageList
 	   try {
 		   publicVideos=VideoLocalServiceUtil.getByOpenAccess(1).size();
 		   privateVideos=VideoLocalServiceUtil.getByOpenAccess(0).size();
-		   //
-		   StatisticLocalServiceUtil.addEntry(privateVideos, publicVideos, serviceContext);
+		   //TODO can not get the service context for using the addEntry method, because of the scheduler! And can't find workaround.
+		   StatisticLocalServiceUtil.add(privateVideos, publicVideos);
 	   } catch (PortalException e) {
 		   LOG.info("Statistics Scheduler failed.");
 	   } catch (SystemException e) {

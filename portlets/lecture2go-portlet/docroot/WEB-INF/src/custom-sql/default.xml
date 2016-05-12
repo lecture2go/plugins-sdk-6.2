@@ -25,6 +25,12 @@
 		]]>
     </sql>
     
+    <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.findVideoStatistics">
+		<![CDATA[
+			SELECT * FROM LG_VideoStatistic;  
+		]]>
+    </sql>
+    
     <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.findVideosBySearchWordAndLectureseriesId">
 		<![CDATA[
 			SELECT v.* 
