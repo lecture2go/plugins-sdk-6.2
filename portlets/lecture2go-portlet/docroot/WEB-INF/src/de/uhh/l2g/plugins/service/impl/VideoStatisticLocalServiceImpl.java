@@ -18,9 +18,9 @@ import java.util.List;
 
 import com.liferay.portal.kernel.exception.SystemException;
 
-import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.VideoStatistic;
 import de.uhh.l2g.plugins.service.base.VideoStatisticLocalServiceBaseImpl;
+import de.uhh.l2g.plugins.service.persistence.VideoStatisticFinderUtil;
 
 /**
  * The implementation of the video statistic local service.
@@ -38,17 +38,17 @@ import de.uhh.l2g.plugins.service.base.VideoStatisticLocalServiceBaseImpl;
  */
 public class VideoStatisticLocalServiceImpl
 	extends VideoStatisticLocalServiceBaseImpl {
-	/*
+    /*
 	 * NOTE FOR DEVELOPERS:
-	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.VideoStatisticLocalServiceUtil} to access the video statistic local service.
-	 */
-	
+    */
 	
 	public List<VideoStatistic> getByCompanyIdAndGroupId(long companyId, long groupId) throws SystemException {
 		return videoStatisticPersistence.findByCompanyIdAndGroupId(companyId, groupId);
 	}
 	
-	
+	public List<VideoStatistic> getAllStatistics() throws SystemException {
+		return VideoStatisticFinderUtil.findAllStats();
+	}
 	
 }

@@ -86,7 +86,6 @@ public class StatisticManagement extends MVCPortlet {
 				//This means User Portlet has not been initialized yet (we can't generate default permissions yet)
 				SessionErrors.add(renderRequest,"no-roles-error");
 			}
-        
 	
 	    } catch (Exception e) {
 	    	throw new PortletException(e);

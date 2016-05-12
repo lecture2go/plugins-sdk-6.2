@@ -32,13 +32,17 @@ package de.uhh.l2g.plugins.util;
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  ***************************************************************************/
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
-import com.liferay.portal.service.ServiceContext;
+
+import de.uhh.l2g.plugins.service.StatisticLocalServiceUtil;
+import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 
 
 /** Statistics is less flawed when running job at concrete time (ideally around midnight)  
@@ -48,27 +52,32 @@ import com.liferay.portal.service.ServiceContext;
 @SuppressWarnings("serial")
 public class StatisticsScheduler extends PortletScheduler implements MessageListener {  
 	private static Log LOG;	
-	
 	  
     public StatisticsScheduler(){
     	super();
     	LOG = LogFactoryUtil.getLog(StatisticsScheduler.class.getName());
     }
     
-	public StatisticsScheduler(String schedulerClassName, ServiceContext serviceContext) {
-		super(StatisticsScheduler.class.getName(), serviceContext);
-	    this.schedulerClassName = StatisticsScheduler.class.getName();
-	    LOG = LogFactoryUtil.getLog(StatisticsScheduler.class.getName());
-	}
-
 	@Override
     public void receive(Message message) throws MessageListenerException {
 	   //uncoment for further debug messages
 	   //super.receive(message);
-		LOG.info("Statistics Scheduler running "+message.getValues().get(SchedulerEngine.JOB_NAME).toString()+"...");
+	   LOG.info("Statistics Scheduler running "+message.getValues().get(SchedulerEngine.JOB_NAME).toString()+"...");
 	   //Do Job....
-		
-		LOG.info("Statistics Scheduler finished.");
+	   int privateVideos = 0;
+	   int publicVideos = 0;
+	   try {
+		   publicVideos=VideoLocalServiceUtil.getByOpenAccess(1).size();
+		   privateVideos=VideoLocalServiceUtil.getByOpenAccess(0).size();
+		   //TODO can not get the service context for using the addEntry method, because of the scheduler! And can't find workaround.
+		   StatisticLocalServiceUtil.add(privateVideos, publicVideos);
+	   } catch (PortalException e) {
+		   LOG.info("Statistics Scheduler failed.");
+	   } catch (SystemException e) {
+		   LOG.info("Statistics Scheduler failed.");
+	   }
+	   //Job end
+	   LOG.info("Statistics Scheduler finished.");
     }
 	
 	public void start() {

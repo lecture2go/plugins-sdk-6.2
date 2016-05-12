@@ -267,16 +267,16 @@
 	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.StatisticModelImpl">
 		<attributes>
 			<id name="statisticId" />
-			<basic name="groupId" />
-			<basic name="companyId" />
-			<basic name="publicVideos" />
-			<basic name="privateVideos" />
-			<basic name="autofillRow" />
-			<basic name="userId" />
-			<basic name="userName" />
 			<basic name="createDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
+			<basic name="publicVideos" />
+			<basic name="privateVideos" />
+			<basic name="autofillRow" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
 			<basic name="modifiedDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>

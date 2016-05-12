@@ -75,9 +75,13 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 			{ "privPercent", Types.INTEGER },
 			{ "currentPubPercent", Types.INTEGER },
 			{ "currentPrivPercent", Types.INTEGER },
-			{ "intervalName", Types.VARCHAR }
+			{ "intervalName", Types.VARCHAR },
+			{ "publicDiff", Types.INTEGER },
+			{ "privateDiff", Types.INTEGER },
+			{ "totalDiff", Types.INTEGER },
+			{ "dateDiff", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_VideoStatistic (videoStatisticId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,compareDate DATE null,totalVideos LONG,publicVideos LONG,privateVideos LONG,currentTotal LONG,currentPublic LONG,currentPrivate LONG,pubPercent INTEGER,privPercent INTEGER,currentPubPercent INTEGER,currentPrivPercent INTEGER,intervalName VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table LG_VideoStatistic (videoStatisticId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,compareDate DATE null,totalVideos LONG,publicVideos LONG,privateVideos LONG,currentTotal LONG,currentPublic LONG,currentPrivate LONG,pubPercent INTEGER,privPercent INTEGER,currentPubPercent INTEGER,currentPrivPercent INTEGER,intervalName VARCHAR(75) null,publicDiff INTEGER,privateDiff INTEGER,totalDiff INTEGER,dateDiff INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table LG_VideoStatistic";
 	public static final String ORDER_BY_JPQL = " ORDER BY videoStatistic.videoStatisticId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_VideoStatistic.videoStatisticId ASC";
@@ -90,7 +94,12 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.finder.cache.enabled.de.uhh.l2g.plugins.model.VideoStatistic"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.VideoStatistic"),
+			true);
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long VIDEOSTATISTICID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.VideoStatistic"));
 
@@ -148,6 +157,10 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 		attributes.put("currentPubPercent", getCurrentPubPercent());
 		attributes.put("currentPrivPercent", getCurrentPrivPercent());
 		attributes.put("intervalName", getIntervalName());
+		attributes.put("publicDiff", getPublicDiff());
+		attributes.put("privateDiff", getPrivateDiff());
+		attributes.put("totalDiff", getTotalDiff());
+		attributes.put("dateDiff", getDateDiff());
 
 		return attributes;
 	}
@@ -256,6 +269,30 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 		if (intervalName != null) {
 			setIntervalName(intervalName);
 		}
+
+		Integer publicDiff = (Integer)attributes.get("publicDiff");
+
+		if (publicDiff != null) {
+			setPublicDiff(publicDiff);
+		}
+
+		Integer privateDiff = (Integer)attributes.get("privateDiff");
+
+		if (privateDiff != null) {
+			setPrivateDiff(privateDiff);
+		}
+
+		Integer totalDiff = (Integer)attributes.get("totalDiff");
+
+		if (totalDiff != null) {
+			setTotalDiff(totalDiff);
+		}
+
+		Integer dateDiff = (Integer)attributes.get("dateDiff");
+
+		if (dateDiff != null) {
+			setDateDiff(dateDiff);
+		}
 	}
 
 	@Override
@@ -275,7 +312,19 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 
 	@Override
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
 		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	@Override
@@ -285,7 +334,19 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 
 	@Override
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@Override
@@ -434,6 +495,50 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 	}
 
 	@Override
+	public int getPublicDiff() {
+		return _publicDiff;
+	}
+
+	@Override
+	public void setPublicDiff(int publicDiff) {
+		_publicDiff = publicDiff;
+	}
+
+	@Override
+	public int getPrivateDiff() {
+		return _privateDiff;
+	}
+
+	@Override
+	public void setPrivateDiff(int privateDiff) {
+		_privateDiff = privateDiff;
+	}
+
+	@Override
+	public int getTotalDiff() {
+		return _totalDiff;
+	}
+
+	@Override
+	public void setTotalDiff(int totalDiff) {
+		_totalDiff = totalDiff;
+	}
+
+	@Override
+	public int getDateDiff() {
+		return _dateDiff;
+	}
+
+	@Override
+	public void setDateDiff(int dateDiff) {
+		_dateDiff = dateDiff;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
+	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			VideoStatistic.class.getName(), getPrimaryKey());
@@ -477,6 +582,10 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 		videoStatisticImpl.setCurrentPubPercent(getCurrentPubPercent());
 		videoStatisticImpl.setCurrentPrivPercent(getCurrentPrivPercent());
 		videoStatisticImpl.setIntervalName(getIntervalName());
+		videoStatisticImpl.setPublicDiff(getPublicDiff());
+		videoStatisticImpl.setPrivateDiff(getPrivateDiff());
+		videoStatisticImpl.setTotalDiff(getTotalDiff());
+		videoStatisticImpl.setDateDiff(getDateDiff());
 
 		videoStatisticImpl.resetOriginalValues();
 
@@ -527,6 +636,17 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 
 	@Override
 	public void resetOriginalValues() {
+		VideoStatisticModelImpl videoStatisticModelImpl = this;
+
+		videoStatisticModelImpl._originalGroupId = videoStatisticModelImpl._groupId;
+
+		videoStatisticModelImpl._setOriginalGroupId = false;
+
+		videoStatisticModelImpl._originalCompanyId = videoStatisticModelImpl._companyId;
+
+		videoStatisticModelImpl._setOriginalCompanyId = false;
+
+		videoStatisticModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -594,12 +714,20 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 			videoStatisticCacheModel.intervalName = null;
 		}
 
+		videoStatisticCacheModel.publicDiff = getPublicDiff();
+
+		videoStatisticCacheModel.privateDiff = getPrivateDiff();
+
+		videoStatisticCacheModel.totalDiff = getTotalDiff();
+
+		videoStatisticCacheModel.dateDiff = getDateDiff();
+
 		return videoStatisticCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{videoStatisticId=");
 		sb.append(getVideoStatisticId());
@@ -635,6 +763,14 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 		sb.append(getCurrentPrivPercent());
 		sb.append(", intervalName=");
 		sb.append(getIntervalName());
+		sb.append(", publicDiff=");
+		sb.append(getPublicDiff());
+		sb.append(", privateDiff=");
+		sb.append(getPrivateDiff());
+		sb.append(", totalDiff=");
+		sb.append(getTotalDiff());
+		sb.append(", dateDiff=");
+		sb.append(getDateDiff());
 		sb.append("}");
 
 		return sb.toString();
@@ -642,7 +778,7 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(67);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.VideoStatistic");
@@ -716,6 +852,22 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 			"<column><column-name>intervalName</column-name><column-value><![CDATA[");
 		sb.append(getIntervalName());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>publicDiff</column-name><column-value><![CDATA[");
+		sb.append(getPublicDiff());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>privateDiff</column-name><column-value><![CDATA[");
+		sb.append(getPrivateDiff());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>totalDiff</column-name><column-value><![CDATA[");
+		sb.append(getTotalDiff());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>dateDiff</column-name><column-value><![CDATA[");
+		sb.append(getDateDiff());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -728,7 +880,11 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 		};
 	private long _videoStatisticId;
 	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private Date _compareDate;
@@ -743,5 +899,10 @@ public class VideoStatisticModelImpl extends BaseModelImpl<VideoStatistic>
 	private int _currentPubPercent;
 	private int _currentPrivPercent;
 	private String _intervalName;
+	private int _publicDiff;
+	private int _privateDiff;
+	private int _totalDiff;
+	private int _dateDiff;
+	private long _columnBitmask;
 	private VideoStatistic _escapedModel;
 }

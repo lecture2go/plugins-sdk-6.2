@@ -38,7 +38,7 @@ public class VideoStatisticCacheModel implements CacheModel<VideoStatistic>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{videoStatisticId=");
 		sb.append(videoStatisticId);
@@ -74,6 +74,14 @@ public class VideoStatisticCacheModel implements CacheModel<VideoStatistic>,
 		sb.append(currentPrivPercent);
 		sb.append(", intervalName=");
 		sb.append(intervalName);
+		sb.append(", publicDiff=");
+		sb.append(publicDiff);
+		sb.append(", privateDiff=");
+		sb.append(privateDiff);
+		sb.append(", totalDiff=");
+		sb.append(totalDiff);
+		sb.append(", dateDiff=");
+		sb.append(dateDiff);
 		sb.append("}");
 
 		return sb.toString();
@@ -126,6 +134,11 @@ public class VideoStatisticCacheModel implements CacheModel<VideoStatistic>,
 			videoStatisticImpl.setIntervalName(intervalName);
 		}
 
+		videoStatisticImpl.setPublicDiff(publicDiff);
+		videoStatisticImpl.setPrivateDiff(privateDiff);
+		videoStatisticImpl.setTotalDiff(totalDiff);
+		videoStatisticImpl.setDateDiff(dateDiff);
+
 		videoStatisticImpl.resetOriginalValues();
 
 		return videoStatisticImpl;
@@ -150,6 +163,10 @@ public class VideoStatisticCacheModel implements CacheModel<VideoStatistic>,
 		currentPubPercent = objectInput.readInt();
 		currentPrivPercent = objectInput.readInt();
 		intervalName = objectInput.readUTF();
+		publicDiff = objectInput.readInt();
+		privateDiff = objectInput.readInt();
+		totalDiff = objectInput.readInt();
+		dateDiff = objectInput.readInt();
 	}
 
 	@Override
@@ -178,6 +195,11 @@ public class VideoStatisticCacheModel implements CacheModel<VideoStatistic>,
 		else {
 			objectOutput.writeUTF(intervalName);
 		}
+
+		objectOutput.writeInt(publicDiff);
+		objectOutput.writeInt(privateDiff);
+		objectOutput.writeInt(totalDiff);
+		objectOutput.writeInt(dateDiff);
 	}
 
 	public long videoStatisticId;
@@ -197,4 +219,8 @@ public class VideoStatisticCacheModel implements CacheModel<VideoStatistic>,
 	public int currentPubPercent;
 	public int currentPrivPercent;
 	public String intervalName;
+	public int publicDiff;
+	public int privateDiff;
+	public int totalDiff;
+	public int dateDiff;
 }

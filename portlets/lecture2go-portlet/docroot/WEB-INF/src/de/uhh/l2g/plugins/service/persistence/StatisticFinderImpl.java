@@ -1,35 +1,26 @@
 package de.uhh.l2g.plugins.service.persistence;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import javax.sql.DataSource;
-
-import org.apache.commons.lang.StringUtils;
-
-import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
-import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
-import com.liferay.portal.kernel.dao.db.DBProcess;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import de.uhh.l2g.plugins.model.Statistic;
-import de.uhh.l2g.plugins.model.impl.StatisticImpl;
 
 public class StatisticFinderImpl extends BasePersistenceImpl<Statistic> implements StatisticFinder {
 
 	public static final String CREATE_VIDEO_STATISTIC_VIEW = StatisticFinder.class.getName() + ".createVideoStatisticView";
 	public static final String REMOVE_VIDEO_STATISTIC_TABLE = StatisticFinder.class.getName() + ".removeVideoStatisticTable";
+	public static final String ADD_NEW_STATISTIC_ENTRY = StatisticFinder.class.getName() + ".addNewStatisticEntry";
 
-	/**WARNING: As Custom Query is restricted executeQuery() 
+	/**
+	 * WARNING: As Custom Query is restricted executeQuery() 
 	 * this methods uses Core DB functionality of Liferay 
 	 */
 	public int createVideoStatisticView() {
@@ -38,7 +29,7 @@ public class StatisticFinderImpl extends BasePersistenceImpl<Statistic> implemen
 		try {
 			session = openSession();
 			String sql = CustomSQLUtil.get(CREATE_VIDEO_STATISTIC_VIEW);
-			
+
 			DB db = DBFactoryUtil.getDB();
 			//This requires to use executeUpdate instead of executeQuery
 			db.runSQL(sql);
@@ -55,7 +46,8 @@ public class StatisticFinderImpl extends BasePersistenceImpl<Statistic> implemen
 		return out;
 	}
 
-	/**WARNING: As Custom Query is restricted executeQuery() 
+	/**
+	 * WARNING: As Custom Query is restricted executeQuery() 
 	 * this methods uses Core DB functionality of Liferay 
 	 */
 	public int removeVideoStatisticTable() {

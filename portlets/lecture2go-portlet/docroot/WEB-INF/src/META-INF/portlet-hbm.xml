@@ -237,16 +237,16 @@
 	<class name="de.uhh.l2g.plugins.model.impl.StatisticImpl" table="LG_Statistic">
 		<cache usage="read-write" />
 		<id name="statisticId" type="long">
-			<generator class="assigned" />
+			<generator class="increment" />
 		</id>
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="publicVideos" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="privateVideos" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="autofillRow" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.SysImpl" table="LG_Sys">

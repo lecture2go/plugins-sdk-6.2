@@ -39,6 +39,7 @@ import de.uhh.l2g.plugins.StatisticValueException;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Statistic;
+import de.uhh.l2g.plugins.model.impl.StatisticImpl;
 import de.uhh.l2g.plugins.service.ClpSerializer;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
@@ -64,13 +65,13 @@ import de.uhh.l2g.plugins.util.RepositoryManager;
  * @see de.uhh.l2g.plugins.service.base.StatisticLocalServiceBaseImpl
  * @see de.uhh.l2g.plugins.service.StatisticLocalServiceUtil
  */
+@SuppressWarnings("unused")
 public class StatisticLocalServiceImpl
 	extends StatisticLocalServiceBaseImpl {
 
 	 protected static Log LOG = LogFactoryUtil.getLog(Statistic.class.getName());	
 	/*
 	 * NOTE FOR DEVELOPERS:
-	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.StatisticLocalServiceUtil} to access the institution_ host local service.
 	 */
 
@@ -91,7 +92,6 @@ public class StatisticLocalServiceImpl
 	}
 
 	/** Drop table via custom query
-	 * 
 	 * https://web.liferay.com/de/community/wiki/-/wiki/Main/Working+with+Database+Views+in+Liferay
 	 */
 	public boolean removeVideoStatisticDefaultTable(){
@@ -99,8 +99,8 @@ public class StatisticLocalServiceImpl
 		return true;	
 	}
 	
-	/**Add Database View with same Name
-	 * 
+	/**
+	 * Add Database View with same Name
 	 */
 	public boolean addVideoStatisticView(){
 		StatisticFinderUtil.createVideoStatisticView();
@@ -108,9 +108,6 @@ public class StatisticLocalServiceImpl
 	
 	}
 
-	/** 
-	 *
-	 * */
 	protected void validate(long privateVideos, long publicVideos, Date date) throws PortalException {
 
 		if (Validator.isNull(privateVideos) || Validator.isNull(publicVideos)) {
@@ -124,6 +121,7 @@ public class StatisticLocalServiceImpl
 	}
 	
 	public Statistic addDefaultEntry(ServiceContext serviceContext) throws SystemException, PortalException{
+
 		long groupId = serviceContext.getScopeGroupId();
 		long userId = serviceContext.getUserId();
 		long companyId = serviceContext.getCompanyId();
@@ -200,6 +198,20 @@ public class StatisticLocalServiceImpl
 
 		return statistic;
 
+	}
+
+	public Statistic add(int privateVideos, int publicVideos) throws SystemException, PortalException {
+		Date now = new Date();
+		Statistic statistic = new StatisticImpl();
+
+		statistic.setCreateDate(now);
+		statistic.setModifiedDate(now);
+		
+		statistic.setPrivateVideos(privateVideos);
+		statistic.setPublicVideos(publicVideos);
+		
+		StatisticLocalServiceUtil.addStatistic(statistic);
+		return statistic;
 	}
 
 	public Statistic updateEntry(long statisticId, int privateVideos, int publicVideos, ServiceContext serviceContext) throws SystemException, PortalException {
