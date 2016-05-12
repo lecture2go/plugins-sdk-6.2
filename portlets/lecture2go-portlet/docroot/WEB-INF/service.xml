@@ -663,6 +663,10 @@
         <column name="currentPrivPercent" type="int"></column>
         <column name="intervalName" type="String"></column>
     	<!-- Finder methods -->
+        <column name="publicDiff" type="int"></column>
+        <column name="privateDiff" type="int"></column>
+        <column name="totalDiff" type="int"></column>
+        <column name="dateDiff" type="int"></column>
         <finder name="CompanyIdAndGroupId" return-type="Collection">
             <finder-column name="groupId"></finder-column>
             <finder-column name="companyId"></finder-column>
