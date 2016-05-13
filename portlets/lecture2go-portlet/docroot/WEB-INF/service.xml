@@ -445,6 +445,13 @@
         <finder name="Lectureseries" return-type="Collection">
             <finder-column name="lectureseriesId"></finder-column>
         </finder>
+        <finder name="Openaccess" return-type="Collection">
+            <finder-column name="openAccess"></finder-column>
+        </finder>
+        <finder name="LectureseriesAndOpenAccess" return-type="Collection">
+            <finder-column name="lectureseriesId"></finder-column>
+            <finder-column name="openAccess"></finder-column>
+        </finder>
     </entity>
     <entity name="Term" local-service="true" remote-service="false">
 
