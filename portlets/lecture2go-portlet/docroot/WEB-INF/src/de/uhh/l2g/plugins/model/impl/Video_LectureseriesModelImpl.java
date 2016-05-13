@@ -79,8 +79,9 @@ public class Video_LectureseriesModelImpl extends BaseModelImpl<Video_Lectureser
 				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.Video_Lectureseries"),
 			true);
 	public static long LECTURESERIESID_COLUMN_BITMASK = 1L;
-	public static long VIDEOID_COLUMN_BITMASK = 2L;
-	public static long VIDEOLECTURESERIESID_COLUMN_BITMASK = 4L;
+	public static long OPENACCESS_COLUMN_BITMASK = 2L;
+	public static long VIDEOID_COLUMN_BITMASK = 4L;
+	public static long VIDEOLECTURESERIESID_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Video_Lectureseries"));
 
@@ -217,7 +218,19 @@ public class Video_LectureseriesModelImpl extends BaseModelImpl<Video_Lectureser
 
 	@Override
 	public void setOpenAccess(int openAccess) {
+		_columnBitmask |= OPENACCESS_COLUMN_BITMASK;
+
+		if (!_setOriginalOpenAccess) {
+			_setOriginalOpenAccess = true;
+
+			_originalOpenAccess = _openAccess;
+		}
+
 		_openAccess = openAccess;
+	}
+
+	public int getOriginalOpenAccess() {
+		return _originalOpenAccess;
 	}
 
 	public long getColumnBitmask() {
@@ -315,6 +328,10 @@ public class Video_LectureseriesModelImpl extends BaseModelImpl<Video_Lectureser
 
 		video_LectureseriesModelImpl._setOriginalLectureseriesId = false;
 
+		video_LectureseriesModelImpl._originalOpenAccess = video_LectureseriesModelImpl._openAccess;
+
+		video_LectureseriesModelImpl._setOriginalOpenAccess = false;
+
 		video_LectureseriesModelImpl._columnBitmask = 0;
 	}
 
@@ -392,6 +409,8 @@ public class Video_LectureseriesModelImpl extends BaseModelImpl<Video_Lectureser
 	private long _originalLectureseriesId;
 	private boolean _setOriginalLectureseriesId;
 	private int _openAccess;
+	private int _originalOpenAccess;
+	private boolean _setOriginalOpenAccess;
 	private long _columnBitmask;
 	private Video_Lectureseries _escapedModel;
 }

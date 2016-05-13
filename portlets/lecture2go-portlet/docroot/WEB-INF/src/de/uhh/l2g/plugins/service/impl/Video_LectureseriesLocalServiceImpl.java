@@ -77,6 +77,10 @@ public class Video_LectureseriesLocalServiceImpl
 		return video_LectureseriesPersistence.findByLectureseries(lectureseriesId);
 	}
 	
+	public List<Video_Lectureseries> getByLectureseriesAndOpenAccess(Long lectureseriesId, int isOpenAccess) throws SystemException {
+		return video_LectureseriesPersistence.findByLectureseriesAndOpenAccess(lectureseriesId, isOpenAccess);
+	}
+	
 	public List<Video_Lectureseries> updateOpenAccessByVideo(Video video) throws SystemException{
 		List<Video_Lectureseries> vl = new ArrayList<Video_Lectureseries>();
 		vl = video_LectureseriesPersistence.findByVideo(video.getVideoId());

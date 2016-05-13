@@ -233,7 +233,7 @@
 				oId = lectser.getLectureseriesId()+"";
 				vidDummy = VideoLocalServiceUtil.getFullVideo(lectser.getLatestOpenAccessVideoId());
 			}
-			int videoCount=lectser.getNumberOfVideos();
+			int videoCount = lectser.getNumberOfOpenAccessVideos();
 			List<Creator> cl = CreatorLocalServiceUtil.getCreatorsByLectureseriesId(lectser.getLectureseriesId());
 			ListIterator<Creator> cli = cl.listIterator();
 			List<Video> vl = new ArrayList<Video>();
