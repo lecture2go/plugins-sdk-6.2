@@ -1104,6 +1104,7 @@ thead, th {
 
 #metadata-upload div {
     width: 100%;
+    float: left;
 }
 
 #metadata-upload label {
