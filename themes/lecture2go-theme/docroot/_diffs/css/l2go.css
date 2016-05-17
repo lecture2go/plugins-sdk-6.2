@@ -89,7 +89,7 @@ fieldset.fieldset.add-streaming-server div.layout {
 
 .aui #navigation .nav .dropdown-menu > li a {
     background: #f9f9f9 url("/lecture2go-portlet/img/rot_navi-pfeil-rechts.png") no-repeat scroll 9px 11px !important;
-    border-color: #ddd #ddd -moz-use-text-color;
+    border-color: #ddd;
     border-radius: 0;
     border-style: solid solid none;
     border-width: 1px;
