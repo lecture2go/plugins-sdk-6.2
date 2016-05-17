@@ -365,8 +365,11 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 				l.setLatestVideoUploadDate(date);
 			}catch (Exception e){}
 			try{
-				List<Video_Lectureseries> nV = Video_LectureseriesLocalServiceUtil.getByLectureseries(l.getLectureseriesId()); 
+				List<Video_Lectureseries> nV = Video_LectureseriesLocalServiceUtil.getByLectureseries(l.getLectureseriesId());
+				List<Video_Lectureseries> nOAV = Video_LectureseriesLocalServiceUtil.getByLectureseriesAndOpenAccess(l.getLectureseriesId(), 1);
+				
 				l.setNumberOfVideos(nV.size());
+				l.setNumberOfOpenAccessVideos(nOAV.size());
 			}catch (Exception e){}
 			// 
 			ll.add(l);
