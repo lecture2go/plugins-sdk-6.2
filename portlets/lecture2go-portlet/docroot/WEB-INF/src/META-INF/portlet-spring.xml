@@ -67,4 +67,5 @@
 	<bean id="de.uhh.l2g.plugins.service.persistence.VideohitlistPersistence" class="de.uhh.l2g.plugins.service.persistence.VideohitlistPersistenceImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.VideoStatisticLocalService" class="de.uhh.l2g.plugins.service.impl.VideoStatisticLocalServiceImpl" />
 	<bean id="de.uhh.l2g.plugins.service.persistence.VideoStatisticPersistence" class="de.uhh.l2g.plugins.service.persistence.VideoStatisticPersistenceImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.VideoStatisticFinder" class="de.uhh.l2g.plugins.service.persistence.VideoStatisticFinderImpl" parent="basePersistence" />
 </beans>

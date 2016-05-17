@@ -1,3 +1,4 @@
+<%@page import="de.uhh.l2g.plugins.model.Host"%>
 <%@include file="/init.jsp"%>
 
 <jsp:useBean id="reqLectureseriesList" type="java.util.List<de.uhh.l2g.plugins.model.Lectureseries>" scope="request" />
@@ -47,6 +48,18 @@
 
 	Map<String,String> subInstitutions = new LinkedHashMap<String, String>();
 	subInstitutions = InstitutionLocalServiceUtil.getByParent(reqVideo.getRootInstitutionId());
+	//video upload path
+	//is first upload:
+	String uploadRepository="";
+	if(reqVideo.getFilename().isEmpty()){
+		uploadRepository=reqProducer.getHomeDir();
+	}else{//not first upload
+		Host host = new HostImpl();	
+		host = HostLocalServiceUtil.getByHostId(reqVideo.getHostId());
+		uploadRepository=PropsUtil.get("lecture2go.media.repository")+"/"+host.getServerRoot()+"/"+reqProducer.getIdNum();
+
+	}
+	
 %>
 
 <script type="text/javascript">
@@ -341,7 +354,8 @@ $(function () {
     }).bind('fileuploadsubmit', function (e, data) {
         // The example input, doesn't have to be part of the upload form:
         data.formData = {
-        		repository: "<%=reqProducer.getHomeDir()%>",
+        		//p.setHomeDir(PropsUtil.get("lecture2go.media.repository")+"/"+HostLocalServiceUtil.getByHostId(p.getHostId()).getServerRoot()+"/"+p.getHomeDir());
+        		repository: "<%=uploadRepository%>",
         		openaccess: "<%=reqVideo.getOpenAccess()%>",
         		lectureseriesNumber: "<%=reqLectureseries.getNumber()%>",
         		fileName: "<%=VideoLocalServiceUtil.getVideo(reqVideo.getVideoId()).getFilename()%>",

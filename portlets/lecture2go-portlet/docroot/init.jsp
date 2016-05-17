@@ -47,6 +47,7 @@
 <%@page import="com.liferay.portal.model.Portlet"%>
 <%@page import="com.liferay.portal.model.User"%>
 <%@page import="com.liferay.portal.model.Role"%>
+<%@page import="de.uhh.l2g.plugins.model.impl.HostImpl"%>
 <%@page import="com.liferay.portal.security.permission.ActionKeys"%>
 <%@page import="com.liferay.portal.service.permission.PortletPermissionUtil"%>
 <%@page import="com.liferay.portal.service.UserLocalServiceUtil"%>

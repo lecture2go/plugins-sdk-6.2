@@ -322,5 +322,9 @@
 		<field name="currentPubPercent" type="int" />
 		<field name="currentPrivPercent" type="int" />
 		<field name="intervalName" type="String" />
+		<field name="publicDiff" type="int" />
+		<field name="privateDiff" type="int" />
+		<field name="totalDiff" type="int" />
+		<field name="dateDiff" type="int" />
 	</model>
 </model-hints>

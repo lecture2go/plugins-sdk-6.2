@@ -434,6 +434,10 @@
 			<basic name="currentPubPercent" />
 			<basic name="currentPrivPercent" />
 			<basic name="intervalName" />
+			<basic name="publicDiff" />
+			<basic name="privateDiff" />
+			<basic name="totalDiff" />
+			<basic name="dateDiff" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -477,6 +481,7 @@
 	<entity class="de.uhh.l2g.plugins.model.impl.LectureseriesImpl" name="Lectureseries">
 		<table name="LG_Lectureseries" />
 		<attributes>
+			<transient name="numberOfOpenAccessVideos" />
 			<transient name="numberOfVideos" />
 			<transient name="type" />
 		</attributes>

@@ -371,5 +371,9 @@
 		<property name="currentPubPercent" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="currentPrivPercent" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="intervalName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="publicDiff" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="privateDiff" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="totalDiff" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="dateDiff" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 </hibernate-mapping>

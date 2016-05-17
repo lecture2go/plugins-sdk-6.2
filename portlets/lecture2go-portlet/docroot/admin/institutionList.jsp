@@ -165,7 +165,7 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 		    int ownInstitutionMax = InstitutionLocalServiceUtil.getMaxSortByParentId(treeBaseId)+1;
 	   	%>
 	
-		<%--ADD SUB_INSTITUTION -> Only Required if user can't see full listing, but is allowed to mange own entries --%>
+		<%--ADD SUB_INSTITUTION -> Only Required if user can't see full listing, but is allowed to manage own entries --%>
 		<%-- Permission on Portlet Scope --%>
 		<c:if test='<%= !permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "VIEW_ALL_INSTITUTIONS") && permissionChecker.hasPermission(groupId, institutionModel, groupId, "ADD_SUB_INSTITUTION_ENTRY") && ownInstitutionId > 0 %>'>
 			<liferay-ui:panel title="add-sub-institution" collapsible="true" id="subInstitutionSettings" defaultState="close" extended="false" persistState="true">
@@ -240,7 +240,7 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 										</aui:fieldset>
 						 			</aui:form>
 						
-									<liferay-ui:search-container searchContainer="<%= searchSubInstitutionContainer %>" curParam ="<%=curParam_row%>" orderByType="asc" emptyResultsMessage="there-are-no-institutions" iteratorURL="<%= innerURL %>" delta="5" deltaConfigurable="true" >
+									<liferay-ui:search-container searchContainer="<%= searchSubInstitutionContainer %>" curParam ="<%=curParam_row%>" orderByType="asc" emptyResultsMessage="there-are-no-institutions" iteratorURL="<%= innerURL %>" delta="100" deltaConfigurable="true" >
 										<liferay-ui:search-container-results results="<%=InstitutionLocalServiceUtil.getByGroupIdAndParent(groupId, institution.getPrimaryKey(), searchContainer.getStart(), searchContainer.getEnd())%>" total="<%=InstitutionLocalServiceUtil.getByGroupIdAndParentCount(groupId, institution.getPrimaryKey())%>" />
 											<liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.Institution" modelVar="subInstitution" rowVar="thisRow" keyProperty="institutionId"  escapedModel="<%=false%>" indexVar="j">
 											<c:choose>
