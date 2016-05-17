@@ -262,7 +262,6 @@ p.smallitalic {
 }
 
 #metadata-upload {
-    float: left;
     margin-top: 14px;
 }
 
@@ -1104,7 +1103,6 @@ thead, th {
 }
 
 #metadata-upload div {
-    float: left;
     width: 100%;
 }
 
@@ -1148,7 +1146,6 @@ thead, th {
 
 #metadata-upload input {
     padding: 5px;
-    width: 49%;
 }
 
 #permissions div label {
@@ -1351,6 +1348,11 @@ thead, th {
 
 #usr-roles > div {
     margin-left: 7px;
+}
+
+#usr-roles div.control-group.form-inline {
+	float: right;
+	width: 70%;
 }
 
 #_lgadminvideomanagement_WAR_lecture2goportlet_apply-date-time {
