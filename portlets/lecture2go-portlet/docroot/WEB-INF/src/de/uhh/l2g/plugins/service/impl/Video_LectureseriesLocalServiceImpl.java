@@ -24,6 +24,7 @@ import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.Video_Lectureseries;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.Video_LectureseriesLocalServiceBaseImpl;
+import de.uhh.l2g.plugins.service.persistence.VideoFinderUtil;
 import de.uhh.l2g.plugins.service.persistence.Video_LectureseriesUtil;
 
 /**
@@ -79,6 +80,14 @@ public class Video_LectureseriesLocalServiceImpl
 	
 	public List<Video_Lectureseries> getByLectureseriesAndOpenAccess(Long lectureseriesId, int isOpenAccess) throws SystemException {
 		return video_LectureseriesPersistence.findByLectureseriesAndOpenAccess(lectureseriesId, isOpenAccess);
+	}
+
+	public Integer getNumberOfVideosByLectureseriesAndOpenAccess(Long lectureseriesId, int isOpenAccess) throws SystemException {
+		return video_LectureseriesPersistence.countByLectureseriesAndOpenAccess(lectureseriesId, isOpenAccess);
+	}
+	
+	public Integer getNumberOfVideosByLectureseries(Long lectureseriesId) throws SystemException {
+		return video_LectureseriesPersistence.countByLectureseries(lectureseriesId);
 	}
 	
 	public List<Video_Lectureseries> updateOpenAccessByVideo(Video video) throws SystemException{
