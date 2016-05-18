@@ -51,14 +51,10 @@
 	//video upload path
 	//is first upload:
 	String uploadRepository="";
-	if(reqVideo.getFilename().isEmpty()){
-		uploadRepository=reqProducer.getHomeDir();
-	}else{//not first upload
-		Host host = new HostImpl();	
-		host = HostLocalServiceUtil.getByHostId(reqVideo.getHostId());
-		uploadRepository=PropsUtil.get("lecture2go.media.repository")+"/"+host.getServerRoot()+"/"+reqProducer.getIdNum();
 
-	}
+	Host host = new HostImpl();	
+	host = HostLocalServiceUtil.getByHostId(reqVideo.getHostId());
+	uploadRepository=PropsUtil.get("lecture2go.media.repository")+"/"+host.getServerRoot()+"/"+reqProducer.getIdNum();
 	
 %>
 
