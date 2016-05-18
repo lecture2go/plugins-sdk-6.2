@@ -530,19 +530,36 @@ thead, th {
 }
 
 .aui .btn {
-    background-image: linear-gradient(to bottom, #ddd, #ddd);
+    background: linear-gradient(#eee, #ddd);
     border-radius: 0;
     border-width: 0;
     color: #484848;
     margin-right: 10px;
 }
 
+.aui .btn:hover {
+	opacity: 0.9;
+	color: #484848;
+    background: linear-gradient(#eee, #ddd);
+	
+}
+
 .aui .btn-primary {
-    background-color: #50a2f5;
+    color: #fff;
+    background-color: #d81b1b;
+    background: linear-gradient(#e5331c, #c90219);
     background-repeat: repeat-x;
     border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
     text-shadow: 0;
 }
+
+.aui .btn-primary:hover {
+	opacity: 0.9;
+    color: #fff;
+    background-color: #d81b1b;
+    background: linear-gradient(#e5331c, #c90219);
+}
+
 
 .aui .btn .caret {
     margin-top: 9px;
