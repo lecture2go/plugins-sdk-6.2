@@ -127,7 +127,7 @@ public class OpenAccessVideos extends MVCPortlet {
 
 	public void viewOpenAccessVideo(ActionRequest request, ActionResponse response) {
 		String objectType = ParamUtil.getString(request, "objectType");
-		String password = ParamUtil.getString(request, "password");
+		String password = request.getParameter("password");
 		
 		Long objectId = new Long(0);
 		boolean secLink = false;
@@ -221,15 +221,16 @@ public class OpenAccessVideos extends MVCPortlet {
 	    	if(video.getOpenAccess()==1) video.setAccessPermitted(1);
 	    	else video.setAccessPermitted(2);
 	    }else{
+	    	//access denied by default
+	    	video.setAccessPermitted(0);
+	    	
     		//1. authentication by lecture series password
-    		if(lectureseries.getPassword().length()>0){
-    			String pwd ="";
-    			if(lectureseries.getPassword().trim().length()>0)pwd=lectureseries.getPassword();
-    			//
-    			if(password.equals(pwd))video.setAccessPermitted(1);
-    			else video.setAccessPermitted(0);
-    		}
+			try{
+		    	if(password.equals(lectureseries.getPassword()))video.setAccessPermitted(1);
+	   			else video.setAccessPermitted(0);				
+			}catch(Exception e){}
 
+   			
     		//2. authentication by cookie
     		Cookie[] c = request.getCookies();
     		for(int i=0; i<c.length;i++){
@@ -244,12 +245,16 @@ public class OpenAccessVideos extends MVCPortlet {
     		
     		//3. authentication by video password
     		if(!video.getPassword().isEmpty()){
-    			String pwd ="";
-    			pwd=video.getPassword();
-    			//
-    			if(password.equals(pwd))video.setAccessPermitted(1);
-    			else video.setAccessPermitted(0);
-    		}	    		
+    			try{
+        			if(password.equals(video.getPassword())){
+        				video.setAccessPermitted(1);
+        			}else{
+        				video.setAccessPermitted(0);
+        			}   				
+    			}catch(Exception e){
+    				video.setAccessPermitted(0);
+    			}
+    		}
     	}
 	    
 	    request.setAttribute("videoLicense",l);
