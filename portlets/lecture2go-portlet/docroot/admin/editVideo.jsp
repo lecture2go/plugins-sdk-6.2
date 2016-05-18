@@ -357,6 +357,7 @@ $(function () {
         		fileName: "<%=VideoLocalServiceUtil.getVideo(reqVideo.getVideoId()).getFilename()%>",
         		secureFileName: "<%=VideoLocalServiceUtil.getVideo(reqVideo.getVideoId()).getSecureFilename()%>",
         		l2gDateTime: $("#l2gDateTime").val(),
+        		videoId: "<%=reqVideo.getVideoId()%>",
         };        
     });
    
