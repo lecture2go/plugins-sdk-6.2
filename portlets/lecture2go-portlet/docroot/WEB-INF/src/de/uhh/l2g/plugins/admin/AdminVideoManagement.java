@@ -554,8 +554,13 @@ public class AdminVideoManagement extends MVCPortlet {
 			license.setCcbyncsa(0);
 			license.setL2go(0);
 			//save next
-			if(licens.equals("uhhl2go"))license.setL2go(1);
-			if(licens.equals("ccbyncsa"))license.setCcbyncsa(1);
+			if(licens.equals("uhhl2go")){
+				license.setL2go(1);
+				license.setCcbyncsa(0);
+			}else{
+				license.setL2go(0);
+				license.setCcbyncsa(1);				
+			}
 			try {
 				LicenseLocalServiceUtil.updateLicense(license);
 				logger.info("LICENSE_UPDATE_SUCCESS");
