@@ -256,7 +256,7 @@
 				</div>
 				
 				<aui:button-row>
-					<aui:button value="apply-changes" onclick="applyAllMetadataChanges()"/>
+					<aui:button type="submit" value="apply-changes" onclick="applyAllMetadataChanges()"/>
 					<aui:button type="cancel" value="cancel" href="<%=backURL%>"/>
 				</aui:button-row>
 				
