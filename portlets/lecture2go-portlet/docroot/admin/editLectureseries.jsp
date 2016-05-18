@@ -246,7 +246,6 @@
 				<a id="addCreator">
 				    <liferay-ui:message key="add-new-creator"/> <span class="icon-large icon-plus-sign"></span>
 				</a>
-				<br/><br/>
 			<%}%>
 			
 			<aui:input name="password" label="password" value="<%=lPassword%>"/>
