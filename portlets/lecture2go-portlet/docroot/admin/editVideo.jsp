@@ -143,7 +143,7 @@
 				
 				<div id="options">
 					<aui:select id="subInstitutionId" size="1" name="subInstitutionId" label="sub-institution">
-						<aui:option value="" selected="true"><liferay-ui:message key="select-lecture-series"/></aui:option>
+						<aui:option value="" selected="true"><liferay-ui:message key="select-sub-institution"/></aui:option>
 					<%
 					Long subInstitutionId = new Long(0);
 					try{subInstitutionId = Video_InstitutionLocalServiceUtil.getByVideo(reqVideo.getVideoId()).get(0).getInstitutionId();}catch (Exception e){}
