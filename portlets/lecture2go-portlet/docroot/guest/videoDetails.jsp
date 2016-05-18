@@ -395,25 +395,24 @@
 		<!-- coockie end -->
 		<%
 	}else{
-		%>
-		<portlet:actionURL name="viewOpenAccessVideo" var="viewOpenAccessVideoURL2">
-			<portlet:param name="objectId" value="<%=objectId%>"/>
-			<%if(objectType.equals("v")){%><portlet:param name="objectType" value="v"/><%}%>
-			<%if(objectType.equals("l")){%><portlet:param name="objectType" value="l"/><%}%>
-		</portlet:actionURL>
-		<aui:form action="<%=viewOpenAccessVideoURL2.toString() %>" method="post">
-			<aui:fieldset helpMessage="enter-password" column="true" label='<%="l2go-video-password"%>'>
-				<aui:input name="password" label="password" required="true" value=""/>
-				
-				<aui:button-row>
-					<aui:button type="submit"/>
-				</aui:button-row>
-			</aui:fieldset>
-		</aui:form>	
-		<%
+		if(video.getAccessPermitted()==0){
+			%>
+			<portlet:actionURL name="viewOpenAccessVideo" var="viewOpenAccessVideoURL2">
+				<portlet:param name="objectId" value="<%=objectId%>"/>
+				<%if(objectType.equals("v")){%><portlet:param name="objectType" value="v"/><%}%>
+				<%if(objectType.equals("l")){%><portlet:param name="objectType" value="l"/><%}%>
+			</portlet:actionURL>
+			<aui:form action="<%=viewOpenAccessVideoURL2.toString() %>" method="post">
+				<aui:fieldset helpMessage="enter-password" column="true" label='<%="l2go-video-password"%>'>
+					<aui:input name="password" label="password" required="true" value=""/>
+					<aui:button-row>
+						<aui:button type="submit"/>
+					</aui:button-row>
+				</aui:fieldset>
+			</aui:form>	
+			<%
+		}
 	}
-	%>
-	<%
 }
 %>
 <script type="text/javascript">

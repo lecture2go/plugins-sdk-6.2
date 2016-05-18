@@ -130,13 +130,15 @@ public class OpenAccessVideos extends MVCPortlet {
 		String password = ParamUtil.getString(request, "password");
 		
 		Long objectId = new Long(0);
+		boolean secLink = false;
 	   	String oid = request.getParameter("objectId");
 	    try{
 	    	objectId = new Long(oid);
 	    }catch(NumberFormatException e){
 		    if(objectType.equals("v")){ //only for video objects
 	    		try {
-					objectId = VideoLocalServiceUtil.getBySecureUrl(oid).getVideoId();				
+					objectId = VideoLocalServiceUtil.getBySecureUrl(oid).getVideoId();		
+					secLink = true;
 				} catch (NoSuchVideoException e1) {
 				} catch (SystemException e1) {}
 	    	 }
@@ -215,41 +217,40 @@ public class OpenAccessVideos extends MVCPortlet {
 		} catch (SystemException e) {}
 	    
 	    //check password access
-	    if(video.getVideoId()>0){
-	    	if(video.getOpenAccess()==1){
-	    		video.setAccessPermitted(1);
-	    	}else{
-	    		//1. authentication by lecture series password
-	    		if(lectureseries.getPassword().length()>0){
-	    			String pwd ="";
-	    			if(lectureseries.getPassword().trim().length()>0)pwd=lectureseries.getPassword();
-	    			//
-	    			if(password.equals(pwd))video.setAccessPermitted(1);
-	    			else video.setAccessPermitted(0);
-	    		}
+	    if(secLink==false){
+	    	if(video.getOpenAccess()==1) video.setAccessPermitted(1);
+	    	else video.setAccessPermitted(2);
+	    }else{
+    		//1. authentication by lecture series password
+    		if(lectureseries.getPassword().length()>0){
+    			String pwd ="";
+    			if(lectureseries.getPassword().trim().length()>0)pwd=lectureseries.getPassword();
+    			//
+    			if(password.equals(pwd))video.setAccessPermitted(1);
+    			else video.setAccessPermitted(0);
+    		}
 
-	    		//2. authentication by cookie
-	    		Cookie[] c = request.getCookies();
-	    		for(int i=0; i<c.length;i++){
-	    			Cookie coo = c[i];
-	    			String cooVal ="";
-	    			if(coo.getName().equals("L2G_LSID"))cooVal=c[i].getValue();
-	    			//has been already logged in
-	    			if(cooVal.equals(video.getLectureseriesId()+"")){
-	    				video.setAccessPermitted(1);
-	    			}
-	    		}
-	    		
-	    		//3. authentication by video password
-	    		if(video.getPassword().length()>0){
-	    			String pwd ="";
-	    			if(video.getPassword().trim().length()>0)pwd=video.getPassword();
-	    			//
-	    			if(password.equals(pwd))video.setAccessPermitted(1);
-	    			else video.setAccessPermitted(0);
-	    		}	    		
-	    	}
-	    }
+    		//2. authentication by cookie
+    		Cookie[] c = request.getCookies();
+    		for(int i=0; i<c.length;i++){
+    			Cookie coo = c[i];
+    			String cooVal ="";
+    			if(coo.getName().equals("L2G_LSID"))cooVal=c[i].getValue();
+    			//has been already logged in
+    			if(cooVal.equals(video.getLectureseriesId()+"")){
+    				video.setAccessPermitted(1);
+    			}
+    		}
+    		
+    		//3. authentication by video password
+    		if(!video.getPassword().isEmpty()){
+    			String pwd ="";
+    			pwd=video.getPassword();
+    			//
+    			if(password.equals(pwd))video.setAccessPermitted(1);
+    			else video.setAccessPermitted(0);
+    		}	    		
+    	}
 	    
 	    request.setAttribute("videoLicense",l);
 	    request.setAttribute("videoMetadata",m);
