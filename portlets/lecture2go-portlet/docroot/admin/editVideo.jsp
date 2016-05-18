@@ -543,12 +543,10 @@ function applyAllMetadataChanges(){
 			'aui-node',
 			function(A) {
 					// Select the node(s) using a css selector string
-				    var license1 = A.one('#<portlet:namespace/>ccbyncsa');
-				    var license2 = A.one('#<portlet:namespace/>uhhl2go');
-				    
+				    var license = A.one("input[name=<portlet:namespace/>license]:checked").get("value");
+				    //alert(license2.get('value'));
 				    updateDescription(descData);
-				    updateLicense(license1.get('value'));
-				    updateLicense(license2.get('value'));
+				    updateLicense(license);
 				    updateCreators();
 				    updateSubInstitutions();
 				    updateMetadata();//last place, important!
