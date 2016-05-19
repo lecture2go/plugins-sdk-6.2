@@ -256,7 +256,7 @@
 							<%if(!isVideo){%><portlet:param name="objectType" value="l"/><%}%>
 						</portlet:actionURL>
 						<%
-							if(videoCount==1){
+							if(videoCount==0){
 								if(isVideo){
 									%>
 							        <a href="<%=view1URL%>">
