@@ -66,7 +66,7 @@ import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideohitlistLocalServiceUtil;
 
 public class ProzessManager {
-	String[] MEDIA_FORMATS = { "pdf","mp3","m4v","mp4","m4a","ogg","flv","webm" };   
+	public final String[] MEDIA_FORMATS = { "pdf","mp3","m4v","mp4","m4a","ogg","flv","webm" };   
 	String[] THUMBNAIL_SUFFIX = { ".jpg","_m.jpg","_s.jpg" };   
 
 	Htaccess HTACCESS = new Htaccess();

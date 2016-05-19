@@ -504,14 +504,14 @@ public class AdminVideoManagement extends MVCPortlet {
 			} catch (SystemException e) {
 //				System.out.println(e);
 			}
-			
+			//rebuild rss
+			// generate RSS
+			ProzessManager pm = new ProzessManager();
+			for (String f: pm.MEDIA_FORMATS) {           
+				pm.generateRSS(video, f);
+			}			
 			JSONObject json = JSONFactoryUtil.createJSONObject();
 			//generate new JSON date for auto complete functionality
-//			try {
-//				AutocompleteManager.generateAutocompleteResults();
-//			} catch (SystemException e) {
-//				e.printStackTrace();
-//			}
 			writeJSON(resourceRequest, resourceResponse, json);
 		}
 
@@ -925,12 +925,6 @@ public class AdminVideoManagement extends MVCPortlet {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//generate new JSON date for auto complete functionality
-//		try {
-//			AutocompleteManager.generateAutocompleteResults();
-//		} catch (SystemException e) {
-//			e.printStackTrace();
-//		}
 	}
 	
 	public void lockVideo(ActionRequest request, ActionResponse response){
@@ -952,12 +946,6 @@ public class AdminVideoManagement extends MVCPortlet {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//generate new JSON date for auto complete functionality
-//		try {
-//			AutocompleteManager.generateAutocompleteResults();
-//		} catch (SystemException e) {
-//			e.printStackTrace();
-//		}
 	}
 	
 	public void unlockVideo(ActionRequest request, ActionResponse response){
@@ -979,12 +967,6 @@ public class AdminVideoManagement extends MVCPortlet {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//generate new JSON date for auto complete functionality
-//		try {
-//			AutocompleteManager.generateAutocompleteResults();
-//		} catch (SystemException e) {
-//			e.printStackTrace();
-//		}
 	}
 	
 	public void activateDownload(ActionRequest request, ActionResponse response) throws SystemException, PortalException{
