@@ -329,14 +329,9 @@ public class AdminVideoManagement extends MVCPortlet {
 				}
 				String thumbnailLocation = PropsUtil.get("lecture2go.images.system.path") + "/" + image;
 				//delete old thumbs
-				String thumbPreffLoc = thumbnailLocation.split(".jpg")[0];
-				File f1 = new File(thumbnailLocation);
-				File f2 = new File(thumbPreffLoc + "_s.jpg");
-				File f3 = new File(thumbPreffLoc + "_m.jpg");
-				f1.delete();
-				f2.delete();
-				f3.delete();
-				//and and thumbs for segments
+				ProzessManager pm = new ProzessManager();
+				pm.deleteThumbnails(video);
+				//and thumbs for segments
 				// delete all segment images from repository location
 				try{
 					List<Segment> segmentList = SegmentLocalServiceUtil.getSegmentsByVideoId(video.getVideoId());
@@ -347,7 +342,8 @@ public class AdminVideoManagement extends MVCPortlet {
 					e.printStackTrace();
 				} catch (NullPointerException e){
 					e.printStackTrace();
-				}				
+				}	
+				//
 				FFmpegManager.createThumbnail(fileLocation, thumbnailLocation);
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
