@@ -66,53 +66,42 @@ import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideohitlistLocalServiceUtil;
 
 public class ProzessManager {
-	
+	String[] MEDIA_FORMATS = { "pdf","mp3","m4v","mp4","m4a","ogg","flv","webm" };   
+	String[] THUMBNAIL_SUFFIX = { ".jpg","_m.jpg","_s.jpg" };   
+
 	Htaccess HTACCESS = new Htaccess();
 	
+	@SuppressWarnings("static-access")
 	public void deactivateDownload(Video video) throws SystemException, PortalException {
 		Host host = HostLocalServiceUtil.getHost(video.getHostId());
 		Producer producer = ProducerLocalServiceUtil.getProducer(video.getProducerId());
 		
 		video.setDownloadLink(0);
 		VideoLocalServiceUtil.updateVideo(video);
-		// set RSS
-		try {
-			generateRSS(video, "mp4");
-			generateRSS(video, "mp3");
-			generateRSS(video, "m4v");
-			generateRSS(video, "m4a");
-			generateRSS(video, "ogg");
-			generateRSS(video, "flv");
-			generateRSS(video, "webm");
-		} catch (Exception e) {
-			e.printStackTrace();
+		// generate RSS
+		for (String f: MEDIA_FORMATS) {           
+			generateRSS(video, f);
 		}
 		String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/";
 		HTACCESS.makeHtaccess(url, VideoLocalServiceUtil.getByProducerAndDownloadLink(producer.getProducerId(), 0));
 	}
 
+	@SuppressWarnings("static-access")
 	public void activateDownload(Video video) throws SystemException, PortalException {
 		Host host = HostLocalServiceUtil.getHost(video.getHostId());
 		Producer producer = ProducerLocalServiceUtil.getProducer(video.getProducerId());
 		
 		video.setDownloadLink(1);
 		VideoLocalServiceUtil.updateVideo(video);
-		// set RSS
-		try {
-			generateRSS(video, "mp4");
-			generateRSS(video, "mp3");
-			generateRSS(video, "m4v");
-			generateRSS(video, "m4a");
-			generateRSS(video, "ogg");
-			generateRSS(video, "flv");
-			generateRSS(video, "webm");
-		} catch (Exception e) {
-			e.printStackTrace();
+		// generate RSS
+		for (String f: MEDIA_FORMATS) {           
+			generateRSS(video, f);
 		}
 		String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/";
 		HTACCESS.makeHtaccess(url, VideoLocalServiceUtil.getByProducerAndDownloadLink(producer.getProducerId(), 0));
 	}
 
+	@SuppressWarnings("static-access")
 	public void activateOpenaccess(Video video) throws SystemException, PortalException {
 		Host host = HostLocalServiceUtil.getHost(video.getHostId());
 		Producer producer = ProducerLocalServiceUtil.getProducer(video.getProducerId());
@@ -127,50 +116,34 @@ public class ProzessManager {
 		String videoSPreffix = video.getSPreffix();
 		try {
 			// then update the filesystem
-			// here rename
-			File fJpg = new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoSPreffix + ".jpg");
-			File fJpgm = new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoSPreffix + "_m.jpg");
-			File fJpgs = new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoSPreffix + "_s.jpg");
-			File fPdf = new File(path + "/" + videoSPreffix + ".pdf");
+			//default media
 			File fMp3 = new File(path + "/" + videoSPreffix + ".mp3");
-			File fM4v = new File(path + "/" + videoSPreffix + ".m4v");
 			File fMp4 = new File(path + "/" + videoSPreffix + ".mp4");
-			File fM4a = new File(path + "/" + videoSPreffix + ".m4a");
-			File fOgg = new File(path + "/" + videoSPreffix + ".ogg");
-			File fFlv = new File(path + "/" + videoSPreffix + ".flv");
-			File fWebm = new File(path + "/" + videoSPreffix + ".webm");
-			timeout();// wait for a while!
+
 			// if mp4 or mp3 exists
 			if (fMp4.isFile() || fMp3.isFile()) {
-				fJpg.renameTo(new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoPreffix + ".jpg"));
-				fJpgm.renameTo(new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoPreffix + "_m.jpg"));
-				fJpgs.renameTo(new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoPreffix + "_s.jpg"));
-				
-				fPdf.renameTo(new File(path + "/" + videoPreffix + ".pdf"));
-				fMp3.renameTo(new File(path + "/" + videoPreffix + ".mp3"));
-				fM4v.renameTo(new File(path + "/" + videoPreffix + ".m4v"));
-				fMp4.renameTo(new File(path + "/" + videoPreffix + ".mp4"));
-				fM4a.renameTo(new File(path + "/" + videoPreffix + ".m4a"));
-				fOgg.renameTo(new File(path + "/" + videoPreffix + ".ogg"));
-				fFlv.renameTo(new File(path + "/" + videoPreffix + ".flv"));
-				fWebm.renameTo(new File(path + "/" + videoPreffix + ".webm"));
-				
+				//for images
+				for (String s: THUMBNAIL_SUFFIX) {
+					File imgFile = new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoSPreffix + s);
+					imgFile.renameTo(new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoPreffix + s));
+				}
+				//for av media
+				for (String f: MEDIA_FORMATS) {           
+					File file = new File(path + "/" + videoSPreffix + "."+f);
+					File newFile = new File(path + "/" + videoPreffix + "."+f);
+					file.renameTo(newFile);
+				}
 				// then update the video in the database
 				video.setOpenAccess(1);
 				video.setSecureFilename("");
 				VideoLocalServiceUtil.updateVideo(video);
 			}
 		} catch (Exception e) {}
-		
-		// rss reload
-		generateRSS(video, "mp4");
-		generateRSS(video, "mp3");
-		generateRSS(video, "m4v");
-		generateRSS(video, "m4a");
-		generateRSS(video, "ogg");
-		generateRSS(video, "flv");
-		generateRSS(video, "webm");		
-		
+		// generate RSS
+		for (String f: MEDIA_FORMATS) {           
+			generateRSS(video, f);
+		}	
+		//
 		String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/";
 		HTACCESS.makeHtaccess(url, VideoLocalServiceUtil.getByProducerAndDownloadLink(producer.getProducerId(), 0));
 		// refresh last video list
@@ -179,6 +152,7 @@ public class ProzessManager {
 		LectureseriesLocalServiceUtil.updateOpenAccess(video, lectureseries); 
 	}
 
+	@SuppressWarnings("static-access")
 	public void deactivateOpenaccess(Video video) throws PortalException, SystemException {
 		Host host = HostLocalServiceUtil.getHost(video.getHostId());
 		Producer producer = ProducerLocalServiceUtil.getProducer(video.getProducerId());
@@ -190,21 +164,11 @@ public class ProzessManager {
 		// then update the filesystem
 		String path = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir();
 		String videoPreffix = video.getPreffix();
-		// here rename
-		File fJpg = new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoPreffix + ".jpg");
-		File fJpgm = new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoPreffix + "_m.jpg");
-		File fJpgs = new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoPreffix + "_s.jpg");
 		
-		File fPdf = new File(path + "/" + videoPreffix + ".pdf");
+		//default media
 		File fMp3 = new File(path + "/" + videoPreffix + ".mp3");
-		File fM4v = new File(path + "/" + videoPreffix + ".m4v");
 		File fMp4 = new File(path + "/" + videoPreffix + ".mp4");
-		File fM4a = new File(path + "/" + videoPreffix + ".m4a");
-		File fOgg = new File(path + "/" + videoPreffix + ".ogg");
-		File fFlv = new File(path + "/" + videoPreffix + ".flv");
-		File fWebm = new File(path + "/" + videoPreffix + ".webm");		
-		// wait for a wile!
-		timeout();
+		//
 		if (fMp4.isFile() || fMp3.isFile()) {
 			// first update the video in the database and, set openaccess
 			video.setOpenAccess(0);
@@ -212,48 +176,28 @@ public class ProzessManager {
 			String secureUrl = Security.createSecureFileName() + "." + video.getContainerFormat();
 			video.setSecureFilename(secureUrl);
 			VideoLocalServiceUtil.updateVideo(video);
-			
-			String vidSPreffix = video.getSPreffix();
-			// then rename all system files
-			fJpg.renameTo(new File(PropsUtil.get("lecture2go.images.system.path") + "/" + vidSPreffix + ".jpg"));
-			fJpgm.renameTo(new File(PropsUtil.get("lecture2go.images.system.path") + "/" + vidSPreffix + "_m.jpg"));
-			fJpgs.renameTo(new File(PropsUtil.get("lecture2go.images.system.path") + "/" + vidSPreffix + "_s.jpg"));
-			fPdf.renameTo(new File(path + "/" + vidSPreffix + ".pdf"));
-			fMp3.renameTo(new File(path + "/" + vidSPreffix + ".mp3"));
-			fM4v.renameTo(new File(path + "/" + vidSPreffix + ".m4v"));
-			fMp4.renameTo(new File(path + "/" + vidSPreffix + ".mp4"));
-			fM4a.renameTo(new File(path + "/" + vidSPreffix + ".m4a"));
-			fOgg.renameTo(new File(path + "/" + vidSPreffix + ".ogg"));
-			fFlv.renameTo(new File(path + "/" + vidSPreffix + ".flv"));
-			fWebm.renameTo(new File(path + "/" + vidSPreffix + ".webm"));
+		
+			String videoSPreffix = video.getSPreffix();
+			//for images
+			for (String s: THUMBNAIL_SUFFIX) {
+				File imgFile = new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoPreffix + s);
+				imgFile.renameTo(new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoSPreffix + s));
+			}
+			//for av media
+			for (String f: MEDIA_FORMATS) {           
+				File file = new File(path + "/" + videoPreffix + "."+f);
+				File newFile = new File(path + "/" + videoSPreffix + "."+f);
+				file.renameTo(newFile);
+			}
 		}
 		// delete all symbolic links
-		File symLinkMp4 = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + video.getPreffix() + ".mp4");
-		File symLinkM4v = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + video.getPreffix() + ".m4v");
-		File symLinkM4a = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + video.getPreffix() + ".m4a");
-		File symLinkMp3 = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + video.getPreffix() + ".mp3");
-		File symLinkPdf = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + video.getPreffix() + ".pdf");
-		File symLinkOgg = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + video.getPreffix() + ".ogg");
-		File symLinkFlv = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + video.getPreffix() + ".flv");
-		File symLinkWebm = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + video.getPreffix() + ".webm");
-		symLinkMp4.delete();
-		symLinkM4v.delete();
-		symLinkM4a.delete();
-		symLinkMp3.delete();
-		symLinkPdf.delete();
-		symLinkOgg.delete();
-		symLinkFlv.delete();
-		symLinkWebm.delete();
-		// set RSS
-		try {
-			generateRSS(video, "mp4");
-			generateRSS(video, "mp3");
-			generateRSS(video, "m4v");
-			generateRSS(video, "m4a");
-			generateRSS(video, "ogg");
-			generateRSS(video, "flf");
-			generateRSS(video, "webm");
-		} catch (Exception e) {
+		for (String f: MEDIA_FORMATS) {           
+			File symLink = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + video.getPreffix() + "."+f);
+			symLink.delete();
+		}
+		// generate RSS
+		for (String f: MEDIA_FORMATS) {           
+			generateRSS(video, f);
 		}
 		// delete video from videohitlist
 		VideohitlistLocalServiceUtil.deleteByVideoId(video.getVideoId());
@@ -269,20 +213,15 @@ public class ProzessManager {
 	}
 
 	public void deleteThumbnails(Video video) {
-		try {
 			String videoPreffix = "";
-			if (video.getOpenAccess()==1)
-				videoPreffix = video.getPreffix();
-			else
-				videoPreffix = video.getSPreffix();
-			File jpgFile = new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoPreffix + ".jpg");
-			File jpgmFile = new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoPreffix + "_m.jpg");
-			File jpgsFile = new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoPreffix + "_s.jpg");
-			jpgFile.delete();
-			jpgmFile.delete();
-			jpgsFile.delete();
-		} catch (NullPointerException npe) {
-		}
+			if (video.getOpenAccess()==1) videoPreffix = video.getPreffix();
+			else videoPreffix = video.getSPreffix();
+			
+			//delete
+			for (String s: THUMBNAIL_SUFFIX) {
+				File file = new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoPreffix + s);
+				file.delete();
+			}
 	}
 
 	@SuppressWarnings("static-access")
@@ -375,61 +314,23 @@ public class ProzessManager {
 		if (video.getOpenAccess()==1) videoPreffix = video.getPreffix();
 		else videoPreffix = video.getSPreffix();
 		
-		try {
-			// delete all video contents
-			if (video.getFilename() != null) {
-				File mp3File = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".mp3");
-				File m4aFile = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".m4a");
-				File mp4vFile = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".m4v");
-				File pdfFile = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".pdf");
-				File mp4File = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".mp4");
-				File oggFile = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".ogg");
-				File flvFile = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".flv");
-				File webmFile = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".webm");
-				File tarFile = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".tar");
-				mp3File.delete();
-				m4aFile.delete();
-				mp4vFile.delete();
-				pdfFile.delete();
-				mp4File.delete();
-				tarFile.delete();
-				oggFile.delete();
-				flvFile.delete();
-				webmFile.delete();
-				deleteThumbnails(video);
+		// delete all video contents
+		if (video.getFilename() != null) {
+			for (String f: MEDIA_FORMATS) {           
+				//all media
+				File file = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + videoPreffix + "." + f);
+				file.delete();
+				//all symbolic links
+				File symLink = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + "." + f);
+				symLink.delete();
 			}
-			// delete all symbolic links
-			File symLinkMp4 = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".mp4");
-			File symLinkM4v = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".m4v");
-			File symLinkM4a = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".m4a");
-			File symLinkMp3 = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".mp3");
-			File symLinkJpg = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".jpg");
-			File symLinkOgg = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".ogg");
-			File symLinkFlv = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".flv");
-			File symLinkWebm = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".webm");
-			File symLinkPdf = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".pdf");
-			symLinkMp4.delete();
-			symLinkM4v.delete();
-			symLinkM4a.delete();
-			symLinkMp3.delete();
-			symLinkJpg.delete();
-			symLinkOgg.delete();
-			symLinkFlv.delete();
-			symLinkWebm.delete();
-			symLinkPdf.delete();
-		} catch (NullPointerException npe) {}
+			//all thumn nails
+			deleteThumbnails(video);
+		}
 		
-		// update RSS
-		try {
-			generateRSS(video, "mp4");
-			generateRSS(video, "mp3");
-			generateRSS(video, "m4v");
-			generateRSS(video, "m4a");
-			generateRSS(video, "ogg");
-			generateRSS(video, "flf");
-			generateRSS(video, "webm");
-		} catch (Exception e) {
-			e.printStackTrace();
+		// generate RSS
+		for (String f: MEDIA_FORMATS) {           
+			generateRSS(video, f);
 		}
 		
 		// update last video list
@@ -437,25 +338,13 @@ public class ProzessManager {
 		
 		// update uploads for producer
 		int n = 0;
-		try {
-			n = VideoLocalServiceUtil.getByProducer(producer.getProducerId()).size();
-		} catch (SystemException e) {
-			e.printStackTrace();
-		}
+		n = VideoLocalServiceUtil.getByProducer(producer.getProducerId()).size();
 		producer.setNumberOfProductions(n);
-		try {
-			ProducerLocalServiceUtil.updateProducer(producer);
-		} catch (SystemException e) {
-			e.printStackTrace();
-		}
+		ProducerLocalServiceUtil.updateProducer(producer);
 		
 		//Update htaccess
 		String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/";
-		try {
-			HTACCESS.makeHtaccess(url, VideoLocalServiceUtil.getByProducerAndDownloadLink(producer.getProducerId(), 0));
-		} catch (SystemException e) {
-			e.printStackTrace();
-		}
+		HTACCESS.makeHtaccess(url, VideoLocalServiceUtil.getByProducerAndDownloadLink(producer.getProducerId(), 0));
 		
 		// refresh open access for lecture series
 		if(lectureseries.getLectureseriesId()>0)LectureseriesLocalServiceUtil.updateOpenAccess(video, lectureseries); 
@@ -471,6 +360,7 @@ public class ProzessManager {
 		return true;
 	}
 	
+	@SuppressWarnings("static-access")
 	public boolean deleteFilesImagesFromVideo(Video video){
 		Host host = new HostImpl();
 		try {
@@ -485,9 +375,9 @@ public class ProzessManager {
 		try {
 			producer = ProducerLocalServiceUtil.getProducer(video.getProducerId());
 		} catch (PortalException e1) {
-			e1.printStackTrace();
+			//e1.printStackTrace();
 		} catch (SystemException e1) {
-			e1.printStackTrace();
+			//e1.printStackTrace();
 		}
 		
 		// delete all segments and images from repository location
@@ -514,62 +404,20 @@ public class ProzessManager {
 		if (video.getOpenAccess()==1) videoPreffix = video.getPreffix();
 		else videoPreffix = video.getSPreffix();
 		
-		try {
-			// delete all video contents
-			if (video.getFilename() != null) {
-				File mp3File = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".mp3");
-				File m4aFile = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".m4a");
-				File mp4vFile = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".m4v");
-				File pdfFile = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".pdf");
-				File mp4File = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".mp4");
-				File oggFile = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".ogg");
-				File flvFile = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".flv");
-				File webmFile = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".webm");
-				File tarFile = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + videoPreffix + ".tar");
-				mp3File.delete();
-				m4aFile.delete();
-				mp4vFile.delete();
-				pdfFile.delete();
-				mp4File.delete();
-				tarFile.delete();
-				oggFile.delete();
-				flvFile.delete();
-				webmFile.delete();
-				deleteThumbnails(video);
-			}
-			
-			// delete all symbolic links
-			File symLinkMp4 = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".mp4");
-			File symLinkM4v = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".m4v");
-			File symLinkM4a = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".m4a");
-			File symLinkMp3 = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".mp3");
-			File symLinkJpg = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".jpg");
-			File symLinkOgg = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".ogg");
-			File symLinkFlv = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".flv");
-			File symLinkWebm = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".webm");
-			File symLinkPdf = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + ".pdf");
-			symLinkMp4.delete();
-			symLinkM4v.delete();
-			symLinkM4a.delete();
-			symLinkMp3.delete();
-			symLinkJpg.delete();
-			symLinkOgg.delete();
-			symLinkFlv.delete();
-			symLinkWebm.delete();
-			symLinkPdf.delete();
-		} catch (NullPointerException npe) {}
+		for (String f: MEDIA_FORMATS) {           
+			//all media
+			File file = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + videoPreffix + "." + f);
+			file.delete();
+			//all symbolic links
+			File symLink = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + "." + f);
+			symLink.delete();
+		}
+		//all thumn nails
+		deleteThumbnails(video);
 		
-		// update RSS
-		try {
-			generateRSS(video, "mp4");
-			generateRSS(video, "mp3");
-			generateRSS(video, "m4v");
-			generateRSS(video, "m4a");
-			generateRSS(video, "ogg");
-			generateRSS(video, "flf");
-			generateRSS(video, "webm");
-		} catch (Exception e) {
-			e.printStackTrace();
+		// generate RSS
+		for (String f: MEDIA_FORMATS) {           
+			generateRSS(video, f);
 		}
 		
 		//Update htaccess
@@ -600,57 +448,43 @@ public class ProzessManager {
 		return true;
 	}
 
-	public void generateRSS(Video video, String type) throws PortalException, SystemException {
+	public void generateRSS(Video video, String type) {
+		Long lsId = video.getLectureseriesId();
 		// RSS generate for this lecture
-		RSSManager rssMan = new RSSManager();
-		String feedName = "";
-		String title = "";
-		try{
-			title = LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId()).getName();
-		}catch(Exception e){}
-		
-		rssMan.setTitle(title);
-		try {
-			List<Video> videoList = VideoLocalServiceUtil.getByLectureseriesAndOpenaccess(video.getLectureseriesId(), 1);
+		if(lsId>=0){
+			RSSManager rssMan = new RSSManager();
+			String feedName = "";
+			String title = "";
+			try{
+				title = LectureseriesLocalServiceUtil.getLectureseries(lsId).getName();
+			}catch(Exception e){}
 			
-			if (type.equals("mp4")) feedName = "" + video.getLectureseriesId() + ".mp4.xml";
-			if (type.equals("mp3")) feedName = "" + video.getLectureseriesId() + ".mp3.xml";
-			if (type.equals("m4a"))	feedName = "" + video.getLectureseriesId() + ".m4a.xml";
-			if (type.equals("m4v"))	feedName = "" + video.getLectureseriesId() + ".m4v.xml";
-			if (type.equals("ogg"))	feedName = "" + video.getLectureseriesId() + ".ogg.xml";
-			if (type.equals("flv"))	feedName = "" + video.getLectureseriesId() + ".flv.xml";
-			if (type.equals("webm")) feedName = "" + video.getLectureseriesId() + ".webm.xml";
-			
-			rssMan.setRssFilename(feedName);
-
-			if (type.equals("mp4"))	rssMan.createRssFile(videoList, "mp4");
-			if (type.equals("mp3")) rssMan.createRssFile(videoList, "mp3");
-			if (type.equals("m4a"))	rssMan.createRssFile(videoList, "m4a");
-			if (type.equals("m4v"))	rssMan.createRssFile(videoList, "m4v");
-			if (type.equals("ogg"))	rssMan.createRssFile(videoList, "ogg");
-			if (type.equals("flv"))	rssMan.createRssFile(videoList, "flv");
-			if (type.equals("webm"))	rssMan.createRssFile(videoList, "webm");
-		} catch (Exception e) {
+			rssMan.setTitle(title);
 			try {
-				if (type.equals("mp4"))	rssMan.createRssFile(null, "mp4");
-				if (type.equals("mp3"))	rssMan.createRssFile(null, "mp3");
-				if (type.equals("m4a"))	rssMan.createRssFile(null, "m4a");
-				if (type.equals("m4v"))	rssMan.createRssFile(null, "m4v");
-				if (type.equals("ogg"))	rssMan.createRssFile(null, "ogg");
-				if (type.equals("flv"))	rssMan.createRssFile(null, "flv");
-				if (type.equals("webm"))	rssMan.createRssFile(null, "webm");
-			} catch (IOException ie) {
+				List<Video> videoList = VideoLocalServiceUtil.getByLectureseriesAndOpenaccess(lsId, 1);
+				
+				for (String f: MEDIA_FORMATS) {           
+					if (type.equals(f)) feedName = "" + lsId + "."+f+".xml";
+					rssMan.setRssFilename(feedName);
+					if (type.equals(f))	rssMan.createRssFile(videoList, f);
+				}
+				
+			} catch (Exception e) {
+				try {
+					for (String f: MEDIA_FORMATS) { 
+						if (type.equals(f))	rssMan.createRssFile(null, f);
+					}
+				} catch (IOException ie) {
+				} catch (PortalException e1) {
+					// TODO Auto-generated catch block
+					//e1.printStackTrace();
+				} catch (SystemException e1) {
+					// TODO Auto-generated catch block
+					//e1.printStackTrace();
+				}
 			}
 		}
 		// RSS end
-	}
-
-	private void timeout() {
-		double a = 0;
-		for (int i = 0; i <= 10000000; i++) {
-			a++;
-			a = Math.exp(a);
-		}
 	}
 
 	public void addNewMediaDirectoryForProducer(Host host, Producer producer) throws IOException {
