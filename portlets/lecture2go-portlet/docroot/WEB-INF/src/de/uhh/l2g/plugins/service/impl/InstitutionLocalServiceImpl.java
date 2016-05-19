@@ -110,6 +110,12 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		return institutionPersistence.findByParent(parentId);
 	}
 
+
+	public  List<Institution> getByParentId(long parentId) throws SystemException {
+		List<Institution> institutions = institutionPersistence.findByParent(parentId);
+		return institutions;
+	}
+	
 	public Map<String, String> getByParent(long parentId) throws SystemException {
 		Map<String, String> institutions = new LinkedHashMap<String, String>();
 		List<Institution> fList = institutionPersistence.findByParent(parentId);

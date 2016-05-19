@@ -48,6 +48,8 @@
 
 	Map<String,String> subInstitutions = new LinkedHashMap<String, String>();
 	subInstitutions = InstitutionLocalServiceUtil.getByParent(reqVideo.getRootInstitutionId());
+	List<Institution> producersSubInstitutions = InstitutionLocalServiceUtil.getByParentId(reqProducer.getInstitutionId());
+	ListIterator<Institution> itPSI = producersSubInstitutions.listIterator();
 	//video upload path
 	//is first upload:
 	String uploadRepository="";
@@ -148,11 +150,11 @@
 					Long subInstitutionId = new Long(0);
 					try{subInstitutionId = Video_InstitutionLocalServiceUtil.getByVideo(reqVideo.getVideoId()).get(0).getInstitutionId();}catch (Exception e){}
 					
-					for (Map.Entry<String, String> f : subInstitutions.entrySet()) {
-					if(f.getKey().equals(subInstitutionId.toString())){
-						%><aui:option value='<%=f.getKey()%>'><%=f.getValue()%></aui:option>
-						<%}
-					}%>
+					while(itPSI.hasNext()){
+						Institution i = itPSI.next();
+						%><aui:option value='<%=i.getInstitutionId()%>'><%=i.getName()%></aui:option><%
+					}
+					%>
 					</aui:select>
 					
 					<div class="subInstitutions" >
