@@ -353,13 +353,13 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		objectVideo.setFlvDownloadLink(downFlvLink);
 		//rss links
 		if(objectVideo.getLectureseriesId()>0){
-			String rssMp3Link = PropsUtil.get("lecture2go.downloadserver.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".mp3.xml";
-			String rssMp4Link = PropsUtil.get("lecture2go.downloadserver.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".mp4.xml";
-			String rssM4vLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".m4v.xml";
-			String rssM4aLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".m4a.xml";
-			String rssWebmLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".webm.xml";
-			String rssOggLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".ogg.xml";
-			String rssFlvLink = PropsUtil.get("lecture2go.downloadserver.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".flv.xml";		
+			String rssMp3Link = PropsUtil.get("lecture2go.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".mp3.xml";
+			String rssMp4Link = PropsUtil.get("lecture2go.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".mp4.xml";
+			String rssM4vLink = PropsUtil.get("lecture2go.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".m4v.xml";
+			String rssM4aLink = PropsUtil.get("lecture2go.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".m4a.xml";
+			String rssWebmLink = PropsUtil.get("lecture2go.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".webm.xml";
+			String rssOggLink = PropsUtil.get("lecture2go.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".ogg.xml";
+			String rssFlvLink = PropsUtil.get("lecture2go.web.root")+"/rss/"+objectVideo.getLectureseriesId()+".flv.xml";		
 			//
 			objectVideo.setMp3RssLink(rssMp3Link);
 			objectVideo.setMp4RssLink(rssMp4Link);
