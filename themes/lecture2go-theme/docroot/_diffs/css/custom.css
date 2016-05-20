@@ -937,7 +937,7 @@ $dockbarOpenGradientEnd: #e9e9e9;
 	}
 	
 	.control-group {
-		margin: 0px 0px 10px;
+		margin: 10px 0px 0px;
 	}
 	
 	#_lgadminvideomanagement_WAR_lecture2goportlet_timeStart, #_lgadminvideomanagement_WAR_lecture2goportlet_timeEnd {
