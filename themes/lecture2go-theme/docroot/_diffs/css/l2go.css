@@ -72,11 +72,12 @@ fieldset.fieldset.add-streaming-server div.layout {
 }
 
 #qr {
-    height: 450px;
+    width: 350px;
+    height: 350px;
     margin-left: -33px;
     opacity: 0.1;
     overflow: hidden;
-    width: 450px;
+    clear: both;
 }
 
 .aui .navbar .nav {
