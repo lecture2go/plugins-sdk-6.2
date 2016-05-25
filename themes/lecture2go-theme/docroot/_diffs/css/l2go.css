@@ -1751,11 +1751,18 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 
 /*** end: front page background-video specific  ***/
 
-.l2go-info {
-	left:15%;
-	width:63%;
-	top:10%;
+.l2go-info-container {
 	position: absolute;
+	top: 0;
+	left: 15%;
+    width: 70%;
+    height: 100%;
+}
+
+.l2go-info {
+	position: relative;
+	height: 72%;
+	margin-top: 10%;
 }
 
 .l2go-info > .catalogue-button {
@@ -1766,7 +1773,9 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	font-family: TheSansUHH,sans-serif;
     font-size: 14px;
 	color: #fff;
-	margin-bottom: 40px;
+	position: absolute;
+    bottom: 0;
+    left: 0;
 }
 
 .l2go-description a {
@@ -1817,7 +1826,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	height: 100%;
 	color: #000;
     /*background-color: #282828;*/
-    background-color: #AAA;
+    background-color: #cac8c8;
     background-image: none;
     box-shadow: none;
     font-size: 15px;
@@ -1833,7 +1842,6 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 
 
 .filter-facility-menu {
-	padding: 5px 5px 10px 20px;
 	display: none;
 	background-color: #d9d7d7;
 	z-index: 9999;
@@ -1847,12 +1855,24 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	margin: 5px 0;
 }
 
+.filter-facility-menu-main {
+	padding: 5px 5px 10px 20px;
+	background-color: inherit;
+}
+
+.filter-facility-menu-extra {
+	padding: 5px 5px 10px 20px;
+	background-color: #cac8c8;
+}
+
+
 .l2go-info  .catalogue-button {
     height: 40px;
     color: #ffffff;
     width: 100%;
-	/* ignore the 20px padding from filter-facility-menu to fill the whole space */
-	margin: 25px -20px 0 -20px;
+	/* ignore the padding from the parent to fill the whole space */
+	width: calc(100% + 45px);
+    margin: 25px 0px 0px -20px;
 }
 
 .video-box-list-container {
@@ -1861,7 +1881,8 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 }
 
 /* this flex container with wrap is used to resize the grids, so all have the same height */
-.row-fluid.video-box-list { 
+.row-fluid.video-box-list,
+.row-fluid.filter-facility-menu-row { 
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -ms-flexbox;
@@ -1875,8 +1896,14 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 }
 
 .video-box { 
-	background-color: #F6F6F6; 
+	position: relative;
+	background-color: #f3f3f3; 
 	padding: 7px; 
+	cursor: pointer; 
+}
+
+.video-box:hover {
+	background-color: #e9e9e9;
 }
 
 
@@ -1924,10 +1951,6 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
     left: 0;
     width: 100%;
     height: 100%;
-}
-
-.video-box {
-	position: relative;
 }
 
 .video-box-date {
@@ -2009,7 +2032,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 		position: relative;
 	}
 
-    .l2go-info {
+    .l2go-info-container {
       	left:5%;
       	width:90%;
       	top: 5%;
@@ -2037,6 +2060,13 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	.video-box {
 		padding: 5px;
 		margin-bottom: 5px;
+	}
+	
+	.video-box-content .title-small {
+		font-size: 12px;
+		width: 100%;
+		margin: 3px;
+		color: #000;
 	}
 
 	.video-box-date {
