@@ -1720,7 +1720,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
     width: 100%;   
     height: 100%; 
     background-color: #000000;
-    opacity: .75;
+    opacity: .55;
 }
 
 /*** end: front page background-video specific  ***/
@@ -1748,18 +1748,25 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	text-decoration: underline;
 }
 
+.big-search {
+	height: 35px;
+}
+
 .big-search > .search {
     position: relative;
     /* reset the margins */
     margin: 0 0 0 180px;
+    height: 40px;
     /* TODO: we cut the parts which are bigger than the parent div with overflow: hidden (Where is this coming from??)*/
     overflow: hidden;
 }
 
 .big-search > .search input.button {
+    /*TODO: hidden until better button */
+    display: none;
     clear: both;
     float: none;
-    height: 25px;
+    height: 40px;
     position: absolute;
     right: 0;
     padding: 2px;
@@ -1772,24 +1779,32 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	margin: 0;
 	margin-left: 0;
 	width: 100%;
+	height: 25px;
+	font-size: 15px;
+	padding-left: 10px;
 }
 
 .big-search .filter-facility-button {
 	float: left;
 	width: 180px;
 	margin: 0;
-	height: 29px;
-	color: #ffffff;
-    background-color: #282828;
+	height: 100%;
+	color: #000;
+    /*background-color: #282828;*/
+    background-color: #AAA;
     background-image: none;
     box-shadow: none;
+    font-size: 15px;
+    border-right: #777 solid 1px;
+    text-shadow: none;
 } 
 
-.big-search .filter-facility-button:hover, 
-.big-search .filter-facility-button:focus, 
-.big-search .filter-facility-button:active {
-	background-color: #323232;
+.big-search .filter-facility-button:active,
+.big-search .filter-facility-button:focus {
+	color: #484848;
+    background: linear-gradient(#eeeeee, #cccccc);
 }
+
 
 .filter-facility-menu {
 	padding: 5px 5px 10px 20px;
@@ -1798,6 +1813,8 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	z-index: 9999;
 	position: absolute;
 	width: 100%;
+	/* border-box keeps the correct width even with the padding */
+	box-sizing: border-box;
 }
 
 .filter-facility-menu li {
@@ -1806,7 +1823,6 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 
 .l2go-info  .catalogue-button {
     height: 40px;
-    background: #d81b1b;
     color: #ffffff;
     width: 100%;
 	/* ignore the 20px padding from filter-facility-menu to fill the whole space */
@@ -1890,22 +1906,31 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 
 .video-box-date {
 	margin: 0 0 5px 0;
+	/*TODO: date has been moved, update css accordingly, this is a workaround */
+	display: none;
 }
 
 
 .video-box-content .title-small {
+	font-size: 14px;
 	width: 100%;
-	margin-bottom: 3px;
+	margin: 10px 0 15px 0;
+	color: #000;
 }
 
 .video-box-content .creator-small2 {
-    margin: 0 0 5px 0;
+    margin: 0 0 2px 0;
     font-size: 12px;
 }
 
+.video-box-content .date {
+	margin: 0 0 10px 0;
+}
+
 .video-box-content .lectureseries-small {
-    margin: 0 0 20px 0;
+    margin: 0 0 25px 0;
     padding: 0;
+    color: #AAA;
 }
 
 .video-box-content .label {
@@ -1989,6 +2014,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	}
 
 	.video-box-date {
+		display: block;
 		/* change the flexbox order */
 		order: 99;
 		/* center vertically */
