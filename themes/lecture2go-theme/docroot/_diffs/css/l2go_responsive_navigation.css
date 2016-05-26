@@ -48,6 +48,9 @@
 	    padding: 4px 0;
 	    position: relative;
 	    width: 100% !important;
+	    height: 25px;
+	    padding-left: 10px;
+	    font-size: 14px
 	}
 	
 	.aui #navigation .nav .dropdown-menu > li a:hover {

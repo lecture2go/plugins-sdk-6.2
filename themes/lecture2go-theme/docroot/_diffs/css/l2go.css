@@ -1746,16 +1746,23 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
     width: 100%;   
     height: 100%; 
     background-color: #000000;
-    opacity: .75;
+    opacity: .55;
 }
 
 /*** end: front page background-video specific  ***/
 
-.l2go-info {
-	left:15%;
-	width:63%;
-	top:10%;
+.l2go-info-container {
 	position: absolute;
+	top: 0;
+	left: 15%;
+    width: 70%;
+    height: 100%;
+}
+
+.l2go-info {
+	position: relative;
+	height: 72%;
+	margin-top: 10%;
 }
 
 .l2go-info > .catalogue-button {
@@ -1766,7 +1773,9 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	font-family: TheSansUHH,sans-serif;
     font-size: 14px;
 	color: #fff;
-	margin-bottom: 40px;
+	position: absolute;
+    bottom: 0;
+    left: 0;
 }
 
 .l2go-description a {
@@ -1774,18 +1783,25 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	text-decoration: underline;
 }
 
+.big-search {
+	height: 35px;
+}
+
 .big-search > .search {
     position: relative;
     /* reset the margins */
     margin: 0 0 0 180px;
+    height: 40px;
     /* TODO: we cut the parts which are bigger than the parent div with overflow: hidden (Where is this coming from??)*/
     overflow: hidden;
 }
 
 .big-search > .search input.button {
+    /*TODO: hidden until better button */
+    display: none;
     clear: both;
     float: none;
-    height: 25px;
+    height: 40px;
     position: absolute;
     right: 0;
     padding: 2px;
@@ -1798,45 +1814,65 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	margin: 0;
 	margin-left: 0;
 	width: 100%;
+	height: 25px;
+	font-size: 15px;
+	padding-left: 10px;
 }
 
 .big-search .filter-facility-button {
 	float: left;
 	width: 180px;
 	margin: 0;
-	height: 29px;
-	color: #ffffff;
-    background-color: #282828;
+	height: 100%;
+	color: #000;
+    /*background-color: #282828;*/
+    background-color: #cac8c8;
     background-image: none;
     box-shadow: none;
+    font-size: 15px;
+    border-right: #777 solid 1px;
+    text-shadow: none;
 } 
 
-.big-search .filter-facility-button:hover, 
-.big-search .filter-facility-button:focus, 
-.big-search .filter-facility-button:active {
-	background-color: #323232;
+.big-search .filter-facility-button:active,
+.big-search .filter-facility-button:focus {
+	color: #484848;
+    background: linear-gradient(#eeeeee, #cccccc);
 }
 
+
 .filter-facility-menu {
-	padding: 5px 5px 10px 20px;
 	display: none;
 	background-color: #d9d7d7;
 	z-index: 9999;
 	position: absolute;
 	width: 100%;
+	/* border-box keeps the correct width even with the padding */
+	box-sizing: border-box;
 }
 
 .filter-facility-menu li {
 	margin: 5px 0;
 }
 
+.filter-facility-menu-main {
+	padding: 5px 5px 10px 20px;
+	background-color: inherit;
+}
+
+.filter-facility-menu-extra {
+	padding: 5px 5px 10px 20px;
+	background-color: #cac8c8;
+}
+
+
 .l2go-info  .catalogue-button {
     height: 40px;
-    background: #d81b1b;
     color: #ffffff;
     width: 100%;
-	/* ignore the 20px padding from filter-facility-menu to fill the whole space */
-	margin: 25px -20px 0 -20px;
+	/* ignore the padding from the parent to fill the whole space */
+	width: calc(100% + 45px);
+    margin: 25px 0px 0px -20px;
 }
 
 .video-box-list-container {
@@ -1845,7 +1881,8 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 }
 
 /* this flex container with wrap is used to resize the grids, so all have the same height */
-.row-fluid.video-box-list { 
+.row-fluid.video-box-list,
+.row-fluid.filter-facility-menu-row { 
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -ms-flexbox;
@@ -1859,8 +1896,14 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 }
 
 .video-box { 
-	background-color: #F6F6F6; 
+	position: relative;
+	background-color: #f3f3f3; 
 	padding: 7px; 
+	cursor: pointer; 
+}
+
+.video-box:hover {
+	background-color: #e9e9e9;
 }
 
 
@@ -1910,28 +1953,33 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
     height: 100%;
 }
 
-.video-box {
-	position: relative;
-}
-
 .video-box-date {
 	margin: 0 0 5px 0;
+	/*TODO: date has been moved, update css accordingly, this is a workaround */
+	display: none;
 }
 
 
 .video-box-content .title-small {
+	font-size: 14px;
 	width: 100%;
-	margin-bottom: 3px;
+	margin: 10px 0 15px 0;
+	color: #000;
 }
 
 .video-box-content .creator-small2 {
-    margin: 0 0 5px 0;
+    margin: 0 0 2px 0;
     font-size: 12px;
 }
 
+.video-box-content .date {
+	margin: 0 0 10px 0;
+}
+
 .video-box-content .lectureseries-small {
-    margin: 0 0 20px 0;
+    margin: 0 0 25px 0;
     padding: 0;
+    color: #AAA;
 }
 
 .video-box-content .label {
@@ -1984,7 +2032,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 		position: relative;
 	}
 
-    .l2go-info {
+    .l2go-info-container {
       	left:5%;
       	width:90%;
       	top: 5%;
@@ -2013,8 +2061,16 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 		padding: 5px;
 		margin-bottom: 5px;
 	}
+	
+	.video-box-content .title-small {
+		font-size: 12px;
+		width: 100%;
+		margin: 3px;
+		color: #000;
+	}
 
 	.video-box-date {
+		display: block;
 		/* change the flexbox order */
 		order: 99;
 		/* center vertically */
