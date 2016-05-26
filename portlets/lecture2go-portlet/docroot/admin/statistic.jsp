@@ -3,7 +3,6 @@
 <%@ page import="de.uhh.l2g.plugins.service.VideoStatisticLocalServiceUtil" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-
 <%
 //Scope GroupId
 long groupId = themeDisplay.getLayout().getGroupId();
@@ -31,28 +30,28 @@ ListIterator<VideoStatistic> it = statisticEntries.listIterator();
 		        break;
 				case 1:
 					%>
-					<span><liferay-ui:message key="sinceyesterday"/> </span>
+					<span><liferay-ui:message key="since-yesterday"/> </span>
 					<br />			
 					<%
 					;
 		        break;
 				case 7:
 					%>
-					<span><liferay-ui:message key="sinceweek"/> </span>
+					<span><liferay-ui:message key="since-week"/> </span>
 					<br />			
 					<%
 					;
 		        break;
 				case 30:
 					%>
-					<span><liferay-ui:message key="sincemonth"/> </span>
+					<span><liferay-ui:message key="since-month"/> </span>
 					<br />			
 					<%
 					;
 		        break;
 				case 366:
 					%>
-					<span><liferay-ui:message key="sinceyear"/> </span>
+					<span><liferay-ui:message key="since-year"/> </span>
 					<br />			
 					<%
 					;
@@ -63,10 +62,10 @@ ListIterator<VideoStatistic> it = statisticEntries.listIterator();
 				%>
 					<em>-&nbsp;<liferay-ui:message key="total"/> 
 						<%if(vStat.getCurrentTotal()>0) {%>
-						 	<%=vStat.getCurrentTotal() %> <liferay-ui:message key="ofwhich"/>
+						 	<%=vStat.getCurrentTotal() %> <liferay-ui:message key="of-which"/>
 						<%}%>
 						<%if(vStat.getCurrentTotal()<1) {%>
-							<liferay-ui:message key="videolistevaluationnotpossible"/> 
+							<liferay-ui:message key="video-list-evaluation-not-possible"/> 
 						<%}%>
 					</em>
 					<br />
