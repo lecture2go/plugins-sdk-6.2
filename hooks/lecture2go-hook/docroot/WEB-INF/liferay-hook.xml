@@ -2,5 +2,8 @@
 <!DOCTYPE hook PUBLIC "-//Liferay//DTD Hook 6.2.0//EN" "http://www.liferay.com/dtd/liferay-hook_6_2_0.dtd">
 
 <hook>
+	<language-properties>content/Language_de.properties</language-properties>
+	<language-properties>content/Language_en.properties</language-properties>
 	<custom-jsp-dir>/custom_jsps</custom-jsp-dir>
+
 </hook>
