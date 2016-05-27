@@ -16,7 +16,7 @@
 
 <%if(video.getVideoId()>0){%>
 	<%if(video.getAccessPermitted()==1){%>
-		<%if(video.getOpenAccess()==1){%>
+		<%if(video.getOpenAccess()==1 || video.getOpenAccess()==0){%>
 			<div class="col-xs-10 col-md-10">
 				<c:if test="${relatedVideos.size()>1}"> <div class="path"></c:if>
 			    <c:if test="${relatedVideos.size()<=1}"> <div class="path-wide"></c:if>
