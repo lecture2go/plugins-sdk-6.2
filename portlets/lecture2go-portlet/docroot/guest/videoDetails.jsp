@@ -405,9 +405,7 @@
 			<aui:form action="<%=viewOpenAccessVideoURL2.toString() %>" method="post">
 				<aui:fieldset helpMessage="enter-password" column="true" label='<%="l2go-video-password"%>'>
 					<aui:input name="password" label="password" required="true" value=""/>
-					<aui:button-row>
-						<aui:button type="submit"/>
-					</aui:button-row>
+					<aui:button type="submit" value="enter"/>
 				</aui:fieldset>
 			</aui:form>	
 			<%
