@@ -16,7 +16,7 @@
 
 <%if(video.getVideoId()>0){%>
 	<%if(video.getAccessPermitted()==1){%>
-		<%if(video.getOpenAccess()==1){%>
+		<%if(video.getOpenAccess()==1 || video.getOpenAccess()==0){%>
 			<div class="col-xs-10 col-md-10">
 				<c:if test="${relatedVideos.size()>1}"> <div class="path"></c:if>
 			    <c:if test="${relatedVideos.size()<=1}"> <div class="path-wide"></c:if>
@@ -405,9 +405,7 @@
 			<aui:form action="<%=viewOpenAccessVideoURL2.toString() %>" method="post">
 				<aui:fieldset helpMessage="enter-password" column="true" label='<%="l2go-video-password"%>'>
 					<aui:input name="password" label="password" required="true" value=""/>
-					<aui:button-row>
-						<aui:button type="submit"/>
-					</aui:button-row>
+					<aui:button type="submit" value="enter"/>
 				</aui:fieldset>
 			</aui:form>	
 			<%
