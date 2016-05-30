@@ -228,7 +228,8 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 
 <script>
 
-$(document).ready(function(){     
+$(document).ready(function(){
+	
     // toggle the subnavigation in the search bar
     $(".filter-facility-button").click(function() {
 			$(".filter-facility-menu").toggle();
@@ -238,20 +239,19 @@ $(document).ready(function(){
 	mediaCheck({
 	  	media: '(min-width: 960px)',
 	  	entry: function() {
-		  	// move search box from top to center
-		  	$(".search").appendTo(".big-search");
+	  		transformSearchToWideView();
 		  	//hide all carousel items but the first and show carousel navigation
 		  	$("#news-carousel .item:not(:first)").removeClass("active");
 		  	$("#popular-carousel .item:not(:first)").removeClass("active");
 		  	$(".carousel-control").show();
 		  	showOrHideCarouselControl('#news-carousel');
 		  	showOrHideCarouselControl('#popular-carousel');
+		  	transformSearchToWideView();
 		 },
 	  exit: function() {
+		  	transformSearchToSmallView();
 		  	// do not show the big button on desktop
 		  	$(".filter-facility-menu").hide();
-		  	// move search box from center to top
-		  	$(".search").prependTo("#content");
 		  	//show all carousel items and hide carousel navigation
 		  	$(".item").addClass("active");
 		  	$(".carousel-control").hide();
@@ -282,6 +282,19 @@ function showOrHideCarouselControl(id) {
   	} else {
     	$this.children('.carousel-control').show();
   	} 
+}
+
+function transformSearchToWideView() {
+  	// move search box from top to center
+  	$(".search").appendTo(".big-search");
+  	// change image to button
+	$('#_lgopenaccessvideos_WAR_lecture2goportlet_searchButton span').text(" <liferay-ui:message key='search'/>");
+}
+
+function transformSearchToSmallView() {
+  	// move search box from center to top
+  	$(".search").prependTo("#content");
+	$('#_lgopenaccessvideos_WAR_lecture2goportlet_searchButton span').text("");
 }
     
 </script>
