@@ -259,13 +259,15 @@
 							if(videoCount==0){
 								if(isVideo){
 									%>
-							        <a href="<%=view1URL%>">
 								       <div class="videotile metainfolist ">
+											<span class="term-of-creation"><%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %></span>
 									        <div class="video-image-wrapper">
 									          <img class="video-image-big" src="<%=vidDummy.getImageMedium()%>"/>
 									        </div>
 									        
-											<div class="lectureseries-title"><%=lectser.getName()%></div>
+							        <div class="lectureseries-title">
+							        	<a href="<%=view1URL%>"><%=lectser.getName()%></a>
+							        </div>
 											
 											<div class="allcreators">
 												<%
@@ -286,8 +288,6 @@
 							        				}
 							           			%>
 												<%=fullname1 %>
-												<br/>
-												<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
 											</div>		
 																	
 									        <div class="tags">
@@ -314,7 +314,6 @@
 									          %>
 									        </div>   
 								        </div>
-							        </a>
 							    	<%									
 								}else{
 									// single Video without lecture series
@@ -329,15 +328,17 @@
 										<portlet:param name="objectType" value="v"/>
 									</portlet:actionURL>
 							        
-							        <a href="<%=view2URL%>">
 								       <div class="videotile metainfolist ">
+											<span class="term-of-creation"><%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %></span>
 									        <div class="video-image-wrapper">
 									          <img class="video-image-big layered-paper" src="<%=vidDummy.getImageMedium()%>"/>
 									          <span class="tri"></span>
 									          <span class="overlay"></span>
 									        </div>
 									        
-											<div class="lectureseries-title"><%=lectser.getName()%></div>
+							        <div class="lectureseries-title">
+							        	<a href="<%=view2URL%>"><%=lectser.getName()%></a>
+							        </div>
 											
 											<div class="allcreators">
 												<%
@@ -356,8 +357,6 @@
 	              								}
 												%>
 												<%=fullname1%>
-												<br/>
-												<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>												
 											</div>		
 
 									        <div class="tags">
@@ -378,22 +377,23 @@
 									          %>
 									        </div>   
 								        </div>
-							        </a>
 							    	<%										
 								}
 							}else{
 								// multiple videos in lecture series
 								%>
-							        <a href="<%=view1URL%>">
-							          <span class="badge"><%=videoCount%></span>
 								       <div class="videotile metainfolist ">
+											<span class="term-of-creation"><%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %></span>
 									        <div class="video-image-wrapper">
 									          <img class="video-image-big layered-paper" src="<%=vidDummy.getImageMedium()%>"/>
+											  <span class="badge"><%=videoCount%></span>
 									          <span class="tri"></span>
 									          <span class="overlay"></span>
 									        </div>
 									        
-											<div class="lectureseries-title"><%=lectser.getName()%></div>
+							        <div class="lectureseries-title">
+							        	<a href="<%=view1URL%>"><%=lectser.getName()%></a>
+							        </div>
 											
 											<div class="allcreators">
 												<%
@@ -411,10 +411,7 @@
 	              								}
 												%>
 												<%=fullname2%>
-												<br/>
-												<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %>
 											</div>		
-																	
 											
 									        <div class="tags">
 									          <%
@@ -435,7 +432,6 @@
 									          %>
 									        </div>   
 								        </div>
-							        </a>
 								<%	
 							}
 						%>
@@ -445,7 +441,7 @@
 				<!-- sublist for searched videos -->
 				<%
 					String videoDivTitle = "";
-				if (videoCount>1) {
+				if (videoCount>0) {
 					if (isSearched) { videoDivTitle = "searchedvideos"; } else { videoDivTitle = "allvideos"; }%>
 					<div id="<%=videoDivTitle%>">
 							<button id="<%="b"+oId%>" >
@@ -487,7 +483,7 @@
 		              						}
 		              						String date = "";
 		              						String dur = "";
-		              						try{ date = v.getDate().trim();}catch(Exception e){}
+		              						try{ date = v. getSimpleDate().trim();}catch(Exception e){}
 		              						try{ dur = v.getDuration().trim().substring(0, 8);}catch(Exception e){}
 		              					%>
 										<div class="metainfo-small">
@@ -502,12 +498,6 @@
 								<li class="placeholder"></li>
 							<%}%>
 							</ul>
-							<script>
-								$("<%="#b"+oId%>").click(function() {
-									$(this).toggleClass("rotated");
-									$("<%="#p"+oId%>").slideToggle("slow");
-								});
-							</script>
 						</div>
 				<%}%>
 		</liferay-ui:search-container-column-text>
@@ -523,7 +513,26 @@
 
 <script type="text/javascript">
 
-$( document ).ready(function() {
+
+$( function() {
+	setTimeout(mach, 1000);
+	function mach() {
+		
+	var element = $("#_lgopenaccessvideos_WAR_lecture2goportlet_lectureseriesesSearchContainer div.videotile.wide");
+	
+	element.on({
+		click: function () {
+			$(this).siblings("div").find("ul").slideToggle().siblings("button").toggleClass("rotated");
+		},
+		mouseenter: function () {
+			$(this).siblings("div").find("button").addClass("highlight");
+		},
+		mouseleave: function () {
+			$(this).siblings("div").find("button").removeClass("highlight");
+		}
+	});
+	}
+	
 	//turn off autocomplete
 	$(document).on('focus', ':input', function() {
 	    $(this).attr('autocomplete', 'off');
