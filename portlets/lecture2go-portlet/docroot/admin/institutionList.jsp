@@ -173,7 +173,7 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 					<aui:form action="<%= addSubInstitutionURL %>" name="fm">
 						<aui:fieldset>
 							<aui:input name="subInstitution" label="sub-institution-name" inlineField="true" />
-							<aui:input name="subInstitutionOrder" label="order" inlineField="true" value='<%= ownInstitutionMax  %>'/>
+							<aui:input cssClass="smallInput"  name="subInstitutionOrder" label="order" inlineField="true" value='<%= ownInstitutionMax  %>'/>
 							<aui:input name='subInstitutionParentId' type='hidden' inlineField="true" value='<%= treeBase.getInstitutionId() %>'/>	
 							<aui:button type="submit" value="add" ></aui:button>				
 					    </aui:fieldset>
