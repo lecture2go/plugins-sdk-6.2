@@ -168,16 +168,18 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 		<%--ADD SUB_INSTITUTION -> Only Required if user can't see full listing, but is allowed to manage own entries --%>
 		<%-- Permission on Portlet Scope --%>
 		<c:if test='<%= !permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "VIEW_ALL_INSTITUTIONS") && permissionChecker.hasPermission(groupId, institutionModel, groupId, "ADD_SUB_INSTITUTION_ENTRY") && ownInstitutionId > 0 %>'>
-			<liferay-ui:panel title="add-sub-institution" collapsible="true" id="subInstitutionSettings" defaultState="close" extended="false" persistState="true">
-				<aui:form action="<%= addSubInstitutionURL %>" name="fm">
-					<aui:fieldset>
-					<aui:input name="subInstitution" label="sub-institution-name" inlineField="true" />
-						<aui:input name="subInstitutionOrder" label="order" inlineField="true" value='<%= ownInstitutionMax  %>'/>
-						<aui:input name='subInstitutionParentId' type='hidden' inlineField="true" value='<%= treeBase.getInstitutionId() %>'/>	
-						<aui:button type="submit" value="add" ></aui:button>				
-				    </aui:fieldset>
-				</aui:form>
-			</liferay-ui:panel>
+			<aui:fieldset column="false" label="sub-institutions" >
+				<aui:layout cssClass="aist">
+					<aui:form action="<%= addSubInstitutionURL %>" name="fm">
+						<aui:fieldset>
+							<aui:input name="subInstitution" label="sub-institution-name" inlineField="true" />
+							<aui:input name="subInstitutionOrder" label="order" inlineField="true" value='<%= ownInstitutionMax  %>'/>
+							<aui:input name='subInstitutionParentId' type='hidden' inlineField="true" value='<%= treeBase.getInstitutionId() %>'/>	
+							<aui:button type="submit" value="add" ></aui:button>				
+					    </aui:fieldset>
+					</aui:form>
+				</aui:layout>
+			</aui:fieldset>
 		</c:if>
 	
 		<%--TOP LEVEL INSTITUTIONS START--%>
@@ -229,6 +231,7 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 					 		<% 
 					 		//Only display second level if user has view all permission
 					 		%>
+					 		
 					 		<c:if test='<%= permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "VIEW_ALL_INSTITUTIONS") %>'>
 								<liferay-ui:panel defaultState="closed" extended="false" id="<%= id_row %>" persistState="true" title="sub-institutions" cssClass="sub-inst">
 									<aui:form action="<%= addSubInstitutionURL %>" name="fm">
