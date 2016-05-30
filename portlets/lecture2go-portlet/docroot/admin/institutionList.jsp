@@ -173,7 +173,7 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 					<aui:form action="<%= addSubInstitutionURL %>" name="fm">
 						<aui:fieldset>
 							<aui:input name="subInstitution" label="sub-institution-name" inlineField="true" />
-							<aui:input name="subInstitutionOrder" label="order" inlineField="true" value='<%= ownInstitutionMax  %>'/>
+							<aui:input cssClass="subInstOrder" name="subInstitutionOrder" label="order" inlineField="true" value='<%= ownInstitutionMax  %>'/>
 							<aui:input name='subInstitutionParentId' type='hidden' inlineField="true" value='<%= treeBase.getInstitutionId() %>'/>	
 							<aui:button type="submit" value="add" ></aui:button>				
 					    </aui:fieldset>
@@ -211,7 +211,7 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
  							<aui:form action="<%= updateInstitutionURL %>" name="<portlet:namespace />fm">
 					 			<aui:fieldset>
 									<aui:input name="outerListInstitution" label="institution-name" inlineField="true" value = "<%= institution.getName() %>" />
-									<aui:input cssClass="smallInput" name="outerListOrder" label="order" inlineField="true" value='<%= institution.getSort() %>'/>
+									<aui:input name="outerListOrder" label="order" inlineField="true" value='<%= institution.getSort() %>'/>
 									<%-- Only display streamer if user is allowed to view host and institution is child of top level --%>
 									<c:if test='<%= permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "VIEW_HOSTS") && institution.getParentId() == rootId %>'>
 										<aui:input name="outerListStreamer" label="streaming-server-name" inlineField="true" value = "<%= curHostName %>" disabled="true"/>
