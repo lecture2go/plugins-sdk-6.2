@@ -486,6 +486,7 @@ a.list-group-item:hover, a.list-group-item:focus {
 
 .search {
     margin-top: -30px;
+    position: relative;
 }
 
 #socialshareprivacy {
@@ -1716,6 +1717,17 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
     margin-left: 10px !important;
 }
 
+#_lgopenaccessvideos_WAR_lecture2goportlet_searchButton {
+	position: absolute;
+    height: 29px;
+    position: absolute;
+    right: 0;
+    padding: 2px;
+    margin: -30px 0 2px;
+    top: 0;
+    width: 30px;
+}
+
 
 /*** FRONT PAGE ***/
 
@@ -1796,18 +1808,17 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
     overflow: hidden;
 }
 
-.big-search > .search input.button {
-    /*TODO: hidden until better button */
-    display: none;
-    clear: both;
-    float: none;
-    height: 40px;
+/*
+.big-search > .search button {
+    height: 35px;
     position: absolute;
     right: 0;
     padding: 2px;
     margin: 0;
-    bottom: 0;
+    top: 0;
+    width: 100px;
 }
+*/
 
 .big-search #_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 	float:none;
@@ -1840,6 +1851,19 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
     background: linear-gradient(#eeeeee, #cccccc);
 }
 
+
+
+.big-search #_lgopenaccessvideos_WAR_lecture2goportlet_searchButton {
+	/* add fontawesome-alloy to this font family to display the search icon */
+	/*font-family: fontawesome-alloy, "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+	height: 35px;
+    position: absolute;
+    right: 0;
+    padding: 2px;
+    margin: 0;
+    top: 0;
+    width: 100px;
+}
 
 .filter-facility-menu {
 	display: none;
@@ -2009,7 +2033,11 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 */
 
 @media (max-width: 959px) {
-
+	
+	#_lgopenaccessvideos_WAR_lecture2goportlet_searchButton {
+    	margin: 3px -8px;
+	}
+	
 	/* hide for mobile view */
     .bg-video-container,
     .big-search .filter-facility-button,
