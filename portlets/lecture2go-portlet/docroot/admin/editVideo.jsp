@@ -214,7 +214,7 @@
 					}%>				
 				</aui:select>
 				
-				<div id="l2gdate"><aui:input id="lecture2go-date" name="lecture2go-date" label="lecture2go-date" required="false" value="" /></div>
+				<div id="l2gdate"><aui:input id="lecture2go-date" name="lecture2go-date" label="lecture2go-date" required="false" value="" disabled="true"/></div>
 	
 				<aui:input name="tags" label="tags" required="false" value="<%=reqVideo.getTags()%>"/>
 	
