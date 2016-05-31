@@ -445,7 +445,7 @@
 				<!-- sublist for searched videos -->
 				<%
 					String videoDivTitle = "";
-				if (videoCount>1) {
+				if (videoCount>0) {
 					if (isSearched) { videoDivTitle = "searchedvideos"; } else { videoDivTitle = "allvideos"; }%>
 					<div id="<%=videoDivTitle%>">
 							<button id="<%="b"+oId%>" >
