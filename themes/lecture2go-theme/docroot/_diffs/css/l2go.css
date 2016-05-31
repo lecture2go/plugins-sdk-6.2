@@ -436,6 +436,7 @@ p.smallitalic {
 }
 
 #searchedvideos > button, #allvideos > button {
+    font-size: 1.0em;
     float: right;
     margin-top: -30px;
     margin-right: 9px;
@@ -445,9 +446,9 @@ p.smallitalic {
 }
 
 #searchedvideos > button.highlight, #allvideos > button.highlight {
-	font-size: 1.5em;
-	margin-right: 4px;
-	margin-top: -35px;
+	font-size: 1.2em;
+	margin-right: 7px;
+	margin-top: -32px;
 }
 
 #searchedvideos > button.rotated, #allvideos > button.rotated {
