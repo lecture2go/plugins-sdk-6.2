@@ -1718,14 +1718,13 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 }
 
 #_lgopenaccessvideos_WAR_lecture2goportlet_searchButton {
-	position: absolute;
-    height: 29px;
     position: absolute;
-    right: 0;
+    top: 2px;
+    right: 2px;
+   	width: 25px;
+    height: 25px;
     padding: 2px;
-    margin: -30px 0 2px;
-    top: 0;
-    width: 30px;
+    margin: -30px 0;
 }
 
 
@@ -1804,8 +1803,6 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
     /* reset the margins */
     margin: 0 0 0 180px;
     height: 40px;
-    /* TODO: we cut the parts which are bigger than the parent div with overflow: hidden (Where is this coming from??)*/
-    overflow: hidden;
 }
 
 /*
@@ -1824,7 +1821,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	float:none;
 	margin: 0;
 	margin-left: 0;
-	width: 100%;
+	width: calc(100% - 12px);
 	height: 25px;
 	font-size: 15px;
 	padding-left: 10px;
