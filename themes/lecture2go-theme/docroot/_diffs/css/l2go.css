@@ -12,25 +12,6 @@
     min-height: 45px;
 }
 
-#searchedvideos, #allvideos {
-    margin-left: 60px;
-    background-color: #F3F3F3;
-    margin-top: 0px;
-    border-bottom: 1px solid #F3F3F3 !important;
-}
-
-#searchedvideos > button, #allvideos > button {
-    float: right;
-    margin-top: -25px;
-    margin-right: 3px;
-    background-color: transparent;
-    border: medium none;
-}
-
-#searchedvideos > button.rotated, #allvideos > button.rotated {
-	transform: rotate(180deg);
-}
-
 fieldset.fieldset.add-streaming-server div.layout {
     margin-left: -11px;
     margin-top: -40px;
@@ -175,18 +156,14 @@ p.smallitalic {
     float: left;
     max-width: 250px;
     height: 110px;
+    position: relative;
 }
 
 .video-image-big {
     position: relative;
     width: 200px;
-    height: 100px !important;
+    height: 109px !important;
     text-align: center;
-    opacity: 0.9;
-}
-
-.video-image-big:hover {
-    opacity: 1;
 }
 
 .video-image-overlay {
@@ -365,7 +342,11 @@ p.smallitalic {
     min-height: 57px;
 }
 
-#_lgopenaccessvideos_WAR_lecture2goportlet_lectureseriesesSearchContainer .table td {
+#_lgopenaccessvideos_WAR_lecture2goportlet_lectureseriesesSearchContainer .table tr:first-of-type td {
+	padding: 0px;
+}
+
+#_lgopenaccessvideos_WAR_lecture2goportlet_lectureseriesesSearchContainer .table tr td {
 	padding: 8px 0 0;
 }
 
@@ -377,11 +358,19 @@ p.smallitalic {
 }
 
 .videotile.wide {
-    width: 100%;
+    width: auto;
     height: 120px;
     background-color: #f3f3f3;
     padding: 8px 0px 0px 8px;
     border: 1px solid #ddd;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.term-of-creation{
+	float: right;
+	font-size: 12px;
+	margin-right: 10px;
 }
 
 .videotile.wide:hover {
@@ -405,7 +394,7 @@ p.smallitalic {
 }
 
 .videotile.small em {
-	color: #999;
+	color: #777;
 }
 
 #video-list .list-group-item {
@@ -439,20 +428,33 @@ p.smallitalic {
     color: #E2001A;
 }
 
-#searchedvideos {
+#searchedvideos, #allvideos {
     margin-left: 60px;
     background-color: #F3F3F3;
     margin-top: 0px;
     border-bottom: 1px solid #F3F3F3 !important;
 }
 
-#searchedvideos > button {
+#searchedvideos > button, #allvideos > button {
+    font-size: 1.0em;
     float: right;
-    margin-top: -25px;
-    margin-right: 3px;
+    margin-top: -30px;
+    margin-right: 9px;
     background-color: transparent;
     border: medium none;
+    transition: font 0.3s, margin 0.3s;
 }
+
+#searchedvideos > button.highlight, #allvideos > button.highlight {
+	font-size: 1.2em;
+	margin-right: 7px;
+	margin-top: -32px;
+}
+
+#searchedvideos > button.rotated, #allvideos > button.rotated {
+	transform: rotate(180deg);
+}
+
 
 #searchedvideo {
     display: block;
@@ -1293,12 +1295,18 @@ thead, th {
 }
 
 .aui .badge {
-    background-color: #4d4d4d;
-    border-radius: 20px;
-    padding-left: 7px;
-    padding-right: 7px;
+	background: rgba(0, 0, 0, 0) linear-gradient(45deg, transparent 65%, #333 70%) repeat scroll 0 0;
+	border-radius: 0;
+	height: 70px;
+	margin: 0;
+	padding: 5px 5px 0 0;
+	position: absolute;
+	right: 0;
+	text-align: right;
+	top: 0;
+	width: 70px;
 }
-
+	
 .aui .icon-caret-down::before {
     content: "";
 }
