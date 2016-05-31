@@ -74,6 +74,11 @@
 	    margin-top: -87px;
 	}
 	
+	.field.subInstOrder {
+    	margin-right: 12px;
+    	width: 22px;
+	}
+
 	.aui .portlet-borderless-container {
     	padding: 0;
 	}

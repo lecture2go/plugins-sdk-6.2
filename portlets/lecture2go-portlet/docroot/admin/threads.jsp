@@ -33,7 +33,6 @@
 
 <div class="noresponsive">	  
 <label class="edit-video-lable"><%=pageName%></label>
-<br/><br/>
 <liferay-ui:message key="common-descritpion-for-l2go-cronjobs"/>
 <%-- This list all unique schedulers --%>
 	<% 
