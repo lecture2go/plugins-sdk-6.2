@@ -1,3 +1,146 @@
+	/*** these styles may be needed for an in-between resolution (between 768 and 960/980) ***/
+	/*
+	.sharetile {
+	    width: 131px;
+	}
+	
+	.video-image-wrapper {
+	    height: 110px;
+	    margin-right: 8px;
+	    max-width: 250px;
+	}
+	
+	.path {
+	    font-size: 11px;
+	    width: 100%;
+	}
+	
+	.catalogue-container .row-fluid .span3 {
+	    margin: 0px;
+	    padding: 0px;
+	    float: left;
+	}
+	
+	#searchedvideo {
+	    width: 30em;
+	}
+	
+	*/
+
+
+
+/*** MOVED FROM MIN-960  ***/
+@media (min-width: 768px) {
+	.aui #navigation {
+	    display: table !important;
+	    margin-top: 0;
+	    visibility: visible !important;
+	}
+}
+
+	.aui #navigation .nav li {
+		height: 34px;
+	}
+
+	#banner {
+	    background: rgba(0, 0, 0, 0) url("/lecture2go-theme/images/logo_l2go.png") no-repeat scroll right -3px top -8px / 159px auto;
+	}
+	
+	.aui .container-fluid::before, 
+	.aui .container-fluid::after {
+	    content: "";
+	    display: table;
+	    line-height: 0;
+	    padding: 25px 25px 20px;
+	    max-width: 998px;
+	}
+	
+	#main-content,
+	.catalogue-container {
+	    margin-top: 30px;
+	}
+	
+	
+	#wrapper {
+	    background-color: #fff;
+	    max-width: 1100px;
+	    padding: 0 16px;
+	    width: calc(100% - 32px);
+	}
+	
+	.responsive_li_item {
+   	 	display: none;
+    	visibility: hidden;
+	}
+	
+	#content {
+    	margin-top: 10px;
+	}
+	
+
+	
+	.aist {
+	    margin-bottom: 30px;
+	    margin-left: -9px;
+	}
+	
+	.admintile.wide em p {
+    	font-size: 10px;
+    	margin-top: -8px;
+	}
+	
+	#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
+	    float: right;
+	    height: 19px;
+	    margin: -30px 0 2px;
+	    padding: 4px 0 4px 4px;
+	    width: 309px;
+	}
+	
+	.field.subInstOrder {
+    	margin-right: 12px;
+    	width: 22px;
+	}
+	
+	.aui .portlet-borderless-container {
+    	padding: 0;
+	}
+	
+	.aui .dockbar-split .dockbar, .aui .dockbar {
+    	display: none;
+	}
+	
+
+	
+	/*TODO: delete if possible */
+	.search input.button {
+	    float: right;
+	    height: 24px;
+	    margin-right: -313px;
+	    margin-top: -28px;
+	}
+
+
+	.catalogue-container .row-fluid .span9 {
+	    width: 74%;
+	}
+	
+	.catalogue-container .row-fluid .span3 {
+	    width: 25%;
+	}	
+	
+	.catalogue-container .row-fluid [class*="span"] {
+	    margin-left: 1%;
+	}
+	
+	
+	
+	
+	
+	
+	
+/*** end MOVED FROM MIN-960  ***/
+
 .taglib-page-iterator .lfr-pagination-buttons {
     visibility: hidden;
 	padding: 0px;
@@ -240,6 +383,7 @@ p.smallitalic {
 
 #metadata {
     float: left;
+    width: 93%;
 }
 
 #metadata-upload {
@@ -2037,10 +2181,11 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 
 */
 
-@media (max-width: 959px) {
+@media (max-width: 767px) {
 	
 	#_lgopenaccessvideos_WAR_lecture2goportlet_searchButton {
-    	margin: 3px -8px;
+    	margin: 3px 0px;
+    	
 	}
 	
 	/* hide for mobile view */
