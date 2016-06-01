@@ -1,149 +1,178 @@
-@media (min-width: 480px) and (max-width: 719px) {
-	.noresponsive{
-		display:none;
+@media (max-width: 479px) {
+	.video-image-big {
+    	height: auto !important;
 	}
 	
-	.aui .accordion-group.lfr-panel-extended {
-	    padding-bottom: 0;
-	}
-	
-	.date.related {
-	    margin-top: -5px;
-	}
-
 	.sharetile {
-	    width: 131px;
-	}
-	
-	.admintile.wide.icons {
-		visibility: hidden;
-		display: none;
-	}
-	
-	#metadata {
 	    width: 100%;
-	}
-	
-	.admintile.wide {
-	    margin: 0 -9px 0 3px;
-	    width: 100%;
-	}
-	   
-	.video-image-wrapper {
-	    /* float: none; */
-	    height: 110px;
-	    margin-right: 8px;
-	    /* max-width: 250px; */
-	}
-	
-	.add-link {
-		visibility: hidden;
-		display: none;
-	}
-	
-	.col-md-5 {
-	    right: 0;
-	    position: relative;
-	    width: 100%;
-	}
-	
-	.player {
-	    width: 100%;
-	}
-	
-	.meta-video-info {
-	    width: 100%;
-	}
-	
-	#qr {
-	    display: none;
-	    visibility: hidden;
-	}
-	
-	.aui #my-tab-content {
-	    min-height: auto;
-	    width: 500px;
-	}
-	
-	.path {
-	    display: none;
-	    visibility: hidden;
-	}
-	
-	
-	.path-wide {
-	    display: none;
-	    visibility: hidden;
-	}
-	
-	.metainfo {
-	    width: 100%;
-	}
-	
-	#tabs > li#down {
-	    display: none;
-	    visibility: hidden;
-	}
-	
-	.catalogue-container .row-fluid .span3 {
-	    width: 100%;
-	}
-	
-	.catalogue-container .row-fluid .span9 {
-	    width: 100%;
-	}
-	
-	.taglib-page-iterator {
-	    clear: both;
-	    height: auto;
-	    overflow: hidden;
-	    width: auto;
-	    height: 49px;
-	}
-	
-	.meta-description {
-	    display: none;
-	}
-	
-	#searchedvideo {
-	    width: 20em;
-	}
-	
-	.label.label-light {
-	    display: none;
-	}
-	
-	.license {
-	    display: none;
-	}
-	
-	.add-new-creator-term-object {
-	    display: none;
-	    visibility: hidden;
 	}
 	
 	#metadata input {
-	    width: 100%;
+	    width: 270px;
+	}
+	
+	.metainfo-small.related {
+	    margin-left: 1px;
+	}
+	
+	.video-image-wrapper-small {
+	    float: none;
+	    height: auto;
+	    margin-right: 8px;
+    	max-width: 60px;
+	}
+
+	.video-image-wrapper-small.related {
+	    float: none;
+	    height: 38px;
+	    margin-top: 2px;
+	    width: auto;
+	}
+	
+	.video-image.related {
+	    min-height: 30px;
+	    width: auto;
+	}
+	
+	img.imgsmall {
+	    border: 0 none;
+	    height: auto;
+	    padding-bottom: 7px;
+	    vertical-align: middle;
+	    width: 65px;
+	    height: 33px;
+	}
+	
+	
+	.chaptertile {
+	    border-color: #e0e0e0;
+	    border-style: solid none none;
+	    border-width: 1px 0 0 !important;
+	    height: 58px;
+	    padding: 2px 0 5px;
+	}
+	
+	.chaptertile span {
+	    float: left;
+	    font-size: 9px;
+	    margin-left: -75px;
+	    margin-top: 45px;
+	    padding-left: 10px;
+	    position: absolute;
+	}
+	
+	.chaptertile a span {
+	    font-size: 12px;
+	    margin-left: -1px;
+	    margin-top: -6px;
+	    padding: 0;
+	}
+	
+	.commenttile {
+	    margin-left: 10px;
+	}
+	
+	.taglib-page-iterator .lfr-pagination-buttons {
+	    visibility: hidden;
+	    padding: 0px;
+	    margin: 0px;
+	    height: 0px;
+	    width: 0px;
+	}
+	
+	#searchedvideo {
+	    width: 10em;
 	}
 	
 	.catalogue-container .row-fluid .span9 {
-	    float: left;
-	    width: 100%;
+	    margin-top: 0;
 	}
-	
-	#banner {
-	    background: rgba(0, 0, 0, 0) url("") no-repeat scroll right 0 top 0 / 130px auto;
-	    margin-right: -6px;
-	} 
 	
 	.aui #navigation.open .navbar-inner {
-    	border-radius: 0;
-    	padding: 0 5px 0 1px;
+   		 padding: 0 3px 0 1px;
 	}
 	
-	.meta-title {
-    	font-size: 15px;
-    	font-weight: 900;
-    	line-height: 17px;
+	.videotile.wide {
+    	height: auto;
 	}
+	
+	.video-image-wrapper {
+	    float: none;
+	    height: auto !important;
+	    margin-bottom: 5px;
+	}
+	
+	.lectureseries-title {
+	    font-size: 14px;
+	}
+	
+	.aui .chaptertile a span {
+	    font-size: 12px;
+	    padding: 0;
+	    margin-left: 0;
+    	margin-top: -10px;
+	}
+	
+	.aui .chaptertile span {
+    	font-size: 8px;
+    	margin-top: 44px;
+	}
+
+	.aui img.imgsmall {
+    	height: auto;
+    	max-width: 65px;
+	}
+	
+	.title-small.related {
+    	margin-bottom: -5px;
+    	margin-top: -11px;
+    	padding: 0;
+   	 	width: 100%;
+	}
+
+	.videotile.small.related {
+	    height: auto;
+	    min-height: auto;
+	}
+	
+	.title-small {
+    	font-size: 11px;
+    	line-height: 14px;
+    	margin: 5px 0 0;
+    	width: 100%;
+	}
+
+	#searchedvideos {
+	    margin-left: 10px;
+	}
+	
+	.creator-small2 {
+	    display: none;
+	}	
+   
+	.metainfo-small {
+	    height: auto !important;
+	    margin-left: 0;
+	    margin-top: 3px;
+	    min-height: auto !important;
+	}
+	
+	.generation-date {
+	    display: none;
+	    visibility: hidden;
+	}
+	
+	/* Bastian */
+	
+    .tags {
+	    display: none;
+	    font-size: smaller;
+	    visibility: hidden;
+	}
+    
+	.aui .label {
+    	line-height: 14px;
+	}	
+	
+	/* Bastian Ende */
 }

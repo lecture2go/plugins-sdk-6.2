@@ -1,4 +1,4 @@
-@media (min-width: 320px) and (max-width: 960px) {	
+@media (max-width: 767px) {	
 	 
 	#heading .meta {
 	    display: none;
@@ -30,6 +30,7 @@
 	
 	#wrapper {
 	    padding: 0;
+	    width: 100%
 	}
 
 	.responsive_li_item {
@@ -47,7 +48,7 @@
 	    min-width: 320px;
 	    padding: 4px 0;
 	    position: relative;
-	    width: 100% !important;
+	    width: calc(100% - 10px);
 	    height: 25px;
 	    padding-left: 10px;
 	    font-size: 14px
@@ -62,10 +63,14 @@
     	background: #f9f9f9 url("/lecture2go-portlet/img/rot_navi-pfeil-rechts.png") no-repeat scroll 9px 13px !important;
     	line-height: 29px;
 	}
-
-		
-	.search {
-    	margin-top: 33px;
+	
+	#_lgopenaccessvideos_WAR_lecture2goportlet_searchButton {
+	    top: 2px;
+	    right: 0px;
+	    width: 30px;
+	    height: 30px;
+	    padding: 2px;
+	    margin: 0;
 	}
 	
 	.aui .portlet-borderless-container {
@@ -81,16 +86,6 @@
 	    background: transparent none repeat scroll 0 0 !important;
 	    color: #444 !important;
 	    height: 33px;
-	}
-
-	.search input.button {
-	    border-left: 0 none;
-	    border-right: 0 none;
-	    float: right;
-	    height: 30px;
-	    margin-top: -39px;
-	    position: relative;
-	    z-index: 2147483647 !important;
 	}
 	
 	.aui #navigation .nav li.active.has-child > a {
@@ -164,7 +159,6 @@
 	}
 
 	.aui #navigation.open .navbar-inner .nav-collapse {
-	    margin-bottom: -27px;
 	    margin-left: -1px;
 	}
 
