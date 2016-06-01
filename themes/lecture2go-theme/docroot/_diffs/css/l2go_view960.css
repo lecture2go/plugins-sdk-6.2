@@ -1,7 +1,4 @@
 @media (min-width: 960px) {
-	#banner {
-	    background: rgba(0, 0, 0, 0) url("/lecture2go-theme/images/logo_l2go.png") no-repeat scroll right -3px top -8px / 159px auto;
-	}
 
 	#main-content,
 	.catalogue-container {

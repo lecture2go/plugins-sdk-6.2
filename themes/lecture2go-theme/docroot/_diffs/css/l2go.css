@@ -1480,12 +1480,12 @@ thead, th {
     padding: 3px 0px 3px 20px;
 }
 
-#heading .meta {
-    float: right;
+#banner .meta {
+    position: absolute;
     font-size: 11px;
     line-height: 13px;
-    margin-right: 2px;
-    margin-top: -87px;
+    right: 10px;
+    top: 5px;
 }
 
 .aui .dockbar-split .dockbar .navbar-inner .nav-account-controls > li > a, .aui .dockbar-split .dockbar .navbar-inner .nav-account-controls li.open > a {
