@@ -107,6 +107,10 @@
 	
 /*** end MOVED FROM MIN-960  ***/
 
+#content {
+	clear: both;
+}
+
 .taglib-page-iterator .lfr-pagination-buttons {
     visibility: hidden;
 	padding: 0px;

@@ -149,6 +149,13 @@
     	line-height: 17px;
 	}
 	
+	.aui .site-title .l2go-logo {
+	    position: absolute;
+	    right: 92px;
+	    top: -6px;
+	    width: 100px;
+	}
+	
 	/* Bastian */
 	
 	
