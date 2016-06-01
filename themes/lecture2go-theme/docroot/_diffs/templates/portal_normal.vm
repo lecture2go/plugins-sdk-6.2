@@ -24,6 +24,26 @@ $theme.include($body_top_include)
 
 <div class="container-fluid" id="wrapper">
 	<header id="banner" role="banner">
+		<div class="meta">
+			#if (!$is_signed_in)
+				<a href="$sign_in_url">$sign_in_text</a> 
+				&nbsp;&nbsp;&nbsp;
+				#foreach( $language in $languageUtil.getAvailableLocales() )
+					<a href="/$language.getLanguage()/web$themeDisplay.getLayout().getGroup().getFriendlyURL()">$language.getLanguage()</a>
+					#if( $velocityHasNext )&nbsp;|&nbsp;#end
+				#end
+			#else
+				<a href="#" onclick="window.open('$my_account_url', '_blank', 'height=700px, width=980px, resizable=no, scrollbars=yes, location=no, toolbar=no, status=no' )" id="myAccount"> $my_account_text</a> 
+				&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+				
+				#if($control_panel_url)
+					<a href="#" onclick="window.open('$control_panel_url', '_blank', 'height=700px, width=980px, resizable=no, scrollbars=yes, location=no, toolbar=no, status=no' )" id="myAccount"> $control_panel_text</a> 
+					&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+				#end
+				
+				<a href="$sign_out_url">$sign_out_text</a> 
+			#end
+		</div>
 		<div id="heading">
 			<h1 class="site-title">
 				<a class="$logo_css_class" href="http://www.uni-hamburg.de" title="#language_format ("go-to-x", [$site_name])">
@@ -44,27 +64,6 @@ $theme.include($body_top_include)
 			<h2 class="page-title">
 				<span>$the_title</span>
 			</h2>
-			
-			<div class="meta">
-				#if (!$is_signed_in)
-					<a href="$sign_in_url">$sign_in_text</a> 
-					&nbsp;&nbsp;&nbsp;
-					#foreach( $language in $languageUtil.getAvailableLocales() )
-						<a href="/$language.getLanguage()/web$themeDisplay.getLayout().getGroup().getFriendlyURL()">$language.getLanguage()</a>
-						#if( $velocityHasNext )&nbsp;|&nbsp;#end
-					#end
-				#else
-					<a href="#" onclick="window.open('$my_account_url', '_blank', 'height=700px, width=980px, resizable=no, scrollbars=yes, location=no, toolbar=no, status=no' )" id="myAccount"> $my_account_text</a> 
-					&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-					
-					#if($control_panel_url)
-						<a href="#" onclick="window.open('$control_panel_url', '_blank', 'height=700px, width=980px, resizable=no, scrollbars=yes, location=no, toolbar=no, status=no' )" id="myAccount"> $control_panel_text</a> 
-						&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-					#end
-					
-					<a href="$sign_out_url">$sign_out_text</a> 
-				#end
-			</div>
 		</div>
 
 		#if ($has_navigation || $is_signed_in)
