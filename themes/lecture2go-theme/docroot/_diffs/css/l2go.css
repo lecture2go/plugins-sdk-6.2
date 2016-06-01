@@ -1,143 +1,109 @@
-	/*** these styles may be needed for an in-between resolution (between 768 and 960/980) ***/
-	/*
-	.sharetile {
-	    width: 131px;
-	}
-	
-	.video-image-wrapper {
-	    height: 110px;
-	    margin-right: 8px;
-	    max-width: 250px;
-	}
-	
-	.path {
-	    font-size: 11px;
-	    width: 100%;
-	}
-	
-	.catalogue-container .row-fluid .span3 {
-	    margin: 0px;
-	    padding: 0px;
-	    float: left;
-	}
-	
-	#searchedvideo {
-	    width: 30em;
-	}
-	
-	*/
+/*** these styles may be needed for an in-between resolution (between 768 and 960/980) ***/
+/*
+.sharetile {
+    width: 131px;
+}
+
+.video-image-wrapper {
+    height: 110px;
+    margin-right: 8px;
+    max-width: 250px;
+}
+
+.path {
+    font-size: 11px;
+    width: 100%;
+}
+
+.catalogue-container .row-fluid .span3 {
+    margin: 0px;
+    padding: 0px;
+    float: left;
+}
+
+#searchedvideo {
+    width: 30em;
+}
+
+*/
 
 
 
 /*** MOVED FROM MIN-960  ***/
-@media (min-width: 768px) {
-	.aui #navigation {
-	    display: table !important;
-	    margin-top: 0;
-	    visibility: visible !important;
-	}
+
+.aui #navigation {
+    display: table;
+    margin-top: 0;
+    visibility: visible;
+    float: left;
 }
 
-	.aui #navigation .nav li {
-		height: 34px;
-	}
+.aui #navigation .nav li {
+	height: 34px;
+}
 
-	#banner {
-	    background: rgba(0, 0, 0, 0) url("/lecture2go-theme/images/logo_l2go.png") no-repeat scroll right -3px top -8px / 159px auto;
-	}
-	
-	.aui .container-fluid::before, 
-	.aui .container-fluid::after {
-	    content: "";
-	    display: table;
-	    line-height: 0;
-	    padding: 25px 25px 20px;
-	    max-width: 998px;
-	}
-	
-	#main-content,
-	.catalogue-container {
-	    margin-top: 30px;
-	}
-	
-	
-	#wrapper {
-	    background-color: #fff;
-	    max-width: 1100px;
-	    padding: 0 16px;
-	    width: calc(100% - 32px);
-	}
-	
-	.responsive_li_item {
-   	 	display: none;
-    	visibility: hidden;
-	}
-	
-	#content {
-    	margin-top: 10px;
-	}
-	
+.aui .container-fluid::before, 
+.aui .container-fluid::after {
+    content: "";
+    display: table;
+    line-height: 0;
+    padding: 25px 25px 20px;
+    max-width: 998px;
+}
 
-	
-	.aist {
-	    margin-bottom: 30px;
-	    margin-left: -9px;
-	}
-	
-	.admintile.wide em p {
-    	font-size: 10px;
-    	margin-top: -8px;
-	}
-	
-	#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
-	    float: right;
-	    height: 19px;
-	    margin: -30px 0 2px;
-	    padding: 4px 0 4px 4px;
-	    width: 309px;
-	}
-	
-	.field.subInstOrder {
-    	margin-right: 12px;
-    	width: 22px;
-	}
-	
-	.aui .portlet-borderless-container {
-    	padding: 0;
-	}
-	
-	.aui .dockbar-split .dockbar, .aui .dockbar {
-    	display: none;
-	}
-	
+#wrapper {
+    background-color: #fff;
+    max-width: 1100px;
+    padding: 0 16px;
+    width: calc(100% - 32px);
+}
 
-	
-	/*TODO: delete if possible */
-	.search input.button {
-	    float: right;
-	    height: 24px;
-	    margin-right: -313px;
-	    margin-top: -28px;
-	}
+.responsive_li_item {
+  	 	display: none;
+   	visibility: hidden;
+}
 
+.aist {
+    margin-bottom: 30px;
+    margin-left: -9px;
+}
 
-	.catalogue-container .row-fluid .span9 {
-	    width: 74%;
-	}
-	
-	.catalogue-container .row-fluid .span3 {
-	    width: 25%;
-	}	
-	
-	.catalogue-container .row-fluid [class*="span"] {
-	    margin-left: 1%;
-	}
-	
-	
-	
-	
-	
-	
+.admintile.wide em p {
+   	font-size: 10px;
+   	margin-top: -8px;
+}
+
+#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
+    float: right;
+    height: 19px;
+    padding: 4px 0 4px 4px;
+    width: 309px;
+}
+
+.field.subInstOrder {
+   	margin-right: 12px;
+   	width: 22px;
+}
+
+.aui .portlet-borderless-container {
+   	padding: 0;
+}
+
+.aui .dockbar-split .dockbar, .aui .dockbar {
+   	display: none;
+}
+
+.catalogue-container .row-fluid .span9 {
+    width: 74%;
+}
+
+.catalogue-container .row-fluid .span3 {
+    width: 25%;
+}	
+
+.catalogue-container .row-fluid [class*="span"] {
+    margin-left: 1%;
+}
 	
 /*** end MOVED FROM MIN-960  ***/
 
@@ -631,7 +597,6 @@ a.list-group-item:hover, a.list-group-item:focus {
 }
 
 .search {
-    margin-top: -30px;
     position: relative;
 }
 
@@ -1688,59 +1653,6 @@ div.filter-menu-link span.icon-large.icon-remove {
 	padding: 4px 0;
 }
 
-/* max-width: 979px */
-@media (max-width: 979px) {
-	
-	.aui .table th, .aui .table td {
-    	line-height: 19px;
-	}
-	
-}
-
-/* max-width: 719px */
-@media (max-width: 767px) {
-	
-	.aui .row-fluid [class*="span"] {
-    margin-left: 0% !important;
-	}
-	
-	.label {
-		float: left;
-	}
-	
-	.video-image-wrapper {
-    	max-width: 30%;
-	}
-	
-	.aui .label {
-    	margin: 1px 1px 0 0;
-	}
-	
-	.aui .logo, .aui .logo:hover {
-	    height: 46px;
-	    width: 156px;
-	}
-	
-	.aui .label {
-    	line-height: 12px;
-	}
-	
-}
-/* Handy */
-@media (max-width: 479px) {
-	
-    .tags {
-	    display: none;
-	    font-size: smaller;
-	    visibility: hidden;
-	}
-    
-	.aui .label {
-    	line-height: 14px;
-	}	
-    
-}
-
 /*Bastian Ende*/
 
 #_lgadmininstitutionmanagement_WAR_lecture2goportlet_outerListOrder {
@@ -1873,10 +1785,10 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
     position: absolute;
     top: 2px;
     right: 2px;
-   	width: 25px;
+    width: 25px;
     height: 25px;
     padding: 2px;
-    margin: -30px 0;
+    margin: 0;
 }
 
 
@@ -1884,7 +1796,6 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 
 
 .front-page-teaser {
-	margin-top: -28px;
 	position: relative;
 }
 
@@ -1955,6 +1866,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
     /* reset the margins */
     margin: 0 0 0 180px;
     height: 40px;
+    float: none;
 }
 
 /*
@@ -2183,10 +2095,6 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 
 @media (max-width: 767px) {
 	
-	#_lgopenaccessvideos_WAR_lecture2goportlet_searchButton {
-    	margin: 3px 0px;
-    	
-	}
 	
 	/* hide for mobile view */
     .bg-video-container,

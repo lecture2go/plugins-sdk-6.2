@@ -126,13 +126,13 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 
 											<div class="video-box-content">
 												<div class="title-small"><%=vid.getTitle() %></div>
-												<div class="creator-small2"><%=vid.getCreators() %></div>
-												<div class="date"><%=vid.getSimpleDate() %></div>
-												
+												<div class="creator-small2"><%=vid.getCreators() %></div>												
 												<% if (!isVideo) { %>
 													<div class="lectureseries-small"><%=lectser.getName() %></div> 
 												<% } %>
-												<span class="label label-light2"><%=inst.getName()%></span>
+												<div class="labels">
+													<span class="label label-light2"><%=inst.getName()%></span>
+												</div>
 											</div> 
 											</a>
 										</div>
@@ -203,11 +203,12 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 										<div class="video-box-content"> 
 											<div class="title-small"><%= vid.getTitle() %></div>
 											<div class="creator-small2"><%= vid.getCreators() %></div>
-											<div class="date"><%=vid.getSimpleDate() %></div>
 											<% if (!isVideo) { %>
 												<div class="lectureseries-small"><%= lec.getName() %></div>
 											<% } %>
-									        <span class="label label-light2"><%=inst.getName()%></span>
+											<div class="labels">
+									        	<span class="label label-light2"><%=inst.getName()%></span>
+									        </div>
 										</div>
 									</div>
 								<c:set var="count" value="${count + 1}" scope="page"/>
@@ -237,7 +238,7 @@ $(document).ready(function(){
 
     // process different things depending on the screen size
 	mediaCheck({
-	  	media: '(min-width: 960px)',
+	  	media: '(min-width: 768px)',
 	  	entry: function() {
 	  		transformSearchToWideView();
 		  	//hide all carousel items but the first and show carousel navigation

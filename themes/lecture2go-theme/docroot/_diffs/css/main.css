@@ -16,15 +16,22 @@
 
 @import url(custom.css);
 
+/* Desktop first - main Styles - all above 768px */
 @import url(l2go.css);
 
-@import url(l2go_view960.css);
+/* @import url(l2go_view960.css); */
 
-@import url(l2go_view720.css);
+/* @import url(l2go_view720.css); */
 
-@import url(l2go_view480.css);
+/* < 768px */
+@import url(l2go_view768.css);
 
-@import url(l2go_view320.css);
+/* < 480px */
+@import url(l2go_view480_new.css);
+
+/* @import url(l2go_view480.css); */
+
+/* @import url(l2go_view320.css); */
 
 @import url(custom_responsive.css);
 
