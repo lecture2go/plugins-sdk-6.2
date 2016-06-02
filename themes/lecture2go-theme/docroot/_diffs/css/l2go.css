@@ -33,13 +33,15 @@
 
 .aui #navigation {
     display: table;
+    float: left;
     margin-top: 0;
     visibility: visible;
-    float: left;
+    width: 56%;
 }
 
 .aui #navigation .nav li {
-	height: 34px;
+    min-width: 100px;
+    width: 20%;
 }
 
 .aui .container-fluid::before, 
@@ -77,7 +79,7 @@
     float: right;
     height: 19px;
     padding: 4px 0 4px 4px;
-    width: 309px;
+    width: 30%;
 }
 
 .field.subInstOrder {
@@ -117,6 +119,24 @@
     margin: 0px;
     height: 0px;
     width: 0px;
+}
+
+.aui #navigation .nav .dropdown-menu > li a {
+    background: #f9f9f9 url("/lecture2go-portlet/img/rot_navi-pfeil-rechts.png") no-repeat scroll 9px 11px !important;
+    border-color: #dddddd;
+    border-radius: 0;
+    border-style: solid solid none;
+    border-width: 1px;
+    color: #4e4e4e;
+    display: block;
+    font-family: TheSansUHH,sans-serif !important;
+    font-size: 12px;
+    margin-left: 3px;
+    margin-top: -3px;
+    padding-left: 29px;
+    text-align: left;
+    text-decoration: none;
+    width: 80%;
 }
 
 .metainfo-small {
@@ -180,23 +200,6 @@ fieldset.fieldset.add-streaming-server div.layout {
 .aui .navbar .nav {
     font-family: TheSansUHHBold,sans-serif !important;
     font-size: 14px;
-}
-
-.aui #navigation .nav .dropdown-menu > li a {
-    background: #f9f9f9 url("/lecture2go-portlet/img/rot_navi-pfeil-rechts.png") no-repeat scroll 9px 11px !important;
-    border-color: #ddd;
-    border-radius: 0;
-    border-style: solid solid none;
-    border-width: 1px;
-    color: #4e4e4e;
-    display: block;
-    font-family: TheSansUHH,sans-serif !important;
-    font-size: 12px;
-    margin-left: 3px;
-    margin-top: -3px;
-    padding-left: 29px;
-    text-align: left;
-    text-decoration: none;
     width: 100%;
 }
 
@@ -217,7 +220,7 @@ fieldset.fieldset.add-streaming-server div.layout {
     border-bottom: 1px solid #f3f3f3;
     border-radius: 0;
     margin-top: -1px;
-    width: 70%;
+    width: 100%;
     z-index: 23452345;
 }
 
@@ -471,6 +474,25 @@ p.smallitalic {
     padding: 0px;
 }
 
+.videotile button {
+    float: right;
+    margin-right: 6px;
+    margin-top: 0px;
+    background-color: transparent;
+    border: medium none;
+    transition: all 0.2s ease;
+}
+
+.videotile button.highlight {
+	transform: scale(1.5);
+}
+
+.videotile button.rotated {
+	transform: rotate(180deg);
+}
+
+
+
 .videotile.wide {
     width: auto;
     height: 120px;
@@ -542,33 +564,12 @@ p.smallitalic {
     color: #E2001A;
 }
 
-#searchedvideos, #allvideos {
+#videolist {
     margin-left: 60px;
     background-color: #F3F3F3;
     margin-top: 0px;
     border-bottom: 1px solid #F3F3F3 !important;
 }
-
-#searchedvideos > button, #allvideos > button {
-    font-size: 1.0em;
-    float: right;
-    margin-top: -30px;
-    margin-right: 9px;
-    background-color: transparent;
-    border: medium none;
-    transition: font 0.3s, margin 0.3s;
-}
-
-#searchedvideos > button.highlight, #allvideos > button.highlight {
-	font-size: 1.2em;
-	margin-right: 7px;
-	margin-top: -32px;
-}
-
-#searchedvideos > button.rotated, #allvideos > button.rotated {
-	transform: rotate(180deg);
-}
-
 
 #searchedvideo {
     display: block;
@@ -2189,6 +2190,10 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 
 	.video-box-date .date {
 	    font-size: 11px;
+	}
+
+    #banner .meta {
+	    display: block;
 	}
 }
 
