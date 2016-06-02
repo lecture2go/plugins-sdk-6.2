@@ -488,7 +488,7 @@ p.smallitalic {
 }
 
 .videotile button.rotated {
-	transform: rotate(180deg);
+	transform: rotate(180deg) scale(1.5);
 }
 
 
@@ -722,7 +722,7 @@ thead, th {
 
 .title-small {
     font-size: 14px;
-    font-weight: 600 !important;
+    font-weight: 600;
     line-height: 17px;
     margin: 0px;
     padding-top: 5px;
@@ -896,6 +896,7 @@ thead, th {
 	font-size: 16px;
 	height: 40px;
 	margin-bottom: 10px;
+	overflow: hidden;
 }
 
 .aui .nav {
