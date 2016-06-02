@@ -36,7 +36,7 @@
     float: left;
     margin-top: 0;
     visibility: visible;
-    width: 55%;
+    width: 56%;
 }
 
 .aui #navigation .nav li {
@@ -79,7 +79,7 @@
     float: right;
     height: 19px;
     padding: 4px 0 4px 4px;
-    width: 309px;
+    width: 30%;
 }
 
 .field.subInstOrder {
@@ -119,6 +119,24 @@
     margin: 0px;
     height: 0px;
     width: 0px;
+}
+
+.aui #navigation .nav .dropdown-menu > li a {
+    background: #f9f9f9 url("/lecture2go-portlet/img/rot_navi-pfeil-rechts.png") no-repeat scroll 9px 11px !important;
+    border-color: #dddddd;
+    border-radius: 0;
+    border-style: solid solid none;
+    border-width: 1px;
+    color: #4e4e4e;
+    display: block;
+    font-family: TheSansUHH,sans-serif !important;
+    font-size: 12px;
+    margin-left: 3px;
+    margin-top: -3px;
+    padding-left: 29px;
+    text-align: left;
+    text-decoration: none;
+    width: 80%;
 }
 
 .metainfo-small {
@@ -182,24 +200,6 @@ fieldset.fieldset.add-streaming-server div.layout {
 .aui .navbar .nav {
     font-family: TheSansUHHBold,sans-serif !important;
     font-size: 14px;
-    width: 100%;
-}
-
-.aui #navigation .nav .dropdown-menu > li a {
-    background: #f9f9f9 url("/lecture2go-portlet/img/rot_navi-pfeil-rechts.png") no-repeat scroll 9px 11px !important;
-    border-color: #ddd;
-    border-radius: 0;
-    border-style: solid solid none;
-    border-width: 1px;
-    color: #4e4e4e;
-    display: block;
-    font-family: TheSansUHH,sans-serif !important;
-    font-size: 12px;
-    margin-left: 3px;
-    margin-top: -3px;
-    padding-left: 29px;
-    text-align: left;
-    text-decoration: none;
     width: 100%;
 }
 
@@ -2192,6 +2192,10 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 
 	.video-box-date .date {
 	    font-size: 11px;
+	}
+
+    #banner .meta {
+	    display: block;
 	}
 }
 
