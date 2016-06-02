@@ -474,6 +474,25 @@ p.smallitalic {
     padding: 0px;
 }
 
+.videotile button {
+    float: right;
+    margin-right: 6px;
+    margin-top: 0px;
+    background-color: transparent;
+    border: medium none;
+    transition: all 0.2s ease;
+}
+
+.videotile button.highlight {
+	transform: scale(1.5);
+}
+
+.videotile button.rotated {
+	transform: rotate(180deg) scale(1.5);
+}
+
+
+
 .videotile.wide {
     width: auto;
     height: 120px;
@@ -545,33 +564,12 @@ p.smallitalic {
     color: #E2001A;
 }
 
-#searchedvideos, #allvideos {
+#videolist {
     margin-left: 60px;
     background-color: #F3F3F3;
     margin-top: 0px;
     border-bottom: 1px solid #F3F3F3 !important;
 }
-
-#searchedvideos > button, #allvideos > button {
-    font-size: 1.0em;
-    float: right;
-    margin-top: -30px;
-    margin-right: 9px;
-    background-color: transparent;
-    border: medium none;
-    transition: font 0.3s, margin 0.3s;
-}
-
-#searchedvideos > button.highlight, #allvideos > button.highlight {
-	font-size: 1.2em;
-	margin-right: 7px;
-	margin-top: -32px;
-}
-
-#searchedvideos > button.rotated, #allvideos > button.rotated {
-	transform: rotate(180deg);
-}
-
 
 #searchedvideo {
     display: block;
@@ -724,7 +722,7 @@ thead, th {
 
 .title-small {
     font-size: 14px;
-    font-weight: 600 !important;
+    font-weight: 600;
     line-height: 17px;
     margin: 0px;
     padding-top: 5px;
@@ -898,6 +896,7 @@ thead, th {
 	font-size: 16px;
 	height: 40px;
 	margin-bottom: 10px;
+	overflow: hidden;
 }
 
 .aui .nav {

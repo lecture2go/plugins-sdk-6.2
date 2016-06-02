@@ -413,6 +413,11 @@
 												<%=fullname2%>
 											</div>		
 											
+									        <button id="<%="b"+oId%>" >
+												<span class="lfr-icon-menu-text">
+													<i class="icon-large icon-chevron-down"></i>
+												</span>	
+											</button>
 									        <div class="tags">
 									          <%
 									        	String cat ="";
@@ -438,18 +443,12 @@
 				<!-- videotile  -->
 				</div>
 				
-				<!-- sublist for searched videos -->
+				<!-- sublist for videos -->
 				<%
 					String videoDivTitle = "";
-				if (videoCount>0) {
-					if (isSearched) { videoDivTitle = "searchedvideos"; } else { videoDivTitle = "allvideos"; }%>
-					<div id="<%=videoDivTitle%>">
-							<button id="<%="b"+oId%>" >
-								<span class="lfr-icon-menu-text">
-									<i class="icon-large icon-chevron-down"></i>
-								</span>	
-							</button>
-						    <ul id="<%="p"+oId%>" class="list-group toggler-content-collapsed content">
+				if (videoCount>0) {%>
+					<div id="videolist">
+						<ul id="<%="p"+oId%>" class="list-group toggler-content-collapsed content">
 							<%
 							while(vli.hasNext()){
 							Video v =  VideoLocalServiceUtil.getFullVideo(vli.next().getVideoId());
@@ -517,20 +516,20 @@
 $( function() {
 	setTimeout(mach, 1000);
 	function mach() {
+		var tile = $("#_lgopenaccessvideos_WAR_lecture2goportlet_lectureseriesesSearchContainer div.videotile.wide");
 		
-	var element = $("#_lgopenaccessvideos_WAR_lecture2goportlet_lectureseriesesSearchContainer div.videotile.wide");
-	
-	element.on({
-		click: function () {
-			$(this).siblings("div").find("ul").slideToggle().siblings("button").toggleClass("rotated");
-		},
-		mouseenter: function () {
-			$(this).siblings("div").find("button").addClass("highlight");
-		},
-		mouseleave: function () {
-			$(this).siblings("div").find("button").removeClass("highlight");
-		}
-	});
+		tile.on({
+			click: function () {
+				$(this).find("button").toggleClass("rotated");
+				$(this).siblings("div").find("ul").slideToggle();
+			},
+			mouseenter: function () {
+				$(this).find("button").addClass("highlight");
+			},
+			mouseleave: function () {
+				$(this).find("button").removeClass("highlight");
+			}
+		});
 	}
 	
 	//turn off autocomplete

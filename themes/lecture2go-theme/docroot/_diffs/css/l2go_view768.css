@@ -145,6 +145,29 @@
     	line-height: 17px;
 	}
 	
+	/* Catalog */
+	.lectureseries-title {
+		font-size: 14px;
+		margin-bottom: 5px;
+	}
+	
+	.allcreators {
+		font-size: 11px;
+	}
+	
+	.term-of-creation {
+		margin: 5px 10px;
+	}
+	
+	.title-small {
+		font-weight: 100;
+	}
+	
+	
+	
+	
+	
+	
 	/* Bastian */
 	
 	
