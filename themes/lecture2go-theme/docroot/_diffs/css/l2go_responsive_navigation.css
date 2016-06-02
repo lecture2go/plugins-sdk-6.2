@@ -33,13 +33,6 @@
 	    width: 100%
 	}
 
-	.responsive_li_item {
-	    display: block;
-	    font-family: TheSansUHH,sans-serif !important;
-	    padding-left: 30px;
-	    visibility: visible;
-	}
-	
 	#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 	    border-left: medium none;
 	    border-right: 0 none;
@@ -100,16 +93,6 @@
 	    background: #e40613 url("/lecture2go-portlet/img/pfeil-weiss-unten.png") no-repeat scroll 15px 13px !important;
 	}
 
-	.aui #navigation .nav li {
-	    background: rgba(0, 0, 0, 0) linear-gradient(180deg, #f3f3f3 0%, #f3f3f3 100%) repeat scroll 0 0;
-	    border-radius: 0;
-	    height: 38px;
-	    line-height: 31px;
-	    margin: 0 1px 1px 0;
-	    min-width: 148px;
-	    text-align: left;
-	}
-
 	.title-text {
 	    margin-top: 8px;
 	}
@@ -156,10 +139,6 @@
 	    height: 38px;
 	    padding-left: 30px;
 	    padding-top: 3px;
-	}
-
-	.aui #navigation.open .navbar-inner .nav-collapse {
-	    margin-left: -1px;
 	}
 
 	.responsive_li_item:hover {
@@ -239,12 +218,6 @@
 	    background-color: transparent;
 	}
 	
-	.aui .dockbar-split .dockbar, .aui .dockbar {
-	    background-color: #444444 !important;
-	    margin-right: 5%;
-	    margin-top: 40px;
-	}
-
 	.aui .dockbar-split .dockbar .navbar-inner {
 	    background: #fff none repeat scroll 0 0;
 	}
@@ -268,4 +241,40 @@
     	color: #444;
 	}
 	
+	.responsive_li_item {
+	    display: block;
+	    font-family: TheSansUHH,sans-serif !important;
+	    padding-left: 0;
+	    visibility: visible;
+	}
+	
+	.aui #navigation .nav li {
+	    background: rgba(0, 0, 0, 0) linear-gradient(180deg, #f3f3f3 0%, #f3f3f3 100%) repeat scroll 0 0;
+	    border-radius: 0;
+	    height: 38px;
+	    line-height: 31px;
+	    margin: 0 1px 1px 0;
+	    text-align: left;
+	    width: 100%;
+	}
+	
+	.aui #navigation {
+    	visibility: visible;
+   	 	width: 100%;
+	}
+	
+	.responsive_li_item.lfr-nav-item {
+	    padding-left: 30px;
+	    width: calc(100% - 30px) !important;
+	}
+	
+	.aui .dockbar-split .dockbar, .aui .dockbar {
+	    background-color: #444444 !important;
+	    margin-right: 1%;
+	    margin-top: 40px;
+	}
+
+	.aui #navigation.open .navbar-inner {
+		border-radius: 0;
+	}
 }
