@@ -1,0 +1,262 @@
+@media (max-width: 767px) {
+	.noresponsive{
+		display:none;
+	}
+	
+	.aui .dockbar-split .dockbar, .aui .dockbar {
+    	display: block;
+	}
+	
+	.aui .accordion-group.lfr-panel-extended {
+	    padding-bottom: 0;
+	}
+	
+	.date.related {
+	    margin-top: -5px;
+	}
+
+	.sharetile {
+	    width: 131px;
+	}
+	
+	.admintile.wide.icons {
+		visibility: hidden;
+		display: none;
+	}
+	
+	#metadata {
+	    width: 100%;
+	}
+	
+	.admintile.wide {
+	    margin: 0 -9px 0 3px;
+	    width: 100%;
+	}
+	   
+	.video-image-wrapper {
+	    /* float: none; */
+	    height: 110px;
+	    margin-right: 8px;
+	    /* max-width: 250px; */
+	}
+	
+	.add-link {
+		visibility: hidden;
+		display: none;
+	}
+	
+	.col-md-5 {
+	    right: 0;
+	    position: relative;
+	    width: 100%;
+	}
+	
+	.player {
+	    width: 100%;
+	}
+	
+	.meta-video-info {
+	    width: 100%;
+	}
+	
+	#qr {
+	    display: none;
+	    visibility: hidden;
+	}
+	
+	.aui #my-tab-content {
+	    min-height: auto;
+	    width: 500px;
+	}
+	
+	.path {
+	    display: none;
+	    visibility: hidden;
+	}
+	
+	
+	.path-wide {
+	    display: none;
+	    visibility: hidden;
+	}
+	
+	.metainfo {
+	    width: 100%;
+	}
+	
+	#tabs > li#down {
+	    display: none;
+	    visibility: hidden;
+	}
+	
+	.catalogue-container .row-fluid .span3 {
+	    width: 100%;
+	}
+	
+	.catalogue-container .row-fluid .span9 {
+	    width: 100%;
+	}
+	
+	.taglib-page-iterator {
+	    clear: both;
+	    height: auto;
+	    overflow: hidden;
+	    width: auto;
+	    height: 49px;
+	}
+	
+	.meta-description {
+	    display: none;
+	}
+	
+	#searchedvideo {
+	    width: 20em;
+	}
+	
+	.label.label-light {
+	    display: none;
+	}
+	
+	.license {
+	    display: none;
+	}
+	
+	.add-new-creator-term-object {
+	    display: none;
+	    visibility: hidden;
+	}
+	
+	#metadata input {
+	    width: 100%;
+	}
+	
+	.catalogue-container .row-fluid .span9 {
+	    float: left;
+	    width: 100%;
+	}
+	
+	#banner {
+	    background: rgba(0, 0, 0, 0) url("") no-repeat scroll right 0 top 0 / 130px auto;
+	}
+	
+	.aui #navigation.open .navbar-inner {
+    	border-radius: 0;
+	}
+	
+	.meta-title {
+    	font-size: 15px;
+    	font-weight: 900;
+    	line-height: 17px;
+	}
+	
+	.aui .site-title .l2go-logo {
+	    position: absolute;
+	    right: 92px;
+	    top: -6px;
+	    width: 100px;
+	}
+	
+	/* Bastian */
+	
+	
+	.aui .table th, .aui .table td {
+    	line-height: 19px;
+	}
+	
+	.aui .row-fluid [class*="span"] {
+    margin-left: 0% !important;
+	}
+	
+	.label {
+		float: left;
+	}
+	
+	.video-image-wrapper {
+    	max-width: 30%;
+	}
+	
+	.aui .label {
+    	margin: 1px 1px 0 0;
+	}
+	
+	.aui .logo, .aui .logo:hover {
+	    height: 46px;
+	    width: 156px;
+	}
+	
+	.aui .label {
+    	line-height: 12px;
+	}
+	
+	
+	/* Bastian Ende */
+	
+	
+	
+	
+	
+	/*** FROM view720 ***/
+	.admintile.wide {
+	    margin: 0 -9px 0 3px;
+	    width: 100%;
+	}
+	
+	img.imgsmall {
+	    border: 0 none;
+	    height: auto;
+	    padding-bottom: 7px;
+	    vertical-align: middle;
+	    width: 65px;
+	    height: 33px;
+	}
+	
+	.aui .chaptertile a span {
+	    margin-top: -50px;
+	}
+	
+	.add-new-creator-term-object {
+	    display: none;
+	    visibility: hidden;
+	}
+	
+	.aui .logo, .aui .logo:hover {
+	    color: #333;
+	    height: 46px;
+	    line-height: 20px;
+	    width: 156px;
+	}
+	
+	/* needed ??
+	.catalogue-container .row-fluid .span9 {
+	    float: left;
+	}
+	
+	
+	*/
+	
+	
+	/* from 960px translated, check if correct */
+	
+	#main-content,
+	.catalogue-container {
+	    margin-top: 0px;
+	}
+	
+	responsive_li_item {
+		display: block;
+	}
+	
+	#content {
+		margin-top: 0px;
+	}
+	
+	.aui .container-fluid::before, 
+	.aui .container-fluid::after {
+	    padding: 0;
+	}
+	
+	.aui #navigation {
+    	display: none;
+    }
+	
+}
