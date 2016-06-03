@@ -851,7 +851,9 @@ thead, th {
 }
 
 .filter-menu-link {
+    line-height: 18px;
     margin-left: 10px;
+    padding: 8px 2px;
 }
 
 .filter-menu {
