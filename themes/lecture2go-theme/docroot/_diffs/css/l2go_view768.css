@@ -148,11 +148,13 @@
 	/* Catalog */
 	.lectureseries-title {
 		font-size: 14px;
+		height: 60px;
 		margin-bottom: 5px;
 	}
 	
 	.allcreators {
 		font-size: 11px;
+		height: 27px;
 	}
 	
 	.term-of-creation {
