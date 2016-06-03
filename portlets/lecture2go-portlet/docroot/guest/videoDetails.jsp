@@ -89,6 +89,7 @@
 		    <div id="main" >
 			  <%
 			    String title = video.getTitle();
+			  	String series = lectureseries.getName();
 			  	if(timeStart>0 && timeEnd>timeStart && video.getCitation2go()==1){
 					title ="citation-of "+title;
 			  	}
@@ -109,12 +110,13 @@
 						<a href="#"><img title="cc-license-click-for-info" src="/lecture2go-portlet/img/lizenz_cc.png" /></a> 		
 				 	  <%}%>       
 				   </div>
-			       <div class="label label-light">${video.hits} <liferay-ui:message key="views"/></div>			  
+			       <div class="views">${video.hits} <liferay-ui:message key="views"/></div>			  
 			  </div>
 			  
 			  <c:if test="${relatedVideos.size()>1}"> <div class="meta-video-info"></c:if>
 			  <c:if test="${relatedVideos.size()<=1}"> <div class="meta-video-info-wide"></c:if>
 			    <div class="meta-title"><%=title%></div>
+			    <div class="meta-lectureseries"><%=series%></div>
 		      	<div class="meta-creators">
 												<%
 						       						String fullname1="";
