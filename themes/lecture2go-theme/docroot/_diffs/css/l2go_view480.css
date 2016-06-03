@@ -1,6 +1,8 @@
 @media (max-width: 479px) {
 	.video-image-big {
-    	height: auto !important;
+    	height: auto;
+    	width: 110px;
+    	
 	}
 	
 	.sharetile {
@@ -92,13 +94,8 @@
    		 padding: 0 3px 0 1px;
 	}
 	
-	.videotile.wide {
-    	height: auto;
-	}
-	
 	.video-image-wrapper {
-	    float: none;
-	    height: auto !important;
+	    float: left;
 	    margin-bottom: 5px;
 	}
 	
