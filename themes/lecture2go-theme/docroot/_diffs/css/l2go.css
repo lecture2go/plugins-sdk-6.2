@@ -151,7 +151,6 @@ fieldset.fieldset.add-streaming-server div.layout {
 }
 
 .meta-date {
-    font-size: 9px;
     font-style: normal !important;
 }
 
@@ -927,17 +926,34 @@ thead, th {
     font-size: 22px;
     font-weight: 900;
     line-height: 25px;
+    margin: 10px 0;
+}
+
+.views {
+	float: right;
+    margin: 0 10px;
 }
 
 .meta-description {
-    width: 100%;
-    margin-top: 10px;
-    margin-bottom: 7px;
-    font-size: 11px !important;
+    border: 1px solid #eee;
+    font-size: 13px !important;
+    margin-bottom: 15px;
+    padding: 20px 40px;
+    width: auto;
 }
+
+.meta-description p{
+    font-size: 13px !important;
+}
+
 .meta-creators {
     font-size: 12px;
     font-weight: 100;
+    margin-bottom: 20px;
+}
+
+.meta-lectureseries {
+	font-weight: 600;
 }
 
 .col-md-7 {
