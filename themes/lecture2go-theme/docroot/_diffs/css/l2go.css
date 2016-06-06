@@ -445,6 +445,7 @@ p.smallitalic {
     line-height: 15px;
     margin: 0;
     padding: 0;
+    color: #777;
 }
 
 .video-image {
@@ -515,6 +516,7 @@ p.smallitalic {
 
 .videotile.small {
     background-color: #f3f3f3 !important;
+    transition: background 0.2s;
 }
 
 .videotile.small:hover {
@@ -734,6 +736,8 @@ thead, th {
     margin-bottom: auto;
     width: 100%;
     word-wrap: break-word;
+    font-size: 12px;
+    font-weight: 800;
 }
 
 .play-small {
@@ -908,7 +912,7 @@ thead, th {
 }
 
 .col-md-5 {
-    top: 10px;
+    top: 0px;
     right: 0%;
     width: 28%;
     position: absolute;
@@ -963,8 +967,12 @@ thead, th {
     margin-top: 0px;
 }
 
+.related-lectureseries-name {
+	font-size: 13px;
+}
+
 .date.related {
-    font-size: 9px;
+    font-size: 10px;
 }
 
 #_lgopenaccessvideos_WAR_lecture2goportlet_timeStart {
