@@ -733,6 +733,7 @@ thead, th {
 .title-small.related {
     margin-bottom: auto;
     width: 100%;
+    word-wrap: break-word;
 }
 
 .play-small {
