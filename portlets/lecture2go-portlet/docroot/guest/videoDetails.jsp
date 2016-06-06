@@ -139,12 +139,14 @@
 							           			%>
 												<%=fullname1 %>&nbsp;<p class= "meta-date"><%=date1%></p>
 				</div>
-				<div class="meta-description">
-					  <%if(videoMetadata.getDescription().trim().length()>0){ %>	
-					  	${videoMetadata.description}
-					  <%}else{%>
-				      	${lectureseries.longDesc}
-					  <%}%>
+				<div class="meta-description-container">
+					<div class="meta-description">
+						  <%if(videoMetadata.getDescription().trim().length()>0){ %>	
+						  	${videoMetadata.description}
+						  <%}else{%>
+					      	${lectureseries.longDesc}
+						  <%}%>
+					</div>
 				</div>
 		    </div>
 		    
@@ -340,8 +342,13 @@
 								<portlet:actionURL name="viewOpenAccessVideo" var="viewOpenAccessVideoURL1">
 									<portlet:param name="objectId" value="<%=oId%>"/>
 									<portlet:param name="objectType" value="v"/>
-								</portlet:actionURL>		
-								<li class="videotile small related">
+								</portlet:actionURL>
+								<%-- test for the active video and highlight it --%>
+								<c:set value="" var="activeClass"></c:set>
+								<c:if test='<%=video.getVideoId() == vid.getVideoId() %>'> 
+  									<c:set value="active" var="activeClass"></c:set>
+								</c:if>
+								<li class="videotile small related ${activeClass}">
 									<a href="<%=viewOpenAccessVideoURL1.toString()%>">
 										<div class="video-image-wrapper-small related">
 											<img class="video-image related" src="<%=vid.getImageSmall()%>">
@@ -419,4 +426,12 @@
     $( function () {
         $('#tabs').tabs();
     });
+    
+    $( document ).ready(function() {
+		$('.meta-description').readmore({
+			collapsedHeight: 40,
+		  	moreLink: '<a href="#">Mehr...</a>',
+		  	lessLink: '<a href="#">Weniger...</a>'
+		});
+	}); 
 </script>    		

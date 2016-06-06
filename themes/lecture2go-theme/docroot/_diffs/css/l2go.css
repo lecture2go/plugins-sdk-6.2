@@ -942,7 +942,7 @@ thead, th {
     margin: 0 10px;
 }
 
-.meta-description {
+.meta-description-container {
     border: 1px solid #eee;
     font-size: 13px !important;
     margin-bottom: 15px;
@@ -952,6 +952,20 @@ thead, th {
 
 .meta-description p{
     font-size: 13px !important;
+}
+
+/* fade-out for description text if not expanded */
+.meta-description[aria-expanded="false"]:after {
+    content: '';
+    display: block;
+    height: 30px;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 94px;
+    background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+    background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
 }
 
 .meta-creators {
