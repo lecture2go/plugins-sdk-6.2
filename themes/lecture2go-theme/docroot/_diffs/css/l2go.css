@@ -80,6 +80,7 @@
     height: 19px;
     padding: 4px 0 4px 4px;
     width: 30%;
+    font-size: 14px;
 }
 
 .field.subInstOrder {
@@ -667,6 +668,7 @@ thead, th {
     border-width: 0;
     color: #484848;
     margin-right: 10px;
+    font-size: 14px;
 }
 
 .aui .btn:hover {
@@ -1912,7 +1914,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	width: calc(100% - 12px);
 	height: 25px;
 	font-size: 15px;
-	padding-left: 10px;
+	padding-left: 10px;	
 }
 
 .big-search .filter-facility-button {
