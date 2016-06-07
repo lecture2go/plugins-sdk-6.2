@@ -448,6 +448,10 @@ p.smallitalic {
     color: #777;
 }
 
+.metainfo-small.related .generation-date {
+	display: none;
+}
+
 .video-image {
     margin-left: 2px;
     max-height: 30px !important;
@@ -2208,7 +2212,6 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	}
 	
 	.video-box-content .title-small {
-		font-size: 12px;
 		width: 100%;
 		margin: 0;
 		color: #000;
@@ -2230,6 +2233,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	}
 
 	.video-box-content {
+		line-height: 20px;
 		font-size: 11px;
 		/* the video-box-content takes all the leftover space between the video-box-image and the video-box-date */
 		flex-grow: 1;
@@ -2237,7 +2241,6 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 
 	.video-box-content .creator-small2 {
 		display:block;
-		font-size: 11px;
 		height: auto;
 	}	
 

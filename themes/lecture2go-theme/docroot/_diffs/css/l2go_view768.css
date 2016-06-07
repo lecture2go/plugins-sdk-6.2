@@ -14,6 +14,14 @@
 	.date.related {
 	    margin-top: -5px;
 	}
+	
+	.metainfo-small.related .date {
+   		display: none;
+	}
+	
+	.metainfo-small.related .generation-date {
+		display: block;
+	}
 
 	.sharetile {
 	    width: 131px;
@@ -165,6 +173,15 @@
 		font-weight: 100;
 	}
 	
+	.title-small.related {
+		font-size: 14px;
+		font-weight: normal;
+	}
+	
+	.creator-small2.related {
+		font-size: 12px;
+		line-height: 20px;
+	}
 	
 	
 	

@@ -357,12 +357,15 @@
 											<img class="video-image related" src="<%=vid.getImageSmall()%>">
 										</div>
 										<div class="metainfo-small related">
+												<%
+													String date = "";
+							           				try{ date = vid.getDate().trim().substring(0, 10);}catch(Exception e){}
+												%>
+												<div class="generation-date"><%=date%></div>
 												<div class="title-small related"><%=vid.getTitle()%></div>
 							          			<p class="creator-small2 related">
 												<%
 						       						String fullname="";
-							        				String date = "";
-							           				try{ date = vid.getDate().trim().substring(0, 10);}catch(Exception e){}
 
 							           				List<Creator> cv = CreatorLocalServiceUtil.getCreatorsByVideoId(vid.getVideoId());
 													ListIterator<Creator> cvi = cv.listIterator();										
