@@ -1,4 +1,4 @@
-$breakpoint_phone: 480px !default;
+$breakpoint_phone: 768px !default;
 $breakpoint_tablet: 768px !default;
 
 @mixin respond-to($types...) {

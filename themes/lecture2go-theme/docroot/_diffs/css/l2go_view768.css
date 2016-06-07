@@ -3,10 +3,6 @@
 		display:none;
 	}
 	
-	.aui .dockbar-split .dockbar, .aui .dockbar {
-    	display: block;
-	}
-	
 	.aui .accordion-group.lfr-panel-extended {
 	    padding-bottom: 0;
 	}

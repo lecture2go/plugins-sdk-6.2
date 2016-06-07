@@ -268,13 +268,15 @@
 	    width: calc(100% - 30px) !important;
 	}
 	
-	.aui .dockbar-split .dockbar, .aui .dockbar {
-	    background-color: #444444 !important;
-	    margin-right: 1%;
-	    margin-top: 40px;
-	}
-
 	.aui #navigation.open .navbar-inner {
 		border-radius: 0;
+	}
+	
+	.aui .dockbar-split .dockbar, .aui .dockbar {
+	    display: block;
+	    float: right;
+	    margin-right: 7px;
+	    margin-top: 42px;
+	    z-index: 401;
 	}
 }
