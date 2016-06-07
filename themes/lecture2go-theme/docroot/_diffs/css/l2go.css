@@ -448,6 +448,10 @@ p.smallitalic {
     color: #777;
 }
 
+.metainfo-small.related .generation-date {
+	display: none;
+}
+
 .video-image {
     margin-left: 2px;
     max-height: 30px !important;
@@ -950,6 +954,10 @@ thead, th {
     width: auto;
 }
 
+.meta-description {
+	position: relative
+}
+
 .meta-description p{
     font-size: 13px !important;
 }
@@ -962,7 +970,7 @@ thead, th {
     width: 100%;
     position: absolute;
     left: 0;
-    bottom: 94px;
+    bottom: 0px;
     background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
     background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
     background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
@@ -2204,7 +2212,6 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	}
 	
 	.video-box-content .title-small {
-		font-size: 12px;
 		width: 100%;
 		margin: 0;
 		color: #000;
@@ -2226,6 +2233,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	}
 
 	.video-box-content {
+		line-height: 20px;
 		font-size: 11px;
 		/* the video-box-content takes all the leftover space between the video-box-image and the video-box-date */
 		flex-grow: 1;
@@ -2233,7 +2241,6 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 
 	.video-box-content .creator-small2 {
 		display:block;
-		font-size: 11px;
 		height: auto;
 	}	
 
