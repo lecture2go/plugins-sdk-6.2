@@ -25,7 +25,10 @@
 				    	for(int i=0; i<videoLectureseries.size(); i++){
 				    		Lectureseries lec = LectureseriesLocalServiceUtil.getLectureseries(videoLectureseries.get(i).getLectureseriesId());
 				    		List<Institution> institutions = InstitutionLocalServiceUtil.getByLectureseriesId(lec.getLectureseriesId(), com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
-				    		for(int j=0; j<institutions.size(); j++){
+					    	// right now we only show the first institution and not linked institutions
+					    	// for(int j=0; j<institutions.size(); j++){
+							for(int j=0; j<1; j++){
+
 				    			Institution insti = InstitutionLocalServiceUtil.getById(institutions.get(j).getInstitutionId());    			
 				    			Institution pInst = InstitutionLocalServiceUtil.getById(institutions.get(j).getParentId());
 					    		%>

@@ -2098,13 +2098,15 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 .video-box-content .title-small {
 	font-size: 14px;
 	width: 100%;
-	margin: 10px 0 15px 0;
+	margin: 10px 0 5px 0;
 	color: #000;
+	height: 60px;
 }
 
 .video-box-content .creator-small2 {
     margin: 0 0 2px 0;
     font-size: 12px;
+    height: 25px;
 }
 
 .video-box-content .date {
@@ -2115,15 +2117,15 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
     margin: 0 0 25px 0;
     padding: 0;
     color: #AAA;
+    height: 25px;
 }
 
 .video-box-content .label {
 	position:absolute;
 	bottom: 5px;
 	text-overflow: ellipsis;
-  	max-width: 180px;
-  	overflow: hidden;
-
+    max-width: calc(100% - 23px);  	
+    overflow: hidden;
 }
 
 /* without video
@@ -2143,6 +2145,8 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 
 */
 
+
+/* TODO: move to l2go_view768.css */
 @media (max-width: 767px) {
 	
 	
@@ -2190,7 +2194,8 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	}
 
 	.row-fluid.video-box-list > [class*='span'] { 
-		flex-direction: row; 
+		flex-direction: row;
+		width: 100%
 	}
 
 	.video-box {
@@ -2201,8 +2206,10 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	.video-box-content .title-small {
 		font-size: 12px;
 		width: 100%;
-		margin: 3px;
+		margin: 0;
 		color: #000;
+		height: auto;
+		padding-top: 0;
 	}
 
 	.video-box-date {
@@ -2227,10 +2234,12 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	.video-box-content .creator-small2 {
 		display:block;
 		font-size: 11px;
+		height: auto;
 	}	
 
 	.video-box-content .lectureseries-small {
 	    padding: 0;
+	    height: auto;
 	}
 
 	.video-box-date .date {

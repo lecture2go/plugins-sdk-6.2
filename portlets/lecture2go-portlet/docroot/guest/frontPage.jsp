@@ -50,7 +50,7 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 							<li><a href="/web/vod/l2go/-/get/0/${parentInstitution.institutionId}/0/0/0/">${parentInstitution.name}</a></li>
 						</c:forEach>
 						</ul>
-						<button class="btn btn-primary catalogue-button"><liferay-ui:message key="to-catalogue"/></button>
+						<button class="btn btn-primary catalogue-button" onclick="window.location='/web/vod/l2go';"><liferay-ui:message key="to-catalogue"/></button>
 					</div>
 					<div class="span7 filter-facility-menu-extra">
 						<ul>
@@ -66,7 +66,7 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 					</div>
 				</div>
 			</div>
-			<button id="outer-catalogue-button" class="btn btn-primary catalogue-button"><liferay-ui:message key="to-catalogue"/></button>
+			<button id="outer-catalogue-button" class="btn btn-primary catalogue-button" onclick="window.location='/web/vod/l2go';"><liferay-ui:message key="to-catalogue"/></button>
 			<div class="l2go-description">
 				<p><liferay-ui:message key="l2go-description"/> <a href=""><liferay-ui:message key="learn-more"/></a></p>
 			</div>
@@ -125,10 +125,10 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 											</div>
 
 											<div class="video-box-content">
-												<div class="title-small"><%=vid.getTitle() %></div>
-												<div class="creator-small2"><%=vid.getCreators() %></div>												
+												<div class="title-small dot-ellipsis dot-resize-update "><%=vid.getTitle() %></div>
+												<div class="creator-small2 dot-ellipsis dot-resize-update "><%=vid.getCreators() %></div>												
 												<% if (!isVideo) { %>
-													<div class="lectureseries-small"><%=lectser.getName() %></div> 
+													<div class="lectureseries-small dot-ellipsis dot-resize-update "><%=lectser.getName() %></div> 
 												<% } %>
 												<div class="labels">
 													<span class="label label-light2"><%=inst.getName()%></span>
@@ -201,10 +201,10 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 										</div>
 	
 										<div class="video-box-content"> 
-											<div class="title-small"><%= vid.getTitle() %></div>
-											<div class="creator-small2"><%= vid.getCreators() %></div>
+											<div class="title-small dot-ellipsis dot-resize-update "><%= vid.getTitle() %></div>
+											<div class="creator-small2 dot-ellipsis dot-resize-update "><%= vid.getCreators() %></div>
 											<% if (!isVideo) { %>
-												<div class="lectureseries-small"><%= lec.getName() %></div>
+												<div class="lectureseries-small dot-ellipsis dot-resize-update "><%= lec.getName() %></div>
 											<% } %>
 											<div class="labels">
 									        	<span class="label label-light2"><%=inst.getName()%></span>
@@ -228,7 +228,6 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 
 
 <script>
-
 $(document).ready(function(){
 	
     // toggle the subnavigation in the search bar
