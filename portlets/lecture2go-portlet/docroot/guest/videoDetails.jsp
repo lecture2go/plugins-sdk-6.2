@@ -432,7 +432,7 @@
     
     $( document ).ready(function() {
 		$('.meta-description').readmore({
-			collapsedHeight: 40,
+			collapsedHeight: 60,
 		  	moreLink: '<a href="#">Mehr...</a>',
 		  	lessLink: '<a href="#">Weniger...</a>'
 		});
