@@ -302,13 +302,13 @@
 									            	System.out.print(e);
 									            }
 									          %>
-									          <span class="label label-light2"><%=cat%></span>
+									          <span class="label label-light2 text-cut"><%=cat%></span>
 									          <%
 									          	while(liIt.hasNext()){
 									          		Lectureseries_Institution lI = liIt.next();
 									          		Institution inst = InstitutionLocalServiceUtil.getById(lI.getInstitutionId());
 									          		%>
-											          <span class="label label-light2"><%=inst.getName()%></span>
+											          <span class="label label-light2 text-cut"><%=inst.getName()%></span>
 									          		<%
 									          	}
 									          %>
@@ -365,13 +365,13 @@
 									        	List<Lectureseries_Institution> li = Lectureseries_InstitutionLocalServiceUtil.getByLectureseries(lectser.getLectureseriesId());
 									        	ListIterator<Lectureseries_Institution> liIt = li.listIterator();
 									          %>
-									          <span class="label label-light2"><%=cat%></span>
+									          <span class="label label-light2 text-cut"><%=cat%></span>
 									          <%
 									          	while(liIt.hasNext()){
 									          		Lectureseries_Institution lI = liIt.next();
 									          		Institution inst = InstitutionLocalServiceUtil.getById(lI.getInstitutionId());
 									          		%>
-											          <span class="label label-light2"><%=inst.getName()%></span>
+											          <span class="label label-light2 text-cut"><%=inst.getName()%></span>
 									          		<%
 									          	}
 									          %>
@@ -425,13 +425,13 @@
 									        	List<Lectureseries_Institution> li = Lectureseries_InstitutionLocalServiceUtil.getByLectureseries(lectser.getLectureseriesId());
 									        	ListIterator<Lectureseries_Institution> liIt = li.listIterator();
 									          %>
-									          <span class="label label-light2"><%=cat%></span>
+									          <span class="label label-light2 text-cut"><%=cat%></span>
 									          <%
 									          	while(liIt.hasNext()){
 									          		Lectureseries_Institution lI = liIt.next();
 									          		Institution inst = InstitutionLocalServiceUtil.getById(lI.getInstitutionId());
 									          		%>
-											          <span class="label label-light2"><%=inst.getName()%></span>
+											          <span class="label label-light2 text-cut"><%=inst.getName()%></span>
 									          		<%
 									          	}
 									          %>

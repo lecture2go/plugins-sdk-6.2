@@ -168,12 +168,6 @@
 	*/
 	
 	/* Bastian */
-	
-    .tags {
-	    display: none;
-	    font-size: smaller;
-	    visibility: hidden;
-	}
     
 	.aui .label {
     	line-height: 14px;
