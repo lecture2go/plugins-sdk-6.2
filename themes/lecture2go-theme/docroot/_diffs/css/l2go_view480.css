@@ -14,27 +14,32 @@
 	}
 	
 	.metainfo-small.related {
-	    margin-left: 1px;
+	    margin-top: 0;
 	}
 	
+	/*)
 	.video-image-wrapper-small {
 	    float: none;
 	    height: auto;
 	    margin-right: 8px;
     	max-width: 60px;
 	}
+	*/
 
+/*
 	.video-image-wrapper-small.related {
 	    float: none;
 	    height: 38px;
 	    margin-top: 2px;
 	    width: auto;
 	}
-	
+*/
+/*
 	.video-image.related {
 	    min-height: 30px;
 	    width: auto;
 	}
+*/
 	
 	img.imgsmall {
 	    border: 0 none;
@@ -120,17 +125,22 @@
     	max-width: 65px;
 	}
 	
+	.generation-date.related {
+		margin: 0;
+	}
+	
+
 	.title-small.related {
-    	margin-bottom: -5px;
-    	margin-top: -11px;
-    	padding: 0;
-   	 	width: 100%;
+		margin: 0;
+		line-height: 17px;
 	}
 
+/*
 	.videotile.small.related {
 	    height: auto;
 	    min-height: auto;
 	}
+	*/
 	
 	.title-small {
     	font-size: 11px;
@@ -143,9 +153,6 @@
 	    margin-left: 10px;
 	}
 	
-	.creator-small2 {
-	    display: none;
-	}	
    
 	.metainfo-small {
 	    height: auto !important;
@@ -153,11 +160,12 @@
 	    margin-top: 3px;
 	    min-height: auto !important;
 	}
-	
+	/*
 	.generation-date {
 	    display: none;
 	    visibility: hidden;
 	}
+	*/
 	
 	/* Bastian */
 	
