@@ -333,7 +333,6 @@
 						<div class="col-md-5">
 						    <div class="related-lectureseries-name"><liferay-ui:message key="lecture-series"/> &nbsp;<a target="_blank" class="icon-small icon-rss" href="${video.mp4RssLink}"></a> </div>
 							<ul class="ul-related">
-								<li class="placeholder"></li>
 								<%
 								ListIterator<Video> vli = relatedVideos.listIterator();
 								while(vli.hasNext()){
@@ -361,7 +360,7 @@
 													String date = "";
 							           				try{ date = vid.getDate().trim().substring(0, 10);}catch(Exception e){}
 												%>
-												<div class="generation-date"><%=date%></div>
+												<div class="generation-date related"><%=date%></div>
 												<div class="title-small related"><%=vid.getTitle()%></div>
 							          			<p class="creator-small2 related">
 												<%
@@ -388,8 +387,8 @@
 									</a>
 								</li>
 								<%if(vli.hasNext()){%><li class="placeholder"></li><%}%>
-							</ul>
 							<%}%>
+							</ul>
 						</div>
 			    	</div>
 				<%
