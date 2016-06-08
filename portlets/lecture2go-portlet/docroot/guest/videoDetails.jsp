@@ -435,8 +435,8 @@
     $( document ).ready(function() {
 		$('.meta-description').readmore({
 			collapsedHeight: 60,
-		  	moreLink: '<a href="#">Mehr...</a>',
-		  	lessLink: '<a href="#">Weniger...</a>'
+		  	moreLink: '<a href="#"><liferay-ui:message key="more"/></a>',
+		  	lessLink: '<a href="#"><liferay-ui:message key="less"/></a>'
 		});
 	}); 
 </script>    		
