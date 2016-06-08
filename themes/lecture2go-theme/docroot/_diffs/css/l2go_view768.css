@@ -44,6 +44,10 @@
 	    /* max-width: 250px; */
 	}
 	
+	.video-image-wrapper-small.related {
+		flex: 0 0 18%;
+	}
+	
 	.add-link {
 		visibility: hidden;
 		display: none;
@@ -147,6 +151,10 @@
     	font-size: 15px;
     	font-weight: 900;
     	line-height: 17px;
+	}
+	
+	.related-lectureseries-name {
+    	margin-top: 15px;
 	}
 	
 	/* Catalog */
