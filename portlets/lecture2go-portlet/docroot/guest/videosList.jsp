@@ -265,7 +265,7 @@
 									          <img class="video-image-big" src="<%=vidDummy.getImageMedium()%>"/>
 									        </div>
 									        
-							        <div class="lectureseries-title">
+							        <div class="lectureseries-title dot-ellipsis dot-resize-update">
 							        	<a href="<%=view1URL%>"><%=lectser.getName()%></a>
 							        </div>
 											
@@ -281,7 +281,7 @@
 							       							fullname1 += clvi.next().getFullName();
 							       							if(clv.size()>1 && clvi.hasNext()) fullname1+=", ";
 								    					}else{
-								    						fullname1+="u. a.";
+								    						fullname1+="u.a.";
 															break;
 								    					}
 								    					j++;
@@ -336,7 +336,7 @@
 									          <span class="overlay"></span>
 									        </div>
 									        
-							        <div class="lectureseries-title">
+							        <div class="lectureseries-title dot-ellipsis dot-resize-update">
 							        	<a href="<%=view2URL%>"><%=lectser.getName()%></a>
 							        </div>
 											
@@ -350,7 +350,7 @@
 						       							fullname1 += cli1.next().getFullName();
 						       							if(cl1.size()>1 && cli1.hasNext()) fullname1+=", ";
 							    					}else{
-							    						fullname1+="u. a.";
+							    						fullname1+="u.a.";
 														break;
 							    					}
 		              								i++;
@@ -391,7 +391,7 @@
 									          <span class="overlay"></span>
 									        </div>
 									        
-							        <div class="lectureseries-title">
+							        <div class="lectureseries-title dot-ellipsis dot-resize-update">
 							        	<a href="<%=view1URL%>"><%=lectser.getName()%></a>
 							        </div>
 											
@@ -404,7 +404,7 @@
 						       							fullname2 += cli.next().getFullName();
 						       							if(cl.size()>1 && cli.hasNext()) fullname2+=", ";
 							    					}else{
-							    						fullname2+="u. a.";
+							    						fullname2+="u.a.";
 														break;
 							    					}
 		              								i++;
@@ -475,7 +475,7 @@
 							       					fullname3 += cvi.next().getFullName();
 							       					if(cv.size()>1 && cvi.hasNext()) fullname3+=", ";
 								    			}else{
-								    				fullname3+="u. a.";
+								    				fullname3+="u.a.";
 													break;
 								    			}
 			              						i++;

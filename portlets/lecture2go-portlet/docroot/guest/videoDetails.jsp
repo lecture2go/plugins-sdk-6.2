@@ -134,7 +134,7 @@
 							       							fullname1 += cvi1.next().getFullName();
 							       							if(cv1.size()>1 && cvi1.hasNext()) fullname1+=", ";
 								    					}else{
-								    						fullname1+="ET. AL";
+								    						fullname1+="u.a.";
 															break;
 								    					}
 								    					j++;
@@ -374,7 +374,7 @@
 							       							fullname += cvi.next().getFullName();
 							       							if(cv.size()>1 && cvi.hasNext()) fullname+=", ";
 								    					}else{
-								    						fullname+="ET. AL";
+								    						fullname+="u.a.";
 															break;
 								    					}
 								    					i++;
