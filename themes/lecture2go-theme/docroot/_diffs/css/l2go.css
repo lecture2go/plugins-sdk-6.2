@@ -504,11 +504,11 @@ p.smallitalic {
 }
 
 .videotile button.highlight {
-	transform: scale(1.5);
+	transform: scale(1.15);
 }
 
 .videotile button.rotated {
-	transform: rotate(180deg) scale(1.5);
+	transform: rotate(180deg) scale(1.15);
 }
 
 
