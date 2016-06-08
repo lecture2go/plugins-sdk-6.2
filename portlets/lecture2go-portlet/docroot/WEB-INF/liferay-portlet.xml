@@ -91,6 +91,7 @@
 		<header-portlet-javascript>/player/jwplayer/jwplayer.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/mediaCheck-min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/readmore.min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/jquery.dotdotdot.min.js</header-portlet-javascript>		
 	</portlet>
 
 	<portlet>
