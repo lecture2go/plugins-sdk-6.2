@@ -119,7 +119,6 @@
 			  <c:if test="${relatedVideos.size()>1}"> <div class="meta-video-info"></c:if>
 			  <c:if test="${relatedVideos.size()<=1}"> <div class="meta-video-info-wide"></c:if>
 			    <div class="meta-title"><%=title%></div>
-			    <div class="meta-lectureseries"><%=series%></div>
 		      	<div class="meta-creators">
 												<%
 						       						String fullname1="";
@@ -140,8 +139,10 @@
 								    					j++;
 							        				}
 							           			%>
-												<%=fullname1 %>&nbsp;<p class= "meta-date"><%=date1%></p>
+												<%=fullname1 %>
+												<div class="date"><%=date1%></div>
 				</div>
+			    <div class="lectureseries-small"><%=series%></div>
 				<div class="meta-description-container">
 					<div class="meta-description">
 						  <%if(videoMetadata.getDescription().trim().length()>0){ %>	

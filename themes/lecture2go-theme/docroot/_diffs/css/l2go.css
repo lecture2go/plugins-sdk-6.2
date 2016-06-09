@@ -447,7 +447,8 @@ p.smallitalic {
 }
 
 .creator-small2 {
-    font-size: 11px;
+	margin: 0 0 2px 0;
+	font-size: 12px;
     font-style: normal !important;
 }
 
@@ -966,7 +967,7 @@ thead, th {
     font-size: 22px;
     font-weight: 900;
     line-height: 25px;
-    margin: 10px 0;
+    margin-top: 10px;
 }
 
 .views {
@@ -980,7 +981,8 @@ thead, th {
 }
 
 .meta-description {
-	position: relative
+    position: relative;
+    margin-top: 20px;
 }
 
 .meta-description p{
@@ -1002,9 +1004,12 @@ thead, th {
 }
 
 .meta-creators {
-    font-size: 12px;
-    font-weight: 100;
-    margin-bottom: 20px;
+	font-size: 12px;
+	font-weight: 100;
+}
+
+.meta-creators .date {
+    font-size: 10px !important;
 }
 
 .meta-lectureseries {
@@ -2153,6 +2158,12 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
     padding: 0;
     color: #AAA;
     height: 30px;
+    line-height: 15px;
+}
+
+.lectureseries-small {
+    padding: 0;
+    color: #AAA;
     line-height: 15px;
 }
 
