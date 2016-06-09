@@ -396,10 +396,12 @@ p.smallitalic {
 
 .meta-video-info {
     width: 70%;
+    margin-top: -11px;
 }
 
 .meta-video-info-wide{
 	width: 100%;
+    margin-top: -11px;
 }
 
 .list-group.toggler-content-collapsed.content > li {
@@ -1540,8 +1542,8 @@ thead, th {
     position: absolute;
     font-size: 11px;
     line-height: 13px;
-    right: 10px;
-    top: 5px;
+    right: 20px;
+    top: 12px;
 }
 
 .aui .dockbar-split .dockbar .navbar-inner .nav-account-controls > li > a, .aui .dockbar-split .dockbar .navbar-inner .nav-account-controls li.open > a {
