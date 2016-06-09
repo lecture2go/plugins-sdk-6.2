@@ -377,11 +377,13 @@ p.smallitalic {
 .path {
     width: 70%;
     font-size: 11px;
+    margin-bottom: 5px;
 }
 
 .path-wide{
 	width: 100%;
 	font-size: 11px;
+	margin-bottom: 5px;
 }
 
 .path > span {
@@ -1022,6 +1024,7 @@ thead, th {
 
 .related-lectureseries-name {
 	font-size: 13px;
+	padding-bottom: 5px;
 }
 
 .date.related {
