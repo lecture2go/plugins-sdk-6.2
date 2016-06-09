@@ -130,7 +130,8 @@
 							       					int j=0;
 							       					while(cvi1.hasNext()){
 							       						if(j<2){
-							       							fullname1 += cvi1.next().getFullName();
+							       							String n = cvi1.next().getFullName();
+							       							fullname1 += "<a href='/l2go/-/get/0/0/0/0/0/"+n+"'>"+n+"</a>";
 							       							if(cv1.size()>1 && cvi1.hasNext()) fullname1+=", ";
 								    					}else{
 								    						fullname1+="u.a.";
@@ -372,7 +373,8 @@
 							       					int i=0;
 							       					while(cvi.hasNext()){
 							       						if(i<2){
-							       							fullname += cvi.next().getFullName();
+							       							String n = cvi.next().getFullName();
+							       							fullname += n;
 							       							if(cv.size()>1 && cvi.hasNext()) fullname+=", ";
 								    					}else{
 								    						fullname+="u.a.";

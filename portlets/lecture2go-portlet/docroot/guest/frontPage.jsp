@@ -131,7 +131,10 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 													<div class="lectureseries-small dot-ellipsis dot-resize-update "><%=lectser.getName() %></div> 
 												<% } %>
 												<div class="labels">
-													<span class="label label-light2"><%=inst.getName()%></span>
+													<%
+														String instLink="<a href='/l2go/-/get/"+inst.getInstitutionId()+"/"+inst.getParentId()+"/0/0/0/'>"+inst.getName()+"</a>"; 
+													%>
+										        	<span class="label label-light2"><%=instLink%></span>												
 												</div>
 											</div> 
 											</a>
@@ -207,7 +210,10 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 												<div class="lectureseries-small dot-ellipsis dot-resize-update "><%= lec.getName() %></div>
 											<% } %>
 											<div class="labels">
-									        	<span class="label label-light2"><%=inst.getName()%></span>
+												<%
+													String instLink="<a href='/l2go/-/get/"+inst.getInstitutionId()+"/"+inst.getParentId()+"/0/0/0/'>"+inst.getName()+"</a>"; 
+												%>
+									        	<span class="label label-light2"><%=instLink%></span>
 									        </div>
 										</div>
 									</div>
