@@ -297,20 +297,23 @@
 									        	ListIterator<Lectureseries_Institution> liIt = li.listIterator();
 									            try{
 									            	Long cId = Video_CategoryLocalServiceUtil.getByVideo(lectser.getLectureseriesId()).get(0).getCategoryId();
-									            	cat =  CategoryLocalServiceUtil.getById(cId).getName();
+									            	cat ="<a href='/l2go/-/get/0/0/"+cId+"/0/0/'>"+CategoryLocalServiceUtil.getById(cId).getName()+"</a>";
+
 									            }catch(Exception e){
 									            	System.out.print(e);
 									            }
 									          %>
 									          <span class="label label-light2 text-cut"><%=cat%></span>
 									          <%
-									          	while(liIt.hasNext()){
-									          		Lectureseries_Institution lI = liIt.next();
-									          		Institution inst = InstitutionLocalServiceUtil.getById(lI.getInstitutionId());
-									          		%>
-											          <span class="label label-light2 text-cut"><%=inst.getName()%></span>
-									          		<%
-									          	}
+									          		try{
+									          			Institution inst = InstitutionLocalServiceUtil.getById(vidDummy.getRootInstitutionId());
+														String instLink="<a href='/l2go/-/get/0/"+inst.getInstitutionId()+"/0/0/0/'>"+inst.getName()+"</a>";  
+										          		%>
+												          <span class="label label-light2 text-cut"><%=instLink%></span>
+										          		<%
+									          		}catch(NullPointerException e){
+									          			//
+									          		}
 									          %>
 									        </div>   
 								        </div>
@@ -361,19 +364,21 @@
 
 									        <div class="tags">
 									          <%
-									        	String cat =CategoryLocalServiceUtil.getById(lectser.getCategoryId()).getName();
+									        	String cat ="<a href='/l2go/-/get/0/0/"+lectser.getCategoryId()+"/0/0/'>"+CategoryLocalServiceUtil.getById(lectser.getCategoryId()).getName()+"</a>";
 									        	List<Lectureseries_Institution> li = Lectureseries_InstitutionLocalServiceUtil.getByLectureseries(lectser.getLectureseriesId());
 									        	ListIterator<Lectureseries_Institution> liIt = li.listIterator();
 									          %>
 									          <span class="label label-light2 text-cut"><%=cat%></span>
 									          <%
-									          	while(liIt.hasNext()){
-									          		Lectureseries_Institution lI = liIt.next();
-									          		Institution inst = InstitutionLocalServiceUtil.getById(lI.getInstitutionId());
-									          		%>
-											          <span class="label label-light2 text-cut"><%=inst.getName()%></span>
-									          		<%
-									          	}
+									          		try{
+									          			Institution inst = InstitutionLocalServiceUtil.getById(vidDummy.getRootInstitutionId());
+														String instLink="<a href='/l2go/-/get/0/"+inst.getInstitutionId()+"/0/0/0/'>"+inst.getName()+"</a>";  
+										          		%>
+												          <span class="label label-light2 text-cut"><%=instLink%></span>
+										          		<%
+									          		}catch(NullPointerException e){
+									          			//
+									          		}
 									          %>
 									        </div>   
 								        </div>
@@ -421,19 +426,23 @@
 									        <div class="tags">
 									          <%
 									        	String cat ="";
-									            try{cat=CategoryLocalServiceUtil.getById(lectser.getCategoryId()).getName();}catch(Exception e){}
+									            try{
+										        	cat ="<a href='/l2go/-/get/0/0/"+lectser.getCategoryId()+"/0/0/'>"+CategoryLocalServiceUtil.getById(lectser.getCategoryId()).getName()+"</a>";
+									            }catch(Exception e){}
 									        	List<Lectureseries_Institution> li = Lectureseries_InstitutionLocalServiceUtil.getByLectureseries(lectser.getLectureseriesId());
 									        	ListIterator<Lectureseries_Institution> liIt = li.listIterator();
 									          %>
 									          <span class="label label-light2 text-cut"><%=cat%></span>
 									          <%
-									          	while(liIt.hasNext()){
-									          		Lectureseries_Institution lI = liIt.next();
-									          		Institution inst = InstitutionLocalServiceUtil.getById(lI.getInstitutionId());
-									          		%>
-											          <span class="label label-light2 text-cut"><%=inst.getName()%></span>
-									          		<%
-									          	}
+									          		try{
+									          			Institution inst = InstitutionLocalServiceUtil.getById(vidDummy.getRootInstitutionId());
+														String instLink="<a href='/l2go/-/get/0/"+inst.getInstitutionId()+"/0/0/0/'>"+inst.getName()+"</a>"; 
+										          		%>
+												          <span class="label label-light2 text-cut"><%=instLink%></span>
+										          		<%
+									          		}catch(NullPointerException e){
+									          			//
+									          		}
 									          %>
 									        </div>   
 								        </div>
