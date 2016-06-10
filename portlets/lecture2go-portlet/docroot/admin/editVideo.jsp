@@ -552,7 +552,7 @@ function applyAllMetadataChanges(){
 				    updateCreators();
 				    updateSubInstitutions();
 				    updateMetadata();//last place, important!
-				    alert("changes-applied");
+				    alert("<liferay-ui:message key='changes-applied'/>");
 			}
 	);
 }
