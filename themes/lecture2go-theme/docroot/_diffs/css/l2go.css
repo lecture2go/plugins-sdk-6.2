@@ -1649,6 +1649,7 @@ div.filter-menu-link span.icon-large.icon-remove {
 
 .aui #footer {
     font-size: 11px;
+    border-top: 1px solid #ddd;
 }
 
 .aui #footer .left {
