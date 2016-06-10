@@ -1647,6 +1647,30 @@ div.filter-menu-link span.icon-large.icon-remove {
     text-decoration: none;
 }
 
+.aui #footer {
+    font-size: 11px;
+}
+
+.aui #footer .left {
+    float: left;
+}
+
+.aui #footer .right {
+    float: right;
+}
+
+#fb {
+    margin-right: 10px;
+}
+
+#tw img, #fb img {
+    height: 12px !important;
+}
+
+#impressum, #disclaimer {
+    font-family: TheSansUHHBold,sans-serif;
+}
+
 #license .control-group.form-inline {
     float: left;
     margin-top: 0;
@@ -2300,6 +2324,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
     #banner .meta {
 	    display: block;
 	}
+	
 }
 
 /*** END FRONT PAGE ***/
