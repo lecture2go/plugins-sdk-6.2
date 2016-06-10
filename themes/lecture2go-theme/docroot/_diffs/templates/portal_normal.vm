@@ -99,11 +99,22 @@ $theme.include($body_top_include)
 	</div>
 
 	<footer id="footer" role="contentinfo">
-	<!--
-		<p class="powered-by">
+		<div class="left">
 			#language ("powered-by") <a href="http://www.liferay.com" rel="external">Liferay</a>
-		</p>
-	-->
+		</div>
+		
+		<div class="right">
+			<a href="http://twitter.com/#!/Lecture2Go" title="Twitter" target="blank" id="tw">	
+				<img class="tw" src="/lecture2go-theme/images/tw.png" alt="Twitter" >
+			</a>
+			<a href="http://www.facebook.com/pages/Hamburg-Germany/Lecture2Go/201731849859567" id="fb" title="Facebook" target="blank">	
+				<img class="fb" src="/lecture2go-theme/images/fb.png" alt="Facebook">	
+			</a>
+
+			<a href="/impressum" id="impressum">#language("impressum")</a>
+			&nbsp;|&nbsp;
+			<a href="/disclaimer" id="disclaimer">#language("disclaimer")</a>
+		</div>	
 	</footer>
 </div>
 
