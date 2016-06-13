@@ -137,7 +137,6 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 										        	<span class="label label-light2"><%=instLink%></span>												
 												</div>
 											</div> 
-											</a>
 										</div>
 										
 									<c:set var="count" value="${count + 1}" scope="page"/>

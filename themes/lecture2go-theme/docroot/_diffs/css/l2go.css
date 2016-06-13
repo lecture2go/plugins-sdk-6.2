@@ -351,6 +351,7 @@ p.smallitalic {
 	margin-left: 5px;
 	/* this is need to wrap the text in a flex box element */
 	min-width: 0;
+	width: 69%;
 }
 
 .metainfo-wide {
@@ -362,7 +363,7 @@ p.smallitalic {
 }
 
 .metainfo {
-    width: 70%;
+    width: auto;
 }
 
 #metadata {
@@ -395,7 +396,7 @@ p.smallitalic {
 }
 
 .meta-video-info {
-    width: 70%;
+    width: auto;
     margin-top: -11px;
 }
 
@@ -456,12 +457,16 @@ p.smallitalic {
     font-style: normal !important;
 }
 
+.creator-small2.related:hover {
+    color: #c40017;
+}
+
 .creator-small2.related {
     font-size: 12px;
     line-height: 15px;
     margin: 0;
     padding: 0;
-    color: #777;
+    width: 100%;
 }
 
 .metainfo-small.related .generation-date {
@@ -476,7 +481,7 @@ p.smallitalic {
 }
 
 .video-image.related {
-    width: 100%;
+    width: 96%;
     max-height: none;
 }
 
@@ -544,20 +549,15 @@ p.smallitalic {
     transition: background 0.2s;
 }
 
-.ul-related {
-	border: 1px solid #eee;
-}
-
 .videotile.small.related {
-    list-style: outside none none !important;
-    padding: 3px;
+    border-bottom: 1px solid #ffffff;
+    float: left;
     height: auto;
     line-height: 15px;
+    list-style: outside none none !important;
     min-height: 70px;
-}
-
-.videotile.small.related a {
-    display: flex;
+    padding: 3px;
+    width: 100%;
 }
 
 .videotile.small em {
@@ -766,12 +766,12 @@ thead, th {
 }
 
 .title-small.related {
-    margin-bottom: auto;
-    width: 100%;
-    word-wrap: break-word;
     font-size: 12px;
     font-weight: 800;
+    margin: 0;
     padding-top: 0;
+    width: 100%;
+    word-wrap: break-word;
 }
 
 .play-small {
@@ -802,6 +802,7 @@ thead, th {
 
 .player {
     width: 70%;
+    float: left;
 }
 
 .aui .label {
@@ -879,13 +880,6 @@ thead, th {
     cursor: default;
 }
 
-.placeholder {
-    border: 0px none !important;
-    background-color: #E0E0E0 !important;
-    list-style: outside none none;
-    height: 1px;
-}
-
 .aui a:hover {
     text-decoration: none !important;
 }
@@ -950,10 +944,8 @@ thead, th {
 }
 
 .col-md-5 {
-    top: 0px;
-    right: 0%;
-    width: 28%;
-    position: absolute;
+    float: left;
+    margin-top: -25px;
 }
 
 .label.label-light {
@@ -1024,6 +1016,12 @@ thead, th {
     margin-top: 0px;
 }
 
+.related {
+    float: left;
+    width: 29%;
+    margin-left: 1%;
+}
+
 .related-lectureseries-name {
 	font-size: 13px;
 	padding-bottom: 5px;
@@ -1031,6 +1029,7 @@ thead, th {
 
 .date.related {
     font-size: 10px;
+    margin: 0;
 }
 
 #_lgopenaccessvideos_WAR_lecture2goportlet_timeStart {
@@ -1650,6 +1649,7 @@ div.filter-menu-link span.icon-large.icon-remove {
 .aui #footer {
     font-size: 11px;
     border-top: 1px solid #ddd;
+    margin-top: 22px;
 }
 
 .aui #footer .left {
