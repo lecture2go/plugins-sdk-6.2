@@ -484,7 +484,7 @@
 		              						String fullname3="";
 		              						while(cvi.hasNext()){
 			              						if(i<2){
-							       					String n = cli.next().getFullName();
+							       					String n = cvi.next().getFullName();
 					       							fullname3 += "<a href='/l2go/-/get/0/0/0/0/0/"+n+"'>"+n+"</a>";
 							       					if(cv.size()>1 && cvi.hasNext()) fullname3+=", ";
 								    			}else{
