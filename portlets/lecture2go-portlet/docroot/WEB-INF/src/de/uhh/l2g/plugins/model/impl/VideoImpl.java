@@ -489,6 +489,16 @@ public class VideoImpl extends VideoBaseImpl {
 			return preffix;
 		}
 		
+		private String linkedCreators;
+
+		public String getLinkedCreators() {
+			return linkedCreators;
+		}
+
+		public void setLinkedCreators(String linkedCreators) {
+			this.linkedCreators = linkedCreators;
+		}
+
 		private String creators;
 
 		public String getCreators() {

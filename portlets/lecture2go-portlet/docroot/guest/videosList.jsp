@@ -278,7 +278,8 @@
 							       					int j=0;
 							       					while(clvi.hasNext()){
 							       						if(j<2){
-							       							fullname1 += clvi.next().getFullName();
+							       							String n = clvi.next().getFullName();
+							       							fullname1 += "<a href='/l2go/-/get/0/0/0/0/0/"+n+"'>"+n+"</a>";
 							       							if(clv.size()>1 && clvi.hasNext()) fullname1+=", ";
 								    					}else{
 								    						fullname1+="u.a.";
@@ -350,7 +351,8 @@
 	              								int i=0;
 	              								while(cli1.hasNext()){
 		              								if(i<2){
-						       							fullname1 += cli1.next().getFullName();
+						       							String n = cli1.next().getFullName();
+						       							fullname1 += "<a href='/l2go/-/get/0/0/0/0/0/"+n+"'>"+n+"</a>";
 						       							if(cl1.size()>1 && cli1.hasNext()) fullname1+=", ";
 							    					}else{
 							    						fullname1+="u.a.";
@@ -406,7 +408,8 @@
 	              								int i=0;
 	              								while(cli.hasNext()){
 		              								if(i<2){
-						       							fullname2 += cli.next().getFullName();
+		              									String n = cli.next().getFullName();
+						       							fullname2 += "<a href='/l2go/-/get/0/0/0/0/0/"+n+"'>"+n+"</a>";
 						       							if(cl.size()>1 && cli.hasNext()) fullname2+=", ";
 							    					}else{
 							    						fullname2+="u.a.";
@@ -481,7 +484,8 @@
 		              						String fullname3="";
 		              						while(cvi.hasNext()){
 			              						if(i<2){
-							       					fullname3 += cvi.next().getFullName();
+							       					String n = cli.next().getFullName();
+					       							fullname3 += "<a href='/l2go/-/get/0/0/0/0/0/"+n+"'>"+n+"</a>";
 							       					if(cv.size()>1 && cvi.hasNext()) fullname3+=", ";
 								    			}else{
 								    				fullname3+="u.a.";

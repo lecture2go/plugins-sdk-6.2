@@ -264,6 +264,10 @@ p.smallitalic {
 	line-height: 12px;
 }
 
+.allcreators a:hover {
+    color: #c40017 !important;
+}
+
 #myToggler .toggler-header-collapsed:hover .video-image-overlay, #myToggler .toggler-header-collapsed:hover .tri, #myToggler .toggler-header-expanded .video-image-overlay, #myToggler .toggler-header-expanded .tri {
     visibility: visible;
 }
