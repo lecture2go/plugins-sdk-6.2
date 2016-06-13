@@ -113,226 +113,229 @@
 						<a href="#"><img title="cc-license-click-for-info" src="/lecture2go-portlet/img/lizenz_cc.png" /></a> 		
 				 	  <%}%>       
 				   </div>
-			       <div class="views">${video.hits} <liferay-ui:message key="views"/></div>			  
-			  </div>
-			  
-			  <c:if test="${relatedVideos.size()>1}"> <div class="meta-video-info"></c:if>
-			  <c:if test="${relatedVideos.size()<=1}"> <div class="meta-video-info-wide"></c:if>
-			    <div class="meta-title"><%=title%></div>
-		      	<div class="meta-creators">
+			       <div class="views">${video.hits} <liferay-ui:message key="views"/></div>	
+			       	
+					  <c:if test="${relatedVideos.size()>1}"> <div class="meta-video-info"></c:if>
+					  <c:if test="${relatedVideos.size()<=1}"> <div class="meta-video-info-wide"></c:if>
+					    <div class="meta-title"><%=title%></div>
+				      	<div class="meta-creators">
+														<%
+								       						String fullname1="";
+									        				String date1 = "";
+									           				try{ date1 = video.getDate().trim().substring(0, 10);}catch(Exception e){}
+		
+									           				List<Creator> cv1 = CreatorLocalServiceUtil.getCreatorsByVideoId(video.getVideoId());
+															ListIterator<Creator> cvi1 = cv1.listIterator();										
+									       					int j=0;
+									       					while(cvi1.hasNext()){
+									       						if(j<2){
+									       							String n = cvi1.next().getFullName();
+									       							fullname1 += "<a href='/l2go/-/get/0/0/0/0/0/"+n+"'>"+n+"</a>";
+									       							if(cv1.size()>1 && cvi1.hasNext()) fullname1+=", ";
+										    					}else{
+										    						fullname1+="u.a.";
+																	break;
+										    					}
+										    					j++;
+									        				}
+									           			%>
+														<%=fullname1 %>
+														<div class="date"><%=date1%></div>
+						</div>
+					    <div class="lectureseries-small"><%=series%></div>
+						<div class="meta-description-container">
+							<div class="meta-description">
+								  <%if(videoMetadata.getDescription().trim().length()>0){ %>	
+								  	${videoMetadata.description}
+								  <%}else{%>
+							      	${lectureseries.longDesc}
+								  <%}%>
+							</div>
+						</div>
+				    </div>
+				    
+				    <%
+				    if(timeEnd==0 || timeEnd<timeStart || video.getCitation2go()==0){
+					%>
+					
+					    <c:if test="${relatedVideos.size()>1}"><div class="metainfo"></c:if>
+					    <c:if test="${relatedVideos.size()<=1}"><div class="metainfo-wide"></c:if>
+							<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+							    <c:if test="${video.downloadLink==1}">
+								    <li id="down"><a href="#download" data-toggle="tab"><liferay-ui:message key="download"/></a></li>
+							    </c:if>
+							    <%if(video.getOpenAccess()==1){%>
+							   	 	<li><a href="#share" data-toggle="tab"><liferay-ui:message key="share"/></a></li>
+							    <%}%>
+							    <li><a href="#support" data-toggle="tab"><liferay-ui:message key="support"/></a></li>
+							    <%if(video.isHasChapters()){ %>
+							    	<li><a href="#chapters" data-toggle="tab"><liferay-ui:message key="chapters"/></a></li>
+							    <%}%>				    
+							</ul>
+							    
+							<div id="my-tab-content" class="tab-content">
+								<c:if test="${video.downloadLink==1}">
+									<div class="tab-pane" id="download">
+								        <p><%@ include file="/guest/includeDownload.jsp" %></p>
+								    </div>
+								</c:if>
+								<%if(video.getOpenAccess()==1){%>
+								    <div class="tab-pane" id="share">
+								        <p><%@ include file="/guest/includeShare.jsp" %></p>
+								    </div>
+							    <%}%>
+								    <div class="tab-pane" id="support">
+								        <p>
+											<%
+												Integer facultyId = (int)video.getRootInstitutionId();
+												String institut = "";
+												String option1 = PortalUtil.getOriginalServletRequest(request).getParameter("option1"); 
+												
+												switch(facultyId){
+													case 3: institut = "UHH-Jura";break;
+													case 4: institut = "UHH-WiSo";break;
+													case 5: institut = "UHH-Medizin";break;
+													case 6: institut = "UHH-EW";break;
+													case 7: institut = "UHH-GWiss";break;
+													case 8: institut = "UHH-MIN";break;
+													case 203: institut = "UHH-PB";break;
+													case 204: institut = "UHH-BWL";break;
+													default: institut = "Fakultätübergreifend";break;
+												}
+												
+												JSONObject jsn = new JSONObject();
+												jsn.put("institution",institut);
+												jsn.put("system","Lecture2Go");
+												jsn.put("role","Lecture2Go-Benutzer");
+												jsn.put("gender","");
+												jsn.put("firstname",PortalUtil.getOriginalServletRequest(request).getParameter("firstname"));
+												jsn.put("lastname",PortalUtil.getOriginalServletRequest(request).getParameter("lastname"));
+												jsn.put("email",PortalUtil.getOriginalServletRequest(request).getParameter("email"));
+												jsn.put("subject",video.getUrl());
+												jsn.put("body",PortalUtil.getOriginalServletRequest(request).getParameter("body"));
+												jsn.put("ergebnis",PortalUtil.getOriginalServletRequest(request).getParameter("ergebnis"));
+												jsn.put("option1",option1);
+												jsn.put("result",PortalUtil.getOriginalServletRequest(request).getParameter("result"));
+												jsn.put("spamprotect",PortalUtil.getOriginalServletRequest(request).getParameter("spamprotect"));
+											%>
+											<div id="meta-share">
 												<%
-						       						String fullname1="";
-							        				String date1 = "";
-							           				try{ date1 = video.getDate().trim().substring(0, 10);}catch(Exception e){}
-
-							           				List<Creator> cv1 = CreatorLocalServiceUtil.getCreatorsByVideoId(video.getVideoId());
-													ListIterator<Creator> cvi1 = cv1.listIterator();										
-							       					int j=0;
-							       					while(cvi1.hasNext()){
-							       						if(j<2){
-							       							String n = cvi1.next().getFullName();
-							       							fullname1 += "<a href='/l2go/-/get/0/0/0/0/0/"+n+"'>"+n+"</a>";
-							       							if(cv1.size()>1 && cvi1.hasNext()) fullname1+=", ";
-								    					}else{
-								    						fullname1+="u.a.";
-															break;
-								    					}
-								    					j++;
-							        				}
-							           			%>
-												<%=fullname1 %>
-												<div class="date"><%=date1%></div>
-				</div>
-			    <div class="lectureseries-small"><%=series%></div>
-				<div class="meta-description-container">
-					<div class="meta-description">
-						  <%if(videoMetadata.getDescription().trim().length()>0){ %>	
-						  	${videoMetadata.description}
-						  <%}else{%>
-					      	${lectureseries.longDesc}
-						  <%}%>
-					</div>
-				</div>
-		    </div>
-		    
-		    <%
-		    if(timeEnd==0 || timeEnd<timeStart || video.getCitation2go()==0){
-			%>
-			
-			    <c:if test="${relatedVideos.size()>1}"><div class="metainfo"></c:if>
-			    <c:if test="${relatedVideos.size()<=1}"><div class="metainfo-wide"></c:if>
-					<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-					    <c:if test="${video.downloadLink==1}">
-						    <li id="down"><a href="#download" data-toggle="tab"><liferay-ui:message key="download"/></a></li>
-					    </c:if>
-					    <%if(video.getOpenAccess()==1){%>
-					   	 	<li><a href="#share" data-toggle="tab"><liferay-ui:message key="share"/></a></li>
-					    <%}%>
-					    <li><a href="#support" data-toggle="tab"><liferay-ui:message key="support"/></a></li>
-					    <%if(video.isHasChapters()){ %>
-					    	<li><a href="#chapters" data-toggle="tab"><liferay-ui:message key="chapters"/></a></li>
-					    <%}%>				    
-					</ul>
-					    
-					<div id="my-tab-content" class="tab-content">
-						<c:if test="${video.downloadLink==1}">
-							<div class="tab-pane" id="download">
-						        <p><%@ include file="/guest/includeDownload.jsp" %></p>
-						    </div>
-						</c:if>
-						<%if(video.getOpenAccess()==1){%>
-						    <div class="tab-pane" id="share">
-						        <p><%@ include file="/guest/includeShare.jsp" %></p>
-						    </div>
-					    <%}%>
-						    <div class="tab-pane" id="support">
-						        <p>
-									<%
-										Integer facultyId = (int)video.getRootInstitutionId();
-										String institut = "";
-										String option1 = PortalUtil.getOriginalServletRequest(request).getParameter("option1"); 
-										
-										switch(facultyId){
-											case 3: institut = "UHH-Jura";break;
-											case 4: institut = "UHH-WiSo";break;
-											case 5: institut = "UHH-Medizin";break;
-											case 6: institut = "UHH-EW";break;
-											case 7: institut = "UHH-GWiss";break;
-											case 8: institut = "UHH-MIN";break;
-											case 203: institut = "UHH-PB";break;
-											case 204: institut = "UHH-BWL";break;
-											default: institut = "Fakultätübergreifend";break;
-										}
-										
-										JSONObject jsn = new JSONObject();
-										jsn.put("institution",institut);
-										jsn.put("system","Lecture2Go");
-										jsn.put("role","Lecture2Go-Benutzer");
-										jsn.put("gender","");
-										jsn.put("firstname",PortalUtil.getOriginalServletRequest(request).getParameter("firstname"));
-										jsn.put("lastname",PortalUtil.getOriginalServletRequest(request).getParameter("lastname"));
-										jsn.put("email",PortalUtil.getOriginalServletRequest(request).getParameter("email"));
-										jsn.put("subject",video.getUrl());
-										jsn.put("body",PortalUtil.getOriginalServletRequest(request).getParameter("body"));
-										jsn.put("ergebnis",PortalUtil.getOriginalServletRequest(request).getParameter("ergebnis"));
-										jsn.put("option1",option1);
-										jsn.put("result",PortalUtil.getOriginalServletRequest(request).getParameter("result"));
-										jsn.put("spamprotect",PortalUtil.getOriginalServletRequest(request).getParameter("spamprotect"));
-									%>
-									<div id="meta-share">
-										<%
-											String url=video.getUrl();
-											if(video.getOpenAccess()==0)url=video.getSecureUrl();
-											SupportFormularClient sfc = new SupportFormularClient("mail4eLearnSupport",url,jsn.toString(),"");
-											out.print(sfc.getFormular());
-										%>
-										
-										<% 
-											// If support form was submitted, scroll down and select 'support' tab
-											if(option1!=null){
+													String url=video.getUrl();
+													if(video.getOpenAccess()==0)url=video.getSecureUrl();
+													SupportFormularClient sfc = new SupportFormularClient("mail4eLearnSupport",url,jsn.toString(),"");
+													out.print(sfc.getFormular());
 												%>
-												<script type="text/javascript">
-													$(function() {
-														// activate contact tab
-														$("#tabs li a").eq(-1).click();
-														
-														// Scrolling must happen in onload, because otherwise the Player is not yet loaded and the position would be wrong
-														window.onload = function () {
-															var pos = $("#tabs").offset().top;
-															$('html, body').animate({scrollTop: pos - 10}, 1000, "easeInOutCubic");	
-														}
-														
-													 });
-												</script>
-												<%		
-											}
-										%>
-									</div>		        
-						    </div>
-
-							<%if(video.isHasChapters() || video.isHasComments()){%>
-							    <div class="tab-pane" id="chapters">
-							    	<liferay-portlet:resourceURL id="showSegments" var="segmentsURL" />
-									<script type="text/javascript">
-										$.ajax({
-										    url: '<%=segmentsURL%>',
-										    method: 'POST',
-										    dataType: "json",
-										    data: {
-										 	   	<portlet:namespace/>videoId: "<%=video.getVideoId()%>",
-										    },
-										    success: function(data, textStatus, jqXHR) {
-										        // since we are using jQuery, you don't need to parse response
-										        drawSegmentRow(data);
-										    }
-										});	
-									
-										function hideSegment(sId){
-											$("b#pf2_"+sId).hide();
-											$("b#pf1_"+sId).show();
-											$("b#iav"+sId).hide();		
-										}
-										function showSegment(sId){
-											$("b#pf1_"+sId).hide();
-											$("b#pf2_"+sId).show();
-											$("b#iav"+sId).show();		
-										}
-										function loadSegment(sId){
-											$("b#pf2_"+sId).show();
-											$("b#pf1_"+sId).hide();
-											$("b#iav"+sId).show();
-										}
-										
-										function drawSegmentRow(data) {
-											for (var i = 0; i < data.length; i++) {
-												drawRow(data[i]);
-										    }
-										}
-										
-										function drawRow(segment) {
-										    if(segment.chapter==1){
-										    	newRow='<div class="chaptertile" id="' + segment.segmentId + '" begin="' + segment.start + '" end="' + segment.end + '">'+
-												'<a><img width="130px" height="63px" class="imgsmall" title="watch this chapter" src="'+segment.image+'"></a>'+
-												'<span>'+segment.start +' - '+segment.end+'</span><br/>'+
-												'<a><span>'+segment.title+'</span></a>';
-											}else{
-												newRow='<div class="commenttile" id="'+segment.segmentId+'" onload="alert('+segment.segmentId+')">'+
-									    		'<div>'+
-												'<b id="pf1_'+segment.segmentId+'">'+
-									    		'<span class="icon-small icon-plus" id="showr'+segment.segmentId+'" onclick="showSegment('+segment.segmentId+')"/>'+
-									    		'</b>'+
-									    		'<b id="pf2_'+segment.segmentId+'">'+
-									    		'<span class="icon-small icon-minus" id="hidr'+segment.segmentId+'" onclick="hideSegment('+segment.segmentId+')"/>'+
-									    		'</b>'+
-									    		'<span class="fs8">'+segment.start+'</span>'+
-									    		'<a><iavst class="white" begin="'+segment.start+'" end="'+segment.end+'"><span>'+segment.title+'</span></iavst></a>'+
-									    		'</div>';
-									    		if(segment.description >""){
-									    			newRow=newRow+'<b id="iav'+segment.segmentId+'"><span class="fs10"><div id="description"><em>'+segment.description+'</em></div></span></b>';
-									    		}
-											}
-											newRow=newRow+'</div>';
-											if(segment.chapter!=1){
-												newRow=newRow+'<script>YUI().use("node-base", function(Y) {Y.on("available", loadSegment('+segment.segmentId+'), "#'+segment.segmentId+'")})<\/script>';
-											}
+												
+												<% 
+													// If support form was submitted, scroll down and select 'support' tab
+													if(option1!=null){
+														%>
+														<script type="text/javascript">
+															$(function() {
+																// activate contact tab
+																$("#tabs li a").eq(-1).click();
+																
+																// Scrolling must happen in onload, because otherwise the Player is not yet loaded and the position would be wrong
+																window.onload = function () {
+																	var pos = $("#tabs").offset().top;
+																	$('html, body').animate({scrollTop: pos - 10}, 1000, "easeInOutCubic");	
+																}
+																
+															 });
+														</script>
+														<%		
+													}
+												%>
+											</div>		        
+								    </div>
+		
+									<%if(video.isHasChapters() || video.isHasComments()){%>
+									    <div class="tab-pane" id="chapters">
+									    	<liferay-portlet:resourceURL id="showSegments" var="segmentsURL" />
+											<script type="text/javascript">
+												$.ajax({
+												    url: '<%=segmentsURL%>',
+												    method: 'POST',
+												    dataType: "json",
+												    data: {
+												 	   	<portlet:namespace/>videoId: "<%=video.getVideoId()%>",
+												    },
+												    success: function(data, textStatus, jqXHR) {
+												        // since we are using jQuery, you don't need to parse response
+												        drawSegmentRow(data);
+												    }
+												});	
 											
-											if(segment.previousSegmentId == -1){
-												$("#chapters").append(newRow);
-											}else{
-												$(newRow).insertAfter("#"+ segment.previousSegmentId);
-											}
-										}
-									</script>
-							    </div>
-					    	<%}%>
-					</div>    
-				</div>
-				
-				<%
-				if(relatedVideos.size()>1){
-				%>
-			    	<div class="related">
-						<div class="col-md-5">
+												function hideSegment(sId){
+													$("b#pf2_"+sId).hide();
+													$("b#pf1_"+sId).show();
+													$("b#iav"+sId).hide();		
+												}
+												function showSegment(sId){
+													$("b#pf1_"+sId).hide();
+													$("b#pf2_"+sId).show();
+													$("b#iav"+sId).show();		
+												}
+												function loadSegment(sId){
+													$("b#pf2_"+sId).show();
+													$("b#pf1_"+sId).hide();
+													$("b#iav"+sId).show();
+												}
+												
+												function drawSegmentRow(data) {
+													for (var i = 0; i < data.length; i++) {
+														drawRow(data[i]);
+												    }
+												}
+												
+												function drawRow(segment) {
+												    if(segment.chapter==1){
+												    	newRow='<div class="chaptertile" id="' + segment.segmentId + '" begin="' + segment.start + '" end="' + segment.end + '">'+
+														'<a><img width="130px" height="63px" class="imgsmall" title="watch this chapter" src="'+segment.image+'"></a>'+
+														'<span>'+segment.start +' - '+segment.end+'</span><br/>'+
+														'<a><span>'+segment.title+'</span></a>';
+													}else{
+														newRow='<div class="commenttile" id="'+segment.segmentId+'" onload="alert('+segment.segmentId+')">'+
+											    		'<div>'+
+														'<b id="pf1_'+segment.segmentId+'">'+
+											    		'<span class="icon-small icon-plus" id="showr'+segment.segmentId+'" onclick="showSegment('+segment.segmentId+')"/>'+
+											    		'</b>'+
+											    		'<b id="pf2_'+segment.segmentId+'">'+
+											    		'<span class="icon-small icon-minus" id="hidr'+segment.segmentId+'" onclick="hideSegment('+segment.segmentId+')"/>'+
+											    		'</b>'+
+											    		'<span class="fs8">'+segment.start+'</span>'+
+											    		'<a><iavst class="white" begin="'+segment.start+'" end="'+segment.end+'"><span>'+segment.title+'</span></iavst></a>'+
+											    		'</div>';
+											    		if(segment.description >""){
+											    			newRow=newRow+'<b id="iav'+segment.segmentId+'"><span class="fs10"><div id="description"><em>'+segment.description+'</em></div></span></b>';
+											    		}
+													}
+													newRow=newRow+'</div>';
+													if(segment.chapter!=1){
+														newRow=newRow+'<script>YUI().use("node-base", function(Y) {Y.on("available", loadSegment('+segment.segmentId+'), "#'+segment.segmentId+'")})<\/script>';
+													}
+													
+													if(segment.previousSegmentId == -1){
+														$("#chapters").append(newRow);
+													}else{
+														$(newRow).insertAfter("#"+ segment.previousSegmentId);
+													}
+												}
+											</script>
+									    </div>
+							    	<%}%>
+							</div>    
+						</div>
+					<%
+					}
+				    %>	  
+			  </div>
+
+			  <%
+			  if(relatedVideos.size()>1){
+			  %>
+			    <div class="related">
+					<div class="col-md-5">
 						    <div class="related-lectureseries-name"><liferay-ui:message key="lecture-series"/> &nbsp;<a target="_blank" class="icon-small icon-rss" href="${video.mp4RssLink}"></a> </div>
 							<ul class="ul-related">
 								<%
@@ -362,7 +365,6 @@
 													String date = "";
 							           				try{ date = vid.getDate().trim().substring(0, 10);}catch(Exception e){}
 												%>
-												<div class="generation-date related"><%=date%></div>
 												<div class="title-small related"><%=vid.getTitle()%></div>
 							          			<p class="creator-small2 related">
 												<%
@@ -374,7 +376,7 @@
 							       					while(cvi.hasNext()){
 							       						if(i<2){
 							       							String n = cvi.next().getFullName();
-							       							fullname += n;
+							       							fullname += "<a href='/l2go/-/get/0/0/0/0/0/"+n+"'>"+n+"</a>";
 							       							if(cv.size()>1 && cvi.hasNext()) fullname+=", ";
 								    					}else{
 								    						fullname+="u.a.";
@@ -389,17 +391,13 @@
 						            	</div>
 									</a>
 								</li>
-								<%if(vli.hasNext()){%><li class="placeholder"></li><%}%>
 							<%}%>
 							</ul>
-						</div>
-			    	</div>
-				<%
-				}
-				%>
-			<%
-			}
-		    %>
+					</div>
+			    </div>
+			  <%
+			  }
+			  %>			  
 		</div>
 		
 		<!-- coockie start -->
