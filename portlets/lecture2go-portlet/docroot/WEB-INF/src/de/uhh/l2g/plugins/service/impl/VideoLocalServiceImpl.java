@@ -318,6 +318,9 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		}
 		
 		//creators
+		String linkedCreators = CreatorLocalServiceUtil.getCommaSeparatedLinkedCreatorsByVideoIdAndMaxCreators(videoId,3);
+		objectVideo.setLinkedCreators(linkedCreators);
+
 		String creators = CreatorLocalServiceUtil.getCommaSeparatedCreatorsByVideoIdAndMaxCreators(videoId,3);
 		objectVideo.setCreators(creators);
 		
