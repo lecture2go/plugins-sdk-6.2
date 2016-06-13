@@ -126,7 +126,7 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 
 											<div class="video-box-content">
 												<div class="title-small dot-ellipsis dot-resize-update "><%=vid.getTitle() %></div>
-												<div class="creator-small2 dot-ellipsis dot-resize-update "><%=vid.getLinkedCreators() %></div>												
+												<div class="creator-small2 dot-ellipsis dot-resize-update "><%=vid.getLinkedCreators() %></div>										
 												<% if (!isVideo) { %>
 													<div class="lectureseries-small dot-ellipsis dot-resize-update "><%=lectser.getName() %></div> 
 												<% } %>

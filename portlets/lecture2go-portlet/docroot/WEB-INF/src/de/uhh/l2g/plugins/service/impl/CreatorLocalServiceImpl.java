@@ -78,6 +78,12 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 		String creators = createCommaSeparatedStringFromCreatorList(creatorList, maxCreators);
 		return creators;
 	}
+
+	public String getCommaSeparatedLinkedCreatorsByVideoIdAndMaxCreators(Long videoId, int maxCreators){
+		List<Creator> creatorList = getCreatorsByVideoId(videoId);
+		String creators = createCommaSeparatedLinkedStringFromCreatorList(creatorList, maxCreators);
+		return creators;
+	}
 	
 	private String createCommaSeparatedStringFromCreatorList(List<Creator> creatorList, int maxCreators) {
 		List<String> creatorFullnameList = new ArrayList<String>();
@@ -85,6 +91,21 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 			creatorFullnameList.add(creator.getFullName());
 		}
 
+		String creators = com.liferay.portal.kernel.util.StringUtil.merge(creatorFullnameList,", ");
+		if (creatorFullnameList.size() > maxCreators) {
+			creators += " u.a.";
+		}
+		return creators;
+	}
+	
+	private String createCommaSeparatedLinkedStringFromCreatorList(List<Creator> creatorList, int maxCreators) {
+		List<String> creatorFullnameList = new ArrayList<String>();
+		for (Creator creator: creatorList) { 
+			String fn = creator.getFullName();
+			String fnLink = "<a href='/l2go/-/get/0/0/0/0/0/"+fn+"'>"+fn+"</a>";;
+			creatorFullnameList.add(fnLink);
+		}
+		
 		String creators = com.liferay.portal.kernel.util.StringUtil.merge(creatorFullnameList,", ");
 		if (creatorFullnameList.size() > maxCreators) {
 			creators += " u.a.";
