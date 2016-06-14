@@ -419,6 +419,7 @@ p.smallitalic {
     -moz-border-left-colors: none;
     border-image: none;
     background-color: #f3f3f3;
+    margin-bottom: 1px;
 }
 
 #meta-share input.option1 {
@@ -605,7 +606,7 @@ p.smallitalic {
 
 #videolist {
     margin-left: 60px;
-    background-color: #F3F3F3;
+    background-color: #ddd;
     margin-top: 0px;
     border-bottom: 1px solid #F3F3F3 !important;
 }
