@@ -366,6 +366,7 @@
 							           				try{ date = vid.getDate().trim().substring(0, 10);}catch(Exception e){}
 												%>
 												<div class="title-small related"><%=vid.getTitle()%></div>
+								           		<div class="date related"><%=date%></div> 
 							          			<p class="creator-small2 related">
 												<%
 						       						String fullname="";
@@ -387,7 +388,6 @@
 							           			%>
 												<%=fullname %>
 							           			</p>
-								           		<div class="date related"><%=date%></div> 
 						            	</div>
 									</a>
 								</li>
