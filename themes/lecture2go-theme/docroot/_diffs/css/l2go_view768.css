@@ -9,7 +9,7 @@
 	
 	.date.related {
 		float:right;
-	    margin-top: -9px;
+	    transform: translateY(140%);
 	}
 	
 	generation-date {
@@ -179,10 +179,11 @@
 	}
 	
 	.title-small.related {
-		font-size: 14px;
-		font-weight: normal;
+	    font-size: 14px;
+	    font-weight: normal;
+	    width: 80%;
 	}
-	
+
 	.video-image.related {
 	    width: 19%;
 	}
