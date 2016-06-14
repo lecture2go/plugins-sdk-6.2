@@ -8,15 +8,17 @@
 	}
 	
 	.date.related {
-	    margin-top: -5px;
+		float:right;
+	    margin-top: -9px;
 	}
 	
-	.metainfo-small.related .date {
-   		display: none;
-	}
-	
-	.metainfo-small.related .generation-date {
+	generation-date {
 		display: block;
+	}
+
+	.metainfo-small.related {
+		display: block;
+	    width: 79%;
 	}
 
 	.sharetile {
@@ -54,9 +56,8 @@
 	}
 	
 	.col-md-5 {
-	    right: 0;
-	    position: relative;
-	    width: 100%;
+		float: left;
+	    margin-top: auto;
 	}
 	
 	.player {
@@ -182,6 +183,10 @@
 		font-weight: normal;
 	}
 	
+	.video-image.related {
+	    width: 19%;
+	}
+
 	.creator-small2.related {
 		font-size: 12px;
 		line-height: 20px;
@@ -280,6 +285,11 @@
 	
 	responsive_li_item {
 		display: block;
+	}
+
+	.related {
+	    margin-left: auto;
+	    width: auto;
 	}
 	
 	#content {
