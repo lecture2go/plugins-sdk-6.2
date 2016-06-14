@@ -8,8 +8,8 @@
 	}
 	
 	.date.related {
-		float:right;
-	    transform: translateY(140%);
+	    position: absolute;
+	    right: 5px;
 	}
 	
 	generation-date {
