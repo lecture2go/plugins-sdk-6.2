@@ -280,7 +280,7 @@
 							       						if(j<2){
 							       							String n = clvi.next().getFullName();
 							       							fullname1 += "<a href='/l2go/-/get/0/0/0/0/0/"+n+"'>"+n+"</a>";
-							       							if(clv.size()>1 && clvi.hasNext()) fullname1+=", ";
+							       							if(clvi.hasNext()) fullname1+=", ";
 								    					}else{
 								    						fullname1+="u.a.";
 															break;
@@ -353,7 +353,7 @@
 		              								if(i<2){
 						       							String n = cli1.next().getFullName();
 						       							fullname1 += "<a href='/l2go/-/get/0/0/0/0/0/"+n+"'>"+n+"</a>";
-						       							if(cl1.size()>1 && cli1.hasNext()) fullname1+=", ";
+						       							if(cli1.hasNext()) fullname1+=", ";
 							    					}else{
 							    						fullname1+="u.a.";
 														break;
@@ -410,7 +410,7 @@
 		              								if(i<2){
 		              									String n = cli.next().getFullName();
 						       							fullname2 += "<a href='/l2go/-/get/0/0/0/0/0/"+n+"'>"+n+"</a>";
-						       							if(cl.size()>1 && cli.hasNext()) fullname2+=", ";
+						       							if(cli.hasNext()) fullname2+=", ";
 							    					}else{
 							    						fullname2+="u.a.";
 														break;
@@ -457,7 +457,7 @@
 				
 				<!-- sublist for videos -->
 				<%
-					String videoDivTitle = "";
+				String videoDivTitle = "";
 				if (videoCount>0) {%>
 					<div id="videolist">
 						<ul id="<%="p"+oId%>" class="list-group toggler-content-collapsed content">
@@ -465,6 +465,7 @@
 							while(vli.hasNext()){
 							Video v =  VideoLocalServiceUtil.getFullVideo(vli.next().getVideoId());
 							String vId = v.getVideoId()+"";
+       						int i=0;
 							%>
 								<portlet:actionURL name="viewOpenAccessVideo" var="vURL">
 									<portlet:param name="objectId" value="<%=vId%>"/>
@@ -480,13 +481,13 @@
 										<%
 											List<Creator> cv = CreatorLocalServiceUtil.getCreatorsByVideoId(v.getVideoId());
 											ListIterator<Creator> cvi = cl.listIterator();										
-		              						int i=0;
 		              						String fullname3="";
 		              						while(cvi.hasNext()){
 			              						if(i<2){
-							       					String n = cvi.next().getFullName();
+			              							Creator c = cvi.next();
+							       					String n = c.getFullName();
 					       							fullname3 += "<a href='/l2go/-/get/0/0/0/0/0/"+n+"'>"+n+"</a>";
-							       					if(cv.size()>1 && cvi.hasNext()) fullname3+=", ";
+							       					if(cvi.hasNext())fullname3+=", ";
 								    			}else{
 								    				fullname3+="u.a.";
 													break;
@@ -499,11 +500,11 @@
 		              						try{ dur = v.getDuration().trim().substring(0, 8);}catch(Exception e){}
 		              					%>
 										<div class="metainfo-small">
-		              							<div class="generation-date"><%=date%></div>
-												<div class="title-small"><%=v.getTitle()%></div>		              							
-			              						<em class="creator-small2">		              							
+		              						<div class="generation-date"><%=date%></div>
+											<div class="title-small"><%=v.getTitle()%></div>		              							
+			              					<div class="allcreators">		              							
 		              							<%=fullname3%>
-		              						</em>
+		              						</div>
 	              						</div>
 									</a>
 								</li>
