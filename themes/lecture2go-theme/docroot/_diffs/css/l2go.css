@@ -811,6 +811,7 @@ thead, th {
 
 .aui .label {
     border-radius: 0px;
+    border: 1px solid #aaa;
     display: inline-block;
     padding: 2px 4px;
     margin-right: 5px;
@@ -819,7 +820,6 @@ thead, th {
     color: #777;
     vertical-align: baseline;
     white-space: nowrap;
-    border: 1px solid #AAA !important;
     background: transparent;
     text-shadow: none;
     padding: 2px 4px 0px !important;
@@ -827,7 +827,15 @@ thead, th {
 }
 
 .aui .label:hover {
+	border: 1px solid #444;
+}
+
+.aui .label a {
 	color: #444;
+}
+
+.aui .label:hover a {
+	color: #000;
 }
 
 .aui .table td {
