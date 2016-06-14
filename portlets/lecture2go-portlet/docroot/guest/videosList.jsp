@@ -508,7 +508,6 @@
 	              						</div>
 									</a>
 								</li>
-								<li class="placeholder"></li>
 							<%}%>
 							</ul>
 						</div>
