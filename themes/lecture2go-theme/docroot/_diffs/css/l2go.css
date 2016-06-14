@@ -419,6 +419,7 @@ p.smallitalic {
     -moz-border-left-colors: none;
     border-image: none;
     background-color: #f3f3f3;
+    margin-bottom: 1px;
 }
 
 #meta-share input.option1 {
@@ -605,7 +606,7 @@ p.smallitalic {
 
 #videolist {
     margin-left: 60px;
-    background-color: #F3F3F3;
+    background-color: #ddd;
     margin-top: 0px;
     border-bottom: 1px solid #F3F3F3 !important;
 }
@@ -811,6 +812,7 @@ thead, th {
 
 .aui .label {
     border-radius: 0px;
+    border: 1px solid #aaa;
     display: inline-block;
     padding: 2px 4px;
     margin-right: 5px;
@@ -819,7 +821,6 @@ thead, th {
     color: #777;
     vertical-align: baseline;
     white-space: nowrap;
-    border: 1px solid #AAA !important;
     background: transparent;
     text-shadow: none;
     padding: 2px 4px 0px !important;
@@ -827,7 +828,15 @@ thead, th {
 }
 
 .aui .label:hover {
+	border: 1px solid #444;
+}
+
+.aui .label a {
 	color: #444;
+}
+
+.aui .label:hover a {
+	color: #000;
 }
 
 .aui .table td {
