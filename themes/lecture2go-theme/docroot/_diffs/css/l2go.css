@@ -329,11 +329,11 @@ p.smallitalic {
 }
 
 .video-image-wrapper-small {
-    margin-right: 8px;
-    margin-top: 7px;
     float: left;
-    max-width: 60px;
     height: 30px;
+    margin-right: 8px;
+    margin-top: 2px;
+    max-width: 60px;
 }
 
 .video-image-wrapper-small.related {
@@ -762,11 +762,10 @@ thead, th {
 }
 
 .title-small {
+    font-weight: 800;
     font-size: 14px;
-    font-weight: 600;
     line-height: 17px;
-    margin: 0px;
-    padding-top: 5px;
+    margin: 0;
     width: 80%;
 }
 
@@ -911,7 +910,7 @@ thead, th {
     float: right;
     font-size: 10px;
     margin-right: 2%;
-    margin-top: 4px;
+    margin-top: 0px;
 }
 
 .duration {
