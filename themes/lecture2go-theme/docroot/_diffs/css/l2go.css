@@ -259,9 +259,9 @@ p.smallitalic {
 }
 
 .allcreators {
-	font-size: smaller;
-	height: 40px;
-	line-height: 12px;
+    font-size: smaller;
+    height: 20px;
+    line-height: 12px;
 }
 
 .allcreators a:hover {
@@ -512,7 +512,7 @@ p.smallitalic {
 .videotile button {
     float: right;
     margin-right: 6px;
-    margin-top: 0px;
+    margin-top: 25px;
     background-color: transparent;
     border: medium none;
     transition: all 0.2s ease;
