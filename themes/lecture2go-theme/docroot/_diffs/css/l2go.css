@@ -869,12 +869,18 @@ thead, th {
     border-bottom:none;
 }
 
+.aui .nav-tabs li {
+	margin: 0px -1px 0px 0px;
+	border: 1px solid #ddd;
+}
+
 .aui .nav-tabs > li > a {
     padding-top: 8px;
     padding-bottom: 8px;
-    border: 1px solid #FFF;
-    border-radius: 0px;
-    background-color: #EAEAEA;
+    background-color: #fff;
+    border-radius: 0;
+    border: none;
+    margin: 0px;
 }
 
 .aui .nav-tabs > li > a:hover, .aui .nav-tabs > li > a:focus {
@@ -883,15 +889,12 @@ thead, th {
 
 .aui .nav-tabs > .active > a, .aui .nav-tabs > .active > a:hover, .aui .nav-tabs > .active > a:focus {
     color: #555;
-    background-color: #FFF;
-    border-width: 3px 0px 0px 0px !important;
-    border-style: solid;
-    border-color: #D81B1B #FFF #FFF #FFF;
+    background-color: #eee;
     -moz-border-top-colors: none;
     -moz-border-right-colors: none;
     -moz-border-bottom-colors: none;
     -moz-border-left-colors: none;
-    border-image: none;
+    border: none;
     cursor: default;
 }
 
@@ -1146,10 +1149,14 @@ thead, th {
 }
 
 .aui .chaptertile {
-    padding: 2px 0px 5px;
-    border-width: 1px 0px 0px !important;
-    border-style: solid none none;
-    border-color: #E0E0E0;
+    padding: 5px 0px;
+    border-width: 0px 0px 1px;
+    border-style: solid;
+    border-color: #eee;
+}
+
+.aui .chaptertile:last-child {
+    border: none;
 }
 
 #chapters .chaptertile input {
