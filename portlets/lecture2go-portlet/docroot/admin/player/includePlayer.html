@@ -123,6 +123,7 @@
                 // Sicher stellen, dass der gewählte Zeitraum eingehalten wird
 
                 var pos =  Math.floor(event.position);
+                console.log(pos);
 
                 if (pos < frameStart && isTouchDevice) {
                     // Nur unter iOS und Android nötig,
@@ -175,8 +176,8 @@
         
         	// Sollte der Nutzer auf die Kapitel klicken,
             // wird zur entsprechenden Stelle gesprungen
-            $chapters.find('div.chaptertile').on('click', function(event) {
-                
+            $chapters.on('click', 'div.chaptertile', function(event) {
+                console.log($(this).text());
             	$(this).addClass("active").siblings().removeClass("active");
             	var sec = $(this).attr("begin");
             	sec = timeToSeconds(sec);
