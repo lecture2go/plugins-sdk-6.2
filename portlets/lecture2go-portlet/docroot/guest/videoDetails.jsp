@@ -355,8 +355,7 @@
 								<c:if test='<%=video.getVideoId() == vid.getVideoId() %>'> 
   									<c:set value="active" var="activeClass"></c:set>
 								</c:if>
-								<li class="videotile small related ${activeClass}">
-									<a href="<%=viewOpenAccessVideoURL1.toString()%>">
+								<li class="videotile small related ${activeClass}" onClick="window.location='<%=viewOpenAccessVideoURL1.toString()%>'">
 										<div class="video-image-wrapper-small related">
 											<img class="video-image related" src="<%=vid.getImageSmall()%>">
 										</div>
@@ -366,7 +365,6 @@
 							           				try{ date = vid.getDate().trim().substring(0, 10);}catch(Exception e){}
 												%>
 												<div class="title-small related"><%=vid.getTitle()%></div>
-								           		<div class="date related"><%=date%></div> 
 							          			<p class="creator-small2 related">
 												<%
 						       						String fullname="";
@@ -378,7 +376,7 @@
 							       						if(i<2){
 							       							String n = cvi.next().getFullName();
 							       							fullname += "<a href='/l2go/-/get/0/0/0/0/0/"+n+"'>"+n+"</a>";
-							       							if(cv.size()>1 && cvi.hasNext()) fullname+=", ";
+							       							if(cvi.hasNext()) fullname+=", ";
 								    					}else{
 								    						fullname+="u.a.";
 															break;
@@ -388,8 +386,8 @@
 							           			%>
 												<%=fullname %>
 							           			</p>
+								           		<div class="date related"><%=date%></div> 
 						            	</div>
-									</a>
 								</li>
 							<%}%>
 							</ul>

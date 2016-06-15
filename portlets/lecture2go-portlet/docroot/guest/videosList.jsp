@@ -471,8 +471,7 @@
 									<portlet:param name="objectId" value="<%=vId%>"/>
 									<portlet:param name="objectType" value="v"/>
 								</portlet:actionURL>				
-								<li class="videotile small">
-									<a href="<%=vURL%>">
+								<li class="videotile small" onClick="window.location='<%=vURL%>'">
 										<div class="videotile metainfolist small">
 											<div class="video-image-wrapper-small">
 												<img class="video-image" src="<%=v.getImageSmall()%>">
@@ -506,7 +505,6 @@
 		              							<%=fullname3%>
 		              						</div>
 	              						</div>
-									</a>
 								</li>
 							<%}%>
 							</ul>

@@ -469,7 +469,7 @@ p.smallitalic {
 .creator-small2.related {
     font-size: 12px;
     line-height: 15px;
-    margin: 0;
+    margin: 6px 0 0;
     padding: 0;
     width: 100%;
 }
@@ -560,9 +560,9 @@ p.smallitalic {
     height: auto;
     line-height: 15px;
     list-style: outside none none !important;
-    min-height: 70px;
     padding: 3px;
     width: 100%;
+    cursor:pointer;
 }
 
 .videotile.small em {
@@ -772,7 +772,7 @@ thead, th {
 .title-small.related {
     font-size: 12px;
     font-weight: 800;
-    margin: 0;
+    margin: -3px 0;
     padding-top: 0;
     width: 100%;
     word-wrap: break-word;

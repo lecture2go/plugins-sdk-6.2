@@ -17,10 +17,11 @@
 	}
 
 	.metainfo-small.related {
-		display: block;
+	    display: block;
+	    margin-top: 2px;
 	    width: 79%;
 	}
-
+	
 	.sharetile {
 	    width: 131px;
 	}
@@ -166,8 +167,8 @@
 	}
 	
 	.allcreators {
-		font-size: 11px;
-		height: 27px;
+	    font-size: 11px;
+	    height: 15px;
 	}
 	
 	.term-of-creation {
@@ -188,6 +189,10 @@
 	    width: 19%;
 	}
 
+	.videotile button {
+	    margin-top: 17px;
+	}
+	
 	.creator-small2.related {
 		font-size: 12px;
 		line-height: 20px;
