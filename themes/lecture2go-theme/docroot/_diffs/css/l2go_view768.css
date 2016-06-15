@@ -7,6 +7,11 @@
 	    padding-bottom: 0;
 	}
 	
+	.aui #my-tab-content {
+    	min-height: auto;
+    	width: 100%;
+	}
+
 	.date.related {
 	    position: absolute;
 	    right: 5px;
@@ -72,11 +77,6 @@
 	#qr {
 	    display: none;
 	    visibility: hidden;
-	}
-	
-	.aui #my-tab-content {
-	    min-height: auto;
-	    width: 500px;
 	}
 	
 	.path {
@@ -180,6 +180,14 @@
 	    width: 80%;
 	}
 
+	#front-page-content {
+	    margin-top: 0px;
+	}
+	
+	.front-page-teaser{
+		display: none;
+	}
+	
 	.video-image.related {
 	    width: 19%;
 	}

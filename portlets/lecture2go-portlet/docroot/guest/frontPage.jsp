@@ -67,9 +67,11 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 				</div>
 			</div>
 			<button id="outer-catalogue-button" class="btn btn-primary catalogue-button" onclick="window.location='/web/vod/l2go';"><liferay-ui:message key="to-catalogue"/></button>
+			<!--  
 			<div class="l2go-description">
 				<p><liferay-ui:message key="l2go-description"/> <a href=""><liferay-ui:message key="learn-more"/></a></p>
 			</div>
+			-->
 		</div>
 	</div>
 </div>
@@ -78,9 +80,9 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 <div id="front-page-content">
 <!-- new videos -->
 	<div class="news">
-		<h4><liferay-ui:message key="last-added"/></h4>
 		<div class="video-box-list-container">
 			<div id="news-carousel" class="carousel slide" data-interval="false" data-wrap="false">
+			<h4><liferay-ui:message key="last-added"/></h4>
             <!-- Carousel items -->
 	            <div class="carousel-inner">
 	                <div class="item active">
@@ -154,15 +156,11 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 		</div>
 	</div>
 
-
-
-
-
-<!-- popular videos -->
+	<!-- popular videos -->
 	<div class="popular">
-		<h4><liferay-ui:message key="popular-videos"/></h4>
 		<div class="video-box-list-container">
 			<div id="popular-carousel" class="carousel slide" data-interval="false" data-wrap="false">
+			<h4><liferay-ui:message key="popular-videos"/></h4>
             <!-- Carousel items -->
 	            <div class="carousel-inner">
 	                <div class="item active">
