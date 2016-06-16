@@ -119,12 +119,26 @@
 	text-overflow: ellipsis;
 }   
 
+.aui .pager li > a, .aui .pager li > span {
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 0;
+    display: inline-block;
+    padding: 0 10px;
+}
+
 .taglib-page-iterator .lfr-pagination-buttons {
-    visibility: hidden;
-	padding: 0px;
-    margin: 0px;
-    height: 0px;
-    width: 0px;
+    margin-top: 4px;
+    padding: 0;
+    visibility: visible;
+}
+
+.taglib-page-iterator .lfr-pagination-config {
+    display: none;
+}
+
+.taglib-page-iterator .search-results {
+    display: none;
 }
 
 .aui #navigation .nav .dropdown-menu > li a {
