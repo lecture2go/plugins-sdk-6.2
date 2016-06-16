@@ -35,10 +35,13 @@
 						<ul>
 							<li>
 								<aui:input name="timeStart" label="citation-start" required="false" id="timeStart" readonly="true"/>
+								<span><liferay-ui:message key="click-to-set-start"/></span>
 							</li>
 							<li>
 								<aui:input name="timeEnd" label="citation-end" required="false" id="timeEnd" readonly="true"/>
+								<span><liferay-ui:message key="click-to-set-end"/></span>
 							</li>
+							<li>
 							<li>
 								<aui:input name="citation" label="citation" required="false" id="citation" readonly="true" onclick="document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_citation.focus(); document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_citation.select();"/>
 							</li>
