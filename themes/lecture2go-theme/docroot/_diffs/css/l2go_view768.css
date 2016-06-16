@@ -107,14 +107,6 @@
 	    width: 100%;
 	}
 	
-	.taglib-page-iterator {
-	    clear: both;
-	    height: auto;
-	    overflow: hidden;
-	    width: auto;
-	    height: 49px;
-	}
-	
 	.meta-description {
 	    display: none;
 	}
@@ -131,6 +123,10 @@
 	    display: none;
 	}
 	
+	.aui .pager li > a, .aui .pager li > span {
+	    padding: 10px;
+	}
+
 	.add-new-creator-term-object {
 	    display: none;
 	    visibility: hidden;

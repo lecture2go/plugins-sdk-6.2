@@ -50,14 +50,6 @@
 	    margin-left: 10px;
 	}
 	
-	.taglib-page-iterator .lfr-pagination-buttons {
-	    visibility: hidden;
-	    padding: 0px;
-	    margin: 0px;
-	    height: 0px;
-	    width: 0px;
-	}
-	
 	#searchedvideo {
 	    width: 10em;
 	}
