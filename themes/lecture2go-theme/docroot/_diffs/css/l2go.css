@@ -1692,10 +1692,6 @@ div.filter-menu-link span.icon-large.icon-remove {
     margin-right: 10px;
 }
 
-#front-page-content {
-    margin-top: -15%;
-}
-
 #tw img, #fb img {
     height: 12px !important;
 }
@@ -1961,14 +1957,14 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 }
 
 #bg-vid {
-    opacity: 0.15;
     width: 100%;
 }
 
 .dark-overlay {
-    background: rgba(0, 0, 0, 0) linear-gradient(rgba(150, 150, 150, 0) 49%, #ffffff 84%) repeat scroll 0 0;
+    background: #000000 none repeat scroll 0 0;
     height: 100%;
     left: 0;
+    opacity: 0.5;
     position: absolute;
     top: 0;
     width: 100%;

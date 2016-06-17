@@ -28,7 +28,7 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 
 <div class="front-page-teaser">
  	<div class="bg-video-container">
-		<video id="bg-vid" autoplay loop poster="/lecture2go-portlet/img/background_still.png" preload="none">
+		<video id="bg-vid" poster="/lecture2go-portlet/img/background_still.png" preload="none">
 		    <source src="/lecture2go-portlet/img/background.mp4" type="video/mp4">
 		</video>
 		<div class="dark-overlay"></div>
@@ -67,11 +67,11 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 				</div>
 			</div>
 			<button id="outer-catalogue-button" class="btn btn-primary catalogue-button" onclick="window.location='/web/vod/l2go';"><liferay-ui:message key="to-catalogue"/></button>
-			<!--  
+			  
 			<div class="l2go-description">
 				<p><liferay-ui:message key="l2go-description"/> <a href=""><liferay-ui:message key="learn-more"/></a></p>
 			</div>
-			-->
+			
 		</div>
 	</div>
 </div>
