@@ -114,6 +114,10 @@
 	clear: both;
 }
 
+.orange {
+	color: #F17B0D;
+}
+
 .text-cut {
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -1982,36 +1986,31 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 
 .l2go-info {
 	position: relative;
-	height: 72%;
-	margin-top: 10%;
-}
-
-.l2go-info > .catalogue-button {
-	display: none;
-}
-
-.l2go-description {
-	font-family: TheSansUHH,sans-serif;
-    font-size: 14px;
+	margin-top: 7%;
 	color: #fff;
-	position: absolute;
-    bottom: 0;
-    left: 0;
 }
 
-.l2go-description a {
-	color: #fff;
-	text-decoration: underline;
+.l2go-title {
+    font-size: 54px;
+    line-height: 64px;
+    text-align: center;
+}
+
+.l2go-subtitle {
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 8%;
 }
 
 .big-search {
 	height: 35px;
+	margin-bottom: 2%;
 }
 
 .big-search > .search {
     position: relative;
     /* reset the margins */
-    margin: 0 0 0 180px;
+    margin: 0;
     height: 40px;
     float: none;
 }
@@ -2038,29 +2037,6 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	padding-left: 10px;	
 }
 
-.big-search .filter-facility-button {
-	float: left;
-	width: 180px;
-	margin: 0;
-	height: 100%;
-	color: #000;
-    /*background-color: #282828;*/
-    background-color: #cac8c8;
-    background-image: none;
-    box-shadow: none;
-    font-size: 15px;
-    border-right: #777 solid 1px;
-    text-shadow: none;
-} 
-
-.big-search .filter-facility-button:active,
-.big-search .filter-facility-button:focus {
-	color: #484848;
-    background: linear-gradient(#eeeeee, #cccccc);
-}
-
-
-
 .big-search #_lgopenaccessvideos_WAR_lecture2goportlet_searchButton {
 	/* add fontawesome-alloy to this font family to display the search icon */
 	/*font-family: fontawesome-alloy, "Helvetica Neue", Helvetica, Arial, sans-serif;*/
@@ -2073,38 +2049,21 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
     width: 100px;
 }
 
-.filter-facility-menu {
-	display: none;
-	background-color: #d9d7d7;
-	z-index: 9999;
-	position: absolute;
-	width: 100%;
-	/* border-box keeps the correct width even with the padding */
-	box-sizing: border-box;
-}
-
-.filter-facility-menu li {
-	margin: 5px 0;
-}
-
-.filter-facility-menu-main {
-	padding: 5px 5px 10px 20px;
-	background-color: inherit;
-}
-
-.filter-facility-menu-extra {
-	padding: 5px 5px 10px 20px;
-	background-color: #cac8c8;
-}
-
-
 .l2go-info  .catalogue-button {
-    height: 40px;
+    display: block;
+    height: 35px;
     color: #ffffff;
     width: 100%;
-	/* ignore the padding from the parent to fill the whole space */
-	width: calc(100% + 45px);
-    margin: 25px 0px 0px -20px;
+    width: calc(100% + 45px);
+    width: auto;
+    background-color: rgba(255, 255, 255, 0.3);
+    border: none;
+    margin: auto;
+    padding: 5px 15px;
+}
+
+.l2go-info  .catalogue-button:hover {
+	background-color: rgba(255,255,255,0.4);
 }
 
 .video-box-list-container {
@@ -2113,8 +2072,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 }
 
 /* this flex container with wrap is used to resize the grids, so all have the same height */
-.row-fluid.video-box-list,
-.row-fluid.filter-facility-menu-row { 
+.row-fluid.video-box-list { 
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -ms-flexbox;
@@ -2257,8 +2215,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	
 	/* hide for mobile view */
     .bg-video-container,
-    .big-search .filter-facility-button,
-    .filter-facility-menu  {
+	{
 		display: none;
 	}
 
@@ -2271,7 +2228,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	    ),
 	    url(/lecture2go-portlet/img/background_still.png);
 		background-repeat: no-repeat;
-		height: 250px;
+		height: 130px;
 		padding-top: 60px;
 		margin-top: 0;
 		position: relative;
@@ -2282,17 +2239,35 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
       	width:90%;
       	top: 5%;
     }
+    
+    .l2go-info {
+    	margin-top: 0;
+    }
+    
+    .l2go-title {
+    	font-size: 34px;
+    	line-height: 40px;
+    }
+    
+    .l2go-subtitle {
+    	font-size: 14px;
+    }
 
+/*
     .l2go-info .catalogue-button {
 		display: block;
 		position: absolute;
 		left: 20%;
 		width: 60%;
 		margin: auto;
-		/* reduce the padding to give the text more place in small views */
+		/* reduce the padding to give the text more place in small views 
 		padding: 0;
 	}
-
+	*/
+	
+	.big-search {
+		display: none;
+	}
 	.video-box-list-container {
 		width: 100%;
 		margin: 0;
