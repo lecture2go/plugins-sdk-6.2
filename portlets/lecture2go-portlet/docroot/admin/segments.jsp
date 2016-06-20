@@ -106,11 +106,13 @@ String backURL = request.getAttribute("backURL").toString();
 	
 	function drawRow(segment) {
 	    if(segment.chapter==1){
+	    	// segment is a chapter
 	    	newRow='<div class="chaptertile" id="' + segment.segmentId + '" begin="' + segment.start + '" end="' + segment.end + '">'+
 			'<a><img width="130px" height="63px" class="imgsmall" title="watch this chapter" src="'+segment.image+'"></a>'+
-			'<span>'+segment.start +' - '+segment.end+'</span><br/>'+
-			'<a><span>'+segment.title+'</span></a>';
+			'<span class="time">'+segment.start +' - '+segment.end+'</span><br/>'+
+			'<a><span class="segment-title">'+segment.title+'</span></a>';
 		}else{
+			// segment is a comment
 			newRow='<div class="commenttile" id="'+segment.segmentId+'" onload="alert('+segment.segmentId+')">'+
     		'<div>'+
 			'<b id="pf1_'+segment.segmentId+'">'+
@@ -119,8 +121,8 @@ String backURL = request.getAttribute("backURL").toString();
     		'<b id="pf2_'+segment.segmentId+'">'+
     		'<span class="icon-small icon-minus" id="hidr'+segment.segmentId+'" onclick="hideSegment('+segment.segmentId+')"/>'+
     		'</b>'+
-    		'<span class="fs8">'+segment.start+'</span>'+
-    		'<a><iavst class="white" begin="'+segment.start+'" end="'+segment.end+'"><span>'+segment.title+'</span></iavst></a>'+
+    		'<span class="time">'+segment.start+'</span>'+
+    		'<a><iavst class="white" begin="'+segment.start+'" end="'+segment.end+'"><span class="segment-title">'+segment.title+'</span></iavst></a>'+
     		'</div>';
     		if(segment.description >""){
     			newRow=newRow+'<b id="iav'+segment.segmentId+'"><span class="fs10"><div id="description"><em>'+segment.description+'</em></div></span></b>';

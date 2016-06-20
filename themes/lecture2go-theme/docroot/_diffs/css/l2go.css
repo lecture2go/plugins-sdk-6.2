@@ -901,7 +901,7 @@ thead, th {
 }
 
 .aui .nav-tabs > .active > a, .aui .nav-tabs > .active > a:hover, .aui .nav-tabs > .active > a:focus {
-    color: #555;
+    color: #c40017;
     background-color: #eee;
     -moz-border-top-colors: none;
     -moz-border-right-colors: none;
@@ -1166,19 +1166,22 @@ thead, th {
 }
 
 #chapters .chaptertile input {
-    margin-left: 48%;
+    margin-right: 300px;
     margin-top: -55px;
-    position: absolute;
+    float: right;
 }
 
-#chapters .commenttile input {
-    margin-left: 13%;
-    margin-top: -37px;
-    position: absolute;
+#chapters span.segment-title {
+	font-size: 12px;
+}
+
+#chapters span.time {
+	font-size: 10px;
+	margin-right: 15px;
 }
 
 .aui .chaptertile:hover {
-    background: #f3f3f3 none repeat scroll 0 0;
+    background: #f9f9f9 none repeat scroll 0 0;
     cursor: pointer;
 }
 
@@ -1205,7 +1208,16 @@ thead, th {
 
 .aui .chaptertile.active {
     color: #D81B1B;
-    background: #fff none repeat scroll 0% 0%;
+    background: #eee;
+}
+
+.commenttile {
+    padding-left: 130px;
+    border-bottom: 1px solid #eee;
+}
+
+.commenttile:hover {
+	background: #f9f9f9;
 }
 
 .commenttile > div {
@@ -1213,8 +1225,10 @@ thead, th {
     cursor: pointer;
 }
 
-.commenttile {
-    margin-left: 130px;
+.commenttile input {
+    margin-right: 300px;
+    margin-top: -37px;
+    float: right;
 }
 
 .fs8 {
@@ -1230,12 +1244,12 @@ thead, th {
 
 #description > em {
     font-style: inherit;
-    margin-left: 53px;
+    margin-left: 62px;
 }
 
 #description {
     line-height: 8px;
-    padding-bottom: 15px;
+    padding: 10px 0;
 }
 
 .admintile.wide.icons {
