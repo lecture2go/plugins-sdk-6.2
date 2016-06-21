@@ -10,49 +10,12 @@
 	
 	
 	.sharetile {
-	    width: 100%;
+	    margin-bottom: 5px;
+	    width: calc(100% - 40px);
 	}
 	
 	#metadata input {
 	    width: 100%;
-	}
-	
-	img.imgsmall {
-	    border: 0 none;
-	    height: auto;
-	    padding-bottom: 7px;
-	    vertical-align: middle;
-	    width: 65px;
-	    height: 33px;
-	}
-	
-	
-	.chaptertile {
-	    border-color: #e0e0e0;
-	    border-style: solid none none;
-	    border-width: 1px 0 0 !important;
-	    height: 58px;
-	    padding: 2px 0 5px;
-	}
-	
-	.chaptertile span {
-	    float: left;
-	    font-size: 9px;
-	    margin-left: -75px;
-	    margin-top: 45px;
-	    padding-left: 10px;
-	    position: absolute;
-	}
-	
-	.chaptertile a span {
-	    font-size: 12px;
-	    margin-left: -1px;
-	    margin-top: -6px;
-	    padding: 0;
-	}
-	
-	.commenttile {
-	    margin-left: 10px;
 	}
 	
 	#searchedvideo {
@@ -76,18 +39,6 @@
 	    font-size: 14px;
 	}
 	
-	.aui .chaptertile a span {
-	    font-size: 12px;
-	    padding: 0;
-	    margin-left: 0;
-    	margin-top: -10px;
-	}
-	
-	.aui .chaptertile span {
-    	font-size: 8px;
-    	margin-top: 44px;
-	}
-
 	.aui img.imgsmall {
     	height: auto;
     	max-width: 65px;

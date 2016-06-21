@@ -3,6 +3,10 @@
 		display:none;
 	}
 	
+	.aui #footer {
+    	width: calc(100% - 9px);
+	}
+
 	.aui .accordion-group.lfr-panel-extended {
 	    padding-bottom: 0;
 	}
@@ -130,10 +134,6 @@
 	.add-new-creator-term-object {
 	    display: none;
 	    visibility: hidden;
-	}
-	
-	#metadata input {
-	    width: 100%;
 	}
 	
 	.catalogue-container .row-fluid .span9 {
