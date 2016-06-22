@@ -163,7 +163,6 @@
 	
 	.allcreators {
 	    font-size: 11px;
-	    height: 15px;
 	}
 	
 	.term-of-creation {
@@ -188,13 +187,7 @@
 		height: 91px;
 	}
 	
-	.creator-small2.related {
-		font-size: 12px;
-		line-height: 20px;
-	}
-	
 	/* Bastian */
-	
 	
 	.aui .table th, .aui .table td {
     	line-height: 19px;

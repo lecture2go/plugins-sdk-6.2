@@ -48,11 +48,6 @@
 	    font-size: 14px;
 	}
 	
-	.aui img.imgsmall {
-    	height: auto;
-    	max-width: 65px;
-	}
-	
 	.layered-paper {
     	box-shadow: 3px 3px 0 0 #999999, 5px 5px 0 0 #ffffff;
 	}

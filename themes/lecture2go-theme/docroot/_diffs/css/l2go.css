@@ -119,8 +119,8 @@
 }
 
 .darker {
-	-webkit-filter: brightness(65%);
-	filter: brightness(65%); 
+	-webkit-filter: brightness(50%);
+	filter: brightness(50%); 
 }
 
 .text-cut {
@@ -283,8 +283,9 @@ p.smallitalic {
 
 .allcreators {
     font-size: smaller;
-    height: 20px;
+    height: auto;
     line-height: 12px;
+    min-height: 20px;
 }
 
 .allcreators a:hover {
@@ -569,7 +570,7 @@ p.smallitalic {
     width: auto;
     height: 120px;
     background-color: #f3f3f3;
-    padding: 8px 0px 0px 8px;
+    padding: 5px 0 0 5px;
     border: 1px solid #ddd;
     cursor: pointer;
     transition: background 0.2s;
@@ -1566,7 +1567,7 @@ thead, th {
 }
 
 .aui .badge {
-	background: rgba(0, 0, 0, 0) linear-gradient(45deg, transparent 65%, #333 70%) repeat scroll 0 0;
+	background: rgba(0, 0, 0, 0) linear-gradient(45deg, rgba(0, 0, 0, 0) 70%, #000000 50%) repeat scroll 0 0;
 	border-radius: 0;
 	height: 70px;
 	margin: 0;
