@@ -13,18 +13,23 @@ $( function() {
 	start();
 	
 	function then() {
-	var tile = $("#_lgopenaccessvideos_WAR_lecture2goportlet_lectureseriesesSearchContainer div.videotile.wide");
-	tile.on({
-		click: function () {
-			$(this).find("button").toggleClass("rotated");
-			$(this).siblings("div").find("ul").slideToggle();
-		},
-		mouseenter: function () {
-			$(this).find("button").addClass("highlight");
-		},
-		mouseleave: function () {
-			$(this).find("button").removeClass("highlight");
-		}
+		var tile = $("#_lgopenaccessvideos_WAR_lecture2goportlet_lectureseriesesSearchContainer div.videotile.wide");
+		tile.on({
+			click: function () {
+					$(this).find("button").toggleClass("rotated");
+					$(this).siblings("div").find("ul").slideToggle();
+			},
+			mouseenter: function () {
+				$(this).find("button").addClass("highlight");
+			},
+			mouseleave: function () {
+				$(this).find("button").removeClass("highlight");
+			}
+		});
+		
+		// if a link on the tile is clicked, do not let the event bubble up to the tile itself
+		tile.find("a").click(function(e) {
+			e.stopPropagation();
 	});
 	
 	//turn off autocomplete
