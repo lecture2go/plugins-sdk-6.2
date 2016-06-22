@@ -259,64 +259,68 @@
 							if(videoCount==0){
 								if(isVideo){
 									%>
-								       <div class="videotile metainfolist ">
-											<span class="term-of-creation"><%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %></span>
 									        <div class="video-image-wrapper">
 									          <img class="video-image-big" src="<%=vidDummy.getImageMedium()%>"/>
 									        </div>
-									        
-							        <div class="lectureseries-title dot-ellipsis dot-resize-update">
-							        	<a href="<%=view1URL%>"><%=lectser.getName()%></a>
-							        </div>
+									<div class="video-content-wrapper">
+										<div class="video-content">
+											<span class="term-of-creation"><%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %></span>
 											
-											<div class="allcreators">
-												<%
-						       						String fullname1="";
-
-							           				List<Creator> clv = CreatorLocalServiceUtil.getCreatorsByVideoId(vidDummy.getVideoId());
-													ListIterator<Creator> clvi = clv.listIterator();										
-							       					int j=0;
-							       					while(clvi.hasNext()){
-							       						if(j<2){
-							       							String n = clvi.next().getFullName();
-							       							fullname1 += "<a href='/l2go/-/get/0/0/0/0/0/"+n+"'>"+n+"</a>";
-							       							if(clvi.hasNext()) fullname1+=", ";
-								    					}else{
-								    						fullname1+="u.a.";
-															break;
-								    					}
-								    					j++;
-							        				}
-							           			%>
-												<%=fullname1 %>
-											</div>		
-																	
-									        <div class="tags">
-									          <%
-									        	String cat = "";
-									        	List<Lectureseries_Institution> li = Lectureseries_InstitutionLocalServiceUtil.getByLectureseries(lectser.getLectureseriesId());
-									        	ListIterator<Lectureseries_Institution> liIt = li.listIterator();
-									            try{
-									            	Long cId = Video_CategoryLocalServiceUtil.getByVideo(lectser.getLectureseriesId()).get(0).getCategoryId();
-									            	cat ="<a href='/l2go/-/get/0/0/"+cId+"/0/0/'>"+CategoryLocalServiceUtil.getById(cId).getName()+"</a>";
-
-									            }catch(Exception e){
-									            	System.out.print(e);
-									            }
-									          %>
-									          <span class="label label-light2 text-cut"><%=cat%></span>
-									          <%
-									          		try{
-									          			Institution inst = InstitutionLocalServiceUtil.getById(vidDummy.getRootInstitutionId());
-														String instLink="<a href='/l2go/-/get/0/"+inst.getInstitutionId()+"/0/0/0/'>"+inst.getName()+"</a>";  
-										          		%>
-												          <span class="label label-light2 text-cut"><%=instLink%></span>
-										          		<%
-									          		}catch(NullPointerException e){
-									          			//
-									          		}
-									          %>
-									        </div>   
+									        <div class="lectureseries-title dot-ellipsis dot-resize-update">
+									        	<a href="<%=view1URL%>"><%=lectser.getName()%></a>
+									        </div>
+												
+												<div class="allcreators">
+													<%
+							       						String fullname1="";
+	
+								           				List<Creator> clv = CreatorLocalServiceUtil.getCreatorsByVideoId(vidDummy.getVideoId());
+														ListIterator<Creator> clvi = clv.listIterator();										
+								       					int j=0;
+								       					while(clvi.hasNext()){
+								       						if(j<2){
+								       							String n = clvi.next().getFullName();
+								       							fullname1 += "<a href='/l2go/-/get/0/0/0/0/0/"+n+"'>"+n+"</a>";
+								       							if(clvi.hasNext()) fullname1+=", ";
+									    					}else{
+									    						fullname1+="u.a.";
+																break;
+									    					}
+									    					j++;
+								        				}
+								           			%>
+													<%=fullname1 %>
+												</div>
+											</div>
+											<div class="video-content-footer">
+																		
+										        <div class="tags">
+										          <%
+										        	String cat = "";
+										        	List<Lectureseries_Institution> li = Lectureseries_InstitutionLocalServiceUtil.getByLectureseries(lectser.getLectureseriesId());
+										        	ListIterator<Lectureseries_Institution> liIt = li.listIterator();
+										            try{
+										            	Long cId = Video_CategoryLocalServiceUtil.getByVideo(lectser.getLectureseriesId()).get(0).getCategoryId();
+										            	cat ="<a href='/l2go/-/get/0/0/"+cId+"/0/0/'>"+CategoryLocalServiceUtil.getById(cId).getName()+"</a>";
+	
+										            }catch(Exception e){
+										            	System.out.print(e);
+										            }
+										          %>
+										          <span class="label label-light2 text-cut"><%=cat%></span>
+										          <%
+										          		try{
+										          			Institution inst = InstitutionLocalServiceUtil.getById(vidDummy.getRootInstitutionId());
+															String instLink="<a href='/l2go/-/get/0/"+inst.getInstitutionId()+"/0/0/0/'>"+inst.getName()+"</a>";  
+											          		%>
+													          <span class="label label-light2 text-cut"><%=instLink%></span>
+											          		<%
+										          		}catch(NullPointerException e){
+										          			//
+										          		}
+										          %>
+										        </div>
+									        </div>	
 								        </div>
 							    	<%									
 								}else{
@@ -332,122 +336,132 @@
 										<portlet:param name="objectType" value="v"/>
 									</portlet:actionURL>
 							        
-								       <div class="videotile metainfolist ">
-											<span class="term-of-creation"><%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %></span>
 									        <div class="video-image-wrapper">
-									          <img class="video-image-big layered-paper" src="<%=vidDummy.getImageMedium()%>"/>
+									          <img class="video-image-big layered-paper darker" src="<%=vidDummy.getImageMedium()%>"/>
 									          <span class="tri"></span>
 									          <span class="overlay"></span>
 									        </div>
-									        
-							        <div class="lectureseries-title dot-ellipsis dot-resize-update">
-							        	<a href="<%=view2URL%>"><%=lectser.getName()%></a>
-							        </div>
-											
-											<div class="allcreators">
-												<%
-												String fullname1="";
+									<div class="video-content-wrapper">
+									<div class="video-content">
+										<span class="term-of-creation"><%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %></span>
+										        
+										        
+								        <div class="lectureseries-title dot-ellipsis dot-resize-update dot-height-40">
+								        	<a href="<%=view2URL%>"><%=lectser.getName()%></a>
+								        </div>
 												
-	              								int i=0;
-	              								while(cli1.hasNext()){
-		              								if(i<2){
-						       							String n = cli1.next().getFullName();
-						       							fullname1 += "<a href='/l2go/-/get/0/0/0/0/0/"+n+"'>"+n+"</a>";
-						       							if(cli1.hasNext()) fullname1+=", ";
-							    					}else{
-							    						fullname1+="u.a.";
-														break;
-							    					}
-		              								i++;
-	              								}
-												%>
-												<%=fullname1%>
-											</div>		
-
-									        <div class="tags">
-									          <%
-									        	String cat ="<a href='/l2go/-/get/0/0/"+lectser.getCategoryId()+"/0/0/'>"+CategoryLocalServiceUtil.getById(lectser.getCategoryId()).getName()+"</a>";
-									        	List<Lectureseries_Institution> li = Lectureseries_InstitutionLocalServiceUtil.getByLectureseries(lectser.getLectureseriesId());
-									        	ListIterator<Lectureseries_Institution> liIt = li.listIterator();
-									          %>
-									          <span class="label label-light2 text-cut"><%=cat%></span>
-									          <%
-									          		try{
-									          			Institution inst = InstitutionLocalServiceUtil.getById(vidDummy.getRootInstitutionId());
-														String instLink="<a href='/l2go/-/get/0/"+inst.getInstitutionId()+"/0/0/0/'>"+inst.getName()+"</a>";  
-										          		%>
-												          <span class="label label-light2 text-cut"><%=instLink%></span>
-										          		<%
-									          		}catch(NullPointerException e){
-									          			//
-									          		}
-									          %>
-									        </div>   
+												<div class="allcreators">
+													<%
+													String fullname1="";
+													
+		              								int i=0;
+		              								while(cli1.hasNext()){
+			              								if(i<2){
+							       							String n = cli1.next().getFullName();
+							       							fullname1 += "<a href='/l2go/-/get/0/0/0/0/0/"+n+"'>"+n+"</a>";
+							       							if(cli1.hasNext()) fullname1+=", ";
+								    					}else{
+								    						fullname1+="u.a.";
+															break;
+								    					}
+			              								i++;
+		              								}
+													%>
+													<%=fullname1%>
+												</div>
+											</div>
+											
+											<div class="video-content-footer">
+										        <div class="tags">
+										          <%
+										        	String cat ="<a href='/l2go/-/get/0/0/"+lectser.getCategoryId()+"/0/0/'>"+CategoryLocalServiceUtil.getById(lectser.getCategoryId()).getName()+"</a>";
+										        	List<Lectureseries_Institution> li = Lectureseries_InstitutionLocalServiceUtil.getByLectureseries(lectser.getLectureseriesId());
+										        	ListIterator<Lectureseries_Institution> liIt = li.listIterator();
+										          %>
+										          <span class="label label-light2 text-cut"><%=cat%></span>
+										          <%
+										          		try{
+										          			Institution inst = InstitutionLocalServiceUtil.getById(vidDummy.getRootInstitutionId());
+															String instLink="<a href='/l2go/-/get/0/"+inst.getInstitutionId()+"/0/0/0/'>"+inst.getName()+"</a>";  
+											          		%>
+													          <span class="label label-light2 text-cut"><%=instLink%></span>
+											          		<%
+										          		}catch(NullPointerException e){
+										          			//
+										          		}
+										          %>
+										        </div>  
+									        </div> 
 								        </div>
 							    	<%										
 								}
 							}else{
 								// multiple videos in lecture series
 								%>
-								       <div class="videotile metainfolist ">
-											<span class="term-of-creation"><%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %></span>
 									        <div class="video-image-wrapper">
-									          <img class="video-image-big layered-paper" src="<%=vidDummy.getImageMedium()%>"/>
+									          <img class="video-image-big layered-paper darker" src="<%=vidDummy.getImageMedium()%>"/>
 											  <span class="badge"><%=videoCount%></span>
 									          <span class="tri"></span>
 									          <span class="overlay"></span>
 									        </div>
-									        
-							        <div class="lectureseries-title dot-ellipsis dot-resize-update">
-							        	<a href="<%=view1URL%>"><%=lectser.getName()%></a>
-							        </div>
+									     
+									<div class="video-content-wrapper">
+										<div class="video-content">
+											<span class="term-of-creation"><%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %></span>
+										        
+									        <div class="lectureseries-title dot-ellipsis dot-resize-update dot-height-40">
+									        	<a href="<%=view1URL%>"><%=lectser.getName()%></a>
+									        </div>
+												
+												<div class="allcreators">
+													<%
+													String fullname2="";
+		              								int i=0;
+		              								while(cli.hasNext()){
+			              								if(i<2){
+			              									String n = cli.next().getFullName();
+							       							fullname2 += "<a href='/l2go/-/get/0/0/0/0/0/"+n+"'>"+n+"</a>";
+							       							if(cli.hasNext()) fullname2+=", ";
+								    					}else{
+								    						fullname2+="u.a.";
+															break;
+								    					}
+			              								i++;
+		              								}
+													%>
+													<%=fullname2%>
+												</div>
+											</div>
 											
-											<div class="allcreators">
-												<%
-												String fullname2="";
-	              								int i=0;
-	              								while(cli.hasNext()){
-		              								if(i<2){
-		              									String n = cli.next().getFullName();
-						       							fullname2 += "<a href='/l2go/-/get/0/0/0/0/0/"+n+"'>"+n+"</a>";
-						       							if(cli.hasNext()) fullname2+=", ";
-							    					}else{
-							    						fullname2+="u.a.";
-														break;
-							    					}
-		              								i++;
-	              								}
-												%>
-												<%=fullname2%>
-											</div>		
-											
-									        <button id="<%="b"+oId%>" >
-												<span class="lfr-icon-menu-text">
-													<i class="icon-large icon-chevron-down"></i>
-												</span>	
-											</button>
-									        <div class="tags">
-									          <%
-									        	String cat ="";
-									            try{
-										        	cat ="<a href='/l2go/-/get/0/0/"+lectser.getCategoryId()+"/0/0/'>"+CategoryLocalServiceUtil.getById(lectser.getCategoryId()).getName()+"</a>";
-									            }catch(Exception e){}
-									        	List<Lectureseries_Institution> li = Lectureseries_InstitutionLocalServiceUtil.getByLectureseries(lectser.getLectureseriesId());
-									        	ListIterator<Lectureseries_Institution> liIt = li.listIterator();
-									          %>
-									          <span class="label label-light2 text-cut"><%=cat%></span>
-									          <%
-									          		try{
-									          			Institution inst = InstitutionLocalServiceUtil.getById(vidDummy.getRootInstitutionId());
-														String instLink="<a href='/l2go/-/get/0/"+inst.getInstitutionId()+"/0/0/0/'>"+inst.getName()+"</a>"; 
-										          		%>
-												          <span class="label label-light2 text-cut"><%=instLink%></span>
-										          		<%
-									          		}catch(NullPointerException e){
-									          			//
-									          		}
-									          %>
-									        </div>   
+											<div class="video-content-footer">
+										        <button id="<%="b"+oId%>" >
+													<span class="lfr-icon-menu-text">
+														<i class="icon-large icon-chevron-down"></i>
+													</span>	
+												</button>
+										        <div class="tags">
+										          <%
+										        	String cat ="";
+										            try{
+											        	cat ="<a href='/l2go/-/get/0/0/"+lectser.getCategoryId()+"/0/0/'>"+CategoryLocalServiceUtil.getById(lectser.getCategoryId()).getName()+"</a>";
+										            }catch(Exception e){}
+										        	List<Lectureseries_Institution> li = Lectureseries_InstitutionLocalServiceUtil.getByLectureseries(lectser.getLectureseriesId());
+										        	ListIterator<Lectureseries_Institution> liIt = li.listIterator();
+										          %>
+										          <span class="label label-light2 text-cut"><%=cat%></span>
+										          <%
+										          		try{
+										          			Institution inst = InstitutionLocalServiceUtil.getById(vidDummy.getRootInstitutionId());
+															String instLink="<a href='/l2go/-/get/0/"+inst.getInstitutionId()+"/0/0/0/'>"+inst.getName()+"</a>"; 
+											          		%>
+													          <span class="label label-light2 text-cut"><%=instLink%></span>
+											          		<%
+										          		}catch(NullPointerException e){
+										          			//
+										          		}
+										          %>
+										        </div>
+										     </div>
 								        </div>
 								<%	
 							}
