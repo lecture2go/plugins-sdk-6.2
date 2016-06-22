@@ -112,7 +112,7 @@
 %>
 <div class="noresponsive">
 <aui:form action="<%=actionURL%>" commandName="model">
-	<aui:fieldset helpMessage="test" column="true" label='<%=lName%>'>
+	<aui:fieldset column="true" label='<%=lName%>'>
 		<aui:layout>
 			<div id="metadata-upload">
 			<%if(readOnly){%>
