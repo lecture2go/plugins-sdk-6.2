@@ -118,6 +118,11 @@
 	color: #F17B0D;
 }
 
+.darker {
+	-webkit-filter: brightness(65%);
+	filter: brightness(65%); 
+}
+
 .text-cut {
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -291,15 +296,29 @@ p.smallitalic {
 }
 
 .layered-paper {
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.15), 0px 8px 0px -5px #666, 0px 8px 1px -4px rgba(0, 0, 0, 0.15), 0px 15px 0px -10px #BBB, 0px 15px 1px -9px rgba(0, 0, 0, 0.15);
+	box-shadow: 4px 4px 0 0 #999999, 8px 8px 0 0 #ffffff;
+    /*box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.15), 0px 8px 0px -5px #666, 0px 8px 1px -4px rgba(0, 0, 0, 0.15), 0px 15px 0px -10px #BBB, 0px 15px 1px -9px rgba(0, 0, 0, 0.15); */
 }
 
 .video-image-wrapper {
     margin-right: 12px;
-    float: left;
-    max-width: 250px;
-    height: 110px;
     position: relative;
+    flex: 0 0 200px;
+}
+
+.video-content-wrapper {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+}
+
+.video-content {
+    flex-grow: 1;
+}
+
+.video-content-footer {
+    flex: 0 0 20px;
+    margin-bottom: 7px;
 }
 
 .video-image-big {
@@ -529,11 +548,11 @@ p.smallitalic {
 
 .videotile button {
     float: right;
-    margin-right: 6px;
-    margin-top: 25px;
+    margin-right: 10px;
     background-color: transparent;
     border: medium none;
     transition: all 0.2s ease;
+    padding: 0;
 }
 
 .videotile button.highlight {
@@ -554,12 +573,13 @@ p.smallitalic {
     border: 1px solid #ddd;
     cursor: pointer;
     transition: background 0.2s;
+    display: flex;
 }
 
 .term-of-creation{
 	float: right;
 	font-size: 12px;
-	margin-right: 10px;
+	margin: 0 10px;
 }
 
 .videotile.wide:hover,
@@ -965,7 +985,6 @@ thead, th {
 .lectureseries-title {
 	font-weight: 600;
 	font-size: 16px;
-	height: 40px;
 	margin-bottom: 10px;
 	overflow: hidden;
 }
@@ -2163,17 +2182,15 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
     height: 100%;
 }
 
-.video-box-date {
-	margin: 0 0 5px 0;
-	/*TODO: date has been moved, update css accordingly, this is a workaround */
-	display: none;
+.video-box-content {
+	padding: 10px 0;
 }
 
 
 .video-box-content .title-small {
 	font-size: 14px;
 	width: 100%;
-	margin: 10px 0 5px 0;
+	margin: 0 0 5px 0;
 	color: #000;
 	height: 60px;
 }
@@ -2185,7 +2202,8 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 }
 
 .video-box-content .date {
-	margin: 0 0 10px 0;
+    margin: 0 2px 0px 7px;
+    float: right;
 }
 
 .video-box-content .lectureseries-small {
@@ -2226,128 +2244,3 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 }
 
 */
-
-
-/* TODO: move to l2go_view768.css */
-@media (max-width: 767px) {
-	
-	
-	/* hide for mobile view */
-    .bg-video-container,
-	{
-		display: none;
-	}
-
-	/* use a background-image and no video on mobile devices */
-    .front-page-teaser {
-		background-size: cover;
-		background-image: linear-gradient(
-	      rgba(0, 0, 0, 0.6), 
-	      rgba(0, 0, 0, 0.6)
-	    ),
-	    url(/lecture2go-portlet/img/background_still.png);
-		background-repeat: no-repeat;
-		height: 130px;
-		padding-top: 60px;
-		margin-top: 0;
-		position: relative;
-	}
-
-    .l2go-info-container {
-      	left:5%;
-      	width:90%;
-      	top: 5%;
-    }
-    
-    .l2go-info {
-    	margin-top: 0;
-    }
-    
-    .l2go-title {
-    	font-size: 34px;
-    	line-height: 40px;
-    }
-    
-    .l2go-subtitle {
-    	font-size: 14px;
-    }
-
-/*
-    .l2go-info .catalogue-button {
-		display: block;
-		position: absolute;
-		left: 20%;
-		width: 60%;
-		margin: auto;
-		/* reduce the padding to give the text more place in small views 
-		padding: 0;
-	}
-	*/
-	
-	.big-search {
-		display: none;
-	}
-	.video-box-list-container {
-		width: 100%;
-		margin: 0;
-	}
-
-	.row-fluid.video-box-list > [class*='span'] { 
-		flex-direction: row;
-		width: 100%
-	}
-
-	.video-box {
-		padding: 5px;
-		margin-bottom: 5px;
-	}
-	
-	.video-box-content .title-small {
-		width: 100%;
-		margin: 0;
-		color: #000;
-		height: auto;
-		padding-top: 0;
-	}
-
-	.video-box-date {
-		display: block;
-		/* change the flexbox order */
-		order: 99;
-		/* center vertically */
-		transform: translateY(50%);
-	}
-
-	.video-box-image-container { 
-  		flex: 0 0 113px;
-  		margin-right: 7px;
-	}
-
-	.video-box-content {
-		line-height: 20px;
-		font-size: 11px;
-		/* the video-box-content takes all the leftover space between the video-box-image and the video-box-date */
-		flex-grow: 1;
-	}
-
-	.video-box-content .creator-small2 {
-		display:block;
-		height: auto;
-	}	
-
-	.video-box-content .lectureseries-small {
-	    padding: 0;
-	    height: auto;
-	}
-
-	.video-box-date .date {
-	    font-size: 11px;
-	}
-
-    #banner .meta {
-	    display: block;
-	}
-	
-}
-
-/*** END FRONT PAGE ***/

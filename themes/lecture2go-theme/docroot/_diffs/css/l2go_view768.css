@@ -51,9 +51,8 @@
 	   
 	.video-image-wrapper {
 	    /* float: none; */
-	    height: 110px;
 	    margin-right: 8px;
-	    /* max-width: 250px; */
+	    flex: 0 0 150px;
 	}
 	
 	.video-image-wrapper-small.related {
@@ -158,7 +157,7 @@
 	/* Catalog */
 	.lectureseries-title {
 		font-size: 14px;
-		height: 60px;
+		/*height: 60px; */
 		margin-bottom: 5px;
 	}
 	
@@ -183,9 +182,10 @@
 	.video-image.related {
 	    width: 19%;
 	}
-
-	.videotile button {
-	    margin-top: 17px;
+	
+	
+	.videotile.wide {
+		height: 91px;
 	}
 	
 	.creator-small2.related {
@@ -207,9 +207,11 @@
 	.label {
 		float: left;
 	}
+
 	
-	.video-image-wrapper {
-    	max-width: 30%;
+	.video-image-big {
+		width: 150px;
+		height: 84px !important;
 	}
 	
 	.aui .label {
@@ -268,6 +270,124 @@
 	    width: 156px;
 	}
 	
+	.layered-paper {
+    	box-shadow: 3px 3px 0 0 #999999, 6px 6px 0 0 #ffffff;
+	}
+	
+	.video-content-footer {
+    	margin-bottom: 2px;
+	}
+	
+	/**** FRONTPAGE ***/
+	
+	
+	/* hide for mobile view */
+    .bg-video-container,
+	{
+		display: none;
+	}
+
+	/* use a background-image and no video on mobile devices */
+    .front-page-teaser {
+		background-size: cover;
+		background-image: linear-gradient(
+	      rgba(0, 0, 0, 0.6), 
+	      rgba(0, 0, 0, 0.6)
+	    ),
+	    url(/lecture2go-portlet/img/background_still.png);
+		background-repeat: no-repeat;
+		height: 130px;
+		padding-top: 60px;
+		margin-top: 0;
+		position: relative;
+	}
+
+    .l2go-info-container {
+      	left:5%;
+      	width:90%;
+      	top: 5%;
+    }
+    
+    .l2go-info {
+    	margin-top: 0;
+    }
+    
+    .l2go-title {
+    	font-size: 34px;
+    	line-height: 40px;
+    }
+    
+    .l2go-subtitle {
+    	font-size: 14px;
+    }
+
+/*
+    .l2go-info .catalogue-button {
+		display: block;
+		position: absolute;
+		left: 20%;
+		width: 60%;
+		margin: auto;
+		/* reduce the padding to give the text more place in small views 
+		padding: 0;
+	}
+	*/
+	
+	.big-search {
+		display: none;
+	}
+	.video-box-list-container {
+		width: 100%;
+		margin: 0;
+	}
+
+	.row-fluid.video-box-list > [class*='span'] { 
+		flex-direction: row;
+		width: 100%
+	}
+
+	.video-box {
+		padding: 5px;
+		margin-bottom: 5px;
+	}
+	
+	.video-box-content .title-small {
+		width: 100%;
+		margin: 0;
+		color: #000;
+		height: auto;
+		padding-top: 0;
+	}
+
+	.video-box-image-container { 
+  		flex: 0 0 113px;
+  		margin-right: 7px;
+	}
+
+	.video-box-content {
+		line-height: 20px;
+		font-size: 11px;
+		/* the video-box-content takes all the leftover space */
+		flex-grow: 1;
+		padding: 0;
+	}
+
+	.video-box-content .creator-small2 {
+		display:block;
+		height: auto;
+	}	
+
+	.video-box-content .lectureseries-small {
+	    padding: 0;
+	    height: auto;
+	}
+
+	
+	/*** END FRONTPAGE***/
+	
+	
+	
+	
 	/* needed ??
 	.catalogue-container .row-fluid .span9 {
 	    float: left;
@@ -302,8 +422,7 @@
 	    padding: 0;
 	}
 	
-    #banner .meta {
+	#banner .meta {
 	    display: none;
 	}
-
 }
