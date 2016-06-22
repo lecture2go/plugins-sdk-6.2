@@ -446,13 +446,13 @@
 											        	cat ="<a href='/l2go/-/get/0/0/"+lectser.getCategoryId()+"/0/0/'>"+CategoryLocalServiceUtil.getById(lectser.getCategoryId()).getName()+"</a>";
 										            }catch(Exception e){}
 										        	List<Lectureseries_Institution> li = Lectureseries_InstitutionLocalServiceUtil.getByLectureseries(lectser.getLectureseriesId());
-										        	ListIterator<Lectureseries_Institution> liIt = li.listIterator();
-										          %>
+													%>
 										          <span class="label label-light2 text-cut"><%=cat%></span>
 										          <%
 										          		try{
-										          			Institution inst = InstitutionLocalServiceUtil.getById(vidDummy.getRootInstitutionId());
-															String instLink="<a href='/l2go/-/get/0/"+inst.getInstitutionId()+"/0/0/0/'>"+inst.getName()+"</a>"; 
+												        	Institution inst = InstitutionLocalServiceUtil.getById(li.get(0).getInstitutionId());
+												        	
+															String instLink="<a href='/l2go/-/get/"+inst.getInstitutionId()+"/" + inst.getParentId() + "/0/0/0/'>"+inst.getName()+"</a>"; 
 											          		%>
 													          <span class="label label-light2 text-cut"><%=instLink%></span>
 											          		<%
