@@ -90,9 +90,6 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 		                    				<div class="row-fluid video-box-list">
 		                    		</c:if>
 										<div class="span3 video-box" onClick="window.location='<%=vid.getUrl() %>'">											
-											<div class="video-box-date">
-												<div class="date"><%=vid.getSimpleDate() %></div>
-											</div>
 											<div class="video-box-image-container">
 												<div class="video-box-image">
 													<img src="<%=vid.getImageMedium() %>">
@@ -100,6 +97,7 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 											</div>
 
 											<div class="video-box-content">
+												<div class="date"><%=vid.getSimpleDate() %></div>
 												<div class="title-small dot-ellipsis dot-resize-update "><%=vid.getTitle() %></div>
 												<div class="creator-small2 dot-ellipsis dot-resize-update "><%=vid.getCreators() %></div>												
 												<% if (!isVideo) { %>
@@ -166,16 +164,14 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 	                    				<div class="row-fluid video-box-list">
 	                    		</c:if>
 									<div class="span3 video-box" onClick="window.location='<%=vid.getUrl() %>'">	
-										<div class="video-box-date">
-											<div class="date"><%=vid.getSimpleDate() %></div>
-										</div>
 										<div class="video-box-image-container">
 											<div class="video-box-image"> 
 												<img src="<%=vid.getImageMedium() %>">
 											</div>
 										</div>
 	
-										<div class="video-box-content"> 
+										<div class="video-box-content">
+											<div class="date"><%=vid.getSimpleDate() %></div>
 											<div class="title-small dot-ellipsis dot-resize-update "><%= vid.getTitle() %></div>
 											<div class="creator-small2 dot-ellipsis dot-resize-update "><%= vid.getCreators() %></div>
 											<% if (!isVideo) { %>
