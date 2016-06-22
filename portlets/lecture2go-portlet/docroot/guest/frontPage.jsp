@@ -78,7 +78,7 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 
 									List<Video_Institution> vi = Video_InstitutionLocalServiceUtil.getByVideo(vid.getVideoId());
 						        	// only get the first institution
-						        	Institution inst = InstitutionLocalServiceUtil.getById(vi.get(0).getInstitutionId());
+						        	Institution inst = InstitutionLocalServiceUtil.getById(vid.getRootInstitutionId());
 									%>
 									
 									<c:if test='${count % 4 == 0 && count != 0}'>
@@ -99,15 +99,17 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 											<div class="video-box-content">
 												<div class="date"><%=vid.getSimpleDate() %></div>
 												<div class="title-small dot-ellipsis dot-resize-update "><%=vid.getTitle() %></div>
-												<div class="creator-small2 dot-ellipsis dot-resize-update "><%=vid.getCreators() %></div>												
+												<div class="creator-small2 dot-ellipsis dot-resize-update "><%=vid.getLinkedCreators() %></div>										
 												<% if (!isVideo) { %>
 													<div class="lectureseries-small dot-ellipsis dot-resize-update "><%=lectser.getName() %></div> 
 												<% } %>
 												<div class="labels">
-													<span class="label label-light2"><%=inst.getName()%></span>
+													<%
+														String instLink="<a href='/l2go/-/get/0/"+inst.getInstitutionId()+"/0/0/0/'>"+inst.getName()+"</a>"; 
+													%>
+										        	<span class="label label-light2"><%=instLink%></span>												
 												</div>
 											</div> 
-											</a>
 										</div>
 										
 									<c:set var="count" value="${count + 1}" scope="page"/>
@@ -153,7 +155,7 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 									
 						        	List<Video_Institution> vi = Video_InstitutionLocalServiceUtil.getByVideo(vid.getVideoId());
 						        	// only get the first institution
-						        	Institution inst = InstitutionLocalServiceUtil.getById(vi.get(0).getInstitutionId());
+						        	Institution inst = InstitutionLocalServiceUtil.getById(video.getRootInstitutionId());
 							%>
 								<c:if test="${count % 4 == 0 && count != 0}">
 									<!-- row-fluid -->
@@ -170,15 +172,18 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 											</div>
 										</div>
 	
-										<div class="video-box-content">
+										<div class="video-box-content"> 
 											<div class="date"><%=vid.getSimpleDate() %></div>
 											<div class="title-small dot-ellipsis dot-resize-update "><%= vid.getTitle() %></div>
-											<div class="creator-small2 dot-ellipsis dot-resize-update "><%= vid.getCreators() %></div>
+											<div class="creator-small2 dot-ellipsis dot-resize-update "><%= vid.getLinkedCreators() %></div>
 											<% if (!isVideo) { %>
 												<div class="lectureseries-small dot-ellipsis dot-resize-update "><%= lec.getName() %></div>
 											<% } %>
 											<div class="labels">
-									        	<span class="label label-light2"><%=inst.getName()%></span>
+												<%
+													String instLink="<a href='/l2go/-/get/0/"+inst.getInstitutionId()+"/0/0/0/'>"+inst.getName()+"</a>"; 
+												%>
+									        	<span class="label label-light2"><%=instLink%></span>
 									        </div>
 										</div>
 									</div>
