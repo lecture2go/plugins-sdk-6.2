@@ -34,12 +34,10 @@
 					<div id="c2g-generate">
 						<ul>
 							<li>
-								<aui:input name="timeStart" label="citation-start" required="false" id="timeStart" readonly="true"/>
-								<span><liferay-ui:message key="click-to-set-start"/></span>
+								<aui:input name="timeStart" label="citation-start" required="false" id="timeStart" readonly="true" helpMessage="click-to-set-start"/>
 							</li>
 							<li>
-								<aui:input name="timeEnd" label="citation-end" required="false" id="timeEnd" readonly="true"/>
-								<span><liferay-ui:message key="click-to-set-end"/></span>
+								<aui:input name="timeEnd" label="citation-end" required="false" id="timeEnd" readonly="true" helpMessage="click-to-set-end"/>
 							</li>
 							<li>
 							<li>
