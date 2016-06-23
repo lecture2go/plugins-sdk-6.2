@@ -1036,6 +1036,10 @@ thead, th {
     margin-top: 20px;
 }
 
+.meta-description-container b {
+    font-weight: 600;
+}
+
 .meta-description p{
     font-size: 13px !important;
 }

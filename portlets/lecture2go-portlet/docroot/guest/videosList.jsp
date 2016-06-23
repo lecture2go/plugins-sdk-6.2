@@ -165,7 +165,7 @@
 					</c:forEach>
 					</ul>
 					<c:if test="${hasManyTerms}">
-						<div id="loadMoreTerms">mehr...</div>
+						<div id="loadMoreTerms"><liferay-ui:message key="more"/></div>
 					</c:if>
 				</liferay-ui:panel>
 				<%}%>

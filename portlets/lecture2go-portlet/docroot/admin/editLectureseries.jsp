@@ -252,7 +252,7 @@
 			
 			<%if(!readOnly){%>
 				<aui:field-wrapper label="description">
-				    <liferay-ui:input-editor name="longDesc" toolbarSet="simple" initMethod="initEditor" width="250"/>
+				    <liferay-ui:input-editor name="longDesc" toolbarSet="simple" initMethod="initEditor" cssClass="ta"/>
 				    <script type="text/javascript">
 				        function <portlet:namespace />initEditor() { return "<%= UnicodeFormatter.toString(lLongDesc) %>";}
 				    </script>
