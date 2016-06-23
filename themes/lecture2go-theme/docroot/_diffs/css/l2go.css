@@ -943,7 +943,7 @@ thead, th {
 
 .filter-menu-link {
     line-height: 18px;
-    margin-left: 10px;
+    margin-left: 5px;
     padding: 6px 2px;
 }
 
@@ -1322,6 +1322,13 @@ thead, th {
     border-top: 1px solid #eee;
 }
 
+.adminrow .wide .video-image-wrapper {
+    flex: 0 0 200px;
+    float: left;
+    margin-right: 12px;
+    position: relative;
+}
+
 .lfr-search-container {
     margin-top: 0px;
     overflow: auto;
@@ -1398,6 +1405,9 @@ thead, th {
     height: 30px;
     line-height: 28px;
     margin-bottom: 8px;
+    max-width: 400px;
+    min-width: 200px;
+    width: auto;
 }
 
 .aui .alert, .aui .portlet-msg-alert, .aui .portlet-msg-error, .aui .portlet-msg-help, .aui .portlet-msg-info, .aui .portlet-msg-progress, .aui .portlet-msg-success {
@@ -1486,9 +1496,9 @@ thead, th {
 
 #license > div {
     float: left;
+    font-size: 14px;
     margin-bottom: 43px;
     margin-right: 41px;
-    margin-top: 0;
 }
 
 #license input {
@@ -1505,7 +1515,7 @@ thead, th {
     width: 100%;
 }
 
-.cke_1.cke.cke_reset.cke_chrome {
+.ta .cke_1.cke.cke_reset.cke_chrome {
     width: 65% !important;
 }
 
@@ -1539,6 +1549,11 @@ thead, th {
 }
 
 #c2g {
+    margin-top: 8px;
+}
+
+#permissions #c2g {
+    font-size: 14px;
     margin-top: 8px;
 }
 
@@ -1693,9 +1708,9 @@ thead, th {
 }
 
 div.filter-menu-link span.icon-large.icon-remove {
-    margin-top: 4px;
     float: right;
-    margin-right: 8px;
+    margin-right: 5px;
+    margin-top: 1px;
 }
 
 .aui .lfr-hudcrumbs .breadcrumb {
