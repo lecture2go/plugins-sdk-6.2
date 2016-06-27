@@ -233,9 +233,17 @@ $(document).ready(function(){
     //showOrHideCarouselControl('#news-carousel');
     //showOrHideCarouselControl('#popular-carousel');
 
-    $('#news-carousel').on('slid.bs.carousel', function() { showOrHideCarouselControl('#news-carousel'); });
+    $('#news-carousel').on('slid.bs.carousel', function() { 
+    	showOrHideCarouselControl('#news-carousel');
+    	// the truncation of the elements needs to be triggered manually on carousel switch
+    	$(".active .title-small, .active .creator-small2, .active .lectureseries-small").trigger("update.dot");
+    	});
 
-    $('#popular-carousel').on('slid.bs.carousel', function() { showOrHideCarouselControl('#popular-carousel'); });
+    $('#popular-carousel').on('slid.bs.carousel', function() { 
+    	showOrHideCarouselControl('#popular-carousel');
+    	// the truncation of the elements needs to be triggered manually on carousel switch
+    	$(".active .title-small, .active .creator-small2, .active .lectureseries-small").trigger("update.dot");
+    });
 
 });
 
@@ -252,7 +260,7 @@ function showOrHideCarouselControl(id) {
     	$this.children('.right.carousel-control').hide();
   	} else {
     	$this.children('.carousel-control').show();
-  	} 
+  	}
 }
 
 function transformSearchToWideView() {
