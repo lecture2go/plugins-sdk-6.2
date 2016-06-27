@@ -1729,7 +1729,8 @@ div.filter-menu-link span.icon-large.icon-remove {
 }
 
 .aui a:focus {
-    outline: none;
+	color: inherit;
+	text-decoration: none;
 }
 
 .aui .dropdown-menu > li > a:hover, .aui .dropdown-menu > li > a:focus, .aui .dropdown-submenu:hover > a, .aui .dropdown-submenu:focus > a {
