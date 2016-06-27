@@ -78,7 +78,8 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 
 									List<Video_Institution> vi = Video_InstitutionLocalServiceUtil.getByVideo(vid.getVideoId());
 						        	// only get the first institution
-						        	Institution inst = InstitutionLocalServiceUtil.getById(vid.getRootInstitutionId());
+						        	Institution inst = InstitutionLocalServiceUtil.getById(vi.get(0).getInstitutionId());
+						        	
 									%>
 									
 									<c:if test='${count % 4 == 0 && count != 0}'>
@@ -105,7 +106,7 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 												<% } %>
 												<div class="labels">
 													<%
-														String instLink="<a href='/l2go/-/get/0/"+inst.getInstitutionId()+"/0/0/0/'>"+inst.getName()+"</a>"; 
+														String instLink="<a href='/l2go/-/get/"+inst.getInstitutionId()+"/"+inst.getParentId()+"/0/0/0/'>"+inst.getName()+"</a>"; 
 													%>
 										        	<span class="label label-light2"><%=instLink%></span>												
 												</div>
@@ -155,7 +156,7 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 									
 						        	List<Video_Institution> vi = Video_InstitutionLocalServiceUtil.getByVideo(vid.getVideoId());
 						        	// only get the first institution
-						        	Institution inst = InstitutionLocalServiceUtil.getById(video.getRootInstitutionId());
+						        	Institution inst = InstitutionLocalServiceUtil.getById(vi.get(0).getInstitutionId());
 							%>
 								<c:if test="${count % 4 == 0 && count != 0}">
 									<!-- row-fluid -->
@@ -181,7 +182,7 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 											<% } %>
 											<div class="labels">
 												<%
-													String instLink="<a href='/l2go/-/get/0/"+inst.getInstitutionId()+"/0/0/0/'>"+inst.getName()+"</a>"; 
+													String instLink="<a href='/l2go/-/get/"+inst.getInstitutionId()+"/"+inst.getParentId()+"/0/0/0/'>"+inst.getName()+"</a>"; 
 												%>
 									        	<span class="label label-light2"><%=instLink%></span>
 									        </div>
@@ -233,9 +234,17 @@ $(document).ready(function(){
     //showOrHideCarouselControl('#news-carousel');
     //showOrHideCarouselControl('#popular-carousel');
 
-    $('#news-carousel').on('slid.bs.carousel', function() { showOrHideCarouselControl('#news-carousel'); });
+    $('#news-carousel').on('slid.bs.carousel', function() { 
+    	showOrHideCarouselControl('#news-carousel');
+    	// the truncation of the elements needs to be triggered manually on carousel switch
+    	$(".active .title-small, .active .creator-small2, .active .lectureseries-small").trigger("update.dot");
+    	});
 
-    $('#popular-carousel').on('slid.bs.carousel', function() { showOrHideCarouselControl('#popular-carousel'); });
+    $('#popular-carousel').on('slid.bs.carousel', function() { 
+    	showOrHideCarouselControl('#popular-carousel');
+    	// the truncation of the elements needs to be triggered manually on carousel switch
+    	$(".active .title-small, .active .creator-small2, .active .lectureseries-small").trigger("update.dot");
+    });
 
 });
 
@@ -252,7 +261,7 @@ function showOrHideCarouselControl(id) {
     	$this.children('.right.carousel-control').hide();
   	} else {
     	$this.children('.carousel-control').show();
-  	} 
+  	}
 }
 
 function transformSearchToWideView() {
