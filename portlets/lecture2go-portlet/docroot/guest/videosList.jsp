@@ -534,3 +534,16 @@
 	</div>
 <!-- catalogue-container -->
 </div>
+
+<script>
+$( function() {
+	var searchQuery = '<%=searchQuery%>';
+	if (searchQuery) {
+	 $("#_lgopenaccessvideos_WAR_lecture2goportlet_lectureseriesesSearchContainer").mark(searchQuery, {
+		    "exclude": [
+		        ".video-content-footer *"
+		    ]
+		});
+	}
+});
+</script>
