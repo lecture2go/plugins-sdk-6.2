@@ -564,8 +564,6 @@ p.smallitalic {
 	transform: rotate(180deg) scale(1.15);
 }
 
-
-
 .videotile.wide {
     width: auto;
     height: 120px;
@@ -594,6 +592,10 @@ p.smallitalic {
     cursor: pointer;
 }
 
+.videotile.small.show-all {
+    font-size: 14px;
+    padding-left: 3px;
+}
 
 .videotile.small.related {
     border-bottom: 1px solid #ddd;

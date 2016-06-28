@@ -521,6 +521,11 @@
 	              						</div>
 								</li>
 							<%}%>
+							<%if (isSearched) { %>
+								<li class="videotile small show-all" onClick="window.location='<%=view1URL%>'">
+									<liferay-ui:message key="more"/>
+								</li>
+							<%} %>
 							</ul>
 						</div>
 				<%}%>
