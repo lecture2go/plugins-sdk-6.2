@@ -521,7 +521,7 @@
 	              						</div>
 								</li>
 							<%}%>
-							<%if (isSearched) { %>
+							<%if (isSearched && (videoCount>1)) { %>
 								<li class="videotile small show-all" onClick="window.location='<%=view1URL%>'">
 									<liferay-ui:message key="all-videos"/>
 								</li>
