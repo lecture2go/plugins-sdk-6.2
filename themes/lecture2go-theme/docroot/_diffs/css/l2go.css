@@ -118,6 +118,10 @@
 	color: #F17B0D;
 }
 
+.c2go-title {
+    color: #000000;
+}
+
 .darker {
 	-webkit-filter: brightness(50%);
 	filter: brightness(50%); 
