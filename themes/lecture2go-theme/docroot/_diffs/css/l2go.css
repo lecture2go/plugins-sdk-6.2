@@ -206,6 +206,9 @@ fieldset.fieldset.add-streaming-server div.layout {
 	background-color: #e9e9e9 !important;
 }
 
+mark {
+	background-color: #009CD1;
+}
 
 #addCreator {
     float: left;
@@ -598,7 +601,7 @@ p.smallitalic {
 
 .videotile.small.show-all {
 	height: 25px;
-    font-size: 14px;
+    font-size: 13px;
     padding-left: 4px;
 }
 
