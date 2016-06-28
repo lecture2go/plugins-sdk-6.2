@@ -97,10 +97,12 @@
 	    width: 100%;
 	}
 	
+	/*
 	#tabs > li#down {
 	    display: none;
 	    visibility: hidden;
 	}
+	*/
 	
 	.catalogue-container .row-fluid .span3 {
 	    width: 100%;
