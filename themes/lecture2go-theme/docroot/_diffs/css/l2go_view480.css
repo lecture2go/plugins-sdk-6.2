@@ -30,6 +30,10 @@
 	    width: 10em;
 	}
 	
+	#videolist {
+		margin-left: 20px;
+	}
+	
 	.catalogue-container .row-fluid .span9 {
 	    margin-top: 0;
 	}
