@@ -259,9 +259,9 @@
 							if(videoCount==0){
 								if(isVideo){
 									%>
-									        <div class="video-image-wrapper">
-									          <img class="video-image-big" src="<%=vidDummy.getImageMedium()%>"/>
-									        </div>
+									<div class="video-image-wrapper">
+									   <img class="video-image-big" src="<%=vidDummy.getImageMedium()%>"/>
+									</div>
 									<div class="video-content-wrapper">
 										<div class="video-content">
 											<span class="term-of-creation"><%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %></span>
@@ -323,77 +323,6 @@
 									        </div>	
 								        </div>
 							    	<%									
-								}else{
-									// single Video without lecture series
-									Video v = new VideoImpl();
-									v = vl.get(0);
-									String vId = v.getVideoId()+"";
-									List<Creator> cl1 = CreatorLocalServiceUtil.getCreatorsByVideoId(v.getVideoId());
-									ListIterator<Creator> cli1 = cl1.listIterator();
-									%>
-									<portlet:actionURL name="viewOpenAccessVideo" var="view2URL">
-										<portlet:param name="objectId" value="<%=vId%>"/>
-										<portlet:param name="objectType" value="v"/>
-									</portlet:actionURL>
-							        
-									        <div class="video-image-wrapper">
-									          <img class="video-image-big layered-paper darker" src="<%=vidDummy.getImageMedium()%>"/>
-									          <span class="tri"></span>
-									          <span class="overlay"></span>
-									        </div>
-									<div class="video-content-wrapper">
-									<div class="video-content">
-										<span class="term-of-creation"><%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %></span>
-										        
-										        
-								        <div class="lectureseries-title dot-ellipsis dot-resize-update dot-height-40">
-								        	<a href="<%=view2URL%>"><%=lectser.getName()%></a>
-								        </div>
-												
-												<div class="allcreators">
-													<%
-													String fullname1="";
-													
-		              								int i=0;
-		              								while(cli1.hasNext()){
-			              								if(i<2){
-							       							String n = cli1.next().getFullName();
-							       							fullname1 += "<a href='/l2go/-/get/0/0/0/0/0/"+n+"'>"+n+"</a>";
-							       							if(cli1.hasNext()) fullname1+=", ";
-								    					}else{
-								    						fullname1+="u.a.";
-															break;
-								    					}
-			              								i++;
-		              								}
-													%>
-													<%=fullname1%>
-												</div>
-											</div>
-											
-											<div class="video-content-footer">
-										        <div class="tags">
-										          <%
-										        	String cat ="<a href='/l2go/-/get/0/0/"+lectser.getCategoryId()+"/0/0/'>"+CategoryLocalServiceUtil.getById(lectser.getCategoryId()).getName()+"</a>";
-										        	List<Lectureseries_Institution> li = Lectureseries_InstitutionLocalServiceUtil.getByLectureseries(lectser.getLectureseriesId());
-										        	ListIterator<Lectureseries_Institution> liIt = li.listIterator();
-										          %>
-										          <span class="label label-light2 text-cut"><%=cat%></span>
-										          <%
-										          		try{
-										          			Institution inst = InstitutionLocalServiceUtil.getById(vidDummy.getRootInstitutionId());
-															String instLink="<a href='/l2go/-/get/0/"+inst.getInstitutionId()+"/0/0/0/'>"+inst.getName()+"</a>";  
-											          		%>
-													          <span class="label label-light2 text-cut"><%=instLink%></span>
-											          		<%
-										          		}catch(NullPointerException e){
-										          			//
-										          		}
-										          %>
-										        </div>  
-									        </div> 
-								        </div>
-							    	<%										
 								}
 							}else{
 								// multiple videos in lecture series
@@ -493,7 +422,7 @@
 										</div>
 										<%
 											List<Creator> cv = CreatorLocalServiceUtil.getCreatorsByVideoId(v.getVideoId());
-											ListIterator<Creator> cvi = cl.listIterator();										
+											ListIterator<Creator> cvi = cv.listIterator();										
 		              						String fullname3="";
 		              						while(cvi.hasNext()){
 			              						if(i<2){
