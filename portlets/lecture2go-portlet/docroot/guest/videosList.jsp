@@ -536,10 +536,14 @@
 </div>
 
 <script>
-Liferay.Portlet.ready(function() { 
-	var searchQuery = '<%=searchQuery%>';
-	if (searchQuery) {
-		$("#_lgopenaccessvideos_WAR_lecture2goportlet_lectureseriesesSearchContainer").mark(searchQuery);
-	}
-});
+//workaround: as neither DOM-ready nor Liferay.Portlet.ready are working right now, set an interval until the element is there
+var checkExist = setInterval(function() {
+	if ($('#_lgopenaccessvideos_WAR_lecture2goportlet_lectureseriesesSearchContainer').length) {
+		var searchQuery = '<%= searchQuery %>';
+		if (searchQuery) {
+			$("#_lgopenaccessvideos_WAR_lecture2goportlet_lectureseriesesSearchContainer").mark(searchQuery);
+		}
+	   	clearInterval(checkExist);
+ 	}
+}, 100);
 </script>
