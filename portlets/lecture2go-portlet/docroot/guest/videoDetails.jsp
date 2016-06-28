@@ -14,6 +14,11 @@
 <jsp:useBean id="timeStart" type="java.lang.Long" scope="request" />
 <jsp:useBean id="timeEnd" type="java.lang.Long" scope="request" />
 
+<%
+boolean isCitation2Go = false;
+if(timeStart>0 && timeEnd>timeStart && video.getCitation2go()==1)isCitation2Go=true;
+%>
+
 <%if(video.getVideoId()>0){%>
 	<%if(video.getAccessPermitted()==1){%>
 		<%if(video.getOpenAccess()==1 || video.getOpenAccess()==0){%>
@@ -93,15 +98,6 @@
 			  <%
 			    String title = video.getTitle();
 			  	String series = lectureseries.getName();
-			  	if(timeStart>0 && timeEnd>timeStart && video.getCitation2go()==1){
-					title ="citation-of "+title;
-			  	}
-			   
-			  	if(timeEnd>0 && timeEnd>timeStart && video.getCitation2go()==1){
-			      %>
-			      	<aui:a href="<%=video.getUrl()%>">go-to-full-video</aui:a>
-			      <%
-			    }
 		      %>
 		       <c:if test="${relatedVideos.size()>1}"><div class="player"></c:if>
 			   <c:if test="${relatedVideos.size()<=1}"><div class="player-wide"></c:if>
@@ -117,30 +113,37 @@
 			       	
 					  <c:if test="${relatedVideos.size()>1}"> <div class="meta-video-info"></c:if>
 					  <c:if test="${relatedVideos.size()<=1}"> <div class="meta-video-info-wide"></c:if>
-					    <div class="meta-title"><%=title%></div>
+					    <div class="meta-title">
+							<%
+								if(isCitation2Go){
+									%><div class="c2go-title"><liferay-ui:message key='citation-of'/></div><%
+								}
+							%>	
+						    <%=title%>
+					    </div>
 				      	<div class="meta-creators">
-														<%
-								       						String fullname1="";
-									        				String date1 = "";
-									           				try{ date1 = video.getDate().trim().substring(0, 10);}catch(Exception e){}
+										<%
+								       		String fullname1="";
+									        String date1 = "";
+									           	try{ date1 = video.getDate().trim().substring(0, 10);}catch(Exception e){}
 		
-									           				List<Creator> cv1 = CreatorLocalServiceUtil.getCreatorsByVideoId(video.getVideoId());
-															ListIterator<Creator> cvi1 = cv1.listIterator();										
-									       					int j=0;
-									       					while(cvi1.hasNext()){
-									       						if(j<2){
-									       							String n = cvi1.next().getFullName();
-									       							fullname1 += "<a href='/l2go/-/get/0/0/0/0/0/"+n+"'>"+n+"</a>";
-									       							if(cv1.size()>1 && cvi1.hasNext()) fullname1+=", ";
-										    					}else{
-										    						fullname1+="u.a.";
-																	break;
-										    					}
-										    					j++;
-									        				}
-									           			%>
-														<%=fullname1 %>
-														<div class="date"><%=date1%></div>
+									           	List<Creator> cv1 = CreatorLocalServiceUtil.getCreatorsByVideoId(video.getVideoId());
+												ListIterator<Creator> cvi1 = cv1.listIterator();										
+									       		int j=0;
+									       		while(cvi1.hasNext()){
+									       			if(j<2){
+									       				String n = cvi1.next().getFullName();
+									       				fullname1 += "<a href='/l2go/-/get/0/0/0/0/0/"+n+"'>"+n+"</a>";
+									       				if(cv1.size()>1 && cvi1.hasNext()) fullname1+=", ";
+										    		}else{
+										    			fullname1+="u.a.";
+														break;
+										    		}
+										    		j++;
+									        	}
+									           %>
+											<%=fullname1 %>
+											<div class="date"><%=date1%></div>
 						</div>
 					    <div class="lectureseries-small"><%=series%></div>
 						<div class="meta-description-container">
