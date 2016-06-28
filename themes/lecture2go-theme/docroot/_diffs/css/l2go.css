@@ -597,8 +597,9 @@ p.smallitalic {
 }
 
 .videotile.small.show-all {
+	height: 25px;
     font-size: 14px;
-    padding-left: 3px;
+    padding-left: 4px;
 }
 
 .videotile.small.related {
