@@ -7,6 +7,7 @@
 <jsp:useBean id="reqProducer" type="de.uhh.l2g.plugins.model.Producer" scope="request" />
 <jsp:useBean id="reqVideo" type="de.uhh.l2g.plugins.model.Video" scope="request" />
 <jsp:useBean id="reqMetadata" type="de.uhh.l2g.plugins.model.Metadata" scope="request" />
+<jsp:useBean id="reqSubInstitutions" type="java.util.List<de.uhh.l2g.plugins.model.Video_Institution>" scope="request" />
 
 <liferay-portlet:resourceURL id="updateMetadata" var="updateURL" />
 <liferay-portlet:resourceURL id="updateDescription" var="updateDescriptionURL" />
@@ -159,12 +160,10 @@
 					
 					<div class="subInstitutions" >
 						<%
-						List<Video_Institution> subInst = new ArrayList<Video_Institution>();
-						subInst = Video_InstitutionLocalServiceUtil.getByVideo(reqVideo.getVideoId());
-						
 						try{
-							for (int i = 0; i < subInst.size(); i++) {
-								Institution inst = InstitutionLocalServiceUtil.getById(subInst.get(i).getInstitutionId());
+							//
+							for (int i = 0; i < reqSubInstitutions.size(); i++) {
+								Institution inst = InstitutionLocalServiceUtil.getById(reqSubInstitutions.get(i).getInstitutionId());
 								%>
 								<div id='<%=inst.getInstitutionId()%>'> 
 									<%=inst.getName()+"&nbsp;&nbsp;&nbsp;" %> 
@@ -173,9 +172,7 @@
 								</div>
 								<%
 							}					
-						}catch(Exception e){
-							//
-						}
+						}catch(Exception e){}
 						%>				
 					</div>	
 								
