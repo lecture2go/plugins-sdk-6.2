@@ -107,7 +107,7 @@
 			<liferay-ui:panel-container>
 				<!-- 	parentinstitution filter -->
 				<%if(presentParentInstitutions.size()>0){ %>
-				<liferay-ui:panel extended="true" title="institution" cssClass='${hasParentInstitutionFiltered ? "filtered" : "notFiltered"}'>
+				<liferay-ui:panel extended="false" defaultState="collapsed" title="institution" cssClass='${hasParentInstitutionFiltered ? "filtered" : "notFiltered"}'>
 					<ul>
 					<c:forEach items="<%=presentParentInstitutions %>" var="parentInstitution">
 						<portlet:actionURL var="filterByParentInstitution" name="addFilter">
@@ -128,7 +128,7 @@
 			 	<!-- 	institution filter  -->
 				<c:if test="${hasParentInstitutionFiltered}">
 				<%if(presentInstitutions.size()>0){ %>
-				<liferay-ui:panel extended="true" title="sub-institution" cssClass='${hasInstitutionFiltered ? "filtered" : "notFiltered"}'>
+				<liferay-ui:panel extended="false" defaultState="collapsed" title="sub-institution" cssClass='${hasInstitutionFiltered ? "filtered" : "notFiltered"}'>
 					<ul>
 					<c:forEach items="<%=presentInstitutions %>" var="institution">
 						<portlet:actionURL var="filterByInstitution" name="addFilter">
@@ -149,7 +149,7 @@
 				
 				<!-- 	terms filter -->
 				<%if(presentTerms.size()>0){%>
-				<liferay-ui:panel extended="true" title="term" cssClass='${hasTermFiltered ? "filtered" : "notFiltered"}'>
+				<liferay-ui:panel extended="false" defaultState="collapsed" title="term" cssClass='${hasTermFiltered ? "filtered" : "notFiltered"}'>
 					<ul class="terms">
 					<c:forEach items="<%=presentTerms %>" var="term">
 						<portlet:actionURL var="filterByTerm" name="addFilter">
@@ -173,7 +173,7 @@
 				
 				<!-- 	category filter -->
 				<%if(presentCategories.size()>0){%>
-				<liferay-ui:panel extended="true" title="category" cssClass='${hasCategoryFiltered ? "filtered" : "notFiltered"}'>
+				<liferay-ui:panel extended="false" defaultState="collapsed" title="category" cssClass='${hasCategoryFiltered ? "filtered" : "notFiltered"}'>
 					<ul>
 					<c:forEach items="<%=presentCategories %>" var="category">
 			    		<portlet:actionURL var="filterByCategory" name="addFilter">
@@ -249,7 +249,6 @@
 			vli = vl.listIterator();
 		%>
 		<liferay-ui:search-container-column-text>
-				<div class="videotile wide">
 						<portlet:actionURL name="viewOpenAccessVideo" var="view1URL">
 							<portlet:param name="objectId" value="<%=oId%>"/>
 							<%if(isVideo){%><portlet:param name="objectType" value="v"/><%}%>
@@ -259,6 +258,7 @@
 							if(videoCount==0){
 								if(isVideo){
 									%>
+								<div class="videotile wide" onClick="window.location='<%=view1URL%>'">
 									<div class="video-image-wrapper">
 									   <img class="video-image-big" src="<%=vidDummy.getImageMedium()%>"/>
 									</div>
@@ -310,8 +310,8 @@
 										          <span class="label label-light2 text-cut"><%=cat%></span>
 										          <%
 										          		try{
-										          			Institution inst = InstitutionLocalServiceUtil.getById(vidDummy.getRootInstitutionId());
-															String instLink="<a href='/l2go/-/get/0/"+inst.getInstitutionId()+"/0/0/0/'>"+inst.getName()+"</a>";  
+															Institution inst = InstitutionLocalServiceUtil.getById(li.get(0).getInstitutionId());
+															String instLink="<a href='/l2go/-/get/"+inst.getInstitutionId() + "/" + inst.getParentId() + "/0/0/0/'>" + inst.getName() + "</a>"; 
 											          		%>
 													          <span class="label label-light2 text-cut"><%=instLink%></span>
 											          		<%
@@ -327,6 +327,7 @@
 							}else{
 								// multiple videos in lecture series
 								%>
+										<div class="videotile wide">
 									        <div class="video-image-wrapper">
 									          <img class="video-image-big layered-paper darker" src="<%=vidDummy.getImageMedium()%>"/>
 											  <span class="badge"><%=videoCount%></span>

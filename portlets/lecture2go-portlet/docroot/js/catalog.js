@@ -1,8 +1,24 @@
-// This is a workaround for binding the Javascript callbacks to the Videotiles. Usually the $(function() {...} should
-// execute when the dom is ready, but the liferay search container seems to build the html later then the onload event
 
 $( function() {
-	function start() {
+	//turn off autocomplete
+	$(document).on('focus', ':input', function() {
+	    $(this).attr('autocomplete', 'off');
+	});
+	// only show the last terms
+	var maxTerms = 4;
+	$("ul.terms > li").slice(maxTerms).hide();
+	// show the remaining terms
+	$('#loadMoreTerms').click(function () {
+	    $('ul.terms > li').show();
+	    $('#loadMoreTerms').hide();
+	});
+	
+	// toggles the panel if necessary
+    toggleFilterPanel();
+    
+    // This is a workaround for binding the Javascript callbacks to the Videotiles. Usually the $(function() {...} should
+    // execute when the dom is ready, but the liferay search container seems to build the html later then the onload event
+    function start() {
 		var tile = $("#_lgopenaccessvideos_WAR_lecture2goportlet_lectureseriesesSearchContainer div.videotile.wide");
 		if (tile.size() > 0) {then()}
 		else {
@@ -26,27 +42,11 @@ $( function() {
 				$(this).find("button").removeClass("highlight");
 			}
 		});
-		
+	
 		// if a link on the tile is clicked, do not let the event bubble up to the tile itself
 		tile.find("a").click(function(e) {
 			e.stopPropagation();
-	});
-	
-	//turn off autocomplete
-	$(document).on('focus', ':input', function() {
-	    $(this).attr('autocomplete', 'off');
-	});
-	// only show the last terms
-	var maxTerms = 4;
-	$("ul.terms > li").slice(maxTerms).hide();
-	// show the remaining terms
-	$('#loadMoreTerms').click(function () {
-	    $('ul.terms > li').show();
-	    $('#loadMoreTerms').hide();
-	});
-	
-	// toggles the panel if necessary
-    toggleFilterPanel();
+		});
 	}
 });
 
@@ -56,10 +56,12 @@ function toggleFilterPanel(){
 		  entry: function() {
 		    $('.notFiltered').find('.toggler-content-expanded').addClass('toggler-content-collapsed').removeClass('toggler-content-expanded');
     		$('.notFiltered').find('.toggler-header-expanded').addClass('toggler-header-collapsed').removeClass('toggler-header-expanded');
+    		$('.filtered').find('.toggler-header-collapsed').addClass('toggler-header-expanded').removeClass('toggler-header-collapsed');
+		    $('.filtered').find('.toggler-content-collapsed').addClass('toggler-content-expanded').removeClass('toggler-content-collapsed');
 		  },
 		  exit: function() {
-			$('.notFiltered').find('.toggler-content-collapsed').addClass('toggler-content-expanded').removeClass('toggler-content-collapsed');
-		  	$('.notFiltered').find('.toggler-header-collapsed').addClass('toggler-header-expanded').removeClass('toggler-header-collapsed');
+			$('.accordion-group').find('.toggler-content-collapsed').addClass('toggler-content-expanded').removeClass('toggler-content-collapsed');
+		  	$('.accordion-group').find('.toggler-header-collapsed').addClass('toggler-header-expanded').removeClass('toggler-header-collapsed');
 		  }
 		});
 }

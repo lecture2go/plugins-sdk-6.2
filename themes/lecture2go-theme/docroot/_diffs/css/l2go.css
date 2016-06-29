@@ -216,7 +216,7 @@ mark {
     margin-bottom: 10px;
 }
 
-.aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle {
+.aui .accordion-group.lfr-panel .accordion-heading .accordion-toggle {
     background-color: #a4a5a6;
     color: #000;
     font-weight: 900;
@@ -719,13 +719,13 @@ a.list-group-item:hover, a.list-group-item:focus {
     border-top: 1px solid #E5E5E5;
 }
 
-.aui .accordion-group .toggler-content-expanded .accordion-inner {
+.aui .accordion-group .toggler-content .accordion-inner {
     border-width: 0px 0px 0px 3px;
     border-style: solid;
     border-color: #ddd;
 }
 
-.aui .accordion-group.lfr-panel-extended .accordion-heading {
+.aui .accordion-group.lfr-panel .accordion-heading {
     background: #a4a5a6 none repeat scroll 0 0;
     border-style: none;
     border-width: 0 0 1px;
@@ -739,7 +739,7 @@ thead, th {
     display: none;
 }
 
-.aui .accordion-group.lfr-panel-extended {
+.aui .accordion-group.lfr-panel {
     border-width: 0px;
     border-radius: 0px;
     padding-bottom: 5px;
@@ -1811,7 +1811,7 @@ div.filter-menu-link span.icon-large.icon-remove {
     line-height: 2px;
 }
 
-.aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle::after, .aui .accordion-group.lfr-panel-extended .accordion-heading .accordion-toggle::before {
+.aui .accordion-group.lfr-panel .accordion-heading .accordion-toggle::after, .aui .accordion-group.lfr-panel .accordion-heading .accordion-toggle::before {
     background-color: #a4a5a6;
     color: #fff;
     float: right;
