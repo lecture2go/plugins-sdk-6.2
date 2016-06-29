@@ -151,11 +151,6 @@ public class AdminVideoManagement extends MVCPortlet {
 		}catch(Exception e){}
 		request.setAttribute("reqLectureseriesList", reqLectureseriesList);
 		
-		//requested sub institutions
-		List<Video_Institution> reqSubInstitutions = new ArrayList<Video_Institution>();
-		reqSubInstitutions = Video_InstitutionLocalServiceUtil.getByVideo(reqVideo.getVideoId());
-		request.setAttribute("reqSubInstitutions", reqSubInstitutions);
-		
 		//requested license
 		License reqLicense = new LicenseImpl();
 		try{reqLicense = LicenseLocalServiceUtil.getByVideoId(reqVideo.getVideoId());}catch(Exception e){}
@@ -248,12 +243,15 @@ public class AdminVideoManagement extends MVCPortlet {
 				Video_InstitutionLocalServiceUtil.addVideo_Institution(vi);
 				tagCloudArrayString.add(ins.getName());
 			}
-		}else{
+		}else{//no lecture series 
 			Institution ins = InstitutionLocalServiceUtil.getInstitution(video.getRootInstitutionId());
 			Video_Institution vi = new Video_InstitutionImpl();
 			vi.setVideoId(video.getVideoId());
-			vi.setInstitutionId(0);
-			vi.setInstitutionParentId(ins.getInstitutionId());
+			vi.setInstitutionId(video.getRootInstitutionId());
+			
+			if(ins.getLevel()==1)vi.setInstitutionParentId(0);
+			else vi.setInstitutionParentId(ins.getParentId());
+			
 			Video_InstitutionLocalServiceUtil.addVideo_Institution(vi);
 			tagCloudArrayString.add(ins.getName());			
 		}
@@ -281,12 +279,6 @@ public class AdminVideoManagement extends MVCPortlet {
 		TagcloudLocalServiceUtil.add(tagCloudArrayString, video.getClass().getName(), video.getVideoId());
 		//
 		String backURL = request.getParameter("backURL");
-		//generate new JSON date for auto complete functionality
-//		try {
-//			AutocompleteManager.generateAutocompleteResults();
-//		} catch (SystemException e) {
-//			e.printStackTrace();
-//		}
 		request.setAttribute("backURL", backURL);
 		response.setRenderParameter("jspPage", "/admin/editVideo.jsp");
 	}
@@ -883,6 +875,7 @@ public class AdminVideoManagement extends MVCPortlet {
 							Institution in = new InstitutionImpl();
 							try {
 								in = InstitutionLocalServiceUtil.getInstitution(institutionId);
+								System.out.print("LEVEEEEELLL---->"+in.getLevel());
 							} catch (PortalException e) {
 								e.printStackTrace();
 							}
@@ -892,21 +885,10 @@ public class AdminVideoManagement extends MVCPortlet {
 							Video_Institution vi = new Video_InstitutionImpl();
 							vi.setInstitutionId(in.getInstitutionId());
 							vi.setVideoId(videoId);
-							vi.setInstitutionParentId(in.getParentId());
+							if(in.getLevel()==1)vi.setInstitutionParentId(0);
+							else vi.setInstitutionParentId(in.getParentId());
 							if(vil.size()==0)Video_InstitutionLocalServiceUtil.addVideo_Institution(vi);
 						}						
-					}else{
-						//video without lecture series and not selected institutions
-						if(video.getLectureseriesId()<0 && institutionsArray.length()==0){
-							List<Video_Institution> vil = new ArrayList<Video_Institution>();
-							vil = Video_InstitutionLocalServiceUtil.getByVideoAndInstitution(videoId, video.getRootInstitutionId());
-							
-							Video_Institution vi = new Video_InstitutionImpl();
-							vi.setInstitutionId(video.getRootInstitutionId());
-							vi.setVideoId(videoId);
-							vi.setInstitutionParentId(video.getRootInstitutionId());
-							if(vil.size()==0)Video_InstitutionLocalServiceUtil.addVideo_Institution(vi);
-						}
 					}
 				} catch (SystemException e) {
 					e.printStackTrace();

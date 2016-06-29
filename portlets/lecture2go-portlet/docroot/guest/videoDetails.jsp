@@ -33,7 +33,6 @@ if(timeStart>0 && timeEnd>timeStart && video.getCitation2go()==1)isCitation2Go=t
 					    	// right now we only show the first institution and not linked institutions
 					    	// for(int j=0; j<institutions.size(); j++){
 							for(int j=0; j<1; j++){
-
 				    			Institution insti = InstitutionLocalServiceUtil.getById(institutions.get(j).getInstitutionId());    			
 				    			Institution pInst = InstitutionLocalServiceUtil.getById(institutions.get(j).getParentId());
 					    		%>
@@ -64,29 +63,36 @@ if(timeStart>0 && timeEnd>timeStart && video.getCitation2go()==1)isCitation2Go=t
 				    	}
 			    	}else{
 				    	for(int i=0; i<videoInstitutions.size(); i++){
-				    		Institution insti = InstitutionLocalServiceUtil.getById(videoInstitutions.get(i).getInstitutionId());    			
-				    		Institution pInst = InstitutionLocalServiceUtil.getById(videoInstitutions.get(i).getInstitutionParentId());
-					    	%>
-								<portlet:actionURL var="backURL3" name="addFilter">
-									<portlet:param name="jspPage" value="/guest/videosList.jsp" />
-									<portlet:param name="parentInstitutionId" value="<%=pInst.getInstitutionId()+\"\"%>"/>
-									<portlet:param name="institutionId" value="0"/>
-									<portlet:param name="termId" value="0"/>
-									<portlet:param name="categoryId" value="0"/>
-									<portlet:param name="creatorId" value="0"/>
-								</portlet:actionURL>					
-								<portlet:actionURL var="backURL4" name="addFilter">
-									<portlet:param name="jspPage" value="/guest/videosList.jsp" />
-									<portlet:param name="parentInstitutionId" value="<%=pInst.getInstitutionId()+\"\"%>"/>
-									<portlet:param name="institutionId" value="<%=insti.getInstitutionId()+\"\"%>"/>
-									<portlet:param name="termId" value="0"/>
-									<portlet:param name="categoryId" value="0"/>
-									<portlet:param name="creatorId" value="0"/>
-								</portlet:actionURL>		    	
-						    	<A HREF="<%=backURL3%>"><%=pInst.getName() %></A>  <span class="icon-arrow-right">&nbsp;</span>  
-						    	<A HREF="<%=backURL4%>"><%=insti.getName() %></A>
-						    	<br/> 
-				      <%}  		
+				    		try{
+					    		Institution insti = InstitutionLocalServiceUtil.getById(videoInstitutions.get(i).getInstitutionId());    			
+					    		Institution pInst = InstitutionLocalServiceUtil.getById(videoInstitutions.get(i).getInstitutionParentId());
+						    	%>
+									<portlet:actionURL var="backURL3" name="addFilter">
+										<portlet:param name="jspPage" value="/guest/videosList.jsp" />
+										<portlet:param name="parentInstitutionId" value="<%=pInst.getInstitutionId()+\"\"%>"/>
+										<portlet:param name="institutionId" value="0"/>
+										<portlet:param name="termId" value="0"/>
+										<portlet:param name="categoryId" value="0"/>
+										<portlet:param name="creatorId" value="0"/>
+									</portlet:actionURL>					
+									<portlet:actionURL var="backURL4" name="addFilter">
+										<portlet:param name="jspPage" value="/guest/videosList.jsp" />
+										<portlet:param name="parentInstitutionId" value="<%=pInst.getInstitutionId()+\"\"%>"/>
+										<portlet:param name="institutionId" value="<%=insti.getInstitutionId()+\"\"%>"/>
+										<portlet:param name="termId" value="0"/>
+										<portlet:param name="categoryId" value="0"/>
+										<portlet:param name="creatorId" value="0"/>
+									</portlet:actionURL>		    	
+							    	
+							    	<%if(pInst.getLevel()>0) {%>
+							    	  <A HREF="<%=backURL3%>"><%=pInst.getName() %></A>
+							    	  <span class="icon-arrow-right">&nbsp;</span> 
+							    	<%}%>
+							    	<A HREF="<%=backURL4%>"><%=insti.getName() %></A>	
+							    	<br/> 
+					      		<%
+				    		}catch(Exception e){}
+				      }  		
 			    	}
 			    	%>
 			    </div>
