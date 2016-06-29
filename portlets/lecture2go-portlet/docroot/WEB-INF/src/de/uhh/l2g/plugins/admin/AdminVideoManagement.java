@@ -151,6 +151,11 @@ public class AdminVideoManagement extends MVCPortlet {
 		}catch(Exception e){}
 		request.setAttribute("reqLectureseriesList", reqLectureseriesList);
 		
+		//requested sub institutions
+		List<Video_Institution> reqSubInstitutions = new ArrayList<Video_Institution>();
+		reqSubInstitutions = Video_InstitutionLocalServiceUtil.getByVideo(reqVideo.getVideoId());
+		request.setAttribute("reqSubInstitutions", reqSubInstitutions);
+		
 		//requested license
 		License reqLicense = new LicenseImpl();
 		try{reqLicense = LicenseLocalServiceUtil.getByVideoId(reqVideo.getVideoId());}catch(Exception e){}
@@ -243,6 +248,14 @@ public class AdminVideoManagement extends MVCPortlet {
 				Video_InstitutionLocalServiceUtil.addVideo_Institution(vi);
 				tagCloudArrayString.add(ins.getName());
 			}
+		}else{
+			Institution ins = InstitutionLocalServiceUtil.getInstitution(video.getRootInstitutionId());
+			Video_Institution vi = new Video_InstitutionImpl();
+			vi.setVideoId(video.getVideoId());
+			vi.setInstitutionId(0);
+			vi.setInstitutionParentId(ins.getInstitutionId());
+			Video_InstitutionLocalServiceUtil.addVideo_Institution(vi);
+			tagCloudArrayString.add(ins.getName());			
 		}
 		
 		//creators
@@ -430,6 +443,7 @@ public class AdminVideoManagement extends MVCPortlet {
 					tagCloudArrayString.add(newLect.getName());
 					tagCloudArrayString.add(newLect.getNumber());
 				}else{
+					//update institution for video only without lecture series
 					List<Video_Institution> vinst = Video_InstitutionLocalServiceUtil.getByVideo(video.getVideoId());
 					ListIterator<Video_Institution> vinstItt = vinst.listIterator();
 					while(vinstItt.hasNext()){
@@ -862,23 +876,37 @@ public class AdminVideoManagement extends MVCPortlet {
 				try {
 					Video_InstitutionLocalServiceUtil.removeByVideoId(videoId);
 					//and update with new institutions from list
-					for (int i = 0; i< institutionsArray.length(); i++){
-						org.json.JSONObject institution =  institutionsArray.getJSONObject(i);
-						Long institutionId= institution.getLong("institutionId");
-						Institution in = new InstitutionImpl();
-						try {
-							in = InstitutionLocalServiceUtil.getInstitution(institutionId);
-						} catch (PortalException e) {
-							e.printStackTrace();
+					if(institutionsArray.length()>0){
+						for (int i = 0; i< institutionsArray.length(); i++){
+							org.json.JSONObject institution =  institutionsArray.getJSONObject(i);
+							Long institutionId= institution.getLong("institutionId");
+							Institution in = new InstitutionImpl();
+							try {
+								in = InstitutionLocalServiceUtil.getInstitution(institutionId);
+							} catch (PortalException e) {
+								e.printStackTrace();
+							}
+							List<Video_Institution> vil = new ArrayList<Video_Institution>();
+							vil = Video_InstitutionLocalServiceUtil.getByVideoAndInstitution(videoId, institutionId);
+							
+							Video_Institution vi = new Video_InstitutionImpl();
+							vi.setInstitutionId(in.getInstitutionId());
+							vi.setVideoId(videoId);
+							vi.setInstitutionParentId(in.getParentId());
+							if(vil.size()==0)Video_InstitutionLocalServiceUtil.addVideo_Institution(vi);
+						}						
+					}else{
+						//video without lecture series and not selected institutions
+						if(video.getLectureseriesId()<0 && institutionsArray.length()==0){
+							List<Video_Institution> vil = new ArrayList<Video_Institution>();
+							vil = Video_InstitutionLocalServiceUtil.getByVideoAndInstitution(videoId, video.getRootInstitutionId());
+							
+							Video_Institution vi = new Video_InstitutionImpl();
+							vi.setInstitutionId(video.getRootInstitutionId());
+							vi.setVideoId(videoId);
+							vi.setInstitutionParentId(video.getRootInstitutionId());
+							if(vil.size()==0)Video_InstitutionLocalServiceUtil.addVideo_Institution(vi);
 						}
-						List<Video_Institution> vil = new ArrayList<Video_Institution>();
-						vil = Video_InstitutionLocalServiceUtil.getByVideoAndInstitution(videoId, institutionId);
-						
-						Video_Institution vi = new Video_InstitutionImpl();
-						vi.setInstitutionId(in.getInstitutionId());
-						vi.setVideoId(videoId);
-						vi.setInstitutionParentId(in.getParentId());
-						if(vil.size()==0)Video_InstitutionLocalServiceUtil.addVideo_Institution(vi);
 					}
 				} catch (SystemException e) {
 					e.printStackTrace();
