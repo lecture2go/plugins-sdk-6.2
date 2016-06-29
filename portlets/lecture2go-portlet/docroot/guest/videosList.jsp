@@ -297,8 +297,7 @@
 										        <div class="tags">
 										          <%
 										        	String cat = "";
-										        	List<Lectureseries_Institution> li = Lectureseries_InstitutionLocalServiceUtil.getByLectureseries(lectser.getLectureseriesId());
-										        	ListIterator<Lectureseries_Institution> liIt = li.listIterator();
+										        	List<Video_Institution> vi = Video_InstitutionLocalServiceUtil.getByVideo(vidDummy.getVideoId());
 										            try{
 										            	Long cId = Video_CategoryLocalServiceUtil.getByVideo(lectser.getLectureseriesId()).get(0).getCategoryId();
 										            	cat ="<a href='/l2go/-/get/0/0/"+cId+"/0/0/'>"+CategoryLocalServiceUtil.getById(cId).getName()+"</a>";
@@ -310,7 +309,7 @@
 										          <span class="label label-light2 text-cut"><%=cat%></span>
 										          <%
 										          		try{
-															Institution inst = InstitutionLocalServiceUtil.getById(li.get(0).getInstitutionId());
+															Institution inst = InstitutionLocalServiceUtil.getById(vi.get(0).getInstitutionId());
 															String instLink="<a href='/l2go/-/get/"+inst.getInstitutionId() + "/" + inst.getParentId() + "/0/0/0/'>" + inst.getName() + "</a>"; 
 											          		%>
 													          <span class="label label-light2 text-cut"><%=instLink%></span>
