@@ -420,4 +420,13 @@
 	#banner .meta {
 	    display: none;
 	}
+
+	#_lgopenaccessvideos_WAR_lecture2goportlet_searchButton {
+	    height: 29px;
+	    margin: 0;
+	    padding: 2px;
+	    right: 1px;
+	    top: 31px;
+	    width: 30px;
+	}
 }
