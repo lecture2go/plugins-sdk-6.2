@@ -28,8 +28,8 @@
 				
 				<element name="elapsedBackground" src="spacer.png" />
 				<element name="durationBackground" src="spacer.png" />
-				<element name="timeSliderCapLeft" src="timeSliderCapLeft.png" />
-				<element name="timeSliderCapRight" src="timeSliderCapRight.png" />
+				<element name="timeSliderCapLeft" src="timeSliderCap.png" />
+				<element name="timeSliderCapRight" src="timeSliderCap.png" />
 				<element name="timeSliderRail" src="timeSliderRail.png" />
 				<element name="timeSliderRailCapLeft" src="timeSliderRailCapLeft.png" />
 				<element name="timeSliderRailCapRight" src="timeSliderRailCapRight.png" />
