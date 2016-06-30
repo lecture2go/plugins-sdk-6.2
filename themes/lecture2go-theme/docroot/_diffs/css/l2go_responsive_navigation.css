@@ -11,10 +11,6 @@
 	    line-height: 38px;
 	}
 
-	div.filter-menu-link span.icon-large.icon-remove {
-	    margin-top: 9px;
-	}
-
 	#loadMoreTerms, #loadMoreCreators {
 	    color: #c90219;
 	    cursor: pointer;
@@ -33,20 +29,6 @@
 	    width: 100%
 	}
 
-	#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
-	    border-left: medium none;
-	    border-right: 0 none;
-	    float: left;
-	    max-width: inherit !important;
-	    min-width: 320px;
-	    padding: 4px 0;
-	    position: relative;
-	    width: calc(100% - 10px);
-	    height: 25px;
-	    padding-left: 10px;
-	    font-size: 14px
-	}
-	
 	.aui #navigation .nav .dropdown-menu > li a:hover {
     	background: #ddd url("/lecture2go-portlet/img/rot_navi-pfeil-rechts.png") no-repeat scroll 9px 13px !important;
 		line-height: 29px;
@@ -55,15 +37,6 @@
 	.aui #navigation .nav .dropdown-menu > li a {
     	background: #f9f9f9 url("/lecture2go-portlet/img/rot_navi-pfeil-rechts.png") no-repeat scroll 9px 13px !important;
     	line-height: 29px;
-	}
-	
-	#_lgopenaccessvideos_WAR_lecture2goportlet_searchButton {
-	    top: 2px;
-	    right: 0px;
-	    width: 30px;
-	    height: 30px;
-	    padding: 2px;
-	    margin: 0;
 	}
 	
 	.aui .portlet-borderless-container {
@@ -123,7 +96,9 @@
 	}
 		
 	.responsive_li_item.selected {
-    	background: #e3e3e3 none repeat scroll 0 0 !important;
+	    background: #e3e3e3 none repeat scroll 0 0 !important;
+	    padding-left: 30px;
+	    width: calc(100% - 30px) !important;
 	}
 	
 	.dropdown-menu.child-menu {
@@ -195,8 +170,8 @@
 	}
 
 	#wrapper #heading .site-title img {
-	    margin-left: 13px;
-	    margin-top: 35px;
+	    margin-left: 12px;
+	    margin-top: 42px;
 	    width: auto;
 	}
 
@@ -275,8 +250,32 @@
 	.aui .dockbar-split .dockbar, .aui .dockbar {
 	    display: block;
 	    float: right;
-	    margin-right: 7px;
-	    margin-top: 42px;
+	    margin-right: -10px;
+	    margin-top: 44px;
 	    z-index: 401;
 	}
+	
+	.user-avatar-image {
+    	display: none;
+	}
+	
+	.filter-menu-link {
+	    line-height: 18px;
+	    margin-left: 5px;
+	    padding: 9px 2px;
+	}
+	
+	
+	div.filter-menu-link span.icon-large.icon-remove {
+    	margin-top: 0;
+	}
+	
+	.aui .accordion-group.lfr-panel .accordion-heading {
+	    height: 38px;
+	}
+	
+	.aui .accordion-group.lfr-panel .accordion-heading .accordion-toggle::after, .aui .accordion-group.lfr-panel .accordion-heading .accordion-toggle::before {
+	    margin: 8px 5px 0 0;
+	}
+	
 }

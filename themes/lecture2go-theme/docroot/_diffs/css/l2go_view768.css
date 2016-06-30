@@ -422,11 +422,24 @@
 	}
 
 	#_lgopenaccessvideos_WAR_lecture2goportlet_searchButton {
-	    height: 30px;
+	    height: 31px;
 	    margin: 0;
 	    padding: 2px;
 	    right: 1px;
-	    top: 30px;
-	    width: 30px;
+	    top: 2px;
+	    width: 31px;
 	}
+
+	#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
+	    border-left: medium none;
+	    border-right: 0 none;
+	    float: left;
+	    font-size: 14px;
+	    height: 25px;
+	    max-width: inherit !important;
+	    padding: 4px 0 4px 10px;
+	    position: relative;
+	    width: calc(100% - 10px);
+	}		
+	
 }
