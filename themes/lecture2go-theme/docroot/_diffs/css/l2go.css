@@ -947,10 +947,6 @@ thead, th {
     cursor: default;
 }
 
-.aui a:hover {
-    text-decoration: none !important;
-}
-
 .filter-menu-link {
     line-height: 18px;
     margin-left: 5px;
@@ -1867,6 +1863,10 @@ div.filter-menu-link span.icon-large.icon-remove {
     color: #4d4d4d;
 }
 
+.aui a:hover {
+	text-decoration: underline;
+}
+
 #term {
 	float:left;
 	margin-left: 0%;
@@ -2257,6 +2257,14 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	text-overflow: ellipsis;
     max-width: calc(100% - 23px);  	
     overflow: hidden;
+}
+
+.journal-content-article a {
+    color: #c40017;
+}
+
+.journal-content-article a:HOVER {
+    text-decoration: underline !important;
 }
 
 /* without video
