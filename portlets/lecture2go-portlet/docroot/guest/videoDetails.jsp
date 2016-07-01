@@ -129,27 +129,11 @@ if(timeStart>0 && timeEnd>timeStart && video.getCitation2go()==1)isCitation2Go=t
 					    </div>
 				      	<div class="meta-creators">
 										<%
-								       		String fullname1="";
 									        String date1 = "";
-									           	try{ date1 = video.getDate().trim().substring(0, 10);}catch(Exception e){}
-		
-									           	List<Creator> cv1 = CreatorLocalServiceUtil.getCreatorsByVideoId(video.getVideoId());
-												ListIterator<Creator> cvi1 = cv1.listIterator();										
-									       		int j=0;
-									       		while(cvi1.hasNext()){
-									       			if(j<2){
-									       				String n = cvi1.next().getFullName();
-									       				fullname1 += "<a href='/l2go/-/get/0/0/0/0/0/"+n+"'>"+n+"</a>";
-									       				if(cv1.size()>1 && cvi1.hasNext()) fullname1+=", ";
-										    		}else{
-										    			fullname1+="u.a.";
-														break;
-										    		}
-										    		j++;
-									        	}
-									           %>
-											<%=fullname1 %>
-											<div class="date"><%=date1%></div>
+									        try{ date1 = video.getDate().trim().substring(0, 10);}catch(Exception e){}
+									    %>
+										<%=video.getLinkedCreators() %>
+										<div class="date"><%=date1%></div>
 						</div>
 					    <div class="lectureseries-small"><%=series%></div>
 						<div class="meta-description-container">
@@ -377,25 +361,7 @@ if(timeStart>0 && timeEnd>timeStart && video.getCitation2go()==1)isCitation2Go=t
 												%>
 												<div class="title-small related"><%=vid.getTitle()%></div>
 							          			<p class="creator-small2 related">
-												<%
-						       						String fullname="";
-
-							           				List<Creator> cv = CreatorLocalServiceUtil.getCreatorsByVideoId(vid.getVideoId());
-													ListIterator<Creator> cvi = cv.listIterator();										
-							       					int i=0;
-							       					while(cvi.hasNext()){
-							       						if(i<2){
-							       							String n = cvi.next().getFullName();
-							       							fullname += "<a href='/l2go/-/get/0/0/0/0/0/"+n+"'>"+n+"</a>";
-							       							if(cvi.hasNext()) fullname+=", ";
-								    					}else{
-								    						fullname+="u.a.";
-															break;
-								    					}
-								    					i++;
-							        				}
-							           			%>
-												<%=fullname %>
+												<%=vid.getLinkedCreators() %>
 							           			</p>
 								           		<div class="date related"><%=date%></div> 
 						            	</div>

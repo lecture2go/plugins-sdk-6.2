@@ -102,7 +102,8 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 		List<String> creatorFullnameList = new ArrayList<String>();
 		for (Creator creator: creatorList) { 
 			String fn = creator.getFullName();
-			String fnLink = "<a href='/l2go/-/get/0/0/0/0/0/"+fn+"'>"+fn+"</a>";;
+			//?_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery=Prof. Dr. Marc Frey
+			String fnLink = "<a href='/l2go/-/get/0/0/0/0/0/?_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery="+fn+"'>"+fn+"</a>";;
 			creatorFullnameList.add(fnLink);
 		}
 		
