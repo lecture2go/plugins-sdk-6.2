@@ -271,25 +271,7 @@
 									        </div>
 												
 												<div class="allcreators">
-													<%
-							       						String fullname1="";
-	
-								           				List<Creator> clv = CreatorLocalServiceUtil.getCreatorsByVideoId(vidDummy.getVideoId());
-														ListIterator<Creator> clvi = clv.listIterator();										
-								       					int j=0;
-								       					while(clvi.hasNext()){
-								       						if(j<2){
-								       							String n = clvi.next().getFullName();
-								       							fullname1 += "<a href='/l2go/-/get/0/0/0/0/0/"+n+"'>"+n+"</a>";
-								       							if(clvi.hasNext()) fullname1+=", ";
-									    					}else{
-									    						fullname1+="u.a.";
-																break;
-									    					}
-									    					j++;
-								        				}
-								           			%>
-													<%=fullname1 %>
+													<%=vidDummy.getLinkedCreators() %>
 												</div>
 											</div>
 											<div class="video-content-footer">
@@ -343,22 +325,7 @@
 									        </div>
 												
 												<div class="allcreators">
-													<%
-													String fullname2="";
-		              								int i=0;
-		              								while(cli.hasNext()){
-			              								if(i<2){
-			              									String n = cli.next().getFullName();
-							       							fullname2 += "<a href='/l2go/-/get/0/0/0/0/0/"+n+"'>"+n+"</a>";
-							       							if(cli.hasNext()) fullname2+=", ";
-								    					}else{
-								    						fullname2+="u.a.";
-															break;
-								    					}
-			              								i++;
-		              								}
-													%>
-													<%=fullname2%>
+													<%=CreatorLocalServiceUtil.getCommaSeparatedLinkedCreatorsByLectureseriesIdAndMaxCreators(vidDummy.getLectureseriesId(), 3)%>
 												</div>
 											</div>
 											
@@ -421,21 +388,6 @@
 											</div>
 										</div>
 										<%
-											List<Creator> cv = CreatorLocalServiceUtil.getCreatorsByVideoId(v.getVideoId());
-											ListIterator<Creator> cvi = cv.listIterator();										
-		              						String fullname3="";
-		              						while(cvi.hasNext()){
-			              						if(i<2){
-			              							Creator c = cvi.next();
-							       					String n = c.getFullName();
-					       							fullname3 += "<a href='/l2go/-/get/0/0/0/0/0/"+n+"'>"+n+"</a>";
-							       					if(cvi.hasNext())fullname3+=", ";
-								    			}else{
-								    				fullname3+="u.a.";
-													break;
-								    			}
-			              						i++;
-		              						}
 		              						String date = "";
 		              						String dur = "";
 		              						try{ date = v. getSimpleDate().trim();}catch(Exception e){}
@@ -445,7 +397,7 @@
 		              						<div class="generation-date"><%=date%></div>
 											<div class="title-small"><%=v.getTitle()%></div>		              							
 			              					<div class="allcreators">		              							
-		              							<%=fullname3%>
+		              							<%=v.getLinkedCreators()%>
 		              						</div>
 	              						</div>
 								</li>
