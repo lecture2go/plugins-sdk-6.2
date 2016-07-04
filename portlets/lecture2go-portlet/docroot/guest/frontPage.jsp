@@ -100,10 +100,15 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 											<div class="video-box-content">
 												<div class="date"><%=vid.getSimpleDate() %></div>
 												<div class="title-small dot-ellipsis dot-resize-update "><%=vid.getTitle() %></div>
-												<div class="creator-small2 dot-ellipsis dot-resize-update "><%=vid.getLinkedCreators() %></div>										
-												<% if (!isVideo) { %>
-													<div class="lectureseries-small dot-ellipsis dot-resize-update "><%=lectser.getName() %></div> 
-												<% } %>
+												<div class="creator-small2 dot-ellipsis dot-resize-update "><%=vid.getLinkedCreators() %></div>
+												<div class="lectureseries-small dot-ellipsis dot-resize-update">
+													<% if (!isVideo) { %>
+														<%=lectser.getName() %>
+													<% } else { %>
+														&nbsp;
+													<% } %>
+												</div> 
+
 												<div class="labels">
 													<%
 														String instLink="<a href='/l2go/-/get/"+inst.getInstitutionId()+"/"+inst.getParentId()+"/0/0/0/'>"+inst.getName()+"</a>"; 
@@ -177,9 +182,13 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 											<div class="date"><%=vid.getSimpleDate() %></div>
 											<div class="title-small dot-ellipsis dot-resize-update "><%= vid.getTitle() %></div>
 											<div class="creator-small2 dot-ellipsis dot-resize-update "><%= vid.getLinkedCreators() %></div>
-											<% if (!isVideo) { %>
-												<div class="lectureseries-small dot-ellipsis dot-resize-update "><%= lec.getName() %></div>
-											<% } %>
+											<div class="lectureseries-small dot-ellipsis dot-resize-update">
+												<% if (!isVideo) { %>
+													<%=lec.getName() %>
+												<% } else { %>
+													&nbsp;
+												<% } %>
+											</div>
 											<div class="labels">
 												<%
 													String instLink="<a href='/l2go/-/get/"+inst.getInstitutionId()+"/"+inst.getParentId()+"/0/0/0/'>"+inst.getName()+"</a>"; 
