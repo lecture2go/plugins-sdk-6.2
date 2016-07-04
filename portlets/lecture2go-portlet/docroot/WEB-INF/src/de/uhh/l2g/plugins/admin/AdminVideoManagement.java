@@ -150,6 +150,11 @@ public class AdminVideoManagement extends MVCPortlet {
 			else reqLectureseriesList = LectureseriesLocalServiceUtil.getFilteredByApprovedSemesterFacultyProducer(1, (long) 0, (long) 0, reqPproducerId);
 		}catch(Exception e){}
 		request.setAttribute("reqLectureseriesList", reqLectureseriesList);
+
+		//requested sub institutions
+		List<Video_Institution> reqSubInstitutions = new ArrayList<Video_Institution>();
+		reqSubInstitutions = Video_InstitutionLocalServiceUtil.getByVideo(reqVideo.getVideoId());
+		request.setAttribute("reqSubInstitutions", reqSubInstitutions);
 		
 		//requested license
 		License reqLicense = new LicenseImpl();
@@ -223,7 +228,12 @@ public class AdminVideoManagement extends MVCPortlet {
 		List<Lectureseries> reqLectureseriesList = new ArrayList<Lectureseries>();
 		try{reqLectureseriesList = LectureseriesLocalServiceUtil.getFilteredByApprovedSemesterFacultyProducer(1, (long) 0, (long) 0, producerId);}catch(Exception e){}
 		request.setAttribute("reqLectureseriesList", reqLectureseriesList);
-		
+
+		//requested sub institutions
+		List<Video_Institution> reqSubInstitutions = new ArrayList<Video_Institution>();
+		reqSubInstitutions = Video_InstitutionLocalServiceUtil.getByVideo(video.getVideoId());
+		request.setAttribute("reqSubInstitutions", reqSubInstitutions);
+
 		//licence
 		License license = new LicenseImpl();
 		license.setVideoId(newVideo.getVideoId());
