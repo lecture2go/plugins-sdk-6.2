@@ -110,7 +110,7 @@ if(timeStart>0 && timeEnd>timeStart && video.getCitation2go()==1)isCitation2Go=t
 				<%@ include file="/player/includePlayer.jsp"%>
 				   <div class="license">
 				      <%if(videoLicense.getL2go()==1){%>
-				      	<a href="license-l2go"><img title="<liferay-ui:message key='l2go-license-click-for-info'/>" src="/lecture2go-portlet/img/l2go-lizenz.png"/></a>
+				      	<a href="/license-l2go"><img title="<liferay-ui:message key='l2go-license-click-for-info'/>" src="/lecture2go-portlet/img/l2go-lizenz.png"/></a>
 				 	  <%}else{%>
 						<a href="https://creativecommons.org/licenses/by-nc-sa/3.0/"><img title="<liferay-ui:message key='cc-license-click-for-info'/>" src="/lecture2go-portlet/img/lizenz_cc.png" /></a> 		
 				 	  <%}%>       
