@@ -876,6 +876,7 @@ thead, th {
     float: left;
 }
 
+/*
 .aui .label {
     border-radius: 0px;
     border: 1px solid #aaa;
@@ -892,10 +893,31 @@ thead, th {
     padding: 2px 4px 0px !important;
     font-weight: 100;
 }
+*/
 
+.aui .label {
+    display: inline-block;
+    padding: 0 10px;
+    margin-right: 5px;
+    font-size: 10px;
+    line-height: 14px;
+	background-color: #f0f0f0;
+    font-size: 11px;
+    height: 20px;
+    line-height: 20px;
+    padding: 0 10px !important;
+    color: #666;
+    text-decoration: none;
+    text-shadow: none;
+    border-radius: 0px;
+    border: none;
+}
+
+/*
 .aui .label:hover {
 	border: 1px solid #444;
 }
+*/
 
 .aui .label a {
 	color: #444;
@@ -2084,6 +2106,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
     right: 12px;
     bottom: 7px;
     z-index: 9999;
+    cursor: pointer;
 }
 
 /*** end: front page background-video specific  ***/
@@ -2199,14 +2222,19 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 
 .video-box { 
 	position: relative;
-	background-color: #f3f3f3; 
+	/*background-color: #f3f3f3; */
 	border: 1px solid #ddd;
-	padding: 7px; 
+	padding: 10px; 
 	cursor: pointer; 
+	height: 300px
 }
 
 .video-box:hover {
-	background-color: #e9e9e9;
+	background-color: #f0f0f0;
+}
+
+.video-box:hover .label {
+	outline: #bbb solid 1px;
 }
 
 
@@ -2264,15 +2292,15 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 .video-box-content .title-small {
 	font-size: 14px;
 	width: 100%;
-	margin: 0 0 5px 0;
+	margin: 0 0 8px 0;
 	color: #000;
-	height: 60px;
+	/*height: 60px;*/
 }
 
 .video-box-content .creator-small2 {
-    margin: 0 0 2px 0;
+    margin: 0 0 8px 0;
     font-size: 12px;
-    height: 25px;
+    /*height: 25px;*/
 }
 
 .video-box-content .date {
@@ -2281,11 +2309,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 }
 
 .video-box-content .lectureseries-small {
-    margin: 0 0 25px 0;
-    padding: 0;
-    color: #AAA;
-    height: 30px;
-    line-height: 15px;
+	margin: 0 0 15px 0;
 }
 
 .lectureseries-small {
@@ -2296,9 +2320,9 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 
 .video-box-content .label {
 	position:absolute;
-	bottom: 5px;
+	bottom: 12px;
 	text-overflow: ellipsis;
-    max-width: calc(100% - 23px);  	
+    max-width: calc(100% - 35px);  	
     overflow: hidden;
 }
 
