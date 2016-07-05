@@ -165,7 +165,7 @@
 									Long pLid = new Long(pIds.get(i)+"");
 									Producer p = new ProducerImpl();
 									p=ProducerLocalServiceUtil.getProdUcer(pLid);
-									prds+=p.getFirstName()+" "+ p.getLastName()+" <br/>";
+									prds+="<p>"+p.getFirstName()+" "+ p.getLastName()+"</p>";
 								}
 							}catch(Exception e){}
 			 			%>

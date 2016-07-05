@@ -48,16 +48,14 @@ $theme.include($body_top_include)
 			<h1 class="site-title">
 				<a class="$logo_css_class" href="http://www.uni-hamburg.de" title="#language_format ("go-to-x", [$site_name])">
 					<img alt="$logo_description" height="$site_logo_height" src="$site_logo" width="$site_logo_width" />
-
+				</a>
+				<div class="l2go-logo">
 					#if ($show_site_name)
 						<span class="site-name" title="#language_format ("go-to-x", [$site_name])">
-							$site_name
+							<a href="$home_url">$site_name</a>
 						</span>
 					#end
-				</a>
-				<a class="l2go-logo" href="/l2gos">
-					<img src="/lecture2go-theme/images/logo_l2go.png">
-				</a>
+				</div>
 
 			</h1>
 
