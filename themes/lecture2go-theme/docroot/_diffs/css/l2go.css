@@ -48,12 +48,16 @@
     float: right;
     font-size: 20px;
     margin-right: 5px;
-    margin-top: 50px;
+    margin-top: 37px;
 }
 
 .aui a:hover {
     color: #c40017;
     text-decoration: underline;
+}
+
+.site-name a {
+    font-weight: 800;
 }
 
 .aui .container-fluid::before, 
@@ -145,10 +149,10 @@
 }   
 
 .aui .pager li > a, .aui .pager li > span {
-    background-color: #ffffff;
     border: 1px solid #dddddd;
     border-radius: 0;
     display: inline-block;
+    min-width: 80px;
     padding: 0 10px;
 }
 
