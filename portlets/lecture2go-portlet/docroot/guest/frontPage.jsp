@@ -31,6 +31,9 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 		    <source src="/lecture2go-portlet/img/background.mp4" type="video/mp4">
 		</video>
 		<div class="dark-overlay"></div>
+		<div id="vid-control">
+			<i class="icon-pause"></i>
+		</div>
 	</div>
 	<div class="l2go-info-container">
 		<div class="l2go-info">
@@ -254,6 +257,18 @@ $(document).ready(function(){
     	// the truncation of the elements needs to be triggered manually on carousel switch
     	$(".active .title-small, .active .creator-small2, .active .lectureseries-small").trigger("update.dot");
     });
+    
+    $('#vid-control').on("click", function(){
+        var video = document.getElementById("bg-vid");
+  		var $controlIcon = $(this).find('i').eq(0);
+  		if (video.paused) {
+  			video.play();
+  			$controlIcon.switchClass("icon-play", "icon-pause");
+  		} else {
+  			video.pause();
+  			$controlIcon.switchClass("icon-pause", "icon-play");
+  		}
+	});
 
 });
 

@@ -2061,6 +2061,15 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
     width: 100%;
 }
 
+#vid-control {
+    font-size: 19px;
+    color: #fff;
+    position: absolute;
+    right: 12px;
+    bottom: 7px;
+    z-index: 9999;
+}
+
 /*** end: front page background-video specific  ***/
 
 .l2go-info-container {
