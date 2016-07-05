@@ -1238,7 +1238,6 @@ thead, th {
 .format {
     color: #d81b1b;
     font-size: 10px;
-    line-height: 5px;
     padding: 0;
 }
 
@@ -1299,6 +1298,11 @@ thead, th {
 .admintile.wide {
     margin: 0 -9px 0 3px;
     width: 85%;
+}
+
+.admintile.wide p {
+    font-size: 12px;
+    margin-bottom: -3px;
 }
 
 .admintile {
