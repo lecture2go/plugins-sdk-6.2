@@ -211,15 +211,14 @@
 	
 	.aui .label {
     	margin: 1px 1px 0 0;
+    	line-height: 15px;
+	    font-size: 10px;
+	    height: 15px;
 	}
 	
 	.aui .logo, .aui .logo:hover {
 	    height: 46px;
 	    width: 156px;
-	}
-	
-	.aui .label {
-    	line-height: 12px;
 	}
 	
 	.aui .site-title .l2go-logo {
@@ -344,6 +343,7 @@
 	.video-box {
 		padding: 5px;
 		margin-bottom: 5px;
+		height: auto;
 	}
 	
 	.video-box-content .title-small {
@@ -352,6 +352,11 @@
 		color: #000;
 		height: auto;
 		padding-top: 0;
+	}
+	
+	.video-box-content .label {
+		position: relative;
+		bottom: 0;
 	}
 
 	.video-box-image-container { 
