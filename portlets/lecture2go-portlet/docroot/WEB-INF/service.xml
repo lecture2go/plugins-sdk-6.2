@@ -131,7 +131,7 @@
             <finder-column name="parentId"></finder-column>
             <finder-column name="sort"></finder-column>
         </finder>
-         <finder name="Root" return-type="Institution" where="parentId &lt; 1">
+         <finder name="Root" return-type="Institution" where="parentId =0" unique="true">
             <finder-column name="companyId"></finder-column>
             <finder-column name="groupId"></finder-column>
         </finder>

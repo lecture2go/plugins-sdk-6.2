@@ -14,9 +14,20 @@
 <jsp:useBean id="timeStart" type="java.lang.Long" scope="request" />
 <jsp:useBean id="timeEnd" type="java.lang.Long" scope="request" />
 
+<portlet:actionURL var="backURL0" name="addFilter">
+	<portlet:param name="jspPage" value="/guest/videosList.jsp" />
+	<portlet:param name="parentInstitutionId" value="0"/>
+	<portlet:param name="institutionId" value="0"/>
+	<portlet:param name="termId" value="0"/>
+	<portlet:param name="categoryId" value="0"/>
+	<portlet:param name="creatorId" value="0"/>
+</portlet:actionURL>
+								
 <%
 boolean isCitation2Go = false;
 if(timeStart>0 && timeEnd>timeStart && video.getCitation2go()==1)isCitation2Go=true;
+
+String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 %>
 
 <%if(video.getVideoId()>0){%>
@@ -35,6 +46,7 @@ if(timeStart>0 && timeEnd>timeStart && video.getCitation2go()==1)isCitation2Go=t
 							for(int j=0; j<1; j++){
 				    			Institution insti = InstitutionLocalServiceUtil.getById(institutions.get(j).getInstitutionId());    			
 				    			Institution pInst = InstitutionLocalServiceUtil.getById(institutions.get(j).getParentId());
+				    			Institution rInst = InstitutionLocalServiceUtil.getById(pInst.getParentId());
 					    		%>
 								<portlet:actionURL var="backURL1" name="addFilter">
 									<portlet:param name="jspPage" value="/guest/videosList.jsp" />
@@ -53,10 +65,12 @@ if(timeStart>0 && timeEnd>timeStart && video.getCitation2go()==1)isCitation2Go=t
 									<portlet:param name="creatorId" value="0"/>
 								</portlet:actionURL>	
 								
-						    	<A HREF="<%=backURL1%>"><%=pInst.getName() %></A> <span class="icon-arrow-right">&nbsp;</span> 
+								<A HREF="<%=backURL0%>"><%=pageName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+								<A HREF="<%=backURL0%>"><%=rInst.getName() %></A> <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+						    	<A HREF="<%=backURL1%>"><%=pInst.getName() %></A> <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
 						    	<A HREF="<%=backURL2%>"><%=insti.getName() %></A> 
 						    	<%if(lec.getLectureseriesId()>0) {%>
-					    		<span class="icon-arrow-right">&nbsp;</span> <SPAN><%=lec.getName()%></SPAN>
+					    		<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <SPAN><%=lec.getName()%></SPAN>
 					    	<%}%>
 						    	<br/>
 				    		<%}
@@ -66,6 +80,7 @@ if(timeStart>0 && timeEnd>timeStart && video.getCitation2go()==1)isCitation2Go=t
 				    		try{
 					    		Institution insti = InstitutionLocalServiceUtil.getById(videoInstitutions.get(i).getInstitutionId());    			
 					    		Institution pInst = InstitutionLocalServiceUtil.getById(videoInstitutions.get(i).getInstitutionParentId());
+					    		Institution rInst = InstitutionLocalServiceUtil.getById(pInst.getParentId());
 						    	%>
 									<portlet:actionURL var="backURL3" name="addFilter">
 										<portlet:param name="jspPage" value="/guest/videosList.jsp" />
@@ -84,9 +99,11 @@ if(timeStart>0 && timeEnd>timeStart && video.getCitation2go()==1)isCitation2Go=t
 										<portlet:param name="creatorId" value="0"/>
 									</portlet:actionURL>		    	
 							    	
+							    	<A HREF="<%=backURL0%>"><%=pageName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+							    	<A HREF="<%=backURL0%>"><%=rInst.getName() %></A> <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
 							    	<%if(pInst.getLevel()>0) {%>
 							    	  <A HREF="<%=backURL3%>"><%=pInst.getName() %></A>
-							    	  <span class="icon-arrow-right">&nbsp;</span> 
+							    	  <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
 							    	<%}%>
 							    	<A HREF="<%=backURL4%>"><%=insti.getName() %></A>	
 							    	<br/> 
@@ -415,4 +432,10 @@ if(timeStart>0 && timeEnd>timeStart && video.getCitation2go()==1)isCitation2Go=t
 		  	lessLink: '<a href="#"><b><liferay-ui:message key="less"/></b></a>'
 		});
 	}); 
-</script>    		
+</script> 
+
+<style type="text/css">
+	.aui #breadcrumbs .breadcrumb {
+	    display: none;
+	}
+</style>   		
