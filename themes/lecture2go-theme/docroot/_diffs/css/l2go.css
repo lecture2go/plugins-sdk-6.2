@@ -92,7 +92,7 @@
 }
 
 .site-name a {
-    font-weight: 800;
+	color: inherit !important;
 }
 
 .aui .container-fluid::before, 
