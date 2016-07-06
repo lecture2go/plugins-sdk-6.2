@@ -36,6 +36,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 
 import de.uhh.l2g.plugins.InstitutionNameException;
+import de.uhh.l2g.plugins.NoSuchInstitutionException;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Institution_Host;
@@ -110,7 +111,10 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		return institutionPersistence.findByParent(parentId);
 	}
 
-
+	public Institution getRoot(long companyId, long groupId) throws NoSuchInstitutionException, SystemException{
+		return institutionPersistence.findByRoot(companyId, groupId);
+	}
+	
 	public  List<Institution> getByParentId(long parentId) throws SystemException {
 		List<Institution> institutions = institutionPersistence.findByParent(parentId);
 		return institutions;

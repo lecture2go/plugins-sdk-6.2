@@ -36,11 +36,40 @@
     float: left;
     margin-top: 0;
     visibility: visible;
-    width: 56%;
+    width: 68%;
+}
+
+.uhh-icon-arrow-right{
+   	background-image: url("/lecture2go-theme/images/arrow_right.png");
+    background-position: left center;
+    background-repeat: no-repeat;
+    color: rgba(0, 0, 0, 0);
+    margin: 0 5px;
+    overflow: hidden;
+    text-align: center;
+    width: 13px;	
+}
+
+.aui #breadcrumbs {
+    margin-bottom: 3px;
+    margin-left: 13px;
+    margin-top: 0;
+    padding: 0;
+}
+
+.aui .breadcrumb li span.divider {
+   	background-image: url("/lecture2go-theme/images/arrow_right.png");
+    background-position: left center;
+    background-repeat: no-repeat;
+    color: rgba(0, 0, 0, 0);
+    margin: 0 5px;
+    overflow: hidden;
+    text-align: center;
+    width: 13px;
 }
 
 .aui #navigation .nav li {
-    min-width: 100px;
+    min-width: 120px;
     width: 20%;
 }
 
@@ -49,6 +78,10 @@
     font-size: 20px;
     margin-right: 5px;
     margin-top: 37px;
+}
+
+.aui .site-navigation {
+    margin-bottom: 0;
 }
 
 .aui a:hover {
@@ -444,13 +477,17 @@ p.smallitalic {
 .path {
     width: 70%;
     font-size: 11px;
-    margin-bottom: 5px;
+    margin-bottom: 12px;
+    margin-left: 15px;
+    margin-top: 8px;
 }
 
 .path-wide{
 	width: 100%;
 	font-size: 11px;
-	margin-bottom: 5px;
+	margin-bottom: 12px;
+    margin-left: 15px;
+    margin-top: 8px;
 }
 
 .path > span {

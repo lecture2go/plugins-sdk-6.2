@@ -1,3 +1,7 @@
+<%@page import="de.uhh.l2g.plugins.model.impl.InstitutionImpl"%>
+<%@ page import = "com.liferay.portal.kernel.util.WebKeys" %>
+<%@ page import = "com.liferay.portal.theme.ThemeDisplay" %>
+
 <%@include file="/init.jsp"%>
  
 <%
@@ -98,8 +102,66 @@
 	if(presentParentInstitutions.size()>0||presentInstitutions.size()>0||presentTerms.size()>0||presentCategories.size()>0){
 		resultSetEmpty=false;
 	}
+	
+	Institution insti = new InstitutionImpl();
+	Institution pInst = new InstitutionImpl();
+	Institution rInst = new InstitutionImpl();
+	String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
+	%>
+	<portlet:actionURL var="backURL0" name="addFilter">
+		<portlet:param name="jspPage" value="/guest/videosList.jsp" />
+		<portlet:param name="parentInstitutionId" value="0"/>
+		<portlet:param name="institutionId" value="0"/>
+		<portlet:param name="termId" value="0"/>
+		<portlet:param name="categoryId" value="0"/>
+		<portlet:param name="creatorId" value="0"/>
+	</portlet:actionURL>
 		
+	<div class="path-wide">
+	<A HREF="<%=backURL0%>"><%=pageName %></A>
+	<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+	<%
+	try{
+		rInst=InstitutionLocalServiceUtil.getRoot(themeDisplay.getCompanyId(), themeDisplay.getLayout().getGroupId()); 
+		if(rInst.getName().length()>0){%>
+		<A HREF="<%=backURL0%>"><%=rInst.getName() %></A>
+	<%} 
+	}catch(Exception e){}
+
+	try{
+		pInst=InstitutionLocalServiceUtil.getById(parentInstitutionId);
+		if(pInst.getName().length()>0){%>
+		<portlet:actionURL var="backURL1" name="addFilter">
+			<portlet:param name="jspPage" value="/guest/videosList.jsp" />
+			<portlet:param name="parentInstitutionId" value="<%=pInst.getInstitutionId()+\"\"%>"/>
+			<portlet:param name="institutionId" value="0"/>
+			<portlet:param name="termId" value="0"/>
+			<portlet:param name="categoryId" value="0"/>
+			<portlet:param name="creatorId" value="0"/>
+		</portlet:actionURL>
+		<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+		<A HREF="<%=backURL1%>"><%=pInst.getName() %></A>
+	<%}		
+	}catch(Exception e){}
+
+	try{
+		insti=InstitutionLocalServiceUtil.getById(institutionId);
+		if(insti.getName().length()>0){%>
+			<portlet:actionURL var="backURL2" name="addFilter">
+				<portlet:param name="jspPage" value="/guest/videosList.jsp" />
+				<portlet:param name="parentInstitutionId" value="<%=pInst.getInstitutionId()+\"\"%>"/>
+				<portlet:param name="institutionId" value="<%=insti.getInstitutionId()+\"\"%>"/>
+				<portlet:param name="termId" value="0"/>
+				<portlet:param name="categoryId" value="0"/>
+				<portlet:param name="creatorId" value="0"/>
+			</portlet:actionURL>	
+			<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+			<A HREF="<%=backURL2%>"><%=insti.getName() %></A> 
+		<%}		
+	}catch(Exception e){}
 %>
+</div>
+
 <div class="catalogue-container">
 	<div class="row-fluid">
 	<%if(!resultSetEmpty){ %>
@@ -433,3 +495,9 @@ var checkExist = setInterval(function() {
  	}
 }, 100);
 </script>
+
+<style type="text/css">
+	.aui #breadcrumbs .breadcrumb {
+	    display: none;
+	}
+</style>  
