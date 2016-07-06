@@ -161,7 +161,7 @@
 	}catch(Exception e){}
 %>
 </div>
-
+<h1><liferay-ui:message key="video-catalog"/></h1>
 <div class="catalogue-container">
 	<div class="row-fluid">
 	<%if(!resultSetEmpty){ %>
