@@ -1944,10 +1944,6 @@ div.filter-menu-link span.icon-large.icon-remove {
     color: #4d4d4d;
 }
 
-.aui a:hover {
-    text-decoration: underline !important;
-}
-
 #term {
 	float:left;
 	margin-left: 0%;
