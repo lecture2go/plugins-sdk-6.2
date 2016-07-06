@@ -75,9 +75,11 @@
 
 .aui .site-title .site-name {
     float: right;
-    font-size: 20px;
     margin-right: 5px;
     margin-top: 37px;
+    font-family: TheSansUHHBold,sans-serif;
+    font-weight: normal;
+    font-size: 20px;
 }
 
 .aui .site-navigation {
