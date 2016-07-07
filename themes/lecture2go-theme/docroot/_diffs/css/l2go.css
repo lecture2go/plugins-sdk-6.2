@@ -52,7 +52,6 @@
 
 .aui #breadcrumbs {
     margin-bottom: 3px;
-    margin-left: 13px;
     margin-top: 0;
     padding: 0;
 }
@@ -163,6 +162,7 @@
 
 #content {
 	clear: both;
+	margin: 10px;
 }
 
 .orange {
@@ -184,10 +184,10 @@
 }   
 
 .aui .pager li > a, .aui .pager li > span {
-    border: 1px solid #dddddd;
+    border: 1px solid #f0f0f0;
     border-radius: 0;
     display: inline-block;
-    min-width: 80px;
+    min-width: 70px;
     padding: 0 10px;
 }
 
@@ -207,7 +207,7 @@
 
 .aui #navigation .nav .dropdown-menu > li a {
     background: #f9f9f9 url("/lecture2go-portlet/img/rot_navi-pfeil-rechts.png") no-repeat scroll 9px 11px !important;
-    border-color: #dddddd;
+    border-color: #f0f0f0;
     border-radius: 0;
     border-style: solid solid none;
     border-width: 1px;
@@ -226,7 +226,7 @@
 .metainfo-small {
     line-height: 20px;
     margin-left: 67px;
-    padding: 1px 0 0;
+    padding: 3px 0 11px;
 }
 
 fieldset.fieldset.add-streaming-server div.layout {
@@ -246,15 +246,25 @@ fieldset.fieldset.add-streaming-server div.layout {
     padding: 0 7px;
 }
 
+.aui .accordion-group.lfr-panel .accordion-heading {
+    background: #f0f0f0 none repeat scroll 0 0;
+    border-color: #ffffff;
+    border-style: solid;
+    border-width: 0 0 2px;
+    color: #ffffff;
+    height: 33px;
+}
+
 .span3 .accordion-inner li {
-    background-color: #f3f3f3 !important;
-    border-color: #fff #f3f3f3 #d4d4d4 !important;
+    background-color: #f0f0f0 !important;
+    border-color: #f0f0f0 #f0f0f0 #ffffff !important;
     border-style: solid !important;
     border-width: 1px !important;
     line-height: 27px;
 }
+
 .span3 .accordion-inner li:hover {
-	background-color: #e9e9e9 !important;
+	background-color: #e5e5e5 !important;
 }
 
 mark {
@@ -268,7 +278,7 @@ mark {
 }
 
 .aui .accordion-group.lfr-panel .accordion-heading .accordion-toggle {
-    background-color: #a4a5a6;
+    background-color: #f0f0f0;
     color: #000;
     font-weight: 900;
     padding: 0 3px 20px 6px;
@@ -303,7 +313,7 @@ mark {
 
 .aui #navigation .nav .dropdown-menu > li {
     background: #f9f9f9 none repeat scroll 0 0 !important;
-    border-bottom: 1px solid #f3f3f3;
+    border-bottom: 1px solid #f0f0f0;
     border-radius: 0;
     margin-top: -1px;
     width: 100%;
@@ -428,7 +438,7 @@ p.smallitalic {
     float: left;
     height: 30px;
     margin-right: 8px;
-    margin-top: 3px;
+    margin-top: 5px;
     max-width: 60px;
 }
 
@@ -480,7 +490,7 @@ p.smallitalic {
     width: 70%;
     font-size: 11px;
     margin-bottom: 12px;
-    margin-left: 15px;
+    margin-left: 0px;
     margin-top: 8px;
 }
 
@@ -488,7 +498,7 @@ p.smallitalic {
 	width: 100%;
 	font-size: 11px;
 	margin-bottom: 12px;
-    margin-left: 15px;
+    margin-left: 0px;
     margin-top: 8px;
 }
 
@@ -519,12 +529,12 @@ p.smallitalic {
     -moz-border-bottom-colors: none;
     -moz-border-left-colors: none;
     border-image: none;
-    background-color: #f3f3f3;
+    background-color: #fff;
     margin-bottom: 1px;
 }
 
 #meta-share input.option1 {
-    background-color: #ddd;
+    background-color: #f0f0f0;
     border: medium none;
     color: #484848;
     font-size: 14px;
@@ -610,12 +620,13 @@ p.smallitalic {
 }
 
 .videotile button {
-    float: right;
-    margin-right: 10px;
-    background-color: transparent;
+    background-color: rgba(0, 0, 0, 0);
     border: medium none;
-    transition: all 0.2s ease;
+    float: right;
+    margin-right: 7px;
+    margin-top: 0px;
     padding: 0;
+    transition: all 0.2s ease 0s;
 }
 
 .videotile button.highlight {
@@ -627,14 +638,15 @@ p.smallitalic {
 }
 
 .videotile.wide {
-    width: auto;
-    height: 120px;
-    background-color: #f3f3f3;
-    padding: 5px 0 0 5px;
-    border: 1px solid #ddd;
+    background-color: #ffffff;
+    border: 1px solid #f0f0f0;
     cursor: pointer;
-    transition: background 0.2s;
     display: flex;
+    height: 120px;
+    margin-bottom: 7px;
+    padding: 5px 0 0 5px;
+    transition: background 0.2s ease 0s;
+    width: auto;
 }
 
 .term-of-creation{
@@ -645,11 +657,11 @@ p.smallitalic {
 
 .videotile.wide:hover,
 .videotile.small:hover {
-    background-color: #e9e9e9 !important;
+    background-color: #f0f0f0 !important;
 }
 
 .videotile.small {
-	background-color: #f3f3f3;
+	background-color: #ffffff;
     transition: background 0.2s;
     cursor: pointer;
 }
@@ -661,7 +673,7 @@ p.smallitalic {
 }
 
 .videotile.small.related {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #f0f0f0;
     cursor: pointer;
     float: left;
     height: auto;
@@ -676,7 +688,7 @@ p.smallitalic {
 }
 
 .videotile.small.related.active {
-    background-color: #e9e9e9;
+    background-color: #f0f0f0;
 }
 
 #video-list .list-group-item {
@@ -686,13 +698,13 @@ p.smallitalic {
     margin-top: 10px;
     margin-bottom: -1px;
     background-color: #FFF;
-    border: 1px solid #DDD;
+    border: 1px solid #f0f0f0;
     height: 118px;
 }
 
 #video-list .list-group-item:hover {
     text-decoration: none;
-    background-color: #f3f3f3;
+    background-color: #f0f0f0;
 }
 
 #video-list .sublist2 {
@@ -711,10 +723,10 @@ p.smallitalic {
 }
 
 #videolist {
+    background-color: #f0f0f0;
+    border-bottom: 0 solid #f0f0f0 !important;
     margin-left: 60px;
-    background-color: #ddd;
-    margin-top: 0px;
-    border-bottom: 1px solid #F3F3F3 !important;
+    margin-top: -7px;
 }
 
 #searchedvideo {
@@ -729,7 +741,7 @@ p.smallitalic {
 a.list-group-item:hover, a.list-group-item:focus {
     color: #555;
     text-decoration: none;
-    background-color: #f3f3f3;
+    background-color: #f0f0f0;
 }
 
 .list-group-item:first-child {
@@ -774,18 +786,6 @@ a.list-group-item:hover, a.list-group-item:focus {
     border-top: 1px solid #E5E5E5;
 }
 
-.aui .accordion-group .toggler-content .accordion-inner {
-    border-width: 0px 0px 0px 3px;
-    border-style: solid;
-    border-color: #ddd;
-}
-
-.aui .accordion-group.lfr-panel .accordion-heading {
-    background: #a4a5a6 none repeat scroll 0 0;
-    border-style: none;
-    border-width: 0 0 1px;
-}
-
 .tileheading {
     font-size: 17px;
 }
@@ -809,7 +809,7 @@ thead, th {
 }
 
 .aui .btn {
-    background: linear-gradient(#eee, #ddd);
+    background: linear-gradient(#eee, #f0f0f0);
     border-radius: 0;
     border-width: 0;
     color: #484848;
@@ -854,7 +854,7 @@ thead, th {
     display: block;
     padding: 4px;
     line-height: 20px;
-    border: 1px solid #DDD;
+    border: 1px solid #f0f0f0;
     border-radius: 0px;
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.055);
     height: 150px;
@@ -997,7 +997,7 @@ thead, th {
 
 .aui .nav-tabs li {
 	margin: 0px -1px 0px 0px;
-	border: 1px solid #ddd;
+	border: 1px solid #f0f0f0;
 }
 
 .aui .nav-tabs > li > a {
@@ -1410,7 +1410,7 @@ thead, th {
 }
 
 .adminrow.wide {
-    background-color: #f3f3f3;
+    background-color: #f0f0f0;
     border-top: 1px solid #eee;
 }
 
@@ -1432,8 +1432,8 @@ thead, th {
 
 .aui select {
     -moz-appearance: none;
-    background-color: #DDD;
-    background-image: linear-gradient(45deg, transparent 50%, #000 50%), linear-gradient(135deg, #000 50%, transparent 50%), linear-gradient(to right, #DDD, #DDD);
+    background-color: #f0f0f0;
+    background-image: linear-gradient(45deg, transparent 50%, #000 50%), linear-gradient(135deg, #000 50%, transparent 50%), linear-gradient(to right, #f0f0f0, #f0f0f0);
     background-position: calc(100% - 18px) calc(1em - 2px), calc(100% - 13px) calc(1em - 2px), 100% 0px;
     background-repeat: no-repeat;
     background-size: 5px 5px, 5px 5px, 2.5em 2.5em;
@@ -1612,7 +1612,7 @@ thead, th {
 }
 
 .edit-video-lable {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #f0f0f0;
     color: black !important;
     font-size: 24px !important;
     font-style: normal;
@@ -1669,7 +1669,7 @@ thead, th {
 
 
 .aui #navigation .nav .dropdown-menu > li a:hover {
-    background: #ddd url("/lecture2go-portlet/img/rot_navi-pfeil-rechts.png") no-repeat scroll 9px 11px !important;
+    background: #f0f0f0 url("/lecture2go-portlet/img/rot_navi-pfeil-rechts.png") no-repeat scroll 9px 11px !important;
     text-decoration: none;
 }
 
@@ -1701,7 +1701,7 @@ thead, th {
 }
 
 .aui .dockbar-split .dockbar .navbar-inner .nav li.dropdown.open > .dropdown-toggle {
-    background: #ddd none repeat scroll 0 0;
+    background: #f0f0f0 none repeat scroll 0 0;
     box-shadow: none;
     color: #4e4e4e;
     margin-right: 0;
@@ -1731,7 +1731,7 @@ thead, th {
 
 .aui .dockbar-split .dockbar .navbar-inner .nav-account-controls {
     background: transparent none repeat scroll 0 0;
-    border: 0 solid #ddd;
+    border: 0 solid #f0f0f0;
     margin-right: 1%;
     right: 0;
 }
@@ -1801,7 +1801,7 @@ thead, th {
 
 div.filter-menu-link span.icon-large.icon-remove {
     float: right;
-    margin-right: 5px;
+    margin-right: 9px;
     margin-top: 1px;
 }
 
@@ -1827,7 +1827,7 @@ div.filter-menu-link span.icon-large.icon-remove {
 
 .aui #footer {
     font-size: 11px;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid #f0f0f0;
     margin-top: 22px;
 }
 
@@ -1889,8 +1889,8 @@ div.filter-menu-link span.icon-large.icon-remove {
 }
 
 .aui .accordion-group.lfr-panel .accordion-heading .accordion-toggle::after, .aui .accordion-group.lfr-panel .accordion-heading .accordion-toggle::before {
-    background-color: #a4a5a6;
-    color: #fff;
+ 	background-color: #f0f0f0;
+    color: #4d4d4d;
     float: right;
     font-size: 18px;
     margin: 3px 5px 0 0;
@@ -1899,12 +1899,28 @@ div.filter-menu-link span.icon-large.icon-remove {
 }
 
 .title-text {
-    color: #fff !important;
+    color: #4d4d4d !important;
     float: left;
     font-size: 14px;
-    margin-top: 4px;
-    padding: 0 8px 4px;
-    text-shadow: 1px 1px 1px #777777 !important;
+    margin-top: 6px;
+    padding: 0 2px 4px;
+    text-shadow: 0px 0px 0px 0px #fff !important;
+}
+
+.aui .icon-chevron-down::before {
+    background-image: url("/lecture2go-theme/images/arrow_down.svg") !important;
+    background-repeat: no-repeat;
+    content: "" !important;
+    height: 30px;
+    width: 30px;
+}
+
+.aui .accordion-group .accordion-heading.toggler-header-expanded .accordion-toggle::before, .aui .lfr-add-panel .lfr-page-template .lfr-page-template-title.toggler-header-expanded::before {
+    background-image: url("/lecture2go-theme/images/arrow_up.svg");
+    content: " ";
+    height: 30px;
+    width: 30px;
+    margin-right: 0px;
 }
 
 /*Bastian Start*/
@@ -1942,6 +1958,10 @@ div.filter-menu-link span.icon-large.icon-remove {
 
 .aui a {
     color: #4d4d4d;
+}
+
+.aui a:hover {
+    text-decoration: underline !important;
 }
 
 #term {
@@ -2257,8 +2277,8 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 
 .video-box { 
 	position: relative;
-	/*background-color: #f3f3f3; */
-	border: 1px solid #ddd;
+	/*background-color: #f0f0f0; */
+	border: 1px solid #f0f0f0;
 	padding: 10px; 
 	cursor: pointer; 
 	height: 300px
