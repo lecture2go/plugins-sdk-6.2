@@ -5,6 +5,7 @@
 <%@include file="/init.jsp"%>
  
 <%
+	String companyName = company.getName();
 	// defines how many terms and creators are shown initially	
 	int maxTerms	= 4;
 
@@ -118,6 +119,7 @@
 	</portlet:actionURL>
 		
 	<div class="path-wide">
+	<A HREF="/"><%=companyName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
 	<A HREF="<%=backURL0%>"><%=pageName %></A>
 	<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
 	<%
@@ -169,7 +171,7 @@
 			<liferay-ui:panel-container>
 				<!-- 	parentinstitution filter -->
 				<%if(presentParentInstitutions.size()>0){ %>
-				<liferay-ui:panel extended="false" defaultState="collapsed" title="institution" cssClass='${hasParentInstitutionFiltered ? "filtered" : "notFiltered"}'>
+				<liferay-ui:panel extended="false" defaultState="collapsed" title="institution-capital" cssClass='${hasParentInstitutionFiltered ? "filtered" : "notFiltered"}'>
 					<ul>
 					<c:forEach items="<%=presentParentInstitutions %>" var="parentInstitution">
 						<portlet:actionURL var="filterByParentInstitution" name="addFilter">
@@ -190,7 +192,7 @@
 			 	<!-- 	institution filter  -->
 				<c:if test="${hasParentInstitutionFiltered}">
 				<%if(presentInstitutions.size()>0){ %>
-				<liferay-ui:panel extended="false" defaultState="collapsed" title="sub-institution" cssClass='${hasInstitutionFiltered ? "filtered" : "notFiltered"}'>
+				<liferay-ui:panel extended="false" defaultState="collapsed" title="sub-institution-capital" cssClass='${hasInstitutionFiltered ? "filtered" : "notFiltered"}'>
 					<ul>
 					<c:forEach items="<%=presentInstitutions %>" var="institution">
 						<portlet:actionURL var="filterByInstitution" name="addFilter">
@@ -211,7 +213,7 @@
 				
 				<!-- 	terms filter -->
 				<%if(presentTerms.size()>0){%>
-				<liferay-ui:panel extended="false" defaultState="collapsed" title="term" cssClass='${hasTermFiltered ? "filtered" : "notFiltered"}'>
+				<liferay-ui:panel extended="false" defaultState="collapsed" title="term-capital" cssClass='${hasTermFiltered ? "filtered" : "notFiltered"}'>
 					<ul class="terms">
 					<c:forEach items="<%=presentTerms %>" var="term">
 						<portlet:actionURL var="filterByTerm" name="addFilter">
@@ -233,9 +235,9 @@
 				<%}%>
 			
 				
-				<!-- 	category filter -->
+				<!-- category filter -->
 				<%if(presentCategories.size()>0){%>
-				<liferay-ui:panel extended="false" defaultState="collapsed" title="category" cssClass='${hasCategoryFiltered ? "filtered" : "notFiltered"}'>
+				<liferay-ui:panel extended="false" defaultState="collapsed" title="category-capital" cssClass='${hasCategoryFiltered ? "filtered" : "notFiltered"}'>
 					<ul>
 					<c:forEach items="<%=presentCategories %>" var="category">
 			    		<portlet:actionURL var="filterByCategory" name="addFilter">
@@ -338,7 +340,7 @@
 											</div>
 											<div class="video-content-footer">
 																		
-										        <div class="tags">
+										        <div class="labels">
 										          <%
 										        	String cat = "";
 										        	List<Video_Institution> vi = Video_InstitutionLocalServiceUtil.getByVideo(vidDummy.getVideoId());
@@ -350,13 +352,13 @@
 										            	System.out.print(e);
 										            }
 										          %>
-										          <span class="label label-light2 text-cut"><%=cat%></span>
+										          <span class="label label-light2"><%=cat%></span>
 										          <%
 										          		try{
 															Institution inst = InstitutionLocalServiceUtil.getById(vi.get(0).getInstitutionId());
 															String instLink="<a href='/l2go/-/get/"+inst.getInstitutionId() + "/" + inst.getParentId() + "/0/0/0/'>" + inst.getName() + "</a>"; 
 											          		%>
-													          <span class="label label-light2 text-cut"><%=instLink%></span>
+													          <span class="label label-light2"><%=instLink%></span>
 											          		<%
 										          		}catch(NullPointerException e){
 										          			//
@@ -397,7 +399,7 @@
 														<i class="icon-large icon-chevron-down"></i>
 													</span>	
 												</button>
-										        <div class="tags">
+										        <div class="labels">
 										          <%
 										        	String cat ="";
 										            try{
@@ -405,14 +407,14 @@
 										            }catch(Exception e){}
 										        	List<Lectureseries_Institution> li = Lectureseries_InstitutionLocalServiceUtil.getByLectureseries(lectser.getLectureseriesId());
 													%>
-										          <span class="label label-light2 text-cut"><%=cat%></span>
+										          <span class="label label-light2"><%=cat%></span>
 										          <%
 										          		try{
 												        	Institution inst = InstitutionLocalServiceUtil.getById(li.get(0).getInstitutionId());
 												        	
 															String instLink="<a href='/l2go/-/get/"+inst.getInstitutionId()+"/" + inst.getParentId() + "/0/0/0/'>"+inst.getName()+"</a>"; 
 											          		%>
-													          <span class="label label-light2 text-cut"><%=instLink%></span>
+													          <span class="label label-light2"><%=instLink%></span>
 											          		<%
 										          		}catch(NullPointerException e){
 										          			//
@@ -499,5 +501,8 @@ var checkExist = setInterval(function() {
 <style type="text/css">
 	.aui #breadcrumbs .breadcrumb {
 	    display: none;
+	}
+	.current-page{
+		display: none;
 	}
 </style>  

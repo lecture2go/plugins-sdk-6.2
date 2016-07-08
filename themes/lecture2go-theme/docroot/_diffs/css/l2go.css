@@ -387,7 +387,7 @@ p.smallitalic {
 
 .video-content-footer {
     flex: 0 0 20px;
-    margin-bottom: 7px;
+    margin-bottom: 0px;
 }
 
 .video-image-big {
@@ -623,7 +623,7 @@ p.smallitalic {
     background-color: rgba(0, 0, 0, 0);
     border: medium none;
     float: right;
-    margin-right: 7px;
+    margin-right: 9px;
     margin-top: 0px;
     padding: 0;
     transition: all 0.2s ease 0s;
@@ -649,6 +649,10 @@ p.smallitalic {
     width: auto;
 }
 
+.videotile.wide .labels {
+    margin-bottom: 10px;
+}
+
 .term-of-creation{
 	float: right;
 	font-size: 12px;
@@ -658,6 +662,10 @@ p.smallitalic {
 .videotile.wide:hover,
 .videotile.small:hover {
     background-color: #f0f0f0 !important;
+}
+
+.videotile.wide:hover .label {
+    outline: 1px solid #bbbbbb;
 }
 
 .videotile.small {
@@ -1912,6 +1920,19 @@ div.filter-menu-link span.icon-large.icon-remove {
     background-repeat: no-repeat;
     content: "" !important;
     height: 30px;
+    width: 30px;
+}
+
+.aui .accordion-group .accordion-heading.toggler-header-collapsed .accordion-toggle::before, .aui .accordion-group .accordion-heading.toggler-header-expanded .accordion-toggle::before, .aui .lfr-add-panel .lfr-page-template .lfr-page-template-title.toggler-header-collapsed::before, .aui .lfr-add-panel .lfr-page-template .lfr-page-template-title.toggler-header-expanded::before {
+    background-image: url("/lecture2go-theme/images/arrow_down.svg");
+    content: " ";
+    display: inline-block;
+    font-family: "fontawesome-alloy";
+    font-style: normal;
+    font-weight: normal;
+    height: 30px;
+    margin-right: 0px !important;
+    text-decoration: inherit;
     width: 30px;
 }
 

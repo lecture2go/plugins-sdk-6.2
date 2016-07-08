@@ -24,6 +24,8 @@
 </portlet:actionURL>
 								
 <%
+String companyName = company.getName();
+
 boolean isCitation2Go = false;
 if(timeStart>0 && timeEnd>timeStart && video.getCitation2go()==1)isCitation2Go=true;
 
@@ -65,13 +67,14 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 									<portlet:param name="creatorId" value="0"/>
 								</portlet:actionURL>	
 								
+								<A HREF="/"><%=companyName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
 								<A HREF="<%=backURL0%>"><%=pageName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
 								<A HREF="<%=backURL0%>"><%=rInst.getName() %></A> <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
 						    	<A HREF="<%=backURL1%>"><%=pInst.getName() %></A> <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
 						    	<A HREF="<%=backURL2%>"><%=insti.getName() %></A> 
 						    	<%if(lec.getLectureseriesId()>0) {%>
 					    		<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <SPAN><%=lec.getName()%></SPAN>
-					    	<%}%>
+					    		<%}%>
 						    	<br/>
 				    		<%}
 				    	}
@@ -99,6 +102,7 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 										<portlet:param name="creatorId" value="0"/>
 									</portlet:actionURL>		    	
 							    	
+   									<A HREF="/"><%=companyName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
 							    	<A HREF="<%=backURL0%>"><%=pageName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
 							    	<A HREF="<%=backURL0%>"><%=rInst.getName() %></A> <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
 							    	<%if(pInst.getLevel()>0) {%>
@@ -115,6 +119,8 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 			    </div>
 			</div>
 		<%}%>
+	
+		<h1><liferay-ui:message key="video-catalog"/></h1>
 		    
 		<div class="col-md-7">
 		    <div id="main" >
@@ -438,4 +444,7 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 	.aui #breadcrumbs .breadcrumb {
 	    display: none;
 	}
-</style>   		
+	.current-page{
+		display: none;
+	}
+</style>  		

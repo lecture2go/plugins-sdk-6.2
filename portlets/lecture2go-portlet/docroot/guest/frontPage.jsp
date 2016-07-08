@@ -304,3 +304,20 @@ function transformSearchToSmallView() {
 }
     
 </script>
+
+<style type="text/css">
+	#breadcrumbs .breadcrumb {
+	    visibility: hidden;
+	}
+	
+	#breadcrumbs {
+	    height: 17px !important;
+	    margin-bottom: 3px;
+	    margin-top: 0;
+	    padding: 0;
+	}
+	
+	.current-page{
+		display: none;
+	}
+</style>  

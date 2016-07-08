@@ -84,7 +84,16 @@ $theme.include($body_top_include)
 		
 	<div id="content">
 		<nav id="breadcrumbs">#breadcrumbs()</nav>
-
+		
+		#set($currentPage = "")
+		#foreach ($nav_item in $nav_items)
+		#if ($nav_item.isSelected())
+		#set($currentPage = $nav_item.getName())
+		#break
+		#end
+		#end 
+		<div class="current-page"> <h1>$currentPage</h1> </div>
+		
 		#if ($selectable)
 			$theme.include($content_include)
 		#else
