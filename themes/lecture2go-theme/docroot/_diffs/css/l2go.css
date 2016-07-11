@@ -487,7 +487,7 @@ p.smallitalic {
 }
 
 .path {
-    width: 70%;
+    width: 100%;
     font-size: 11px;
     margin-bottom: 12px;
     margin-left: 0px;
@@ -500,6 +500,11 @@ p.smallitalic {
 	margin-bottom: 12px;
     margin-left: 0px;
     margin-top: 8px;
+}
+
+.license {
+    float: right;
+    font-size: 10px;
 }
 
 .path > span {
@@ -1109,12 +1114,13 @@ thead, th {
     font-size: 22px;
     font-weight: 900;
     line-height: 25px;
-    margin-top: 10px;
+    margin-top: 30px;
 }
 
 .views {
 	float: right;
     margin: 0 10px;
+    font-size: 10px;
 }
 
 .meta-description-container {
@@ -1153,6 +1159,7 @@ thead, th {
 .meta-creators {
 	font-size: 12px;
 	font-weight: 100;
+	margin-top: 5px;
 }
 
 .meta-creators .date {
