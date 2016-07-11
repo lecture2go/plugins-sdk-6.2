@@ -434,8 +434,8 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
     $( document ).ready(function() {
 		$('.meta-description').readmore({
 			collapsedHeight: 60,
-		  	moreLink: '<a href="#"><b><liferay-ui:message key="more"/></b></a>',
-		  	lessLink: '<a href="#"><b><liferay-ui:message key="less"/></b></a>'
+		  	moreLink: '<a href="#"><div><liferay-ui:message key="more"/><img class ="down_up" src="/lecture2go-theme/images/arrow_down.svg"/></div></a>',
+		  	lessLink: '<a href="#"><div><liferay-ui:message key="less"/><img class ="down_up" src="/lecture2go-theme/images/arrow_up.svg"/></div></a>'
 		});
 	}); 
 </script> 

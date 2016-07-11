@@ -56,6 +56,10 @@
     padding: 0;
 }
 
+.rotated .icon-large.icon-chevron-down {
+    transform: rotate(180deg) scale(1);
+}
+
 .aui .breadcrumb li span.divider {
    	background-image: url("/lecture2go-theme/images/arrow_right.png");
     background-position: left center;
@@ -1926,6 +1930,24 @@ div.filter-menu-link span.icon-large.icon-remove {
     text-shadow: 0px 0px 0px 0px #fff !important;
 }
 
+.arrow-up {
+    background-image: url("/lecture2go-theme/images/arrow_up.svg");
+    background-repeat: no-repeat;
+    height: 30px;
+    width: 30px;
+}
+
+.down_up {
+    width: 30px;
+}
+
+.arrow-down {
+    background-image: url("/lecture2go-theme/images/arrow_down.svg");
+    background-repeat: no-repeat;
+    height: 30px;
+    width: 30px;
+}
+
 .aui .icon-chevron-down::before {
     background-image: url("/lecture2go-theme/images/arrow_down.svg") !important;
     background-repeat: no-repeat;
@@ -2400,9 +2422,9 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 }
 
 .lectureseries-small {
-    padding: 0;
-    color: #AAA;
+    font-style: italic;
     line-height: 15px;
+    padding: 0;
 }
 
 .video-box-content .label {
