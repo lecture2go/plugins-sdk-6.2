@@ -256,8 +256,8 @@ fieldset.fieldset.add-streaming-server div.layout {
 }
 
 .span3 .accordion-inner li {
-    background-color: #f0f0f0 !important;
-    border-color: #f0f0f0 #f0f0f0 #ffffff !important;
+    background-color: #ffffff !important;
+    border-color: #ffffff #ffffff #f0f0f0 !important;
     border-style: solid !important;
     border-width: 1px !important;
     line-height: 27px;
@@ -1121,6 +1121,10 @@ thead, th {
 	float: right;
     margin: 0 10px;
     font-size: 10px;
+}
+
+.aui .accordion .accordion-group .toggler-content-expanded {
+    border-width: 0;
 }
 
 .meta-description-container {
