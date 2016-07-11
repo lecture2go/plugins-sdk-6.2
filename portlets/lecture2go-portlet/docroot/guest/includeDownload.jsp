@@ -10,7 +10,7 @@
 				</c:if>
 				<c:if test="${video.mp3File.isFile()==true}">
 					<div class="download">
-						<a href="${video.mp3DownloadLink}" target="_blank"> <span class="icon-large icon-music"/><br/><liferay-ui:message key="mp3-audion"/> </a>
+						<a href="${video.mp3DownloadLink}" target="_blank"> <span class="icon-large icon-music"/><br/><liferay-ui:message key="mp3-audio"/> </a>
 					</div>
 				</c:if>
 
