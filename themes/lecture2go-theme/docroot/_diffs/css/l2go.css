@@ -2485,3 +2485,33 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 }
 
 /*** CONTACT END ***/
+
+/*** TEXT ACCORDION ***/
+
+#text-accordion .accordion-content {
+	display: none;
+}
+
+#text-accordion h3 {
+	font-size: 14px;
+    line-height: 20px;
+    margin: 0;
+    padding: 4px 0 4px 16px;
+    border-bottom: 1px solid #ddd;
+}
+
+#text-accordion .accordion-toggle {
+	cursor: pointer;
+    background-image: url("/lecture2go-theme/images/bottom.gif");
+    background-position: 0 8px;
+    background-repeat: no-repeat;
+    margin-bottom: 19px;
+}
+
+#text-accordion .accordion-toggle.open {
+	background-image: url("/lecture2go-theme/images/top.gif");
+}
+
+#text-accordion .accordion-content {
+	padding: 0px 0 3px 17px;
+}
