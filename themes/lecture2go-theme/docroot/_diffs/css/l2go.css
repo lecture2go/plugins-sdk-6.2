@@ -2444,6 +2444,10 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
     line-height: 20px;
 }
 
+.aui .journal-content-article ul {
+	margin-bottom: 10px;
+}
+
 /* without video
 .front-page-teaser {
 	background-size: cover;
