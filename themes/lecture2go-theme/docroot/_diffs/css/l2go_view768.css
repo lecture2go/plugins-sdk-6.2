@@ -447,6 +447,10 @@
 	    width: calc(100% - 10px);
 	}
 	
+	#breadcrumbs {
+		display: none;
+	}
+	
 	.l2go-contact {
     	width: 50%;
 	}
