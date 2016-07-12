@@ -252,23 +252,24 @@ fieldset.fieldset.add-streaming-server div.layout {
 
 .aui .accordion-group.lfr-panel .accordion-heading {
     background: #f0f0f0 none repeat scroll 0 0;
-    border-color: #ffffff;
+    border-color: #f0f0f0;
     border-style: solid;
-    border-width: 0 0 2px;
-    color: #ffffff;
+    border-width: 1px;
+    color: #f0f0f0;
     height: 33px;
 }
 
 .span3 .accordion-inner li {
     background-color: #ffffff !important;
-    border-color: #ffffff #ffffff #f0f0f0 !important;
-    border-style: solid !important;
-    border-width: 1px !important;
+    border-bottom: 1px solid #f0f0f0 !important;
+    border-left: 1px solid #f0f0f0 !important;
+    border-right: 1px solid #f0f0f0 !important;
+    border-top: 0 none;
     line-height: 27px;
 }
 
 .span3 .accordion-inner li:hover {
-	background-color: #e5e5e5 !important;
+    background-color: #f0f0f0 !important;
 }
 
 mark {
@@ -1115,9 +1116,9 @@ thead, th {
 }
 
 .meta-title {
-    font-size: 22px;
+    font-size: 15px;
     font-weight: 900;
-    line-height: 25px;
+    line-height: inherit;
     margin-top: 30px;
 }
 
@@ -1167,7 +1168,7 @@ thead, th {
 .meta-creators {
 	font-size: 12px;
 	font-weight: 100;
-	margin-top: 5px;
+	margin-top: 0px;
 }
 
 .meta-creators .date {
@@ -1744,6 +1745,7 @@ thead, th {
     line-height: 13px;
     right: 20px;
     top: 12px;
+    z-index: 9999;
 }
 
 .aui .dockbar-split .dockbar .navbar-inner .nav-account-controls > li > a, .aui .dockbar-split .dockbar .navbar-inner .nav-account-controls li.open > a {
@@ -2488,3 +2490,33 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 }
 
 /*** CONTACT END ***/
+
+/*** TEXT ACCORDION ***/
+
+#text-accordion .accordion-content {
+	display: none;
+}
+
+#text-accordion h3 {
+	font-size: 14px;
+    line-height: 20px;
+    margin: 0;
+    padding: 4px 0 4px 16px;
+    border-bottom: 1px solid #ddd;
+}
+
+#text-accordion .accordion-toggle {
+	cursor: pointer;
+    background-image: url("/lecture2go-theme/images/bottom.gif");
+    background-position: 0 8px;
+    background-repeat: no-repeat;
+    margin-bottom: 19px;
+}
+
+#text-accordion .accordion-toggle.open {
+	background-image: url("/lecture2go-theme/images/top.gif");
+}
+
+#text-accordion .accordion-content {
+	padding: 0px 0 3px 17px;
+}
