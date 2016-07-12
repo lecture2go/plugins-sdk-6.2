@@ -2014,10 +2014,6 @@ div.filter-menu-link span.icon-large.icon-remove {
     color: #4d4d4d;
 }
 
-.aui a:hover {
-    text-decoration: underline !important;
-}
-
 #term {
 	float:left;
 	margin-left: 0%;
@@ -2459,3 +2455,27 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 }
 
 */
+
+
+/*** CONTACT ***/
+
+.l2go-contact .portlet-borderless-container {
+	background-color: #f3f3f3;
+	border: 1px solid #e0e0e0;
+	border-radius: 2px;
+}
+
+.l2go-contact h1,h2,h3,h4 {
+    font-size: 13px;
+    padding: 6px 13px 5px 13px;
+    border: 1px solid #E0E0E0;
+    border-color: #fff #fff #e0e0e0 #fff;
+    box-shadow: 0 1px 0 #fff;
+    margin: 0;
+}
+
+.l2go-contact p {
+	padding: 6px 13px 5px 13px;
+}
+
+/*** CONTACT END ***/
