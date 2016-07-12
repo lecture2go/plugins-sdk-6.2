@@ -41,7 +41,7 @@
 							</li>
 							<li>
 							<li>
-								<aui:input name="citation" label="citation" required="false" id="citation" readonly="true"  helpMessage="about-citation" onclick="document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_citation.focus(); document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_citation.select();"/>
+								<aui:input name="citation" label="citation2go-link" required="false" id="citation" readonly="true"  helpMessage="about-citation" onclick="document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_citation.focus(); document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_citation.select();"/>
 							</li>
 						</ul>
 					</div>
