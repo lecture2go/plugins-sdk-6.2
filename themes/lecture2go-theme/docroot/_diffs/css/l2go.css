@@ -1744,6 +1744,7 @@ thead, th {
     line-height: 13px;
     right: 20px;
     top: 12px;
+    z-index: 9999;
 }
 
 .aui .dockbar-split .dockbar .navbar-inner .nav-account-controls > li > a, .aui .dockbar-split .dockbar .navbar-inner .nav-account-controls li.open > a {
@@ -1985,11 +1986,6 @@ div.filter-menu-link span.icon-large.icon-remove {
 
 .aui .portlet-dockbar {
     display: block !important;
-}
-
-.aui h2 {
-    display: none;
-    font-size: 31px !important;
 }
 
 .tags {
@@ -2439,6 +2435,16 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
     text-decoration: underline !important;
 }
 
+.aui .journal-content-article img {
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 25px;
+}
+
+.aui .journal-content-article li {
+    line-height: 20px;
+}
+
 /* without video
 .front-page-teaser {
 	background-size: cover;
@@ -2465,7 +2471,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	border-radius: 2px;
 }
 
-.l2go-contact h1,h2,h3,h4 {
+.l2go-contact h1, .l2go-contact h2, .l2go-contact h3, .l2go-contact h4 {
     font-size: 13px;
     padding: 6px 13px 5px 13px;
     border: 1px solid #E0E0E0;
