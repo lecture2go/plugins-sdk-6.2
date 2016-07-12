@@ -42,6 +42,12 @@ $dockbarOpenGradientEnd: #e9e9e9;
     	font-size: 20px;
     	line-height: 25px;
 	}
+	
+	h2 {
+		font-size: 15px;
+		line-height: 20px;
+		margin: 0 0 10px 0;
+	}
 
 	.separator {
 		border-color: #BFBFBF transparent #FFF;

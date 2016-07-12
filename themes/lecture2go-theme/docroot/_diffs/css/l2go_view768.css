@@ -445,6 +445,20 @@
 	    padding: 4px 0 4px 10px;
 	    position: relative;
 	    width: calc(100% - 10px);
-	}		
+	}
 	
+	.l2go-contact {
+    	width: 50%;
+	}
+	
+	.l2go-contact .portlet-borderless-container {
+    	border: none;
+	}
+	
+	.l2go-contact h1, .l2go-contact h2, .l2go-contact h3, .l2go-contact h4 {
+    	box-shadow: none;
+    	border: none;
+    	border-bottom: 1px solid #E0E0E0;
+    	font-size: 15px;
+	}
 }
