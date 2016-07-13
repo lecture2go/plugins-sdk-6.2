@@ -224,8 +224,7 @@
 	.aui .site-title .l2go-logo {
 	    position: absolute;
 	    right: 21px;
-	    top: -23px;
-	    width: 71px !important;
+	    /*width: 71px !important;*/
 	}	
 	/* Bastian Ende */
 	
