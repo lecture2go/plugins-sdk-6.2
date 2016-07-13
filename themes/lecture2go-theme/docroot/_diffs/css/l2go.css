@@ -2192,7 +2192,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	/* line-height 0 to avoid empty space after inline-block element */
 	line-height: 0;
 	/* this is a fallback image */
-	background-image: url(/lecture2go-portlet/img/background_still.png);
+	background-image: url('/lecture2go-portlet/img/background_still.png');
 }
 
 #bg-vid {
