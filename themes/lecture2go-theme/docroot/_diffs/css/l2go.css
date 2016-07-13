@@ -743,7 +743,7 @@ p.smallitalic {
 #videolist {
     background-color: #f0f0f0;
     border-bottom: 0 solid #f0f0f0 !important;
-    margin-left: 60px;
+    margin-left: 13px;
     margin-top: -7px;
 }
 
@@ -1940,7 +1940,7 @@ div.filter-menu-link span.icon-large.icon-remove {
 }
 
 .down_up {
-    width: 30px;
+    width: 20px;
 }
 
 .arrow-down {
