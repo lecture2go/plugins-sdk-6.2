@@ -183,7 +183,7 @@
 							<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>
 							<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
 						</portlet:actionURL>
-						<li class="filter-menu"><a href="${filterByParentInstitution}"><div class="filter-menu-link">${parentInstitution.name}<span ${hasParentInstitutionFiltered ? 'class="icon-large icon-remove"' : ''}></span></div></a></li>
+						<li class="filter-menu"><a href="${filterByParentInstitution}"><div class="filter-menu-link"><span ${hasParentInstitutionFiltered ? 'class="icon-large icon-remove"' : ''}></span>${parentInstitution.name}</div></a></li>
 					</c:forEach>
 					</ul>
 				</liferay-ui:panel>
@@ -204,7 +204,7 @@
 							<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>
 							<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
 						</portlet:actionURL>
-						<li class="filter-menu"><a href="${filterByInstitution}"><div class="filter-menu-link">${institution.name}<span ${hasInstitutionFiltered ? 'class="icon-large icon-remove"' : ''}></span></div></a></li>
+						<li class="filter-menu"><a href="${filterByInstitution}"><div class="filter-menu-link"><span ${hasInstitutionFiltered ? 'class="icon-large icon-remove"' : ''}></span>${institution.name}</div></a></li>
 					</c:forEach>
 					</ul>
 				</liferay-ui:panel>
@@ -225,7 +225,7 @@
 							<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>
 							<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
 						</portlet:actionURL>
-						<li class="filter-menu"><a href="${filterByTerm}"><div class="filter-menu-link">${term.termName}<span ${hasTermFiltered ? 'class="icon-large icon-remove"' : ''}></span></div></a></li>
+						<li class="filter-menu"><a href="${filterByTerm}"><div class="filter-menu-link"><span ${hasTermFiltered ? 'class="icon-large icon-remove"' : ''}></span>${term.termName}</div></a></li>
 					</c:forEach>
 					</ul>
 					<c:if test="${hasManyTerms}">
@@ -249,7 +249,7 @@
 							<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>	
 							<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
 						</portlet:actionURL>
-						<li class="filter-menu"><a href="${filterByCategory}"><div class="filter-menu-link">${category.name} <span ${hasCategoryFiltered ? 'class="icon-large icon-remove"' : ''}></span></div></a></li>
+						<li class="filter-menu"><a href="${filterByCategory}"><div class="filter-menu-link"><span ${hasCategoryFiltered ? 'class="icon-large icon-remove"' : ''}></span>${category.name}</div></a></li>
 					</c:forEach>
 					</ul>
 				</liferay-ui:panel>
