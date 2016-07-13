@@ -1045,7 +1045,7 @@ thead, th {
     -moz-border-bottom-colors: none;
     -moz-border-left-colors: none;
     border: none;
-    cursor: default;
+    cursor: pointer;
 }
 
 .filter-menu-link {
