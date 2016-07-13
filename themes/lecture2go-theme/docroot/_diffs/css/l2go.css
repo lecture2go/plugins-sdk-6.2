@@ -658,7 +658,6 @@ p.smallitalic {
     cursor: pointer;
     display: flex;
     height: 120px;
-    margin-bottom: 7px;
     padding: 5px 0 0 5px;
     transition: background 0.2s ease 0s;
     width: auto;
@@ -749,7 +748,6 @@ p.smallitalic {
     background-color: #f0f0f0;
     border-bottom: 0 solid #f0f0f0 !important;
     margin-left: 13px;
-    margin-top: -7px;
 }
 
 #searchedvideo {
