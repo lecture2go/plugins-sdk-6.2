@@ -284,7 +284,6 @@ mark {
 .aui .accordion-group.lfr-panel .accordion-heading .accordion-toggle {
     background-color: #f0f0f0;
     color: #000;
-    font-weight: 900;
     padding: 0 3px 20px 6px;
 }
 
@@ -1044,7 +1043,7 @@ thead, th {
     -moz-border-bottom-colors: none;
     -moz-border-left-colors: none;
     border: none;
-    cursor: default;
+    cursor: pointer;
 }
 
 .filter-menu-link {
@@ -1932,6 +1931,7 @@ div.filter-menu-link span.icon-large.icon-remove {
 }
 
 .title-text {
+	font-family: TheSansUHHBold;
     color: #4d4d4d !important;
     float: left;
     font-size: 14px;
@@ -2195,6 +2195,8 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	line-height: 0;
 	/* this is a fallback image */
 	background-image: url('/lecture2go-portlet/img/background_still.png');
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 
 #bg-vid {

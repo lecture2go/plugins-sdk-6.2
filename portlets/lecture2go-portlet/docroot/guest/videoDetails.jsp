@@ -429,6 +429,14 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 <script type="text/javascript">
     $( function () {
         $('#tabs').tabs();
+        $('[data-toggle=tab]').click(function(e){
+    	    if ($(this).parent().hasClass('active')){
+                $(this).parent().removeClass('active');
+    		    $($(this).attr("href")).removeClass('active');
+                // do not trigger the opening sequence from the tabs widget
+    		    e.stopPropagation();
+            }
+    	});
     });
     
     $( document ).ready(function() {
