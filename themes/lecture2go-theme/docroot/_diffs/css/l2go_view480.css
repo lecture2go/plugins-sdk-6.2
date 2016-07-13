@@ -12,10 +12,13 @@
 		margin-right: 1px;
 	}
 	
+	.videotile.wide, .videotile.small, .video-box {
+		background-color: #f9f9f9;
+	}
+	
 	.front-page-teaser {
 		height: 100px;
 	}
-	
 	
 	.sharetile {
 	    margin-bottom: 5px;
