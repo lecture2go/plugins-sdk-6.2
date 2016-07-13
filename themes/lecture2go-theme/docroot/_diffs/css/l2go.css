@@ -394,6 +394,12 @@ p.smallitalic {
     margin-bottom: 0px;
 }
 
+.video-content-footer .labels .label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(50% - 38px);
+}
+
 .video-image-big {
     position: relative;
     width: 200px;
