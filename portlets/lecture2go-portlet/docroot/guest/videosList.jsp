@@ -171,7 +171,7 @@
 			<liferay-ui:panel-container>
 				<!-- 	parentinstitution filter -->
 				<%if(presentParentInstitutions.size()>0){ %>
-				<liferay-ui:panel extended="false" defaultState="collapsed" title="institution-capital" cssClass='${hasParentInstitutionFiltered ? "filtered" : "notFiltered"}'>
+				<liferay-ui:panel extended="false" defaultState="collapsed" title="institution" cssClass='${hasParentInstitutionFiltered ? "filtered" : "notFiltered"}'>
 					<ul>
 					<c:forEach items="<%=presentParentInstitutions %>" var="parentInstitution">
 						<portlet:actionURL var="filterByParentInstitution" name="addFilter">
@@ -192,7 +192,7 @@
 			 	<!-- 	institution filter  -->
 				<c:if test="${hasParentInstitutionFiltered}">
 				<%if(presentInstitutions.size()>0){ %>
-				<liferay-ui:panel extended="false" defaultState="collapsed" title="sub-institution-capital" cssClass='${hasInstitutionFiltered ? "filtered" : "notFiltered"}'>
+				<liferay-ui:panel extended="false" defaultState="collapsed" title="sub-institution" cssClass='${hasInstitutionFiltered ? "filtered" : "notFiltered"}'>
 					<ul>
 					<c:forEach items="<%=presentInstitutions %>" var="institution">
 						<portlet:actionURL var="filterByInstitution" name="addFilter">
@@ -213,7 +213,7 @@
 				
 				<!-- 	terms filter -->
 				<%if(presentTerms.size()>0){%>
-				<liferay-ui:panel extended="false" defaultState="collapsed" title="term-capital" cssClass='${hasTermFiltered ? "filtered" : "notFiltered"}'>
+				<liferay-ui:panel extended="false" defaultState="collapsed" title="term" cssClass='${hasTermFiltered ? "filtered" : "notFiltered"}'>
 					<ul class="terms">
 					<c:forEach items="<%=presentTerms %>" var="term">
 						<portlet:actionURL var="filterByTerm" name="addFilter">
@@ -237,7 +237,7 @@
 				
 				<!-- category filter -->
 				<%if(presentCategories.size()>0){%>
-				<liferay-ui:panel extended="false" defaultState="collapsed" title="category-capital" cssClass='${hasCategoryFiltered ? "filtered" : "notFiltered"}'>
+				<liferay-ui:panel extended="false" defaultState="collapsed" title="category" cssClass='${hasCategoryFiltered ? "filtered" : "notFiltered"}'>
 					<ul>
 					<c:forEach items="<%=presentCategories %>" var="category">
 			    		<portlet:actionURL var="filterByCategory" name="addFilter">

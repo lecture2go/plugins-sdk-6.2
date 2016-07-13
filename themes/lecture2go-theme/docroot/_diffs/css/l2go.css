@@ -230,7 +230,6 @@
 .metainfo-small {
     line-height: 20px;
     margin-left: 67px;
-    padding: 3px 0 11px;
 }
 
 fieldset.fieldset.add-streaming-server div.layout {
@@ -546,7 +545,7 @@ p.smallitalic {
     border-image: none;
     background-color: #fff;
     margin-bottom: 1px;
-    padding: 6px 0 8px;
+    padding: 6px 0 10px;
 }
 
 #meta-share input.option1 {
@@ -1283,6 +1282,7 @@ thead, th {
 #embedForm {
     float: left;
     margin-left: -22px;
+    min-width: 100%;
 }
 
 .aui img.imgsmall {
@@ -2428,6 +2428,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 .lectureseries-small {
     font-style: italic;
     line-height: 15px;
+    margin-top: 5px;
     padding: 0;
 }
 

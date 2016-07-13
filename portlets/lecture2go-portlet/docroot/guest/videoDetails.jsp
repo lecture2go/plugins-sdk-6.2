@@ -135,10 +135,10 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 				      <%if(videoLicense.getL2go()==1){%>
 				      	<a href="/license-l2go" title="<liferay-ui:message key='l2go-license-click-for-info'/>"><liferay-ui:message key="license"/>: <liferay-ui:message key='l2go-license'/></a>
 				 	  <%}else{%>
-						<a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" title="<liferay-ui:message key='cc-license-click-for-info'/>"><liferay-ui:message key='cy-nc-sa-license'/></a> 		
+						<a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" title="<liferay-ui:message key='cc-license-click-for-info'/>"><liferay-ui:message key="license"/>: <liferay-ui:message key='cy-nc-sa-license'/></a> 		
 				 	  <%}%>       
 				   </div>
-			       <div class="views">${video.hits} <liferay-ui:message key="views"/></div>	
+			       <div class="views"><liferay-ui:message key="views"/>: ${video.hits}</div>	
 			       	
 					  <c:if test="${relatedVideos.size()>1}"> <div class="meta-video-info"></c:if>
 					  <c:if test="${relatedVideos.size()<=1}"> <div class="meta-video-info-wide"></c:if>
