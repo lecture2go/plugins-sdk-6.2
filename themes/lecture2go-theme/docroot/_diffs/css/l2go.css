@@ -892,7 +892,8 @@ thead, th {
 }
 
 .title-small {
-    font-weight: 800;
+	font-family: TheSansUHHBold;
+    font-weight: normal;
     font-size: 14px;
     line-height: 17px;
     margin: 0 0 5px 0;
@@ -901,7 +902,6 @@ thead, th {
 
 .title-small.related {
     font-size: 12px;
-    font-weight: 800;
     margin: -3px 0;
     padding-top: 0;
     width: 100%;
@@ -1122,8 +1122,10 @@ thead, th {
 }
 
 .meta-title {
+	color: #4d4d4d;
     font-size: 15px;
-    font-weight: 900;
+    font-weight: normal;
+    font-family: TheSansUHHBold;
     line-height: inherit;
     margin-top: 30px;
 }
@@ -2400,6 +2402,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 
 
 .video-box-content .title-small {
+	color: #4d4d4d;
 	font-size: 14px;
 	width: 100%;
 	margin: 0 0 8px 0;
