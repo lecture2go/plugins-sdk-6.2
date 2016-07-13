@@ -30,10 +30,6 @@
 	    width: 10em;
 	}
 	
-	#videolist {
-		margin-left: 20px;
-	}
-	
 	/* disable all links on the searchcontainer video tiles, as they are too small on mobile devices */
 	#_lgopenaccessvideos_WAR_lecture2goportlet_lectureseriesesSearchContainerSearchContainer a {
     	pointer-events: none;

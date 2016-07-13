@@ -358,7 +358,6 @@ p.smallitalic {
     font-size: smaller;
     height: auto;
     line-height: 12px;
-    min-height: 20px;
 }
 
 .allcreators a:hover {
@@ -443,7 +442,7 @@ p.smallitalic {
     float: left;
     height: 30px;
     margin-right: 8px;
-    margin-top: 5px;
+    margin-top: 2px;
     max-width: 60px;
 }
 
@@ -541,6 +540,7 @@ p.smallitalic {
     border-image: none;
     background-color: #fff;
     margin-bottom: 1px;
+    padding: 6px 0 8px;
 }
 
 #meta-share input.option1 {
@@ -889,7 +889,7 @@ thead, th {
     font-weight: 800;
     font-size: 14px;
     line-height: 17px;
-    margin: 0;
+    margin: 0 0 5px 0;
     width: 80%;
 }
 
@@ -2185,6 +2185,8 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	display: inline-block;
 	/* line-height 0 to avoid empty space after inline-block element */
 	line-height: 0;
+	/* this is a fallback image */
+	background-image: url(/lecture2go-portlet/img/background_still.png);
 }
 
 #bg-vid {
