@@ -47,7 +47,6 @@
 <%@page import="com.liferay.portal.model.Portlet"%>
 <%@page import="com.liferay.portal.model.User"%>
 <%@page import="com.liferay.portal.model.Role"%>
-<%@page import="de.uhh.l2g.plugins.model.impl.HostImpl"%>
 <%@page import="com.liferay.portal.security.permission.ActionKeys"%>
 <%@page import="com.liferay.portal.service.permission.PortletPermissionUtil"%>
 <%@page import="com.liferay.portal.service.UserLocalServiceUtil"%>
@@ -63,6 +62,8 @@
 <%@page import="com.liferay.util.portlet.PortletRequestUtil"%>
 <%@page import="com.liferay.portlet.PortletURLUtil"%>
 <%@page import="com.liferay.portal.kernel.util.PropsUtil"%>
+<%@page import="com.liferay.portal.kernel.util.PropsKeys"%>
+<%@page import="com.liferay.portal.kernel.util.PrefsPropsUtil"%>
 
 <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@page import="org.springframework.scripting.config.LangNamespaceUtils"%>
@@ -70,6 +71,7 @@
 <%@page import="org.springframework.web.portlet.bind.PortletRequestUtils"%>
 <%@page import="org.json.JSONObject"%>
 
+<%@page import="de.uhh.l2g.plugins.model.impl.HostImpl"%>
 <%@page import="de.uhh.l2g.plugins.model.Video_Lectureseries"%>
 <%@page import="de.uhh.l2g.plugins.admin.AdminUserManagement"%>
 <%@page import="de.uhh.l2g.plugins.service.ProducerLocalServiceUtil"%>

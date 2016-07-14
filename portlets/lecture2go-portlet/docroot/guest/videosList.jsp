@@ -1,11 +1,13 @@
 <%@page import="de.uhh.l2g.plugins.model.impl.InstitutionImpl"%>
-<%@ page import = "com.liferay.portal.kernel.util.WebKeys" %>
-<%@ page import = "com.liferay.portal.theme.ThemeDisplay" %>
+<%@page import = "com.liferay.portal.kernel.util.WebKeys" %>
+<%@page import = "com.liferay.portal.theme.ThemeDisplay" %>
 
 <%@include file="/init.jsp"%>
  
 <%
 	String companyName = company.getName();
+	String portalURL = PrefsPropsUtil.getString(company.getCompanyId(),PropsKeys.DEFAULT_LANDING_PAGE_PATH);
+
 	// defines how many terms and creators are shown initially	
 	int maxTerms	= 4;
 
@@ -119,7 +121,7 @@
 	</portlet:actionURL>
 		
 	<div class="path-wide">
-	<A HREF="/"><%=companyName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+	<A HREF=<%=portalURL%>><%=companyName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
 	<A HREF="<%=backURL0%>"><%=pageName %></A>
 	<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
 	<%
