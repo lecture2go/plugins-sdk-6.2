@@ -50,6 +50,24 @@
     width: 13px;	
 }
 
+.aui .icon-chevron-right::before {
+    background-image: url("/lecture2go-theme/images/arrow_right.svg");
+    background-repeat: no-repeat;
+    content: "";
+    height: 55px;
+    margin-left: -10px;
+    width: 55px;
+}
+
+.aui .icon-chevron-left::before {
+    background-image: url("/lecture2go-theme/images/arrow_left.svg");
+    background-repeat: no-repeat;
+    content: "";
+    height: 55px;
+    margin-left: -15px;
+    width: 55px;
+}
+
 .aui #breadcrumbs {
     margin-bottom: 3px;
     margin-top: 0;
