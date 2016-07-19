@@ -163,7 +163,9 @@
 	<model name="de.uhh.l2g.plugins.model.Office">
 		<field name="officeId" type="long" />
 		<field name="name" type="String" />
-		<field name="www" type="String" />
+		<field name="www" type="String">
+			<hint-collection name="SHORTTEXT" />
+		</field>	
 		<field name="email" type="String" />
 		<field name="institutionId" type="long" />
 	</model>
