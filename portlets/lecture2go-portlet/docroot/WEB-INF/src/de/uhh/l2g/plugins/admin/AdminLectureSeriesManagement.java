@@ -3,6 +3,7 @@ package de.uhh.l2g.plugins.admin;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,8 @@ import org.json.JSONArray;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.model.User;
@@ -33,6 +36,7 @@ import de.uhh.l2g.plugins.model.Lectureseries_Creator;
 import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.model.Tagcloud;
 import de.uhh.l2g.plugins.model.Term;
+import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.impl.CategoryImpl;
 import de.uhh.l2g.plugins.model.impl.CoordinatorImpl;
 import de.uhh.l2g.plugins.model.impl.CreatorImpl;
@@ -60,6 +64,7 @@ import de.uhh.l2g.plugins.util.EmailManager;
 import de.uhh.l2g.plugins.util.Htaccess;
 import de.uhh.l2g.plugins.util.HtmlManager;
 import de.uhh.l2g.plugins.util.Lecture2GoRoleChecker;
+import de.uhh.l2g.plugins.util.ProzessManager;
 
 public class AdminLectureSeriesManagement extends MVCPortlet {
 	
@@ -67,6 +72,7 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		// requested lectureseries
 		//TagcloudLocalServiceUtil.generateForAllLectureseries();
 		//LectureseriesLocalServiceUtil.updateUploadAndGenerationDate();
+		//generateRSSforAllLectureseriesWhithOpenaccessVideos();
 		
 		long reqLectureseriesId = new Long(request.getParameterMap().get("lectureseriesId")[0]);
 		String backURL = request.getParameter("backURL");
@@ -108,11 +114,6 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		}	
 		
 		//generate new JSON date for auto complete functionality
-//		try {
-//			AutocompleteManager.generateAutocompleteResults();
-//		} catch (SystemException e) {
-//			e.printStackTrace();
-//		}
 	}
 
 	public void editLectureseries(ActionRequest request, ActionResponse response) throws NumberFormatException, PortalException, SystemException, UnsupportedEncodingException{
@@ -470,6 +471,25 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 //		} catch (SystemException e) {
 //			e.printStackTrace();
 //		}
+	}
+	
+	public void generateRSSforAllLectureseriesWhithOpenaccessVideos(){
+		List<Lectureseries> allLect = LectureseriesLocalServiceUtil.getAllLectureseriesWhithOpenaccessVideos();
+		Iterator<Lectureseries> ittLect = allLect.iterator();
+		Log LOG = LogFactoryUtil.getLog(AdminLectureSeriesManagement.class.getName());	
+		int a = 1;
+		while(ittLect.hasNext()){
+			Lectureseries l = ittLect.next();
+			Video v = VideoLocalServiceUtil.getFullVideo(l.getLatestOpenAccessVideoId());
+			// generate RSS
+			LOG.info("Generate RSS" +a+" fol lecture series with ID: "+l.getLectureseriesId()+" and latest open access video with ID: "+v.getVideoId());
+			ProzessManager pm = new ProzessManager();
+			for (String f: pm.MEDIA_FORMATS) {           
+				pm.generateRSS(v, f);
+			}		
+			LOG.info("RSS "+a+" generated");
+			a++;
+		}
 	}
 	
 	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws PortletException, IOException {

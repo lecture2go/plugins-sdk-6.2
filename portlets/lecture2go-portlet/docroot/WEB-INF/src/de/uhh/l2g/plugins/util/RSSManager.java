@@ -47,6 +47,8 @@ import java.util.SimpleTimeZone;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import de.uhh.l2g.plugins.model.Host;
@@ -217,6 +219,7 @@ public class RSSManager {
 	 * @throws PortalException 
 	 */
 	public void createRssFile(List<Video> videoList, String type) throws IOException, PortalException, SystemException {
+		Log LOG = LogFactoryUtil.getLog(RSSManager.class.getName());
 		try {
 			String imageLink = PropsUtil.get("lecture2go.web.home") + PropsUtil.get("lecture2go.theme.root.path") + "/" + "images" + "/" + "l2go" + "/" + "itunesu" + "/" + "logo.jpg";
 
@@ -423,7 +426,7 @@ public class RSSManager {
 			}
 			schreibeStrom.close();
 		} catch (NullPointerException npe) {
-			// nothing
+			LOG.error("RSS FAILED !");
 		}
 	}
 

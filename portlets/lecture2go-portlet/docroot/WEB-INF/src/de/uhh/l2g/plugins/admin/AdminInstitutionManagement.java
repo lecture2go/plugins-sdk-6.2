@@ -1,7 +1,6 @@
 package de.uhh.l2g.plugins.admin;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -16,12 +15,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -36,7 +33,6 @@ import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
 import de.uhh.l2g.plugins.util.PermissionManager;
-import de.uhh.l2g.plugins.util.PortletScheduler;
 
 public class AdminInstitutionManagement extends MVCPortlet {
 	 protected static Log LOG = LogFactoryUtil.getLog(AdminInstitutionManagement.class.getName());	
@@ -138,11 +134,6 @@ public class AdminInstitutionManagement extends MVCPortlet {
 			//Set to zero if empty/otherwise synchronize with DB
 		    LOG.info("Updating Counter values!");
 		   
-			long cH = HostLocalServiceUtil.updateCounter();
-			long cI = InstitutionLocalServiceUtil.updateCounter();
-			long cIH  = Institution_HostLocalServiceUtil.updateCounter();
-		    
-
 			//Initialize if needed
 			//Trigger new init by deleting this test, removing Role or removing ResourcePermissions for this context from DB
 			if (isInitialized  == false) {
@@ -170,11 +161,6 @@ public class AdminInstitutionManagement extends MVCPortlet {
 					    LOG.debug("Default Institution_Host: "+defaultInstitutionHostId);
 			}
 		    
-				
-		    List<Institution> institutions = InstitutionLocalServiceUtil.getByGroupId(groupId);
-		    List<Institution_Host> institution_host = Institution_HostLocalServiceUtil.getByGroupId(groupId);
-		    List<Host> host = HostLocalServiceUtil.getByGroupId(groupId);
-
 		    if (!(institutionId > 0)) {
 		    	institutionId = 0;
 		    	//institutionId = institutions.get(0).getInstitutionId();
