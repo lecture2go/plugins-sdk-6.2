@@ -29,7 +29,7 @@ if (selContact != null) {
 	birthday.setTime(selContact.getBirthday());
 }
 %>
-<div style="padding:10px">
+<div>
 	<liferay-ui:error-marker key="errorSection" value="details" />
 	
 	<aui:model-context bean="<%= selUser %>" model="<%= User.class %>" />

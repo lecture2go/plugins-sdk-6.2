@@ -2550,3 +2550,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 #text-accordion .accordion-content {
 	padding: 0px 0 3px 17px;
 }
+
+.lfr-ctrl-panel.panel-manage-frontpage {
+    padding: 10px;
+}
