@@ -906,7 +906,7 @@ thead, th {
 }
 
 .title-small {
-	font-family: TheSansUHHBold;
+	font-family: TheSansUHHBold, sans-serif;
     font-weight: normal;
     font-size: 14px;
     line-height: 17px;
@@ -1139,7 +1139,7 @@ thead, th {
 	color: #4d4d4d;
     font-size: 15px;
     font-weight: normal;
-    font-family: TheSansUHHBold;
+    font-family: TheSansUHHBold, sans-serif;
     line-height: inherit;
     margin-top: 30px;
 }
@@ -1947,7 +1947,7 @@ div.filter-menu-link span.icon-large.icon-remove {
 }
 
 .title-text {
-	font-family: TheSansUHHBold;
+	font-family: TheSansUHHBold, sans-serif;
     color: #4d4d4d !important;
     float: left;
     font-size: 14px;
