@@ -865,7 +865,7 @@ thead, th {
 
 .aui .btn-primary {
     color: #fff;
-    background-color: #d81b1b;
+    background: #d81b1b;
     background-image: linear-gradient(#e5331c, #c90219);
     background-repeat: repeat-x;
     border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
