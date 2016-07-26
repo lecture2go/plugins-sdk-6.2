@@ -866,10 +866,9 @@ thead, th {
 .aui .btn-primary {
     color: #fff;
     background-color: #d81b1b;
-    background: linear-gradient(#e5331c, #c90219);
+    background-image: linear-gradient(#e5331c, #c90219);
     background-repeat: repeat-x;
     border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-    text-shadow: 0;
 }
 
 .aui .btn-primary:hover {
@@ -1269,7 +1268,7 @@ thead, th {
 }
 
 #meta-share input {
-    height: 23px;
+    height: 13px;
 }
 
 #meta-share .appmon_support_form_row_1 {
@@ -2295,6 +2294,8 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 */
 
 .big-search #_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
+	/* we use border-box here for better positioning the searchbutton*/
+	box-sizing: border-box;
 	float:none;
 	margin: 0;
 	margin-left: 0;
@@ -2325,6 +2326,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
     border: none;
     margin: auto;
     padding: 5px 15px;
+    width: 220px; /* a fixed width is added to be compatible with older safari versions*/
 }
 
 .l2go-info  .catalogue-button:hover {
