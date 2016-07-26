@@ -434,7 +434,7 @@ p.smallitalic {
 .video-content-footer .labels .label {
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 50%;
+    max-width: 49%;
 }
 
 .video-image-big {
@@ -714,6 +714,7 @@ p.smallitalic {
 
 .videotile.wide .labels {
     margin-bottom: 10px;
+    padding-right: 35px;
 }
 
 .term-of-creation{
