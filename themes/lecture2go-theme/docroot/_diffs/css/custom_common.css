@@ -49,6 +49,10 @@
 	@include box-sizing(border-box);
 }
 
+input {
+    box-sizing: content-box;
+}
+
 .aui {
 	body {
 		font-weight: 200;
