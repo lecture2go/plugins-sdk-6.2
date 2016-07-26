@@ -2006,6 +2006,7 @@ div.filter-menu-link span.icon-large.icon-remove {
 
 .down_up {
     width: 20px;
+    height: 20px !important; /* seems necessary for older browsers */
 }
 
 .arrow-down {
@@ -2369,7 +2370,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
     border: none;
     margin: auto;
     padding: 5px 15px;
-    width: 220px; /* a fixed width is added to be compatible with older safari versions*/
+    width: 230px; /* a fixed width is added to be compatible with older safari versions*/
 }
 
 .l2go-info  .catalogue-button:hover {
