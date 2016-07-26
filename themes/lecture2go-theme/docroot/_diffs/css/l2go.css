@@ -866,10 +866,9 @@ thead, th {
 .aui .btn-primary {
     color: #fff;
     background-color: #d81b1b;
-    background: linear-gradient(#e5331c, #c90219);
+    background-image: linear-gradient(#e5331c, #c90219);
     background-repeat: repeat-x;
     border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-    text-shadow: 0;
 }
 
 .aui .btn-primary:hover {
