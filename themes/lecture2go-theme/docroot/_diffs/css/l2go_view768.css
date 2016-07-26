@@ -3,6 +3,10 @@
 		display:none;
 	}
 	
+	.aui .site-title .site-name {
+		margin-top: 0;
+	}
+	
 	.aui #footer {
     	padding: 0 9px 0;
     	width: 100%;
@@ -434,7 +438,7 @@
 	    border-right: 0 none;
 	    float: left;
 	    font-size: 14px;
-	    height: 35px;
+	    height: 25px;
 	    max-width: inherit !important;
 	    padding: 4px 0 4px 10px;
 	    position: relative;
