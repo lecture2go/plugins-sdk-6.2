@@ -1,3 +1,5 @@
+@import "compass";
+
 /*** these styles may be needed for an in-between resolution (between 768 and 960/980) ***/
 /*
 .sharetile {
@@ -195,8 +197,7 @@
 }
 
 .darker {
-	-webkit-filter: brightness(50%);
-	filter: brightness(50%); 
+	@include filter(brightness(50%));
 }
 
 .text-cut {
@@ -1758,7 +1759,10 @@ thead, th {
 }
 
 .aui .badge {
-	background: rgba(0, 0, 0, 0) linear-gradient(45deg, rgba(0, 0, 0, 0) 70%, #000000 50%) repeat scroll 0 0;
+	background: rgba(0, 0, 0, 0);
+	@include background-image(linear-gradient(45deg, rgba(0, 0, 0, 0) 70%, #000000 50%));
+
+	/*background: rgba(0, 0, 0, 0) linear-gradient(45deg, rgba(0, 0, 0, 0) 70%, #000000 50%) repeat scroll 0 0;*/
 	border-radius: 0;
 	height: 75px;
 	margin: 0;

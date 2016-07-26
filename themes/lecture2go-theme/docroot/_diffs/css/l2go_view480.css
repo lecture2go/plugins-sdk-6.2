@@ -51,7 +51,11 @@
 	.video-image-wrapper {
 	    float: left;
 	    margin-bottom: 5px;
-	    flex: 0 0 113px;
+	    -webkit-box-flex: 0 0 113px;
+  		-moz-box-flex: 0 0 113px;    
+  		-webkit-flex: 0 0 113px;
+  		-ms-flex: 0 0 113px;  
+  		flex: 0 0 113px;
 	}
 	
 	.lectureseries-title {
