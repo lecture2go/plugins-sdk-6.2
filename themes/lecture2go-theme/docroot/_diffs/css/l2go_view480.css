@@ -22,6 +22,7 @@
 	
 	.sharetile {
 	    margin-bottom: 5px;
+	   	width: 90%; /* fallback for browsers without support for calc-function */
 	    width: calc(100% - 40px);
 	}
 	

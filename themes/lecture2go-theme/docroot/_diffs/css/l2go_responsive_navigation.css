@@ -94,7 +94,7 @@
 	.responsive_li_item.selected {
 	    background: #e3e3e3 none repeat scroll 0 0 !important;
 	    padding-left: 30px;
-	    width: calc(100% - 30px) !important;
+	    width: 100%;
 	}
 	
 	.dropdown-menu.child-menu {
@@ -164,15 +164,9 @@
 	    background-color: #d81b1b;
 	    background-image: linear-gradient(180deg, #e40613 0%, #e40613 100%);
 	    color: #fff;
-	    height: 35px;
+	    height: 38px;
 	    padding-left: 30px;
 	    padding-top: 3px;
-	}
-
-	#wrapper #heading .site-title img {
-	    margin-left: 12px;
-	    margin-top: 38px;
-	    width: auto;
 	}
 
 	.user-avatar-image {
@@ -240,7 +234,7 @@
 	
 	.responsive_li_item.lfr-nav-item {
 	    padding-left: 30px;
-	    width: calc(100% - 30px) !important;
+	    width: 100%;
 	}
 	
 	.aui #navigation.open .navbar-inner {
