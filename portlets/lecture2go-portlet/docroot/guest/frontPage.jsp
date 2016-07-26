@@ -29,6 +29,7 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
  	<div class="bg-video-container">
 		<video id="bg-vid" autoplay loop poster="/lecture2go-portlet/img/background_still.png" preload="none">
 		    <source src="/lecture2go-portlet/img/background.mp4" type="video/mp4">
+		    <img src="/lecture2go-portlet/img/background_still.png">
 		</video>
 		<div class="dark-overlay"></div>
 		<div id="vid-control">

@@ -129,7 +129,6 @@
     background-color: #fff;
     max-width: 1100px;
     padding: 0 16px;
-    width: calc(100% - 32px);
 }
 
 .responsive_li_item {
@@ -149,7 +148,7 @@
 
 #_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
     float: right;
-    height: 19px;
+    height: 29px;
     padding: 4px 0 4px 4px;
     width: 30%;
     font-size: 14px;
@@ -273,7 +272,7 @@ fieldset.fieldset.add-streaming-server div.layout {
     border-style: solid;
     border-width: 1px;
     color: #f0f0f0;
-    height: 33px;
+    height: 35px;
 }
 
 .span3 .accordion-inner li {
@@ -413,7 +412,7 @@ p.smallitalic {
 .video-content-footer .labels .label {
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: calc(50% - 38px);
+    max-width: 50%;
 }
 
 .video-image-big {
@@ -581,7 +580,7 @@ p.smallitalic {
     height: auto;
     margin: 0 -17px 0 22px;
     padding: 8px;
-    width: 26%;
+    width: 28%;
 }
 
 .aui .btn:hover, .aui .btn:focus, .aui .btn:active, .aui .btn.active, .aui .btn.disabled, .aui .btn[disabled] {
@@ -674,7 +673,7 @@ p.smallitalic {
     border: 1px solid #f0f0f0;
     cursor: pointer;
     display: flex;
-    height: 120px;
+    height: 127px;
     padding: 5px 0 0 5px;
     transition: background 0.2s ease 0s;
     width: auto;
@@ -719,7 +718,7 @@ p.smallitalic {
     line-height: 15px;
     list-style: outside none none !important;
     padding: 3px;
-    width: calc(100% - 9px);
+    width: 100%;
 }
 
 .videotile.small em {
@@ -741,6 +740,8 @@ p.smallitalic {
     height: 118px;
 }
 
+/*
+not used anymore??
 #video-list .list-group-item:hover {
     text-decoration: none;
     background-color: #f0f0f0;
@@ -753,6 +754,7 @@ p.smallitalic {
     padding-bottom: 5px;
     height: auto;
 }
+*/
 
 #videoscount {
     font-size: 11px;
@@ -906,7 +908,7 @@ thead, th {
 }
 
 .title-small {
-	font-family: TheSansUHHBold;
+	font-family: TheSansUHHBold, sans-serif;
     font-weight: normal;
     font-size: 14px;
     line-height: 17px;
@@ -1139,7 +1141,7 @@ thead, th {
 	color: #4d4d4d;
     font-size: 15px;
     font-weight: normal;
-    font-family: TheSansUHHBold;
+    font-family: TheSansUHHBold, sans-serif;
     line-height: inherit;
     margin-top: 30px;
 }
@@ -1238,10 +1240,10 @@ thead, th {
 
 #metadata input {
     font-size: 13px;
-    height: 20px;
+    height: 24px;
     margin: 0 !important;
     padding: 1px;
-    width: 97%;
+    width: 100%;
     cursor:pointer;
 }
 
@@ -1723,14 +1725,14 @@ thead, th {
 .aui .badge {
 	background: rgba(0, 0, 0, 0) linear-gradient(45deg, rgba(0, 0, 0, 0) 70%, #000000 50%) repeat scroll 0 0;
 	border-radius: 0;
-	height: 70px;
+	height: 75px;
 	margin: 0;
 	padding: 5px 5px 0 0;
 	position: absolute;
 	right: 0;
 	text-align: right;
 	top: 0;
-	width: 70px;
+	width: 75px;
 }
 	
 .aui .icon-caret-down::before {
@@ -1787,7 +1789,7 @@ thead, th {
 .aui .dockbar.navbar .nav > li > a, .aui .dockbar.navbar .nav > li a:focus {
     background: transparent none repeat scroll 0 0;
     color: #4e4e4e;
-   padding: 0px 0px 3px 20px;
+    padding: 0px 0px 3px 20px;
 }
 
 .aui .dockbar.navbar .nav li.dropdown .dropdown-menu li a {
@@ -1947,7 +1949,7 @@ div.filter-menu-link span.icon-large.icon-remove {
 }
 
 .title-text {
-	font-family: TheSansUHHBold;
+	font-family: TheSansUHHBold, sans-serif;
     color: #4d4d4d !important;
     float: left;
     font-size: 14px;
@@ -2296,8 +2298,8 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	float:none;
 	margin: 0;
 	margin-left: 0;
-	width: calc(100% - 12px);
-	height: 25px;
+	width: 100%;
+	height: 35px;
 	font-size: 15px;
 	padding-left: 10px;	
 }
@@ -2318,8 +2320,6 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
     display: block;
     height: 35px;
     color: #ffffff;
-    width: 100%;
-    width: calc(100% + 45px);
     width: auto;
     background-color: rgba(255, 255, 255, 0.3);
     border: none;
@@ -2454,7 +2454,8 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	position:absolute;
 	bottom: 12px;
 	text-overflow: ellipsis;
-    max-width: calc(100% - 35px);  	
+	max-width: 88%; /* fallback for browsers without support for calc-function */
+    max-width: calc(100% - 20px);
     overflow: hidden;
 }
 

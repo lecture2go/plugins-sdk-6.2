@@ -10,12 +10,8 @@
 		}
 
 		#heading {
-			bottom: 100%;
-			margin-top: -2em;
-			position: relative;
-			/* workaround: compensating for negative top margin */
-			margin-bottom: calc(2em + 10px);
-			
+			margin: 17px 0px 0 12px;
+    		padding: 0;
 			.site-title {
 				font-size: 26px;
 

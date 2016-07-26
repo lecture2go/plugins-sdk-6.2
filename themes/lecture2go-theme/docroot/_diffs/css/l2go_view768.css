@@ -4,7 +4,8 @@
 	}
 	
 	.aui #footer {
-    	width: calc(100% - 9px);
+    	padding: 0 9px 0;
+    	width: 100%;
 	}
 
 	.aui .accordion-group.lfr-panel-extended {
@@ -186,7 +187,7 @@
 	
 	
 	.videotile.wide {
-		height: 91px;
+		height: 98px;
 	}
 	
 	/* Bastian */
@@ -216,11 +217,6 @@
 	    height: 15px;
 	}
 	
-	.aui .logo, .aui .logo:hover {
-	    height: 46px;
-	    width: 156px;
-	}
-	
 	.aui .site-title .l2go-logo {
 	    position: absolute;
 	    right: 21px;
@@ -244,7 +240,7 @@
 	    padding-bottom: 7px;
 	    vertical-align: middle;
 	    width: 65px;
-	    height: 33px;
+	    height: 40px;
 	}
 	
 	.aui .chaptertile a span {
@@ -289,7 +285,7 @@
 	    ),
 	    url(/lecture2go-portlet/img/background_still.png);
 		background-repeat: no-repeat;
-		height: 130px;
+		height: 190px;
 		padding-top: 60px;
 		margin-top: 0;
 		position: relative;
@@ -438,11 +434,11 @@
 	    border-right: 0 none;
 	    float: left;
 	    font-size: 14px;
-	    height: 25px;
+	    height: 35px;
 	    max-width: inherit !important;
 	    padding: 4px 0 4px 10px;
 	    position: relative;
-	    width: calc(100% - 10px);
+	    width: 100%;
 	}
 	
 	#breadcrumbs {
