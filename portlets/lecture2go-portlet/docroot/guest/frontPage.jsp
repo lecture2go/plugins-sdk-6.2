@@ -28,7 +28,7 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 <div class="front-page-teaser">
  	<div class="bg-video-container">
 		<video id="bg-vid" autoplay loop poster="/lecture2go-portlet/img/background_still.png" preload="none">
-		    <source src="/lecture2go-portlet/img/background.mp4" type="video/mp4">
+		    <!-- the video source is added dynamically to avoid unnecessary traffic -->
 		    <img src="/lecture2go-portlet/img/background_still.png">
 		</video>
 		<div class="dark-overlay"></div>
@@ -231,7 +231,7 @@ $(document).ready(function(){
 		  	$(".carousel-control").show();
 		  	showOrHideCarouselControl('#news-carousel');
 		  	showOrHideCarouselControl('#popular-carousel');
-		  	transformSearchToWideView();
+		  	addBGVideo();
 		 },
 	  exit: function() {
 		  	transformSearchToSmallView();
@@ -302,6 +302,11 @@ function transformSearchToSmallView() {
   	$(".search").prependTo("#content");
 	$('#_lgopenaccessvideos_WAR_lecture2goportlet_searchButton span').text("");
 	$('#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery').attr("placeholder", "<liferay-ui:message key='search-videos'/>");
+}
+
+// add the video source to the video
+function addBGVideo() {
+	$('#bg-vid').prepend('<source src="/lecture2go-portlet/img/background.mp4" type="video/mp4">');
 }
     
 </script>
