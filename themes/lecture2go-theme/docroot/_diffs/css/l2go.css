@@ -1473,7 +1473,7 @@ thead, th {
 
 .admintile.wide > a {
     font-size: 14px;
-    font-weight: 700;
+    font-family: TheSansUHHBold,sans-serif;
 }
 
 .admintile.wide.icons > a {
