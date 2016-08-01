@@ -1699,10 +1699,9 @@ thead, th {
 
 .edit-video-lable {
     border-bottom: 1px solid #f0f0f0;
-    color: black !important;
-    font-size: 24px !important;
+    font-family: TheSansUHHBold, sans-serif;
+    font-size: 15px !important;
     font-style: normal;
-    font-weight: 700 !important;
     padding: 30px 0 5px;
 }
 
