@@ -156,8 +156,10 @@
 							Lectureseries ls = new LectureseriesImpl();
 							if(vid.getLectureseriesId()>0)ls = LectureseriesLocalServiceUtil.getLectureseries(vid.getLectureseriesId());
 							String lName="";
-							if(!ls.getNumber().equals(""))lName+=ls.getNumber()+" :";
+							/* if(!ls.getNumber().equals(""))lName+=ls.getNumber()+" :"; */
 							if(!ls.getName().equals(""))lName+=ls.getName();
+							String lTerm="";
+							if(ls.getTermId()>0)lTerm = TermLocalServiceUtil.getById(ls.getTermId()).getTermName();
 							String vName = vid.getTitle();
 							if(vName.trim().equals(""))vName =LanguageUtil.get(pageContext, "no-title");
 						%>
@@ -165,12 +167,12 @@
 							    <img class="video-image-big" src="<%=vid.getImageMedium()%>"/>
 							</div>
 							<div class="video-content-wrapper">
-								<div>
+								<div class="admin-videolist-video-title" <% if(!vid.getFilename().equals("")){%> onClick="window.open('<%=url%>')" <%} %>>
 									<%= vName %>
 								</div>
 								<%if(!lName.equals("")){%>
-									<div>
-										<%=lName%>
+									<div class="admin-videolist-lectureseries-title">
+										<%=lName%> (<%=lTerm%>)
 									</div>
 								<%}
 								if(!vid.getFilename().equals("")){
@@ -207,7 +209,9 @@
 										<liferay-ui:message key="pdf-text"/> &nbsp;
 									<%}%>
 									</div>
-								<div><%=vid.getDate()%> - <liferay-ui:message key="hits"/>: <%=vid.getHits()%></div>
+								<div class="admin-videolist-date">
+									<%=vid.getDate()%> | <liferay-ui:message key="hits"/>: <%=vid.getHits()%>
+								</div>
 						<%}%>
 						</div>
 						<div class="video-edit-wrapper">
