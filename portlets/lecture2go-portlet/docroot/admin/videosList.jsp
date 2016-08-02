@@ -151,7 +151,6 @@
 					<portlet:param name="videoId" value="<%= String.valueOf(video.getVideoId())%>" />
 				</portlet:actionURL>
 				<liferay-ui:search-container-column-text name="">
-					<div class="adminrow wide">
 						<div class="admintile wide">
 						<%
 							Lectureseries ls = new LectureseriesImpl();
@@ -161,153 +160,137 @@
 							if(!ls.getName().equals(""))lName+=ls.getName();
 							String vName = vid.getTitle();
 							if(vName.trim().equals(""))vName =LanguageUtil.get(pageContext, "no-title");
-						
-							if(!vid.getFilename().equals("")){%>
-							<aui:a  href="<%=url%>" target="blank">
-								<div class="video-image-wrapper">
-								    <img class="video-image-big" src="<%=vid.getImageMedium()%>"/>
-								</div>					
-								<%=vName%>
-							</aui:a>
-						<%}
-						else{%>
-							<aui:a  href="#">
-								<div class="video-image-wrapper">
-								    <img class="video-image-big" src="<%=vid.getImageMedium()%>"/>
-								</div>	
-								<%=vName%>
-							</aui:a>
-						<%}%>
-						<%if(!lName.equals("")){%>
-							<br/>
-							<%=lName%>
-						<%}%>
-						<br/>
-						<%
-						if(!vid.getFilename().equals("")){
-							%><div class="format"><%
-							if(vid.getMp4File().isFile()){%>
-								<liferay-ui:message key="mp4-video"/> &nbsp;
-							<%}
-							
-							if(vid.getMp3File().isFile()){%>
-								<liferay-ui:message key="mp3-audio"/> &nbsp;
-							<%}
-							
-							if(vid.getM4aFile().isFile()){%>
-								<liferay-ui:message key="m4a-audio"/> &nbsp;
-							<%}
-							
-							if(vid.getM4vFile().isFile()){%>
-								<liferay-ui:message key="m4v-video"/> &nbsp;
-							<%}
-							
-							if(vid.getFlvFile().isFile()){%>
-								<liferay-ui:message key="flv-video"/> &nbsp;
-							<%}
-							
-							if(vid.getOggFile().isFile()){%>
-								<liferay-ui:message key="ogg-video"/> &nbsp;
-							<%}
-							
-							if(vid.getWebmFile().isFile()){%>
-								<liferay-ui:message key="webm-video"/> &nbsp;
-							<%}
-							
-							if(vid.getPdfFile().isFile()){%>
-								<liferay-ui:message key="pdf-text"/> &nbsp;
-							<%}%>
+						%>
+							<div class="video-image-wrapper" <% if(!vid.getFilename().equals("")){%> onClick="window.open('<%=url%>')" <%} %>>
+							    <img class="video-image-big" src="<%=vid.getImageMedium()%>"/>
 							</div>
-							<em> 
-								<br/>
-								<%=vid.getDate()%> 
-								<p>
-									<liferay-ui:message key="hits"/>: <%=vid.getHits()%>
-								</p>
-							</em>
+							<div class="video-content-wrapper">
+								<div>
+									<%= vName %>
+								</div>
+								<%if(!lName.equals("")){%>
+									<div>
+										<%=lName%>
+									</div>
+								<%}
+								if(!vid.getFilename().equals("")){
+									%><div class="format"><%
+									if(vid.getMp4File().isFile()){%>
+										<liferay-ui:message key="mp4-video"/> &nbsp;
+									<%}
+									
+									if(vid.getMp3File().isFile()){%>
+										<liferay-ui:message key="mp3-audio"/> &nbsp;
+									<%}
+									
+									if(vid.getM4aFile().isFile()){%>
+										<liferay-ui:message key="m4a-audio"/> &nbsp;
+									<%}
+									
+									if(vid.getM4vFile().isFile()){%>
+										<liferay-ui:message key="m4v-video"/> &nbsp;
+									<%}
+									
+									if(vid.getFlvFile().isFile()){%>
+										<liferay-ui:message key="flv-video"/> &nbsp;
+									<%}
+									
+									if(vid.getOggFile().isFile()){%>
+										<liferay-ui:message key="ogg-video"/> &nbsp;
+									<%}
+									
+									if(vid.getWebmFile().isFile()){%>
+										<liferay-ui:message key="webm-video"/> &nbsp;
+									<%}
+									
+									if(vid.getPdfFile().isFile()){%>
+										<liferay-ui:message key="pdf-text"/> &nbsp;
+									<%}%>
+									</div>
+								<div><%=vid.getDate()%> - <liferay-ui:message key="hits"/>: <%=vid.getHits()%></div>
 						<%}%>
 						</div>
-						<div class="admintile wide icons">
+						<div class="video-edit-wrapper">
 				
-						<%
-							String primKey = String.valueOf(vid.getPrimaryKey());
-						%>
-		
-						<portlet:actionURL name="viewVideo" var="editURL">
-							<portlet:param name="videoId" value="<%= primKey%>" />
-							<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>
-						</portlet:actionURL>
-						
-						
-						<portlet:actionURL name="lockVideo" var="lockURL">
-							<portlet:param name="videoId" value="<%= primKey%>" />
-							<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>	
-						</portlet:actionURL>
-						
-						<portlet:actionURL name="unlockVideo" var="unlockURL">
-							<portlet:param name="videoId" value="<%= primKey%>" />
-							<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>	
-						</portlet:actionURL>
-						
-						<portlet:actionURL name="activateDownload" var="activateDowonloadURL">
-							<portlet:param name="videoId" value="<%= primKey%>" />
-							<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>	
-						</portlet:actionURL>
-						
-						<portlet:actionURL name="deactivateDownload" var="deactivateDowonloadURL">
-							<portlet:param name="videoId" value="<%= primKey%>" />
-							<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>	
-						</portlet:actionURL>
-						
-						<portlet:actionURL name="addSegment" var="segmentURL">
-							<portlet:param name="videoId" value="<%= primKey%>" />
-							<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>		
-						</portlet:actionURL>
-	
-						<portlet:actionURL name="removeVideo" var="removeURL">
-							<portlet:param name="videoId" value="<%= primKey%>" />
-							<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>	
-						</portlet:actionURL>
-								
-						<a href="<%=removeURL.toString()%>">
-							<span class="icon-large icon-remove" onclick="return confirm('<liferay-ui:message key="really-delete-question"/>')"></span>
-						</a>		
-						
-						<%if(vid.getFilename().length()>0){
-							if (SegmentLocalServiceUtil.getSegmentsByVideoId(vid.getVideoId()).size()>0){%>
-								 <a href="<%=segmentURL.toString()%>">
-								    <span class="icon-large icon-comment"></span>
-								 </a>			
-							<%}else{%>
-								<a href="<%=segmentURL.toString()%>">
-								   <span class="icon-large icon-align-justify"></span>
-								</a>	
-							<%}	
-							if (vid.getDownloadLink()==1){%>
-								 <a href="<%=deactivateDowonloadURL.toString()%>">
-								    <span class="icon-large icon-download-alt"></span>
-								 </a>
-							<%}else{%>
-								 <a href="<%=activateDowonloadURL.toString()%>">
-								    <span class="icon-large icon-download"></span>
-								 </a>		
-							<%}	
-							if (vid.getOpenAccess()==1){%>
-								<a href="<%=lockURL.toString()%>">
-								   <span class="icon-large icon-unlock"></span>
-								</a>
-							<%}else{%>
-								 <a href="<%=unlockURL.toString()%>">
-								    <span class="icon-large icon-lock"></span>
-								 </a>
-							<%}	
+							<%
+								String primKey = String.valueOf(vid.getPrimaryKey());
+							%>
+			
+							<portlet:actionURL name="viewVideo" var="editURL">
+								<portlet:param name="videoId" value="<%= primKey%>" />
+								<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>
+							</portlet:actionURL>
 							
-						}%>
-						
-						<a href="<%=editURL.toString()%>">
-						   <span class="icon-large icon-pencil"></span>
-						</a>
-						
+							
+							<portlet:actionURL name="lockVideo" var="lockURL">
+								<portlet:param name="videoId" value="<%= primKey%>" />
+								<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>	
+							</portlet:actionURL>
+							
+							<portlet:actionURL name="unlockVideo" var="unlockURL">
+								<portlet:param name="videoId" value="<%= primKey%>" />
+								<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>	
+							</portlet:actionURL>
+							
+							<portlet:actionURL name="activateDownload" var="activateDowonloadURL">
+								<portlet:param name="videoId" value="<%= primKey%>" />
+								<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>	
+							</portlet:actionURL>
+							
+							<portlet:actionURL name="deactivateDownload" var="deactivateDowonloadURL">
+								<portlet:param name="videoId" value="<%= primKey%>" />
+								<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>	
+							</portlet:actionURL>
+							
+							<portlet:actionURL name="addSegment" var="segmentURL">
+								<portlet:param name="videoId" value="<%= primKey%>" />
+								<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>		
+							</portlet:actionURL>
+		
+							<portlet:actionURL name="removeVideo" var="removeURL">
+								<portlet:param name="videoId" value="<%= primKey%>" />
+								<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>	
+							</portlet:actionURL>
+									
+							<a href="<%=removeURL.toString()%>">
+								<span class="icon-large icon-remove" onclick="return confirm('<liferay-ui:message key="really-delete-question"/>')"></span>
+							</a>		
+							
+							<%if(vid.getFilename().length()>0){
+								if (SegmentLocalServiceUtil.getSegmentsByVideoId(vid.getVideoId()).size()>0){%>
+									 <a href="<%=segmentURL.toString()%>">
+									    <span class="icon-large icon-comment"></span>
+									 </a>			
+								<%}else{%>
+									<a href="<%=segmentURL.toString()%>">
+									   <span class="icon-large icon-align-justify"></span>
+									</a>	
+								<%}	
+								if (vid.getDownloadLink()==1){%>
+									 <a href="<%=deactivateDowonloadURL.toString()%>">
+									    <span class="icon-large icon-download-alt"></span>
+									 </a>
+								<%}else{%>
+									 <a href="<%=activateDowonloadURL.toString()%>">
+									    <span class="icon-large icon-download"></span>
+									 </a>		
+								<%}	
+								if (vid.getOpenAccess()==1){%>
+									<a href="<%=lockURL.toString()%>">
+									   <span class="icon-large icon-unlock"></span>
+									</a>
+								<%}else{%>
+									 <a href="<%=unlockURL.toString()%>">
+									    <span class="icon-large icon-lock"></span>
+									 </a>
+								<%}	
+								
+							}%>
+							
+							<a href="<%=editURL.toString()%>">
+							   <span class="icon-large icon-pencil"></span>
+							</a>
+						</div>
 					</div>
 				</div>
 			</liferay-ui:search-container-column-text>
