@@ -1460,6 +1460,8 @@ thead, th {
   	display: -ms-flexbox;
   	display: flex;
     width: 100%;
+    border-top: 1px solid #eee;
+    margin-bottom: 5px;
 }
 
 .admintile.wide p {
@@ -1487,6 +1489,47 @@ thead, th {
 .admintile.wide em {
     font-size: 11px;
     font-style: normal;
+}
+
+.admintile.wide .video-image-wrapper {
+	-webkit-box-flex: 0 0 150px;
+    -moz-box-flex: 0 0 150px;
+    -webkit-flex: 0 0 150px;
+    -ms-flex: 0 0 150px;
+    flex: 0 0 150px;
+}
+
+.admintile.wide .video-image-big {
+	width: 150px;
+    height: 84px !important;
+}
+
+.admintile.wide .video-image-big:hover,
+.admintile.wide .admin-videolist-video-title:hover {
+	cursor: pointer;
+}
+
+.admintile.wide .admin-videolist-video-title {
+    font-family: TheSansUHHBold, sans-serif;
+    margin-bottom: 2px;
+}
+
+.admintile.wide .admin-videolist-lectureseries-title {
+	font-family: TheSansUHHItalic,sans-serif;
+    margin-bottom: 7px;
+}
+
+.admintile.wide .admin-videolist-date {
+	font-size: 10px;
+}
+
+.aui .admintile.wide .icon-large:before {
+	font-size: 20px;
+    padding: 8px;
+}
+
+.video-edit-wrapper a:hover {
+    text-decoration: none;
 }
 
 .adminrow.wide:hover {
