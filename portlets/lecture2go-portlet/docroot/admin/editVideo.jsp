@@ -42,6 +42,19 @@
 	String backURL = request.getAttribute("backURL").toString();
 	List<Creator> creators = new ArrayList<Creator>();
 	try{creators = CreatorLocalServiceUtil.getCreators(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);}catch (NullPointerException e){}
+	JSONArray json = new JSONArray();
+	for (Creator creator: creators) {
+		JSONObject c = new JSONObject();
+		try {
+			c.put("id", creator.getCreatorId());
+			c.put("value", creator.getFullName());
+			c.put("label", creator.getFullName());
+			json.put(c);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}	
+	
 	List<Term> semesters = new ArrayList<Term>(); 
 	try{semesters = TermLocalServiceUtil.getAllSemesters();}catch(Exception e){}
 	List<Category> categories = new ArrayList<Category>();
@@ -120,12 +133,7 @@
 				<div id="metadata-upload">
 				<aui:input id="title" name="title" label="title" required="false" value="<%=reqVideo.getTitle()%>" />
 				
-				<aui:select size="1" name="crId" label="creators">
-					<aui:option value=""><liferay-ui:message key="select-creator"/></aui:option>
-					<%for (int i = 0; i < creators.size(); i++) {
-						%><aui:option value='<%=creators.get(i).getCreatorId()%>'><%=creators.get(i).getJobTitle() + " "+creators.get(i).getLastName() + ", " + creators.get(i).getFirstName()%></aui:option><%
-					}%>	
-				</aui:select>	
+				<aui:input id="creator" name="creator" label="<liferay-ui:message key='select-creator'/>" required="false" />
 							
 				<div id="creators"></div>
 	
@@ -273,6 +281,19 @@ $(function () {
 	if(lsId>0){
 		$options.hide();
 	}
+	var local_source = <%=json.toString()%>
+	$( "#_lgadminvideomanagement_WAR_lecture2goportlet_creator" ).autocomplete({
+		source: local_source,
+		minLength: 3,
+		select: function (event, ui) {
+			if(ui.item.id>0){
+  		        var vars = getJSONCreator(ui.item.id);
+  		        console.log(vars);
+  		        $.template( "filesTemplate", $("#created") );
+  		        $.tmpl( "filesTemplate", vars ).appendTo( "#creators" );
+  			}
+		}
+	});
 });
 
 function toggleLectureseries(){
@@ -745,7 +766,6 @@ function remb(c){
 AUI().use('aui-node',
   function(A){
 	// Select the node(s) using a css selector string
-    var crId = A.one('#<portlet:namespace/>crId');
     var subInstitutionId = A.one('#<portlet:namespace/>subInstitutionId');
     var subInstitutions = A.one('.subInstitutions');
 	var citationAllowed = A.one('#<portlet:namespace/>citationAllowedCheckbox');
@@ -755,19 +775,7 @@ AUI().use('aui-node',
 			function(A){
 				toggleCitationAllowed(citationAllowed.get('checked'))
 			}
-	);
-
-    crId.on(
-      	'change',
-      	function(A) {
-  			if(crId.get('value')>0){
-  		        var vars = getJSONCreator(crId.get('value'));
-  		        console.log(vars);
-  		        $.template( "filesTemplate", $("#created") );
-  		        $.tmpl( "filesTemplate", vars ).appendTo( "#creators" );
-  			}
-      	}
-    );
+	)
     
     subInstitutionId.on(
           'change',
