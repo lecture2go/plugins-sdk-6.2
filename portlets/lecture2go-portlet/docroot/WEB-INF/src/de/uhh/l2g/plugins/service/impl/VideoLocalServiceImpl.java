@@ -199,9 +199,9 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		// set thumbnail
 		// if no file
 		if (objectVideo.getContainerFormat().equals("") && objectVideo.getFilename().equals("")) {
-			objectVideo.setImage("/lecture2go-portlet/img/novideo.jpg");
-			objectVideo.setImageSmall("/lecture2go-portlet/img/novideo.jpg");
-			objectVideo.setImageMedium("/lecture2go-portlet/img/novideo.jpg");
+			objectVideo.setImage("/lecture2go-portlet/img/nomedia.gif");
+			objectVideo.setImageSmall("/lecture2go-portlet/img/nomedia.gif");
+			objectVideo.setImageMedium("/lecture2go-portlet/img/nomedia.gif");
 		}		
 		// if audio file
 		if (objectVideo.getContainerFormat().equals("mp3")) {

@@ -255,21 +255,22 @@
 								<portlet:param name="videoId" value="<%= primKey%>" />
 								<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>	
 							</portlet:actionURL>
-									
-							<a href="<%=removeURL.toString()%>">
-								<span class="icon-large icon-remove" onclick="return confirm('<liferay-ui:message key="really-delete-question"/>')"></span>
-							</a>		
+							
+							<a href="<%=editURL.toString()%>">
+							   <span class="icon-large icon-pencil"></span>
+							</a>
 							
 							<%if(vid.getFilename().length()>0){
-								if (SegmentLocalServiceUtil.getSegmentsByVideoId(vid.getVideoId()).size()>0){%>
-									 <a href="<%=segmentURL.toString()%>">
-									    <span class="icon-large icon-comment"></span>
-									 </a>			
+								if (vid.getOpenAccess()==1){%>
+								<a href="<%=lockURL.toString()%>">
+								   <span class="icon-large icon-unlock"></span>
+								</a>
 								<%}else{%>
-									<a href="<%=segmentURL.toString()%>">
-									   <span class="icon-large icon-align-justify"></span>
-									</a>	
+									 <a href="<%=unlockURL.toString()%>">
+									    <span class="icon-large icon-lock"></span>
+									 </a>
 								<%}	
+									
 								if (vid.getDownloadLink()==1){%>
 									 <a href="<%=deactivateDowonloadURL.toString()%>">
 									    <span class="icon-large icon-download-alt"></span>
@@ -279,20 +280,21 @@
 									    <span class="icon-large icon-download"></span>
 									 </a>		
 								<%}	
-								if (vid.getOpenAccess()==1){%>
-									<a href="<%=lockURL.toString()%>">
-									   <span class="icon-large icon-unlock"></span>
-									</a>
+								
+								if (SegmentLocalServiceUtil.getSegmentsByVideoId(vid.getVideoId()).size()>0){%>
+								 <a href="<%=segmentURL.toString()%>">
+								    <span class="icon-large icon-comment"></span>
+								 </a>			
 								<%}else{%>
-									 <a href="<%=unlockURL.toString()%>">
-									    <span class="icon-large icon-lock"></span>
-									 </a>
-								<%}	
+									<a href="<%=segmentURL.toString()%>">
+									   <span class="icon-large icon-align-justify"></span>
+									</a>	
+								<%}
 								
 							}%>
 							
-							<a href="<%=editURL.toString()%>">
-							   <span class="icon-large icon-pencil"></span>
+							<a href="<%=removeURL.toString()%>">
+								<span class="icon-large icon-remove" onclick="return confirm('<liferay-ui:message key="really-delete-question"/>')"></span>
 							</a>
 						</div>
 					</div>
