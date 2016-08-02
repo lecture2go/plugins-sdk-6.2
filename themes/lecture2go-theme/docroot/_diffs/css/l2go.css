@@ -1754,7 +1754,7 @@ thead, th {
     padding: 30px 0 5px;
 }
 
-label.edit-video-lable:first-child {
+label.edit-video-lable.first {
     padding-top: 5px;
 }
 

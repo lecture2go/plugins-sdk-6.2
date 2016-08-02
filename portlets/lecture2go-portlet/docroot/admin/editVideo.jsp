@@ -86,7 +86,7 @@
   });
 </script>
 <div class="noresponsive">
-	<label class="edit-video-lable"><liferay-ui:message key="upload"/></label>
+	<label class="edit-video-lable first"><liferay-ui:message key="upload"/></label>
 	<div id="date-time-form">
 		<aui:fieldset helpMessage="test" column="true" label="" >
 			<aui:layout>
