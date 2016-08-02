@@ -912,6 +912,27 @@ $dockbarOpenGradientEnd: #e9e9e9;
 		background: #ddd;
 	}
 	
+	.ui-autocomplete {
+		position: absolute;
+	    z-index: 1;
+	}
+
+	.ui-menu-item {
+		cursor: pointer;
+	}
+	
+	.ui-autocomplete .ui-menu-item {
+		color: #888;
+		background: #fff;
+		padding: 5px;
+		font-size: 13px;
+		line-height: 16px;
+	}
+	
+	.ui-autocomplete .ui-menu-item.ui-state-active,
+	.ui-autocomplete .ui-menu-item.ui-state-focus {
+		background: #ddd;
+	}
 
 	/* ---------- IE8 ---------- */
 

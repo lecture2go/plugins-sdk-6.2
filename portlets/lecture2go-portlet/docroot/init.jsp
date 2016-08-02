@@ -70,6 +70,8 @@
 <%@page import="org.springframework.web.bind.ServletRequestUtils"%>
 <%@page import="org.springframework.web.portlet.bind.PortletRequestUtils"%>
 <%@page import="org.json.JSONObject"%>
+<%@page import="org.json.JSONArray"%>
+<%@page import="org.json.JSONException"%>
 
 <%@page import="de.uhh.l2g.plugins.model.impl.HostImpl"%>
 <%@page import="de.uhh.l2g.plugins.model.Video_Lectureseries"%>
