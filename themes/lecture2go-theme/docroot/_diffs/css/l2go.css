@@ -1683,8 +1683,11 @@ thead, th {
     margin-top: 10px;
 }
 
-#metadata-upload select {
+#metadata-upload select,
+#metadata-upload input {
     width: 50%;
+    max-width: 400px;
+    min-width: 240px;
 }
 
 #metadata-upload .textarea {
