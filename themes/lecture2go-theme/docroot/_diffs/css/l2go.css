@@ -1528,7 +1528,9 @@ thead, th {
     padding: 8px;
 }
 
-.video-edit-wrapper a:hover {
+.video-edit-wrapper a:hover,
+.video-edit-wrapper a:focus,
+.video-edit-wrapper a:active {
     text-decoration: none;
 }
 
