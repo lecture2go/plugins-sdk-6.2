@@ -915,13 +915,15 @@ $dockbarOpenGradientEnd: #e9e9e9;
 	.ui-autocomplete {
 		position: absolute;
 	    z-index: 1;
+	   	border: 1px solid #888;
 	}
 
 	.ui-menu-item {
 		cursor: pointer;
 	}
 	
-	.ui-autocomplete .ui-menu-item {
+	.ui-autocomplete .ui-menu-item,
+	.ui-autocomplete .newcreator {
 		color: #888;
 		background: #fff;
 		padding: 5px;
@@ -930,10 +932,20 @@ $dockbarOpenGradientEnd: #e9e9e9;
 	}
 	
 	.ui-autocomplete .ui-menu-item.ui-state-active,
-	.ui-autocomplete .ui-menu-item.ui-state-focus {
+	.ui-autocomplete .ui-menu-item.ui-state-focus,
+	.ui-autocomplete .newcreator:hover {
 		background: #ddd;
 	}
-
+	
+		
+	.ui-autocomplete .newcreator {
+    	border-top: 2px solid #888;
+    	color: #4d4d4d;
+    	height: 35px;
+    	padding-top: 10px;
+    	cursor: pointer;
+	}
+	
 	/* ---------- IE8 ---------- */
 
 	&.ie8 {
