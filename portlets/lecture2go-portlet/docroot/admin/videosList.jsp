@@ -151,7 +151,7 @@
 					<portlet:param name="videoId" value="<%= String.valueOf(video.getVideoId())%>" />
 				</portlet:actionURL>
 				<liferay-ui:search-container-column-text name="">
-						<div class="admintile wide">
+						<div class="adminrow wide">
 						<%
 							Lectureseries ls = new LectureseriesImpl();
 							if(vid.getLectureseriesId()>0)ls = LectureseriesLocalServiceUtil.getLectureseries(vid.getLectureseriesId());
@@ -166,7 +166,7 @@
 							<div class="video-image-wrapper" <% if(!vid.getFilename().equals("")){%> onClick="window.open('<%=url%>')" <%} %>>
 							    <img class="video-image-big" src="<%=vid.getImageMedium()%>"/>
 							</div>
-							<div class="video-content-wrapper">
+							<div class="admintile wide video-content-wrapper">
 								<div class="admin-videolist-video-title" <% if(!vid.getFilename().equals("")){%> onClick="window.open('<%=url%>')" <%} %>>
 									<%= vName %>
 								</div>

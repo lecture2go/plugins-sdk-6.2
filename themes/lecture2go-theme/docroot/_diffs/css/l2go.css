@@ -1450,18 +1450,22 @@ thead, th {
     padding: 0 0 10px;
 }
 
+
 .admintile.wide.icons {
-    width: 15%;
+	-webkit-box-flex: 0;
+    -moz-box-flex: 0;
+    -webkit-flex: none;
+    -ms-flex: none;
+	flex: none;
 }
 
+
 .admintile.wide {
-	display: -webkit-box;
-  	display: -moz-box;
-  	display: -ms-flexbox;
-  	display: flex;
-    width: 100%;
-    border-top: 1px solid #eee;
-    margin-bottom: 5px;
+	-webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
 }
 
 .admintile.wide p {
@@ -1471,7 +1475,6 @@ thead, th {
 
 .admintile {
     border-top: 0px solid #EAEAEA;
-    float: left;
     padding-top: 3px;
     font-size: 13px;
 }
@@ -1523,7 +1526,7 @@ thead, th {
 	font-size: 10px;
 }
 
-.aui .admintile.wide .icon-large:before {
+.video-edit-wrapper .icon-large:before {
 	font-size: 20px;
     padding: 8px;
 }
@@ -1534,16 +1537,20 @@ thead, th {
     text-decoration: none;
 }
 
-.adminrow.wide:hover {
-    background-color: #eaeaea;
-    height: 100%;
-}
-
 .adminrow.wide {
-    background-color: #f0f0f0;
+    display: saf;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    width: 100%;
     border-top: 1px solid #eee;
+    margin-bottom: 5px;
 }
 
+/*
 .adminrow .wide .video-image-wrapper {
     -webkit-box-flex: 0 0 200px;
   	-moz-box-flex: 0 0 200px;    
@@ -1554,6 +1561,7 @@ thead, th {
     margin-right: 12px;
     position: relative;
 }
+*/
 
 .lfr-search-container {
     margin-top: 0px;
@@ -2015,7 +2023,6 @@ div.filter-menu-link span.icon-large.icon-remove {
 }
 
 .undertile.wide {
-    float: left;
     font-size: 10px;
     line-height: 13px;
     margin-left: 4px;
@@ -2274,7 +2281,6 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 }
 
 .admintile.wide.icons.creators {
-    float: right;
     margin-right: 8px;
     margin-top: 0;
     width: 120px;
