@@ -133,13 +133,9 @@
 				<div id="metadata-upload">
 				<aui:input id="title" name="title" label="title" required="false" value="<%=reqVideo.getTitle()%>" />
 				
-				<aui:input id="creator" name="creator" label="<liferay-ui:message key='select-creator'/>" required="false" />
+				<aui:input id="creator" name="creator" label="creators" required="false" />
 							
 				<div id="creators"></div>
-	
-				<a id="addCreator">
-				    <liferay-ui:message key="add-new-creator"/> <span class="icon-large icon-plus-sign"></span>
-				</a>
 								
 				<aui:select size="1" name="lectureseriesId" label="lecture-series" onChange="toggleLectureseries()">
 					<aui:option value="0"><liferay-ui:message key="select-lecture-series"/></aui:option>
@@ -241,9 +237,9 @@
 					
 					<div id="c2g">
 						<%if(reqVideo.getCitation2go()==0){%>
-					  		<aui:input name="citationAllowed" type="checkbox" label="" id="citationAllowed"><liferay-ui:message key="citation-allowed"/></aui:input>
+					  		<aui:input name="citationAllowed" type="checkbox" label="citation-allowed" id="citationAllowed"></aui:input>
 					   	<%}else{%>
-						  <aui:input name="citationAllowed" type="checkbox" label="" id="citationAllowed" checked="true"><liferay-ui:message key="citation-allowed"/></aui:input>
+						  <aui:input name="citationAllowed" type="checkbox" label="citation-allowed" id="citationAllowed" checked="true"></aui:input>
 					    <%}%>
 					</div>
 				</div>
@@ -277,6 +273,7 @@
 var $options = $( "#options" );
 
 $(function () {
+	c = 0;
 	var lsId = <%=reqLectureseries.getLectureseriesId()%>;
 	if(lsId>0){
 		$options.hide();
@@ -285,6 +282,26 @@ $(function () {
 	$( "#_lgadminvideomanagement_WAR_lecture2goportlet_creator" ).autocomplete({
 		source: local_source,
 		minLength: 3,
+		open: function(event, ui) {
+			$('.ui-autocomplete').append('<li id="addNewCreator" class="newcreator"><liferay-ui:message key="add-new-creator"/> <span class="icon-large icon-plus-sign"></span></li>');
+			$( "#addNewCreator" ).on( "click", function() {
+				c++;
+				appendCreator(c);
+				$("#_lgadminvideomanagement_WAR_lecture2goportlet_creator").autocomplete('close');
+			});
+		},
+        response: function(event, ui) {
+            if (ui.content.length === 0) {
+            	avoidClosing = true;
+	        }
+        },
+        close: function(event, ui) {
+        	if (avoidClosing) {
+        		$("ul.ui-autocomplete li:not(:last)").remove();
+            	$("ul.ui-autocomplete").show();
+            	avoidClosing = false;
+        	}
+        },
 		select: function (event, ui) {
 			if(ui.item.id>0){
   		        var vars = getJSONCreator(ui.item.id);
@@ -754,10 +771,7 @@ function appendCreator(c){
 };
 
 var c = 0;
-$( "#addCreator" ).on( "click", function() {
-	c++;
-	appendCreator(c);
-});
+
 
 function remb(c){
 	$("#"+c).remove();
@@ -833,17 +847,9 @@ function getJSONCreator (data){
 <script type="text/x-jquery-tmpl" id="newCreator">
 	<div id="nc<%="${counter}"%>">
 	<aui:input type="hidden" name="gender"/>
-	<aui:select size="1" name="jobTitle" label="">
-		<aui:option value="">choose-job-title</aui:option>
-		<%
-		String[] l =  LanguageUtil.get(pageContext, "creator-titles").split(",");
-		for(int i=0; i<l.length; i++){
-			String title = l[i];
-			%><aui:option value="<%=title%>"><%=title%></aui:option><%
-		}
-		%>
-	</aui:select>
+	<aui:input name="jobTitle" type="text"/>
 	<aui:input name="firstName" type="text"/>
+	<aui:input name="middleName" type="text"/>
 	<aui:input name="lastName" type="text"/>
 	<aui:input name="creatorId" value="0" type="hidden"/>
 	<a class="icon-large icon-remove" onclick="remb('<%="nc${counter}"%>');"></a>
