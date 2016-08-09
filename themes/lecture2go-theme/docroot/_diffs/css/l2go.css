@@ -1708,6 +1708,7 @@ thead, th {
 
 div[id^="nc"] {
 	background-color: #F9F9F9;
+	width: auto !important;
 	margin-bottom: 10px;
 }
 
