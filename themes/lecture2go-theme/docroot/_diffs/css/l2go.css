@@ -1636,7 +1636,7 @@ thead, th {
     margin: 0 6px 0 0;
 }
 
-.aui select, .aui input[type="file"] {
+.aui input[type="file"] {
     height: 30px;
     margin-bottom: 8px;
     max-width: 400px;
@@ -1667,8 +1667,7 @@ thead, th {
 
 #metadata-upload label {
     float: left;
-    min-width: 116px;
-    width: 15%;
+    width: 180px;
 }
 
 #metadata-upload .subInstitutions {
@@ -1696,7 +1695,6 @@ thead, th {
 #metadata-upload select,
 #metadata-upload input {
     width: 50%;
-    max-width: 400px;
     min-width: 240px;
 }
 

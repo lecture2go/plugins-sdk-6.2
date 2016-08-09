@@ -49,7 +49,7 @@
 	@include box-sizing(border-box);
 }
 
-input {
+input, select {
     box-sizing: content-box;
 }
 
