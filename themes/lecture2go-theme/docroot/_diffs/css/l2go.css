@@ -1710,6 +1710,8 @@ div[id^="nc"] {
 	background-color: #F9F9F9;
 	width: auto !important;
 	margin-bottom: 10px;
+	padding: 5px 30px 5px 10px;
+	position: relative;
 }
 
 div[id^="nc"] .control-group {
@@ -1725,6 +1727,12 @@ div[id^="nc"] label {
 div[id^="nc"] input {
     min-width: auto !important;
     margin-right: 5px;
+}
+
+div[id^="nc"] a.icon-large.icon-remove {
+	position: absolute !important;
+    bottom: 20px;
+    margin-left: 10px;
 }
 
 input#_lgadminvideomanagement_WAR_lecture2goportlet_jobTitle,
