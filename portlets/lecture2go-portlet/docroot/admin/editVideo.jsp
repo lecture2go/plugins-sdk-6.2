@@ -190,7 +190,7 @@
 						}%>
 					</aui:select>
 	
-					<aui:select size="1" id="categoryId" name="categoryId" label="event-type">
+					<aui:select size="1" id="categoryId" name="categoryId" label="category">
 						<%
 						Long cId = new Long(0);
 						try{cId = Video_CategoryLocalServiceUtil.getByVideo(reqVideo.getVideoId()).get(0).getCategoryId();}catch(Exception e){}
