@@ -151,10 +151,14 @@
 				<portlet:param name="lectureseriesId" value="<%= String.valueOf(lectser.getLectureseriesId())%>" />
 				<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>
 			</portlet:actionURL>
+			<%
+				String lTerm=TermLocalServiceUtil.getById(lectser.getTermId()).getTermName();
+				
+			%>
 			<liferay-ui:search-container-column-text name="name">
 				<div class="adminrow wide">
 					<div class="admintile wide">
-						<strong><%=lectser.getName()%></strong>
+						<strong><%=lectser.getName()%> (<%=lTerm%>)</strong>
 						<br/>
 						<%
 						List<Long> pIds = new ArrayList<Long>();
@@ -170,6 +174,8 @@
 							}catch(Exception e){}
 			 			%>
 			 			<%=prds %>
+			 			<br />
+			 			<p><%= lectser.getNumberOfVideos() %> Videos</p>
 			 		</div>
 			 		<div class="admintile wide icons">
 						<portlet:actionURL name="removeLectureseries" var="removeURL">

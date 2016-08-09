@@ -851,7 +851,7 @@ function getJSONCreator (data){
 <script type="text/x-jquery-tmpl" id="newCreator">
 	<div id="nc<%="${counter}"%>">
 	<aui:input type="hidden" name="gender"/>
-	<aui:input name="jobTitle" type="text"/>
+	<aui:input name="jobTitle" type="text" helpMessage="job-title-help-text"/>
 	<aui:input name="firstName" type="text"/>
 	<aui:input name="middleName" type="text"/>
 	<aui:input name="lastName" type="text"/>
