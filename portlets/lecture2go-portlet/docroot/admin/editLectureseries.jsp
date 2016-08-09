@@ -129,7 +129,7 @@
 
 			<%if(!readOnly){%>
 				<aui:select size="1" name="categoryId" label="event-type" required="true">
-					<aui:option value=""><liferay-ui:message key="select-event-type"/></aui:option>
+					<aui:option value=""><liferay-ui:message key="select-category"/></aui:option>
 					<%for (int i = 0; i < categories.size(); i++) {
 						if (categoryId==categories.get(i).getCategoryId()) {%>
 							<aui:option value='<%=categories.get(i).getCategoryId()%>' selected="true"><%=categories.get(i).getName()%></aui:option>
@@ -139,7 +139,7 @@
 					}%>
 				</aui:select>
 			<%}else{%>
-				<aui:input name="cat" label="event-type" required="true" value="<%=CategoryLocalServiceUtil.getById(categoryId).getName()%>" readonly="<%=readOnly%>"/>
+				<aui:input name="cat" label="category" required="true" value="<%=CategoryLocalServiceUtil.getById(categoryId).getName()%>" readonly="<%=readOnly%>"/>
 				<aui:input type="hidden" name="categoryId" value="<%=categoryId%>"/>
 			<%}%>
 			
