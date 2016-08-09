@@ -50,7 +50,7 @@
 }
 
 input, select {
-    box-sizing: content-box;
+    box-sizing: content-box !important;
 }
 
 .aui {
