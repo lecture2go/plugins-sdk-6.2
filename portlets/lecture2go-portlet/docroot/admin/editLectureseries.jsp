@@ -248,7 +248,7 @@
 				</a>
 			<%}%>
 			
-			<aui:input name="password" label="password" value="<%=lPassword%>"/>
+			<aui:input name="password" label="password" helpMessage="password-help-text" value="<%=lPassword%>"/>
 			
 			<%if(!readOnly){%>
 				<aui:field-wrapper label="description">
