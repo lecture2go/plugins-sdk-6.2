@@ -280,8 +280,12 @@ $(function () {
 	}
 	var local_source = <%=json.toString()%>
 	$( "#_lgadminvideomanagement_WAR_lecture2goportlet_creator" ).autocomplete({
-		source: local_source,
-		minLength: 3,
+	    source: function(request, response) {
+	        var results = $.ui.autocomplete.filter(local_source, request.term);
+
+	        response(results.slice(0, 10));
+	    },
+		minLength: 1,
 		open: function(event, ui) {
 			$('.ui-autocomplete').append('<li id="addNewCreator" class="newcreator"><liferay-ui:message key="add-new-creator"/> <span class="icon-large icon-plus-sign"></span></li>');
 			$( "#addNewCreator" ).on( "click", function() {

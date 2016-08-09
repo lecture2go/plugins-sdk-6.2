@@ -1708,6 +1708,8 @@ thead, th {
 
 div[id^="nc"] {
 	background-color: #F9F9F9;
+	width: auto !important;
+	margin-bottom: 10px;
 }
 
 div[id^="nc"] .control-group {
@@ -1725,13 +1727,13 @@ div[id^="nc"] input {
     margin-right: 5px;
 }
 
-#_lgadminvideomanagement_WAR_lecture2goportlet_jobTitle,
-#_lgadminvideomanagement_WAR_lecture2goportlet_middleName {
+input#_lgadminvideomanagement_WAR_lecture2goportlet_jobTitle,
+input#_lgadminvideomanagement_WAR_lecture2goportlet_middleName {
 	width: 100px;
 }
 
-#_lgadminvideomanagement_WAR_lecture2goportlet_firstName,
-#_lgadminvideomanagement_WAR_lecture2goportlet_lastName {
+input#_lgadminvideomanagement_WAR_lecture2goportlet_firstName,
+input#_lgadminvideomanagement_WAR_lecture2goportlet_lastName {
 	width: 150px;
 }
 
