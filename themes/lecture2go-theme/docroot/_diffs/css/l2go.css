@@ -1680,7 +1680,7 @@ thead, th {
 #metadata-upload #creators {
     clear: both;
     margin-left: 187px;
-    width: 56% !important;
+    width: 70%;
 }
 
 #metadata-upload #creators div div label {
@@ -1704,6 +1704,35 @@ thead, th {
 
 #metadata-upload input {
     padding: 5px;
+}
+
+div[id^="nc"] {
+	background-color: #F9F9F9;
+}
+
+div[id^="nc"] .control-group {
+    float: left !important;
+    width: auto !important;
+}
+
+div[id^="nc"] label {
+    float: none !important;
+    width: auto !important;
+}
+
+div[id^="nc"] input {
+    min-width: auto !important;
+    margin-right: 5px;
+}
+
+#_lgadminvideomanagement_WAR_lecture2goportlet_jobTitle,
+#_lgadminvideomanagement_WAR_lecture2goportlet_middleName {
+	width: 100px;
+}
+
+#_lgadminvideomanagement_WAR_lecture2goportlet_firstName,
+#_lgadminvideomanagement_WAR_lecture2goportlet_lastName {
+	width: 150px;
 }
 
 #permissions div label {
