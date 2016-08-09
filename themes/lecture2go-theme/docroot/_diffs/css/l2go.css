@@ -1054,8 +1054,8 @@ thead, th {
 }
 
 #c2g input {
-    margin-left: 135px;
-    margin-top: 7px;
+    margin-left: 145px;
+    margin-top: 15px;
     position: absolute;
 }
 
@@ -1710,6 +1710,8 @@ div[id^="nc"] {
 	background-color: #F9F9F9;
 	width: auto !important;
 	margin-bottom: 10px;
+	padding: 5px 30px 5px 10px;
+	position: relative;
 }
 
 div[id^="nc"] .control-group {
@@ -1725,6 +1727,12 @@ div[id^="nc"] label {
 div[id^="nc"] input {
     min-width: auto !important;
     margin-right: 5px;
+}
+
+div[id^="nc"] a.icon-large.icon-remove {
+	position: absolute !important;
+    bottom: 20px;
+    margin-left: 10px;
 }
 
 input#_lgadminvideomanagement_WAR_lecture2goportlet_jobTitle,
@@ -1815,15 +1823,6 @@ label.edit-video-lable.first {
     background-color: #F6F6F6;
     background-image: none;
     border-radius: 0px;
-}
-
-#c2g {
-    margin-top: 8px;
-}
-
-#permissions #c2g {
-    font-size: 14px;
-    margin-top: 8px;
 }
 
 .prodCont {
