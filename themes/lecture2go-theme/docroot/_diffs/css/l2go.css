@@ -1712,6 +1712,7 @@ div[id^="nc"] {
 	margin-bottom: 10px;
 	padding: 5px 30px 5px 10px;
 	position: relative;
+	margin-left: -5px;
 }
 
 div[id^="nc"] .control-group {
@@ -1737,12 +1738,12 @@ div[id^="nc"] a.icon-large.icon-remove {
 
 input#_lgadminvideomanagement_WAR_lecture2goportlet_jobTitle,
 input#_lgadminvideomanagement_WAR_lecture2goportlet_middleName {
-	width: 100px;
+	width: 80px;
 }
 
 input#_lgadminvideomanagement_WAR_lecture2goportlet_firstName,
 input#_lgadminvideomanagement_WAR_lecture2goportlet_lastName {
-	width: 150px;
+	width: 135px;
 }
 
 #permissions div label {
