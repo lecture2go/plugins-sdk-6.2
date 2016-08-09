@@ -1054,8 +1054,8 @@ thead, th {
 }
 
 #c2g input {
-    margin-left: 135px;
-    margin-top: 7px;
+    margin-left: 145px;
+    margin-top: 15px;
     position: absolute;
 }
 
@@ -1823,15 +1823,6 @@ label.edit-video-lable.first {
     background-color: #F6F6F6;
     background-image: none;
     border-radius: 0px;
-}
-
-#c2g {
-    margin-top: 8px;
-}
-
-#permissions #c2g {
-    font-size: 14px;
-    margin-top: 8px;
 }
 
 .prodCont {
