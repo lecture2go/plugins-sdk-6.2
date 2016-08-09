@@ -116,9 +116,9 @@
 		<aui:layout>
 			<div id="metadata-upload">
 			<%if(readOnly){%>
-				<aui:input name="number" label="number" required="true" value="<%=lNumber %>" readonly="<%=readOnly%>"/>
+				<aui:input name="number" label="number" required="false" value="<%=lNumber %>" readonly="<%=readOnly%>"/>
 			<%}else{%>
-				<aui:input name="number" label="number" required="true" value="<%=lNumber %>"/>
+				<aui:input name="number" label="number" required="false" value="<%=lNumber %>"/>
 			<%}%>
 			
 			<%if(readOnly){%>
@@ -128,7 +128,7 @@
 			<%}%>
 
 			<%if(!readOnly){%>
-				<aui:select size="1" name="categoryId" label="event-type" required="true">
+				<aui:select size="1" name="categoryId" label="category" required="true">
 					<aui:option value=""><liferay-ui:message key="select-category"/></aui:option>
 					<%for (int i = 0; i < categories.size(); i++) {
 						if (categoryId==categories.get(i).getCategoryId()) {%>
