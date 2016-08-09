@@ -137,8 +137,8 @@
 							
 				<div id="creators"></div>
 								
-				<aui:select size="1" name="lectureseriesId" label="lecture-series" onChange="toggleLectureseries()">
-					<aui:option value="0"><liferay-ui:message key="select-lecture-series"/></aui:option>
+				<aui:select size="1" name="lectureseriesId" label="lecture-series" helpMessage="video-with-or-without-lectureseries" onChange="toggleLectureseries()">
+					<aui:option value="0">-<liferay-ui:message key="without-lecture-series"/>-</aui:option>
 					<%for (int i = 0; i < reqLectureseriesList.size(); i++) {
 						if(reqLectureseriesList.get(i).getLectureseriesId()==reqVideo.getLectureseriesId()){%>
 							<aui:option value='<%=reqLectureseriesList.get(i).getLectureseriesId()%>' selected="true"><%=reqLectureseriesList.get(i).getName()%></aui:option>
