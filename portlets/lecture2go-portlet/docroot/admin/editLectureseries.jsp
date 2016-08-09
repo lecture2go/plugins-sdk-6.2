@@ -116,15 +116,15 @@
 		<aui:layout>
 			<div id="metadata-upload">
 			<%if(readOnly){%>
-				<aui:input name="number" label="number" required="false" value="<%=lNumber %>" readonly="<%=readOnly%>"/>
+				<aui:input name="number" label="number" required="false" helpMessage="number-help-text" value="<%=lNumber %>" readonly="<%=readOnly%>"/>
 			<%}else{%>
-				<aui:input name="number" label="number" required="false" value="<%=lNumber %>"/>
+				<aui:input name="number" label="number" required="false" helpMessage="number-help-text" value="<%=lNumber %>"/>
 			<%}%>
 			
 			<%if(readOnly){%>
-				<aui:input name="name" label="name" required="true" value="<%=lName%>" readonly="<%=readOnly%>"/>
+				<aui:input name="name" label="lectureseries-title" required="true" value="<%=lName%>" readonly="<%=readOnly%>"/>
 			<%}else{%>
-				<aui:input name="name" label="name" required="true" value="<%=lName%>"/>
+				<aui:input name="name" label="lectureseries-title" required="true" value="<%=lName%>"/>
 			<%}%>
 
 			<%if(!readOnly){%>
