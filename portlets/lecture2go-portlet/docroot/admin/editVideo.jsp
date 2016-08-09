@@ -659,7 +659,7 @@ function updateCreators(){
 			parameters['creatorId'] = $div.find('input[name = '+namespace+'creatorId]').val();
 			parameters['firstName'] = $div.find('input[name = '+namespace+'firstName]').val();
 			parameters['lastName'] = $div.find('input[name = '+namespace+'lastName]').val();
-			parameters['middleName'] = "";
+			parameters['middleName'] = $div.find('input[name = '+namespace+'middleName]').val();
 			parameters['jobTitle'] = $div.find('input[name = '+namespace+'jobTitle]').val();
 			parameters['gender'] = "";
 			parameters['fullName'] = $div.find('input[name = '+namespace+'fullName]').val();
@@ -667,7 +667,7 @@ function updateCreators(){
 			parameters['creatorId'] = "0";
 			parameters['firstName'] = $div.find('input[name = '+namespace+'firstName]').val().trim();
 			parameters['lastName'] = $div.find('input[name = '+namespace+'lastName]').val().trim();
-			parameters['middleName'] = "";
+			parameters['middleName'] = $div.find('input[name = '+namespace+'middleName]').val().trim();
 			parameters['jobTitle'] = $div.find('#'+namespace+'jobTitle option:selected').val();
 			parameters['gender'] = "";
 			parameters['fullName'] = parameters['jobTitle']+" "+parameters['firstName']+" "+parameters['lastName'];		
@@ -868,6 +868,7 @@ function getJSONCreator (data){
 		<aui:input type="hidden" name="gender"/>
 		<input type="hidden" name="<portlet:namespace/>creatorId" value="<%="${creatorId}"%>"/>
 		<input type="hidden" name="<portlet:namespace/>firstName" value="<%="${firstName}"%>"/>
+		<input type="hidden" name="<portlet:namespace/>middleName" value="<%="${middleName}"%>"/>
 		<input type="hidden" name="<portlet:namespace/>lastName" value="<%="${lastName}"%>"/>
 		<input type="hidden" name="<portlet:namespace/>jobTitle" value="<%="${jobTitle}"%>"/>
 		<input type="hidden" name="<portlet:namespace/>fullName" value="<%="${fullName}"%>"/>

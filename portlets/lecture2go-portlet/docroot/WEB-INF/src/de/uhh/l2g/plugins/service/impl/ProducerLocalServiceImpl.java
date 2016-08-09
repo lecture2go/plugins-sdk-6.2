@@ -14,6 +14,8 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -96,6 +98,14 @@ public class ProducerLocalServiceImpl extends ProducerLocalServiceBaseImpl {
 
 	public List<Producer> getAllProducers(int begin, int end) throws SystemException{
 		List<Producer> prods = ProducerLocalServiceUtil.getProducers(begin, end);
+		/* the producers-list is sorted here and not through the database because we do not have the 
+		 * user information in the producer data sets and a JOIN seems too complicated */
+		Collections.sort(prods, new Comparator<Producer>() {
+			@Override
+			public int compare(Producer p1, Producer p2) {
+				return p1.getLastName().compareTo(p2.getLastName());
+			}
+		});
 		return fillProps(prods);
 	}
 
