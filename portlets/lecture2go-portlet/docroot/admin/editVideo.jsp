@@ -668,7 +668,7 @@ function updateCreators(){
 			parameters['firstName'] = $div.find('input[name = '+namespace+'firstName]').val().trim();
 			parameters['lastName'] = $div.find('input[name = '+namespace+'lastName]').val().trim();
 			parameters['middleName'] = $div.find('input[name = '+namespace+'middleName]').val().trim();
-			parameters['jobTitle'] = $div.find('#'+namespace+'jobTitle option:selected').val();
+			parameters['jobTitle'] = $div.find('input[name = '+namespace+'jobTitle]').val().trim();
 			parameters['gender'] = "";
 			parameters['fullName'] = parameters['jobTitle']+" "+parameters['firstName']+" "+parameters['lastName'];		
 		}
