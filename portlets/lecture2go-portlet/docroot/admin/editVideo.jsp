@@ -42,18 +42,18 @@
 	String backURL = request.getAttribute("backURL").toString();
 	List<Creator> creators = new ArrayList<Creator>();
 	try{creators = CreatorLocalServiceUtil.getCreators(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);}catch (NullPointerException e){}
-	JSONArray json = new JSONArray();
+	JSONArray allCreatorsJSON = new JSONArray();
 	for (Creator creator: creators) {
 		JSONObject c = new JSONObject();
 		try {
 			c.put("id", creator.getCreatorId());
 			c.put("value", creator.getFullName());
 			c.put("label", creator.getFullName());
-			json.put(c);
+			allCreatorsJSON.put(c);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-	}	
+	}
 	
 	List<Term> semesters = new ArrayList<Term>(); 
 	try{semesters = TermLocalServiceUtil.getAllSemesters();}catch(Exception e){}
@@ -71,7 +71,7 @@
 	Host host = new HostImpl();	
 	host = HostLocalServiceUtil.getByHostId(reqVideo.getHostId());
 	uploadRepository=PropsUtil.get("lecture2go.media.repository")+"/"+host.getServerRoot()+"/"+reqProducer.getIdNum();
-	
+
 %>
 
 <script type="text/javascript">
@@ -271,50 +271,29 @@
 
 <script type="text/javascript">
 var $options = $( "#options" );
+var c = 0;
+
+/* these variables are set here but used in the external autocomplete-creator.js file, be sure to include this js AFTER the jsp is rendered*/
+var allCreatorsInJQueryAutocompleteFormat = <%= allCreatorsJSON.toString()%>;
+var getJSONCreatorURL = "<%=getJSONCreatorURL%>";
+var namespace = "<portlet:namespace/>";
+<%
+String assignedCreators ="";
+try{
+	assignedCreators = CreatorLocalServiceUtil.getJSONCreatorsByVideoId(reqVideo.getVideoId()).toString();
+}catch(Exception e){}
+%>
+var assignedCreators = <%=assignedCreators%>;
+
+var $options = $( "#options" );
 
 $(function () {
-	c = 0;
 	var lsId = <%=reqLectureseries.getLectureseriesId()%>;
 	if(lsId>0){
 		$options.hide();
 	}
-	var local_source = <%=json.toString()%>
-	$( "#_lgadminvideomanagement_WAR_lecture2goportlet_creator" ).autocomplete({
-	    source: function(request, response) {
-	        var results = $.ui.autocomplete.filter(local_source, request.term);
-
-	        response(results.slice(0, 10));
-	    },
-		minLength: 1,
-		open: function(event, ui) {
-			$('.ui-autocomplete').append('<li id="addNewCreator" class="newcreator"><liferay-ui:message key="add-new-creator"/> <span class="icon-large icon-plus-sign"></span></li>');
-			$( "#addNewCreator" ).on( "click", function() {
-				c++;
-				appendCreator(c);
-				$("#_lgadminvideomanagement_WAR_lecture2goportlet_creator").autocomplete('close');
-			});
-		},
-        response: function(event, ui) {
-            if (ui.content.length === 0) {
-            	avoidClosing = true;
-	        }
-        },
-        close: function(event, ui) {
-        	if (avoidClosing) {
-        		$("ul.ui-autocomplete li:not(:last)").remove();
-            	$("ul.ui-autocomplete").show();
-            	avoidClosing = false;
-        	}
-        },
-		select: function (event, ui) {
-			if(ui.item.id>0){
-  		        var vars = getJSONCreator(ui.item.id);
-  		        console.log(vars);
-  		        $.template( "filesTemplate", $("#created") );
-  		        $.tmpl( "filesTemplate", vars ).appendTo( "#creators" );
-  			}
-		}
-	});
+	
+	autocompleteCreator($("#<portlet:namespace/>creator"));
 });
 
 function toggleLectureseries(){
@@ -648,34 +627,7 @@ function deleteFile(fileName){
 	}
 }
 
-function updateCreators(){
-	var namespace="<portlet:namespace/>";
-	var jsonArray = [];
-	$('#creators').children().each(function(n){
-		var parameters = {};
-		var $div = $(this);
-		var id = $div.attr('id');
-		if(id.indexOf("nc")==-1){
-			parameters['creatorId'] = $div.find('input[name = '+namespace+'creatorId]').val();
-			parameters['firstName'] = $div.find('input[name = '+namespace+'firstName]').val();
-			parameters['lastName'] = $div.find('input[name = '+namespace+'lastName]').val();
-			parameters['middleName'] = $div.find('input[name = '+namespace+'middleName]').val();
-			parameters['jobTitle'] = $div.find('input[name = '+namespace+'jobTitle]').val();
-			parameters['gender'] = "";
-			parameters['fullName'] = $div.find('input[name = '+namespace+'fullName]').val();
-		}else{
-			parameters['creatorId'] = "0";
-			parameters['firstName'] = $div.find('input[name = '+namespace+'firstName]').val().trim();
-			parameters['lastName'] = $div.find('input[name = '+namespace+'lastName]').val().trim();
-			parameters['middleName'] = $div.find('input[name = '+namespace+'middleName]').val().trim();
-			parameters['jobTitle'] = $div.find('#'+namespace+'jobTitle option:selected').val();
-			parameters['gender'] = "";
-			parameters['fullName'] = parameters['jobTitle']+" "+parameters['firstName']+" "+parameters['lastName'];		
-		}
-		if(parameters['firstName'].length>0 && parameters['lastName'].length>0){
-			jsonArray[n]=parameters;
-		}
-	});
+function updateCreatorOnServer(jsonArray) {
 	//set parameter to server for update 
 	$.ajax({
 		  type: "POST",
@@ -691,8 +643,7 @@ function updateCreators(){
 		    //remove all creators 
 		    $( "#creators" ).empty();
 		    //and show new creators list
-	        $.template( "filesTemplate", $("#created") );
-	        $.tmpl( "filesTemplate", data ).appendTo( "#creators" );		    
+		    showCreatorsList(data);    
 		  }
 	})
 }
@@ -766,13 +717,7 @@ function updateSubInstitutions(){
 	})
 }
 
-function appendCreator(c){
-	$(function () {
-    	var vars = {'counter':c};
-    	$.template( "filesTemplate", $("#newCreator") );
-    	$.tmpl( "filesTemplate", vars ).appendTo( "#creators" );
-	});
-};
+
 
 var c = 0;
 
@@ -809,23 +754,7 @@ AUI().use('aui-node',
   }
 );
 
-function getJSONCreator (data){
-	var ret;
-	$.ajax({
-		  type: "POST",
-		  url: "<%=getJSONCreatorURL%>",
-		  dataType: 'json',
-		  data: {
-		 	   	<portlet:namespace/>creatorId: data,
-		  },
-		  global: false,
-		  async:false,
-		  success: function(data) {
-		    ret = data;
-		  }
-	})
-	return ret;
-}
+
 </script>
 
 <!-- Template -->
@@ -847,45 +776,4 @@ function getJSONCreator (data){
     });
 </script>
 
-<!-- Template -->
-<script type="text/x-jquery-tmpl" id="newCreator">
-	<div id="nc<%="${counter}"%>">
-	<aui:input type="hidden" name="gender"/>
-	<aui:input name="jobTitle" type="text" helpMessage="job-title-help-text"/>
-	<aui:input name="firstName" type="text"/>
-	<aui:input name="middleName" type="text"/>
-	<aui:input name="lastName" type="text"/>
-	<aui:input name="creatorId" value="0" type="hidden"/>
-	<a class="icon-large icon-remove" onclick="remb('<%="nc${counter}"%>');"></a>
-	<br/>
-	</div>
-</script>
-
-<!-- Template -->
-<script type="text/x-jquery-tmpl" id="created">
-   	<div id="<%="c${creatorId}"%>">
-    	<%="${fullName}"%> &nbsp; <a class="icon-large icon-remove" onclick="remb('<%="c${creatorId}"%>');"></a>
-		<aui:input type="hidden" name="gender"/>
-		<input type="hidden" name="<portlet:namespace/>creatorId" value="<%="${creatorId}"%>"/>
-		<input type="hidden" name="<portlet:namespace/>firstName" value="<%="${firstName}"%>"/>
-		<input type="hidden" name="<portlet:namespace/>middleName" value="<%="${middleName}"%>"/>
-		<input type="hidden" name="<portlet:namespace/>lastName" value="<%="${lastName}"%>"/>
-		<input type="hidden" name="<portlet:namespace/>jobTitle" value="<%="${jobTitle}"%>"/>
-		<input type="hidden" name="<portlet:namespace/>fullName" value="<%="${fullName}"%>"/>
-	</div>
-</script>
-
-<script type="text/javascript">
-		<%
-			String vars ="";
-			try{
-				vars = CreatorLocalServiceUtil.getJSONCreatorsByVideoId(reqVideo.getVideoId()).toString();
-			}catch(Exception e){}
-		%>
-		
-		$(function () {
-	        var vars = <%=vars%>;
-	        $.template( "filesTemplate", $("#created") );
-	        $.tmpl( "filesTemplate", vars ).appendTo( "#creators" );
-	    });
-</script>
+<%@include file="includeCreatorTemplates.jsp" %>

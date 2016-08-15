@@ -175,7 +175,7 @@
 			 			%>
 			 			<%=prds %>
 			 			<br />
-			 			<p><%= lectser.getNumberOfVideos() %> Videos</p>
+			 			<p><%= lectser.getNumberOfVideos() %> Video<c:if test="<%= lectser.getNumberOfVideos() >1 %>">s</c:if></p>
 			 		</div>
 			 		<div class="admintile wide icons">
 						<portlet:actionURL name="removeLectureseries" var="removeURL">
