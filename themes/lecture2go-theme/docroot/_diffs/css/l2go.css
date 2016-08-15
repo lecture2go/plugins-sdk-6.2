@@ -2429,7 +2429,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 
 .big-search #_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
 	/* we use border-box here for better positioning the searchbutton*/
-	box-sizing: border-box;
+	box-sizing: border-box !important;
 	float:none;
 	margin: 0;
 	margin-left: 0;
