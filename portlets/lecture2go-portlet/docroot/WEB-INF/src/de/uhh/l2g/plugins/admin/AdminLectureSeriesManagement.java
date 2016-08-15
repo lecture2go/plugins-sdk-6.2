@@ -513,6 +513,10 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			}
 			writeJSON(resourceRequest, resourceResponse, json);			
 		}
+		
+		if(resourceID.equals("updateCreators")){
+			/* TODO: to be filled */
+		}
 
 	}
 

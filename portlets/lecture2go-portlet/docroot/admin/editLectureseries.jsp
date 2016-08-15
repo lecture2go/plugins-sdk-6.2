@@ -72,6 +72,19 @@
 		creators = CreatorLocalServiceUtil.getCreators(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 	}catch (NullPointerException e){}
 	
+	JSONArray allCreatorsJSON = new JSONArray();
+	for (Creator creator: creators) {
+		JSONObject c = new JSONObject();
+		try {
+			c.put("id", creator.getCreatorId());
+			c.put("value", creator.getFullName());
+			c.put("label", creator.getFullName());
+			allCreatorsJSON.put(c);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	List<Term> semesters = new ArrayList<Term>(); 
 	try{
 		semesters = TermLocalServiceUtil.getAllSemesters();
@@ -234,18 +247,10 @@
 			<%}%>
 			
 			<%if(!readOnly){%>
-				<aui:select size="1" name="crId" label="creators">
-					<aui:option value=""><liferay-ui:message key="select-creator"/></aui:option>
-					<%for (int i = 0; i < creators.size(); i++) {
-						%><aui:option value='<%=creators.get(i).getCreatorId()%>'><%=creators.get(i).getJobTitle() + " "+creators.get(i).getLastName() + ", " + creators.get(i).getFirstName()%></aui:option><%
-					}%>	
-				</aui:select>
-	
+				<aui:input id="creator" name="creator" label="creators" required="false" />
+							
 				<div id="creators"></div>
-			
-				<a id="addCreator">
-				    <liferay-ui:message key="add-new-creator"/> <span class="icon-large icon-plus-sign"></span>
-				</a>
+		
 			<%}%>
 			
 			<aui:input name="password" label="password" helpMessage="password-help-text" value="<%=lPassword%>"/>
@@ -270,75 +275,31 @@
 </aui:form>
 </div>
 
-<!-- Template -->
-<script type="text/x-jquery-tmpl" id="newCreator">
-	<div id="nc<%="${counter}"%>">
-	<aui:input type="hidden" name="gender"/>
-	<aui:select size="1" name="jobTitle" label="">
-		<aui:option value=""></aui:option>
-		<%
-		String[] l =  LanguageUtil.get(pageContext, "creator-titles").split(",");
-		for(int i=0; i<l.length; i++){
-			String title = l[i];
-			%><aui:option value="<%=title%>"><%=title%></aui:option><%
-		}
-		%>
-	</aui:select>
-	<aui:input name="firstName" type="text"/>
-	<aui:input name="lastName" type="text"/>
-	<aui:input name="creatorId" value="0" type="hidden"/>
-	<a class="icon-large icon-remove" onclick="remb('<%="nc${counter}"%>');"></a>
-	<br/>
-	</div>
-</script>
-
-<!-- Template -->
-<script type="text/x-jquery-tmpl" id="created">
-   	<div id="<%="c${creatorId}"%>">
-    	<%="${fullName}"%> &nbsp; <a class="icon-large icon-remove" onclick="remb('<%="c${creatorId}"%>'); reseCreator();"></a>
-		<aui:input type="hidden" name="gender"/>
-		<input type="hidden" name="<portlet:namespace/>jobTitle" value="<%="${jobTitle}"%>"/>
-		<input type="hidden" name="<portlet:namespace/>firstName" value="<%="${firstName}"%>"/>
-		<input type="hidden" name="<portlet:namespace/>lastName" value="<%="${lastName}"%>"/>
-		<input type="hidden" name="<portlet:namespace/>creatorId" value="<%="${creatorId}"%>"/>
-	</div>
-</script>
-
-<script type="text/javascript">
-		<%
-			String vars ="";
-			try{
-				vars = CreatorLocalServiceUtil.getJSONCreatorsByLectureseriesId(reqLectureseries.getLectureseriesId()).toString();
-			}catch(Exception e){}
-		%>
-		
-		$(function () {
-	        var vars = <%=vars%>;
-	        $.template( "filesTemplate", $("#created") );
-	        $.tmpl( "filesTemplate", vars ).appendTo( "#creators" );
-	    });
-</script>
-
 <liferay-portlet:resourceURL id="getJSONCreator" var="getJSONCreatorURL" />
+<liferay-portlet:resourceURL id="updateCreators" var="updateCreatorsURL" />
 
 <script>
-function appendCreator(c){
-	$(function () {
-    	var vars = {'counter':c};
-    	$.template( "filesTemplate", $("#newCreator") );
-    	$.tmpl( "filesTemplate", vars ).appendTo( "#creators" );
-	});
-};
-
 var c = 0;
-$( "#addCreator" ).on( "click", function() {
-	c++;
-	appendCreator(c);
-});
+
+/* these variables are set here but used in the external autocomplete-creator.js file, be sure to include this js AFTER the jsp is rendered*/
+var allCreatorsInJQueryAutocompleteFormat = <%= allCreatorsJSON.toString()%>;
+var getJSONCreatorURL = "<%=getJSONCreatorURL%>";
+var namespace = "<portlet:namespace/>";
+<%
+String assignedCreators ="";
+try{
+	assignedCreators = CreatorLocalServiceUtil.getJSONCreatorsByLectureseriesId(reqLectureseries.getLectureseriesId()).toString();
+}catch(Exception e){}
+%>
+var assignedCreators = <%=assignedCreators%>;
+
 
 function remb(c){
 	$("#"+c).remove();
 }
+$(function () {
+	autocompleteCreator($("#<portlet:namespace/>creator"));
+});
 
 AUI().use('aui-node',
   
@@ -362,18 +323,6 @@ function(A) {
   			}
       	}
     );
-    
-    crId.on(
-      	'change',
-      	function(A) {
-  			if(crId.get('value')>0){
-  		        var vars = getJSONCreator(crId.get('value'));
-  		        console.log(vars);
-  		        $.template( "filesTemplate", $("#created") );
-  		        $.tmpl( "filesTemplate", vars ).appendTo( "#creators" );
-  			}
-      	}
-    );
 
     institutionId.on(
       	'change',
@@ -389,24 +338,26 @@ function(A) {
   }
 );
 
-function getJSONCreator (data){
-	var ret;
+function updateCreatorOnServer(jsonArray) {
+	//set parameter to server for update 
 	$.ajax({
 		  type: "POST",
-		  url: "<%=getJSONCreatorURL%>",
+		  url: "<%=updateCreatorsURL%>",
 		  dataType: 'json',
 		  data: {
-		 	   	<portlet:namespace/>creatorId: data,
+		 	   	<portlet:namespace/>creator: JSON.stringify(jsonArray),
+		 	   	<portlet:namespace/>videoId: "<%=reqLectureseries.getLectureseriesId()%>",
 		  },
 		  global: false,
 		  async:false,
 		  success: function(data) {
-		    ret = data;
+		    //remove all creators 
+		    $( "#creators" ).empty();
+		    //and show new creators list
+		    showCreatorsList(data);    
 		  }
 	})
-	return ret;
 }
-
 
 function resetInstitution(){
 	var l = $(".facilCont div").length;
@@ -432,3 +383,5 @@ function resetCreator(){
 }
 
 </script>
+
+<%@include file="includeCreatorTemplates.jsp" %>
