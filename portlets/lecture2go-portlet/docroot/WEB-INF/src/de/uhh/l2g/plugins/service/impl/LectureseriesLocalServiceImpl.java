@@ -17,17 +17,22 @@ package de.uhh.l2g.plugins.service.impl;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
+import java.util.TreeMap;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
 import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.Video;
+import de.uhh.l2g.plugins.model.Term;
 import de.uhh.l2g.plugins.model.impl.VideoImpl;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
+import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.LectureseriesLocalServiceBaseImpl;
@@ -62,6 +67,30 @@ public class LectureseriesLocalServiceImpl extends LectureseriesLocalServiceBase
 			l = new ArrayList<Lectureseries>();
 		}
 		return l;
+	}
+	
+	public Map<Term, List<Lectureseries>> getFilteredByApprovedSemesterFacultyProducerAsTreeMapSortedByTerm(Integer approved, Long semester, Long facultyId, Long producerId) {
+		List<Lectureseries> l = getFilteredByApprovedSemesterFacultyProducer(approved,semester,facultyId,producerId);
+		Map<Term, List<Lectureseries>> lectureseriesTreeMapSortedByTerm = new TreeMap<Term, List<Lectureseries>>(new Comparator<Term>() {
+			@Override
+			public int compare(Term t1, Term t2) {
+				return t2.getYear().compareTo(t1.getYear());
+			}
+		});
+		for (Lectureseries singleLectureseries: l) {
+			try{
+				Term t = TermLocalServiceUtil.getTerm(singleLectureseries.getTermId());
+				List<Lectureseries> tmp = lectureseriesTreeMapSortedByTerm.get(t);
+			    if(tmp == null){
+			    	// no object with this series before, so create new one
+			        tmp = new ArrayList<Lectureseries>();
+			        lectureseriesTreeMapSortedByTerm.put(t, tmp);
+			    }
+			    tmp.add(singleLectureseries);
+			}catch(Exception e){}
+		}
+
+		return lectureseriesTreeMapSortedByTerm;
 	}
 	
 

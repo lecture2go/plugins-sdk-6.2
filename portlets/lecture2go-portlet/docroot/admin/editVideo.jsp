@@ -1,4 +1,6 @@
 <%@page import="de.uhh.l2g.plugins.model.Host"%>
+<%@page import="java.util.TreeMap"%>
+
 <%@include file="/init.jsp"%>
 
 <jsp:useBean id="reqLectureseriesList" type="java.util.List<de.uhh.l2g.plugins.model.Lectureseries>" scope="request" />
@@ -72,6 +74,9 @@
 	host = HostLocalServiceUtil.getByHostId(reqVideo.getHostId());
 	uploadRepository=PropsUtil.get("lecture2go.media.repository")+"/"+host.getServerRoot()+"/"+reqProducer.getIdNum();
 
+	Map<Term, List<Lectureseries>> lectureseriesAsTreeList = new TreeMap<Term, List<Lectureseries>>();
+	if(reqVideo.getVideoId()>0)lectureseriesAsTreeList = LectureseriesLocalServiceUtil.getFilteredByApprovedSemesterFacultyProducerAsTreeMapSortedByTerm(1, (long) 0, (long) 0, reqVideo.getProducerId());
+	else lectureseriesAsTreeList = LectureseriesLocalServiceUtil.getFilteredByApprovedSemesterFacultyProducerAsTreeMapSortedByTerm(1, (long) 0, (long) 0, reqProducer.getProducerId());
 %>
 
 <script type="text/javascript">
@@ -139,13 +144,18 @@
 								
 				<aui:select size="1" name="lectureseriesId" label="lecture-series" helpMessage="video-with-or-without-lectureseries" onChange="toggleLectureseries()">
 					<aui:option value="0">-<liferay-ui:message key="without-lecture-series"/>-</aui:option>
-					<%for (int i = 0; i < reqLectureseriesList.size(); i++) {
-						if(reqLectureseriesList.get(i).getLectureseriesId()==reqVideo.getLectureseriesId()){%>
-							<aui:option value='<%=reqLectureseriesList.get(i).getLectureseriesId()%>' selected="true"><%=reqLectureseriesList.get(i).getName()%></aui:option>
-						<%}else{%>
-							<aui:option value='<%=reqLectureseriesList.get(i).getLectureseriesId()%>'><%=reqLectureseriesList.get(i).getName()%></aui:option>
-						<%}					
-					}%>
+					<%
+					for(Map.Entry<Term, List<Lectureseries>> entry : lectureseriesAsTreeList.entrySet()) {%>
+						<aui:option value='0' disabled="true">&#9472; <%=entry.getKey().getTermName()%> &#9472;</aui:option>
+						<% for(Lectureseries l: entry.getValue()) {
+								if(l.getLectureseriesId()==reqVideo.getLectureseriesId()){%>
+									<aui:option value='<%=l.getLectureseriesId()%>' selected="true"><%=l.getName()%></aui:option>
+								<%}else{%>
+									<aui:option value='<%=l.getLectureseriesId()%>'><%=l.getName()%></aui:option>
+								<%}	
+							}
+					 }
+					 %>
 				</aui:select>
 				
 				<div id="options">
