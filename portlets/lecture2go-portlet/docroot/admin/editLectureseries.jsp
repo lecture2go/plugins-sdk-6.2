@@ -291,8 +291,8 @@ try{
 	assignedCreators = CreatorLocalServiceUtil.getJSONCreatorsByLectureseriesId(reqLectureseries.getLectureseriesId()).toString();
 }catch(Exception e){}
 %>
-var assignedCreators = <%=assignedCreators%>;
-
+var assignedCreators = "";
+<c:if test="<%=assignedCreators.isEmpty()%>">assignedCreators = <%=assignedCreators%> </c:if>
 
 function remb(c){
 	$("#"+c).remove();
@@ -345,8 +345,7 @@ function updateCreatorOnServer(jsonArray) {
 		  url: "<%=updateCreatorsURL%>",
 		  dataType: 'json',
 		  data: {
-		 	   	<portlet:namespace/>creator: JSON.stringify(jsonArray),
-		 	   	<portlet:namespace/>videoId: "<%=reqLectureseries.getLectureseriesId()%>",
+		 	   	<portlet:namespace/>creator: JSON.stringify(jsonArray)
 		  },
 		  global: false,
 		  async:false,

@@ -1737,12 +1737,16 @@ div[id^="nc"] a.icon-large.icon-remove {
 }
 
 input#_lgadminvideomanagement_WAR_lecture2goportlet_jobTitle,
-input#_lgadminvideomanagement_WAR_lecture2goportlet_middleName {
+input#_lgadminvideomanagement_WAR_lecture2goportlet_middleName,
+input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_jobTitle,
+input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_middleName {
 	width: 80px;
 }
 
 input#_lgadminvideomanagement_WAR_lecture2goportlet_firstName,
-input#_lgadminvideomanagement_WAR_lecture2goportlet_lastName {
+input#_lgadminvideomanagement_WAR_lecture2goportlet_lastName,
+input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_firstName,
+input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_lastName {
 	width: 135px;
 }
 
