@@ -242,7 +242,7 @@
     padding-left: 29px;
     text-align: left;
     text-decoration: none;
-    width: 80%;
+    width: 100%;
 }
 
 .metainfo-small {
@@ -1795,7 +1795,7 @@ input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_lastName {
 }
 
 .ta .cke_1.cke.cke_reset.cke_chrome {
-    width: 65% !important;
+    width: 68% !important;
 }
 
 .edit-video-lable {
