@@ -1695,7 +1695,7 @@ thead, th {
 
 #metadata-upload select,
 #metadata-upload input {
-    width: 50%;
+    width: 500px;
     min-width: 240px;
 }
 
@@ -1796,7 +1796,7 @@ input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_lastName {
 }
 
 .ta .cke_1.cke.cke_reset.cke_chrome {
-    width: 68% !important;
+    width: 690px !important;
 }
 
 .edit-video-lable {
@@ -1819,7 +1819,7 @@ label.edit-video-lable.first {
 	
 .aui #upload-form {
     display: none;
-    width: 65%;
+    width: 693px;
 }
 
 .aui .progress {
@@ -1832,12 +1832,12 @@ label.edit-video-lable.first {
 }
 
 .prodCont {
-    margin-left: 20%;
+    margin-left: 209px;
     width: 56% !important;
 }
 
 .facilCont {
-    margin-left: 20%;
+    margin-left: 209px;
     width: 56% !important;
 }
 
