@@ -1514,7 +1514,7 @@ thead, th {
 
 .admintile.wide .admin-videolist-video-title {
     font-family: TheSansUHHBold, sans-serif;
-    margin-bottom: 2px;
+    margin-bottom: 0px;
 }
 
 .admintile.wide .admin-videolist-lectureseries-title {
