@@ -2190,9 +2190,8 @@ div.filter-menu-link span.icon-large.icon-remove {
 .aui a {
     color: #4d4d4d;
 }
-
-.aui .row-fluid [class*="span"]{
-	margin-left: auto;
+.row-fluid.video-box-list .span3.video-box {
+    width: 23%;
 }
 
 #term {
