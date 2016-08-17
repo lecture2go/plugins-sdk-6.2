@@ -342,11 +342,15 @@
 		margin: 0;
 	}
 
+	.row-fluid.video-box-list{
+		display: table;
+	}
+	
 	.row-fluid.video-box-list > [class*='span'] { 
 		-webkit-box-orient: horizontal;
  		-webkit-flex-direction: row;
 		flex-direction: row;
-		width: 100%
+		width: 100%;
 	}
 
 	.video-box {
@@ -446,7 +450,7 @@
 	#_lgopenaccessvideos_WAR_lecture2goportlet_searchButton {
 	    height: 31px;
 	    padding: 2px;
-	    right: 1px;
+	    right: -9px;
 	    top: 2px;
 	    width: 31px;
 	}

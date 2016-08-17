@@ -409,6 +409,7 @@ p.smallitalic {
   	display: -moz-box;
   	display: -ms-flexbox;
   	display: flex;
+  	display: -webkit-flex; /* Safari */
   	-webkit-box-orient: vertical;
   	-webkit-flex-direction: column;
 	flex-direction: column;
@@ -423,12 +424,12 @@ p.smallitalic {
 }
 
 .video-content-footer {
-    -webkit-box-flex: 0 0 20px;
-  	-moz-box-flex: 0 0 20px;      
-  	-webkit-flex: 0 0 20px;
-  	-ms-flex: 0 0 20px;  
-  	flex: 0 0 20px;
-    margin-bottom: 0px;
+  -webkit-box-flex: 0 0 30px;
+  -moz-box-flex: 0 0 30px;
+  -webkit-flex: 0 0 30px;
+  -ms-flex: 0 0 30px;
+  flex: 0 0 30px;
+  margin-bottom: 0px;
 }
 
 .video-content-footer .labels .label {
@@ -706,6 +707,7 @@ p.smallitalic {
   	display: -moz-box;
   	display: -ms-flexbox;
   	display: flex;
+  	display: -webkit-flex; /* Safari */
     height: 127px;
     padding: 5px 0 0 5px;
     transition: background 0.2s ease 0s;
@@ -1547,6 +1549,7 @@ thead, th {
     display: -moz-box;
     display: -ms-flexbox;
     display: flex;
+    display: -webkit-flex; /* Safari */
     -ms-flex-wrap: wrap;
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
@@ -2167,6 +2170,7 @@ div.filter-menu-link span.icon-large.icon-remove {
   	display: -moz-box;
   	display: -ms-flexbox;
   	display: flex;
+  	display: -webkit-flex; /* Safari */
 }
 
 .tags > span {
@@ -2502,6 +2506,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
   	display: -moz-box;
   	display: -ms-flexbox;
   	display: flex;
+  	display: -webkit-flex; /* Safari */
 	-webkit-box-orient: vertical;
   	-webkit-flex-direction: column;
 	flex-direction: column;
