@@ -16,6 +16,10 @@
 	    padding-bottom: 0;
 	}
 	
+	.row-fluid.video-box-list .span3.video-box {
+  		width: 100%; 
+  	}
+  	
 	.aui #my-tab-content {
     	min-height: auto;
     	width: 100%;
