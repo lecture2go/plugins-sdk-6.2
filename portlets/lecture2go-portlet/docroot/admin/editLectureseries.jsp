@@ -247,10 +247,10 @@
 			<%}%>
 			
 			<%if(!readOnly){%>
+				<!-- do not show creators yet! 
 				<aui:input id="creator" name="creator" label="creators" required="false" />
-							
 				<div id="creators"></div>
-		
+				-->
 			<%}%>
 			
 			<aui:input name="password" label="password" helpMessage="password-help-text" value="<%=lPassword%>"/>

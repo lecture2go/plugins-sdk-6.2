@@ -130,11 +130,11 @@
 								</aui:select>
 							</aui:form>
 	</aui:fieldset>
-	<br/>
+
 	<a href="<%=addLectureseriesURL.toString()%>" class="add-link">
 	    <liferay-ui:message key="add-new-lectureseries"/> <span class="icon-large icon-plus-sign"/>
 	</a>
-					
+
 	<liferay-ui:search-container emptyResultsMessage='<liferay-ui:message key="no-lectureseries-found"/>' delta="10" iteratorURL="<%= portletURL %>">
 		<liferay-ui:search-container-results>
 			<%

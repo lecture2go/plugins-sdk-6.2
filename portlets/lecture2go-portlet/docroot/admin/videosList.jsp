@@ -119,7 +119,6 @@
 	</aui:fieldset>
 	
 	<%if(producerId>0){%>	
-		<br/>
 		<portlet:actionURL name="addVideo" var="addVideoURL">
 			<portlet:param name="lectureseriesId" value='<%=lectureseriesId+""%>'/>
 				<portlet:param name="producerId" value='<%=producerId+""%>'/>

@@ -229,7 +229,8 @@
 	
 				<aui:input name="tags" label="tags" required="false" value="<%=reqVideo.getTags()%>"/>
 	
-				<aui:input name="publisher" label="publisher" required="false" value="<%=reqMetadata.getPublisher()%>"/>
+				<!--not used any more
+				<aui:input name="publisher" label="publisher" required="false" value="reqMetadata.getPublisher()"/>-->
 				
 				<aui:field-wrapper label="description">
 				    <liferay-ui:input-editor  name="longDesc" toolbarSet="simple" initMethod="initEditor" onChangeMethod="setDescriptionData" cssClass="ta"/>
