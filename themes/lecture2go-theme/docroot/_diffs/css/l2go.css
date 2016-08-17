@@ -1693,6 +1693,10 @@ thead, th {
     margin-top: 10px;
 }
 
+.noresponsive fieldset.list {
+    margin-bottom: 20px;
+}
+
 #metadata-upload select,
 #metadata-upload input {
     width: 500px;
