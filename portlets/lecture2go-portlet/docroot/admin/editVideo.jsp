@@ -265,7 +265,7 @@
 				
 				<aui:button-row>
 					<aui:button value="apply-changes" onclick="applyAllMetadataChanges()" cssClass="btn-primary"/>
-					<aui:button type="cancel" value="cancel" href="<%=backURL%>"/>
+					<aui:button type="cancel" value="back" href="<%=backURL%>"/>
 				</aui:button-row>
 				
 				<aui:input name="videoId" type="hidden" value="<%=reqVideo.getVideoId()%>"/>
