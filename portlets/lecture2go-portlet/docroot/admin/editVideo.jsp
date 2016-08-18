@@ -36,8 +36,7 @@
 	}
 	if(permissionCoordinator)institutions = InstitutionLocalServiceUtil.getByParent(CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getInstitutionId());
 
-	Locale[] languages = LanguageUtil.getAvailableLocales();
-	String[] availableLanguageIds = LocaleUtil.toLanguageIds(languages);
+	String[] languages = LanguageUtil.get(pageContext, "languages-for-select").split(",");
 	String languageId="";
 
 	String uploadProgressId = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
@@ -216,13 +215,9 @@
 				</div>
 	
 				<aui:select size="1" name="language" label="language" required="false">
-					<%for (int i=0; i<languages.length; i++){
-						if (languages[i].getLanguage().equals(reqMetadata.getLanguage())) {%>
-							<aui:option value='<%=languages[i].getLanguage()%>' selected="true"><%=languages[i].getDisplayLanguage()%></aui:option>
-						<%} else {%>
-							<aui:option value='<%=languages[i].getLanguage()%>'><%=languages[i].getDisplayLanguage()%></aui:option>
-						<%}
-					}%>				
+					<%for (int i=0; i<languages.length; i++){%>
+							<aui:option value='<%=languages[i]%>' selected="<%=reqMetadata.getLanguage().contains(languages[i]) %>"><%=languages[i]%></aui:option>
+					<%}%>				
 				</aui:select>
 				
 				<div id="l2gdate"><aui:input id="lecture2go-date" name="lecture2go-date" label="lecture2go-date" required="false" value="" disabled="true"/></div>
@@ -525,7 +520,7 @@ function updateMetadata(){
 				 	   	<portlet:namespace/>language: A.one('#<portlet:namespace/>language').get('value'),
 				 	   	<portlet:namespace/>title: A.one('#<portlet:namespace/>title').get('value'),
 				 	   	<portlet:namespace/>tags: A.one('#<portlet:namespace/>tags').get('value'),
-				 	   	<portlet:namespace/>publisher: <%=reqProducer.getFirstName()+" "+reqProducer.getLastName()%>,
+				 	   	<portlet:namespace/>publisher: "",
 				 	   	<portlet:namespace/>citationAllowedCheckbox: A.one('#<portlet:namespace/>citationAllowedCheckbox').get('checked'),
 				 	   	<portlet:namespace/>categoryId: categoryId,
 				 	   	<portlet:namespace/>termId: termId,
