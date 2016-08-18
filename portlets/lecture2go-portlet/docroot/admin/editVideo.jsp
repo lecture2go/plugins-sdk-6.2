@@ -525,7 +525,7 @@ function updateMetadata(){
 				 	   	<portlet:namespace/>language: A.one('#<portlet:namespace/>language').get('value'),
 				 	   	<portlet:namespace/>title: A.one('#<portlet:namespace/>title').get('value'),
 				 	   	<portlet:namespace/>tags: A.one('#<portlet:namespace/>tags').get('value'),
-				 	   	<portlet:namespace/>publisher: A.one('#<portlet:namespace/>publisher').get('value'),
+				 	   	<portlet:namespace/>publisher: "",
 				 	   	<portlet:namespace/>citationAllowedCheckbox: A.one('#<portlet:namespace/>citationAllowedCheckbox').get('checked'),
 				 	   	<portlet:namespace/>categoryId: categoryId,
 				 	   	<portlet:namespace/>termId: termId,
