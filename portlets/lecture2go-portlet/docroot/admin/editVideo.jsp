@@ -224,8 +224,7 @@
 	
 				<aui:input name="tags" label="tags" required="false" value="<%=reqVideo.getTags()%>"/>
 	
-				<!--not used any more
-				<aui:input name="publisher" label="publisher" required="false" value="reqMetadata.getPublisher()"/>-->
+				<aui:input name="publisher" label="publisher" required="false" value="<%=reqMetadata.getPublisher()%>"/>
 				
 				<aui:field-wrapper label="description">
 				    <liferay-ui:input-editor  name="longDesc" toolbarSet="simple" initMethod="initEditor" onChangeMethod="setDescriptionData" cssClass="ta"/>
@@ -520,7 +519,7 @@ function updateMetadata(){
 				 	   	<portlet:namespace/>language: A.one('#<portlet:namespace/>language').get('value'),
 				 	   	<portlet:namespace/>title: A.one('#<portlet:namespace/>title').get('value'),
 				 	   	<portlet:namespace/>tags: A.one('#<portlet:namespace/>tags').get('value'),
-				 	   	<portlet:namespace/>publisher: "",
+				 	   	<portlet:namespace/>publisher: A.one('#<portlet:namespace/>publisher').get('value'),
 				 	   	<portlet:namespace/>citationAllowedCheckbox: A.one('#<portlet:namespace/>citationAllowedCheckbox').get('checked'),
 				 	   	<portlet:namespace/>categoryId: categoryId,
 				 	   	<portlet:namespace/>termId: termId,
