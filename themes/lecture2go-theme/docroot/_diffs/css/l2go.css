@@ -1657,12 +1657,13 @@ thead, th {
 }
 
 .aui .alert, .aui .portlet-msg-alert, .aui .portlet-msg-error, .aui .portlet-msg-help, .aui .portlet-msg-info, .aui .portlet-msg-progress, .aui .portlet-msg-success {
-    background-color: transparent;
-    border-color: #eaeaea -moz-use-text-color -moz-use-text-color;
+    background-color: rgba(0, 0, 0, 0);
+    border-color: #fff -moz-use-text-color -moz-use-text-color;
     border-style: solid none none;
     border-width: 1px 0 0;
     color: #c40017;
     margin-top: 20px;
+    min-height: 330px;
     padding-left: 0;
     word-wrap: break-word;
 }
