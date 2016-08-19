@@ -133,139 +133,158 @@
 	<aui:fieldset column="false" label="" >
 		<aui:layout>
 			<aui:form action="<%=actionURL%>" commandName="model" name="metadata">
-				<label class="edit-video-lable"><liferay-ui:message key="metadata"/></label>
+				<label class="edit-video-lable" id="edit-video-lable-1"><liferay-ui:message key="metadata"/></label>
 				<div id="metadata-upload">
-				<aui:input id="title" name="title" label="title" required="false" value="<%=reqVideo.getTitle()%>" />
-				
-				<aui:input id="creator" name="creator" label="creators" required="false" />
-							
-				<div id="creators"></div>
-								
-				<aui:select size="1" name="lectureseriesId" label="lecture-series" helpMessage="video-with-or-without-lectureseries" onChange="toggleLectureseries()">
-					<aui:option value="0">-<liferay-ui:message key="without-lecture-series"/>-</aui:option>
-					<%
-					for(Map.Entry<Term, List<Lectureseries>> entry : lectureseriesAsTreeList.entrySet()) {%>
-						<aui:option value='0' disabled="true">&#9472; <%=entry.getKey().getTermName()%> &#9472;</aui:option>
-						<% for(Lectureseries l: entry.getValue()) {
-								if(l.getLectureseriesId()==reqVideo.getLectureseriesId()){%>
-									<aui:option value='<%=l.getLectureseriesId()%>' selected="true"><%=l.getName()%></aui:option>
-								<%}else{%>
-									<aui:option value='<%=l.getLectureseriesId()%>'><%=l.getName()%></aui:option>
-								<%}	
-							}
-					 }
-					 %>
-				</aui:select>
-				
-				<div id="options">
-					<aui:select id="subInstitutionId" size="1" name="subInstitutionId" label="sub-institution">
-						<aui:option value="" selected="true"><liferay-ui:message key="select-sub-institution"/></aui:option>
-					<%
-					Long subInstitutionId = new Long(0);
-					try{subInstitutionId = Video_InstitutionLocalServiceUtil.getByVideo(reqVideo.getVideoId()).get(0).getInstitutionId();}catch (Exception e){}
+					<aui:input id="title" name="title" label="title" required="false" value="<%=reqVideo.getTitle()%>" />
 					
-					while(itPSI.hasNext()){
-						Institution i = itPSI.next();
-						%><aui:option value='<%=i.getInstitutionId()%>'><%=i.getName()%></aui:option><%
-					}
-					%>
+					<aui:input id="creator" name="creator" label="creators" required="false" />
+								
+					<div id="creators"></div>
+									
+					<aui:select size="1" name="lectureseriesId" label="lecture-series" helpMessage="video-with-or-without-lectureseries" onChange="toggleLectureseries()">
+						<aui:option value="0">-<liferay-ui:message key="without-lecture-series"/>-</aui:option>
+						<%
+						for(Map.Entry<Term, List<Lectureseries>> entry : lectureseriesAsTreeList.entrySet()) {%>
+							<aui:option value='0' disabled="true">&#9472; <%=entry.getKey().getTermName()%> &#9472;</aui:option>
+							<% for(Lectureseries l: entry.getValue()) {
+									if(l.getLectureseriesId()==reqVideo.getLectureseriesId()){%>
+										<aui:option value='<%=l.getLectureseriesId()%>' selected="true"><%=l.getName()%></aui:option>
+									<%}else{%>
+										<aui:option value='<%=l.getLectureseriesId()%>'><%=l.getName()%></aui:option>
+									<%}	
+								}
+						 }
+						 %>
 					</aui:select>
 					
-					<div class="subInstitutions" >
+					<div id="options">
+						<aui:select id="subInstitutionId" size="1" name="subInstitutionId" label="sub-institution">
+							<aui:option value="" selected="true"><liferay-ui:message key="select-sub-institution"/></aui:option>
 						<%
-						try{
-							//
-							for (int i = 0; i < reqSubInstitutions.size(); i++) {
-								Institution inst = InstitutionLocalServiceUtil.getById(reqSubInstitutions.get(i).getInstitutionId());
-								%>
-								<div id='<%=inst.getInstitutionId()%>'> 
-									<%=inst.getName()+"&nbsp;&nbsp;&nbsp;" %> 
-									<a class="icon-large icon-remove" style='cursor:pointer;' onClick='document.getElementById("<%=inst.getInstitutionId()%>").remove();'></a>
-									<aui:input type="hidden" name="institutions" id="institutions" value="<%=inst.getInstitutionId()%>"/>
-								</div>
-								<%
-							}					
-						}catch(Exception e){}
-						%>				
-					</div>	
-								
-					<aui:select id="termId" size="1" name="termId" label="term">
-						<%for (int i = 0; i < semesters.size(); i++) {
-							if (reqVideo.getTermId()==semesters.get(i).getTermId()) {%>
-								<aui:option value='<%=semesters.get(i).getTermId()%>' selected="true"><%=semesters.get(i).getPrefix()+"&nbsp;"+semesters.get(i).getYear()%></aui:option>
-							<%} else {%>
-								<aui:option value='<%=semesters.get(i).getTermId()%>'><%=semesters.get(i).getPrefix()+"&nbsp;"+semesters.get(i).getYear()%></aui:option>
-							<%}
-						}%>
-					</aui:select>
-	
-					<aui:select size="1" id="categoryId" name="categoryId" label="category">
-						<%
-						Long cId = new Long(0);
-						try{cId = Video_CategoryLocalServiceUtil.getByVideo(reqVideo.getVideoId()).get(0).getCategoryId();}catch(Exception e){}
+						Long subInstitutionId = new Long(0);
+						try{subInstitutionId = Video_InstitutionLocalServiceUtil.getByVideo(reqVideo.getVideoId()).get(0).getInstitutionId();}catch (Exception e){}
 						
-						for (int i = 0; i < categories.size(); i++) {
-							if (cId==categories.get(i).getCategoryId()) {%>
-								<aui:option value='<%=categories.get(i).getCategoryId()%>' selected="true"><%=categories.get(i).getName()%></aui:option>
-							<%} else {%>
-								<aui:option value='<%=categories.get(i).getCategoryId()%>'><%=categories.get(i).getName()%></aui:option>
-							<%}
-						}%>
+						while(itPSI.hasNext()){
+							Institution i = itPSI.next();
+							%><aui:option value='<%=i.getInstitutionId()%>'><%=i.getName()%></aui:option><%
+						}
+						%>
+						</aui:select>
+						
+						<div class="subInstitutions" >
+							<%
+							try{
+								//
+								for (int i = 0; i < reqSubInstitutions.size(); i++) {
+									Institution inst = InstitutionLocalServiceUtil.getById(reqSubInstitutions.get(i).getInstitutionId());
+									%>
+									<div id='<%=inst.getInstitutionId()%>'> 
+										<%=inst.getName()+"&nbsp;&nbsp;&nbsp;" %> 
+										<a class="icon-large icon-remove" style='cursor:pointer;' onClick='document.getElementById("<%=inst.getInstitutionId()%>").remove();'></a>
+										<aui:input type="hidden" name="institutions" id="institutions" value="<%=inst.getInstitutionId()%>"/>
+									</div>
+									<%
+								}					
+							}catch(Exception e){}
+							%>				
+						</div>	
+									
+						<aui:select id="termId" size="1" name="termId" label="term">
+							<%for (int i = 0; i < semesters.size(); i++) {
+								if (reqVideo.getTermId()==semesters.get(i).getTermId()) {%>
+									<aui:option value='<%=semesters.get(i).getTermId()%>' selected="true"><%=semesters.get(i).getPrefix()+"&nbsp;"+semesters.get(i).getYear()%></aui:option>
+								<%} else {%>
+									<aui:option value='<%=semesters.get(i).getTermId()%>'><%=semesters.get(i).getPrefix()+"&nbsp;"+semesters.get(i).getYear()%></aui:option>
+								<%}
+							}%>
+						</aui:select>
+		
+						<aui:select size="1" id="categoryId" name="categoryId" label="category">
+							<%
+							Long cId = new Long(0);
+							try{cId = Video_CategoryLocalServiceUtil.getByVideo(reqVideo.getVideoId()).get(0).getCategoryId();}catch(Exception e){}
+							
+							for (int i = 0; i < categories.size(); i++) {
+								if (cId==categories.get(i).getCategoryId()) {%>
+									<aui:option value='<%=categories.get(i).getCategoryId()%>' selected="true"><%=categories.get(i).getName()%></aui:option>
+								<%} else {%>
+									<aui:option value='<%=categories.get(i).getCategoryId()%>'><%=categories.get(i).getName()%></aui:option>
+								<%}
+							}%>
+						</aui:select>
+					</div>
+		
+					<aui:select size="1" name="language" label="language" required="false">
+						<%for (int i=0; i<languages.length; i++){%>
+								<aui:option value='<%=languages[i]%>' selected="<%=reqMetadata.getLanguage().contains(languages[i]) %>"><%=languages[i]%></aui:option>
+						<%}%>				
 					</aui:select>
+					
+					<div id="l2gdate"><aui:input id="lecture2go-date" name="lecture2go-date" label="lecture2go-date" required="false" value="" disabled="true"/></div>
+		
+					<aui:input name="tags" label="tags" required="false" value="<%=reqVideo.getTags()%>"/>
+		
+					<aui:input name="publisher" label="publisher" required="false" value="<%=reqMetadata.getPublisher()%>"/>
+					
+					<aui:field-wrapper label="description">
+					    <liferay-ui:input-editor  name="longDesc" toolbarSet="simple" initMethod="initEditor" onChangeMethod="setDescriptionData" cssClass="ta"/>
+					    <script type="text/javascript">
+					        function <portlet:namespace />initEditor() { return "<%= UnicodeFormatter.toString(reqMetadata.getDescription()) %>"; }
+					    </script>
+					</aui:field-wrapper>
 				</div>
-	
-				<aui:select size="1" name="language" label="language" required="false">
-					<%for (int i=0; i<languages.length; i++){%>
-							<aui:option value='<%=languages[i]%>' selected="<%=reqMetadata.getLanguage().contains(languages[i]) %>"><%=languages[i]%></aui:option>
-					<%}%>				
-				</aui:select>
-				
-				<div id="l2gdate"><aui:input id="lecture2go-date" name="lecture2go-date" label="lecture2go-date" required="false" value="" disabled="true"/></div>
-	
-				<aui:input name="tags" label="tags" required="false" value="<%=reqVideo.getTags()%>"/>
-	
-				<aui:input name="publisher" label="publisher" required="false" value="<%=reqMetadata.getPublisher()%>"/>
-				
-				<aui:field-wrapper label="description">
-				    <liferay-ui:input-editor  name="longDesc" toolbarSet="simple" initMethod="initEditor" onChangeMethod="setDescriptionData" cssClass="ta"/>
-				    <script type="text/javascript">
-				        function <portlet:namespace />initEditor() { return "<%= UnicodeFormatter.toString(reqMetadata.getDescription()) %>"; }
-				    </script>
-				</aui:field-wrapper>
-				</div>
+				<script>
+					$( "#edit-video-lable-1" ).click(function() {
+					  $( "#metadata-upload" ).slideToggle( "slow" );
+					});
+				</script>
 				
 				<div id="permissions">
-					<label class="edit-video-lable"><liferay-ui:message key="permissions"/></label>
-					<div>
-						<aui:input id="password" name="password" label="password" required="false" value="<%=reqVideo.getPassword()%>" />
-					</div>
-					
-					<div id="c2g">
-						<%if(reqVideo.getCitation2go()==0){%>
-					  		<aui:input name="citationAllowed" type="checkbox" label="citation-allowed" id="citationAllowed"></aui:input>
-					   	<%}else{%>
-						  <aui:input name="citationAllowed" type="checkbox" label="citation-allowed" id="citationAllowed" checked="true"></aui:input>
-					    <%}%>
+					<label class="edit-video-lable" id="edit-video-lable-2"><liferay-ui:message key="permissions"/></label>
+					<div id="permissions-content">
+						<div>
+							<aui:input id="password" name="password" label="password" required="false" value="<%=reqVideo.getPassword()%>" />
+						</div>
+						
+						<div id="c2g">
+							<%if(reqVideo.getCitation2go()==0){%>
+						  		<aui:input name="citationAllowed" type="checkbox" label="citation-allowed" id="citationAllowed"></aui:input>
+						   	<%}else{%>
+							  <aui:input name="citationAllowed" type="checkbox" label="citation-allowed" id="citationAllowed" checked="true"></aui:input>
+						    <%}%>
+						</div>
 					</div>
 				</div>
+				<script>
+					$( "#edit-video-lable-2" ).click(function() {
+					  $( "#permissions-content" ).slideToggle( "slow" );
+					});
+				</script>
 				
 				<div id="license">
-					<label class="edit-video-lable"><liferay-ui:message key="license"/></label>
-					<div>
-						<%if(reqLicense.getL2go()==1){%><aui:input name="license"  id="uhhl2go" label="" value="uhhl2go" checked="true" type="radio"/><%}%>
-						<%if(reqLicense.getL2go()==0){%><aui:input name="license" id="uhhl2go" label="" value="uhhl2go" type="radio"/><%}%>
-						<a href="/license" target="_blank"><liferay-ui:message key="lecture2go-licence"/> </a>	 	      	      
-					</div>	
-					<div>		
-						<%if(reqLicense.getCcbyncsa()==1){%><aui:input name="license" label="" id="ccbyncsa" value="ccbyncsa" checked="true" type="radio" /><%}%>
-						<%if(reqLicense.getCcbyncsa()==0){%><aui:input name="license" label="" id="ccbyncsa" value="ccbyncsa" type="radio"/><%}%>
-						<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank"> <liferay-ui:message key="creative-commons"/> </a>
+					<label class="edit-video-lable" id="edit-video-lable-3"><liferay-ui:message key="license"/></label>
+					<div id="license-content">
+						<div>
+							<%if(reqLicense.getL2go()==1){%><aui:input name="license"  id="uhhl2go" label="" value="uhhl2go" checked="true" type="radio"/><%}%>
+							<%if(reqLicense.getL2go()==0){%><aui:input name="license" id="uhhl2go" label="" value="uhhl2go" type="radio"/><%}%>
+							<a href="/license" target="_blank"><liferay-ui:message key="lecture2go-licence"/> </a>	 	      	      
+						</div>	
+						<div>		
+							<%if(reqLicense.getCcbyncsa()==1){%><aui:input name="license" label="" id="ccbyncsa" value="ccbyncsa" checked="true" type="radio" /><%}%>
+							<%if(reqLicense.getCcbyncsa()==0){%><aui:input name="license" label="" id="ccbyncsa" value="ccbyncsa" type="radio"/><%}%>
+							<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank"> <liferay-ui:message key="creative-commons"/> </a>
+						</div>
 					</div>
 				</div>
-				
+				<script>
+					$( "#edit-video-lable-3" ).click(function() {
+					  $( "#license-content" ).slideToggle( "slow" );
+					});
+				</script>
+							
 				<aui:button-row>
 					<aui:button value="apply-changes" onclick="applyAllMetadataChanges()" cssClass="btn-primary"/>
-					<aui:button type="cancel" value="back" href="<%=backURL%>"/>
+					<aui:button type="cancel" value="back" href="<%=backURL%>" name="cancel"/>
 				</aui:button-row>
 				
 				<aui:input name="videoId" type="hidden" value="<%=reqVideo.getVideoId()%>"/>
@@ -362,6 +381,7 @@ $(function () {
 	           		updateVideoFileName(vars[0]);
 				}
            }
+           $('#<portlet:namespace></portlet:namespace>cancel').show();
         },
         progressall: function (e, data) {
 	        var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -369,6 +389,9 @@ $(function () {
 	        	setTimeout(function(){$('#progress .bar').css('width',0 + '%')}, 2000);
 	        }else{
 		        $('#progress .bar').css('width',progress + '%');
+		        if($('#<portlet:namespace></portlet:namespace>cancel').is(":visible")){
+		        	$('#<portlet:namespace></portlet:namespace>cancel').hide();	
+		        }
 	        }
    		},
 		dropZone: $('#dropzone')
