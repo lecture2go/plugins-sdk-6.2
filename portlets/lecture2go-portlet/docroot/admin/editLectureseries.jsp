@@ -129,9 +129,9 @@
 		<aui:layout>
 			<div id="metadata-upload">
 			<%if(readOnly){%>
-				<aui:input name="number" label="number" required="false" helpMessage="number-help-text" value="<%=lNumber %>" readonly="<%=readOnly%>"/>
+				<aui:input name="number" label="lectureseries-number" required="false" helpMessage="number-help-text" value="<%=lNumber %>" readonly="<%=readOnly%>"/>
 			<%}else{%>
-				<aui:input name="number" label="number" required="false" helpMessage="number-help-text" value="<%=lNumber %>"/>
+				<aui:input name="number" label="lectureseries-number" required="false" helpMessage="number-help-text" value="<%=lNumber %>"/>
 			<%}%>
 			
 			<%if(readOnly){%>
@@ -224,12 +224,6 @@
 				<aui:input type="hidden" name="producers" id="producers" value="<%=producerId%>"/>
 				<aui:input type="hidden" name="producerId" id="producerId" value="<%=producerId%>"/>
 			<%}%>
-			
-			<%if(readOnly){%>
-				<aui:input name="shortDesc" label="short-description"  value="<%=lShortDesc%>"  readonly="<%=readOnly%>"/>
-			<%}else{%>
-				<aui:input name="shortDesc" label="short-description"  value="<%=lShortDesc%>"/>
-			<%}%>							
 
 			<%if(readOnly){%>
 				<aui:input name="term" label="term" required="true" value='<%=TermLocalServiceUtil.getById(lSemester).getPrefix()+" "+TermLocalServiceUtil.getById(lSemester).getYear()%>' readonly="<%=readOnly%>"/>
