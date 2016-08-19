@@ -140,11 +140,12 @@
 	boolean permissionStudent = false;
 
 try{
+	Lecture2GoRoleChecker rcheck = new Lecture2GoRoleChecker();
 	remoteUser = UserLocalServiceUtil.getUser(new Long (request.getRemoteUser()));
-	permissionAdmin = permissionChecker.hasPermission(remoteUser.getGroupId(), User.class.getName(), remoteUser.getPrimaryKey(), "ADD_L2GOADMIN");
-	permissionCoordinator = permissionChecker.hasPermission(remoteUser.getGroupId(), User.class.getName(), remoteUser.getPrimaryKey(), "ADD_L2GOPRODUCER");
-	permissionProducer = new Lecture2GoRoleChecker().isProducer(remoteUser);
-	permissionStudent = new Lecture2GoRoleChecker().isStudent(remoteUser);
+	permissionAdmin = rcheck.isL2gAdmin(remoteUser);
+	permissionCoordinator = rcheck.isCoordinator(remoteUser);
+	permissionProducer = rcheck.isProducer(remoteUser);
+	permissionStudent = rcheck.isStudent(remoteUser);
 	if(permissionAdmin){
 		permissionCoordinator=false;
 		permissionProducer=false;

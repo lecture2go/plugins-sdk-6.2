@@ -42,7 +42,7 @@ public class Lecture2GoRoleChecker extends RoleLocalServiceUtil {
 		} catch (SystemException e) {
 			e.printStackTrace();
 		}
-		for (Role role : rL) if(role.getName().equals("L2Go Admin"))l2gAdmin=true;
+		for (Role role : rL) if(role.getName().equals("L2Go Admin") || role.getName().equals("Administrator") )l2gAdmin=true;
 		return l2gAdmin;
 	}
 	public  boolean isStudent(User user) {

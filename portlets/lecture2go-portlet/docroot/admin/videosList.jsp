@@ -56,6 +56,7 @@
 	}
 	String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 %>
+
 <div class="noresponsive">
 	<label class="edit-video-lable"><%=pageName%></label>
 	<aui:fieldset helpMessage="" column="true" cssClass="list">

@@ -1593,8 +1593,9 @@ thead, th {
     box-sizing: border-box;
     color: #484848;
     float: left;
-    margin-right: 10px;
+    margin-right: 5px;
     line-height: 20px;
+    margin-left: 0px;
     
     /* reset */
 	-webkit-box-sizing: border-box;
@@ -1603,7 +1604,7 @@ thead, th {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	
-    width: 233px;
+    width: 240px;
     height: 30px;
 }
 
