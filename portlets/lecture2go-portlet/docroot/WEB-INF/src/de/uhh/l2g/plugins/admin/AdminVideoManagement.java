@@ -237,6 +237,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		//licence
 		License license = new LicenseImpl();
 		license.setVideoId(newVideo.getVideoId());
+		license.setCcbyncsa(1);
 		LicenseLocalServiceUtil.addLicense(license);
 		request.setAttribute("reqLicense", license);
 
@@ -534,6 +535,19 @@ public class AdminVideoManagement extends MVCPortlet {
 			try {
 				VideoLocalServiceUtil.updateVideo(video);
 				jo.put("generationDate", generationDate);
+				writeJSON(resourceRequest, resourceResponse, jo);
+			} catch (SystemException e) {
+//				e.printStackTrace();
+			}
+		}
+
+		if(resourceID.equals("videoUpdateFirstTitle")){
+			String firsttitle = ParamUtil.getString(resourceRequest, "firsttitle");
+			JSONObject jo = JSONFactoryUtil.createJSONObject();
+			video.setTitle(firsttitle);
+			try {
+				VideoLocalServiceUtil.updateVideo(video);
+				jo.put("firsttitle", firsttitle);
 				writeJSON(resourceRequest, resourceResponse, jo);
 			} catch (SystemException e) {
 //				e.printStackTrace();
