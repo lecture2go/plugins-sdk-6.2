@@ -41,6 +41,8 @@
     width: 68%;
 }
 
+
+
 .uhh-icon-arrow-right{
    	background-image: url("/lecture2go-theme/images/arrow_right.png");
     background-position: left center;
@@ -1662,10 +1664,13 @@ thead, th {
     border-style: solid none none;
     border-width: 1px 0 0;
     color: #c40017;
-    margin-top: 20px;
-    min-height: 330px;
     padding-left: 0;
     word-wrap: break-word;
+}
+
+.required {
+    display: none;
+    visibility: hidden;
 }
 
 #searchName {
@@ -1790,7 +1795,7 @@ input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_lastName {
     width: 100%;
 }
 
-#license > div {
+#license > div > div {
     float: left;
     font-size: 14px;
     margin-bottom: 43px;
@@ -1989,11 +1994,11 @@ label.edit-video-lable.first {
 }
 
 
-#_lgadminvideomanagement_WAR_lecture2goportlet_apply-date-time {
+#_lgadminvideomanagement_WAR_lecture2goportlet_apply-date-time, #_lgadminvideomanagement_WAR_lecture2goportlet_apply-first-title {
     float: left;
     margin-left: 231px;
-    position: absolute;
     margin-top: -56px;
+    position: absolute;
 }
 
 #_lgadminlectureseriesmanagement_WAR_lecture2goportlet_longDesc {

@@ -25,6 +25,7 @@
 <liferay-portlet:resourceURL id="updateupdateOpenAccessForLectureseries" var="updateupdateOpenAccessForLectureseriesURL" />
 <liferay-portlet:resourceURL id="videoUpdateGenerationDate" var="videoUpdateGenerationDateURL" />
 <liferay-portlet:resourceURL id="getGenerationDate" var="getGenerationDateURL" />
+<liferay-portlet:resourceURL id="videoUpdateFirstTitle" var="videoUpdateFirstTitleURL" />
 
 <%
 	String actionURL = "";
@@ -80,14 +81,23 @@
 
 <script type="text/javascript">
   $(function(){
+	var vidtitle = "<%=reqVideo.getTitle()%>";
     if(isFirstUpload()==1 && getDateTime().length==0){
    	  	$("#date-time-form").fadeIn(1000);
     	$("#upload-form").hide();
     	$("#l2gdate").hide();
+    	if(vidtitle.trim()>""){
+    		$("#first-title").hide();
+    		$("#date-time").show();
+    	}else{
+    		$("#date-time").hide();
+    	}
+    	$("#<portlet:namespace/>meta-ebene").hide();
     }else{
   	  $("#date-time-form").hide();
 	  $("#upload-form").fadeIn(1000); 	
 	  $("#<portlet:namespace/>lecture2go-date").val(getDateTime());
+	  $("#<portlet:namespace/>meta-ebene").show();
     }
     //
     $('#<portlet:namespace/>datetimepicker').datetimepicker({
@@ -102,20 +112,29 @@
     });
   });
 </script>
+
 <div class="noresponsive">
 	<label class="edit-video-lable"><liferay-ui:message key="upload"/></label>
 	<div id="date-time-form">
-		<aui:fieldset helpMessage="test" column="true" label="" >
+		<aui:fieldset column="true">
 			<aui:layout>
-				<aui:input id="datetimepicker" name="datetimepicker" label="select-date-time-bevor-upload"/>
-				<aui:button-row>
-					<aui:button id="apply-date-time" name="apply-date-time" value="apply-date-time" onClick="applyDateTime();"/>
-				</aui:button-row>
+				<div id="first-title">
+					<aui:input id="firsttitle" name="firsttitle" label="first-title" value="<%=reqVideo.getTitle()%>" />
+					<aui:button-row>
+						<aui:button id="apply-first-title" name="apply-first-title" value="apply-first-title" onClick="applyFirstTitle();"/>
+					</aui:button-row>
+				</div>
+				<div id="date-time">
+					<aui:input id="datetimepicker" name="datetimepicker" label="select-date-time-bevor-upload"/>
+					<aui:button-row>
+						<aui:button id="apply-date-time" name="apply-date-time" value="apply-date-time" onClick="applyDateTime();"/>
+					</aui:button-row>
+				</div>
 			</aui:layout>
 		</aui:fieldset>
 	</div>
 	<div id="upload-form">
-		<aui:fieldset helpMessage="test" column="true" label="" >
+		<aui:fieldset column="true">
 			<aui:layout>
 				<div>
 					<input id="fileupload" type="file" name="files[]" data-url="/servlet-file-upload/upload" multiple/>
@@ -130,17 +149,20 @@
 		</aui:fieldset>
 	</div>
 	
-	<aui:fieldset column="false" label="" >
+	<aui:fieldset column="false" label="" id="meta-ebene">
 		<aui:layout>
 			<aui:form action="<%=actionURL%>" commandName="model" name="metadata">
 				<label class="edit-video-lable" id="edit-video-lable-1"><liferay-ui:message key="metadata"/></label>
 				<div id="metadata-upload">
-					<aui:input id="title" name="title" label="title" required="false" value="<%=reqVideo.getTitle()%>" />
+					<aui:input id="stayhere" name="stayhere" label="" required="true" value="" type="hidden"/>
 					
-					<aui:input id="creator" name="creator" label="creators" required="false" />
-								
-					<div id="creators"></div>
-									
+					<div id="titledefault"><aui:input id="title" name="title" label="title" required="true" value="<%=reqVideo.getTitle()%>" /></div>
+					
+					<div id="creators-custom">
+						<aui:input id="creator" name="creator" label="creators" />
+						<div id="creators"></div>
+					</div>		
+							
 					<aui:select size="1" name="lectureseriesId" label="lecture-series" helpMessage="video-with-or-without-lectureseries" onChange="toggleLectureseries()">
 						<aui:option value="0">-<liferay-ui:message key="without-lecture-series"/>-</aui:option>
 						<%
@@ -189,7 +211,7 @@
 							%>				
 						</div>	
 									
-						<aui:select id="termId" size="1" name="termId" label="term">
+						<aui:select id="termId" size="1" name="termId" label="term" required="true">
 							<%for (int i = 0; i < semesters.size(); i++) {
 								if (reqVideo.getTermId()==semesters.get(i).getTermId()) {%>
 									<aui:option value='<%=semesters.get(i).getTermId()%>' selected="true"><%=semesters.get(i).getPrefix()+"&nbsp;"+semesters.get(i).getYear()%></aui:option>
@@ -199,7 +221,7 @@
 							}%>
 						</aui:select>
 		
-						<aui:select size="1" id="categoryId" name="categoryId" label="category">
+						<aui:select size="1" id="categoryId" name="categoryId" label="category" required="true">
 							<%
 							Long cId = new Long(0);
 							try{cId = Video_CategoryLocalServiceUtil.getByVideo(reqVideo.getVideoId()).get(0).getCategoryId();}catch(Exception e){}
@@ -214,7 +236,7 @@
 						</aui:select>
 					</div>
 		
-					<aui:select size="1" name="language" label="language" required="false">
+					<aui:select size="1" name="language" label="language" required="true">
 						<%for (int i=0; i<languages.length; i++){%>
 								<aui:option value='<%=languages[i]%>' selected="<%=reqMetadata.getLanguage().contains(languages[i]) %>"><%=languages[i]%></aui:option>
 						<%}%>				
@@ -283,7 +305,7 @@
 				</script>
 							
 				<aui:button-row>
-					<aui:button value="apply-changes" onclick="applyAllMetadataChanges()" cssClass="btn-primary"/>
+					<aui:button type="submit" value="apply-changes" onclick="applyAllMetadataChanges()" cssClass="btn-primary"/>
 					<aui:button type="cancel" value="back" href="<%=backURL%>" name="cancel"/>
 				</aui:button-row>
 				
@@ -292,7 +314,11 @@
 		</aui:layout>
 	</aui:fieldset>
 </div>
-
+<script type="text/javascript">
+	function test(){
+		alert("test");
+	}
+</script>
 <script type="text/javascript">
 var $options = $( "#options" );
 var c = 0;
@@ -590,6 +616,7 @@ function applyAllMetadataChanges(){
 	AUI().use(
 			'aui-node',
 			function(A) {
+				if($("#<portlet:namespace/>title").val() && $("#creators > div").length>0){
 					// Select the node(s) using a css selector string
 				    var license = A.one("input[name=<portlet:namespace/>license]:checked").get("value");
 				    //alert(license2.get('value'));
@@ -598,7 +625,22 @@ function applyAllMetadataChanges(){
 				    updateCreators();
 				    updateSubInstitutions();
 				    updateMetadata();//last place, important!
-				    alert("<liferay-ui:message key='changes-applied'/>");
+				 	//reset creator class
+				    $("#creators-custom").css({"background-color": "white", "color": "#555555"});
+				    $("#creators-custom .control-label").css({"color": "#488f06"});
+				    
+				    alert("<liferay-ui:message key='changes-applied'/>");					
+				}else{
+					if($("#creators > div").length==0){
+					    //update creator class
+					    $("#creators-custom").css({"background-color": "#b50303", "color": "white"});
+					    $("#creators-custom .control-label").css({"color": "white"});
+						$('html, body').animate({
+		                    scrollTop: $("#creators-custom").offset().top
+		                }, 1000);
+						alert("<liferay-ui:message key='please-add-creators'/>");
+					}
+				}
 			}
 	);
 }
@@ -647,6 +689,9 @@ function deleteFile(fileName){
 		        if (isFirstUpload()==1){
 		      	  	$('#date-time-form').fadeIn( 500 );
 		    	  	$("#upload-form").hide(); 
+		    	  	$("#date-time").hide();
+		    	  	$("#first-title").show();
+		    	  	$("#<portlet:namespace/>meta-ebene").hide();
 		        }
 		        //hide date fild
 		        $("#l2gdate").hide();
@@ -673,7 +718,7 @@ function updateCreatorOnServer(jsonArray) {
 		    //and show new creators list
 		    showCreatorsList(data);    
 		  }
-	})
+	});
 }
 
 function applyDateTime(){
@@ -695,6 +740,32 @@ function applyDateTime(){
 				  $("#tm").text(getDateTime());
 				  $("#<portlet:namespace/>lecture2go-date").val(genDate);
 				  $("#l2gdate").fadeIn(1000);
+				  $("#<portlet:namespace/>meta-ebene").show();
+			  }
+	  });
+}
+
+function applyFirstTitle(){
+	  var title = $('#<portlet:namespace/>firsttitle').val();
+	  //
+	  $.ajax({
+			  type: "POST",
+			  url: "<%=videoUpdateFirstTitleURL%>",
+			  dataType: 'json',
+			  data: {
+				  <portlet:namespace/>firsttitle: title,
+			 	  <portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>"
+			  },
+			  global: false,
+			  async:false,
+			  success: function(data) {
+				  if(!data.firsttitle){
+					  alert('<liferay-ui:message key="please-enter-a-title"/>');
+				  }else{
+					  $('#first-title').hide();
+					  $("#date-time").show();	
+					  $("#titledefault").val(data.firsttitle);
+				  }
 			  }
 	  })
 }
