@@ -628,6 +628,7 @@ function applyAllMetadataChanges(){
 				 	//reset creator class
 				    $("#creators-custom").css({"background-color": "white", "color": "#555555"});
 				    $("#creators-custom .control-label").css({"color": "#488f06"});
+				    $("#metadata-upload #creators").css({"color": "#488f06"});
 				    
 				    alert("<liferay-ui:message key='changes-applied'/>");					
 				}else{
@@ -638,6 +639,7 @@ function applyAllMetadataChanges(){
 						$('html, body').animate({
 		                    scrollTop: $("#creators-custom").offset().top
 		                }, 1000);
+						
 						alert("<liferay-ui:message key='please-add-creators'/>");
 					}
 				}

@@ -14,17 +14,26 @@
 String backURL = request.getAttribute("backURL").toString();
 %>
 <div class="noresponsive">
-<aui:fieldset helpMessage="test" column="true" label='<%=reqVideo.getTitle()%>'>
+<aui:fieldset column="true" label='<%=reqVideo.getTitle()%>'>
 	<aui:layout>
 		<aui:form action="<%=addSegmentURL.toString()%>" commandName="model" name="segments" id="segments">
-			<div class="player-wide">
+			<div class="player-segment">
 				<%@ include file="player/includePlayer.html"%>
 			</div>
+			
 			<div id="set-segments">
-				<aui:input name="segment" value="1" type="radio" label="chapter" id="chapter" checked="true"/>	
+				<div id="segmentinput">
+					<div>
+						<aui:input name="segment" value="1" type="radio" label="" id="chapter" checked="true"/>	
+						<liferay-ui:message key="chapter"/>
+					</div>
+	
+					<div id="com">
+						<aui:input name="segment" value="0" type="radio" label="" id="comment"/>
+						<liferay-ui:message key="comment"/> 
+					</div>
+				</div>
 				
-				<aui:input name="segment" value="0" type="radio" label="comment" id="comment"/>	
-
 				<aui:input name="chortTitle" label="short title" required="true" id="chortTitle"/>
 		
 				<aui:input name="segmentBegin" label="segment begin" required="true" id="timeStart" readonly="true"/>
@@ -46,9 +55,8 @@ String backURL = request.getAttribute("backURL").toString();
 		</aui:form>
 	</aui:layout>
 </aui:fieldset>
-<br/>
-<div id="chapters"/>
-</div>
+
+<div id="chapters"></div>
 
 <liferay-portlet:resourceURL id="showSegments" var="segmentsURL" />
 <script type="text/javascript">
@@ -103,7 +111,7 @@ String backURL = request.getAttribute("backURL").toString();
 			drawRow(data[i]);
 	    }
 	}
-	
+
 	function drawRow(segment) {
 	    if(segment.chapter==1){
 	    	// segment is a chapter

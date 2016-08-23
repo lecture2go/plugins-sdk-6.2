@@ -1365,9 +1365,8 @@ thead, th {
 }
 
 #chapters .chaptertile input {
-    margin-right: 300px;
-    margin-top: -55px;
     float: right;
+    margin-top: -15px;
 }
 
 #chapters span.segment-title {
@@ -1428,9 +1427,37 @@ thead, th {
 }
 
 .commenttile input {
-    margin-right: 300px;
-    margin-top: -37px;
     float: right;
+    margin-top: -21px;
+}
+
+#segmentinput > div {
+    float: left;
+    font-size: 18px;
+    margin-bottom: 34px;
+}
+
+#set-segments {
+    float: left;
+    margin-top: -17px !important;
+}
+
+#segmentinput #com {
+    margin-left: 31%;
+}
+
+#_lgadminvideomanagement_WAR_lecture2goportlet_timeStart, #_lgadminvideomanagement_WAR_lecture2goportlet_timeEnd {
+    width: 92px;
+}
+
+#_lgadminvideomanagement_WAR_lecture2goportlet_text {
+    width: 225px;
+}
+
+.player-segment {
+    float: left;
+    margin-right: 13px;
+    width: 810px;
 }
 
 .fs8 {
