@@ -159,7 +159,7 @@
 					<div id="titledefault"><aui:input id="title" name="title" label="title" required="true" value="<%=reqVideo.getTitle()%>" /></div>
 					
 					<div id="creators-custom">
-						<aui:input id="creator" name="creator" label="creators" />
+						<aui:input id="creator" name="creator" label="creators-required" />
 						<div id="creators"></div>
 					</div>		
 							
@@ -364,17 +364,17 @@ $(function () {
             var acceptFileTypes = /(mp4|m4v|m4a|mp3|ogg|flv|webm|pdf)$/i;//file types
 			
             if (data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
-                uploadErrors.push('not an accepted file type');
+                uploadErrors.push('<liferay-ui:message key="not-an-accepted-file-type"/>');
             }
             if (data.originalFiles[0]['size'].length && data.originalFiles[0]['size'] > 2147483648) {
-                uploadErrors.push('max file size 2 GB');
+                uploadErrors.push('<liferay-ui:message key="max-file-size"/>');
             }
           	//check for first upload
         	if (isFirstUpload()==1) {
         		if (!fileUploadAllowed(data.originalFiles)){
-        			uploadErrors.push('first upload has to be a mp3 or mp4 media file');   
+        			uploadErrors.push('<liferay-ui:message key="first-upload-requirements"/>');   
         		} else {
-        			if(videoFileNameExistsInDatabase(data.originalFiles[0]['name'])==1) uploadErrors.push('file exists in DB, please rename');  
+        			if(videoFileNameExistsInDatabase(data.originalFiles[0]['name'])==1) uploadErrors.push('<liferay-ui:message key="file-exists-in-database"/>');  
         		}
         	}
             if (uploadErrors.length > 0) {
@@ -764,7 +764,7 @@ function applyFirstTitle(){
 				  }else{
 					  $('#first-title').hide();
 					  $("#date-time").show();	
-					  $("#titledefault").val(data.firsttitle);
+					  $("#<portlet:namespace/>title").val(data.firsttitle);
 				  }
 			  }
 	  })
