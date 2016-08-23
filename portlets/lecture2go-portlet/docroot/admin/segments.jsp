@@ -49,7 +49,6 @@ String backURL = request.getAttribute("backURL").toString();
 				
 				<aui:button-row>
 					<aui:button type="submit" value="add segment" onClick="addSegment()" />
-					<aui:button type="cancel" value="cancel" href="<%=backURL%>"/>
 				</aui:button-row>
 			</div>
 		</aui:form>
