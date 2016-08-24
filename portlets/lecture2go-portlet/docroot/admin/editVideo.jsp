@@ -315,9 +315,7 @@
 	</aui:fieldset>
 </div>
 <script type="text/javascript">
-	function test(){
-		alert("test");
-	}
+	$("#<portlet:namespace/>meta-ebene").hide();
 </script>
 <script type="text/javascript">
 var $options = $( "#options" );
