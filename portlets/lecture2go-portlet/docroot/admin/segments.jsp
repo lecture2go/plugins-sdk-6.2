@@ -59,7 +59,7 @@ String backURL = request.getAttribute("backURL").toString();
 				
 				<div id="segment-input-cancel">
 					<aui:button-row>
-						<aui:button type="cancel" value="back" href="<%=backURL%>"/>
+						<aui:button type="cancel" value="cancel" href="<%=backURL%>"/>
 					</aui:button-row>				
 				</div>
 			</div>
