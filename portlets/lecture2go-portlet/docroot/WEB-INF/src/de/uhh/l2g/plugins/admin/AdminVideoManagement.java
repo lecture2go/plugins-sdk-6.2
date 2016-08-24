@@ -212,6 +212,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		newVideo.setRootInstitutionId(reqProducer.getInstitutionId());
 		newVideo.setOpenAccess(0);
 		newVideo.setSecureFilename(Security.createSecureFileName()+".xx");
+		newVideo.setCitation2go(1);
 		//save it
 		Video video = VideoLocalServiceUtil.addVideo(newVideo);
 		request.setAttribute("reqVideo", newVideo);
