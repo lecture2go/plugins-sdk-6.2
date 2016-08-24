@@ -263,17 +263,17 @@
 							<%if(vid.getFilename().length()>0){
 								if (vid.getOpenAccess()==1){%>
 								<a href="<%=lockURL.toString()%>">
-								   <span class="icon-large icon-unlock"></span>
+								   <span class="icon-large icon-unlock" onclick="return confirm('<liferay-ui:message key="really-unlock-question"/>')"></span>
 								</a>
 								<%}else{%>
 									 <a href="<%=unlockURL.toString()%>">
-									    <span class="icon-large icon-lock"></span>
+									    <span class="icon-large icon-lock" onclick="return confirm('<liferay-ui:message key="really-lock-question"/>')"></span>
 									 </a>
 								<%}	
 									
 								if (vid.getDownloadLink()==1){%>
 									 <a href="<%=deactivateDowonloadURL.toString()%>">
-									    <span class="icon-large icon-download-alt"></span>
+									    <span class="icon-large icon-download-alt" onclick="return confirm('<liferay-ui:message key="really-deactivate-download-question"/>')"></span>
 									 </a>
 								<%}else{%>
 									 <a href="<%=activateDowonloadURL.toString()%>">
