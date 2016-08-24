@@ -1,3 +1,4 @@
+<%@page import="de.uhh.l2g.plugins.model.impl.InstitutionImpl"%>
 <%@include file="/init.jsp"%>
 <%
 Long institutionId = new Long(0);
@@ -82,7 +83,10 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 
 									List<Video_Institution> vi = Video_InstitutionLocalServiceUtil.getByVideo(vid.getVideoId());
 						        	// only get the first institution
-						        	Institution inst = InstitutionLocalServiceUtil.getById(vi.get(0).getInstitutionId());
+						        	Institution inst = new InstitutionImpl();
+						        	try{
+						        		inst=InstitutionLocalServiceUtil.getById(vi.get(0).getInstitutionId());
+						        	}catch(Exception e){}
 						        	
 									%>
 									
@@ -112,13 +116,14 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 														&nbsp;
 													<% } %>
 												</div> 
-
+												<%if(inst.getInstitutionId()>0){ %>
 												<div class="labels">
 													<%
 														String instLink="<a href='/l2go/-/get/"+inst.getInstitutionId()+"/"+inst.getParentId()+"/0/0/0/'>"+inst.getName()+"</a>"; 
 													%>
 										        	<span class="label label-light2"><%=instLink%></span>												
 												</div>
+												<%}%>
 											</div> 
 										</div>
 										
@@ -165,8 +170,10 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 									
 						        	List<Video_Institution> vi = Video_InstitutionLocalServiceUtil.getByVideo(vid.getVideoId());
 						        	// only get the first institution
-						        	Institution inst = InstitutionLocalServiceUtil.getById(vi.get(0).getInstitutionId());
-							%>
+						        	Institution inst = new InstitutionImpl();
+						        	try{
+						        		inst=InstitutionLocalServiceUtil.getById(vi.get(0).getInstitutionId());
+						        	}catch(Exception e){}							%>
 								<c:if test="${count % 4 == 0 && count != 0}">
 									<!-- row-fluid -->
 										</div>
@@ -193,12 +200,14 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 													&nbsp;
 												<% } %>
 											</div>
+											<%if(inst.getInstitutionId()>0){ %>
 											<div class="labels">
 												<%
 													String instLink="<a href='/l2go/-/get/"+inst.getInstitutionId()+"/"+inst.getParentId()+"/0/0/0/'>"+inst.getName()+"</a>"; 
 												%>
 									        	<span class="label label-light2"><%=instLink%></span>
 									        </div>
+									        <%} %>
 										</div>
 									</div>
 								<c:set var="count" value="${count + 1}" scope="page"/>
