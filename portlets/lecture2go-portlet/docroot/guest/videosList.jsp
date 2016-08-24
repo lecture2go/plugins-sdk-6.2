@@ -362,7 +362,7 @@
 											          		%>
 													          <span class="label label-light2"><%=instLink%></span>
 											          		<%
-										          		}catch(NullPointerException e){
+										          		}catch(Exception e){
 										          			//
 										          		}
 										          %>
