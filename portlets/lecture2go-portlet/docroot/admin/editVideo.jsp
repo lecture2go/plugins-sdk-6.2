@@ -149,7 +149,7 @@
 		</aui:fieldset>
 	</div>
 	
-	<aui:fieldset column="false" label="" id="meta-ebene">
+	<aui:fieldset column="false" label="" id="meta-ebene" style="display:none;">
 		<aui:layout>
 			<aui:form action="<%=actionURL%>" commandName="model" name="metadata">
 				<label class="edit-video-lable" id="edit-video-lable-1"><liferay-ui:message key="metadata"/></label>
@@ -314,9 +314,6 @@
 		</aui:layout>
 	</aui:fieldset>
 </div>
-<script type="text/javascript">
-	$("#<portlet:namespace/>meta-ebene").hide();
-</script>
 <script type="text/javascript">
 var $options = $( "#options" );
 var c = 0;
