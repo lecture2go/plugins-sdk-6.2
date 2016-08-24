@@ -1353,6 +1353,22 @@ thead, th {
     width: auto;
 }
 
+#segments-width {
+    width: 811px;
+}
+
+#segments-width #chapters .icon-large {
+    cursor: pointer;
+    float: right;
+    margin: 5px;
+}
+
+#segment-input-cancel {
+    margin-left: 152px;
+    position: absolute;
+    top: 470px;
+}
+
 .aui .chaptertile {
     padding: 5px 0px;
     border-width: 0px 0px 1px;
@@ -1376,6 +1392,12 @@ thead, th {
 #chapters span.time {
 	font-size: 10px;
 	margin-right: 5px;
+}
+
+.segment-time {
+    float: left;
+    margin-bottom: 11px;
+    width: 50%;
 }
 
 .aui .chaptertile:hover {
@@ -1433,8 +1455,8 @@ thead, th {
 
 #segmentinput > div {
     float: left;
-    font-size: 18px;
-    margin-bottom: 34px;
+    font-size: 16px;
+    margin-bottom: 21px;
 }
 
 #set-segments {
@@ -1447,7 +1469,8 @@ thead, th {
 }
 
 #_lgadminvideomanagement_WAR_lecture2goportlet_timeStart, #_lgadminvideomanagement_WAR_lecture2goportlet_timeEnd {
-    width: 92px;
+    width: 59px;
+    margin-bottom: 15px;
 }
 
 #_lgadminvideomanagement_WAR_lecture2goportlet_text {

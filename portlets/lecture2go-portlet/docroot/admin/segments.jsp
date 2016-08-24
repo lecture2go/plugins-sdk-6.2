@@ -24,21 +24,25 @@ String backURL = request.getAttribute("backURL").toString();
 			<div id="set-segments">
 				<div id="segmentinput">
 					<div>
-						<aui:input name="segment" value="1" type="radio" label="" id="chapter" checked="true"/>	
+						<aui:input name="segment" value="1" type="radio" label="" id="chapter" helpMessage="wath-is-chapter" checked="true"/>	
 						<liferay-ui:message key="chapter"/>
 					</div>
 	
 					<div id="com">
-						<aui:input name="segment" value="0" type="radio" label="" id="comment"/>
+						<aui:input name="segment" value="0" type="radio" label="" id="comment" helpMessage="wath-is-segment"/>
 						<liferay-ui:message key="comment"/> 
 					</div>
 				</div>
 				
-				<aui:input name="chortTitle" label="short title" required="true" id="chortTitle"/>
-		
-				<aui:input name="segmentBegin" label="segment begin" required="true" id="timeStart" readonly="true"/>
-		
-				<aui:input name="segmentEnd" label="segment end" required="true" id="timeEnd" readonly="true"/>
+				<aui:input name="chortTitle" label="title" required="true" id="chortTitle"/>
+				
+				<div class="segment-time">
+					<aui:input name="segmentBegin" label="start" required="true" id="timeStart" readonly="true"/>
+				</div>
+				
+				<div class="segment-time">
+					<aui:input name="segmentEnd" label="end" required="true" id="timeEnd" readonly="true"/>
+				</div>
 				
 				<div id="iav">
 					<aui:input name="text" type="textarea" label="text" autoSize="true" id="text"/>
@@ -47,15 +51,25 @@ String backURL = request.getAttribute("backURL").toString();
 				<aui:input name="videoId" type="hidden" value="<%=reqVideo.getVideoId()%>"/>
 				<div id="ignore"><aui:input type="text" name="dummy" required="true"/></div>
 				
-				<aui:button-row>
-					<aui:button type="submit" value="add segment" onClick="addSegment()" />
-				</aui:button-row>
+				<div id="segment-input-add">
+					<aui:button-row>
+						<aui:button type="submit" value="add" onClick="addSegment()" />
+					</aui:button-row>
+				</div>
+				
+				<div id="segment-input-cancel">
+					<aui:button-row>
+						<aui:button type="cancel" value="back" href="<%=backURL%>"/>
+					</aui:button-row>				
+				</div>
 			</div>
 		</aui:form>
 	</aui:layout>
 </aui:fieldset>
 
-<div id="chapters"></div>
+<div id="segments-width">
+	<div id="chapters"></div>
+</div>
 
 <liferay-portlet:resourceURL id="showSegments" var="segmentsURL" />
 <script type="text/javascript">
@@ -112,15 +126,16 @@ String backURL = request.getAttribute("backURL").toString();
 	}
 
 	function drawRow(segment) {
+		newRow='<span class="icon-large icon-remove" alt="delete" onclick="deleteSegment('+segment.segmentId+')" ></span>';
 	    if(segment.chapter==1){
 	    	// segment is a chapter
-	    	newRow='<div class="chaptertile" id="' + segment.segmentId + '" begin="' + segment.start + '" end="' + segment.end + '">'+
+	    	newRow=newRow+'<div class="chaptertile" id="' + segment.segmentId + '" begin="' + segment.start + '" end="' + segment.end + '">'+
 			'<a><img width="130px" height="63px" class="imgsmall" title="watch this chapter" src="'+segment.image+'"></a>'+
 			'<span class="time">'+segment.start +' - '+segment.end+'</span><br/>'+
 			'<a><span class="segment-title">'+segment.title+'</span></a>';
 		}else{
 			// segment is a comment
-			newRow='<div class="commenttile" id="'+segment.segmentId+'" onload="alert('+segment.segmentId+')">'+
+			newRow=newRow+'<div class="commenttile" id="'+segment.segmentId+'" onload="alert('+segment.segmentId+')">'+
     		'<div>'+
 			'<b id="pf1_'+segment.segmentId+'">'+
     		'<span class="icon-small icon-plus" id="showr'+segment.segmentId+'" onclick="showSegment('+segment.segmentId+')"/>'+
@@ -135,8 +150,6 @@ String backURL = request.getAttribute("backURL").toString();
     			newRow=newRow+'<b id="iav'+segment.segmentId+'"><span class="fs10"><div id="description"><em>'+segment.description+'</em></div></span></b>';
     		}
 		}
-		newRow=newRow+'<input type="image" src="/lecture2go-portlet/img/delete.png" alt="delete" onclick="deleteSegment('+segment.segmentId+')" >';
-		
 		newRow=newRow+'</div>';
 		
 		if(segment.chapter!=1){
