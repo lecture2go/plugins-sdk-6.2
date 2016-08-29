@@ -192,7 +192,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			int y=1;
 			if (hasSearch)y=2;
 			//
-			for (int i=y;i<=2;i++){ //for all queries "lQueryForSearch" "lQuery" and "vQuery"
+			for (int i=0;i<=2;i++){ //for all queries "lQueryForSearch" "lQuery" and "vQuery"
 				if (termId > 0) qPos.add(termId);
 				if (creatorId > 0) qPos.add(creatorId);
 				if (categoryId > 0) qPos.add(categoryId);
