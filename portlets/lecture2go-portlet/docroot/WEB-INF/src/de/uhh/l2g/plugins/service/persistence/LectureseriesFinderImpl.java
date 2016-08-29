@@ -188,7 +188,11 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			 *  an array is created with the specific filter values and iterated for every subquery
 			 */
 			QueryPos qPos = QueryPos.getInstance(q);
-			for (int i=0;i<=2;i++){ //for all queries "lQueryForSearch" "lQuery" and "vQuery"
+			boolean hasSearch = (searchQuery.trim().length()>0);
+			int y=1;
+			if (hasSearch)y=2;
+			//
+			for (int i=y;i<=2;i++){ //for all queries "lQueryForSearch" "lQuery" and "vQuery"
 				if (termId > 0) qPos.add(termId);
 				if (creatorId > 0) qPos.add(creatorId);
 				if (categoryId > 0) qPos.add(categoryId);
