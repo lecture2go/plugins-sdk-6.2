@@ -18,9 +18,7 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.Video;
-import de.uhh.l2g.plugins.model.Video_Lectureseries;
 import de.uhh.l2g.plugins.model.impl.LectureseriesImpl;
-import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 
 public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> implements LectureseriesFinder {
@@ -190,7 +188,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			 *  an array is created with the specific filter values and iterated for every subquery
 			 */
 			QueryPos qPos = QueryPos.getInstance(q);
-			for (int i=0;i<=1;i++){ //for both of queries "lQuery" and "vQuery"
+			for (int i=0;i<=2;i++){ //for all queries "lQueryForSearch" "lQuery" and "vQuery"
 				if (termId > 0) qPos.add(termId);
 				if (creatorId > 0) qPos.add(creatorId);
 				if (categoryId > 0) qPos.add(categoryId);
@@ -227,6 +225,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 		//for lecture series
 		String lQuery = "SELECT l.number_, l.eventType, l.categoryId, l.name, l.shortDesc, l.termId, \"\" AS language, \"\" AS facultyName, l.lectureseriesId, NULL AS password_, 1 AS approved, l.longDesc, l. latestOpenAccessVideoId, l.latestVideoUploadDate, COUNT(l.lectureseriesId) as videoCount FROM LG_Video v ";
 			   lQuery+= "JOIN LG_Lectureseries AS l ON (v.lectureseriesId = l.lectureseriesId)";
+		String lQueryForSeach="";
 		
 		//for videos
 		String vQuery = "SELECT \"00.000\" AS number_, NULL AS eventType, 0 AS categoryId, v.title AS name, v.title AS shortDesc, v.termId, \"\" AS language, \"\" AS facultyName, v.videoId AS lectureseriesId, NULL AS password_, 1 AS approved, v.title AS longDesc, v.lectureseriesId AS latestOpenAccessVideoId, v.uploadDate AS latestVideoUploadDate, 1 as videoCount FROM LG_Video v ";
@@ -254,12 +253,17 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 		}
 		
 		if(hasSearch){
-			lQuery += "INNER JOIN LG_Tagcloud AS tag ON (v.videoId = tag.objectId)  ";
-			vQuery += "INNER JOIN LG_Tagcloud AS tag ON (v.videoId = tag.objectId) ";			
+			lQueryForSeach = lQuery;
+			String INNER_JOIN = "INNER JOIN LG_Tagcloud AS tag ON (v.videoId = tag.objectId AND tag.objectClassType=\"de.uhh.l2g.plugins.model.impl.VideoImpl\") ";
+			lQuery  += "INNER JOIN LG_Tagcloud AS tag ON (v.lectureseriesId = tag.objectId AND tag.objectClassType=\"de.uhh.l2g.plugins.model.impl.LectureseriesImpl\")  ";
+			lQueryForSeach += INNER_JOIN;
+			vQuery  += INNER_JOIN;			
 		}
 		
-		lQuery += "WHERE v.openAccess=1 ";
-		vQuery += "WHERE v.lectureseriesId<0 AND v.openAccess=1 ";
+		String WHERE = "WHERE v.openAccess=1 ";
+		lQuery += WHERE;
+		lQueryForSeach += WHERE;
+		vQuery += WHERE + "AND v.lectureseriesId<0 ";
 		
 		if (hasTerm) {
 			String termQuery = "AND t.termId = ? ";
@@ -288,16 +292,23 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 		}
 
 		if(hasSearch){
-			lQuery += "AND tag.tags LIKE ? AND tag.objectClassType=\"de.uhh.l2g.plugins.model.impl.VideoImpl\" ";
-			vQuery += "AND v.lectureseriesId<0 AND tag.objectClassType=\"de.uhh.l2g.plugins.model.impl.VideoImpl\" AND tag.tags LIKE ? ";			
+			String LIKE="AND tag.tags LIKE ? ";
+			lQuery += LIKE;
+			lQueryForSeach += LIKE;
+			vQuery += LIKE + "AND v.lectureseriesId<0 ";			
 		}
-		
-		lQuery += "GROUP BY v.lectureseriesId ";
+		String GROUP = "GROUP BY v.lectureseriesId ";
+		lQueryForSeach += GROUP;
+		lQuery += GROUP;
 		
 		query = "SELECT * FROM  ( ";
 		query+= lQuery;
 		query+= "UNION "; 
 		query+= vQuery;
+		if(hasSearch){
+			query+= "UNION "; 
+			query+= lQueryForSeach;				
+		}
 		query+= ") ";
 		query+= "AS a ";
 		query+= "GROUP BY lectureseriesId ";

@@ -33,12 +33,23 @@
     
     <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.findVideosBySearchWordAndLectureseriesId">
 		<![CDATA[
-			SELECT v.* 
-			FROM LG_Video v 
-			INNER JOIN LG_Tagcloud as tag ON (v.videoId = tag.objectId) 
-			WHERE objectClassType="de.uhh.l2g.plugins.model.impl.VideoImpl" 
-			AND tag.tags LIKE ? 
-			AND v.lectureseriesId=?
+			SELECT * FROM  ( 
+						SELECT v.* 
+						FROM LG_Video v 
+						INNER JOIN LG_Tagcloud as tag ON (v.videoId = tag.objectId) 
+						WHERE objectClassType="de.uhh.l2g.plugins.model.impl.VideoImpl" 
+						AND tag.tags LIKE ? 
+						AND v.lectureseriesId=? 
+			            
+			UNION 
+						SELECT v.* 
+						FROM LG_Video v 
+						INNER JOIN LG_Tagcloud as tag ON (v.lectureseriesId = tag.objectId) 
+						WHERE objectClassType="de.uhh.l2g.plugins.model.impl.LectureseriesImpl" 
+						AND tag.tags LIKE ?
+						AND v.lectureseriesId=? 
+			
+			) AS a GROUP BY lectureseriesId
 		]]>
     </sql>
 
