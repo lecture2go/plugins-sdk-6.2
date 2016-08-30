@@ -78,11 +78,6 @@
 	    height: 38px;
 	}
 
-	#meta-share input.option1 {
-	    height: 38px;
-	    width: 70%;
-	}
-	
 	.aui #navigation .nav li.lfr-nav-item.dropdown.has-child {
 	    background: #f3f3f3 url("/lecture2go-portlet/img/pfeil-schwarz-unten.png") no-repeat scroll 15px 13px !important;
 	}

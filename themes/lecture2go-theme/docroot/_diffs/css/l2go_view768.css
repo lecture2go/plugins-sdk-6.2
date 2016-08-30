@@ -40,8 +40,12 @@
 	    width: 79%;
 	}
 	
+	.videotile.small.related {
+    	padding: 3px 3px 15px;
+	}
+	
 	.sharetile {
-	    width: 131px;
+	    width: 30%;
 	}
 	
 	.admintile.wide.icons {
@@ -122,10 +126,6 @@
 	*/
 	
 	.catalogue-container .row-fluid .span3 {
-	    width: 100%;
-	}
-	
-	.catalogue-container .row-fluid .span9 {
 	    width: 100%;
 	}
 	
@@ -438,8 +438,13 @@
 	    width: auto;
 	}
 	
-	#content {
-		margin-top: 0px;
+	#content{
+		margin-left: 0px;
+    	margin-right: 0px;
+    	margin-top: 0px;
+	}
+	.columns-1 {
+	    padding: 0px;
 	}
 	
 	.aui .container-fluid::before, 
@@ -454,9 +459,9 @@
 	#_lgopenaccessvideos_WAR_lecture2goportlet_searchButton {
 	    height: 31px;
 	    padding: 2px;
-	    right: -9px;
 	    top: 2px;
 	    width: 31px;
+	    right: 0px;
 	}
 
 	#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
@@ -466,11 +471,15 @@
 	    font-size: 14px;
 	    height: 25px;
 	    max-width: inherit !important;
-	    padding: 4px 0 4px 10px;
+	    padding: 4px 0;
 	    position: relative;
 	    width: 100%;
 	}
 	
+	#_lgopenaccessvideos_WAR_lecture2goportlet_fm input[type="text"] {
+    	padding-left: 5px;
+	}
+
 	#breadcrumbs {
 		display: none;
 	}

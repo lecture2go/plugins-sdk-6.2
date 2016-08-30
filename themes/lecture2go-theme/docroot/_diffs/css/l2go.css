@@ -601,9 +601,11 @@ p.smallitalic {
     border: medium none;
     color: #484848;
     font-size: 14px;
-    height: 27px;
+    height: 38px;
     margin-bottom: 0;
     margin-top: -15px;
+    padding-left: 7px;
+    padding-right: 7px;
 }
 
 .sharetile {
@@ -1305,15 +1307,16 @@ thead, th {
 }
 
 #meta-share input {
-    height: 13px;
+    height: 18px;
+    width: 300px;
 }
 
-#meta-share .appmon_support_form_row_1 {
-    font-size: 13px;
-}
 
-#meta-share .appmon_support_form_row_2 {
-    font-size: 13px;
+#meta-share textarea {
+    height: 80px;
+    margin: 0;
+    padding: 0;
+    width: 223px;
 }
 
 #meta-share input.option1:hover {
@@ -1324,7 +1327,6 @@ thead, th {
 #meta-share {
     margin-bottom: 0;
     padding-bottom: 0;
-    width: 229px;
 }
 
 #qr:hover {
