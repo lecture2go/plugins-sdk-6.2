@@ -199,7 +199,7 @@
 }
 
 .darker {
-	@include filter(brightness(50%));
+	@include filter(brightness(70%));
 }
 
 .text-cut {
