@@ -2779,3 +2779,119 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 .lfr-ctrl-panel.panel-manage-frontpage {
     padding: 10px;
 }
+
+strong, b, th, #kopf .sprachwechsel {
+    font-family: TheSansUHHBold,sans-serif;
+    font-weight: normal;
+}
+	
+/** UHH FOOTER START **/
+#footer #fuss {
+	    font-size: 11px;
+	    margin-top: 25px;
+	    min-height: 276px;
+	    padding: 40px 15px 0;
+	    position: relative;
+	}
+	.grau {
+	    background-color: #f3f3f3;
+	}
+	.rand {
+	    border: 1px solid #efefef;
+	}
+	.rund {
+	    border-radius: 2px;
+	    overflow: hidden;
+	}
+	.versteckt {
+	    left: -10000px;
+	    position: absolute;
+	}
+	#fuss strong.uhh {
+	    display: block;
+	    font-size: 11px;
+	    left: 15px;
+	    letter-spacing: 3px;
+	    position: absolute;
+	    top: 15px;
+	}
+	#fuss ul {
+	    float: left;
+	    font-size: 11px;
+	    list-style-type: none;
+	    margin: 0;
+	    padding: 0;
+	    width: 20%;
+	}
+	#fuss .copyright {
+	    bottom: 19px;
+	    left: 15px;
+	    position: absolute;
+	}
+	#fuss .audit {
+	    background-image: url("https://www.uni-hamburg.de//assets/audit-b66822e0121bb4bba20d582abb8d43ada636f72acb143787444215fbcec58546.png");
+	    bottom: 15px;
+	    height: 45px;
+	    position: absolute;
+	    right: 14px;
+	    width: 45px;
+	    background-repeat: no-repeat;
+	}
+	#fuss .audit a {
+	    height: 45px;
+	    opacity: 0;
+	    padding: 0;
+	    position: absolute;
+	    width: 45px;
+	}	
+	#fuss .audit1 {
+	    background-image: url("https://www.uni-hamburg.de/assets/HRK-audit-a84e13dcc9159d239f791351c1ce8ec59bcefa57eb8a5fef23065f4e12a0e29e.png");
+	    bottom: 15px;
+	    height: 45px;
+	    position: absolute;
+	    right: 72px;
+	    width: 45px;
+	    background-repeat: no-repeat;
+	}
+	#fuss .audit1 a {
+	    height: 45px;
+	    opacity: 0;
+	    padding: 0;
+	    position: absolute;
+	    width: 45px;
+	}
+	#fuss a.facebook {
+    	background-image: url("https://www.uni-hamburg.de/assets/facebook-e26dffa7209487f2c6ef06b12bafda00d624dd55221f55dd9e23f82866072d11.gif");
+	}
+	#fuss a.twitter {
+    	background-image: url("https://www.uni-hamburg.de/assets/twitter-0956f9a17ec8f32bef6d7e4d90dcfe1f4d5707530a0ad7ee034ec4d8bfc26a15.gif");
+	}
+	#fuss a.instagram {
+	    background-image: url("https://www.uni-hamburg.de/assets/instagram-983573287d34515304bdb32ea7cebf8db2ce98a87ac748c2bb5ad877b0a86973.png");
+	}
+	#fuss a.youtube {
+	    background-image: url("https://www.uni-hamburg.de/assets/youtube-3b7e2fdc7b0bb6038336a3b87d7306e5ad15c2ffa9347956bdbbf20c8a836b53.gif");
+	}
+	#fuss a.lecture2go {
+	    background-image: url("https://www.uni-hamburg.de/assets/lecture2go-4c076b12569bf18d9dee86d2a85c109d9548efb948da67192824a8f8780db957.gif");
+	}
+	#fuss a.podcast {
+	    background-image: url("https://www.uni-hamburg.de/assets/podcast-00b51977b1cd052425446f6a7e41560b95ddf9d22cf06d24596c9146c69aff88.gif");
+	}
+	#fuss a.uhh-app {
+	    background-image: url("https://www.uni-hamburg.de/assets/uhh-app-22a81392aa64b8ae0e0fdc128d65a264444f0b6d9f207e50e8724c3359a3a792.png");
+	}
+	#fuss a.icon {
+	    background-position: left center;
+	    background-repeat: no-repeat;
+	    padding: 0 0 0 26px;
+	}
+	#fuss a {
+	    color: #4e4e4e;
+	    display: inline-block;
+	    text-decoration: none;
+	}
+	#fuss li {
+    	text-align: left;
+	}
+/** UHH FOOTER END**/
