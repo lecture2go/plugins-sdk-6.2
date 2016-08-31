@@ -375,6 +375,7 @@ p.smallitalic {
     font-size: smaller;
     height: auto;
     line-height: 12px;
+    max-width: 85%;
 }
 
 .allcreators a:hover {
