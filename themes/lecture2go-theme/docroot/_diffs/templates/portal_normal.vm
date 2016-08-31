@@ -122,6 +122,8 @@ $theme.include($body_top_include)
 			&nbsp;|&nbsp;
 			<a href="/disclaimer" id="disclaimer">#language("disclaimer")</a>
 		</div>	
+		
+		#parse ("$full_templates_path/uhh_footer.vm")
 	</footer>
 </div>
 
