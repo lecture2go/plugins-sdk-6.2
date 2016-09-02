@@ -641,5 +641,7 @@
 	.aui .dockbar-split .dockbar, .aui .dockbar {
 	    margin-right: 2px !important;
 	}
-	
+	.aui #navigation.open .navbar-inner {
+    	padding: 0;
+	}
 }

@@ -143,4 +143,9 @@
 	    padding: 40px 0 0;
 	}
 	/** UHH FOOTER END **/
+	
+	.video-content-footer .labels .label {
+    	max-width: 33%;
+	}
+
 }
