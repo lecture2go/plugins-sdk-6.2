@@ -642,7 +642,7 @@
 	    margin-right: 2px !important;
 	}
 	.aui #navigation.open .navbar-inner {
-    	padding: 0;
+    	padding: 0 !important;
 	}
 	
 }
