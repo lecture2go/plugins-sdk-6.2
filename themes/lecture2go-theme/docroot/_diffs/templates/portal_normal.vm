@@ -124,6 +124,7 @@ $theme.include($body_top_include)
 		</div>	
 		
 		#parse ("$full_templates_path/uhh_footer.vm")
+		#parse ("$full_templates_path/uhh_footer_seiteninfo2.vm")
 	</footer>
 </div>
 

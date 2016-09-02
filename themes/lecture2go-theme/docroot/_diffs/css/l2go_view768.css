@@ -444,7 +444,7 @@
     	margin-top: 0px;
 	}
 	.columns-1 {
-	    padding: 0px;
+	    padding-bottom: 10px;
 	}
 	
 	.aui .container-fluid::before, 
@@ -477,7 +477,10 @@
 	}
 	
 	#_lgopenaccessvideos_WAR_lecture2goportlet_fm input[type="text"] {
-    	padding-left: 5px;
+	    margin-left: 0;
+	    padding-left: 5px;
+	    padding-right: 0;
+	    width: calc(100% - 5px);
 	}
 
 	#breadcrumbs {
@@ -498,4 +501,145 @@
     	border-bottom: 1px solid #E0E0E0;
     	font-size: 15px;
 	}
+	
+	/** UHH FOOTER START**/
+	#fuss ul + ul + ul + ul + ul {
+	    border-bottom: 1px solid #dddddd;
+	    clear: left;
+	    font-size: 0;
+	    left: 0;
+	    padding: 8px 38px;
+	    position: absolute;
+	    right: 0;
+	    text-align: center;
+	    top: 0;
+	    width: auto;
+	}	
+	#fuss ul {
+	    padding: 18px 2px 24px;
+	    width: 25%;
+	}
+	#fuss .audit, #fuss .audit1 {
+	    display: none;
+	}
+	#fuss ul + ul + ul + ul + ul li {
+	    margin: 0 17px 0 0;
+	}
+	#fuss ul + ul + ul + ul + ul li {
+	    border-radius: 17px;
+	    display: inline-block;
+	    height: 33px;
+	    overflow: hidden;
+	    vertical-align: top;
+	    width: 33px;
+	}	
+	#fuss .copyright{
+		display:none;
+	}
+	#fuss strong.uhh{
+		display: none;
+	}
+	#fuss a.facebook {
+	    background-image: url("https://www.uni-hamburg.de/assets/fb-63f8506de40909f714d00000b3b4543d1fcf72bc1bbbc7e25910513ef5070047.png");
+	}	
+	#fuss a.twitter {
+	    background-image: url("https://www.uni-hamburg.de/assets/twitter-4ce5382abe249c676a87d9f120803f550abffd2270482466c2a254fe3c4f8554.png");
+	}
+	#fuss a.instagram {
+	    background-image: url("https://www.uni-hamburg.de/assets/instagram-m-7dadc7d5277564e45148b7220e37563f4ac904bf62377a53d5de8ff653515aa7.png");
+	}
+	#fuss a.youtube {
+	    background-image: url("https://www.uni-hamburg.de/assets/youtube-m-4547468dc550abada216f5ffc6690dd50ed1060665e0cfd2a1e9994bd031e991.png");
+	    background-size: cover;
+	}
+	#fuss a.lecture2go {
+	    background-image: url("https://www.uni-hamburg.de/assets/l2go-9436c3aa7ed78acd2aac5793e9613519704479b95bada71dbeada2157618566d.png");
+	}
+	#fuss a.podcast {
+	    background-image: url("https://www.uni-hamburg.de/assets/podcast-a56a4f51cda9b112e2091e0f758b6d2f17aa8ba66a8dd43d412c30b375495abd.png");
+	}
+	#fuss a.uhh-app {
+	    background-image: url("https://www.uni-hamburg.de/assets/app-bfe39ecbd37cee5370096eda9526d866dc41175886d9c3cb7481a09b6b1f1f8e.png");
+	}
+	#fuss a.icon {
+	    display: block;
+	    height: 33px;
+	    padding: 0;
+	    width: 33px;
+	}
+	.aui #footer{
+		padding: 0px;
+		margin: 0px;
+	}
+	#footer .right {
+    	display: none;
+	}
+	#footer #fuss {
+	    margin-top: 0px;
+	    
+	}
+	#seiteninfo2{
+		display: inline-block;
+	    background-color: #444444;
+	    border-bottom: 1px solid #666666;
+	    overflow: hidden;
+	    padding: 20px 25px 16px;
+	    width: 100%;
+	}
+	#seiteninfo2 .blaettern .feedback, #seiteninfo2 .blaettern .impressum {
+	    clear: left;
+	    color: #ffffff;
+	    display: block;
+	    float: left;
+	    font-size: 12px;
+	    line-height: 26px;
+	}
+	#scrollTopButton {
+	    background-color: #f9f9f9;
+	    background-image: url("/lecture2go-theme/images/arrow_up.svg");
+	    background-repeat: no-repeat;
+	    bottom: -2px;
+	    cursor: pointer;
+	    display: block;
+	    float: right;
+	    height: 45px;
+	    margin-bottom: -14px;
+	    margin-right: -24px;
+	    position: relative;
+	    width: 45px;
+	    z-index: 100;
+	}
+	/**UHH FOOTER END**/
+	.l2go-contact h1, .l2go-contact h2, .l2go-contact h3, .l2go-contact h4 {
+	    margin-bottom: 10px;
+	    padding: 6px 0 5px;
+	}
+	.portlet-borderless-container .l2go-contact {
+	    border: 0;
+	}
+	.l2go-contact {
+	    width: 100%;
+	}
+	.l2go-contact p {
+	    padding: 0px;
+	}
+	.columns-2{
+		margin: 10px
+	}
+	.aui .pager li > a, .aui .pager li > span {
+	    padding: 10px !important;
+	}
+	.taglib-page-iterator {
+	    margin-bottom: 3px;
+	    margin-top: 17px;
+	}
+	#wrapper {
+	    padding: 0;
+	    margin: 0;
+	    width: 97%;
+	}	
+	.aui .dockbar-split .dockbar, .aui .dockbar {
+	    margin-right: 2px !important;
+	}
+	
 }

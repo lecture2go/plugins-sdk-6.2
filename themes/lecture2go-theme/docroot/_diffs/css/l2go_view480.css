@@ -91,4 +91,56 @@
 	.l2go-contact {
     	width: auto;
 	}
+	
+	/** UHH FOOTER START **/
+	
+	#fuss ul {
+    	padding-left: 25px;
+    	padding-right: 2px;
+    	border-top: 0px solid #dddddd;
+    	width: 50%;
+	}
+	#fuss ul + ul {
+	    padding-left: 2px;
+	    padding-right: 25px;
+   	    border-top: 0px solid #dddddd;
+	}
+	#fuss ul + ul + ul {
+	    clear: left;
+	    padding-left: 25px;
+	    padding-right: 2px;
+   	    border-top: 1px solid #dddddd;
+	}
+	#fuss ul + ul + ul + ul {
+	    clear: none;
+	    padding-left: 2px;
+	    padding-right: 25px;
+   	    border-top: 1px solid #dddddd;
+	}
+	#fuss ul + ul + ul + ul + ul {
+	    border-bottom: 1px solid #dddddd;
+	    clear: left;
+	    font-size: 0;
+	    left: 0;
+	    padding: 8px 0;
+	    position: absolute;
+	    right: 0;
+	    text-align: center;
+	    top: 0;
+	    white-space: nowrap;
+	    width: auto;
+	}	
+	#fuss ul + ul + ul + ul + ul li {
+	    margin: 0 2% 0 0;
+	}	
+	.rand {
+	    border: 0px solid #efefef;
+	}
+	#footer{
+		border: 0px none;
+	}
+	#fuss {
+	    padding: 40px 0 0;
+	}
+	/** UHH FOOTER END **/
 }

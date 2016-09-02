@@ -1,0 +1,8 @@
+<div id="seiteninfo2">
+	<div class="info">
+		<div class="blaettern">
+			<a href="/impressum" class="impressum">#language("impressum")</a>
+			<a href="/disclaimer" class="impressum">#language("disclaimer")</a>
+		</div>
+</div>
+<a href="#banner"><div id="scrollTopButton" style="right: 0px;"></div></a>
