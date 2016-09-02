@@ -111,16 +111,13 @@ $theme.include($body_top_include)
 		</div>
 		
 		<div class="right">
-			<a href="http://twitter.com/#!/Lecture2Go" title="Twitter" target="blank" id="tw">	
-				<img class="tw" src="/lecture2go-theme/images/tw.png" alt="Twitter" >
-			</a>
-			<a href="http://www.facebook.com/pages/Hamburg-Germany/Lecture2Go/201731849859567" id="fb" title="Facebook" target="blank">	
-				<img class="fb" src="/lecture2go-theme/images/fb.png" alt="Facebook">	
-			</a>
-
 			<a href="/impressum" id="impressum">#language("impressum")</a>
-			&nbsp;|&nbsp;
+			<span class="sep">|</span>
 			<a href="/disclaimer" id="disclaimer">#language("disclaimer")</a>
+			<span class="sep">|</span>			
+			<a href="http://twitter.com/#!/Lecture2Go" title="Twitter" target="blank" id="tw">Twitter</a>
+			<span class="sep">|</span>
+			<a href="http://www.facebook.com/pages/Hamburg-Germany/Lecture2Go/201731849859567" id="fb" title="Facebook" target="blank">Facebook</a>
 		</div>	
 		
 		#parse ("$full_templates_path/uhh_footer.vm")

@@ -2100,6 +2100,7 @@ div.filter-menu-link span.icon-large.icon-remove {
 
 .aui #footer .right {
     float: right;
+    margin-right: -9px;
 }
 
 #fb {
@@ -2110,7 +2111,7 @@ div.filter-menu-link span.icon-large.icon-remove {
     height: 12px !important;
 }
 
-#impressum, #disclaimer {
+#impressum, #disclaimer, #tw, #fb {
     font-family: TheSansUHHBold,sans-serif;
 }
 
@@ -2905,5 +2906,7 @@ strong, b, th, #kopf .sprachwechsel {
 #seiteninfo2{
 	display: none;
 }
+.sep {
+    margin: 5px;
+}
 /** UHH FOOTER END**/
-
