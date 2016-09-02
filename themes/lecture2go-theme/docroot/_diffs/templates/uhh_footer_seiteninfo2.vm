@@ -3,6 +3,8 @@
 		<div class="blaettern">
 			<a href="/impressum" class="impressum">#language("impressum")</a>
 			<a href="/disclaimer" class="impressum">#language("disclaimer")</a>
+			<a href="http://twitter.com/#!/Lecture2Go" title="Twitter" target="blank" class="impressum">Twitter</a>
+			<a href="http://www.facebook.com/pages/Hamburg-Germany/Lecture2Go/201731849859567" class="impressum" title="Facebook" target="blank">Facebook</a>
 		</div>
 </div>
 <a href="#banner"><div id="scrollTopButton" style="right: 0px;"></div></a>
