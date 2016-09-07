@@ -356,7 +356,7 @@ $(function () {
         dataType: 'json',
         add: function(e, data) {
             var uploadErrors = [];
-            var acceptFileTypes = /(mp4|m4v|m4a|mp3|ogg|flv|webm|pdf)$/i;//file types
+            var acceptFileTypes = /(mp4|m4v|m4a|mpeg|audio|ogg|flv|webm|pdf)$/i;//file types
 			
             if (data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
                 uploadErrors.push('<liferay-ui:message key="not-an-accepted-file-type"/>');
@@ -434,7 +434,7 @@ $(function () {
 
 function fileUploadAllowed(data){
 	var ret = false;
-    var acceptFileTypes = /(mp4|mp3)$/i;//allowed file types
+    var acceptFileTypes = /(mp4|mpeg|audio)$/i;//allowed file types
     
     data.forEach(function(entry) {
     	console.log(entry['type']);
