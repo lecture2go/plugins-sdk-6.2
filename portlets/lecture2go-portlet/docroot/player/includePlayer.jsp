@@ -41,7 +41,7 @@
         	seconds = seconds + parseInt(mm) * 60;
         	seconds = seconds + parseInt(ss);
         	return seconds;
-        }
+        };
 
         // Start- und Endzeit der Zitatfunktion ermitteln (Durch die URL Parameter)
         var frameStart = getUrlParameter('start');
@@ -55,8 +55,6 @@
 	        frameEnd = <%=timeEnd%>;		
 		}
 		
-        var containerFormat = "${video.containerFormat}";
-        
         var playerUri1 ="${video.playerUris.get(0)}";
         var playerUri2 ="${video.playerUris.get(1)}";
         var playerUri3 ="${video.playerUris.get(2)}";
@@ -76,7 +74,7 @@
             	{ file: playerUri2 },
             	{ file: playerUri3 },
             	{ file: playerUri4 },
-            	{ file: playerUri5 },
+            	{ file: playerUri5 }
             ],
             tracks: [{
                 file: vttFile,
@@ -200,7 +198,7 @@
             var startFrameTime = undefined;
             var endFrameTime = undefined;
             var startTimeStr = undefined;
-            var entTimeStr = undefined;
+            var endTimeStr = undefined;
 
             // Benutzer setzt Start des Clips
             $inputTimeStart.click(function() {
@@ -217,7 +215,7 @@
                     		$inputTimeEnd.val(endTimeStr);
                     		
                     	}
-                    	generateClipLink (startFrameTime, endFrameTime);
+                    	generateClipLink (Math.round(startFrameTime), Math.round(endFrameTime));
                     	console.log("start: " + startFrameTime + ", end: " + endFrameTime);
                     }
             });
@@ -237,7 +235,7 @@
                 		$inputTimeStart.val(startTimeStr);
                 		
                 	}
-                	generateClipLink (startFrameTime, endFrameTime);
+                	generateClipLink (Math.round(startFrameTime), Math.round(endFrameTime));
                 	console.log("start: " + startFrameTime + ", end: " + endFrameTime);
                 }
                 validateClipTime();
