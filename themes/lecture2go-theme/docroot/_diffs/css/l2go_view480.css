@@ -19,7 +19,11 @@
 	.videotile.wide {
     	height: auto;
 	}
-
+	
+	.videotile.wide .labels {
+	    max-width: 180px;
+	}
+	
 	.video-content-footer {
 	    margin-bottom: 0;
 	    margin-top: 10px;

@@ -459,23 +459,23 @@
 	#_lgopenaccessvideos_WAR_lecture2goportlet_searchButton {
 	    height: 31px;
 	    padding: 2px;
+	    right: 6px;
 	    top: 2px;
 	    width: 31px;
-	    right: 0px;
 	}
 
 	#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery {
-	    border-left: medium none;
-	    border-right: 0 none;
 	    float: left;
 	    font-size: 14px;
 	    height: 25px;
+	    margin-left: 3px !important;
 	    max-width: inherit !important;
-	    padding: 4px 0;
+	    padding-bottom: 4px;
+	    padding-top: 4px;
 	    position: relative;
-	    width: 100%;
+	    width: calc(100% - 14px) !important;
 	}
-	
+
 	#_lgopenaccessvideos_WAR_lecture2goportlet_fm input[type="text"] {
 	    margin-left: 0;
 	    padding-left: 5px;
