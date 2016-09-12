@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -19,6 +20,7 @@ import org.json.JSONArray;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -250,16 +252,17 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		TagcloudLocalServiceUtil.updateByObjectIdAndObjectClassType(tagCloudArrayString, lectureseries.getClass().getName(), lectureseries.getLectureseriesId());
 		
 		//send an email to coordinator and administrator, if logged in as producer
+		Locale locale = request.getLocale();  
 		if(new Lecture2GoRoleChecker().isProducer(user)){
 			//get producer details
 			Producer p = new ProducerImpl();
 			p = ProducerLocalServiceUtil.getProdUcer(user.getUserId());//full object "getProdUser()"
 			Coordinator c = new CoordinatorImpl();
 			// Subject
-			String SUBJECT = "lecture-series-edited";
-			String BODY = "lecture-series-edited-by-user" + " \n" + "lecture : " + lectureseries.getNumber() + ": " + lectureseries.getName();
+			String SUBJECT = LanguageUtil.get(getPortletConfig(), locale, "lecture-series-edited");
+			String BODY = LanguageUtil.get(getPortletConfig(), locale, "lecture-series-edited") + " \n" + LanguageUtil.get(getPortletConfig(), locale, "lecture-series") + " : " + lectureseries.getNumber() + ": " + lectureseries.getName();
 			//if coordinator exists
-			boolean coordExists = false;
+ 			boolean coordExists = false;
 			// Coordinator for this Producer
 			try{
 				c = CoordinatorLocalServiceUtil.getByInstitution(p.getInstitutionId());
@@ -268,16 +271,16 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			//check 
 			if(coordExists){
 				String COORDEMAILADDRESS = c.getEmailAddress();				
-				String BODY2 = "coordinator" + " " + c.getFirstName() + " " + c.getLastName() + " " + "lecture-series-edited-by-user" + "  \n" + "lecture" + ": "  +lectureseries.getNumber() + ": " + lectureseries.getName();
+				String BODY2 = LanguageUtil.get(getPortletConfig(), locale, "lecture-series-edited") + "  \n" + LanguageUtil.get(getPortletConfig(), locale, "lecture-series") + ": "  +lectureseries.getNumber() + ": " + lectureseries.getName();
 				// Send mail to Coordinator
-				em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), COORDEMAILADDRESS, HtmlManager.ISO88591toUTF8(SUBJECT), HtmlManager.ISO88591toUTF8(BODY));
+				em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), COORDEMAILADDRESS, SUBJECT, BODY);
 				// Send mail to L2Go
-				em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), PropsUtil.get("lecture2go.response.email.address"), HtmlManager.ISO88591toUTF8(SUBJECT), HtmlManager.ISO88591toUTF8(BODY2));
+				em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), PropsUtil.get("lecture2go.response.email.address"), SUBJECT, BODY2);
 			}
 			// Send mail to Producer
 			String PRODEMAILADDRESS = p.getEmailAddress();
-			String BODY3 = "lecture-series-edited-coordinator-notified" +"  \n" + "lecture" +" :" + lectureseries.getNumber() + ": " + lectureseries.getName();
-			em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), PRODEMAILADDRESS, HtmlManager.ISO88591toUTF8(SUBJECT), HtmlManager.ISO88591toUTF8(BODY3));
+			String BODY3 = LanguageUtil.get(getPortletConfig(), locale, "lecture-series-edited-coordinator-notified") +"  \n" + LanguageUtil.get(getPortletConfig(), locale, "lecture-series") +" :" + lectureseries.getNumber() + ": " + lectureseries.getName();
+			em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), PRODEMAILADDRESS, SUBJECT, BODY3);
 		}	
 
 		//send an email to  administrator, if logged in as coordinator
@@ -286,18 +289,12 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			Coordinator c = new CoordinatorImpl();
 			c = CoordinatorLocalServiceUtil.getById(user.getUserId());
 			// Subject
-			String SUBJECT = "new-lectureseries";
-			String BODY = "coordinator" +" "+ c.getFirstName() + " " + c.getLastName()+ " " + "has-entered-a-new-event" + " \n" + "lecture" +":" + lectureseries.getNumber() + ": " + lectureseries.getName();
+			String SUBJECT = LanguageUtil.get(getPortletConfig(), locale, "new-lectureseries");
+			String BODY = LanguageUtil.get(getPortletConfig(), locale, "coordinator") +" "+ c.getFirstName() + " " + c.getLastName()+ " " + LanguageUtil.get(getPortletConfig(), locale, "edited-the-lecture-series") + " \n" + LanguageUtil.get(getPortletConfig(), locale, "lecture-series") +":" + lectureseries.getNumber() + ": " + lectureseries.getName();
 			// Send mail to L2Go
-			em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), PropsUtil.get("lecture2go.response.email.address")  , HtmlManager.ISO88591toUTF8(SUBJECT), HtmlManager.ISO88591toUTF8(BODY));
+			em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), PropsUtil.get("lecture2go.response.email.address")  , SUBJECT, BODY);
 		}	
 		
-		//generate new JSON date for auto complete functionality
-//		try {
-//			AutocompleteManager.generateAutocompleteResults();
-//		} catch (SystemException e) {
-//			e.printStackTrace();
-//		}
 	}
 
 	public void addLectureseries(ActionRequest request, ActionResponse response) throws SystemException, PortalException, UnsupportedEncodingException {
@@ -423,14 +420,15 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		request.setAttribute("producers", producers);
 		request.setAttribute("backURL", backURL);
 		//send an email to coordinator and administrator, if logged in as producer
+		Locale locale = request.getLocale();  
 		if(new Lecture2GoRoleChecker().isProducer(user)){
 			//get producer details
 			Producer p = new ProducerImpl();
 			p = ProducerLocalServiceUtil.getProdUcer(user.getUserId());//full object "getProdUser()"
 			Coordinator c = new CoordinatorImpl();
 			// Subject
-			String SUBJECT = "new-request-for-approval";
-			String BODY = "you-have-a-new-request-for-approval" + " \n" + "lecture : " + newlect.getNumber() + ": " + newlect.getName();
+			String SUBJECT = LanguageUtil.get(getPortletConfig(), locale, "new-request-for-approval") ;
+			String BODY = LanguageUtil.get(getPortletConfig(), locale, "you-have-a-new-request-for-approval") + " \n" + LanguageUtil.get(getPortletConfig(), locale, "lecture-series") + " : " + newlect.getNumber() + ": " + newlect.getName();
 			//if coordinator exists
 			boolean coordExists = false;
 			// Coordinator for this Producer
@@ -441,16 +439,16 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			//check 
 			if(coordExists){
 				String COORDEMAILADDRESS = c.getEmailAddress();				
-				String BODY2 = "coordinator" + " " + c.getFirstName() + " " + c.getLastName() + " " + "got-a-new-request-for-approval" + "  \n" + "lecture" + ": "  +newlect.getNumber() + ": " + newlect.getName();
+				String BODY2 =  LanguageUtil.get(getPortletConfig(), locale, "coordinator") + " " + c.getFirstName() + " " + c.getLastName() + " " + LanguageUtil.get(getPortletConfig(), locale, "got-a-new-request-for-approval") + "  \n" + LanguageUtil.get(getPortletConfig(), locale, "lecture-series") + ": "  +newlect.getNumber() + ": " + newlect.getName();
 				// Send mail to Coordinator
-				em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), COORDEMAILADDRESS, HtmlManager.ISO88591toUTF8(SUBJECT), HtmlManager.ISO88591toUTF8(BODY));
+				em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), COORDEMAILADDRESS, SUBJECT, BODY);
 				// Send mail to L2Go
-				em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), PropsUtil.get("lecture2go.response.email.address"), HtmlManager.ISO88591toUTF8(SUBJECT), HtmlManager.ISO88591toUTF8(BODY2));
+				em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), PropsUtil.get("lecture2go.response.email.address"), SUBJECT, BODY2);
 			}
 			// Send mail to Producer
 			String PRODEMAILADDRESS = p.getEmailAddress();
-			String BODY3 = "your-request-was-sent" +"  \n" + "lecture" +" :" + newlect.getNumber() + ": " + newlect.getName();
-			em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), PRODEMAILADDRESS, HtmlManager.ISO88591toUTF8(SUBJECT), HtmlManager.ISO88591toUTF8(BODY3));
+			String BODY3 = LanguageUtil.get(getPortletConfig(), locale, "your-request-was-sent") +"  \n" + LanguageUtil.get(getPortletConfig(), locale, "lecture-series") +" :" + newlect.getNumber() + ": " + newlect.getName();
+			em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), PRODEMAILADDRESS, SUBJECT, BODY3);
 		}	
 
 		//send an email to  administrator, if logged in as coordinator
@@ -459,18 +457,12 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			Coordinator c = new CoordinatorImpl();
 			c = CoordinatorLocalServiceUtil.getById(user.getUserId());
 			// Subject
-			String SUBJECT = "new-lectureseries";
-			String BODY = "coordinator" +" "+ c.getFirstName() + " " + c.getLastName()+ " " + "has-entered-a-new-event" + " \n" + "lecture" +":" + newlect.getNumber() + ": " + newlect.getName();
+			String SUBJECT = LanguageUtil.get(getPortletConfig(), locale, "new-lectureseries");
+			String BODY = LanguageUtil.get(getPortletConfig(), locale, "coordinator") +" "+ c.getFirstName() + " " + c.getLastName()+ " " + LanguageUtil.get(getPortletConfig(), locale, "has-entered-a-new-lecture-series") + " \n" + LanguageUtil.get(getPortletConfig(), locale, "lecture-series") +":" + newlect.getNumber() + ": " + newlect.getName();
 			// Send mail to L2Go
-			em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), PropsUtil.get("lecture2go.response.email.address")  , HtmlManager.ISO88591toUTF8(SUBJECT), HtmlManager.ISO88591toUTF8(BODY));
+			em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), PropsUtil.get("lecture2go.response.email.address")  , SUBJECT, BODY);
 		}	
 		
-		//generate new JSON date for auto complete functionality
-//		try {
-//			AutocompleteManager.generateAutocompleteResults();
-//		} catch (SystemException e) {
-//			e.printStackTrace();
-//		}
 	}
 	
 	public void generateRSSforAllLectureseriesWhithOpenaccessVideos(){

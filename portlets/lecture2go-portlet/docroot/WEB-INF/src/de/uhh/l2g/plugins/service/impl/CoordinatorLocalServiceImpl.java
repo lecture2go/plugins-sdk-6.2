@@ -74,7 +74,20 @@ public class CoordinatorLocalServiceImpl extends CoordinatorLocalServiceBaseImpl
 	}
 	
 	public Coordinator getById(long coordinatorId) throws SystemException {
-		return coordinatorPersistence.fetchByPrimaryKey(coordinatorId);
+		Coordinator c = new CoordinatorImpl();
+		try {
+			c = coordinatorPersistence.fetchByPrimaryKey(coordinatorId);
+			User u = UserLocalServiceUtil.getUser(c.getCoordinatorId());
+			c.setEmailAddress(u.getEmailAddress());
+			c.setFirstName(u.getFirstName());
+			c.setLastName(u.getLastName());
+			c.setLastLoginDate(u.getLastLoginDate());
+		} catch (NoSuchCoordinatorException e) {
+			e.printStackTrace();
+		} catch (PortalException e) {
+			e.printStackTrace();
+		} 
+		return c;
 	}
 	
 	public Institution getInstitutionByCoordinator(long coordinatorId) throws SystemException {

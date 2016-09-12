@@ -56,6 +56,8 @@
 		//
 		Institution i = InstitutionLocalServiceUtil.getById(p.getInstitutionId());
 		if(institutionId==0)institutionId = p.getInstitutionId();
+		//
+		institutions = InstitutionLocalServiceUtil.getByParent(p.getInstitutionId());
 	}
 	
 	Locale[] languages = LanguageUtil.getAvailableLocales();
@@ -156,12 +158,11 @@
 				<aui:input type="hidden" name="categoryId" value="<%=categoryId%>"/>
 			<%}%>
 			
-			<%if(!permissionProducer){%>
 				<aui:select size="1" name="institutionId" label="institution" required="true">
 					<aui:option value=""><liferay-ui:message key="select-institution"/></aui:option>
 					<%for (Map.Entry<String, String> f : institutions.entrySet()) {
 					boolean dis=true; 
-					if(f.getValue().startsWith("----") || permissionCoordinator)dis=false;
+					if(f.getValue().startsWith("----") || permissionCoordinator || permissionProducer)dis=false;
 					if(f.getKey().equals(institutionId.toString())){
 						%><aui:option value='<%=f.getKey()%>' selected="true" disabled="<%=dis%>"><%=f.getValue()%></aui:option>
 					<%}else{%><aui:option value='<%=f.getKey()%>' disabled="<%=dis%>"><%=f.getValue()%></aui:option><%}	
@@ -186,10 +187,6 @@
 					}catch(Exception e){}
 					%>				
 				</div>
-			<%}else{ %>
-				<aui:input type="hidden" name="institutions" id="institutions" value="<%=institutionId%>"/>
-				<aui:input type="hidden" name="institutionId" id="institutionId" value="<%=institutionId%>"/>
-			<%}%>
 			
 			<%if(!permissionProducer){%>	
 				<aui:select size="1" name="producerId" label="producer" required="true" helpMessage="please-add-at-lest-one-producer">
