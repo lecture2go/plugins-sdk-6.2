@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
+import com.sun.xml.internal.bind.v2.runtime.reflect.ListIterator;
 
 import de.uhh.l2g.plugins.model.Category;
 import de.uhh.l2g.plugins.model.Coordinator;
@@ -250,51 +251,27 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 
 		//edit tag cloud
 		TagcloudLocalServiceUtil.updateByObjectIdAndObjectClassType(tagCloudArrayString, lectureseries.getClass().getName(), lectureseries.getLectureseriesId());
-		
-		//send an email to coordinator and administrator, if logged in as producer
-		Locale locale = request.getLocale();  
-		if(new Lecture2GoRoleChecker().isProducer(user)){
-			//get producer details
-			Producer p = new ProducerImpl();
-			p = ProducerLocalServiceUtil.getProdUcer(user.getUserId());//full object "getProdUser()"
-			Coordinator c = new CoordinatorImpl();
-			// Subject
-			String SUBJECT = LanguageUtil.get(getPortletConfig(), locale, "lecture-series-edited");
-			String BODY = LanguageUtil.get(getPortletConfig(), locale, "lecture-series-edited") + " \n" + LanguageUtil.get(getPortletConfig(), locale, "lecture-series") + " : " + lectureseries.getNumber() + ": " + lectureseries.getName();
-			//if coordinator exists
- 			boolean coordExists = false;
-			// Coordinator for this Producer
-			try{
-				c = CoordinatorLocalServiceUtil.getByInstitution(p.getInstitutionId());
-				if(c.getCoordinatorId()>0)coordExists = true;
-			}catch(NoSuchElementException e){}
-			//check 
-			if(coordExists){
-				String COORDEMAILADDRESS = c.getEmailAddress();				
-				String BODY2 = LanguageUtil.get(getPortletConfig(), locale, "lecture-series-edited") + "  \n" + LanguageUtil.get(getPortletConfig(), locale, "lecture-series") + ": "  +lectureseries.getNumber() + ": " + lectureseries.getName();
-				// Send mail to Coordinator
-				em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), COORDEMAILADDRESS, SUBJECT, BODY);
-				// Send mail to L2Go
-				em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), PropsUtil.get("lecture2go.response.email.address"), SUBJECT, BODY2);
-			}
-			// Send mail to Producer
-			String PRODEMAILADDRESS = p.getEmailAddress();
-			String BODY3 = LanguageUtil.get(getPortletConfig(), locale, "lecture-series-edited-coordinator-notified") +"  \n" + LanguageUtil.get(getPortletConfig(), locale, "lecture-series") +" :" + lectureseries.getNumber() + ": " + lectureseries.getName();
-			em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), PRODEMAILADDRESS, SUBJECT, BODY3);
-		}	
 
-		//send an email to  administrator, if logged in as coordinator
-		if(new Lecture2GoRoleChecker().isCoordinator(user)){
-			//get coordinator details
-			Coordinator c = new CoordinatorImpl();
-			c = CoordinatorLocalServiceUtil.getById(user.getUserId());
-			// Subject
-			String SUBJECT = LanguageUtil.get(getPortletConfig(), locale, "new-lectureseries");
-			String BODY = LanguageUtil.get(getPortletConfig(), locale, "coordinator") +" "+ c.getFirstName() + " " + c.getLastName()+ " " + LanguageUtil.get(getPortletConfig(), locale, "edited-the-lecture-series") + " \n" + LanguageUtil.get(getPortletConfig(), locale, "lecture-series") +":" + lectureseries.getNumber() + ": " + lectureseries.getName();
-			// Send mail to L2Go
-			em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), PropsUtil.get("lecture2go.response.email.address")  , SUBJECT, BODY);
+		//email notification after edit
+		Locale locale = request.getLocale();  
+
+		//send an email to all producer, if logged in as coordinator or admin
+		//and lecture serice edited
+		if(new Lecture2GoRoleChecker().isCoordinator(user) || new Lecture2GoRoleChecker().isL2gAdmin(user) ){
+			List<Long> pIds = ProducerLocalServiceUtil.getAllProducerIds(lectureseries.getLectureseriesId());
+			java.util.ListIterator<Long> itt=  pIds.listIterator();
+			while(itt.hasNext()){
+				String pId= itt.next()+"";
+				Long pIdL=new Long(pId);
+				Producer pr = ProducerLocalServiceUtil.getProdUcer(pIdL);
+				String PRODEMAILADDRESS = pr.getEmailAddress();
+				// Subject
+				String SUBJECT = LanguageUtil.get(getPortletConfig(), locale, "lecture-series-edited");
+				String BODY = user.getFirstName() + " " + user.getLastName()+ " " + LanguageUtil.get(getPortletConfig(), locale, "edited-the-lecture-series") + " \n" + LanguageUtil.get(getPortletConfig(), locale, "lecture-series") +":" + lectureseries.getNumber() + ": " + lectureseries.getName();
+				// Send mail to producer
+				em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), PRODEMAILADDRESS , SUBJECT, BODY);
+			}
 		}	
-		
 	}
 
 	public void addLectureseries(ActionRequest request, ActionResponse response) throws SystemException, PortalException, UnsupportedEncodingException {
