@@ -267,7 +267,7 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 				String PRODEMAILADDRESS = pr.getEmailAddress();
 				// Subject
 				String SUBJECT = LanguageUtil.get(getPortletConfig(), locale, "lecture-series-edited-and-allowed");
-				String BODY = user.getFirstName() + " " + user.getLastName()+ " " + LanguageUtil.get(getPortletConfig(), locale, "edited-the-lecture-series") + " \n" + LanguageUtil.get(getPortletConfig(), locale, "lecture-series") +":" + lectureseries.getNumber() + ": " + lectureseries.getName();
+				String BODY = user.getFirstName() + " " + user.getLastName()+ " " + LanguageUtil.get(getPortletConfig(), locale, "edited-and-allowed-lecture-series") + " \n" + LanguageUtil.get(getPortletConfig(), locale, "lecture-series") +":" + lectureseries.getNumber() + ": " + lectureseries.getName();
 				// Send mail to producer
 				em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), PRODEMAILADDRESS , SUBJECT, BODY);
 			}
