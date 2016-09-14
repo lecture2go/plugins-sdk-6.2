@@ -294,7 +294,7 @@
 						<div>		
 							<%if(reqLicense.getCcbyncsa()==1){%><aui:input name="license" label="" id="ccbyncsa" value="ccbyncsa" checked="true" type="radio" /><%}%>
 							<%if(reqLicense.getCcbyncsa()==0){%><aui:input name="license" label="" id="ccbyncsa" value="ccbyncsa" type="radio"/><%}%>
-							<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank"> <liferay-ui:message key="creative-commons"/> </a>
+							<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank"> <liferay-ui:message key="cc-license-click-for-info"/> </a>
 						</div>
 					</div>
 				</div>
@@ -402,7 +402,7 @@ $(function () {
 	           		updateVideoFileName(vars[0]);
 				}
            }
-           $('#<portlet:namespace></portlet:namespace>cancel').show();
+           validate();
         },
         progressall: function (e, data) {
 	        var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -611,6 +611,7 @@ function applyAllMetadataChanges(){
 	AUI().use(
 			'aui-node',
 			function(A) {
+				validate();//inpul correct?
 				if($("#<portlet:namespace/>title").val() && $("#creators > div").length>0){
 					// Select the node(s) using a css selector string
 				    var license = A.one("input[name=<portlet:namespace/>license]:checked").get("value");
@@ -624,19 +625,30 @@ function applyAllMetadataChanges(){
 				    $("#creators-custom").css({"background-color": "white", "color": "#555555"});
 				    $("#creators-custom .control-label").css({"color": "#488f06"});
 				    $("#metadata-upload #creators").css({"color": "#488f06"});
-				    
 				    alert("<liferay-ui:message key='changes-applied'/>");					
+				}
+			}
+	);
+}
+
+
+function validate(){
+	AUI().use(
+			'aui-node',
+			function(A) {
+				if($("#creators > div").length==0){
+				    //update creator class
+				    $("#creators-custom").css({"background-color": "#b50303", "color": "white"});
+				    $("#creators-custom .control-label").css({"color": "white"});
+					$('html, body').animate({
+		                   scrollTop: $("#creators-custom").offset().top
+		               }, 1000);
+			        if($('#<portlet:namespace></portlet:namespace>cancel').is(":visible")){
+			        	$('#<portlet:namespace></portlet:namespace>cancel').hide();	
+			        }	
+					alert("<liferay-ui:message key='please-add-creators'/>");
 				}else{
-					if($("#creators > div").length==0){
-					    //update creator class
-					    $("#creators-custom").css({"background-color": "#b50303", "color": "white"});
-					    $("#creators-custom .control-label").css({"color": "white"});
-						$('html, body').animate({
-		                    scrollTop: $("#creators-custom").offset().top
-		                }, 1000);
-						
-						alert("<liferay-ui:message key='please-add-creators'/>");
-					}
+					$('#<portlet:namespace></portlet:namespace>cancel').show();
 				}
 			}
 	);

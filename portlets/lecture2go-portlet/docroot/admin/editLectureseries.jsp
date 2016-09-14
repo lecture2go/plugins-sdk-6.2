@@ -158,6 +158,7 @@
 				<aui:input type="hidden" name="categoryId" value="<%=categoryId%>"/>
 			<%}%>
 			
+			<%if(!readOnly){%>
 				<aui:select size="1" name="institutionId" label="institution" required="true">
 					<aui:option value=""><liferay-ui:message key="select-institution"/></aui:option>
 					<%for (Map.Entry<String, String> f : institutions.entrySet()) {
@@ -187,6 +188,10 @@
 					}catch(Exception e){}
 					%>				
 				</div>
+			<%}else{ %>
+				<aui:input type="hidden" name="institutions" id="institutions" value="<%=institutionId%>"/>
+				<aui:input type="hidden" name="institutionId" id="institutionId" value="<%=institutionId%>"/>
+			<%}%>
 			
 			<%if(!permissionProducer){%>	
 				<aui:select size="1" name="producerId" label="producer" required="true" helpMessage="please-add-at-lest-one-producer">

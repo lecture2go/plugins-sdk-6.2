@@ -169,13 +169,18 @@
 									Long pLid = new Long(pIds.get(i)+"");
 									Producer p = new ProducerImpl();
 									p=ProducerLocalServiceUtil.getProdUcer(pLid);
-									prds+="<p>"+p.getFirstName()+" "+ p.getLastName()+"</p>";
+									prds+="<p>"+p.getLastName()+", "+ p.getFirstName()+"</p>";
 								}
 							}catch(Exception e){}
 			 			%>
 			 			<%=prds %>
 			 			<br />
-			 			<p><%= lectser.getNumberOfVideos() %> Video<c:if test="<%= lectser.getNumberOfVideos() >1 %>">s</c:if></p>
+			 			<c:if test="<%= lectser.getNumberOfVideos() >0 %>">
+			 				<p><%= lectser.getNumberOfVideos() %> Video<c:if test="<%= lectser.getNumberOfVideos() >1 %>">s</c:if> <liferay-ui:message key="uploaded"/></p>
+			 			</c:if>
+			 			<c:if test="<%= lectser.getNumberOfVideos() ==0 %>">
+			 				<p><liferay-ui:message key="no-videos-uploaded"/></p>
+			 			</c:if>			 			
 			 		</div>
 			 		<div class="admintile wide icons">
 						<portlet:actionURL name="removeLectureseries" var="removeURL">

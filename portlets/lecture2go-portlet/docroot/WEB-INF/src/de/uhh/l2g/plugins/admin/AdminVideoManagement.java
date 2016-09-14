@@ -238,7 +238,8 @@ public class AdminVideoManagement extends MVCPortlet {
 		//licence
 		License license = new LicenseImpl();
 		license.setVideoId(newVideo.getVideoId());
-		license.setCcbyncsa(1);
+		license.setCcbyncsa(0);
+		license.setL2go(1);
 		LicenseLocalServiceUtil.addLicense(license);
 		request.setAttribute("reqLicense", license);
 
