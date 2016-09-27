@@ -199,9 +199,9 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		// set thumbnail
 		// if no file
 		if (objectVideo.getContainerFormat().equals("") && objectVideo.getFilename().equals("")) {
-			objectVideo.setImage("/lecture2go-portlet/img/nomedia.gif");
-			objectVideo.setImageSmall("/lecture2go-portlet/img/nomedia.gif");
-			objectVideo.setImageMedium("/lecture2go-portlet/img/nomedia.gif");
+			objectVideo.setImage("/lecture2go-portlet/img/nomedia.png");
+			objectVideo.setImageSmall("/lecture2go-portlet/img/nomedia.png");
+			objectVideo.setImageMedium("/lecture2go-portlet/img/nomedia.png");
 		}		
 		// if audio file
 		if (objectVideo.getContainerFormat().equals("mp3")) {
@@ -222,7 +222,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				objectVideo.setImageSmall(PropsUtil.get("lecture2go.web.root") + "/images/" + imageSmall);
 				objectVideo.setImageMedium(PropsUtil.get("lecture2go.web.root") + "/images/" + imageMedium);
 			} else {
-				String img = "/lecture2go-portlet/img/noimage.jpg";
+				String img = "/lecture2go-portlet/img/noimage.png";
 				objectVideo.setImage(img);
 				objectVideo.setImageSmall(img);
 				objectVideo.setImageMedium(img);
