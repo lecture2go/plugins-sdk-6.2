@@ -107,7 +107,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		Long reqVideoId = new Long(0);
 		Video reqVideo = new VideoImpl(); 
 		try{reqVideoId = new Long(request.getParameterMap().get("videoId")[0]);}catch(Exception e){}
-		try{reqVideo = VideoLocalServiceUtil.getVideo(reqVideoId);}catch(Exception e){}
+		try{reqVideo = VideoLocalServiceUtil.getFullVideo(reqVideoId);}catch(Exception e){}
 		
 		//requested producer
 		Producer reqProducer = new ProducerImpl();
@@ -559,6 +559,14 @@ public class AdminVideoManagement extends MVCPortlet {
 		if(resourceID.equals("getGenerationDate")){
 			JSONObject jo = JSONFactoryUtil.createJSONObject();
 			jo.put("generationDate", video.getGenerationDate());
+			writeJSON(resourceRequest, resourceResponse, jo);
+		}
+
+		if(resourceID.equals("getFileName")){
+			JSONObject jo = JSONFactoryUtil.createJSONObject();
+			String fileName="";
+			if(video.getFilename().length()>0)fileName=video.getFilename();
+			jo.put("fileName", fileName);
 			writeJSON(resourceRequest, resourceResponse, jo);
 		}
 		

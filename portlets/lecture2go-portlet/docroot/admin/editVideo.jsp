@@ -26,6 +26,7 @@
 <liferay-portlet:resourceURL id="videoUpdateGenerationDate" var="videoUpdateGenerationDateURL" />
 <liferay-portlet:resourceURL id="getGenerationDate" var="getGenerationDateURL" />
 <liferay-portlet:resourceURL id="videoUpdateFirstTitle" var="videoUpdateFirstTitleURL" />
+<liferay-portlet:resourceURL id="getFileName" var="getFileNameURL" />
 
 <%
 	String actionURL = "";
@@ -303,7 +304,30 @@
 					  $( "#license-content" ).slideToggle( "slow" );
 					});
 				</script>
-							
+
+				<div id="embed">
+					<label class="edit-video-lable" id="edit-video-lable-4"><liferay-ui:message key="share"/></label>
+					<div id="embed-content">
+						<!-- embed start -->
+						<aui:input name="embed_code3" label="video-url" helpMessage="about-video-url" required="false" id="embed_code3" readonly="true" value="<%=reqVideo.getUrl()%>" onclick="document.embed-content._lgadminvideomanagement_WAR_lecture2goportlet_embed_code3.focus();document.embed-content._lgadminvideomanagement_WAR_lecture2goportlet_embed_code3.select();"/>
+						<aui:input name="embed_code" label="embed-iframe" helpMessage="about-iframe-embed" required="false" id="embed_code" readonly="true" value="<%=reqVideo.getEmbedIframe()%>" onclick="document.embed-content._lgadminvideomanagement_WAR_lecture2goportlet_embed_code.focus();document.embed-content._lgadminvideomanagement_WAR_lecture2goportlet_embed_code.select();"/>
+						<%if(reqVideo.getDownloadLink()==1){ %>
+							<aui:input name="embed_code1" label="embed-html5" helpMessage="about-html5-embed" required="false" id="embed_code1" readonly="true" value="<%=reqVideo.getEmbedHtml5()%>" onclick="document.embed-content._lgadminvideomanagement_WAR_lecture2goportlet_embed_code1.focus();document.embed-content._lgadminvideomanagement_WAR_lecture2goportlet_embed_code1.select();"/>							
+						<%}%>
+						<%if(reqVideo.getLectureseriesId()>0){ %>
+							<aui:input name="embed_code2" label="lecture-series-url" helpMessage="about-lecture-series-url" required="false" id="embed_code2" readonly="true" value="<%=reqVideo.getLectureseriesUrl()%>" onclick="document.embed-content._lgadminvideomanagement_WAR_lecture2goportlet_embed_code2.focus();document.embed-content._lgadminvideomanagement_WAR_lecture2goportlet_embed_code2.select();"/>
+						<%}%>
+						<aui:input name="embed_code4" label="embed-commsy" helpMessage="about-commsy-embed" required="false" id="embed_code4" readonly="true" value="<%=reqVideo.getEmbedCommsy()%>" onclick="document.embed-content._lgadminvideomanagement_WAR_lecture2goportlet_embed_code4.focus();document.embed-content._lgadminvideomanagement_WAR_lecture2goportlet_embed_code4.select();"/>
+						<!-- embed end -->	      	      
+					</div>
+				</div>
+				
+				<script>
+					$( "#edit-video-lable-4" ).click(function() {
+					  $( "#embed-content" ).slideToggle( "slow" );
+					});
+				</script>
+											
 				<aui:button-row>
 					<aui:button type="submit" value="apply-changes" onclick="applyAllMetadataChanges()" cssClass="btn-primary"/>
 					<aui:button type="cancel" value="back" href="<%=backURL%>" name="cancel"/>
@@ -352,7 +376,9 @@ function toggleLectureseries(){
 }
 
 $(function () {
-    $('#fileupload').fileupload({
+	toggleShare();
+	
+	$('#fileupload').fileupload({
         dataType: 'json',
         add: function(e, data) {
             var uploadErrors = [];
@@ -437,7 +463,6 @@ function fileUploadAllowed(data){
     var acceptFileTypes = /(mp4|mpeg|audio)$/i;//allowed file types
     
     data.forEach(function(entry) {
-    	console.log(entry['type']);
     	if(acceptFileTypes.test(entry['type'])){
         	ret = true;
         }
@@ -446,7 +471,7 @@ function fileUploadAllowed(data){
 }
 
 function defaultContainer(){
-	var ret;
+	var ret="";
 	$.ajax({
 		  type: "POST",
 		  url: "<%=defaultContainerURL%>",
@@ -459,7 +484,7 @@ function defaultContainer(){
 		  success: function(data) {
 		    ret = data.containerFormat;
 		  }
-	})
+	});
 	return ret;
 }
 
@@ -477,7 +502,7 @@ function isFirstUpload(){
 		  success: function(data) {
 		    ret = data.firstUpload;
 		  }
-	})
+	});
 	return ret;
 }
 
@@ -495,7 +520,7 @@ function videoFileNameExistsInDatabase (fileName){
 		  success: function(data) {
 		    ret = data.exist;
 		  }
-	})
+	});
 	return ret;
 }
 
@@ -516,6 +541,7 @@ function updateVideoFileName(file){
 				on: {
 					   success: function() {
 					     var jsonResponse = this.get('responseData');
+					     toggleShare();
 					   }
 				}
 			});	
@@ -704,6 +730,8 @@ function deleteFile(fileName){
 		        }
 		        //hide date fild
 		        $("#l2gdate").hide();
+		        //toggle share
+		        toggleShare();
 		    }
 		});	
 	}
@@ -776,7 +804,35 @@ function applyFirstTitle(){
 					  $("#<portlet:namespace/>title").val(data.firsttitle);
 				  }
 			  }
-	  })
+	  });
+}
+
+function getDBFilename(){
+	var ret ="";
+	  //
+	  $.ajax({
+			  type: "POST",
+			  url: "<%=getFileNameURL%>",
+			  dataType: 'json',
+			  data: {
+			 	  <portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>"
+			  },
+			  global: false,
+			  async:false,
+			  success: function(data) {
+				 ret=data.fileName; 
+			  }
+	  });
+	  return ret;
+}
+
+function toggleShare(){
+	var mediaFilename = getDBFilename();
+	if(mediaFilename.length>0){
+		 $("#embed").show();
+	}else{
+		 $("#embed").hide();
+	}
 }
 
 function getDateTime(){
