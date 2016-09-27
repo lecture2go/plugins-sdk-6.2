@@ -394,6 +394,16 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				}				
 			}
 		}
+		
+		//embed commsy
+		String embedCommsy="";
+		if(objectVideo.getOpenAccess()==1){
+			embedCommsy ="(:lecture2go "+objectVideo.getRootInstitutionId() + "l2g" + objectProducer.getHomeDir()+"/"+objectVideo.getFilename()+":)";
+		}else{
+			embedCommsy ="(:lecture2go "+objectVideo.getRootInstitutionId() + "l2g" + objectProducer.getHomeDir()+"/"+objectVideo.getSecureFilename()+":)";
+		}
+		objectVideo.setEmbedCommsy(embedCommsy);
+		
 		objectVideo.setEmbedHtml5(embedHtml5);
 		
 		return objectVideo;

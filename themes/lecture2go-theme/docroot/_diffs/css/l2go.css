@@ -1339,6 +1339,13 @@ thead, th {
     opacity: 0.9;
 }
 
+#embed {
+    float: left;
+    margin-bottom: 30px;
+    margin-top: -30px;
+    width: 100%;
+}
+
 #embedForm {
     float: left;
     margin-left: -22px;
@@ -1739,7 +1746,7 @@ thead, th {
     float: left;
 }
 
-#metadata-upload label {
+#metadata-upload label, #embed-content label {
     float: left;
     width: 180px;
 }

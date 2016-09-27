@@ -91,6 +91,16 @@ public class VideoImpl extends VideoBaseImpl {
 		this.playerUris = playerUris;
 	}
 
+	private String embedCommsy;
+	
+	public String getEmbedCommsy() {
+		return embedCommsy;
+	}
+
+	public void setEmbedCommsy(String embedCommsy) {
+		this.embedCommsy = embedCommsy;
+	}
+
 	private String embedIframe;
 
 	private String embedHtml5;
