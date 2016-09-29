@@ -27,6 +27,7 @@
 <liferay-portlet:resourceURL id="getGenerationDate" var="getGenerationDateURL" />
 <liferay-portlet:resourceURL id="videoUpdateFirstTitle" var="videoUpdateFirstTitleURL" />
 <liferay-portlet:resourceURL id="getFileName" var="getFileNameURL" />
+<liferay-portlet:resourceURL id="getCommsyEmbed" var="getCommsyEmbedURL" />
 
 <%
 	String actionURL = "";
@@ -309,13 +310,15 @@
 					<label class="edit-video-lable" id="edit-video-lable-4"><liferay-ui:message key="share"/></label>
 					<div id="embed-content">
 						<!-- embed start -->
-						<aui:input name="embed_code3" label="video-url" helpMessage="about-video-url" required="false" id="embed_code3" readonly="true" value="<%=reqVideo.getUrl()%>" onclick="document.embed-content._lgadminvideomanagement_WAR_lecture2goportlet_embed_code3.focus();document.embed-content._lgadminvideomanagement_WAR_lecture2goportlet_embed_code3.select();"/>
+						<%
+							String vurl = "";	
+							if(reqVideo.getOpenAccess()==1) vurl=reqVideo.getUrl();
+							else vurl=reqVideo.getSecureUrl();
+						%>
+						<aui:input name="embed_code3" label="video-url" helpMessage="about-video-url" required="false" id="embed_code3" readonly="true" value="<%=vurl%>" onclick="document.embed-content._lgadminvideomanagement_WAR_lecture2goportlet_embed_code3.focus();document.embed-content._lgadminvideomanagement_WAR_lecture2goportlet_embed_code3.select();"/>
 						<aui:input name="embed_code" label="embed-iframe" helpMessage="about-iframe-embed" required="false" id="embed_code" readonly="true" value="<%=reqVideo.getEmbedIframe()%>" onclick="document.embed-content._lgadminvideomanagement_WAR_lecture2goportlet_embed_code.focus();document.embed-content._lgadminvideomanagement_WAR_lecture2goportlet_embed_code.select();"/>
-						<%if(reqVideo.getDownloadLink()==1){ %>
+						<%if(reqVideo.getDownloadLink()==1){%>
 							<aui:input name="embed_code1" label="embed-html5" helpMessage="about-html5-embed" required="false" id="embed_code1" readonly="true" value="<%=reqVideo.getEmbedHtml5()%>" onclick="document.embed-content._lgadminvideomanagement_WAR_lecture2goportlet_embed_code1.focus();document.embed-content._lgadminvideomanagement_WAR_lecture2goportlet_embed_code1.select();"/>							
-						<%}%>
-						<%if(reqVideo.getLectureseriesId()>0){ %>
-							<aui:input name="embed_code2" label="lecture-series-url" helpMessage="about-lecture-series-url" required="false" id="embed_code2" readonly="true" value="<%=reqVideo.getLectureseriesUrl()%>" onclick="document.embed-content._lgadminvideomanagement_WAR_lecture2goportlet_embed_code2.focus();document.embed-content._lgadminvideomanagement_WAR_lecture2goportlet_embed_code2.select();"/>
 						<%}%>
 						<aui:input name="embed_code4" label="embed-commsy" helpMessage="about-commsy-embed" required="false" id="embed_code4" readonly="true" value="<%=reqVideo.getEmbedCommsy()%>" onclick="document.embed-content._lgadminvideomanagement_WAR_lecture2goportlet_embed_code4.focus();document.embed-content._lgadminvideomanagement_WAR_lecture2goportlet_embed_code4.select();"/>
 						<!-- embed end -->	      	      
@@ -415,9 +418,11 @@ $(function () {
            		var f3 = vars[0].fileName;
            		if(f3.indexOf(f1) > -1){
 	           		updateVideoFileName(vars[0]);
+	           		validate();
            		}
            		if(f3.indexOf(f2) > -1){
 	           		updateVideoFileName(vars[0]);
+	           		validate();
            		}
            }else{
 				//update only for mp3 and mp4, but without changing the container
@@ -426,9 +431,9 @@ $(function () {
 				var f3 = "mp4";
 				if(f1.indexOf(f2) > -1 || f1.indexOf(f3) > -1){
 	           		updateVideoFileName(vars[0]);
+	           		validate();
 				}
            }
-           validate();
         },
         progressall: function (e, data) {
 	        var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -672,7 +677,7 @@ function validate(){
 			        if($('#<portlet:namespace></portlet:namespace>cancel').is(":visible")){
 			        	$('#<portlet:namespace></portlet:namespace>cancel').hide();	
 			        }	
-					alert("<liferay-ui:message key='please-add-creators'/>");
+					//alert("<liferay-ui:message key='please-add-creators'/>");
 				}else{
 					$('#<portlet:namespace></portlet:namespace>cancel').show();
 				}
@@ -826,10 +831,31 @@ function getDBFilename(){
 	  return ret;
 }
 
+function getCommsyEmbed(){
+	var ret ="";
+	  //
+	  $.ajax({
+			  type: "POST",
+			  url: "<%=getCommsyEmbedURL%>",
+			  dataType: 'json',
+			  data: {
+			 	  <portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>"
+			  },
+			  global: false,
+			  async:false,
+			  success: function(data) {
+				 ret=data.commsyEmbed; 
+			  }
+	  });
+	  return ret;
+}
+
 function toggleShare(){
 	var mediaFilename = getDBFilename();
+	var commsyEmbed = getCommsyEmbed();
 	if(mediaFilename.length>0){
 		 $("#embed").show();
+		 $("#<portlet:namespace/>embed_code4").val(commsyEmbed);
 	}else{
 		 $("#embed").hide();
 	}

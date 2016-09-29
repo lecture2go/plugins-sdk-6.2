@@ -569,6 +569,14 @@ public class AdminVideoManagement extends MVCPortlet {
 			jo.put("fileName", fileName);
 			writeJSON(resourceRequest, resourceResponse, jo);
 		}
+
+		if(resourceID.equals("getCommsyEmbed")){
+			JSONObject jo = JSONFactoryUtil.createJSONObject();
+			String commsyEmbed="";
+			if(video.getFilename().length()>0)commsyEmbed=video.getEmbedCommsy();
+			jo.put("commsyEmbed", commsyEmbed);
+			writeJSON(resourceRequest, resourceResponse, jo);
+		}		
 		
 		if(resourceID.equals("videoFileNameExists")){
 			String filename = ParamUtil.getString(resourceRequest, "fileName");
