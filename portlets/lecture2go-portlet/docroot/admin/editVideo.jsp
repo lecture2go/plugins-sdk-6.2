@@ -160,7 +160,7 @@
 					<div id="titledefault"><aui:input id="title" name="title" label="title" required="true" value="<%=reqVideo.getTitle()%>" /></div>
 					
 					<div id="creators-custom">
-						<aui:input id="creator" name="creator" label="creators-required" />
+						<aui:input id="creator" name="creator" label="creators-required" helpMessage="<liferay-ui:message key='creator-explanation'/>"/>
 						<div id="creators"></div>
 					</div>		
 							
