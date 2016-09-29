@@ -160,7 +160,7 @@
 					<div id="titledefault"><aui:input id="title" name="title" label="title" required="true" value="<%=reqVideo.getTitle()%>" /></div>
 					
 					<div id="creators-custom">
-						<aui:input id="creator" name="creator" label="creators-required" />
+						<aui:input id="creator" name="creator" label="creators-required" helpMessage="<liferay-ui:message key='creator-explanation'/>"/>
 						<div id="creators"></div>
 					</div>		
 							
@@ -265,10 +265,11 @@
 				<div id="permissions">
 					<label class="edit-video-lable" id="edit-video-lable-2"><liferay-ui:message key="permissions"/></label>
 					<div id="permissions-content">
-						<div>
-							<aui:input id="password" name="password" label="password" required="false" value="<%=reqVideo.getPassword()%>" />
-						</div>
-						
+						<%if(reqVideo.getOpenAccess()==0){%>
+							<div>
+								<aui:input id="password" name="password" label="password" required="false" value="<%=reqVideo.getPassword()%>" />
+							</div>
+						<%}%>
 						<div id="c2g">
 							<%if(reqVideo.getCitation2go()==0){%>
 						  		<aui:input name="citationAllowed" type="checkbox" label="citation-allowed" id="citationAllowed"></aui:input>
