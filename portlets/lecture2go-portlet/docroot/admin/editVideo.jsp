@@ -27,7 +27,7 @@
 <liferay-portlet:resourceURL id="getGenerationDate" var="getGenerationDateURL" />
 <liferay-portlet:resourceURL id="videoUpdateFirstTitle" var="videoUpdateFirstTitleURL" />
 <liferay-portlet:resourceURL id="getFileName" var="getFileNameURL" />
-<liferay-portlet:resourceURL id="getCommsyEmbed" var="getCommsyEmbedURL" />
+<liferay-portlet:resourceURL id="getShare" var="getShareURL" />
 
 <%
 	String actionURL = "";
@@ -831,12 +831,12 @@ function getDBFilename(){
 	  return ret;
 }
 
-function getCommsyEmbed(){
-	var ret ="";
+function getShare(){
+	  var ret;
 	  //
 	  $.ajax({
 			  type: "POST",
-			  url: "<%=getCommsyEmbedURL%>",
+			  url: "<%=getShareURL%>",
 			  dataType: 'json',
 			  data: {
 			 	  <portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>"
@@ -844,7 +844,7 @@ function getCommsyEmbed(){
 			  global: false,
 			  async:false,
 			  success: function(data) {
-				 ret=data.commsyEmbed; 
+				 ret=data; 
 			  }
 	  });
 	  return ret;
@@ -852,10 +852,13 @@ function getCommsyEmbed(){
 
 function toggleShare(){
 	var mediaFilename = getDBFilename();
-	var commsyEmbed = getCommsyEmbed();
+	var data = getShare();
 	if(mediaFilename.length>0){
 		 $("#embed").show();
-		 $("#<portlet:namespace/>embed_code4").val(commsyEmbed);
+		  $("#<portlet:namespace/>embed_code").val(data.iframeEmbed);//iframe
+		  $("#<portlet:namespace/>embed_code1").val(data.html5Embed);//html5
+		  $("#<portlet:namespace/>embed_code3").val(data.url);//url
+		  $("#<portlet:namespace/>embed_code4").val(data.commsyEmbed);//commsy
 	}else{
 		 $("#embed").hide();
 	}
