@@ -1,6 +1,3 @@
-<%@page import="de.uhh.l2g.plugins.model.Host"%>
-<%@page import="java.util.TreeMap"%>
-
 <%@include file="/init.jsp"%>
 
 <jsp:useBean id="reqLectureseriesList" type="java.util.List<de.uhh.l2g.plugins.model.Lectureseries>" scope="request" />
@@ -27,7 +24,7 @@
 <liferay-portlet:resourceURL id="getGenerationDate" var="getGenerationDateURL" />
 <liferay-portlet:resourceURL id="videoUpdateFirstTitle" var="videoUpdateFirstTitleURL" />
 <liferay-portlet:resourceURL id="getFileName" var="getFileNameURL" />
-<liferay-portlet:resourceURL id="getCommsyEmbed" var="getCommsyEmbedURL" />
+<liferay-portlet:resourceURL id="getShare" var="getShareURL" />
 
 <%
 	String actionURL = "";
@@ -116,39 +113,41 @@
 </script>
 
 <div class="noresponsive">
-	<label class="edit-video-lable"><liferay-ui:message key="upload"/></label>
-	<div id="date-time-form">
-		<aui:fieldset column="true">
-			<aui:layout>
-				<div id="first-title">
-					<aui:input id="firsttitle" name="firsttitle" label="first-title" value="<%=reqVideo.getTitle()%>" />
-					<aui:button-row>
-						<aui:button id="apply-first-title" name="apply-first-title" value="apply-first-title" onClick="applyFirstTitle();"/>
-					</aui:button-row>
-				</div>
-				<div id="date-time">
-					<aui:input id="datetimepicker" name="datetimepicker" label="select-date-time-bevor-upload"/>
-					<aui:button-row>
-						<aui:button id="apply-date-time" name="apply-date-time" value="apply-date-time" onClick="applyDateTime();"/>
-					</aui:button-row>
-				</div>
-			</aui:layout>
-		</aui:fieldset>
-	</div>
-	<div id="upload-form">
-		<aui:fieldset column="true">
-			<aui:layout>
-				<div>
-					<input id="fileupload" type="file" name="files[]" data-url="/servlet-file-upload/upload" multiple/>
-					<input type="hidden" id="l2gDateTime" value=""/>
-					<br/>
-					<div id="progress" class="progress">
-				    	<div class="bar" style="width: 0%;"></div>
+	<div id="upload">
+		<label class="edit-video-lable"><liferay-ui:message key="upload"/></label>
+		<div id="date-time-form">
+			<aui:fieldset column="true">
+				<aui:layout>
+					<div id="first-title">
+						<aui:input id="firsttitle" name="firsttitle" label="first-title" value="<%=reqVideo.getTitle()%>" />
+						<aui:button-row>
+							<aui:button id="apply-first-title" name="apply-first-title" value="apply-first-title" onClick="applyFirstTitle();"/>
+						</aui:button-row>
 					</div>
-					<table id="uploaded-files" class="table"></table>
-				</div>
-			</aui:layout>
-		</aui:fieldset>
+					<div id="date-time">
+						<aui:input id="datetimepicker" name="datetimepicker" label="select-date-time-bevor-upload"/>
+						<aui:button-row>
+							<aui:button id="apply-date-time" name="apply-date-time" value="apply-date-time" onClick="applyDateTime();"/>
+						</aui:button-row>
+					</div>
+				</aui:layout>
+			</aui:fieldset>
+		</div>
+		<div id="upload-form">
+			<aui:fieldset column="true">
+				<aui:layout>
+					<div>
+						<input id="fileupload" type="file" name="files[]" data-url="/servlet-file-upload/upload" multiple/>
+						<input type="hidden" id="l2gDateTime" value=""/>
+						<br/>
+						<div id="progress" class="progress">
+					    	<div class="bar" style="width: 0%;"></div>
+						</div>
+						<table id="uploaded-files" class="table"></table>
+					</div>
+				</aui:layout>
+			</aui:fieldset>
+		</div>
 	</div>
 	
 	<aui:fieldset column="false" label="" id="meta-ebene" style="display:none;">
@@ -324,7 +323,6 @@
 						<!-- embed end -->	      	      
 					</div>
 				</div>
-				
 				<script>
 					$( "#edit-video-lable-4" ).click(function() {
 					  $( "#embed-content" ).slideToggle( "slow" );
@@ -831,12 +829,12 @@ function getDBFilename(){
 	  return ret;
 }
 
-function getCommsyEmbed(){
-	var ret ="";
+function getShare(){
+	  var ret;
 	  //
 	  $.ajax({
 			  type: "POST",
-			  url: "<%=getCommsyEmbedURL%>",
+			  url: "<%=getShareURL%>",
 			  dataType: 'json',
 			  data: {
 			 	  <portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>"
@@ -844,7 +842,7 @@ function getCommsyEmbed(){
 			  global: false,
 			  async:false,
 			  success: function(data) {
-				 ret=data.commsyEmbed; 
+				 ret=data; 
 			  }
 	  });
 	  return ret;
@@ -852,10 +850,13 @@ function getCommsyEmbed(){
 
 function toggleShare(){
 	var mediaFilename = getDBFilename();
-	var commsyEmbed = getCommsyEmbed();
+	var data = getShare();
 	if(mediaFilename.length>0){
 		 $("#embed").show();
-		 $("#<portlet:namespace/>embed_code4").val(commsyEmbed);
+		  $("#<portlet:namespace/>embed_code").val(data.iframeEmbed);//iframe
+		  $("#<portlet:namespace/>embed_code1").val(data.html5Embed);//html5
+		  $("#<portlet:namespace/>embed_code3").val(data.url);//url
+		  $("#<portlet:namespace/>embed_code4").val(data.commsyEmbed);//commsy
 	}else{
 		 $("#embed").hide();
 	}

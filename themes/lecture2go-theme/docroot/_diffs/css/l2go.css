@@ -1341,9 +1341,12 @@ thead, th {
 
 #embed {
     float: left;
-    margin-bottom: 30px;
-    margin-top: -30px;
+    margin-bottom: 50px;
     width: 100%;
+}
+
+#permissions, #embed, #license, #_lgadminvideomanagement_WAR_lecture2goportlet_metadata, #embed {
+    margin-top: 50px;
 }
 
 #embedForm {
@@ -1861,7 +1864,7 @@ input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_lastName {
 #license > div > div {
     float: left;
     font-size: 14px;
-    margin-bottom: 43px;
+    margin-bottom: 20px;
     margin-right: 41px;
 }
 
@@ -1888,7 +1891,6 @@ input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_lastName {
     font-family: TheSansUHHBold, sans-serif;
     font-size: 15px !important;
     font-style: normal;
-    padding: 30px 0 5px;
 }
 
 label.edit-video-lable.first {
@@ -1904,6 +1906,10 @@ label.edit-video-lable.first {
 .aui #upload-form {
     display: none;
     width: 693px;
+}
+
+#upload {
+    margin-top: 20px;
 }
 
 .aui .progress {
