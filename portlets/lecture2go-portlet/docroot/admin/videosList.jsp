@@ -265,44 +265,44 @@
 								<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>	
 							</portlet:actionURL>
 							
-							<a href="<%=editURL.toString()%>">
+							<a href="<%=editURL.toString()%>" title="<liferay-ui:message key='edit'/>" alt="<liferay-ui:message key='edit'/>">
 							   <span class="icon-large icon-pencil"></span>
 							</a>
 							
 							<%if(vid.getFilename().length()>0){
 								if (vid.getOpenAccess()==1){%>
-								<a href="<%=lockURL.toString()%>">
+								<a href="<%=lockURL.toString()%>" title="<liferay-ui:message key='lock-help'/>" alt="<liferay-ui:message key='lock-help'/>">
 								   <span class="icon-large icon-unlock" onclick="return confirm('<liferay-ui:message key="really-lock-question"/>')"></span>
 								</a>
 								<%}else{%>
-									 <a href="<%=unlockURL.toString()%>">
+									 <a href="<%=unlockURL.toString()%>" title="<liferay-ui:message key='unlock-help'/>" alt="<liferay-ui:message key='unlock-help'/>">
 									    <span class="icon-large icon-lock" onclick="return confirm('<liferay-ui:message key="really-unlock-question"/>')"></span>
 									 </a>
 								<%}	
 									
 								if (vid.getDownloadLink()==1){%>
-									 <a href="<%=deactivateDowonloadURL.toString()%>">
+									 <a href="<%=deactivateDowonloadURL.toString()%>" title="<liferay-ui:message key='deaktivate-download-help'/>" alt="<liferay-ui:message key='deaktivate-download-help'/>">
 									    <span class="icon-large icon-download-alt" onclick="return confirm('<liferay-ui:message key="really-deactivate-download-question"/>')"></span>
 									 </a>
 								<%}else{%>
-									 <a href="<%=activateDowonloadURL.toString()%>">
+									 <a href="<%=activateDowonloadURL.toString()%>" title="<liferay-ui:message key='aktivate-download-help'/>" alt="<liferay-ui:message key='aktivate-download-help'/>">
 									    <span class="icon-large icon-download"></span>
 									 </a>		
 								<%}	
 								
 								if (SegmentLocalServiceUtil.getSegmentsByVideoId(vid.getVideoId()).size()>0){%>
-								 <a href="<%=segmentURL.toString()%>">
+								 <a href="<%=segmentURL.toString()%>" title="<liferay-ui:message key='comment-video-help'/>" alt="<liferay-ui:message key='comment-video-help'/>">
 								    <span class="icon-large icon-comment"></span>
 								 </a>			
 								<%}else{%>
-									<a href="<%=segmentURL.toString()%>">
+									<a href="<%=segmentURL.toString()%>" title="<liferay-ui:message key='comment-video-help'/>" alt="<liferay-ui:message key='comment-video-help'/>">
 									   <span class="icon-large icon-align-justify"></span>
 									</a>	
 								<%}
 								
 							}%>
 							
-							<a href="<%=removeURL.toString()%>">
+							<a href="<%=removeURL.toString()%>" title="<liferay-ui:message key='delete'/>">
 								<span class="icon-large icon-remove" onclick="return confirm('<liferay-ui:message key="really-delete-question"/>')"></span>
 							</a>
 						</div>
