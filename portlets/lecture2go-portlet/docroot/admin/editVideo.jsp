@@ -116,39 +116,41 @@
 </script>
 
 <div class="noresponsive">
-	<label class="edit-video-lable"><liferay-ui:message key="upload"/></label>
-	<div id="date-time-form">
-		<aui:fieldset column="true">
-			<aui:layout>
-				<div id="first-title">
-					<aui:input id="firsttitle" name="firsttitle" label="first-title" value="<%=reqVideo.getTitle()%>" />
-					<aui:button-row>
-						<aui:button id="apply-first-title" name="apply-first-title" value="apply-first-title" onClick="applyFirstTitle();"/>
-					</aui:button-row>
-				</div>
-				<div id="date-time">
-					<aui:input id="datetimepicker" name="datetimepicker" label="select-date-time-bevor-upload"/>
-					<aui:button-row>
-						<aui:button id="apply-date-time" name="apply-date-time" value="apply-date-time" onClick="applyDateTime();"/>
-					</aui:button-row>
-				</div>
-			</aui:layout>
-		</aui:fieldset>
-	</div>
-	<div id="upload-form">
-		<aui:fieldset column="true">
-			<aui:layout>
-				<div>
-					<input id="fileupload" type="file" name="files[]" data-url="/servlet-file-upload/upload" multiple/>
-					<input type="hidden" id="l2gDateTime" value=""/>
-					<br/>
-					<div id="progress" class="progress">
-				    	<div class="bar" style="width: 0%;"></div>
+	<div id="upload">
+		<label class="edit-video-lable"><liferay-ui:message key="upload"/></label>
+		<div id="date-time-form">
+			<aui:fieldset column="true">
+				<aui:layout>
+					<div id="first-title">
+						<aui:input id="firsttitle" name="firsttitle" label="first-title" value="<%=reqVideo.getTitle()%>" />
+						<aui:button-row>
+							<aui:button id="apply-first-title" name="apply-first-title" value="apply-first-title" onClick="applyFirstTitle();"/>
+						</aui:button-row>
 					</div>
-					<table id="uploaded-files" class="table"></table>
-				</div>
-			</aui:layout>
-		</aui:fieldset>
+					<div id="date-time">
+						<aui:input id="datetimepicker" name="datetimepicker" label="select-date-time-bevor-upload"/>
+						<aui:button-row>
+							<aui:button id="apply-date-time" name="apply-date-time" value="apply-date-time" onClick="applyDateTime();"/>
+						</aui:button-row>
+					</div>
+				</aui:layout>
+			</aui:fieldset>
+		</div>
+		<div id="upload-form">
+			<aui:fieldset column="true">
+				<aui:layout>
+					<div>
+						<input id="fileupload" type="file" name="files[]" data-url="/servlet-file-upload/upload" multiple/>
+						<input type="hidden" id="l2gDateTime" value=""/>
+						<br/>
+						<div id="progress" class="progress">
+					    	<div class="bar" style="width: 0%;"></div>
+						</div>
+						<table id="uploaded-files" class="table"></table>
+					</div>
+				</aui:layout>
+			</aui:fieldset>
+		</div>
 	</div>
 	
 	<aui:fieldset column="false" label="" id="meta-ebene" style="display:none;">
@@ -324,7 +326,6 @@
 						<!-- embed end -->	      	      
 					</div>
 				</div>
-				
 				<script>
 					$( "#edit-video-lable-4" ).click(function() {
 					  $( "#embed-content" ).slideToggle( "slow" );
