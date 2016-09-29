@@ -1,6 +1,3 @@
-<%@page import="de.uhh.l2g.plugins.model.Host"%>
-<%@page import="java.util.TreeMap"%>
-
 <%@include file="/init.jsp"%>
 
 <jsp:useBean id="reqLectureseriesList" type="java.util.List<de.uhh.l2g.plugins.model.Lectureseries>" scope="request" />
