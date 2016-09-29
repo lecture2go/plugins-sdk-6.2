@@ -5,6 +5,7 @@
 	List<Coordinator> coordinators = new ArrayList<Coordinator>();
 	List<Producer> producers = new ArrayList<Producer>();
 	List<Lectureseries> lectureseries = new ArrayList<Lectureseries>();
+	Map<Term, List<Lectureseries>> lectureseriesAsTreeList = new TreeMap<Term, List<Lectureseries>>();
 	
 	PortletURL portletURL = renderResponse.createRenderURL();
 	portletURL.setParameter("coordinatorId", ServletRequestUtils.getLongParameter(request, "coordinatorId", 0)+"");
@@ -25,6 +26,7 @@
 			if(producerId==0)tempVideosList = VideoLocalServiceUtil.getByRootInstitution(institutionId);
 			else {
 				lectureseries = LectureseriesLocalServiceUtil.getFilteredByApprovedSemesterFacultyProducer(1, new Long(0), new Long(0), producerId);
+				lectureseriesAsTreeList = LectureseriesLocalServiceUtil.getFilteredByApprovedSemesterFacultyProducerAsTreeMapSortedByTerm(1, new Long(0), new Long(0), producerId);
 				if(lectureseriesId==0) tempVideosList = VideoLocalServiceUtil.getByProducer(producerId);
 				else tempVideosList = VideoLocalServiceUtil.getByProducerAndLectureseries(producerId, lectureseriesId);
 			}
@@ -40,6 +42,7 @@
 			producers = ProducerLocalServiceUtil.getProducersByInstitutionId(institutionId);
 			if(producerId>0){
 				lectureseries = LectureseriesLocalServiceUtil.getFilteredByApprovedSemesterFacultyProducer(1, new Long(0), new Long(0), producerId);
+				lectureseriesAsTreeList = LectureseriesLocalServiceUtil.getFilteredByApprovedSemesterFacultyProducerAsTreeMapSortedByTerm(1, new Long(0), new Long(0), producerId);
 				if(lectureseriesId==0)tempVideosList = VideoLocalServiceUtil.getByProducer(producerId);
 				else tempVideosList = VideoLocalServiceUtil.getByProducerAndLectureseries(producerId, lectureseriesId);
 			}else{
@@ -51,6 +54,7 @@
 				if(lectureseriesId>0) tempVideosList = VideoLocalServiceUtil.getByProducerAndLectureseries(producerId, lectureseriesId);
 				else tempVideosList = VideoLocalServiceUtil.getByProducer(producerId);
 				lectureseries = LectureseriesLocalServiceUtil.getFilteredByApprovedSemesterFacultyProducer(1, new Long(0), new Long(0), producerId);
+				lectureseriesAsTreeList = LectureseriesLocalServiceUtil.getFilteredByApprovedSemesterFacultyProducerAsTreeMapSortedByTerm(1, new Long(0), new Long(0), producerId);
 			}
 		}
 	}
@@ -106,14 +110,19 @@
 								</portlet:renderURL>
 								<aui:form action="<%= sortByLectureseries.toString() %>" method="post">
 									<aui:select name="lectureseriesId" label="" onChange="submit();">
-										<aui:option value=""><liferay-ui:message key="select-lecture-series"/></aui:option>
-										<%for (int i = 0; i < lectureseries.size(); i++) {
-											if(lectureseries.get(i).getLectureseriesId()==lectureseriesId){%>
-												<aui:option value='<%=lectureseries.get(i).getLectureseriesId()%>' selected="true"><%=lectureseries.get(i).getName()%></aui:option>
-											<%}else{%>
-												<aui:option value='<%=lectureseries.get(i).getLectureseriesId()%>'><%=lectureseries.get(i).getName()%></aui:option>
-											<%}					
-										}%>								
+										<aui:option value="0">-<liferay-ui:message key="without-lecture-series"/>-</aui:option>
+										<%
+										for(Map.Entry<Term, List<Lectureseries>> entry : lectureseriesAsTreeList.entrySet()) {%>
+											<aui:option value='0' disabled="true">&#9472; <%=entry.getKey().getTermName()%> &#9472;</aui:option>
+											<% for(Lectureseries l: entry.getValue()) {
+													if(l.getLectureseriesId()==lectureseriesId){%>
+														<aui:option value='<%=l.getLectureseriesId()%>' selected="true"><%=l.getName()%></aui:option>
+													<%}else{%>
+														<aui:option value='<%=l.getLectureseriesId()%>'><%=l.getName()%></aui:option>
+													<%}	
+												}
+										 }
+										 %>
 									</aui:select>
 								</aui:form>				
 					<%}%>
