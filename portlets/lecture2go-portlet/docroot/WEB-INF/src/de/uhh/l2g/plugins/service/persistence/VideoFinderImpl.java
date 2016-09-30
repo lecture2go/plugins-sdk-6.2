@@ -246,8 +246,8 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 			qPos.add(word);
 			qPos.add(lectureseriesId);
 			//2nd query
-			qPos.add(word);
-			qPos.add(lectureseriesId);			
+//			qPos.add(word);
+//			qPos.add(lectureseriesId);			
 			@SuppressWarnings("unchecked")
 			List <Object[]> l =  (List<Object[]>) QueryUtil.list(q, getDialect(),com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 			return assembleVideos(l);
