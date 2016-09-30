@@ -14,6 +14,9 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -55,6 +58,7 @@ public class ProducerLocalServiceImpl extends ProducerLocalServiceBaseImpl {
 	
 	private List<Producer> fillProps(List<Producer> pl) throws SystemException{
 		Iterator<Producer> it = pl.iterator();
+		List<Producer> prodL = new  ArrayList<Producer>();
 		while (it.hasNext()){
 			Producer p = it.next();
 			User u;
@@ -64,11 +68,20 @@ public class ProducerLocalServiceImpl extends ProducerLocalServiceBaseImpl {
 				p.setFirstName(u.getFirstName());
 				p.setEmailAddress(u.getEmailAddress());
 				p.setLastLoginDate(u.getLastLoginDate());
+				prodL.add(p);
 			} catch (PortalException e) {
 				e.printStackTrace();
 			}
 		}
-		return pl;
+		
+		// Sorting
+		Collections.sort(prodL, new Comparator<Producer>() {
+				@Override
+				public int compare(Producer p1, Producer p2) {
+					return  p1.getLastName().compareTo(p2.getLastName());
+				}
+		    });
+		return prodL;
 	}
 	
 	
