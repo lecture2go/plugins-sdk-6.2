@@ -573,7 +573,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		if(resourceID.equals("getShare")){
 			JSONObject jo = JSONFactoryUtil.createJSONObject();
 			String url = "";
-			if(video.getOpenAccess()==1)url=video.getSecureUrl();
+			if(video.getOpenAccess()==0)url=video.getSecureUrl();
 			else url=video.getUrl();
 			jo.put("commsyEmbed", video.getEmbedCommsy());
 			jo.put("html5Embed", video.getEmbedHtml5());
