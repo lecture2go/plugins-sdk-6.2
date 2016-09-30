@@ -113,7 +113,7 @@
 										<aui:option value="0">-<liferay-ui:message key="without-lecture-series"/>-</aui:option>
 										<%
 										for(Map.Entry<Term, List<Lectureseries>> entry : lectureseriesAsTreeList.entrySet()) {%>
-											<aui:option value='0' disabled="true">&#9472; <%=entry.getKey().getTermName()%> &#9472;</aui:option>
+											<aui:option value='' disabled="true">&#9472; <%=entry.getKey().getTermName()%> &#9472;</aui:option>
 											<% for(Lectureseries l: entry.getValue()) {
 													if(l.getLectureseriesId()==lectureseriesId){%>
 														<aui:option value='<%=l.getLectureseriesId()%>' selected="true"><%=l.getName()%></aui:option>
