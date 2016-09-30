@@ -193,12 +193,14 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			if (hasSearch)y=2;
 			//
 			for (int i=0 ;i<=y;i++){ //for all queries "lQueryForSearch" "lQuery" and "vQuery"
-				if (termId > 0) qPos.add(termId);
-				if (creatorId > 0) qPos.add(creatorId);
-				if (categoryId > 0) qPos.add(categoryId);
-				if (institutionId > 0) qPos.add(institutionId);
-				if (parentInstitutionId > 0) qPos.add(parentInstitutionId);
-				if (searchQuery.trim().length()>0) qPos.add("%" + searchQuery + "%");
+				if (i<2){
+					if (termId > 0) qPos.add(termId);
+					if (creatorId > 0) qPos.add(creatorId);
+					if (categoryId > 0) qPos.add(categoryId);
+					if (institutionId > 0) qPos.add(institutionId);
+					if (parentInstitutionId > 0) qPos.add(parentInstitutionId);					
+				}
+				if (hasSearch) qPos.add("%" + searchQuery + "%");
 			}
 			
 			@SuppressWarnings("unchecked")
