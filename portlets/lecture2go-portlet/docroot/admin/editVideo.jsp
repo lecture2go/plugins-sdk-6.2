@@ -384,14 +384,17 @@ $(function () {
         dataType: 'json',
         add: function(e, data) {
             var uploadErrors = [];
-            var acceptFileTypes = /(mp4|m4v|m4a|mpeg|audio|ogg|flv|webm|pdf)$/i;//file types
+			var acceptFileTypes = /(mp4|m4v|m4a|audio|audio\/mp3|pdf)$/i;//file types
 			
-            if (data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
-                uploadErrors.push('<liferay-ui:message key="not-an-accepted-file-type"/>');
-            }
-            if (data.originalFiles[0]['size'].length && data.originalFiles[0]['size'] > 2147483648) {
-                uploadErrors.push('<liferay-ui:message key="max-file-size"/>');
-            }
+			for(i=0;i<data.originalFiles.length; i++){
+	            if (data.originalFiles[i]['type'].length && !acceptFileTypes.test(data.originalFiles[i]['type'])) {
+	                uploadErrors.push('<liferay-ui:message key="not-an-accepted-file-type"/>');
+	            }
+	            if ( data.originalFiles[i]['size'] > 2147483648) { //2 GB
+	                uploadErrors.push('<liferay-ui:message key="max-file-size"/>');
+	            }
+			}
+
           	//check for first upload
         	if (isFirstUpload()==1) {
         		if (!fileUploadAllowed(data.originalFiles)){
@@ -464,7 +467,7 @@ $(function () {
 
 function fileUploadAllowed(data){
 	var ret = false;
-    var acceptFileTypes = /(mp4|mpeg|audio)$/i;//allowed file types
+    var acceptFileTypes = /(mp4|audio|audio\/mp3)$/i;//allowed file types
     
     data.forEach(function(entry) {
     	if(acceptFileTypes.test(entry['type'])){
@@ -599,6 +602,7 @@ function updateMetadata(){
 				 	   	<portlet:namespace/>termId: termId,
 				 	   	<portlet:namespace/>password: A.one('#<portlet:namespace/>password').get('value'),
 			 	},
+			 	async:true,
 			 	//get server response
 				on: {
 					   success: function() {
@@ -621,6 +625,7 @@ function updateLicense(data){
 				 	   	<portlet:namespace/>license: data,
 				 	   	<portlet:namespace/>videoId: A.one('#<portlet:namespace/>videoId').get('value'),
 			 	},
+			 	async:true,
 			 	//get server response
 				on: {
 					   success: function() {
@@ -632,7 +637,7 @@ function updateLicense(data){
 	);
 }
 
-var descData;
+var descData="<%=reqMetadata.getDescription()%>";
 function <portlet:namespace/>setDescriptionData(data){
 	descData = data;
 }
@@ -695,6 +700,7 @@ function updateDescription(data){
 				 	   	<portlet:namespace/>description: data,
 				 	   	<portlet:namespace/>videoId: A.one('#<portlet:namespace/>videoId').get('value'),
 			 	},
+			 	async:true,
 			 	//get server response
 				on: {
 					   success: function() {
@@ -902,7 +908,7 @@ function updateSubInstitutions(){
 		 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>",
 		  },
 		  global: false,
-		  async:false,
+		  async:true,
 		  success: function(data) {
 		    //		    
 		  }
