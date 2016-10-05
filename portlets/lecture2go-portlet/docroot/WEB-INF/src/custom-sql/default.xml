@@ -12,7 +12,7 @@
 			SELECT v.* 
 			FROM LG_Video v, LG_Videohitlist vhl  
 			WHERE v.videoId=vhl.videoId 
-			ORDER BY hits DESC 
+			ORDER BY hitsPerDay DESC 
 		]]>
     </sql>
     
