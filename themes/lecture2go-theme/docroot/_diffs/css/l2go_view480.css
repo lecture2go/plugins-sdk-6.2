@@ -1,4 +1,8 @@
 @media (max-width: 479px) {
+	.aui .chaptertile a span {
+    	margin-top: -42px;
+	}
+
 	.video-image-big {
     	height: 64px !important;
     	width: 113px;
@@ -7,7 +11,7 @@
 	.term-of-creation {
 		margin: 0px 5px;
 	}
-	
+
 	.videotile button {
 		margin-right: 1px;
 	}
