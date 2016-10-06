@@ -384,7 +384,7 @@ $(function () {
         dataType: 'json',
         add: function(e, data) {
             var uploadErrors = [];
-			var acceptFileTypes = /(mp4|m4v|m4a|audio|audio\/mp3|pdf)$/i;//file types
+			var acceptFileTypes = /(mp4|m4v|m4a|audio\/mp3|audio\/mpeg|audio|pdf)$/i;//file types
 			
 			for(i=0;i<data.originalFiles.length; i++){
 	            if (data.originalFiles[i]['type'].length && !acceptFileTypes.test(data.originalFiles[i]['type'])) {
@@ -467,8 +467,7 @@ $(function () {
 
 function fileUploadAllowed(data){
 	var ret = false;
-    var acceptFileTypes = /(mp4|audio|audio\/mp3)$/i;//allowed file types
-    
+    var acceptFileTypes = /(mp4|audio\/mp3|audio\/mpeg|audio)$/i;//allowed file types
     data.forEach(function(entry) {
     	if(acceptFileTypes.test(entry['type'])){
         	ret = true;
