@@ -20,9 +20,11 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
+import de.uhh.l2g.plugins.model.Creator;
 import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.Video_Creator;
+import de.uhh.l2g.plugins.model.impl.CreatorImpl;
 import de.uhh.l2g.plugins.model.impl.VideoImpl;
 import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
@@ -401,12 +403,15 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 				ListIterator<Video_Creator> vci = vc.listIterator();
 				String creators ="";
 				while(vci.hasNext()){
-					creators+="###"+CreatorLocalServiceUtil.getCreator(vci.next().getCreatorId()).getFullName();
+					Long cId = vci.next().getCreatorId();
+					Creator cr = new CreatorImpl();
+					try{
+						cr = CreatorLocalServiceUtil.getCreator(cId);
+					}catch(Exception e){}
+					creators+="###"+cr.getFullName();
 				}
 				v.setCreators(creators);
 			} catch (SystemException e) {
-				e.printStackTrace();
-			} catch (PortalException e) {
 				e.printStackTrace();
 			}
 			vl.add(v);
