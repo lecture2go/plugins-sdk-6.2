@@ -269,6 +269,8 @@
 							<div>
 								<aui:input id="password" name="password" label="password" required="false" value="<%=reqVideo.getPassword()%>" />
 							</div>
+						<%}else{%>
+							<aui:input name="password" id="password" type="hidden" value="<%=reqVideo.getPassword()%>"/>
 						<%}%>
 						<div id="c2g">
 							<%if(reqVideo.getCitation2go()==0){%>
@@ -911,7 +913,7 @@ function updateSubInstitutions(){
 		  success: function(data) {
 		    //		    
 		  }
-	})
+	});
 }
 
 
