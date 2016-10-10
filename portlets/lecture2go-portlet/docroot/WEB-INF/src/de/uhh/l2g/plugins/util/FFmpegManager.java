@@ -211,40 +211,22 @@ public class FFmpegManager {
 		if(imageRepositoryFolderExists()){
 			try {
 				File f = new File(thumbnailLocation);
-				int i =0;
-				while (i<100){
-					i++;
-					if(!f.isFile())runCmd.exec(command);
-					else break;
-				}
-				if (!f.isFile())
-					ret = false;
+				runCmd.exec(command);
+				if (!f.isFile()) ret = false;
 			} catch (IOException e) {
 				ret = false;
 			}
 			try {
 				File f = new File(thumbPreffLoc + "_s.jpg");
-				int i =0;
-				while (i<100){
-					i++;
-					if(!f.isFile())runCmd.exec(command1);
-					else break;
-				}
-				if (!f.isFile())
-					ret = false;
+				runCmd.exec(command1);
+				if (!f.isFile()) ret = false;
 			} catch (IOException e) {
 				ret = false;
 			}
 			try {
 				File f = new File(thumbPreffLoc + "_m.jpg");
-				int i =0;
-				while (i<100){
-					i++;
-					if(!f.isFile())runCmd.exec(command2);
-					else break;
-				}
-				if (!f.isFile())
-					ret = false;
+				runCmd.exec(command2);
+				if (!f.isFile()) ret = false;
 			} catch (IOException e) {
 				ret = false;
 			}
