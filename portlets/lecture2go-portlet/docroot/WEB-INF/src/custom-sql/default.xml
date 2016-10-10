@@ -202,6 +202,14 @@
 		]]>
     </sql>
 
+    <sql id="de.uhh.l2g.plugins.service.persistence.CreatorFinder.findCreatorsForLectureseriesOverTheAssigenedVideos">
+		<![CDATA[
+			SELECT c.* FROM LG_Video_Creator vc 
+			INNER JOIN LG_Creator c ON c.creatorId=vc.creatorId 
+			WHERE videoId IN (SELECT videoId FROM lportal620.LG_Video WHERE lectureseriesId = ?);
+		]]>
+    </sql>
+
     <sql id="de.uhh.l2g.plugins.service.persistence.CreatorFinder.findCreatorsForVideo">
 		<![CDATA[
 			SELECT c.* FROM LG_Creator c, LG_Video_Creator vc WHERE c.creatorId=vc.creatorId AND vc.videoId = ?
