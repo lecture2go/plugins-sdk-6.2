@@ -50,6 +50,7 @@ import de.uhh.l2g.plugins.model.impl.HostImpl;
 import de.uhh.l2g.plugins.model.impl.LectureseriesImpl;
 import de.uhh.l2g.plugins.model.impl.MetadataImpl;
 import de.uhh.l2g.plugins.model.impl.ProducerImpl;
+import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LastvideolistLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
@@ -351,6 +352,12 @@ public class ProzessManager {
 		
 		//delete creators from video
 		Video_CreatorLocalServiceUtil.deleteByVideoId(video.getVideoId());
+		//update creators in Lectureseries
+		//now update creators for the whole lecture series
+		Long lId = lectureseries.getLectureseriesId();
+		try{
+			if(lId>0)CreatorLocalServiceUtil.updateCreatorsForLectureseriesOverTheAssigenedVideosByLectureseriesId(lId);
+		}catch(SystemException e){}
 		
 		//delete tag cloud for this video
 		TagcloudLocalServiceUtil.deleteByObjectId(video.getVideoId());

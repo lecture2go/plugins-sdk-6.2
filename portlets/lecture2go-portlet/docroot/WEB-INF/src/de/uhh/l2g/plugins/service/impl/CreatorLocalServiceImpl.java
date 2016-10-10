@@ -28,6 +28,9 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
 import de.uhh.l2g.plugins.model.Creator;
+import de.uhh.l2g.plugins.model.Lectureseries_Creator;
+import de.uhh.l2g.plugins.model.impl.Lectureseries_CreatorImpl;
+import de.uhh.l2g.plugins.service.Lectureseries_CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.CreatorLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.CreatorFinderUtil;
 
@@ -77,6 +80,27 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 	
 	public List<Creator> getCreatorsByVideoId(Long videoId){
 		List<Creator> cl = CreatorFinderUtil.findCreatorsByVideo(videoId);
+		return cl;
+	}
+	
+	public List<Creator> getCreatorsForLectureseriesOverTheAssigenedVideos(Long lectureseriesId){
+		List<Creator> cl = CreatorFinderUtil.findCreatorsForLectureseriesOverTheAssigenedVideos(lectureseriesId);
+		return cl;
+	}
+	
+	public List<Creator> updateCreatorsForLectureseriesOverTheAssigenedVideosByLectureseriesId(Long lectureseriesId) throws SystemException{
+		//remove all creators
+		lectureseries_CreatorPersistence.removeByLectureseries(lectureseriesId);
+		//add new creators to database
+		List<Creator> cl = CreatorFinderUtil.findCreatorsForLectureseriesOverTheAssigenedVideos(lectureseriesId);
+		ListIterator<Creator> ic = cl.listIterator();
+		while (ic.hasNext()){
+			Creator c = ic.next();
+			Lectureseries_Creator lc = new Lectureseries_CreatorImpl();
+			lc.setCreatorId(c.getCreatorId());
+			lc.setLectureseriesId(lectureseriesId);
+			Lectureseries_CreatorLocalServiceUtil.addLectureseries_Creator(lc);
+		}
 		return cl;
 	}
 	
