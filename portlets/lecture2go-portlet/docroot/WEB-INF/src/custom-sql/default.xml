@@ -206,7 +206,8 @@
 		<![CDATA[
 			SELECT c.* FROM LG_Video_Creator vc 
 			INNER JOIN LG_Creator c ON c.creatorId=vc.creatorId 
-			WHERE videoId IN (SELECT videoId FROM lportal620.LG_Video WHERE lectureseriesId = ?);
+			WHERE videoId IN (SELECT videoId FROM lportal620.LG_Video WHERE lectureseriesId = ?) 
+			GROUP BY creatorId;
 		]]>
     </sql>
 
