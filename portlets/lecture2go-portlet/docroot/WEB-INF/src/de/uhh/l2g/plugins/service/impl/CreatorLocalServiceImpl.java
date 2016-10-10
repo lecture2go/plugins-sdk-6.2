@@ -99,7 +99,7 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 			Lectureseries_Creator lc = new Lectureseries_CreatorImpl();
 			lc.setCreatorId(c.getCreatorId());
 			lc.setLectureseriesId(lectureseriesId);
-			Lectureseries_CreatorLocalServiceUtil.addLectureseries_Creator(lc);
+			if(!c.getFirstName().equals("N.") && !c.getLastName().equals("N."))Lectureseries_CreatorLocalServiceUtil.addLectureseries_Creator(lc);
 		}
 		return cl;
 	}

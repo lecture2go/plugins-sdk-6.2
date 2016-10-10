@@ -154,9 +154,11 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 				      	<div class="meta-creators">
 										<%
 									        String date1 = "";
+											String creators = "";
+											creators=CreatorLocalServiceUtil.getCommaSeparatedLinkedCreatorsByLectureseriesIdAndMaxCreators(lectureseries.getLectureseriesId(), 10);
 									        try{ date1 = video.getDate().trim().substring(0, 10);}catch(Exception e){}
 									    %>
-										<%=video.getLinkedCreators() %>
+										<%=creators%>
 										<div class="date"><%=date1%></div>
 						</div>
 					    <div class="lectureseries-small"><%=series%></div>
