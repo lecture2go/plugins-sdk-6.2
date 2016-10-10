@@ -193,13 +193,11 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			if (hasSearch)y=2;
 			//
 			for (int i=0 ;i<=y;i++){ //for all queries "lQueryForSearch" "lQuery" and "vQuery"
-				if (i<2){
-					if (termId > 0) qPos.add(termId);
-					if (creatorId > 0) qPos.add(creatorId);
-					if (categoryId > 0) qPos.add(categoryId);
-					if (institutionId > 0) qPos.add(institutionId);
-					if (parentInstitutionId > 0) qPos.add(parentInstitutionId);					
-				}
+				if (termId > 0) qPos.add(termId);
+				if (creatorId > 0) qPos.add(creatorId);
+				if (categoryId > 0) qPos.add(categoryId);
+				if (institutionId > 0) qPos.add(institutionId);
+				if (parentInstitutionId > 0) qPos.add(parentInstitutionId);					
 				if (hasSearch) qPos.add("%" + searchQuery + "%");
 			}
 			
@@ -275,26 +273,31 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			String termQuery = "AND t.termId = ? ";
 			lQuery += termQuery;
 			vQuery += termQuery;
+			lQueryForSeach += termQuery;
 		}
 		
 		if (hasCreator) {
 			lQuery += "AND lc.creatorId = ? ";
 			vQuery += "AND vc.creatorId = ? ";
+			lQueryForSeach += "AND lc.creatorId = ? ";
 		}
 	
 		if (hasCategory) {
 			lQuery += "AND l.categoryId = ? ";
 			vQuery += "AND vcat.categoryId = ? ";
+			lQueryForSeach += "AND l.categoryId = ? ";
 		}
 
 		if (hasInstitution) {
 			lQuery += "AND li.institutionId = ? ";
 			vQuery += "AND vi.institutionId = ? ";
+			lQueryForSeach += "AND li.institutionId = ? ";
 		}
 
 		if (hasParentInstitution) {
 			lQuery += "AND li.institutionParentId = ? ";
 			vQuery += "AND vi.institutionParentId = ? ";
+			lQueryForSeach += "AND li.institutionParentId = ? ";
 		}
 
 		if(hasSearch){
