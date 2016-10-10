@@ -900,6 +900,11 @@ public class AdminVideoManagement extends MVCPortlet {
 				} catch (SystemException e) {
 					e.printStackTrace();
 				}
+				//now update creators for the whole lecture series
+				Long lId = video.getLectureseriesId();
+				try{
+					if(lId>0)CreatorLocalServiceUtil.updateCreatorsForLectureseriesOverTheAssigenedVideosByLectureseriesId(lId);
+				}catch(SystemException e){}
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
