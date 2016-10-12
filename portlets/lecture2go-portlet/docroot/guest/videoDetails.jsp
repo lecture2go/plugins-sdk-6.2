@@ -155,7 +155,7 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 										<%
 									        String date1 = "";
 											String creators = "";
-											creators=CreatorLocalServiceUtil.getCommaSeparatedLinkedCreatorsByLectureseriesIdAndMaxCreators(lectureseries.getLectureseriesId(), 100);
+											creators=CreatorLocalServiceUtil.getCommaSeparatedLinkedCreatorsByVideoIdAndMaxCreators(video.getVideoId(), 100);
 									        try{ date1 = video.getDate().trim().substring(0, 10);}catch(Exception e){}
 									    %>
 										<%=creators%>
