@@ -342,6 +342,19 @@
 		</aui:layout>
 	</aui:fieldset>
 </div>
+
+
+<script id="htmlTemplate" type="text/x-tmpl">
+    <%=reqMetadata.getDescription()%>
+</script>
+
+<script>
+	var descData=$('#htmlTemplate').text();
+	function <portlet:namespace/>setDescriptionData(data){
+		descData = data;
+	}
+</script>
+
 <script type="text/javascript">
 var $options = $( "#options" );
 var c = 0;
@@ -636,11 +649,6 @@ function updateLicense(data){
 			});	
 		}
 	);
-}
-
-var descData="<%=reqMetadata.getDescription()%>";
-function <portlet:namespace/>setDescriptionData(data){
-	descData = data;
 }
 
 function applyAllMetadataChanges(){
