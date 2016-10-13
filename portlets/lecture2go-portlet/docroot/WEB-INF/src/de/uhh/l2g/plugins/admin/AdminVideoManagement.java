@@ -109,6 +109,12 @@ public class AdminVideoManagement extends MVCPortlet {
 		try{reqVideoId = new Long(request.getParameterMap().get("videoId")[0]);}catch(Exception e){}
 		try{reqVideo = VideoLocalServiceUtil.getFullVideo(reqVideoId);}catch(Exception e){}
 		
+		//hack for empty secure filename on the first upload
+		if(reqVideo.getFilename().length()==0 && reqVideo.getSecureFilename().length()==0){
+			reqVideo.setSecureFilename(Security.createSecureFileName()+".xx");
+			VideoLocalServiceUtil.updateVideo(reqVideo);
+		}
+		
 		//requested producer
 		Producer reqProducer = new ProducerImpl();
 		try{
