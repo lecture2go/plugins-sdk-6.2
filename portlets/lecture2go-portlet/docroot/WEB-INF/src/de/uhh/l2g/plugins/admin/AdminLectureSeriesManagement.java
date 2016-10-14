@@ -153,6 +153,7 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		if(new Lecture2GoRoleChecker().isCoordinator(user) || new Lecture2GoRoleChecker().isL2gAdmin(user)){
 			lectureseries.setApproved(1);
 		}
+		// If no lectureseries number is set, the default-number 00.000 will be set
 		lectureseries.setNumber("".equals(request.getParameter("number")) ? LanguageUtil.get(getPortletConfig(), locale, "lecture-series-default-number"):request.getParameter("number"));
 		lectureseries.setCategoryId(categoryId);
 		lectureseries.setName(request.getParameter("name"));
@@ -303,6 +304,7 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		//build lecture series object
 		LectureseriesImpl lectureseries = new LectureseriesImpl();
 		lectureseries.setApproved(0);
+		// If no lectureseries number is set, the default-number 00.000 will be set
 		lectureseries.setNumber("".equals(request.getParameter("number")) ? LanguageUtil.get(getPortletConfig(), locale, "lecture-series-default-number"):request.getParameter("number"));
 		lectureseries.setCategoryId(categoryId);
 		lectureseries.setName(request.getParameter("name"));
