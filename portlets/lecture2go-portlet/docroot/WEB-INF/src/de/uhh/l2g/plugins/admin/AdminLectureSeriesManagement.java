@@ -145,13 +145,15 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			categoryId = new Long(request.getParameter("categoryId"));
 		}catch(Exception e){}
 		
+		Locale locale = request.getLocale(); 
+
 		//update object
 		Lectureseries lectureseries = LectureseriesLocalServiceUtil.getLectureseries(lId);
 		//only for admin or coordinator can update this flag
 		if(new Lecture2GoRoleChecker().isCoordinator(user) || new Lecture2GoRoleChecker().isL2gAdmin(user)){
 			lectureseries.setApproved(1);
 		}
-		lectureseries.setNumber(request.getParameter("number"));
+		lectureseries.setNumber("".equals(request.getParameter("number")) ? LanguageUtil.get(getPortletConfig(), locale, "lecture-series-default-number"):request.getParameter("number"));
 		lectureseries.setCategoryId(categoryId);
 		lectureseries.setName(request.getParameter("name"));
 		lectureseries.setShortDesc(request.getParameter("shortDesc"));
@@ -253,7 +255,6 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		TagcloudLocalServiceUtil.updateByObjectIdAndObjectClassType(tagCloudArrayString, lectureseries.getClass().getName(), lectureseries.getLectureseriesId());
 
 		//email notification after edit
-		Locale locale = request.getLocale();  
 
 		//send an email to all producer, if logged in as coordinator or admin
 		//and lecture serice edited
@@ -297,10 +298,12 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			categoryId = new Long(request.getParameter("categoryId"));
 		}catch(Exception e){}
 		
+		Locale locale = request.getLocale(); 
+		
 		//build lecture series object
 		LectureseriesImpl lectureseries = new LectureseriesImpl();
 		lectureseries.setApproved(0);
-		lectureseries.setNumber(request.getParameter("number"));
+		lectureseries.setNumber("".equals(request.getParameter("number")) ? LanguageUtil.get(getPortletConfig(), locale, "lecture-series-default-number"):request.getParameter("number"));
 		lectureseries.setCategoryId(categoryId);
 		lectureseries.setName(request.getParameter("name"));
 		lectureseries.setShortDesc(request.getParameter("shortDesc"));
@@ -397,7 +400,6 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		request.setAttribute("producers", producers);
 		request.setAttribute("backURL", backURL);
 		//send an email to coordinator and administrator, if logged in as producer
-		Locale locale = request.getLocale();  
 		if(new Lecture2GoRoleChecker().isProducer(user)){
 			//get producer details
 			Producer p = new ProducerImpl();
