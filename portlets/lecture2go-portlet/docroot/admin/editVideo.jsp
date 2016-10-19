@@ -473,7 +473,7 @@ $(function () {
         		lectureseriesNumber: "<%=reqLectureseries.getNumber()%>",
         		fileName: "<%=VideoLocalServiceUtil.getVideo(reqVideo.getVideoId()).getFilename()%>",
         		secureFileName: "<%=VideoLocalServiceUtil.getVideo(reqVideo.getVideoId()).getSecureFilename()%>",
-        		l2gDateTime: $("#l2gDateTime").val(),
+        		l2gDateTime: $("#<portlet:namespace></portlet:namespace>lecture2go-date").val(),
         		videoId: "<%=reqVideo.getVideoId()%>"
         };        
     });
