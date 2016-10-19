@@ -24,7 +24,7 @@
 %>
 
 <body>
-	<%if(video.getOpenAccess()==1 && video.getVideoId()>0){ %>
+	<%if(video.getVideoId()>0){ %>
 		<div id="player1"></div>
 		<script>
 					var vttChapterFile ="<%=video.getVttChapterFile()%>";
