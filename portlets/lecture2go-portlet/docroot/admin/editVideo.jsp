@@ -466,7 +466,6 @@ $(function () {
 		dropZone: $('#dropzone')
     }).bind('fileuploadsubmit', function (e, data) {
         // The example input, doesn't have to be part of the upload form:
-			alert($("#<portlet:namespace></portlet:namespace>lecture2go-date").val());
         	data.formData = {
         		//p.setHomeDir(PropsUtil.get("lecture2go.media.repository")+"/"+HostLocalServiceUtil.getByHostId(p.getHostId()).getServerRoot()+"/"+p.getHomeDir());
         		repository: "<%=uploadRepository%>",
