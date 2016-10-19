@@ -24,6 +24,7 @@
 <liferay-portlet:resourceURL id="getGenerationDate" var="getGenerationDateURL" />
 <liferay-portlet:resourceURL id="videoUpdateFirstTitle" var="videoUpdateFirstTitleURL" />
 <liferay-portlet:resourceURL id="getFileName" var="getFileNameURL" />
+<liferay-portlet:resourceURL id="getSecureFileName" var="getSecureFileNameURL" />
 <liferay-portlet:resourceURL id="getShare" var="getShareURL" />
 
 <%
@@ -466,13 +467,15 @@ $(function () {
 		dropZone: $('#dropzone')
     }).bind('fileuploadsubmit', function (e, data) {
         // The example input, doesn't have to be part of the upload form:
+        	var fileName = getDBFilename();
+        	var secureFileName = getSecureFilename();
         	data.formData = {
         		//p.setHomeDir(PropsUtil.get("lecture2go.media.repository")+"/"+HostLocalServiceUtil.getByHostId(p.getHostId()).getServerRoot()+"/"+p.getHomeDir());
-        		repository: "<%=uploadRepository%>",
+        	    repository: "<%=uploadRepository%>",
         		openaccess: "<%=reqVideo.getOpenAccess()%>",
         		lectureseriesNumber: "<%=reqLectureseries.getNumber()%>",
-        		fileName: "<%=VideoLocalServiceUtil.getVideo(reqVideo.getVideoId()).getFilename()%>",
-        		secureFileName: "<%=VideoLocalServiceUtil.getVideo(reqVideo.getVideoId()).getSecureFilename()%>",
+        		fileName: fileName,
+        		secureFileName: secureFileName,
         		l2gDateTime: $("#<portlet:namespace></portlet:namespace>lecture2go-date").val(),
         		videoId: "<%=reqVideo.getVideoId()%>"
         };        
@@ -840,6 +843,25 @@ function getDBFilename(){
 			  async:false,
 			  success: function(data) {
 				 ret=data.fileName; 
+			  }
+	  });
+	  return ret;
+}
+
+function getSecureFilename(){
+	var ret ="";
+	  //
+	  $.ajax({
+			  type: "POST",
+			  url: "<%=getSecureFileNameURL%>",
+			  dataType: 'json',
+			  data: {
+			 	  <portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>"
+			  },
+			  global: false,
+			  async:false,
+			  success: function(data) {
+				 ret=data.secureFileName; 
 			  }
 	  });
 	  return ret;
