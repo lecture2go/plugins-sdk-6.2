@@ -466,7 +466,8 @@ $(function () {
 		dropZone: $('#dropzone')
     }).bind('fileuploadsubmit', function (e, data) {
         // The example input, doesn't have to be part of the upload form:
-        data.formData = {
+			alert($("#<portlet:namespace></portlet:namespace>lecture2go-date").val());
+        	data.formData = {
         		//p.setHomeDir(PropsUtil.get("lecture2go.media.repository")+"/"+HostLocalServiceUtil.getByHostId(p.getHostId()).getServerRoot()+"/"+p.getHomeDir());
         		repository: "<%=uploadRepository%>",
         		openaccess: "<%=reqVideo.getOpenAccess()%>",
@@ -474,7 +475,7 @@ $(function () {
         		fileName: "<%=VideoLocalServiceUtil.getVideo(reqVideo.getVideoId()).getFilename()%>",
         		secureFileName: "<%=VideoLocalServiceUtil.getVideo(reqVideo.getVideoId()).getSecureFilename()%>",
         		l2gDateTime: $("#l2gDateTime").val(),
-        		videoId: "<%=reqVideo.getVideoId()%>",
+        		videoId: "<%=reqVideo.getVideoId()%>"
         };        
     });
    
