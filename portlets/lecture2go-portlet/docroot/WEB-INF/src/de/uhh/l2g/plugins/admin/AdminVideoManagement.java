@@ -575,6 +575,14 @@ public class AdminVideoManagement extends MVCPortlet {
 			jo.put("fileName", fileName);
 			writeJSON(resourceRequest, resourceResponse, jo);
 		}
+		
+		if(resourceID.equals("getSecureFileName")){
+			JSONObject jo = JSONFactoryUtil.createJSONObject();
+			String secureFileName="";
+			if(video.getSecureFilename().length()>0)secureFileName=video.getSecureFilename();
+			jo.put("secureFileName", secureFileName);
+			writeJSON(resourceRequest, resourceResponse, jo);
+		}
 
 		if(resourceID.equals("getShare")){
 			JSONObject jo = JSONFactoryUtil.createJSONObject();
