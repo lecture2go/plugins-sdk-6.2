@@ -15,7 +15,16 @@
 			ORDER BY hitsPerDay DESC 
 		]]>
     </sql>
-    
+
+    <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.findVideosByHitsAndOpenAccess">
+		<![CDATA[
+			SELECT v.* 
+			FROM LG_Video v  
+			WHERE hits>? AND openAccess=1 
+			ORDER BY hits DESC 
+		]]>
+    </sql>
+        
     <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.findVideosByHits">
 		<![CDATA[
 			SELECT v.* 

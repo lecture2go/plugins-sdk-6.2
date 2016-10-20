@@ -620,6 +620,10 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	public List<Video> getByHits(Long hits){
 		return VideoFinderUtil.findVideosByHits(hits);
 	}
+
+	public List<Video> getByHitsAndOpenAccess(Long hits){
+		return VideoFinderUtil.findVideosByHitsAndOpenAccess(hits);
+	}
 	
 	public List<Video> getByHits(){
 		return VideoFinderUtil.findVideosByHits(0);

@@ -302,7 +302,7 @@ public class ThreadManagement extends MVCPortlet {
 	public void createPopularVideoList() throws SystemException {
 		List<Video> returnList = new ArrayList<Video>();
 		//1.get open access videos with more than 20 clicks 
-		returnList = VideoLocalServiceUtil.getByHits(HITS);
+		returnList = VideoLocalServiceUtil.getByHitsAndOpenAccess(HITS);
 		//2.truncate table videohitlist
 		VideohitlistLocalServiceUtil.deleteAll();
 		//3.fill table with data
