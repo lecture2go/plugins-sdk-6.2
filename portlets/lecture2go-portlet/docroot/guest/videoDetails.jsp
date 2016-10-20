@@ -24,11 +24,12 @@
 </portlet:actionURL>
 
 <%
+String tags= video.getTags().length()>0 ? " - "+video.getTags()+" - " : "";
+String pageTitle=video.getTitle() +" - "+lectureseries.getName()+" - "+CreatorLocalServiceUtil.getCommaSeparatedCreatorsByVideoIdAndMaxCreators(video.getVideoId(), 200) + " - Universität Hamburg" + tags;
+PortalUtil.setPageTitle(pageTitle, request);
+
 String companyName = company.getName();
 String portalURL = PrefsPropsUtil.getString(company.getCompanyId(),PropsKeys.DEFAULT_LANDING_PAGE_PATH);
-
-String pageTitle=video.getTitle() +" - "+lectureseries.getName()+" - "+CreatorLocalServiceUtil.getCommaSeparatedCreatorsByVideoIdAndMaxCreators(video.getVideoId(), 200) + " - " + video.getTags() + " - " + companyName;
-PortalUtil.setPageTitle(pageTitle, request);
 
 boolean isCitation2Go = false;
 if(timeStart>0 && timeEnd>timeStart && video.getCitation2go()==1)isCitation2Go=true;
