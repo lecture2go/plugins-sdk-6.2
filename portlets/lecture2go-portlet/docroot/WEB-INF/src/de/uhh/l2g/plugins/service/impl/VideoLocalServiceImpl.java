@@ -16,6 +16,8 @@ package de.uhh.l2g.plugins.service.impl;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -548,6 +550,13 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			Video objectVideo = getFullVideo(vli.next().getVideoId());
 			if(objectVideo.getFilename().trim().length()>0)rvl.add(objectVideo);
 		}
+		// Sort by generation date
+		Collections.sort(rvl, new Comparator<Video>() {
+				@Override
+				public int compare(Video v1, Video v2) {
+					return  v2.getGenerationDate().compareTo(v1.getGenerationDate());
+				}
+		    });
 		return rvl;
 	}
 	
