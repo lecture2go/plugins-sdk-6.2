@@ -23,14 +23,12 @@
 	<portlet:param name="creatorId" value="0"/>
 </portlet:actionURL>
 
-<SCRIPT LANGUAGE = "JavaScript">
-var name="<%=video.getTitle() +" - "+lectureseries.getName()+" - "+video.getCreators()%>";
-document.title = "Lecture2Go - "+name;
-</SCRIPT>
-								
 <%
 String companyName = company.getName();
 String portalURL = PrefsPropsUtil.getString(company.getCompanyId(),PropsKeys.DEFAULT_LANDING_PAGE_PATH);
+
+String pageTitle=video.getTitle() +" - "+lectureseries.getName()+" - "+CreatorLocalServiceUtil.getCommaSeparatedCreatorsByVideoIdAndMaxCreators(video.getVideoId(), 200) + " - " + video.getTags() + " - " + companyName;
+PortalUtil.setPageTitle(pageTitle, request);
 
 boolean isCitation2Go = false;
 if(timeStart>0 && timeEnd>timeStart && video.getCitation2go()==1)isCitation2Go=true;
