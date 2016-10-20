@@ -48,6 +48,7 @@
 						WHERE objectClassType="de.uhh.l2g.plugins.model.impl.VideoImpl" 
 						AND tag.tags LIKE ? 
 						AND v.lectureseriesId=? 
+						AND v.openAccess=1
 		]]>
     </sql>
 
