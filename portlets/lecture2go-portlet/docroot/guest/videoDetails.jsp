@@ -22,6 +22,11 @@
 	<portlet:param name="categoryId" value="0"/>
 	<portlet:param name="creatorId" value="0"/>
 </portlet:actionURL>
+
+<SCRIPT LANGUAGE = "JavaScript">
+var name="<%=video.getTitle() +" - "+lectureseries.getName()+" - "+video.getCreators()%>";
+document.title = "Lecture2Go - "+name;
+</SCRIPT>
 								
 <%
 String companyName = company.getName();
