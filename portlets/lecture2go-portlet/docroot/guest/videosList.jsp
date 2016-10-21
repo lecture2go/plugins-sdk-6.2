@@ -330,10 +330,18 @@
 									</div>
 									<div class="video-content-wrapper">
 										<div class="video-content">
-											<span class="term-of-creation"><%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName() %></span>
+											<%
+												String term ="";
+												try{term = TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName();}catch(Exception e){}
+											%>
+											<span class="term-of-creation"><%=term%></span>
 											
 									        <div class="lectureseries-title dot-ellipsis dot-resize-update">
-									        	<a href="<%=view1URL%>"><%=lectser.getName()%></a>
+									        	<%
+									        	String lectName = "";
+									        	try{lectName=lectser.getName();}catch(Exception e){}
+									        	%>
+									        	<a href="<%=view1URL%>"><%=lectName%></a>
 									        </div>
 												
 												<div class="allcreators">
