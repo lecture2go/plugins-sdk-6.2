@@ -141,17 +141,19 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 		    long userId =  Long.parseLong(request.getRemoteUser());
 		    long ownInstitutionId = 0; //user is not attached to a conrete institution
 		   
-		    //Currently only this roles have fixed institution
-			if (UserLocalServiceUtil.hasRoleUser(coordinatorRoleId, userId)){
-			    	ownInstitutionId = CoordinatorLocalServiceUtil.getInstitutionByCoordinator(userId).getInstitutionId();
-			}
-			else{
-			    if (UserLocalServiceUtil.hasRoleUser(producerRoleId, userId)){
-			   		ownInstitutionId = ProducerLocalServiceUtil.getInstitutionByProducer(userId).getInstitutionId();
-			    }
-			}
-			
-		   long treeBaseId = InstitutionLocalServiceUtil.getDefaultInstitutionId(companyId, groupId);
+		    try{
+			    //Currently only this roles have fixed institution
+				if (UserLocalServiceUtil.hasRoleUser(coordinatorRoleId, userId)){
+				    	ownInstitutionId = CoordinatorLocalServiceUtil.getInstitutionByCoordinator(userId).getInstitutionId();
+				}
+				else{
+				    if (UserLocalServiceUtil.hasRoleUser(producerRoleId, userId)){
+				   		ownInstitutionId = ProducerLocalServiceUtil.getInstitutionByProducer(userId).getInstitutionId();
+				    }
+				}
+		    }catch(Exception e){}
+		    
+		    long treeBaseId = InstitutionLocalServiceUtil.getDefaultInstitutionId(companyId, groupId);
 		
 		    if(permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "VIEW_ALL_INSTITUTIONS")){
 		    	treeBaseId = rootId; //top level
