@@ -165,8 +165,13 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 									boolean isVideo = (vid.getLectureseriesId() < 0);
 
 									String creators = CreatorLocalServiceUtil.getCommaSeparatedCreatorsByVideoIdAndMaxCreators(vid.getVideoId(),3);
-								
-									Lectureseries lec = LectureseriesLocalServiceUtil.getLectureseries(vid.getLectureseriesId());
+									
+									String lectureseries = "";
+									
+									if (!isVideo) {
+										Lectureseries lec = LectureseriesLocalServiceUtil.getLectureseries(vid.getLectureseriesId());
+										lectureseries = lec.getName();
+									}
 									
 						        	List<Video_Institution> vi = Video_InstitutionLocalServiceUtil.getByVideo(vid.getVideoId());
 						        	// only get the first institution
@@ -195,7 +200,7 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 											<div class="creator-small2 dot-ellipsis dot-height-25 dot-resize-update "><%= vid.getLinkedCreators() %></div>
 											<div class="lectureseries-small dot-ellipsis dot-height-25 dot-resize-update">
 												<% if (!isVideo) { %>
-													<%=lec.getName() %>
+													<%=lectureseries %>
 												<% } else { %>
 													&nbsp;
 												<% } %>
