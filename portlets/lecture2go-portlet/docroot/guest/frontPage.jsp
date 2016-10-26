@@ -1,4 +1,7 @@
 <%@page import="de.uhh.l2g.plugins.model.impl.InstitutionImpl"%>
+<%@page import="com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil"%>
+<%@page import="com.liferay.portlet.journal.model.JournalArticle"%>
+<%@page import="com.liferay.portal.kernel.workflow.WorkflowConstants"%>
 <%@include file="/init.jsp"%>
 <%
 Long institutionId = new Long(0);
@@ -56,6 +59,26 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 
 
 <div id="front-page-content">
+	<% 
+		// this is a temporary solution to show a web content for important news below the teaser
+		String articleId = "78499";
+		long groupId = themeDisplay.getLayout().getGroupId();
+				
+		// check if the article is approved, if not there will be not 'lead-box'-div
+		boolean articleApproved = true;
+		try {
+			JournalArticle j = JournalArticleLocalServiceUtil.getLatestArticle(groupId, articleId, WorkflowConstants.STATUS_APPROVED);
+		} catch(Exception e) {
+			articleApproved = false;
+		}
+		
+	%>
+	<c:if test='<%=articleApproved %>'>
+		<div class="lead-box">
+			<liferay-ui:journal-article articleId="<%=articleId%>" groupId="<%=groupId%>"/>
+		</div>
+	</c:if>
+	
 <!-- new videos -->
 	<div class="news">
 		<h4><liferay-ui:message key="last-added"/></h4>
@@ -165,7 +188,7 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 									boolean isVideo = (vid.getLectureseriesId() < 0);
 
 									String creators = CreatorLocalServiceUtil.getCommaSeparatedCreatorsByVideoIdAndMaxCreators(vid.getVideoId(),3);
-									
+
 									String lectureseries = "";
 									
 									if (!isVideo) {
