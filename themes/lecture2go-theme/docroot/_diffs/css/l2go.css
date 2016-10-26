@@ -569,12 +569,10 @@ p.smallitalic {
     font-size: 10px;
 }
 
-.path > span {
-    font-weight: 900;
-}
-
+.path > span,
 .path-wide > span {
-    font-weight: 900;
+   	font-family: TheSansUHHBold, sans-serif;
+    font-weight: normal;
 }
 
 .meta-video-info {
@@ -1211,7 +1209,6 @@ thead, th {
 
 .meta-description-container b {
     color: #c90219;
-    font-weight: 600;
 }
 
 .meta-description p{
@@ -1234,16 +1231,11 @@ thead, th {
 
 .meta-creators {
 	font-size: 12px;
-	font-weight: 100;
 	margin-top: 0px;
 }
 
 .meta-creators .date {
     font-size: 10px !important;
-}
-
-.meta-lectureseries {
-	font-weight: 600;
 }
 
 .col-md-7 {
@@ -2635,7 +2627,6 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
     top: 110px;
     left: -40px;
     font-size: 30px;
-    font-weight: 100;
     line-height: 30px;
     color: #999999;
     width: 30px;
