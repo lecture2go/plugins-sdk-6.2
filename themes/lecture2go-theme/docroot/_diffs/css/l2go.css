@@ -2498,6 +2498,28 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
     margin-bottom: 8%;
 }
 
+.lead-box {
+	background-color: #fffff5;
+    padding: 12px 16px;
+    border: 1px solid #efefef;
+    box-shadow: 0px 0px 2px #eee;
+    margin: 5px 0 0 0;
+}
+
+.lead-box h3 {
+    font-size: 15px;
+	margin: 0px 0 4px 0; 
+	line-height: 18px;
+}
+
+.lead-box p {
+	margin: 0 0 4px 0;
+}
+
+.lead-box a {
+    color: #c40017;
+}
+
 .big-search {
 	height: 35px;
 	margin-bottom: 2%;
