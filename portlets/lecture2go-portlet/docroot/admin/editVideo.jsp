@@ -79,9 +79,13 @@
 	else lectureseriesAsTreeList = LectureseriesLocalServiceUtil.getFilteredByApprovedSemesterFacultyProducerAsTreeMapSortedByTerm(1, (long) 0, (long) 0, reqProducer.getProducerId());
 %>
 
+<script id="htmlTitle" type="text/x-tmpl">
+    <%=reqVideo.getTitle()%>
+</script>
+
 <script type="text/javascript">
   $(function(){
-	var vidtitle = "<%=reqVideo.getTitle()%>";
+	var vidtitle = $('#htmlTitle').text();
     if(isFirstUpload()==1 && getDateTime().length==0){
    	  	$("#date-time-form").fadeIn(1000);
     	$("#upload-form").hide();
