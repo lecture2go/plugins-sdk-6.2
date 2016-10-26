@@ -188,7 +188,7 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 									boolean isVideo = (vid.getLectureseriesId() < 0);
 
 									String creators = CreatorLocalServiceUtil.getCommaSeparatedCreatorsByVideoIdAndMaxCreators(vid.getVideoId(),3);
-								
+
 									String lectureseries = "";
 									
 									if (!isVideo) {
