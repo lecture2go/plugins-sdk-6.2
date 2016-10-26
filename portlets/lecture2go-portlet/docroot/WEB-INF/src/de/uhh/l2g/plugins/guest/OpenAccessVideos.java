@@ -128,6 +128,7 @@ public class OpenAccessVideos extends MVCPortlet {
 	public void viewOpenAccessVideo(ActionRequest request, ActionResponse response) {
 		String objectType = ParamUtil.getString(request, "objectType");
 		String password = request.getParameter("password");
+		boolean objectExists = true;
 		
 		Long objectId = new Long(0);
 		boolean secLink = false;
@@ -162,115 +163,119 @@ public class OpenAccessVideos extends MVCPortlet {
 	    	try{
 	    		lectureseries = LectureseriesLocalServiceUtil.getLectureseries(objectId);
 	    		video = VideoLocalServiceUtil.getFullVideo(lectureseries.getLatestOpenAccessVideoId());
-	    	}catch(Exception e){}
+	    	}catch(Exception e){
+	    		objectExists = false;
+	    	}
 	    }else if(objectType.equals("v")){
 	    	video = VideoLocalServiceUtil.getFullVideo(objectId);
-	    	try{lectureseries = LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId());}catch(Exception e){}
+	    	if(video.getVideoId()==0)objectExists=false;
+	    	try{lectureseries = LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId());}catch (Exception e){}
 	    }
-	    
-	    List<Video> relatedVideos = new ArrayList<Video>();
-	    //related videos by lectureseries id
-    	try {
-    		int os = 0;
-    		if(video.getOpenAccess()==1)os=1;
-			relatedVideos = VideoLocalServiceUtil.getByLectureseriesAndOpenaccess(lectureseries.getLectureseriesId(),os);
-		} catch (SystemException e) {}
-	    
-	    //chapters and segments
-	    List<Segment> segments= new ArrayList<Segment>();
-		try {
-			segments = SegmentLocalServiceUtil.getSegmentsByVideoId(objectId);
-		} catch (PortalException e) {
-		} catch (SystemException e) {}
-	    
-	    //lectureseries for video
-	    List<Video_Lectureseries> vl = new ArrayList<Video_Lectureseries>();
-	    try {
-			vl = Video_LectureseriesLocalServiceUtil.getByVideo(video.getVideoId());
-		} catch (SystemException e) {}
-	    
-	    //institutions for video
-	    List<Video_Institution> vi = new ArrayList<Video_Institution>();
-	    vi = Video_InstitutionLocalServiceUtil.getByVideo(video.getVideoId());
-	    
-	    //metadata for video
-	    Metadata m = new MetadataImpl();
-	    try {
-			m = MetadataLocalServiceUtil.getMetadata(video.getMetadataId());
-		} catch (PortalException e) {
-		} catch (SystemException e) {}
-	    
-	    //license for video
-	    
-	    License l = new LicenseImpl();
-	    try {
-			l = LicenseLocalServiceUtil.getByVideoId(video.getVideoId());
-		} catch (NoSuchLicenseException e) {
-		} catch (SystemException e) {}
-	    
-	    //update video hits
-	    Long hits = video.getHits();
-	    hits = hits+1;
-	    video.setHits(hits);
-	    try {
-			VideoLocalServiceUtil.updateVideo(video);
-		} catch (SystemException e) {}
-	    
-	    //check password access
-	    if(secLink==false){
-	    	if(video.getOpenAccess()==1) video.setAccessPermitted(1);
-	    	else video.setAccessPermitted(2);
-	    }else{
-	    	//access denied by default
-	    	video.setAccessPermitted(0);
-	    	
-    		//1. authentication by lecture series password
-			try{
-		    	if(password.equals(lectureseries.getPassword()))video.setAccessPermitted(1);
-	   			else video.setAccessPermitted(0);				
-			}catch(Exception e){}
+	    if(objectExists){
+		    List<Video> relatedVideos = new ArrayList<Video>();
+		    //related videos by lectureseries id
+	    	try {
+	    		int os = 0;
+	    		if(video.getOpenAccess()==1)os=1;
+				relatedVideos = VideoLocalServiceUtil.getByLectureseriesAndOpenaccess(lectureseries.getLectureseriesId(),os);
+			} catch (SystemException e) {}
+		    
+		    //chapters and segments
+		    List<Segment> segments= new ArrayList<Segment>();
+			try {
+				segments = SegmentLocalServiceUtil.getSegmentsByVideoId(objectId);
+			} catch (PortalException e) {
+			} catch (SystemException e) {}
+		    
+		    //lectureseries for video
+		    List<Video_Lectureseries> vl = new ArrayList<Video_Lectureseries>();
+		    try {
+				vl = Video_LectureseriesLocalServiceUtil.getByVideo(video.getVideoId());
+			} catch (SystemException e) {}
+		    
+		    //institutions for video
+		    List<Video_Institution> vi = new ArrayList<Video_Institution>();
+		    vi = Video_InstitutionLocalServiceUtil.getByVideo(video.getVideoId());
+		    
+		    //metadata for video
+		    Metadata m = new MetadataImpl();
+		    try {
+				m = MetadataLocalServiceUtil.getMetadata(video.getMetadataId());
+			} catch (PortalException e) {
+			} catch (SystemException e) {}
+		    
+		    //license for video
+		    
+		    License l = new LicenseImpl();
+		    try {
+				l = LicenseLocalServiceUtil.getByVideoId(video.getVideoId());
+			} catch (NoSuchLicenseException e) {
+			} catch (SystemException e) {}
+		    
+		    //update video hits
+		    Long hits = video.getHits();
+		    hits = hits+1;
+		    video.setHits(hits);
+		    try {
+				VideoLocalServiceUtil.updateVideo(video);
+			} catch (SystemException e) {}
+		    
+		    //check password access
+		    if(secLink==false){
+		    	if(video.getOpenAccess()==1) video.setAccessPermitted(1);
+		    	else video.setAccessPermitted(2);
+		    }else{
+		    	//access denied by default
+		    	video.setAccessPermitted(0);
+		    	
+	    		//1. authentication by lecture series password
+				try{
+			    	if(password.equals(lectureseries.getPassword()))video.setAccessPermitted(1);
+		   			else video.setAccessPermitted(0);				
+				}catch(Exception e){}
 
-   			
-    		//2. authentication by cookie
-    		Cookie[] c = request.getCookies();
-    		for(int i=0; i<c.length;i++){
-    			Cookie coo = c[i];
-    			String cooVal ="";
-    			if(coo.getName().equals("L2G_LSID"))cooVal=c[i].getValue();
-    			//has been already logged in
-    			if(cooVal.equals(video.getLectureseriesId()+"")){
-    				video.setAccessPermitted(1);
-    			}
-    		}
-    		
-    		//3. authentication by video password
-    		if(!video.getPassword().isEmpty()){
-    			try{
-        			if(password.equals(video.getPassword())){
-        				video.setAccessPermitted(1);
-        			}else{
-        				video.setAccessPermitted(0);
-        			}   				
-    			}catch(Exception e){
-    				video.setAccessPermitted(0);
-    			}
-    		}
-    	}
-	    
-	    request.setAttribute("videoLicense",l);
-	    request.setAttribute("videoMetadata",m);
-	    request.setAttribute("videoInstitutions",vi);
-	    request.setAttribute("videoLectureseries",vl);
-	    request.setAttribute("video",video);
-	    request.setAttribute("relatedVideos",relatedVideos);
-	    request.setAttribute("segments",segments);
-	    request.setAttribute("lectureseries",lectureseries);
-	    request.setAttribute("timeStart",timeStart);
-	    request.setAttribute("timeEnd",timeEnd);
-	    request.setAttribute("objectType",objectType);
-	    request.setAttribute("objectId",oid);
-	    
-		response.setRenderParameter("jspPage","/guest/videoDetails.jsp");
+	   			
+	    		//2. authentication by cookie
+	    		Cookie[] c = request.getCookies();
+	    		for(int i=0; i<c.length;i++){
+	    			Cookie coo = c[i];
+	    			String cooVal ="";
+	    			if(coo.getName().equals("L2G_LSID"))cooVal=c[i].getValue();
+	    			//has been already logged in
+	    			if(cooVal.equals(video.getLectureseriesId()+"")){
+	    				video.setAccessPermitted(1);
+	    			}
+	    		}
+	    		
+	    		//3. authentication by video password
+	    		if(!video.getPassword().isEmpty()){
+	    			try{
+	        			if(password.equals(video.getPassword())){
+	        				video.setAccessPermitted(1);
+	        			}else{
+	        				video.setAccessPermitted(0);
+	        			}   				
+	    			}catch(Exception e){
+	    				video.setAccessPermitted(0);
+	    			}
+	    		}
+	    	}
+		    
+		    request.setAttribute("videoLicense",l);
+		    request.setAttribute("videoMetadata",m);
+		    request.setAttribute("videoInstitutions",vi);
+		    request.setAttribute("videoLectureseries",vl);
+		    request.setAttribute("video",video);
+		    request.setAttribute("relatedVideos",relatedVideos);
+		    request.setAttribute("segments",segments);
+		    request.setAttribute("lectureseries",lectureseries);
+		    request.setAttribute("timeStart",timeStart);
+		    request.setAttribute("timeEnd",timeEnd);
+		    request.setAttribute("objectType",objectType);
+		    request.setAttribute("objectId",oid);
+		    
+			response.setRenderParameter("jspPage","/guest/videoDetails.jsp");	    	
+	    }
 	}
 	
 }
