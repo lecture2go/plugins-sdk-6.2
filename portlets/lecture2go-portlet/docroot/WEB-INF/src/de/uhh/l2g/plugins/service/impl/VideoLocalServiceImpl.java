@@ -638,4 +638,16 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		return VideoFinderUtil.findVideosByHits(0);
 	}
 	
+	@Override
+	public Video updateVideo(Video video){
+		Video v = new VideoImpl();
+		if(video.getVideoId()>0)
+			try {
+				v=super.updateVideo(video);
+			} catch (SystemException e) {
+				e.printStackTrace();
+			}
+		return v;
+	}
+	
 }
