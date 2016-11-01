@@ -1,4 +1,4 @@
-<script type="text/javascript">jwplayer.key="Ez+YMIX4GOdXtP/v87cdP4FQuVY2dvNrQluq/w==";</script>
+<script type="text/javascript">jwplayer.key="201IIc3/RasApk0L1+d1fv9pi5UCUsF6VvHj1C+EfkI=";</script>
 <script>
     $(function() {
         // herausfinden ob es ein tablet/smartphone ist
@@ -120,8 +120,10 @@
                 // selbst manuell das vide gestartet hat. Wir werden den start des Zitates
                 // später anders lösen
                 if (!isTouchDevice) {
-                    jwplayer().seek(frameStart);
-                    jwplayer().pause();
+                	jwplayer().on('firstFrame', function() { 
+                		jwplayer().play();
+                		jwplayer().seek(frameStart);
+                	});
                 }
             }
 
