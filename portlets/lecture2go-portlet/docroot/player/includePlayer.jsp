@@ -1,4 +1,4 @@
-<script type="text/javascript">jwplayer.key="201IIc3/RasApk0L1+d1fv9pi5UCUsF6VvHj1C+EfkI=";</script>
+<script type="text/javascript">jwplayer.key="";</script>
 <script>
     $(function() {
         // herausfinden ob es ein tablet/smartphone ist
@@ -106,7 +106,7 @@
             			id : $chapterDivs.eq(i).attr("id"),
             			begin : timeToSeconds($chapterDivs.eq(i).attr("begin")),
                     	end : timeToSeconds($chapterDivs.eq(i).attr("end"))
-            	}
+            	};
             	chapters[i] = chapter;
             }
 
