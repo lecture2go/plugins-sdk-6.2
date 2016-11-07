@@ -201,7 +201,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		ProducerImpl reqProducer = new ProducerImpl();
 		reqProducer = (ProducerImpl)ProducerLocalServiceUtil.getProdUcer(producerId);
 		request.setAttribute("reqProducer", reqProducer);
-
+		
 		//video
 		Video newVideo = new VideoImpl();
 		//long newVideoId = counterLocalServiceUtil.increment(Video.class.getName());
@@ -224,6 +224,14 @@ public class AdminVideoManagement extends MVCPortlet {
 		request.setAttribute("reqVideo", newVideo);
 		tagCloudArrayString.add(video.getTitle());
 
+		// update uploads for producer
+		ProducerImpl p = new ProducerImpl();
+		p = (ProducerImpl)ProducerLocalServiceUtil.getProducer(producerId);
+		int n = 0;
+		n = VideoLocalServiceUtil.getByProducer(p.getProducerId()).size();
+		p.setNumberOfProductions(n);
+		ProducerLocalServiceUtil.updateProducer(p);
+			
 		//link to lectureseries list
 		Video_Lectureseries vl = new Video_LectureseriesImpl();
 		vl.setLectureseriesId(lectureseriesId);
@@ -274,7 +282,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			Video_InstitutionLocalServiceUtil.addVideo_Institution(vi);
 			tagCloudArrayString.add(ins.getName());			
 		}
-		
+	
 		//creators
 		JSONArray creatorsArray = CreatorLocalServiceUtil.getJSONCreatorsByLectureseriesId(lectureseriesId);
 		for (int i = 0; i< creatorsArray.length(); i++){
@@ -545,8 +553,25 @@ public class AdminVideoManagement extends MVCPortlet {
 				jo.put("generationDate", generationDate);
 				writeJSON(resourceRequest, resourceResponse, jo);
 			} catch (SystemException e) {
-//				e.printStackTrace();
+				//e.printStackTrace();
 			}
+		}
+
+		if(resourceID.equals("updateNumberOfProductions")){
+			Producer producer = new ProducerImpl();
+			JSONObject jo = JSONFactoryUtil.createJSONObject();
+			try {
+				producer = ProducerLocalServiceUtil.getProducer(video.getProducerId());
+				// update uploads for producer
+				int n = 0;
+				n = VideoLocalServiceUtil.getByProducer(producer.getProducerId()).size();
+				producer.setNumberOfProductions(n);
+				jo.put("numberOfProductions", n);				
+				ProducerLocalServiceUtil.updateProducer(producer);
+			} catch (Exception e1) {
+				jo.put("numberOfProductions", "-1");
+			} 
+			writeJSON(resourceRequest, resourceResponse, jo);
 		}
 
 		if(resourceID.equals("videoUpdateFirstTitle")){
@@ -558,7 +583,7 @@ public class AdminVideoManagement extends MVCPortlet {
 				jo.put("firsttitle", firsttitle);
 				writeJSON(resourceRequest, resourceResponse, jo);
 			} catch (SystemException e) {
-//				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 		
