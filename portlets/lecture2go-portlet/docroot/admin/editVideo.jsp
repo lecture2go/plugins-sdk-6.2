@@ -26,6 +26,7 @@
 <liferay-portlet:resourceURL id="getFileName" var="getFileNameURL" />
 <liferay-portlet:resourceURL id="getSecureFileName" var="getSecureFileNameURL" />
 <liferay-portlet:resourceURL id="getShare" var="getShareURL" />
+<liferay-portlet:resourceURL id="updateNumberOfProductions" var="updateNumberOfProductionsURL" />
 
 <%
 	String actionURL = "";
@@ -486,6 +487,24 @@ $(function () {
     });
    
 });
+
+function updateNumberOfProductions(){
+	var ret="";
+	$.ajax({
+		  type: "POST",
+		  url: "<%=updateNumberOfProductionsURL%>",
+		  dataType: 'json',
+		  data: {
+		 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>",
+		  },
+		  global: false,
+		  async:false,
+		  success: function(data) {
+		    ret = data.containerFormat;
+		  }
+	});
+	return ret;	
+}
 
 function fileUploadAllowed(data){
 	var ret = false;
