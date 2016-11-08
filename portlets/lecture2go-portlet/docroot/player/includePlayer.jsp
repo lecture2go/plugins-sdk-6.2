@@ -80,14 +80,8 @@
                 file: vttFile,
                 kind:'chapters'
             }],
-            primary: "flash",
-            androidhls: true,
-
-            // Die Skin wird hier geladen. Im Zitatmodus wird eine andere Skin genutzt
-            // die über keine Zeitleiste verfügt
-            skin: ((frameStart && frameEnd) ?
-                    '/lecture2go-portlet/player/jwplayer/skins/six/six_nobar.xml' :
-                    '/lecture2go-portlet/player/jwplayer/skins/six/six.xml')
+            hlshtml: true,
+            androidhls: true
         }).onReady(function() {
 
          	// Inputfelder für Start und Ende der Zitate / Kapitel speichern 

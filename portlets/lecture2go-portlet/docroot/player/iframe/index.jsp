@@ -52,8 +52,8 @@
 			                		kind:'chapters'
 				            	}
 			            ],
-			            primary: "flash",
-			            androidhls: true,
+			            hlshtml: true,
+			            androidhls: true
 			        });
 		</script>
 	<%}%>
