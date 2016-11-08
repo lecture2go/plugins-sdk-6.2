@@ -57,7 +57,5 @@ AUI().use('autocomplete-list','aui-base','aui-io-request','autocomplete-filters'
 	    });
 	    
 	    document.ac.on("hoveredItemChange", function (event) {window.ev=event;});
-	    
-	    
 	}
 });
