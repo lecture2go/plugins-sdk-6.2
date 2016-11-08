@@ -336,6 +336,7 @@ public class AdminUserManagement extends MVCPortlet {
 		p.setApproved(1);
 		// home directory 
 		p.setHomeDir(u.getScreenName());
+		p.setIdNum(u.getScreenName());
 		// repository for producer
 		Host h = new HostImpl();
 		try{
