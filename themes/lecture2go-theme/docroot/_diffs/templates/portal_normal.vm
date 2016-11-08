@@ -8,7 +8,7 @@
 	<title>$the_title - $company_name</title>
 	
 	<script src="$javascript_folder/jquery-2.1.4.min.js"></script>
-
+	
 	<meta content="initial-scale=1.0, width=device-width" name="viewport" />
 	
 	$theme.include($top_head_include)
@@ -129,5 +129,6 @@ $theme.include($body_bottom_include)
 
 $theme.include($bottom_include)
 
+<script src="$javascript_folder/autocomplete.js"></script>
 </body>
 </html>
