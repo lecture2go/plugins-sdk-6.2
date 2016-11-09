@@ -508,8 +508,11 @@
 var checkExist = setInterval(function() {
 	if ($('#_lgopenaccessvideos_WAR_lecture2goportlet_lectureseriesesSearchContainer').length) {
 		var searchQuery = '<%= searchQuery %>';
+		var markOptions = {
+			"separateWordSearch": false
+		};
 		if (searchQuery) {
-			$("#_lgopenaccessvideos_WAR_lecture2goportlet_lectureseriesesSearchContainer").mark(searchQuery);
+			$("#_lgopenaccessvideos_WAR_lecture2goportlet_lectureseriesesSearchContainer").mark(searchQuery, markOptions);
 		}
 	   	clearInterval(checkExist);
  	}
