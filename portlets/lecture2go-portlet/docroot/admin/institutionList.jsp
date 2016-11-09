@@ -40,19 +40,6 @@ String institutionPortletPrimKey = portletDisplay.getResourcePK();
 String institutionModel = Institution.class.getName();
 String institutionHostModel = Institution_Host.class.getName();
 
-//RoleIds
-long adminRoleId = 0;
-long coordinatorRoleId = 0;
-long producerRoleId = 0;
-long studentRoleId = 0; 
-
-Role admin = RoleLocalServiceUtil.fetchRole(companyId, AdminUserManagement.L2G_ADMIN);
-if (admin != null){
-	adminRoleId = RoleLocalServiceUtil.getRole(companyId, AdminUserManagement.L2G_ADMIN).getRoleId();
-	coordinatorRoleId = RoleLocalServiceUtil.getRole(companyId, AdminUserManagement.L2G_COORDINATOR).getRoleId();
-	producerRoleId = RoleLocalServiceUtil.getRole(companyId, AdminUserManagement.L2G_PRODUCER).getRoleId();
-	studentRoleId = RoleLocalServiceUtil.getRole(companyId, AdminUserManagement.L2G_STUDENT).getRoleId();
-}
 String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 %>
 <%--END: DEBUG INFO--%>
@@ -82,7 +69,7 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 %>
 <div class="noresponsive">
 		<%--INSTITUTIONS START--%>
-		<c:if test='<%= permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "ADD_INSTITUTIONS") %>'>
+		<c:if test='<%= permissionAdmin %>'>
 			<aui:fieldset column="false" label="<%=pageName%>" cssClass="add-institution" >
 				<aui:layout cssClass="aist">
 					<aui:form action="<%= addInstitutionURL %>" name="fm">
@@ -124,11 +111,11 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 		   
 		    try{
 			    //Currently only this roles have fixed institution
-				if (UserLocalServiceUtil.hasRoleUser(coordinatorRoleId, userId)){
+				if (permissionCoordinator){
 				    	ownInstitutionId = CoordinatorLocalServiceUtil.getInstitutionByCoordinator(userId).getInstitutionId();
 				}
 				else{
-				    if (UserLocalServiceUtil.hasRoleUser(producerRoleId, userId)){
+				    if (permissionProducer){
 				   		ownInstitutionId = ProducerLocalServiceUtil.getInstitutionByProducer(userId).getInstitutionId();
 				    }
 				}
@@ -136,7 +123,7 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 		    
 		    long treeBaseId = InstitutionLocalServiceUtil.getDefaultInstitutionId(companyId, groupId);
 		
-		    if(permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "VIEW_ALL_INSTITUTIONS")){
+		    if(permissionAdmin){
 		    	treeBaseId = rootId; //top level
 		    }
 		    else { //set User's institution
@@ -150,7 +137,7 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 	
 		<%--ADD SUB_INSTITUTION -> Only Required if user can't see full listing, but is allowed to manage own entries --%>
 		<%-- Permission on Portlet Scope --%>
-		<c:if test='<%= !permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "VIEW_ALL_INSTITUTIONS") && permissionChecker.hasPermission(groupId, institutionModel, groupId, "ADD_SUB_INSTITUTION_ENTRY") && ownInstitutionId > 0 %>'>
+		<c:if test='<%= (permissionAdmin || permissionCoordinator) && ownInstitutionId > 0 %>'>
 			<aui:fieldset column="false" label="sub-institutions" >
 				<aui:layout cssClass="aist">
 					<aui:form action="<%= addSubInstitutionURL %>" name="fm">
@@ -180,10 +167,7 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 				 			Host curHost = Institution_HostLocalServiceUtil.getByGroupIdAndInstitutionId(companyId, groupId, institution.getInstitutionId());
  							String curHostName = AdminInstitutionManagement.DEFAULT_STREAMER;
 				 			if (curHost != null && curHost.getDefaultHost() < 1 ) curHostName = curHost.getName();
-				 			
-				 			
 				 			int subInstitutionMax = InstitutionLocalServiceUtil.getMaxSortByParentId(institution.getPrimaryKey())+1;
-
 				 		%>
 							<portlet:actionURL name="deleteInstitution" var="deleteInstitutionURL">
 								<portlet:param name="outerListInstitutionId" value='<%= (new Long(institution.getPrimaryKey())).toString() %>' />
@@ -196,14 +180,14 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 									<aui:input name="outerListInstitution" label="institution-name" inlineField="true" value = "<%= institution.getName() %>" />
 									<aui:input name="outerListOrder" label="order" inlineField="true" value='<%= institution.getSort() %>'/>
 									<%-- Only display streamer if user is allowed to view host and institution is child of top level --%>
-									<c:if test='<%= permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "VIEW_HOSTS") && institution.getParentId() == rootId %>'>
+									<c:if test='<%= institution.getParentId() == rootId %>'>
 										<aui:input name="outerListStreamer" label="streaming-server-name" inlineField="true" value = "<%= curHostName %>" disabled="true"/>
 									</c:if>
 									<aui:input name="outerListInstitutionId" type='hidden' inlineField="true" value = "<%= institution.getPrimaryKey() %>"/>
 									<aui:input name="outerListHostId" type='hidden' inlineField="true" value = "<%= curHost.getPrimaryKey() %>"/>
 									<aui:input name='institutionId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "institutionId") %>'/>
 									<aui:button type="submit" value="edit"></aui:button>
-									<c:if  test='<%= permissionChecker.hasPermission(groupId, institutionModel, groupId, "DELETE_INSTITUTIONS") %>'>
+									<c:if  test='<%= permissionAdmin || permissionCoordinator %>'>
 										<c:if test='<%=  InstitutionLocalServiceUtil.getLockingElements(institution.getInstitutionId()) < 1 %>'>
 											<aui:button name="delete" value="delete" type="button" href="<%=deleteInstitutionURL.toString() %>" />
 										</c:if>
@@ -215,7 +199,7 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 					 		//Only display second level if user has view all permission
 					 		%>
 					 		
-					 		<c:if test='<%= permissionChecker.hasPermission(groupId, institutionPortletName, institutionPortletPrimKey, "VIEW_ALL_INSTITUTIONS") %>'>
+					 		<c:if test='<%= permissionAdmin %>'>
 								<liferay-ui:panel defaultState="closed" extended="false" id="<%= id_row %>" persistState="true" title="sub-institutions" cssClass="sub-inst">
 									<aui:form action="<%= addSubInstitutionURL %>" name="fm">
 							 			<aui:fieldset>
@@ -230,7 +214,7 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 										<liferay-ui:search-container-results results="<%=InstitutionLocalServiceUtil.getByGroupIdAndParent(groupId, institution.getPrimaryKey(), searchContainer.getStart(), searchContainer.getEnd())%>" total="<%=InstitutionLocalServiceUtil.getByGroupIdAndParentCount(groupId, institution.getPrimaryKey())%>" />
 											<liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.Institution" modelVar="subInstitution" rowVar="thisRow" keyProperty="institutionId"  escapedModel="<%=false%>" indexVar="j">
 											<c:choose>
-												<c:when  test='<%= permissionChecker.hasPermission(groupId, institutionModel, groupId, "EDIT_ALL_INSTITUTIONS") || (permissionChecker.hasPermission(groupId, institutionModel, groupId, "EDIT_OWN_INSTITUTIONS") && ownInstitutionId == institution.getPrimaryKey() ) %>'> 
+												<c:when  test='<%= true %>'> 
 								        			<liferay-ui:search-container-column-text name="institution" >
 									        			<portlet:actionURL name="deleteSubInstitution" var="deleteSubInstitutionURL">
 										 					<portlet:param name="innerListInstitutionId" value='<%= (new Long(subInstitution.getPrimaryKey())).toString() %>' />
@@ -244,10 +228,8 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 																<aui:input cssClass="smallInput" name="innerListOrder" label="order" inlineField="true" value='<%= subInstitution.getSort() %>'/>
 																<aui:input name="innerListInstitutionId" type='hidden' inlineField="true" value = "<%= subInstitution.getInstitutionId() %>"/>
 																<aui:button type="submit" value="edit"></aui:button>
-																<c:if  test='<%= permissionChecker.hasPermission(groupId, institutionModel, groupId, "DELETE_SUB_INSTITUTIONS") %>'>
-																	<c:if test='<%=  InstitutionLocalServiceUtil.getLockingElements(subInstitution.getInstitutionId()) < 1 %>'>
-																			<aui:button name="delete" value="delete" type="button" href="<%=deleteSubInstitutionURL.toString() %>" />
-																	</c:if>
+																<c:if test='<%=  InstitutionLocalServiceUtil.getLockingElements(subInstitution.getInstitutionId()) < 1 %>'>
+																		<aui:button name="delete" value="delete" type="button" href="<%=deleteSubInstitutionURL.toString() %>" />
 																</c:if>
 															</aui:fieldset>
 														</aui:form>
@@ -265,7 +247,7 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 							<%--END: SUB INSTUTIONS--%>
 						</liferay-ui:search-container-column-text>
 			    	</liferay-ui:search-container-row>
-			   	 	<liferay-ui:search-iterator searchContainer="<%= searchInstitutionContainer %>" />
+			   	 	<liferay-ui:search-iterator searchContainer="<%=searchInstitutionContainer%>" />
 			</liferay-ui:search-container>
 		<%--TOP LEVEL INSTITUTIONS END--%>
 	<%--INSTITUTIONS END--%>
