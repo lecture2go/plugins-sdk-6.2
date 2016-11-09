@@ -65,6 +65,8 @@
 <%@page import="com.liferay.portal.kernel.util.PropsUtil"%>
 <%@page import="com.liferay.portal.kernel.util.PropsKeys"%>
 <%@page import="com.liferay.portal.kernel.util.PrefsPropsUtil"%>
+<%@page import="com.liferay.portal.kernel.dao.search.SearchContainer" %>
+<%@page import="com.liferay.portal.kernel.util.GetterUtil" %>
 
 <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@page import="org.springframework.scripting.config.LangNamespaceUtils"%>
@@ -74,9 +76,8 @@
 <%@page import="org.json.JSONArray"%>
 <%@page import="org.json.JSONException"%>
 
-<%@page import="de.uhh.l2g.plugins.model.impl.HostImpl"%>
-<%@page import="de.uhh.l2g.plugins.model.Video_Lectureseries"%>
 <%@page import="de.uhh.l2g.plugins.admin.AdminUserManagement"%>
+
 <%@page import="de.uhh.l2g.plugins.service.ProducerLocalServiceUtil"%>
 <%@page import="de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil"%>
 <%@page import="de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil"%>
@@ -92,10 +93,18 @@
 <%@page import="de.uhh.l2g.plugins.service.SegmentLocalServiceUtil"%>
 <%@page import="de.uhh.l2g.plugins.service.Video_CreatorLocalServiceUtil"%>
 <%@page import="de.uhh.l2g.plugins.service.Lectureseries_CreatorLocalServiceUtil"%>
-<%@page import="de.uhh.l2g.plugins.model.Video_Category"%>
+<%@page import="de.uhh.l2g.plugins.service.HostLocalServiceUtil"%>
+<%@page import="de.uhh.l2g.plugins.service.TermLocalServiceUtil"%>
+<%@page import="de.uhh.l2g.plugins.service.CategoryLocalServiceUtil"%>
+<%@page import="de.uhh.l2g.plugins.service.CreatorLocalServiceUtil"%>
+<%@page import="de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil" %>
+<%@page import="de.uhh.l2g.plugins.service.MetadataLocalServiceUtil"%>
 
 <%@page import="de.uhh.l2g.plugins.NoSuchMetadataException"%>
-<%@page import="de.uhh.l2g.plugins.service.MetadataLocalServiceUtil"%>
+
+<%@page import="de.uhh.l2g.plugins.model.impl.HostImpl"%>
+<%@page import="de.uhh.l2g.plugins.model.Video_Lectureseries"%>
+<%@page import="de.uhh.l2g.plugins.model.Video_Category"%>
 <%@page import="de.uhh.l2g.plugins.model.Term"%>
 <%@page import="de.uhh.l2g.plugins.model.Creator"%>
 <%@page import="de.uhh.l2g.plugins.model.Category"%>
@@ -118,14 +127,19 @@
 <%@page import="de.uhh.l2g.plugins.model.impl.LicenseImpl"%>
 <%@page import="de.uhh.l2g.plugins.model.Lectureseries_Institution"%>
 <%@page import="de.uhh.l2g.plugins.model.Host"%>
-<%@page import="de.uhh.l2g.plugins.util.Security"%>
-<%@page import="de.uhh.l2g.plugins.service.HostLocalServiceUtil"%>
-<%@page import="de.uhh.l2g.plugins.service.TermLocalServiceUtil"%>
-<%@page import="de.uhh.l2g.plugins.service.CategoryLocalServiceUtil"%>
-<%@page import="de.uhh.l2g.plugins.service.CreatorLocalServiceUtil"%>
+<%@page import="de.uhh.l2g.plugins.model.Institution_Host"%>
+
 <%@page import="de.uhh.l2g.plugins.util.Lecture2GoRoleChecker"%>
+<%@page import="de.uhh.l2g.plugins.util.Security"%>
+
 <%@page import="de.uhh.l2g.webservices.*"%>
 
+
+
+<%@ page import="de.uhh.l2g.plugins.admin.AdminInstitutionManagement" %>
+<%@ page import="de.uhh.l2g.plugins.admin.AdminUserManagement" %>
+
+<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <portlet:defineObjects />
 <liferay-theme:defineObjects/>
