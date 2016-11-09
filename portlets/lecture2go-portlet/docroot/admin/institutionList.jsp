@@ -1,20 +1,8 @@
 <%@include file="/init.jsp"%>
-<%@ page import="de.uhh.l2g.plugins.model.Institution" %>
-<%@ page import="com.liferay.portal.kernel.dao.search.ResultRow" %>
-<%@ page import="de.uhh.l2g.plugins.model.Host" %>
-<%@ page import="de.uhh.l2g.plugins.model.Institution_Host" %>
-<%@ page import="de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil" %>
-<%@ page import="de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil" %>
-<%@ page import="de.uhh.l2g.plugins.service.HostLocalServiceUtil" %>
-<%@ page import="de.uhh.l2g.plugins.admin.AdminInstitutionManagement" %>
-<%@ page import="de.uhh.l2g.plugins.admin.AdminUserManagement" %>
-<%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %>
-<%@ page import="com.liferay.portal.kernel.util.GetterUtil" %>
-<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+
 
 <%!com.liferay.portal.kernel.dao.search.SearchContainer<Institution> searchInstitutionContainer = null;%>
 <%!com.liferay.portal.kernel.dao.search.SearchContainer<Institution> searchSubInstitutionContainer = null;%>
-<%!com.liferay.portal.kernel.dao.search.SearchContainer<Host> searchHostContainer = null;%>
 
 <liferay-ui:success key="request_processed" message="request_processed"/>
 <liferay-ui:error key="host-or-institution-error" message="host-or-institution-error"/>
@@ -29,10 +17,6 @@
 <portlet:actionURL name="addSubInstitution" var="addSubInstitutionURL"></portlet:actionURL>
 <portlet:actionURL name="updateInstitution" var="updateInstitutionURL"></portlet:actionURL>
 <portlet:actionURL name="updateSubInstitution" var="updateSubInstitutionURL"></portlet:actionURL>
-<portlet:actionURL name="addStreamingServer" var="addStreamingServerURL"></portlet:actionURL>
-<portlet:actionURL name="deleteStreamingServer" var="deletetreamingServerURL"></portlet:actionURL>
-<portlet:actionURL name="updateStreamingServer" var="updateStreamingServerURL"></portlet:actionURL>
-<portlet:actionURL name="updateTreeRoot" var="updateTreeRootURL"></portlet:actionURL>
 
 <%
 //Variables required for Permissions
@@ -43,7 +27,7 @@ String institutionPortletName = portletDisplay.getRootPortletId();
 
 //Scope(PrimKey): company wide, scope group or instance
 //Scope GroupId
-long groupId = scopeGroupId;
+long groupId = scopeGroupId; 
 //long groupId = themeDisplay.getLayout().getGroupId();
 //Company Id of Application
 long companyId = themeDisplay.getLayout().getCompanyId();
@@ -54,7 +38,6 @@ String groupIdString = String.valueOf(groupId);
 String institutionPortletPrimKey = portletDisplay.getResourcePK();
 //On Model Level:
 String institutionModel = Institution.class.getName();
-String hostModel = Host.class.getName();
 String institutionHostModel = Institution_Host.class.getName();
 
 //RoleIds
@@ -82,7 +65,6 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 	portletURL.setParameter("institutionId", institutionId+"");
 	portletURL.setParameter("hostId", hostId+"");
 	
-	String repDirectory = PropsUtil.get("lecture2go.media.repository");
 	//Get Top Level institution of current scope
 	Institution root = InstitutionLocalServiceUtil.getRootByGroupId(companyId, groupId);
 	long rootId = GetterUtil.getLong(root.getInstitutionId());
@@ -93,8 +75,7 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 	//Get StreamingServers
 	List<Host> hostList = HostLocalServiceUtil.getByGroupId(groupId);
 	//System.out.println(hostList.toString());
-	//Get StreamingServer Defaults
-	Host defaultHost = HostLocalServiceUtil.getByDefault(companyId, groupId);
+
 	
 	//Sort preset for first level Institutions
 	int maxOrder = InstitutionLocalServiceUtil.getMaxSortByParentId(rootId)+1;
@@ -188,7 +169,7 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 			<liferay-ui:search-container searchContainer="<%= searchInstitutionContainer %>" curParam ="curOuter" orderByType="asc" emptyResultsMessage="there-are-no-institutions" delta="5" iteratorURL="<%= outerURL %>" deltaConfigurable="true">
 				<liferay-ui:search-container-results results="<%=InstitutionLocalServiceUtil.getByGroupIdAndParent(groupId, treeBaseId, searchContainer.getStart(), searchContainer.getEnd())%>" total="<%=InstitutionLocalServiceUtil.getByGroupIdAndParentCount(groupId, treeBaseId)%>" />
 				<liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.Institution" modelVar="institution" keyProperty="institutionId"  escapedModel="<%= false %>" indexVar="i">
-		        <liferay-ui:search-container-column-text name="institution">
+		        <liferay-ui:search-container-column-text name="institution" cssClass="toplevel-institutions">
 				        <%
 				 			ResultRow container_row = (ResultRow)request.getAttribute("curOuter");
 				 			//Institution institution_row = (Institution)row.getObject();
@@ -288,99 +269,4 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 			</liferay-ui:search-container>
 		<%--TOP LEVEL INSTITUTIONS END--%>
 	<%--INSTITUTIONS END--%>
-
-<%if (defaultHost != null) {%>	
-	<%--STREAMING SERVER START--%>
-		<%if(permissionAdmin){ %>
-			<aui:fieldset column="false" label="institutions-streaming-server" cssClass="add-streaming-server" >
-				<aui:layout>
-					<aui:form action="<%= addStreamingServerURL %>" name="fm" inlineLabel="true">
-						 <aui:button-row>
-						 	 <aui:fieldset column="true">
-							 <aui:input label="streaming-server-name" name="name" required="true" inlineField="true"></aui:input>
-				 	         <aui:input label="streaming-server-domain-or-ip" name="ip" inlineField="true" value='<%= defaultHost.getStreamer() %>'></aui:input>
-				 	         <aui:input label="port" name="port" inlineField="true" value='<%= defaultHost.getPort() %>'></aui:input>
-				 	         <aui:input label="protocol" name="protocol" inlineField="true" value='<%= defaultHost.getProtocol() %>'></aui:input>
-				 	         <aui:input name='hostId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "hostId") %>'/>
-						 	 <aui:button type="submit" value="add"></aui:button>
-						 	 </aui:fieldset>
-						 </aui:button-row>
-					</aui:form>
-				</aui:layout>
-			</aui:fieldset>
-			
-			<%-- LIST --%>
-			<liferay-ui:panel title="streaming-server" collapsible="true" id="streamingServerSettings" defaultState="closed" extended="false" persistState="true" cssClass="sub-inst">
-				<liferay-ui:search-container searchContainer="<%= searchHostContainer %>" curParam ="curStreamingServer" orderByType="asc" emptyResultsMessage="there-are-no-hosts" iteratorURL="<%= innerURL %>" delta="20" deltaConfigurable="true" >
-					<liferay-ui:search-container-results results="<%=HostLocalServiceUtil.getByGroupId(groupId, searchContainer.getStart(), searchContainer.getEnd())%>" total="<%=HostLocalServiceUtil.getByGroupIdCount(groupId)%>" />
-					<liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.Host" modelVar="Hosts" rowVar="thisRow" keyProperty="hostId"  escapedModel="<%= false %>" indexVar="k">
-	        			<liferay-ui:search-container-column-text name="Host" >
-		        			<c:choose>
-			        			<c:when  test='<%= permissionChecker.hasPermission(groupId, hostModel, groupId, "EDIT_HOST") %>'> 
-			        		    	<%--DELETE: For advanced security, this should only be generated if user is allowed to delete Hosts--%>	    
-					        		<portlet:actionURL name="deleteStreamingServer" var="deleteStreamingServerURL">
-					        			<c:choose>
-					        				<c:when test='<%=  HostLocalServiceUtil.getLockingElements(groupId, Hosts.getHostId()) < 1 %>'>
-					        					<portlet:param name="curStreamingServerId" value='<%= (new Long(Hosts.getHostId())).toString() %>' />
-											</c:when>
-											<c:otherwise>
-												<portlet:param name="curStreamingServerId" value='<%= "0" %>' />
-											</c:otherwise>
-										</c:choose>
-										<portlet:param name="backURL" value="<%=String.valueOf(portletURL) %>"/>
-									</portlet:actionURL>
-									<aui:form action="<%= updateStreamingServerURL %>" name="fm">
-										<aui:fieldset>
-										<% if (Hosts.getDefaultHost() > 0) { %>
-											<aui:input name="curStreamingServerName" label="name" inlineField="true" value = "Default" />
-										<% } else { %>
-											<aui:input name="curStreamingServerName" label="name" inlineField="true" value = "<%= Hosts.getName() %>" />
-										<%}%>
-											<aui:input name="curStreamingServerIP" label="ip-or-domain" inlineField="true" value = "<%= Hosts.getStreamer() %>" />				
-											<aui:input name="curStreamingServerPort" label="port" inlineField="true" value = "<%= Hosts.getPort() %>" />
-											<aui:input name="curStreamingServerProtocol" label="protocol" inlineField="true" value = "<%= Hosts.getProtocol() %>" />
-											<aui:input name="curStreamingServerId" type='hidden' inlineField="true" value = "<%= (new Long(Hosts.getHostId())).toString() %>"/>
-											<aui:button type="submit" value="edit"></aui:button>
-												<%--DELETE --%>
-												<c:if test='<%= permissionChecker.hasPermission(groupId, hostModel, groupId, ActionKeys.DELETE) && HostLocalServiceUtil.getLockingElements(groupId, Hosts.getHostId()) < 1 && !(Hosts.getDefaultHost() > 0) %>'>
-													<aui:button name="delete" value="delete" type="button" href="<%=deleteStreamingServerURL.toString() %>" />
-												</c:if>
-										</aui:fieldset>
-									</aui:form>
-									</c:when>
-									<c:otherwise>
-										<liferay-ui:message key="<%=Hosts.getName() %>"></liferay-ui:message>
-										<liferay-ui:message key="<%=Hosts.getStreamer() %>"></liferay-ui:message>
-										<liferay-ui:message key="<%=String.valueOf(Hosts.getPort()) %>"></liferay-ui:message>
-										<liferay-ui:message key="<%=Hosts.getProtocol() %>"></liferay-ui:message>
-										<liferay-ui:message key="<%=repDirectory %>"></liferay-ui:message>
-									</c:otherwise>
-								</c:choose>
-	        				</liferay-ui:search-container-column-text>
-	        			</liferay-ui:search-container-row>
-	        		<liferay-ui:search-iterator searchContainer="<%= searchHostContainer %>" />
-				</liferay-ui:search-container>
-			</liferay-ui:panel>
-		<%}%>
-	<%--STREAMING SERVER END--%>	
-<%} else {%>
-<liferay-ui:message key="streamer-defaults-not-configured"></liferay-ui:message> 
-<%}%>
-	<%--TREE ROOT (INSTITUTION)--%>
-<c:choose>
-<c:when  test='<%= permissionChecker.hasPermission(groupId, institutionModel, groupId, "EDIT_TREE_ROOT") %>'>
-	<liferay-ui:panel title="top-level-institution" collapsible="true" id="treeRootSettings"
-					defaultState="closed"
-					extended="<%= false %>"
-					persistState="<%= false %>">
-	<aui:form action="<%= updateTreeRootURL %>" name="<portlet:namespace />fm">
-		<aui:fieldset>
-			<aui:input name="treeRoot" label="top-level-institution" required="true" inlineField="true"  value = '<%= treeBase.getName() %>'/>
-			<aui:input name="treeRootId" type='hidden' inlineField="true" value = '<%= treeBase.getInstitutionId() %>'/>
-			<aui:button type="submit" value="save"></aui:button>
-		</aui:fieldset>
-	</aui:form>
-	</liferay-ui:panel>
-</c:when>
-</c:choose>
 </div>
