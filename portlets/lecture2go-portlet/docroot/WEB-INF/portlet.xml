@@ -156,6 +156,31 @@
   </portlet>
   
   <portlet>
+        <portlet-name>lg-admin-streaming-server-management</portlet-name>
+        <display-name>L2Go Streaming Server Management</display-name>
+        <portlet-class>de.uhh.l2g.plugins.admin.AdminInstitutionManagement</portlet-class>
+        <init-param>
+            <name>view-template</name>
+            <value>/admin/streamingServerList.jsp</value>
+        </init-param>
+        <init-param>
+            <name>add-process-action-success-action</name>
+            <value>false</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>view</portlet-mode>
+        </supports>
+        <resource-bundle>content.Language</resource-bundle>
+        <portlet-info>
+            <title>L2Go Streaming Server Management</title>
+            <short-title>L2Go Streaming Server Management</short-title>
+            <keywords>L2Go Streaming Server Management</keywords>
+        </portlet-info>
+  </portlet>
+  
+  <portlet>
         <portlet-name>lg-admin-creators-management</portlet-name>
         <display-name>L2Go Creators Management</display-name>
         <portlet-class>de.uhh.l2g.plugins.admin.CreatorsManagement</portlet-class>
