@@ -41,8 +41,6 @@
     width: 68%;
 }
 
-
-
 .uhh-icon-arrow-right{
    	background-image: url("/lecture2go-theme/images/arrow_right.png");
     background-position: left center;
@@ -1753,6 +1751,35 @@ thead, th {
     width: 49%;
 }
 
+.toplevel-institutions .control-group {
+    margin-right: 33px;
+}
+
+.toplevel-institutions fieldset {
+    margin-top: 15px;
+}
+
+.toplevel-institutions .btn.btn-primary {
+    margin-top: -8px;
+}
+
+.toplevel-institutions .btn {
+    margin-top: -8px;
+}
+
+#_lgadminstreamingservermanagement_WAR_lecture2goportlet_name, #_lgadminstreamingservermanagement_WAR_lecture2goportlet_curStreamingServerName {
+    width: 100px;
+}
+
+.add-institution .btn.btn-primary {
+    margin-top: -8px;
+}
+
+.add-institution select {
+    background-position: calc(100% - 18px) calc(1em), calc(100% - 13px) calc(1em), 100% 0;
+    height: 23px;
+}
+
 #metadata-upload #creators {
     clear: both;
     margin-left: 209px;
@@ -2337,6 +2364,18 @@ div.filter-menu-link span.icon-large.icon-remove {
     margin-top: 10px;
 }
 
+.add-institution input {
+    margin-right: 34px;
+}
+
+#_lgadminstreamingservermanagement_WAR_lecture2goportlet_port, #_lgadminstreamingservermanagement_WAR_lecture2goportlet_curStreamingServerPort {
+    width: 50px;
+}
+
+#_lgadminstreamingservermanagement_WAR_lecture2goportlet_protocol, #_lgadminstreamingservermanagement_WAR_lecture2goportlet_curStreamingServerProtocol {
+    width: 77px;
+}
+
 .aui .sub-inst.accordion-group .toggler-content-expanded {
     border: 0px !important;
 }
@@ -2348,12 +2387,6 @@ div.filter-menu-link span.icon-large.icon-remove {
 
 .sub-inst {
     font-size: 12px;
-    margin-left: 111px;
-    margin-top: -10px;
-}
-
-.sub-inst .title-text {
-    margin-top: 2px;
 }
 
 .sub-inst .accordion-heading {
