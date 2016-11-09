@@ -52,8 +52,10 @@
 	    width: 10em;
 	}
 	
-	/* disable all links on the searchcontainer video tiles, as they are too small on mobile devices */
-	#_lgopenaccessvideos_WAR_lecture2goportlet_lectureseriesesSearchContainerSearchContainer a {
+	/* disable all links on the video tiles, as they are too small on mobile devices */
+	.video-content-wrapper a,
+	.video-box-content a
+	 {
     	pointer-events: none;
     	cursor: default;
 	}
