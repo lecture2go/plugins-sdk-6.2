@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.Role;
@@ -28,7 +27,6 @@ import com.liferay.util.bridges.mvc.MVCPortlet;
 import de.uhh.l2g.plugins.NoPropertyException;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
-import de.uhh.l2g.plugins.model.Institution_Host;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
@@ -38,64 +36,9 @@ public class AdminInstitutionManagement extends MVCPortlet {
 	protected static Log LOG = LogFactoryUtil.getLog(AdminInstitutionManagement.class.getName());
 	public static final String DEFAULT_STREAMER = "Default";
 
-	/**
-	 * Set default permissions (assumes fixed and unique role names)
-	 * 
-	 * @param pm
-	 *            - PermissionManager
-	 * @throws PortalException
-	 * @throws SystemException
-	 */
-	private void setDefaultPermissions(PermissionManager pm) throws SystemException, PortalException {
-
-		// Remove view permission for Guest and edit for ordinary Site Members
-		pm.removeL2GLayoutViewPermission(RoleConstants.GUEST);
-		pm.removeL2GLayoutPermissions(RoleConstants.SITE_MEMBER, new String[] { ActionKeys.VIEW, ActionKeys.ADD_DISCUSSION, ActionKeys.CUSTOMIZE });
-
-		// Remove Advanced Permissions for Owner (Owner should be Administrator
-		// anyway)
-		pm.removeL2GLayoutPermissions(RoleConstants.OWNER, new String[] { ActionKeys.CUSTOMIZE, ActionKeys.PERMISSIONS });
-
-		// Allow View Permission for higher L2GRoles
-		pm.setL2GLayoutViewPermission(AdminUserManagement.L2G_ADMIN);
-		pm.setL2GLayoutViewPermission(AdminUserManagement.L2G_COORDINATOR);
-
-		// Allow almost all Portlet operations for L2Go admin
-		pm.setL2GPortletPermissions(AdminUserManagement.L2G_ADMIN, new String[] { ActionKeys.VIEW, "VIEW_ALL_INSTITUTIONS", "VIEW_HOSTS", "ADD_INSTITUTIONS" });
-		pm.setL2GPortletPermissions(AdminUserManagement.L2G_COORDINATOR, ActionKeys.VIEW);
-		// Remove for normal Member
-		pm.removeL2GPortletPermissions(RoleConstants.SITE_MEMBER, ActionKeys.VIEW);
-		// Remove for Owner
-		pm.removeL2GPortletPermissions(RoleConstants.OWNER, new String[] { "VIEW_ALL_INSTITUTIONS", "VIEW_HOSTS", "ADD_INSTITUTIONS" });
-
-		// Entities on Model Level
-		pm.removeL2GEntityPermissions(RoleConstants.SITE_MEMBER, Institution.class.getName(), new String[] { ActionKeys.VIEW });
-		pm.removeL2GEntityPermissions(RoleConstants.SITE_MEMBER, Institution_Host.class.getName(), new String[] { ActionKeys.VIEW });
-		pm.removeL2GEntityPermissions(RoleConstants.SITE_MEMBER, Host.class.getName(), new String[] { ActionKeys.VIEW });
-
-		pm.setL2GEntityPermissions(AdminUserManagement.L2G_ADMIN, Institution.class.getName(), new String[] { ActionKeys.VIEW, "ADD_SUB_INSTITUTION_ENTRY", "ADD_HOSTS", "EDIT_HOSTS", "EDIT_ALL_INSTITUTIONS", "EDIT_OWN_INSTITUTIONS", "DELETE_INSTITUTIONS", "DELETE_SUB_INSTITUTIONS", "ADD_SUB_INSTITUTION_ENTRY" });
-		pm.setL2GEntityPermissions(AdminUserManagement.L2G_COORDINATOR, Institution.class.getName(), new String[] { ActionKeys.VIEW, "ADD_SUB_INSTITUTION_ENTRY", "EDIT_OWN_INSTITUTIONS", "DELETE_SUB_INSTITUTIONS", "ADD_SUB_INSTITUTION_ENTRY" });
-		//
-		pm.setL2GEntityViewPermissions(AdminUserManagement.L2G_PRODUCER, Institution.class.getName());
-		pm.setL2GEntityViewPermissions(AdminUserManagement.L2G_STUDENT, Institution.class.getName());
-
-		pm.setL2GEntityPermissions(AdminUserManagement.L2G_ADMIN, Institution_Host.class.getName(), new String[] { ActionKeys.VIEW, ActionKeys.DELETE, "ADD_LINK" });
-		pm.setL2GEntityViewPermissions(AdminUserManagement.L2G_COORDINATOR, Institution_Host.class.getName());
-
-		pm.setL2GEntityViewPermissions(AdminUserManagement.L2G_PRODUCER, Institution_Host.class.getName());
-		pm.setL2GEntityViewPermissions(AdminUserManagement.L2G_STUDENT, Institution_Host.class.getName());
-
-		pm.setL2GEntityPermissions(AdminUserManagement.L2G_ADMIN, Host.class.getName(), new String[] { ActionKeys.VIEW, ActionKeys.UPDATE, ActionKeys.DELETE, "ADD_HOST", "EDIT_HOST" });
-		pm.setL2GEntityPermissions(AdminUserManagement.L2G_COORDINATOR, Host.class.getName(), new String[] { ActionKeys.VIEW });
-
-		pm.setL2GEntityViewPermissions(AdminUserManagement.L2G_PRODUCER, Host.class.getName());
-		pm.setL2GEntityViewPermissions(AdminUserManagement.L2G_STUDENT, Host.class.getName());
-
-	}
 
 	@Override
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException, IOException {
-
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(Institution.class.getName(), renderRequest);
 
@@ -121,7 +64,6 @@ public class AdminInstitutionManagement extends MVCPortlet {
 				PermissionManager pm = new PermissionManager(serviceContext);
 				ResourcePermission rp = pm.getPermissionforRole(AdminUserManagement.L2G_ADMIN);
 				if (rp == null) {
-					setDefaultPermissions(pm);
 					// In this case we are probably missing other defaults too,
 					// but UserPortlet has been triggered
 					isInitialized = false;
@@ -207,12 +149,6 @@ public class AdminInstitutionManagement extends MVCPortlet {
 			int sort = ParamUtil.getInteger(request, "order");
 
 			InstitutionLocalServiceUtil.addInstitution(institutionName, hostId, parentId, sort, serviceContext);
-
-			SessionMessages.add(request, "request_processed", "institution-entry-added");
-
-			// response.setRenderParameter("institutionId",
-			// Long.toString(institutionId));
-
 		} catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
 			LOG.error("Failed adding Institution " + institutionName, e);
@@ -238,12 +174,6 @@ public class AdminInstitutionManagement extends MVCPortlet {
 			int sort = ParamUtil.getInteger(request, "subInstitutionOrder");
 
 			InstitutionLocalServiceUtil.addInstitution(institutionName, hostId, parentId, sort, serviceContext);
-
-			SessionMessages.add(request, "request_processed", "subinstitution-entry-added");
-
-			// response.setRenderParameter("institutionId",
-			// Long.toString(institutionId));
-
 		} catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
 			LOG.error("Failed adding Sub-Institution " + institutionName, e);
@@ -260,7 +190,6 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		LOG.info("Root: " + institutionId);
 		try {
 			InstitutionLocalServiceUtil.updateInstitution(institutionId, institutionName, 1, serviceContext);
-			SessionMessages.add(request, "request_processed", "tree-root-entry-updated");
 			response.setRenderParameter("mvcPath", "/admin/institutionList.jsp");
 		} catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
@@ -278,7 +207,6 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		LOG.info("Updating " + institutionId);
 		try {
 			InstitutionLocalServiceUtil.updateInstitution(institutionId, name, sort, serviceContext);
-			SessionMessages.add(request, "request_processed", "institution-entry-updated");
 		} catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
 			LOG.error("Failed updating Institution", e);
@@ -295,7 +223,6 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		LOG.info("Updating " + institutionId);
 		try {
 			InstitutionLocalServiceUtil.updateInstitution(institutionId, institutionName, sort, serviceContext);
-			SessionMessages.add(request, "request_processed", "subinstitution-entry-updated");
 		} catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
 			LOG.error("Failed updating SubInstitution", e);
@@ -312,7 +239,6 @@ public class AdminInstitutionManagement extends MVCPortlet {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(Institution.class.getName(), request);
 			response.setRenderParameter("institutionId", Long.toString(institutionId));
 			InstitutionLocalServiceUtil.deleteInstitution(institutionId, serviceContext);
-			SessionMessages.add(request, "request_processed", "institution-entry-deleted");
 		} catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
 			LOG.error("Failed deleting Institution", e);
@@ -329,7 +255,6 @@ public class AdminInstitutionManagement extends MVCPortlet {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(Institution.class.getName(), request);
 			response.setRenderParameter("institutionId", Long.toString(institutionId));
 			InstitutionLocalServiceUtil.deleteInstitution(institutionId, serviceContext);
-			SessionMessages.add(request, "request_processed", "subnstitution-entry-deleted");
 		} catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
 			LOG.error("Failed deleting SubInstitution", e);
@@ -345,7 +270,6 @@ public class AdminInstitutionManagement extends MVCPortlet {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(Host.class.getName(), request);
 			if (hostId > 0)
 				HostLocalServiceUtil.deleteHost(hostId, serviceContext);
-			SessionMessages.add(request, "request_processed", "streamer-entry-deleted");
 		} catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
 			LOG.error("Failed deleting Streaming Server", e);
@@ -363,7 +287,6 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		LOG.info("Trying to add " + hostName + ": " + ip);
 		try {
 			HostLocalServiceUtil.addHost(hostName, ip, protocol, port, serviceContext);
-			SessionMessages.add(request, "request_processed", "streamer-entry-added");
 		} catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
 			LOG.error("Failed adding Streaming Server", e);
@@ -382,7 +305,6 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		LOG.info("Trying to update " + hostName + ": " + ip);
 		try {
 			HostLocalServiceUtil.updateHost(hostId, hostName, ip, protocol, port, serviceContext);
-			SessionMessages.add(request, "request_processed", "streamer-entry-updated");
 		} catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
 			LOG.error("Failed updating Streaming Server", e);

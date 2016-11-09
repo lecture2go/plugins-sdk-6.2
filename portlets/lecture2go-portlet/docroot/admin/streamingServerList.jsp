@@ -54,7 +54,7 @@ if (defaultHost != null) {%>
 					<liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.Host" modelVar="Hosts" rowVar="thisRow" keyProperty="hostId"  escapedModel="<%= false %>" indexVar="k">
 	        			<liferay-ui:search-container-column-text name="Host" cssClass="toplevel-institutions">
 		        			<c:choose>
-			        			<c:when  test='<%= permissionChecker.hasPermission(groupId, hostModel, groupId, "EDIT_HOST") %>'> 
+			        			<c:when  test='<%= (permissionAdmin||permissionCoordinator) %>'> 
 			        		    	<%--DELETE: For advanced security, this should only be generated if user is allowed to delete Hosts--%>	    
 					        		<portlet:actionURL name="deleteStreamingServer" var="deleteStreamingServerURL">
 					        			<c:choose>
@@ -77,13 +77,15 @@ if (defaultHost != null) {%>
 											hn=Hosts.getName();
 										}%>
 											<aui:input name="curStreamingServerName" label="" inlineField="true" value = "<%= hn %>" disabled="true"/>
+											<input type="hidden" name="<portlet:namespace></portlet:namespace>curStreamingServerName" value = "<%= hn %>"/>
+											
 											<aui:input name="curStreamingServerIP" label="" inlineField="true" value = "<%= Hosts.getStreamer() %>" />				
 											<aui:input name="curStreamingServerPort" label="" inlineField="true" value = "<%= Hosts.getPort() %>" />
 											<aui:input name="curStreamingServerProtocol" label="" inlineField="true" value = "<%= Hosts.getProtocol() %>" />
 											<aui:input name="curStreamingServerId" type='hidden' inlineField="true" value = "<%= (new Long(Hosts.getHostId())).toString() %>"/>
 											<aui:button type="submit" value="edit"></aui:button>
 												<%--DELETE --%>
-												<c:if test='<%= permissionChecker.hasPermission(groupId, hostModel, groupId, ActionKeys.DELETE) && HostLocalServiceUtil.getLockingElements(groupId, Hosts.getHostId()) < 1 && !(Hosts.getDefaultHost() > 0) %>'>
+												<c:if test='<%= (permissionAdmin||permissionCoordinator) && HostLocalServiceUtil.getLockingElements(groupId, Hosts.getHostId()) < 1 && !(Hosts.getDefaultHost() > 0) %>'>
 													<aui:button name="delete" value="delete" type="button" href="<%=deleteStreamingServerURL.toString() %>" />
 												</c:if>
 										</aui:fieldset>
