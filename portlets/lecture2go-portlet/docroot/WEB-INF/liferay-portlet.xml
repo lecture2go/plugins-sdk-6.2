@@ -176,7 +176,7 @@
 	   	 	    <scheduler-description>This scheduler is used to collect Statistical Data from Database</scheduler-description> 
   				<scheduler-event-listener-class>de.uhh.l2g.plugins.util.StatisticsScheduler</scheduler-event-listener-class>  
          		<trigger>  
-         			<cron><cron-trigger-value>0 0 11 * * ? </cron-trigger-value></cron>  
+         			<cron><cron-trigger-value>0 0 0,12 ? * * </cron-trigger-value></cron>  
  				</trigger>   
    			</scheduler-entry> 
     	 	<scheduler-entry> 
