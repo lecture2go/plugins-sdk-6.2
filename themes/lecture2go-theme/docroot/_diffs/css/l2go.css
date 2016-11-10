@@ -2965,3 +2965,81 @@ strong, b, th, #kopf .sprachwechsel {
     margin: 5px;
 }
 /** UHH FOOTER END**/
+
+/** Start video statistic portlet styles **/
+.videoStatistic_table {
+	display: table;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.videoStatistic_heading {
+	display: table-row;
+	font-weight: bold;
+}
+
+.videoStatistic_heading::first-letter {
+   text-transform:uppercase;
+}
+
+.videoStatistic_row {
+	display: table-row;
+	padding: 1px;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+}
+
+.videoStatistic_cell {
+	display: table-cell;
+	border-bottom: 1px solid #ddd;
+	border-width: thin;
+	padding-left: 1px;
+	padding-right: 1px;
+	padding-bottom: 1em;
+	padding-top: 1em;
+	text-align: left;
+}
+.videoStatistic_cell::first-letter {
+   text-transform:uppercase;
+}
+
+.videoStatistic_cell_total {
+	display: table-cell;
+	border-bottom: 1px solid #ddd;
+	border-width: thin;
+	padding-left: 1px;
+	padding-right: 1px;
+	padding-bottom: 1em;
+	padding-top: 1em;
+	text-align: center;
+	color: blue;
+}
+
+.videoStatistic_cell_public {
+	display: table-cell;
+	border-bottom: 1px solid #ddd;
+	border-width: thin;
+	padding-left: 1px;
+	padding-right: 1px;
+	padding-bottom: 1em;
+	padding-top: 1em;
+	text-align: center;
+	color: green;
+}
+
+.videoStatistic_cell_private {
+	display: table-cell;
+	border-bottom: 1px solid #ddd;
+	border-width: thin;
+	padding-left: 1px;
+	padding-right: 1px;
+	padding-bottom: 1em;
+	padding-top: 1em;
+	text-align: center;
+	color: red;
+}
+
+.lineBreak:after {
+	content: "\a";
+}
+/** End Video Statitic Portlet Styles **/
