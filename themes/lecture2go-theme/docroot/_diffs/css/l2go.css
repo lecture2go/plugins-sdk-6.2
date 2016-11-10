@@ -3011,7 +3011,7 @@ strong, b, th, #kopf .sprachwechsel {
 	padding-right: 1px;
 	padding-bottom: 1em;
 	padding-top: 1em;
-	text-align: center;
+	text-align: left;
 	color: blue;
 }
 
@@ -3023,7 +3023,7 @@ strong, b, th, #kopf .sprachwechsel {
 	padding-right: 1px;
 	padding-bottom: 1em;
 	padding-top: 1em;
-	text-align: center;
+	text-align: left;
 	color: green;
 }
 
@@ -3035,7 +3035,7 @@ strong, b, th, #kopf .sprachwechsel {
 	padding-right: 1px;
 	padding-bottom: 1em;
 	padding-top: 1em;
-	text-align: center;
+	text-align: left;
 	color: red;
 }
 
