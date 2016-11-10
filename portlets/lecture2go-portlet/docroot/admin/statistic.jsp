@@ -1,7 +1,8 @@
-<%@include file="/init.jsp" %>
-<%@ page import="de.uhh.l2g.plugins.model.VideoStatistic" %>
-<%@ page import="de.uhh.l2g.plugins.service.VideoStatisticLocalServiceUtil" %>
-<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+<%@include file="/init.jsp"%>
+<%@ page import="de.uhh.l2g.plugins.model.VideoStatistic"%>
+<%@ page
+	import="de.uhh.l2g.plugins.service.VideoStatisticLocalServiceUtil"%>
+<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui"%>
 
 <%
 //Scope GroupId
@@ -11,94 +12,131 @@ long companyId = themeDisplay.getLayout().getCompanyId();
 
 List<VideoStatistic> statisticEntries = VideoStatisticLocalServiceUtil.getAllStatistics();
 ListIterator<VideoStatistic> it = statisticEntries.listIterator();
-%>
- 
-<aui:fieldset column="false" label="statistic" >
-	<span><liferay-ui:message key="statistic-info"/></span>
-	<aui:layout cssClass="l2stat">
-		<%
-		while(it.hasNext()){ 
+
+String totalCurrentVideo = "-";
+String totalPublic = "";
+String totalPublicPerc = ""; 
+String totalPrivate = "";
+String totalPrivatePerc = "";
+
+String totalYesterday = "-";
+String totalYesterdayPublic = "";
+String totalYesterdayPrivate = "";
+
+String totalOneWeek = "-";
+String totalOneWeekPublic = "";
+String totalOneWeekPrivate = "";
+
+String totalOneMonth = "-";
+String totalOneMonthPublic = "";
+String totalOneMonthPrivate = "";
+
+String totalOneYear ="-";
+String totalOneYearPublic = "";
+String totalOneYearPrivate = "";
+
+	while(it.hasNext()){ 
 			VideoStatistic vStat = it.next();
 			int timeSpan=vStat.getDateDiff();
-			switch(timeSpan){
-				case 0:
-					%>
-					<span><liferay-ui:message key="current"/> </span>
-					<br />			
-					<%
-					;
-		        break;
-				case 1:
-					%>
-					<span><liferay-ui:message key="since-yesterday"/> </span>
-					<br />			
-					<%
-					;
-		        break;
-				case 7:
-					%>
-					<span><liferay-ui:message key="since-week"/> </span>
-					<br />			
-					<%
-					;
-		        break;
-				case 30:
-					%>
-					<span><liferay-ui:message key="since-month"/> </span>
-					<br />			
-					<%
-					;
-		        break;
-				case 366:
-					%>
-					<span><liferay-ui:message key="since-year"/> </span>
-					<br />			
-					<%
-					;
-		        break;
-			}
-			//
 			if(timeSpan == 0){
-				%>
-					<em>-&nbsp;<liferay-ui:message key="total"/> 
-						<%if(vStat.getCurrentTotal()>0) {%>
-						 	<%=vStat.getCurrentTotal() %> <liferay-ui:message key="of-which"/>
-						<%}%>
-						<%if(vStat.getCurrentTotal()<1) {%>
-							<liferay-ui:message key="video-list-evaluation-not-possible"/> 
-						<%}%>
-					</em>
-					<br />
-					<%if(vStat.getCurrentPublic()>0) {%>
-						<em> &nbsp; <%=vStat.getPubPercent() %> <liferay-ui:message key="percent"/> <liferay-ui:message key="public"/> </em>
-					<%}%>			
-					<br />
-					<%if(vStat.getCurrentPrivate()>0) {%>
-						<em> &nbsp; <%=vStat.getPrivPercent() %> <liferay-ui:message key="percent"/> <liferay-ui:message key="private"/> </em>
-					<%}%>			
-					<br />		
-				<%		
-			}else{
-				%>
-					<%if(vStat.getPublicDiff()>=0) {%>
-						<em> -&nbsp;<liferay-ui:message key="public"/> <span class="plus">+<%=vStat.getPublicDiff()%></span></em>
-						<br />			
-					<%}%>
-					<%if(vStat.getPublicDiff()<0) {%>
-						<em> -&nbsp;<liferay-ui:message key="public"/> <span class="minus"><%=vStat.getPublicDiff()%></span></em>
-						<br />			
-					<%}%>
-					<%if(vStat.getPrivateDiff()>=0) {%>
-						<em> -&nbsp;<liferay-ui:message key="private"/> <span class="plus">+<%=vStat.getPrivateDiff()%></span></em>
-						<br />			
-					<%}%>
-					<%if(vStat.getPrivateDiff()<0) {%>
-						<em> -&nbsp;<liferay-ui:message key="private"/> <span class="minus"><%=vStat.getPrivateDiff()%></span></em>
-						<br />			
-					<%}%>
-				<%		
-			}
+				totalCurrentVideo = vStat.getCurrentTotal()+"";
+				totalPublic = vStat.getCurrentPublic()+"";
+				totalPublicPerc = vStat.getCurrentPubPercent()+""; 
+				totalPrivate = vStat.getCurrentPrivate()+"";
+				totalPrivatePerc = vStat.getCurrentPrivPercent()+"";
+				 } 
+			else if(timeSpan == 1) {
+				 totalYesterday = vStat.getTotalDiff() +"";
+ 				 totalYesterdayPublic = vStat.getPublicDiff()+"";
+				 totalYesterdayPrivate = vStat.getPrivateDiff()+"";
+                } 
+			else if(timeSpan == 7) {
+	        	 totalOneWeek = vStat.getTotalDiff() +"";
+ 				 totalOneWeekPublic = vStat.getPublicDiff()+"";
+				 totalOneWeekPrivate = vStat.getPrivateDiff()+"";
+		} else if(timeSpan > 27 && timeSpan < 32) {
+		    	 totalOneMonth = vStat.getTotalDiff() +"";
+ 				 totalOneMonthPublic = vStat.getPublicDiff()+"";
+				 totalOneMonthPrivate = vStat.getPrivateDiff()+"";
+			 } else if(timeSpan == 365 || timeSpan == 366) {
+				 totalOneYear = vStat.getTotalDiff() +"";
+ 				 totalOneYearPublic = vStat.getPublicDiff()+"";
+				 totalOneYearPrivate = vStat.getPrivateDiff()+"";}	
 		}
-		%>
+
+%>
+
+<label class="edit-video-lable"><liferay-ui:message
+		key="video-statistic" /></label>
+<aui:fieldset column="false">
+	<aui:layout cssClass="l2stat">
+		<div class="lineBreak"></div>
+		<div class="videoStatistic_table">
+			<div class="lineBreak"></div>
+			<div class="videoStatistic_heading">
+				<div class="videoStatistic_cell">
+					<liferay-ui:message key="timespan" />
+				</div>
+				<div class="videoStatistic_cell">
+					<liferay-ui:message key="total" />
+				</div>
+				<div class="videoStatistic_cell">
+					<liferay-ui:message key="public" />
+				</div>
+				<div class="videoStatistic_cell">
+					<liferay-ui:message key="private" />
+				</div>
+			</div>
+			<div class="videoStatistic_row">
+				<div class="videoStatistic_cell">
+					<liferay-ui:message key="total" />
+				</div>
+				<div class="videoStatistic_cell_total"><%=totalCurrentVideo %></div>
+				<div class="videoStatistic_cell_public"><%=totalPublic %>
+					<div class="lineBreak"></div>
+					(<%=totalPublicPerc%>
+					<liferay-ui:message key="percentSymbol" />
+					)
+				</div>
+				<div class="videoStatistic_cell_private"><%=totalPrivate %>
+					<div class="lineBreak"></div>
+					(<%=totalPrivatePerc%>
+					<liferay-ui:message key="percentSymbol" />
+					)
+				</div>
+			</div>
+			<div class="videoStatistic_row">
+				<div class="videoStatistic_cell">
+					<liferay-ui:message key="since-yesterday" />
+				</div>
+				<div class="videoStatistic_cell_total"><%=totalYesterday  %></div>
+				<div class="videoStatistic_cell_public"><%=totalYesterdayPublic %></div>
+				<div class="videoStatistic_cell_private"><%=totalYesterdayPrivate %></div>
+			</div>
+			<div class="videoStatistic_row">
+				<div class="videoStatistic_cell">
+					<liferay-ui:message key="since-week" />
+				</div>
+				<div class="videoStatistic_cell_total"><%=totalOneWeek  %></div>
+				<div class="videoStatistic_cell_public"><%=totalOneWeekPublic %></div>
+				<div class="videoStatistic_cell_private"><%=totalOneWeekPrivate %></div>
+			</div>
+			<div class="videoStatistic_row">
+				<div class="videoStatistic_cell">
+					<liferay-ui:message key="since-month" />
+				</div>
+				<div class="videoStatistic_cell_total"><%=totalOneMonth  %></div>
+				<div class="videoStatistic_cell_public"><%=totalOneMonthPublic %></div>
+				<div class="videoStatistic_cell_private"><%=totalOneMonthPrivate %></div>
+			</div>
+			<div class="videoStatistic_row">
+				<div class="videoStatistic_cell">
+					<liferay-ui:message key="since-year" />
+				</div>
+				<div class="videoStatistic_cell_total"><%=totalOneYear  %></div>
+				<div class="videoStatistic_cell_public"><%=totalOneYearPublic %></div>
+				<div class="videoStatistic_cell_private"><%=totalOneYearPrivate %></div>
+			</div>
+		</div>
 	</aui:layout>
 </aui:fieldset>
