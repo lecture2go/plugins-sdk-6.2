@@ -232,13 +232,13 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		validate(name, streamLocation);
+		//validate(name, streamLocation);
 
 		long hostId = counterLocalService.increment(Host.class.getName());
 
 		Host host = hostPersistence.create(hostId);
 
-		host.setName(name);
+		host.setName(RepositoryManager.prepareServerRoot(hostId));
 		host.setGroupId(groupId);
 		host.setCompanyId(companyId);
 		// host.setStreamingServerTemplateId(streamingServerTemplateId);

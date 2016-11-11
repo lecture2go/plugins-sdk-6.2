@@ -60,7 +60,7 @@ public class AdminStreamerManagement extends MVCPortlet {
 	
 	public void addStreamingServer(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(Host.class.getName(), request);
-		String hostName = ParamUtil.getString(request, "name");
+		String hostName = "";
 		String ip = ParamUtil.getString(request, "ip");
 		String protocol = ParamUtil.getString(request, "protocol");
 		int port = ParamUtil.getInteger(request, "port");
