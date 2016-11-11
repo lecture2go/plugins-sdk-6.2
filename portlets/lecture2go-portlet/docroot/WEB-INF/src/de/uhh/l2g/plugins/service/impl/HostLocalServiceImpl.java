@@ -309,9 +309,9 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 			resourceLocalService.deleteResource(companyId, Host.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL, hostId);
 			host = deleteHost(hostId);
 			//delete directory
-			String hostDir = PropsUtil.get("lecture2go.media.repository") +"/" +host.getServerRoot(); 
-			File d = new File(hostDir);
-			d.delete();
+			//String hostDir = PropsUtil.get("lecture2go.media.repository") +"/" +host.getServerRoot(); 
+			//File d = new File(hostDir);
+			//d.delete();
 		} else {
 			String message = LanguageUtil.format(serviceContext.getLocale(), "There are {0} objects still refering to this institution", l);
 			SessionMessages.add(serviceContext.getRequest(), "deletion-locked", message);
