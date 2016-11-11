@@ -165,7 +165,7 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 				 			String curParam_row = "curInner"+String.valueOf(institution.getInstitutionId());
 				 			long outerOrder = institution.getSort();
 				 			Host curHost = Institution_HostLocalServiceUtil.getByGroupIdAndInstitutionId(companyId, groupId, institution.getInstitutionId());
- 							String curHostName = AdminInstitutionManagement.DEFAULT_STREAMER;
+ 							String curHostName = AdminStreamerManagement.DEFAULT_STREAMER;
 				 			if (curHost != null && curHost.getDefaultHost() < 1 ) curHostName = curHost.getName();
 				 			int subInstitutionMax = InstitutionLocalServiceUtil.getMaxSortByParentId(institution.getPrimaryKey())+1;
 				 		%>

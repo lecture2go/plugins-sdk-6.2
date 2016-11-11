@@ -158,7 +158,7 @@
   <portlet>
         <portlet-name>lg-admin-streaming-server-management</portlet-name>
         <display-name>L2Go Streaming Server Management</display-name>
-        <portlet-class>de.uhh.l2g.plugins.admin.AdminInstitutionManagement</portlet-class>
+        <portlet-class>de.uhh.l2g.plugins.admin.AdminStreamerManagement</portlet-class>
         <init-param>
             <name>view-template</name>
             <value>/admin/streamingServerList.jsp</value>

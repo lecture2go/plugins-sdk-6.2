@@ -78,9 +78,10 @@ public class RepositoryManager {
 		String shell = GetterUtil.getString(PropsUtil.get("lecture2go.shell.bin"));
 		String OS = System.getProperty("os.name");
 		if (!OS.startsWith("Windows")){
-			if (shell == null) {
+			if (shell == null || !folder.exists()) {
 				folder.mkdirs();
-				LOG.error("Shell not configured! Check paramter lecture2go.shell.bin in your portal properties");
+				if(shell == null)LOG.error("Shell not configured! Check paramter lecture2go.shell.bin in your portal properties");
+				if(!folder.exists())LOG.error("Folder exists allready!");
 			}
 			else {
 				if(folder.mkdirs()){}

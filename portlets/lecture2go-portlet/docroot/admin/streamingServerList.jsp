@@ -27,19 +27,21 @@ String repDirectory = PropsUtil.get("lecture2go.media.repository");
 
 //Get StreamingServer Defaults
 Host defaultHost = HostLocalServiceUtil.getByDefault(companyId, groupId);
-	
+
+
+
 if (defaultHost != null) {%>	
 	<%--STREAMING SERVER START--%>
 		<%if(permissionAdmin){ %>
 			<aui:fieldset column="false" label="streaming-server" cssClass="add-institution" >
 				<aui:layout>
-					<aui:form action="<%= addStreamingServerURL %>" name="fm" inlineLabel="true">
+					<aui:form action="<%= addStreamingServerURL %>" name="fm" inlineLabel="true" commandName="model">
 						 <aui:button-row>
 						 	 <aui:fieldset column="true">
 							 <aui:input label="streaming-server-name" name="name" required="true" inlineField="true"></aui:input>
-				 	         <aui:input label="streaming-server-domain-or-ip" name="ip" inlineField="true" value='<%= defaultHost.getStreamer() %>'></aui:input>
-				 	         <aui:input label="port" name="port" inlineField="true" value='<%= defaultHost.getPort() %>'></aui:input>
-				 	         <aui:input label="protocol" name="protocol" inlineField="true" value='<%= defaultHost.getProtocol() %>'></aui:input>
+				 	         <aui:input label="streaming-server-domain-or-ip" name="ip" inlineField="true" value=''></aui:input>
+				 	         <aui:input label="port" name="port" inlineField="true" value=''></aui:input>
+				 	         <aui:input label="protocol" name="protocol" inlineField="true" value=''></aui:input>
 				 	         <aui:input name='hostId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "hostId") %>'/>
 						 	 <aui:button type="submit" value="add"></aui:button>
 						 	 </aui:fieldset>

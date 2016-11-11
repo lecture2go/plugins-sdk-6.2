@@ -9,9 +9,9 @@
 <%@taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@page import="com.liferay.portal.kernel.util.Validator"%>
 <%@page import="javax.portlet.PortletPreferences"%>
-<%@page import="com.liferay.util.PwdGenerator"%>
+<%@page import="javax.portlet.PortletURL"%>
+<%@page import="javax.portlet.PortletException"%>
 
 <%@page import="java.util.Arrays"%>
 <%@page import="java.util.Enumeration"%>
@@ -31,10 +31,8 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.io.PrintWriter"%>
 
-<%@page import="javax.portlet.PortletURL"%>
-<%@page import="javax.portlet.PortletException"%>
-<%@page import="org.apache.jasper.JasperException"%>
-
+<%@page import="com.liferay.portal.kernel.util.Validator"%>
+<%@page import="com.liferay.util.PwdGenerator"%>
 <%@page import="com.liferay.portal.theme.ThemeDisplay" %>
 <%@page import="com.liferay.portal.util.PortalUtil"%>
 <%@page import="com.liferay.portal.kernel.util.HtmlUtil"%>
@@ -68,6 +66,7 @@
 <%@page import="com.liferay.portal.kernel.dao.search.SearchContainer" %>
 <%@page import="com.liferay.portal.kernel.util.GetterUtil" %>
 
+<%@page import="org.apache.jasper.JasperException"%>
 <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@page import="org.springframework.scripting.config.LangNamespaceUtils"%>
 <%@page import="org.springframework.web.bind.ServletRequestUtils"%>
@@ -76,7 +75,9 @@
 <%@page import="org.json.JSONArray"%>
 <%@page import="org.json.JSONException"%>
 
-<%@page import="de.uhh.l2g.plugins.admin.AdminUserManagement"%>
+<%@ page import="de.uhh.l2g.plugins.admin.AdminInstitutionManagement" %>
+<%@ page import="de.uhh.l2g.plugins.admin.AdminStreamerManagement" %>
+<%@ page import="de.uhh.l2g.plugins.admin.AdminUserManagement" %>
 
 <%@page import="de.uhh.l2g.plugins.service.ProducerLocalServiceUtil"%>
 <%@page import="de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil"%>
@@ -133,11 +134,6 @@
 <%@page import="de.uhh.l2g.plugins.util.Security"%>
 
 <%@page import="de.uhh.l2g.webservices.*"%>
-
-
-
-<%@ page import="de.uhh.l2g.plugins.admin.AdminInstitutionManagement" %>
-<%@ page import="de.uhh.l2g.plugins.admin.AdminUserManagement" %>
 
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
