@@ -2541,7 +2541,8 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	margin: 0 0 4px 0;
 }
 
-.lead-box a {
+.lead-box a,
+.meta-description a {
     color: #c40017;
 }
 
