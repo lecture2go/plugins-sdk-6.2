@@ -14,7 +14,9 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 import com.liferay.portal.kernel.exception.SystemException;
 
@@ -53,5 +55,19 @@ public class Video_CategoryLocalServiceImpl extends Video_CategoryLocalServiceBa
 	public void removeByVideo(Long videoId) throws SystemException{
 		video_CategoryPersistence.removeByVideo(videoId);
 	}
+	
+	public void updateCategoryByVideoAndCategory(Long videoId, Long categoryId, Long newCategoryId){
+		List<Video_Category> vca = new ArrayList<Video_Category>();
+		try {
+			vca = video_CategoryPersistence.findByVideoCategory(videoId, categoryId);
+			ListIterator<Video_Category> vci = vca.listIterator();
+			while(vci.hasNext()){
+				//new object
+				Video_Category nvc = vci.next();
+				nvc.setCategoryId(newCategoryId);
+				video_CategoryPersistence.update(nvc);
+			}
+		} catch (SystemException e) {}
+	}	
 	
 }

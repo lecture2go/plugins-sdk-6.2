@@ -34,6 +34,7 @@ import de.uhh.l2g.plugins.model.Coordinator;
 import de.uhh.l2g.plugins.model.Creator;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Lectureseries;
+import de.uhh.l2g.plugins.model.Lectureseries_Category;
 import de.uhh.l2g.plugins.model.Lectureseries_Creator;
 import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.model.Tagcloud;
@@ -44,6 +45,7 @@ import de.uhh.l2g.plugins.model.impl.CoordinatorImpl;
 import de.uhh.l2g.plugins.model.impl.CreatorImpl;
 import de.uhh.l2g.plugins.model.impl.InstitutionImpl;
 import de.uhh.l2g.plugins.model.impl.LectureseriesImpl;
+import de.uhh.l2g.plugins.model.impl.Lectureseries_CategoryImpl;
 import de.uhh.l2g.plugins.model.impl.Lectureseries_CreatorImpl;
 import de.uhh.l2g.plugins.model.impl.Lectureseries_InstitutionImpl;
 import de.uhh.l2g.plugins.model.impl.ProducerImpl;
@@ -54,6 +56,7 @@ import de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Lectureseries_CategoryLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Lectureseries_CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Lectureseries_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
@@ -64,7 +67,6 @@ import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.util.EmailManager;
 import de.uhh.l2g.plugins.util.Htaccess;
-import de.uhh.l2g.plugins.util.HtmlManager;
 import de.uhh.l2g.plugins.util.Lecture2GoRoleChecker;
 import de.uhh.l2g.plugins.util.ProzessManager;
 
@@ -154,7 +156,10 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		}
 		// If no lectureseries number is set, the default-number 00.000 will be set
 		lectureseries.setNumber("".equals(request.getParameter("number")) ? LanguageUtil.get(getPortletConfig(), locale, "lecture-series-default-number"):request.getParameter("number"));
+		//update categoryId
 		lectureseries.setCategoryId(categoryId);
+		//and all linked objects to this category over the lecture series object
+		LectureseriesLocalServiceUtil.updateCategoryForLectureseries(lectureseries.getLectureseriesId(), categoryId);
 		lectureseries.setName(request.getParameter("name"));
 		lectureseries.setShortDesc(request.getParameter("shortDesc"));
 		lectureseries.setTermId(semesterId);
@@ -244,9 +249,9 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			e.printStackTrace();
 		}
 		
-		//category
+		//update tagclout category
 		Category ctgr = new CategoryImpl();
-		try{ctgr = CategoryLocalServiceUtil.getCategory(lectureseries.getCategoryId());}catch(Exception e){}			
+		try{ctgr = CategoryLocalServiceUtil.getCategory(lectureseries.getCategoryId());}catch(Exception e){}		
 		tagCloudArrayString.add(ctgr.getName());
 		tagCloudArrayString.add(lectureseries.getName());
 		tagCloudArrayString.add(lectureseries.getNumber());
@@ -316,6 +321,12 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		
 		//save object to database
 		Lectureseries newlect = LectureseriesLocalServiceUtil.addLectureseries(lectureseries);
+		//add to Lectureseries_Category table
+		Lectureseries_Category lcat = new Lectureseries_CategoryImpl();
+		lcat.setLectureseriesId(newlect.getLectureseriesId());
+		lcat.setCategoryId(newlect.getCategoryId());
+		Lectureseries_CategoryLocalServiceUtil.addLectureseries_Category(lcat);
+		//
 		Long lId = newlect.getLectureseriesId();
 
 		//refresh htaccess authentication files 

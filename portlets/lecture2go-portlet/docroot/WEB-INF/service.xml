@@ -516,6 +516,10 @@
     	<!-- Group instance -->
 
     	<!-- Audit fields -->
+        <finder name="VideoCategory" return-type="Collection">
+            <finder-column name="videoId"></finder-column>
+            <finder-column name="categoryId"></finder-column>
+        </finder>
     </entity>
     <entity name="Lectureseries_Category" local-service="true" remote-service="false">
         <column name="lectureseriesCategoryId" type="long" primary="true" id-type="increment"></column>
@@ -526,6 +530,10 @@
         </finder>
         <finder name="Category" return-type="Collection">
             <finder-column name="categoryId"></finder-column>
+        </finder>
+        <finder name="CategoryLectureseries" return-type="Collection">
+            <finder-column name="categoryId"></finder-column>
+            <finder-column name="lectureseriesId"></finder-column>
         </finder>
     </entity>
     <entity name="Creator" local-service="true"

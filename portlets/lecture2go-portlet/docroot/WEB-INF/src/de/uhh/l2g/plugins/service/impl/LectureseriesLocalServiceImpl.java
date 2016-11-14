@@ -24,6 +24,7 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
@@ -32,8 +33,10 @@ import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.Term;
 import de.uhh.l2g.plugins.model.impl.VideoImpl;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Lectureseries_CategoryLocalServiceUtil;
 import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.LectureseriesLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.LectureseriesFinderUtil;
@@ -171,7 +174,23 @@ public class LectureseriesLocalServiceImpl extends LectureseriesLocalServiceBase
 			}
 		}
 	}
-		
+	
+	public void updateCategoryForLectureseries(Long lectureseriesId, Long newCategoryId) throws NoSuchModelException, SystemException{
+		Lectureseries lectureseries = lectureseriesPersistence.findByPrimaryKey(lectureseriesId);
+		//for related categories to this lecture, table Lectureseries_Category
+		Lectureseries_CategoryLocalServiceUtil.updateCategoryByLectureseriesAndCategory(lectureseries.getLectureseriesId(), lectureseries.getCategoryId(), newCategoryId);
+		//for related videos to this lecture, table Video_Category
+		List<Video> vl = VideoLocalServiceUtil.getByLectureseries(lectureseries.getLectureseriesId());
+		ListIterator<Video> vli = vl.listIterator();
+		while(vli.hasNext()){
+			Video v = vli.next();
+			Video_CategoryLocalServiceUtil.updateCategoryByVideoAndCategory(v.getVideoId(), lectureseries.getCategoryId(), newCategoryId);
+		}
+		//for lecture series itself
+		lectureseries.setCategoryId(newCategoryId);
+		lectureseriesPersistence.update(lectureseries);
+	}
+	
 	public List<Lectureseries> getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(Long institutionId, Long parentInstitutionId, Long termId, Long categoryId, Long creatorId, String searchQuery){
 		return LectureseriesFinderUtil.findFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(institutionId, parentInstitutionId, termId, categoryId, creatorId, searchQuery);
 	}
