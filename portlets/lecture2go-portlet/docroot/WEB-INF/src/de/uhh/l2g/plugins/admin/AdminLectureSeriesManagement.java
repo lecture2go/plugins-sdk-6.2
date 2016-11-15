@@ -192,45 +192,6 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			tagCloudArrayString.add(inst.getName());
 			tagCloudArrayString.add(parentInst.getName());
 		}
-
-		//new creators
-		String[] firstNames = request.getParameterValues("firstName");
-		String[] lastNames = request.getParameterValues("lastName");
-		String[] jobTitles = request.getParameterValues("jobTitle");
-		String[] genders = request.getParameterValues("gender");
-		String[] creatorIds = request.getParameterValues("creatorId");
-		Long cId = new Long(0);
-		//remove all creators for this lecture series first
-		Lectureseries_CreatorLocalServiceUtil.removeByLectureseriesId(lId);
-		//and add the new creators
-		try{
-			for(int i=0;i<creatorIds.length;i++){
-				if(creatorIds[i].equals("0")){
-					Creator c = new CreatorImpl();
-					c.setFirstName(firstNames[i]);
-					c.setLastName(lastNames[i]);
-					c.setJobTitle(jobTitles[i]);
-					c.setGender(genders[i]);
-					c.setFullName(jobTitles[i]+" "+firstNames[i]+" "+lastNames[i]);
-					List<Creator> cl = CreatorLocalServiceUtil.getByFullName(jobTitles[i]+" "+firstNames[i]+" "+lastNames[i]);
-					if(cl.size()==0)cId = CreatorLocalServiceUtil.addCreator(c).getCreatorId();
-					else cId = CreatorLocalServiceUtil.getByFullName(jobTitles[i]+" "+firstNames[i]+" "+lastNames[i]).iterator().next().getCreatorId();
-				}else{
-					cId = new Long(creatorIds[i]);
-				}
-				//add created creator to lecture series
-				Lectureseries_Creator lc = new Lectureseries_CreatorImpl();
-				lc.setLectureseriesId(lId);
-				lc.setCreatorId(cId);
-				if(Lectureseries_CreatorLocalServiceUtil.getByLectureseriesIdAndCreatorId(lId, cId).size()==0){
-					Lectureseries_CreatorLocalServiceUtil.addLectureseries_Creator(lc);
-				}
-				Creator cr = CreatorLocalServiceUtil.getCreator(cId);
-				tagCloudArrayString.add(cr.getFirstName());
-				tagCloudArrayString.add(cr.getLastName());
-				tagCloudArrayString.add(cr.getFullName());
-			}
-		}catch (NullPointerException e){}
 		//update producer link
 		//delete old entries first
 		Producer_LectureseriesLocalServiceUtil.removeByLectureseriesId(lId);
