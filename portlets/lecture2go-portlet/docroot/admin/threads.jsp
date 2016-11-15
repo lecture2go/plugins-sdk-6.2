@@ -32,7 +32,7 @@
 <liferay-portlet:resourceURL id="triggerVideohitlistThread" var="triggerVideohitlistThread" />
 
 <div class="noresponsive">	  
-<label class="edit-video-lable"><%=pageName%></label>
+<label class="edit-video-lable"><liferay-ui:message key="cronjobs"/></label>
 <liferay-ui:message key="common-descritpion-for-l2go-cronjobs"/>
 <%-- This list all unique schedulers --%>
 	<% 

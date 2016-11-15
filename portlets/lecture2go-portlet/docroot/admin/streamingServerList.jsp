@@ -38,8 +38,7 @@ if (defaultHost != null) {%>
 					<aui:form action="<%= addStreamingServerURL %>" name="fm" inlineLabel="true" commandName="model">
 						 <aui:button-row>
 						 	 <aui:fieldset column="true">
-							 <aui:input label="streaming-server-name" name="name" required="true" inlineField="true"></aui:input>
-				 	         <aui:input label="streaming-server-domain-or-ip" name="ip" inlineField="true" value=''></aui:input>
+				 	         <aui:input label="streaming-server-domain-or-ip" name="ip" inlineField="true" required="true" value=''></aui:input>
 				 	         <aui:input label="port" name="port" inlineField="true" value=''></aui:input>
 				 	         <aui:input label="protocol" name="protocol" inlineField="true" value=''></aui:input>
 				 	         <aui:input name='hostId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "hostId") %>'/>

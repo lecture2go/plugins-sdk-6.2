@@ -227,7 +227,7 @@
 							<portlet:param name="creatorId" value="<%=creatorId.toString() %>"/>
 							<portlet:param name="searchQuery" value="<%=searchQuery %>"/>	
 						</portlet:actionURL>
-						<li class="filter-menu"><a href="${filterByTerm}"><div class="filter-menu-link"><span ${hasTermFiltered ? 'class="icon-large icon-remove"' : ''}></span>${term.termName}</div></a></li>
+						<li class="filter-menu"><a href="${filterByTerm}"><div class="filter-menu-link"><span ${hasTermFiltered ? 'class="icon-large icon-remove"' : ''}></span><c:choose><c:when test="${term.termName==''}"><liferay-ui:message key="no-term"/></c:when><c:otherwise>${term.termName}</c:otherwise></c:choose></div></a></li>
 					</c:forEach>
 					</ul>
 					<c:if test="${hasManyTerms}">
