@@ -44,8 +44,10 @@ public class TermImpl extends TermBaseImpl {
 	 * @return the full termName (prefix + year)
 	 */
 	public String getTermName() {
-		return this.getPrefix() + " " + this.getYear();
-		
+		String termName = this.getPrefix() + " " + this.getYear();
+		// the termName is trimmed, so an empty term is returned as an empty string (no spaces)
+		termName = termName.trim();
+		return termName;
 	}
 	
 }
