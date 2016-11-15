@@ -25,10 +25,12 @@ public class CreatorsManagement extends MVCPortlet {
 	public void add(ActionRequest request, ActionResponse response) throws SystemException, PortalException{
 		String backURL = request.getParameterMap().get("backURL")[0];
 		String fn=request.getParameter("firstName");
+		String mn=request.getParameter("middleName");
 		String ln=request.getParameter("lastName");
 		String t=request.getParameter("jobTitle");
 		Creator creator = new CreatorImpl();
 		creator.setFirstName(fn);
+		creator.setMiddleName(mn);
 		creator.setLastName(ln);
 		creator.setJobTitle(t);
 		CreatorLocalServiceUtil.addCreator(creator);
@@ -43,10 +45,12 @@ public class CreatorsManagement extends MVCPortlet {
 		long reqCreatorId = new Long(request.getParameterMap().get("creatorId")[0]);
 		String backURL = request.getParameterMap().get("backURL")[0];
 		String fn=request.getParameter("firstName");
+		String mn=request.getParameter("middleName");
 		String ln=request.getParameter("lastName");
 		String t=request.getParameter("jobTitle");
 		Creator creator = CreatorLocalServiceUtil.getCreator(reqCreatorId);
 		creator.setFirstName(fn);
+		creator.setMiddleName(mn);
 		creator.setLastName(ln);
 		creator.setJobTitle(t);
 		CreatorLocalServiceUtil.updateCreator(creator);

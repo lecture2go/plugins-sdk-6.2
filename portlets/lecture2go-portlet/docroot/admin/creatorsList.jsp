@@ -33,15 +33,9 @@
 		<aui:layout>
 				<aui:form action="<%=addURL%>" commandName="model" name="metadata">
 					<div class="add-new-creator-term-object">
-						<aui:select size="1" name="jobTitle" label="job-title">
-							<aui:option value="0"><liferay-ui:message key="please-choose-job-title"/></aui:option>
-								<%
-								for(int i=0; i<ct.length; i++){
-									String title = ct[i];
-									%><aui:option value='<%=title%>'><%=title%></aui:option>
-								<%}%>
-						</aui:select>				
+						<aui:input name="jobTitle" value="" type="text" label="job-title"/>
 						<aui:input name="firstName" value="" type="text" label="first-name"/>
+						<aui:input name="middleName" value="" type="text" label="middle-name"/>
 						<aui:input name="lastName" value="" type="text" label="last-name"/>
 						<aui:button type="submit" value="add" id="add"/>
 					</div>
@@ -79,20 +73,9 @@
 				<aui:form action="<%=editURL%>" commandName="model">
 					  <div class="adminrow wide">
 						<div class="admintile wide">
-							<aui:select size="1" name="jobTitle" label="">
-									<aui:option value="0"><liferay-ui:message key="please-choose-job-title"/></aui:option>
-									<%
-									for(int i=0; i<ct.length; i++){
-										String title = ct[i];
-										if (creator.getJobTitle().trim().equals(title.trim())) {%>
-											<aui:option value='<%=title%>' selected="true"><%=title%></aui:option>
-										<%} else {%>
-											<aui:option value='<%=title%>'><%=title%></aui:option>
-										<%}
-									}
-									%>
-							</aui:select>				
+							<aui:input name="jobTitle" value="<%=creator.getJobTitle()%>" type="job-title" label=""/>
 							<aui:input name="firstName" value="<%=creator.getFirstName()%>" type="text" label=""/>
+							<aui:input name="middleName" value="<%=creator.getMiddleName()%>" type="text" label=""/>
 							<aui:input name="lastName" value="<%=creator.getLastName()%>" type="text" label=""/>
 							<aui:input name="creatorId" value="<%=creator.getCreatorId()%>" type="hidden"/>
 						</div>
