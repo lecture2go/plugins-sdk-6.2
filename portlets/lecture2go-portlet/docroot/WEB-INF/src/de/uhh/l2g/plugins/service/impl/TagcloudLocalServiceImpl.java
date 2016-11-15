@@ -85,10 +85,18 @@ public class TagcloudLocalServiceImpl extends TagcloudLocalServiceBaseImpl {
 		}
 		
 		Tagcloud tagcloud = new TagcloudImpl();
-		tagcloud.setTags(tagCloudString);
-		tagcloud.setObjectClassType(className);
-		tagcloud.setObjectId(objectId);
-		TagcloudLocalServiceUtil.addTagcloud(tagcloud);
+		try {
+			tagcloud=TagcloudLocalServiceUtil.getByObjectIdAndObjectClassType(objectId, className);
+			tagcloud.setTags(tagCloudString);
+			tagcloud.setObjectClassType(className);
+			tagcloud.setObjectId(objectId);
+			TagcloudLocalServiceUtil.updateTagcloud(tagcloud);
+		} catch (NoSuchTagcloudException e) {
+			tagcloud.setTags(tagCloudString);
+			tagcloud.setObjectClassType(className);
+			tagcloud.setObjectId(objectId);
+			TagcloudLocalServiceUtil.addTagcloud(tagcloud);
+		}
 		//
 	}
 	
@@ -163,6 +171,7 @@ public class TagcloudLocalServiceImpl extends TagcloudLocalServiceBaseImpl {
 					try {
 						Creator cr = CreatorLocalServiceUtil.getCreator(creatId);
 						tagCloudArrayString.add(cr.getFirstName());
+						tagCloudArrayString.add(cr.getMiddleName());
 						tagCloudArrayString.add(cr.getLastName());
 						tagCloudArrayString.add(cr.getFullName());
 					} catch (PortalException e) {
@@ -204,9 +213,7 @@ public class TagcloudLocalServiceImpl extends TagcloudLocalServiceBaseImpl {
 				tagCloudArrayString.add(lect.getNumber());
 				tagCloudArrayString.add(lect.getEventType());
 				tagCloudArrayString.add(lect.getName());
-			} catch (PortalException e1) {
-				e1.printStackTrace();
-			} catch (SystemException e1) {
+			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 			//Term
@@ -249,9 +256,10 @@ public class TagcloudLocalServiceImpl extends TagcloudLocalServiceBaseImpl {
 					try {
 						Creator cr = CreatorLocalServiceUtil.getCreator(creatId);
 						tagCloudArrayString.add(cr.getFirstName());
+						tagCloudArrayString.add(cr.getMiddleName());
 						tagCloudArrayString.add(cr.getLastName());
 						tagCloudArrayString.add(cr.getFullName());
-					} catch (PortalException e) {
+					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
