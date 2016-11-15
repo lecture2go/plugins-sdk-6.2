@@ -203,6 +203,7 @@ public class TagcloudLocalServiceImpl extends TagcloudLocalServiceBaseImpl {
 				lect = LectureseriesLocalServiceUtil.getLectureseries(v.getLectureseriesId());
 				tagCloudArrayString.add(lect.getNumber());
 				tagCloudArrayString.add(lect.getEventType());
+				tagCloudArrayString.add(lect.getName());
 			} catch (PortalException e1) {
 				e1.printStackTrace();
 			} catch (SystemException e1) {
