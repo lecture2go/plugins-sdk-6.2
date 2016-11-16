@@ -58,6 +58,7 @@ import de.uhh.l2g.plugins.model.impl.Video_InstitutionImpl;
 import de.uhh.l2g.plugins.model.impl.Video_LectureseriesImpl;
 import de.uhh.l2g.plugins.service.CategoryLocalServiceUtil;
 import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
+import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Lectureseries_InstitutionLocalServiceUtil;
@@ -823,7 +824,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			//delete file
 			String fPath="";
 			try {
-				fPath = ProducerLocalServiceUtil.getProdUcer(video.getProducerId()).getHomeDir()+"/";
+				fPath = PropsUtil.get("lecture2go.media.repository")+"/"+HostLocalServiceUtil.getByHostId(video.getHostId()).getServerRoot()+"/"+ProducerLocalServiceUtil.getProducer(video.getProducerId()).getHomeDir()+"/";
 				mainContainerFormat = VideoLocalServiceUtil.getVideo(videoId).getContainerFormat();
 			} catch (PortalException e) {
 				e.printStackTrace();
