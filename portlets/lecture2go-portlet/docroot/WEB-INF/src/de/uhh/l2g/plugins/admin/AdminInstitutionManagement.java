@@ -134,21 +134,19 @@ public class AdminInstitutionManagement extends MVCPortlet {
 
 	public void addInstitution(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
 		String institutionName = "";
-
+		String backURL = request.getParameter("backURL");
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(Institution.class.getName(), request);
-
 			institutionName = ParamUtil.getString(request, "institution");
 			long hostId = ParamUtil.getLong(request, "serverselect");
 			long parentId = ParamUtil.getLong(request, "parent");
 			int sort = ParamUtil.getInteger(request, "order");
-
 			InstitutionLocalServiceUtil.addInstitution(institutionName, hostId, parentId, sort, serviceContext);
+			response.sendRedirect(backURL);
 		} catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
 			LOG.error("Failed adding Institution " + institutionName, e);
 			PortalUtil.copyRequestParameters(request, response);
-
 			response.setRenderParameter("mvcPath", "/admin/institutionList.jsp");
 		}
 	}
@@ -159,21 +157,19 @@ public class AdminInstitutionManagement extends MVCPortlet {
 	 */
 	public void addSubInstitution(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
 		String institutionName = "";
-
+		String backURL = request.getParameter("backURL");
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(Institution.class.getName(), request);
-
 			institutionName = ParamUtil.getString(request, "subInstitution");
 			long hostId = 0;
 			long parentId = ParamUtil.getLong(request, "subInstitutionParentId");
 			int sort = ParamUtil.getInteger(request, "subInstitutionOrder");
-
 			InstitutionLocalServiceUtil.addInstitution(institutionName, hostId, parentId, sort, serviceContext);
+			response.sendRedirect(backURL);
 		} catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
 			LOG.error("Failed adding Sub-Institution " + institutionName, e);
 			PortalUtil.copyRequestParameters(request, response);
-
 			response.setRenderParameter("mvcPath", "/admin/institutionList.jsp");
 		}
 	}
@@ -184,8 +180,10 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		long institutionId = ParamUtil.getLong(request, "outerListInstitutionId");
 		int sort = ParamUtil.getInteger(request, "outerListOrder");
 		LOG.info("Updating " + institutionId);
+		String backURL = request.getParameter("backURL");
 		try {
 			InstitutionLocalServiceUtil.updateInstitution(institutionId, name, sort, serviceContext);
+			response.sendRedirect(backURL);
 		} catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
 			LOG.error("Failed updating Institution", e);
@@ -200,8 +198,10 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		long institutionId = ParamUtil.getLong(request, "innerListInstitutionId");
 		int sort = ParamUtil.getInteger(request, "innerListOrder");
 		LOG.info("Updating " + institutionId);
+		String backURL = request.getParameter("backURL");
 		try {
 			InstitutionLocalServiceUtil.updateInstitution(institutionId, institutionName, sort, serviceContext);
+			response.sendRedirect(backURL);
 		} catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
 			LOG.error("Failed updating SubInstitution", e);
@@ -213,11 +213,12 @@ public class AdminInstitutionManagement extends MVCPortlet {
 	public void deleteInstitution(ActionRequest request, ActionResponse response) {
 		long institutionId = ParamUtil.getLong(request, "outerListInstitutionId");
 		LOG.info("Deleting " + institutionId);
+		String backURL = request.getParameter("backURL");
 		try {
-
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(Institution.class.getName(), request);
 			response.setRenderParameter("institutionId", Long.toString(institutionId));
 			InstitutionLocalServiceUtil.deleteInstitution(institutionId, serviceContext);
+			response.sendRedirect(backURL);
 		} catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
 			LOG.error("Failed deleting Institution", e);
@@ -230,10 +231,12 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		long institutionId = ParamUtil.getLong(request, "innerListInstitutionId");
 		long parentId = ParamUtil.getLong(request, "innerListInstitutionParentId");
 		LOG.info("Trying to remove " + institutionId + " in " + parentId);
+		String backURL = request.getParameter("backURL");
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(Institution.class.getName(), request);
 			response.setRenderParameter("institutionId", Long.toString(institutionId));
 			InstitutionLocalServiceUtil.deleteInstitution(institutionId, serviceContext);
+			response.sendRedirect(backURL);
 		} catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
 			LOG.error("Failed deleting SubInstitution", e);

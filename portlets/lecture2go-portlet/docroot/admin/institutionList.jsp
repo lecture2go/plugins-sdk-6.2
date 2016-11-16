@@ -10,13 +10,6 @@
 <liferay-ui:error key="no-roles-error" message="roles-not-configured" />
 
 <portlet:renderURL var="viewURL"><portlet:param name="jspPage" value="/admin/institutionList.jsp" /></portlet:renderURL>
-<liferay-portlet:renderURL varImpl="outerURL"><portlet:param name="jspPage" value="/admin/institutionList.jsp" /></liferay-portlet:renderURL>
-<liferay-portlet:renderURL varImpl="innerURL"><portlet:param name="jspPage" value="/admin/institutionList.jsp" /></liferay-portlet:renderURL>
-
-<portlet:actionURL name="addInstitution" var="addInstitutionURL"></portlet:actionURL>
-<portlet:actionURL name="addSubInstitution" var="addSubInstitutionURL"></portlet:actionURL>
-<portlet:actionURL name="updateInstitution" var="updateInstitutionURL"></portlet:actionURL>
-<portlet:actionURL name="updateSubInstitution" var="updateSubInstitutionURL"></portlet:actionURL>
 
 <%
 //Variables required for Permissions
@@ -41,6 +34,7 @@ String institutionModel = Institution.class.getName();
 String institutionHostModel = Institution_Host.class.getName();
 
 String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
+
 %>
 <%--END: DEBUG INFO--%>
 <%
@@ -48,10 +42,6 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 	long institutionId = Long.valueOf((Long) renderRequest.getAttribute("institutionId"));
 	long hostId = Long.valueOf((Long) renderRequest.getAttribute("hostId"));
 
-	PortletURL portletURL = renderResponse.createRenderURL();
-	portletURL.setParameter("institutionId", institutionId+"");
-	portletURL.setParameter("hostId", hostId+"");
-	
 	//Get Top Level institution of current scope
 	Institution root = InstitutionLocalServiceUtil.getRootByGroupId(companyId, groupId);
 	long rootId = GetterUtil.getLong(root.getInstitutionId());
@@ -62,11 +52,29 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 	//Get StreamingServers
 	List<Host> hostList = HostLocalServiceUtil.getByGroupId(groupId);
 	//System.out.println(hostList.toString());
-
 	
 	//Sort preset for first level Institutions
 	int maxOrder = InstitutionLocalServiceUtil.getMaxSortByParentId(rootId)+1;
 %>
+	<liferay-portlet:renderURL varImpl="outerURL">
+		<portlet:param name="jspPage" value="/admin/institutionList.jsp" />
+	</liferay-portlet:renderURL>
+	<liferay-portlet:renderURL varImpl="innerURL">
+		<portlet:param name="jspPage" value="/admin/institutionList.jsp" />
+	</liferay-portlet:renderURL>
+
+	<portlet:actionURL name="addInstitution" var="addInstitutionURL">
+		<portlet:param name="backURL" value='<%=String.valueOf(PortalUtil.getCurrentCompleteURL(request))%>' />
+	</portlet:actionURL>
+	<portlet:actionURL name="addSubInstitution" var="addSubInstitutionURL">
+		<portlet:param name="backURL" value='<%=String.valueOf(PortalUtil.getCurrentCompleteURL(request))%>' />
+	</portlet:actionURL>
+	<portlet:actionURL name="updateInstitution" var="updateInstitutionURL">
+		<portlet:param name="backURL" value='<%=String.valueOf(PortalUtil.getCurrentCompleteURL(request))%>' />
+	</portlet:actionURL>
+	<portlet:actionURL name="updateSubInstitution" var="updateSubInstitutionURL">
+		<portlet:param name="backURL" value='<%=String.valueOf(PortalUtil.getCurrentCompleteURL(request))%>' />
+	</portlet:actionURL>
 <div class="noresponsive">
 		<%--INSTITUTIONS START--%>
 		<c:if test='<%= permissionAdmin %>'>
@@ -172,7 +180,7 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 							<portlet:actionURL name="deleteInstitution" var="deleteInstitutionURL">
 								<portlet:param name="outerListInstitutionId" value='<%= (new Long(institution.getPrimaryKey())).toString() %>' />
 								<portlet:param name="institutionId" value='<%= (new Long(institutionId)).toString() %>' />
-								<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>
+								<portlet:param name="backURL" value="<%=String.valueOf(outerURL)%>"/>
 							</portlet:actionURL>
 							
  							<aui:form action="<%= updateInstitutionURL %>" name="<portlet:namespace />fm">
@@ -219,7 +227,7 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 									        			<portlet:actionURL name="deleteSubInstitution" var="deleteSubInstitutionURL">
 										 					<portlet:param name="innerListInstitutionId" value='<%= (new Long(subInstitution.getPrimaryKey())).toString() %>' />
 										 					<portlet:param name="innerListInstitutionParentId" value='<%= (new Long(institution.getPrimaryKey())).toString() %>' />
-															<portlet:param name="backURL" value="<%=String.valueOf(portletURL) %>"/>
+															<portlet:param name="backURL" value="<%=String.valueOf(innerURL) %>"/>
 														</portlet:actionURL>
 														
 														<aui:form action="<%= updateSubInstitutionURL %>" name="fm">
