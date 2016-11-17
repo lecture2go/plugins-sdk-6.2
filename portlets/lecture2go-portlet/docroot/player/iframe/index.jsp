@@ -33,6 +33,16 @@
 			        var playerUri3 ="<%=video.getPlayerUris().get(2)%>";
 			        var playerUri4 ="<%=video.getPlayerUris().get(3)%>";
 			        var playerUri5 ="<%=video.getPlayerUris().get(4)%>";
+
+			        //hack for HLS in firefox and mp3
+			        var containerFormat = "<%=video.getContainerFormat()%>";
+			        var isFirefox = typeof InstallTrigger !== 'undefined';
+			        if(containerFormat.indexOf("mp3") !== -1 && isFirefox){
+			        	var playerUri = playerUri1;
+			        	playerUri1 = playerUri3;
+			        	playerUri3 = playerUri;
+			        }
+			        //
 			        
 					var img = "<%=video.getImage()%>";
 			        jwplayer('player1').setup({

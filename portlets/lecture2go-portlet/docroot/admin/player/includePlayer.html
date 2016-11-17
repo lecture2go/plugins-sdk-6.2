@@ -56,6 +56,16 @@
         var playerUri4 ="${reqVideo.playerUris.get(3)}";
         var playerUri5 ="${reqVideo.playerUris.get(4)}";		
 
+        //hack for HLS in firefox and mp3
+        var containerFormat = "${video.containerFormat}";
+        var isFirefox = typeof InstallTrigger !== 'undefined';
+        if(containerFormat.indexOf("mp3") !== -1 && isFirefox){
+        	var playerUri = playerUri1;
+        	playerUri1 = playerUri3;
+        	playerUri3 = playerUri;
+        }
+        //
+        
         // Hier wird der JW-Player initialisiert
         // Interessant ist hierbei, dass es mehrere Quellen geben kann
         jwplayer('player1').setup({
