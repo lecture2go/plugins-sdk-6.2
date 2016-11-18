@@ -176,7 +176,11 @@
 			 			<%=prds %>
 			 			<br />
 			 			<c:if test="<%= lectser.getNumberOfVideos() >0 %>">
-			 				<p><%= lectser.getNumberOfVideos() %> Video<c:if test="<%= lectser.getNumberOfVideos() >1 %>">s</c:if> <liferay-ui:message key="uploaded"/></p>
+			 				<p>
+				 				<%= lectser.getNumberOfVideos() %> 
+				 				<c:if test="<%= lectser.getNumberOfVideos() >1 %>"><liferay-ui:message key="video-datasets"/></c:if>
+				 				<c:if test="<%= lectser.getNumberOfVideos() ==1 %>"><liferay-ui:message key="video-dataset"/></c:if>
+			 				</p>
 			 			</c:if>
 			 			<c:if test="<%= lectser.getNumberOfVideos() ==0 %>">
 			 				<p><liferay-ui:message key="no-videos-uploaded"/></p>
