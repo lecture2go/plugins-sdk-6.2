@@ -171,6 +171,10 @@
 							if(ls.getTermId()>0)lTerm = TermLocalServiceUtil.getById(ls.getTermId()).getTermName();
 							String vName = vid.getTitle();
 							if(vName.trim().equals(""))vName =LanguageUtil.get(pageContext, "no-title");
+							String creators=CreatorLocalServiceUtil.getCommaSeparatedLinkedCreatorsByVideoIdAndMaxCreators(vid.getVideoId(), 100);
+							if (creators.trim()).equals(""))creators = LanguageUtil.get(pageContext, "no-creator");
+
+
 						%>
 							<div class="video-image-wrapper" <% if(!vid.getFilename().equals("")){%> onClick="window.open('<%=url%>')" <%} %>>
 							    <img class="video-image-big" src="<%=vid.getImageMedium()%>"/>
@@ -178,6 +182,9 @@
 							<div class="admintile wide video-content-wrapper">
 								<div class="admin-videolist-video-title" <% if(!vid.getFilename().equals("")){%> onClick="window.open('<%=url%>')" <%} %>>
 									<%= vName %>
+								</div>
+								<div class="admin-videolist-creator-title">
+									<%= creators %>
 								</div>
 								<%if(!lName.equals("")){%>
 									<div class="admin-videolist-lectureseries-title">
