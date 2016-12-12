@@ -509,7 +509,15 @@ var checkExist = setInterval(function() {
 	if ($('#_lgopenaccessvideos_WAR_lecture2goportlet_lectureseriesesSearchContainer').length) {
 		var searchQuery = '<%= searchQuery %>';
 		var markOptions = {
-			"separateWordSearch": false
+			"separateWordSearch": false,
+			 "each": function(node){
+				 // open the video list of a lectureseries if a search query is found in a video BUT NOT in the lectureseries itself
+				 if(!(($(node).closest(".table-cell").find(".videotile.wide").find("mark")).length)){
+					// open the video list of a lectureseries if a video is found
+					 $(node).closest("ul").show();
+				 }
+			
+			 }
 		};
 		if (searchQuery) {
 			$("#_lgopenaccessvideos_WAR_lecture2goportlet_lectureseriesesSearchContainer").mark(searchQuery, markOptions);
