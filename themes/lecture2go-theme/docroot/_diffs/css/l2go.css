@@ -1213,6 +1213,11 @@ thead, th {
     font-size: 13px !important;
 }
 
+.meta-description ul {
+    list-style-type: square;
+    margin-left: 25px;
+}
+
 /* fade-out for description text if not expanded */
 .meta-description[aria-expanded="false"]:after {
     content: '';
