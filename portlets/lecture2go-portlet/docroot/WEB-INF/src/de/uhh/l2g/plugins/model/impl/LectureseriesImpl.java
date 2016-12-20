@@ -66,5 +66,9 @@ public class LectureseriesImpl extends LectureseriesBaseImpl {
 	public LectureseriesImpl() {
 	}
 	
+	@Override
+	public String getLongDesc() {
+		return super.getLongDesc().replaceAll("style=\"[^\"]*\"", "");
+	}
 	
 }

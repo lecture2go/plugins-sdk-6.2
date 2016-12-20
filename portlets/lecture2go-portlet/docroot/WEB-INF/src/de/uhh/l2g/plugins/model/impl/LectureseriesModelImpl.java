@@ -506,7 +506,7 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 			return StringPool.BLANK;
 		}
 		else {
-			return _longDesc.replaceAll("style=\"[^\"]*\"", "");
+			return _longDesc;
 		}
 	}
 

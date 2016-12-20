@@ -31,4 +31,11 @@ public class MetadataImpl extends MetadataBaseImpl {
 	 */
 	public MetadataImpl() {
 	}
+	
+	
+	
+	@Override
+	public String getDescription() {
+		return super.getDescription().replaceAll("style=\"[^\"]*\"", "");
+	}
 }

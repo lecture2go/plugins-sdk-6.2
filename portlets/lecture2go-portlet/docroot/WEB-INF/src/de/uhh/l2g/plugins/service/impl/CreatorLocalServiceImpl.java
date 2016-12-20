@@ -25,12 +25,13 @@ import org.json.JSONObject;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 
 import de.uhh.l2g.plugins.model.Creator;
 import de.uhh.l2g.plugins.model.Lectureseries_Creator;
+import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.impl.Lectureseries_CreatorImpl;
 import de.uhh.l2g.plugins.service.Lectureseries_CreatorLocalServiceUtil;
+import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.CreatorLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.CreatorFinderUtil;
 
@@ -65,15 +66,35 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 		List<Creator> cl = CreatorFinderUtil.findCreatorsByLectureseries(lectureseriesId);
 		return cl;
 	}
+
+	public List<Creator> getCreatorsByLectureseriesIdForOpenAccessVideosOnly(Long lectureseriesId){
+		List<Video> vl = new ArrayList<Video>();
+		List<Creator> cl = new ArrayList<Creator>();
+		try {
+			vl = VideoLocalServiceUtil.getByLectureseriesAndOpenaccess(lectureseriesId, 1);
+			ListIterator<Video> ivl = vl.listIterator();
+			while(ivl.hasNext()){
+				Video v = ivl.next();
+				List<Creator> currcreatlist = new ArrayList<Creator>();
+				currcreatlist= getCreatorsByVideoId(v.getVideoId());
+				ListIterator<Creator> it = currcreatlist.listIterator();
+				while(it.hasNext()){
+					Creator obj = it.next();
+					if(!cl.contains(obj))cl.add(obj);
+				}
+			}
+		} catch (SystemException e) {}
+		return cl;
+	}
 	
 	public String getCommaSeparatedCreatorsByLectureseriesIdAndMaxCreators(Long lectureseriesId, int maxCreators){
-		List<Creator> creatorList = getCreatorsByLectureseriesId(lectureseriesId);
+		List<Creator> creatorList = getCreatorsByLectureseriesIdForOpenAccessVideosOnly(lectureseriesId);
 		String creators = createCommaSeparatedStringFromCreatorList(creatorList, maxCreators);
 		return creators;
 	}
 
 	public String getCommaSeparatedLinkedCreatorsByLectureseriesIdAndMaxCreators(Long lectureseriesId, int maxCreators){
-		List<Creator> creatorList = getCreatorsByLectureseriesId(lectureseriesId);
+		List<Creator> creatorList = getCreatorsByLectureseriesIdForOpenAccessVideosOnly(lectureseriesId);
 		String creators = createCommaSeparatedLinkedStringFromCreatorList(creatorList, maxCreators);
 		return creators;
 	}
