@@ -252,8 +252,7 @@ public class MetadataModelImpl extends BaseModelImpl<Metadata>
 			return StringPool.BLANK;
 		}
 		else {
-			
-			return _description.replaceAll("style=\"[^\"]*\"", "");
+			return _description;
 		}
 	}
 
