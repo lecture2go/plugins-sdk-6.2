@@ -172,7 +172,7 @@
 							String vName = vid.getTitle();
 							if(vName.trim().equals(""))vName =LanguageUtil.get(pageContext, "no-title");
 							String creators=CreatorLocalServiceUtil.getCommaSeparatedLinkedCreatorsByVideoIdAndMaxCreators(vid.getVideoId(), 100);
-							if (creators.trim()).equals(""))creators = LanguageUtil.get(pageContext, "no-creator");
+							if (creators.trim().equals(""))creators = LanguageUtil.get(pageContext, "no-creator");
 
 
 						%>
