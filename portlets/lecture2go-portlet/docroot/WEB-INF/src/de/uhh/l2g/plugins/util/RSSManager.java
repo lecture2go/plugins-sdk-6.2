@@ -341,7 +341,7 @@ public class RSSManager {
 						pdfLinkFlv.delete();
 					}
 
-					link = PropsUtil.get("lecture2go.web.home")+"/veranstaltungen/-/v/"+v.getVideoId();
+					link = PropsUtil.get("lecture2go.web.home")+"/l2go/-/get/v/"+v.getVideoId();
 
 					String title = v.getTitle().trim();
 
