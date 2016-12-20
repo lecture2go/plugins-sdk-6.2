@@ -114,6 +114,8 @@ String backURL = request.getAttribute("backURL").toString();
 		    success: function(data, textStatus, jqXHR) {
 		        // since we are using jQuery, you don't need to parse response
 		        $("#"+data.segmentId).remove();
+		        // Quick fix: remove the remove button as well
+		        $('[onclick="deleteSegment(' + data.segmentId + ')"]').remove();
 		    }
 		});	
 	}
