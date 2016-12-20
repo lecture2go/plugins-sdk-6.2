@@ -226,6 +226,9 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 													default: institut = "Fakultätübergreifend";break;
 												}
 												
+												String url=video.getUrl();
+												if(video.getOpenAccess()==0)url=video.getSecureUrl();
+												
 												JSONObject jsn = new JSONObject();
 												jsn.put("institution",institut);
 												jsn.put("system","Lecture2Go");
@@ -243,8 +246,6 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 											%>
 											<div id="meta-share">
 												<%
-													String url=video.getUrl();
-													if(video.getOpenAccess()==0)url=video.getSecureUrl();
 													SupportFormularClient sfc = new SupportFormularClient("mail4eLearnSupport",url,jsn.toString(),"");
 													out.print(sfc.getFormular());
 												%>
