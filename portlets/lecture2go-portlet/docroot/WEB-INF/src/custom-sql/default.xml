@@ -60,7 +60,7 @@
 				( 
 					LG_Video.openAccess=1 AND 
 			        LG_Video.metadataId = LG_Metadata.metadataId AND 
-			        LG_Video.lectureseriesId = LG_Lectureseries.lectureseriesId AND 
+			        (LG_Video.lectureseriesId = LG_Lectureseries.lectureseriesId OR LG_Video.lectureseriesId < 0) AND  
 			        LG_Video.rootInstitutionId=LG_Institution.institutionId AND
 			        LG_Video.videoId = LG_Video_Creator.videoId AND 
 			        LG_Creator.creatorId = LG_Video_Creator.creatorId

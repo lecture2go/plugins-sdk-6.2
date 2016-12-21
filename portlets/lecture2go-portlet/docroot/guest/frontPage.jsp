@@ -15,7 +15,7 @@ String searchQuery = "";
 //-lecture series = lectureseriesId>0
 //-videos = lectureseriesId<0
 //example -> top 10
-List<Lectureseries> latest = LectureseriesLocalServiceUtil.getLatest(10);
+List<Lectureseries> latest = LectureseriesLocalServiceUtil.getLatest(12);
 ListIterator<Lectureseries> lli = latest.listIterator();
 
 //get popular videos
