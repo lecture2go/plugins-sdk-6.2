@@ -1113,7 +1113,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			Segment seg = sLi.next();
 			text +=seg.getStart()+" --> "+seg.getEnd()+" \n";
 			if(seg.getChapter()==1){
-				text +="Chapter: "+seg.getTitle()+" \n\n";
+				text +=seg.getTitle()+" \n\n";
 			}else{
 				String desc="";
 				if(seg.getDescription().trim().length()>0)desc = " ("+seg.getDescription().trim() + ")";
