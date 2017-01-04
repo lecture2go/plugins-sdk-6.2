@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.Term;
+import de.uhh.l2g.plugins.model.impl.LectureseriesImpl;
 import de.uhh.l2g.plugins.model.impl.VideoImpl;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Lectureseries_CategoryLocalServiceUtil;
@@ -61,6 +62,18 @@ public class LectureseriesLocalServiceImpl extends LectureseriesLocalServiceBase
 	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil} to access the lectureseries local service.
 	 */
+	
+	@Override
+	public Lectureseries updateLectureseries(Lectureseries lectureseries){
+		Lectureseries l = new LectureseriesImpl();
+		if(lectureseries.getLectureseriesId()>0)
+			try {
+				l=super.updateLectureseries(lectureseries);
+			} catch (SystemException e) {
+				e.printStackTrace();
+			}
+		return l;
+	}
 	
 	public List<Lectureseries> getFilteredByApprovedSemesterFacultyProducer(Integer approved, Long semester, Long facultyId, Long producerId) {
 		List<Lectureseries> l = LectureseriesFinderUtil.findFilteredByApprovedSemesterFacultyProducer(approved, semester, facultyId, producerId);
