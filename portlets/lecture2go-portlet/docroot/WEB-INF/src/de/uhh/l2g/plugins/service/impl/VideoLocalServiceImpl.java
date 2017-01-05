@@ -337,7 +337,8 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		}
 		else {
 			preff=objectVideo.getSPreffix();
-			pth = PropsUtil.get("lecture2go.downloadserver.web.root")+"/videorep/"+objectHost.getName()+"/"+objectProducer.getHomeDir()+"/";
+			///getFile?downloadPath=/vh_001/rzii014/00.000_video-20527_2016-12-20_15-26.mp4&downloadAllowed=1
+			pth = PropsUtil.get("lecture2go.downloadserver.web.root")+"/servlet-file-download/getFile?downloadAllowed="+objectVideo.getDownloadLink()+"&downloadPath=/"+objectHost.getName()+"/"+objectProducer.getHomeDir()+"/";
 		}
 		String downMp3Link = pth+preff+".mp3";
 		String downMp4Link = pth+preff+".mp4";
