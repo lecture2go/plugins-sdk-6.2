@@ -23,6 +23,8 @@ function autocompleteCreator($creatorInputObject) {
 		open: function(event, ui) {
 			$('.ui-autocomplete').append('<li id="addNewCreator" class="newcreator">' + Liferay.Language.get('add-new-creator') + ' <span class="icon-large icon-plus-sign"></span></li>');
 			$( "#addNewCreator" ).on( "click", function() {
+				/* empty the creator input field */
+				$creatorInputObject.val('');
 				c++;
 				appendCreator(c);
 				$creatorInputObject.autocomplete('close');
