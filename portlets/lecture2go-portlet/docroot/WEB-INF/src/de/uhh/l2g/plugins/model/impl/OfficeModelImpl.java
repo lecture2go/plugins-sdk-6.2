@@ -64,7 +64,7 @@ public class OfficeModelImpl extends BaseModelImpl<Office>
 			{ "email", Types.VARCHAR },
 			{ "institutionId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Office (officeId LONG not null primary key,name VARCHAR(75) null,www VARCHAR(75) null,email VARCHAR(75) null,institutionId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Office (officeId LONG not null primary key,name VARCHAR(75) null,www STRING null,email VARCHAR(75) null,institutionId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Office";
 	public static final String ORDER_BY_JPQL = " ORDER BY office.officeId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Office.officeId ASC";
