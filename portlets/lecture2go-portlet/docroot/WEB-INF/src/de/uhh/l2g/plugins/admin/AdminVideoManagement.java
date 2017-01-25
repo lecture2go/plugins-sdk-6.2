@@ -403,6 +403,7 @@ public class AdminVideoManagement extends MVCPortlet {
 	 	    String password = ParamUtil.getString(resourceRequest, "password");
 
 			Lectureseries oldLs = new LectureseriesImpl();
+			Long oldLsId = video.getLectureseriesId();
 			try {
 				oldLs = LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId());
 			} catch (PortalException e1) {
@@ -515,6 +516,18 @@ public class AdminVideoManagement extends MVCPortlet {
 				VideoLocalServiceUtil.updateVideo(video);
 				// refresh open access for old lecture if lid > 0
 				if(oldLs.getLectureseriesId()>0) LectureseriesLocalServiceUtil.updateOpenAccess(video, oldLs);
+				
+				//update lg_lectureseries_creators
+				if(lId.longValue() != oldLsId.longValue())
+				{
+					try{
+						if(lId>0)CreatorLocalServiceUtil.updateCreatorsForLectureseriesOverTheAssigenedVideosByLectureseriesId(lId);
+					}catch(SystemException e){}
+					
+					try{
+						if(oldLsId>0)CreatorLocalServiceUtil.updateCreatorsForLectureseriesOverTheAssigenedVideosByLectureseriesId(oldLsId);
+					}catch(SystemException e){}
+				}
 				
 			} catch (NumberFormatException e) {
 				//System.out.println(e);

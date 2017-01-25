@@ -40,6 +40,7 @@ import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.model.Tagcloud;
 import de.uhh.l2g.plugins.model.Term;
 import de.uhh.l2g.plugins.model.Video;
+import de.uhh.l2g.plugins.model.Video_Institution;
 import de.uhh.l2g.plugins.model.impl.CategoryImpl;
 import de.uhh.l2g.plugins.model.impl.CoordinatorImpl;
 import de.uhh.l2g.plugins.model.impl.CreatorImpl;
@@ -51,6 +52,7 @@ import de.uhh.l2g.plugins.model.impl.Lectureseries_InstitutionImpl;
 import de.uhh.l2g.plugins.model.impl.ProducerImpl;
 import de.uhh.l2g.plugins.model.impl.Producer_LectureseriesImpl;
 import de.uhh.l2g.plugins.model.impl.TagcloudImpl;
+import de.uhh.l2g.plugins.model.impl.Video_InstitutionImpl;
 import de.uhh.l2g.plugins.service.CategoryLocalServiceUtil;
 import de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
@@ -64,6 +66,7 @@ import de.uhh.l2g.plugins.service.Producer_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.TagcloudLocalServiceUtil;
 import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.util.EmailManager;
 import de.uhh.l2g.plugins.util.Htaccess;
@@ -192,6 +195,36 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			tagCloudArrayString.add(inst.getName());
 			tagCloudArrayString.add(parentInst.getName());
 		}
+		
+		// get all videos of this lectureSeries 
+		List<Video> videosByLectureseries = VideoLocalServiceUtil
+				.getByLectureseries(lId);
+		for (int i = 0; i < videosByLectureseries.size(); i++) {
+			Video video = videosByLectureseries.get(i);
+
+			// Update table LG_Video_Institution
+			Video_InstitutionLocalServiceUtil.removeByVideoId(video
+					.getVideoId()); // Delete old entries
+			for (int j = 0; j < institutions.length; j++) {
+				Institution inst = new InstitutionImpl();
+				inst = InstitutionLocalServiceUtil.getById(new Long(
+						institutions[j]));
+				Video_Institution vi = new Video_InstitutionImpl();
+				vi.setVideoId(video.getVideoId());
+				vi.setInstitutionId(inst.getInstitutionId());
+				vi.setInstitutionParentId(inst.getParentId());
+				Video_InstitutionLocalServiceUtil.addVideo_Institution(vi);
+			}
+
+			// update column termId in lg_video table
+			Long videoTermId = video.getTermId();
+			if (semesterId.longValue() != videoTermId.longValue()) {
+				video.setTermId(semesterId);
+				VideoLocalServiceUtil.updateVideo(video);
+			}
+		}
+		
+		
 		//update producer link
 		//delete old entries first
 		Producer_LectureseriesLocalServiceUtil.removeByLectureseriesId(lId);
