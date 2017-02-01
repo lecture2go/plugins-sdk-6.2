@@ -28,17 +28,19 @@ public class CreatorsManagement extends MVCPortlet {
 		String mn=request.getParameter("middleName");
 		String ln=request.getParameter("lastName");
 		String t=request.getParameter("jobTitle");
-		Creator creator = new CreatorImpl();
-		creator.setFirstName(fn);
-		creator.setMiddleName(mn);
-		creator.setLastName(ln);
-		creator.setJobTitle(t);
-		CreatorLocalServiceUtil.addCreator(creator);
-		try {
-			response.sendRedirect(backURL);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}		
+		if (isValid(fn, ln)) {
+			Creator creator = new CreatorImpl();
+			creator.setFirstName(fn);
+			creator.setMiddleName(mn);
+			creator.setLastName(ln);
+			creator.setJobTitle(t);
+			CreatorLocalServiceUtil.addCreator(creator);
+			try {
+				response.sendRedirect(backURL);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public void edit(ActionRequest request, ActionResponse response) throws SystemException, PortalException{
