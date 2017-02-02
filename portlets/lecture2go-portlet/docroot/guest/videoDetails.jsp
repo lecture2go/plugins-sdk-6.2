@@ -237,7 +237,7 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 												jsn.put("firstname",PortalUtil.getOriginalServletRequest(request).getParameter("firstname"));
 												jsn.put("lastname",PortalUtil.getOriginalServletRequest(request).getParameter("lastname"));
 												jsn.put("email",PortalUtil.getOriginalServletRequest(request).getParameter("email"));
-												jsn.put("subject",video.getUrl());
+												jsn.put("subject",url);
 												jsn.put("body",PortalUtil.getOriginalServletRequest(request).getParameter("body"));
 												jsn.put("ergebnis",PortalUtil.getOriginalServletRequest(request).getParameter("ergebnis"));
 												jsn.put("option1",option1);
