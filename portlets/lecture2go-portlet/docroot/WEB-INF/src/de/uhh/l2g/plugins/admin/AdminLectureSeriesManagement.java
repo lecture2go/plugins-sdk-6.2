@@ -69,6 +69,7 @@ import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.util.EmailManager;
+import de.uhh.l2g.plugins.util.FileManager;
 import de.uhh.l2g.plugins.util.Htaccess;
 import de.uhh.l2g.plugins.util.Lecture2GoRoleChecker;
 import de.uhh.l2g.plugins.util.ProzessManager;
@@ -461,8 +462,12 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			// generate RSS
 			LOG.info("Generate RSS" +a+" fol lecture series with ID: "+l.getLectureseriesId()+" and latest open access video with ID: "+v.getVideoId());
 			ProzessManager pm = new ProzessManager();
-			for (String f: pm.MEDIA_FORMATS) {           
-				pm.generateRSS(v, f);
+			for (String f: FileManager.MEDIA_FORMATS) {           
+				try {
+					pm.generateRSS(v, f);
+				} catch (Exception e) {
+					e.printStackTrace();
+				} 
 			}		
 			LOG.info("RSS "+a+" generated");
 			a++;

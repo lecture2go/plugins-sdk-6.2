@@ -74,6 +74,7 @@ import de.uhh.l2g.plugins.service.Video_CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.util.FFmpegManager;
+import de.uhh.l2g.plugins.util.FileManager;
 import de.uhh.l2g.plugins.util.ProzessManager;
 import de.uhh.l2g.plugins.util.Security;
 
@@ -550,8 +551,13 @@ public class AdminVideoManagement extends MVCPortlet {
 			//rebuild rss
 			// generate RSS
 			ProzessManager pm = new ProzessManager();
-			for (String f: pm.MEDIA_FORMATS) {           
-				pm.generateRSS(video, f);
+			for (String f: FileManager.MEDIA_FORMATS) {           
+				try {
+					pm.generateRSS(video, f);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
 			}			
 			JSONObject json = JSONFactoryUtil.createJSONObject();
 			//generate new JSON date for auto complete functionality
@@ -867,7 +873,11 @@ public class AdminVideoManagement extends MVCPortlet {
 					}
 				}
 				ProzessManager pm = new ProzessManager();
-				pm.deleteFilesImagesFromVideo(video);
+				try {
+					pm.deleteFilesImagesFromVideo(video);
+				} catch (Exception e) {
+					e.printStackTrace();
+				} 
 			}else{
 				org.json.JSONObject o = new org.json.JSONObject();
 					try {

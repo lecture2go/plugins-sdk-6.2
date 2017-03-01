@@ -67,7 +67,6 @@ import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideohitlistLocalServiceUtil;
 
 public class ProzessManager {
-	public final String[] MEDIA_FORMATS = { "pdf","mp3","m4v","mp4","m4a","ogg","flv","webm" };   
 	String[] THUMBNAIL_SUFFIX = { ".jpg","_m.jpg","_s.jpg" };   
 
 	Htaccess HTACCESS = new Htaccess();
@@ -79,8 +78,10 @@ public class ProzessManager {
 		
 		video.setDownloadLink(0);
 		VideoLocalServiceUtil.updateVideo(video);
+		//remove symbolic links
+		removeSymbolicLinks(video);
 		// generate RSS
-		for (String f: MEDIA_FORMATS) {           
+		for (String f: FileManager.MEDIA_FORMATS) {           
 			generateRSS(video, f);
 		}
 		String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/";
@@ -94,8 +95,10 @@ public class ProzessManager {
 		
 		video.setDownloadLink(1);
 		VideoLocalServiceUtil.updateVideo(video);
+		//symbolic links for download
+		if(video.getOpenAccess()==1)generateSymbolicLinks(video);
 		// generate RSS
-		for (String f: MEDIA_FORMATS) {           
+		for (String f: FileManager.MEDIA_FORMATS) {
 			generateRSS(video, f);
 		}
 		String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/";
@@ -129,7 +132,7 @@ public class ProzessManager {
 					imgFile.renameTo(new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoPreffix + s));
 				}
 				//for av media
-				for (String f: MEDIA_FORMATS) {           
+				for (String f: FileManager.MEDIA_FORMATS) {           
 					File file = new File(path + "/" + videoSPreffix + "."+f);
 					File newFile = new File(path + "/" + videoPreffix + "."+f);
 					file.renameTo(newFile);
@@ -140,8 +143,10 @@ public class ProzessManager {
 				VideoLocalServiceUtil.updateVideo(video);
 			}
 		} catch (Exception e) {}
+		//activate symbolic links for download if allowed
+		if(video.getDownloadLink()==1)generateSymbolicLinks(video);
 		// generate RSS
-		for (String f: MEDIA_FORMATS) {           
+		for (String f: FileManager.MEDIA_FORMATS) {           
 			generateRSS(video, f);
 		}	
 		//
@@ -185,19 +190,19 @@ public class ProzessManager {
 				imgFile.renameTo(new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoSPreffix + s));
 			}
 			//for av media
-			for (String f: MEDIA_FORMATS) {           
+			for (String f: FileManager.MEDIA_FORMATS) {           
 				File file = new File(path + "/" + videoPreffix + "."+f);
 				File newFile = new File(path + "/" + videoSPreffix + "."+f);
 				file.renameTo(newFile);
 			}
 		}
 		// delete all symbolic links
-		for (String f: MEDIA_FORMATS) {           
-			File symLink = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + video.getPreffix() + "."+f);
+		for (String f: FileManager.MEDIA_FORMATS) {           
+			File symLink = new File(PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/" + video.getPreffix() + "."+f);
 			symLink.delete();
 		}
 		// generate RSS
-		for (String f: MEDIA_FORMATS) {           
+		for (String f: FileManager.MEDIA_FORMATS) {           
 			generateRSS(video, f);
 		}
 		// delete video from videohitlist
@@ -317,12 +322,12 @@ public class ProzessManager {
 		
 		// delete all video contents
 		if (video.getFilename() != null) {
-			for (String f: MEDIA_FORMATS) {           
+			for (String f: FileManager.MEDIA_FORMATS) {           
 				//all media
 				File file = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + videoPreffix + "." + f);
 				file.delete();
 				//all symbolic links
-				File symLink = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + "." + f);
+				File symLink = new File(PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/" + videoPreffix + "." + f);
 				symLink.delete();
 			}
 			//all thumn nails
@@ -330,7 +335,7 @@ public class ProzessManager {
 		}
 		
 		// generate RSS
-		for (String f: MEDIA_FORMATS) {           
+		for (String f: FileManager.MEDIA_FORMATS) {           
 			generateRSS(video, f);
 		}
 		
@@ -368,7 +373,7 @@ public class ProzessManager {
 	}
 	
 	@SuppressWarnings("static-access")
-	public boolean deleteFilesImagesFromVideo(Video video){
+	public boolean deleteFilesImagesFromVideo(Video video) throws PortalException, SystemException{
 		Host host = new HostImpl();
 		try {
 			host = HostLocalServiceUtil.getHost(video.getHostId());
@@ -411,19 +416,19 @@ public class ProzessManager {
 		if (video.getOpenAccess()==1) videoPreffix = video.getPreffix();
 		else videoPreffix = video.getSPreffix();
 		
-		for (String f: MEDIA_FORMATS) {           
+		for (String f: FileManager.MEDIA_FORMATS) {           
 			//all media
 			File file = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + videoPreffix + "." + f);
 			file.delete();
 			//all symbolic links
-			File symLink = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + videoPreffix + "." + f);
+			File symLink = new File(PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/" + videoPreffix + "." + f);
 			symLink.delete();
 		}
 		//all thumn nails
 		deleteThumbnails(video);
 		
 		// generate RSS
-		for (String f: MEDIA_FORMATS) {           
+		for (String f: FileManager.MEDIA_FORMATS) {           
 			generateRSS(video, f);
 		}
 		
@@ -455,39 +460,27 @@ public class ProzessManager {
 		return true;
 	}
 
-	public void generateRSS(Video video, String type) {
+	public void generateRSS(Video video, String type) throws PortalException, SystemException {
 		Long lsId = video.getLectureseriesId();
-		// RSS generate for this lecture
+		RSSManager rssMan = new RSSManager();
+		String feedName = "";
+		String title = "";
+		// RSS generate for this lecture or video object
 		if(lsId>=0){
-			RSSManager rssMan = new RSSManager();
-			String feedName = "";
-			String title = "";
-			try{
-				title = LectureseriesLocalServiceUtil.getLectureseries(lsId).getName();
-			}catch(Exception e){}
-			
+			Lectureseries lectser = LectureseriesLocalServiceUtil.getLectureseries(lsId);
+			List<Video> videoList = VideoLocalServiceUtil.getByLectureseriesAndOpenaccess(lsId, 1);
+			title = lectser.getName();
 			rssMan.setTitle(title);
-			try {
-				List<Video> videoList = VideoLocalServiceUtil.getByLectureseriesAndOpenaccess(lsId, 1);
-				
-				for (String f: MEDIA_FORMATS) {           
-					if (type.equals(f)) feedName = "" + lsId + "."+f+".xml";
+			//	
+			for (String f: FileManager.MEDIA_FORMATS) {           
+				if (type.equals(f)){
+					feedName = "" + lsId + "."+f+".xml";
 					rssMan.setRssFilename(feedName);
-					if (type.equals(f))	rssMan.createRssFile(videoList, f);
-				}
-				
-			} catch (Exception e) {
-				try {
-					for (String f: MEDIA_FORMATS) { 
-						if (type.equals(f))	rssMan.createRssFile(null, f);
+					try {
+						rssMan.createRssFile(videoList, f);
+					} catch (IOException e) {
+						e.printStackTrace();
 					}
-				} catch (IOException ie) {
-				} catch (PortalException e1) {
-					// TODO Auto-generated catch block
-					//e1.printStackTrace();
-				} catch (SystemException e1) {
-					// TODO Auto-generated catch block
-					//e1.printStackTrace();
 				}
 			}
 		}
@@ -513,4 +506,50 @@ public class ProzessManager {
 			}
 		}
 	}
+
+	public boolean generateSymbolicLinks(Video v){
+		boolean ret = false;
+		Host objectHost = new HostImpl();
+		Producer objectProducer = new ProducerImpl();
+		try {
+			objectHost = HostLocalServiceUtil.getByHostId(v.getHostId());
+			objectProducer = ProducerLocalServiceUtil.getProducer(v.getProducerId());
+
+		} catch (SystemException e) {
+			e.printStackTrace();
+		} catch (PortalException e) {
+			e.printStackTrace();
+		}
+		Runtime runCmd = Runtime.getRuntime();
+		
+		for (String mf : FileManager.MEDIA_FORMATS) {
+			String command = "ln -s " + PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + "." + mf+ " " + PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/" + v.getPreffix() + "." + mf;
+			
+			String mFile = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + "." + mf;
+			String mFileAbo = PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/" + v.getPreffix() + "." + mf;
+			
+			File medFile = new File(mFile);
+			File aboFile = new File(mFileAbo);
+			
+			if (medFile.isFile() && !aboFile.isFile()){
+				try {
+					runCmd.exec(command);
+					ret = true;
+				} catch (IOException e) {
+					e.printStackTrace();
+				}				
+			}
+		}
+		return ret;
+	}
+
+	public boolean removeSymbolicLinks(Video v){
+		boolean ret = false;
+		for (String mf : FileManager.MEDIA_FORMATS) {
+			File symLink = new File(PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/"+v.getPreffix() + "." + mf);
+			symLink.delete();
+			ret=true;
+		}
+		return ret;
+	}	
 }

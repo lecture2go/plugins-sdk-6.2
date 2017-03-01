@@ -259,87 +259,6 @@ public class RSSManager {
 					Video v = VideoLocalServiceUtil.getFullVideo(it.next().getVideoId());//gets the full object
 					Host objectHost = HostLocalServiceUtil.getHost(v.getHostId());
 					Producer objectProducer = ProducerLocalServiceUtil.getProducer(v.getProducerId());
-					
-					if (v.getDownloadLink()==1) {
-						Runtime runCmd = Runtime.getRuntime();
-
-						String commandMp4 = "ln -s " + PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + ".mp4 " + PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + v.getPreffix() + ".mp4";
-						String commandM4v = "ln -s " + PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + ".m4v " + PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + v.getPreffix() + ".m4v";
-						String commandM4a = "ln -s " + PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + ".m4a " + PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + v.getPreffix() + ".m4a";
-						String commandMp3 = "ln -s " + PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + ".mp3 " + PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + v.getPreffix() + ".mp3";
-						String commandOgg = "ln -s " + PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + ".ogg " + PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + v.getPreffix() + ".ogg";
-						String commandWebm = "ln -s " + PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + ".webm " + PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + v.getPreffix() + ".webm";
-						String commandFlv = "ln -s " + PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + ".flv " + PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + v.getPreffix() + ".flv";
-						String commandPdf = "ln -s " + PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + ".pdf " + PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + v.getPreffix() + ".pdf";
-
-						String mp4File = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + ".mp4";
-						String mp3File = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + ".mp3";
-						String m4vFile = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + ".m4v";
-						String m4aFile = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + ".m4a";
-						String oggFile = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + ".ogg";
-						String webmFile = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + ".webm";
-						String flvFile = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + ".flv";
-						String pdfFile = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + ".pdf";
-
-						String mp4FileAbo = PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + v.getPreffix() + ".mp4";
-						String mp3FileAbo = PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + v.getPreffix() + ".mp3";
-						String m4vFileAbo = PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + v.getPreffix() + ".m4v";
-						String m4aFileAbo = PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + v.getPreffix() + ".m4a";
-						String oggFileAbo = PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + v.getPreffix() + ".ogg";
-						String webmFileAbo = PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + v.getPreffix() + ".webm";
-						String flvFileAbo = PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + v.getPreffix() + ".flv";
-						String pdfFileAbo = PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + v.getPreffix() + ".pdf";
-
-						File fMp4 = new File(mp4File);
-						File fMp3 = new File(mp3File);
-						File fM4v = new File(m4vFile);
-						File fM4a = new File(m4aFile);
-						File fOgg = new File(oggFile);
-						File fWebm = new File(webmFile);
-						File fFlv = new File(flvFile);
-						File fPdf = new File(pdfFile);
-
-						File aboFMp4 = new File(mp4FileAbo);
-						File aboFMp3 = new File(mp3FileAbo);
-						File aboFM4v = new File(m4vFileAbo);
-						File aboFM4a = new File(m4aFileAbo);
-						File aboOgg = new File(oggFileAbo);
-						File aboWebm = new File(webmFileAbo);
-						File aboFlv = new File(flvFileAbo);
-						File aboPdf = new File(pdfFileAbo);
-
-						try {
-							if (fMp4.isFile() && !aboFMp4.isFile()) runCmd.exec(commandMp4);
-							if (fMp3.isFile() && !aboFMp3.isFile()) runCmd.exec(commandMp3);
-							if (fM4v.isFile() && !aboFM4v.isFile()) runCmd.exec(commandM4v);
-							if (fM4a.isFile() && !aboFM4a.isFile()) runCmd.exec(commandM4a);
-							if (fOgg.isFile() && !aboOgg.isFile()) runCmd.exec(commandOgg);
-							if (fWebm.isFile() && !aboWebm.isFile()) runCmd.exec(commandWebm);
-							if (fFlv.isFile() && !aboFlv.isFile()) runCmd.exec(commandFlv);
-							if (fPdf.isFile() && !aboPdf.isFile()) runCmd.exec(commandPdf);
-						} catch (IOException e) {
-							//
-						}
-					} else {
-						// delete all symbolic links
-						File symLinkMp4 = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + v.getPreffix() + ".mp4");
-						File symLinkM4v = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + v.getPreffix() + ".m4v");
-						File symLinkM4a = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + v.getPreffix() + ".m4a");
-						File symLinkMp3 = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + v.getPreffix() + ".mp3");
-						File symLinkOgg = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + v.getPreffix() + ".ogg");
-						File symLinkWebm = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + v.getPreffix() + ".webm");
-						File symLinkFlv = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + v.getPreffix() + ".flv");
-						File pdfLinkFlv = new File(PropsUtil.get("lecture2go.media.repository") + "/" + "abo" + "/" + v.getPreffix() + ".pdf");
-
-						symLinkMp4.delete();
-						symLinkM4v.delete();
-						symLinkM4a.delete();
-						symLinkMp3.delete();
-						symLinkOgg.delete();
-						symLinkWebm.delete();
-						symLinkFlv.delete();
-						pdfLinkFlv.delete();
-					}
 
 					link = PropsUtil.get("lecture2go.web.home")+"/l2go/-/get/v/"+v.getVideoId();
 
@@ -367,7 +286,7 @@ public class RSSManager {
 					text += "<title>" + title + "</title>\n";
 
 					// TODO here iTunes tags
-					String creator = "";
+					String creator = "";	
 					creator = stringToIsoString(creator);
 
 					text += "<itunes:author>" + creator + "</itunes:author> \n";
@@ -378,32 +297,18 @@ public class RSSManager {
 
 					text += "<link>" + link + "</link>\n";
 					if (v.getDownloadLink()==1) {
-						String mp4File = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + ".mp4";
-						String mp3File = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + ".mp3";
-						String m4vFile = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + ".m4v";
-						String m4aFile = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + ".m4a";
-						String oggFile = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + ".ogg";
-						String webmFile = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + ".webm";
-						String flvFile = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + ".flv";
-						String pdfFile = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + ".pdf";
-
-						File fMp4 = new File(mp4File);
-						File fMp3 = new File(mp3File);
-						File fM4v = new File(m4vFile);
-						File fM4a = new File(m4aFile);
-						File fOgg = new File(oggFile);
-						File fWebm = new File(webmFile);
-						File fFlv = new File(flvFile);
-						File fPdf = new File(pdfFile);
-
-						if (fMp4.isFile() && type.equals("mp4")) text += "<enclosure url='" + PropsUtil.get("lecture2go.downloadserver.web.root")+"/"+"abo"+"/"+v.getPreffix() + ".mp4' type='video/mp4'/>\n";
-						if (fMp3.isFile() && type.equals("mp3")) text += "<enclosure url='" + PropsUtil.get("lecture2go.downloadserver.web.root")+"/"+"abo"+"/"+v.getPreffix() + ".mp3' type='video/mp3'/>\n";
-						if (fM4a.isFile() && type.equals("m4a")) text += "<enclosure url='" + PropsUtil.get("lecture2go.downloadserver.web.root")+"/"+"abo"+"/"+v.getPreffix() + ".m4a' type='video/m4a'/>\n";
-						if (fM4v.isFile() && type.equals("m4v")) text += "<enclosure url='" + PropsUtil.get("lecture2go.downloadserver.web.root")+"/"+"abo"+"/"+v.getPreffix() + ".m4v' type='video/m4v'/>\n";
-						if (fOgg.isFile() && type.equals("ogg")) text += "<enclosure url='" + PropsUtil.get("lecture2go.downloadserver.web.root")+"/"+"abo"+"/"+v.getPreffix() + ".ogg' type='video/ogg'/>\n";
-						if (fWebm.isFile() && type.equals("webm")) text += "<enclosure url='" + PropsUtil.get("lecture2go.downloadserver.web.root")+"/"+"abo"+"/"+v.getPreffix() + ".webm' type='video/webm'/>\n";
-						if (fFlv.isFile() && type.equals("flv")) text += "<enclosure url='" + PropsUtil.get("lecture2go.downloadserver.web.root")+"/"+"abo"+"/"+v.getPreffix() + ".flv' type='video/flv'/>\n";
-						if (fPdf.isFile() && type.equals("pdf")) text += "<enclosure url='" + PropsUtil.get("lecture2go.downloadserver.web.root")+"/"+"abo"+"/"+v.getPreffix() + ".pdf' type='video/pdf'/>\n";
+						for (String mf : FileManager.MEDIA_FORMATS) {
+							String mfFile = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() +"."+ mf;
+							File mfM = new File(mfFile);
+							if (mfM.isFile() && type.equals("mp4")) text += "<enclosure url='" + PropsUtil.get("lecture2go.downloadserver.web.root")+"/"+PropsUtil.get("lecture2go.symboliclinks.repository.name")+"/"+v.getPreffix() + ".mp4' type='video/mp4'/>\n";
+							if (mfM.isFile() && type.equals("mp3")) text += "<enclosure url='" + PropsUtil.get("lecture2go.downloadserver.web.root")+"/"+PropsUtil.get("lecture2go.symboliclinks.repository.name")+"/"+v.getPreffix() + ".mp3' type='video/mp3'/>\n";
+							if (mfM.isFile() && type.equals("m4a")) text += "<enclosure url='" + PropsUtil.get("lecture2go.downloadserver.web.root")+"/"+PropsUtil.get("lecture2go.symboliclinks.repository.name")+"/"+v.getPreffix() + ".m4a' type='video/m4a'/>\n";
+							if (mfM.isFile() && type.equals("m4v")) text += "<enclosure url='" + PropsUtil.get("lecture2go.downloadserver.web.root")+"/"+PropsUtil.get("lecture2go.symboliclinks.repository.name")+"/"+v.getPreffix() + ".m4v' type='video/m4v'/>\n";
+							if (mfM.isFile() && type.equals("ogg")) text += "<enclosure url='" + PropsUtil.get("lecture2go.downloadserver.web.root")+"/"+PropsUtil.get("lecture2go.symboliclinks.repository.name")+"/"+v.getPreffix() + ".ogg' type='video/ogg'/>\n";
+							if (mfM.isFile() && type.equals("webm")) text += "<enclosure url='" + PropsUtil.get("lecture2go.downloadserver.web.root")+"/"+PropsUtil.get("lecture2go.symboliclinks.repository.name")+"/"+v.getPreffix() + ".webm' type='video/webm'/>\n";
+							if (mfM.isFile() && type.equals("flv")) text += "<enclosure url='" + PropsUtil.get("lecture2go.downloadserver.web.root")+"/"+PropsUtil.get("lecture2go.symboliclinks.repository.name")+"/"+v.getPreffix() + ".flv' type='video/flv'/>\n";
+							if (mfM.isFile() && type.equals("pdf")) text += "<enclosure url='" + PropsUtil.get("lecture2go.downloadserver.web.root")+"/"+PropsUtil.get("lecture2go.symboliclinks.repository.name")+"/"+v.getPreffix() + ".pdf' type='video/pdf'/>\n";
+						}
 					}
 					text += "<pubDate>" + d + "</pubDate>\n";
 					text += "<guid>" + link + "</guid>\n";
