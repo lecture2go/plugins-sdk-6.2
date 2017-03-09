@@ -4,7 +4,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<script type="text/javascript" src="/lecture2go-portlet/js/jquery-2.1.4.min.js"></script>
-	<script type="text/javascript" src="/lecture2go-portlet/player/jwplayer-7.7.2/jwplayer.js"></script>
+	<script type="text/javascript" src="/lecture2go-portlet/player/jwplayer-7.9.3/jwplayer.js"></script>
 	<script type="text/javascript">jwplayer.key="";</script>
 	
 	<title>Lecture2o-Embed</title>
