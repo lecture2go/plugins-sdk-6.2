@@ -621,6 +621,10 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			if( playerUri.length()>0 && !playerUri.contains("[") && !playerUri.contains("]") )playerUris.add(playerUri);
 			else playerUris.add("null");
 		}
+		//sort player uris 
+		for(int i=0; i<playerUris.size();i++){
+			if(playerUris.get(i).contains("null"))playerUris.set(i, playerUris.get(i+1));
+		}
 		video.setPlayerUris(playerUris);
 	}
 	
