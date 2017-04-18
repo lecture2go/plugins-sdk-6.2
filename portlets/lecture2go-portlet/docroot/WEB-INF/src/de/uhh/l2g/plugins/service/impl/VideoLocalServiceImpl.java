@@ -570,15 +570,19 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	 * [filename]=video file name (automatically e.g 00.000_video_2015-06-08_08-06.mp4)
 	 * [protocol]=host protocol (automatically e.g rtmpt)
 	 * [port]=host port (automatically e.g 80)
-	 * lecture2go.uri1.player.template=${lecture2go.web.root}/abo/[filename]
-	 * lecture2go.uri2.player.template=rtmpt://[host]/vod/_definst/[ext]:[l2go_path]/[filename]
-	 * lecture2go.uri3.player.template=rtmpt://[host]/vod/_definst/[ext]:[l2go_path]/[filename]/playlist.m3u8
-	 * lecture2go.uri4.player.template=${lecture2go.uri3.player.template}
-	 * lecture2go.uri5.player.template=${lecture2go.uri3.player.template}
+	 * [smilfile]=adaptive streaming file 
+	 * 
+	 * example for lecture2go configuration
+	 * lecture2go.uri1.player.template=https://[host]/vod/_definst/smil:[l2go_path]/[smilfile]/playlist.m3u8
+	 * lecture2go.uri2.player.template=https://[host]/vod/_definst/[ext]:[l2go_path]/[filename]/playlist.m3u8
+	 * lecture2go.uri3.player.template=rtmpt://[host]/vod/_definst/[ext]:[l2go_path]/[filename]
+	 * lecture2go.uri4.player.template=${lecture2go.downloadserver.web.root}/abo/[filename]
+	 * lecture2go.uri5.player.template=rtsp://[host]:[port]/vod/_definst/[ext]:[l2go_path]/[filename]
 	**/
 	public void addPlayerUris2Video(Host host, Video video, Producer producer){
 		ArrayList<String> playerUris = new ArrayList<String>();
-
+		String  mediaRep = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir();
+		
 		String l2go_path = video.getRootInstitutionId() + "l2g" + producer.getHomeDir();
 		
 		String uri1 = PropsUtil.get("lecture2go.uri1.player.template");
@@ -593,8 +597,20 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		for(int i=0; i<uris.size();i++){
 			String playerUri = "";
 			playerUri += uris.get(i);
-			if(video.getOpenAccess()==1)playerUri = playerUri.replace("[filename]", video.getFilename());
-			else playerUri = playerUri.replace("[filename]", video.getSecureFilename());
+			if(video.getOpenAccess()==1){
+				//check for smil file
+				String smilPath = mediaRep + "/" + video.getPreffix()+".smil";
+				File smilFile = new File(smilPath);
+				if(smilFile.isFile()) playerUri = playerUri.replace("[smilfile]", video.getPreffix()+".smil");
+				playerUri = playerUri.replace("[filename]", video.getFilename());
+			}else{
+				//check for smil file
+				String smilPath = mediaRep + "/" + video.getSPreffix()+".smil";
+				File smilFile = new File(smilPath);				
+				if(smilFile.isFile()) playerUri = playerUri.replace("[smilfile]", video.getSPreffix()+".smil");
+				playerUri = playerUri.replace("[filename]", video.getSecureFilename());
+				
+			}
 			//
 			playerUri = playerUri.replace("[host]", host.getStreamer());
 			playerUri = playerUri.replace("[ext]", video.getContainerFormat());
@@ -602,7 +618,8 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			playerUri = playerUri.replace("[protocol]", host.getProtocol());
 			playerUri = playerUri.replace("[port]", host.getPort()+"");
 			//
-			if(playerUri.length()>0)playerUris.add(playerUri);
+			if( playerUri.length()>0 && !playerUri.contains("[") && !playerUri.contains("]") )playerUris.add(playerUri);
+			else playerUris.add("null");
 		}
 		video.setPlayerUris(playerUris);
 	}

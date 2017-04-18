@@ -1,4 +1,4 @@
-<script type="text/javascript">jwplayer.key="";</script>
+<script type="text/javascript">jwplayer.key="201IIc3/RasApk0L1+d1fv9pi5UCUsF6VvHj1C+EfkI=";</script>
 <script>
     $(function() {
         // herausfinden ob es ein tablet/smartphone ist
@@ -54,13 +54,34 @@
 	        frameStart = <%=timeStart%>;
 	        frameEnd = <%=timeEnd%>;		
 		}
+
+		//prepare uris for player 
+		//if null entries found, get the next tamplated uri
+		var plUris = "${video.playerUris}".replace("]", "").replace("[", ""); 
+		var src ="";
+		var arrUris = plUris.split(",");
+		var arrStreaminUris =[];
+		for (i = 0; i < arrUris.length; i++) { 
+			var suff ="";
+			if (i < arrUris.length-1)suff=",";
+			var uri="";
+			if(arrUris[i].indexOf("null") == -1){
+				uri = arrUris[i].replace("]", "").replace("[", "");
+			}else{
+				uri = arrUris[i+1].replace("]", "").replace("[", "");
+			}
+			arrStreaminUris[i] = uri;
+		}
+		//prepare end
+		console.log(arrStreaminUris);
 		
-        var playerUri1 ="${video.playerUris.get(0)}";
-        var playerUri2 ="${video.playerUris.get(1)}";
-        var playerUri3 ="${video.playerUris.get(2)}";
-        var playerUri4 ="${video.playerUris.get(3)}";
-        var playerUri5 ="${video.playerUris.get(4)}";
+        var playerUri1 = arrStreaminUris[0];
+        var playerUri2 = arrStreaminUris[1];
+        var playerUri3 = arrStreaminUris[2];
+        var playerUri4 = arrStreaminUris[3];
+        var playerUri5 = arrStreaminUris[4];
         
+
         //hack for HLS in firefox and mp3
         var containerFormat = "${video.containerFormat}";
         var isFirefox = typeof InstallTrigger !== 'undefined';
@@ -73,7 +94,7 @@
         //
         
 		var vttFile ="${video.vttChapterFile}";
-		
+ 		      	
         // Hier wird der JW-Player initialisiert
         // Interessant ist hierbei, dass es mehrere Quellen geben kann
         jwplayer('player1').setup({
