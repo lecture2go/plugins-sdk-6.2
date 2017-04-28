@@ -61,6 +61,7 @@
         var playerUri4 ="${video.playerUris.get(3)}";
         var playerUri5 ="${video.playerUris.get(4)}";
         
+
         //hack for HLS in firefox and mp3
         var containerFormat = "${video.containerFormat}";
         var isFirefox = typeof InstallTrigger !== 'undefined';
