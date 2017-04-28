@@ -69,7 +69,7 @@ $theme.include($body_top_include)
 		#end
 		
 		#set ($param1="")
-		#set ($param1 = $request.getParameter('_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery')) 
+		#set ($param1 = $request.getParameter('_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery').text()) 
 		
 		<div class="search">
 			<form action="/l2go/-/get/0/0/0/0/0/"  method="post" name="_lgopenaccessvideos_WAR_lecture2goportlet_fm" id="_lgopenaccessvideos_WAR_lecture2goportlet_fm"> 
