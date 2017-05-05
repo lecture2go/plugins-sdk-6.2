@@ -134,10 +134,14 @@
 			        	"", 
 			        	"Dieses Video auf Lecture2Go ansehen",
 			        	function() {
-			                   window.open('<%=video.getUrl()%>');
-			                },
+			        		//stop player
+			        		jwplayer().stop()
+			        		//open web site
+			                window.open('<%=video.getUrl()%>');
+			            },
 			        	"Lecture2Go"
 			        )
+								        
 		</script>
 	<%}%>
 </body>
