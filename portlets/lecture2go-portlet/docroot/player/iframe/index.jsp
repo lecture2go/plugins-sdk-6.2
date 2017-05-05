@@ -8,6 +8,70 @@
 	<script type="text/javascript">jwplayer.key="";</script>
 	
 	<title>Lecture2o-Embed</title>
+	<style type="text/css">
+	
+		.jw-controlbar-center-group {
+		    width: 100% !important;
+		    padding: 0 .5em;
+		}
+		
+		.jw-controlbar {
+		    width: calc(100% - 100px) !important;
+		}
+	
+		.jw-background-color {
+    		background-color: rgba(33, 33, 33, 0.8);
+		}
+
+		.jw-skin-seven .jw-dock-button {
+		    border-radius: 0em !important;
+		}
+	
+		.jw-dock-button.jw-background-color.jw-reset {
+		    bottom: -40px;
+		    margin: 0 0 0 -11px;
+		    position: absolute;
+		    width: 100%;
+		}
+	
+		.jw-icon.jw-dock-image.jw-reset::before {
+		    color: #fff;
+		    content: "Lecture2Go";
+		    float: right;
+		    font-family: arial;
+		    font-size: 15px;
+		    font-weight: bold;
+		    margin-right: 8px;
+		    margin-top: 11px;
+		}		
+
+		.jw-overlay::before {
+		    background-color: rgba(0, 0, 0, 0);
+		    bottom: 0;
+		    content: " ";
+		    left: -50%;
+		    position: absolute;
+		    top: 100px;
+		    width: 100%;
+		}
+
+		.jw-dock-button .jw-overlay {
+		    display: none;
+		    margin-top: -63px !important;
+		    margin-right: 5px !important;
+		    font-size: 14px !important;
+		}
+	
+		.jw-skin-seven .jw-dock .jw-overlay, .jw-skin-seven .jw-skip {
+		    border-radius: 0em !important;
+		}
+			
+		.jw-dock-image:hover {
+    		opacity: 1;
+		}
+		
+	</style>
+
 </head>
 
 <%@ page import="de.uhh.l2g.plugins.service.VideoLocalServiceUtil"%>
@@ -66,6 +130,14 @@
 			            hlshtml: true,
 			            androidhls: true
 			        });
+			        jwplayer().addButton(
+			        	"", 
+			        	"Dieses Video auf Lecture2Go ansehen",
+			        	function() {
+			                   window.open('<%=video.getUrl()%>');
+			                },
+			        	"Lecture2Go"
+			        )
 		</script>
 	<%}%>
 </body>
