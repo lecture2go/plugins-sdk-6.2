@@ -38,7 +38,7 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{number=");
 		sb.append(number);
@@ -70,6 +70,8 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 		sb.append(latestVideoUploadDate);
 		sb.append(", latestVideoGenerationDate=");
 		sb.append(latestVideoGenerationDate);
+		sb.append(", videoSort=");
+		sb.append(videoSort);
 		sb.append("}");
 
 		return sb.toString();
@@ -160,6 +162,8 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 			lectureseriesImpl.setLatestVideoGenerationDate(latestVideoGenerationDate);
 		}
 
+		lectureseriesImpl.setVideoSort(videoSort);
+
 		lectureseriesImpl.resetOriginalValues();
 
 		return lectureseriesImpl;
@@ -182,6 +186,7 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 		latestOpenAccessVideoId = objectInput.readLong();
 		latestVideoUploadDate = objectInput.readLong();
 		latestVideoGenerationDate = objectInput.readUTF();
+		videoSort = objectInput.readInt();
 	}
 
 	@Override
@@ -260,6 +265,8 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 		else {
 			objectOutput.writeUTF(latestVideoGenerationDate);
 		}
+
+		objectOutput.writeInt(videoSort);
 	}
 
 	public String number;
@@ -277,4 +284,5 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 	public long latestOpenAccessVideoId;
 	public long latestVideoUploadDate;
 	public String latestVideoGenerationDate;
+	public int videoSort;
 }
