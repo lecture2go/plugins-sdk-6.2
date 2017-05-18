@@ -1,0 +1,157 @@
+@media (max-width: 479px) {
+	.aui .chaptertile a span {
+    	margin-top: -42px;
+	}
+
+	.video-image-big {
+    	height: 64px !important;
+    	width: 113px;
+	}
+	
+	.term-of-creation {
+		margin: 0px 5px;
+	}
+
+	.videotile button {
+		margin-right: 1px;
+	}
+	
+	.videotile.wide, .videotile.small, .video-box {
+		background-color: #f9f9f9;
+	}
+	
+	.videotile.wide {
+    	height: auto;
+	}
+	
+	.videotile.wide .labels {
+	    max-width: 180px;
+	}
+	
+	.video-content-footer {
+	    margin-bottom: 0;
+	    margin-top: 10px;
+	}
+
+	.front-page-teaser {
+		height: 160px;
+	}
+	
+	.sharetile {
+	    margin-bottom: 5px;
+	    width: 100%;
+	    border: 0px solid #eeeeee;
+	    padding: 0 0 10px;
+	}
+	
+	#metadata input {
+	    width: 92%;
+	}
+	
+	#searchedvideo {
+	    width: 10em;
+	}
+	
+	/* disable all links on the video tiles, as they are too small on mobile devices */
+	.video-content-wrapper a,
+	.video-box-content a
+	 {
+    	pointer-events: none;
+    	cursor: default;
+	}
+
+	.catalogue-container .row-fluid .span9 {
+	    margin-top: 0;
+	}
+	
+	.aui #navigation.open .navbar-inner {
+   		 padding: 0 3px 0 1px;
+	}
+	
+	.video-image-wrapper {
+	    float: left;
+	    margin-bottom: 5px;
+	    -webkit-box-flex: 0 0 113px;
+  		-moz-box-flex: 0 0 113px;    
+  		-webkit-flex: 0 0 113px;
+  		-ms-flex: 0 0 113px;  
+  		flex: 0 0 113px;
+	}
+	
+	.lectureseries-title {
+	    font-size: 14px;
+	}
+	
+	.layered-paper {
+    	box-shadow: 3px 3px 0 0 #999999, 5px 5px 0 0 #ffffff;
+	}
+	
+	#searchedvideos {
+	    margin-left: 10px;
+	}
+	
+	/* Bastian */
+    
+	.aui .label {
+    	line-height: 14px;
+	}	
+	
+	/* Bastian Ende */
+	
+	.l2go-contact {
+    	width: auto;
+	}
+	
+	/** UHH FOOTER START **/
+	
+	#fuss ul {
+    	padding-left: 25px;
+    	padding-right: 2px;
+    	border-top: 0px solid #dddddd;
+    	width: 50%;
+	}
+	#fuss ul + ul {
+	    padding-left: 2px;
+	    padding-right: 25px;
+   	    border-top: 0px solid #dddddd;
+	}
+	#fuss ul + ul + ul {
+	    clear: left;
+	    padding-left: 25px;
+	    padding-right: 2px;
+   	    border-top: 1px solid #dddddd;
+	}
+	#fuss ul + ul + ul + ul {
+	    clear: none;
+	    padding-left: 2px;
+	    padding-right: 25px;
+   	    border-top: 1px solid #dddddd;
+	}
+	#fuss ul + ul + ul + ul + ul {
+	    border-bottom: 1px solid #dddddd;
+	    clear: left;
+	    font-size: 0;
+	    left: 0;
+	    padding: 8px 0;
+	    position: absolute;
+	    right: 0;
+	    text-align: center;
+	    top: 0;
+	    white-space: nowrap;
+	    width: auto;
+	}	
+	#fuss ul + ul + ul + ul + ul li {
+	    margin: 0 2% 0 0;
+	}	
+	.rand {
+	    border: 0px solid #efefef;
+	}
+	#footer{
+		border: 0px none;
+	}
+	#fuss {
+	    padding: 40px 0 0;
+	}
+	/** UHH FOOTER END **/
+
+}

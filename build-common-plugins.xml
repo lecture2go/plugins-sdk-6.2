@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project name="build-common-plugins" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-common.xml" />
+	<import file="build-common-plugins-inspector.xml" />
+
+	<path id="plugins.includes.path">
+		<dirset dir="." excludes="${plugins.excludes}" includes="${plugins.includes}" />
+	</path>
+
+	<pathconvert pathsep="," property="plugins.includes.path" refid="plugins.includes.path" targetos="unix" />
+
+	<if>
+		<equals arg1="${basedir}" arg2="${user.dir}" />
+		<then>
+			<property name="plugin.type.dir" value=".." />
+		</then>
+		<else>
+			<property name="plugin.type.dir" value="${basedir}" />
+		</else>
+	</if>
+
+	<target name="build-service">
+		<for param="service.file">
+			<path>
+				<fileset
+					dir="."
+					includes="**/service.xml"
+				/>
+			</path>
+			<sequential>
+				<antelope:stringutil string="@{service.file}" property="service.file.index">
+					<antelope:indexof string="docroot" fromindex="0" />
+				</antelope:stringutil>
+
+				<if>
+					<equals arg1="${service.file.index}" arg2="-1" />
+					<then>
+						<antelope:stringutil string="@{service.file}" property="service.file.index">
+							<antelope:indexof string="service.xml" fromindex="0" />
+						</antelope:stringutil>
+					</then>
+				</if>
+
+				<antelope:stringutil string="@{service.file}" property="portlet.dir">
+					<antelope:substring beginindex="0" endindex="${service.file.index}" />
+				</antelope:stringutil>
+
+				<ant dir="${portlet.dir}" target="build-service" inheritAll="false" />
+			</sequential>
+		</for>
+	</target>
+
+	<target name="compile-jsp">
+		<for param="module.web.dir">
+			<dirset dir=".">
+				<include name="**/*-web" />
+			</dirset>
+			<sequential>
+				<ant antfile="${sdk.dir}/build-common-plugin.xml" dir="@{module.web.dir}" target="compile-jsp" />
+			</sequential>
+		</for>
+	</target>
+
+	<target name="setup-eclipse">
+		<subant target="setup-eclipse">
+			<multirootfileset basedirs="${plugins.includes.path}">
+				<include name="build.xml" />
+			</multirootfileset>
+		</subant>
+	</target>
+
+	<target name="test-class-group">
+		<subant target="test-class-group">
+			<multirootfileset basedirs="${plugins.includes.path}">
+				<include name="build.xml" />
+			</multirootfileset>
+		</subant>
+	</target>
+</project>

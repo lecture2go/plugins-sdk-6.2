@@ -1,0 +1,308 @@
+<?xml version="1.0"?>
+
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+	version="2.0">
+	<portlet>
+     	<portlet-name>lg-front-page</portlet-name>
+     	<display-name>L2Go Frontpage</display-name>
+     	<portlet-class>de.uhh.l2g.plugins.guest.FrontPage</portlet-class>
+	    <init-param>
+	      	<name>view-template</name>
+	      	<value>/guest/frontPage.jsp</value>
+	    </init-param>
+	    <init-param>
+	      	<name>add-process-action-success-action</name>
+	      	<value>false</value>
+	    </init-param>
+	    <expiration-cache>0</expiration-cache>
+	    <supports>
+	      	<mime-type>text/html</mime-type>
+	    </supports>
+	    <resource-bundle>content.Language</resource-bundle>
+	    <portlet-info>
+	      	<title>L2Go Frontpage</title>
+	      	<short-title>L2Go Frontpage</short-title>
+	      	<keywords>L2Go Frontpage</keywords>
+	    </portlet-info>
+	    <security-role-ref>
+	      	<role-name>guest</role-name>
+	    </security-role-ref>
+    </portlet>
+	
+	<portlet>
+     	<portlet-name>lg-open-access-videos</portlet-name>
+     	<display-name>Open Access Videos</display-name>
+     	<portlet-class>de.uhh.l2g.plugins.guest.OpenAccessVideos</portlet-class>
+	    <init-param>
+	      	<name>view-template</name>
+	      	<value>/guest/videosList.jsp</value>
+	    </init-param>
+	    <init-param>
+	      	<name>add-process-action-success-action</name>
+	      	<value>false</value>
+	    </init-param>
+	    <expiration-cache>0</expiration-cache>
+	    <supports>
+	      	<mime-type>text/html</mime-type>
+	    </supports>
+	    <resource-bundle>content.Language</resource-bundle>
+	    <portlet-info>
+	      	<title>Open Access Videos</title>
+	      	<short-title>Open Access Video Catalog</short-title>
+	      	<keywords>Open Access Videos</keywords>
+	    </portlet-info>
+	    <security-role-ref>
+	      	<role-name>guest</role-name>
+	    </security-role-ref>
+    </portlet>
+	
+	<portlet>
+     	<portlet-name>lg-admin-video-management</portlet-name>
+     	<display-name>L2Go Video Management</display-name>
+     	<portlet-class>de.uhh.l2g.plugins.admin.AdminVideoManagement</portlet-class>
+	    <init-param>
+	      	<name>view-template</name>
+	      	<value>/admin/videosList.jsp</value>
+	    </init-param>
+	    <init-param>
+	      	<name>add-process-action-success-action</name>
+	      	<value>false</value>
+	    </init-param>
+	    <expiration-cache>0</expiration-cache>
+	    <supports>
+	      	<mime-type>text/html</mime-type>
+	    </supports>
+	    <resource-bundle>content.Language</resource-bundle>
+	    <portlet-info>
+	      	<title>L2Go Video Management</title>
+	      	<short-title>L2Go Video Management</short-title>
+	      	<keywords>L2Go Video Management</keywords>
+	    </portlet-info>
+    </portlet>
+    	
+	<portlet>
+     	<portlet-name>lg-admin-lecture-series-management</portlet-name>
+     	<display-name>L2Go Lecture Series Management</display-name>
+     	<portlet-class>de.uhh.l2g.plugins.admin.AdminLectureSeriesManagement</portlet-class>
+	    <init-param>
+	      	<name>view-template</name>
+	      	<value>/admin/lectureSeriesList.jsp</value>
+	    </init-param>
+	    <init-param>
+	      	<name>add-process-action-success-action</name>
+	      	<value>false</value>
+	    </init-param>
+	    <expiration-cache>0</expiration-cache>
+	    <supports>
+	      	<mime-type>text/html</mime-type>
+	    </supports>
+	    <resource-bundle>content.Language</resource-bundle>
+	    <portlet-info>
+	      	<title>L2Go Lecture Series Management</title>
+	      	<short-title>L2Go Lecture Series Management</short-title>
+	      	<keywords>L2Go Lecture Series Management</keywords>
+	    </portlet-info>
+    </portlet> 
+  
+    <portlet>
+     	<portlet-name>lg-admin-user-management</portlet-name>
+     	<display-name>L2Go User Management</display-name>
+     	<portlet-class>de.uhh.l2g.plugins.admin.AdminUserManagement</portlet-class>
+	    <init-param>
+	      	<name>view-template</name>
+	      	<value>/admin/userList.jsp</value>
+	    </init-param>
+	    <init-param>
+	      	<name>add-process-action-success-action</name>
+	      	<value>false</value>
+	    </init-param>
+	    <expiration-cache>0</expiration-cache>
+	    <supports>
+	      	<mime-type>text/html</mime-type>
+	    </supports>
+	    <resource-bundle>content.Language</resource-bundle>
+	    <portlet-info>
+	      	<title>L2Go User Management</title>
+	      	<short-title>L2Go User Management</short-title>
+	      	<keywords>L2Go User Management</keywords>
+	    </portlet-info>
+  </portlet>
+  
+  <portlet>
+        <portlet-name>lg-admin-institution-management</portlet-name>
+        <display-name>L2Go Institution Management</display-name>
+        <portlet-class>de.uhh.l2g.plugins.admin.AdminInstitutionManagement</portlet-class>
+        <init-param>
+            <name>view-template</name>
+            <value>/admin/institutionList.jsp</value>
+        </init-param>
+        <init-param>
+            <name>add-process-action-success-action</name>
+            <value>false</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>view</portlet-mode>
+        </supports>
+        <resource-bundle>content.Language</resource-bundle>
+        <portlet-info>
+            <title>L2Go Institution Management</title>
+            <short-title>L2Go Institution Management</short-title>
+            <keywords>L2Go Institution Management</keywords>
+        </portlet-info>
+  </portlet>
+  
+  <portlet>
+        <portlet-name>lg-admin-streaming-server-management</portlet-name>
+        <display-name>L2Go Streaming Server Management</display-name>
+        <portlet-class>de.uhh.l2g.plugins.admin.AdminStreamerManagement</portlet-class>
+        <init-param>
+            <name>view-template</name>
+            <value>/admin/streamingServerList.jsp</value>
+        </init-param>
+        <init-param>
+            <name>add-process-action-success-action</name>
+            <value>false</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>view</portlet-mode>
+        </supports>
+        <resource-bundle>content.Language</resource-bundle>
+        <portlet-info>
+            <title>L2Go Streaming Server Management</title>
+            <short-title>L2Go Streaming Server Management</short-title>
+            <keywords>L2Go Streaming Server Management</keywords>
+        </portlet-info>
+  </portlet>
+  
+  <portlet>
+        <portlet-name>lg-admin-creators-management</portlet-name>
+        <display-name>L2Go Creators Management</display-name>
+        <portlet-class>de.uhh.l2g.plugins.admin.CreatorsManagement</portlet-class>
+        <init-param>
+            <name>view-template</name>
+            <value>/admin/creatorsList.jsp</value>
+        </init-param>
+        <init-param>
+            <name>add-process-action-success-action</name>
+            <value>false</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>view</portlet-mode>
+        </supports>
+        <resource-bundle>content.Language</resource-bundle>
+        <portlet-info>
+            <title>L2Go Creators Management</title>
+            <short-title>L2Go Creators Management</short-title>
+            <keywords>L2Go Creators Management</keywords>
+        </portlet-info>
+  </portlet>
+  
+  <portlet>
+        <portlet-name>lg-admin-terms-management</portlet-name>
+        <display-name>L2Go Terms Management</display-name>
+        <portlet-class>de.uhh.l2g.plugins.admin.TermsManagement</portlet-class>
+        <init-param>
+            <name>view-template</name>
+            <value>/admin/termsList.jsp</value>
+        </init-param>
+        <init-param>
+            <name>add-process-action-success-action</name>
+            <value>false</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>view</portlet-mode>
+        </supports>
+        <resource-bundle>content.Language</resource-bundle>
+        <portlet-info>
+            <title>L2Go Terms Management</title>
+            <short-title>L2Go Terms Management</short-title>
+            <keywords>L2Go Terms Management</keywords>
+        </portlet-info>
+  </portlet>
+  
+  <portlet>
+        <portlet-name>lg-admin-thread-management</portlet-name>
+        <display-name>L2Go Thread Management</display-name>
+        <portlet-class>de.uhh.l2g.plugins.admin.ThreadManagement</portlet-class>
+        <init-param>
+            <name>view-template</name>
+            <value>/admin/threads.jsp</value>
+        </init-param>
+        <init-param>
+            <name>add-process-action-success-action</name>
+            <value>false</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>view</portlet-mode>
+        </supports>
+        <resource-bundle>content.Language</resource-bundle>
+        <portlet-info>
+            <title>L2Go Thread Management</title>
+            <short-title>L2Go Thread Management</short-title>
+            <keywords>L2Go Thread Management</keywords>
+        </portlet-info>
+  </portlet>
+  
+  <portlet>
+        <portlet-name>lg-admin-category-management</portlet-name>
+        <display-name>L2Go Category Management</display-name>
+        <portlet-class>de.uhh.l2g.plugins.admin.CategoryManagement</portlet-class>
+        <init-param>
+            <name>view-template</name>
+            <value>/admin/categoriesList.jsp</value>
+        </init-param>
+        <init-param>
+            <name>add-process-action-success-action</name>
+            <value>false</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>view</portlet-mode>
+        </supports>
+        <resource-bundle>content.Language</resource-bundle>
+        <portlet-info>
+            <title>L2Go Category Management</title>
+            <short-title>L2Go Category Management</short-title>
+            <keywords>L2Go Category Management</keywords>
+        </portlet-info>
+  </portlet> 
+  
+    <portlet>
+        <portlet-name>lg-statistic-management</portlet-name>
+        <display-name>L2Go Statistic Management</display-name>
+        <portlet-class>de.uhh.l2g.plugins.admin.StatisticManagement</portlet-class>
+        <init-param>
+            <name>view-template</name>
+            <value>/admin/statistic.jsp</value>
+        </init-param>
+        <init-param>
+            <name>add-process-action-success-action</name>
+            <value>false</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>view</portlet-mode>
+        </supports>
+        <resource-bundle>content.Language</resource-bundle>
+        <portlet-info>
+            <title>L2Go Statistic Management</title>
+            <short-title>L2Go Statistic Management</short-title>
+            <keywords>L2Go Statistic Management</keywords>
+        </portlet-info>
+  </portlet>
+    
+</portlet-app>

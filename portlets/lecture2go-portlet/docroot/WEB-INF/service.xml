@@ -1,0 +1,732 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+<service-builder package-path="de.uhh.l2g.plugins" auto-namespace-tables="true">
+    <author>Iavor Sturm</author>
+    <namespace>LG</namespace>
+    <entity name="Lectureseries" local-service="true" remote-service="false">
+        <column name="number" type="String"></column>
+        <column name="eventType" type="String"></column>
+        <column name="categoryId" type="long"></column>
+        <column name="name" type="String"></column>
+        <column name="shortDesc" type="String"></column>
+        <column name="termId" type="long"></column>
+        <column name="language" type="String"></column>
+        <column name="facultyName" type="String"></column>
+        <column name="lectureseriesId" type="long" primary="true" id-type="increment"></column>
+        <column name="password" type="String"></column>
+        <column name="approved" type="int"></column>
+        <column name="longDesc" type="String"></column>
+        <column name="latestOpenAccessVideoId" type="long"></column>
+        <column name="latestVideoUploadDate" type="Date"></column>
+        <column name="latestVideoGenerationDate" type="String"></column>
+        <order by="asc">
+            <order-column name="name" order-by="asc"></order-column>
+        </order>
+        <finder name="Term" return-type="Collection">
+            <finder-column name="termId"></finder-column>
+        </finder>
+        <finder name="Language" return-type="Collection">
+            <finder-column name="language"></finder-column>
+        </finder>
+        <finder name="Number" return-type="Collection">
+            <finder-column name="number"></finder-column>
+        </finder>
+        <finder name="Type" return-type="Collection">
+            <finder-column name="eventType" case-sensitive="false"></finder-column>
+        </finder>
+        <finder name="Category" return-type="Collection">
+            <finder-column name="categoryId"></finder-column>
+        </finder>
+        <finder name="Name" return-type="Collection">
+            <finder-column name="name"></finder-column>
+        </finder>
+        <finder name="Faculty" return-type="Collection">
+            <finder-column name="facultyName"></finder-column>
+        </finder>
+        <finder name="Approved" return-type="Collection">
+            <finder-column name="approved"></finder-column>
+        </finder>
+        <finder name="Password" return-type="Collection" unique="false">
+            <finder-column name="password"></finder-column>
+        </finder>
+        <finder name="LatestOpenAccessVideo" return-type="Collection">
+            <finder-column name="latestOpenAccessVideoId"></finder-column>
+        </finder>
+        <finder name="LatestVideoUploadDate" return-type="Collection">
+            <finder-column name="latestVideoUploadDate"></finder-column>
+        </finder>
+        <finder name="LatestVideoGenerationDate" return-type="Collection">
+            <finder-column name="latestVideoGenerationDate"></finder-column>
+        </finder>
+    </entity>
+    <entity name="Institution" local-service="true" remote-service="false">
+    	<column name="institutionId" type="long" primary="true">
+    	</column>
+    	<column name="parentId" type="long"></column>
+    	<column name="name" type="String"></column>
+    	<column name="typ" type="String"></column>
+    	<column name="www" type="String"></column>
+    	<column name="level" type="int"></column>
+    	<column name="sort" type="int"></column>
+        <column name="groupId" type="long"></column>
+        <column name="companyId" type="long"></column>
+		<order by="asc"> <order-column name="sort" />
+		</order>
+    	<finder name="Parent" return-type="Collection">
+    		<finder-column name="parentId"></finder-column>
+    	</finder>
+    	<finder name="Name" return-type="Collection">
+    		<finder-column name="name"></finder-column>
+    	</finder>
+    	<finder name="Typ" return-type="Collection">
+    		<finder-column name="typ"></finder-column>
+    	</finder>
+    	<finder name="Www" return-type="Collection">
+    		<finder-column name="www"></finder-column>
+    	</finder>
+    	<finder name="level" return-type="Collection">
+    		<finder-column name="level"></finder-column>
+    	</finder>
+    	<finder name="Sort" return-type="Collection">
+    		<finder-column name="sort"></finder-column>
+    	</finder>
+    	<finder name="LevelAndType" return-type="Collection">
+    		<finder-column name="level"></finder-column>
+    		<finder-column name="typ"></finder-column>
+    	</finder>
+        <finder name="GroupId" return-type="Collection">
+            <finder-column name="groupId"></finder-column>
+        </finder>
+        <finder name="G_P" return-type="Collection">
+            <finder-column name="groupId"></finder-column>
+            <finder-column name="parentId"></finder-column>
+        </finder>
+        <finder name="G_N" return-type="Collection">
+            <finder-column name="name"></finder-column>
+            <finder-column name="groupId"></finder-column>
+        </finder>
+        <finder name="G_T" return-type="Collection">
+            <finder-column name="typ"></finder-column>
+            <finder-column name="groupId"></finder-column>
+        </finder>
+        <finder name="G_W" return-type="Collection">
+            <finder-column name="www"></finder-column>
+            <finder-column name="groupId"></finder-column>
+        </finder>
+        <finder name="G_L" return-type="Collection">
+            <finder-column name="level"></finder-column>
+            <finder-column name="groupId"></finder-column>
+        </finder>
+        <finder name="G_S" return-type="Collection">
+            <finder-column name="sort"></finder-column>
+            <finder-column name="groupId"></finder-column>
+        </finder>
+        <finder name="G_L_T" return-type="Collection">
+            <finder-column name="level"></finder-column>
+            <finder-column name="typ"></finder-column>
+            <finder-column name="groupId"></finder-column>
+        </finder>
+        <finder name="G_P_S" return-type="Collection">
+            <finder-column name="groupId"></finder-column>
+            <finder-column name="parentId"></finder-column>
+            <finder-column name="sort"></finder-column>
+        </finder>
+         <finder name="Root" return-type="Institution" where="parentId =0" unique="true">
+            <finder-column name="companyId"></finder-column>
+            <finder-column name="groupId"></finder-column>
+        </finder>
+        <finder name="G_I" return-type="Institution">
+            <finder-column name="groupId"></finder-column>
+            <finder-column name="institutionId"></finder-column>
+        </finder>
+        <finder name="CompanyId" return-type="Collection">
+            <finder-column name="companyId"></finder-column>
+        </finder>
+    </entity>
+    <entity name="Lectureseries_Institution" local-service="true" remote-service="false">
+        <column name="lectureseriesInstitutionId" type="long" primary="true" id-type="increment"></column>
+        <column name="lectureseriesId" type="long" primary="false"></column>
+        <column name="institutionId" type="long" primary="false"></column>
+        <column name="institutionParentId" type="long"></column>
+        <finder name="LectureseriesId" return-type="Collection">
+            <finder-column name="lectureseriesId"></finder-column>
+        </finder>
+        <finder name="InstitutionId" return-type="Collection">
+            <finder-column name="institutionId"></finder-column>
+        </finder>
+        <finder name="LectureseriesIdAndInstitutionId" return-type="Collection">
+            <finder-column name="lectureseriesId"></finder-column>
+            <finder-column name="institutionId"></finder-column>
+        </finder>
+        <finder name="InstitutionParentId" return-type="Collection">
+            <finder-column name="institutionParentId"></finder-column>
+        </finder>
+    </entity>
+    <entity name="Producer" local-service="true" remote-service="false">
+        <column name="producerId" type="long" primary="true"></column>
+        <column name="idNum" type="String"></column>
+        <column name="homeDir" type="String"></column>
+        <column name="hostId" type="long"></column>
+        <column name="institutionId" type="long"></column>
+        <column name="numberOfProductions" type="long"></column>
+        <column name="approved" type="int"></column>
+        <finder name="Host" return-type="Collection">
+            <finder-column name="hostId"></finder-column>
+        </finder>
+        <finder name="Institution" return-type="Collection">
+            <finder-column name="institutionId"></finder-column>
+        </finder>
+        <finder name="Status" return-type="Collection">
+            <finder-column name="approved"></finder-column>
+        </finder>
+        <finder name="Directory" return-type="Producer">
+            <finder-column name="homeDir"></finder-column>
+        </finder>
+        <finder name="UID" return-type="Producer">
+            <finder-column name="idNum"></finder-column>
+        </finder>
+    </entity>
+    <entity name="Producer_Lectureseries" local-service="true" remote-service="false">
+        <column name="producerLectureseriesId" type="long" primary="true" id-type="increment"></column>
+        <column name="lectureseriesId" type="long"></column>
+        <column name="producerId" type="long"></column>
+        <finder name="LectureseriesId" return-type="Collection">
+            <finder-column name="lectureseriesId"></finder-column>
+        </finder>
+        <finder name="ProducerId" return-type="Collection">
+            <finder-column name="producerId"></finder-column>
+        </finder>
+        <finder name="LectureseriesIdAndProducerId" return-type="Collection">
+            <finder-column name="lectureseriesId"></finder-column>
+            <finder-column name="producerId"></finder-column>
+        </finder>
+    </entity>
+    <entity name="Host" local-service="true" remote-service="false">
+    	<column name="hostId" type="long" primary="true">
+    	</column>
+    	<column name="protocol" type="String"></column>
+    	<column name="streamer" type="String"></column>
+    	<column name="port" type="int"></column>
+    	<column name="serverRoot" type="String"></column>
+    	<column name="name" type="String"></column>
+		<column name="groupId" type="long"></column>
+        <column name="companyId" type="long"></column>
+        <column name="defaultHost" type="int"></column>
+        <order by="asc"> <order-column name="serverRoot" />
+        </order>
+		<finder name="GroupId" return-type="Collection">
+            <finder-column name="groupId"></finder-column>
+        </finder>
+        <finder name="CompanyIdAndGroupId" return-type="Collection">
+       		<finder-column name="companyId"></finder-column>
+            <finder-column name="groupId"></finder-column>
+        </finder>
+        <finder name="G_H" return-type="Host">
+            <finder-column name="groupId"></finder-column>
+            <finder-column name="hostId"></finder-column>
+        </finder>
+        <finder name="DefaultHost" return-type="Host" where="defaultHost &gt; 0">
+            <finder-column name="companyId"></finder-column>
+            <finder-column name="groupId"></finder-column>
+        </finder>
+    </entity>
+    <entity name="Institution_Host" local-service="true" remote-service="false">
+        <column name="institutionHostId" type="long" primary="true"></column>
+        <column name="institutionId" type="long"></column>
+        <column name="hostId" type="long"></column>
+        <column name="groupId" type="long"></column>
+        <column name="companyId" type="long"></column>
+        <finder name="institutionId" return-type="Collection" db-index="false">
+            <finder-column name="institutionId" case-sensitive="false"></finder-column>
+        </finder>
+        <finder name="hostId" return-type="Collection" db-index="false">
+            <finder-column name="hostId"></finder-column>
+        </finder>
+        <finder name="G_H" unique="false" return-type="Collection">
+            <finder-column name="groupId"></finder-column>
+            <finder-column name="hostId"></finder-column>
+        </finder>
+        <finder name="G_I" return-type="Institution_Host" unique="false" db-index="false">
+            <finder-column name="groupId"></finder-column>
+            <finder-column name="institutionId"></finder-column>
+        </finder>
+        <finder name="GroupId" return-type="Collection">
+            <finder-column name="groupId"></finder-column>
+        </finder>
+        <finder name="C_G_H" return-type="Collection">
+            <finder-column name="companyId"></finder-column>
+            <finder-column name="groupId"></finder-column>
+            <finder-column name="hostId"></finder-column>
+        </finder>
+        <finder name="C_G_I" return-type="Collection">
+            <finder-column name="companyId"></finder-column>
+            <finder-column name="groupId"></finder-column>
+            <finder-column name="institutionId"></finder-column>
+        </finder>
+    </entity>
+    <entity name="Office" local-service="true" remote-service="false">
+        <column name="officeId" type="long" primary="true" id-type="increment"></column>
+        <column name="name" type="String"></column>
+        <column name="www" type="String"></column>
+        <column name="email" type="String"></column>
+        <column name="institutionId" type="long"></column>
+        <finder name="Institution" return-type="Office">
+            <finder-column name="institutionId"></finder-column>
+        </finder>
+    </entity>
+    <entity name="Coordinator" local-service="true" remote-service="false">
+        <column name="coordinatorId" type="long" primary="true"></column>
+        <column name="institutionId" type="long"></column>
+        <column name="officeId" type="long"></column>
+        <finder name="Institution" return-type="Coordinator">
+            <finder-column name="institutionId"></finder-column>
+        </finder>
+        <finder name="Office" return-type="Collection">
+            <finder-column name="officeId"></finder-column>
+        </finder>
+    </entity>
+    <entity name="Sys" local-service="true" remote-service="false">
+        <column name="sysId" type="int" primary="true" id-type="increment"></column>
+        <column name="version" type="String"></column>
+        <column name="setupWizard" type="int"></column>
+    </entity>
+    <entity name="Lastvideolist" local-service="true" remote-service="false">
+        <column name="lastvideolistId" type="int" primary="true" id-type="increment"></column>
+        <column name="videoId" type="long"></column>
+        <finder name="Video" return-type="Collection">
+            <finder-column name="videoId"></finder-column>
+        </finder>
+    </entity>
+    <entity name="License" local-service="true" remote-service="false">
+        <column name="licenseId" type="long" primary="true" id-type="increment"></column>
+        <column name="videoId" type="long"></column>
+        <column name="ccby" type="int"></column>
+        <column name="ccbybc" type="int"></column>
+        <column name="ccbyncnd" type="int"></column>
+        <column name="ccbyncsa" type="int"></column>
+        <column name="ccbysa" type="int"></column>
+        <column name="ccbync" type="int"></column>
+        <column name="l2go" type="int"></column>
+        <finder name="Video" return-type="de.uhh.l2g.plugins.model.License">
+            <finder-column name="videoId"></finder-column>
+        </finder>
+    </entity>
+    <entity name="Metadata" local-service="true" remote-service="false">
+        <column name="metadataId" type="long" primary="true" id-type="increment"></column>
+        <column name="type" type="String"></column>
+        <column name="language" type="String"></column>
+        <column name="title" type="String"></column>
+        <column name="subject" type="String"></column>
+        <column name="description" type="String"></column>
+        <column name="publisher" type="String"></column>
+    </entity>
+    <entity name="Segment" local-service="true" remote-service="false">
+        <column name="segmentId" type="long" primary="true" id-type="increment"></column>
+        <column name="videoId" type="long"></column>
+        <column name="start" type="String"></column>
+        <column name="title" type="String"></column>
+        <column name="description" type="String"></column>
+        <column name="end" type="String"></column>
+        <column name="chapter" type="int"></column>
+        <column name="userId" type="long"></column>
+        <order by="asc">
+            <order-column name="start" order-by="asc" case-sensitive="false"></order-column>
+        </order>
+        <finder name="Video" return-type="Collection">
+            <finder-column name="videoId"></finder-column>
+        </finder>
+        <finder name="User" return-type="Collection">
+            <finder-column name="userId"></finder-column>
+        </finder>
+    </entity>
+    <entity name="Video" local-service="true" remote-service="false">
+        <column name="videoId" type="long" primary="true" id-type="increment"></column>
+        <column name="title" type="String"></column>
+        <column name="lectureseriesId" type="long"></column>
+        <column name="producerId" type="long"></column>
+        <column name="containerFormat" type="String"></column>
+        <column name="filename" type="String"></column>
+        <column name="resolution" type="String"></column>
+        <column name="duration" type="String"></column>
+        <column name="hostId" type="long"></column>
+        <column name="fileSize" type="String"></column>
+        <column name="generationDate" type="String"></column>
+        <column name="openAccess" type="int"></column>
+        <column name="downloadLink" type="int"></column>
+        <column name="metadataId" type="long"></column>
+        <column name="secureFilename" type="String"></column>
+        <column name="hits" type="long"></column>
+        <column name="uploadDate" type="Date"></column>
+        <column name="permittedToSegment" type="int"></column>
+        <column name="rootInstitutionId" type="long"></column>
+        <column name="citation2go" type="int"></column>
+        <column name="termId" type="long"></column>
+        <column name="tags" type="String"></column>
+        <column name="password" type="String"></column>
+        <order by="desc">
+            <order-column name="videoId" order-by="desc"></order-column>
+            <order-column name="uploadDate" order-by="desc"></order-column>
+        </order>
+        <finder name="Producer" return-type="Collection">
+            <finder-column name="producerId"></finder-column>
+        </finder>
+        <finder name="Lectureseries" return-type="Collection">
+            <finder-column name="lectureseriesId"></finder-column>
+        </finder>
+        <finder name="ProducerAndLectureseries" return-type="Collection">
+            <finder-column name="producerId"></finder-column>
+            <finder-column name="lectureseriesId"></finder-column>
+        </finder>
+        <finder return-type="Collection" name="ProducerAndDownloadLink">
+            <finder-column name="producerId"></finder-column>
+            <finder-column name="downloadLink"></finder-column>
+        </finder>
+        <finder name="LectureseriesAndOpenaccess" return-type="Collection">
+            <finder-column name="lectureseriesId"></finder-column>
+            <finder-column name="openAccess"></finder-column>
+        </finder>
+        <finder name="Filename" return-type="Collection">
+            <finder-column name="filename"></finder-column>
+        </finder>
+        <finder name="UploadDate" return-type="Collection">
+            <finder-column name="uploadDate"></finder-column>
+        </finder>
+        <finder name="RootInstitution" return-type="Collection">
+            <finder-column name="rootInstitutionId"></finder-column>
+        </finder>
+        <finder name="Password" return-type="Collection">
+            <finder-column name="password"></finder-column>
+        </finder>
+        <finder name="OpenAccess" return-type="Collection">
+            <finder-column name="openAccess"></finder-column>
+        </finder>
+        <finder name="Term" return-type="Collection">
+            <finder-column name="termId"></finder-column>
+        </finder>
+    </entity>
+    <entity name="Video_Institution" local-service="true" remote-service="false">
+        <column name="videoInstitutionId" type="long" primary="true" id-type="increment"></column>
+        <column name="videoId" type="long"></column>
+        <column name="institutionId" type="long"></column>
+        <column name="institutionParentId" type="long"></column>
+        <finder name="Video" return-type="Collection">
+            <finder-column name="videoId"></finder-column>
+        </finder>
+        <finder name="Institution" return-type="Collection">
+            <finder-column name="institutionId"></finder-column>
+        </finder>
+        <finder name="VideoInstitution" return-type="Collection">
+            <finder-column name="videoId"></finder-column>
+            <finder-column name="institutionId"></finder-column>
+        </finder>
+        <finder name="InstitutionParentId" return-type="Collection">
+            <finder-column name="institutionParentId"></finder-column>
+        </finder>
+    </entity>
+    <entity name="Videohitlist" local-service="true" remote-service="false">
+        <column name="videohitlistId" type="long" primary="true" id-type="increment"></column>
+        <column name="hitsPerDay" type="long"></column>
+        <column name="hitsPerWeek" type="long"></column>
+        <column name="hitsPerMonth" type="long"></column>
+        <column name="hitsPerYear" type="long"></column>
+        <column name="videoId" type="long"></column>
+        <finder name="Video" return-type="Collection">
+            <finder-column name="videoId"></finder-column>
+        </finder>
+    </entity>
+    <entity name="Video_Lectureseries" local-service="true" remote-service="false">
+        <column name="videoLectureseriesId" type="long" primary="true" id-type="increment"></column>
+        <column name="videoId" type="long"></column>
+        <column name="lectureseriesId" type="long"></column>
+        <column name="openAccess" type="int"></column>
+        <finder name="Video" return-type="Collection">
+            <finder-column name="videoId"></finder-column>
+        </finder>
+        <finder name="Lectureseries" return-type="Collection">
+            <finder-column name="lectureseriesId"></finder-column>
+        </finder>
+        <finder name="Openaccess" return-type="Collection">
+            <finder-column name="openAccess"></finder-column>
+        </finder>
+        <finder name="LectureseriesAndOpenAccess" return-type="Collection">
+            <finder-column name="lectureseriesId"></finder-column>
+            <finder-column name="openAccess"></finder-column>
+        </finder>
+    </entity>
+    <entity name="Term" local-service="true" remote-service="false">
+
+    	<!-- PK fields -->
+
+    	<column name="termId" type="long" primary="true" id-type="increment"></column>
+
+    	<!-- Group instance -->
+
+    	<!-- Audit fields -->
+        <column name="parentId" type="long"></column>
+        <column name="languageId" type="String"></column>
+        <column name="prefix" type="String"></column>
+        <column name="year" type="String"></column>
+        <column name="translation" type="String"></column>
+        <order by="desc">
+            <order-column name="year" order-by="desc"></order-column>
+        </order>
+        <finder name="Prefix" return-type="Collection">
+            <finder-column name="prefix"></finder-column>
+        </finder>
+        <finder name="Year" return-type="Collection">
+            <finder-column name="year"></finder-column>
+        </finder>
+    </entity>
+    <entity name="Category" local-service="true" remote-service="false">
+    	<column name="categoryId" type="long" primary="true" id-type="increment"></column>
+
+
+    	<!-- PK fields -->
+
+    	<!-- Group instance -->
+
+    	<!-- Audit fields -->
+        <column name="parentId" type="long"></column>
+        <column name="languageId" type="String"></column>
+        <column name="name" type="String"></column>
+        <column name="translation" type="String"></column>
+        <order by="desc">
+            <order-column name="categoryId" order-by="desc"></order-column>
+        </order>
+        <finder name="Name" return-type="Collection">
+            <finder-column name="name"></finder-column>
+        </finder>
+    </entity>
+    <entity name="Video_Category" local-service="true"
+    	remote-service="false">
+
+    	<column name="videoCategoryId" type="long" primary="true" id-type="increment"></column>
+    	<column name="videoId" type="long"></column>
+    	<column name="categoryId" type="long"></column>
+    	<finder name="Video" return-type="Collection">
+    		<finder-column name="videoId"></finder-column>
+    	</finder>
+    	<finder name="Category" return-type="Collection">
+    		<finder-column name="categoryId"></finder-column>
+    	</finder>
+
+
+    	<!-- PK fields -->
+
+    	<!-- Group instance -->
+
+    	<!-- Audit fields -->
+        <finder name="VideoCategory" return-type="Collection">
+            <finder-column name="videoId"></finder-column>
+            <finder-column name="categoryId"></finder-column>
+        </finder>
+    </entity>
+    <entity name="Lectureseries_Category" local-service="true" remote-service="false">
+        <column name="lectureseriesCategoryId" type="long" primary="true" id-type="increment"></column>
+        <column name="categoryId" type="long"></column>
+        <column name="lectureseriesId" type="long"></column>
+        <finder name="Lectureseries" return-type="Collection">
+            <finder-column name="lectureseriesId"></finder-column>
+        </finder>
+        <finder name="Category" return-type="Collection">
+            <finder-column name="categoryId"></finder-column>
+        </finder>
+        <finder name="CategoryLectureseries" return-type="Collection">
+            <finder-column name="categoryId"></finder-column>
+            <finder-column name="lectureseriesId"></finder-column>
+        </finder>
+    </entity>
+    <entity name="Creator" local-service="true"
+    	remote-service="false">
+    	<column name="creatorId" type="long" primary="true" id-type="increment">
+    	</column>
+    	<column name="firstName" type="String"></column>
+    	<column name="lastName" type="String"></column>
+    	<column name="middleName" type="String"></column>
+    	<column name="jobTitle" type="String"></column>
+    	<column name="gender" type="String"></column>
+        <column name="fullName" type="String"></column>
+        <order by="asc">
+            <order-column name="lastName" order-by="asc"></order-column>
+        </order>
+    	<finder name="FirstName" return-type="Collection">
+    		<finder-column name="firstName"></finder-column>
+    	</finder>
+    	<finder name="LastName" return-type="Collection">
+    		<finder-column name="lastName"></finder-column>
+    	</finder>
+    	<finder name="MiddleName" return-type="Collection">
+    		<finder-column name="middleName"></finder-column>
+    	</finder>
+
+
+    	<!-- PK fields -->
+
+    	<!-- Group instance -->
+
+    	<!-- Audit fields -->
+        <finder name="FullName" return-type="Collection">
+            <finder-column name="fullName"></finder-column>
+        </finder>
+    </entity>
+    <entity name="Lectureseries_Creator" local-service="true" remote-service="false">
+        <column name="lectureseriesCreatorId" type="long" primary="true" id-type="increment"></column>
+        <column name="lectureseriesId" type="long"></column>
+        <column name="creatorId" type="long"></column>
+        <finder name="Lectureseries" return-type="Collection">
+            <finder-column name="lectureseriesId"></finder-column>
+        </finder>
+        <finder name="Creator" return-type="Collection">
+            <finder-column name="creatorId"></finder-column>
+        </finder>
+        <finder name="LectureseriesCreator" return-type="Collection">
+            <finder-column name="lectureseriesId"></finder-column>
+            <finder-column name="creatorId"></finder-column>
+        </finder>
+    </entity>
+    <entity name="Video_Creator" local-service="true" remote-service="false">
+        <column name="videoCreatorId" type="long" primary="true" id-type="increment"></column>
+        <column name="creatorId" type="long"></column>
+        <column name="videoId" type="long"></column>
+        <finder name="Video" return-type="Collection">
+            <finder-column name="videoId"></finder-column>
+        </finder>
+        <finder name="Creator" return-type="Collection">
+            <finder-column name="creatorId"></finder-column>
+        </finder>
+        <finder name="VideoCreator" return-type="Collection">
+            <finder-column name="videoId"></finder-column>
+            <finder-column name="creatorId"></finder-column>
+        </finder>
+    </entity>
+    <entity name="Tagcloud" local-service="true" remote-service="false">
+        <column name="tagcloudId" type="long" primary="true" id-type="increment"></column>
+        <column name="objectClassType" type="String"></column>
+        <column name="objectId" type="long"></column>
+        <column name="tags" type="String"></column>
+        <finder name="ObjectClassType" return-type="Collection">
+            <finder-column name="objectClassType"></finder-column>
+        </finder>
+        <finder name="ObjectId" return-type="Collection">
+            <finder-column name="objectId"></finder-column>
+        </finder>
+        <finder name="ObjectClassTypeAndObjectId" return-type="Tagcloud">
+            <finder-column name="objectClassType"></finder-column>
+            <finder-column name="objectId"></finder-column>
+        </finder>
+    </entity>
+    <entity name="Statistic" local-service="true"
+    	remote-service="false">
+        <column name="createDate" type="Date"></column>
+        <column name="publicVideos" type="int"></column>
+        <column name="privateVideos" type="int"></column>
+        <column name="autofillRow" type="int"></column>
+
+    	<column name="statisticId" type="long" primary="true" id-type="increment"></column>
+	    <column name="groupId" type="long"></column>
+    	<column name="companyId" type="long"></column>
+    	<column name="userId" type="long"></column>
+    	<column name="userName" type="String"></column>
+    	<column name="modifiedDate" type="Date"></column>
+        <finder name="StatisticId" return-type="Statistic">
+            <finder-column name="statisticId"></finder-column>
+        </finder>
+        <finder name="C_G_S" return-type="Statistic">
+            <finder-column name="companyId"></finder-column>
+            <finder-column name="groupId"></finder-column>
+            <finder-column name="statisticId"></finder-column>
+        </finder>
+        <finder name="C_G_D" return-type="Statistic">
+            <finder-column name="companyId"></finder-column>
+            <finder-column name="groupId"></finder-column>
+            <finder-column name="createDate"></finder-column>
+        </finder>
+        <finder name="C_G" return-type="Collection">
+            <finder-column name="companyId"></finder-column>
+            <finder-column name="groupId"></finder-column>
+        </finder>
+    </entity>
+    <entity name="VideoStatistic" local-service="true" remote-service="false">
+
+    	<!-- PK fields -->
+
+    	<column name="videoStatisticId" type="long" primary="true"></column>
+
+    	<!-- Group instance -->
+
+    	<column name="groupId" type="long"></column>
+
+    	<!-- Audit fields -->
+
+    	<column name="companyId" type="long"></column>
+    	<column name="createDate" type="Date"></column>
+    	<column name="modifiedDate" type="Date"></column>
+
+    	<!-- Other fields -->
+
+    	<!-- Order -->
+        <column name="compareDate" type="Date"></column>
+        <column name="totalVideos" type="long"></column>
+        <column name="publicVideos" type="long"></column>
+        <column name="privateVideos" type="long"></column>
+        <column name="currentTotal" type="long"></column>
+        <column name="currentPublic" type="long"></column>
+        <column name="currentPrivate" type="long"></column>
+        <column name="pubPercent" type="int"></column>
+        <column name="privPercent" type="int"></column>
+        <column name="currentPubPercent" type="int"></column>
+        <column name="currentPrivPercent" type="int"></column>
+        <column name="intervalName" type="String"></column>
+    	<!-- Finder methods -->
+        <column name="publicDiff" type="int"></column>
+        <column name="privateDiff" type="int"></column>
+        <column name="totalDiff" type="int"></column>
+        <column name="dateDiff" type="int"></column>
+        <finder name="CompanyIdAndGroupId" return-type="Collection">
+            <finder-column name="groupId"></finder-column>
+            <finder-column name="companyId"></finder-column>
+        </finder>
+    </entity>
+    <entity name="ScheduledThread" local-service="true"
+    	remote-service="false">
+
+  		<!-- PK fields -->
+  		<column name="scheduledThreadId" type="long" primary="true"></column>
+
+    	<!-- Group instance -->
+
+    	<column name="groupId" type="long"></column>
+
+    	<!-- Audit fields -->
+
+    	<column name="companyId" type="long"></column>
+    	<column name="userId" type="long"></column>
+    	<column name="userName" type="String"></column>
+    	<column name="createDate" type="Date"></column>
+    	<column name="modifiedDate" type="Date"></column>
+ 
+    	<column name="schedulerClassName" type="String"></column>
+    	<column name="cronText" type="String"></column>
+    	<finder name="SchedulerClassName"
+    		return-type="ScheduledThread">
+    		<finder-column name="schedulerClassName"></finder-column>
+    	</finder>
+
+
+    
+    </entity>
+    <exceptions>
+        <exception>HostName</exception>
+        <exception>HostStreamer</exception>
+        <exception>InstitutionName</exception>
+        <exception>Institution_HostHost</exception>
+        <exception>Institution_HostInstitution</exception>
+        <exception>StatisticValue</exception>
+        <exception>StatisticDate</exception>
+        <exception>NoProperty</exception>
+    </exceptions>
+
+
+
+
+</service-builder>

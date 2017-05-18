@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+
+    <sql id="de.uhh.l2g.plugins.service.persistence.InstitutionFinder.findRootInstitutionsByOpenAccessVideos">
+		<![CDATA[
+			SELECT distinct i2.* FROM LG_Video v JOIN LG_Video_Institution vi ON v.videoId=vi.videoId JOIN LG_Institution i ON vi.institutionId= i.institutionId JOIN (SELECT * FROM LG_Institution) i2 ON i.parentId=i2.institutionId WHERE v.openAccess=1 ORDER BY sort
+		]]>
+    </sql>
+    
+    <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.findPopularVideos">
+		<![CDATA[
+			SELECT v.* 
+			FROM LG_Video v, LG_Videohitlist vhl  
+			WHERE v.videoId=vhl.videoId 
+			ORDER BY hitsPerDay DESC 
+		]]>
+    </sql>
+
+    <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.findVideosByHitsAndOpenAccess">
+		<![CDATA[
+			SELECT v.* 
+			FROM LG_Video v  
+			WHERE hits>? AND openAccess=1 
+			ORDER BY hits DESC 
+		]]>
+    </sql>
+        
+    <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.findVideosByHits">
+		<![CDATA[
+			SELECT v.* 
+			FROM LG_Video v  
+			WHERE hits>? 
+			ORDER BY hits DESC 
+		]]>
+    </sql>
+    
+    <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.findVideoStatistics">
+		<![CDATA[
+			SELECT * FROM LG_VideoStatistic;  
+		]]>
+    </sql>
+    
+    <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.findVideosBySearchWordAndLectureseriesId">
+		<![CDATA[
+						SELECT v.* 
+						FROM LG_Video v 
+						INNER JOIN LG_Tagcloud as tag ON (v.videoId = tag.objectId) 
+						WHERE objectClassType="de.uhh.l2g.plugins.model.impl.VideoImpl" 
+						AND tag.tags LIKE ? 
+						AND v.lectureseriesId=? 
+						AND v.openAccess=1
+		]]>
+    </sql>
+
+    <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.findAllSearchWords">
+		<![CDATA[
+			SELECT DISTINCT LG_Video.* , LG_Lectureseries.name AS lectureseriesName, LG_Lectureseries.number_ AS lectureseriesNumber, LG_Creator.fullName AS creatorFullName
+			FROM LG_Video, LG_Metadata, LG_Lectureseries, LG_Institution, LG_Creator,  LG_Video_Creator
+			WHERE (
+				( 
+					LG_Video.openAccess=1 AND 
+			        LG_Video.metadataId = LG_Metadata.metadataId AND 
+			        (LG_Video.lectureseriesId = LG_Lectureseries.lectureseriesId OR LG_Video.lectureseriesId < 0) AND  
+			        LG_Video.rootInstitutionId=LG_Institution.institutionId AND
+			        LG_Video.videoId = LG_Video_Creator.videoId AND 
+			        LG_Creator.creatorId = LG_Video_Creator.creatorId
+				) 
+			    AND 
+			    ( 
+					( LG_Video.title > "" ) OR 
+			        ( LG_Lectureseries.name > "" ) OR 
+			        ( LG_Video.tags > "" ) OR 
+			        ( LG_Lectureseries.number_ > "" ) OR
+			        ( LG_Creator.fullName > "" )
+				)
+			) 
+			GROUP BY LG_Video.videoId ORDER BY LG_Video.generationDate DESC
+		]]>
+    </sql>
+
+    <sql id="de.uhh.l2g.plugins.service.persistences.VideoFinder.findVideosBySearchWord">
+		<![CDATA[
+			SELECT DISTINCT LG_Video.* , LG_Lectureseries.name AS lectureseriesName, LG_Lectureseries.number_ AS lectureseriesNumber, LG_Creator.fullName AS creatorFullName
+			FROM LG_Video, LG_Metadata, LG_Lectureseries, LG_Institution, LG_Creator,  LG_Video_Creator
+			WHERE (
+				( 
+					LG_Video.openAccess=1 AND 
+			        LG_Video.metadataId = LG_Metadata.metadataId AND 
+			        LG_Video.lectureseriesId = LG_Lectureseries.lectureseriesId AND 
+			        LG_Video.rootInstitutionId=LG_Institution.institutionId AND
+			        LG_Video.videoId = LG_Video_Creator.videoId AND 
+			        LG_Creator.creatorId = LG_Video_Creator.creatorId
+				) 
+			    AND 
+			    ( 
+					( LG_Video.title LIKE ? ) OR 
+			        ( LG_Lectureseries.name LIKE ? ) OR 
+			        ( LG_Video.tags LIKE ? ) OR 
+			        ( LG_Lectureseries.number_ LIKE ? ) OR
+			        ( LG_Creator.fullName LIKE ? )
+				)
+			) 
+			ORDER BY LG_Video.generationDate DESC
+		]]>
+    </sql>
+
+    <sql id="de.uhh.l2g.plugins.service.persistence.InstitutionFinder.findAllSortedAsTree">
+		<![CDATA[
+			SELECT myNode.institutionId, myNode.parentId, myNode.name, myNode.typ, myNode.www, myNode.level, myNode.sort,
+			IF(myParent.institutionId>=0, IF(myGrandparent.institutionId>=0,
+			CONCAT(myGrandparent.institutionId, '/', myParent.institutionId, '/', myNode.institutionId),
+			CONCAT('', myParent.institutionId, '/', myNode.institutionId)),
+			CONCAT( myNode.institutionId, '')) AS path
+			FROM LG_Institution AS myNode
+			LEFT JOIN LG_Institution AS myParent ON myNode.parentId = myParent.institutionId
+			LEFT JOIN LG_Institution AS myGrandparent ON myParent.parentId = myGrandparent.institutionId
+			ORDER BY path ASC
+		]]>
+    </sql>
+
+        <sql id="de.uhh.l2g.plugins.service.persistence.InstitutionFinder.findMaxSortByParent">
+		<![CDATA[
+			SELECT MAX(sort) as maxsort FROM LG_Institution WHERE parentId = ?;
+		]]>
+    </sql>
+
+        <sql id="de.uhh.l2g.plugins.service.persistence.InstitutionFinder.findLockingElements">
+		<![CDATA[
+			SELECT COUNT(*) as countElements FROM LG_Institution as Inst
+			NATURAL JOIN
+			(
+			(SELECT institutionId FROM LG_Lectureseries_Institution AS Lec)
+				UNION
+			(SELECT institutionId FROM LG_Video_Institution AS Vid)
+				UNION
+			(SELECT institutionId FROM LG_Coordinator AS Coo)
+				UNION
+			(SELECT institutionId FROM LG_Producer AS Pro)
+				UNION
+			(SELECT parentId as institutionId FROM LG_Institution AS Child)
+			 )
+			AS contents
+			WHERE Inst.institutionId = ?
+		]]>
+    </sql>
+
+    <sql id="de.uhh.l2g.plugins.service.persistence.InstitutionFinder.findByLectureseriesId">
+		<![CDATA[
+			SELECT LG_Institution.institutionId, LG_Institution.parentId, LG_Institution.name, LG_Institution.typ, LG_Institution.www, LG_Institution.level, LG_Institution.sort
+			FROM LG_Institution, LG_Lectureseries_Institution
+			WHERE (LG_Lectureseries_Institution.lectureseriesId=? AND LG_Institution.institutionId=LG_Lectureseries_Institution.institutionId)
+		]]>
+    </sql>
+
+    <sql id="de.uhh.l2g.plugins.service.persistence.LectureseriesFinder.findAllLectureseriesWithOpenAccessVideos">
+		<![CDATA[
+			SELECT number_, eventType, categoryId, l.name, shortDesc, l.termId, language, facultyName, l.lectureseriesId, l.password_, approved, longDesc, latestOpenAccessVideoId
+			FROM LG_Lectureseries l, LG_Video v, LG_Video_Institution vi, LG_Institution i
+			WHERE ( l.lectureseriesId=v.lectureseriesId AND v.openAccess=1 AND v.videoId=vi.videoId AND vi.institutionId=i.institutionId)
+			GROUP BY l.lectureseriesId
+		]]>
+    </sql>
+
+    <sql id="de.uhh.l2g.plugins.service.persistence.LectureseriesFinder.findAllLectureseriesWithPassword">
+		<![CDATA[
+			SELECT number_, eventType, categoryId, l.name, shortDesc, termId, language, facultyName, l.lectureseriesId, password_, approved, longDesc, latestOpenAccessVideoId
+			FROM LG_Lectureseries l
+			WHERE l.password_>""
+		]]>
+    </sql>
+
+    <sql id="de.uhh.l2g.plugins.service.persistence.LectureseriesFinder.findAllLectureseriesForVideo">
+		<![CDATA[
+			SELECT number_, eventType, categoryId, l.name, shortDesc, termId, language, facultyName, l.lectureseriesId, password_, approved, longDesc, latestOpenAccessVideoId
+			FROM LG_Lectureseries l, LG_Video_Lectureseries vl
+			WHERE (vl.videoId = ? AND l.lectureseriesId=vl.lectureseriesId)
+		]]>
+    </sql>
+
+    <sql id="de.uhh.l2g.plugins.service.persistence.ProducerFinder.findProducerIds">
+		<![CDATA[
+			SELECT p.producerId
+			FROM  LG_Producer_Lectureseries AS pc
+			INNER JOIN LG_Producer AS p ON pc.producerId = p.producerId
+			WHERE pc.lectureseriesId = ?
+		]]>
+    </sql>
+
+    <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.findVideoForSecureUrl">
+		<![CDATA[
+			SELECT videoId FROM LG_Video WHERE secureFilename LIKE ?
+		]]>
+    </sql>
+
+    <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.findLatestOpenAccessVideoForlectureseries">
+		<![CDATA[
+			SELECT videoId FROM LG_Video
+			WHERE (generationDate=(SELECT MAX(generationDate) FROM LG_Video WHERE lectureseriesId=? AND openAccess=1) AND lectureseriesId=? AND openAccess=1)
+			ORDER BY videoId ASC
+		]]>
+    </sql>
+
+    <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.resetLectureseriesForVideos">
+		<![CDATA[
+			UPDATE LG_Video SET lectureseriesId=0 WHERE lectureseriesId=?
+		]]>
+    </sql>
+
+    <sql id="de.uhh.l2g.plugins.service.persistence.CreatorFinder.findCreatorsForLectureseries">
+		<![CDATA[
+			SELECT c.* FROM LG_Creator c, LG_Lectureseries_Creator lc WHERE c.creatorId=lc.creatorId AND lc.lectureseriesId = ?
+		]]>
+    </sql>
+
+    <sql id="de.uhh.l2g.plugins.service.persistence.CreatorFinder.findCreatorsForLectureseriesOverTheAssigenedVideos">
+		<![CDATA[
+			SELECT c.* FROM LG_Video_Creator vc 
+			INNER JOIN LG_Creator c ON c.creatorId=vc.creatorId 
+			WHERE videoId IN (SELECT videoId FROM lportal620.LG_Video WHERE lectureseriesId = ?) 
+			GROUP BY creatorId;
+		]]>
+    </sql>
+
+    <sql id="de.uhh.l2g.plugins.service.persistence.CreatorFinder.findCreatorsForVideo">
+		<![CDATA[
+			SELECT c.* FROM LG_Creator c, LG_Video_Creator vc WHERE c.creatorId=vc.creatorId AND vc.videoId = ?
+		]]>
+    </sql>
+    
+    <sql id="de.uhh.l2g.plugins.service.persistence.StatisticFinder.removeVideoStatisticTable">
+		<![CDATA[
+			DROP TABLE IF EXISTS LG_VideoStatistic
+		]]>
+	</sql>
+		
+	<sql id="de.uhh.l2g.plugins.service.persistence.StatisticFinder.createVideoStatisticView">
+		<![CDATA[
+			CREATE OR REPLACE 
+			VIEW LG_VideoStatistic AS 
+			SELECT DATEDIFF(NOW(),LG_Statistic.createDate ) AS dateDiff, 
+			(SELECT CASE DATEDIFF(NOW(),LG_Statistic.createDate) WHEN 0 THEN 0 WHEN DATEDIFF(NOW(),DATE_SUB(NOW(),INTERVAL 1 DAY)) THEN 1 WHEN DATEDIFF(NOW(),DATE_SUB(NOW(),INTERVAL 1 WEEK)) THEN 2 WHEN DATEDIFF(NOW(),DATE_SUB(NOW(),INTERVAL 1 MONTH)) THEN 3  WHEN DATEDIFF(NOW(),DATE_SUB(NOW(),INTERVAL 1 YEAR)) THEN 4  ELSE NULL END) AS timespanId, 
+			MAX(LG_Statistic.createDate) AS maxDate,  
+			(SELECT s1.publicVideos FROM LG_Statistic s1 WHERE DATEDIFF(NOW(),s1.createDate) = dateDiff AND s1.createDate = MAX(LG_Statistic.createDate) )AS public, 
+			(SELECT s1.privateVideos FROM LG_Statistic s1 WHERE DATEDIFF(NOW(),s1.createDate) = dateDiff AND s1.createDate = MAX(LG_Statistic.createDate) )AS private, 
+			(SELECT s1.privateVideos+s1.publicVideos FROM LG_Statistic s1 WHERE DATEDIFF(NOW(),s1.createDate) = dateDiff AND s1.createDate = MAX(LG_Statistic.createDate))AS total,  
+			(SELECT TRUNCATE(ROUND((s1.publicVideos)/(s1.privateVideos+s1.publicVideos),2)*100,0) FROM LG_Statistic s1 WHERE DATEDIFF(NOW(),s1.createDate) = dateDiff AND s1.createDate = MAX(LG_Statistic.createDate))AS pubPercent, 
+			(SELECT TRUNCATE(ROUND((s1.privateVideos)/(s1.privateVideos+s1.publicVideos),2)*100,0) FROM LG_Statistic s1 WHERE DATEDIFF(NOW(),s1.createDate) = dateDiff AND s1.createDate = MAX(LG_Statistic.createDate) )AS privPercent,  
+			NOW() AS current, 
+			(SELECT COUNT(*) FROM LG_Video WHERE openAccess = 1 AND filename IS NOT NULL) AS currentPublic, 
+			(SELECT COUNT(*) FROM LG_Video WHERE openAccess = 0 AND filename IS NOT NULL) AS currentPrivate, 
+			(SELECT COUNT(*) FROM LG_Video WHERE 1=1 AND filename IS NOT NULL) AS currentTotal, 
+			(SELECT TRUNCATE(ROUND((currentPublic)/(currentPrivate+currentPublic),2)*100,0) FROM LG_Statistic s1 WHERE DATEDIFF(NOW(),s1.createDate) = dateDiff AND s1.createDate = MAX(LG_Statistic.createDate)) AS curPubPercent, 
+			(SELECT TRUNCATE(ROUND((currentPrivate)/(currentPrivate+currentPublic),2)*100,0) FROM LG_Statistic s1 WHERE DATEDIFF(NOW(),s1.createDate) = dateDiff AND s1.createDate = MAX(LG_Statistic.createDate)) AS curPrivPercent, 
+			(SELECT currentPublic-s1.publicVideos FROM LG_Statistic s1 WHERE DATEDIFF(NOW(),s1.createDate) = dateDiff AND s1.createDate = MAX(LG_Statistic.createDate)) AS publicDiff, 
+			(SELECT currentPrivate-s1.privateVideos FROM LG_Statistic s1 WHERE DATEDIFF(NOW(),s1.createDate) = dateDiff AND s1.createDate = MAX(LG_Statistic.createDate)) AS privateDiff, 
+			(SELECT currentTotal-(s1.privateVideos+s1.publicVideos) FROM LG_Statistic s1 WHERE DATEDIFF(NOW(),s1.createDate) = dateDiff AND s1.createDate = MAX(LG_Statistic.createDate))AS totalDiff 
+			FROM LG_Video 
+			JOIN LG_Statistic on (1=1 AND(  
+				DATEDIFF(NOW(),LG_Statistic.createDate ) = 0 OR  
+				DATEDIFF(NOW(),LG_Statistic.createDate ) = DATEDIFF(NOW(),DATE_SUB(NOW(),INTERVAL 1 DAY))  OR  
+				DATEDIFF(NOW(),LG_Statistic.createDate ) = DATEDIFF(NOW(),DATE_SUB(NOW(),INTERVAL 1 WEEK))  OR  
+				DATEDIFF(NOW(),LG_Statistic.createDate ) = DATEDIFF(NOW(),DATE_SUB(NOW(),INTERVAL 1 MONTH))  OR 
+				DATEDIFF(NOW(),LG_Statistic.createDate ) = DATEDIFF(NOW(),DATE_SUB(NOW(),INTERVAL 1 YEAR)) 
+			)) 
+			GROUP BY dateDiff DESC 
+			ORDER BY createDate DESC
+		]]>
+    </sql>
+		
+</custom-sql>
