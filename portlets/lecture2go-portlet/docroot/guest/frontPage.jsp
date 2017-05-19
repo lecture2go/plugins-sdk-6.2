@@ -61,7 +61,7 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 <div id="front-page-content">
 	<% 
 		// this is a temporary solution to show a web content for important news below the teaser
-		String articleId = "78499";
+		String articleId = "26311";
 		long groupId = themeDisplay.getLayout().getGroupId();
 				
 		// check if the article is approved, if not there will be not 'lead-box'-div
