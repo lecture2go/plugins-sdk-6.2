@@ -154,7 +154,7 @@
 
     <sql id="de.uhh.l2g.plugins.service.persistence.LectureseriesFinder.findAllLectureseriesWithOpenAccessVideos">
 		<![CDATA[
-			SELECT number_, eventType, categoryId, l.name, shortDesc, l.termId, language, facultyName, l.lectureseriesId, l.password_, approved, longDesc, latestOpenAccessVideoId
+			SELECT number_, eventType, categoryId, l.name, shortDesc, l.termId, language, facultyName, l.lectureseriesId, l.password_, approved, longDesc, latestOpenAccessVideoId, l.videoSort
 			FROM LG_Lectureseries l, LG_Video v, LG_Video_Institution vi, LG_Institution i
 			WHERE ( l.lectureseriesId=v.lectureseriesId AND v.openAccess=1 AND v.videoId=vi.videoId AND vi.institutionId=i.institutionId)
 			GROUP BY l.lectureseriesId
@@ -163,7 +163,7 @@
 
     <sql id="de.uhh.l2g.plugins.service.persistence.LectureseriesFinder.findAllLectureseriesWithPassword">
 		<![CDATA[
-			SELECT number_, eventType, categoryId, l.name, shortDesc, termId, language, facultyName, l.lectureseriesId, password_, approved, longDesc, latestOpenAccessVideoId
+			SELECT number_, eventType, categoryId, l.name, shortDesc, termId, language, facultyName, l.lectureseriesId, password_, approved, longDesc, latestOpenAccessVideoId, l.videoSort
 			FROM LG_Lectureseries l
 			WHERE l.password_>""
 		]]>
@@ -171,7 +171,7 @@
 
     <sql id="de.uhh.l2g.plugins.service.persistence.LectureseriesFinder.findAllLectureseriesForVideo">
 		<![CDATA[
-			SELECT number_, eventType, categoryId, l.name, shortDesc, termId, language, facultyName, l.lectureseriesId, password_, approved, longDesc, latestOpenAccessVideoId
+			SELECT number_, eventType, categoryId, l.name, shortDesc, termId, language, facultyName, l.lectureseriesId, password_, approved, longDesc, latestOpenAccessVideoId, l.videoSort
 			FROM LG_Lectureseries l, LG_Video_Lectureseries vl
 			WHERE (vl.videoId = ? AND l.lectureseriesId=vl.lectureseriesId)
 		]]>

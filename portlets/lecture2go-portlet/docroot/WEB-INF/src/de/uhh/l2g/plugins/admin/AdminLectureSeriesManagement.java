@@ -149,6 +149,11 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		try{
 			categoryId = new Long(request.getParameter("categoryId"));
 		}catch(Exception e){}
+		Integer videoSort = new Integer(0);
+		try{
+			videoSort = "1".equals(request.getParameter("videoSort")) ? new Integer(1) : videoSort;
+		}catch(Exception e){}
+
 		
 		Locale locale = request.getLocale(); 
 
@@ -171,6 +176,7 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		lectureseries.setFacultyName(request.getParameter("facultyName"));
 		lectureseries.setPassword(request.getParameter("password"));
 		lectureseries.setLongDesc(s);	
+		lectureseries.setVideoSort(videoSort);
 		
 		//update database
 		LectureseriesLocalServiceUtil.updateLectureseries(lectureseries);
@@ -297,6 +303,11 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		try{
 			categoryId = new Long(request.getParameter("categoryId"));
 		}catch(Exception e){}
+		Integer videoSort = new Integer(0);
+		try{
+			videoSort = "1".equals(request.getParameter("videoSort")) ? new Integer(1) : videoSort;
+		}catch(Exception e){}
+
 		
 		Locale locale = request.getLocale(); 
 		
@@ -313,6 +324,7 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		lectureseries.setFacultyName(request.getParameter("facultyName"));
 		lectureseries.setPassword(request.getParameter("password"));
 		lectureseries.setLongDesc(s);
+		lectureseries.setVideoSort(videoSort);
 		
 		//save object to database
 		Lectureseries newlect = LectureseriesLocalServiceUtil.addLectureseries(lectureseries);
