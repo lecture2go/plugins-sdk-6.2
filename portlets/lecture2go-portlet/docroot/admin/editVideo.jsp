@@ -340,7 +340,7 @@
 											
 				<aui:button-row>
 					<aui:button type="submit" value="apply-changes" onclick="applyAllMetadataChanges()" cssClass="btn-primary"/>
-					<aui:button type="cancel" value="back" href="<%=backURL%>" name="cancel"/>
+					<aui:button type="cancel" value="back" name="cancel"/>
 				</aui:button-row>
 				
 				<aui:input name="videoId" type="hidden" value="<%=reqVideo.getVideoId()%>"/>
@@ -1021,7 +1021,10 @@ AUI().use('aui-node',
 
 <script type="text/javascript">
     $(function () {
-        var vars = <%=VideoLocalServiceUtil.getJSONVideo(reqVideo.getVideoId()).toString()%>;
+    	$('#<portlet:namespace></portlet:namespace>cancel').click(function(){
+    		   window.location.href="<%=backURL.toString()%>";
+    	})
+    	var vars = <%=VideoLocalServiceUtil.getJSONVideo(reqVideo.getVideoId()).toString()%>;
         console.log(vars);
         $.template( "filesTemplate", $("#template") );
         $.tmpl( "filesTemplate", vars ).appendTo( ".table" );
