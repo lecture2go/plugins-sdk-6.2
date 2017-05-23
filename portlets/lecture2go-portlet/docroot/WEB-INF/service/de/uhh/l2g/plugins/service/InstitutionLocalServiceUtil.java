@@ -327,7 +327,6 @@ public class InstitutionLocalServiceUtil {
 		return getService().getByParentId(parentId, type);
 	}
 
-<<<<<<< HEAD
 	public static de.uhh.l2g.plugins.model.Institution getRoot(long companyId,
 		long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -341,8 +340,6 @@ public class InstitutionLocalServiceUtil {
 		return getService().getByParentId(parentId);
 	}
 
-=======
->>>>>>> refs/remotes/github.com/lecture2go/master
 	public static java.util.Map<java.lang.String, java.lang.String> getByParent(
 		long parentId)
 		throws com.liferay.portal.kernel.exception.SystemException {

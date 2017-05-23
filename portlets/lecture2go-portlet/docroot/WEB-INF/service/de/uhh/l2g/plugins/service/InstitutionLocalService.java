@@ -297,7 +297,6 @@ public interface InstitutionLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-<<<<<<< HEAD
 	public de.uhh.l2g.plugins.model.Institution getRoot(long companyId,
 		long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -309,8 +308,6 @@ public interface InstitutionLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-=======
->>>>>>> refs/remotes/github.com/lecture2go/master
 	public java.util.Map<java.lang.String, java.lang.String> getByParent(
 		long parentId)
 		throws com.liferay.portal.kernel.exception.SystemException;

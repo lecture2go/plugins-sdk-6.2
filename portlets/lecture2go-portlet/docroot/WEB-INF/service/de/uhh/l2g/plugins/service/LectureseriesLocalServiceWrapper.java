@@ -297,7 +297,6 @@ public class LectureseriesLocalServiceWrapper
 	}
 
 	@Override
-<<<<<<< HEAD
 	public java.util.Map<de.uhh.l2g.plugins.model.Term, java.util.List<de.uhh.l2g.plugins.model.Lectureseries>> getFilteredByApprovedSemesterFacultyProducerAsTreeMapSortedByTerm(
 		java.lang.Integer approved, java.lang.Long semester,
 		java.lang.Long facultyId, java.lang.Long producerId) {
@@ -361,54 +360,6 @@ public class LectureseriesLocalServiceWrapper
 			com.liferay.portal.kernel.exception.SystemException {
 		_lectureseriesLocalService.updateCategoryForLectureseries(lectureseriesId,
 			newCategoryId);
-=======
-	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _lectureseriesLocalService.getAll();
-	}
-
-	@Override
-	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getAllLectureseriesWhithOpenaccessVideos() {
-		return _lectureseriesLocalService.getAllLectureseriesWhithOpenaccessVideos();
-	}
-
-	@Override
-	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getAllLectureseriesWhithPassword() {
-		return _lectureseriesLocalService.getAllLectureseriesWhithPassword();
-	}
-
-	@Override
-	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getAllForVideo(
-		de.uhh.l2g.plugins.model.Video video) {
-		return _lectureseriesLocalService.getAllForVideo(video);
-	}
-
-	@Override
-	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getByTerm(
-		java.lang.Long termId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _lectureseriesLocalService.getByTerm(termId);
-	}
-
-	@Override
-	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getByLatestVideoId(
-		java.lang.Long latestVideoId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _lectureseriesLocalService.getByLatestVideoId(latestVideoId);
-	}
-
-	@Override
-	public void updateOpenAccess(de.uhh.l2g.plugins.model.Video video,
-		de.uhh.l2g.plugins.model.Lectureseries lectureseries)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_lectureseriesLocalService.updateOpenAccess(video, lectureseries);
-	}
-
-	@Override
-	public void updateUploadAndGenerationDate()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_lectureseriesLocalService.updateUploadAndGenerationDate();
->>>>>>> refs/remotes/github.com/lecture2go/master
 	}
 
 	@Override

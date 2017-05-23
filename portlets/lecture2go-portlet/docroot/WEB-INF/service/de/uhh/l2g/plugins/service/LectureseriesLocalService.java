@@ -260,7 +260,6 @@ public interface LectureseriesLocalService extends BaseLocalService,
 		java.lang.Long facultyId, java.lang.Long producerId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-<<<<<<< HEAD
 	public java.util.Map<de.uhh.l2g.plugins.model.Term, java.util.List<de.uhh.l2g.plugins.model.Lectureseries>> getFilteredByApprovedSemesterFacultyProducerAsTreeMapSortedByTerm(
 		java.lang.Integer approved, java.lang.Long semester,
 		java.lang.Long facultyId, java.lang.Long producerId);
@@ -300,37 +299,6 @@ public interface LectureseriesLocalService extends BaseLocalService,
 		java.lang.Long newCategoryId)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException;
-=======
-	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getAllLectureseriesWhithOpenaccessVideos();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getAllLectureseriesWhithPassword();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getAllForVideo(
-		de.uhh.l2g.plugins.model.Video video);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getByTerm(
-		java.lang.Long termId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getByLatestVideoId(
-		java.lang.Long latestVideoId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public void updateOpenAccess(de.uhh.l2g.plugins.model.Video video,
-		de.uhh.l2g.plugins.model.Lectureseries lectureseries)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public void updateUploadAndGenerationDate()
-		throws com.liferay.portal.kernel.exception.SystemException;
->>>>>>> refs/remotes/github.com/lecture2go/master
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(

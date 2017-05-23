@@ -283,7 +283,6 @@ public class LectureseriesLocalServiceUtil {
 			semester, facultyId, producerId);
 	}
 
-<<<<<<< HEAD
 	public static java.util.Map<de.uhh.l2g.plugins.model.Term, java.util.List<de.uhh.l2g.plugins.model.Lectureseries>> getFilteredByApprovedSemesterFacultyProducerAsTreeMapSortedByTerm(
 		java.lang.Integer approved, java.lang.Long semester,
 		java.lang.Long facultyId, java.lang.Long producerId) {
@@ -339,47 +338,6 @@ public class LectureseriesLocalServiceUtil {
 			com.liferay.portal.kernel.exception.SystemException {
 		getService()
 			.updateCategoryForLectureseries(lectureseriesId, newCategoryId);
-=======
-	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getAll();
-	}
-
-	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getAllLectureseriesWhithOpenaccessVideos() {
-		return getService().getAllLectureseriesWhithOpenaccessVideos();
-	}
-
-	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getAllLectureseriesWhithPassword() {
-		return getService().getAllLectureseriesWhithPassword();
-	}
-
-	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getAllForVideo(
-		de.uhh.l2g.plugins.model.Video video) {
-		return getService().getAllForVideo(video);
-	}
-
-	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getByTerm(
-		java.lang.Long termId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getByTerm(termId);
-	}
-
-	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getByLatestVideoId(
-		java.lang.Long latestVideoId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getByLatestVideoId(latestVideoId);
-	}
-
-	public static void updateOpenAccess(de.uhh.l2g.plugins.model.Video video,
-		de.uhh.l2g.plugins.model.Lectureseries lectureseries)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().updateOpenAccess(video, lectureseries);
-	}
-
-	public static void updateUploadAndGenerationDate()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().updateUploadAndGenerationDate();
->>>>>>> refs/remotes/github.com/lecture2go/master
 	}
 
 	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(
