@@ -106,6 +106,7 @@ public class VideohitlistLocalServiceClpInvoker {
 				"de.uhh.l2g.plugins.model.Videohitlist"
 			};
 
+<<<<<<< HEAD
 		_methodName162 = "getBeanIdentifier";
 
 		_methodParameterTypes162 = new String[] {  };
@@ -281,4 +282,181 @@ public class VideohitlistLocalServiceClpInvoker {
 	private String[] _methodParameterTypes168;
 	private String _methodName169;
 	private String[] _methodParameterTypes169;
+=======
+		_methodName160 = "getBeanIdentifier";
+
+		_methodParameterTypes160 = new String[] {  };
+
+		_methodName161 = "setBeanIdentifier";
+
+		_methodParameterTypes161 = new String[] { "java.lang.String" };
+
+		_methodName166 = "deleteByVideoId";
+
+		_methodParameterTypes166 = new String[] { "java.lang.Long" };
+
+		_methodName167 = "deleteAll";
+
+		_methodParameterTypes167 = new String[] {  };
+	}
+
+	public Object invokeMethod(String name, String[] parameterTypes,
+		Object[] arguments) throws Throwable {
+		if (_methodName0.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes0, parameterTypes)) {
+			return VideohitlistLocalServiceUtil.addVideohitlist((de.uhh.l2g.plugins.model.Videohitlist)arguments[0]);
+		}
+
+		if (_methodName1.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes1, parameterTypes)) {
+			return VideohitlistLocalServiceUtil.createVideohitlist(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName2.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes2, parameterTypes)) {
+			return VideohitlistLocalServiceUtil.deleteVideohitlist(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName3.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes3, parameterTypes)) {
+			return VideohitlistLocalServiceUtil.deleteVideohitlist((de.uhh.l2g.plugins.model.Videohitlist)arguments[0]);
+		}
+
+		if (_methodName4.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes4, parameterTypes)) {
+			return VideohitlistLocalServiceUtil.dynamicQuery();
+		}
+
+		if (_methodName5.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes5, parameterTypes)) {
+			return VideohitlistLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0]);
+		}
+
+		if (_methodName6.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes6, parameterTypes)) {
+			return VideohitlistLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0],
+				((Integer)arguments[1]).intValue(),
+				((Integer)arguments[2]).intValue());
+		}
+
+		if (_methodName7.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes7, parameterTypes)) {
+			return VideohitlistLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0],
+				((Integer)arguments[1]).intValue(),
+				((Integer)arguments[2]).intValue(),
+				(com.liferay.portal.kernel.util.OrderByComparator)arguments[3]);
+		}
+
+		if (_methodName8.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes8, parameterTypes)) {
+			return VideohitlistLocalServiceUtil.dynamicQueryCount((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0]);
+		}
+
+		if (_methodName9.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes9, parameterTypes)) {
+			return VideohitlistLocalServiceUtil.dynamicQueryCount((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0],
+				(com.liferay.portal.kernel.dao.orm.Projection)arguments[1]);
+		}
+
+		if (_methodName10.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes10, parameterTypes)) {
+			return VideohitlistLocalServiceUtil.fetchVideohitlist(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName11.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes11, parameterTypes)) {
+			return VideohitlistLocalServiceUtil.getVideohitlist(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName12.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes12, parameterTypes)) {
+			return VideohitlistLocalServiceUtil.getPersistedModel((java.io.Serializable)arguments[0]);
+		}
+
+		if (_methodName13.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes13, parameterTypes)) {
+			return VideohitlistLocalServiceUtil.getVideohitlists(((Integer)arguments[0]).intValue(),
+				((Integer)arguments[1]).intValue());
+		}
+
+		if (_methodName14.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes14, parameterTypes)) {
+			return VideohitlistLocalServiceUtil.getVideohitlistsCount();
+		}
+
+		if (_methodName15.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes15, parameterTypes)) {
+			return VideohitlistLocalServiceUtil.updateVideohitlist((de.uhh.l2g.plugins.model.Videohitlist)arguments[0]);
+		}
+
+		if (_methodName160.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes160, parameterTypes)) {
+			return VideohitlistLocalServiceUtil.getBeanIdentifier();
+		}
+
+		if (_methodName161.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes161, parameterTypes)) {
+			VideohitlistLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
+
+			return null;
+		}
+
+		if (_methodName166.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes166, parameterTypes)) {
+			VideohitlistLocalServiceUtil.deleteByVideoId((java.lang.Long)arguments[0]);
+
+			return null;
+		}
+
+		if (_methodName167.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes167, parameterTypes)) {
+			VideohitlistLocalServiceUtil.deleteAll();
+
+			return null;
+		}
+
+		throw new UnsupportedOperationException();
+	}
+
+	private String _methodName0;
+	private String[] _methodParameterTypes0;
+	private String _methodName1;
+	private String[] _methodParameterTypes1;
+	private String _methodName2;
+	private String[] _methodParameterTypes2;
+	private String _methodName3;
+	private String[] _methodParameterTypes3;
+	private String _methodName4;
+	private String[] _methodParameterTypes4;
+	private String _methodName5;
+	private String[] _methodParameterTypes5;
+	private String _methodName6;
+	private String[] _methodParameterTypes6;
+	private String _methodName7;
+	private String[] _methodParameterTypes7;
+	private String _methodName8;
+	private String[] _methodParameterTypes8;
+	private String _methodName9;
+	private String[] _methodParameterTypes9;
+	private String _methodName10;
+	private String[] _methodParameterTypes10;
+	private String _methodName11;
+	private String[] _methodParameterTypes11;
+	private String _methodName12;
+	private String[] _methodParameterTypes12;
+	private String _methodName13;
+	private String[] _methodParameterTypes13;
+	private String _methodName14;
+	private String[] _methodParameterTypes14;
+	private String _methodName15;
+	private String[] _methodParameterTypes15;
+	private String _methodName160;
+	private String[] _methodParameterTypes160;
+	private String _methodName161;
+	private String[] _methodParameterTypes161;
+	private String _methodName166;
+	private String[] _methodParameterTypes166;
+	private String _methodName167;
+	private String[] _methodParameterTypes167;
+>>>>>>> refs/remotes/github.com/lecture2go/master
 }
