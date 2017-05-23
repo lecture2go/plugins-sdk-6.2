@@ -19,6 +19,7 @@
         <column name="latestOpenAccessVideoId" type="long"></column>
         <column name="latestVideoUploadDate" type="Date"></column>
         <column name="latestVideoGenerationDate" type="String"></column>
+        <column name="videoSort" type="int"></column>
         <order by="asc">
             <order-column name="name" order-by="asc"></order-column>
         </order>

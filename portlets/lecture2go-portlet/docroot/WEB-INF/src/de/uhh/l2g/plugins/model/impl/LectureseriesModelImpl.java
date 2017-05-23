@@ -73,9 +73,10 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 			{ "longDesc", Types.CLOB },
 			{ "latestOpenAccessVideoId", Types.BIGINT },
 			{ "latestVideoUploadDate", Types.TIMESTAMP },
-			{ "latestVideoGenerationDate", Types.VARCHAR }
+			{ "latestVideoGenerationDate", Types.VARCHAR },
+			{ "videoSort", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Lectureseries (number_ VARCHAR(75) null,eventType STRING null,categoryId LONG,name STRING null,shortDesc TEXT null,termId LONG,language STRING null,facultyName STRING null,lectureseriesId LONG not null primary key,password_ STRING null,approved INTEGER,longDesc TEXT null,latestOpenAccessVideoId LONG,latestVideoUploadDate DATE null,latestVideoGenerationDate VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Lectureseries (number_ VARCHAR(75) null,eventType STRING null,categoryId LONG,name STRING null,shortDesc TEXT null,termId LONG,language STRING null,facultyName STRING null,lectureseriesId LONG not null primary key,password_ STRING null,approved INTEGER,longDesc TEXT null,latestOpenAccessVideoId LONG,latestVideoUploadDate DATE null,latestVideoGenerationDate VARCHAR(75) null,videoSort INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Lectureseries";
 	public static final String ORDER_BY_JPQL = " ORDER BY lectureseries.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Lectureseries.name ASC";
@@ -159,6 +160,7 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 		attributes.put("latestVideoUploadDate", getLatestVideoUploadDate());
 		attributes.put("latestVideoGenerationDate",
 			getLatestVideoGenerationDate());
+		attributes.put("videoSort", getVideoSort());
 
 		return attributes;
 	}
@@ -256,6 +258,12 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 
 		if (latestVideoGenerationDate != null) {
 			setLatestVideoGenerationDate(latestVideoGenerationDate);
+		}
+
+		Integer videoSort = (Integer)attributes.get("videoSort");
+
+		if (videoSort != null) {
+			setVideoSort(videoSort);
 		}
 	}
 
@@ -582,6 +590,16 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 		return GetterUtil.getString(_originalLatestVideoGenerationDate);
 	}
 
+	@Override
+	public int getVideoSort() {
+		return _videoSort;
+	}
+
+	@Override
+	public void setVideoSort(int videoSort) {
+		_videoSort = videoSort;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -628,6 +646,7 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 		lectureseriesImpl.setLatestOpenAccessVideoId(getLatestOpenAccessVideoId());
 		lectureseriesImpl.setLatestVideoUploadDate(getLatestVideoUploadDate());
 		lectureseriesImpl.setLatestVideoGenerationDate(getLatestVideoGenerationDate());
+		lectureseriesImpl.setVideoSort(getVideoSort());
 
 		lectureseriesImpl.resetOriginalValues();
 
@@ -809,12 +828,14 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 			lectureseriesCacheModel.latestVideoGenerationDate = null;
 		}
 
+		lectureseriesCacheModel.videoSort = getVideoSort();
+
 		return lectureseriesCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{number=");
 		sb.append(getNumber());
@@ -846,6 +867,8 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 		sb.append(getLatestVideoUploadDate());
 		sb.append(", latestVideoGenerationDate=");
 		sb.append(getLatestVideoGenerationDate());
+		sb.append(", videoSort=");
+		sb.append(getVideoSort());
 		sb.append("}");
 
 		return sb.toString();
@@ -853,7 +876,7 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(52);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Lectureseries");
@@ -919,6 +942,10 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 			"<column><column-name>latestVideoGenerationDate</column-name><column-value><![CDATA[");
 		sb.append(getLatestVideoGenerationDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>videoSort</column-name><column-value><![CDATA[");
+		sb.append(getVideoSort());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -960,6 +987,7 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 	private Date _originalLatestVideoUploadDate;
 	private String _latestVideoGenerationDate;
 	private String _originalLatestVideoGenerationDate;
+	private int _videoSort;
 	private long _columnBitmask;
 	private Lectureseries _escapedModel;
 }

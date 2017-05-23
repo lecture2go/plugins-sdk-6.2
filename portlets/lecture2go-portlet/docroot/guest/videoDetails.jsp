@@ -130,9 +130,15 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 		<div class="col-md-7">
 		    <div id="main" >
 			  <%
-			    String title = video.getTitle();
-			  	String series = lectureseries.getName();
-		      %>
+			    String title = video.getTitle();  	
+			  	Long lTermId = lectureseries.getTermId();
+			  	String termMetadata = "";
+			  	if(lTermId > 1)
+			  	{
+			  		termMetadata = " ("+TermLocalServiceUtil.getById(lTermId).getPrefix()+" "+TermLocalServiceUtil.getById(lTermId).getYear()+")";
+			  	}
+			  		String series = lectureseries.getName()+termMetadata;
+			  	%>
 		       <c:if test="${relatedVideos.size()>1}"><div class="player"></c:if>
 			   <c:if test="${relatedVideos.size()<=1}"><div class="player-wide"></c:if>
 				<%@ include file="/player/includePlayer.jsp"%>
