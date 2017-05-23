@@ -13,6 +13,8 @@
 	String lLongDesc = "";
 	Long producerId = new Long(0);
 	Long institutionId = new Long(0);
+	Integer videoSort = new Integer(0);
+	Boolean isSortVideosASC = false;
 	
 	Long lId=new Long(0);
 	Lectureseries reqLectureseries = new LectureseriesImpl();
@@ -27,6 +29,11 @@
 		lShortDesc=reqLectureseries.getShortDesc();
 		lPassword=reqLectureseries.getPassword();
 		lLongDesc=reqLectureseries.getLongDesc();
+		videoSort=reqLectureseries.getVideoSort();
+		if(videoSort == 1)
+		{
+			isSortVideosASC=true;
+		}
 	}catch(NullPointerException npe){}
 	
 	try{
@@ -250,6 +257,11 @@
 			<%}%>
 			
 			<aui:input name="password" label="password" helpMessage="password-help-text" value="<%=lPassword%>"/>
+
+			<aui:select id="videosort" size="1" name="videoSort" label="sortvideo">
+				<aui:option value="1" selected="<%=isSortVideosASC%>" label="sortvideoAsc"></aui:option>		
+				<aui:option value="0" selected="<%=!isSortVideosASC%>" label="sortvideoDesc"></aui:option>		
+			</aui:select>
 			
 			<%if(!readOnly){%>
 				<aui:field-wrapper label="description">

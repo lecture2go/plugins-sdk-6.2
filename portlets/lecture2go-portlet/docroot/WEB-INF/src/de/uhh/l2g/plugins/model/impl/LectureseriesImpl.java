@@ -34,6 +34,7 @@ public class LectureseriesImpl extends LectureseriesBaseImpl {
 	
 	private int numberOfVideos = 0;
 	private int numberOfOpenAccessVideos = 0;
+	private int videoSort = 0;
 	
 	public int getNumberOfVideos() {
 		return numberOfVideos;
@@ -69,6 +70,14 @@ public class LectureseriesImpl extends LectureseriesBaseImpl {
 	@Override
 	public String getLongDesc() {
 		return super.getLongDesc().replaceAll("(style|class)=\"[^\"]*\"", "");
+	}
+
+	public int getVideoSort() {
+		return videoSort;
+	}
+
+	public void setVideoSort(int videoSort) {
+		this.videoSort = videoSort;
 	}
 	
 }

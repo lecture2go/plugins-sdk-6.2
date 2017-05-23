@@ -115,6 +115,7 @@
 		<field name="latestOpenAccessVideoId" type="long" />
 		<field name="latestVideoUploadDate" type="Date" />
 		<field name="latestVideoGenerationDate" type="String" />
+		<field name="videoSort" type="int" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Lectureseries_Category">
 		<field name="lectureseriesCategoryId" type="long" />
@@ -165,7 +166,7 @@
 		<field name="name" type="String" />
 		<field name="www" type="String">
 			<hint-collection name="SHORTTEXT" />
-		</field>	
+		</field>
 		<field name="email" type="String" />
 		<field name="institutionId" type="long" />
 	</model>
