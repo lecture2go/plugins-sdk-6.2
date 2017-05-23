@@ -562,7 +562,6 @@
 			<transient name="creatorFullName" />
 			<transient name="creators" />
 			<transient name="date" />
-			<transient name="embedCommsy" />
 			<transient name="embedHtml5" />
 			<transient name="embedIframe" />
 			<transient name="flvDownloadLink" />
@@ -576,7 +575,6 @@
 			<transient name="lectureseriesName" />
 			<transient name="lectureseriesNumber" />
 			<transient name="lectureseriesUrl" />
-			<transient name="linkedCreators" />
 			<transient name="m4aDownloadLink" />
 			<transient name="m4aFile" />
 			<transient name="m4aRssLink" />
