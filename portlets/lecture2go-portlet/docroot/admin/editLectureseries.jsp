@@ -275,7 +275,7 @@
 			<%}%>
 			<aui:button-row>
 				<aui:button type="submit" onclick="<portlet:namespace />extractCodeFromEditor()"/>
-				<aui:button type="cancel" value="cancel" href="<%=backURL%>"/>
+				<aui:button type="cancel" value="cancel" name="cancel"/>
 			</aui:button-row>
 			</div>
 		</aui:layout>
@@ -288,7 +288,6 @@
 
 <script>
 var c = 0;
-
 /* these variables are set here but used in the external autocomplete-creator.js file, be sure to include this js AFTER the jsp is rendered*/
 var allCreatorsInJQueryAutocompleteFormat = <%= allCreatorsJSON.toString()%>;
 var getJSONCreatorURL = "<%=getJSONCreatorURL%>";
@@ -307,6 +306,10 @@ function remb(c){
 }
 $(function () {
 	autocompleteCreator($("#<portlet:namespace/>creator"));
+});
+
+$('#<portlet:namespace></portlet:namespace>cancel').click(function(){
+	   window.location.href="<%=backURL.toString()%>";
 });
 
 AUI().use('aui-node',

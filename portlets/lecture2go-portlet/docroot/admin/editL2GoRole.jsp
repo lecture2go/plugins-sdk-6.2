@@ -87,10 +87,16 @@
 				
 				<aui:button-row>
 		      		<aui:button type="submit"/>
-		      		<aui:button type="cancel" value="cancel" href="<%=backURL%>"/>
+		      		<aui:button type="cancel" value="cancel" name="cancel"/>
 		    	</aui:button-row>	
 			</div>
 		</aui:layout>
 	</aui:fieldset>
 </aui:form>
 </div>
+
+<script>
+	$('#<portlet:namespace></portlet:namespace>cancel').click(function(){
+		   window.location.href="<%=backURL.toString()%>";
+	});
+</script>
