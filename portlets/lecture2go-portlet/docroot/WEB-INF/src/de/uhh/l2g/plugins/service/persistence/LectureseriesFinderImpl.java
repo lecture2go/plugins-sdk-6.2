@@ -48,6 +48,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			q.addScalar("longDesc", Type.STRING);
 			q.addScalar("latestOpenAccessVideoId", Type.LONG);
 			q.addScalar("videoSort", Type.INTEGER);
+			q.addScalar("USID", Type.STRING);
 			q.setCacheable(false);			
 			@SuppressWarnings("unchecked")
 			List <Object[]> ls =  (List <Object[]>) QueryUtil.list(q, getDialect(), com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
@@ -84,6 +85,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			q.addScalar("longDesc", Type.STRING);
 			q.addScalar("latestOpenAccessVideoId", Type.LONG);
 			q.addScalar("videoSort", Type.INTEGER);
+			q.addScalar("USID", Type.STRING);
 			QueryPos qPos = QueryPos.getInstance(q);
 			qPos.add(video.getVideoId());
 			q.setCacheable(false);	
@@ -122,6 +124,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			q.addScalar("longDesc", Type.STRING);
 			q.addScalar("latestOpenAccessVideoId", Type.LONG);
 			q.addScalar("videoSort", Type.INTEGER);
+			q.addScalar("USID", Type.STRING);
 			q.setCacheable(false);			
 			@SuppressWarnings("unchecked")
 			List <Object[]> ls =  (List <Object[]>) QueryUtil.list(q, getDialect(), com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
@@ -350,6 +353,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			q.addScalar("longDesc", Type.STRING);
 			q.addScalar("latestOpenAccessVideoId", Type.LONG);
 			q.addScalar("videoSort", Type.INTEGER);
+			q.addScalar("USID", Type.STRING);
 			q.setCacheable(false);
 			@SuppressWarnings("unchecked")
 			List <Object[]> l =  (List<Object[]>) QueryUtil.list(q, getDialect(),com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
@@ -384,6 +388,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			l.setLongDesc((String) lectser[11]);
 			l.setLatestOpenAccessVideoId((Long) lectser[12]);
 			l.setVideoSort((Integer) lectser[13]);
+			l.setUSID((String) lectser[14]);
 			//additional parameter
 			try{
 				String string = (String)lectser[14];
@@ -406,7 +411,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 	
 	private String sqlFilterForLectureseries(Integer approved, Long termId, Long facultyId, Long producerId) {
 		// build query
-		String query = "SELECT c.number_, c.eventType, c.categoryId, c.name, c.shortDesc, c.longDesc, c.termId, c.language, c.facultyName, c.lectureseriesId, c.password_, c.approved, c.longDesc, c.latestOpenAccessVideoId, c.videoSort ";
+		String query = "SELECT c.number_, c.eventType, c.categoryId, c.name, c.shortDesc, c.longDesc, c.termId, c.language, c.facultyName, c.lectureseriesId, c.password_, c.approved, c.longDesc, c.latestOpenAccessVideoId, c.videoSort, c.USID ";
 			   query += "FROM LG_Lectureseries AS c ";
 
 		if (facultyId > 0) {

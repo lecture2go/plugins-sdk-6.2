@@ -211,4 +211,14 @@ public class LectureseriesLocalServiceImpl extends LectureseriesLocalServiceBase
 	public List<Lectureseries> getLatest(int limit){
 		return LectureseriesFinderUtil.findLatest(limit); 
 	}	
+	
+	public Lectureseries getByUSID(String usid){
+		Lectureseries l = new LectureseriesImpl();
+		try {
+			l = lectureseriesPersistence.findByUSID(usid).get(0);
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return l;
+	}
 }

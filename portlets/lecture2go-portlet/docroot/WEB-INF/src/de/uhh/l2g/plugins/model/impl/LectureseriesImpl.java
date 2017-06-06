@@ -14,6 +14,10 @@
 
 package de.uhh.l2g.plugins.model.impl;
 
+import java.util.NoSuchElementException;
+
+import com.liferay.portal.kernel.util.PropsUtil;
+
 /**
  * The extended model implementation for the Lectureseries service. Represents a row in the &quot;LG_Lectureseries&quot; database table, with each column mapped to a property of this class.
  *
@@ -78,6 +82,22 @@ public class LectureseriesImpl extends LectureseriesBaseImpl {
 
 	public void setVideoSort(int videoSort) {
 		this.videoSort = videoSort;
+	}
+	
+	public String getClosedAccessURI(){
+		String webhome = PropsUtil.get("lecture2go.web.home");
+		String USID = "";
+		if (webhome.contains("localhost")) webhome += "/web/vod";
+		USID= webhome + "/l2go/-/get/l/" + this.getUSID();
+		return USID;
+	}
+	
+	public String getOpenAccessURI(){
+		String webhome = PropsUtil.get("lecture2go.web.home");
+		String lid = "";
+		if (webhome.contains("localhost")) webhome += "/web/vod";
+		lid= webhome + "/l2go/-/get/l/" + this.getLectureseriesId();
+		return lid;
 	}
 	
 }

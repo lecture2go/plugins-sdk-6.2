@@ -159,7 +159,7 @@
 				<div class="adminrow wide">
 					<div class="admintile wide">
 						<strong><%=lectser.getName()%> (<%=lTerm%>)</strong>
-						<br/>
+						<p><a href="<%=lectser.getClosedAccessURI() %>" target="blank">closed-access-uri</a>&nbsp;|&nbsp;<a href="<%=lectser.getOpenAccessURI() %>" target="blank">open-access-uri</a></p>
 						<%
 						List<Long> pIds = new ArrayList<Long>();
 						String prds = "";

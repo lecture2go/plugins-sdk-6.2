@@ -699,4 +699,13 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		return sortedVideoList;
 	}
 	
+	public Long getLatestClosedAccessVideoId(Long lectureseriesId){
+		List<Video> vl = new ArrayList<Video>();
+		try {
+			vl = getByLectureseriesAndOpenaccess(lectureseriesId,0);
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return vl.get(0).getVideoId();
+	}
 }
