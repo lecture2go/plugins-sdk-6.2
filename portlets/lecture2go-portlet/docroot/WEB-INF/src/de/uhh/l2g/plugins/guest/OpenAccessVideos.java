@@ -260,7 +260,9 @@ public class OpenAccessVideos extends MVCPortlet {
 							video.setAccessPermitted(1);
 						}
 					}
-				}catch(java.lang.NullPointerException e){}
+				}catch(java.lang.NullPointerException e){
+					System.out.print(e);
+				}
 	    		
 	    		//3. authentication by video password
 	    		if(!video.getPassword().isEmpty()){
