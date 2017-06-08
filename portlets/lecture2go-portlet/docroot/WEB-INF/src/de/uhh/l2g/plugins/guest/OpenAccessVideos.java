@@ -249,16 +249,18 @@ public class OpenAccessVideos extends MVCPortlet {
 
 	   			
 	    		//2. authentication by cookie
-	    		Cookie[] c = request.getCookies();
-	    		for(int i=0; i<c.length;i++){
-	    			Cookie coo = c[i];
-	    			String cooVal ="";
-	    			if(coo.getName().equals("L2G_LSID"))cooVal=c[i].getValue();
-	    			//has been already logged in
-	    			if(cooVal.equals(video.getLectureseriesId()+"")){
-	    				video.setAccessPermitted(1);
-	    			}
-	    		}
+				Cookie[] c = request.getCookies();
+				try{
+					for(int i=0; i<c.length;i++){
+						Cookie coo = c[i];
+						String cooVal ="";
+						if(coo.getName().equals("L2G_LSID"))cooVal=c[i].getValue();
+						//has been already logged in
+						if(cooVal.equals(video.getLectureseriesId()+"")){
+							video.setAccessPermitted(1);
+						}
+					}
+				}catch(java.lang.NullPointerException e){}
 	    		
 	    		//3. authentication by video password
 	    		if(!video.getPassword().isEmpty()){
