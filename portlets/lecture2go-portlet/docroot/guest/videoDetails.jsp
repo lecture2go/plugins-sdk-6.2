@@ -411,15 +411,17 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 			  }
 			  %>			  
 		</div>
+		<%if(video.getOpenAccess()==0){%>
+			<!-- coockie start -->
+			<script type="text/javascript">
+				$(function(){
+					//cookie
+					$.cookie("L2G_LSID", "<%=lectureseries.getLectureseriesId()%>");
+				});
+			</script>		
+			<!-- coockie end -->
+		<%}%>
 		
-		<!-- coockie start -->
-		<script type="text/javascript">
-			$(function(){
-				//cookie
-				$.cookie("L2G_LSID", "<%=lectureseries.getLectureseriesId()%>");
-			});
-		</script>		
-		<!-- coockie end -->
 		<%
 	}else{
 		if(video.getAccessPermitted()==0){
