@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE project>
 
-<project name="lecture2go-hook" basedir="." default="deploy">
+<project name="lecture2go-hook" basedir="." default="war">
 	<import file="../build-common-hook.xml" />
 </project>

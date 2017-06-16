@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE project>
 
-<project name="lecture2go-theme" basedir="." default="deploy">
+<project name="lecture2go-theme" basedir="." default="war">
 	<import file="../build-common-theme.xml" />
 
 	<property name="theme.parent" value="classic" />
