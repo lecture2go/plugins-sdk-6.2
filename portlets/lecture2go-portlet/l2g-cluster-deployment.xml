@@ -5,24 +5,29 @@
    <property file="l2go-deploy.properties"/>
 	
    <target name="deploy-to-all-nodes">
-   		<echo>Deploy to all nodes</echo>
+   		<echo>Cluster deployment started.</echo>
    		<antcall target="deploy-to-node1" />
 		<antcall target="deploy-to-node2" />
    </target>
    
    <target name="deploy-to-node1">
-   		<echo>Deployment to node1 has been started.</echo>
+   		<echo>Deploy to node1.</echo>
    		<copy todir="${l2g.cluster.node1}">
 		  <fileset dir="${l2g.dist.dir}"/>
 		</copy>
-   		<echo>Finished with success.</echo>
    </target>
-   
+      
    <target name="deploy-to-node2">
-   		<echo>Deployment to node2 has been started.</echo>
-   		<copy todir="${l2g.cluster.node2}">
+   		<echo>Deploy to node2.</echo>
+	   		<copy todir="${l2g.cluster.node2}">
+			  <fileset dir="${l2g.dist.dir}"/>
+			</copy>
+   </target>
+
+   <target name="clean">
+   		<echo>Delete WAR files.</echo>
+   		<delete>
 		  <fileset dir="${l2g.dist.dir}"/>
-		</copy>
-   		<echo>Finished with success.</echo>
+		</delete>
    </target>
 </project>
