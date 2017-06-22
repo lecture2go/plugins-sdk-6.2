@@ -116,6 +116,7 @@
 		<field name="latestVideoUploadDate" type="Date" />
 		<field name="latestVideoGenerationDate" type="String" />
 		<field name="videoSort" type="int" />
+		<field name="USID" type="String" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Lectureseries_Category">
 		<field name="lectureseriesCategoryId" type="long" />

@@ -120,6 +120,7 @@
 			</basic>
 			<basic name="latestVideoGenerationDate" />
 			<basic name="videoSort" />
+			<basic name="USID" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

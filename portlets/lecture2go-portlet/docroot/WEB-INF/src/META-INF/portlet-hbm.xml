@@ -126,6 +126,7 @@
 		<property name="latestVideoUploadDate" type="org.hibernate.type.TimestampType" />
 		<property name="latestVideoGenerationDate" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="videoSort" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="USID" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.Lectureseries_CategoryImpl" table="LG_Lectureseries_Category">
 		<cache usage="read-write" />
