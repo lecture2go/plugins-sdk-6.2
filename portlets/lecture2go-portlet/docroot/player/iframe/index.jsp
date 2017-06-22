@@ -1,9 +1,11 @@
+<%@page import="java.lang.reflect.Array"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org   /TR/html4/loose.dtd">
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<script type="text/javascript" src="/lecture2go-portlet/js/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="/lecture2go-portlet/js/citation2go.js"></script>
 	<script type="text/javascript" src="/lecture2go-portlet/player/jwplayer-7.9.3/jwplayer.js"></script>
 	<script type="text/javascript">jwplayer.key="";</script>
 	
@@ -81,16 +83,41 @@
 <%
 	Video video = new VideoImpl();
 	Long videoId = new Long(0);
+	String start = null;
+	String end = null;
+	
 	try{
 		videoId = new Long(request.getParameter("v"));
 		video = VideoLocalServiceUtil.getFullVideo(videoId);
-	}catch(Exception e){}
+	}catch(Exception e){
+		try{
+			String[] s = request.getQueryString().split("/");
+			videoId = new Long(s[0].split("=")[1]);
+			video = VideoLocalServiceUtil.getFullVideo(videoId);
+			start = s[1];
+			end = s[2];
+		}catch(Exception a){}
+	}
 %>
 
 <body>
 	<%if(video.getVideoId()>0){ %>
 		<div id="player1"></div>
 		<script>
+					var isCitation=false;
+					// herausfinden ob es ein tablet/smartphone ist
+			        var isTouchDevice = 'ontouchstart' in document.documentElement;
+					
+			        // Start- und Endzeit der Zitatfunktion ermitteln (Durch die URL Parameter)
+			        var fs=<%=start%>;
+			        var fe= <%=end%>;
+			        
+			        if(fs>0 && fe>0 && fe>fs){
+				        var frameStart = <%=start%>;
+				        var frameEnd = <%=end%>;
+				        isCitation = true;
+			        }
+			        
 					var vttChapterFile ="<%=video.getVttChapterFile()%>";
 					var playerUri1 ="<%=video.getPlayerUris().get(0)%>";
 			        var playerUri2 ="<%=video.getPlayerUris().get(1)%>";
@@ -129,7 +156,63 @@
 			            ],
 			            hlshtml: true,
 			            androidhls: true
+			        }).onReady(function() {
+
+			            if (frameStart && frameEnd) {
+			                // Sollten sich die Start- und Endzeit in den URL Parametern befinden
+			                // wird in diesen Abschnitt dafür gesorgt das man auch nur das Entsprechende
+			                // Videomaterial zu sehen bekommt
+
+
+			                // iOS und Android unterstützen seek nur wenn der Nutzer
+			                // selbst manuell das vide gestartet hat. Wir werden den start des Zitates
+			                // später anders lösen
+			                if (!isTouchDevice) {
+			                	jwplayer().on('firstFrame', function() { 
+			                		jwplayer().play();
+			                		jwplayer().seek(frameStart);
+			                	});
+			                }
+			            }
+			                
+			            // Event listener alle 100 ms während playback
+			            jwplayer().onTime( function(event){
+
+			                // Sicher stellen, dass der gewählte Zeitraum eingehalten wird
+
+			                var pos =  Math.floor(event.position);
+
+			                if (pos < frameStart && isTouchDevice) {
+			                    // Nur unter iOS und Android nötig,
+			                    jwplayer().seek(frameStart);
+			                } else if (pos > frameEnd) {
+			                    jwplayer().seek(frameStart);
+			                    jwplayer().pause();
+			                }
+			            });
+
+			            // Diese Stelle ist wiederum nur auf PC nötig.
+			            // Hiermit wird verhindert, dass der Nutzer per Tastatur
+			            // aus den Zitatsbereich herausspult
+			            if (!isTouchDevice) {
+			                jwplayer().onSeek( function(event){
+			                    var pos =  event.position;
+
+			                    if (Math.ceil(pos) < Math.ceil(frameStart) || Math.ceil(pos) > Math.ceil(frameEnd)) {
+			                        jwplayer().seek(frameStart);
+			                        jwplayer().pause();
+			                    }
+			                });
+			            }
+
+			            $('#fullVideo').show();
+
 			        });
+			        //
+			        var tit="Lecture2Go";
+			        if(isCitation){
+			        	tit="Zitat2Go";
+			        }
 			        jwplayer().addButton(
 			        	"", 
 			        	"Dieses Video auf Lecture2Go ansehen",
@@ -139,7 +222,7 @@
 			        		//open web site
 			                window.open('<%=video.getUrl()%>');
 			            },
-			        	"Lecture2Go"
+			            tit
 			        )
 								        
 		</script>

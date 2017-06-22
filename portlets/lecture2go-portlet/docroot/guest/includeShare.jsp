@@ -43,6 +43,9 @@
 							<li>
 								<aui:input name="citation" label="citation2go-link" required="false" id="citation" readonly="true"  helpMessage="about-citation" onclick="document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_citation.focus(); document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_citation.select();"/>
 							</li>
+							<li>
+								<aui:input name="citationiframe" label="embed-iframe" required="false" id="citationiframe" readonly="true"  helpMessage="about-citation-iframe" onclick="document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_citationiframe.focus(); document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_citationiframe.select();"/>
+							</li>
 						</ul>
 					</div>
 				</div>
