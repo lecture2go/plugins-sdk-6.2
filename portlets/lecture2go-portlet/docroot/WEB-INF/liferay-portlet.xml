@@ -96,6 +96,7 @@
 		<header-portlet-javascript>/js/jquery.dotdotdot.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/jquery.mark.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/catalog.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/citation2go.js</header-portlet-javascript>
 	</portlet>
 
 	<portlet>
