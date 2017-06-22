@@ -59,7 +59,7 @@ String backURL = request.getAttribute("backURL").toString();
 				
 				<div id="segment-input-cancel">
 					<aui:button-row>
-						<aui:button type="cancel" value="cancel"/>
+						<aui:button type="cancel" value="cancel" name="cancel"/>
 					</aui:button-row>				
 				</div>
 			</div>
@@ -214,9 +214,10 @@ String backURL = request.getAttribute("backURL").toString();
 			}
 		);
 	}
-	
-	$('#<portlet:namespace></portlet:namespace>cancel').click(function(){
-		   window.location.href="<%=backURL.toString()%>";
-	})
+	$(function () {
+		$('#<portlet:namespace></portlet:namespace>cancel').click(function(){
+			   window.location.href="<%=backURL.toString()%>";
+		});
+	});
 	
 </script>
