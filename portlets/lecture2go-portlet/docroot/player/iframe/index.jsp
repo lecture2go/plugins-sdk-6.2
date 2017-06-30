@@ -225,7 +225,7 @@
 			        			if(video.getOpenAccess()==1)url=video.getUrl();
 			        			else url=video.getSecureUrl();
 			        		%>
-			                window.open('<%=video.getUrl()%>');
+			                window.open('<%=url%>');
 			            },
 			            tit
 			        )
