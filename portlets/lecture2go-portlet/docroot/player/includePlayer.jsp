@@ -1,4 +1,4 @@
-<script type="text/javascript">jwplayer.key="";</script>
+<script type="text/javascript">jwplayer.key="201IIc3/RasApk0L1+d1fv9pi5UCUsF6VvHj1C+EfkI";</script>
 <script>
     $(function() {
         // herausfinden ob es ein tablet/smartphone ist
@@ -219,7 +219,7 @@
             	var vid = <%=video.getVideoId()%>;
             	var host ='<%=PropsUtil.get("lecture2go.web.root")%>';
             	
-            	var iframe="<iframe src='"+host+"/lecture2go-portlet/player/iframe/?v="+vid+"/"+firstFrame+"/"+lastFrame+"' frameborder='0' width='647' height='373'></iframe>";
+            	var iframe="<iframe src='"+host+"/lecture2go-portlet/player/iframe/?v="+vid+"/"+firstFrame+"/"+lastFrame+"' frameborder='0' width='647' height='373' allowfullscreen></iframe>";
             	$citationiframe.val(iframe);
             }
         });
