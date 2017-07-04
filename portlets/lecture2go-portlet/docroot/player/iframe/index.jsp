@@ -220,7 +220,12 @@
 			        		//stop player
 			        		jwplayer().stop();
 			        		//open web site
-			                window.open('<%=video.getUrl()%>');
+			        		<%
+			        			String url = "";
+			        			if(video.getOpenAccess()==1)url=video.getUrl();
+			        			else url=video.getSecureUrl();
+			        		%>
+			                window.open('<%=url%>');
 			            },
 			            tit
 			        )

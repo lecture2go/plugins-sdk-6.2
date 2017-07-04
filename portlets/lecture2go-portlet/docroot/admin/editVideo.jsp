@@ -411,7 +411,7 @@ $(function () {
 	            if (data.originalFiles[i]['type'].length && !acceptFileTypes.test(data.originalFiles[i]['type'])) {
 	                uploadErrors.push('<liferay-ui:message key="not-an-accepted-file-type"/>');
 	            }
-	            if ( data.originalFiles[i]['size'] > 2147483648) { //2 GB
+	            if ( data.originalFiles[i]['size'] > 5368709120) { //5 GB
 	                uploadErrors.push('<liferay-ui:message key="max-file-size"/>');
 	            }
 			}
