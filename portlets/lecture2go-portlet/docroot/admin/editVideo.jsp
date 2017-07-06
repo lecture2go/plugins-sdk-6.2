@@ -4,6 +4,7 @@
 <jsp:useBean id="reqLectureseries" type="de.uhh.l2g.plugins.model.Lectureseries" scope="request" />
 <jsp:useBean id="reqLicense" type="de.uhh.l2g.plugins.model.License" scope="request" />
 <jsp:useBean id="reqProducer" type="de.uhh.l2g.plugins.model.Producer" scope="request" />
+<jsp:useBean id="video" type="de.uhh.l2g.plugins.model.Video" scope="request" />
 <jsp:useBean id="reqVideo" type="de.uhh.l2g.plugins.model.Video" scope="request" />
 <jsp:useBean id="reqMetadata" type="de.uhh.l2g.plugins.model.Metadata" scope="request" />
 <jsp:useBean id="reqSubInstitutions" type="java.util.List<de.uhh.l2g.plugins.model.Video_Institution>" scope="request" />
@@ -27,6 +28,7 @@
 <liferay-portlet:resourceURL id="getSecureFileName" var="getSecureFileNameURL" />
 <liferay-portlet:resourceURL id="getShare" var="getShareURL" />
 <liferay-portlet:resourceURL id="updateNumberOfProductions" var="updateNumberOfProductionsURL" />
+<liferay-portlet:resourceURL id="updateThumbnail" var="updateThumbnailURL" />
 
 <%
 	String actionURL = "";
@@ -337,7 +339,27 @@
 					  $( "#embed-content" ).slideToggle( "slow" );
 					});
 				</script>
-											
+
+							
+				<div id="video-thumbnail">
+					<label class="edit-video-lable" id="edit-video-lable-5"><liferay-ui:message key="video-thumbnail" /></label>
+					<div id="thumbnail-content">
+						<!-- thumbnail start --> 
+							<liferay-ui:message key="video-thumbnail-about"/>
+							<%@include file="/player/includePlayerForThumbnail.jsp"%>
+						<!-- thumbnail end -->	      	      
+					</div>
+				</div>
+				<script>
+					$(function(){
+						$( "#thumbnail-content" ).slideToggle( "slow" );
+					}); 
+					$( "#edit-video-lable-5" ).click(function() {
+					  $( "#thumbnail-content" ).slideToggle( "slow" );
+					});
+				</script>
+							
+				<br/>		
 				<aui:button-row>
 					<aui:button type="submit" value="apply-changes" onclick="applyAllMetadataChanges()" cssClass="btn-primary"/>
 					<aui:button type="cancel" value="back" name="cancel"/>
@@ -695,6 +717,7 @@ function applyAllMetadataChanges(){
 				    $("#creators-custom").css({"background-color": "white", "color": "#555555"});
 				    $("#creators-custom .control-label").css({"color": "#488f06"});
 				    $("#metadata-upload #creators").css({"color": "#488f06"});
+					updateThumbnail();
 				    alert("<liferay-ui:message key='changes-applied'/>");					
 				}
 			}
@@ -959,6 +982,24 @@ function updateSubInstitutions(){
 		  dataType: 'json',
 		  data: {
 		 	   	<portlet:namespace/>subInstitution: JSON.stringify(jsonArray),
+		 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>"
+		  },
+		  global: false,
+		  async:true,
+		  success: function(data) {
+		    //		    
+		  }
+	});
+}
+
+function updateThumbnail(){
+	//set parameter to server for update 
+	$.ajax({
+		  type: "POST",
+		  url: "<%=updateThumbnailURL%>",
+		  dataType: 'json',
+		  data: {
+		 	   	<portlet:namespace/>inputTime: Math.floor(player.getPosition()),
 		 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>",
 		  },
 		  global: false,
