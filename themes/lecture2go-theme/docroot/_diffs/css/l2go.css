@@ -1855,6 +1855,7 @@ input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_jobTitle,
 input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_middleName,
 input#_lgadmincreatorsmanagement_WAR_lecture2goportlet_middleName {
 	width: 80px;
+	height: 21px;
 }
 
 input#_lgadminvideomanagement_WAR_lecture2goportlet_firstName,
