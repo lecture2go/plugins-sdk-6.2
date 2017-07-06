@@ -161,7 +161,10 @@
 	<aui:fieldset column="false" label="" id="meta-ebene" style="display:none;">
 		<aui:layout>
 			<aui:form action="<%=actionURL%>" commandName="model" name="metadata">
-				<label class="edit-video-lable" id="edit-video-lable-1"><liferay-ui:message key="metadata"/></label>
+				<label class="edit-video-lable" id="edit-video-lable-1">
+					<i id="l1" class="aui icon-chevron-down thumb"></i>
+					<liferay-ui:message key="metadata"/>
+				</label>
 				<div id="metadata-upload">
 					<aui:input id="stayhere" name="stayhere" label="" required="true" value="" type="hidden"/>
 					
@@ -267,11 +270,15 @@
 				<script>
 					$( "#edit-video-lable-1" ).click(function() {
 					  $( "#metadata-upload" ).slideToggle( "slow" );
+					  $("#l1", this).toggleClass("thumb thumb-90");
 					});
 				</script>
 				
 				<div id="permissions">
-					<label class="edit-video-lable" id="edit-video-lable-2"><liferay-ui:message key="permissions"/></label>
+					<label class="edit-video-lable" id="edit-video-lable-2">
+						<i id="l2" class="aui icon-chevron-down thumb"></i>
+						<liferay-ui:message key="permissions"/>
+					</label>
 					<div id="permissions-content">
 						<%if(reqVideo.getOpenAccess()==0){%>
 							<div>
@@ -292,11 +299,15 @@
 				<script>
 					$( "#edit-video-lable-2" ).click(function() {
 					  $( "#permissions-content" ).slideToggle( "slow" );
+					  $("#l2", this).toggleClass("thumb thumb-90");
 					});
 				</script>
 				
 				<div id="license">
-					<label class="edit-video-lable" id="edit-video-lable-3"><liferay-ui:message key="license"/></label>
+					<label class="edit-video-lable" id="edit-video-lable-3">
+						<i id="l3" class="aui icon-chevron-down thumb"></i>
+						<liferay-ui:message key="license"/>
+					</label>
 					<div id="license-content">
 						<div>
 							<%if(reqLicense.getL2go()==1){%><aui:input name="license"  id="uhhl2go" label="" value="uhhl2go" checked="true" type="radio"/><%}%>
@@ -313,11 +324,15 @@
 				<script>
 					$( "#edit-video-lable-3" ).click(function() {
 					  $( "#license-content" ).slideToggle( "slow" );
+					  $("#l3", this).toggleClass("thumb thumb-90");
 					});
 				</script>
 
 				<div id="embed">
-					<label class="edit-video-lable" id="edit-video-lable-4"><liferay-ui:message key="share"/></label>
+					<label class="edit-video-lable" id="edit-video-lable-4">
+						<i id="l4" class="aui icon-chevron-down thumb"></i>
+						<liferay-ui:message key="share"/>
+					</label>
 					<div id="embed-content">
 						<!-- embed start -->
 						<%
@@ -337,12 +352,17 @@
 				<script>
 					$( "#edit-video-lable-4" ).click(function() {
 					  $( "#embed-content" ).slideToggle( "slow" );
+					  $("#l4", this).toggleClass("thumb thumb-90");
 					});
 				</script>
 
 							
 				<div id="video-thumbnail">
-					<label class="edit-video-lable" id="edit-video-lable-5"><liferay-ui:message key="video-thumbnail" /></label>
+					<label class="edit-video-lable" id="edit-video-lable-5">
+						<i id="l5" class="aui icon-chevron-down thumb-90"></i>
+						<liferay-ui:message key="video-thumbnail" />
+					</label>
+					
 					<div id="thumbnail-content">
 						<!-- thumbnail start --> 
 							<liferay-ui:message key="video-thumbnail-about"/>
@@ -356,6 +376,7 @@
 					}); 
 					$( "#edit-video-lable-5" ).click(function() {
 					  $( "#thumbnail-content" ).slideToggle( "slow" );
+					  $("#l5", this).toggleClass("thumb-90 thumb");
 					});
 				</script>
 							
