@@ -1914,7 +1914,7 @@ input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_lastName {
 }
 
 .edit-video-lable {
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 3px solid #f0f0f0;
     font-family: TheSansUHHBold, sans-serif;
     font-size: 15px !important;
     font-style: normal;
@@ -2231,6 +2231,19 @@ div.filter-menu-link span.icon-large.icon-remove {
     content: "" !important;
     height: 30px;
     width: 30px;
+}
+
+.aui.icon-chevron-down.thumb-90::before {
+    margin-bottom: -10px;
+    transform: rotate(-90deg) scale(1.15);
+}
+
+.aui label, .aui input, .aui button, .aui select, .aui textarea {
+    line-height: 33px;
+}
+
+.aui.icon-chevron-down.thumb::before {
+    margin-bottom: -10px;
 }
 
 .aui .accordion-group .accordion-heading.toggler-header-collapsed .accordion-toggle::before, .aui .accordion-group .accordion-heading.toggler-header-expanded .accordion-toggle::before, .aui .lfr-add-panel .lfr-page-template .lfr-page-template-title.toggler-header-collapsed::before, .aui .lfr-add-panel .lfr-page-template .lfr-page-template-title.toggler-header-expanded::before {
