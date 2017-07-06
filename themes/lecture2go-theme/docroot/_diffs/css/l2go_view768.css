@@ -298,7 +298,7 @@
 	      rgba(0, 0, 0, 0.6), 
 	      rgba(0, 0, 0, 0.6)
 	    ),
-	    url(https://lecture2go.uni-hamburg.de/lecture2go-portlet/img/background_still.png);
+	    url(/lecture2go-portlet/img/background_still.jpg);
 		background-repeat: no-repeat;
 		height: 190px;
 		padding-top: 60px;
