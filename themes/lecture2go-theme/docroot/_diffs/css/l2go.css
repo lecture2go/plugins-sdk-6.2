@@ -3051,3 +3051,8 @@ strong, b, th, #kopf .sprachwechsel {
 	content: "\a";
 }
 /** End Video Statitic Portlet Styles **/
+
+#thumbnail-content #player1{
+	width: 690px !important;
+	margin-top: 2px;
+}

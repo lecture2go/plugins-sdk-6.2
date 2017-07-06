@@ -173,6 +173,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		request.setAttribute("backURL", backURL);
 
 		request.setAttribute("reqVideo", reqVideo);
+		request.setAttribute("video", reqVideo);
 		response.setRenderParameter("jspPage", "/admin/editVideo.jsp");
 	}
 	
@@ -224,6 +225,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		//save it
 		Video video = VideoLocalServiceUtil.addVideo(newVideo);
 		request.setAttribute("reqVideo", newVideo);
+		request.setAttribute("video", newVideo);
 		tagCloudArrayString.add(video.getTitle());
 
 		// update uploads for producer
@@ -389,6 +391,40 @@ public class AdminVideoManagement extends MVCPortlet {
 			
 			JSONObject json = JSONFactoryUtil.createJSONObject();
 			writeJSON(resourceRequest, resourceResponse, json);
+		}
+		
+		if(resourceID.equals("updateThumbnail")){
+			String image="";
+			String fileLocation="";
+			String thumbnailLocation = "";
+			int time = ParamUtil.getInteger(resourceRequest, "inputTime");
+			
+			//proceed only if time > 0
+			if(time > 0){
+				//create new thumb nail 
+				if(video.getOpenAccess()==1){
+					image = video.getPreffix()+".jpg";
+					try {
+						fileLocation = ProducerLocalServiceUtil.getProdUcer(video.getProducerId()).getHomeDir() + "/" + video.getFilename();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}else{
+					image = video.getSPreffix()+".jpg";
+					try {
+						fileLocation = ProducerLocalServiceUtil.getProdUcer(video.getProducerId()).getHomeDir() + "/" + video.getSecureFilename();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				//
+				try {
+					thumbnailLocation = PropsUtil.get("lecture2go.images.system.path") + "/" + image;
+					FFmpegManager.createThumbnail(fileLocation, thumbnailLocation, time);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		if(resourceID.equals("updateMetadata")){
