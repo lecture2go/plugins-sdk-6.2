@@ -503,7 +503,6 @@ $(function () {
 	           		validate();
 				}
            }
-           
            //update player 
            playerUri1 =getJSONVideo().playerUris["url0"];
            playerUri2 =getJSONVideo().playerUris["url1"];
@@ -512,10 +511,16 @@ $(function () {
            playerUri5 =getJSONVideo().playerUris["url4"];
            
            videoImage =getJSONVideo().thumbnail;
-           //initialize and show player
-           initializePlayer();
+           player.remove();
+           //initialize and show player	
+	       initializePlayer();
            //show thumbnail player
            $("#video-thumbnail").show();
+           setTimeout(
+           function(){
+        	player.seek(0);
+        	player.pause();
+           }, 1000);
         },
         progressall: function (e, data) {
 	        var progress = parseInt(data.loaded / data.total * 100, 10);

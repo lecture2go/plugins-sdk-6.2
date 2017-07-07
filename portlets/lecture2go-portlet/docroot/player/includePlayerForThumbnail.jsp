@@ -11,6 +11,8 @@ var playerUri5 =getJSONVideo().playerUris["url4"];
 
 var videoImage =getJSONVideo().thumbnail;
 
+var vttFile ="${video.vttChapterFile}";
+
     $(function() {
         // herausfinden ob es ein tablet/smartphone ist
         var isTouchDevice = 'ontouchstart' in document.documentElement;
@@ -32,8 +34,6 @@ var videoImage =getJSONVideo().thumbnail;
     });
     
     function initializePlayer(){
-		var vttFile ="${video.vttChapterFile}";
-
         // Hier wird der JW-Player initialisiert
         // Interessant ist hierbei, dass es mehrere Quellen geben kann
         jwplayer('player1').setup({
@@ -56,7 +56,7 @@ var videoImage =getJSONVideo().thumbnail;
         });
 
         //update player
-	    player = jwplayer('player1');    	
+	    player = jwplayer('player1'); 
     }
     
     function getJSONVideo() {
