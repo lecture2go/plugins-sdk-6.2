@@ -512,7 +512,7 @@ $(function () {
            playerUri5 =getJSONVideo().playerUris["url4"];
            
            videoImage =getJSONVideo().thumbnail;
-           //initialize
+           //initialize and show player
            initializePlayer();
            //show thumbnail player
            $("#video-thumbnail").show();

@@ -28,7 +28,6 @@ var videoImage =getJSONVideo().thumbnail;
         	playerUri3 = playerUri;
         }
         //
-        
         initializePlayer();
     });
     
