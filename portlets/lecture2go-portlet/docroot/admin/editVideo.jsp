@@ -29,6 +29,7 @@
 <liferay-portlet:resourceURL id="getShare" var="getShareURL" />
 <liferay-portlet:resourceURL id="updateNumberOfProductions" var="updateNumberOfProductionsURL" />
 <liferay-portlet:resourceURL id="updateThumbnail" var="updateThumbnailURL" />
+<liferay-portlet:resourceURL id="getJSONVideo" var="getJSONVideoURL" />
 
 <%
 	String actionURL = "";
@@ -356,7 +357,6 @@
 					});
 				</script>
 
-							
 				<div id="video-thumbnail">
 					<label class="edit-video-lable" id="edit-video-lable-5">
 						<i id="l5" class="aui icon-chevron-down thumb-90"></i>
@@ -372,14 +372,17 @@
 				</div>
 				<script>
 					$(function(){
-						$( "#thumbnail-content" ).slideToggle( "slow" );
+						if(isFirstUpload()==1){
+							$( "#video-thumbnail" ).hide();
+						}else{
+							$( "#thumbnail-content" ).hide();
+						}
 					}); 
 					$( "#edit-video-lable-5" ).click(function() {
 					  $( "#thumbnail-content" ).slideToggle( "slow" );
 					  $("#l5", this).toggleClass("thumb-90 thumb");
 					});
 				</script>
-							
 				<br/>		
 				<aui:button-row>
 					<aui:button type="submit" value="apply-changes" onclick="applyAllMetadataChanges()" cssClass="btn-primary"/>
@@ -500,6 +503,19 @@ $(function () {
 	           		validate();
 				}
            }
+           
+           //update player 
+           playerUri1 =getJSONVideo().playerUris["url0"];
+           playerUri2 =getJSONVideo().playerUris["url1"];
+           playerUri3 =getJSONVideo().playerUris["url2"];
+           playerUri4 =getJSONVideo().playerUris["url3"];
+           playerUri5 =getJSONVideo().playerUris["url4"];
+           
+           videoImage =getJSONVideo().thumbnail;
+           //initialize
+           initializePlayer();
+           //show thumbnail player
+           $("#video-thumbnail").show();
         },
         progressall: function (e, data) {
 	        var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -811,6 +827,7 @@ function deleteFile(fileName){
 		        }
 		        //update view
 		        if (isFirstUpload()==1){
+		        	$('#video-thumbnail').hide();
 		      	  	$('#date-time-form').fadeIn( 500 );
 		    	  	$("#upload-form").hide(); 
 		    	  	$("#date-time").hide();
@@ -1026,12 +1043,9 @@ function updateThumbnail(){
 		  global: false,
 		  async:true,
 		  success: function(data) {
-		    //		    
 		  }
 	});
 }
-
-
 
 var c = 0;
 
