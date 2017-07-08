@@ -34,6 +34,15 @@ var vttFile ="${video.vttChapterFile}";
     });
     
     function initializePlayer(){
+        //update player 
+        playerUri1 =getJSONVideo().playerUris["url0"];
+        playerUri2 =getJSONVideo().playerUris["url1"];
+        playerUri3 =getJSONVideo().playerUris["url2"];
+        playerUri4 =getJSONVideo().playerUris["url3"];
+        playerUri5 =getJSONVideo().playerUris["url4"];
+           
+        videoImage =getJSONVideo().thumbnail;
+        
         // Hier wird der JW-Player initialisiert
         // Interessant ist hierbei, dass es mehrere Quellen geben kann
         jwplayer('player1').setup({

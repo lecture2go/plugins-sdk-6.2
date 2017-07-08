@@ -371,13 +371,7 @@
 					</div>
 				</div>
 				<script>
-					$(function(){
-						if(isFirstUpload()==1){
-							$( "#video-thumbnail" ).hide();
-						}else{
-							$( "#thumbnail-content" ).hide();
-						}
-					}); 
+					$(function(){$( "#thumbnail-content" ).hide();});
 					$( "#edit-video-lable-5" ).click(function() {
 					  $( "#thumbnail-content" ).slideToggle( "slow" );
 					  $("#l5", this).toggleClass("thumb-90 thumb");
@@ -408,6 +402,7 @@
 </script>
 
 <script type="text/javascript">
+
 var $options = $( "#options" );
 var c = 0;
 
@@ -503,24 +498,15 @@ $(function () {
 	           		validate();
 				}
            }
-           //update player 
-           playerUri1 =getJSONVideo().playerUris["url0"];
-           playerUri2 =getJSONVideo().playerUris["url1"];
-           playerUri3 =getJSONVideo().playerUris["url2"];
-           playerUri4 =getJSONVideo().playerUris["url3"];
-           playerUri5 =getJSONVideo().playerUris["url4"];
-           
-           videoImage =getJSONVideo().thumbnail;
            player.remove();
-           //initialize and show player	
+           //initialize and show player
 	       initializePlayer();
-           //show thumbnail player
-           $("#video-thumbnail").show();
            setTimeout(
-           function(){
-        	player.seek(0);
-        	player.pause();
-           }, 1000);
+	           function(){
+	        	player.seek(0);
+	        	player.pause();
+	           }, 1000
+           );
         },
         progressall: function (e, data) {
 	        var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -832,13 +818,15 @@ function deleteFile(fileName){
 		        }
 		        //update view
 		        if (isFirstUpload()==1){
-		        	$('#video-thumbnail').hide();
 		      	  	$('#date-time-form').fadeIn( 500 );
 		    	  	$("#upload-form").hide(); 
 		    	  	$("#date-time").hide();
 		    	  	$("#first-title").show();
 		    	  	$("#<portlet:namespace/>meta-ebene").hide();
 		        }
+		        player.remove();
+		        //initialize and show player
+			    initializePlayer();
 		        //hide date fild
 		        $("#l2gdate").hide();
 		        //toggle share
