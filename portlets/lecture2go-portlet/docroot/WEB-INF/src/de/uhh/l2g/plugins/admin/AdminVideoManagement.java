@@ -612,6 +612,18 @@ public class AdminVideoManagement extends MVCPortlet {
 				//e.printStackTrace();
 			}
 		}
+		
+		if(resourceID.equals("getJSONVideo")){
+			JSONObject uris = JSONFactoryUtil.createJSONObject();
+			for(int i=0; i<video.getPlayerUris().size(); i++){
+				uris.put("url"+i, video.getPlayerUris().get(i));
+			}
+			JSONObject jo = JSONFactoryUtil.createJSONObject();
+			jo.put("title", video.getTitle());
+			jo.put("playerUris", uris);
+			jo.put("thumbnail", video.getImage());
+			writeJSON(resourceRequest, resourceResponse, jo);
+		}
 
 		if(resourceID.equals("updateNumberOfProductions")){
 			Producer producer = new ProducerImpl();
