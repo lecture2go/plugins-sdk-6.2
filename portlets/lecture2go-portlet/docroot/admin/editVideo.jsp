@@ -29,6 +29,7 @@
 <liferay-portlet:resourceURL id="getShare" var="getShareURL" />
 <liferay-portlet:resourceURL id="updateNumberOfProductions" var="updateNumberOfProductionsURL" />
 <liferay-portlet:resourceURL id="updateThumbnail" var="updateThumbnailURL" />
+<liferay-portlet:resourceURL id="getJSONVideo" var="getJSONVideoURL" />
 
 <%
 	String actionURL = "";
@@ -356,7 +357,6 @@
 					});
 				</script>
 
-							
 				<div id="video-thumbnail">
 					<label class="edit-video-lable" id="edit-video-lable-5">
 						<i id="l5" class="aui icon-chevron-down thumb-90"></i>
@@ -371,15 +371,12 @@
 					</div>
 				</div>
 				<script>
-					$(function(){
-						$( "#thumbnail-content" ).slideToggle( "slow" );
-					}); 
+					$(function(){$( "#thumbnail-content" ).hide();});
 					$( "#edit-video-lable-5" ).click(function() {
 					  $( "#thumbnail-content" ).slideToggle( "slow" );
 					  $("#l5", this).toggleClass("thumb-90 thumb");
 					});
 				</script>
-							
 				<br/>		
 				<aui:button-row>
 					<aui:button type="submit" value="apply-changes" onclick="applyAllMetadataChanges()" cssClass="btn-primary"/>
@@ -405,6 +402,7 @@
 </script>
 
 <script type="text/javascript">
+
 var $options = $( "#options" );
 var c = 0;
 
@@ -500,6 +498,15 @@ $(function () {
 	           		validate();
 				}
            }
+           player.remove();
+           //initialize and show player
+	       initializePlayer();
+           setTimeout(
+	           function(){
+	        	player.seek(0);
+	        	player.pause();
+	           }, 1000
+           );
         },
         progressall: function (e, data) {
 	        var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -817,6 +824,9 @@ function deleteFile(fileName){
 		    	  	$("#first-title").show();
 		    	  	$("#<portlet:namespace/>meta-ebene").hide();
 		        }
+		        player.remove();
+		        //initialize and show player
+			    initializePlayer();
 		        //hide date fild
 		        $("#l2gdate").hide();
 		        //toggle share
@@ -1026,12 +1036,9 @@ function updateThumbnail(){
 		  global: false,
 		  async:true,
 		  success: function(data) {
-		    //		    
 		  }
 	});
 }
-
-
 
 var c = 0;
 
