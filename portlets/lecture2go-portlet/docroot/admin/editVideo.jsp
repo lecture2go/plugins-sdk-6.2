@@ -498,23 +498,24 @@ $(function () {
 	           		validate();
 				}
            }
-           player.remove();
+           
+       	   var st = false;
+           
+       	   player.remove();
            //initialize and show player
             setTimeout(
 	           function(){
 	        	   initializePlayer();
+	        	   player.seek(0);
+	           	   player.on('play',function(){
+	            		  if(st==false){
+	            			   player.pause();
+	            			   st=true;
+	            		  }
+	     		   });	        	   
 	           }, 2000
            );
            
-       	   player.seek(0);
-       	   
-       	   var st = false;
-       	   player.on('play',function(){
-       		   if(st==false){
-       			   player.pause();
-       			   st=true;
-       		   }
-		   });
        	   
         },
         progressall: function (e, data) {
