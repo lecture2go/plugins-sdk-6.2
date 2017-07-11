@@ -500,13 +500,22 @@ $(function () {
            }
            player.remove();
            //initialize and show player
-	       initializePlayer();
-           setTimeout(
+            setTimeout(
 	           function(){
-	        	player.seek(0);
-	        	player.pause();
-	           }, 1000
+	        	   initializePlayer();
+	           }, 2000
            );
+           
+       	   player.seek(0);
+       	   
+       	   var st = false;
+       	   player.on('play',function(){
+       		   if(st==false){
+       			   player.pause();
+       			   st=true;
+       		   }
+		   });
+       	   
         },
         progressall: function (e, data) {
 	        var progress = parseInt(data.loaded / data.total * 100, 10);
