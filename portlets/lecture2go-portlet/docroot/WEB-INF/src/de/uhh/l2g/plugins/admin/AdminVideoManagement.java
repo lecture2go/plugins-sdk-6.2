@@ -261,8 +261,9 @@ public class AdminVideoManagement extends MVCPortlet {
 		LicenseLocalServiceUtil.addLicense(license);
 		request.setAttribute("reqLicense", license);
 
-		//update lg_video_institution table
+		//update lg_video_institution table and update previewVideoId in lg_lecturseries table
 		if(lectureseriesId>0){
+			LectureseriesLocalServiceUtil.updatePreviewVideoOpenAccess(LectureseriesLocalServiceUtil.getLectureseries(lectureseriesId));
 			List<Lectureseries_Institution> li = Lectureseries_InstitutionLocalServiceUtil.getByLectureseries(lectureseriesId);
 			ListIterator<Lectureseries_Institution> i = li.listIterator();
 			while(i.hasNext()){
@@ -496,6 +497,7 @@ public class AdminVideoManagement extends MVCPortlet {
 					LectureseriesLocalServiceUtil.updateLectureseries(newLect);
 					//update lectureseries
 					LectureseriesLocalServiceUtil.updateOpenAccess(video, newLect);
+					LectureseriesLocalServiceUtil.updatePreviewVideoOpenAccess(newLect);
 					
 					//add lecture series parameter to tag cloud
 					tagCloudArrayString.add(newLect.getName());
@@ -551,8 +553,11 @@ public class AdminVideoManagement extends MVCPortlet {
 				video.setPassword(password);
 				// update video
 				VideoLocalServiceUtil.updateVideo(video);
-				// refresh open access for old lecture if lid > 0
-				if(oldLs.getLectureseriesId()>0) LectureseriesLocalServiceUtil.updateOpenAccess(video, oldLs);
+				// refresh open access and previewVideoId for old lecture if lid > 0
+				if(oldLs.getLectureseriesId()>0) {
+					LectureseriesLocalServiceUtil.updateOpenAccess(video, oldLs);
+					LectureseriesLocalServiceUtil.updatePreviewVideoOpenAccess(oldLs);
+				}
 				
 				//update lg_lectureseries_creators
 				if(lId.longValue() != oldLsId.longValue())

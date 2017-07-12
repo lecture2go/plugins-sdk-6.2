@@ -291,13 +291,13 @@
 			String oId = "";
 			boolean isVideo = false;
 			Video vidDummy = new VideoImpl();
-			if(lectser.getLatestOpenAccessVideoId()<0){
+			if(lectser.getPreviewVideoId()<0){
 				isVideo = true;
 				vidDummy = VideoLocalServiceUtil.getFullVideo(lectser.getLectureseriesId());
 				oId = vidDummy.getVideoId()+"";
 			}else{
 				oId = lectser.getLectureseriesId()+"";
-				vidDummy = VideoLocalServiceUtil.getFullVideo(lectser.getLatestOpenAccessVideoId());
+				vidDummy = VideoLocalServiceUtil.getFullVideo(lectser.getPreviewVideoId());
 			}
 			int videoCount = lectser.getNumberOfOpenAccessVideos();
 			List<Creator> cl = CreatorLocalServiceUtil.getCreatorsByLectureseriesId(lectser.getLectureseriesId());

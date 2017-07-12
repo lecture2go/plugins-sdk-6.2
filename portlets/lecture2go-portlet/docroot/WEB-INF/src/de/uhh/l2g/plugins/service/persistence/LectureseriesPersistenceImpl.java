@@ -7426,6 +7426,7 @@ public class LectureseriesPersistenceImpl extends BasePersistenceImpl<Lectureser
 		lectureseriesImpl.setLatestVideoGenerationDate(lectureseries.getLatestVideoGenerationDate());
 		lectureseriesImpl.setVideoSort(lectureseries.getVideoSort());
 		lectureseriesImpl.setUSID(lectureseries.getUSID());
+		lectureseriesImpl.setPreviewVideoId(lectureseries.getPreviewVideoId());
 
 		return lectureseriesImpl;
 	}
