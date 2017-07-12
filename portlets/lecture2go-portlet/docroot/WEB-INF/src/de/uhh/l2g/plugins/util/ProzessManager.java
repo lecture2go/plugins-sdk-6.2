@@ -369,6 +369,9 @@ public class ProzessManager {
 		
 		//delete all categories for video
 		Video_CategoryLocalServiceUtil.removeByVideo(video.getVideoId());
+		
+		//update LectureSeries previewVideoId
+		LectureseriesLocalServiceUtil.updatePreviewVideoOpenAccess(lectureseries);
 		return true;
 	}
 	

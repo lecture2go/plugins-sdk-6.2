@@ -191,6 +191,8 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		
 		//update database
 		LectureseriesLocalServiceUtil.updateLectureseries(lectureseries);
+		//update previewVideoId
+		LectureseriesLocalServiceUtil.updatePreviewVideoOpenAccess(lectureseries);
 		//refresh htaccess authentication files 
 		Htaccess.writePW(LectureseriesLocalServiceUtil.getAllLectureseriesWhithPassword());
 		
