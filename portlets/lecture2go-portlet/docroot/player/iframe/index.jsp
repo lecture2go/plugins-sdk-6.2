@@ -1,9 +1,54 @@
-<%@page import="java.lang.reflect.Array"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org   /TR/html4/loose.dtd">
 <html>
+
+<%@page import="java.lang.reflect.Array"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+
+<%@ page import="de.uhh.l2g.plugins.service.VideoLocalServiceUtil"%>
+<%@ page import="de.uhh.l2g.plugins.model.Video"%>
+<%@ page import="de.uhh.l2g.plugins.model.impl.VideoImpl"%>
+
+<%
+	Video video = new VideoImpl();
+	Long videoId = new Long(0);
+	String start = null;
+	String end = null;
+	
+	try{
+		videoId = new Long(request.getParameter("v"));
+		video = VideoLocalServiceUtil.getFullVideo(videoId);
+	}catch(Exception e){
+		try{
+			String[] s = request.getQueryString().split("/");
+			videoId = new Long(s[0].split("=")[1]);
+			video = VideoLocalServiceUtil.getFullVideo(videoId);
+			start = s[1];
+			end = s[2];
+		}catch(Exception a){}
+	}
+%>
+
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <meta property="og:url" content="<%=request.getRequestURL()%>">
+    <meta property="og:title" content="<%=video.getTitle()%>">
+    <meta property="og:image" content="<%=video.getImage()%>">
+    <meta property="og:description" content="<%=video.getTitle()%>">
+    <meta property="og:type" content="video">
+    <meta property="og:video" content="<%=video.getPlayerUris().get(2)%>">
+    <meta property="og:video:secure_url" content="<%=video.getPlayerUris().get(2)%>">
+    <meta property="og:video:type" content="video/mp4">
+    <meta property="og:video:width" content="480">
+    <meta property="og:video:height" content="270">
+    
+    <meta name="twitter:card" content="player">
+    <meta name="twitter:player" content="<%=request.getRequestURL()%>">
+    <meta name="twitter:player:width" content="480">
+    <meta name="twitter:player:height" content="270">
+    <meta name="twitter:player:stream" content="<%=video.getPlayerUris().get(2)%>">
+    <meta name="twitter:player:stream:content_type" content="video/mp4; codecs=&quot;avc1.42E01E, mp4a.40.2&quot;">
+    	
 	<script type="text/javascript" src="/lecture2go-portlet/js/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript" src="/lecture2go-portlet/js/citation2go.js"></script>
 	<script type="text/javascript" src="/lecture2go-portlet/player/jwplayer-7.9.3/jwplayer.js"></script>
@@ -75,30 +120,6 @@
 	</style>
 
 </head>
-
-<%@ page import="de.uhh.l2g.plugins.service.VideoLocalServiceUtil"%>
-<%@ page import="de.uhh.l2g.plugins.model.Video"%>
-<%@ page import="de.uhh.l2g.plugins.model.impl.VideoImpl"%>
-
-<%
-	Video video = new VideoImpl();
-	Long videoId = new Long(0);
-	String start = null;
-	String end = null;
-	
-	try{
-		videoId = new Long(request.getParameter("v"));
-		video = VideoLocalServiceUtil.getFullVideo(videoId);
-	}catch(Exception e){
-		try{
-			String[] s = request.getQueryString().split("/");
-			videoId = new Long(s[0].split("=")[1]);
-			video = VideoLocalServiceUtil.getFullVideo(videoId);
-			start = s[1];
-			end = s[2];
-		}catch(Exception a){}
-	}
-%>
 
 <body>
 	<%if(video.getVideoId()>0){ %>
