@@ -21,6 +21,7 @@
         <column name="latestVideoGenerationDate" type="String"></column>
         <column name="videoSort" type="int"></column>
         <column name="USID" type="String"></column>
+        <column name="previewVideoId" type="long"></column>
         <order by="asc">
             <order-column name="name" order-by="asc"></order-column>
         </order>
