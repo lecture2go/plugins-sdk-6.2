@@ -205,16 +205,15 @@ public class FFmpegManager {
 	public static boolean createThumbnail(String fileLocation, String thumbnailLocation, int sec) {
 		Runtime runCmd = Runtime.getRuntime();
 		String thumbPreffLoc = thumbnailLocation.split(".jpg")[0];
-		String command = PropsUtil.get("lecture2go.ffmpeg.bin") + " -ss "+sec+" -i " + fileLocation + " -f image2 -vframes 1 " + thumbnailLocation;
-		String command1 = PropsUtil.get("lecture2go.ffmpeg.bin") + " -ss "+sec+" -i " + fileLocation + " -f image2 -vframes 1 -filter:v scale='130:-1' " + thumbPreffLoc + "_s.jpg";
-		String command2 = PropsUtil.get("lecture2go.ffmpeg.bin") + " -ss "+sec+" -i " + fileLocation + " -f image2 -vframes 1 -filter:v scale='300:-1' " + thumbPreffLoc + "_m.jpg";
+		String command = PropsUtil.get("lecture2go.ffmpeg.bin") + " -ss "+sec+" -i " + fileLocation + " -f image2 -vframes 1 " + thumbnailLocation + " -y";
+		String command1 = PropsUtil.get("lecture2go.ffmpeg.bin") + " -ss "+sec+" -i " + fileLocation + " -f image2 -vframes 1 -filter:v scale='130:-1' " + thumbPreffLoc + "_s.jpg -y";
+		String command2 = PropsUtil.get("lecture2go.ffmpeg.bin") + " -ss "+sec+" -i " + fileLocation + " -f image2 -vframes 1 -filter:v scale='300:-1' " + thumbPreffLoc + "_m.jpg -y";
 		boolean ret = true;
 		if(!imageRepositoryFolderExists()) createImageRepositoryFolder();
 		
 		if(imageRepositoryFolderExists()){
 			try {
 				File f = new File(thumbnailLocation);
-				f.delete();//delete old one
 				runCmd.exec(command);
 				if (!f.isFile()) ret = false;
 			} catch (IOException e) {
@@ -222,7 +221,6 @@ public class FFmpegManager {
 			}
 			try {
 				File f = new File(thumbPreffLoc + "_s.jpg");
-				f.delete();//delete old one
 				runCmd.exec(command1);
 				if (!f.isFile()) ret = false;
 			} catch (IOException e) {
@@ -230,20 +228,11 @@ public class FFmpegManager {
 			}
 			try {
 				File f = new File(thumbPreffLoc + "_m.jpg");
-				f.delete();//delete old one
 				runCmd.exec(command2);
 				if (!f.isFile()) ret = false;
 			} catch (IOException e) {
 				ret = false;
 			}
-			// because of memory limit should close the ffmpeg processes
-			if (ret){
-				try {
-					runCmd.exec("/usr/bin/killall -9 ffmpeg");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}			
-			}			
 		}
 		return ret;
 	}
