@@ -75,9 +75,10 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 			{ "latestVideoUploadDate", Types.TIMESTAMP },
 			{ "latestVideoGenerationDate", Types.VARCHAR },
 			{ "videoSort", Types.INTEGER },
-			{ "USID", Types.VARCHAR }
+			{ "USID", Types.VARCHAR },
+			{ "previewVideoId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Lectureseries (number_ VARCHAR(75) null,eventType STRING null,categoryId LONG,name STRING null,shortDesc TEXT null,termId LONG,language STRING null,facultyName STRING null,lectureseriesId LONG not null primary key,password_ STRING null,approved INTEGER,longDesc TEXT null,latestOpenAccessVideoId LONG,latestVideoUploadDate DATE null,latestVideoGenerationDate VARCHAR(75) null,videoSort INTEGER,USID VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Lectureseries (number_ VARCHAR(75) null,eventType STRING null,categoryId LONG,name STRING null,shortDesc TEXT null,termId LONG,language STRING null,facultyName STRING null,lectureseriesId LONG not null primary key,password_ STRING null,approved INTEGER,longDesc TEXT null,latestOpenAccessVideoId LONG,latestVideoUploadDate DATE null,latestVideoGenerationDate VARCHAR(75) null,videoSort INTEGER,USID VARCHAR(75) null,previewVideoId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Lectureseries";
 	public static final String ORDER_BY_JPQL = " ORDER BY lectureseries.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Lectureseries.name ASC";
@@ -164,6 +165,7 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 			getLatestVideoGenerationDate());
 		attributes.put("videoSort", getVideoSort());
 		attributes.put("USID", getUSID());
+		attributes.put("previewVideoId", getPreviewVideoId());
 
 		return attributes;
 	}
@@ -273,6 +275,12 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 
 		if (USID != null) {
 			setUSID(USID);
+		}
+
+		Long previewVideoId = (Long)attributes.get("previewVideoId");
+
+		if (previewVideoId != null) {
+			setPreviewVideoId(previewVideoId);
 		}
 	}
 
@@ -634,6 +642,16 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 		return GetterUtil.getString(_originalUSID);
 	}
 
+	@Override
+	public long getPreviewVideoId() {
+		return _previewVideoId;
+	}
+
+	@Override
+	public void setPreviewVideoId(long previewVideoId) {
+		_previewVideoId = previewVideoId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -682,6 +700,7 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 		lectureseriesImpl.setLatestVideoGenerationDate(getLatestVideoGenerationDate());
 		lectureseriesImpl.setVideoSort(getVideoSort());
 		lectureseriesImpl.setUSID(getUSID());
+		lectureseriesImpl.setPreviewVideoId(getPreviewVideoId());
 
 		lectureseriesImpl.resetOriginalValues();
 
@@ -875,12 +894,14 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 			lectureseriesCacheModel.USID = null;
 		}
 
+		lectureseriesCacheModel.previewVideoId = getPreviewVideoId();
+
 		return lectureseriesCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{number=");
 		sb.append(getNumber());
@@ -916,6 +937,8 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 		sb.append(getVideoSort());
 		sb.append(", USID=");
 		sb.append(getUSID());
+		sb.append(", previewVideoId=");
+		sb.append(getPreviewVideoId());
 		sb.append("}");
 
 		return sb.toString();
@@ -923,7 +946,7 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(58);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Lectureseries");
@@ -997,6 +1020,10 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 			"<column><column-name>USID</column-name><column-value><![CDATA[");
 		sb.append(getUSID());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>previewVideoId</column-name><column-value><![CDATA[");
+		sb.append(getPreviewVideoId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1041,6 +1068,7 @@ public class LectureseriesModelImpl extends BaseModelImpl<Lectureseries>
 	private int _videoSort;
 	private String _USID;
 	private String _originalUSID;
+	private long _previewVideoId;
 	private long _columnBitmask;
 	private Lectureseries _escapedModel;
 }

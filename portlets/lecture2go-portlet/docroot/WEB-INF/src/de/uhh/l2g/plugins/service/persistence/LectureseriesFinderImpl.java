@@ -163,6 +163,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 	public List<Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(Long institutionId, Long parentInstitutionId, Long termId, Long categoryId, Long creatorId, String searchQuery, int limit) {
 		int start =com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS;
 		int stop =com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS;
+		List<Lectureseries> ret = new ArrayList<Lectureseries>();
 		if (limit>0){
 			start=0;
 			stop = limit;
@@ -215,7 +216,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			
 			@SuppressWarnings("unchecked")
 			List <Object[]> l =  (List<Object[]>) QueryUtil.list(q, getDialect(),start , stop);
-			return assembleLectureseries(l);
+			ret = assembleLectureseries(l);
 		} catch (Exception e) {
 			try {
 				throw new SystemException(e);
@@ -225,7 +226,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 		} finally {
 			closeSession(session);
 		}
-		return null;
+		return ret;
 	}
 		
 	private String sqlFilterForOpenAccessLectureseries(Long institutionId, Long institutionParentId, Long termId, Long categoryId, Long creatorId, String searchQuery) {

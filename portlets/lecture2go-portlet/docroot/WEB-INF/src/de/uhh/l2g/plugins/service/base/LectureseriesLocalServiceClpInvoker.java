@@ -165,26 +165,36 @@ public class LectureseriesLocalServiceClpInvoker {
 				"de.uhh.l2g.plugins.model.Lectureseries"
 			};
 
-		_methodName178 = "updateUploadAndGenerationDate";
+		_methodName178 = "updatePreviewVideoOpenAccess";
 
-		_methodParameterTypes178 = new String[] {  };
+		_methodParameterTypes178 = new String[] {
+				"de.uhh.l2g.plugins.model.Lectureseries"
+			};
 
-		_methodName179 = "updateCategoryForLectureseries";
+		_methodName179 = "updateUploadAndGenerationDate";
 
-		_methodParameterTypes179 = new String[] {
+		_methodParameterTypes179 = new String[] {  };
+
+		_methodName180 = "updateCategoryForLectureseries";
+
+		_methodParameterTypes180 = new String[] {
 				"java.lang.Long", "java.lang.Long"
 			};
 
-		_methodName180 = "getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString";
+		_methodName181 = "getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString";
 
-		_methodParameterTypes180 = new String[] {
+		_methodParameterTypes181 = new String[] {
 				"java.lang.Long", "java.lang.Long", "java.lang.Long",
 				"java.lang.Long", "java.lang.Long", "java.lang.String"
 			};
 
-		_methodName181 = "getLatest";
+		_methodName182 = "getLatest";
 
-		_methodParameterTypes181 = new String[] { "int" };
+		_methodParameterTypes182 = new String[] { "int" };
+
+		_methodName183 = "getByUSID";
+
+		_methodParameterTypes183 = new String[] { "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -347,30 +357,42 @@ public class LectureseriesLocalServiceClpInvoker {
 
 		if (_methodName178.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes178, parameterTypes)) {
-			LectureseriesLocalServiceUtil.updateUploadAndGenerationDate();
+			LectureseriesLocalServiceUtil.updatePreviewVideoOpenAccess((de.uhh.l2g.plugins.model.Lectureseries)arguments[0]);
 
 			return null;
 		}
 
 		if (_methodName179.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes179, parameterTypes)) {
-			LectureseriesLocalServiceUtil.updateCategoryForLectureseries((java.lang.Long)arguments[0],
-				(java.lang.Long)arguments[1]);
+			LectureseriesLocalServiceUtil.updateUploadAndGenerationDate();
 
 			return null;
 		}
 
 		if (_methodName180.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes180, parameterTypes)) {
+			LectureseriesLocalServiceUtil.updateCategoryForLectureseries((java.lang.Long)arguments[0],
+				(java.lang.Long)arguments[1]);
+
+			return null;
+		}
+
+		if (_methodName181.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes181, parameterTypes)) {
 			return LectureseriesLocalServiceUtil.getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString((java.lang.Long)arguments[0],
 				(java.lang.Long)arguments[1], (java.lang.Long)arguments[2],
 				(java.lang.Long)arguments[3], (java.lang.Long)arguments[4],
 				(java.lang.String)arguments[5]);
 		}
 
-		if (_methodName181.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes181, parameterTypes)) {
+		if (_methodName182.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes182, parameterTypes)) {
 			return LectureseriesLocalServiceUtil.getLatest(((Integer)arguments[0]).intValue());
+		}
+
+		if (_methodName183.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes183, parameterTypes)) {
+			return LectureseriesLocalServiceUtil.getByUSID((java.lang.String)arguments[0]);
 		}
 
 		throw new UnsupportedOperationException();
@@ -440,4 +462,8 @@ public class LectureseriesLocalServiceClpInvoker {
 	private String[] _methodParameterTypes180;
 	private String _methodName181;
 	private String[] _methodParameterTypes181;
+	private String _methodName182;
+	private String[] _methodParameterTypes182;
+	private String _methodName183;
+	private String[] _methodParameterTypes183;
 }
