@@ -1,7 +1,9 @@
+<%@page import="de.uhh.l2g.plugins.util.RepositoryManager"%>
 <%@page import="de.uhh.l2g.plugins.model.impl.InstitutionImpl"%>
 <%@page import="com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil"%>
 <%@page import="com.liferay.portlet.journal.model.JournalArticle"%>
 <%@page import="com.liferay.portal.kernel.workflow.WorkflowConstants"%>
+<%@page import="de.uhh.l2g.plugins.util.InstallWizardManager"%>
 <%@include file="/init.jsp"%>
 <%
 Long institutionId = new Long(0);
@@ -26,7 +28,9 @@ ListIterator<Video> pli = popular.listIterator();
 //get all root (1st level) institutions with open access videos
 List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutionsByOpenAccessVideos();
 
-
+//this proceeds only if the install wizart is activ
+InstallWizardManager installWizardManager = new InstallWizardManager(portletGroupId, company.getCompanyId());
+installWizardManager.installRepository();
 %>
 
 <div class="front-page-teaser">

@@ -106,13 +106,13 @@ public class MetadataLocalServiceClpInvoker {
 				"de.uhh.l2g.plugins.model.Metadata"
 			};
 
-		_methodName162 = "getBeanIdentifier";
+		_methodName166 = "getBeanIdentifier";
 
-		_methodParameterTypes162 = new String[] {  };
+		_methodParameterTypes166 = new String[] {  };
 
-		_methodName163 = "setBeanIdentifier";
+		_methodName167 = "setBeanIdentifier";
 
-		_methodParameterTypes163 = new String[] { "java.lang.String" };
+		_methodParameterTypes167 = new String[] { "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -204,13 +204,13 @@ public class MetadataLocalServiceClpInvoker {
 			return MetadataLocalServiceUtil.updateMetadata((de.uhh.l2g.plugins.model.Metadata)arguments[0]);
 		}
 
-		if (_methodName162.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
+		if (_methodName166.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes166, parameterTypes)) {
 			return MetadataLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName163.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes163, parameterTypes)) {
+		if (_methodName167.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes167, parameterTypes)) {
 			MetadataLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
@@ -251,8 +251,8 @@ public class MetadataLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName162;
-	private String[] _methodParameterTypes162;
-	private String _methodName163;
-	private String[] _methodParameterTypes163;
+	private String _methodName166;
+	private String[] _methodParameterTypes166;
+	private String _methodName167;
+	private String[] _methodParameterTypes167;
 }

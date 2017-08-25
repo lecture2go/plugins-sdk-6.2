@@ -59,6 +59,17 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.InstallWizardModelImpl">
+		<attributes>
+			<id name="installWizardId" />
+			<basic name="wizartActive" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.InstitutionModelImpl">
 		<attributes>
 			<id name="institutionId" />
@@ -465,6 +476,10 @@
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.HostImpl" name="Host">
 		<table name="LG_Host" />
+		<attributes />
+	</entity>
+	<entity class="de.uhh.l2g.plugins.model.impl.InstallWizardImpl" name="InstallWizard">
+		<table name="LG_InstallWizard" />
 		<attributes />
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.InstitutionImpl" name="Institution">

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE project>
 
-<project name="lecture2go-portlet" basedir="." default="war">
+<project name="lecture2go-portlet" basedir="." default="deploy">
 	<import file="../build-common-portlet.xml" />
 	<target name="build-lang">
 		<antcall target="build-lang-cmd">
