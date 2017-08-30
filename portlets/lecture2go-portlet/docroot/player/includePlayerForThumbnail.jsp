@@ -1,5 +1,3 @@
-<script type="text/javascript">jwplayer.key="";</script>
-
 <script>
 var player = jwplayer('player1');
 
