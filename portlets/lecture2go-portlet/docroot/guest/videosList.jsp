@@ -291,7 +291,7 @@
 			String oId = "";
 			boolean isVideo = false;
 			Video vidDummy = new VideoImpl();
-			if(lectser.getPreviewVideoId()<0){
+			if(lectser.getLatestOpenAccessVideoId()<0){
 				isVideo = true;
 				vidDummy = VideoLocalServiceUtil.getFullVideo(lectser.getLectureseriesId());
 				oId = vidDummy.getVideoId()+"";
