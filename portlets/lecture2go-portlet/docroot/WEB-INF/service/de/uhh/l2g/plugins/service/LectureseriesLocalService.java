@@ -292,6 +292,10 @@ public interface LectureseriesLocalService extends BaseLocalService,
 		de.uhh.l2g.plugins.model.Lectureseries lectureseries)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public void updatePreviewVideoOpenAccess(
+		de.uhh.l2g.plugins.model.Lectureseries lectureseries)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public void updateUploadAndGenerationDate()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -309,4 +313,8 @@ public interface LectureseriesLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getLatest(
 		int limit);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public de.uhh.l2g.plugins.model.Lectureseries getByUSID(
+		java.lang.String usid);
 }
