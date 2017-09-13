@@ -196,7 +196,7 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 							    <%if(video.getOpenAccess()==1){%>
 							   	 	<li><a href="#share" data-toggle="tab"><liferay-ui:message key="share"/></a></li>
 							    <%}%>
-							    <li><a href="#support" data-toggle="tab"><liferay-ui:message key="support"/></a></li>
+							    
 							    <%if(video.isHasChapters()){ %>
 							    	<li><a href="#chapters" data-toggle="tab"><liferay-ui:message key="chapters"/></a></li>
 							    <%}%>				    
@@ -213,73 +213,8 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 								        <p><%@ include file="/guest/includeShare.jsp" %></p>
 								    </div>
 							    <%}%>
-								    <div class="tab-pane" id="support">
-								        <p>
-											<%
-												Integer facultyId = (int)video.getRootInstitutionId();
-												String institut = "";
-												String option1 = PortalUtil.getOriginalServletRequest(request).getParameter("option1"); 
-												
-												switch(facultyId){
-													case 3: institut = "UHH-Jura";break;
-													case 4: institut = "UHH-WiSo";break;
-													case 5: institut = "UHH-Medizin";break;
-													case 6: institut = "UHH-EW";break;
-													case 7: institut = "UHH-GWiss";break;
-													case 8: institut = "UHH-MIN";break;
-													case 203: institut = "UHH-PB";break;
-													case 204: institut = "UHH-BWL";break;
-													default: institut = "Fakultätübergreifend";break;
-												}
-												
-												String url=video.getUrl();
-												if(video.getOpenAccess()==0)url=video.getSecureUrl();
-												
-												JSONObject jsn = new JSONObject();
-												jsn.put("institution",institut);
-												jsn.put("system","Lecture2Go");
-												jsn.put("role","Lecture2Go-Benutzer");
-												jsn.put("gender","");
-												jsn.put("firstname",PortalUtil.getOriginalServletRequest(request).getParameter("firstname"));
-												jsn.put("lastname",PortalUtil.getOriginalServletRequest(request).getParameter("lastname"));
-												jsn.put("email",PortalUtil.getOriginalServletRequest(request).getParameter("email"));
-												jsn.put("subject",url);
-												jsn.put("body",PortalUtil.getOriginalServletRequest(request).getParameter("body"));
-												jsn.put("ergebnis",PortalUtil.getOriginalServletRequest(request).getParameter("ergebnis"));
-												jsn.put("option1",option1);
-												jsn.put("result",PortalUtil.getOriginalServletRequest(request).getParameter("result"));
-												jsn.put("spamprotect",PortalUtil.getOriginalServletRequest(request).getParameter("spamprotect"));
-											%>
-											<div id="meta-share">
-												<%
-													SupportFormularClient sfc = new SupportFormularClient("mail4eLearnSupport",url,jsn.toString(),"");
-													out.print(sfc.getFormular());
-												%>
-												
-												<% 
-													// If support form was submitted, scroll down and select 'support' tab
-													if(option1!=null){
-														%>
-														<script type="text/javascript">
-															$(function() {
-																// activate contact tab
-																$("#tabs li a").eq(-1).click();
-																
-																// Scrolling must happen in onload, because otherwise the Player is not yet loaded and the position would be wrong
-																window.onload = function () {
-																	var pos = $("#tabs").offset().top;
-																	$('html, body').animate({scrollTop: pos - 10}, 1000, "easeInOutCubic");	
-																}
-																
-															 });
-														</script>
-														<%		
-													}
-												%>
-											</div>		        
-								    </div>
-		
-									<%if(video.isHasChapters() || video.isHasComments()){%>
+								    		
+								<%if(video.isHasChapters() || video.isHasComments()){%>
 									    <div class="tab-pane" id="chapters">
 									    	<liferay-portlet:resourceURL id="showSegments" var="segmentsURL" />
 											<script type="text/javascript">
