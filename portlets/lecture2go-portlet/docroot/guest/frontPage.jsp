@@ -47,7 +47,11 @@ installWizardManager.installRepository();
 	<div class="l2go-info-container">
 		<div class="l2go-info">
 			<div class="l2go-title">
-				Lecture<span class="orange">2</span>Go
+				<%if(company.getName().equals("Lecture2Go")){%>
+					Lecture<span class="orange">2</span>Go
+				<%}else{%>
+					<%=company.getName()%>
+				<%}%>
 			</div>
 			<div class="l2go-subtitle">
 				<p><liferay-ui:message key="l2go-description"/></p>
