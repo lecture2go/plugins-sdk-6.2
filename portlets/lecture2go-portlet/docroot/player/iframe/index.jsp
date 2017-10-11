@@ -87,21 +87,6 @@
 		    return parentUrl;
 		}
 
-		function securityCheck(){
-			if(getOpenAccess().indexOf("1")>-1){
-				//load page
-			}else{
-				//stop loading page if not uni request
-				if(getParentUrl().indexOf("localhost")==-1 || getParentUrl().indexOf("null")==0){
-					window.stop();
-					document.write('<script type="text/undefined">')
-				}
-			}
-		}
-		$(document).ready(function(){
-			securityCheck();
-		});
-
 	</script>
 </head>
 
