@@ -260,6 +260,11 @@ public interface LectureseriesLocalService extends BaseLocalService,
 		java.lang.Long facultyId, java.lang.Long producerId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.Map<de.uhh.l2g.plugins.model.Term, java.util.List<de.uhh.l2g.plugins.model.Lectureseries>> getFilteredByApprovedSemesterFacultyProducerAsTreeMapSortedByTerm(
+		java.lang.Integer approved, java.lang.Long semester,
+		java.lang.Long facultyId, java.lang.Long producerId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -289,6 +294,11 @@ public interface LectureseriesLocalService extends BaseLocalService,
 
 	public void updateUploadAndGenerationDate()
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void updateCategoryForLectureseries(java.lang.Long lectureseriesId,
+		java.lang.Long newCategoryId)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(

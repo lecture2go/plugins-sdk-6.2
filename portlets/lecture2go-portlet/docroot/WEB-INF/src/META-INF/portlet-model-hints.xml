@@ -165,7 +165,7 @@
 		<field name="name" type="String" />
 		<field name="www" type="String">
 			<hint-collection name="SHORTTEXT" />
-		</field>	
+		</field>
 		<field name="email" type="String" />
 		<field name="institutionId" type="long" />
 	</model>

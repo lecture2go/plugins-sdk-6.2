@@ -283,6 +283,14 @@ public class LectureseriesLocalServiceUtil {
 			semester, facultyId, producerId);
 	}
 
+	public static java.util.Map<de.uhh.l2g.plugins.model.Term, java.util.List<de.uhh.l2g.plugins.model.Lectureseries>> getFilteredByApprovedSemesterFacultyProducerAsTreeMapSortedByTerm(
+		java.lang.Integer approved, java.lang.Long semester,
+		java.lang.Long facultyId, java.lang.Long producerId) {
+		return getService()
+				   .getFilteredByApprovedSemesterFacultyProducerAsTreeMapSortedByTerm(approved,
+			semester, facultyId, producerId);
+	}
+
 	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getAll()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getAll();
@@ -322,6 +330,14 @@ public class LectureseriesLocalServiceUtil {
 	public static void updateUploadAndGenerationDate()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().updateUploadAndGenerationDate();
+	}
+
+	public static void updateCategoryForLectureseries(
+		java.lang.Long lectureseriesId, java.lang.Long newCategoryId)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.updateCategoryForLectureseries(lectureseriesId, newCategoryId);
 	}
 
 	public static java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(

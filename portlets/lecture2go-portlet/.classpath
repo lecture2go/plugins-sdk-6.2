@@ -9,16 +9,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/liferay-portal-6.2-ce-ga3/tomcat-7.0.42/webapps/ROOT/WEB-INF/lib/ant.jar"/>
-	<classpathentry kind="lib" path="/liferay-portal-6.2-ce-ga3/tomcat-7.0.42/webapps/ROOT/WEB-INF/lib/commons-collections.jar"/>
-	<classpathentry kind="lib" path="/liferay-portal-6.2-ce-ga3/tomcat-7.0.42/webapps/ROOT/WEB-INF/lib/commons-fileupload.jar"/>
-	<classpathentry kind="lib" path="/liferay-portal-6.2-ce-ga3/tomcat-7.0.42/lib/jasper.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/com.liferay.ide.eclipse.server.tomcat.runtimeClasspathProvider/Liferay v6.2 CE (Tomcat 7)">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="liferay-portal-6.2-ce-ga3/tomcat-7.0.42/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/liferay-portal-6.2-ce-ga3/tomcat-7.0.42/webapps/ROOT/WEB-INF/lib/jaxrpc.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/plugins-sdk-6.2"/>
 	<classpathentry kind="output" path="docroot/WEB-INF/classes"/>
 </classpath>

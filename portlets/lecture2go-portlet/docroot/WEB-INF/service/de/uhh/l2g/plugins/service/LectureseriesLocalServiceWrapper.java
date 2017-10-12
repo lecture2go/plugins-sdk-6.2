@@ -297,6 +297,14 @@ public class LectureseriesLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.Map<de.uhh.l2g.plugins.model.Term, java.util.List<de.uhh.l2g.plugins.model.Lectureseries>> getFilteredByApprovedSemesterFacultyProducerAsTreeMapSortedByTerm(
+		java.lang.Integer approved, java.lang.Long semester,
+		java.lang.Long facultyId, java.lang.Long producerId) {
+		return _lectureseriesLocalService.getFilteredByApprovedSemesterFacultyProducerAsTreeMapSortedByTerm(approved,
+			semester, facultyId, producerId);
+	}
+
+	@Override
 	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getAll()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _lectureseriesLocalService.getAll();
@@ -343,6 +351,15 @@ public class LectureseriesLocalServiceWrapper
 	public void updateUploadAndGenerationDate()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_lectureseriesLocalService.updateUploadAndGenerationDate();
+	}
+
+	@Override
+	public void updateCategoryForLectureseries(java.lang.Long lectureseriesId,
+		java.lang.Long newCategoryId)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_lectureseriesLocalService.updateCategoryForLectureseries(lectureseriesId,
+			newCategoryId);
 	}
 
 	@Override

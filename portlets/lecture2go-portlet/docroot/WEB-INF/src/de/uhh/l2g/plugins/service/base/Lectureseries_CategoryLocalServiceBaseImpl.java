@@ -64,6 +64,7 @@ import de.uhh.l2g.plugins.service.persistence.TermFinder;
 import de.uhh.l2g.plugins.service.persistence.TermPersistence;
 import de.uhh.l2g.plugins.service.persistence.VideoFinder;
 import de.uhh.l2g.plugins.service.persistence.VideoPersistence;
+import de.uhh.l2g.plugins.service.persistence.VideoStatisticFinder;
 import de.uhh.l2g.plugins.service.persistence.VideoStatisticPersistence;
 import de.uhh.l2g.plugins.service.persistence.Video_CategoryPersistence;
 import de.uhh.l2g.plugins.service.persistence.Video_CreatorPersistence;
@@ -1555,6 +1556,25 @@ public abstract class Lectureseries_CategoryLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the video statistic finder.
+	 *
+	 * @return the video statistic finder
+	 */
+	public VideoStatisticFinder getVideoStatisticFinder() {
+		return videoStatisticFinder;
+	}
+
+	/**
+	 * Sets the video statistic finder.
+	 *
+	 * @param videoStatisticFinder the video statistic finder
+	 */
+	public void setVideoStatisticFinder(
+		VideoStatisticFinder videoStatisticFinder) {
+		this.videoStatisticFinder = videoStatisticFinder;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -1862,6 +1882,8 @@ public abstract class Lectureseries_CategoryLocalServiceBaseImpl
 	protected de.uhh.l2g.plugins.service.VideoStatisticLocalService videoStatisticLocalService;
 	@BeanReference(type = VideoStatisticPersistence.class)
 	protected VideoStatisticPersistence videoStatisticPersistence;
+	@BeanReference(type = VideoStatisticFinder.class)
+	protected VideoStatisticFinder videoStatisticFinder;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
