@@ -3,18 +3,13 @@ package de.uhh.l2g.plugins.util;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.liferay.portal.TermsOfUseException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
-import com.liferay.portal.service.ServiceContext;
 
-import de.uhh.l2g.plugins.NoSuchTermException;
-import de.uhh.l2g.plugins.admin.ThreadManagement;
 import de.uhh.l2g.plugins.model.Term;
 import de.uhh.l2g.plugins.model.impl.TermImpl;
 import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
@@ -27,8 +22,26 @@ import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
 public final class TermScheduler extends PortletScheduler implements
 		MessageListener {
 
-	public Date dt = new Date();
+	private int wise = 9;
+	private int sose = 3;
+	
+	public int getWise() {
+		return wise;
+	}
 
+	public void setWise(int wise) {
+		this.wise = wise;
+	}
+
+	public int getSose() {
+		return sose;
+	}
+
+	public void setSose(int sose) {
+		this.sose = sose;
+	}
+
+	
 	public TermScheduler() {
 		super();
 		LOG = LogFactoryUtil.getLog(TermScheduler.class.getName());
@@ -42,6 +55,7 @@ public final class TermScheduler extends PortletScheduler implements
 				+ message.getValues().get(SchedulerEngine.JOB_NAME).toString()
 				+ "...");
 		// Do Job
+		Date dt = new Date();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(dt);
 		Term term = new TermImpl();
@@ -52,7 +66,7 @@ public final class TermScheduler extends PortletScheduler implements
 		System.out.println("year: " + yearString);
 
 		// checks if month is april
-		if (cal.get(Calendar.MONTH) == 3) {
+		if (cal.get(Calendar.MONTH) == sose) {
 			String prefix = "SoSe";
 			term.setYear(yearString);
 			term.setPrefix(prefix);
@@ -64,7 +78,7 @@ public final class TermScheduler extends PortletScheduler implements
 			}
 		}
 		// checks if month is october
-		else if (cal.get(Calendar.MONTH) == 9) {
+		else if (cal.get(Calendar.MONTH) == wise) {
 			String prefix = "WiSe";
 			int nextYear = ++year;
 			String nextYearString = String.valueOf(nextYear).substring(2);
@@ -79,11 +93,7 @@ public final class TermScheduler extends PortletScheduler implements
 			} catch (SystemException e) {
 				System.out.println(e);
 			}
-			/*
-			 * try { System.out.println(TermLocalServiceUtil.getAllSemesters());
-			 * } catch (SystemException e) { System.out.println(e); }
-			 */
-
+			
 		}
 	}
 
