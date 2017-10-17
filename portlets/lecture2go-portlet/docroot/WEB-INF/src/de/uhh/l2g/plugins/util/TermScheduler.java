@@ -64,7 +64,6 @@ public final class TermScheduler extends PortletScheduler implements
         // represent year as a string
         int year = cal.get(Calendar.YEAR);
         String yearString = String.valueOf(year).substring(2);
-        System.out.println("year: " + yearString);
 
         // checks if month is april
         if (cal.get(Calendar.MONTH) == sose) {
@@ -83,8 +82,6 @@ public final class TermScheduler extends PortletScheduler implements
             String prefix = "WiSe";
             int nextYear = ++year;
             String nextYearString = String.valueOf(nextYear).substring(2);
-            // System.out.println("this year is: " + yearString +
-            // " and next year: " + nextYearString);
             String composedYear = yearString + "/" + nextYearString;
             term.setYear(composedYear);
             term.setPrefix(prefix);
