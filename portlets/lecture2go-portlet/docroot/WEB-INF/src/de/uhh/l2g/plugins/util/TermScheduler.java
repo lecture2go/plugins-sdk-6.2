@@ -16,95 +16,96 @@ import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
 
 
 /*
- * Checks via cron job periodically what it is and according to that adds a new Term 
- * 
+ * Checks via cron job periodically what month it is and according to that adds a new Term
+ *
+ *
  */
 public final class TermScheduler extends PortletScheduler implements
-		MessageListener {
+        MessageListener {
 
-	private int wise = 9;
-	private int sose = 3;
-	
-	public int getWise() {
-		return wise;
-	}
+    private int wise = 9;
+    private int sose = 3;
 
-	public void setWise(int wise) {
-		this.wise = wise;
-	}
+    public int getWise() {
+        return wise;
+    }
 
-	public int getSose() {
-		return sose;
-	}
+    public void setWise(int wise) {
+        this.wise = wise;
+    }
 
-	public void setSose(int sose) {
-		this.sose = sose;
-	}
+    public int getSose() {
+        return sose;
+    }
 
-	
-	public TermScheduler() {
-		super();
-		LOG = LogFactoryUtil.getLog(TermScheduler.class.getName());
-	}
+    public void setSose(int sose) {
+        this.sose = sose;
+    }
 
-	@Override
-	public void receive(Message message) throws MessageListenerException {
-		// uncoment for further debug messages
-		// super.receive(message);
-		LOG.info("Term Scheduler running "
-				+ message.getValues().get(SchedulerEngine.JOB_NAME).toString()
-				+ "...");
-		// Do Job
-		Date dt = new Date();
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(dt);
-		Term term = new TermImpl();
 
-		// represent year as a string
-		int year = cal.get(Calendar.YEAR);
-		String yearString = String.valueOf(year).substring(2);
-		System.out.println("year: " + yearString);
+    public TermScheduler() {
+        super();
+        LOG = LogFactoryUtil.getLog(TermScheduler.class.getName());
+    }
 
-		// checks if month is april
-		if (cal.get(Calendar.MONTH) == sose) {
-			String prefix = "SoSe";
-			term.setYear(yearString);
-			term.setPrefix(prefix);
+    @Override
+    public void receive(Message message) throws MessageListenerException {
+        // uncoment for further debug messages
+        // super.receive(message);
+        LOG.info("Term Scheduler running "
+                + message.getValues().get(SchedulerEngine.JOB_NAME).toString()
+                + "...");
+        // Do Job
+        Date dt = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dt);
+        Term term = new TermImpl();
 
-			try {
-				TermLocalServiceUtil.addTerm(term);
-			} catch (SystemException e) {
-				System.out.println(e);
-			}
-		}
-		// checks if month is october
-		else if (cal.get(Calendar.MONTH) == wise) {
-			String prefix = "WiSe";
-			int nextYear = ++year;
-			String nextYearString = String.valueOf(nextYear).substring(2);
-			// System.out.println("this year is: " + yearString +
-			// " and next year: " + nextYearString);
-			String composedYear = yearString + "/" + nextYearString;
-			term.setYear(composedYear);
-			term.setPrefix(prefix);
+        // represent year as a string
+        int year = cal.get(Calendar.YEAR);
+        String yearString = String.valueOf(year).substring(2);
+        System.out.println("year: " + yearString);
 
-			try {
-				TermLocalServiceUtil.addTerm(term);
-			} catch (SystemException e) {
-				System.out.println(e);
-			}
-			
-		}
-	}
+        // checks if month is april
+        if (cal.get(Calendar.MONTH) == sose) {
+            String prefix = "SoSe";
+            term.setYear(yearString);
+            term.setPrefix(prefix);
 
-	public void start() {
-		super.schedule();
-		LOG.info("Wintersemester Scheduler start.");
-	}
+            try {
+                TermLocalServiceUtil.addTerm(term);
+            } catch (SystemException e) {
+                System.out.println(e);
+            }
+        }
+        // checks if month is october
+        else if (cal.get(Calendar.MONTH) == wise) {
+            String prefix = "WiSe";
+            int nextYear = ++year;
+            String nextYearString = String.valueOf(nextYear).substring(2);
+            // System.out.println("this year is: " + yearString +
+            // " and next year: " + nextYearString);
+            String composedYear = yearString + "/" + nextYearString;
+            term.setYear(composedYear);
+            term.setPrefix(prefix);
 
-	public void stop() {
-		super.unschedule();
-		LOG.info("Wintersemester Scheduler stop.");
-	}
+            try {
+                TermLocalServiceUtil.addTerm(term);
+            } catch (SystemException e) {
+                System.out.println(e);
+            }
+
+        }
+    }
+
+    public void start() {
+        super.schedule();
+        LOG.info("Wintersemester Scheduler start.");
+    }
+
+    public void stop() {
+        super.unschedule();
+        LOG.info("Wintersemester Scheduler stop.");
+    }
 
 }
