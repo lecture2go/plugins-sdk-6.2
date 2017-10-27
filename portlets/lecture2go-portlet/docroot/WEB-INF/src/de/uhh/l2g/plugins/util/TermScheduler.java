@@ -22,8 +22,8 @@ import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
 public final class TermScheduler extends PortletScheduler implements
 		MessageListener {
 
-	private int wise = 9;
-	private int sose = 3;
+	private int wise = 36; // 36th week of the year ca. 4 weeks before winter term
+	private int sose = 10; // 10th week of the ca. 4 weeks before summer term
 	
 	public int getWise() {
 		return wise;
@@ -66,7 +66,7 @@ public final class TermScheduler extends PortletScheduler implements
 		System.out.println("year: " + yearString);
 
 		// checks if month is april
-		if (cal.get(Calendar.MONTH) == sose) {
+		if (cal.get(Calendar.WEEK_OF_YEAR) == sose) {
 			String prefix = "SoSe";
 			term.setYear(yearString);
 			term.setPrefix(prefix);
@@ -78,7 +78,7 @@ public final class TermScheduler extends PortletScheduler implements
 			}
 		}
 		// checks if month is october
-		else if (cal.get(Calendar.MONTH) == wise) {
+		else if (cal.get(Calendar.WEEK_OF_YEAR) == wise) {
 			String prefix = "WiSe";
 			int nextYear = ++year;
 			String nextYearString = String.valueOf(nextYear).substring(2);
