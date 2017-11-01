@@ -196,15 +196,19 @@
          			<cron><cron-trigger-value>0 */5 * * * ?</cron-trigger-value></cron>  
  				</trigger>   
    			</scheduler-entry> 
+   			<scheduler-entry> 
+	   	 	    <scheduler-description>Term Scheduler</scheduler-description> 
+  				<scheduler-event-listener-class>de.uhh.l2g.plugins.util.TermScheduler</scheduler-event-listener-class>  
+         		<trigger>  
+         			<cron><cron-trigger-value>0 0 * * 0 ? </cron-trigger-value></cron>  
+ 				</trigger>   
+   			</scheduler-entry>    			  				
    	   	<instanceable>false</instanceable>
 		<private-request-attributes>false</private-request-attributes>
-
 		<header-portlet-javascript>/js/jquery.tmpl.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/jquery-ui-1.11.1.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/bootstrap.min.js</header-portlet-javascript>
-		
    		<add-default-resource>true</add-default-resource>
 	 </portlet>
-	
 </liferay-portlet-app>
 

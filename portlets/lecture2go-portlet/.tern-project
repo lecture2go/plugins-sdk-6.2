@@ -1,1 +1,17 @@
-{"ide":{"scriptPaths":[]},"plugins":{"aui":{},"liferay":{},"yui":{}},"libs":["ecma5","browser"]}
+{
+  "plugins": {
+    "aui": {
+      
+    },
+    "liferay": {
+      
+    },
+    "yui": {
+      
+    }
+  },
+  "libs": [
+    "ecma5",
+    "browser"
+  ]
+}

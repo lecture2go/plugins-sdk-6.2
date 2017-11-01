@@ -32,7 +32,7 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 InstallWizardManager installWizardManager = new InstallWizardManager(portletGroupId, company.getCompanyId());
 installWizardManager.installRepository();
 %>
-
+   
 <div class="front-page-teaser">
  	<div class="bg-video-container">
 		<video id="bg-vid" autoplay loop poster="/lecture2go-portlet/img/background_still.jpg" preload="none">
