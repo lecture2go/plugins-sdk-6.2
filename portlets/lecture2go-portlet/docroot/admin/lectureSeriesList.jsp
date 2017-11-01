@@ -158,7 +158,8 @@
 			<liferay-ui:search-container-column-text name="name">
 				<div class="adminrow wide">
 					<div class="admintile wide">
-						<strong><%=lectser.getName()%> (<%=lTerm%>)</strong>
+						<strong><%=lectser.getName()%> (<%=lTerm%>)</strong><br/>
+						<p><a href="<%=lectser.getClosedAccessURI() %>" target="blank"><liferay-ui:message key="lecture-series-closed-access-uri"/></a>&nbsp;|&nbsp;<a href="<%=lectser.getOpenAccessURI() %>" target="blank"><liferay-ui:message key="lecture-series-open-access-uri"/></a></p>
 						<br/>
 						<%
 						List<Long> pIds = new ArrayList<Long>();

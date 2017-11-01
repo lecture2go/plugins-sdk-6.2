@@ -348,6 +348,13 @@ public class LectureseriesLocalServiceWrapper
 	}
 
 	@Override
+	public void updatePreviewVideoOpenAccess(
+		de.uhh.l2g.plugins.model.Lectureseries lectureseries)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_lectureseriesLocalService.updatePreviewVideoOpenAccess(lectureseries);
+	}
+
+	@Override
 	public void updateUploadAndGenerationDate()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_lectureseriesLocalService.updateUploadAndGenerationDate();
@@ -375,6 +382,12 @@ public class LectureseriesLocalServiceWrapper
 	public java.util.List<de.uhh.l2g.plugins.model.Lectureseries> getLatest(
 		int limit) {
 		return _lectureseriesLocalService.getLatest(limit);
+	}
+
+	@Override
+	public de.uhh.l2g.plugins.model.Lectureseries getByUSID(
+		java.lang.String usid) {
+		return _lectureseriesLocalService.getByUSID(usid);
 	}
 
 	/**

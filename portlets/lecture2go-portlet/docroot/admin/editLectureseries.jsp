@@ -13,6 +13,8 @@
 	String lLongDesc = "";
 	Long producerId = new Long(0);
 	Long institutionId = new Long(0);
+	Integer videoSort = new Integer(0);
+	Boolean isSortVideosASC = false;
 	
 	Long lId=new Long(0);
 	Lectureseries reqLectureseries = new LectureseriesImpl();
@@ -27,6 +29,11 @@
 		lShortDesc=reqLectureseries.getShortDesc();
 		lPassword=reqLectureseries.getPassword();
 		lLongDesc=reqLectureseries.getLongDesc();
+		videoSort=reqLectureseries.getVideoSort();
+		if(videoSort == 1)
+		{
+			isSortVideosASC=true;
+		}
 	}catch(NullPointerException npe){}
 	
 	try{
@@ -250,6 +257,11 @@
 			<%}%>
 			
 			<aui:input name="password" label="password" helpMessage="password-help-text" value="<%=lPassword%>"/>
+
+			<aui:select id="videosort" size="1" name="videoSort" label="sortvideo">
+				<aui:option value="1" selected="<%=isSortVideosASC%>" label="sortvideoAsc"></aui:option>		
+				<aui:option value="0" selected="<%=!isSortVideosASC%>" label="sortvideoDesc"></aui:option>		
+			</aui:select>
 			
 			<%if(!readOnly){%>
 				<aui:field-wrapper label="description">
@@ -263,7 +275,7 @@
 			<%}%>
 			<aui:button-row>
 				<aui:button type="submit" onclick="<portlet:namespace />extractCodeFromEditor()"/>
-				<aui:button type="cancel" value="cancel" href="<%=backURL%>"/>
+				<aui:button type="cancel" value="cancel" name="cancel"/>
 			</aui:button-row>
 			</div>
 		</aui:layout>
@@ -276,7 +288,6 @@
 
 <script>
 var c = 0;
-
 /* these variables are set here but used in the external autocomplete-creator.js file, be sure to include this js AFTER the jsp is rendered*/
 var allCreatorsInJQueryAutocompleteFormat = <%= allCreatorsJSON.toString()%>;
 var getJSONCreatorURL = "<%=getJSONCreatorURL%>";
@@ -295,6 +306,10 @@ function remb(c){
 }
 $(function () {
 	autocompleteCreator($("#<portlet:namespace/>creator"));
+});
+
+$('#<portlet:namespace></portlet:namespace>cancel').click(function(){
+	   window.location.href="<%=backURL.toString()%>";
 });
 
 AUI().use('aui-node',

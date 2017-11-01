@@ -130,17 +130,23 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 		<div class="col-md-7">
 		    <div id="main" >
 			  <%
-			    String title = video.getTitle();
-			  	String series = lectureseries.getName();
-		      %>
+			    String title = video.getTitle();  	
+			  	Long lTermId = lectureseries.getTermId();
+			  	String termMetadata = "";
+			  	if(lTermId > 1)
+			  	{
+			  		termMetadata = " ("+TermLocalServiceUtil.getById(lTermId).getPrefix()+" "+TermLocalServiceUtil.getById(lTermId).getYear()+")";
+			  	}
+			  		String series = lectureseries.getName()+termMetadata;
+			  	%>
 		       <c:if test="${relatedVideos.size()>1}"><div class="player"></c:if>
 			   <c:if test="${relatedVideos.size()<=1}"><div class="player-wide"></c:if>
 				<%@ include file="/player/includePlayer.jsp"%>
 				   <div class="license">
 				      <%if(videoLicense.getL2go()==1){%>
-				      	<a href="/license-l2go" title="<liferay-ui:message key='l2go-license-click-for-info'/>"><liferay-ui:message key="license"/>: <liferay-ui:message key='l2go-license'/></a>
+				      	<a href="/web/vod/licence-l2go" title="<liferay-ui:message key='l2go-license-click-for-info'/>"><liferay-ui:message key="license"/></a>
 				 	  <%}else{%>
-						<a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" title="<liferay-ui:message key='cc-license-click-for-info'/>"><liferay-ui:message key="license"/>: <liferay-ui:message key='cy-nc-sa-license'/></a> 		
+						<a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" title="<liferay-ui:message key='cc-license-click-for-info'/>"><liferay-ui:message key="license"/></a> 		
 				 	  <%}%>       
 				   </div>
 			       <div class="views"><liferay-ui:message key="views"/>: ${video.hits}</div>	
@@ -190,7 +196,7 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 							    <%if(video.getOpenAccess()==1){%>
 							   	 	<li><a href="#share" data-toggle="tab"><liferay-ui:message key="share"/></a></li>
 							    <%}%>
-							    <li><a href="#support" data-toggle="tab"><liferay-ui:message key="support"/></a></li>
+							    
 							    <%if(video.isHasChapters()){ %>
 							    	<li><a href="#chapters" data-toggle="tab"><liferay-ui:message key="chapters"/></a></li>
 							    <%}%>				    
@@ -207,73 +213,8 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 								        <p><%@ include file="/guest/includeShare.jsp" %></p>
 								    </div>
 							    <%}%>
-								    <div class="tab-pane" id="support">
-								        <p>
-											<%
-												Integer facultyId = (int)video.getRootInstitutionId();
-												String institut = "";
-												String option1 = PortalUtil.getOriginalServletRequest(request).getParameter("option1"); 
-												
-												switch(facultyId){
-													case 3: institut = "UHH-Jura";break;
-													case 4: institut = "UHH-WiSo";break;
-													case 5: institut = "UHH-Medizin";break;
-													case 6: institut = "UHH-EW";break;
-													case 7: institut = "UHH-GWiss";break;
-													case 8: institut = "UHH-MIN";break;
-													case 203: institut = "UHH-PB";break;
-													case 204: institut = "UHH-BWL";break;
-													default: institut = "Fakultätübergreifend";break;
-												}
-												
-												String url=video.getUrl();
-												if(video.getOpenAccess()==0)url=video.getSecureUrl();
-												
-												JSONObject jsn = new JSONObject();
-												jsn.put("institution",institut);
-												jsn.put("system","Lecture2Go");
-												jsn.put("role","Lecture2Go-Benutzer");
-												jsn.put("gender","");
-												jsn.put("firstname",PortalUtil.getOriginalServletRequest(request).getParameter("firstname"));
-												jsn.put("lastname",PortalUtil.getOriginalServletRequest(request).getParameter("lastname"));
-												jsn.put("email",PortalUtil.getOriginalServletRequest(request).getParameter("email"));
-												jsn.put("subject",url);
-												jsn.put("body",PortalUtil.getOriginalServletRequest(request).getParameter("body"));
-												jsn.put("ergebnis",PortalUtil.getOriginalServletRequest(request).getParameter("ergebnis"));
-												jsn.put("option1",option1);
-												jsn.put("result",PortalUtil.getOriginalServletRequest(request).getParameter("result"));
-												jsn.put("spamprotect",PortalUtil.getOriginalServletRequest(request).getParameter("spamprotect"));
-											%>
-											<div id="meta-share">
-												<%
-													SupportFormularClient sfc = new SupportFormularClient("mail4eLearnSupport",url,jsn.toString(),"");
-													out.print(sfc.getFormular());
-												%>
-												
-												<% 
-													// If support form was submitted, scroll down and select 'support' tab
-													if(option1!=null){
-														%>
-														<script type="text/javascript">
-															$(function() {
-																// activate contact tab
-																$("#tabs li a").eq(-1).click();
-																
-																// Scrolling must happen in onload, because otherwise the Player is not yet loaded and the position would be wrong
-																window.onload = function () {
-																	var pos = $("#tabs").offset().top;
-																	$('html, body').animate({scrollTop: pos - 10}, 1000, "easeInOutCubic");	
-																}
-																
-															 });
-														</script>
-														<%		
-													}
-												%>
-											</div>		        
-								    </div>
-		
-									<%if(video.isHasChapters() || video.isHasComments()){%>
+								    		
+								<%if(video.isHasChapters() || video.isHasComments()){%>
 									    <div class="tab-pane" id="chapters">
 									    	<liferay-portlet:resourceURL id="showSegments" var="segmentsURL" />
 											<script type="text/javascript">
@@ -405,15 +346,17 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 			  }
 			  %>			  
 		</div>
+		<%if(video.getOpenAccess()==0){%>
+			<!-- coockie start -->
+			<script type="text/javascript">
+				$(function(){
+					//cookie
+					$.cookie("L2G_LSID", "<%=lectureseries.getLectureseriesId()%>");
+				});
+			</script>		
+			<!-- coockie end -->
+		<%}%>
 		
-		<!-- coockie start -->
-		<script type="text/javascript">
-			$(function(){
-				//cookie
-				$.cookie("L2G_LSID", "<%=lectureseries.getLectureseriesId()%>");
-			});
-		</script>		
-		<!-- coockie end -->
 		<%
 	}else{
 		if(video.getAccessPermitted()==0){

@@ -17,6 +17,7 @@ package de.uhh.l2g.plugins.service.impl;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -160,6 +161,39 @@ public class LectureseriesLocalServiceImpl extends LectureseriesLocalServiceBase
 			LectureseriesLocalServiceUtil.updateLectureseries(l);
 		}
 	}
+
+	public void updatePreviewVideoOpenAccess(Lectureseries lectureseries) throws SystemException{
+		List<Video> openAccessVideosOfLectureseries = VideoLocalServiceUtil.getByLectureseriesAndOpenaccess(lectureseries.getLectureseriesId(), 1);
+		
+		if (lectureseries.getVideoSort() == 1) {
+			//sort ascending
+			Collections.sort(openAccessVideosOfLectureseries,
+					new Comparator<Video>() {
+						@Override
+						public int compare(Video v1, Video v2) {
+							return v1.getGenerationDate().compareTo(
+									v2.getGenerationDate());
+						}
+					});
+		} else {
+            //sort descending
+			Collections.sort(openAccessVideosOfLectureseries,
+					new Comparator<Video>() {
+						@Override
+						public int compare(Video v1, Video v2) {
+							return v2.getGenerationDate().compareTo(
+									v1.getGenerationDate());
+						}
+					});
+		}
+		
+		if(openAccessVideosOfLectureseries.size() < 1)
+        	return;
+				
+		Video previewVideo = openAccessVideosOfLectureseries.get(0);			
+		lectureseries.setPreviewVideoId(previewVideo.getVideoId());
+		LectureseriesLocalServiceUtil.updateLectureseries(lectureseries);						
+	}
 	
 	public void updateUploadAndGenerationDate() throws SystemException{
 		List<Lectureseries> all = getAll();
@@ -211,4 +245,14 @@ public class LectureseriesLocalServiceImpl extends LectureseriesLocalServiceBase
 	public List<Lectureseries> getLatest(int limit){
 		return LectureseriesFinderUtil.findLatest(limit); 
 	}	
+	
+	public Lectureseries getByUSID(String usid){
+		Lectureseries l = new LectureseriesImpl();
+		try {
+			l = lectureseriesPersistence.findByUSID(usid).get(0);
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return l;
+	}
 }

@@ -117,7 +117,8 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 
 	public List<Video> getByLectureseries(Long lectureseriesId) throws SystemException {
 		List<Video> vl = videoPersistence.findByLectureseries(lectureseriesId);
-		return vl;
+		List<Video> rvl = getSortedVideoList(vl, lectureseriesId);
+		return rvl;
 	}
 
 	public List<Video> getByProducerAndLectureseries(Long producerId, Long lectureseriesId) throws SystemException {
@@ -377,7 +378,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		}
 		
 		//embed iframe
-		String embedIframe="<iframe src='"+PropsUtil.get("lecture2go.web.root")+"/lecture2go-portlet/player/iframe/?v="+objectVideo.getVideoId()+"' frameborder='0' width='647' height='373'></iframe>";
+		String embedIframe="<iframe src='"+PropsUtil.get("lecture2go.web.root")+"/lecture2go-portlet/player/iframe/?v="+objectVideo.getVideoId()+"' frameborder='0' width='647' height='373' allowfullscreen></iframe>";
 		objectVideo.setEmbedIframe(embedIframe);
 		
 		//embed html5
@@ -544,20 +545,8 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 
 	public List<Video> getByLectureseriesAndOpenaccess(Long lectureseriesId, int openAccess) throws SystemException{
 		List<Video> vl = new ArrayList<Video>();
-		if(lectureseriesId!=0)vl=videoPersistence.findByLectureseriesAndOpenaccess(lectureseriesId, openAccess);
-		List<Video> rvl = new ArrayList<Video>();
-		ListIterator<Video> vli = vl.listIterator();
-		while(vli.hasNext()){
-			Video objectVideo = getFullVideo(vli.next().getVideoId());
-			if(objectVideo.getFilename().trim().length()>0)rvl.add(objectVideo);
-		}
-		// Sort by generation date
-		Collections.sort(rvl, new Comparator<Video>() {
-				@Override
-				public int compare(Video v1, Video v2) {
-					return  v2.getGenerationDate().compareTo(v1.getGenerationDate());
-				}
-		    });
+		if(lectureseriesId!=0)vl=videoPersistence.findByLectureseriesAndOpenaccess(lectureseriesId, openAccess);	
+		List<Video> rvl = getSortedVideoList(vl, lectureseriesId);		
 		return rvl;
 	}
 	
@@ -570,15 +559,19 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	 * [filename]=video file name (automatically e.g 00.000_video_2015-06-08_08-06.mp4)
 	 * [protocol]=host protocol (automatically e.g rtmpt)
 	 * [port]=host port (automatically e.g 80)
-	 * lecture2go.uri1.player.template=${lecture2go.web.root}/abo/[filename]
-	 * lecture2go.uri2.player.template=rtmpt://[host]/vod/_definst/[ext]:[l2go_path]/[filename]
-	 * lecture2go.uri3.player.template=rtmpt://[host]/vod/_definst/[ext]:[l2go_path]/[filename]/playlist.m3u8
-	 * lecture2go.uri4.player.template=${lecture2go.uri3.player.template}
-	 * lecture2go.uri5.player.template=${lecture2go.uri3.player.template}
+	 * [smilfile]=adaptive streaming file 
+	 * 
+	 * example for lecture2go configuration
+	 * lecture2go.uri1.player.template=https://[host]/vod/_definst/smil:[l2go_path]/[smilfile]/playlist.m3u8
+	 * lecture2go.uri2.player.template=https://[host]/vod/_definst/[ext]:[l2go_path]/[filename]/playlist.m3u8
+	 * lecture2go.uri3.player.template=rtmpt://[host]/vod/_definst/[ext]:[l2go_path]/[filename]
+	 * lecture2go.uri4.player.template=${lecture2go.downloadserver.web.root}/abo/[filename]
+	 * lecture2go.uri5.player.template=rtsp://[host]:[port]/vod/_definst/[ext]:[l2go_path]/[filename]
 	**/
 	public void addPlayerUris2Video(Host host, Video video, Producer producer){
 		ArrayList<String> playerUris = new ArrayList<String>();
-
+		String  mediaRep = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir();
+		
 		String l2go_path = video.getRootInstitutionId() + "l2g" + producer.getHomeDir();
 		
 		String uri1 = PropsUtil.get("lecture2go.uri1.player.template");
@@ -593,8 +586,20 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		for(int i=0; i<uris.size();i++){
 			String playerUri = "";
 			playerUri += uris.get(i);
-			if(video.getOpenAccess()==1)playerUri = playerUri.replace("[filename]", video.getFilename());
-			else playerUri = playerUri.replace("[filename]", video.getSecureFilename());
+			if(video.getOpenAccess()==1){
+				//check for smil file
+				String smilPath = mediaRep + "/" + video.getPreffix()+".smil";
+				File smilFile = new File(smilPath);
+				if(smilFile.isFile()) playerUri = playerUri.replace("[smilfile]", video.getPreffix()+".smil");
+				playerUri = playerUri.replace("[filename]", video.getFilename());
+			}else{
+				//check for smil file
+				String smilPath = mediaRep + "/" + video.getSPreffix()+".smil";
+				File smilFile = new File(smilPath);				
+				if(smilFile.isFile()) playerUri = playerUri.replace("[smilfile]", video.getSPreffix()+".smil");
+				playerUri = playerUri.replace("[filename]", video.getSecureFilename());
+				
+			}
 			//
 			playerUri = playerUri.replace("[host]", host.getStreamer());
 			playerUri = playerUri.replace("[ext]", video.getContainerFormat());
@@ -602,7 +607,12 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			playerUri = playerUri.replace("[protocol]", host.getProtocol());
 			playerUri = playerUri.replace("[port]", host.getPort()+"");
 			//
-			if(playerUri.length()>0)playerUris.add(playerUri);
+			if( playerUri.length()>0 && !playerUri.contains("[") && !playerUri.contains("]") )playerUris.add(playerUri);
+			else playerUris.add("null");
+		}
+		//sort player uris 
+		for(int i=0; i<playerUris.size();i++){
+			if(playerUris.get(i).contains("null"))playerUris.set(i, playerUris.get(i+1));
 		}
 		video.setPlayerUris(playerUris);
 	}
@@ -651,4 +661,51 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		return v;
 	}
 	
+	
+	private List<Video> getSortedVideoList(List<Video> vl, Long lectureseriesId) throws SystemException
+	{ 
+		List<Video> sortedVideoList = new ArrayList<Video>();
+		
+		if(vl == null || lectureseriesId < 1)
+			return sortedVideoList;
+	
+		ListIterator<Video> vli = vl.listIterator();
+		while(vli.hasNext()){
+			Video objectVideo = getFullVideo(vli.next().getVideoId());
+			if(objectVideo.getFilename().trim().length()>0)sortedVideoList.add(objectVideo);
+		}
+		int sortVideo = 0;
+		try {
+			Lectureseries lectureseriesObject = lectureseriesPersistence.findByPrimaryKey(lectureseriesId);
+			sortVideo = lectureseriesObject.getVideoSort();
+		} catch (NoSuchModelException e) {
+			e.printStackTrace();
+		}
+		
+		// Sort by generation date
+		Collections.sort(sortedVideoList, new Comparator<Video>() {
+				@Override
+				public int compare(Video v1, Video v2) {
+					return  v2.getGenerationDate().compareTo(v1.getGenerationDate());
+				}
+		    });
+		
+		// Sort videos ascending
+		if(sortVideo == 1)
+		{
+			Collections.reverse(sortedVideoList);
+		}
+		
+		return sortedVideoList;
+	}
+	
+	public Long getLatestClosedAccessVideoId(Long lectureseriesId){
+		List<Video> vl = new ArrayList<Video>();
+		try {
+			vl = getByLectureseriesAndOpenaccess(lectureseriesId,0);
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return vl.get(0).getVideoId();
+	}
 }

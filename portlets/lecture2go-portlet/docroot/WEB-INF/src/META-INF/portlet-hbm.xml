@@ -6,6 +6,7 @@
 	<import class="de.uhh.l2g.plugins.model.Coordinator" />
 	<import class="de.uhh.l2g.plugins.model.Creator" />
 	<import class="de.uhh.l2g.plugins.model.Host" />
+	<import class="de.uhh.l2g.plugins.model.InstallWizard" />
 	<import class="de.uhh.l2g.plugins.model.Institution" />
 	<import class="de.uhh.l2g.plugins.model.Institution_Host" />
 	<import class="de.uhh.l2g.plugins.model.Lastvideolist" />
@@ -75,6 +76,15 @@
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="defaultHost" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
+	<class name="de.uhh.l2g.plugins.model.impl.InstallWizardImpl" table="LG_InstallWizard">
+		<cache usage="read-write" />
+		<id name="installWizardId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="wizartActive" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.InstitutionImpl" table="LG_Institution">
 		<cache usage="read-write" />
 		<id name="institutionId" type="long">
@@ -125,6 +135,9 @@
 		<property name="latestOpenAccessVideoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="latestVideoUploadDate" type="org.hibernate.type.TimestampType" />
 		<property name="latestVideoGenerationDate" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="videoSort" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="USID" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="previewVideoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.Lectureseries_CategoryImpl" table="LG_Lectureseries_Category">
 		<cache usage="read-write" />

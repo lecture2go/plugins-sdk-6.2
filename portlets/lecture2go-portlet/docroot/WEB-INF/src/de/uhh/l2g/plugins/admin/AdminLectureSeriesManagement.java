@@ -16,6 +16,7 @@ import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.json.JSONArray;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
+import com.sun.xml.internal.bind.v2.runtime.reflect.ListIterator;
 
 import de.uhh.l2g.plugins.model.Category;
 import de.uhh.l2g.plugins.model.Coordinator;
@@ -125,6 +127,15 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 	}
 
 	public void editLectureseries(ActionRequest request, ActionResponse response) throws NumberFormatException, PortalException, SystemException, UnsupportedEncodingException{
+//		List<Lectureseries> lll = LectureseriesLocalServiceUtil.getAll();
+//		java.util.ListIterator<Lectureseries> itttt = lll.listIterator();
+//		
+//		while (itttt.hasNext()){
+//			Lectureseries dfdf = itttt.next();
+//			dfdf.setUSID(RandomStringUtils.random(11, true, true));
+//			LectureseriesLocalServiceUtil.updateLectureseries(dfdf);
+//		}
+		
 		User user = UserLocalServiceUtil.getUser(new Long(request.getRemoteUser()));
 		EmailManager em = new EmailManager();
 		//search tags
@@ -149,6 +160,11 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		try{
 			categoryId = new Long(request.getParameter("categoryId"));
 		}catch(Exception e){}
+		Integer videoSort = new Integer(0);
+		try{
+			videoSort = "1".equals(request.getParameter("videoSort")) ? new Integer(1) : videoSort;
+		}catch(Exception e){}
+
 		
 		Locale locale = request.getLocale(); 
 
@@ -171,9 +187,12 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		lectureseries.setFacultyName(request.getParameter("facultyName"));
 		lectureseries.setPassword(request.getParameter("password"));
 		lectureseries.setLongDesc(s);	
+		lectureseries.setVideoSort(videoSort);
 		
 		//update database
 		LectureseriesLocalServiceUtil.updateLectureseries(lectureseries);
+		//update previewVideoId
+		LectureseriesLocalServiceUtil.updatePreviewVideoOpenAccess(lectureseries);
 		//refresh htaccess authentication files 
 		Htaccess.writePW(LectureseriesLocalServiceUtil.getAllLectureseriesWhithPassword());
 		
@@ -297,6 +316,10 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		try{
 			categoryId = new Long(request.getParameter("categoryId"));
 		}catch(Exception e){}
+		Integer videoSort = new Integer(0);
+		try{
+			videoSort = "1".equals(request.getParameter("videoSort")) ? new Integer(1) : videoSort;
+		}catch(Exception e){}
 		
 		Locale locale = request.getLocale(); 
 		
@@ -313,6 +336,10 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		lectureseries.setFacultyName(request.getParameter("facultyName"));
 		lectureseries.setPassword(request.getParameter("password"));
 		lectureseries.setLongDesc(s);
+		lectureseries.setVideoSort(videoSort);
+		
+		//add an USID
+		lectureseries.setUSID(RandomStringUtils.random(11, true, true));
 		
 		//save object to database
 		Lectureseries newlect = LectureseriesLocalServiceUtil.addLectureseries(lectureseries);

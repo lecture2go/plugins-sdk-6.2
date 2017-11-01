@@ -38,7 +38,7 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{number=");
 		sb.append(number);
@@ -70,6 +70,12 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 		sb.append(latestVideoUploadDate);
 		sb.append(", latestVideoGenerationDate=");
 		sb.append(latestVideoGenerationDate);
+		sb.append(", videoSort=");
+		sb.append(videoSort);
+		sb.append(", USID=");
+		sb.append(USID);
+		sb.append(", previewVideoId=");
+		sb.append(previewVideoId);
 		sb.append("}");
 
 		return sb.toString();
@@ -160,6 +166,17 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 			lectureseriesImpl.setLatestVideoGenerationDate(latestVideoGenerationDate);
 		}
 
+		lectureseriesImpl.setVideoSort(videoSort);
+
+		if (USID == null) {
+			lectureseriesImpl.setUSID(StringPool.BLANK);
+		}
+		else {
+			lectureseriesImpl.setUSID(USID);
+		}
+
+		lectureseriesImpl.setPreviewVideoId(previewVideoId);
+
 		lectureseriesImpl.resetOriginalValues();
 
 		return lectureseriesImpl;
@@ -182,6 +199,9 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 		latestOpenAccessVideoId = objectInput.readLong();
 		latestVideoUploadDate = objectInput.readLong();
 		latestVideoGenerationDate = objectInput.readUTF();
+		videoSort = objectInput.readInt();
+		USID = objectInput.readUTF();
+		previewVideoId = objectInput.readLong();
 	}
 
 	@Override
@@ -260,6 +280,17 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 		else {
 			objectOutput.writeUTF(latestVideoGenerationDate);
 		}
+
+		objectOutput.writeInt(videoSort);
+
+		if (USID == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(USID);
+		}
+
+		objectOutput.writeLong(previewVideoId);
 	}
 
 	public String number;
@@ -277,4 +308,7 @@ public class LectureseriesCacheModel implements CacheModel<Lectureseries>,
 	public long latestOpenAccessVideoId;
 	public long latestVideoUploadDate;
 	public String latestVideoGenerationDate;
+	public int videoSort;
+	public String USID;
+	public long previewVideoId;
 }

@@ -4,6 +4,7 @@
 <jsp:useBean id="reqLectureseries" type="de.uhh.l2g.plugins.model.Lectureseries" scope="request" />
 <jsp:useBean id="reqLicense" type="de.uhh.l2g.plugins.model.License" scope="request" />
 <jsp:useBean id="reqProducer" type="de.uhh.l2g.plugins.model.Producer" scope="request" />
+<jsp:useBean id="video" type="de.uhh.l2g.plugins.model.Video" scope="request" />
 <jsp:useBean id="reqVideo" type="de.uhh.l2g.plugins.model.Video" scope="request" />
 <jsp:useBean id="reqMetadata" type="de.uhh.l2g.plugins.model.Metadata" scope="request" />
 <jsp:useBean id="reqSubInstitutions" type="java.util.List<de.uhh.l2g.plugins.model.Video_Institution>" scope="request" />
@@ -27,6 +28,8 @@
 <liferay-portlet:resourceURL id="getSecureFileName" var="getSecureFileNameURL" />
 <liferay-portlet:resourceURL id="getShare" var="getShareURL" />
 <liferay-portlet:resourceURL id="updateNumberOfProductions" var="updateNumberOfProductionsURL" />
+<liferay-portlet:resourceURL id="updateThumbnail" var="updateThumbnailURL" />
+<liferay-portlet:resourceURL id="getJSONVideo" var="getJSONVideoURL" />
 
 <%
 	String actionURL = "";
@@ -159,7 +162,10 @@
 	<aui:fieldset column="false" label="" id="meta-ebene" style="display:none;">
 		<aui:layout>
 			<aui:form action="<%=actionURL%>" commandName="model" name="metadata">
-				<label class="edit-video-lable" id="edit-video-lable-1"><liferay-ui:message key="metadata"/></label>
+				<label class="edit-video-lable" id="edit-video-lable-1">
+					<i id="l1" class="aui icon-chevron-down thumb"></i>
+					<liferay-ui:message key="metadata"/>
+				</label>
 				<div id="metadata-upload">
 					<aui:input id="stayhere" name="stayhere" label="" required="true" value="" type="hidden"/>
 					
@@ -265,11 +271,15 @@
 				<script>
 					$( "#edit-video-lable-1" ).click(function() {
 					  $( "#metadata-upload" ).slideToggle( "slow" );
+					  $("#l1", this).toggleClass("thumb thumb-90");
 					});
 				</script>
 				
 				<div id="permissions">
-					<label class="edit-video-lable" id="edit-video-lable-2"><liferay-ui:message key="permissions"/></label>
+					<label class="edit-video-lable" id="edit-video-lable-2">
+						<i id="l2" class="aui icon-chevron-down thumb"></i>
+						<liferay-ui:message key="permissions"/>
+					</label>
 					<div id="permissions-content">
 						<%if(reqVideo.getOpenAccess()==0){%>
 							<div>
@@ -290,16 +300,20 @@
 				<script>
 					$( "#edit-video-lable-2" ).click(function() {
 					  $( "#permissions-content" ).slideToggle( "slow" );
+					  $("#l2", this).toggleClass("thumb thumb-90");
 					});
 				</script>
 				
 				<div id="license">
-					<label class="edit-video-lable" id="edit-video-lable-3"><liferay-ui:message key="license"/></label>
+					<label class="edit-video-lable" id="edit-video-lable-3">
+						<i id="l3" class="aui icon-chevron-down thumb"></i>
+						<liferay-ui:message key="license"/>
+					</label>
 					<div id="license-content">
 						<div>
 							<%if(reqLicense.getL2go()==1){%><aui:input name="license"  id="uhhl2go" label="" value="uhhl2go" checked="true" type="radio"/><%}%>
 							<%if(reqLicense.getL2go()==0){%><aui:input name="license" id="uhhl2go" label="" value="uhhl2go" type="radio"/><%}%>
-							<a href="/license" target="_blank"><liferay-ui:message key="lecture2go-licence"/> </a>	 	      	      
+							<a href="/web/vod/licence-l2go" target="_blank"><liferay-ui:message key="lecture2go-licence"/> </a>	 	      	      
 						</div>	
 						<div>		
 							<%if(reqLicense.getCcbyncsa()==1){%><aui:input name="license" label="" id="ccbyncsa" value="ccbyncsa" checked="true" type="radio" /><%}%>
@@ -311,11 +325,15 @@
 				<script>
 					$( "#edit-video-lable-3" ).click(function() {
 					  $( "#license-content" ).slideToggle( "slow" );
+					  $("#l3", this).toggleClass("thumb thumb-90");
 					});
 				</script>
 
 				<div id="embed">
-					<label class="edit-video-lable" id="edit-video-lable-4"><liferay-ui:message key="share"/></label>
+					<label class="edit-video-lable" id="edit-video-lable-4">
+						<i id="l4" class="aui icon-chevron-down thumb"></i>
+						<liferay-ui:message key="share"/>
+					</label>
 					<div id="embed-content">
 						<!-- embed start -->
 						<%
@@ -335,12 +353,34 @@
 				<script>
 					$( "#edit-video-lable-4" ).click(function() {
 					  $( "#embed-content" ).slideToggle( "slow" );
+					  $("#l4", this).toggleClass("thumb thumb-90");
 					});
 				</script>
-											
+
+				<div id="video-thumbnail">
+					<label class="edit-video-lable" id="edit-video-lable-5">
+						<i id="l5" class="aui icon-chevron-down thumb-90"></i>
+						<liferay-ui:message key="video-thumbnail" />
+					</label>
+					
+					<div id="thumbnail-content">
+						<!-- thumbnail start --> 
+							<liferay-ui:message key="video-thumbnail-about"/>
+							<%@include file="/player/includePlayerForThumbnail.jsp"%>
+						<!-- thumbnail end -->	      	      
+					</div>
+				</div>
+				<script>
+					$(function(){$( "#thumbnail-content" ).hide();});
+					$( "#edit-video-lable-5" ).click(function() {
+					  $( "#thumbnail-content" ).slideToggle( "slow" );
+					  $("#l5", this).toggleClass("thumb-90 thumb");
+					});
+				</script>
+				<br/>		
 				<aui:button-row>
 					<aui:button type="submit" value="apply-changes" onclick="applyAllMetadataChanges()" cssClass="btn-primary"/>
-					<aui:button type="cancel" value="back" href="<%=backURL%>" name="cancel"/>
+					<aui:button type="cancel" value="back" name="cancel"/>
 				</aui:button-row>
 				
 				<aui:input name="videoId" type="hidden" value="<%=reqVideo.getVideoId()%>"/>
@@ -362,6 +402,7 @@
 </script>
 
 <script type="text/javascript">
+
 var $options = $( "#options" );
 var c = 0;
 
@@ -411,7 +452,7 @@ $(function () {
 	            if (data.originalFiles[i]['type'].length && !acceptFileTypes.test(data.originalFiles[i]['type'])) {
 	                uploadErrors.push('<liferay-ui:message key="not-an-accepted-file-type"/>');
 	            }
-	            if ( data.originalFiles[i]['size'] > 2147483648) { //2 GB
+	            if ( data.originalFiles[i]['size'] > 5368709120) { //5 GB
 	                uploadErrors.push('<liferay-ui:message key="max-file-size"/>');
 	            }
 			}
@@ -457,6 +498,25 @@ $(function () {
 	           		validate();
 				}
            }
+           
+       	   var st = false;
+           
+       	   player.remove();
+           //initialize and show player
+            setTimeout(
+	           function(){
+	        	   initializePlayer();
+	        	   player.seek(0);
+	           	   player.on('play',function(){
+	            		  if(st==false){
+	            			   player.pause();
+	            			   st=true;
+	            		  }
+	     		   });	        	   
+	           }, 2000
+           );
+           
+       	   
         },
         progressall: function (e, data) {
 	        var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -695,6 +755,7 @@ function applyAllMetadataChanges(){
 				    $("#creators-custom").css({"background-color": "white", "color": "#555555"});
 				    $("#creators-custom .control-label").css({"color": "#488f06"});
 				    $("#metadata-upload #creators").css({"color": "#488f06"});
+					updateThumbnail();
 				    alert("<liferay-ui:message key='changes-applied'/>");					
 				}
 			}
@@ -773,6 +834,9 @@ function deleteFile(fileName){
 		    	  	$("#first-title").show();
 		    	  	$("#<portlet:namespace/>meta-ebene").hide();
 		        }
+		        player.remove();
+		        //initialize and show player
+			    initializePlayer();
 		        //hide date fild
 		        $("#l2gdate").hide();
 		        //toggle share
@@ -959,7 +1023,7 @@ function updateSubInstitutions(){
 		  dataType: 'json',
 		  data: {
 		 	   	<portlet:namespace/>subInstitution: JSON.stringify(jsonArray),
-		 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>",
+		 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>"
 		  },
 		  global: false,
 		  async:true,
@@ -969,7 +1033,22 @@ function updateSubInstitutions(){
 	});
 }
 
-
+function updateThumbnail(){
+	//set parameter to server for update 
+	$.ajax({
+		  type: "POST",
+		  url: "<%=updateThumbnailURL%>",
+		  dataType: 'json',
+		  data: {
+		 	   	<portlet:namespace/>inputTime: Math.floor(player.getPosition()),
+		 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>",
+		  },
+		  global: false,
+		  async:true,
+		  success: function(data) {
+		  }
+	});
+}
 
 var c = 0;
 
@@ -1021,7 +1100,10 @@ AUI().use('aui-node',
 
 <script type="text/javascript">
     $(function () {
-        var vars = <%=VideoLocalServiceUtil.getJSONVideo(reqVideo.getVideoId()).toString()%>;
+    	$('#<portlet:namespace></portlet:namespace>cancel').click(function(){
+    		   window.location.href="<%=backURL.toString()%>";
+    	})
+    	var vars = <%=VideoLocalServiceUtil.getJSONVideo(reqVideo.getVideoId()).toString()%>;
         console.log(vars);
         $.template( "filesTemplate", $("#template") );
         $.tmpl( "filesTemplate", vars ).appendTo( ".table" );

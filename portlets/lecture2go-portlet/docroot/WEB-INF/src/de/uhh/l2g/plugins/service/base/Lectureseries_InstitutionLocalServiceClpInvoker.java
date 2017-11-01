@@ -106,35 +106,91 @@ public class Lectureseries_InstitutionLocalServiceClpInvoker {
 				"de.uhh.l2g.plugins.model.Lectureseries_Institution"
 			};
 
+<<<<<<< HEAD
 		_methodName162 = "getBeanIdentifier";
+=======
+		_methodName166 = "getBeanIdentifier";
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodParameterTypes162 = new String[] {  };
+=======
+		_methodParameterTypes166 = new String[] {  };
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodName163 = "setBeanIdentifier";
+=======
+		_methodName167 = "setBeanIdentifier";
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodParameterTypes163 = new String[] { "java.lang.String" };
+=======
+		_methodParameterTypes167 = new String[] { "java.lang.String" };
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodName168 = "removeByLectureseriesId";
+=======
+		_methodName172 = "removeByLectureseriesId";
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodParameterTypes168 = new String[] { "java.lang.Long" };
+=======
+		_methodParameterTypes172 = new String[] { "java.lang.Long" };
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodName169 = "removeByacilityId";
+=======
+		_methodName173 = "removeByacilityId";
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodParameterTypes169 = new String[] { "java.lang.Long" };
+=======
+		_methodParameterTypes173 = new String[] { "java.lang.Long" };
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodName170 = "institutionAssignedToLectureseries";
+=======
+		_methodName174 = "institutionAssignedToLectureseries";
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodParameterTypes170 = new String[] {
+=======
+		_methodParameterTypes174 = new String[] {
+>>>>>>> refs/remotes/l2go@github/master
 				"de.uhh.l2g.plugins.model.Lectureseries_Institution"
 			};
 
+<<<<<<< HEAD
 		_methodName171 = "getByLectureseries";
+=======
+		_methodName175 = "getByLectureseries";
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodParameterTypes171 = new String[] { "long" };
+=======
+		_methodParameterTypes175 = new String[] { "long" };
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodName172 = "findFirstByLectureseriesIdAndInstitutionId";
+=======
+		_methodName176 = "findFirstByLectureseriesIdAndInstitutionId";
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodParameterTypes172 = new String[] { "long", "long" };
+=======
+		_methodParameterTypes176 = new String[] { "long", "long" };
+>>>>>>> refs/remotes/l2go@github/master
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -226,28 +282,61 @@ public class Lectureseries_InstitutionLocalServiceClpInvoker {
 			return Lectureseries_InstitutionLocalServiceUtil.updateLectureseries_Institution((de.uhh.l2g.plugins.model.Lectureseries_Institution)arguments[0]);
 		}
 
+<<<<<<< HEAD
 		if (_methodName162.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
+=======
+		if (_methodName166.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes166, parameterTypes)) {
+>>>>>>> refs/remotes/l2go@github/master
 			return Lectureseries_InstitutionLocalServiceUtil.getBeanIdentifier();
 		}
 
+<<<<<<< HEAD
 		if (_methodName163.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes163, parameterTypes)) {
+=======
+		if (_methodName167.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes167, parameterTypes)) {
+>>>>>>> refs/remotes/l2go@github/master
 			Lectureseries_InstitutionLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
+<<<<<<< HEAD
 		if (_methodName168.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes168, parameterTypes)) {
 			return Lectureseries_InstitutionLocalServiceUtil.removeByLectureseriesId((java.lang.Long)arguments[0]);
+=======
+		if (_methodName172.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes172, parameterTypes)) {
+			return Lectureseries_InstitutionLocalServiceUtil.removeByLectureseriesId((java.lang.Long)arguments[0]);
 		}
 
-		if (_methodName169.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes169, parameterTypes)) {
+		if (_methodName173.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes173, parameterTypes)) {
 			return Lectureseries_InstitutionLocalServiceUtil.removeByacilityId((java.lang.Long)arguments[0]);
 		}
 
+		if (_methodName174.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes174, parameterTypes)) {
+			return Lectureseries_InstitutionLocalServiceUtil.institutionAssignedToLectureseries((de.uhh.l2g.plugins.model.Lectureseries_Institution)arguments[0]);
+>>>>>>> refs/remotes/l2go@github/master
+		}
+
+<<<<<<< HEAD
+		if (_methodName169.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes169, parameterTypes)) {
+			return Lectureseries_InstitutionLocalServiceUtil.removeByacilityId((java.lang.Long)arguments[0]);
+=======
+		if (_methodName175.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes175, parameterTypes)) {
+			return Lectureseries_InstitutionLocalServiceUtil.getByLectureseries(((Long)arguments[0]).longValue());
+>>>>>>> refs/remotes/l2go@github/master
+		}
+
+<<<<<<< HEAD
 		if (_methodName170.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes170, parameterTypes)) {
 			return Lectureseries_InstitutionLocalServiceUtil.institutionAssignedToLectureseries((de.uhh.l2g.plugins.model.Lectureseries_Institution)arguments[0]);
@@ -260,6 +349,10 @@ public class Lectureseries_InstitutionLocalServiceClpInvoker {
 
 		if (_methodName172.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes172, parameterTypes)) {
+=======
+		if (_methodName176.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes176, parameterTypes)) {
+>>>>>>> refs/remotes/l2go@github/master
 			return Lectureseries_InstitutionLocalServiceUtil.findFirstByLectureseriesIdAndInstitutionId(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue());
 		}
@@ -299,6 +392,7 @@ public class Lectureseries_InstitutionLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
+<<<<<<< HEAD
 	private String _methodName162;
 	private String[] _methodParameterTypes162;
 	private String _methodName163;
@@ -313,4 +407,20 @@ public class Lectureseries_InstitutionLocalServiceClpInvoker {
 	private String[] _methodParameterTypes171;
 	private String _methodName172;
 	private String[] _methodParameterTypes172;
+=======
+	private String _methodName166;
+	private String[] _methodParameterTypes166;
+	private String _methodName167;
+	private String[] _methodParameterTypes167;
+	private String _methodName172;
+	private String[] _methodParameterTypes172;
+	private String _methodName173;
+	private String[] _methodParameterTypes173;
+	private String _methodName174;
+	private String[] _methodParameterTypes174;
+	private String _methodName175;
+	private String[] _methodParameterTypes175;
+	private String _methodName176;
+	private String[] _methodParameterTypes176;
+>>>>>>> refs/remotes/l2go@github/master
 }

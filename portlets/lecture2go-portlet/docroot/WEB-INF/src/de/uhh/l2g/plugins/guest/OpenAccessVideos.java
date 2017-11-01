@@ -13,6 +13,8 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.servlet.http.Cookie;
 
+import org.apache.commons.lang.RandomStringUtils;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
+import de.uhh.l2g.plugins.NoSuchLectureseriesException;
 import de.uhh.l2g.plugins.NoSuchLicenseException;
 import de.uhh.l2g.plugins.NoSuchVideoException;
 import de.uhh.l2g.plugins.model.Lectureseries;
@@ -133,16 +136,21 @@ public class OpenAccessVideos extends MVCPortlet {
 		Long objectId = new Long(0);
 		boolean secLink = false;
 	   	String oid = request.getParameter("objectId");
+		
 	    try{
 	    	objectId = new Long(oid);
 	    }catch(NumberFormatException e){
-		    if(objectType.equals("v")){ //only for video objects
+		    if(objectType.equals("v")){ //for video objects
 	    		try {
 					objectId = VideoLocalServiceUtil.getBySecureUrl(oid).getVideoId();		
 					secLink = true;
 				} catch (NoSuchVideoException e1) {
 				} catch (SystemException e1) {}
 	    	 }
+		    if(objectType.equals("l")){ //for lecture series objects
+		    	objectId = LectureseriesLocalServiceUtil.getByUSID(oid).getLectureseriesId();
+				secLink = true;
+		    }
 	    }
 
 	    Long timeStart = new Long(0);
@@ -153,7 +161,6 @@ public class OpenAccessVideos extends MVCPortlet {
 	    	timeEnd = new Long(ParamUtil.getString(request, "timeEnd"));
 	    }catch(Exception e){}
 	   
-	    
 	    Video video = new VideoImpl();
 	    //lecture series object
 	    Lectureseries lectureseries = new LectureseriesImpl();
@@ -162,9 +169,15 @@ public class OpenAccessVideos extends MVCPortlet {
 	    if(objectType.equals("l")){
 	    	try{
 	    		lectureseries = LectureseriesLocalServiceUtil.getLectureseries(objectId);
-	    		video = VideoLocalServiceUtil.getFullVideo(lectureseries.getLatestOpenAccessVideoId());
+	    		if(!secLink){
+	    			video = VideoLocalServiceUtil.getFullVideo(lectureseries.getLatestOpenAccessVideoId());
+	    		}else{
+	    			Long videoId = VideoLocalServiceUtil.getLatestClosedAccessVideoId(objectId);
+	    			video = VideoLocalServiceUtil.getFullVideo(videoId);
+	    		}
 	    	}catch(Exception e){
 	    		objectExists = false;
+	    		response.setRenderParameter("jspPage","/guest/noVideosFound.jsp");	
 	    	}
 	    }else if(objectType.equals("v")){
 	    	video = VideoLocalServiceUtil.getFullVideo(objectId);
@@ -236,16 +249,20 @@ public class OpenAccessVideos extends MVCPortlet {
 
 	   			
 	    		//2. authentication by cookie
-	    		Cookie[] c = request.getCookies();
-	    		for(int i=0; i<c.length;i++){
-	    			Cookie coo = c[i];
-	    			String cooVal ="";
-	    			if(coo.getName().equals("L2G_LSID"))cooVal=c[i].getValue();
-	    			//has been already logged in
-	    			if(cooVal.equals(video.getLectureseriesId()+"")){
-	    				video.setAccessPermitted(1);
-	    			}
-	    		}
+				Cookie[] c = request.getCookies();
+				try{
+					for(int i=0; i<c.length;i++){
+						Cookie coo = c[i];
+						String cooVal ="";
+						if(coo.getName().equals("L2G_LSID"))cooVal=c[i].getValue();
+						//has been already logged in
+						if(cooVal.equals(video.getLectureseriesId()+"")){
+							video.setAccessPermitted(1);
+						}
+					}
+				}catch(java.lang.NullPointerException e){
+					System.out.print(e);
+				}
 	    		
 	    		//3. authentication by video password
 	    		if(!video.getPassword().isEmpty()){
@@ -274,7 +291,8 @@ public class OpenAccessVideos extends MVCPortlet {
 		    request.setAttribute("objectType",objectType);
 		    request.setAttribute("objectId",oid);
 		    
-			response.setRenderParameter("jspPage","/guest/videoDetails.jsp");	    	
+		    if(video.getVideoId()==0) response.setRenderParameter("jspPage","/guest/noVideosFound.jsp");	
+		    else response.setRenderParameter("jspPage","/guest/videoDetails.jsp");	    	
 	    }
 	}
 	

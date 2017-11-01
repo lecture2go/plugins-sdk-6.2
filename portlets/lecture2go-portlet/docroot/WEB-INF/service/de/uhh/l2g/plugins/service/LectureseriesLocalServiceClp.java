@@ -160,12 +160,17 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 				"de.uhh.l2g.plugins.model.Lectureseries"
 			};
 
+<<<<<<< HEAD
 		_methodName28 = "updateUploadAndGenerationDate";
 
 		_methodParameterTypes28 = new String[] {  };
 
 		_methodName29 = "updateCategoryForLectureseries";
+=======
+		_methodName28 = "updatePreviewVideoOpenAccess";
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodParameterTypes29 = new String[] {
 				"java.lang.Long", "java.lang.Long"
 			};
@@ -173,13 +178,44 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 		_methodName30 = "getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString";
 
 		_methodParameterTypes30 = new String[] {
+=======
+		_methodParameterTypes28 = new String[] {
+				"de.uhh.l2g.plugins.model.Lectureseries"
+			};
+
+		_methodName29 = "updateUploadAndGenerationDate";
+
+		_methodParameterTypes29 = new String[] {  };
+
+		_methodName30 = "updateCategoryForLectureseries";
+
+		_methodParameterTypes30 = new String[] {
+				"java.lang.Long", "java.lang.Long"
+			};
+
+		_methodName31 = "getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString";
+
+		_methodParameterTypes31 = new String[] {
+>>>>>>> refs/remotes/l2go@github/master
 				"java.lang.Long", "java.lang.Long", "java.lang.Long",
 				"java.lang.Long", "java.lang.Long", "java.lang.String"
 			};
 
+<<<<<<< HEAD
 		_methodName31 = "getLatest";
+=======
+		_methodName32 = "getLatest";
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodParameterTypes31 = new String[] { "int" };
+=======
+		_methodParameterTypes32 = new String[] { "int" };
+
+		_methodName33 = "getByUSID";
+
+		_methodParameterTypes33 = new String[] { "java.lang.String" };
+>>>>>>> refs/remotes/l2go@github/master
 	}
 
 	@Override
@@ -990,11 +1026,50 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 	}
 
 	@Override
-	public void updateUploadAndGenerationDate()
+	public void updatePreviewVideoOpenAccess(
+		de.uhh.l2g.plugins.model.Lectureseries lectureseries)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			_invokableLocalService.invokeMethod(_methodName28,
+<<<<<<< HEAD
 				_methodParameterTypes28, new Object[] {  });
+=======
+				_methodParameterTypes28,
+				new Object[] { ClpSerializer.translateInput(lectureseries) });
+>>>>>>> refs/remotes/l2go@github/master
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
+<<<<<<< HEAD
+	public void updateCategoryForLectureseries(java.lang.Long lectureseriesId,
+		java.lang.Long newCategoryId)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			_invokableLocalService.invokeMethod(_methodName29,
+				_methodParameterTypes29,
+=======
+	public void updateUploadAndGenerationDate()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		try {
+			_invokableLocalService.invokeMethod(_methodName29,
+				_methodParameterTypes29, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1019,8 +1094,9 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			_invokableLocalService.invokeMethod(_methodName29,
-				_methodParameterTypes29,
+			_invokableLocalService.invokeMethod(_methodName30,
+				_methodParameterTypes30,
+>>>>>>> refs/remotes/l2go@github/master
 				new Object[] {
 					ClpSerializer.translateInput(lectureseriesId),
 					
@@ -1056,8 +1132,13 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 		Object returnObj = null;
 
 		try {
+<<<<<<< HEAD
 			returnObj = _invokableLocalService.invokeMethod(_methodName30,
 					_methodParameterTypes30,
+=======
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31,
+>>>>>>> refs/remotes/l2go@github/master
 					new Object[] {
 						ClpSerializer.translateInput(institutionId),
 						
@@ -1093,8 +1174,13 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 		Object returnObj = null;
 
 		try {
+<<<<<<< HEAD
 			returnObj = _invokableLocalService.invokeMethod(_methodName31,
 					_methodParameterTypes31, new Object[] { limit });
+=======
+			returnObj = _invokableLocalService.invokeMethod(_methodName32,
+					_methodParameterTypes32, new Object[] { limit });
+>>>>>>> refs/remotes/l2go@github/master
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1109,6 +1195,31 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 		}
 
 		return (java.util.List<de.uhh.l2g.plugins.model.Lectureseries>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public de.uhh.l2g.plugins.model.Lectureseries getByUSID(
+		java.lang.String usid) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName33,
+					_methodParameterTypes33,
+					new Object[] { ClpSerializer.translateInput(usid) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (de.uhh.l2g.plugins.model.Lectureseries)ClpSerializer.translateOutput(returnObj);
 	}
 
 	private InvokableLocalService _invokableLocalService;
@@ -1174,4 +1285,11 @@ public class LectureseriesLocalServiceClp implements LectureseriesLocalService {
 	private String[] _methodParameterTypes30;
 	private String _methodName31;
 	private String[] _methodParameterTypes31;
+<<<<<<< HEAD
+=======
+	private String _methodName32;
+	private String[] _methodParameterTypes32;
+	private String _methodName33;
+	private String[] _methodParameterTypes33;
+>>>>>>> refs/remotes/l2go@github/master
 }

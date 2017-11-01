@@ -106,40 +106,105 @@ public class ProducerLocalServiceClpInvoker {
 				"de.uhh.l2g.plugins.model.Producer"
 			};
 
+<<<<<<< HEAD
 		_methodName162 = "getBeanIdentifier";
+=======
+		_methodName166 = "getBeanIdentifier";
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodParameterTypes162 = new String[] {  };
+=======
+		_methodParameterTypes166 = new String[] {  };
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodName163 = "setBeanIdentifier";
+=======
+		_methodName167 = "setBeanIdentifier";
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodParameterTypes163 = new String[] { "java.lang.String" };
+=======
+		_methodParameterTypes167 = new String[] { "java.lang.String" };
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodName169 = "getProducersByInstitutionId";
-
-		_methodParameterTypes169 = new String[] { "long" };
-
-		_methodName170 = "getProducersByHostId";
-
-		_methodParameterTypes170 = new String[] { "long" };
-
-		_methodName171 = "getProducersByHostIdCount";
-
-		_methodParameterTypes171 = new String[] { "long" };
-
-		_methodName172 = "getById";
-
-		_methodParameterTypes172 = new String[] { "long" };
-
-		_methodName173 = "getInstitutionByProducer";
+=======
+		_methodName173 = "getProducersByInstitutionId";
 
 		_methodParameterTypes173 = new String[] { "long" };
 
+		_methodName174 = "getProducersByHostId";
+
+		_methodParameterTypes174 = new String[] { "long" };
+
+		_methodName175 = "getProducersByHostIdCount";
+>>>>>>> refs/remotes/l2go@github/master
+
+		_methodParameterTypes175 = new String[] { "long" };
+
+<<<<<<< HEAD
+		_methodName170 = "getProducersByHostId";
+=======
+		_methodName176 = "getById";
+>>>>>>> refs/remotes/l2go@github/master
+
+		_methodParameterTypes176 = new String[] { "long" };
+
+<<<<<<< HEAD
+		_methodName171 = "getProducersByHostIdCount";
+=======
+		_methodName177 = "getInstitutionByProducer";
+>>>>>>> refs/remotes/l2go@github/master
+
+		_methodParameterTypes177 = new String[] { "long" };
+
+<<<<<<< HEAD
+		_methodName172 = "getById";
+=======
+		_methodName178 = "getAllProducers";
+>>>>>>> refs/remotes/l2go@github/master
+
+<<<<<<< HEAD
+		_methodParameterTypes172 = new String[] { "long" };
+=======
+		_methodParameterTypes178 = new String[] { "int", "int" };
+>>>>>>> refs/remotes/l2go@github/master
+
+<<<<<<< HEAD
+		_methodName173 = "getInstitutionByProducer";
+=======
+		_methodName179 = "getProdUcer";
+>>>>>>> refs/remotes/l2go@github/master
+
+<<<<<<< HEAD
+		_methodParameterTypes173 = new String[] { "long" };
+=======
+		_methodParameterTypes179 = new String[] { "java.lang.Long" };
+>>>>>>> refs/remotes/l2go@github/master
+
+<<<<<<< HEAD
 		_methodName174 = "getAllProducers";
+=======
+		_methodName180 = "getAllProducerIds";
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodParameterTypes174 = new String[] { "int", "int" };
+=======
+		_methodParameterTypes180 = new String[] { "java.lang.Long" };
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodName175 = "getProdUcer";
+=======
+		_methodName181 = "getProducerIds";
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodParameterTypes175 = new String[] { "java.lang.Long" };
 
 		_methodName176 = "getAllProducerIds";
@@ -149,6 +214,9 @@ public class ProducerLocalServiceClpInvoker {
 		_methodName177 = "getProducerIds";
 
 		_methodParameterTypes177 = new String[] { "java.lang.Long", "int", "int" };
+=======
+		_methodParameterTypes181 = new String[] { "java.lang.Long", "int", "int" };
+>>>>>>> refs/remotes/l2go@github/master
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -240,18 +308,29 @@ public class ProducerLocalServiceClpInvoker {
 			return ProducerLocalServiceUtil.updateProducer((de.uhh.l2g.plugins.model.Producer)arguments[0]);
 		}
 
+<<<<<<< HEAD
 		if (_methodName162.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
+=======
+		if (_methodName166.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes166, parameterTypes)) {
+>>>>>>> refs/remotes/l2go@github/master
 			return ProducerLocalServiceUtil.getBeanIdentifier();
 		}
 
+<<<<<<< HEAD
 		if (_methodName163.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes163, parameterTypes)) {
+=======
+		if (_methodName167.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes167, parameterTypes)) {
+>>>>>>> refs/remotes/l2go@github/master
 			ProducerLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
+<<<<<<< HEAD
 		if (_methodName169.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes169, parameterTypes)) {
 			return ProducerLocalServiceUtil.getProducersByInstitutionId(((Long)arguments[0]).longValue());
@@ -272,19 +351,30 @@ public class ProducerLocalServiceClpInvoker {
 			return ProducerLocalServiceUtil.getById(((Long)arguments[0]).longValue());
 		}
 
+=======
+>>>>>>> refs/remotes/l2go@github/master
 		if (_methodName173.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes173, parameterTypes)) {
+<<<<<<< HEAD
 			return ProducerLocalServiceUtil.getInstitutionByProducer(((Long)arguments[0]).longValue());
+=======
+			return ProducerLocalServiceUtil.getProducersByInstitutionId(((Long)arguments[0]).longValue());
+>>>>>>> refs/remotes/l2go@github/master
 		}
 
 		if (_methodName174.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes174, parameterTypes)) {
+<<<<<<< HEAD
 			return ProducerLocalServiceUtil.getAllProducers(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
+=======
+			return ProducerLocalServiceUtil.getProducersByHostId(((Long)arguments[0]).longValue());
+>>>>>>> refs/remotes/l2go@github/master
 		}
 
 		if (_methodName175.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes175, parameterTypes)) {
+<<<<<<< HEAD
 			return ProducerLocalServiceUtil.getProdUcer((java.lang.Long)arguments[0]);
 		}
 
@@ -295,6 +385,39 @@ public class ProducerLocalServiceClpInvoker {
 
 		if (_methodName177.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes177, parameterTypes)) {
+=======
+			return ProducerLocalServiceUtil.getProducersByHostIdCount(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName176.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes176, parameterTypes)) {
+			return ProducerLocalServiceUtil.getById(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName177.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes177, parameterTypes)) {
+			return ProducerLocalServiceUtil.getInstitutionByProducer(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName178.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes178, parameterTypes)) {
+			return ProducerLocalServiceUtil.getAllProducers(((Integer)arguments[0]).intValue(),
+				((Integer)arguments[1]).intValue());
+		}
+
+		if (_methodName179.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes179, parameterTypes)) {
+			return ProducerLocalServiceUtil.getProdUcer((java.lang.Long)arguments[0]);
+		}
+
+		if (_methodName180.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes180, parameterTypes)) {
+			return ProducerLocalServiceUtil.getAllProducerIds((java.lang.Long)arguments[0]);
+		}
+
+		if (_methodName181.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes181, parameterTypes)) {
+>>>>>>> refs/remotes/l2go@github/master
 			return ProducerLocalServiceUtil.getProducerIds((java.lang.Long)arguments[0],
 				((Integer)arguments[1]).intValue(),
 				((Integer)arguments[2]).intValue());
@@ -335,6 +458,7 @@ public class ProducerLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
+<<<<<<< HEAD
 	private String _methodName162;
 	private String[] _methodParameterTypes162;
 	private String _methodName163;
@@ -347,6 +471,12 @@ public class ProducerLocalServiceClpInvoker {
 	private String[] _methodParameterTypes171;
 	private String _methodName172;
 	private String[] _methodParameterTypes172;
+=======
+	private String _methodName166;
+	private String[] _methodParameterTypes166;
+	private String _methodName167;
+	private String[] _methodParameterTypes167;
+>>>>>>> refs/remotes/l2go@github/master
 	private String _methodName173;
 	private String[] _methodParameterTypes173;
 	private String _methodName174;
@@ -357,4 +487,15 @@ public class ProducerLocalServiceClpInvoker {
 	private String[] _methodParameterTypes176;
 	private String _methodName177;
 	private String[] _methodParameterTypes177;
+<<<<<<< HEAD
+=======
+	private String _methodName178;
+	private String[] _methodParameterTypes178;
+	private String _methodName179;
+	private String[] _methodParameterTypes179;
+	private String _methodName180;
+	private String[] _methodParameterTypes180;
+	private String _methodName181;
+	private String[] _methodParameterTypes181;
+>>>>>>> refs/remotes/l2go@github/master
 }

@@ -106,10 +106,19 @@ public class CategoryLocalServiceClpInvoker {
 				"de.uhh.l2g.plugins.model.Category"
 			};
 
+<<<<<<< HEAD
 		_methodName162 = "getBeanIdentifier";
+=======
+		_methodName166 = "getBeanIdentifier";
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodParameterTypes162 = new String[] {  };
+=======
+		_methodParameterTypes166 = new String[] {  };
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodName163 = "setBeanIdentifier";
 
 		_methodParameterTypes163 = new String[] { "java.lang.String" };
@@ -119,22 +128,57 @@ public class CategoryLocalServiceClpInvoker {
 		_methodParameterTypes168 = new String[] { "int", "int" };
 
 		_methodName169 = "getByName";
+=======
+		_methodName167 = "setBeanIdentifier";
+>>>>>>> refs/remotes/l2go@github/master
 
 		_methodParameterTypes169 = new String[] { "java.lang.String" };
 
+<<<<<<< HEAD
 		_methodName170 = "getById";
+=======
+		_methodName172 = "getAllCategories";
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodParameterTypes170 = new String[] { "java.lang.Long" };
+=======
+		_methodParameterTypes172 = new String[] { "int", "int" };
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodName171 = "getCategoriesFromLectureseriesIdsAndVideoIds";
+=======
+		_methodName173 = "getByName";
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodParameterTypes171 = new String[] {
+=======
+		_methodParameterTypes173 = new String[] { "java.lang.String" };
+
+		_methodName174 = "getById";
+
+		_methodParameterTypes174 = new String[] { "java.lang.Long" };
+
+		_methodName175 = "getCategoriesFromLectureseriesIdsAndVideoIds";
+
+		_methodParameterTypes175 = new String[] {
+>>>>>>> refs/remotes/l2go@github/master
 				"java.util.ArrayList", "java.util.ArrayList"
 			};
 
+<<<<<<< HEAD
 		_methodName172 = "deleteById";
+=======
+		_methodName176 = "deleteById";
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodParameterTypes172 = new String[] { "java.lang.Long" };
+=======
+		_methodParameterTypes176 = new String[] { "java.lang.Long" };
+>>>>>>> refs/remotes/l2go@github/master
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -226,29 +270,62 @@ public class CategoryLocalServiceClpInvoker {
 			return CategoryLocalServiceUtil.updateCategory((de.uhh.l2g.plugins.model.Category)arguments[0]);
 		}
 
+<<<<<<< HEAD
 		if (_methodName162.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
+=======
+		if (_methodName166.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes166, parameterTypes)) {
+>>>>>>> refs/remotes/l2go@github/master
 			return CategoryLocalServiceUtil.getBeanIdentifier();
 		}
 
+<<<<<<< HEAD
 		if (_methodName163.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes163, parameterTypes)) {
+=======
+		if (_methodName167.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes167, parameterTypes)) {
+>>>>>>> refs/remotes/l2go@github/master
 			CategoryLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
+<<<<<<< HEAD
 		if (_methodName168.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes168, parameterTypes)) {
+=======
+		if (_methodName172.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes172, parameterTypes)) {
+>>>>>>> refs/remotes/l2go@github/master
 			return CategoryLocalServiceUtil.getAllCategories(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
+<<<<<<< HEAD
 		if (_methodName169.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes169, parameterTypes)) {
 			return CategoryLocalServiceUtil.getByName((java.lang.String)arguments[0]);
+=======
+		if (_methodName173.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes173, parameterTypes)) {
+			return CategoryLocalServiceUtil.getByName((java.lang.String)arguments[0]);
 		}
 
+		if (_methodName174.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes174, parameterTypes)) {
+			return CategoryLocalServiceUtil.getById((java.lang.Long)arguments[0]);
+		}
+
+		if (_methodName175.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes175, parameterTypes)) {
+			return CategoryLocalServiceUtil.getCategoriesFromLectureseriesIdsAndVideoIds((java.util.ArrayList<java.lang.Long>)arguments[0],
+				(java.util.ArrayList<java.lang.Long>)arguments[1]);
+>>>>>>> refs/remotes/l2go@github/master
+		}
+
+<<<<<<< HEAD
 		if (_methodName170.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes170, parameterTypes)) {
 			return CategoryLocalServiceUtil.getById((java.lang.Long)arguments[0]);
@@ -262,6 +339,10 @@ public class CategoryLocalServiceClpInvoker {
 
 		if (_methodName172.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes172, parameterTypes)) {
+=======
+		if (_methodName176.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes176, parameterTypes)) {
+>>>>>>> refs/remotes/l2go@github/master
 			CategoryLocalServiceUtil.deleteById((java.lang.Long)arguments[0]);
 
 			return null;
@@ -302,6 +383,7 @@ public class CategoryLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
+<<<<<<< HEAD
 	private String _methodName162;
 	private String[] _methodParameterTypes162;
 	private String _methodName163;
@@ -316,4 +398,20 @@ public class CategoryLocalServiceClpInvoker {
 	private String[] _methodParameterTypes171;
 	private String _methodName172;
 	private String[] _methodParameterTypes172;
+=======
+	private String _methodName166;
+	private String[] _methodParameterTypes166;
+	private String _methodName167;
+	private String[] _methodParameterTypes167;
+	private String _methodName172;
+	private String[] _methodParameterTypes172;
+	private String _methodName173;
+	private String[] _methodParameterTypes173;
+	private String _methodName174;
+	private String[] _methodParameterTypes174;
+	private String _methodName175;
+	private String[] _methodParameterTypes175;
+	private String _methodName176;
+	private String[] _methodParameterTypes176;
+>>>>>>> refs/remotes/l2go@github/master
 }

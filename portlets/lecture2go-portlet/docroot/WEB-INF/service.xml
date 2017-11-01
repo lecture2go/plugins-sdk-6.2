@@ -19,6 +19,9 @@
         <column name="latestOpenAccessVideoId" type="long"></column>
         <column name="latestVideoUploadDate" type="Date"></column>
         <column name="latestVideoGenerationDate" type="String"></column>
+        <column name="videoSort" type="int"></column>
+        <column name="USID" type="String"></column>
+        <column name="previewVideoId" type="long"></column>
         <order by="asc">
             <order-column name="name" order-by="asc"></order-column>
         </order>
@@ -57,6 +60,9 @@
         </finder>
         <finder name="LatestVideoGenerationDate" return-type="Collection">
             <finder-column name="latestVideoGenerationDate"></finder-column>
+        </finder>
+        <finder name="USID" return-type="Collection">
+            <finder-column name="USID"></finder-column>
         </finder>
     </entity>
     <entity name="Institution" local-service="true" remote-service="false">
@@ -714,6 +720,24 @@
 
 
     
+    </entity>
+    <entity local-service="true" remote-service="false"
+    	name="InstallWizard">
+
+    	<!-- PK fields -->
+
+    	<column name="installWizardId" type="long" primary="true"></column>
+
+    	<!-- Group instance -->
+
+    	<!-- Audit fields -->
+        <column name="wizartActive" type="int"></column>
+        <column name="groupId" type="long"></column>
+        <column name="companyId" type="long"></column>
+        <finder name="groupAndCompyny" return-type="InstallWizard">
+            <finder-column name="groupId"></finder-column>
+            <finder-column name="companyId"></finder-column>
+        </finder>
     </entity>
     <exceptions>
         <exception>HostName</exception>

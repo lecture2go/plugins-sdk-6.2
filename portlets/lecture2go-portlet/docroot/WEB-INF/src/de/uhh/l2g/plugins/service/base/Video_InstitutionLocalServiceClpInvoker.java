@@ -106,24 +106,61 @@ public class Video_InstitutionLocalServiceClpInvoker {
 				"de.uhh.l2g.plugins.model.Video_Institution"
 			};
 
+<<<<<<< HEAD
 		_methodName162 = "getBeanIdentifier";
+=======
+		_methodName166 = "getBeanIdentifier";
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodParameterTypes162 = new String[] {  };
+=======
+		_methodParameterTypes166 = new String[] {  };
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodName163 = "setBeanIdentifier";
+=======
+		_methodName167 = "setBeanIdentifier";
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodParameterTypes163 = new String[] { "java.lang.String" };
+=======
+		_methodParameterTypes167 = new String[] { "java.lang.String" };
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodName168 = "removeByVideoId";
+=======
+		_methodName172 = "removeByVideoId";
 
-		_methodParameterTypes168 = new String[] { "java.lang.Long" };
+		_methodParameterTypes172 = new String[] { "java.lang.Long" };
 
+		_methodName173 = "removeByInstitutionId";
+
+		_methodParameterTypes173 = new String[] { "java.lang.Long" };
+
+		_methodName174 = "getByVideo";
+>>>>>>> refs/remotes/l2go@github/master
+
+		_methodParameterTypes174 = new String[] { "java.lang.Long" };
+
+<<<<<<< HEAD
 		_methodName169 = "removeByInstitutionId";
+=======
+		_methodName175 = "getByInstitution";
+>>>>>>> refs/remotes/l2go@github/master
 
-		_methodParameterTypes169 = new String[] { "java.lang.Long" };
+		_methodParameterTypes175 = new String[] { "java.lang.Long" };
 
+<<<<<<< HEAD
 		_methodName170 = "getByVideo";
+=======
+		_methodName176 = "getByVideoAndInstitution";
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodParameterTypes170 = new String[] { "java.lang.Long" };
 
 		_methodName171 = "getByInstitution";
@@ -133,6 +170,9 @@ public class Video_InstitutionLocalServiceClpInvoker {
 		_methodName172 = "getByVideoAndInstitution";
 
 		_methodParameterTypes172 = new String[] {
+=======
+		_methodParameterTypes176 = new String[] {
+>>>>>>> refs/remotes/l2go@github/master
 				"java.lang.Long", "java.lang.Long"
 			};
 	}
@@ -226,28 +266,61 @@ public class Video_InstitutionLocalServiceClpInvoker {
 			return Video_InstitutionLocalServiceUtil.updateVideo_Institution((de.uhh.l2g.plugins.model.Video_Institution)arguments[0]);
 		}
 
+<<<<<<< HEAD
 		if (_methodName162.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
+=======
+		if (_methodName166.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes166, parameterTypes)) {
+>>>>>>> refs/remotes/l2go@github/master
 			return Video_InstitutionLocalServiceUtil.getBeanIdentifier();
 		}
 
+<<<<<<< HEAD
 		if (_methodName163.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes163, parameterTypes)) {
+=======
+		if (_methodName167.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes167, parameterTypes)) {
+>>>>>>> refs/remotes/l2go@github/master
 			Video_InstitutionLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
+<<<<<<< HEAD
 		if (_methodName168.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes168, parameterTypes)) {
 			return Video_InstitutionLocalServiceUtil.removeByVideoId((java.lang.Long)arguments[0]);
+=======
+		if (_methodName172.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes172, parameterTypes)) {
+			return Video_InstitutionLocalServiceUtil.removeByVideoId((java.lang.Long)arguments[0]);
 		}
 
-		if (_methodName169.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes169, parameterTypes)) {
+		if (_methodName173.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes173, parameterTypes)) {
 			return Video_InstitutionLocalServiceUtil.removeByInstitutionId((java.lang.Long)arguments[0]);
 		}
 
+		if (_methodName174.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes174, parameterTypes)) {
+			return Video_InstitutionLocalServiceUtil.getByVideo((java.lang.Long)arguments[0]);
+>>>>>>> refs/remotes/l2go@github/master
+		}
+
+<<<<<<< HEAD
+		if (_methodName169.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes169, parameterTypes)) {
+			return Video_InstitutionLocalServiceUtil.removeByInstitutionId((java.lang.Long)arguments[0]);
+=======
+		if (_methodName175.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes175, parameterTypes)) {
+			return Video_InstitutionLocalServiceUtil.getByInstitution((java.lang.Long)arguments[0]);
+>>>>>>> refs/remotes/l2go@github/master
+		}
+
+<<<<<<< HEAD
 		if (_methodName170.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes170, parameterTypes)) {
 			return Video_InstitutionLocalServiceUtil.getByVideo((java.lang.Long)arguments[0]);
@@ -260,6 +333,10 @@ public class Video_InstitutionLocalServiceClpInvoker {
 
 		if (_methodName172.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes172, parameterTypes)) {
+=======
+		if (_methodName176.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes176, parameterTypes)) {
+>>>>>>> refs/remotes/l2go@github/master
 			return Video_InstitutionLocalServiceUtil.getByVideoAndInstitution((java.lang.Long)arguments[0],
 				(java.lang.Long)arguments[1]);
 		}
@@ -299,6 +376,7 @@ public class Video_InstitutionLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
+<<<<<<< HEAD
 	private String _methodName162;
 	private String[] _methodParameterTypes162;
 	private String _methodName163;
@@ -313,4 +391,20 @@ public class Video_InstitutionLocalServiceClpInvoker {
 	private String[] _methodParameterTypes171;
 	private String _methodName172;
 	private String[] _methodParameterTypes172;
+=======
+	private String _methodName166;
+	private String[] _methodParameterTypes166;
+	private String _methodName167;
+	private String[] _methodParameterTypes167;
+	private String _methodName172;
+	private String[] _methodParameterTypes172;
+	private String _methodName173;
+	private String[] _methodParameterTypes173;
+	private String _methodName174;
+	private String[] _methodParameterTypes174;
+	private String _methodName175;
+	private String[] _methodParameterTypes175;
+	private String _methodName176;
+	private String[] _methodParameterTypes176;
+>>>>>>> refs/remotes/l2go@github/master
 }

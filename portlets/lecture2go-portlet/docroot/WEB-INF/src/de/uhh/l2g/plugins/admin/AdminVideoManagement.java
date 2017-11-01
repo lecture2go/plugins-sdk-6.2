@@ -173,6 +173,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		request.setAttribute("backURL", backURL);
 
 		request.setAttribute("reqVideo", reqVideo);
+		request.setAttribute("video", reqVideo);
 		response.setRenderParameter("jspPage", "/admin/editVideo.jsp");
 	}
 	
@@ -224,6 +225,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		//save it
 		Video video = VideoLocalServiceUtil.addVideo(newVideo);
 		request.setAttribute("reqVideo", newVideo);
+		request.setAttribute("video", newVideo);
 		tagCloudArrayString.add(video.getTitle());
 
 		// update uploads for producer
@@ -259,8 +261,9 @@ public class AdminVideoManagement extends MVCPortlet {
 		LicenseLocalServiceUtil.addLicense(license);
 		request.setAttribute("reqLicense", license);
 
-		//update lg_video_institution table
+		//update lg_video_institution table and update previewVideoId in lg_lecturseries table
 		if(lectureseriesId>0){
+			LectureseriesLocalServiceUtil.updatePreviewVideoOpenAccess(LectureseriesLocalServiceUtil.getLectureseries(lectureseriesId));
 			List<Lectureseries_Institution> li = Lectureseries_InstitutionLocalServiceUtil.getByLectureseries(lectureseriesId);
 			ListIterator<Lectureseries_Institution> i = li.listIterator();
 			while(i.hasNext()){
@@ -391,6 +394,40 @@ public class AdminVideoManagement extends MVCPortlet {
 			writeJSON(resourceRequest, resourceResponse, json);
 		}
 		
+		if(resourceID.equals("updateThumbnail")){
+			String image="";
+			String fileLocation="";
+			String thumbnailLocation = "";
+			int time = ParamUtil.getInteger(resourceRequest, "inputTime");
+			
+			//proceed only if time > 0
+			if(time > 0){
+				//create new thumb nail 
+				if(video.getOpenAccess()==1){
+					image = video.getPreffix()+".jpg";
+					try {
+						fileLocation = ProducerLocalServiceUtil.getProdUcer(video.getProducerId()).getHomeDir() + "/" + video.getFilename();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}else{
+					image = video.getSPreffix()+".jpg";
+					try {
+						fileLocation = ProducerLocalServiceUtil.getProdUcer(video.getProducerId()).getHomeDir() + "/" + video.getSecureFilename();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				//
+				try {
+					thumbnailLocation = PropsUtil.get("lecture2go.images.system.path") + "/" + image;
+					FFmpegManager.createThumbnail(fileLocation, thumbnailLocation, time);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
 		if(resourceID.equals("updateMetadata")){
 			
 	 	    String title = ParamUtil.getString(resourceRequest, "title");
@@ -460,6 +497,7 @@ public class AdminVideoManagement extends MVCPortlet {
 					LectureseriesLocalServiceUtil.updateLectureseries(newLect);
 					//update lectureseries
 					LectureseriesLocalServiceUtil.updateOpenAccess(video, newLect);
+					LectureseriesLocalServiceUtil.updatePreviewVideoOpenAccess(newLect);
 					
 					//add lecture series parameter to tag cloud
 					tagCloudArrayString.add(newLect.getName());
@@ -515,8 +553,11 @@ public class AdminVideoManagement extends MVCPortlet {
 				video.setPassword(password);
 				// update video
 				VideoLocalServiceUtil.updateVideo(video);
-				// refresh open access for old lecture if lid > 0
-				if(oldLs.getLectureseriesId()>0) LectureseriesLocalServiceUtil.updateOpenAccess(video, oldLs);
+				// refresh open access and previewVideoId for old lecture if lid > 0
+				if(oldLs.getLectureseriesId()>0) {
+					LectureseriesLocalServiceUtil.updateOpenAccess(video, oldLs);
+					LectureseriesLocalServiceUtil.updatePreviewVideoOpenAccess(oldLs);
+				}
 				
 				//update lg_lectureseries_creators
 				if(lId.longValue() != oldLsId.longValue())
@@ -575,6 +616,18 @@ public class AdminVideoManagement extends MVCPortlet {
 			} catch (SystemException e) {
 				//e.printStackTrace();
 			}
+		}
+		
+		if(resourceID.equals("getJSONVideo")){
+			JSONObject uris = JSONFactoryUtil.createJSONObject();
+			for(int i=0; i<video.getPlayerUris().size(); i++){
+				uris.put("url"+i, video.getPlayerUris().get(i));
+			}
+			JSONObject jo = JSONFactoryUtil.createJSONObject();
+			jo.put("title", video.getTitle());
+			jo.put("playerUris", uris);
+			jo.put("thumbnail", video.getImage());
+			writeJSON(resourceRequest, resourceResponse, jo);
 		}
 
 		if(resourceID.equals("updateNumberOfProductions")){

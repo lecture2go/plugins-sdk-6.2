@@ -1,4 +1,3 @@
-<script type="text/javascript">jwplayer.key="";</script>
 <script>
     $(function() {
         // herausfinden ob es ein tablet/smartphone ist
@@ -6,42 +5,6 @@
 
         // Die Adresse des Web- und Videoservers ermitteln
         var server = "#";
-
-        // Diese Funktion wird genutzt um die Url Parameter auszulesen
-        var getUrlParameter = function(sParam){
-            var sPageURL = window.location.search.substring(1);
-            var sURLVariables = sPageURL.split('&');
-            for (var i = 0; i < sURLVariables.length; i++){
-                var sParameterName = sURLVariables[i].split('=');
-                if (sParameterName[0] == sParam){
-                    return sParameterName[1];
-                }
-            }
-        };
-
-        // Diese Funktion benutzen wir später zum Formatieren von Zeitangaben
-        var secondsToTime = function(secs) {
-            var sec_num = parseInt(secs, 10);
-            var hours   = Math.floor(sec_num / 3600);
-            var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
-            var seconds = sec_num - (hours * 3600) - (minutes * 60);
-
-            if (hours   < 10) {hours   = "0"+hours;}
-            if (minutes < 10) {minutes = "0"+minutes;}
-            if (seconds < 10) {seconds = "0"+seconds;}
-            return hours+':'+minutes+':'+seconds;
-        };
-        
-        var timeToSeconds = function (timeStr) {
-        	var seconds = 0;
-        	var hh = timeStr.slice(0,2);
-        	var mm = timeStr.slice(3,5);
-        	var ss = timeStr.slice(6,8);
-        	seconds = parseInt(hh) * 3600;
-        	seconds = seconds + parseInt(mm) * 60;
-        	seconds = seconds + parseInt(ss);
-        	return seconds;
-        };
 
         // Start- und Endzeit der Zitatfunktion ermitteln (Durch die URL Parameter)
         var frameStart = getUrlParameter('start');
@@ -61,6 +24,7 @@
         var playerUri4 ="${video.playerUris.get(3)}";
         var playerUri5 ="${video.playerUris.get(4)}";
         
+
         //hack for HLS in firefox and mp3
         var containerFormat = "${video.containerFormat}";
         var isFirefox = typeof InstallTrigger !== 'undefined';
@@ -95,18 +59,19 @@
             androidhls: true
         }).onReady(function() {
 
-         	// Inputfelder für Start und Ende der Zitate / Kapitel speichern 
+         	// Inputfelder fÃ¼r Start und Ende der Zitate / Kapitel speichern 
             var $inputTimeStart = $("#<portlet:namespace></portlet:namespace>timeStart").val("");
             var $inputTimeEnd = $("#<portlet:namespace></portlet:namespace>timeEnd").val("");
             var $citation = $("#<portlet:namespace></portlet:namespace>citation").val("");
+            var $citationiframe = $("#<portlet:namespace></portlet:namespace>citationiframe").val("");
 
             var $chapters = $('#chapters');
             var $chapterDivs = $chapters.find("div.chaptertile");
             
-            // Chapter ids und Zeiten in Object für spätere Abfragen speichern
+            // Chapter ids und Zeiten in Object fÃ¼r spÃ¤tere Abfragen speichern
             var chapters = [];
             for (var i = 0; i < $chapterDivs.length; i++) {
-            	// Array chapters enthält Triple aus id, Anfangs- und Endzeit der Kapitel
+            	// Array chapters enthÃ¤lt Triple aus id, Anfangs- und Endzeit der Kapitel
             	var chapter = {
             			id : $chapterDivs.eq(i).attr("id"),
             			begin : timeToSeconds($chapterDivs.eq(i).attr("begin")),
@@ -117,13 +82,13 @@
 
             if (frameStart && frameEnd) {
                 // Sollten sich die Start- und Endzeit in den URL Parametern befinden
-                // wird in diesen Abschnitt dafür gesorgt das man auch nur das Entsprechende
+                // wird in diesen Abschnitt dafÃ¼r gesorgt das man auch nur das Entsprechende
                 // Videomaterial zu sehen bekommt
 
 
-                // iOS und Android unterstützen seek nur wenn der Nutzer
+                // iOS und Android unterstÃ¼tzen seek nur wenn der Nutzer
                 // selbst manuell das vide gestartet hat. Wir werden den start des Zitates
-                // später anders lösen
+                // spÃ¤ter anders lÃ¶sen
                 if (!isTouchDevice) {
                 	jwplayer().on('firstFrame', function() { 
                 		jwplayer().play();
@@ -133,15 +98,15 @@
             }
 
                 
-            // Event listener alle 100 ms während playback
+            // Event listener alle 100 ms wÃ¤hrend playback
             jwplayer().onTime( function(event){
 
-                // Sicher stellen, dass der gewählte Zeitraum eingehalten wird
+                // Sicher stellen, dass der gewÃ¤hlte Zeitraum eingehalten wird
 
                 var pos =  Math.floor(event.position);
 
                 if (pos < frameStart && isTouchDevice) {
-                    // Nur unter iOS und Android nötig,
+                    // Nur unter iOS und Android nÃ¶tig,
                     jwplayer().seek(frameStart);
                 } else if (pos > frameEnd) {
                     jwplayer().seek(frameStart);
@@ -168,7 +133,7 @@
                 }
             });
 
-            // Diese Stelle ist wiederum nur auf PC nötig.
+            // Diese Stelle ist wiederum nur auf PC nÃ¶tig.
             // Hiermit wird verhindert, dass der Nutzer per Tastatur
             // aus den Zitatsbereich herausspult
             if (!isTouchDevice) {
@@ -198,7 +163,7 @@
             	event.stopPropagation();
             });
 
-            // Im nachfolgenden Abschnitt wird den Nutzer ermöglicht
+            // Im nachfolgenden Abschnitt wird den Nutzer ermÃ¶glicht
             // eigene Zitate zu erstellen und zu teilen
             var player = jwplayer();
 
@@ -234,7 +199,7 @@
 
                 $inputTimeEnd.val(EndTimeStr);
 
-                if (startFrameTime && endFrameTime) {
+                if (startFrameTime && endFrameTime && startFrameTime<endFrameTime) {
                 	// Falls Startzeit nach Endzeit liegt, Zeiten angleichen
                 	if (startFrameTime > endFrameTime) {
                 		startFrameTime = endFrameTime;
@@ -250,6 +215,11 @@
             
             function generateClipLink (firstFrame, lastFrame) {
             	$citation.val("${video.url}"+"/"+firstFrame+"/"+lastFrame);
+            	var vid = <%=video.getVideoId()%>;
+            	var host ='<%=PropsUtil.get("lecture2go.web.root")%>';
+            	
+            	var iframe="<iframe src='"+host+"/lecture2go-portlet/player/iframe/?v="+vid+"/"+firstFrame+"/"+lastFrame+"' frameborder='0' width='647' height='373' allowfullscreen></iframe>";
+            	$citationiframe.val(iframe);
             }
         });
     });

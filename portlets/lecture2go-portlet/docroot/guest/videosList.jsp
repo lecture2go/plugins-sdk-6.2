@@ -297,7 +297,7 @@
 				oId = vidDummy.getVideoId()+"";
 			}else{
 				oId = lectser.getLectureseriesId()+"";
-				vidDummy = VideoLocalServiceUtil.getFullVideo(lectser.getLatestOpenAccessVideoId());
+				vidDummy = VideoLocalServiceUtil.getFullVideo(lectser.getPreviewVideoId());
 			}
 			int videoCount = lectser.getNumberOfOpenAccessVideos();
 			List<Creator> cl = CreatorLocalServiceUtil.getCreatorsByLectureseriesId(lectser.getLectureseriesId());

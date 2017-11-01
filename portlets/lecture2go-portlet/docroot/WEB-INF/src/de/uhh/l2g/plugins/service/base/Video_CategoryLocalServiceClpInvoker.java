@@ -106,16 +106,45 @@ public class Video_CategoryLocalServiceClpInvoker {
 				"de.uhh.l2g.plugins.model.Video_Category"
 			};
 
+<<<<<<< HEAD
 		_methodName162 = "getBeanIdentifier";
+=======
+		_methodName166 = "getBeanIdentifier";
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodParameterTypes162 = new String[] {  };
+=======
+		_methodParameterTypes166 = new String[] {  };
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodName163 = "setBeanIdentifier";
+=======
+		_methodName167 = "setBeanIdentifier";
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodParameterTypes163 = new String[] { "java.lang.String" };
+=======
+		_methodParameterTypes167 = new String[] { "java.lang.String" };
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodName168 = "getByVideo";
+=======
+		_methodName172 = "getByVideo";
 
+		_methodParameterTypes172 = new String[] { "java.lang.Long" };
+
+		_methodName173 = "getByCategory";
+
+		_methodParameterTypes173 = new String[] { "java.lang.Long" };
+
+		_methodName174 = "removeByVideo";
+>>>>>>> refs/remotes/l2go@github/master
+
+<<<<<<< HEAD
 		_methodParameterTypes168 = new String[] { "java.lang.Long" };
 
 		_methodName169 = "getByCategory";
@@ -129,6 +158,13 @@ public class Video_CategoryLocalServiceClpInvoker {
 		_methodName171 = "updateCategoryByVideoAndCategory";
 
 		_methodParameterTypes171 = new String[] {
+=======
+		_methodParameterTypes174 = new String[] { "java.lang.Long" };
+
+		_methodName175 = "updateCategoryByVideoAndCategory";
+
+		_methodParameterTypes175 = new String[] {
+>>>>>>> refs/remotes/l2go@github/master
 				"java.lang.Long", "java.lang.Long", "java.lang.Long"
 			};
 	}
@@ -222,37 +258,67 @@ public class Video_CategoryLocalServiceClpInvoker {
 			return Video_CategoryLocalServiceUtil.updateVideo_Category((de.uhh.l2g.plugins.model.Video_Category)arguments[0]);
 		}
 
+<<<<<<< HEAD
 		if (_methodName162.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
+=======
+		if (_methodName166.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes166, parameterTypes)) {
+>>>>>>> refs/remotes/l2go@github/master
 			return Video_CategoryLocalServiceUtil.getBeanIdentifier();
 		}
 
+<<<<<<< HEAD
 		if (_methodName163.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes163, parameterTypes)) {
+=======
+		if (_methodName167.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes167, parameterTypes)) {
+>>>>>>> refs/remotes/l2go@github/master
 			Video_CategoryLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
+<<<<<<< HEAD
 		if (_methodName168.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes168, parameterTypes)) {
+=======
+		if (_methodName172.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes172, parameterTypes)) {
+>>>>>>> refs/remotes/l2go@github/master
 			return Video_CategoryLocalServiceUtil.getByVideo((java.lang.Long)arguments[0]);
 		}
 
+<<<<<<< HEAD
 		if (_methodName169.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes169, parameterTypes)) {
+=======
+		if (_methodName173.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes173, parameterTypes)) {
+>>>>>>> refs/remotes/l2go@github/master
 			return Video_CategoryLocalServiceUtil.getByCategory((java.lang.Long)arguments[0]);
 		}
 
+<<<<<<< HEAD
 		if (_methodName170.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes170, parameterTypes)) {
+=======
+		if (_methodName174.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes174, parameterTypes)) {
+>>>>>>> refs/remotes/l2go@github/master
 			Video_CategoryLocalServiceUtil.removeByVideo((java.lang.Long)arguments[0]);
 
 			return null;
 		}
 
+<<<<<<< HEAD
 		if (_methodName171.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes171, parameterTypes)) {
+=======
+		if (_methodName175.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes175, parameterTypes)) {
+>>>>>>> refs/remotes/l2go@github/master
 			Video_CategoryLocalServiceUtil.updateCategoryByVideoAndCategory((java.lang.Long)arguments[0],
 				(java.lang.Long)arguments[1], (java.lang.Long)arguments[2]);
 
@@ -294,6 +360,7 @@ public class Video_CategoryLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
+<<<<<<< HEAD
 	private String _methodName162;
 	private String[] _methodParameterTypes162;
 	private String _methodName163;
@@ -306,4 +373,18 @@ public class Video_CategoryLocalServiceClpInvoker {
 	private String[] _methodParameterTypes170;
 	private String _methodName171;
 	private String[] _methodParameterTypes171;
+=======
+	private String _methodName166;
+	private String[] _methodParameterTypes166;
+	private String _methodName167;
+	private String[] _methodParameterTypes167;
+	private String _methodName172;
+	private String[] _methodParameterTypes172;
+	private String _methodName173;
+	private String[] _methodParameterTypes173;
+	private String _methodName174;
+	private String[] _methodParameterTypes174;
+	private String _methodName175;
+	private String[] _methodParameterTypes175;
+>>>>>>> refs/remotes/l2go@github/master
 }

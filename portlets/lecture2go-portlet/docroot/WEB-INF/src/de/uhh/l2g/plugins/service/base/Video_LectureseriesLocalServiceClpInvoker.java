@@ -106,24 +106,61 @@ public class Video_LectureseriesLocalServiceClpInvoker {
 				"de.uhh.l2g.plugins.model.Video_Lectureseries"
 			};
 
+<<<<<<< HEAD
 		_methodName162 = "getBeanIdentifier";
+=======
+		_methodName166 = "getBeanIdentifier";
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodParameterTypes162 = new String[] {  };
+=======
+		_methodParameterTypes166 = new String[] {  };
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodName163 = "setBeanIdentifier";
+=======
+		_methodName167 = "setBeanIdentifier";
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodParameterTypes163 = new String[] { "java.lang.String" };
+=======
+		_methodParameterTypes167 = new String[] { "java.lang.String" };
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodName168 = "removeByLectureseriesId";
+=======
+		_methodName172 = "removeByLectureseriesId";
 
-		_methodParameterTypes168 = new String[] { "java.lang.Long" };
+		_methodParameterTypes172 = new String[] { "java.lang.Long" };
 
+		_methodName173 = "removeByVideoId";
+
+		_methodParameterTypes173 = new String[] { "java.lang.Long" };
+
+		_methodName174 = "getByVideo";
+>>>>>>> refs/remotes/l2go@github/master
+
+		_methodParameterTypes174 = new String[] { "java.lang.Long" };
+
+<<<<<<< HEAD
 		_methodName169 = "removeByVideoId";
+=======
+		_methodName175 = "getByLectureseries";
+>>>>>>> refs/remotes/l2go@github/master
 
-		_methodParameterTypes169 = new String[] { "java.lang.Long" };
+		_methodParameterTypes175 = new String[] { "java.lang.Long" };
 
+<<<<<<< HEAD
 		_methodName170 = "getByVideo";
+=======
+		_methodName176 = "getByLectureseriesAndOpenAccess";
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodParameterTypes170 = new String[] { "java.lang.Long" };
 
 		_methodName171 = "getByLectureseries";
@@ -145,6 +182,21 @@ public class Video_LectureseriesLocalServiceClpInvoker {
 		_methodName175 = "updateOpenAccessByVideo";
 
 		_methodParameterTypes175 = new String[] { "de.uhh.l2g.plugins.model.Video" };
+=======
+		_methodParameterTypes176 = new String[] { "java.lang.Long", "int" };
+
+		_methodName177 = "getNumberOfVideosByLectureseriesAndOpenAccess";
+
+		_methodParameterTypes177 = new String[] { "java.lang.Long", "int" };
+
+		_methodName178 = "getNumberOfVideosByLectureseries";
+
+		_methodParameterTypes178 = new String[] { "java.lang.Long" };
+
+		_methodName179 = "updateOpenAccessByVideo";
+
+		_methodParameterTypes179 = new String[] { "de.uhh.l2g.plugins.model.Video" };
+>>>>>>> refs/remotes/l2go@github/master
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -236,28 +288,61 @@ public class Video_LectureseriesLocalServiceClpInvoker {
 			return Video_LectureseriesLocalServiceUtil.updateVideo_Lectureseries((de.uhh.l2g.plugins.model.Video_Lectureseries)arguments[0]);
 		}
 
+<<<<<<< HEAD
 		if (_methodName162.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
+=======
+		if (_methodName166.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes166, parameterTypes)) {
+>>>>>>> refs/remotes/l2go@github/master
 			return Video_LectureseriesLocalServiceUtil.getBeanIdentifier();
 		}
 
+<<<<<<< HEAD
 		if (_methodName163.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes163, parameterTypes)) {
+=======
+		if (_methodName167.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes167, parameterTypes)) {
+>>>>>>> refs/remotes/l2go@github/master
 			Video_LectureseriesLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
+<<<<<<< HEAD
 		if (_methodName168.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes168, parameterTypes)) {
 			return Video_LectureseriesLocalServiceUtil.removeByLectureseriesId((java.lang.Long)arguments[0]);
+=======
+		if (_methodName172.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes172, parameterTypes)) {
+			return Video_LectureseriesLocalServiceUtil.removeByLectureseriesId((java.lang.Long)arguments[0]);
 		}
 
-		if (_methodName169.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes169, parameterTypes)) {
+		if (_methodName173.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes173, parameterTypes)) {
 			return Video_LectureseriesLocalServiceUtil.removeByVideoId((java.lang.Long)arguments[0]);
 		}
 
+		if (_methodName174.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes174, parameterTypes)) {
+			return Video_LectureseriesLocalServiceUtil.getByVideo((java.lang.Long)arguments[0]);
+>>>>>>> refs/remotes/l2go@github/master
+		}
+
+<<<<<<< HEAD
+		if (_methodName169.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes169, parameterTypes)) {
+			return Video_LectureseriesLocalServiceUtil.removeByVideoId((java.lang.Long)arguments[0]);
+=======
+		if (_methodName175.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes175, parameterTypes)) {
+			return Video_LectureseriesLocalServiceUtil.getByLectureseries((java.lang.Long)arguments[0]);
+>>>>>>> refs/remotes/l2go@github/master
+		}
+
+<<<<<<< HEAD
 		if (_methodName170.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes170, parameterTypes)) {
 			return Video_LectureseriesLocalServiceUtil.getByVideo((java.lang.Long)arguments[0]);
@@ -287,6 +372,27 @@ public class Video_LectureseriesLocalServiceClpInvoker {
 
 		if (_methodName175.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes175, parameterTypes)) {
+=======
+		if (_methodName176.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes176, parameterTypes)) {
+			return Video_LectureseriesLocalServiceUtil.getByLectureseriesAndOpenAccess((java.lang.Long)arguments[0],
+				((Integer)arguments[1]).intValue());
+		}
+
+		if (_methodName177.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes177, parameterTypes)) {
+			return Video_LectureseriesLocalServiceUtil.getNumberOfVideosByLectureseriesAndOpenAccess((java.lang.Long)arguments[0],
+				((Integer)arguments[1]).intValue());
+		}
+
+		if (_methodName178.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes178, parameterTypes)) {
+			return Video_LectureseriesLocalServiceUtil.getNumberOfVideosByLectureseries((java.lang.Long)arguments[0]);
+		}
+
+		if (_methodName179.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes179, parameterTypes)) {
+>>>>>>> refs/remotes/l2go@github/master
 			return Video_LectureseriesLocalServiceUtil.updateOpenAccessByVideo((de.uhh.l2g.plugins.model.Video)arguments[0]);
 		}
 
@@ -325,6 +431,7 @@ public class Video_LectureseriesLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
+<<<<<<< HEAD
 	private String _methodName162;
 	private String[] _methodParameterTypes162;
 	private String _methodName163;
@@ -345,4 +452,26 @@ public class Video_LectureseriesLocalServiceClpInvoker {
 	private String[] _methodParameterTypes174;
 	private String _methodName175;
 	private String[] _methodParameterTypes175;
+=======
+	private String _methodName166;
+	private String[] _methodParameterTypes166;
+	private String _methodName167;
+	private String[] _methodParameterTypes167;
+	private String _methodName172;
+	private String[] _methodParameterTypes172;
+	private String _methodName173;
+	private String[] _methodParameterTypes173;
+	private String _methodName174;
+	private String[] _methodParameterTypes174;
+	private String _methodName175;
+	private String[] _methodParameterTypes175;
+	private String _methodName176;
+	private String[] _methodParameterTypes176;
+	private String _methodName177;
+	private String[] _methodParameterTypes177;
+	private String _methodName178;
+	private String[] _methodParameterTypes178;
+	private String _methodName179;
+	private String[] _methodParameterTypes179;
+>>>>>>> refs/remotes/l2go@github/master
 }

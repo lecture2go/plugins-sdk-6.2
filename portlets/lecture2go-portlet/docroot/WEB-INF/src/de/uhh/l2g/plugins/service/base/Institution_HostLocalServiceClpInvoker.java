@@ -106,22 +106,59 @@ public class Institution_HostLocalServiceClpInvoker {
 				"de.uhh.l2g.plugins.model.Institution_Host"
 			};
 
+<<<<<<< HEAD
 		_methodName162 = "getBeanIdentifier";
+=======
+		_methodName166 = "getBeanIdentifier";
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodParameterTypes162 = new String[] {  };
+=======
+		_methodParameterTypes166 = new String[] {  };
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodName163 = "setBeanIdentifier";
+=======
+		_methodName167 = "setBeanIdentifier";
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodParameterTypes163 = new String[] { "java.lang.String" };
+=======
+		_methodParameterTypes167 = new String[] { "java.lang.String" };
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodName168 = "getByGroupId";
+=======
+		_methodName172 = "getByGroupId";
 
-		_methodParameterTypes168 = new String[] { "long" };
+		_methodParameterTypes172 = new String[] { "long" };
 
+		_methodName173 = "getByInstitutionId";
+
+		_methodParameterTypes173 = new String[] { "long" };
+
+		_methodName174 = "getByInstitution";
+>>>>>>> refs/remotes/l2go@github/master
+
+		_methodParameterTypes174 = new String[] { "long" };
+
+<<<<<<< HEAD
 		_methodName169 = "getByInstitutionId";
+=======
+		_methodName175 = "getByGroupIdAndInstitutionId";
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodParameterTypes169 = new String[] { "long" };
+=======
+		_methodParameterTypes175 = new String[] { "long", "long", "long" };
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodName170 = "getByInstitution";
 
 		_methodParameterTypes170 = new String[] { "long" };
@@ -143,25 +180,77 @@ public class Institution_HostLocalServiceClpInvoker {
 		_methodParameterTypes174 = new String[] { "long", "long" };
 
 		_methodName175 = "getByGroupIdAndHostIdCount";
+=======
+		_methodName176 = "getLinkByGroupIdAndInstitutionId";
+>>>>>>> refs/remotes/l2go@github/master
 
 		_methodParameterTypes175 = new String[] { "long", "long" };
 
+<<<<<<< HEAD
 		_methodName176 = "getListByGroupIdAndInstitutionId";
+=======
+		_methodName177 = "getByGroupIdAndHostId";
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodParameterTypes176 = new String[] { "long", "long", "long" };
+=======
+		_methodParameterTypes177 = new String[] { "long", "long" };
 
-		_methodName178 = "getDefaultInstitutionHostId";
+		_methodName178 = "getListByGroupIdAndHostId";
 
 		_methodParameterTypes178 = new String[] { "long", "long" };
 
-		_methodName179 = "addDefaultInstitutionHost";
+		_methodName179 = "getByGroupIdAndHostIdCount";
 
-		_methodParameterTypes179 = new String[] {
+		_methodParameterTypes179 = new String[] { "long", "long" };
+
+		_methodName180 = "getListByGroupIdAndInstitutionId";
+
+		_methodParameterTypes180 = new String[] { "long", "long", "long" };
+
+		_methodName182 = "getDefaultInstitutionHostId";
+
+		_methodParameterTypes182 = new String[] { "long", "long" };
+
+		_methodName183 = "addDefaultInstitutionHost";
+
+		_methodParameterTypes183 = new String[] {
+				"long", "long", "com.liferay.portal.service.ServiceContext"
+			};
+>>>>>>> refs/remotes/l2go@github/master
+
+<<<<<<< HEAD
+		_methodName178 = "getDefaultInstitutionHostId";
+=======
+		_methodName184 = "addEntry";
+>>>>>>> refs/remotes/l2go@github/master
+
+<<<<<<< HEAD
+		_methodParameterTypes178 = new String[] { "long", "long" };
+=======
+		_methodParameterTypes184 = new String[] {
+				"long", "long", "com.liferay.portal.service.ServiceContext"
+			};
+>>>>>>> refs/remotes/l2go@github/master
+
+<<<<<<< HEAD
+		_methodName179 = "addDefaultInstitutionHost";
+=======
+		_methodName185 = "updateEntry";
+>>>>>>> refs/remotes/l2go@github/master
+
+		_methodParameterTypes185 = new String[] {
 				"long", "long", "com.liferay.portal.service.ServiceContext"
 			};
 
+<<<<<<< HEAD
 		_methodName180 = "addEntry";
+=======
+		_methodName186 = "deleteLinkById";
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodParameterTypes180 = new String[] {
 				"long", "long", "com.liferay.portal.service.ServiceContext"
 			};
@@ -175,18 +264,37 @@ public class Institution_HostLocalServiceClpInvoker {
 		_methodName182 = "deleteLinkById";
 
 		_methodParameterTypes182 = new String[] {
+=======
+		_methodParameterTypes186 = new String[] {
+>>>>>>> refs/remotes/l2go@github/master
 				"long", "com.liferay.portal.service.ServiceContext"
 			};
 
+<<<<<<< HEAD
 		_methodName183 = "deleteLinkByInstitution";
+=======
+		_methodName187 = "deleteLinkByInstitution";
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodParameterTypes183 = new String[] {
+=======
+		_methodParameterTypes187 = new String[] {
+>>>>>>> refs/remotes/l2go@github/master
 				"de.uhh.l2g.plugins.model.Institution", "long", "long"
 			};
 
+<<<<<<< HEAD
 		_methodName184 = "updateCounter";
+=======
+		_methodName188 = "updateCounter";
+>>>>>>> refs/remotes/l2go@github/master
 
+<<<<<<< HEAD
 		_methodParameterTypes184 = new String[] {  };
+=======
+		_methodParameterTypes188 = new String[] {  };
+>>>>>>> refs/remotes/l2go@github/master
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -278,18 +386,29 @@ public class Institution_HostLocalServiceClpInvoker {
 			return Institution_HostLocalServiceUtil.updateInstitution_Host((de.uhh.l2g.plugins.model.Institution_Host)arguments[0]);
 		}
 
+<<<<<<< HEAD
 		if (_methodName162.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
+=======
+		if (_methodName166.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes166, parameterTypes)) {
+>>>>>>> refs/remotes/l2go@github/master
 			return Institution_HostLocalServiceUtil.getBeanIdentifier();
 		}
 
+<<<<<<< HEAD
 		if (_methodName163.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes163, parameterTypes)) {
+=======
+		if (_methodName167.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes167, parameterTypes)) {
+>>>>>>> refs/remotes/l2go@github/master
 			Institution_HostLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
+<<<<<<< HEAD
 		if (_methodName168.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes168, parameterTypes)) {
 			return Institution_HostLocalServiceUtil.getByGroupId(((Long)arguments[0]).longValue());
@@ -312,20 +431,31 @@ public class Institution_HostLocalServiceClpInvoker {
 				((Long)arguments[2]).longValue());
 		}
 
+=======
+>>>>>>> refs/remotes/l2go@github/master
 		if (_methodName172.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes172, parameterTypes)) {
+<<<<<<< HEAD
 			return Institution_HostLocalServiceUtil.getLinkByGroupIdAndInstitutionId(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue());
+=======
+			return Institution_HostLocalServiceUtil.getByGroupId(((Long)arguments[0]).longValue());
+>>>>>>> refs/remotes/l2go@github/master
 		}
 
 		if (_methodName173.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes173, parameterTypes)) {
+<<<<<<< HEAD
 			return Institution_HostLocalServiceUtil.getByGroupIdAndHostId(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue());
+=======
+			return Institution_HostLocalServiceUtil.getByInstitutionId(((Long)arguments[0]).longValue());
+>>>>>>> refs/remotes/l2go@github/master
 		}
 
 		if (_methodName174.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes174, parameterTypes)) {
+<<<<<<< HEAD
 			return Institution_HostLocalServiceUtil.getListByGroupIdAndHostId(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue());
 		}
@@ -339,25 +469,60 @@ public class Institution_HostLocalServiceClpInvoker {
 		if (_methodName176.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes176, parameterTypes)) {
 			return Institution_HostLocalServiceUtil.getListByGroupIdAndInstitutionId(((Long)arguments[0]).longValue(),
+=======
+			return Institution_HostLocalServiceUtil.getByInstitution(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName175.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes175, parameterTypes)) {
+			return Institution_HostLocalServiceUtil.getByGroupIdAndInstitutionId(((Long)arguments[0]).longValue(),
+>>>>>>> refs/remotes/l2go@github/master
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue());
 		}
 
+<<<<<<< HEAD
 		if (_methodName178.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes178, parameterTypes)) {
 			return Institution_HostLocalServiceUtil.getDefaultInstitutionHostId(((Long)arguments[0]).longValue(),
+=======
+		if (_methodName176.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes176, parameterTypes)) {
+			return Institution_HostLocalServiceUtil.getLinkByGroupIdAndInstitutionId(((Long)arguments[0]).longValue(),
+>>>>>>> refs/remotes/l2go@github/master
 				((Long)arguments[1]).longValue());
 		}
 
+<<<<<<< HEAD
+=======
+		if (_methodName177.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes177, parameterTypes)) {
+			return Institution_HostLocalServiceUtil.getByGroupIdAndHostId(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName178.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes178, parameterTypes)) {
+			return Institution_HostLocalServiceUtil.getListByGroupIdAndHostId(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
+		}
+
+>>>>>>> refs/remotes/l2go@github/master
 		if (_methodName179.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes179, parameterTypes)) {
+<<<<<<< HEAD
 			return Institution_HostLocalServiceUtil.addDefaultInstitutionHost(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(com.liferay.portal.service.ServiceContext)arguments[2]);
+=======
+			return Institution_HostLocalServiceUtil.getByGroupIdAndHostIdCount(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
+>>>>>>> refs/remotes/l2go@github/master
 		}
 
 		if (_methodName180.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes180, parameterTypes)) {
+<<<<<<< HEAD
 			return Institution_HostLocalServiceUtil.addEntry(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(com.liferay.portal.service.ServiceContext)arguments[2]);
@@ -379,12 +544,60 @@ public class Institution_HostLocalServiceClpInvoker {
 		if (_methodName183.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes183, parameterTypes)) {
 			return Institution_HostLocalServiceUtil.deleteLinkByInstitution((de.uhh.l2g.plugins.model.Institution)arguments[0],
+=======
+			return Institution_HostLocalServiceUtil.getListByGroupIdAndInstitutionId(((Long)arguments[0]).longValue(),
+>>>>>>> refs/remotes/l2go@github/master
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue());
 		}
 
+<<<<<<< HEAD
 		if (_methodName184.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes184, parameterTypes)) {
+=======
+		if (_methodName182.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes182, parameterTypes)) {
+			return Institution_HostLocalServiceUtil.getDefaultInstitutionHostId(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName183.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes183, parameterTypes)) {
+			return Institution_HostLocalServiceUtil.addDefaultInstitutionHost(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[2]);
+		}
+
+		if (_methodName184.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes184, parameterTypes)) {
+			return Institution_HostLocalServiceUtil.addEntry(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[2]);
+		}
+
+		if (_methodName185.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes185, parameterTypes)) {
+			return Institution_HostLocalServiceUtil.updateEntry(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[2]);
+		}
+
+		if (_methodName186.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes186, parameterTypes)) {
+			return Institution_HostLocalServiceUtil.deleteLinkById(((Long)arguments[0]).longValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[1]);
+		}
+
+		if (_methodName187.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes187, parameterTypes)) {
+			return Institution_HostLocalServiceUtil.deleteLinkByInstitution((de.uhh.l2g.plugins.model.Institution)arguments[0],
+				((Long)arguments[1]).longValue(),
+				((Long)arguments[2]).longValue());
+		}
+
+		if (_methodName188.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes188, parameterTypes)) {
+>>>>>>> refs/remotes/l2go@github/master
 			return Institution_HostLocalServiceUtil.updateCounter();
 		}
 
@@ -423,6 +636,7 @@ public class Institution_HostLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
+<<<<<<< HEAD
 	private String _methodName162;
 	private String[] _methodParameterTypes162;
 	private String _methodName163;
@@ -435,6 +649,12 @@ public class Institution_HostLocalServiceClpInvoker {
 	private String[] _methodParameterTypes170;
 	private String _methodName171;
 	private String[] _methodParameterTypes171;
+=======
+	private String _methodName166;
+	private String[] _methodParameterTypes166;
+	private String _methodName167;
+	private String[] _methodParameterTypes167;
+>>>>>>> refs/remotes/l2go@github/master
 	private String _methodName172;
 	private String[] _methodParameterTypes172;
 	private String _methodName173;
@@ -451,12 +671,21 @@ public class Institution_HostLocalServiceClpInvoker {
 	private String[] _methodParameterTypes179;
 	private String _methodName180;
 	private String[] _methodParameterTypes180;
-	private String _methodName181;
-	private String[] _methodParameterTypes181;
 	private String _methodName182;
 	private String[] _methodParameterTypes182;
 	private String _methodName183;
 	private String[] _methodParameterTypes183;
 	private String _methodName184;
 	private String[] _methodParameterTypes184;
+<<<<<<< HEAD
+=======
+	private String _methodName185;
+	private String[] _methodParameterTypes185;
+	private String _methodName186;
+	private String[] _methodParameterTypes186;
+	private String _methodName187;
+	private String[] _methodParameterTypes187;
+	private String _methodName188;
+	private String[] _methodParameterTypes188;
+>>>>>>> refs/remotes/l2go@github/master
 }

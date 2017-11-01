@@ -1855,6 +1855,7 @@ input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_jobTitle,
 input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_middleName,
 input#_lgadmincreatorsmanagement_WAR_lecture2goportlet_middleName {
 	width: 80px;
+	height: 21px;
 }
 
 input#_lgadminvideomanagement_WAR_lecture2goportlet_firstName,
@@ -1914,7 +1915,7 @@ input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_lastName {
 }
 
 .edit-video-lable {
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 3px solid #f0f0f0;
     font-family: TheSansUHHBold, sans-serif;
     font-size: 15px !important;
     font-style: normal;
@@ -1963,7 +1964,7 @@ label.edit-video-lable.first {
 }
 
 .add-new-creator-term-object #add {
-    margin-top: 25px;
+    margin-top: 39px;
 }
 
 
@@ -2233,6 +2234,19 @@ div.filter-menu-link span.icon-large.icon-remove {
     width: 30px;
 }
 
+.aui.icon-chevron-down.thumb-90::before {
+    margin-bottom: -10px;
+    transform: rotate(-90deg) scale(1.15);
+}
+
+.aui label, .aui input, .aui button, .aui select, .aui textarea {
+    line-height: 33px;
+}
+
+.aui.icon-chevron-down.thumb::before {
+    margin-bottom: -10px;
+}
+
 .aui .accordion-group .accordion-heading.toggler-header-collapsed .accordion-toggle::before, .aui .accordion-group .accordion-heading.toggler-header-expanded .accordion-toggle::before, .aui .lfr-add-panel .lfr-page-template .lfr-page-template-title.toggler-header-collapsed::before, .aui .lfr-add-panel .lfr-page-template .lfr-page-template-title.toggler-header-expanded::before {
     background-image: url("/lecture2go-theme/images/arrow_down.svg");
     content: " ";
@@ -2258,6 +2272,10 @@ div.filter-menu-link span.icon-large.icon-remove {
 
 .aui .accordion {
     margin-bottom: 0px;
+}
+
+.aui legend{
+	border-width: 0 0 3px;
 }
 
 .aui .portlet-dockbar {
@@ -2610,7 +2628,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
     background-color: rgba(255, 255, 255, 0.3);
     border: none;
     margin: auto;
-    padding: 5px 15px;
+    padding: 0px 15px;
     width: 230px; /* a fixed width is added to be compatible with older safari versions*/
 }
 
@@ -3051,3 +3069,14 @@ strong, b, th, #kopf .sprachwechsel {
 	content: "\a";
 }
 /** End Video Statitic Portlet Styles **/
+
+#thumbnail-content #player1{
+	width: 690px !important;
+	margin-top: 2px;
+}
+
+.aui .alert.alert-block {
+    margin: auto;
+    max-width: 1096px;
+    padding: 0;
+}
