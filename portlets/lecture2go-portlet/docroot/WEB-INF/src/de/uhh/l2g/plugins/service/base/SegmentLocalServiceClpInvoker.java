@@ -102,107 +102,32 @@ public class SegmentLocalServiceClpInvoker {
 				"de.uhh.l2g.plugins.model.Segment"
 			};
 
-<<<<<<< HEAD
-		_methodName162 = "getBeanIdentifier";
-=======
 		_methodName166 = "getBeanIdentifier";
->>>>>>> refs/remotes/l2go@github/master
 
-<<<<<<< HEAD
-		_methodParameterTypes162 = new String[] {  };
-=======
 		_methodParameterTypes166 = new String[] {  };
->>>>>>> refs/remotes/l2go@github/master
 
-<<<<<<< HEAD
-		_methodName163 = "setBeanIdentifier";
-=======
 		_methodName167 = "setBeanIdentifier";
->>>>>>> refs/remotes/l2go@github/master
 
-<<<<<<< HEAD
-		_methodParameterTypes163 = new String[] { "java.lang.String" };
-=======
 		_methodParameterTypes167 = new String[] { "java.lang.String" };
->>>>>>> refs/remotes/l2go@github/master
 
-<<<<<<< HEAD
-		_methodName168 = "deleteThumbhailsFromSegments";
-=======
 		_methodName172 = "deleteThumbhailsFromSegments";
->>>>>>> refs/remotes/l2go@github/master
 
-<<<<<<< HEAD
-		_methodParameterTypes168 = new String[] { "java.util.List" };
-=======
 		_methodParameterTypes172 = new String[] { "java.util.List" };
->>>>>>> refs/remotes/l2go@github/master
 
-<<<<<<< HEAD
-		_methodName169 = "deleteThumbhailsFromSegment";
-=======
 		_methodName173 = "deleteThumbhailsFromSegment";
->>>>>>> refs/remotes/l2go@github/master
 
-<<<<<<< HEAD
-		_methodParameterTypes169 = new String[] {
-=======
 		_methodParameterTypes173 = new String[] {
->>>>>>> refs/remotes/l2go@github/master
 				"de.uhh.l2g.plugins.model.Segment"
 			};
 
-<<<<<<< HEAD
-		_methodName170 = "getSegmentsByVideoId";
-=======
 		_methodName174 = "getSegmentsByVideoId";
->>>>>>> refs/remotes/l2go@github/master
 
-<<<<<<< HEAD
-		_methodParameterTypes170 = new String[] { "java.lang.Long" };
-=======
 		_methodParameterTypes174 = new String[] { "java.lang.Long" };
->>>>>>> refs/remotes/l2go@github/master
 
-<<<<<<< HEAD
-		_methodName171 = "getSegmentById";
-
-		_methodParameterTypes171 = new String[] { "java.lang.Long" };
-
-		_methodName172 = "fillWithProperties";
-
-		_methodParameterTypes172 = new String[] {
-				"de.uhh.l2g.plugins.model.Segment"
-			};
-
-		_methodName173 = "deleteByVideoId";
-
-		_methodParameterTypes173 = new String[] { "java.lang.Long" };
-
-		_methodName174 = "createSegment";
-
-		_methodParameterTypes174 = new String[] {
-				"de.uhh.l2g.plugins.model.Segment"
-			};
-
-		_methodName175 = "removeSegment";
-=======
 		_methodName175 = "getSegmentById";
->>>>>>> refs/remotes/l2go@github/master
 
 		_methodParameterTypes175 = new String[] { "java.lang.Long" };
 
-<<<<<<< HEAD
-		_methodName176 = "getPreviusSegment";
-
-		_methodParameterTypes176 = new String[] {
-				"de.uhh.l2g.plugins.model.Segment"
-			};
-
-		_methodName177 = "getPreviusSegmentId";
-
-		_methodParameterTypes177 = new String[] { "java.lang.Long" };
-=======
 		_methodName176 = "fillWithProperties";
 
 		_methodParameterTypes176 = new String[] {
@@ -232,7 +157,6 @@ public class SegmentLocalServiceClpInvoker {
 		_methodName181 = "getPreviusSegmentId";
 
 		_methodParameterTypes181 = new String[] { "java.lang.Long" };
->>>>>>> refs/remotes/l2go@github/master
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -324,52 +248,6 @@ public class SegmentLocalServiceClpInvoker {
 			return SegmentLocalServiceUtil.updateSegment((de.uhh.l2g.plugins.model.Segment)arguments[0]);
 		}
 
-<<<<<<< HEAD
-		if (_methodName162.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
-			return SegmentLocalServiceUtil.getBeanIdentifier();
-		}
-
-		if (_methodName163.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes163, parameterTypes)) {
-			SegmentLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
-
-			return null;
-		}
-
-		if (_methodName168.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes168, parameterTypes)) {
-			SegmentLocalServiceUtil.deleteThumbhailsFromSegments((java.util.List<de.uhh.l2g.plugins.model.Segment>)arguments[0]);
-
-			return null;
-		}
-
-		if (_methodName169.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes169, parameterTypes)) {
-			SegmentLocalServiceUtil.deleteThumbhailsFromSegment((de.uhh.l2g.plugins.model.Segment)arguments[0]);
-
-			return null;
-		}
-
-		if (_methodName170.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes170, parameterTypes)) {
-			return SegmentLocalServiceUtil.getSegmentsByVideoId((java.lang.Long)arguments[0]);
-		}
-
-		if (_methodName171.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes171, parameterTypes)) {
-			return SegmentLocalServiceUtil.getSegmentById((java.lang.Long)arguments[0]);
-		}
-
-		if (_methodName172.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes172, parameterTypes)) {
-			return SegmentLocalServiceUtil.fillWithProperties((de.uhh.l2g.plugins.model.Segment)arguments[0]);
-		}
-
-		if (_methodName173.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes173, parameterTypes)) {
-			SegmentLocalServiceUtil.deleteByVideoId((java.lang.Long)arguments[0]);
-=======
 		if (_methodName166.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes166, parameterTypes)) {
 			return SegmentLocalServiceUtil.getBeanIdentifier();
@@ -378,13 +256,10 @@ public class SegmentLocalServiceClpInvoker {
 		if (_methodName167.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes167, parameterTypes)) {
 			SegmentLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
->>>>>>> refs/remotes/l2go@github/master
 
 			return null;
 		}
 
-<<<<<<< HEAD
-=======
 		if (_methodName172.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes172, parameterTypes)) {
 			SegmentLocalServiceUtil.deleteThumbhailsFromSegments((java.util.List<de.uhh.l2g.plugins.model.Segment>)arguments[0]);
@@ -399,30 +274,13 @@ public class SegmentLocalServiceClpInvoker {
 			return null;
 		}
 
->>>>>>> refs/remotes/l2go@github/master
 		if (_methodName174.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes174, parameterTypes)) {
-<<<<<<< HEAD
-			return SegmentLocalServiceUtil.createSegment((de.uhh.l2g.plugins.model.Segment)arguments[0]);
-=======
 			return SegmentLocalServiceUtil.getSegmentsByVideoId((java.lang.Long)arguments[0]);
->>>>>>> refs/remotes/l2go@github/master
 		}
 
 		if (_methodName175.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes175, parameterTypes)) {
-<<<<<<< HEAD
-			return SegmentLocalServiceUtil.removeSegment((java.lang.Long)arguments[0]);
-		}
-
-		if (_methodName176.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes176, parameterTypes)) {
-			return SegmentLocalServiceUtil.getPreviusSegment((de.uhh.l2g.plugins.model.Segment)arguments[0]);
-		}
-
-		if (_methodName177.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes177, parameterTypes)) {
-=======
 			return SegmentLocalServiceUtil.getSegmentById((java.lang.Long)arguments[0]);
 		}
 
@@ -455,7 +313,6 @@ public class SegmentLocalServiceClpInvoker {
 
 		if (_methodName181.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes181, parameterTypes)) {
->>>>>>> refs/remotes/l2go@github/master
 			return SegmentLocalServiceUtil.getPreviusSegmentId((java.lang.Long)arguments[0]);
 		}
 
@@ -494,25 +351,10 @@ public class SegmentLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-<<<<<<< HEAD
-	private String _methodName162;
-	private String[] _methodParameterTypes162;
-	private String _methodName163;
-	private String[] _methodParameterTypes163;
-	private String _methodName168;
-	private String[] _methodParameterTypes168;
-	private String _methodName169;
-	private String[] _methodParameterTypes169;
-	private String _methodName170;
-	private String[] _methodParameterTypes170;
-	private String _methodName171;
-	private String[] _methodParameterTypes171;
-=======
 	private String _methodName166;
 	private String[] _methodParameterTypes166;
 	private String _methodName167;
 	private String[] _methodParameterTypes167;
->>>>>>> refs/remotes/l2go@github/master
 	private String _methodName172;
 	private String[] _methodParameterTypes172;
 	private String _methodName173;
@@ -525,8 +367,6 @@ public class SegmentLocalServiceClpInvoker {
 	private String[] _methodParameterTypes176;
 	private String _methodName177;
 	private String[] _methodParameterTypes177;
-<<<<<<< HEAD
-=======
 	private String _methodName178;
 	private String[] _methodParameterTypes178;
 	private String _methodName179;
@@ -535,5 +375,4 @@ public class SegmentLocalServiceClpInvoker {
 	private String[] _methodParameterTypes180;
 	private String _methodName181;
 	private String[] _methodParameterTypes181;
->>>>>>> refs/remotes/l2go@github/master
 }
