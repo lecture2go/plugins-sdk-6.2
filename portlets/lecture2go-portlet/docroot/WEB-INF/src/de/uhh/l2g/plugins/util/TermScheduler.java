@@ -20,9 +20,13 @@ import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
  *
  *
  */
-public final class TermScheduler extends PortletScheduler implements
-		MessageListener {
+public final class TermScheduler extends PortletScheduler implements MessageListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private int wise = 36; // 36th week of the year ca. 4 weeks before winter term
 	private int sose = 10; // 10th week of the ca. 4 weeks before summer term
 	
