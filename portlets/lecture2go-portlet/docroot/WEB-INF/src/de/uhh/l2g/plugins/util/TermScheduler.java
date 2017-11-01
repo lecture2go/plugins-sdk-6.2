@@ -16,8 +16,9 @@ import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
 
 
 /*
- * Checks via cron job periodically what it is and according to that adds a new Term 
- * 
+ * Checks via cron job periodically what month it is and according to that adds a new Term
+ *
+ *
  */
 public final class TermScheduler extends PortletScheduler implements
 		MessageListener {
@@ -106,5 +107,4 @@ public final class TermScheduler extends PortletScheduler implements
 		super.unschedule();
 		LOG.info("Wintersemester Scheduler stop.");
 	}
-
 }
