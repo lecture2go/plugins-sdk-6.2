@@ -219,6 +219,10 @@ public class VideoLocalServiceClpInvoker {
 		_methodName193 = "updateVideo";
 
 		_methodParameterTypes193 = new String[] { "de.uhh.l2g.plugins.model.Video" };
+
+		_methodName195 = "getLatestClosedAccessVideoId";
+
+		_methodParameterTypes195 = new String[] { "java.lang.Long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -463,6 +467,11 @@ public class VideoLocalServiceClpInvoker {
 			return VideoLocalServiceUtil.updateVideo((de.uhh.l2g.plugins.model.Video)arguments[0]);
 		}
 
+		if (_methodName195.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes195, parameterTypes)) {
+			return VideoLocalServiceUtil.getLatestClosedAccessVideoId((java.lang.Long)arguments[0]);
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -554,4 +563,6 @@ public class VideoLocalServiceClpInvoker {
 	private String[] _methodParameterTypes192;
 	private String _methodName193;
 	private String[] _methodParameterTypes193;
+	private String _methodName195;
+	private String[] _methodParameterTypes195;
 }

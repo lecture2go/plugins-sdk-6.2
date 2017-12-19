@@ -402,9 +402,9 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		//embed commsy
 		String embedCommsy="";
 		if(objectVideo.getOpenAccess()==1){
-			embedCommsy ="(:lecture2go "+objectVideo.getRootInstitutionId() + "l2g" + objectProducer.getHomeDir()+"/"+objectVideo.getFilename()+":)";
+			embedCommsy ="(:lecture2go "+objectVideo.getVideoId()+":)";
 		}else{
-			embedCommsy ="(:lecture2go "+objectVideo.getRootInstitutionId() + "l2g" + objectProducer.getHomeDir()+"/"+objectVideo.getSecureFilename()+":)";
+			embedCommsy ="(:lecture2go "+objectVideo.getSPreffix()+":)";
 		}
 		objectVideo.setEmbedCommsy(embedCommsy);
 		

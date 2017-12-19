@@ -8,7 +8,6 @@
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="/liferay-portal-6.2-ce-ga3/tomcat-7.0.42/webapps/ROOT/WEB-INF/lib/ant.jar"/>
 	<classpathentry kind="lib" path="/liferay-portal-6.2-ce-ga3/tomcat-7.0.42/webapps/ROOT/WEB-INF/lib/commons-collections.jar"/>
 	<classpathentry kind="lib" path="/liferay-portal-6.2-ce-ga3/tomcat-7.0.42/webapps/ROOT/WEB-INF/lib/commons-fileupload.jar"/>
@@ -20,5 +19,12 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="/liferay-portal-6.2-ce-ga3/tomcat-7.0.42/webapps/ROOT/WEB-INF/lib/jaxrpc.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/plugins-sdk-6.2"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/lecture2go/liferay/workspace-for-liferay-6.2.0/plugins-sdk-6.2/themes/lecture2go-theme/docroot/WEB-INF/lib/util-java.jar"/>
+	<classpathentry kind="lib" path="/lecture2go/liferay/workspace-for-liferay-6.2.0/plugins-sdk-6.2/themes/lecture2go-theme/docroot/WEB-INF/lib/util-bridges.jar"/>
 	<classpathentry kind="output" path="docroot/WEB-INF/classes"/>
 </classpath>
