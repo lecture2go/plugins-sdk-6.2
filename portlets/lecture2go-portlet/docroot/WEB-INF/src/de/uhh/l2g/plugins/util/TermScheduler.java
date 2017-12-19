@@ -72,12 +72,6 @@ public final class TermScheduler extends PortletScheduler implements
 			String prefix = "SoSe";
 			term.setYear(yearString);
 			term.setPrefix(prefix);
-
-			try {
-				TermLocalServiceUtil.addTerm(term);
-			} catch (SystemException e) {
-				System.out.println(e);
-			}
 		}
 		// checks if month is october
 		else if (cal.get(Calendar.WEEK_OF_YEAR) == wise) {
@@ -89,13 +83,12 @@ public final class TermScheduler extends PortletScheduler implements
 			String composedYear = yearString + "/" + nextYearString;
 			term.setYear(composedYear);
 			term.setPrefix(prefix);
-
-			try {
-				TermLocalServiceUtil.addTerm(term);
-			} catch (SystemException e) {
-				System.out.println(e);
-			}
-			
+		}
+		//
+		try {
+			TermLocalServiceUtil.addTerm(term);
+		} catch (SystemException e) {
+			System.out.println(e);
 		}
 	}
 
