@@ -39,6 +39,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import com.liferay.portal.kernel.util.PropsUtil;
 
@@ -49,10 +50,6 @@ import de.uhh.l2g.plugins.model.Video;
  * The Class Htaccess.
  */
 public class Htaccess {
-
-	/** The Constant fileExtentions. */
-	final static String[] fileExtentions = { ".pdf", ".mp3", ".m4v", ".mp4", ".m4a", ".tar", ".ogg", ".webm", ".flv" };
-  
 	final static String HTUSERS_DIR = PropsUtil.get("lecture2go.security.folder");
 	final static String HTUSERS_FILE = PropsUtil.get("lecture2go.security.folder") + "/" + ".htusers";
 	/**
@@ -137,24 +134,29 @@ public class Htaccess {
 			bw.newLine();
 			bw.write("");
 
+			
+
+			
 			for (Video video : lockedVideos) {
 				if (video != null) {
 					Long lectureseriesId = video.getLectureseriesId();
-
 					if (video.getFilename().length() > 10) {
-						for (String extention : fileExtentions) {
-							bw.write("<Files " + video.getPreffix() + extention + ">");
+						// all files starting with the file prefix will get added to the htaccess list 
+						// (this includes file extensions as well as potential suffixes)
+						bw.write("<FilesMatch \"^" + Pattern.quote(video.getPreffix()) + ".*\">");
+						bw.newLine();
+						bw.write("Require user " + lectureseriesId);
+						bw.newLine();
+						bw.write("</FilesMatch>");
+						bw.newLine();
+					
+						// this check is important, otherwise the regex would fit for all files in the directory (/.*/)
+						if (video.getSPreffix() != "") { 
+							bw.write("<FilesMatch \"^" + Pattern.quote(video.getSPreffix()) + ".*\">");
 							bw.newLine();
 							bw.write("Require user " + lectureseriesId);
 							bw.newLine();
-							bw.write("</Files>");
-							bw.newLine();
-
-							bw.write("<Files " + video.getSPreffix() + extention + ">");
-							bw.newLine();
-							bw.write("Require user " + lectureseriesId);
-							bw.newLine();
-							bw.write("</Files>");
+							bw.write("</FilesMatch>");
 							bw.newLine();
 						}
 					}
