@@ -30,6 +30,8 @@
 <liferay-portlet:resourceURL id="updateNumberOfProductions" var="updateNumberOfProductionsURL" />
 <liferay-portlet:resourceURL id="updateThumbnail" var="updateThumbnailURL" />
 <liferay-portlet:resourceURL id="getJSONVideo" var="getJSONVideoURL" />
+<liferay-portlet:resourceURL id="convertVideo" var="convertVideoURL" />
+
 
 <%
 	String actionURL = "";
@@ -152,6 +154,13 @@
 						<div id="progress" class="progress">
 					    	<div class="bar" style="width: 0%;"></div>
 						</div>
+						<c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider")%>'>
+							<c:if test="<%= permissionChecker.isOmniadmin() %>">
+								<div id="postprocessing" style="margin-bottom: 20px;">
+									<aui:input name="postprocess" type="checkbox" label="Postprocess after upload (beta)" id="postprocess"></aui:input>
+								</div>
+							</c:if>
+						</c:if>
 						<table id="uploaded-files" class="table"></table>
 					</div>
 				</aui:layout>
@@ -480,10 +489,16 @@ $(function () {
         	   	var f1 = "mp4";
            		var f2 = "mp3";
            		var f3 = vars[0].fileName;
+           		//mp4 file
            		if(f3.indexOf(f1) > -1){
 	           		updateVideoFileName(vars[0]);
 	           		validate();
+	           		//start converting process for mp4
+	           		if (hasPostProcessingActivated) {
+	           			convertVideo();
+	           		}
            		}
+           		//mp3 file, do not trigger the post processing
            		if(f3.indexOf(f2) > -1){
 	           		updateVideoFileName(vars[0]);
 	           		validate();
@@ -493,9 +508,14 @@ $(function () {
 				var f1 = vars[0].fileName;
 				var f2 = defaultContainer();
 				var f3 = "mp4";
+				//for mp3 and mp4 files
 				if(f1.indexOf(f2) > -1 || f1.indexOf(f3) > -1){
 	           		updateVideoFileName(vars[0]);
 	           		validate();
+	           		//trigger the post processor only for mp4 files
+	           		if ((hasPostProcessingActivated) && (f1.indexOf(f3) > -1)) {
+	           			convertVideo();
+	           		}
 				}
            }
            
@@ -649,6 +669,28 @@ function updateVideoFileName(file){
 					   success: function() {
 					     var jsonResponse = this.get('responseData');
 					     toggleShare();
+					   }
+				}
+			});	
+		}
+	);
+}
+
+function convertVideo(){
+	AUI().use('aui-io-request', 'aui-node',
+		function(A){
+			A.io.request('<%=convertVideoURL%>', {
+		 	dataType: 'json',
+		 	method: 'POST',
+			 	//send data to server
+			 	data: {
+			 		<portlet:namespace/>videoId: A.one('#<portlet:namespace/>videoId').get('value'),
+			 		// may be filled with instructions (workflow to use etc.)
+			 	},
+			 	//get server response
+				on: {
+					   success: function() {
+					     var jsonResponse = this.get('responseData');					     
 					   }
 				}
 			});	
@@ -1085,7 +1127,20 @@ AUI().use('aui-node',
   }
 );
 
-
+var hasPostProcessingActivated = false;
+<c:if test="<%= permissionChecker.isOmniadmin() %>">
+	AUI().use(
+		'aui-node',
+		function(A) {
+			var postProcessCheckbox = A.one('#<portlet:namespace/>postprocessCheckbox');
+			postProcessCheckbox.on(
+			'click',
+			function(A){
+				hasPostProcessingActivated = (postProcessCheckbox.get('checked'))
+			});
+		}
+	);
+</c:if>
 </script>
 
 <!-- Template -->

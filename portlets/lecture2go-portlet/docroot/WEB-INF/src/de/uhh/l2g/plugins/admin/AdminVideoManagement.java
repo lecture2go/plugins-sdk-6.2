@@ -75,6 +75,7 @@ import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.util.FFmpegManager;
 import de.uhh.l2g.plugins.util.FileManager;
+import de.uhh.l2g.plugins.util.HttpManager;
 import de.uhh.l2g.plugins.util.ProzessManager;
 import de.uhh.l2g.plugins.util.Security;
 
@@ -426,6 +427,48 @@ public class AdminVideoManagement extends MVCPortlet {
 					e.printStackTrace();
 				}
 			}
+		}
+		
+		if(resourceID.equals("convertVideo")){
+			// if activated, notify the video processor to convert the video
+			if (PropsUtil.contains("lecture2go.videoprocessing.provider")) {
+				String videoConversionUrl = PropsUtil.get("lecture2go.videoprocessing.provider.videoconversion");
+
+				try {
+					// create json object with the necessary informations for the videoprocessor
+					JSONObject jo = JSONFactoryUtil.createJSONObject();
+					jo.put("sourceId", video.getVideoId());
+					String folder = PropsUtil.get("lecture2go.media.repository")+"/"+HostLocalServiceUtil.getByHostId(video.getHostId()).getServerRoot()+"/"+ProducerLocalServiceUtil.getProducer(video.getProducerId()).getHomeDir()+"/";
+					String filePath;
+					if(video.getOpenAccess()==1){
+						filePath = folder + video.getFilename();
+					}else{
+						filePath = folder + video.getSecureFilename();
+					}
+					jo.put("sourceFilePath", filePath);
+					jo.put("createSmil", true);
+					
+					// send POST request to video processor
+					try {
+						HttpManager httpManager = new HttpManager();
+						httpManager.setUrl(videoConversionUrl);
+						if (PropsUtil.contains("lecture2go.videoprocessing.basicauth.user") && PropsUtil.contains("lecture2go.videoprocessing.basicauth.pass")) {
+							httpManager.setUser(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.user"));
+							httpManager.setPass(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.pass"));
+						}
+						httpManager.sendPost(jo);
+						httpManager.close();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				} catch (SystemException e) {
+					e.printStackTrace();
+				} catch (PortalException e) {
+					e.printStackTrace();
+				}
+			}
+			JSONObject json = JSONFactoryUtil.createJSONObject();
+			writeJSON(resourceRequest, resourceResponse, json);
 		}
 		
 		if(resourceID.equals("updateMetadata")){
