@@ -384,6 +384,26 @@ public class ProzessManager {
 		
 		//update LectureSeries previewVideoId
 		LectureseriesLocalServiceUtil.updatePreviewVideoOpenAccess(lectureseries);
+		
+
+		// delete all created files from the video-processor if activated
+		if (PropsUtil.contains("lecture2go.videoprocessing.provider")) {
+			String videoConversionUrl = PropsUtil.get("lecture2go.videoprocessing.provider.videoconversion") + "/sourceid/" + String.valueOf(video.getVideoId());
+			// send DELETE request to video processor
+			try {
+				HttpManager httpManager = new HttpManager();
+				httpManager.setUrl(videoConversionUrl);
+				if (PropsUtil.contains("lecture2go.videoprocessing.basicauth.user") && PropsUtil.contains("lecture2go.videoprocessing.basicauth.pass")) {
+					httpManager.setUser(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.user"));
+					httpManager.setPass(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.pass"));
+				}
+				httpManager.sendDelete();
+				httpManager.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
 		return true;
 	}
 	
