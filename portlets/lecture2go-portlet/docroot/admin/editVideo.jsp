@@ -493,10 +493,6 @@ $(function () {
            		if(f3.indexOf(f1) > -1){
 	           		updateVideoFileName(vars[0]);
 	           		validate();
-	           		//start converting process for mp4
-	           		if (hasPostProcessingActivated) {
-	           			convertVideo();
-	           		}
            		}
            		//mp3 file, do not trigger the post processing
            		if(f3.indexOf(f2) > -1){
@@ -512,10 +508,6 @@ $(function () {
 				if(f1.indexOf(f2) > -1 || f1.indexOf(f3) > -1){
 	           		updateVideoFileName(vars[0]);
 	           		validate();
-	           		//trigger the post processor only for mp4 files
-	           		if ((hasPostProcessingActivated) && (f1.indexOf(f3) > -1)) {
-	           			convertVideo();
-	           		}
 				}
            }
            
@@ -668,6 +660,9 @@ function updateVideoFileName(file){
 				on: {
 					   success: function() {
 					     var jsonResponse = this.get('responseData');
+					     if (hasPostProcessingActivated) {
+			           			convertVideo(s);
+			           	 }
 					     toggleShare();
 					   }
 				}

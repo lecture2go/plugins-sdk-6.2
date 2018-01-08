@@ -431,7 +431,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		
 		if(resourceID.equals("convertVideo")){
 			// if activated, notify the video processor to convert the video
-			if (PropsUtil.contains("lecture2go.videoprocessing.provider")) {
+			if (PropsUtil.contains("lecture2go.videoprocessing.provider") && (video.getContainerFormat().equalsIgnoreCase("mp4"))) {
 				String videoConversionUrl = PropsUtil.get("lecture2go.videoprocessing.provider.videoconversion");
 
 				try {
