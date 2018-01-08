@@ -661,7 +661,7 @@ function updateVideoFileName(file){
 					   success: function() {
 					     var jsonResponse = this.get('responseData');
 					     if (hasPostProcessingActivated) {
-			           			convertVideo(s);
+			           			convertVideo();
 			           	 }
 					     toggleShare();
 					   }
