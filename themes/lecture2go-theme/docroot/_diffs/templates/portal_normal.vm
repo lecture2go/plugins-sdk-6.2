@@ -116,8 +116,6 @@ $theme.include($body_top_include)
 			<a href="/web/vod/disclaimer" id="disclaimer">#language("disclaimer")</a>
 		</div>	
 		
-		#parse ("$full_templates_path/uhh_footer.vm")
-		#parse ("$full_templates_path/uhh_footer_seiteninfo2.vm")
 	</footer>
 </div>
 
