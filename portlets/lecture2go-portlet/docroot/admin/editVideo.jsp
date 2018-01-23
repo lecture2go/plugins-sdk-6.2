@@ -30,6 +30,8 @@
 <liferay-portlet:resourceURL id="updateNumberOfProductions" var="updateNumberOfProductionsURL" />
 <liferay-portlet:resourceURL id="updateThumbnail" var="updateThumbnailURL" />
 <liferay-portlet:resourceURL id="getJSONVideo" var="getJSONVideoURL" />
+<liferay-portlet:resourceURL id="convertVideo" var="convertVideoURL" />
+<liferay-portlet:resourceURL id="updateHtaccess" var="updateHtaccessURL" />
 
 <%
 	String actionURL = "";
@@ -480,10 +482,12 @@ $(function () {
         	   	var f1 = "mp4";
            		var f2 = "mp3";
            		var f3 = vars[0].fileName;
+           		//mp4 file
            		if(f3.indexOf(f1) > -1){
 	           		updateVideoFileName(vars[0]);
 	           		validate();
            		}
+           		//mp3 file, do not trigger the post processing
            		if(f3.indexOf(f2) > -1){
 	           		updateVideoFileName(vars[0]);
 	           		validate();
@@ -493,11 +497,15 @@ $(function () {
 				var f1 = vars[0].fileName;
 				var f2 = defaultContainer();
 				var f3 = "mp4";
+				//for mp3 and mp4 files
 				if(f1.indexOf(f2) > -1 || f1.indexOf(f3) > -1){
 	           		updateVideoFileName(vars[0]);
 	           		validate();
 				}
            }
+           
+           //htaccess update function for physical file protectiom
+           updateHtaccess();
            
        	   var st = false;
            
@@ -602,7 +610,7 @@ function isFirstUpload(){
 		  url: "<%=isFirstUploadURL%>",
 		  dataType: 'json',
 		  data: {
-		 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>",
+		 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>"
 		  },
 		  global: false,
 		  async:false,
@@ -631,6 +639,24 @@ function videoFileNameExistsInDatabase (fileName){
 	return ret;
 }
 
+function updateHtaccess (){
+	var ret = 0;
+	$.ajax({
+		  type: "POST",
+		  url: "<%=updateHtaccessURL%>",
+		  dataType: 'json',
+		  data: {
+			  <portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>"
+		  },
+		  global: false,
+		  async: false,
+		  success: function(data) {
+		    ret = 1;
+		  }
+	});
+	return ret;
+}
+
 function updateVideoFileName(file){
 	AUI().use('aui-io-request', 'aui-node',
 		function(A){
@@ -642,13 +668,35 @@ function updateVideoFileName(file){
 				 	   	<portlet:namespace/>videoId: A.one('#<portlet:namespace/>videoId').get('value'),
 				 	   	<portlet:namespace/>fileName: file.fileName,
 				 	   	<portlet:namespace/>secureFileName: file.secureFileName,
-				 	   	<portlet:namespace/>generationDate: file.generationDate,
+				 	   	<portlet:namespace/>generationDate: file.generationDate
 			 	},
 			 	//get server response
 				on: {
 					   success: function() {
 					     var jsonResponse = this.get('responseData');
 					     toggleShare();
+					   }
+				}
+			});	
+		}
+	);
+}
+
+function convertVideo(){
+	AUI().use('aui-io-request', 'aui-node',
+		function(A){
+			A.io.request('<%=convertVideoURL%>', {
+		 	dataType: 'json',
+		 	method: 'POST',
+			 	//send data to server
+			 	data: {
+			 		<portlet:namespace/>videoId: A.one('#<portlet:namespace/>videoId').get('value'),
+			 		// may be filled with instructions (workflow to use etc.)
+			 	},
+			 	//get server response
+				on: {
+					   success: function() {
+					     var jsonResponse = this.get('responseData');					     
 					   }
 				}
 			});	
