@@ -189,7 +189,7 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 				c.put("fullName", cr.getFullName());
 				json.put(c);
 			} catch (JSONException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 		return json;
@@ -212,7 +212,7 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 				c.put("fullName", cr.getFullName());
 				json.put(c);
 			} catch (JSONException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 		return json;
@@ -232,7 +232,7 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 			c.put("fullName", cr.getFullName());
 			json.put(c);
 		} catch (JSONException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return json;
 	}

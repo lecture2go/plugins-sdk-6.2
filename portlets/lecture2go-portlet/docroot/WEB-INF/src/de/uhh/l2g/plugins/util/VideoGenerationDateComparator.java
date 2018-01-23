@@ -31,7 +31,7 @@ public class VideoGenerationDateComparator implements Comparator<Video> {
 			d1 = df.parse(v1.getGenerationDate());
 			d2 = df.parse(v2.getGenerationDate());
 		} catch (ParseException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 
 		int ret = 0;

@@ -27,9 +27,9 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
-import de.uhh.l2g.plugins.NoSuchLicenseException;
 import de.uhh.l2g.plugins.model.Category;
 import de.uhh.l2g.plugins.model.Creator;
+import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.Lectureseries_Institution;
@@ -75,8 +75,10 @@ import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.util.FFmpegManager;
 import de.uhh.l2g.plugins.util.FileManager;
+import de.uhh.l2g.plugins.util.HttpManager;
 import de.uhh.l2g.plugins.util.ProzessManager;
 import de.uhh.l2g.plugins.util.Security;
+import de.uhh.l2g.plugins.util.Htaccess;
 
 public class AdminVideoManagement extends MVCPortlet {
 
@@ -303,7 +305,7 @@ public class AdminVideoManagement extends MVCPortlet {
 				tagCloudArrayString.add(creator.getString("lastName"));
 				tagCloudArrayString.add(creator.getString("fullName"));
 			} catch (JSONException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 		
@@ -327,18 +329,12 @@ public class AdminVideoManagement extends MVCPortlet {
 			Long metadataId = video.getMetadataId();
 			metadata = MetadataLocalServiceUtil.getMetadata(metadataId);
 		} catch (PortalException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (SystemException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		License license = new LicenseImpl();
-		try {
-			license = LicenseLocalServiceUtil.getByVideoId(video.getVideoId());
-		} catch (NoSuchLicenseException e1) {
-			e1.printStackTrace();
-		} catch (SystemException e1) {
-			e1.printStackTrace();
-		}
+		license = LicenseLocalServiceUtil.getByVideoId(video.getVideoId());
 		
 		if(resourceID.equals("updateVideoFileName")){
 			String fileName = ParamUtil.getString(resourceRequest, "fileName");
@@ -374,20 +370,20 @@ public class AdminVideoManagement extends MVCPortlet {
 					List<Segment> segmentList = SegmentLocalServiceUtil.getSegmentsByVideoId(video.getVideoId());
 					SegmentLocalServiceUtil.deleteThumbhailsFromSegments(segmentList);
 				}catch (PortalException e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				} catch (SystemException e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				} catch (NullPointerException e){
-					e.printStackTrace();
+					//e.printStackTrace();
 				}	
 				//
 				FFmpegManager.createThumbnail(fileLocation, thumbnailLocation);
 			} catch (NumberFormatException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			} catch (SystemException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			} catch (PortalException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			
 			JSONObject json = JSONFactoryUtil.createJSONObject();
@@ -408,14 +404,14 @@ public class AdminVideoManagement extends MVCPortlet {
 					try {
 						fileLocation = ProducerLocalServiceUtil.getProdUcer(video.getProducerId()).getHomeDir() + "/" + video.getFilename();
 					} catch (Exception e) {
-						e.printStackTrace();
+						//e.printStackTrace();
 					}
 				}else{
 					image = video.getSPreffix()+".jpg";
 					try {
 						fileLocation = ProducerLocalServiceUtil.getProdUcer(video.getProducerId()).getHomeDir() + "/" + video.getSecureFilename();
 					} catch (Exception e) {
-						e.printStackTrace();
+						//e.printStackTrace();
 					}
 				}
 				//
@@ -423,9 +419,51 @@ public class AdminVideoManagement extends MVCPortlet {
 					thumbnailLocation = PropsUtil.get("lecture2go.images.system.path") + "/" + image;
 					FFmpegManager.createThumbnail(fileLocation, thumbnailLocation, time);
 				} catch (Exception e) {
+					//e.printStackTrace();
+				}
+			}
+		}
+		
+		if(resourceID.equals("convertVideo")){
+			// if activated, notify the video processor to convert the video
+			if (PropsUtil.contains("lecture2go.videoprocessing.provider") && (video.getContainerFormat().equalsIgnoreCase("mp4"))) {
+				String videoConversionUrl = PropsUtil.get("lecture2go.videoprocessing.provider.videoconversion");
+
+				try {
+					// create json object with the necessary informations for the videoprocessor
+					JSONObject jo = JSONFactoryUtil.createJSONObject();
+					jo.put("sourceId", video.getVideoId());
+					String folder = PropsUtil.get("lecture2go.media.repository")+"/"+HostLocalServiceUtil.getByHostId(video.getHostId()).getServerRoot()+"/"+ProducerLocalServiceUtil.getProducer(video.getProducerId()).getHomeDir()+"/";
+					String filePath;
+					if(video.getOpenAccess()==1){
+						filePath = folder + video.getFilename();
+					}else{
+						filePath = folder + video.getSecureFilename();
+					}
+					jo.put("sourceFilePath", filePath);
+					jo.put("createSmil", true);
+					
+					// send POST request to video processor
+					try {
+						HttpManager httpManager = new HttpManager();
+						httpManager.setUrl(videoConversionUrl);
+						if (PropsUtil.contains("lecture2go.videoprocessing.basicauth.user") && PropsUtil.contains("lecture2go.videoprocessing.basicauth.pass")) {
+							httpManager.setUser(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.user"));
+							httpManager.setPass(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.pass"));
+						}
+						httpManager.sendPost(jo);
+						httpManager.close();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				} catch (SystemException e) {
+					e.printStackTrace();
+				} catch (PortalException e) {
 					e.printStackTrace();
 				}
 			}
+			JSONObject json = JSONFactoryUtil.createJSONObject();
+			writeJSON(resourceRequest, resourceResponse, json);
 		}
 		
 		if(resourceID.equals("updateMetadata")){
@@ -542,7 +580,7 @@ public class AdminVideoManagement extends MVCPortlet {
 						creator = creatorsArray.getJSONObject(i);
 						tagCloudArrayString.add(creator.getString("fullName"));
 					} catch (JSONException e) {
-						//e.printStackTrace();
+						////e.printStackTrace();
 					}
 				}
 				//update tag cloud for this video
@@ -576,7 +614,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			} catch (SystemException e) {
 				//System.out.println(e);
 			} catch (PortalException e) {
-				//e.printStackTrace();
+				////e.printStackTrace();
 			}
 			//metadata
 			try {
@@ -597,7 +635,7 @@ public class AdminVideoManagement extends MVCPortlet {
 					pm.generateRSS(video, f);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					//e.printStackTrace();
 				} 
 			}			
 			JSONObject json = JSONFactoryUtil.createJSONObject();
@@ -614,10 +652,24 @@ public class AdminVideoManagement extends MVCPortlet {
 				jo.put("generationDate", generationDate);
 				writeJSON(resourceRequest, resourceResponse, jo);
 			} catch (SystemException e) {
-				//e.printStackTrace();
+				////e.printStackTrace();
 			}
 		}
-		
+
+		if (resourceID.equals("updateHtaccess")) {
+			try {
+				Host host = HostLocalServiceUtil.getHost(video.getHostId());
+				Producer producer = ProducerLocalServiceUtil.getProducer(video.getProducerId());
+				String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/";
+				long producerId = video.getProducerId();
+				List<Video> lockedVideosByProducer;
+				lockedVideosByProducer = VideoLocalServiceUtil.getByProducerAndDownloadLink(producerId, 0);
+				Htaccess.makeHtaccess(url, lockedVideosByProducer);
+			} catch (Exception e) {
+				// 
+			} 
+		}
+			
 		if(resourceID.equals("getJSONVideo")){
 			JSONObject uris = JSONFactoryUtil.createJSONObject();
 			for(int i=0; i<video.getPlayerUris().size(); i++){
@@ -656,7 +708,7 @@ public class AdminVideoManagement extends MVCPortlet {
 				jo.put("firsttitle", firsttitle);
 				writeJSON(resourceRequest, resourceResponse, jo);
 			} catch (SystemException e) {
-				//e.printStackTrace();
+				////e.printStackTrace();
 			}
 		}
 		
@@ -702,7 +754,7 @@ public class AdminVideoManagement extends MVCPortlet {
 				if(vl.size()>0)jo.put("exist", "1");
 				else jo.put("exist", "0");
 			} catch (SystemException e) {
-//				e.printStackTrace();
+//				//e.printStackTrace();
 				jo.put("exist", "0");
 			}
 			writeJSON(resourceRequest, resourceResponse, jo);
@@ -725,7 +777,7 @@ public class AdminVideoManagement extends MVCPortlet {
 				LicenseLocalServiceUtil.updateLicense(license);
 				logger.info("LICENSE_UPDATE_SUCCESS");
 			} catch (SystemException e) {
-//				e.printStackTrace();
+				//e.printStackTrace();
 				logger.info("LICENSE_UPDATE_FAILED");
 			}
 			JSONObject json = JSONFactoryUtil.createJSONObject();
@@ -739,7 +791,7 @@ public class AdminVideoManagement extends MVCPortlet {
 				MetadataLocalServiceUtil.updateMetadata(metadata);
 				logger.info("DESCRIPTION_UPDATE_SUCCESS");
 			} catch (SystemException e) {
-//				e.printStackTrace();
+				//e.printStackTrace();
 				logger.info("DESCRIPTION_UPDATE_FAILED");
 			}
 			JSONObject json = JSONFactoryUtil.createJSONObject();
@@ -755,7 +807,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			try {
 				VideoLocalServiceUtil.updateVideo(video);
 			} catch (SystemException e) {
-//				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			
 			JSONObject json = JSONFactoryUtil.createJSONObject();
@@ -804,9 +856,9 @@ public class AdminVideoManagement extends MVCPortlet {
 					// and return response
 					writeJSON(resourceRequest, resourceResponse, jo);
 				} catch (SystemException e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				} catch (PortalException e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 			}
 			//update chapter file (vtt)
@@ -840,9 +892,9 @@ public class AdminVideoManagement extends MVCPortlet {
 				}
 				
 			} catch (PortalException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			} catch (SystemException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			
 			writeJSON(resourceRequest, resourceResponse, ja);
@@ -868,9 +920,9 @@ public class AdminVideoManagement extends MVCPortlet {
 				jo.put("videoId", s.getVideoId());
 				writeJSON(resourceRequest, resourceResponse, jo);
 			} catch (SystemException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			} catch (PortalException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			//update chapter file (vtt)
 			updateVttChapterFile(video);
@@ -899,9 +951,9 @@ public class AdminVideoManagement extends MVCPortlet {
 				fPath = PropsUtil.get("lecture2go.media.repository")+"/"+HostLocalServiceUtil.getByHostId(video.getHostId()).getServerRoot()+"/"+ProducerLocalServiceUtil.getProducer(video.getProducerId()).getHomeDir()+"/";
 				mainContainerFormat = VideoLocalServiceUtil.getVideo(videoId).getContainerFormat();
 			} catch (PortalException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			} catch (SystemException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			JSONArray jarr = new JSONArray();
 			//delete all
@@ -922,15 +974,32 @@ public class AdminVideoManagement extends MVCPortlet {
 						}
 						jarr.put(o);
 					} catch (JSONException e) {
-						e.printStackTrace();
+						//e.printStackTrace();
 					}
 				}
 				ProzessManager pm = new ProzessManager();
 				try {
 					pm.deleteFilesImagesFromVideo(video);
 				} catch (Exception e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				} 
+				// delete all created files from the video-processor if activated
+				if (PropsUtil.contains("lecture2go.videoprocessing.provider")) {
+					String videoConversionUrl = PropsUtil.get("lecture2go.videoprocessing.provider.videoconversion") + "/sourceid/" + String.valueOf(video.getVideoId());
+					// send DELETE request to video processor
+					try {
+						HttpManager httpManager = new HttpManager();
+						httpManager.setUrl(videoConversionUrl);
+						if (PropsUtil.contains("lecture2go.videoprocessing.basicauth.user") && PropsUtil.contains("lecture2go.videoprocessing.basicauth.pass")) {
+							httpManager.setUser(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.user"));
+							httpManager.setPass(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.pass"));
+						}
+						httpManager.sendDelete();
+						httpManager.close();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 			}else{
 				org.json.JSONObject o = new org.json.JSONObject();
 					try {
@@ -942,7 +1011,7 @@ public class AdminVideoManagement extends MVCPortlet {
 						}
 						jarr.put(o);
 					} catch (JSONException e) {
-						e.printStackTrace();
+						//e.printStackTrace();
 					}
 			}
 			writeJSON(resourceRequest, resourceResponse, jarr);
@@ -954,15 +1023,15 @@ public class AdminVideoManagement extends MVCPortlet {
 			try{
 				cId = new Long(creatorId);
 			}catch(Exception e){
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			JSONArray json = new JSONArray();
 			try {
 				json = CreatorLocalServiceUtil.getJSONCreator(cId);
 			} catch (PortalException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			} catch (SystemException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			writeJSON(resourceRequest, resourceResponse, json);			
 		}
@@ -1014,7 +1083,7 @@ public class AdminVideoManagement extends MVCPortlet {
 						if(vcl.size()==0)Video_CreatorLocalServiceUtil.addVideo_Creator(vc);
 					}
 				} catch (SystemException e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 				//now update creators for the whole lecture series
 				Long lId = video.getLectureseriesId();
@@ -1022,7 +1091,7 @@ public class AdminVideoManagement extends MVCPortlet {
 					if(lId>0)CreatorLocalServiceUtil.updateCreatorsForLectureseriesOverTheAssigenedVideosByLectureseriesId(lId);
 				}catch(SystemException e){}
 			} catch (JSONException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			writeJSON(resourceRequest, resourceResponse, CreatorLocalServiceUtil.getJSONCreatorsByVideoId(videoId));			
 		}
@@ -1042,9 +1111,9 @@ public class AdminVideoManagement extends MVCPortlet {
 							Institution in = new InstitutionImpl();
 							try {
 								in = InstitutionLocalServiceUtil.getInstitution(institutionId);
-								System.out.print("LEVEEEEELLL---->"+in.getLevel());
+								//System.out.print("LEVEEEEELLL---->"+in.getLevel());
 							} catch (PortalException e) {
-								e.printStackTrace();
+								//e.printStackTrace();
 							}
 							List<Video_Institution> vil = new ArrayList<Video_Institution>();
 							vil = Video_InstitutionLocalServiceUtil.getByVideoAndInstitution(videoId, institutionId);
@@ -1058,10 +1127,10 @@ public class AdminVideoManagement extends MVCPortlet {
 						}						
 					}
 				} catch (SystemException e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 			} catch (JSONException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			writeJSON(resourceRequest, resourceResponse, CreatorLocalServiceUtil.getJSONCreatorsByVideoId(videoId));			
 		}
@@ -1071,14 +1140,14 @@ public class AdminVideoManagement extends MVCPortlet {
 			try {
 				lect = LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId());
 			} catch (PortalException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			} catch (SystemException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			try {
 				LectureseriesLocalServiceUtil.updateOpenAccess(video, lect);
 			} catch (SystemException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			writeJSON(resourceRequest, resourceResponse, CreatorLocalServiceUtil.getJSONCreatorsByVideoId(videoId));			
 		}
@@ -1096,7 +1165,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		try {
 			response.sendRedirect(backURL);
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 	
@@ -1117,7 +1186,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		try {
 			response.sendRedirect(backURL);
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 	
@@ -1138,7 +1207,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		try {
 			response.sendRedirect(backURL);
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 	
@@ -1153,7 +1222,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		try {
 			response.sendRedirect(backURL);
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 	
@@ -1168,7 +1237,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		try {
 			response.sendRedirect(backURL);
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 	
@@ -1217,7 +1286,7 @@ public class AdminVideoManagement extends MVCPortlet {
 				if(v.isHasChapters())updateVttChapterFile(v);
 			}
 		} catch (SystemException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 }

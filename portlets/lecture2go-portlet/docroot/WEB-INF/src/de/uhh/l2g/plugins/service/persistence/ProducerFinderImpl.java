@@ -31,7 +31,7 @@ public class ProducerFinderImpl extends BasePersistenceImpl<Producer> implements
 			try {
 				throw new SystemException(e);
 			} catch (SystemException se) {
-				se.printStackTrace();
+				//e.printStackTrace();
 			}
 		} finally {
 			closeSession(session);

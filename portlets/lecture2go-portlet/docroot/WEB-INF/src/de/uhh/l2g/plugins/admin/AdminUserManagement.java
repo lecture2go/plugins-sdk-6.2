@@ -203,11 +203,11 @@ public class AdminUserManagement extends MVCPortlet {
 					User u = UserLocalServiceUtil.getUser(p.getProducerId());
 					UserLocalServiceUtil.updateScreenName(u.getUserId(), p.getHomeDir());
 				} catch (PortalException e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 			}
 		} catch (SystemException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 	public static List<Role> getL2GoRoles(User u) throws SystemException{
@@ -268,7 +268,7 @@ public class AdminUserManagement extends MVCPortlet {
 		try {
 			response.sendRedirect(backURL);
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 	
@@ -579,14 +579,14 @@ public class AdminUserManagement extends MVCPortlet {
 			pm.removeL2GLayoutPermissions(RoleConstants.GUEST, new String[] {ActionKeys.VIEW, ActionKeys.ADD_DISCUSSION});
 			} catch (PortalException e) {
 			RoleLocalServiceUtil.checkSystemRoles();
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		try {
 			
 			pm.removeL2GLayoutPermissions(RoleConstants.SITE_MEMBER, new String[] {ActionKeys.VIEW, ActionKeys.ADD_DISCUSSION, ActionKeys.CUSTOMIZE});
 		} catch (PortalException e) {
 			RoleLocalServiceUtil.checkSystemRoles();
-			e.printStackTrace();
+			//e.printStackTrace();
 		}		
         //Permission of this role should be removed iff L2G Layout Admin should be seperated from OmniAdmin Role
 		try {
@@ -594,7 +594,7 @@ public class AdminUserManagement extends MVCPortlet {
 
 		} catch (PortalException e) {
 			RoleLocalServiceUtil.checkSystemRoles();
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 	}

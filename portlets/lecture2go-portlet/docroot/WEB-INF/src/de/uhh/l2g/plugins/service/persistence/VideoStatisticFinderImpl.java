@@ -51,7 +51,7 @@ public class VideoStatisticFinderImpl extends BasePersistenceImpl<VideoStatistic
 			try {
 				throw new SystemException(e);
 			} catch (SystemException se) {
-				se.printStackTrace();
+				//e.printStackTrace();
 			}
 		} finally {
 			closeSession(session);

@@ -111,16 +111,16 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			Video_LectureseriesLocalServiceUtil.removeByLectureseriesId(lId);//video links to lecture series
 			TagcloudLocalServiceUtil.deleteByObjectId(lId);//tag cloud
 		} catch (PortalException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (SystemException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		//refresh htaccess authentication files 
 		Htaccess.writePW(LectureseriesLocalServiceUtil.getAllLectureseriesWhithPassword());
 		try {
 			response.sendRedirect(backURL);
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}	
 		
 		//generate new JSON date for auto complete functionality
@@ -260,7 +260,7 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		try {
 			response.sendRedirect(backURL);
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 		//update tagclout category
@@ -493,7 +493,7 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 				try {
 					pm.generateRSS(v, f);
 				} catch (Exception e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				} 
 			}		
 			LOG.info("RSS "+a+" generated");
@@ -510,15 +510,15 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			try{
 				cId = new Long(creatorId);
 			}catch(Exception e){
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			JSONArray json = new JSONArray();
 			try {
 				json = CreatorLocalServiceUtil.getJSONCreator(cId);
 			} catch (PortalException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			} catch (SystemException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			writeJSON(resourceRequest, resourceResponse, json);			
 		}
