@@ -88,7 +88,7 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 			try {
 				throw new SystemException(e);
 			} catch (SystemException se) {
-				se.printStackTrace();
+				//e.printStackTrace();
 			}
 		} finally {
 			closeSession(session);
@@ -138,7 +138,7 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 			try {
 				throw new SystemException(e);
 			} catch (SystemException se) {
-				se.printStackTrace();
+				//e.printStackTrace();
 			}
 		} finally {
 			closeSession(session);
@@ -188,7 +188,7 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 			try {
 				throw new SystemException(e);
 			} catch (SystemException se) {
-				se.printStackTrace();
+				//e.printStackTrace();
 			}
 		} finally {
 			closeSession(session);
@@ -216,7 +216,7 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 			try {
 				throw new SystemException(e);
 			} catch (SystemException se) {
-				se.printStackTrace();
+				//e.printStackTrace();
 			}
 		} finally {
 			closeSession(session);
@@ -253,7 +253,7 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 			try {
 				throw new SystemException(e);
 			} catch (SystemException se) {
-				se.printStackTrace();
+				//e.printStackTrace();
 			}
 		} finally {
 			closeSession(session);
@@ -308,7 +308,7 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 			try {
 				throw new SystemException(e);
 			} catch (SystemException se) {
-				se.printStackTrace();
+				//e.printStackTrace();
 			}
 		} finally {
 			closeSession(session);
@@ -331,7 +331,7 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 			try {
 				throw new SystemException(e);
 			} catch (SystemException se) {
-				se.printStackTrace();
+				//e.printStackTrace();
 			}
 		} finally {
 			closeSession(session);
@@ -358,7 +358,7 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 			try {
 				throw new SystemException(e);
 			} catch (SystemException se) {
-				//se.printStackTrace();
+				//e.printStackTrace();
 			}
 		} finally {
 			closeSession(session);
@@ -386,7 +386,7 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 			try {
 				throw new SystemException(e);
 			} catch (SystemException se) {
-				//se.printStackTrace();
+				//e.printStackTrace();
 			}
 		} finally {
 			closeSession(session);
@@ -422,7 +422,7 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 				String s = (video[16])+"";
 				date = (Date) formatter.parse(s);
 			} catch (ParseException e) {
-//				e.printStackTrace();
+//				//e.printStackTrace();
 			}			
 			//
 			v.setUploadDate(date);
@@ -463,7 +463,7 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 				}
 				v.setCreators(creators);
 			} catch (SystemException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			vl.add(v);
 		}

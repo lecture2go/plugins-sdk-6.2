@@ -38,6 +38,8 @@ import java.util.List;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import de.uhh.l2g.plugins.model.Host;
@@ -156,6 +158,11 @@ public class ProzessManager {
 		VideoLocalServiceUtil.createLastVideoList();
 		// refresh open acces for lecture series
 		LectureseriesLocalServiceUtil.updateOpenAccess(video, lectureseries); 
+		
+		// if activated, notify the video processor to handle the processed video files
+		if (PropsUtil.contains("lecture2go.videoprocessing.provider")) {
+			this.notifyVideoProcessor(video.getVideoId(), video.getFilename());
+		}
 	}
 
 	@SuppressWarnings("static-access")
@@ -216,6 +223,11 @@ public class ProzessManager {
 		
 		// refresh open access for lecture series
 		LectureseriesLocalServiceUtil.updateOpenAccess(video, lectureseries); 
+		
+		// if activated, notify the video processor to handle the processed video files
+		if (PropsUtil.contains("lecture2go.videoprocessing.provider")) {
+			this.notifyVideoProcessor(video.getVideoId(), video.getSecureFilename());
+		}
 	}
 
 	public void deleteThumbnails(Video video) {
@@ -278,11 +290,11 @@ public class ProzessManager {
 			List<Segment> segmentList = SegmentLocalServiceUtil.getSegmentsByVideoId(video.getVideoId());
 			SegmentLocalServiceUtil.deleteThumbhailsFromSegments(segmentList);
 		}catch (PortalException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (SystemException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (NullPointerException e){
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 		//and all segments
@@ -372,6 +384,26 @@ public class ProzessManager {
 		
 		//update LectureSeries previewVideoId
 		LectureseriesLocalServiceUtil.updatePreviewVideoOpenAccess(lectureseries);
+		
+
+		// delete all created files from the video-processor if activated
+		if (PropsUtil.contains("lecture2go.videoprocessing.provider")) {
+			String videoConversionUrl = PropsUtil.get("lecture2go.videoprocessing.provider.videoconversion") + "/sourceid/" + String.valueOf(video.getVideoId());
+			// send DELETE request to video processor
+			try {
+				HttpManager httpManager = new HttpManager();
+				httpManager.setUrl(videoConversionUrl);
+				if (PropsUtil.contains("lecture2go.videoprocessing.basicauth.user") && PropsUtil.contains("lecture2go.videoprocessing.basicauth.pass")) {
+					httpManager.setUser(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.user"));
+					httpManager.setPass(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.pass"));
+				}
+				httpManager.sendDelete();
+				httpManager.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
 		return true;
 	}
 	
@@ -401,11 +433,11 @@ public class ProzessManager {
 			SegmentLocalServiceUtil.deleteThumbhailsFromSegments(segmentList);
 			
 		}catch (PortalException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (SystemException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (NullPointerException e){
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		//and all segments
 		try {
@@ -440,7 +472,7 @@ public class ProzessManager {
 		try {
 			HTACCESS.makeHtaccess(url, VideoLocalServiceUtil.getByProducerAndDownloadLink(producer.getProducerId(), 0));
 		} catch (SystemException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 		// set empty parameter to video itself
@@ -482,7 +514,7 @@ public class ProzessManager {
 					try {
 						rssMan.createRssFile(videoList, f);
 					} catch (IOException e) {
-						e.printStackTrace();
+						//e.printStackTrace();
 					}
 				}
 			}
@@ -519,9 +551,9 @@ public class ProzessManager {
 			objectProducer = ProducerLocalServiceUtil.getProducer(v.getProducerId());
 
 		} catch (SystemException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (PortalException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		Runtime runCmd = Runtime.getRuntime();
 		
@@ -539,7 +571,7 @@ public class ProzessManager {
 					runCmd.exec(command);
 					ret = true;
 				} catch (IOException e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				}				
 			}
 		}
@@ -554,5 +586,31 @@ public class ProzessManager {
 			ret=true;
 		}
 		return ret;
-	}	
+	}
+	
+	/**
+	 * This notifies the Video-Processor via a PUT-http-request of the changed name of the file 
+	 * (The video-processor must rename all processed files upon activating or deactivating videos and recreate the SMIL-file)
+	 * @param videoId the id of the video
+	 * @param filename the filename which will be used for renaming the processed files
+	 */
+	private void notifyVideoProcessor(Long videoId, String filename) {
+		String videoConversionUrl = PropsUtil.get("lecture2go.videoprocessing.provider.videoconversion") + "/sourceid/" + String.valueOf(videoId) + "/filename";
+		// create json object with current (non-open access) filename
+		JSONObject jo = JSONFactoryUtil.createJSONObject();
+		jo.put("sourceFileName", filename);
+		// send PUT request to video processor
+		try {
+			HttpManager httpManager = new HttpManager();
+			httpManager.setUrl(videoConversionUrl);
+			if (PropsUtil.contains("lecture2go.videoprocessing.basicauth.user") && PropsUtil.contains("lecture2go.videoprocessing.basicauth.pass")) {
+				httpManager.setUser(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.user"));
+				httpManager.setPass(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.pass"));
+			}
+			httpManager.sendPut(jo);
+			httpManager.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

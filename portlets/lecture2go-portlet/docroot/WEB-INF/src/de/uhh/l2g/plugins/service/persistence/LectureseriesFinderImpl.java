@@ -58,7 +58,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			try {
 				throw new SystemException(e);
 			} catch (SystemException se) {
-				se.printStackTrace();
+				//e.printStackTrace();
 			}
 		} finally {
 			closeSession(session);
@@ -98,7 +98,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			try {
 				throw new SystemException(e);
 			} catch (SystemException se) {
-				se.printStackTrace();
+				//e.printStackTrace();
 			}
 		} finally {
 			closeSession(session);
@@ -136,7 +136,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			try {
 				throw new SystemException(e);
 			} catch (SystemException se) {
-				se.printStackTrace();
+				//e.printStackTrace();
 			}
 		} finally {
 			closeSession(session);
@@ -221,7 +221,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			try {
 				throw new SystemException(e);
 			} catch (SystemException se) {
-				se.printStackTrace();
+				//e.printStackTrace();
 			}
 		} finally {
 			closeSession(session);
@@ -369,7 +369,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			try {
 				throw new SystemException(e);
 			} catch (SystemException se) {
-				se.printStackTrace();
+				//e.printStackTrace();
 			}
 		} finally {
 			closeSession(session);

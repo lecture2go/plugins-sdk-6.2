@@ -51,7 +51,7 @@ public class Lectureseries_InstitutionLocalServiceImpl
 			Lectureseries_InstitutionUtil.removeByLectureseriesId(lectureseriesId);
 		} catch (SystemException e) {
 			ret = true;
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return ret;
 	}
@@ -62,7 +62,7 @@ public class Lectureseries_InstitutionLocalServiceImpl
 			Lectureseries_InstitutionUtil.removeByInstitutionId(institutionId);
 		} catch (SystemException e) {
 			ret = true;
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return ret;
 	}
@@ -73,7 +73,7 @@ public class Lectureseries_InstitutionLocalServiceImpl
 				try {
 					lfL = lectureseries_InstitutionPersistence.findByLectureseriesIdAndInstitutionId(lf.getLectureseriesId(), lf.getInstitutionId());
 				} catch (Exception e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 		if (lfL.size()>0) ret=true;
 		return ret;

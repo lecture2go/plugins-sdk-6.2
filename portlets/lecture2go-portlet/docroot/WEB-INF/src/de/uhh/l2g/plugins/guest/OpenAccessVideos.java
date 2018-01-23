@@ -83,9 +83,9 @@ public class OpenAccessVideos extends MVCPortlet {
 					}
 					
 				} catch (PortalException e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				} catch (SystemException e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 				writeJSON(resourceRequest, resourceResponse, ja);
 			}			
@@ -220,10 +220,7 @@ public class OpenAccessVideos extends MVCPortlet {
 		    //license for video
 		    
 		    License l = new LicenseImpl();
-		    try {
-				l = LicenseLocalServiceUtil.getByVideoId(video.getVideoId());
-			} catch (NoSuchLicenseException e) {
-			} catch (SystemException e) {}
+			l = LicenseLocalServiceUtil.getByVideoId(video.getVideoId());
 		    
 		    //update video hits
 		    Long hits = video.getHits();

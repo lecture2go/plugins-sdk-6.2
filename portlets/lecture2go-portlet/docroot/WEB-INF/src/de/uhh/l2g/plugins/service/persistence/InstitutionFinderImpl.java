@@ -47,7 +47,7 @@ public class InstitutionFinderImpl extends BasePersistenceImpl<Institution> impl
 			try {
 				throw new SystemException(e);
 			} catch (SystemException se) {
-				se.printStackTrace();
+				//e.printStackTrace();
 			}
 		} finally {
 			closeSession(session);
@@ -78,7 +78,7 @@ public class InstitutionFinderImpl extends BasePersistenceImpl<Institution> impl
 			try {
 				throw new SystemException(e);
 			} catch (SystemException se) {
-				se.printStackTrace();
+				//e.printStackTrace();
 			}
 		} finally {
 			closeSession(session);
@@ -108,7 +108,7 @@ public class InstitutionFinderImpl extends BasePersistenceImpl<Institution> impl
 			try {
 				throw new SystemException(e);
 			} catch (SystemException se) {
-				se.printStackTrace();
+				//e.printStackTrace();
 			}
 		} finally {
 			closeSession(session);
@@ -142,7 +142,7 @@ public class InstitutionFinderImpl extends BasePersistenceImpl<Institution> impl
 			try {
 				throw new SystemException(e);
 			} catch (SystemException se) {
-				se.printStackTrace();
+				//e.printStackTrace();
 			}
 		} finally {
 			closeSession(session);
@@ -176,7 +176,7 @@ public class InstitutionFinderImpl extends BasePersistenceImpl<Institution> impl
 			try {
 				throw new SystemException(e);
 			} catch (SystemException se) {
-				se.printStackTrace();
+				//e.printStackTrace();
 			}
 		} finally {
 			closeSession(session);
@@ -206,7 +206,7 @@ public class InstitutionFinderImpl extends BasePersistenceImpl<Institution> impl
 			try {
 				throw new SystemException(e);
 			} catch (SystemException se) {
-				se.printStackTrace();
+				//e.printStackTrace();
 			}
 		} finally {
 			closeSession(session);
