@@ -150,7 +150,9 @@ public class ProzessManager {
 		// generate RSS
 		for (String f: FileManager.MEDIA_FORMATS) {           
 			generateRSS(video, f);
-		}	
+		}
+		//update LectureSeries previewVideoId
+		LectureseriesLocalServiceUtil.updatePreviewVideoOpenAccess(lectureseries);
 		//
 		String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/";
 		HTACCESS.makeHtaccess(url, VideoLocalServiceUtil.getByProducerAndDownloadLink(producer.getProducerId(), 0));
@@ -223,6 +225,9 @@ public class ProzessManager {
 		
 		// refresh open access for lecture series
 		LectureseriesLocalServiceUtil.updateOpenAccess(video, lectureseries); 
+		
+		//update LectureSeries previewVideoId
+		LectureseriesLocalServiceUtil.updatePreviewVideoOpenAccess(lectureseries);
 		
 		// if activated, notify the video processor to handle the processed video files
 		if (PropsUtil.contains("lecture2go.videoprocessing.provider")) {
