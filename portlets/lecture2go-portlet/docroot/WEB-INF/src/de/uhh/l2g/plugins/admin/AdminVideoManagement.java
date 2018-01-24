@@ -30,6 +30,7 @@ import com.liferay.util.bridges.mvc.MVCPortlet;
 import de.uhh.l2g.plugins.NoSuchLicenseException;
 import de.uhh.l2g.plugins.model.Category;
 import de.uhh.l2g.plugins.model.Creator;
+import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.Lectureseries_Institution;
@@ -78,6 +79,7 @@ import de.uhh.l2g.plugins.util.FileManager;
 import de.uhh.l2g.plugins.util.HttpManager;
 import de.uhh.l2g.plugins.util.ProzessManager;
 import de.uhh.l2g.plugins.util.Security;
+import de.uhh.l2g.plugins.util.Htaccess;
 
 public class AdminVideoManagement extends MVCPortlet {
 
@@ -660,7 +662,21 @@ public class AdminVideoManagement extends MVCPortlet {
 				//e.printStackTrace();
 			}
 		}
-		
+
+		if (resourceID.equals("updateHtaccess")) {
+			try {
+				Host host = HostLocalServiceUtil.getHost(video.getHostId());
+				Producer producer = ProducerLocalServiceUtil.getProducer(video.getProducerId());
+				String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/";
+				long producerId = video.getProducerId();
+				List<Video> lockedVideosByProducer;
+				lockedVideosByProducer = VideoLocalServiceUtil.getByProducerAndDownloadLink(producerId, 0);
+				Htaccess.makeHtaccess(url, lockedVideosByProducer);
+			} catch (Exception e) {
+				// 
+			} 
+		}
+			
 		if(resourceID.equals("getJSONVideo")){
 			JSONObject uris = JSONFactoryUtil.createJSONObject();
 			for(int i=0; i<video.getPlayerUris().size(); i++){

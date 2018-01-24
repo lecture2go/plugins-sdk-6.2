@@ -31,6 +31,7 @@
 <liferay-portlet:resourceURL id="updateThumbnail" var="updateThumbnailURL" />
 <liferay-portlet:resourceURL id="getJSONVideo" var="getJSONVideoURL" />
 <liferay-portlet:resourceURL id="convertVideo" var="convertVideoURL" />
+<liferay-portlet:resourceURL id="updateHtaccess" var="updateHtaccessURL" />
 
 
 <%
@@ -511,6 +512,9 @@ $(function () {
 				}
            }
            
+           //htaccess update function for physical file protectiom
+           updateHtaccess();
+           
        	   var st = false;
            
        	   player.remove();
@@ -614,7 +618,7 @@ function isFirstUpload(){
 		  url: "<%=isFirstUploadURL%>",
 		  dataType: 'json',
 		  data: {
-		 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>",
+		 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>"
 		  },
 		  global: false,
 		  async:false,
@@ -643,6 +647,24 @@ function videoFileNameExistsInDatabase (fileName){
 	return ret;
 }
 
+function updateHtaccess (){
+	var ret = 0;
+	$.ajax({
+		  type: "POST",
+		  url: "<%=updateHtaccessURL%>",
+		  dataType: 'json',
+		  data: {
+			  <portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>"
+		  },
+		  global: false,
+		  async: false,
+		  success: function(data) {
+		    ret = 1;
+		  }
+	});
+	return ret;
+}
+
 function updateVideoFileName(file){
 	AUI().use('aui-io-request', 'aui-node',
 		function(A){
@@ -654,7 +676,7 @@ function updateVideoFileName(file){
 				 	   	<portlet:namespace/>videoId: A.one('#<portlet:namespace/>videoId').get('value'),
 				 	   	<portlet:namespace/>fileName: file.fileName,
 				 	   	<portlet:namespace/>secureFileName: file.secureFileName,
-				 	   	<portlet:namespace/>generationDate: file.generationDate,
+				 	   	<portlet:namespace/>generationDate: file.generationDate
 			 	},
 			 	//get server response
 				on: {
