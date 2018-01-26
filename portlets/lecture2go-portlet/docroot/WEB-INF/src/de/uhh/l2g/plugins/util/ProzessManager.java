@@ -197,7 +197,6 @@ public class ProzessManager {
 			for (String s: THUMBNAIL_SUFFIX) {
 				File imgFile = new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoPreffix + s);
 				imgFile.renameTo(new File(PropsUtil.get("lecture2go.images.system.path") + "/" + videoSPreffix + s));
-				System.out.print("neuer name"+ imgFile.toString());
 			}
 			//for av media
 			for (String f: FileManager.MEDIA_FORMATS) {           
