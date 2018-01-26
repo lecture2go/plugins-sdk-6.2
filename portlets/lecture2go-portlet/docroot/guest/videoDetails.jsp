@@ -24,17 +24,25 @@
 </portlet:actionURL>
 
 <%
-String tags= video.getTags().length()>0 ? " - "+video.getTags()+" - " : "";
-String pageTitle=video.getTitle() +" - "+lectureseries.getName()+" - "+CreatorLocalServiceUtil.getCommaSeparatedCreatorsByVideoIdAndMaxCreators(video.getVideoId(), 200) + " - Universität Hamburg" + tags;
-PortalUtil.setPageTitle(pageTitle, request);
+	String pageTitle = "";
 
-String companyName = company.getName();
-String portalURL = PrefsPropsUtil.getString(company.getCompanyId(),PropsKeys.DEFAULT_LANDING_PAGE_PATH);
+	if (video.getOpenAccess() == 1) {
+		String tags = video.getTags().length() > 0 ? " - " + video.getTags() + " - " : "";
+		pageTitle = video.getTitle() + " - " + lectureseries.getName() + " - " + CreatorLocalServiceUtil.getCommaSeparatedCreatorsByVideoIdAndMaxCreators(video.getVideoId(), 200) + " - Universität Hamburg" + tags;
+	} else {
+		pageTitle = company.getName();
+	}
 
-boolean isCitation2Go = false;
-if(timeStart>0 && timeEnd>timeStart && video.getCitation2go()==1)isCitation2Go=true;
+	PortalUtil.setPageTitle(pageTitle, request);
 
-String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
+	String companyName = company.getName();
+	String portalURL = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.DEFAULT_LANDING_PAGE_PATH);
+
+	boolean isCitation2Go = false;
+	if (timeStart > 0 && timeEnd > timeStart && video.getCitation2go() == 1)
+		isCitation2Go = true;
+
+	String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 %>
 
 <%if(video.getVideoId()>0){%>
