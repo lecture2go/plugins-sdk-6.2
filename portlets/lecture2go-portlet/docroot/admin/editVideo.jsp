@@ -155,10 +155,21 @@
 						<div id="progress" class="progress">
 					    	<div class="bar" style="width: 0%;"></div>
 						</div>
+						<% 	
+						// for testing: only give a few users the right to postprocess videos:
+						List<Integer> producerIdsAllowedForPostprocessing = new ArrayList<Integer>();
+						producerIdsAllowedForPostprocessing.add(21908); // Iavor
+						producerIdsAllowedForPostprocessing.add(22707); // Matthias
+						producerIdsAllowedForPostprocessing.add(21923); // Konferenzen-Account
+						producerIdsAllowedForPostprocessing.add(22646); // Tini
+						producerIdsAllowedForPostprocessing.add(30045); // Ingo
+						producerIdsAllowedForPostprocessing.add(33631); // Dominic
+						%>
 						<c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider")%>'>
-							<c:if test="<%= permissionChecker.isOmniadmin() %>">
+							<c:if test="<%= permissionChecker.isOmniadmin() || producerIdsAllowedForPostprocessing.contains((int) reqProducer.getProducerId()) %>">
 								<div id="postprocessing" style="margin-bottom: 20px;">
 									<aui:input name="postprocess" type="checkbox" label="Postprocess after upload (beta)" id="postprocess"></aui:input>
+									<aui:button type="button" value="Start Postprocessing (beta)" onclick="convertVideo()"/>
 								</div>
 							</c:if>
 						</c:if>
