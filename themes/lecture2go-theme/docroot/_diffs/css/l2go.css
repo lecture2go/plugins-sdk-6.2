@@ -3080,3 +3080,11 @@ strong, b, th, #kopf .sprachwechsel {
     max-width: 1096px;
     padding: 0;
 }
+
+.supportlink a {
+    font-size: 12px;
+    margin-top: 0px !important;
+    float: left;
+    font-style: normal;
+    width: 100%;
+}

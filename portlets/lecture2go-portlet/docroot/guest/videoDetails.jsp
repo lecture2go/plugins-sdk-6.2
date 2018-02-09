@@ -228,62 +228,43 @@
 												String institut = "";
 												String option1 = PortalUtil.getOriginalServletRequest(request).getParameter("option1"); 
 												
+												// <option value="1">UHH-BWL</option>
+												// <option value="2">UHH-EW</option>
+												// <option value="3">UHH-GWiss</option>
+												// <option value="4">UHH-Jura</option>
+												// <option value="5">UHH-Medizin</option>
+												// <option value="6">UHH-MIN</option>
+												// <option value="7">UHH-PB</option>
+												// <option value="8">UHH-WiSo</option>
+												// <option value="9">UHH-UK</option>
+												// <option value="10">UHH-ZfW</option>
+												// <option value="11">HFH</option>
+												// <option value="13">andere Institution</option><option value="12">HfMT</option>
+												
 												switch(facultyId){
-													case 3: institut = "UHH-Jura";break;
-													case 4: institut = "UHH-WiSo";break;
-													case 5: institut = "UHH-Medizin";break;
-													case 6: institut = "UHH-EW";break;
-													case 7: institut = "UHH-GWiss";break;
-													case 8: institut = "UHH-MIN";break;
-													case 203: institut = "UHH-PB";break;
-													case 204: institut = "UHH-BWL";break;
-													default: institut = "Fakultätübergreifend";break;
+													case 3: institut = "4";break; //jura
+													case 4: institut = "8";break; //wiso
+													case 5: institut = "5";break; //medizin
+													case 6: institut = "2";break; //erz. wiss
+													case 7: institut = "3";break; //g.wiss
+													case 8: institut = "6";break; //min
+													case 203: institut = "7";break; //pb
+													case 204: institut = "1";break; //bwl
+													default: institut = "13";break; //andere, bzw. übergreifend
 												}
 												
 												String url=video.getUrl();
 												if(video.getOpenAccess()==0)url=video.getSecureUrl();
 												
-												JSONObject jsn = new JSONObject();
-												jsn.put("institution",institut);
-												jsn.put("system","Lecture2Go");
-												jsn.put("role","Lecture2Go-Benutzer");
-												jsn.put("gender","");
-												jsn.put("firstname",PortalUtil.getOriginalServletRequest(request).getParameter("firstname"));
-												jsn.put("lastname",PortalUtil.getOriginalServletRequest(request).getParameter("lastname"));
-												jsn.put("email",PortalUtil.getOriginalServletRequest(request).getParameter("email"));
-												jsn.put("subject",url);
-												jsn.put("body",PortalUtil.getOriginalServletRequest(request).getParameter("body"));
-												jsn.put("ergebnis",PortalUtil.getOriginalServletRequest(request).getParameter("ergebnis"));
-												jsn.put("option1",option1);
-												jsn.put("result",PortalUtil.getOriginalServletRequest(request).getParameter("result"));
-												jsn.put("spamprotect",PortalUtil.getOriginalServletRequest(request).getParameter("spamprotect"));
+												String suppLink ="https://www.uni-hamburg.de/elearning/dienstleistung/support.html";
+												String param="?institut="+institut+"&bereich=2&betreff="+url;
+												suppLink += param;
 											%>
 											<div id="meta-share">
-												<%
-													SupportFormularClient sfc = new SupportFormularClient("mail4eLearnSupport",url,jsn.toString(),"");
-													out.print(sfc.getFormular());
-												%>
-												
-												<% 
-													// If support form was submitted, scroll down and select 'support' tab
-													if(option1!=null){
-														%>
-														<script type="text/javascript">
-															$(function() {
-																// activate contact tab
-																$("#tabs li a").eq(-1).click();
-																
-																// Scrolling must happen in onload, because otherwise the Player is not yet loaded and the position would be wrong
-																window.onload = function () {
-																	var pos = $("#tabs").offset().top;
-																	$('html, body').animate({scrollTop: pos - 10}, 1000, "easeInOutCubic");	
-																}
-																
-															 });
-														</script>
-														<%		
-													}
-												%>
+												<div class="supportlink">
+													<p class="smallitalic"><liferay-ui:message key="support-notification"/>
+													<a href="<%=suppLink%>" target="_blank" style="color:#c40017"><liferay-ui:message key="support-formular-link"/></a>
+												</div>
 											</div>		        
 								    </div>
 		
