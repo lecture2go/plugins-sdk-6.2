@@ -257,7 +257,7 @@
 												if(video.getOpenAccess()==0)url=video.getSecureUrl();
 												
 												String suppLink ="https://www.uni-hamburg.de/elearning/dienstleistung/support.html";
-												String param="?institut="+institut+"&bereich=2&betreff="+url;
+												String param="?institut="+institut+"&bereich=2&betreff="+url+"#new_mailform3";
 												suppLink += param;
 											%>
 											<div id="meta-share">
