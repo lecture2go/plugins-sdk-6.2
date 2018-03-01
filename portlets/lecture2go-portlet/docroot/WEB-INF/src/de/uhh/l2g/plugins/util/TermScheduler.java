@@ -94,12 +94,12 @@ public final class TermScheduler extends PortletScheduler implements
 
 	public void start() {
 		super.schedule();
-		LOG.info("Wintersemester Scheduler start.");
+		LOG.info("Scheduler start.");
 	}
 
 	public void stop() {
 		super.unschedule();
-		LOG.info("Wintersemester Scheduler stop.");
+		LOG.info("Scheduler stop.");
 	}
 	
 	public void init(String schedulerClassName, ServiceContext serviceContext) {
