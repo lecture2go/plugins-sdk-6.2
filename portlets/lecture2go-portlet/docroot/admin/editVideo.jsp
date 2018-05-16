@@ -84,6 +84,11 @@
 	Map<Term, List<Lectureseries>> lectureseriesAsTreeList = new TreeMap<Term, List<Lectureseries>>();
 	if(reqVideo.getVideoId()>0)lectureseriesAsTreeList = LectureseriesLocalServiceUtil.getFilteredByApprovedSemesterFacultyProducerAsTreeMapSortedByTerm(1, (long) 0, (long) 0, reqVideo.getProducerId());
 	else lectureseriesAsTreeList = LectureseriesLocalServiceUtil.getFilteredByApprovedSemesterFacultyProducerAsTreeMapSortedByTerm(1, (long) 0, (long) 0, reqProducer.getProducerId());
+
+	String videoConversionStatus = "";
+	if (PropsUtil.contains("lecture2go.videoprocessing.provider")) {
+		videoConversionStatus = VideoProcessorManager.getSimpleVideoConversionStatusForVideoId(reqVideo.getVideoId());
+	}
 %>
 
 <script id="htmlTitle" type="text/x-tmpl">
@@ -168,6 +173,22 @@
 						<c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider")%>'>
 							<c:if test="<%= permissionChecker.isOmniadmin() || producerIdsAllowedForPostprocessing.contains((int) reqProducer.getProducerId()) %>">
 								<div id="postprocessing" style="margin-bottom: 20px;">
+									<span id="conversion">
+										<c:choose>
+											<c:when test='<%=videoConversionStatus.equals("RUNNING")%>'>
+								            	 <span class="conversion-running"><span class="icon-exclamation-sign"></span> <liferay-ui:message key="conversion-running"/></span>
+								            	 <liferay-ui:icon-help message='conversion-description'/>
+								         	</c:when>
+											<c:when test='<%=videoConversionStatus.equals("FINISHED")%>'>
+												<span><span class="icon-ok-sign"></span> <liferay-ui:message key="conversion-finished"/></span>
+								            	 <liferay-ui:icon-help message='conversion-description'/>
+								         	</c:when>
+											<c:when test='<%=videoConversionStatus.equals("ERROR")%>'>
+												<span class="conversion-failed"><span class="icon-remove-sign"></span> <liferay-ui:message key="conversion-failed"/> - <a class="force-underline" href="javascript:convertVideo()" >nochmal versuchen</a></span>
+								            	 <liferay-ui:icon-help message='conversion-description'/>
+											</c:when>
+								      </c:choose>
+									</span>
 									<aui:input name="postprocess" type="checkbox" label="Postprocess after upload (beta)" id="postprocess"></aui:input>
 									<aui:button type="button" value="Start Postprocessing (beta)" onclick="convertVideo()"/>
 								</div>
@@ -705,6 +726,8 @@ function updateVideoFileName(file){
 }
 
 function convertVideo(){
+	$("#conversion").html('<span class="conversion-running"><span class="icon-exclamation-sign"> </span>' + "<liferay-ui:message key="conversion-initializing"/>" + '</span><liferay-ui:icon-help message="conversion-description"/>');
+
 	AUI().use('aui-io-request', 'aui-node',
 		function(A){
 			A.io.request('<%=convertVideoURL%>', {
@@ -718,8 +741,13 @@ function convertVideo(){
 			 	//get server response
 				on: {
 					   success: function() {
-					     var jsonResponse = this.get('responseData');					     
-					   }
+					     var status = this.get('responseData').status;
+					     if(status == false) {
+					    	 $("#conversion").html('<span class="conversion-failed"><span class="icon-remove-sign"> </span> ' + "<liferay-ui:message key="conversion-failed"/>" + ' - <a class="force-underline" href="javascript:convertVideo()" >' + "<liferay-ui:message key="try-again"/>" + '</a></span><liferay-ui:icon-help message='conversion-description'/>');
+					     } else {
+						     $("#conversion").html('<span class="conversion-running"><span class="icon-exclamation-sign"> </span>' + "<liferay-ui:message key="conversion-running"/>" + '</span><liferay-ui:icon-help message='conversion-description'/>');
+					     }
+				   }
 				}
 			});	
 		}
@@ -903,6 +931,7 @@ function deleteFile(fileName){
 		    	  	$("#date-time").hide();
 		    	  	$("#first-title").show();
 		    	  	$("#<portlet:namespace/>meta-ebene").hide();
+		    	  	$("#conversion").html('');
 		        }
 		        player.remove();
 		        //initialize and show player

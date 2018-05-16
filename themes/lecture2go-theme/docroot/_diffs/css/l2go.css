@@ -373,6 +373,10 @@ p.smallitalic {
     margin-left: 0;
 }
 
+.force-underline {
+	text-decoration: underline !important;
+}
+
 .allcreators {
     font-size: smaller;
     height: auto;
@@ -3088,3 +3092,13 @@ strong, b, th, #kopf .sprachwechsel {
     font-style: normal;
     width: 100%;
 }
+
+.conversion-running {
+	color: #33aadd;	
+}
+
+.conversion-failed {
+	color: #c40017;
+}
+
+
