@@ -233,9 +233,12 @@
 				<aui:input type="hidden" name="producers" id="producers" value="<%=producerId%>"/>
 				<aui:input type="hidden" name="producerId" id="producerId" value="<%=producerId%>"/>
 			<%}%>
-
-			<%if(readOnly){%>
+			<%if(readOnly){%> 
+				<%if(TermLocalServiceUtil.getById(lSemester).getPrefix().isEmpty() && TermLocalServiceUtil.getById(lSemester).getPrefix().isEmpty()){%>
+					<aui:input name="term" label="term" required="true" value='<%=LanguageUtil.get(pageContext, "no-term")%>' readonly="<%=readOnly%>"/>
+				<%}else{%>
 				<aui:input name="term" label="term" required="true" value='<%=TermLocalServiceUtil.getById(lSemester).getPrefix()+" "+TermLocalServiceUtil.getById(lSemester).getYear()%>' readonly="<%=readOnly%>"/>
+				<%}%>
 				<aui:input type="hidden" name="semesterId" value="<%=lSemester%>"/>
 			<%}else{%>
 				<aui:select id="allSemesters" size="1" name="semesterId" label="semester" required="true">
