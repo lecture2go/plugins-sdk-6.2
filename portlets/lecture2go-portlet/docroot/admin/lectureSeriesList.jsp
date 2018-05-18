@@ -153,8 +153,9 @@
 			</portlet:actionURL>
 			<%
 				String lTerm=TermLocalServiceUtil.getById(lectser.getTermId()).getTermName();
-				
+				if(lTerm.isEmpty())	lTerm = LanguageUtil.get(pageContext, "no-term");
 			%>
+							
 			<liferay-ui:search-container-column-text name="name">
 				<div class="adminrow wide">
 					<div class="admintile wide">

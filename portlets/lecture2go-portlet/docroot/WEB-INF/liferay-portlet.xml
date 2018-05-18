@@ -102,10 +102,10 @@
 	</portlet>
 
 	<portlet>
-   		<portlet-name>lg-admin-institution-management</portlet-name>
-   	 	<icon>/icon.png</icon>
+		<portlet-name>lg-admin-institution-management</portlet-name>
+		<icon>/icon.png</icon>
 
-  	    <instanceable>false</instanceable>
+		<instanceable>false</instanceable>
 		<private-request-attributes>false</private-request-attributes>
 
 		<header-portlet-javascript>/js/jquery.tmpl.min.js</header-portlet-javascript>
@@ -116,10 +116,10 @@
 	</portlet>
 
 	<portlet>
-   		<portlet-name>lg-admin-streaming-server-management</portlet-name>
-   	 	<icon>/icon.png</icon>
+		<portlet-name>lg-admin-streaming-server-management</portlet-name>
+		<icon>/icon.png</icon>
 
-  	    <instanceable>false</instanceable>
+		<instanceable>false</instanceable>
 		<private-request-attributes>false</private-request-attributes>
 
 		<header-portlet-javascript>/js/jquery.tmpl.min.js</header-portlet-javascript>
@@ -130,10 +130,10 @@
 	</portlet>
 		
 	<portlet>
-   	 	<portlet-name>lg-statistic-management</portlet-name>
-   	 	<icon>/icon.png</icon>
+		<portlet-name>lg-statistic-management</portlet-name>
+		<icon>/icon.png</icon>
    	 	
-  	    <instanceable>false</instanceable>
+		<instanceable>false</instanceable>
 		<private-request-attributes>false</private-request-attributes>
 
 		<header-portlet-javascript>/js/jquery.tmpl.min.js</header-portlet-javascript>
@@ -143,13 +143,13 @@
 		<add-default-resource>true</add-default-resource>
 	</portlet>
 	<!-- 
-	    1. Seconds
-	    2. Minutes
-	    3. Hours
-	    4. Day-of-Month
-	    5. Month
-	    6. Day-of-Week
-	    7. Year (optional field)
+		1. Seconds
+		2. Minutes
+		3. Hours
+		4. Day-of-Month
+		5. Month
+		6. Day-of-Week
+		7. Year (optional field)
 		**Expression** 	**Meaning**
 		0 0 12 * * ? 	Fire at 12pm (noon) every day
 		0 15 10 ? * * 	Fire at 10:15am every day
@@ -205,10 +205,11 @@
    			</scheduler-entry>    			  				
    	   	<instanceable>false</instanceable>
 		<private-request-attributes>false</private-request-attributes>
+		
 		<header-portlet-javascript>/js/jquery.tmpl.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/jquery-ui-1.11.1.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/bootstrap.min.js</header-portlet-javascript>
-   		<add-default-resource>true</add-default-resource>
-	 </portlet>
+		<add-default-resource>true</add-default-resource>
+	</portlet>
 </liferay-portlet-app>
 
