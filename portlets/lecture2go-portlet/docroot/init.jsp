@@ -55,7 +55,6 @@
 <%@page import="com.liferay.portal.service.PortletLocalServiceUtil"%>
 <%@page import="com.liferay.portal.kernel.util.UnicodeFormatter"%>
 <%@page import="com.liferay.portal.kernel.language.LanguageUtil"%>
-<%@page import="com.liferay.portal.kernel.language.LanguageUtil"%>
 <%@page import="com.liferay.portal.kernel.util.LocaleUtil"%>
 <%@page import="com.liferay.taglib.portlet.RenderURLParamsTag"%>
 <%@page import="com.liferay.util.portlet.PortletRequestUtil"%>
