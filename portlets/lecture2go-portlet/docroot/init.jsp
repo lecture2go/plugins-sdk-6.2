@@ -2,6 +2,7 @@
 
 <%@taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@taglib uri="http://liferay.com/tld/aui" prefix="aui"%>
 <%@taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
 <%@taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %>
@@ -30,6 +31,8 @@
 <%@page import="java.lang.String"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.io.PrintWriter"%>
+
+<%@page import="de.uhh.l2g.plugins.util.HTMLFilter"%>
 
 <%@page import="com.liferay.portal.kernel.util.Validator"%>
 <%@page import="com.liferay.util.PwdGenerator"%>
@@ -131,8 +134,6 @@
 
 <%@page import="de.uhh.l2g.plugins.util.Lecture2GoRoleChecker"%>
 <%@page import="de.uhh.l2g.plugins.util.Security"%>
-
-<%@page import="de.uhh.l2g.webservices.*"%>
 
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
