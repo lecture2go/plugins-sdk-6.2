@@ -21,7 +21,10 @@
 	Long creatorId 				= ServletRequestUtils.getLongParameter(request, "creatorId", 0);
 
 	String searchQuery			= ServletRequestUtils.getStringParameter(request, "searchQuery", "");
-
+	//XSS anti scripting required!
+	HTMLFilter hF = new HTMLFilter();
+	searchQuery = hF.filter(searchQuery);
+	
 	// filters are set if they have a value different than 0
 	boolean hasInstitutionFiltered 			= (institutionId != 0);
 	boolean hasParentInstitutionFiltered 	= (parentInstitutionId != 0);
@@ -111,6 +114,9 @@
 	Institution rInst = new InstitutionImpl();
 	String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 	%>
+	
+	<p>Welcome <c:out value="<%=searchQuery%>" /></p>
+	
 	<portlet:actionURL var="backURL0" name="addFilter">
 		<portlet:param name="jspPage" value="/guest/videosList.jsp" />
 		<portlet:param name="parentInstitutionId" value="0"/>
@@ -516,7 +522,6 @@ var checkExist = setInterval(function() {
 					// open the video list of a lectureseries if a video is found
 					 $(node).closest("ul").show();
 				 }
-			
 			 }
 		};
 		if (searchQuery) {
