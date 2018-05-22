@@ -20,7 +20,7 @@ public class Lecture2GoRoleChecker extends RoleLocalServiceUtil {
 		try {
 			rL = user.getRoles();
 		} catch (SystemException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		for (Role role : rL) if(role.getName().equals("L2Go Producer"))producer=true;
 		return producer;
@@ -30,7 +30,7 @@ public class Lecture2GoRoleChecker extends RoleLocalServiceUtil {
 		try {
 			rL = user.getRoles();
 		} catch (SystemException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		for (Role role : rL) if(role.getName().equals("L2Go Coordinator"))coordinator=true;
 		return coordinator;
@@ -40,7 +40,7 @@ public class Lecture2GoRoleChecker extends RoleLocalServiceUtil {
 		try {
 			rL = user.getRoles();
 		} catch (SystemException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		for (Role role : rL) if(role.getName().equals("L2Go Admin") || role.getName().equals("Administrator") )l2gAdmin=true;
 		return l2gAdmin;
@@ -50,7 +50,7 @@ public class Lecture2GoRoleChecker extends RoleLocalServiceUtil {
 		try {
 			rL = user.getRoles();
 		} catch (SystemException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		for (Role role : rL) if(role.getName().equals("L2Go Student"))student=true;
 		return student;
