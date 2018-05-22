@@ -115,8 +115,6 @@
 	String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 	%>
 	
-	<p>Welcome <c:out value="<%=searchQuery%>" /></p>
-	
 	<portlet:actionURL var="backURL0" name="addFilter">
 		<portlet:param name="jspPage" value="/guest/videosList.jsp" />
 		<portlet:param name="parentInstitutionId" value="0"/>
