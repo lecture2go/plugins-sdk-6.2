@@ -250,7 +250,7 @@
 													case 8: institut = "6";break; //min
 													case 203: institut = "7";break; //pb
 													case 204: institut = "1";break; //bwl
-													default: institut = "13";break; //andere, bzw. übergreifend
+													default: institut = "0";break; //andere, bzw. übergreifend
 												}
 												
 												String url=video.getUrl();
