@@ -113,11 +113,9 @@ $theme.include($body_top_include)
 		<div class="right">
 			<a href="/impressum" id="impressum">#language("impressum")</a>
 			<span class="sep">|</span>
-			<a href="/disclaimer" id="disclaimer">#language("disclaimer")</a>
-			<span class="sep">|</span>			
-			<a href="http://twitter.com/#!/Lecture2Go" title="Twitter" target="blank" id="tw">Twitter</a>
+			<a href="https://www.uni-hamburg.de/datenschutz.html" id="privacy-policy" target="blank">#language("privacy-policy")</a>			
 			<span class="sep">|</span>
-			<a href="http://www.facebook.com/pages/Hamburg-Germany/Lecture2Go/201731849859567" id="fb" title="Facebook" target="blank">Facebook</a>
+			<a href="/disclaimer" id="disclaimer">#language("disclaimer")</a>
 		</div>	
 		
 		#parse ("$full_templates_path/uhh_footer.vm")
