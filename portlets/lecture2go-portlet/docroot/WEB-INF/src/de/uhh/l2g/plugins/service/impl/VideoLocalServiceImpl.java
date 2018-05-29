@@ -631,7 +631,6 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			String playerUri = "";
 			playerUri += uris.get(i);
 			if(video.getOpenAccess()==1){
-
 				if (hasSmilFile(host, video, producer)) {
 					playerUri = playerUri.replace("[smilfile]", video.getPreffix()+".smil");
 				}
@@ -757,7 +756,13 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	private boolean hasSmilFile(Host host, Video video, Producer producer) {
 		String  mediaRep = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir();
 
-		String smilPath = mediaRep + "/" + video.getPreffix()+".smil";
+		String prefix;
+		if (video.getOpenAccess()==1) {
+			prefix = video.getPreffix();
+		} else {
+			prefix = video.getSPreffix();
+		}
+		String smilPath = mediaRep + "/" + prefix +".smil";
 		File smilFile = new File(smilPath);
 		return smilFile.isFile();
 	}
@@ -777,8 +782,14 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		final int targetBitrate = 1400000; // in bit/s
 		String filename = "";
 
-		String  mediaRep = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir();
-		String smilPath = mediaRep + "/" + video.getPreffix()+".smil";
+		String mediaRep = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir();
+		String prefix;
+		if (video.getOpenAccess()==1) {
+			prefix = video.getPreffix();
+		} else {
+			prefix = video.getSPreffix();
+		}
+		String smilPath = mediaRep + "/" + prefix +".smil";
 		
 		// read the smil file as an xml document
 		Document xml = SAXReaderUtil.read(new FileInputStream(smilPath));
