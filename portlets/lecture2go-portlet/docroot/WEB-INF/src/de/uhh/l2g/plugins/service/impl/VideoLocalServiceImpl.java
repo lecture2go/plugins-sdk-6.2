@@ -238,6 +238,12 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				objectVideo.setImageMedium(img);
 			}
 		}
+		
+		// checks if video has a smil file
+		if(checkSmilFile(objectHost, objectVideo, objectProducer)) {
+			objectVideo.setHasSmilFile(true);
+		}		
+		
 		// date
 		// extract time and date from the originalFileName
 		String[] parameter = objectVideo.getGenerationDate().split("\\_");
@@ -352,8 +358,11 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		
 		// the link the the downloadable mp4 can vary, if there is a smil file for adaptive streaming, use the video file with a reasonable bitrate
 		String downMp4Link;
-		if(hasSmilFile(objectHost, objectVideo, objectProducer)) {
+		if (objectVideo.hasSmilFile()) {
 			try {
+				String fileNameFromSmil = getFileNameOfVideoWithReasonableBitrate(objectHost, objectVideo, objectProducer);
+				objectVideo.setFileNameFromSmil(fileNameFromSmil);
+				System.out.println("dateiname aus smil: " + fileNameFromSmil);
 				downMp4Link = pth+getFileNameOfVideoWithReasonableBitrate(objectHost, objectVideo, objectProducer);
 			} catch (Exception e) {
 				// can not read the smil file, use the default mp4 as downloadable video
@@ -370,7 +379,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		String downPdfLink = pth+preff+".pdf";
 		String downOggLink = pth+preff+".ogg";
 		String downFlvLink = pth+preff+".flv";
-		//
+
 		objectVideo.setMp4DownloadLink(downMp4Link);
 		objectVideo.setMp3DownloadLink(downMp3Link);
 		objectVideo.setM4vDownloadLink(downM4vLink);
@@ -408,9 +417,9 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			if(objectVideo.getContainerFormat().equals("mp4")){
 				String videoFileName = "";
 				if(objectVideo.getOpenAccess()==1){
-					if(hasSmilFile(objectHost, objectVideo, objectProducer)) {
+					if (objectVideo.hasSmilFile()) {
 						try {
-							videoFileName = getFileNameOfVideoWithReasonableBitrate(objectHost, objectVideo, objectProducer);
+							videoFileName = objectVideo.getFileNameFromSmil();
 						} catch (Exception e) {
 							// can not read the smil file, use the default filename
 							videoFileName = objectVideo.getPreffix()+".mp4";
@@ -421,7 +430,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 					}
 					embedHtml5="<video width='647' height='373' controls><source src='"+PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+videoFileName+"' type='video/mp4'>Your browser does not support the video tag.</video>";
 				}else{
-					if(hasSmilFile(objectHost, objectVideo, objectProducer)) {
+					if (objectVideo.hasSmilFile()) {
 						try {
 							videoFileName = getFileNameOfVideoWithReasonableBitrate(objectHost, objectVideo, objectProducer);
 						} catch (Exception e) {
@@ -631,12 +640,12 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			String playerUri = "";
 			playerUri += uris.get(i);
 			if(video.getOpenAccess()==1){
-				if (hasSmilFile(host, video, producer)) {
+				if (video.hasSmilFile()) {
 					playerUri = playerUri.replace("[smilfile]", video.getPreffix()+".smil");
 				}
 				playerUri = playerUri.replace("[filename]", video.getFilename());
 			}else{
-				if (hasSmilFile(host, video, producer)) {
+				if (video.hasSmilFile()) {
 					playerUri = playerUri.replace("[smilfile]", video.getSPreffix()+".smil");
 				}
 				playerUri = playerUri.replace("[filename]", video.getSecureFilename());
@@ -753,7 +762,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	/**
 	 * Checks if the video has a related smil-file in the file system
 	 */
-	private boolean hasSmilFile(Host host, Video video, Producer producer) {
+	public boolean checkSmilFile(Host host, Video video, Producer producer) {
 		String  mediaRep = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir();
 
 		String prefix;
@@ -814,4 +823,6 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	
 		return filename;
 	}
+	
+	
 }

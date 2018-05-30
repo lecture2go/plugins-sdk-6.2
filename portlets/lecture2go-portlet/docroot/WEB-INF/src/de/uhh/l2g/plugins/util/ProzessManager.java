@@ -551,10 +551,19 @@ public class ProzessManager {
 		Runtime runCmd = Runtime.getRuntime();
 		
 		for (String mf : FileManager.MEDIA_FORMATS) {
-			String command = "ln -s " + PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + "." + mf+ " " + PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/" + v.getPreffix() + "." + mf;
+			String mFile;
+			String mFileAbo;
+			if (mf == "mp4" && v.hasSmilFile()) {
+				// if there is a smil file, do not use the default video file but the one given by the mp4DownloadLink
+				mFile = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getFileNameFromSmil();
+				mFileAbo = PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/" + v.getFileNameFromSmil();
+			} else {
+				// default handling of all files
+				mFile = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + "." + mf;
+				mFileAbo = PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/" + v.getPreffix() + "." + mf;
+			}
 			
-			String mFile = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + "." + mf;
-			String mFileAbo = PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/" + v.getPreffix() + "." + mf;
+			String command = "ln -s " + mFile + " " + mFileAbo;
 			
 			File medFile = new File(mFile);
 			File aboFile = new File(mFileAbo);
@@ -574,6 +583,9 @@ public class ProzessManager {
 	public boolean removeSymbolicLinks(Video v){
 		boolean ret = false;
 		for (String mf : FileManager.MEDIA_FORMATS) {
+			if (mf == "mp4" && v.hasSmilFile()) {
+				File symLink = new File(PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/" + v.getFileNameFromSmil());
+			}
 			File symLink = new File(PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/"+v.getPreffix() + "." + mf);
 			symLink.delete();
 			ret=true;
