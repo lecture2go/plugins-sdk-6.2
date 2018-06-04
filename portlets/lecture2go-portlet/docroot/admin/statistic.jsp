@@ -1,68 +1,64 @@
 <%@include file="/init.jsp"%>
 <%@ page import="de.uhh.l2g.plugins.model.VideoStatistic"%>
 <%@ page
-	import="de.uhh.l2g.plugins.service.VideoStatisticLocalServiceUtil"%>
+	import="de.uhh.l2g.plugins.service.StatisticLocalServiceUtil"%>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui"%>
 
 <%
-//Scope GroupId
-long groupId = themeDisplay.getLayout().getGroupId();
-//Company Id of Application
-long companyId = themeDisplay.getLayout().getCompanyId();
+JSONObject jsonObject = StatisticLocalServiceUtil.getAllStatistics();
 
-List<VideoStatistic> statisticEntries = VideoStatisticLocalServiceUtil.getAllStatistics();
-ListIterator<VideoStatistic> it = statisticEntries.listIterator();
+JSONArray array = (JSONArray) jsonObject.get("statistic");
 
-String totalCurrentVideo = "-";
+String totalVideos = "-";
 String totalPublic = "";
-String totalPublicPerc = ""; 
 String totalPrivate = "";
-String totalPrivatePerc = "";
 
-String totalYesterday = "-";
-String totalYesterdayPublic = "";
-String totalYesterdayPrivate = "";
+String totalYesterday = "0";
+String totalYesterdayPublic = "0";
+String totalYesterdayPrivate = "0";
 
-String totalOneWeek = "-";
-String totalOneWeekPublic = "";
-String totalOneWeekPrivate = "";
+String totalOneWeek = "0";
+String totalOneWeekPublic = "0";
+String totalOneWeekPrivate = "0";
 
-String totalOneMonth = "-";
-String totalOneMonthPublic = "";
-String totalOneMonthPrivate = "";
+String totalOneMonth = "0";
+String totalOneMonthPublic = "0";
+String totalOneMonthPrivate = "0";
 
-String totalOneYear ="-";
-String totalOneYearPublic = "";
-String totalOneYearPrivate = "";
+String totalOneYear ="0";
+String totalOneYearPublic = "0";
+String totalOneYearPrivate = "0";
 
-	while(it.hasNext()){ 
-			VideoStatistic vStat = it.next();
-			int timeSpan=vStat.getDateDiff();
-			if(timeSpan == 0){
-				totalCurrentVideo = vStat.getCurrentTotal()+"";
-				totalPublic = vStat.getCurrentPublic()+"";
-				totalPublicPerc = vStat.getCurrentPubPercent()+""; 
-				totalPrivate = vStat.getCurrentPrivate()+"";
-				totalPrivatePerc = vStat.getCurrentPrivPercent()+"";
-				 } 
-			else if(timeSpan == 1) {
-				 totalYesterday = vStat.getTotalDiff() +"";
- 				 totalYesterdayPublic = vStat.getPublicDiff()+"";
-				 totalYesterdayPrivate = vStat.getPrivateDiff()+"";
-                } 
-			else if(timeSpan == 7) {
-	        	 totalOneWeek = vStat.getTotalDiff() +"";
- 				 totalOneWeekPublic = vStat.getPublicDiff()+"";
-				 totalOneWeekPrivate = vStat.getPrivateDiff()+"";
-		} else if(timeSpan > 27 && timeSpan < 32) {
-		    	 totalOneMonth = vStat.getTotalDiff() +"";
- 				 totalOneMonthPublic = vStat.getPublicDiff()+"";
-				 totalOneMonthPrivate = vStat.getPrivateDiff()+"";
-			 } else if(timeSpan == 365 || timeSpan == 366) {
-				 totalOneYear = vStat.getTotalDiff() +"";
- 				 totalOneYearPublic = vStat.getPublicDiff()+"";
-				 totalOneYearPrivate = vStat.getPrivateDiff()+"";}	
-		}
+for(int i=0;i<array.length();i++){
+    JSONObject object = array.getJSONObject(i);
+    String timespan = (String)object.get("timespan");
+    
+    if(timespan.equals("0")){
+    	 totalVideos = object.get("total") + "";
+    	 totalPublic = object.get("public") + "";
+		 totalPrivate = object.get("private") + "";    	
+    }
+    if(timespan.equals("DAY")){
+		 totalYesterday = object.get("totalDiff") + "";
+		 totalYesterdayPublic = object.get("publicDiff") + "";
+		 totalYesterdayPrivate = object.get("privateDiff") + "";    	
+    }
+    if(timespan.equals("WEEK")){
+		 totalOneWeek = object.get("totalDiff") + "";
+		 totalOneWeekPublic = object.get("publicDiff") + "";
+		 totalOneWeekPrivate = object.get("privateDiff") + "";  	
+    }
+    if(timespan.equals("MONTH")){
+		 totalOneMonth = object.get("totalDiff") + "";
+		 totalOneMonthPublic = object.get("publicDiff") + "";
+		 totalOneMonthPrivate = object.get("privateDiff") + "";    	
+    }
+    if(timespan.equals("YEAR")){
+		 totalOneYear = object.get("totalDiff") + "";
+		 totalOneYearPublic = object.get("publicDiff") + "";
+		 totalOneYearPrivate = object.get("privateDiff") + "";
+    }
+}
 
 %>
 
@@ -91,19 +87,9 @@ String totalOneYearPrivate = "";
 				<div class="videoStatistic_cell">
 					<liferay-ui:message key="total" />
 				</div>
-				<div class="videoStatistic_cell_total"><%=totalCurrentVideo %></div>
-				<div class="videoStatistic_cell_public"><%=totalPublic %>
-					<div class="lineBreak"></div>
-					(<%=totalPublicPerc%>
-					<liferay-ui:message key="percentSymbol" />
-					)
-				</div>
-				<div class="videoStatistic_cell_private"><%=totalPrivate %>
-					<div class="lineBreak"></div>
-					(<%=totalPrivatePerc%>
-					<liferay-ui:message key="percentSymbol" />
-					)
-				</div>
+				<div class="videoStatistic_cell_total"><%=totalVideos %></div>
+				<div class="videoStatistic_cell_public"><%=totalPublic %></div>
+				<div class="videoStatistic_cell_private"><%=totalPrivate %></div>
 			</div>
 			<div class="videoStatistic_row">
 				<div class="videoStatistic_cell">

@@ -102,21 +102,21 @@ public class LicenseLocalServiceClpInvoker {
 				"de.uhh.l2g.plugins.model.License"
 			};
 
-		_methodName162 = "getBeanIdentifier";
+		_methodName156 = "getBeanIdentifier";
 
-		_methodParameterTypes162 = new String[] {  };
+		_methodParameterTypes156 = new String[] {  };
 
-		_methodName163 = "setBeanIdentifier";
+		_methodName157 = "setBeanIdentifier";
 
-		_methodParameterTypes163 = new String[] { "java.lang.String" };
+		_methodParameterTypes157 = new String[] { "java.lang.String" };
 
-		_methodName168 = "getByVideoId";
+		_methodName162 = "getByVideoId";
 
-		_methodParameterTypes168 = new String[] { "java.lang.Long" };
+		_methodParameterTypes162 = new String[] { "java.lang.Long" };
 
-		_methodName169 = "deleteByVideoId";
+		_methodName163 = "deleteByVideoId";
 
-		_methodParameterTypes169 = new String[] { "java.lang.Long" };
+		_methodParameterTypes163 = new String[] { "java.lang.Long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -208,25 +208,25 @@ public class LicenseLocalServiceClpInvoker {
 			return LicenseLocalServiceUtil.updateLicense((de.uhh.l2g.plugins.model.License)arguments[0]);
 		}
 
-		if (_methodName162.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
+		if (_methodName156.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes156, parameterTypes)) {
 			return LicenseLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName163.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes163, parameterTypes)) {
+		if (_methodName157.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes157, parameterTypes)) {
 			LicenseLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName168.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes168, parameterTypes)) {
+		if (_methodName162.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
 			return LicenseLocalServiceUtil.getByVideoId((java.lang.Long)arguments[0]);
 		}
 
-		if (_methodName169.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes169, parameterTypes)) {
+		if (_methodName163.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes163, parameterTypes)) {
 			return LicenseLocalServiceUtil.deleteByVideoId((java.lang.Long)arguments[0]);
 		}
 
@@ -265,12 +265,12 @@ public class LicenseLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
+	private String _methodName156;
+	private String[] _methodParameterTypes156;
+	private String _methodName157;
+	private String[] _methodParameterTypes157;
 	private String _methodName162;
 	private String[] _methodParameterTypes162;
 	private String _methodName163;
 	private String[] _methodParameterTypes163;
-	private String _methodName168;
-	private String[] _methodParameterTypes168;
-	private String _methodName169;
-	private String[] _methodParameterTypes169;
 }

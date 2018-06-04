@@ -106,35 +106,35 @@ public class CategoryLocalServiceClpInvoker {
 				"de.uhh.l2g.plugins.model.Category"
 			};
 
-		_methodName162 = "getBeanIdentifier";
+		_methodName156 = "getBeanIdentifier";
 
-		_methodParameterTypes162 = new String[] {  };
+		_methodParameterTypes156 = new String[] {  };
 
-		_methodName163 = "setBeanIdentifier";
+		_methodName157 = "setBeanIdentifier";
+
+		_methodParameterTypes157 = new String[] { "java.lang.String" };
+
+		_methodName162 = "getAllCategories";
+
+		_methodParameterTypes162 = new String[] { "int", "int" };
+
+		_methodName163 = "getByName";
 
 		_methodParameterTypes163 = new String[] { "java.lang.String" };
 
-		_methodName168 = "getAllCategories";
+		_methodName164 = "getById";
 
-		_methodParameterTypes168 = new String[] { "int", "int" };
+		_methodParameterTypes164 = new String[] { "java.lang.Long" };
 
-		_methodName169 = "getByName";
+		_methodName165 = "getCategoriesFromLectureseriesIdsAndVideoIds";
 
-		_methodParameterTypes169 = new String[] { "java.lang.String" };
-
-		_methodName170 = "getById";
-
-		_methodParameterTypes170 = new String[] { "java.lang.Long" };
-
-		_methodName171 = "getCategoriesFromLectureseriesIdsAndVideoIds";
-
-		_methodParameterTypes171 = new String[] {
+		_methodParameterTypes165 = new String[] {
 				"java.util.ArrayList", "java.util.ArrayList"
 			};
 
-		_methodName172 = "deleteById";
+		_methodName166 = "deleteById";
 
-		_methodParameterTypes172 = new String[] { "java.lang.Long" };
+		_methodParameterTypes166 = new String[] { "java.lang.Long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -226,42 +226,42 @@ public class CategoryLocalServiceClpInvoker {
 			return CategoryLocalServiceUtil.updateCategory((de.uhh.l2g.plugins.model.Category)arguments[0]);
 		}
 
-		if (_methodName162.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
+		if (_methodName156.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes156, parameterTypes)) {
 			return CategoryLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName163.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes163, parameterTypes)) {
+		if (_methodName157.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes157, parameterTypes)) {
 			CategoryLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName168.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes168, parameterTypes)) {
+		if (_methodName162.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
 			return CategoryLocalServiceUtil.getAllCategories(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
-		if (_methodName169.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes169, parameterTypes)) {
+		if (_methodName163.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes163, parameterTypes)) {
 			return CategoryLocalServiceUtil.getByName((java.lang.String)arguments[0]);
 		}
 
-		if (_methodName170.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes170, parameterTypes)) {
+		if (_methodName164.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes164, parameterTypes)) {
 			return CategoryLocalServiceUtil.getById((java.lang.Long)arguments[0]);
 		}
 
-		if (_methodName171.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes171, parameterTypes)) {
+		if (_methodName165.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes165, parameterTypes)) {
 			return CategoryLocalServiceUtil.getCategoriesFromLectureseriesIdsAndVideoIds((java.util.ArrayList<java.lang.Long>)arguments[0],
 				(java.util.ArrayList<java.lang.Long>)arguments[1]);
 		}
 
-		if (_methodName172.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes172, parameterTypes)) {
+		if (_methodName166.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes166, parameterTypes)) {
 			CategoryLocalServiceUtil.deleteById((java.lang.Long)arguments[0]);
 
 			return null;
@@ -302,18 +302,18 @@ public class CategoryLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
+	private String _methodName156;
+	private String[] _methodParameterTypes156;
+	private String _methodName157;
+	private String[] _methodParameterTypes157;
 	private String _methodName162;
 	private String[] _methodParameterTypes162;
 	private String _methodName163;
 	private String[] _methodParameterTypes163;
-	private String _methodName168;
-	private String[] _methodParameterTypes168;
-	private String _methodName169;
-	private String[] _methodParameterTypes169;
-	private String _methodName170;
-	private String[] _methodParameterTypes170;
-	private String _methodName171;
-	private String[] _methodParameterTypes171;
-	private String _methodName172;
-	private String[] _methodParameterTypes172;
+	private String _methodName164;
+	private String[] _methodParameterTypes164;
+	private String _methodName165;
+	private String[] _methodParameterTypes165;
+	private String _methodName166;
+	private String[] _methodParameterTypes166;
 }

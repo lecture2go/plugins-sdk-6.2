@@ -14,8 +14,11 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import org.json.JSONObject;
 
 import com.liferay.counter.model.Counter;
 import com.liferay.counter.service.CounterLocalServiceUtil;
@@ -75,6 +78,10 @@ public class StatisticLocalServiceImpl
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.StatisticLocalServiceUtil} to access the institution_ host local service.
 	 */
 
+	public JSONObject getAllStatistics() throws SystemException {
+			return StatisticFinderUtil.findAllStatistics();
+	}
+		
 	public List<Statistic> getByCompanyIdandGroupId(long companyId, long groupId) throws SystemException, PortalException {
 		List<Statistic> institution_host = statisticPersistence.findByC_G(companyId, groupId);
 		return institution_host; 
@@ -296,6 +303,8 @@ public class StatisticLocalServiceImpl
 				CounterLocalServiceUtil.updateCounter(counter);
 			}			
 			return counter.getCurrentId();
-	   	}  	   
+	   	}
+	   
+	   
 
 }

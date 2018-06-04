@@ -412,40 +412,6 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.VideoStatisticModelImpl">
-		<attributes>
-			<id name="videoStatisticId" />
-			<basic name="groupId" />
-			<basic name="companyId" />
-			<basic name="createDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="modifiedDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="compareDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="totalVideos" />
-			<basic name="publicVideos" />
-			<basic name="privateVideos" />
-			<basic name="currentTotal" />
-			<basic name="currentPublic" />
-			<basic name="currentPrivate" />
-			<basic name="pubPercent" />
-			<basic name="privPercent" />
-			<basic name="currentPubPercent" />
-			<basic name="currentPrivPercent" />
-			<basic name="intervalName" />
-			<basic name="publicDiff" />
-			<basic name="privateDiff" />
-			<basic name="totalDiff" />
-			<basic name="dateDiff" />
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
 	<entity class="de.uhh.l2g.plugins.model.impl.CategoryImpl" name="Category">
 		<table name="LG_Category" />
 		<attributes />
@@ -628,10 +594,6 @@
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.VideohitlistImpl" name="Videohitlist">
 		<table name="LG_Videohitlist" />
-		<attributes />
-	</entity>
-	<entity class="de.uhh.l2g.plugins.model.impl.VideoStatisticImpl" name="VideoStatistic">
-		<table name="LG_VideoStatistic" />
 		<attributes />
 	</entity>
 </entity-mappings>
