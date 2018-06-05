@@ -100,31 +100,31 @@ public class TermLocalServiceClpInvoker {
 
 		_methodParameterTypes15 = new String[] { "de.uhh.l2g.plugins.model.Term" };
 
-		_methodName166 = "getBeanIdentifier";
+		_methodName160 = "getBeanIdentifier";
+
+		_methodParameterTypes160 = new String[] {  };
+
+		_methodName161 = "setBeanIdentifier";
+
+		_methodParameterTypes161 = new String[] { "java.lang.String" };
+
+		_methodName166 = "getAllSemesters";
 
 		_methodParameterTypes166 = new String[] {  };
 
-		_methodName167 = "setBeanIdentifier";
+		_methodName167 = "getById";
 
-		_methodParameterTypes167 = new String[] { "java.lang.String" };
+		_methodParameterTypes167 = new String[] { "java.lang.Long" };
 
-		_methodName172 = "getAllSemesters";
+		_methodName168 = "getTermsFromLectureseriesIdsAndVideoIds";
 
-		_methodParameterTypes172 = new String[] {  };
-
-		_methodName173 = "getById";
-
-		_methodParameterTypes173 = new String[] { "java.lang.Long" };
-
-		_methodName174 = "getTermsFromLectureseriesIdsAndVideoIds";
-
-		_methodParameterTypes174 = new String[] {
+		_methodParameterTypes168 = new String[] {
 				"java.util.ArrayList", "java.util.ArrayList"
 			};
 
-		_methodName175 = "deleteById";
+		_methodName169 = "deleteById";
 
-		_methodParameterTypes175 = new String[] { "java.lang.Long" };
+		_methodParameterTypes169 = new String[] { "java.lang.Long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -216,36 +216,36 @@ public class TermLocalServiceClpInvoker {
 			return TermLocalServiceUtil.updateTerm((de.uhh.l2g.plugins.model.Term)arguments[0]);
 		}
 
-		if (_methodName166.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes166, parameterTypes)) {
+		if (_methodName160.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes160, parameterTypes)) {
 			return TermLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName167.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes167, parameterTypes)) {
+		if (_methodName161.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes161, parameterTypes)) {
 			TermLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName172.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes172, parameterTypes)) {
+		if (_methodName166.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes166, parameterTypes)) {
 			return TermLocalServiceUtil.getAllSemesters();
 		}
 
-		if (_methodName173.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes173, parameterTypes)) {
+		if (_methodName167.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes167, parameterTypes)) {
 			return TermLocalServiceUtil.getById((java.lang.Long)arguments[0]);
 		}
 
-		if (_methodName174.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes174, parameterTypes)) {
+		if (_methodName168.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes168, parameterTypes)) {
 			return TermLocalServiceUtil.getTermsFromLectureseriesIdsAndVideoIds((java.util.ArrayList<java.lang.Long>)arguments[0],
 				(java.util.ArrayList<java.lang.Long>)arguments[1]);
 		}
 
-		if (_methodName175.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes175, parameterTypes)) {
+		if (_methodName169.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes169, parameterTypes)) {
 			TermLocalServiceUtil.deleteById((java.lang.Long)arguments[0]);
 
 			return null;
@@ -286,16 +286,16 @@ public class TermLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
+	private String _methodName160;
+	private String[] _methodParameterTypes160;
+	private String _methodName161;
+	private String[] _methodParameterTypes161;
 	private String _methodName166;
 	private String[] _methodParameterTypes166;
 	private String _methodName167;
 	private String[] _methodParameterTypes167;
-	private String _methodName172;
-	private String[] _methodParameterTypes172;
-	private String _methodName173;
-	private String[] _methodParameterTypes173;
-	private String _methodName174;
-	private String[] _methodParameterTypes174;
-	private String _methodName175;
-	private String[] _methodParameterTypes175;
+	private String _methodName168;
+	private String[] _methodParameterTypes168;
+	private String _methodName169;
+	private String[] _methodParameterTypes169;
 }
