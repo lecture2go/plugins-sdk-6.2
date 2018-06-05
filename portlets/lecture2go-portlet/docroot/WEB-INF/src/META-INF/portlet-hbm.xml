@@ -31,7 +31,6 @@
 	<import class="de.uhh.l2g.plugins.model.Video_Institution" />
 	<import class="de.uhh.l2g.plugins.model.Video_Lectureseries" />
 	<import class="de.uhh.l2g.plugins.model.Videohitlist" />
-	<import class="de.uhh.l2g.plugins.model.VideoStatistic" />
 	<class name="de.uhh.l2g.plugins.model.impl.CategoryImpl" table="LG_Category">
 		<cache usage="read-write" />
 		<id name="categoryId" type="long">
@@ -362,31 +361,5 @@
 		<property name="hitsPerMonth" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="hitsPerYear" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="videoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-	</class>
-	<class name="de.uhh.l2g.plugins.model.impl.VideoStatisticImpl" table="LG_VideoStatistic">
-		<cache usage="read-write" />
-		<id name="videoStatisticId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="createDate" type="org.hibernate.type.TimestampType" />
-		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="compareDate" type="org.hibernate.type.TimestampType" />
-		<property name="totalVideos" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="publicVideos" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="privateVideos" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="currentTotal" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="currentPublic" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="currentPrivate" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="pubPercent" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="privPercent" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="currentPubPercent" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="currentPrivPercent" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="intervalName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="publicDiff" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="privateDiff" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="totalDiff" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="dateDiff" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 </hibernate-mapping>

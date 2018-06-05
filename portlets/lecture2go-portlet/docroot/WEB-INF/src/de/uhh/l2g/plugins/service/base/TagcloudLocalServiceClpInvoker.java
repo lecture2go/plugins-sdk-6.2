@@ -106,41 +106,41 @@ public class TagcloudLocalServiceClpInvoker {
 				"de.uhh.l2g.plugins.model.Tagcloud"
 			};
 
-		_methodName166 = "getBeanIdentifier";
+		_methodName160 = "getBeanIdentifier";
 
-		_methodParameterTypes166 = new String[] {  };
+		_methodParameterTypes160 = new String[] {  };
 
-		_methodName167 = "setBeanIdentifier";
+		_methodName161 = "setBeanIdentifier";
 
-		_methodParameterTypes167 = new String[] { "java.lang.String" };
+		_methodParameterTypes161 = new String[] { "java.lang.String" };
 
-		_methodName172 = "deleteByObjectId";
+		_methodName166 = "deleteByObjectId";
 
-		_methodParameterTypes172 = new String[] { "long" };
+		_methodParameterTypes166 = new String[] { "long" };
 
-		_methodName173 = "getByObjectIdAndObjectClassType";
+		_methodName167 = "getByObjectIdAndObjectClassType";
 
-		_methodParameterTypes173 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes167 = new String[] { "long", "java.lang.String" };
 
-		_methodName174 = "add";
+		_methodName168 = "add";
 
-		_methodParameterTypes174 = new String[] {
+		_methodParameterTypes168 = new String[] {
 				"java.util.ArrayList", "java.lang.String", "java.lang.Long"
 			};
 
-		_methodName175 = "updateByObjectIdAndObjectClassType";
+		_methodName169 = "updateByObjectIdAndObjectClassType";
 
-		_methodParameterTypes175 = new String[] {
+		_methodParameterTypes169 = new String[] {
 				"java.util.ArrayList", "java.lang.String", "long"
 			};
 
-		_methodName176 = "generateForAllLectureseries";
+		_methodName170 = "generateForAllLectureseries";
 
-		_methodParameterTypes176 = new String[] {  };
+		_methodParameterTypes170 = new String[] {  };
 
-		_methodName177 = "generateForAllVideos";
+		_methodName171 = "generateForAllVideos";
 
-		_methodParameterTypes177 = new String[] {  };
+		_methodParameterTypes171 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -232,56 +232,56 @@ public class TagcloudLocalServiceClpInvoker {
 			return TagcloudLocalServiceUtil.updateTagcloud((de.uhh.l2g.plugins.model.Tagcloud)arguments[0]);
 		}
 
-		if (_methodName166.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes166, parameterTypes)) {
+		if (_methodName160.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes160, parameterTypes)) {
 			return TagcloudLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName167.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes167, parameterTypes)) {
+		if (_methodName161.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes161, parameterTypes)) {
 			TagcloudLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName172.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes172, parameterTypes)) {
+		if (_methodName166.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes166, parameterTypes)) {
 			TagcloudLocalServiceUtil.deleteByObjectId(((Long)arguments[0]).longValue());
 
 			return null;
 		}
 
-		if (_methodName173.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes173, parameterTypes)) {
+		if (_methodName167.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes167, parameterTypes)) {
 			return TagcloudLocalServiceUtil.getByObjectIdAndObjectClassType(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1]);
 		}
 
-		if (_methodName174.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes174, parameterTypes)) {
+		if (_methodName168.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes168, parameterTypes)) {
 			TagcloudLocalServiceUtil.add((java.util.ArrayList<java.lang.String>)arguments[0],
 				(java.lang.String)arguments[1], (java.lang.Long)arguments[2]);
 
 			return null;
 		}
 
-		if (_methodName175.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes175, parameterTypes)) {
+		if (_methodName169.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes169, parameterTypes)) {
 			TagcloudLocalServiceUtil.updateByObjectIdAndObjectClassType((java.util.ArrayList<java.lang.String>)arguments[0],
 				(java.lang.String)arguments[1], ((Long)arguments[2]).longValue());
 
 			return null;
 		}
 
-		if (_methodName176.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes176, parameterTypes)) {
+		if (_methodName170.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes170, parameterTypes)) {
 			TagcloudLocalServiceUtil.generateForAllLectureseries();
 
 			return null;
 		}
 
-		if (_methodName177.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes177, parameterTypes)) {
+		if (_methodName171.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes171, parameterTypes)) {
 			TagcloudLocalServiceUtil.generateForAllVideos();
 
 			return null;
@@ -322,20 +322,20 @@ public class TagcloudLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
+	private String _methodName160;
+	private String[] _methodParameterTypes160;
+	private String _methodName161;
+	private String[] _methodParameterTypes161;
 	private String _methodName166;
 	private String[] _methodParameterTypes166;
 	private String _methodName167;
 	private String[] _methodParameterTypes167;
-	private String _methodName172;
-	private String[] _methodParameterTypes172;
-	private String _methodName173;
-	private String[] _methodParameterTypes173;
-	private String _methodName174;
-	private String[] _methodParameterTypes174;
-	private String _methodName175;
-	private String[] _methodParameterTypes175;
-	private String _methodName176;
-	private String[] _methodParameterTypes176;
-	private String _methodName177;
-	private String[] _methodParameterTypes177;
+	private String _methodName168;
+	private String[] _methodParameterTypes168;
+	private String _methodName169;
+	private String[] _methodParameterTypes169;
+	private String _methodName170;
+	private String[] _methodParameterTypes170;
+	private String _methodName171;
+	private String[] _methodParameterTypes171;
 }
