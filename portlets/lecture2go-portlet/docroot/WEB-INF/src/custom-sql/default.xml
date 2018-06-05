@@ -249,7 +249,7 @@
 		
 	<sql id="de.uhh.l2g.plugins.service.persistence.StatisticFinder.getAllStatistics">
 		<![CDATA[
-			SELECT * FROM lportal620_stage.LG_VideoStatistic WHERE total > 0;
+			SELECT * FROM LG_VideoStatistic WHERE total > 0;
 		]]>
     </sql>		
 </custom-sql>
