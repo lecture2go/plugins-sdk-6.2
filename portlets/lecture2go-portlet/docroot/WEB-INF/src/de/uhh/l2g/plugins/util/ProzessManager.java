@@ -172,9 +172,7 @@ public class ProzessManager {
 		if (video.hasSmilFile()) {
 			// delete old download symbolic link with secure file name if existing
 			File downloadSymLink = new File(path + "/" + videoSPreffix + PropsUtil.get("lecture2go.videoprocessing.downloadsuffix") + ".mp4");
-			if (downloadSymLink.isFile()) {
-				downloadSymLink.delete();
-			}
+			downloadSymLink.delete();
 			
 			// create a symlink to the video file which has a reasonable bitrate
 			try {
@@ -248,9 +246,8 @@ public class ProzessManager {
 		if (video.hasSmilFile()) {
 			// delete old download symbolic link
 			File downloadSymLink = new File(path + "/" + videoPreffix + PropsUtil.get("lecture2go.videoprocessing.downloadsuffix") + ".mp4");
-			if (downloadSymLink.isFile()) {
-				downloadSymLink.delete();
-			}
+			downloadSymLink.delete();
+			
 			// create a new symbolic link to the video file which has a reasonable bitrate
 			try {
 				createSymLinkToDownloadableFile(host, video, producer);
@@ -398,9 +395,8 @@ public class ProzessManager {
 			}
 			// delete old download symbolic link if existing
 			File downloadSymLink = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + videoPreffix + PropsUtil.get("lecture2go.videoprocessing.downloadsuffix") + ".mp4");
-			if (downloadSymLink.isFile()) {
-				downloadSymLink.delete();
-			}
+			downloadSymLink.delete();
+			
 			//all thumn nails
 			deleteThumbnails(video);
 		}
