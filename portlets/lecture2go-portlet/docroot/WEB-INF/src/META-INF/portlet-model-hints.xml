@@ -309,27 +309,4 @@
 		<field name="hitsPerYear" type="long" />
 		<field name="videoId" type="long" />
 	</model>
-	<model name="de.uhh.l2g.plugins.model.VideoStatistic">
-		<field name="videoStatisticId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="compareDate" type="Date" />
-		<field name="totalVideos" type="long" />
-		<field name="publicVideos" type="long" />
-		<field name="privateVideos" type="long" />
-		<field name="currentTotal" type="long" />
-		<field name="currentPublic" type="long" />
-		<field name="currentPrivate" type="long" />
-		<field name="pubPercent" type="int" />
-		<field name="privPercent" type="int" />
-		<field name="currentPubPercent" type="int" />
-		<field name="currentPrivPercent" type="int" />
-		<field name="intervalName" type="String" />
-		<field name="publicDiff" type="int" />
-		<field name="privateDiff" type="int" />
-		<field name="totalDiff" type="int" />
-		<field name="dateDiff" type="int" />
-	</model>
 </model-hints>
