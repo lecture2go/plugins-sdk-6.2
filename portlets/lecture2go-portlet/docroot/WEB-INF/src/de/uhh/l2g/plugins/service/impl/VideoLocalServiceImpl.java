@@ -351,7 +351,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		
 		// the link the the downloadable mp4 can vary, if there is a smil file for adaptive streaming, the video with the download suffix is used
 		String downMp4Link;
-		if (objectVideo.hasSmilFile()) {
+		if (objectVideo.hasSmilFile() && (objectVideo.getOpenAccess()==0)) {
 			downMp4Link = pth+preff+PropsUtil.get("lecture2go.videoprocessing.downloadsuffix")+".mp4";
 		} else {
 			downMp4Link = pth+preff+".mp4";
