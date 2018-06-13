@@ -528,14 +528,4 @@ public class VideoImpl extends VideoBaseImpl {
 		public boolean hasSmilFile() {
 			return this.hasSmilFile;
 		}
-
-		private String fileNameFromSmil;
-		
-		public String getFileNameFromSmil() {
-			return fileNameFromSmil;
-		}
-
-		public void setFileNameFromSmil(String fileNameFromSmil) {
-			this.fileNameFromSmil = fileNameFromSmil;
-		}
 }

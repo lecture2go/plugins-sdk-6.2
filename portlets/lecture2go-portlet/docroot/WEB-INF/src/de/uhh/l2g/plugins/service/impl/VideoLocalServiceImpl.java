@@ -15,8 +15,6 @@
 package de.uhh.l2g.plugins.service.impl;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -33,11 +31,6 @@ import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.DocumentException;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.Node;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import de.uhh.l2g.plugins.NoSuchInstitutionException;
 import de.uhh.l2g.plugins.NoSuchLectureseriesException;
@@ -242,7 +235,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		// checks if video has a smil file
 		if(checkSmilFile(objectHost, objectVideo, objectProducer)) {
 			objectVideo.setHasSmilFile(true);
-		}		
+		}
 		
 		// date
 		// extract time and date from the originalFileName
@@ -356,30 +349,21 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		}
 		String downMp3Link = pth+preff+".mp3";
 		
-		// the link the the downloadable mp4 can vary, if there is a smil file for adaptive streaming, use the video file with a reasonable bitrate
+		// the link the the downloadable mp4 can vary, if there is a smil file for adaptive streaming, the video with the download suffix is used
 		String downMp4Link;
 		if (objectVideo.hasSmilFile()) {
-			try {
-				String fileNameFromSmil = getFileNameOfVideoWithReasonableBitrate(objectHost, objectVideo, objectProducer);
-				objectVideo.setFileNameFromSmil(fileNameFromSmil);
-				System.out.println("dateiname aus smil: " + fileNameFromSmil);
-				downMp4Link = pth+getFileNameOfVideoWithReasonableBitrate(objectHost, objectVideo, objectProducer);
-			} catch (Exception e) {
-				// can not read the smil file, use the default mp4 as downloadable video
-				downMp4Link = pth+preff+".mp4";
-				e.printStackTrace();
-			}
+			downMp4Link = pth+preff+PropsUtil.get("lecture2go.videoprocessing.downloadsuffix")+".mp4";
 		} else {
 			downMp4Link = pth+preff+".mp4";
 		}
-
+		//String downMp4Link = pth+preff+".mp4";
 		String downM4vLink = pth+preff+".m4v";
 		String downM4aLink = pth+preff+".m4a";
 		String downWebmLink = pth+preff+".webm";
 		String downPdfLink = pth+preff+".pdf";
 		String downOggLink = pth+preff+".ogg";
 		String downFlvLink = pth+preff+".flv";
-
+		//
 		objectVideo.setMp4DownloadLink(downMp4Link);
 		objectVideo.setMp3DownloadLink(downMp3Link);
 		objectVideo.setM4vDownloadLink(downM4vLink);
@@ -415,29 +399,13 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		String embedHtml5="";
 		if(objectVideo.getDownloadLink()==1){
 			if(objectVideo.getContainerFormat().equals("mp4")){
-				String videoFileName = "";
 				if(objectVideo.getOpenAccess()==1){
-					if (objectVideo.hasSmilFile()) {
-						try {
-							videoFileName = objectVideo.getFileNameFromSmil();
-						} catch (Exception e) {
-							// can not read the smil file, use the default filename
-							videoFileName = objectVideo.getPreffix()+".mp4";
-							e.printStackTrace();
-						}
-					} else {
-						videoFileName = objectVideo.getPreffix()+".mp4";
-					}
-					embedHtml5="<video width='647' height='373' controls><source src='"+PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+videoFileName+"' type='video/mp4'>Your browser does not support the video tag.</video>";
+					embedHtml5="<video width='647' height='373' controls><source src='"+PropsUtil.get("lecture2go.downloadserver.web.root")+"/abo/"+objectVideo.getPreffix()+".mp4"+"' type='video/mp4'>Your browser does not support the video tag.</video>";
 				}else{
+					// the link the the downloadable mp4 can vary, if there is a smil file for adaptive streaming, the video with the download suffix is used
+					String videoFileName = "";
 					if (objectVideo.hasSmilFile()) {
-						try {
-							videoFileName = getFileNameOfVideoWithReasonableBitrate(objectHost, objectVideo, objectProducer);
-						} catch (Exception e) {
-							// can not read the smil file, use the default filename
-							videoFileName = objectVideo.getSecureFilename();
-							e.printStackTrace();
-						}
+						videoFileName = objectVideo.getSPreffix() + PropsUtil.get("lecture2go.videoprocessing.downloadsuffix") + ".mp4";
 					} else {
 						videoFileName = objectVideo.getSecureFilename();
 					}
@@ -649,6 +617,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 					playerUri = playerUri.replace("[smilfile]", video.getSPreffix()+".smil");
 				}
 				playerUri = playerUri.replace("[filename]", video.getSecureFilename());
+				
 			}
 			//
 			playerUri = playerUri.replace("[host]", host.getStreamer());
@@ -765,64 +734,11 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	public boolean checkSmilFile(Host host, Video video, Producer producer) {
 		String  mediaRep = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir();
 
-		String prefix;
-		if (video.getOpenAccess()==1) {
-			prefix = video.getPreffix();
-		} else {
-			prefix = video.getSPreffix();
-		}
+		// set prefix according to openaccess filename or secured
+		String prefix = video.getOpenAccess()==1 ? video.getPreffix() : video.getSPreffix();
 		String smilPath = mediaRep + "/" + prefix +".smil";
 		File smilFile = new File(smilPath);
 		return smilFile.isFile();
 	}
-	
-	
-	/**
-	 * Returns the filename of the video whose bitrate is nearest to the defined target bitrate
-	 * Uses the smil xml file to get the information about the videos.
-	 * @param host the host (necessary to determine the path to the smil file)
-	 * @param video the video (necessary to determine the path to the smil file)
-	 * @param producer the producer (necessary to determine the path to the smil file)
-	 * @return the filename of the video with reasonable bitrate
-	 * @throws FileNotFoundException
-	 * @throws DocumentException
-	 */
-	private String getFileNameOfVideoWithReasonableBitrate(Host host, Video video, Producer producer) throws FileNotFoundException, DocumentException {
-		final int targetBitrate = 1400000; // in bit/s
-		String filename = "";
-
-		String mediaRep = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir();
-		String prefix;
-		if (video.getOpenAccess()==1) {
-			prefix = video.getPreffix();
-		} else {
-			prefix = video.getSPreffix();
-		}
-		String smilPath = mediaRep + "/" + prefix +".smil";
-		
-		// read the smil file as an xml document
-		Document xml = SAXReaderUtil.read(new FileInputStream(smilPath));
-	
-		// select all video nodes with a system-bitrate
-		List<Node> videoNodes = xml.selectNodes("/smil/body/switch/video[@system-bitrate]");
-
-		if (!videoNodes.isEmpty()) {
-			// sort the video nodes by the difference from the system-bitrate to the targetBitrate (ascending)
-			Collections.sort(videoNodes, new Comparator<Node>() {
-			    @Override
-			    public int compare(Node n1, Node n2) {
-			    	Integer n1IntervalToTargetBitrate = Math.abs(Integer.valueOf(((Element) n1).attributeValue("system-bitrate")) - targetBitrate);
-			    	Integer n2IntervalToTargetBitrate = Math.abs(Integer.valueOf(((Element) n2).attributeValue("system-bitrate")) - targetBitrate);
-			        return n1IntervalToTargetBitrate.compareTo(n2IntervalToTargetBitrate);
-			    }
-			});
-			// use the video which bitrate is the nearest to the target bitrate (cast to element)
-			Element correctNode = (Element) videoNodes.get(0);
-			filename = correctNode.attributeValue("src");
-		}
-	
-		return filename;
-	}
-	
 	
 }
