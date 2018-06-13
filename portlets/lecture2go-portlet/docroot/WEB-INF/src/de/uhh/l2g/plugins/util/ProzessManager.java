@@ -42,6 +42,7 @@ import java.util.List;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
@@ -394,6 +395,11 @@ public class ProzessManager {
 				//all symbolic links
 				File symLink = new File(PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/" + videoPreffix + "." + f);
 				symLink.delete();
+			}
+			// delete old download symbolic link if existing
+			File downloadSymLink = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + videoPreffix + PropsUtil.get("lecture2go.videoprocessing.downloadsuffix") + ".mp4");
+			if (downloadSymLink.isFile()) {
+				downloadSymLink.delete();
 			}
 			//all thumn nails
 			deleteThumbnails(video);
