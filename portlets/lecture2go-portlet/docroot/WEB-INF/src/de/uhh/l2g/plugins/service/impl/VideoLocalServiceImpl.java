@@ -53,6 +53,7 @@ import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LastvideolistLocalServiceUtil;
 import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
+import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.VideoLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.VideoFinderUtil;
 import de.uhh.l2g.plugins.util.FFmpegManager;
@@ -232,11 +233,6 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			}
 		}
 		
-		// checks if video has a smil file
-		if(checkSmilFile(objectHost, objectVideo, objectProducer)) {
-			objectVideo.setHasSmilFile(true);
-		}
-		
 		// date
 		// extract time and date from the originalFileName
 		String[] parameter = objectVideo.getGenerationDate().split("\\_");
@@ -351,7 +347,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		
 		// the link the the downloadable mp4 can vary, if there is a smil file for adaptive streaming, the video with the download suffix is used
 		String downMp4Link;
-		if (objectVideo.hasSmilFile() && (objectVideo.getOpenAccess()==0)) {
+		if (checkSmilFile(objectVideo) && (objectVideo.getOpenAccess()==0)) {
 			downMp4Link = pth+preff+PropsUtil.get("lecture2go.videoprocessing.downloadsuffix")+".mp4";
 		} else {
 			downMp4Link = pth+preff+".mp4";
@@ -404,7 +400,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				}else{
 					// the link the the downloadable mp4 can vary, if there is a smil file for adaptive streaming, the video with the download suffix is used
 					String videoFileName = "";
-					if (objectVideo.hasSmilFile()) {
+					if (checkSmilFile(objectVideo)) {
 						videoFileName = objectVideo.getSPreffix() + PropsUtil.get("lecture2go.videoprocessing.downloadsuffix") + ".mp4";
 					} else {
 						videoFileName = objectVideo.getSecureFilename();
@@ -608,12 +604,12 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			String playerUri = "";
 			playerUri += uris.get(i);
 			if(video.getOpenAccess()==1){
-				if (video.hasSmilFile()) {
+				if (checkSmilFile(video)) {
 					playerUri = playerUri.replace("[smilfile]", video.getPreffix()+".smil");
 				}
 				playerUri = playerUri.replace("[filename]", video.getFilename());
 			}else{
-				if (video.hasSmilFile()) {
+				if (checkSmilFile(video)) {
 					playerUri = playerUri.replace("[smilfile]", video.getSPreffix()+".smil");
 				}
 				playerUri = playerUri.replace("[filename]", video.getSecureFilename());
@@ -731,7 +727,23 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	/**
 	 * Checks if the video has a related smil-file in the file system
 	 */
-	public boolean checkSmilFile(Host host, Video video, Producer producer) {
+	public boolean checkSmilFile(Video video) {
+		Host host = new HostImpl();
+		try {
+			host = HostLocalServiceUtil.getHost(video.getHostId());
+		} catch (PortalException e1) {
+//			e1.printStackTrace();
+		} catch (SystemException e1) {
+//			e1.printStackTrace();
+		}
+		Producer producer = new ProducerImpl();
+		try {
+			producer = producerPersistence.findByPrimaryKey(video.getProducerId());
+		} catch (NoSuchProducerException e1) {
+//			e1.printStackTrace();
+		} catch (SystemException e1) {
+//			e1.printStackTrace();
+		}
 		String  mediaRep = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir();
 
 		// set prefix according to openaccess filename or secured

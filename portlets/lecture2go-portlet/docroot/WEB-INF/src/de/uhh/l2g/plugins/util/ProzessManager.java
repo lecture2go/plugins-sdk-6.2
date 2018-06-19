@@ -88,6 +88,14 @@ public class ProzessManager {
 		
 		video.setDownloadLink(0);
 		VideoLocalServiceUtil.updateVideo(video);
+		
+		if (VideoLocalServiceUtil.checkSmilFile(video)) {
+			String prefix = video.getOpenAccess()==1 ? video.getPreffix() : video.getSPreffix();
+			// delete old download symbolic link with secure file name if existing
+			File downloadSymLink = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + prefix + PropsUtil.get("lecture2go.videoprocessing.downloadsuffix") + ".mp4");
+			downloadSymLink.delete();
+		}
+		
 		//remove symbolic links
 		removeSymbolicLinks(video);
 		// generate RSS
@@ -106,12 +114,12 @@ public class ProzessManager {
 		video.setDownloadLink(1);
 		
 		// if there is a smil file, create a symlink to the video file which has a reasonable bitrate
-		if (video.hasSmilFile()) {
+		if (VideoLocalServiceUtil.checkSmilFile(video)) {
 			try {
 				createSymLinkToDownloadableFile(host, video, producer);
 			} catch (Exception e) {
 				e.printStackTrace();
-			} 
+			}
 		}
 		
 		VideoLocalServiceUtil.updateVideo(video);
@@ -169,7 +177,7 @@ public class ProzessManager {
 			VideoProcessorManager.renameFileOfVideoConversion(video.getVideoId(), video.getFilename());
 		}
 		
-		if (video.hasSmilFile()) {
+		if (VideoLocalServiceUtil.checkSmilFile(video)) {
 			// delete old download symbolic link with secure file name if existing
 			File downloadSymLink = new File(path + "/" + videoSPreffix + PropsUtil.get("lecture2go.videoprocessing.downloadsuffix") + ".mp4");
 			downloadSymLink.delete();
@@ -243,7 +251,7 @@ public class ProzessManager {
 			VideoProcessorManager.renameFileOfVideoConversion(video.getVideoId(), video.getSecureFilename());
 		}
 		
-		if (video.hasSmilFile()) {
+		if (VideoLocalServiceUtil.checkSmilFile(video)) {
 			// delete old download symbolic link
 			File downloadSymLink = new File(path + "/" + videoPreffix + PropsUtil.get("lecture2go.videoprocessing.downloadsuffix") + ".mp4");
 			downloadSymLink.delete();
@@ -603,7 +611,7 @@ public class ProzessManager {
 		for (String mf : FileManager.MEDIA_FORMATS) {
 			String mFile;
 			String mFileAbo;
-			if (mf == "mp4" && v.hasSmilFile()) {
+			if (mf == "mp4" && VideoLocalServiceUtil.checkSmilFile(v)) {
 				// if there is a smil file, do not use the default video file but the specific version with download suffix
 				mFile = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + PropsUtil.get("lecture2go.videoprocessing.downloadsuffix") + ".mp4";
 				mFileAbo = PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/" + v.getPreffix() + ".mp4";

@@ -517,15 +517,5 @@ public class VideoImpl extends VideoBaseImpl {
 
 		public void setCreators(String creators) {
 			this.creators = creators;
-		} 
-		
-		private boolean hasSmilFile = false;
-		
-		public void setHasSmilFile(boolean hasSmilFile) {
-			this.hasSmilFile = hasSmilFile;
-		}
-		
-		public boolean hasSmilFile() {
-			return this.hasSmilFile;
 		}
 }
