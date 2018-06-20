@@ -32,7 +32,6 @@ import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.xml.DocumentException;
 
 import de.uhh.l2g.plugins.NoSuchInstitutionException;
 import de.uhh.l2g.plugins.NoSuchLectureseriesException;
@@ -55,7 +54,6 @@ import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LastvideolistLocalServiceUtil;
 import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
-import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.VideoLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.VideoFinderUtil;
 import de.uhh.l2g.plugins.util.FFmpegManager;
@@ -349,6 +347,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		String downMp3Link = pth+preff+".mp3";
 		
 		// check if file with download-suffix exists, if not create it
+		// (this may happen if a file was set to be downloaded before the smil file existed)
 		if(objectVideo.getDownloadLink()==1 && checkSmilFile(objectVideo)){
 			File file = new File(PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + preff+PropsUtil.get("lecture2go.videoprocessing.downloadsuffix")+".mp4");
 			try {

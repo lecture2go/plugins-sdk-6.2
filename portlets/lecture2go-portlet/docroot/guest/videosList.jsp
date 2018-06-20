@@ -21,7 +21,10 @@
 	Long creatorId 				= ServletRequestUtils.getLongParameter(request, "creatorId", 0);
 
 	String searchQuery			= ServletRequestUtils.getStringParameter(request, "searchQuery", "");
-
+	//XSS anti scripting required!
+	HTMLFilter hF = new HTMLFilter();
+	searchQuery = hF.filter(searchQuery);
+	
 	// filters are set if they have a value different than 0
 	boolean hasInstitutionFiltered 			= (institutionId != 0);
 	boolean hasParentInstitutionFiltered 	= (parentInstitutionId != 0);

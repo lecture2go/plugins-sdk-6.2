@@ -1,8 +1,6 @@
 <%@include file="/init.jsp"%>
 <liferay-portlet:resourceURL id="convertVideo" var="convertVideoURL" />
 
-
-
 <%
 	List<Video> tempVideosList = new ArrayList<Video>();
 	List<Coordinator> coordinators = new ArrayList<Coordinator>();
