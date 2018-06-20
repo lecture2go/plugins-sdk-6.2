@@ -169,6 +169,7 @@
 						producerIdsAllowedForPostprocessing.add(22646); // Tini
 						producerIdsAllowedForPostprocessing.add(30045); // Ingo
 						producerIdsAllowedForPostprocessing.add(33631); // Dominic
+						producerIdsAllowedForPostprocessing.add(22869); // Annelie
 						%>
 						<c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider")%>'>
 							<c:if test="<%= permissionChecker.isOmniadmin() || producerIdsAllowedForPostprocessing.contains((int) reqProducer.getProducerId()) %>">
