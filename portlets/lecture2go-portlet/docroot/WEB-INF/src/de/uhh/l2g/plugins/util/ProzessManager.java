@@ -680,7 +680,7 @@ public class ProzessManager {
 	 * @throws FileNotFoundException
 	 * @throws DocumentException
 	 */
-	private void createSymLinkToDownloadableFile(Host host, Video video, Producer producer) throws FileNotFoundException, DocumentException {
+	public void createSymLinkToDownloadableFile(Host host, Video video, Producer producer) throws FileNotFoundException, DocumentException {
 		String homePath = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/";
 		// parses optimal file from the smil file
 		String filename = getFileNameOfVideoWithReasonableBitrate(host, video, producer);

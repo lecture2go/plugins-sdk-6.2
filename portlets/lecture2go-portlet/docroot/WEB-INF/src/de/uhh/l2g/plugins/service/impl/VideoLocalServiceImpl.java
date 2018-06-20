@@ -15,6 +15,7 @@
 package de.uhh.l2g.plugins.service.impl;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -31,6 +32,7 @@ import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.xml.DocumentException;
 
 import de.uhh.l2g.plugins.NoSuchInstitutionException;
 import de.uhh.l2g.plugins.NoSuchLectureseriesException;
@@ -57,6 +59,7 @@ import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.VideoLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.VideoFinderUtil;
 import de.uhh.l2g.plugins.util.FFmpegManager;
+import de.uhh.l2g.plugins.util.ProzessManager;
 
 /**
  * The implementation of the video local service.
@@ -344,6 +347,19 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			pth = PropsUtil.get("lecture2go.downloadserver.web.root")+"/servlet-file-download/getFile?downloadAllowed="+objectVideo.getDownloadLink()+"&downloadPath=/"+objectHost.getName()+"/"+objectProducer.getHomeDir()+"/";
 		}
 		String downMp3Link = pth+preff+".mp3";
+		
+		// check if file with download-suffix exists, if not create it
+		if(objectVideo.getDownloadLink()==1 && checkSmilFile(objectVideo)){
+			File file = new File(PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + preff+PropsUtil.get("lecture2go.videoprocessing.downloadsuffix")+".mp4");
+			try {
+				if (!isSymlink(file)) {
+					ProzessManager pm = new ProzessManager();
+					pm.createSymLinkToDownloadableFile(objectHost, objectVideo, objectProducer);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} 
+		}
 		
 		// the link the the downloadable mp4 can vary, if there is a smil file for adaptive streaming, the video with the download suffix is used
 		String downMp4Link;
@@ -751,6 +767,26 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		String smilPath = mediaRep + "/" + prefix +".smil";
 		File smilFile = new File(smilPath);
 		return smilFile.isFile();
+	}
+	
+	/**
+	 * Checks if file is a symoblic link (necessary for Java 6), may be replaced be java.nio.file.Files.isSymbolicLink in Java 7
+	 * see: https://stackoverflow.com/questions/813710/java-1-6-determine-symbolic-links
+	 * @param file the file to check
+	 * @return true if file is sym link, false if not
+	 * @throws IOException
+	 */
+	public static boolean isSymlink(File file) throws IOException {
+		if (file == null)
+			throw new NullPointerException("File must not be null");
+		File canon;
+		if (file.getParent() == null) {
+			canon = file;
+	  	} else {
+	  		File canonDir = file.getParentFile().getCanonicalFile();
+		    canon = new File(canonDir, file.getName());
+	  	}
+		return !canon.getCanonicalFile().equals(canon.getAbsoluteFile());
 	}
 	
 }
