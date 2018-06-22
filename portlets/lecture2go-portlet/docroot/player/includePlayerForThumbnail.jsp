@@ -1,4 +1,4 @@
-<script type="text/javascript">jwplayer.key="bx3OCWiALZ6LiI/6uVH6FQqLc5XhDwcVJUGtR+WxeBI=;</script>
+<script type="text/javascript">jwplayer.key="bx3OCWiALZ6LiI/6uVH6FQqLc5XhDwcVJUGtR+WxeBI=";</script>
 
 <script>
 var player = jwplayer('player1');
