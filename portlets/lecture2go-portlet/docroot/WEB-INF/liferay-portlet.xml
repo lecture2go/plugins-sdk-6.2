@@ -186,7 +186,7 @@
 				<scheduler-description>This scheduler is used to update the popular video list in database</scheduler-description> 
 				<scheduler-event-listener-class>de.uhh.l2g.plugins.util.VideohitlistScheduler</scheduler-event-listener-class>  
 				<trigger>  
-					<cron><cron-trigger-value>0 0 11 * * ? </cron-trigger-value></cron>  
+					<cron><cron-trigger-value>0 */30 * * * ? </cron-trigger-value></cron>  
 				</trigger>   
 			</scheduler-entry> 
 			<scheduler-entry> 

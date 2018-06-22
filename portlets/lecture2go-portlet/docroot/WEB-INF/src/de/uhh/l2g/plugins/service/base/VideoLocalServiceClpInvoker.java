@@ -223,6 +223,14 @@ public class VideoLocalServiceClpInvoker {
 		_methodName189 = "getLatestClosedAccessVideoId";
 
 		_methodParameterTypes189 = new String[] { "java.lang.Long" };
+
+		_methodName190 = "checkSmilFile";
+
+		_methodParameterTypes190 = new String[] { "de.uhh.l2g.plugins.model.Video" };
+
+		_methodName191 = "isSymlink";
+
+		_methodParameterTypes191 = new String[] { "java.io.File" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -472,6 +480,16 @@ public class VideoLocalServiceClpInvoker {
 			return VideoLocalServiceUtil.getLatestClosedAccessVideoId((java.lang.Long)arguments[0]);
 		}
 
+		if (_methodName190.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes190, parameterTypes)) {
+			return VideoLocalServiceUtil.checkSmilFile((de.uhh.l2g.plugins.model.Video)arguments[0]);
+		}
+
+		if (_methodName191.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes191, parameterTypes)) {
+			return VideoLocalServiceUtil.isSymlink((java.io.File)arguments[0]);
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -565,4 +583,8 @@ public class VideoLocalServiceClpInvoker {
 	private String[] _methodParameterTypes187;
 	private String _methodName189;
 	private String[] _methodParameterTypes189;
+	private String _methodName190;
+	private String[] _methodParameterTypes190;
+	private String _methodName191;
+	private String[] _methodParameterTypes191;
 }

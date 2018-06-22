@@ -333,7 +333,7 @@ public class ThreadManagement extends MVCPortlet {
 					long clickspermonth = calcHitsPro(month, hits);
 					long clicksperyear = calcHitsPro(year, hits);
 	
-					Videohitlist vhl = new VideohitlistImpl();
+					Videohitlist vhl = VideohitlistLocalServiceUtil.createVideohitlist(0);
 					vhl.setVideoId(v.getVideoId());
 					vhl.setHitsPerDay(clicksperday);
 					vhl.setHitsPerWeek(clicksperweek);
@@ -342,7 +342,7 @@ public class ThreadManagement extends MVCPortlet {
 					//save
 					VideohitlistLocalServiceUtil.addVideohitlist(vhl);
 				}catch (ParseException e) {
-					System.out.println("Simple Date Parsen Error!!");
+					e.printStackTrace();
 				}
 		}
 	}	

@@ -768,6 +768,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		return smilFile.isFile();
 	}
 	
+
 	/**
 	 * Checks if file is a symoblic link (necessary for Java 6), may be replaced be java.nio.file.Files.isSymbolicLink in Java 7
 	 * see: https://stackoverflow.com/questions/813710/java-1-6-determine-symbolic-links
@@ -775,7 +776,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	 * @return true if file is sym link, false if not
 	 * @throws IOException
 	 */
-	public static boolean isSymlink(File file) throws IOException {
+	public boolean isSymlink(File file) throws IOException {
 		if (file == null)
 			throw new NullPointerException("File must not be null");
 		File canon;
@@ -787,5 +788,4 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	  	}
 		return !canon.getCanonicalFile().equals(canon.getAbsoluteFile());
 	}
-	
 }
