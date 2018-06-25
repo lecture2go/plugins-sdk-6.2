@@ -16,6 +16,7 @@ package de.uhh.l2g.plugins.service.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -769,23 +770,13 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	}
 	
 	/**
-	 * Checks if file is a symoblic link (necessary for Java 6), may be replaced be java.nio.file.Files.isSymbolicLink in Java 7
-	 * see: https://stackoverflow.com/questions/813710/java-1-6-determine-symbolic-links
+	 * Checks if file is a symoblic link
 	 * @param file the file to check
 	 * @return true if file is sym link, false if not
 	 * @throws IOException
 	 */
-	public static boolean isSymlink(File file) throws IOException {
-		if (file == null)
-			throw new NullPointerException("File must not be null");
-		File canon;
-		if (file.getParent() == null) {
-			canon = file;
-	  	} else {
-	  		File canonDir = file.getParentFile().getCanonicalFile();
-		    canon = new File(canonDir, file.getName());
-	  	}
-		return !canon.getCanonicalFile().equals(canon.getAbsoluteFile());
+	public boolean isSymlink(File file) throws IOException {
+		return Files.isSymbolicLink(file.toPath());
 	}
 	
 }
