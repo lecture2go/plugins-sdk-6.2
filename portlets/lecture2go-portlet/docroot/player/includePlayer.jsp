@@ -8,6 +8,18 @@
         // Die Adresse des Web- und Videoservers ermitteln
         var server = "#";
 
+        // Diese Funktion wird genutzt um die Url Parameter auszulesen
+        var getUrlParameter = function(sParam){
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++){
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam){
+                    return sParameterName[1];
+                }
+            }
+        };
+        
         // Start- und Endzeit der Zitatfunktion ermitteln (Durch die URL Parameter)
         var frameStart = getUrlParameter('start');
         var frameEnd = getUrlParameter('end');
@@ -42,7 +54,7 @@
 		
         // Hier wird der JW-Player initialisiert
         // Interessant ist hierbei, dass es mehrere Quellen geben kann
-        jwplayer('player1').setup({
+        var pla = jwplayer('player1').setup({
             width: "100%",
             aspectratio: "16:9",
             image: "${video.image}",
@@ -59,7 +71,9 @@
             }],
             hlshtml: true,
             androidhls: true
-        }).onReady(function() {
+        });
+        
+        pla.on('ready', function(){
 
          	// Inputfelder für Start und Ende der Zitate / Kapitel speichern 
             var $inputTimeStart = $("#<portlet:namespace></portlet:namespace>timeStart").val("");
@@ -101,8 +115,7 @@
 
                 
             // Event listener alle 100 ms während playback
-            jwplayer().onTime( function(event){
-
+            pla.on('time', function(event) {
                 // Sicher stellen, dass der gewählte Zeitraum eingehalten wird
 
                 var pos =  Math.floor(event.position);
@@ -139,7 +152,7 @@
             // Hiermit wird verhindert, dass der Nutzer per Tastatur
             // aus den Zitatsbereich herausspult
             if (!isTouchDevice) {
-                jwplayer().onSeek( function(event){
+            	pla.on('seek', function(event) {
                     var pos =  event.position;
 
                     if (Math.ceil(pos) < Math.ceil(frameStart) || Math.ceil(pos) > Math.ceil(frameEnd)) {
@@ -229,5 +242,3 @@
 </script>
 
 <div id="player1"></div>
-
-
