@@ -1,5 +1,17 @@
 <script type="text/javascript">jwplayer.key="qKvU61clkb6v98R2Yoc/cL6x7dFfJ3we+r6nxD6iB0Q=";</script>
 
+<style>
+<!--
+.jw-reset.jw-settings-content-item {
+    line-height: 13px;
+}
+
+.jw-breakpoint-4 .jw-settings-menu, .jw-breakpoint-3 .jw-settings-menu {
+    width: 220px;
+}
+-->
+</style>
+
 <script>
     $(function() {
         // herausfinden ob es ein tablet/smartphone ist
@@ -57,6 +69,7 @@
         var pla = jwplayer('player1').setup({
             width: "100%",
             aspectratio: "16:9",
+            playbackRateControls: [0.75, 1, 1.25, 1.5],
             image: "${video.image}",
             sources: [
             	{ file: playerUri1 },
