@@ -22,17 +22,10 @@ String backURL = request.getAttribute("backURL").toString();
 			</div>
 			
 			<div id="set-segments">
-				<div id="segmentinput">
-					<div>
-						<aui:input name="segment" value="1" type="radio" label="" id="chapter" helpMessage="wath-is-chapter" checked="true"/>	
-						<liferay-ui:message key="chapter"/>
-					</div>
-	
-					<div id="com">
-						<aui:input name="segment" value="0" type="radio" label="" id="comment" helpMessage="wath-is-segment"/>
-						<liferay-ui:message key="comment"/> 
-					</div>
-				</div>
+				
+				<aui:input name="segment" value="1" type="hidden" id="chapter"/>
+				
+				<aui:input name="segment" value="0" type="hidden" id="comment"/>
 				
 				<aui:input name="chortTitle" label="title" required="true" id="chortTitle"/>
 				
@@ -49,6 +42,7 @@ String backURL = request.getAttribute("backURL").toString();
 				</div>
 				
 				<aui:input name="videoId" type="hidden" value="<%=reqVideo.getVideoId()%>"/>
+				
 				<div id="ignore"><aui:input type="text" name="dummy" required="true"/></div>
 				
 				<div id="segment-input-add">
@@ -196,8 +190,8 @@ String backURL = request.getAttribute("backURL").toString();
 						 	   	<portlet:namespace/>timeStart: timeStart,
 						 	   	<portlet:namespace/>timeEnd: timeEnd,
 						 	   	<portlet:namespace/>text: A.one('#<portlet:namespace/>text').get('value'),
-						 	   	<portlet:namespace/>chapter: A.one('#<portlet:namespace/>chapter').get('checked'),
-						 	   	<portlet:namespace/>comment: A.one('#<portlet:namespace/>comment').get('checked'),
+						 	   	<portlet:namespace/>chapter: true,
+						 	   	<portlet:namespace/>comment: false,
 						 	   	<portlet:namespace/>videoId: A.one('#<portlet:namespace/>videoId').get('value'),
 					 	},
 					 	//get server response

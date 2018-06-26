@@ -1379,9 +1379,7 @@ thead, th {
 }
 
 #segment-input-cancel {
-    margin-left: 152px;
-    position: absolute;
-    top: 470px;
+    float: right;
 }
 
 .aui .chaptertile {
@@ -1476,7 +1474,12 @@ thead, th {
 
 #set-segments {
     float: left;
-    margin-top: -17px !important;
+    background: #faf9f9;
+    padding: 0 5px 0px 5px;
+}
+
+#_lgadminvideomanagement_WAR_lecture2goportlet_chortTitle {
+    width: 200px;
 }
 
 #segmentinput #com {
