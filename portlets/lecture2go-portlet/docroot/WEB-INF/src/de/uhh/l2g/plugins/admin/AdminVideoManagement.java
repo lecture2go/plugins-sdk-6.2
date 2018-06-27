@@ -448,6 +448,18 @@ public class AdminVideoManagement extends MVCPortlet {
 			writeJSON(resourceRequest, resourceResponse, json);
 		}
 		
+		if(resourceID.equals("getVideoConversionStatus")){
+			JSONObject json = JSONFactoryUtil.createJSONObject();
+			// if activated, notify the video processor to convert the video
+			if (PropsUtil.contains("lecture2go.videoprocessing.provider")) {
+				String videoConversionUrl = PropsUtil.get("lecture2go.videoprocessing.provider.videoconversion");
+				String videoConversionStatus = VideoProcessorManager.getSimpleVideoConversionStatusForVideoId(video.getVideoId());
+				
+				json.put("videoConversionStatus", videoConversionStatus);
+			}
+			writeJSON(resourceRequest, resourceResponse, json);
+		}
+		
 		if(resourceID.equals("updateMetadata")){
 			
 	 	    String title = ParamUtil.getString(resourceRequest, "title");
