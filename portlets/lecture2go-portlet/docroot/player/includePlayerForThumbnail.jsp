@@ -9,6 +9,10 @@
 .jw-breakpoint-4 .jw-settings-menu, .jw-breakpoint-3 .jw-settings-menu {
     width: 220px;
 }
+
+.jwplayer .jw-rightclick.jw-open {
+    display: none;
+}
 -->
 </style>
 
@@ -62,6 +66,7 @@ var vttFile ="${video.vttChapterFile}";
             aspectratio: "16:9",
             playbackRateControls: [0.75, 1, 1.25, 1.5],
             image: videoImage,
+            cast: {},
             sources: [
             	{ file: playerUri1 },
             	{ file: playerUri2 },
