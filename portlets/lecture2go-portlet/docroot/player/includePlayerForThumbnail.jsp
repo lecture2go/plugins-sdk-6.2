@@ -67,13 +67,7 @@ var vttFile ="${video.vttChapterFile}";
             playbackRateControls: [0.75, 1, 1.25, 1.5],
             image: videoImage,
             cast: {},
-            sources: [
-            	{ file: playerUri1 },
-            	{ file: playerUri2 },
-            	{ file: playerUri3 },
-            	{ file: playerUri4 },
-            	{ file: playerUri5 }
-            ],
+            sources: ${video.jsonPlayerUris},
             tracks: [{
                 file: vttFile,
                 kind:'chapters'
