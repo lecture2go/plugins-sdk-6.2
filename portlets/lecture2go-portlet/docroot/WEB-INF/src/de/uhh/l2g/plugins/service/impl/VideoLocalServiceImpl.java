@@ -603,7 +603,6 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	public void addPlayerUris2Video(Host host, Video video, Producer producer){
 		ArrayList<String> playerUris = new ArrayList<String>();
 		JSONArray playerUrisSortedJSON = new JSONArray();
-		String  mediaRep = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir();
 		
 		String l2go_path = video.getRootInstitutionId() + "l2g" + producer.getHomeDir();
 		
@@ -645,12 +644,8 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			String uri = playerUris.get(i);
 			//json object
 			JSONObject o = new JSONObject();
-			//container
-			String container ="";
-			int l = uri.trim().split("\\.").length;
-			container = uri.trim().split("\\.")[l-1];
 			//for smil file
-			if(uri.contains("vod/_definst/smil") && checkSmilFile(video) && container.contains("smil")){
+			if(uri.contains("vod/_definst/smil") && checkSmilFile(video)){
 				try {
 					o.put("file", uri);
 				} catch (JSONException e) {
@@ -660,7 +655,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				playerUrisSortedJSON.put(o);
 			}
 			//for hls streaming
-			if(uri.contains("vod/_definst/mp4") && !fileStringSegmentFoundInArray(uri, playerUrisSortedJSON)){
+			if(uri.contains("vod/_definst/mp4") || uri.contains("vod/_definst/mp3")  && !checkSmilFile(video)){
 				try {
 					o.put("file", uri);
 				} catch (JSONException e) {
@@ -671,10 +666,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			}
 			//for download
 			String downloadServ = PropsUtil.get("lecture2go.downloadserver.web.root");
-			if(
-					uri.contains(downloadServ) && 
-					video.getDownloadLink()==1 
-			){
+			if(uri.contains(downloadServ) && video.getDownloadLink()==1){
 				try {
 					o.put("file", uri);
 				} catch (JSONException e) {
@@ -809,20 +801,6 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		return smilFile.isFile();
 	}
 
-	public boolean fileStringSegmentFoundInArray(String file, JSONArray jsonArray){
-		boolean ret = false;
-		for(int i=0;i<jsonArray.length();i++){
-			try {
-				Object o = jsonArray.get(i);
-				int df = 0;
-				df++;
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		return ret;
-	}
 
 	/**
 	 * Checks if file is a symoblic link (necessary for Java 6), may be replaced be java.nio.file.Files.isSymbolicLink in Java 7
