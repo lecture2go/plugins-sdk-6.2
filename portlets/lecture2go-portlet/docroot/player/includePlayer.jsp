@@ -48,24 +48,6 @@
 	        frameEnd = <%=timeEnd%>;		
 		}
 		
-        var playerUri1 ="${video.playerUris.get(0)}";
-        var playerUri2 ="${video.playerUris.get(1)}";
-        var playerUri3 ="${video.playerUris.get(2)}";
-        var playerUri4 ="${video.playerUris.get(3)}";
-        var playerUri5 ="${video.playerUris.get(4)}";
-        
-
-        //hack for HLS in firefox and mp3
-        var containerFormat = "${video.containerFormat}";
-        var isFirefox = typeof InstallTrigger !== 'undefined';
-        var downloadAllowed = "${video.downloadLink}";
-        if(containerFormat.indexOf("mp3") !== -1 && isFirefox && downloadAllowed.indexOf("1")!==-1){
-        	var playerUri = playerUri1;
-        	playerUri1 = playerUri3;
-        	playerUri3 = playerUri;
-        }
-        //
-        
 		var vttFile ="${video.vttChapterFile}";
 		
         // Hier wird der JW-Player initialisiert
