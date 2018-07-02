@@ -602,7 +602,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	**/
 	public void addPlayerUris2Video(Host host, Video video, Producer producer){
 		ArrayList<String> playerUris = new ArrayList<String>();
-		String  mediaRep = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir();
+		JSONArray playerUrisSortedJSON = new JSONArray();
 		
 		String l2go_path = video.getRootInstitutionId() + "l2g" + producer.getHomeDir();
 		
@@ -628,7 +628,6 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 					playerUri = playerUri.replace("[smilfile]", video.getSPreffix()+".smil");
 				}
 				playerUri = playerUri.replace("[filename]", video.getSecureFilename());
-				
 			}
 			//
 			playerUri = playerUri.replace("[host]", host.getStreamer());
@@ -638,13 +637,47 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			playerUri = playerUri.replace("[port]", host.getPort()+"");
 			//
 			if( playerUri.length()>0 && !playerUri.contains("[") && !playerUri.contains("]") )playerUris.add(playerUri);
-			else playerUris.add("null");
+			
 		}
-		//sort player uris 
+		//sort player with priority set in the portal-ext.properties
 		for(int i=0; i<playerUris.size();i++){
-			if(playerUris.get(i).contains("null"))playerUris.set(i, playerUris.get(i+1));
+			String uri = playerUris.get(i);
+			//json object
+			JSONObject o = new JSONObject();
+			//for smil file
+			if(uri.contains("vod/_definst/smil") && checkSmilFile(video)){
+				try {
+					o.put("file", uri);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				playerUrisSortedJSON.put(o);
+			}
+			//for hls streaming
+			if(uri.contains("vod/_definst/mp4") || uri.contains("vod/_definst/mp3")  && !checkSmilFile(video)){
+				try {
+					o.put("file", uri);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				playerUrisSortedJSON.put(o);
+			}
+			//for download
+			String downloadServ = PropsUtil.get("lecture2go.downloadserver.web.root");
+			if(uri.contains(downloadServ) && video.getDownloadLink()==1){
+				try {
+					o.put("file", uri);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				playerUrisSortedJSON.put(o);
+			}
 		}
-		video.setPlayerUris(playerUris);
+		//
+		video.setJsonPlayerUris(playerUrisSortedJSON);
 	}
 	
 	public Video getBySecureUrl(String surl) throws NoSuchVideoException, SystemException{
@@ -767,7 +800,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		File smilFile = new File(smilPath);
 		return smilFile.isFile();
 	}
-	
+
 
 	/**
 	 * Checks if file is a symoblic link (necessary for Java 6), may be replaced be java.nio.file.Files.isSymbolicLink in Java 7
