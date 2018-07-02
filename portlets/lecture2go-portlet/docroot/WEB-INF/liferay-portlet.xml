@@ -35,7 +35,7 @@
 		<header-portlet-javascript>/js/jquery.datetimepicker.js</header-portlet-javascript>
 		<header-portlet-javascript>/player/jwplayer-8.4.1/jwplayer.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/jwplayer.custom.util.js</header-portlet-javascript>
-
+		<footer-portlet-javascript>/js/videoprocessor.js</footer-portlet-javascript>
 		<footer-portlet-javascript>/js/autocomplete-creator.js</footer-portlet-javascript>
 	</portlet>
 	
