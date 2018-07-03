@@ -645,8 +645,12 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			String uri = playerUris.get(i);
 			//json object
 			JSONObject o = new JSONObject();
+			//container
+			String container ="";
+			int l = uri.trim().split("\\.").length;
+			container = uri.trim().split("\\.")[l-1];
 			//for smil file
-			if(uri.contains("vod/_definst/smil") && checkSmilFile(video)){
+			if(uri.contains("vod/_definst/smil") && checkSmilFile(video) && container.contains("m3u8")){
 				try {
 					o.put("file", uri);
 				} catch (JSONException e) {
@@ -656,7 +660,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				playerUrisSortedJSON.put(o);
 			}
 			//for hls streaming
-			if(uri.contains("vod/_definst/mp4") || uri.contains("vod/_definst/mp3")  && !checkSmilFile(video)){
+			if((uri.contains("vod/_definst/mp4") || uri.contains("vod/_definst/mp3"))  && !checkSmilFile(video)){
 				try {
 					o.put("file", uri);
 				} catch (JSONException e) {
@@ -802,6 +806,20 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		return smilFile.isFile();
 	}
 
+	public boolean fileStringSegmentFoundInArray(String file, JSONArray jsonArray){
+		boolean ret = false;
+		for(int i=0;i<jsonArray.length();i++){
+			try {
+				Object o = jsonArray.get(i);
+				int df = 0;
+				df++;
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return ret;
+	}
 
 	/**
 	 * Checks if file is a symoblic link
