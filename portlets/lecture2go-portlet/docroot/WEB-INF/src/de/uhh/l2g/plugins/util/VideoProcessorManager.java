@@ -73,14 +73,14 @@ public class VideoProcessorManager {
 					}
 				} catch (IOException e) {
 					LOG.error("Failed connecting to videoprocessor to start a new video conversion of video with id: " + videoId); 
-					e.printStackTrace();
+					//e.printStackTrace();
 					return false;
 				}
 			} catch (SystemException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 				return false;
 			} catch (PortalException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 				return false;
 			}
 		}
@@ -116,7 +116,7 @@ public class VideoProcessorManager {
 				}
 			} catch (IOException e) {
 				LOG.error("Failed connecting to videoprocessor to rename the files of the video conversion of video with id: " + videoId); 
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 	}
@@ -149,7 +149,7 @@ public class VideoProcessorManager {
 				}
 			} catch (IOException e) {
 				LOG.error("Failed connecting to videoprocessor to delete the files of the video conversion of video with id: " + videoId); 
-				e.printStackTrace();
+				//e.printStackTrace();
 				return false;
 			}
 		}

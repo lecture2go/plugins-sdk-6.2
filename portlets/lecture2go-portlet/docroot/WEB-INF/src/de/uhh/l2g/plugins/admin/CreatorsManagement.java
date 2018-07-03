@@ -38,7 +38,7 @@ public class CreatorsManagement extends MVCPortlet {
 			try {
 				response.sendRedirect(backURL);
 			} catch (IOException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 	}
@@ -61,7 +61,7 @@ public class CreatorsManagement extends MVCPortlet {
 			try {
 				response.sendRedirect(backURL);
 			} catch (IOException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 	}
@@ -74,7 +74,7 @@ public class CreatorsManagement extends MVCPortlet {
 		try {
 			response.sendRedirect(backURL);
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 

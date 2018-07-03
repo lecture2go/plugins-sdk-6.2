@@ -152,7 +152,7 @@ public class SegmentLocalServiceImpl extends SegmentLocalServiceBaseImpl {
 				if(s.getSegmentId()==segment.getSegmentId())previousSegmentIndex=lis.previousIndex();
 			}
 		} catch (SystemException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		int ps = previousSegmentIndex-1;
 		Segment previousSegment = sl.get(ps);
@@ -165,9 +165,9 @@ public class SegmentLocalServiceImpl extends SegmentLocalServiceBaseImpl {
 		try {
 			s = getSegmentById(segmentId);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (PortalException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} 
 		Long prevSegId = new Long(0);
 		try{

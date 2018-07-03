@@ -118,7 +118,7 @@ public class ThreadManagement extends MVCPortlet {
 			PortalUtil.copyRequestParameters(request, response);
 			
 			System.out.println(e.getClass().getName());
-			e.printStackTrace();
+			//e.printStackTrace();
 
 			response.setRenderParameter("mvcPath", "/admin/threads.jsp");
 		}
@@ -149,7 +149,7 @@ public class ThreadManagement extends MVCPortlet {
 			PortalUtil.copyRequestParameters(request, response);
 			
 			System.out.println(e.getClass().getName());
-			e.printStackTrace();
+			//e.printStackTrace();
 
 			response.setRenderParameter("mvcPath",
 					"/admin/threads.jsp");
@@ -181,7 +181,7 @@ public class ThreadManagement extends MVCPortlet {
 			PortalUtil.copyRequestParameters(request, response);
 			
 			System.out.println(e.getClass().getName());
-			e.printStackTrace();
+			//e.printStackTrace();
 			
 			response.setRenderParameter("mvcPath", "/admin/threads.jsp");
 		}
@@ -215,7 +215,7 @@ public class ThreadManagement extends MVCPortlet {
 			PortalUtil.copyRequestParameters(request, response);
 			
 			System.out.println(e.getClass().getName());
-			e.printStackTrace();
+			//e.printStackTrace();
 			
 			response.setRenderParameter("mvcPath", "/admin/threads.jsp");
 		}
@@ -247,7 +247,7 @@ public class ThreadManagement extends MVCPortlet {
 			PortalUtil.copyRequestParameters(request, response);
 			
 			System.out.println(e.getClass().getName());
-			e.printStackTrace();
+			//e.printStackTrace();
 			
 			response.setRenderParameter("mvcPath", "/admin/threads.jsp");
 		}
@@ -342,7 +342,7 @@ public class ThreadManagement extends MVCPortlet {
 					//save
 					VideohitlistLocalServiceUtil.addVideohitlist(vhl);
 				}catch (ParseException e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 		}
 	}	
@@ -358,7 +358,7 @@ public class ThreadManagement extends MVCPortlet {
 			try {
 				createPopularVideoList();
 			} catch (SystemException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 	}

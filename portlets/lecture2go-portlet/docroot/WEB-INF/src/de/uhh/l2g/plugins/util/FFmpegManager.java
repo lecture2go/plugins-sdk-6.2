@@ -409,7 +409,7 @@ public class FFmpegManager {
 			//update video object
 			VideoLocalServiceUtil.updateVideo(video);
 		} catch (NullPointerException e) {
-			//e.printStackTrace();
+			////e.printStackTrace();
 		}
 	}
 }

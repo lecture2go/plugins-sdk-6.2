@@ -51,7 +51,7 @@ public class Producer_LectureseriesLocalServiceImpl
 			Producer_LectureseriesUtil.removeByLectureseriesId(lectureseriesId);
 		} catch (SystemException e) {
 			ret = true;
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return ret;
 	}	
@@ -62,7 +62,7 @@ public class Producer_LectureseriesLocalServiceImpl
 				try {
 					pId = producer_LectureseriesPersistence.findByLectureseriesIdAndProducerId(pl.getLectureseriesId(), pl.getProducerId());
 				} catch (Exception e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 		if (pId.size()>0) ret=true;
 		return ret;

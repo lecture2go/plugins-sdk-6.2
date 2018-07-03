@@ -71,7 +71,7 @@ public class LectureseriesLocalServiceImpl extends LectureseriesLocalServiceBase
 			try {
 				l=super.updateLectureseries(lectureseries);
 			} catch (SystemException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		return l;
 	}
@@ -212,12 +212,12 @@ public class LectureseriesLocalServiceImpl extends LectureseriesLocalServiceBase
 						d = format.parse(v.getGenerationDate());
 						l.setLatestVideoUploadDate(d);
 					} catch (ParseException e) {
-						e.printStackTrace();
+						//e.printStackTrace();
 					}
 				}
 				LectureseriesLocalServiceUtil.updateLectureseries(l);
 			} catch (PortalException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 	}
@@ -251,7 +251,7 @@ public class LectureseriesLocalServiceImpl extends LectureseriesLocalServiceBase
 		try {
 			l = lectureseriesPersistence.findByUSID(usid).get(0);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return l;
 	}

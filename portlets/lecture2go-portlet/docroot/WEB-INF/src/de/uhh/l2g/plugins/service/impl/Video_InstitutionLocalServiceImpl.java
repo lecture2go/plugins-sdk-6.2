@@ -51,7 +51,7 @@ public class Video_InstitutionLocalServiceImpl
 			Video_InstitutionUtil.removeByVideo(videoId);
 		} catch (SystemException e) {
 			ret = true;
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return ret;
 	}
@@ -62,7 +62,7 @@ public class Video_InstitutionLocalServiceImpl
 			Video_InstitutionUtil.removeByInstitution(institutionId);
 		} catch (SystemException e) {
 			ret = true;
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return ret;
 	}
@@ -72,7 +72,7 @@ public class Video_InstitutionLocalServiceImpl
 		try {
 			vi = video_InstitutionPersistence.findByVideo(videoId);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return vi;
 	}
@@ -82,7 +82,7 @@ public class Video_InstitutionLocalServiceImpl
 		try {
 			vi = video_InstitutionPersistence.findByInstitution(institutionId);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return vi;
 	}
@@ -92,7 +92,7 @@ public class Video_InstitutionLocalServiceImpl
 		try {
 			vi = video_InstitutionPersistence.findByVideoInstitution(videoId, institutionId);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return vi;
 	}

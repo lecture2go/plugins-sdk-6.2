@@ -155,7 +155,7 @@ public class Institution_HostLocalServiceImpl
 		defaults = institution_HostPersistence.findByC_G_I(companyId, groupId, defaultInstitution.getInstitutionId());
 	} catch (SystemException e) {
 		//TODO: 
-		e.printStackTrace();
+		//e.printStackTrace();
 	}	    			
 	if (defaults.size() > 0) return defaults.get(0).getInstitutionHostId();
 	else return 0;

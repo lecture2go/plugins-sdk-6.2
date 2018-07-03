@@ -53,9 +53,9 @@ public class LicenseLocalServiceImpl extends LicenseLocalServiceBaseImpl {
 			LicenseUtil.removeByVideo(videoId);
 		} catch (SystemException e) {
 			ret = true;
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (NoSuchLicenseException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return ret;
 	}

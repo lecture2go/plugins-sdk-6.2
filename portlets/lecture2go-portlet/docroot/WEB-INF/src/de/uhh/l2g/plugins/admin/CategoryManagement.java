@@ -34,7 +34,7 @@ public class CategoryManagement extends MVCPortlet {
 		try {
 			response.sendRedirect(backURL);
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}		
 	}
 	
@@ -49,7 +49,7 @@ public class CategoryManagement extends MVCPortlet {
 		try {
 			response.sendRedirect(backURL);
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}		
 	}
 	
@@ -61,7 +61,7 @@ public class CategoryManagement extends MVCPortlet {
 		try {
 			response.sendRedirect(backURL);
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 

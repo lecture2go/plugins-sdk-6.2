@@ -354,7 +354,7 @@ public class RSSManager {
 
 			return text;
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			return "";
 		}
 	}
@@ -407,7 +407,7 @@ public class RSSManager {
 			ret = format.parse(l2goDate);
 		} catch (ParseException e) {
 			
-			e.printStackTrace();
+			//e.printStackTrace();
 			ret = null;
 		}
 		String[] dt = ret.toString().split(" ");
@@ -463,9 +463,9 @@ public class RSSManager {
 			try {
 				inst = InstitutionLocalServiceUtil.getInstitution(le.next().getInstitutionId());
 			} catch (PortalException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			} catch (SystemException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			if (inst.getTyp().equals("tree2")) retur = true;
 		}

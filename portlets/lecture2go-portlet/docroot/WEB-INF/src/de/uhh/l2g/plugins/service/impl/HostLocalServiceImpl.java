@@ -87,7 +87,7 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 			h = Institution_HostLocalServiceUtil.getByInstitutionId(institutionId);
 		} catch (PortalException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return h;
 	}
@@ -137,7 +137,7 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 			c = Institution_HostLocalServiceUtil.getByGroupIdAndHostIdCount(groupId, hostId);
 		} catch (PortalException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return c;
 	}
@@ -255,7 +255,7 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 			RepositoryManager.createFolder(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 
 		resourceLocalService.addResources(user.getCompanyId(), groupId, userId, Host.class.getName(), hostId, false, true, true);

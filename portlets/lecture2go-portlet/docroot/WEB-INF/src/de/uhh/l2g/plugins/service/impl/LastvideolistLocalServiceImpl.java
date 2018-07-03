@@ -44,7 +44,7 @@ public class LastvideolistLocalServiceImpl
 		try {
 			lastvideolistPersistence.removeByVideo(videoId);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 }
