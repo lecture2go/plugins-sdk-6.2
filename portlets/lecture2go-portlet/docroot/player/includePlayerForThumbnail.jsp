@@ -13,6 +13,14 @@
 .jwplayer .jw-rightclick.jw-open {
     display: none;
 }
+
+.jw-icon.jw-icon-inline.jw-button-color.jw-reset.jw-icon-cc.jw-settings-submenu-button {
+	display: none !important;
+}
+
+.jw-icon.jw-icon-inline.jw-button-color.jw-reset.jw-settings-captions.jw-submenu-captions {
+	display: none !important;
+}
 -->
 </style>
 

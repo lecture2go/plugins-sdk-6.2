@@ -13,6 +13,14 @@
 .jwplayer .jw-rightclick.jw-open {
     display: none;
 }
+
+.jw-icon.jw-icon-inline.jw-button-color.jw-reset.jw-icon-cc.jw-settings-submenu-button {
+	display: none !important;
+}
+
+.jw-icon.jw-icon-inline.jw-button-color.jw-reset.jw-settings-captions.jw-submenu-captions {
+	display: none !important;
+}
 -->
 </style>
 
@@ -174,7 +182,6 @@
 
             // Im nachfolgenden Abschnitt wird den Nutzer ermöglicht
             // eigene Zitate zu erstellen und zu teilen
-            var player = jwplayer();
 
             var startFrameTime = undefined;
             var endFrameTime = undefined;
@@ -183,7 +190,7 @@
 
             // Benutzer setzt Start des Clips
             $inputTimeStart.click(function() {
-                	startFrameTime = Math.round(player.getPosition());
+                	startFrameTime = Math.round(jwplayer().getPosition());
                     startTimeStr = secondsToTime(Math.floor(startFrameTime));
 
                     $inputTimeStart.val(startTimeStr);
@@ -203,7 +210,7 @@
 
             // Benutzer setzt Ende des Clips
             $inputTimeEnd.click(function() {
-            	endFrameTime = player.getPosition();
+            	endFrameTime = jwplayer().getPosition();
                 EndTimeStr = secondsToTime(Math.floor(endFrameTime));
 
                 $inputTimeEnd.val(EndTimeStr);
