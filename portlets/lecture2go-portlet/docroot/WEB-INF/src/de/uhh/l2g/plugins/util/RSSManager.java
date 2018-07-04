@@ -238,7 +238,10 @@ public class RSSManager {
 			text += "<description>" + description + "</description> \n";
 			text += "<language>" + language + "</language> \n";
 			// here iTunes tags
-			text += "<copyright>&#x2117; &amp; &#xA9; 2010 University of Hamburg Lecture2Go</copyright> \n";
+			Calendar cal = Calendar.getInstance();
+			int year = cal.get(Calendar.YEAR);
+			String yearString = String.valueOf(year);
+			text += "<copyright>&#x2117; &amp; &#xA9; "+yearString+" University of Hamburg Lecture2Go</copyright> \n";
 			text += "<itunes:author>University of Hamburg - Lecture2Go</itunes:author> \n";
 			text += "<itunes:summary>The University of Hamburg offers a steadily growing portion of its lectures online and similar to a take-away. For further information and more video lectures visit the central media platform of the University of Hamburg at http://lecture2go.uni-hamburg.de!</itunes:summary> \n";
 			text += "<itunes:image href='" + imageLink + "' /> \n";
