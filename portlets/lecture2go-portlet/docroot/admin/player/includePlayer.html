@@ -24,8 +24,9 @@
 -->
 </style>
 
+
 <script>
-    $(function() {
+	$(function() {
         // herausfinden ob es ein tablet/smartphone ist
         var isTouchDevice = 'ontouchstart' in document.documentElement;
 
@@ -53,12 +54,23 @@
         
         // Hier wird der JW-Player initialisiert
         // Interessant ist hierbei, dass es mehrere Quellen geben kann
+        // Hier wird der JW-Player initialisiert
+        // Interessant ist hierbei, dass es mehrere Quellen geben kann
+		var vttFile ="${reqVideo.vttChapterFile}";
+		
+        // Hier wird der JW-Player initialisiert
+        // Interessant ist hierbei, dass es mehrere Quellen geben kann
         var pla = jwplayer('player1').setup({
             width: "100%",
             aspectratio: "16:9",
             playbackRateControls: [0.75, 1, 1.25, 1.5],
             image: "${reqVideo.image}",
-            sources: ${video.jsonPlayerUris},
+            cast: {},
+            sources: ${reqVideo.jsonPlayerUris},
+            tracks: [{
+                file: vttFile,
+                kind:'chapters'
+            }],
             hlshtml: true,
             androidhls: true
         });
@@ -253,6 +265,7 @@
     });
 
 </script>
+
 
 <div id="player1"></div>
 

@@ -649,29 +649,14 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			String container ="";
 			int l = uri.trim().split("\\.").length;
 			container = uri.trim().split("\\.")[l-1];
-			//for smil file
-			if(uri.contains("vod/_definst/smil") && checkSmilFile(video) && container.contains("m3u8")){
-				try {
-					o.put("file", uri);
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					//e.printStackTrace();
-				}
-				playerUrisSortedJSON.put(o);
-			}
-			//for hls streaming
-			if((uri.contains("vod/_definst/mp4") || uri.contains("vod/_definst/mp3"))  && !checkSmilFile(video)){
-				try {
-					o.put("file", uri);
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					//e.printStackTrace();
-				}
-				playerUrisSortedJSON.put(o);
-			}
-			//for download
 			String downloadServ = PropsUtil.get("lecture2go.downloadserver.web.root");
-			if(uri.contains(downloadServ) && video.getDownloadLink()==1){
+
+			//check player files!
+			boolean smilFileAllowed = (uri.contains("vod/_definst/smil") && checkSmilFile(video) && container.contains("m3u8"));
+			boolean hlsStreamingAllowed = ((uri.contains("vod/_definst/mp4") || uri.contains("vod/_definst/mp3"))  && !checkSmilFile(video));
+			boolean downloadAllowed = (uri.contains(downloadServ) && video.getDownloadLink()==1);
+			boolean rtspAllowed = (uri.contains("rtsp"));
+			if(smilFileAllowed || hlsStreamingAllowed || downloadAllowed || rtspAllowed){
 				try {
 					o.put("file", uri);
 				} catch (JSONException e) {
