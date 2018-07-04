@@ -140,12 +140,12 @@
 			  <%
 			    String title = video.getTitle();  	
 			  	Long lTermId = lectureseries.getTermId();
-			  	String termMetadata = "";
-			  	if(lTermId > 1)
-			  	{
-			  		termMetadata = " ("+TermLocalServiceUtil.getById(lTermId).getPrefix()+" "+TermLocalServiceUtil.getById(lTermId).getYear()+")";
-			  	}
-			  		String series = lectureseries.getName()+termMetadata;
+
+			  	String series = "";
+		  		String t = TermLocalServiceUtil.getById(lTermId).getPrefix()+" "+TermLocalServiceUtil.getById(lTermId).getYear();
+			  		
+		  		if (t.trim().length()>0)series = lectureseries.getName() +"("+t+")";
+		  		else series= lectureseries.getName();
 			  	%>
 		       <c:if test="${relatedVideos.size()>1}"><div class="player"></c:if>
 			   <c:if test="${relatedVideos.size()<=1}"><div class="player-wide"></c:if>

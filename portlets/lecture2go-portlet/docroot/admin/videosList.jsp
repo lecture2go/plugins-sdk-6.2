@@ -190,7 +190,7 @@
 								</div>
 								<%if(!lName.equals("")){%>
 									<div class="admin-videolist-lectureseries-title">
-										<%=lName%> (<%=lTerm%>)
+										<%=lName%> <%if(lTerm.length()>0){ %>(<%=lTerm%>)<%}%>
 									</div>
 								<%}
 								if(!vid.getFilename().equals("")){
