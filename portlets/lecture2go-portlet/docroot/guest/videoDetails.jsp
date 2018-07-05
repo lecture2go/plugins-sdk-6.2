@@ -142,7 +142,11 @@
 			  	Long lTermId = lectureseries.getTermId();
 
 			  	String series = "";
-		  		String t = TermLocalServiceUtil.getById(lTermId).getPrefix()+" "+TermLocalServiceUtil.getById(lTermId).getYear();
+		  		String t = "";
+		  		try{
+		  			t = TermLocalServiceUtil.getById(lTermId).getPrefix()+" "+TermLocalServiceUtil.getById(lTermId).getYear();
+		  		}catch (Exception e){};
+		  		
 			  		
 		  		if (t.trim().length()>0)series = lectureseries.getName() +"("+t+")";
 		  		else series= lectureseries.getName();
