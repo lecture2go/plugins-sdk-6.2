@@ -35,7 +35,7 @@ public class CategoryFinderImpl extends BasePersistenceImpl<Category> implements
 			try {
 				throw new SystemException(e);
 			} catch (SystemException se) {
-				se.printStackTrace();
+				//e.printStackTrace();
 			}
 		} finally {
 			closeSession(session);

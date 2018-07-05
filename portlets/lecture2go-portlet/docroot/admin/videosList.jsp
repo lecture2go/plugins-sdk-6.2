@@ -1,4 +1,5 @@
 <%@include file="/init.jsp"%>
+<liferay-portlet:resourceURL id="getVideoConversionStatus" var="getVideoConversionStatusURL" />
 <liferay-portlet:resourceURL id="convertVideo" var="convertVideoURL" />
 
 <%
@@ -156,11 +157,6 @@
 					String url = "";
 					if(vid.getOpenAccess()==1)url=vid.getUrl();
 					else url=vid.getSecureUrl();
-					
-					String videoConversionStatus = "";
-					if (PropsUtil.contains("lecture2go.videoprocessing.provider")) {
-						videoConversionStatus = VideoProcessorManager.getSimpleVideoConversionStatusForVideoId(video.getVideoId());
-					}
 				%>
 				<portlet:actionURL name="viewVideo" var="viewURL">
 					<portlet:param name="videoId" value="<%= String.valueOf(video.getVideoId())%>" />
@@ -194,7 +190,7 @@
 								</div>
 								<%if(!lName.equals("")){%>
 									<div class="admin-videolist-lectureseries-title">
-										<%=lName%> (<%=lTerm%>)
+										<%=lName%> <%if(lTerm.length()>0){ %>(<%=lTerm%>)<%}%>
 									</div>
 								<%}
 								if(!vid.getFilename().equals("")){
@@ -233,22 +229,8 @@
 									</div>
 								<div class="admin-videolist-date">
 									<%=vid.getDate()%> | <liferay-ui:message key="hits"/>: <%=vid.getHits()%>
-									<span id="<portlet:namespace/>conversion">
-									<c:choose>
-										<c:when test='<%=videoConversionStatus.equals("RUNNING")%>'>
-							            	 <span style="color:#33aadd"> | <span class="icon-exclamation-sign"></span> <liferay-ui:message key="conversion-running"/></span>
-							            	 <liferay-ui:icon-help message='conversion-description'/>
-							         	</c:when>
-										<c:when test='<%=videoConversionStatus.equals("FINISHED")%>'>
-											<span> | <span class="icon-ok-sign"></span> <liferay-ui:message key="conversion-finished"/></span>
-							            	 <liferay-ui:icon-help message='conversion-description'/>
-							         	</c:when>
-										<c:when test='<%=videoConversionStatus.equals("ERROR")%>'>
-											<span style="color:red"> | <span class="icon-remove-sign"></span> <liferay-ui:message key="conversion-failed"/> - <a href="javascript:convertVideo(<%=vid.getVideoId()%>)" style="text-decoration: underline" ><liferay-ui:message key="try again"/></a></span>
-							            	 <liferay-ui:icon-help message='conversion-description'/>
-										</c:when>
-							      </c:choose>
-							      </span>
+									<span class="conversion" data-video-id="<%=vid.getVideoId()%>">
+							      	</span>
 								</div>
 						<%}%>
 						</div>
@@ -344,33 +326,11 @@
 </div>
 
 <script>
+AUI().ready('', function(A){
+	// check conversion status for every video
+	$('*[data-video-id]').each(function(){
+		videoProcessor.pollStatus('<portlet:namespace/>','<%=getVideoConversionStatusURL%>', '<%=convertVideoURL%>', $(this).attr("data-video-id"))
+	})
+});
 
-
-function convertVideo(id){
-	$("#<portlet:namespace/>conversion").html('<span class="conversion-running"><span class="icon-exclamation-sign"> </span>' + "<liferay-ui:message key="conversion-initializing"/>" + '</span>');
-	AUI().use('aui-io-request', 'aui-node',
-		function(A){
-			A.io.request('<%=convertVideoURL%>', {
-		 	dataType: 'json',
-		 	method: 'POST',
-			 	//send data to server
-			 	data: {
-			 		<portlet:namespace/>videoId: id,
-			 		// may be filled with instructions (workflow to use etc.)
-			 	},
-			 	//get server response
-				on: {
-					   success: function() {
-					     var status = this.get('responseData').status;
-					     if(status == false) {
-					    	 $("#<portlet:namespace/>conversion").html('<span class="conversion-failed"> | <span class="icon-remove-sign"></span> ' + "<liferay-ui:message key="conversion-failed"/>" + ' - <a class="force-underline" href="javascript:convertVideo(' + id + ')">' + "<liferay-ui:message key="try-again"/>" +  + '</a></span>');
-					     } else {
-						     $("#<portlet:namespace/>conversion").html('<span class="conversion-running"> | <span class="icon-exclamation-sign"></span> ' + "<liferay-ui:message key="conversion-running"/>" + '</span>');
-					     }
-					   }
-				}
-			});	
-		}
-	);
-}
 </script>

@@ -83,9 +83,9 @@ public class OpenAccessVideos extends MVCPortlet {
 					}
 					
 				} catch (PortalException e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				} catch (SystemException e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 				writeJSON(resourceRequest, resourceResponse, ja);
 			}			

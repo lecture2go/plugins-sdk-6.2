@@ -31,6 +31,7 @@
 <liferay-portlet:resourceURL id="updateThumbnail" var="updateThumbnailURL" />
 <liferay-portlet:resourceURL id="getJSONVideo" var="getJSONVideoURL" />
 <liferay-portlet:resourceURL id="convertVideo" var="convertVideoURL" />
+<liferay-portlet:resourceURL id="getVideoConversionStatus" var="getVideoConversionStatusURL" />
 <liferay-portlet:resourceURL id="updateHtaccess" var="updateHtaccessURL" />
 
 
@@ -85,10 +86,6 @@
 	if(reqVideo.getVideoId()>0)lectureseriesAsTreeList = LectureseriesLocalServiceUtil.getFilteredByApprovedSemesterFacultyProducerAsTreeMapSortedByTerm(1, (long) 0, (long) 0, reqVideo.getProducerId());
 	else lectureseriesAsTreeList = LectureseriesLocalServiceUtil.getFilteredByApprovedSemesterFacultyProducerAsTreeMapSortedByTerm(1, (long) 0, (long) 0, reqProducer.getProducerId());
 
-	String videoConversionStatus = "";
-	if (PropsUtil.contains("lecture2go.videoprocessing.provider")) {
-		videoConversionStatus = VideoProcessorManager.getSimpleVideoConversionStatusForVideoId(reqVideo.getVideoId());
-	}
 %>
 
 <script id="htmlTitle" type="text/x-tmpl">
@@ -174,24 +171,10 @@
 						<c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider")%>'>
 							<c:if test="<%= permissionChecker.isOmniadmin() || producerIdsAllowedForPostprocessing.contains((int) reqProducer.getProducerId()) %>">
 								<div id="postprocessing" style="margin-bottom: 20px;">
-									<span id="conversion">
-										<c:choose>
-											<c:when test='<%=videoConversionStatus.equals("RUNNING")%>'>
-								            	 <span class="conversion-running"><span class="icon-exclamation-sign"></span> <liferay-ui:message key="conversion-running"/></span>
-								            	 <liferay-ui:icon-help message='conversion-description'/>
-								         	</c:when>
-											<c:when test='<%=videoConversionStatus.equals("FINISHED")%>'>
-												<span><span class="icon-ok-sign"></span> <liferay-ui:message key="conversion-finished"/></span>
-								            	 <liferay-ui:icon-help message='conversion-description'/>
-								         	</c:when>
-											<c:when test='<%=videoConversionStatus.equals("ERROR")%>'>
-												<span class="conversion-failed"><span class="icon-remove-sign"></span> <liferay-ui:message key="conversion-failed"/> - <a class="force-underline" href="javascript:convertVideo()" >nochmal versuchen</a></span>
-								            	 <liferay-ui:icon-help message='conversion-description'/>
-											</c:when>
-								      </c:choose>
+									<span class="conversion" data-video-id="<%=reqVideo.getVideoId()%>">
 									</span>
 									<aui:input name="postprocess" type="checkbox" label="Postprocess after upload (beta)" id="postprocess"></aui:input>
-									<aui:button type="button" value="Start Postprocessing (beta)" onclick="convertVideo()"/>
+									<aui:button type="button" id="start-postprocessing" value="Start Postprocessing (beta)"/>
 								</div>
 							</c:if>
 						</c:if>
@@ -716,39 +699,10 @@ function updateVideoFileName(file){
 					   success: function() {
 					     var jsonResponse = this.get('responseData');
 					     if (hasPostProcessingActivated) {
-			           			convertVideo();
+			           			videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>','<%=getVideoConversionStatusURL%>',<%=reqVideo.getVideoId()%>);
 			           	 }
 					     toggleShare();
 					   }
-				}
-			});	
-		}
-	);
-}
-
-function convertVideo(){
-	$("#conversion").html('<span class="conversion-running"><span class="icon-exclamation-sign"> </span>' + "<liferay-ui:message key="conversion-initializing"/>" + '</span><liferay-ui:icon-help message="conversion-description"/>');
-
-	AUI().use('aui-io-request', 'aui-node',
-		function(A){
-			A.io.request('<%=convertVideoURL%>', {
-		 	dataType: 'json',
-		 	method: 'POST',
-			 	//send data to server
-			 	data: {
-			 		<portlet:namespace/>videoId: A.one('#<portlet:namespace/>videoId').get('value'),
-			 		// may be filled with instructions (workflow to use etc.)
-			 	},
-			 	//get server response
-				on: {
-					   success: function() {
-					     var status = this.get('responseData').status;
-					     if(status == false) {
-					    	 $("#conversion").html('<span class="conversion-failed"><span class="icon-remove-sign"> </span> ' + "<liferay-ui:message key="conversion-failed"/>" + ' - <a class="force-underline" href="javascript:convertVideo()" >' + "<liferay-ui:message key="try-again"/>" + '</a></span><liferay-ui:icon-help message='conversion-description'/>');
-					     } else {
-						     $("#conversion").html('<span class="conversion-running"><span class="icon-exclamation-sign"> </span>' + "<liferay-ui:message key="conversion-running"/>" + '</span><liferay-ui:icon-help message='conversion-description'/>');
-					     }
-				   }
 				}
 			});	
 		}
@@ -932,7 +886,7 @@ function deleteFile(fileName){
 		    	  	$("#date-time").hide();
 		    	  	$("#first-title").show();
 		    	  	$("#<portlet:namespace/>meta-ebene").hide();
-		    	  	$("#conversion").html('');
+		    	  	$(".conversion").html('');
 		        }
 		        player.remove();
 		        //initialize and show player
@@ -1140,7 +1094,7 @@ function updateThumbnail(){
 		  url: "<%=updateThumbnailURL%>",
 		  dataType: 'json',
 		  data: {
-		 	   	<portlet:namespace/>inputTime: Math.floor(player.getPosition()),
+		 	   	<portlet:namespace/>inputTime: Math.floor(jwplayer().getPosition()),
 		 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>",
 		  },
 		  global: false,
@@ -1199,6 +1153,15 @@ var hasPostProcessingActivated = false;
 		}
 	);
 </c:if>
+$('#start-postprocessing').click(function(){
+	videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>', '<%=getVideoConversionStatusURL%>', <%=reqVideo.getVideoId()%>);
+});
+
+
+AUI().ready('', function(A){
+	// check conversion status
+	videoProcessor.pollStatus('<portlet:namespace/>','<%=getVideoConversionStatusURL%>','<%=convertVideoURL%>',<%=reqVideo.getVideoId()%>);
+});
 </script>
 
 <!-- Template -->
@@ -1222,5 +1185,6 @@ var hasPostProcessingActivated = false;
         $.tmpl( "filesTemplate", vars ).appendTo( ".table" );
     });
 </script>
+
 
 <%@include file="includeCreatorTemplates.jsp" %>

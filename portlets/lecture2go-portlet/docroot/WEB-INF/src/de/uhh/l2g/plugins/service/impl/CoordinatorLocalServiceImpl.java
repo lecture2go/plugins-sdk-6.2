@@ -62,7 +62,7 @@ public class CoordinatorLocalServiceImpl extends CoordinatorLocalServiceBaseImpl
 				c.setEmailAddress(u.getEmailAddress());
 				c.setLastLoginDate(u.getLastLoginDate());
 			} catch (PortalException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 		return cl;
@@ -83,9 +83,9 @@ public class CoordinatorLocalServiceImpl extends CoordinatorLocalServiceBaseImpl
 			c.setLastName(u.getLastName());
 			c.setLastLoginDate(u.getLastLoginDate());
 		} catch (NoSuchCoordinatorException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (PortalException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} 
 		return c;
 	}
@@ -104,9 +104,9 @@ public class CoordinatorLocalServiceImpl extends CoordinatorLocalServiceBaseImpl
 			c.setLastName(u.getLastName());
 			c.setLastLoginDate(u.getLastLoginDate());
 		} catch (NoSuchCoordinatorException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (PortalException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} 
 		return c;
 	}

@@ -16,6 +16,7 @@ package de.uhh.l2g.plugins.service.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -292,9 +293,9 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		try {
 			institution = institutionPersistence.findByPrimaryKey(objectVideo.getRootInstitutionId());
 		} catch (NoSuchInstitutionException e) {
-//			e.printStackTrace();
+//			//e.printStackTrace();
 		} catch (SystemException e) {
-//			e.printStackTrace();
+//			//e.printStackTrace();
 		}
 		try {
 			if (webhome.contains("localhost"))
@@ -356,7 +357,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 					pm.createSymLinkToDownloadableFile(objectHost, objectVideo, objectProducer);
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			} 
 		}
 		
@@ -464,7 +465,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				jsonoMp4.put("type", "mp4");
 				json.put(jsonoMp4);
 			} catch (JSONException e) {
-//				e.printStackTrace();
+//				//e.printStackTrace();
 			}
 		}
 
@@ -477,7 +478,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				jsonoMp3.put("type", "mp3");
 				json.put(jsonoMp3);
 			} catch (JSONException e) {
-//				e.printStackTrace();
+//				//e.printStackTrace();
 			}
 		}
 		
@@ -490,7 +491,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				jsonoM4a.put("type", "m4a");
 				json.put(jsonoM4a);
 			} catch (JSONException e) {
-//				e.printStackTrace();
+//				//e.printStackTrace();
 			} 
 		}
 
@@ -503,7 +504,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				jsonoM4v.put("type", "m4v");
 				json.put(jsonoM4v);
 			} catch (JSONException e) {
-//				e.printStackTrace();
+//				//e.printStackTrace();
 			}
 		}
 		
@@ -516,7 +517,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				pdf.put("type", "pdf");
 				json.put(pdf);
 			} catch (JSONException e) {
-//				e.printStackTrace();
+//				//e.printStackTrace();
 			}
 		}
 		
@@ -529,7 +530,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				flv.put("type", "flv");
 				json.put(flv);
 			} catch (JSONException e) {
-//				e.printStackTrace();
+//				//e.printStackTrace();
 			}
 		}
 		
@@ -542,7 +543,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				ogg.put("type", "ogg");
 				json.put(ogg);
 			} catch (JSONException e) {
-//				e.printStackTrace();
+//				//e.printStackTrace();
 			}
 		}
 		
@@ -555,7 +556,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				webm.put("type", "webm");
 				json.put(webm);
 			} catch (JSONException e) {
-//				e.printStackTrace();
+//				//e.printStackTrace();
 			}
 		}
 		return json;
@@ -644,34 +645,23 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			String uri = playerUris.get(i);
 			//json object
 			JSONObject o = new JSONObject();
-			//for smil file
-			if(uri.contains("vod/_definst/smil") && checkSmilFile(video)){
-				try {
-					o.put("file", uri);
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				playerUrisSortedJSON.put(o);
-			}
-			//for hls streaming
-			if(uri.contains("vod/_definst/mp4") || uri.contains("vod/_definst/mp3")  && !checkSmilFile(video)){
-				try {
-					o.put("file", uri);
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				playerUrisSortedJSON.put(o);
-			}
-			//for download
+			//container
+			String container ="";
+			int l = uri.trim().split("\\.").length;
+			container = uri.trim().split("\\.")[l-1];
 			String downloadServ = PropsUtil.get("lecture2go.downloadserver.web.root");
-			if(uri.contains(downloadServ) && video.getDownloadLink()==1){
+
+			//check player files!
+			boolean smilFileAllowed = (uri.contains("vod/_definst/smil") && checkSmilFile(video) && container.contains("m3u8"));
+			boolean hlsStreamingAllowed = ((uri.contains("vod/_definst/mp4") || uri.contains("vod/_definst/mp3"))  && !checkSmilFile(video));
+			boolean downloadAllowed = (uri.contains(downloadServ) && video.getDownloadLink()==1);
+			boolean rtspAllowed = (uri.contains("rtsp"));
+			if(smilFileAllowed || hlsStreamingAllowed || downloadAllowed || rtspAllowed){
 				try {
 					o.put("file", uri);
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 				playerUrisSortedJSON.put(o);
 			}
@@ -719,7 +709,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			try {
 				v=super.updateVideo(video);
 			} catch (SystemException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		return v;
 	}
@@ -742,7 +732,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			Lectureseries lectureseriesObject = lectureseriesPersistence.findByPrimaryKey(lectureseriesId);
 			sortVideo = lectureseriesObject.getVideoSort();
 		} catch (NoSuchModelException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 		// Sort by generation date
@@ -767,7 +757,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		try {
 			vl = getByLectureseriesAndOpenaccess(lectureseriesId,0);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return vl.get(0).getVideoId();
 	}
@@ -801,24 +791,28 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		return smilFile.isFile();
 	}
 
+	public boolean fileStringSegmentFoundInArray(String file, JSONArray jsonArray){
+		boolean ret = false;
+		for(int i=0;i<jsonArray.length();i++){
+			try {
+				Object o = jsonArray.get(i);
+				int df = 0;
+				df++;
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				//e.printStackTrace();
+			}
+		}
+		return ret;
+	}
 
 	/**
-	 * Checks if file is a symoblic link (necessary for Java 6), may be replaced be java.nio.file.Files.isSymbolicLink in Java 7
-	 * see: https://stackoverflow.com/questions/813710/java-1-6-determine-symbolic-links
+	 * Checks if file is a symoblic link
 	 * @param file the file to check
 	 * @return true if file is sym link, false if not
 	 * @throws IOException
 	 */
 	public boolean isSymlink(File file) throws IOException {
-		if (file == null)
-			throw new NullPointerException("File must not be null");
-		File canon;
-		if (file.getParent() == null) {
-			canon = file;
-	  	} else {
-	  		File canonDir = file.getParentFile().getCanonicalFile();
-		    canon = new File(canonDir, file.getName());
-	  	}
-		return !canon.getCanonicalFile().equals(canon.getAbsoluteFile());
+		return Files.isSymbolicLink(file.toPath());
 	}
 }

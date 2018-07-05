@@ -70,7 +70,7 @@ public class ProducerLocalServiceImpl extends ProducerLocalServiceBaseImpl {
 				p.setLastLoginDate(u.getLastLoginDate());
 				prodL.add(p);
 			} catch (PortalException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 		

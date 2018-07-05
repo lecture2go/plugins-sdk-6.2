@@ -67,7 +67,7 @@ public class Htaccess {
 				secFileDir.mkdirs();
 				new File(HTUSERS_FILE).createNewFile(); 
 			} catch (IOException e) {
-				//e.printStackTrace();
+				////e.printStackTrace();
 			}
 		
 		try {
@@ -166,7 +166,7 @@ public class Htaccess {
 			bw.flush();
 			bw.close();
 		} catch (IOException e) {
-			//e.printStackTrace();
+			////e.printStackTrace();
 		}
 
 	}

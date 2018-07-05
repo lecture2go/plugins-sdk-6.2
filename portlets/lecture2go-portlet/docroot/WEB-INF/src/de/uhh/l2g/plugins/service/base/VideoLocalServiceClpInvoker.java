@@ -228,9 +228,15 @@ public class VideoLocalServiceClpInvoker {
 
 		_methodParameterTypes190 = new String[] { "de.uhh.l2g.plugins.model.Video" };
 
-		_methodName191 = "isSymlink";
+		_methodName191 = "fileStringSegmentFoundInArray";
 
-		_methodParameterTypes191 = new String[] { "java.io.File" };
+		_methodParameterTypes191 = new String[] {
+				"java.lang.String", "org.json.JSONArray"
+			};
+
+		_methodName192 = "isSymlink";
+
+		_methodParameterTypes192 = new String[] { "java.io.File" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -487,6 +493,12 @@ public class VideoLocalServiceClpInvoker {
 
 		if (_methodName191.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes191, parameterTypes)) {
+			return VideoLocalServiceUtil.fileStringSegmentFoundInArray((java.lang.String)arguments[0],
+				(org.json.JSONArray)arguments[1]);
+		}
+
+		if (_methodName192.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes192, parameterTypes)) {
 			return VideoLocalServiceUtil.isSymlink((java.io.File)arguments[0]);
 		}
 
@@ -587,4 +599,6 @@ public class VideoLocalServiceClpInvoker {
 	private String[] _methodParameterTypes190;
 	private String _methodName191;
 	private String[] _methodParameterTypes191;
+	private String _methodName192;
+	private String[] _methodParameterTypes192;
 }

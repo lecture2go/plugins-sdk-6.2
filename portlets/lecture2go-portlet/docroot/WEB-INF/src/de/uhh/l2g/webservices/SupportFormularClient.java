@@ -62,9 +62,9 @@ public class SupportFormularClient {
 			ELSuFPortType sfsd = sl.geteLSuFPort();
 			rsf = sfsd.mailFormularJson(hash, url, post, get, "nodebug", "number","#F17B0D");
 		} catch (ServiceException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (RemoteException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return rsf;
 	}

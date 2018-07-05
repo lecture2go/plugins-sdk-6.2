@@ -120,7 +120,7 @@ public class TagcloudLocalServiceImpl extends TagcloudLocalServiceBaseImpl {
 		try {
 			all = LectureseriesLocalServiceUtil.getAll();
 		} catch (SystemException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 		ListIterator<Lectureseries> li = all.listIterator();
@@ -155,11 +155,11 @@ public class TagcloudLocalServiceImpl extends TagcloudLocalServiceBaseImpl {
 					try {
 						tagCloudArrayString.add(InstitutionLocalServiceUtil.getInstitution(instId).getName());
 					} catch (PortalException e) {
-						e.printStackTrace();
+						//e.printStackTrace();
 					}
 				}
 			} catch (SystemException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			//Creators
 			List<Lectureseries_Creator> lcl = new ArrayList<Lectureseries_Creator>(); 
@@ -175,18 +175,18 @@ public class TagcloudLocalServiceImpl extends TagcloudLocalServiceBaseImpl {
 						tagCloudArrayString.add(cr.getLastName());
 						tagCloudArrayString.add(cr.getFullName());
 					} catch (PortalException e) {
-						e.printStackTrace();
+						//e.printStackTrace();
 					}
 				}
 			} catch (SystemException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			
 			//add tag cloud
 			try {
 				add(tagCloudArrayString, l.getClass().getName(), l.getLectureseriesId());
 			} catch (SystemException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}		
 		}
 		
@@ -197,7 +197,7 @@ public class TagcloudLocalServiceImpl extends TagcloudLocalServiceBaseImpl {
 		try {
 			all = VideoLocalServiceUtil.getByOpenAccess(1);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 		ListIterator<Video> li = all.listIterator();
@@ -240,11 +240,11 @@ public class TagcloudLocalServiceImpl extends TagcloudLocalServiceBaseImpl {
 					try {
 						tagCloudArrayString.add(InstitutionLocalServiceUtil.getInstitution(instId).getName());
 					} catch (PortalException e) {
-						e.printStackTrace();
+						//e.printStackTrace();
 					}
 				}
 			} catch (SystemException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			//Creators
 			List<Video_Creator> vcl = new ArrayList<Video_Creator>(); 
@@ -260,18 +260,18 @@ public class TagcloudLocalServiceImpl extends TagcloudLocalServiceBaseImpl {
 						tagCloudArrayString.add(cr.getLastName());
 						tagCloudArrayString.add(cr.getFullName());
 					} catch (Exception e) {
-						e.printStackTrace();
+						//e.printStackTrace();
 					}
 				}
 			} catch (SystemException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			
 			//add tag cloud
 			try {
 				add(tagCloudArrayString, v.getClass().getName(), v.getVideoId());
 			} catch (SystemException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}		
 		}
 		
