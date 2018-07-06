@@ -499,6 +499,12 @@ public class AdminVideoManagement extends MVCPortlet {
 				}
 				video.setTags(tags);
 				if(lId>0){
+					//update lecture series id for this video first !!!
+					//important, because of dependencies
+					video.setLectureseriesId(lId);
+					VideoLocalServiceUtil.updateVideo(video);
+
+					//forward
 					newLect = LectureseriesLocalServiceUtil.getLectureseries(lId);
 					//
 					termId = newLect.getTermId();
