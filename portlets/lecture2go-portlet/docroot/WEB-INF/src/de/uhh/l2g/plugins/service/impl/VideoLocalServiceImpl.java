@@ -656,7 +656,13 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			boolean hlsStreamingAllowed = ((uri.contains("vod/_definst/mp4") || uri.contains("vod/_definst/mp3"))  && !checkSmilFile(video));
 			boolean downloadAllowed = (uri.contains(downloadServ) && video.getDownloadLink()==1);
 			boolean rtspAllowed = (uri.contains("rtsp"));
+
 			if(smilFileAllowed || hlsStreamingAllowed || downloadAllowed || rtspAllowed){
+				//custom case for download allowed 
+				//and oper or closed case
+				if(downloadAllowed && video.getOpenAccess()==0){
+					uri=downloadServ+"/down/"+l2go_path+"/"+video.getSecureFilename();
+				}
 				try {
 					o.put("file", uri);
 				} catch (JSONException e) {

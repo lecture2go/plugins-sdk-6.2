@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 
 import de.uhh.l2g.plugins.NoSuchLicenseException;
 import de.uhh.l2g.plugins.model.License;
+import de.uhh.l2g.plugins.service.LicenseLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.LicenseLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.LicenseUtil;
 
@@ -42,8 +43,17 @@ public class LicenseLocalServiceImpl extends LicenseLocalServiceBaseImpl {
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.LicenseLocalServiceUtil} to access the license local service.
 	 */
 	
-	public de.uhh.l2g.plugins.model.License getByVideoId(Long videoId) throws NoSuchLicenseException, SystemException{
-		License l = licensePersistence.findByVideo(videoId);
+	public de.uhh.l2g.plugins.model.License getByVideoId(Long videoId){
+		License l = LicenseLocalServiceUtil.createLicense(0);
+		try {
+			l = licensePersistence.findByVideo(videoId);
+		} catch (NoSuchLicenseException e) {
+			// TODO Auto-generated catch block
+//			e.printStackTrace();
+		} catch (SystemException e) {
+			// TODO Auto-generated catch block
+//			e.printStackTrace();
+		}
 		return l;
 	}
 	
