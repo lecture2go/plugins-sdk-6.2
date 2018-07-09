@@ -530,18 +530,17 @@ $(function () {
            
            //htaccess update function for physical file protectiom
            updateHtaccess();
-           
        	   var st = false;
            
-       	   player.remove();
+       	   jwplayer().remove();
            //initialize and show player
             setTimeout(
 	           function(){
 	        	   initializePlayer();
-	        	   player.seek(0);
-	           	   player.on('play',function(){
+	        	   jwplayer().seek(0);
+	        	   jwplayer().on('play',function(){
 	            		  if(st==false){
-	            			   player.pause();
+	            			  jwplayer().pause();
 	            			   st=true;
 	            		  }
 	     		   });	        	   
@@ -888,7 +887,7 @@ function deleteFile(fileName){
 		    	  	$("#<portlet:namespace/>meta-ebene").hide();
 		    	  	$(".conversion").html('');
 		        }
-		        player.remove();
+		        jwplayer().remove();
 		        //initialize and show player
 			    initializePlayer();
 		        //hide date fild
