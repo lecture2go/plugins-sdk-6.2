@@ -338,10 +338,8 @@ public class AdminVideoManagement extends MVCPortlet {
 		License license = new LicenseImpl();
 		try {
 			license = LicenseLocalServiceUtil.getByVideoId(video.getVideoId());
-		} catch (NoSuchLicenseException e1) {
-			e1.printStackTrace();
-		} catch (SystemException e1) {
-			e1.printStackTrace();
+		} catch (Exception e1) {
+			//e1.printStackTrace();
 		}
 		
 		if(resourceID.equals("updateVideoFileName")){
@@ -671,13 +669,9 @@ public class AdminVideoManagement extends MVCPortlet {
 		}
 			
 		if(resourceID.equals("getJSONVideo")){
-			JSONObject uris = JSONFactoryUtil.createJSONObject();
-			for(int i=0; i<video.getPlayerUris().size(); i++){
-				uris.put("url"+i, video.getPlayerUris().get(i));
-			}
 			JSONObject jo = JSONFactoryUtil.createJSONObject();
 			jo.put("title", video.getTitle());
-			jo.put("playerUris", uris);
+			jo.put("playerUris", video.getJsonPlayerUris().toString());
 			jo.put("thumbnail", video.getImage());
 			writeJSON(resourceRequest, resourceResponse, jo);
 		}
