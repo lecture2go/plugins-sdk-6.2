@@ -8,6 +8,13 @@
     	width: 113px;
 	}
 	
+	.btn.maindelete {
+	    margin-top: -42px !important;
+	    margin-left: 67px !important;
+	    float: left !important;
+	    position: absolute !important;
+	}
+	
 	.term-of-creation {
 		margin: 0px 5px;
 	}
