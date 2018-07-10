@@ -2348,11 +2348,21 @@ div.filter-menu-link span.icon-large.icon-remove {
 }
 
 #_lgadmininstitutionmanagement_WAR_lecture2goportlet_fm button {
-    margin-top: 26px;
+    margin-top: 39px;
 }
 
 #_lgadmininstitutionmanagement_WAR_lecture2goportlet_curStreamingServerProtocol {
     width: 70px;
+}
+
+.btn.subdelete {
+    margin-left: 518px !important;
+    margin-top: -66px;
+}
+
+.btn.maindelete {
+    margin-left: 71px;
+    margin-top: -50px;
 }
 
 #_lgadmininstitutionmanagement_WAR_lecture2goportlet_protocol {
