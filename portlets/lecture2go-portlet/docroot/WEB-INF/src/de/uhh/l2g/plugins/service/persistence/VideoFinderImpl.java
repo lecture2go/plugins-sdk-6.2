@@ -358,11 +358,7 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 			try {
 				throw new SystemException(e);
 			} catch (SystemException se) {
-<<<<<<< HEAD
 				////e.printStackTrace();
-=======
-				//e.printStackTrace();
->>>>>>> refs/remotes/origin/master
 			}
 		} finally {
 			closeSession(session);
@@ -390,11 +386,7 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 			try {
 				throw new SystemException(e);
 			} catch (SystemException se) {
-<<<<<<< HEAD
 				////e.printStackTrace();
-=======
-				//e.printStackTrace();
->>>>>>> refs/remotes/origin/master
 			}
 		} finally {
 			closeSession(session);

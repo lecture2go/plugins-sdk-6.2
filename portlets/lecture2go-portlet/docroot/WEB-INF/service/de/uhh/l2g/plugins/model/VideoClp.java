@@ -1106,6 +1106,22 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 	}
 
 	@Override
+	public void setJsonPlayerUris(org.json.JSONArray jsonPlayerUris) {
+		try {
+			String methodName = "setJsonPlayerUris";
+
+			Class<?>[] parameterTypes = new Class<?>[] { org.json.JSONArray.class };
+
+			Object[] parameterValues = new Object[] { jsonPlayerUris };
+
+			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
 	public void setShortName(java.lang.String shortName) {
 		try {
 			String methodName = "setShortName";
@@ -1481,6 +1497,25 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 			Object[] parameterValues = new Object[] {  };
 
 			java.lang.String returnObj = (java.lang.String)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public org.json.JSONArray getJsonPlayerUris() {
+		try {
+			String methodName = "getJsonPlayerUris";
+
+			Class<?>[] parameterTypes = new Class<?>[] {  };
+
+			Object[] parameterValues = new Object[] {  };
+
+			org.json.JSONArray returnObj = (org.json.JSONArray)invokeOnRemoteModel(methodName,
 					parameterTypes, parameterValues);
 
 			return returnObj;
@@ -1968,22 +2003,6 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 	}
 
 	@Override
-	public void setPdfFile(java.io.File pdfFile) {
-		try {
-			String methodName = "setPdfFile";
-
-			Class<?>[] parameterTypes = new Class<?>[] { java.io.File.class };
-
-			Object[] parameterValues = new Object[] { pdfFile };
-
-			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
-		}
-		catch (Exception e) {
-			throw new UnsupportedOperationException(e);
-		}
-	}
-
-	@Override
 	public java.lang.String getVttChapterFile() {
 		try {
 			String methodName = "getVttChapterFile";
@@ -1996,6 +2015,22 @@ public class VideoClp extends BaseModelImpl<Video> implements Video {
 					parameterTypes, parameterValues);
 
 			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public void setPdfFile(java.io.File pdfFile) {
+		try {
+			String methodName = "setPdfFile";
+
+			Class<?>[] parameterTypes = new Class<?>[] { java.io.File.class };
+
+			Object[] parameterValues = new Object[] { pdfFile };
+
+			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
 		}
 		catch (Exception e) {
 			throw new UnsupportedOperationException(e);
