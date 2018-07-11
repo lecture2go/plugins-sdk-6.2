@@ -6,9 +6,13 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<script type="text/javascript" src="/lecture2go-portlet/js/jquery-2.1.4.min.js"></script>
+<!-- for self hostet player 
 	<script type="text/javascript" src="/lecture2go-portlet/player/jwplayer-7.12.13/jwplayer.js"></script>
-	<script type="text/javascript">jwplayer.key="201IIc3/RasApk0L1+d1fv9pi5UCUsF6VvHj1C+EfkI=";</script>
-
+	<script type="text/javascript">jwplayer.key="get-your-licence-from-jw-player";</script>
+!-->
+<!-- for cloud hosted player -->
+	<script type="text/javascript" src="https://content.jwplatform.com/libraries/meCDJ4WV.js"></script>
+<!-- for cloud hosted end -->
 	<title>Lecture2o-Embed</title>
 	<style type="text/css">
 
@@ -104,21 +108,6 @@
 		});
 
 	</script>
-	<!-- Piwik -->
-		<script type="text/javascript">
-		 var _paq = _paq || [];
-		 // tracker methods like "setCustomDimension" should be called before "trackPageView"
-		 _paq.push(['trackPageView']);
-		 _paq.push(['enableLinkTracking']);
-		 (function() {
-		   var u="//www.piwik.uni-hamburg.de/";
-		   _paq.push(['setTrackerUrl', u+'piwik.php']);
-		   _paq.push(['setSiteId', '137']);
-		   var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-		   g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-		 })();
-		</script>
-	<!-- End Piwik Code -->
 </head>
 
 <%@ page import="de.uhh.l2g.plugins.service.VideoLocalServiceUtil"%>

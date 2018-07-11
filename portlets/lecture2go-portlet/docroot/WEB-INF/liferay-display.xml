@@ -16,4 +16,7 @@
         <portlet id="lg-front-page"></portlet>
         <portlet id="lg-admin-streaming-server-management"></portlet>
 	</category>
+	<category name="category.sample">
+		<portlet id="test"></portlet>
+	</category>
 </display>

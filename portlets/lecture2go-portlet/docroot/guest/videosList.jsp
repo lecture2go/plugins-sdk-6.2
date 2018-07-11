@@ -114,6 +114,7 @@
 	Institution rInst = new InstitutionImpl();
 	String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 	%>
+	
 	<portlet:actionURL var="backURL0" name="addFilter">
 		<portlet:param name="jspPage" value="/guest/videosList.jsp" />
 		<portlet:param name="parentInstitutionId" value="0"/>
@@ -519,7 +520,6 @@ var checkExist = setInterval(function() {
 					// open the video list of a lectureseries if a video is found
 					 $(node).closest("ul").show();
 				 }
-			
 			 }
 		};
 		if (searchQuery) {

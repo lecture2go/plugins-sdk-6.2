@@ -34,7 +34,6 @@
 <liferay-portlet:resourceURL id="getVideoConversionStatus" var="getVideoConversionStatusURL" />
 <liferay-portlet:resourceURL id="updateHtaccess" var="updateHtaccessURL" />
 
-
 <%
 	String actionURL = "";
 	
@@ -339,7 +338,7 @@
 						<div>
 							<%if(reqLicense.getL2go()==1){%><aui:input name="license"  id="uhhl2go" label="" value="uhhl2go" checked="true" type="radio"/><%}%>
 							<%if(reqLicense.getL2go()==0){%><aui:input name="license" id="uhhl2go" label="" value="uhhl2go" type="radio"/><%}%>
-							<a href="/license" target="_blank"><liferay-ui:message key="lecture2go-licence"/> </a>	 	      	      
+							<a href="/web/vod/licence-l2go" target="_blank"><liferay-ui:message key="lecture2go-licence"/> </a>	 	      	      
 						</div>	
 						<div>		
 							<%if(reqLicense.getCcbyncsa()==1){%><aui:input name="license" label="" id="ccbyncsa" value="ccbyncsa" checked="true" type="radio" /><%}%>
@@ -530,6 +529,9 @@ $(function () {
            
            //htaccess update function for physical file protectiom
            updateHtaccess();
+           
+           //htaccess update function for physical file protectiom
+           updateHtaccess();
        	   var st = false;
            
        	   jwplayer().remove();
@@ -701,6 +703,28 @@ function updateVideoFileName(file){
 			           			videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>','<%=getVideoConversionStatusURL%>',<%=reqVideo.getVideoId()%>);
 			           	 }
 					     toggleShare();
+					   }
+				}
+			});	
+		}
+	);
+}
+
+function convertVideo(){
+	AUI().use('aui-io-request', 'aui-node',
+		function(A){
+			A.io.request('<%=convertVideoURL%>', {
+		 	dataType: 'json',
+		 	method: 'POST',
+			 	//send data to server
+			 	data: {
+			 		<portlet:namespace/>videoId: A.one('#<portlet:namespace/>videoId').get('value'),
+			 		// may be filled with instructions (workflow to use etc.)
+			 	},
+			 	//get server response
+				on: {
+					   success: function() {
+					     var jsonResponse = this.get('responseData');					     
 					   }
 				}
 			});	
