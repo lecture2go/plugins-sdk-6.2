@@ -223,6 +223,20 @@ public class VideoLocalServiceClpInvoker {
 		_methodName193 = "getLatestClosedAccessVideoId";
 
 		_methodParameterTypes193 = new String[] { "java.lang.Long" };
+
+		_methodName194 = "checkSmilFile";
+
+		_methodParameterTypes194 = new String[] { "de.uhh.l2g.plugins.model.Video" };
+
+		_methodName195 = "fileStringSegmentFoundInArray";
+
+		_methodParameterTypes195 = new String[] {
+				"java.lang.String", "org.json.JSONArray"
+			};
+
+		_methodName196 = "isSymlink";
+
+		_methodParameterTypes196 = new String[] { "java.io.File" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -472,6 +486,22 @@ public class VideoLocalServiceClpInvoker {
 			return VideoLocalServiceUtil.getLatestClosedAccessVideoId((java.lang.Long)arguments[0]);
 		}
 
+		if (_methodName194.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes194, parameterTypes)) {
+			return VideoLocalServiceUtil.checkSmilFile((de.uhh.l2g.plugins.model.Video)arguments[0]);
+		}
+
+		if (_methodName195.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes195, parameterTypes)) {
+			return VideoLocalServiceUtil.fileStringSegmentFoundInArray((java.lang.String)arguments[0],
+				(org.json.JSONArray)arguments[1]);
+		}
+
+		if (_methodName196.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes196, parameterTypes)) {
+			return VideoLocalServiceUtil.isSymlink((java.io.File)arguments[0]);
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -565,4 +595,10 @@ public class VideoLocalServiceClpInvoker {
 	private String[] _methodParameterTypes191;
 	private String _methodName193;
 	private String[] _methodParameterTypes193;
+	private String _methodName194;
+	private String[] _methodParameterTypes194;
+	private String _methodName195;
+	private String[] _methodParameterTypes195;
+	private String _methodName196;
+	private String[] _methodParameterTypes196;
 }

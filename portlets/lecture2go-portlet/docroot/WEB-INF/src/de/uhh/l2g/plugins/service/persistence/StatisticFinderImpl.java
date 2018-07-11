@@ -38,7 +38,7 @@ public class StatisticFinderImpl extends BasePersistenceImpl<Statistic> implemen
 			try {
 				throw new SystemException(e);
 			} catch (SystemException se) {
-				se.printStackTrace();
+				//e.printStackTrace();
 			}
 		} finally {
 			closeSession(session);

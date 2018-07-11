@@ -55,6 +55,10 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 	
 	//Sort preset for first level Institutions
 	int maxOrder = InstitutionLocalServiceUtil.getMaxSortByParentId(rootId)+1;
+
+	Institution treeBase = InstitutionLocalServiceUtil.getByGroupIdAndId(groupId, rootId);
+    int ownInstitutionMax = InstitutionLocalServiceUtil.getMaxSortByParentId(rootId)+1;
+			
 %>
 	<liferay-portlet:renderURL varImpl="outerURL">
 		<portlet:param name="jspPage" value="/admin/institutionList.jsp" />
@@ -76,12 +80,12 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 		<portlet:param name="backURL" value='<%=String.valueOf(PortalUtil.getCurrentCompleteURL(request))%>' />
 	</portlet:actionURL>
 <div class="noresponsive">
-		<%--INSTITUTIONS START--%>
+		<%--INSTITUTION LIST START--%>
 		<c:if test='<%= permissionAdmin %>'>
 			<aui:fieldset column="false" label="<%=pageName%>" cssClass="add-institution" >
 				<aui:layout cssClass="aist">
-					<aui:form action="<%= addInstitutionURL %>" name="fm">
-							<aui:fieldset>
+						<aui:fieldset>
+							<aui:form action="<%= addInstitutionURL %>" name="fm">
 								<aui:input name="institution" label="institution" required="true" inlineField="true"/>
 	            				<aui:select name="serverselect" id="select-streamer" label="streaming-server-name" inlineField="true">
 									<%
@@ -102,67 +106,33 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 					            <aui:input name='institutionId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "institutionId") %>'/>
 					            <aui:input name='parent' type='hidden' inlineField="true" value='<%= rootId %>'/>
 								<aui:button type="submit" value="add" ></aui:button>
-					        </aui:fieldset>
-					</aui:form>
+							</aui:form>
+					     </aui:fieldset>
 				</aui:layout>
 			</aui:fieldset>
 		</c:if>
-		<%--INSTITUTION LIST--%>
-		<% 
-			// Unfortunately JSP does not support nesting of <c:choose> when braking containers at arbitrary points
-		   	// Therefore Generate List and Root based on Permissions, instead of hiding non visible subsets
-		   
-	   
-		   	//Find out if user is connected with an institution
-		    long userId =  Long.parseLong(request.getRemoteUser());
-		    long ownInstitutionId = 0; //user is not attached to a conrete institution
-		   
-		    try{
-			    //Currently only this roles have fixed institution
-				if (permissionCoordinator){
-				    	ownInstitutionId = CoordinatorLocalServiceUtil.getInstitutionByCoordinator(userId).getInstitutionId();
-				}
-				else{
-				    if (permissionProducer){
-				   		ownInstitutionId = ProducerLocalServiceUtil.getInstitutionByProducer(userId).getInstitutionId();
-				    }
-				}
-		    }catch(Exception e){}
-		    
-		    long treeBaseId = InstitutionLocalServiceUtil.getDefaultInstitutionId(companyId, groupId);
-		
-		    if(permissionAdmin){
-		    	treeBaseId = rootId; //top level
-		    }
-		    else { //set User's institution
-			    treeBaseId = ownInstitutionId;
-		    }
-		    
-		    Institution treeBase = InstitutionLocalServiceUtil.getByGroupIdAndId(groupId, treeBaseId);
+		<%--INSTITUTION LIST END--%>
 
-		    int ownInstitutionMax = InstitutionLocalServiceUtil.getMaxSortByParentId(treeBaseId)+1;
-	   	%>
-	
 		<%--ADD SUB_INSTITUTION -> Only Required if user can't see full listing, but is allowed to manage own entries --%>
 		<%-- Permission on Portlet Scope --%>
-		<c:if test='<%= (permissionAdmin || permissionCoordinator) && ownInstitutionId > 0 %>'>
+		<c:if test='<%= permissionAdmin %>'>
 			<aui:fieldset column="false" label="sub-institutions" >
 				<aui:layout cssClass="aist">
-					<aui:form action="<%= addSubInstitutionURL %>" name="fm">
-						<aui:fieldset>
-							<aui:input name="subInstitution" label="sub-institution-name" inlineField="true" />
-							<aui:input cssClass="subInstOrder" name="subInstitutionOrder" label="order" inlineField="true" value='<%= ownInstitutionMax  %>'/>
-							<aui:input name='subInstitutionParentId' type='hidden' inlineField="true" value='<%= treeBase.getInstitutionId() %>'/>	
-							<aui:button type="submit" value="add" ></aui:button>				
-					    </aui:fieldset>
-					</aui:form>
+					<aui:fieldset>
+							<aui:form action="<%= addSubInstitutionURL %>" name="fm">
+								<aui:input name="subInstitution" label="sub-institution-name" inlineField="true" />
+								<aui:input cssClass="subInstOrder" name="subInstitutionOrder" label="order" inlineField="true" value='<%= ownInstitutionMax  %>'/>
+								<aui:input name='subInstitutionParentId' type='hidden' inlineField="true" value='<%= treeBase.getInstitutionId() %>'/>	
+								<aui:button type="submit" value="add" ></aui:button>				
+							</aui:form>
+				    </aui:fieldset>
 				</aui:layout>
 			</aui:fieldset>
 		</c:if>
 	
 		<%--TOP LEVEL INSTITUTIONS START--%>
 			<liferay-ui:search-container searchContainer="<%= searchInstitutionContainer %>" curParam ="curOuter" orderByType="asc" emptyResultsMessage="there-are-no-institutions" delta="5" iteratorURL="<%= outerURL %>" deltaConfigurable="true">
-				<liferay-ui:search-container-results results="<%=InstitutionLocalServiceUtil.getByGroupIdAndParent(groupId, treeBaseId, searchContainer.getStart(), searchContainer.getEnd())%>" total="<%=InstitutionLocalServiceUtil.getByGroupIdAndParentCount(groupId, treeBaseId)%>" />
+				<liferay-ui:search-container-results results="<%=InstitutionLocalServiceUtil.getByGroupIdAndParent(groupId, rootId, searchContainer.getStart(), searchContainer.getEnd())%>" total="<%=InstitutionLocalServiceUtil.getByGroupIdAndParentCount(groupId, rootId)%>" />
 				<liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.Institution" modelVar="institution" keyProperty="institutionId"  escapedModel="<%= false %>" indexVar="i">
 		        <liferay-ui:search-container-column-text name="institution" cssClass="toplevel-institutions">
 				        <%
@@ -183,8 +153,8 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 								<portlet:param name="backURL" value="<%=String.valueOf(outerURL)%>"/>
 							</portlet:actionURL>
 							
- 							<aui:form action="<%= updateInstitutionURL %>" name="<portlet:namespace />fm">
-					 			<aui:fieldset>
+				 			<aui:fieldset>
+		 						<aui:form action="<%= updateInstitutionURL %>" name="<portlet:namespace />fm">
 									<aui:input name="outerListInstitution" label="institution-name" inlineField="true" value = "<%= institution.getName() %>" />
 									<aui:input name="outerListOrder" label="order" inlineField="true" value='<%= institution.getSort() %>'/>
 									<%-- Only display streamer if user is allowed to view host and institution is child of top level --%>
@@ -195,68 +165,61 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 									<aui:input name="outerListHostId" type='hidden' inlineField="true" value = "<%= curHost.getPrimaryKey() %>"/>
 									<aui:input name='institutionId' type='hidden' inlineField="true" value='<%= ParamUtil.getString(renderRequest, "institutionId") %>'/>
 									<aui:button type="submit" value="edit"></aui:button>
-									<c:if  test='<%= permissionAdmin || permissionCoordinator %>'>
-										<c:if test='<%=  InstitutionLocalServiceUtil.getLockingElements(institution.getInstitutionId()) < 1 %>'>
-											<aui:button name="delete" value="delete" type="button" href="<%=deleteInstitutionURL.toString() %>" />
-										</c:if>
-									</c:if>
-								</aui:fieldset>
-					 		</aui:form>
+						 		</aui:form>
+								<c:if test='<%=  InstitutionLocalServiceUtil.getLockingElements(institution.getInstitutionId()) < 1 %>'>
+									<aui:button cssClass="subdelete" name="delete" value="delete" type="button" href="<%=deleteInstitutionURL.toString() %>" />
+								</c:if>
+							</aui:fieldset>
 					 		<%--SUB INSTITUTIONS--%>
-					 		<% 
-					 		//Only display second level if user has view all permission
-					 		%>
 					 		
-					 		<c:if test='<%= permissionAdmin %>'>
-								<liferay-ui:panel defaultState="closed" extended="false" id="<%= id_row %>" persistState="true" title="sub-institutions" cssClass="sub-inst">
-									<aui:form action="<%= addSubInstitutionURL %>" name="fm">
-							 			<aui:fieldset>
+							<liferay-ui:panel defaultState="closed" extended="false" id="<%= id_row %>" persistState="true" title="sub-institutions" cssClass="sub-inst">
+						 			<aui:fieldset>
+										<aui:form action="<%= addSubInstitutionURL %>" name="fm">
 											<aui:input name="subInstitution" label="sub-institution-name" inlineField="true" />
 											<aui:input name="subInstitutionOrder" label="order" inlineField="true" value='<%= subInstitutionMax  %>'/>
 											<aui:input name='subInstitutionParentId' type='hidden' inlineField="true" value='<%= institution.getPrimaryKey() %>'/>
 											<aui:button type="submit" value="add"/>
-										</aui:fieldset>
-						 			</aui:form>
+							 			</aui:form>
+									</aui:fieldset>
 						
-									<liferay-ui:search-container searchContainer="<%= searchSubInstitutionContainer %>" curParam ="<%=curParam_row%>" orderByType="asc" emptyResultsMessage="there-are-no-institutions" iteratorURL="<%= innerURL %>" delta="100" deltaConfigurable="true" >
-										<liferay-ui:search-container-results results="<%=InstitutionLocalServiceUtil.getByGroupIdAndParent(groupId, institution.getPrimaryKey(), searchContainer.getStart(), searchContainer.getEnd())%>" total="<%=InstitutionLocalServiceUtil.getByGroupIdAndParentCount(groupId, institution.getPrimaryKey())%>" />
-											<liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.Institution" modelVar="subInstitution" rowVar="thisRow" keyProperty="institutionId"  escapedModel="<%=false%>" indexVar="j">
-											<c:choose>
-												<c:when  test='<%= true %>'> 
-								        			<liferay-ui:search-container-column-text name="institution" >
+								<liferay-ui:search-container searchContainer="<%= searchSubInstitutionContainer %>" curParam ="<%=curParam_row%>" orderByType="asc" emptyResultsMessage="there-are-no-institutions" iteratorURL="<%= innerURL %>" delta="100" deltaConfigurable="true" >
+									<liferay-ui:search-container-results results="<%=InstitutionLocalServiceUtil.getByGroupIdAndParent(groupId, institution.getPrimaryKey(), searchContainer.getStart(), searchContainer.getEnd())%>" total="<%=InstitutionLocalServiceUtil.getByGroupIdAndParentCount(groupId, institution.getPrimaryKey())%>" />
+										<liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.Institution" modelVar="subInstitution" rowVar="thisRow" keyProperty="institutionId"  escapedModel="<%=false%>" indexVar="j">
+										<c:choose>
+											<c:when  test='<%= true %>'> 
+							        			<liferay-ui:search-container-column-text name="institution" >
 									        			<portlet:actionURL name="deleteSubInstitution" var="deleteSubInstitutionURL">
 										 					<portlet:param name="innerListInstitutionId" value='<%= (new Long(subInstitution.getPrimaryKey())).toString() %>' />
 										 					<portlet:param name="innerListInstitutionParentId" value='<%= (new Long(institution.getPrimaryKey())).toString() %>' />
 															<portlet:param name="backURL" value="<%=String.valueOf(innerURL) %>"/>
 														</portlet:actionURL>
-														
-														<aui:form action="<%= updateSubInstitutionURL %>" name="fm">
-															<aui:fieldset>
+													
+														<aui:fieldset>
+															<aui:form action="<%= updateSubInstitutionURL %>" name="fm">
 																<aui:input name="innerListInstitution" label="sub-institution-name" inlineField="true" value = "<%= subInstitution.getName() %>" />
 																<aui:input cssClass="smallInput" name="innerListOrder" label="order" inlineField="true" value='<%= subInstitution.getSort() %>'/>
 																<aui:input name="innerListInstitutionId" type='hidden' inlineField="true" value = "<%= subInstitution.getInstitutionId() %>"/>
 																<aui:button type="submit" value="edit"></aui:button>
-																<c:if test='<%=  InstitutionLocalServiceUtil.getLockingElements(subInstitution.getInstitutionId()) < 1 %>'>
-																		<aui:button name="delete" value="delete" type="button" href="<%=deleteSubInstitutionURL.toString() %>" />
-																</c:if>
-															</aui:fieldset>
-														</aui:form>
-							        				</liferay-ui:search-container-column-text>
-							        			</c:when>
-												<c:otherwise>
-													<liferay-ui:message key="<%= subInstitution.getName() %>"></liferay-ui:message>
-												</c:otherwise>
-											</c:choose>
-						        		</liferay-ui:search-container-row>
-						        	<liferay-ui:search-iterator searchContainer="<%= searchSubInstitutionContainer %>" />
-									</liferay-ui:search-container>
-								</liferay-ui:panel>
-							</c:if>
-							<%--END: SUB INSTUTIONS--%>
-						</liferay-ui:search-container-column-text>
-			    	</liferay-ui:search-container-row>
-			   	 	<liferay-ui:search-iterator searchContainer="<%=searchInstitutionContainer%>" />
-			</liferay-ui:search-container>
-		<%--TOP LEVEL INSTITUTIONS END--%>
-	<%--INSTITUTIONS END--%>
+															</aui:form>
+															<c:if test='<%=  InstitutionLocalServiceUtil.getLockingElements(subInstitution.getInstitutionId()) < 1 %>'>
+																	<aui:button cssClass="maindelete" name="delete" value="delete" type="button" href="<%=deleteSubInstitutionURL.toString() %>" />
+															</c:if>
+														</aui:fieldset>
+						        				</liferay-ui:search-container-column-text>
+						        			</c:when>
+											<c:otherwise>
+												<liferay-ui:message key="<%= subInstitution.getName() %>"></liferay-ui:message>
+											</c:otherwise>
+										</c:choose>
+					        		</liferay-ui:search-container-row>
+					        	<liferay-ui:search-iterator searchContainer="<%= searchSubInstitutionContainer %>" />
+								</liferay-ui:search-container>
+							</liferay-ui:panel>
+						<%--END: SUB INSTUTIONS--%>
+					</liferay-ui:search-container-column-text>
+		    	</liferay-ui:search-container-row>
+		   	 	<liferay-ui:search-iterator searchContainer="<%=searchInstitutionContainer%>" />
+		</liferay-ui:search-container>
+	<%--TOP LEVEL INSTITUTIONS END--%>
+<%--INSTITUTIONS END--%>
 </div>

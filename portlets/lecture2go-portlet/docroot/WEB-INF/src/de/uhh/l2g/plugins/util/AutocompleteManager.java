@@ -34,7 +34,7 @@ public class AutocompleteManager {
 		try {
 			videoList = VideoLocalServiceUtil.getAll();
 		} catch (SystemException e) {
-			//e.printStackTrace();
+			////e.printStackTrace();
 		}
 				
 		for (Video video : videoList) resultList.add(video.getTitle());

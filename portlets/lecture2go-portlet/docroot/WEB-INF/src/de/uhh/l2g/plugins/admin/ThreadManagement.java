@@ -315,34 +315,34 @@ public class ThreadManagement extends MVCPortlet {
 
 		for(Video v : returnList){
 			try {
-				d1 = df.parse(v.getGenerationDate()); 
-				long ms1   = d1.getTime();
-				long hits = v.getHits();
-				long timeinms = msnow - ms1;
-
-				// Durschnittswerte berechnen
-				//Berechne alter des Videos in...
-				long days = timeinms / (1000*60*60*24); //...Tagen
-				long week = timeinms / (1000*60*60*24*7); //...Wochen
-				long month = timeinms / 2628000000l; //....Monaten
-				long year = timeinms / (2628000000l*12l); //....Jahren
-				
-				//Berechne die Hits pro...
-				long clicksperday = calcHitsPro(days, hits);
-				long clicksperweek = calcHitsPro(week, hits);
-				long clickspermonth = calcHitsPro(month, hits);
-				long clicksperyear = calcHitsPro(year, hits);
-
-				Videohitlist vhl = new VideohitlistImpl();
-				vhl.setVideoId(v.getVideoId());
-				vhl.setHitsPerDay(clicksperday);
-				vhl.setHitsPerWeek(clicksperweek);
-				vhl.setHitsPerMonth(clickspermonth);
-				vhl.setHitsPerYear(clicksperyear);
-				//save
-				VideohitlistLocalServiceUtil.addVideohitlist(vhl);
+					d1 = df.parse(v.getGenerationDate()); 
+					long ms1   = d1.getTime();
+					long hits = v.getHits();
+					long timeinms = msnow - ms1;
+	
+					// Durschnittswerte berechnen
+					//Berechne alter des Videos in...
+					long days = timeinms / (1000*60*60*24); //...Tagen
+					long week = timeinms / (1000*60*60*24*7); //...Wochen
+					long month = timeinms / 2628000000l; //....Monaten
+					long year = timeinms / (2628000000l*12l); //....Jahren
+					
+					//Berechne die Hits pro...
+					long clicksperday = calcHitsPro(days, hits);
+					long clicksperweek = calcHitsPro(week, hits);
+					long clickspermonth = calcHitsPro(month, hits);
+					long clicksperyear = calcHitsPro(year, hits);
+	
+					Videohitlist vhl = VideohitlistLocalServiceUtil.createVideohitlist(0);
+					vhl.setVideoId(v.getVideoId());
+					vhl.setHitsPerDay(clicksperday);
+					vhl.setHitsPerWeek(clicksperweek);
+					vhl.setHitsPerMonth(clickspermonth);
+					vhl.setHitsPerYear(clicksperyear);
+					//save
+					VideohitlistLocalServiceUtil.addVideohitlist(vhl);
 				}catch (ParseException e) {
-					System.out.println("Simple Date Parsen Error!!");
+					//e.printStackTrace();
 				}
 		}
 	}	

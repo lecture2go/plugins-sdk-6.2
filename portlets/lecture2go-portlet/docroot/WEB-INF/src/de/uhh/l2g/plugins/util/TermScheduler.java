@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
+import com.liferay.portal.service.ServiceContext;
 
 import de.uhh.l2g.plugins.model.Term;
 import de.uhh.l2g.plugins.model.impl.TermImpl;
@@ -20,13 +21,9 @@ import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
  *
  *
  */
-public final class TermScheduler extends PortletScheduler implements MessageListener {
+public final class TermScheduler extends PortletScheduler implements
+		MessageListener {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
 	private int wise = 36; // 36th week of the year ca. 4 weeks before winter term
 	private int sose = 10; // 10th week of the ca. 4 weeks before summer term
 	
@@ -75,12 +72,6 @@ public final class TermScheduler extends PortletScheduler implements MessageList
 			String prefix = "SoSe";
 			term.setYear(yearString);
 			term.setPrefix(prefix);
-
-			try {
-				TermLocalServiceUtil.addTerm(term);
-			} catch (SystemException e) {
-				System.out.println(e);
-			}
 		}
 		// checks if month is october
 		else if (cal.get(Calendar.WEEK_OF_YEAR) == wise) {
@@ -92,23 +83,26 @@ public final class TermScheduler extends PortletScheduler implements MessageList
 			String composedYear = yearString + "/" + nextYearString;
 			term.setYear(composedYear);
 			term.setPrefix(prefix);
-
-			try {
-				TermLocalServiceUtil.addTerm(term);
-			} catch (SystemException e) {
-				System.out.println(e);
-			}
-			
+		}
+		//
+		try {
+			TermLocalServiceUtil.addTerm(term);
+		} catch (SystemException e) {
+			System.out.println(e);
 		}
 	}
 
 	public void start() {
 		super.schedule();
-		LOG.info("Wintersemester Scheduler start.");
+		LOG.info("Scheduler start.");
 	}
 
 	public void stop() {
 		super.unschedule();
-		LOG.info("Wintersemester Scheduler stop.");
+		LOG.info("Scheduler stop.");
+	}
+	
+	public void init(String schedulerClassName, ServiceContext serviceContext) {
+        super.initScheduler(schedulerClassName,serviceContext);
 	}
 }

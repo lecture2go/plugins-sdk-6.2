@@ -31,12 +31,12 @@ public class EmailManager extends MailEngine {
 				tadss = InternetAddress.parse(to);
 				cadss = InternetAddress.parse(from);
 			} catch (AddressException e) {
-				//e.printStackTrace();
+				////e.printStackTrace();
 			}
 			send(fadss, tadss, cadss, subject, body);
 			ret = true;
 		} catch (MailEngineException e) {
-			//e.printStackTrace();
+			////e.printStackTrace();
 		}
 		//email successfully sent
 		return ret;
