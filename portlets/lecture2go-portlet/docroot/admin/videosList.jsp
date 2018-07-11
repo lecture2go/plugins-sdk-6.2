@@ -1,4 +1,6 @@
 <%@include file="/init.jsp"%>
+<liferay-portlet:resourceURL id="getVideoConversionStatus" var="getVideoConversionStatusURL" />
+<liferay-portlet:resourceURL id="convertVideo" var="convertVideoURL" />
 
 <%
 	List<Video> tempVideosList = new ArrayList<Video>();
@@ -188,7 +190,7 @@
 								</div>
 								<%if(!lName.equals("")){%>
 									<div class="admin-videolist-lectureseries-title">
-										<%=lName%> (<%=lTerm%>)
+										<%=lName%> <%if(lTerm.length()>0){ %>(<%=lTerm%>)<%}%>
 									</div>
 								<%}
 								if(!vid.getFilename().equals("")){
@@ -227,6 +229,8 @@
 									</div>
 								<div class="admin-videolist-date">
 									<%=vid.getDate()%> | <liferay-ui:message key="hits"/>: <%=vid.getHits()%>
+									<span class="conversion" data-video-id="<%=vid.getVideoId()%>">
+							      	</span>
 								</div>
 						<%}%>
 						</div>
@@ -320,3 +324,13 @@
 		<liferay-ui:search-iterator />
 	</liferay-ui:search-container>
 </div>
+
+<script>
+AUI().ready('', function(A){
+	// check conversion status for every video
+	$('*[data-video-id]').each(function(){
+		videoProcessor.pollStatus('<portlet:namespace/>','<%=getVideoConversionStatusURL%>', '<%=convertVideoURL%>', $(this).attr("data-video-id"))
+	})
+});
+
+</script>

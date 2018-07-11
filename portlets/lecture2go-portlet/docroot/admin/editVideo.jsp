@@ -83,6 +83,7 @@
 	Map<Term, List<Lectureseries>> lectureseriesAsTreeList = new TreeMap<Term, List<Lectureseries>>();
 	if(reqVideo.getVideoId()>0)lectureseriesAsTreeList = LectureseriesLocalServiceUtil.getFilteredByApprovedSemesterFacultyProducerAsTreeMapSortedByTerm(1, (long) 0, (long) 0, reqVideo.getProducerId());
 	else lectureseriesAsTreeList = LectureseriesLocalServiceUtil.getFilteredByApprovedSemesterFacultyProducerAsTreeMapSortedByTerm(1, (long) 0, (long) 0, reqProducer.getProducerId());
+
 %>
 
 <script id="htmlTitle" type="text/x-tmpl">
@@ -507,17 +508,19 @@ $(function () {
            //htaccess update function for physical file protectiom
            updateHtaccess();
            
+           //htaccess update function for physical file protectiom
+           updateHtaccess();
        	   var st = false;
            
-       	   player.remove();
+       	   jwplayer().remove();
            //initialize and show player
             setTimeout(
 	           function(){
 	        	   initializePlayer();
-	        	   player.seek(0);
-	           	   player.on('play',function(){
+	        	   jwplayer().seek(0);
+	        	   jwplayer().on('play',function(){
 	            		  if(st==false){
-	            			   player.pause();
+	            			  jwplayer().pause();
 	            			   st=true;
 	            		  }
 	     		   });	        	   
@@ -882,7 +885,7 @@ function deleteFile(fileName){
 		    	  	$("#first-title").show();
 		    	  	$("#<portlet:namespace/>meta-ebene").hide();
 		        }
-		        player.remove();
+		        jwplayer().remove();
 		        //initialize and show player
 			    initializePlayer();
 		        //hide date fild
@@ -1088,7 +1091,7 @@ function updateThumbnail(){
 		  url: "<%=updateThumbnailURL%>",
 		  dataType: 'json',
 		  data: {
-		 	   	<portlet:namespace/>inputTime: Math.floor(player.getPosition()),
+		 	   	<portlet:namespace/>inputTime: Math.floor(jwplayer().getPosition()),
 		 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>",
 		  },
 		  global: false,

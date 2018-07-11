@@ -134,6 +134,7 @@
 
 <%@page import="de.uhh.l2g.plugins.util.Lecture2GoRoleChecker"%>
 <%@page import="de.uhh.l2g.plugins.util.Security"%>
+<%@page import="de.uhh.l2g.plugins.util.VideoProcessorManager"%>
 
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 

@@ -358,7 +358,7 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 			try {
 				throw new SystemException(e);
 			} catch (SystemException se) {
-				//e.printStackTrace();
+				////e.printStackTrace();
 			}
 		} finally {
 			closeSession(session);
@@ -386,7 +386,7 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 			try {
 				throw new SystemException(e);
 			} catch (SystemException se) {
-				//e.printStackTrace();
+				////e.printStackTrace();
 			}
 		} finally {
 			closeSession(session);

@@ -33,14 +33,22 @@ package de.uhh.l2g.plugins.util;
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  ***************************************************************************/
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
+
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.DocumentException;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.Node;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Lectureseries;
@@ -80,6 +88,14 @@ public class ProzessManager {
 		
 		video.setDownloadLink(0);
 		VideoLocalServiceUtil.updateVideo(video);
+		
+		if (VideoLocalServiceUtil.checkSmilFile(video)) {
+			String prefix = video.getOpenAccess()==1 ? video.getPreffix() : video.getSPreffix();
+			// delete old download symbolic link with secure file name if existing
+			File downloadSymLink = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + prefix + PropsUtil.get("lecture2go.videoprocessing.downloadsuffix") + ".mp4");
+			downloadSymLink.delete();
+		}
+		
 		//remove symbolic links
 		removeSymbolicLinks(video);
 		// generate RSS
@@ -96,6 +112,16 @@ public class ProzessManager {
 		Producer producer = ProducerLocalServiceUtil.getProducer(video.getProducerId());
 		
 		video.setDownloadLink(1);
+		
+		// if there is a smil file, create a symlink to the video file which has a reasonable bitrate
+		if (VideoLocalServiceUtil.checkSmilFile(video)) {
+			try {
+				createSymLinkToDownloadableFile(host, video, producer);
+			} catch (Exception e) {
+				//e.printStackTrace();
+			}
+		}
+		
 		VideoLocalServiceUtil.updateVideo(video);
 		//symbolic links for download
 		if(video.getOpenAccess()==1)generateSymbolicLinks(video);
@@ -145,6 +171,25 @@ public class ProzessManager {
 				VideoLocalServiceUtil.updateVideo(video);
 			}
 		} catch (Exception e) {}
+		
+		// if activated, notify the video processor to handle the processed video files
+		if (PropsUtil.contains("lecture2go.videoprocessing.provider")) {
+			VideoProcessorManager.renameFileOfVideoConversion(video.getVideoId(), video.getFilename());
+		}
+		
+		if (VideoLocalServiceUtil.checkSmilFile(video)) {
+			// delete old download symbolic link with secure file name if existing
+			File downloadSymLink = new File(path + "/" + videoSPreffix + PropsUtil.get("lecture2go.videoprocessing.downloadsuffix") + ".mp4");
+			downloadSymLink.delete();
+			
+			// create a symlink to the video file which has a reasonable bitrate
+			try {
+				createSymLinkToDownloadableFile(host, video, producer);
+			} catch (Exception e) {
+				//e.printStackTrace();
+			} 
+		}
+		
 		//activate symbolic links for download if allowed
 		if(video.getDownloadLink()==1)generateSymbolicLinks(video);
 		// generate RSS
@@ -160,11 +205,6 @@ public class ProzessManager {
 		VideoLocalServiceUtil.createLastVideoList();
 		// refresh open acces for lecture series
 		LectureseriesLocalServiceUtil.updateOpenAccess(video, lectureseries); 
-		
-		// if activated, notify the video processor to handle the processed video files
-		if (PropsUtil.contains("lecture2go.videoprocessing.provider")) {
-			this.notifyVideoProcessor(video.getVideoId(), video.getFilename());
-		}
 	}
 
 	@SuppressWarnings("static-access")
@@ -205,6 +245,25 @@ public class ProzessManager {
 				file.renameTo(newFile);
 			}
 		}
+		
+		// if activated, notify the video processor to handle the processed video files
+		if (PropsUtil.contains("lecture2go.videoprocessing.provider")) {
+			VideoProcessorManager.renameFileOfVideoConversion(video.getVideoId(), video.getSecureFilename());
+		}
+		
+		if (VideoLocalServiceUtil.checkSmilFile(video)) {
+			// delete old download symbolic link
+			File downloadSymLink = new File(path + "/" + videoPreffix + PropsUtil.get("lecture2go.videoprocessing.downloadsuffix") + ".mp4");
+			downloadSymLink.delete();
+			
+			// create a new symbolic link to the video file which has a reasonable bitrate
+			try {
+				createSymLinkToDownloadableFile(host, video, producer);
+			} catch (Exception e) {
+				//e.printStackTrace();
+			} 
+		}
+		
 		// delete all symbolic links
 		for (String f: FileManager.MEDIA_FORMATS) {           
 			File symLink = new File(PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/" + video.getPreffix() + "."+f);
@@ -228,11 +287,6 @@ public class ProzessManager {
 		
 		//update LectureSeries previewVideoId
 		LectureseriesLocalServiceUtil.updatePreviewVideoOpenAccess(lectureseries);
-		
-		// if activated, notify the video processor to handle the processed video files
-		if (PropsUtil.contains("lecture2go.videoprocessing.provider")) {
-			this.notifyVideoProcessor(video.getVideoId(), video.getSecureFilename());
-		}
 	}
 
 	public void deleteThumbnails(Video video) {
@@ -347,6 +401,10 @@ public class ProzessManager {
 				File symLink = new File(PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/" + videoPreffix + "." + f);
 				symLink.delete();
 			}
+			// delete old download symbolic link if existing
+			File downloadSymLink = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + videoPreffix + PropsUtil.get("lecture2go.videoprocessing.downloadsuffix") + ".mp4");
+			downloadSymLink.delete();
+			
 			//all thumn nails
 			deleteThumbnails(video);
 		}
@@ -393,20 +451,8 @@ public class ProzessManager {
 
 		// delete all created files from the video-processor if activated
 		if (PropsUtil.contains("lecture2go.videoprocessing.provider")) {
-			String videoConversionUrl = PropsUtil.get("lecture2go.videoprocessing.provider.videoconversion") + "/sourceid/" + String.valueOf(video.getVideoId());
 			// send DELETE request to video processor
-			try {
-				HttpManager httpManager = new HttpManager();
-				httpManager.setUrl(videoConversionUrl);
-				if (PropsUtil.contains("lecture2go.videoprocessing.basicauth.user") && PropsUtil.contains("lecture2go.videoprocessing.basicauth.pass")) {
-					httpManager.setUser(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.user"));
-					httpManager.setPass(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.pass"));
-				}
-				httpManager.sendDelete();
-				httpManager.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			VideoProcessorManager.deleteVideoConversion(video.getVideoId());
 		}
 		
 		return true;
@@ -563,10 +609,19 @@ public class ProzessManager {
 		Runtime runCmd = Runtime.getRuntime();
 		
 		for (String mf : FileManager.MEDIA_FORMATS) {
-			String command = "ln -s " + PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + "." + mf+ " " + PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/" + v.getPreffix() + "." + mf;
+			String mFile;
+			String mFileAbo;
+			if (mf == "mp4" && VideoLocalServiceUtil.checkSmilFile(v)) {
+				// if there is a smil file, do not use the default video file but the specific version with download suffix
+				mFile = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + PropsUtil.get("lecture2go.videoprocessing.downloadsuffix") + ".mp4";
+				mFileAbo = PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/" + v.getPreffix() + ".mp4";
+			} else {
+				// default handling of all files
+				mFile = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + "." + mf;
+				mFileAbo = PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/" + v.getPreffix() + "." + mf;
+			}
 			
-			String mFile = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + "." + mf;
-			String mFileAbo = PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/" + v.getPreffix() + "." + mf;
+			String command = "ln -s " + mFile + " " + mFileAbo;
 			
 			File medFile = new File(mFile);
 			File aboFile = new File(mFileAbo);
@@ -594,28 +649,88 @@ public class ProzessManager {
 	}
 	
 	/**
-	 * This notifies the Video-Processor via a PUT-http-request of the changed name of the file 
-	 * (The video-processor must rename all processed files upon activating or deactivating videos and recreate the SMIL-file)
-	 * @param videoId the id of the video
-	 * @param filename the filename which will be used for renaming the processed files
+	 * Generates a symbolic link
+	 * @param filePath the filepath which is linked to
+	 * @param symLinkPath the symbolic link which will be created
+	 * @return true if the creation was sucessful, false if not
 	 */
-	private void notifyVideoProcessor(Long videoId, String filename) {
-		String videoConversionUrl = PropsUtil.get("lecture2go.videoprocessing.provider.videoconversion") + "/sourceid/" + String.valueOf(videoId) + "/filename";
-		// create json object with current (non-open access) filename
-		JSONObject jo = JSONFactoryUtil.createJSONObject();
-		jo.put("sourceFileName", filename);
-		// send PUT request to video processor
-		try {
-			HttpManager httpManager = new HttpManager();
-			httpManager.setUrl(videoConversionUrl);
-			if (PropsUtil.contains("lecture2go.videoprocessing.basicauth.user") && PropsUtil.contains("lecture2go.videoprocessing.basicauth.pass")) {
-				httpManager.setUser(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.user"));
-				httpManager.setPass(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.pass"));
-			}
-			httpManager.sendPut(jo);
-			httpManager.close();
-		} catch (Exception e) {
-			e.printStackTrace();
+	public boolean generateSymLink(String filePath, String symLinkPath) {
+		boolean ret = false;
+		Runtime runCmd = Runtime.getRuntime();
+		String command = "ln -s " + filePath + " " + symLinkPath;
+		File file = new File(filePath);
+		File symFile = new File(symLinkPath);
+		
+		if (file.isFile() && !symFile.isFile()){
+			try {
+				runCmd.exec(command);
+				ret = true;
+			} catch (IOException e) {
+				//e.printStackTrace();
+			}				
 		}
+		return ret;
+	}
+	
+	/**
+	 * Creates a symbolic link to the downloadable file
+	 * @param host the host to determine the correct directory of the video file
+	 * @param video the video
+	 * @param producer the producer to determine the correct directory of the video file
+	 * @throws FileNotFoundException
+	 * @throws DocumentException
+	 */
+	public void createSymLinkToDownloadableFile(Host host, Video video, Producer producer) throws FileNotFoundException, DocumentException {
+		String homePath = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/";
+		// parses optimal file from the smil file
+		String filename = getFileNameOfVideoWithReasonableBitrate(host, video, producer);
+		String filePath = homePath + filename;
+		// set prefix according to openaccess filename or secured
+		String prefix = video.getOpenAccess()==1 ? video.getPreffix() : video.getSPreffix();
+		String symLinkPath = homePath + prefix + PropsUtil.get("lecture2go.videoprocessing.downloadsuffix") + ".mp4";
+		generateSymLink(filePath, symLinkPath);
+	}
+	
+	/**
+	 * Returns the filename of the video whose bitrate is nearest to the defined target bitrate
+	 * Uses the smil xml file to get the information about the videos.
+	 * @param host the host (necessary to determine the path to the smil file)
+	 * @param video the video (necessary to determine the path to the smil file)
+	 * @param producer the producer (necessary to determine the path to the smil file)
+	 * @return the filename of the video with reasonable bitrate
+	 * @throws FileNotFoundException
+	 * @throws DocumentException
+	 */
+	private String getFileNameOfVideoWithReasonableBitrate(Host host, Video video, Producer producer) throws FileNotFoundException, DocumentException {
+		final int targetBitrate = Integer.parseInt(PropsUtil.get("lecture2go.videoprocessing.targetdownloadbitrate"));
+		String filename = "";
+
+		String mediaRep = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir();
+		// set prefix according to openaccess filename or secured
+		String prefix = video.getOpenAccess()==1 ? video.getPreffix() : video.getSPreffix();
+		String smilPath = mediaRep + "/" + prefix +".smil";
+		
+		// read the smil file as an xml document
+		Document xml = SAXReaderUtil.read(new FileInputStream(smilPath));
+	
+		// select all video nodes with a system-bitrate
+		List<Node> videoNodes = xml.selectNodes("/smil/body/switch/video[@system-bitrate]");
+
+		if (!videoNodes.isEmpty()) {
+			// sort the video nodes by the difference from the system-bitrate to the targetBitrate (ascending)
+			Collections.sort(videoNodes, new Comparator<Node>() {
+			    @Override
+			    public int compare(Node n1, Node n2) {
+			    	Integer n1IntervalToTargetBitrate = Math.abs(Integer.valueOf(((Element) n1).attributeValue("system-bitrate")) - targetBitrate);
+			    	Integer n2IntervalToTargetBitrate = Math.abs(Integer.valueOf(((Element) n2).attributeValue("system-bitrate")) - targetBitrate);
+			        return n1IntervalToTargetBitrate.compareTo(n2IntervalToTargetBitrate);
+			    }
+			});
+			// use the video which bitrate is the nearest to the target bitrate (cast to element)
+			Element correctNode = (Element) videoNodes.get(0);
+			filename = correctNode.attributeValue("src");
+		}
+	
+		return filename;
 	}
 }

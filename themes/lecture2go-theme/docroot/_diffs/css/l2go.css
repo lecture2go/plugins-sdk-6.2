@@ -350,7 +350,7 @@ mark {
 }
 
 p.smallitalic {
-    font-size: 9px;
+    font-size: 11px;
     font-style: italic;
 }
 
@@ -371,6 +371,10 @@ p.smallitalic {
 .aui .row-fluid [class*="span"]:first-child {
     float: left;
     margin-left: 0;
+}
+
+.force-underline {
+	text-decoration: underline !important;
 }
 
 .allcreators {
@@ -1375,9 +1379,7 @@ thead, th {
 }
 
 #segment-input-cancel {
-    margin-left: 152px;
-    position: absolute;
-    top: 470px;
+    float: right;
 }
 
 .aui .chaptertile {
@@ -1472,7 +1474,12 @@ thead, th {
 
 #set-segments {
     float: left;
-    margin-top: -17px !important;
+    background: #faf9f9;
+    padding: 0 3px 0px 3px;
+}
+
+#_lgadminvideomanagement_WAR_lecture2goportlet_chortTitle {
+    width: 200px;
 }
 
 #segmentinput #com {
@@ -2147,7 +2154,7 @@ div.filter-menu-link span.icon-large.icon-remove {
     height: 12px !important;
 }
 
-#impressum, #disclaimer, #tw, #fb {
+#impressum, #disclaimer, #tw, #fb, #privacy-policy {
     font-family: TheSansUHHBold,sans-serif;
 }
 
@@ -2341,11 +2348,21 @@ div.filter-menu-link span.icon-large.icon-remove {
 }
 
 #_lgadmininstitutionmanagement_WAR_lecture2goportlet_fm button {
-    margin-top: 26px;
+    margin-top: 39px;
 }
 
 #_lgadmininstitutionmanagement_WAR_lecture2goportlet_curStreamingServerProtocol {
     width: 70px;
+}
+
+.btn.subdelete {
+    margin-left: 518px !important;
+    margin-top: -66px;
+}
+
+.btn.maindelete {
+    margin-left: 71px;
+    margin-top: -50px;
 }
 
 #_lgadmininstitutionmanagement_WAR_lecture2goportlet_protocol {
@@ -2450,8 +2467,8 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 .sub-inst .title-text {
     color: #444 !important;
     float: left;
-    font-size: 14px;
-    padding: 0 8px 4px;
+    font-size: 13px;
+    padding: 0 1px 4px;
     text-shadow: 0 0 0 #777777 !important;
 }
 
@@ -3080,3 +3097,21 @@ strong, b, th, #kopf .sprachwechsel {
     max-width: 1096px;
     padding: 0;
 }
+
+.supportlink a {
+    font-size: 12px;
+    margin-top: 0px !important;
+    float: left;
+    font-style: normal;
+    width: 100%;
+}
+
+.conversion-running {
+	color: #33aadd;	
+}
+
+.conversion-failed {
+	color: #c40017;
+}
+
+

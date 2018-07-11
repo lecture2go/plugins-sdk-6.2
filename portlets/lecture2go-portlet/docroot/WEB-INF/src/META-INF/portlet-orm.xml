@@ -557,6 +557,7 @@
 			<transient name="image" />
 			<transient name="imageMedium" />
 			<transient name="imageSmall" />
+			<transient name="jsonPlayerUris" />
 			<transient name="lectureseriesName" />
 			<transient name="lectureseriesNumber" />
 			<transient name="lectureseriesUrl" />

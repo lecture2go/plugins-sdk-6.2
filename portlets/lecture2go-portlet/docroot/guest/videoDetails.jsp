@@ -140,12 +140,16 @@
 			  <%
 			    String title = video.getTitle();  	
 			  	Long lTermId = lectureseries.getTermId();
-			  	String termMetadata = "";
-			  	if(lTermId > 1)
-			  	{
-			  		termMetadata = " ("+TermLocalServiceUtil.getById(lTermId).getPrefix()+" "+TermLocalServiceUtil.getById(lTermId).getYear()+")";
-			  	}
-			  		String series = lectureseries.getName()+termMetadata;
+
+			  	String series = "";
+		  		String t = "";
+		  		try{
+		  			t = TermLocalServiceUtil.getById(lTermId).getPrefix()+" "+TermLocalServiceUtil.getById(lTermId).getYear();
+		  		}catch (Exception e){};
+		  		
+			  		
+		  		if (t.trim().length()>0)series = lectureseries.getName() +"("+t+")";
+		  		else series= lectureseries.getName();
 			  	%>
 		       <c:if test="${relatedVideos.size()>1}"><div class="player"></c:if>
 			   <c:if test="${relatedVideos.size()<=1}"><div class="player-wide"></c:if>
@@ -221,7 +225,7 @@
 								        <p><%@ include file="/guest/includeShare.jsp" %></p>
 								    </div>
 							    <%}%>
-								    		
+    		
 								<%if(video.isHasChapters() || video.isHasComments()){%>
 									    <div class="tab-pane" id="chapters">
 									    	<liferay-portlet:resourceURL id="showSegments" var="segmentsURL" />

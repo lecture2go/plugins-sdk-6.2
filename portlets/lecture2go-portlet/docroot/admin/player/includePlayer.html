@@ -1,5 +1,31 @@
+<script type="text/javascript">jwplayer.key="qKvU61clkb6v98R2Yoc/cL6x7dFfJ3we+r6nxD6iB0Q=";</script>
+
+<style>
+<!--
+.jw-reset.jw-settings-content-item {
+    line-height: 13px;
+}
+
+.jw-breakpoint-4 .jw-settings-menu, .jw-breakpoint-3 .jw-settings-menu {
+    width: 220px;
+}
+
+.jwplayer .jw-rightclick.jw-open {
+    display: none;
+}
+
+.jw-icon.jw-icon-inline.jw-button-color.jw-reset.jw-icon-cc.jw-settings-submenu-button {
+	display: none !important;
+}
+
+.jw-icon.jw-icon-inline.jw-button-color.jw-reset.jw-settings-captions.jw-submenu-captions {
+	display: none !important;
+}
+-->
+</style>
+
 <script>
-    $(function() {
+	$(function() {
         // herausfinden ob es ein tablet/smartphone ist
         var isTouchDevice = 'ontouchstart' in document.documentElement;
 
@@ -25,39 +51,30 @@
         var frameEnd = getUrlParameter('end');
         var containerFormat = "${reqVideo.containerFormat}";
         
-        var playerUri1 ="${reqVideo.playerUris.get(0)}";
-        var playerUri2 ="${reqVideo.playerUris.get(1)}";
-        var playerUri3 ="${reqVideo.playerUris.get(2)}";
-        var playerUri4 ="${reqVideo.playerUris.get(3)}";
-        var playerUri5 ="${reqVideo.playerUris.get(4)}";		
-
-        //hack for HLS in firefox and mp3
-        var containerFormat = "${video.containerFormat}";
-        var isFirefox = typeof InstallTrigger !== 'undefined';
-        var downloadAllowed = "${video.downloadLink}";
-        if(containerFormat.indexOf("mp3") !== -1 && isFirefox && downloadAllowed.indexOf("1")!==-1){
-        	var playerUri = playerUri1;
-        	playerUri1 = playerUri3;
-        	playerUri3 = playerUri;
-        }
-        //
-        
         // Hier wird der JW-Player initialisiert
         // Interessant ist hierbei, dass es mehrere Quellen geben kann
-        jwplayer('player1').setup({
+        // Hier wird der JW-Player initialisiert
+        // Interessant ist hierbei, dass es mehrere Quellen geben kann
+		var vttFile ="${reqVideo.vttChapterFile}";
+		
+        // Hier wird der JW-Player initialisiert
+        // Interessant ist hierbei, dass es mehrere Quellen geben kann
+        var pla = jwplayer('player1').setup({
             width: "100%",
             aspectratio: "16:9",
+            playbackRateControls: [0.75, 1, 1.25, 1.5],
             image: "${reqVideo.image}",
-            sources: [
-            	{ file: playerUri1 },
-            	{ file: playerUri2 },
-            	{ file: playerUri3 },
-            	{ file: playerUri4 },
-            	{ file: playerUri5 },
-            ],
+            cast: {},
+            sources: ${reqVideo.jsonPlayerUris},
+            tracks: [{
+                file: vttFile,
+                kind:'chapters'
+            }],
             hlshtml: true,
             androidhls: true
-        }).onReady(function() {
+        });
+        
+        pla.on('ready', function(){
 
          	// Inputfelder für Start und Ende der Zitate / Kapitel speichern 
             var $inputTimeStart = $("#_lgadminvideomanagement_WAR_lecture2goportlet_timeStart").val("");
@@ -98,9 +115,9 @@
 
                 
             // Event listener alle 100 ms während playback
-            jwplayer().onTime( function(event){
-
-                // Sicher stellen, dass der gewählte Zeitraum eingehalten wird
+			pla.on('time', function(event) {
+            
+				// Sicher stellen, dass der gewählte Zeitraum eingehalten wird
 
                 var pos =  Math.floor(event.position);
                 console.log(pos);
@@ -140,7 +157,8 @@
             // Hiermit wird verhindert, dass der Nutzer per Tastatur
             // aus den Zitatsbereich herausspult
             if (!isTouchDevice) {
-                jwplayer().onSeek( function(event){
+            	
+                pla.on('seek', function(event) {
                     var pos =  event.position;
 
                     if (Math.ceil(pos) < Math.ceil(frameStart) || Math.ceil(pos) > Math.ceil(frameEnd)) {
@@ -246,6 +264,7 @@
     });
 
 </script>
+
 
 <div id="player1"></div>
 

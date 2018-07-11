@@ -218,9 +218,10 @@ public class OpenAccessVideos extends MVCPortlet {
 			} catch (SystemException e) {}
 		    
 		    //license for video
-		    
 		    License l = new LicenseImpl();
-			l = LicenseLocalServiceUtil.getByVideoId(video.getVideoId());
+		    try {
+				l = LicenseLocalServiceUtil.getByVideoId(video.getVideoId());
+			} catch (Exception e) {} 
 		    
 		    //update video hits
 		    Long hits = video.getHits();

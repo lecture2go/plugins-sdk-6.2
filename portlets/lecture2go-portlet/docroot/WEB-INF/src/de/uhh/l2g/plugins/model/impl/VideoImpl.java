@@ -17,6 +17,8 @@ package de.uhh.l2g.plugins.model.impl;
 import java.io.File;
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+
 /**
  * The extended model implementation for the Video service. Represents a row in the &quot;LG_Video&quot; database table, with each column mapped to a property of this class.
  *
@@ -78,6 +80,16 @@ public class VideoImpl extends VideoBaseImpl {
 
 	public void setAccessPermitted(Integer accessPermitted) {
 		this.accessPermitted = accessPermitted;
+	}
+
+	private JSONArray jsonPlayerUris;
+	
+	public JSONArray getJsonPlayerUris() {
+		return jsonPlayerUris;
+	}
+
+	public void setJsonPlayerUris(JSONArray jsonPlayerUris) {
+		this.jsonPlayerUris = jsonPlayerUris;
 	}
 
 	private ArrayList<String> playerUris;
@@ -517,5 +529,5 @@ public class VideoImpl extends VideoBaseImpl {
 
 		public void setCreators(String creators) {
 			this.creators = creators;
-		} 
+		}
 }

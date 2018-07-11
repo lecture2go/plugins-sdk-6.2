@@ -6,8 +6,13 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<script type="text/javascript" src="/lecture2go-portlet/js/jquery-2.1.4.min.js"></script>
+<!-- for self hostet player 
+	<script type="text/javascript" src="/lecture2go-portlet/player/jwplayer-7.12.13/jwplayer.js"></script>
+	<script type="text/javascript">jwplayer.key="get-your-licence-from-jw-player";</script>
+!-->
+<!-- for cloud hosted player -->
 	<script type="text/javascript" src="https://content.jwplatform.com/libraries/meCDJ4WV.js"></script>
-
+<!-- for cloud hosted end -->
 	<title>Lecture2o-Embed</title>
 	<style type="text/css">
 
@@ -87,12 +92,28 @@
 		    return parentUrl;
 		}
 
+		function securityCheck(){
+			if(getOpenAccess().indexOf("1")>-1){
+				//load page
+			}else{
+				//stop loading page if not uni request
+				if(getParentUrl().indexOf("uni-hamburg")==-1 || getParentUrl().indexOf("null")==0){
+					window.stop();
+					document.write('<script type="text/undefined">')
+				}
+			}
+		}
+		$(document).ready(function(){
+			securityCheck();
+		});
+
 	</script>
 </head>
 
 <%@ page import="de.uhh.l2g.plugins.service.VideoLocalServiceUtil"%>
 <%@ page import="de.uhh.l2g.plugins.model.Video"%>
 <%@ page import="de.uhh.l2g.plugins.model.impl.VideoImpl"%>
+
 
 <%
 	Video video = new VideoImpl();
@@ -111,13 +132,14 @@
 		//for a closesed access video, check this
 		//don't forget cases in commsy like this -> 37l2gbar8265/00.000_video-22005_2017-10-06_13-00.mp4
 		if(al.length==1){
-			if(al[0].split("_").length>0)videoId = VideoLocalServiceUtil.getByFilename(al[0]).iterator().next().getVideoId();
+			int t =  al[0].split("_").length;
+			if(t==4)videoId = VideoLocalServiceUtil.getByFilename(al[0]).iterator().next().getVideoId();
 			else videoId = VideoLocalServiceUtil.getBySecureUrl(al[0]).getVideoId();
 		}
 		if(al.length==2){
 			int t =  al[1].split("_").length;
 			if(t==4)videoId = VideoLocalServiceUtil.getByFilename(al[1]).iterator().next().getVideoId();
-			if(t==1)videoId = VideoLocalServiceUtil.getBySecureUrl(al[1]).getVideoId();
+			else videoId = VideoLocalServiceUtil.getBySecureUrl(al[1]).getVideoId();
 		}
 
 		//has time parameters
@@ -155,36 +177,15 @@
 			        }
 
 					var vttChapterFile ="<%=video.getVttChapterFile()%>";
-					var playerUri1 ="<%=video.getPlayerUris().get(0)%>";
-			        var playerUri2 ="<%=video.getPlayerUris().get(1)%>";
-			        var playerUri3 ="<%=video.getPlayerUris().get(2)%>";
-			        var playerUri4 ="<%=video.getPlayerUris().get(3)%>";
-			        var playerUri5 ="<%=video.getPlayerUris().get(4)%>";
-
-			        //hack for HLS in firefox and mp3
-			        var containerFormat = "<%=video.getContainerFormat()%>";
-			        var isFirefox = typeof InstallTrigger !== 'undefined';
-			        var downloadAllowed = "<%=video.getDownloadLink()%>";
-			        if(containerFormat.indexOf("mp3") !== -1 && isFirefox && downloadAllowed.indexOf("1")!==-1){
-			        	var playerUri = playerUri1;
-			        	playerUri1 = playerUri3;
-			        	playerUri3 = playerUri;
-			        }
 			        //
 
 					var img = "<%=video.getImage()%>";
 			        jwplayer('player1').setup({
 			            width: "100%",
-       			    height: "100%",
+       			    	height: "100%",
 			            aspectratio: "16:9",
 			            image: img,
-			            sources: [
-			                  	{ file: playerUri1 },
-			                	{ file: playerUri2 },
-			                	{ file: playerUri3 },
-			                	{ file: playerUri4 },
-			                	{ file: playerUri5 }
-			            ],
+			            sources: <%=video.getJsonPlayerUris()%>,
 			            tracks: [{
 			               			file: vttChapterFile,
 			                		kind:'chapters'

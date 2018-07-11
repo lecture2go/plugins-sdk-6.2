@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
+import de.uhh.l2g.plugins.NoSuchLicenseException;
 import de.uhh.l2g.plugins.model.Category;
 import de.uhh.l2g.plugins.model.Creator;
 import de.uhh.l2g.plugins.model.Host;
@@ -79,6 +80,7 @@ import de.uhh.l2g.plugins.util.HttpManager;
 import de.uhh.l2g.plugins.util.ProzessManager;
 import de.uhh.l2g.plugins.util.Security;
 import de.uhh.l2g.plugins.util.Htaccess;
+import de.uhh.l2g.plugins.util.VideoProcessorManager;
 
 public class AdminVideoManagement extends MVCPortlet {
 
@@ -334,7 +336,11 @@ public class AdminVideoManagement extends MVCPortlet {
 			//e.printStackTrace();
 		}
 		License license = new LicenseImpl();
-		license = LicenseLocalServiceUtil.getByVideoId(video.getVideoId());
+		try {
+			license = LicenseLocalServiceUtil.getByVideoId(video.getVideoId());
+		} catch (Exception e1) {
+			//e1.printStackTrace();
+		}
 		
 		if(resourceID.equals("updateVideoFileName")){
 			String fileName = ParamUtil.getString(resourceRequest, "fileName");
@@ -425,44 +431,30 @@ public class AdminVideoManagement extends MVCPortlet {
 		}
 		
 		if(resourceID.equals("convertVideo")){
+			JSONObject json = JSONFactoryUtil.createJSONObject();
 			// if activated, notify the video processor to convert the video
 			if (PropsUtil.contains("lecture2go.videoprocessing.provider") && (video.getContainerFormat().equalsIgnoreCase("mp4"))) {
 				String videoConversionUrl = PropsUtil.get("lecture2go.videoprocessing.provider.videoconversion");
-
-				try {
-					// create json object with the necessary informations for the videoprocessor
-					JSONObject jo = JSONFactoryUtil.createJSONObject();
-					jo.put("sourceId", video.getVideoId());
-					String folder = PropsUtil.get("lecture2go.media.repository")+"/"+HostLocalServiceUtil.getByHostId(video.getHostId()).getServerRoot()+"/"+ProducerLocalServiceUtil.getProducer(video.getProducerId()).getHomeDir()+"/";
-					String filePath;
-					if(video.getOpenAccess()==1){
-						filePath = folder + video.getFilename();
-					}else{
-						filePath = folder + video.getSecureFilename();
-					}
-					jo.put("sourceFilePath", filePath);
-					jo.put("createSmil", true);
-					
-					// send POST request to video processor
-					try {
-						HttpManager httpManager = new HttpManager();
-						httpManager.setUrl(videoConversionUrl);
-						if (PropsUtil.contains("lecture2go.videoprocessing.basicauth.user") && PropsUtil.contains("lecture2go.videoprocessing.basicauth.pass")) {
-							httpManager.setUser(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.user"));
-							httpManager.setPass(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.pass"));
-						}
-						httpManager.sendPost(jo);
-						httpManager.close();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				} catch (SystemException e) {
-					e.printStackTrace();
-				} catch (PortalException e) {
-					e.printStackTrace();
+			
+				boolean isVideoConversionStarted = VideoProcessorManager.startVideoConversion(video.getVideoId());
+				if (isVideoConversionStarted) {
+					json.put("status", Boolean.TRUE);
+				} else {
+					json.put("status", Boolean.FALSE);
 				}
 			}
+			writeJSON(resourceRequest, resourceResponse, json);
+		}
+		
+		if(resourceID.equals("getVideoConversionStatus")){
 			JSONObject json = JSONFactoryUtil.createJSONObject();
+			// if activated, notify the video processor to convert the video
+			if (PropsUtil.contains("lecture2go.videoprocessing.provider")) {
+				String videoConversionUrl = PropsUtil.get("lecture2go.videoprocessing.provider.videoconversion");
+				String videoConversionStatus = VideoProcessorManager.getSimpleVideoConversionStatusForVideoId(video.getVideoId());
+				
+				json.put("videoConversionStatus", videoConversionStatus);
+			}
 			writeJSON(resourceRequest, resourceResponse, json);
 		}
 		
@@ -505,6 +497,12 @@ public class AdminVideoManagement extends MVCPortlet {
 				}
 				video.setTags(tags);
 				if(lId>0){
+					//update lecture series id for this video first !!!
+					//important, because of dependencies
+					video.setLectureseriesId(lId);
+					VideoLocalServiceUtil.updateVideo(video);
+
+					//forward
 					newLect = LectureseriesLocalServiceUtil.getLectureseries(lId);
 					//
 					termId = newLect.getTermId();
@@ -671,13 +669,9 @@ public class AdminVideoManagement extends MVCPortlet {
 		}
 			
 		if(resourceID.equals("getJSONVideo")){
-			JSONObject uris = JSONFactoryUtil.createJSONObject();
-			for(int i=0; i<video.getPlayerUris().size(); i++){
-				uris.put("url"+i, video.getPlayerUris().get(i));
-			}
 			JSONObject jo = JSONFactoryUtil.createJSONObject();
 			jo.put("title", video.getTitle());
-			jo.put("playerUris", uris);
+			jo.put("playerUris", video.getJsonPlayerUris().toString());
 			jo.put("thumbnail", video.getImage());
 			writeJSON(resourceRequest, resourceResponse, jo);
 		}
@@ -777,7 +771,7 @@ public class AdminVideoManagement extends MVCPortlet {
 				LicenseLocalServiceUtil.updateLicense(license);
 				logger.info("LICENSE_UPDATE_SUCCESS");
 			} catch (SystemException e) {
-				//e.printStackTrace();
+//				//e.printStackTrace();
 				logger.info("LICENSE_UPDATE_FAILED");
 			}
 			JSONObject json = JSONFactoryUtil.createJSONObject();
@@ -791,7 +785,7 @@ public class AdminVideoManagement extends MVCPortlet {
 				MetadataLocalServiceUtil.updateMetadata(metadata);
 				logger.info("DESCRIPTION_UPDATE_SUCCESS");
 			} catch (SystemException e) {
-				//e.printStackTrace();
+//				//e.printStackTrace();
 				logger.info("DESCRIPTION_UPDATE_FAILED");
 			}
 			JSONObject json = JSONFactoryUtil.createJSONObject();
@@ -807,7 +801,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			try {
 				VideoLocalServiceUtil.updateVideo(video);
 			} catch (SystemException e) {
-				//e.printStackTrace();
+//				//e.printStackTrace();
 			}
 			
 			JSONObject json = JSONFactoryUtil.createJSONObject();
@@ -985,20 +979,8 @@ public class AdminVideoManagement extends MVCPortlet {
 				} 
 				// delete all created files from the video-processor if activated
 				if (PropsUtil.contains("lecture2go.videoprocessing.provider")) {
-					String videoConversionUrl = PropsUtil.get("lecture2go.videoprocessing.provider.videoconversion") + "/sourceid/" + String.valueOf(video.getVideoId());
 					// send DELETE request to video processor
-					try {
-						HttpManager httpManager = new HttpManager();
-						httpManager.setUrl(videoConversionUrl);
-						if (PropsUtil.contains("lecture2go.videoprocessing.basicauth.user") && PropsUtil.contains("lecture2go.videoprocessing.basicauth.pass")) {
-							httpManager.setUser(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.user"));
-							httpManager.setPass(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.pass"));
-						}
-						httpManager.sendDelete();
-						httpManager.close();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+					VideoProcessorManager.deleteVideoConversion(video.getVideoId());
 				}
 			}else{
 				org.json.JSONObject o = new org.json.JSONObject();
@@ -1111,7 +1093,7 @@ public class AdminVideoManagement extends MVCPortlet {
 							Institution in = new InstitutionImpl();
 							try {
 								in = InstitutionLocalServiceUtil.getInstitution(institutionId);
-								//System.out.print("LEVEEEEELLL---->"+in.getLevel());
+								System.out.print("LEVEEEEELLL---->"+in.getLevel());
 							} catch (PortalException e) {
 								//e.printStackTrace();
 							}

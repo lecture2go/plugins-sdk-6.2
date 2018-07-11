@@ -3,6 +3,13 @@
 		display:none;
 	}
 	
+	.btn.maindelete {
+	    margin-top: -42px !important;
+	    margin-left: 67px !important;
+	    float: left !important;
+	    position: absolute !important;
+	}
+
 	.aui .site-title .site-name {
 		margin-top: 0;
 	}
