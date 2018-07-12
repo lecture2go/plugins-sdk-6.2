@@ -148,6 +148,10 @@
         <finder name="CompanyId" return-type="Collection">
             <finder-column name="companyId"></finder-column>
         </finder>
+        <finder name="ParentIdAndCompanyId" return-type="Institution">
+            <finder-column name="parentId"></finder-column>
+            <finder-column name="companyId"></finder-column>
+        </finder>
     </entity>
     <entity name="Lectureseries_Institution" local-service="true" remote-service="false">
         <column name="lectureseriesInstitutionId" type="long" primary="true" id-type="increment"></column>
@@ -679,6 +683,24 @@
 
 
     
+    </entity>
+    <entity local-service="true" remote-service="false"
+    	name="InstallWizard">
+
+    	<!-- PK fields -->
+
+    	<column name="installWizardId" type="long" primary="true"></column>
+
+    	<!-- Group instance -->
+
+    	<!-- Audit fields -->
+        <column name="wizartActive" type="int"></column>
+        <column name="groupId" type="long"></column>
+        <column name="companyId" type="long"></column>
+        <finder name="groupAndCompyny" return-type="InstallWizard">
+            <finder-column name="groupId"></finder-column>
+            <finder-column name="companyId"></finder-column>
+        </finder>
     </entity>
     <exceptions>
         <exception>HostName</exception>

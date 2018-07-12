@@ -120,6 +120,11 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		return institutions;
 	}
 	
+	public  Institution getByParentIdAndCompanyId(long parentId, long companyId) throws SystemException, NoSuchInstitutionException {
+		Institution institutions = institutionPersistence.findByParentIdAndCompanyId(parentId, companyId);
+		return institutions;
+	}
+	
 	public Map<String, String> getByParent(long parentId) throws SystemException {
 		Map<String, String> institutions = new LinkedHashMap<String, String>();
 		List<Institution> fList = institutionPersistence.findByParent(parentId);
