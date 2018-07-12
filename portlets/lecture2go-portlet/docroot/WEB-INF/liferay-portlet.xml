@@ -12,7 +12,7 @@
 		<header-portlet-javascript>/js/bootstrap.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/jquery.socialshareprivacy.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/jquery.cookie.js</header-portlet-javascript>
-		<header-portlet-javascript>/player/jwplayer-7.9.3/jwplayer.js</header-portlet-javascript>
+		<header-portlet-javascript>https://cdn.jwplayer.com/libraries/aVr2lJgW.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/mediaCheck-min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/readmore.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/jquery.dotdotdot.min.js</header-portlet-javascript>		
@@ -33,7 +33,7 @@
 		<header-portlet-javascript>/js/upload/jquery.iframe-transport.js</header-portlet-javascript>
 
 		<header-portlet-javascript>/js/jquery.datetimepicker.js</header-portlet-javascript>
-		<header-portlet-javascript>/player/jwplayer-7.9.3/jwplayer.js</header-portlet-javascript>
+		<header-portlet-javascript>https://cdn.jwplayer.com/libraries/aVr2lJgW.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/jwplayer.custom.util.js</header-portlet-javascript>
 
 		<footer-portlet-javascript>/js/autocomplete-creator.js</footer-portlet-javascript>
@@ -92,7 +92,7 @@
 		<header-portlet-javascript>/js/jquery.socialshareprivacy.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/qrc.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/jquery.cookie.js</header-portlet-javascript>
-		<header-portlet-javascript>/player/jwplayer-7.9.3/jwplayer.js</header-portlet-javascript>
+		<header-portlet-javascript>https://cdn.jwplayer.com/libraries/aVr2lJgW.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/mediaCheck-min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/readmore.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/jquery.dotdotdot.min.js</header-portlet-javascript>

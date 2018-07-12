@@ -148,6 +148,10 @@
         <finder name="CompanyId" return-type="Collection">
             <finder-column name="companyId"></finder-column>
         </finder>
+        <finder name="ParentIdAndCompanyId" return-type="Institution">
+            <finder-column name="parentId"></finder-column>
+            <finder-column name="companyId"></finder-column>
+        </finder>
     </entity>
     <entity name="Lectureseries_Institution" local-service="true" remote-service="false">
         <column name="lectureseriesInstitutionId" type="long" primary="true" id-type="increment"></column>
