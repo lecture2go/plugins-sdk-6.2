@@ -30,12 +30,12 @@ var videoProcessor = {
 		                   "</span>"
 		                 ].join("\n")).add(videoProcessor.getToolTipHtml());
 	},
-	getConversionFailedHtml: function(namepace, convertVideoURL, videoConversionStatusURL, id) {
+	getConversionFailedHtml: function(namespace, convertVideoURL, videoConversionStatusURL, id) {
 		return $([
 		                   "<span class='conversion-failed'>",
 		                   "  <span class='icon-remove-sign'> </span>",
 		                   Liferay.Language.get('conversion-failed') + " - ",
-		                   "  <a class='force-underline' href='javascript:videoProcessor.convertVideo("+namespace+","+convertVideoURL+","+videoConversionStatusURL+","+id+")'> ",
+		                   "  <a class='force-underline' href='javascript:videoProcessor.convert(\""+namespace+"\",\""+convertVideoURL+"\",\""+videoConversionStatusURL+"\","+id+")'> ",
 		                   		Liferay.Language.get('try-again'),
 		                   "  </a>",
 		                   "</span>"
