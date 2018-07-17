@@ -1420,10 +1420,11 @@ thead, th {
     font-size: 12px;
 }
 
-#chapters {
+.aui #chapters {
     margin-top: 10px;
     padding-top: 0;
     width: auto;
+    border: 1px 0 0 1px solid #eee;
 }
 
 .aui .chaptertile {
@@ -2474,7 +2475,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 .sub-inst .title-text {
     color: #444 !important;
     float: left;
-    font-size: 13px;
+    font-size: 14px;
     padding: 0 1px 4px;
     text-shadow: 0 0 0 #777777 !important;
 }

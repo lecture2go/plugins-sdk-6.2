@@ -125,6 +125,7 @@ String backURL = request.getAttribute("backURL").toString();
 		    if(segment.chapter==1){
 		    	// segment is a chapter
 		    	newRow='<li class="chaptertile" id="' + segment.segmentId + '" begin="' + segment.start + '" end="' + segment.end + '">';
+		    	newRow=newRow + '<div class="icon-large icon-remove" alt="delete" onclick="deleteSegment('+segment.segmentId+')" ></div>';
 		    	newRow=newRow + '<div class="image">';
 		    	newRow=newRow + '<a><img src="'+segment.image+'"></a>';
 		    	newRow=newRow + '</div>';
@@ -132,7 +133,6 @@ String backURL = request.getAttribute("backURL").toString();
 		    	newRow=newRow + '<div class="title">';
 		    	newRow=newRow + '<a><b>' + segment.start +'</b> '+segment.title+'</a>';
 		    	newRow=newRow + '</div>';
-		    	newRow=newRow + '<span class="icon-large icon-remove" alt="delete" onclick="deleteSegment('+segment.segmentId+')" ></span>';
 	    	
 	    	newRow=newRow + '</li>';
 			}
