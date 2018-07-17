@@ -84,7 +84,7 @@
             var $citationiframe = $("#<portlet:namespace></portlet:namespace>citationiframe").val("");
 
             var $chapters = $('#chapters');
-            var $chapterDivs = $chapters.find("div.chaptertile");
+            var $chapterDivs = $chapters.find("li.chaptertile");
             
             // Chapter ids und Zeiten in Object für spätere Abfragen speichern
             var chapters = [];
@@ -168,7 +168,7 @@
         
         	// Sollte der Nutzer auf die Kapitel klicken,
             // wird zur entsprechenden Stelle gesprungen
-            $chapters.find('div.chaptertile').on('click', function(event) {
+            $chapters.find('li.chaptertile').on('click', function(event) {
                 
             	$(this).addClass("active").siblings().removeClass("active");
             	var sec = $(this).attr("begin");
