@@ -121,7 +121,7 @@
     	value: new Date(),
     	maxDate: '+1970/01/30',
     	minDate: false,
-    	step:10
+    	step:15
     });
   });
 </script>
