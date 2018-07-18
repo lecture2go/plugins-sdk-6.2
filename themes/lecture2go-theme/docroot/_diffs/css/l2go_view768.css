@@ -37,7 +37,6 @@
 	}
 
 	.date.related {
-	    position: absolute;
 	    right: 5px;
 	}
 	
@@ -97,7 +96,7 @@
 	}
 	
 	.col-md-5 {
-		float: left;
+		float: none;
 	    margin-top: auto;
 	}
 	
@@ -267,10 +266,6 @@
 	    vertical-align: middle;
 	    width: 65px;
 	    height: 40px;
-	}
-	
-	.aui .chaptertile a span {
-	    margin-top: -50px;
 	}
 	
 	.add-new-creator-term-object {
@@ -445,7 +440,7 @@
 
 	.related {
 	    margin-left: auto;
-	    width: auto;
+	    width: 100%;
 	}
 	
 	#content{
