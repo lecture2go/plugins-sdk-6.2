@@ -84,7 +84,7 @@
 
 
             var $chapters = $('#chapters');
-            var $chapterDivs = $chapters.find("div.chaptertile");
+            var $chapterDivs = $chapters.find("li.chaptertile");
             
             // Chapter ids und Zeiten in Object für spätere Abfragen speichern
             var chapters = [];
@@ -174,7 +174,7 @@
         
         	// Sollte der Nutzer auf die Kapitel klicken,
             // wird zur entsprechenden Stelle gesprungen
-            $chapters.on('click', 'div.chaptertile', function(event) {
+            $chapters.on('click', 'li.chaptertile', function(event) {
                 console.log($(this).text());
             	$(this).addClass("active").siblings().removeClass("active");
             	var sec = $(this).attr("begin");

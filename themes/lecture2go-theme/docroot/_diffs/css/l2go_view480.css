@@ -1,13 +1,13 @@
 @media (max-width: 479px) {
-	.aui .chaptertile a span {
-    	margin-top: -42px;
-	}
-
 	.video-image-big {
     	height: 64px !important;
     	width: 113px;
 	}
 	
+	.aui .chaptertile .title {
+	    width: calc(85% - 30px);
+	}
+
 	.btn.maindelete {
 	    margin-top: -42px !important;
 	    margin-left: 67px !important;
