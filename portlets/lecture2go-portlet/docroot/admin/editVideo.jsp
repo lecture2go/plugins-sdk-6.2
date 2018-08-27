@@ -157,24 +157,13 @@
 						<div id="progress" class="progress">
 					    	<div class="bar" style="width: 0%;"></div>
 						</div>
-						<% 	
-						// for testing: only give a few users the right to postprocess videos:
-						List<Integer> producerIdsAllowedForPostprocessing = new ArrayList<Integer>();
-						producerIdsAllowedForPostprocessing.add(21908); // Iavor
-						producerIdsAllowedForPostprocessing.add(22707); // Matthias
-						producerIdsAllowedForPostprocessing.add(21923); // Konferenzen-Account
-						producerIdsAllowedForPostprocessing.add(22646); // Tini
-						producerIdsAllowedForPostprocessing.add(30045); // Ingo
-						producerIdsAllowedForPostprocessing.add(33631); // Dominic
-						producerIdsAllowedForPostprocessing.add(22869); // Annelie
-						%>
 						<c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider")%>'>
-							<c:if test="<%= permissionChecker.isOmniadmin() || producerIdsAllowedForPostprocessing.contains((int) reqProducer.getProducerId()) %>">
+							<c:if test="<%= permissionChecker.isOmniadmin() %>">
+								<!-- the admin has a button to start postprocessing manually -->
 								<div id="postprocessing" style="margin-bottom: 20px;">
 									<span class="conversion" data-video-id="<%=reqVideo.getVideoId()%>">
 									</span>
-									<aui:input name="postprocess" type="checkbox" label="Postprocess after upload (beta)" id="postprocess"></aui:input>
-									<aui:button type="button" id="start-postprocessing" value="Start Postprocessing (beta)"/>
+									<aui:button type="button" id="start-postprocessing" value="Start Postprocessing"/>
 								</div>
 							</c:if>
 						</c:if>
@@ -697,9 +686,8 @@ function updateVideoFileName(file){
 				on: {
 					   success: function() {
 					     var jsonResponse = this.get('responseData');
-					     if (hasPostProcessingActivated) {
-			           			videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>','<%=getVideoConversionStatusURL%>',<%=reqVideo.getVideoId()%>);
-			           	 }
+			           	
+					     videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>','<%=getVideoConversionStatusURL%>',<%=reqVideo.getVideoId()%>);
 					     toggleShare();
 					   }
 				}
@@ -1138,20 +1126,6 @@ AUI().use('aui-node',
   }
 );
 
-var hasPostProcessingActivated = false;
-<c:if test="<%= permissionChecker.isOmniadmin() %>">
-	AUI().use(
-		'aui-node',
-		function(A) {
-			var postProcessCheckbox = A.one('#<portlet:namespace/>postprocessCheckbox');
-			postProcessCheckbox.on(
-			'click',
-			function(A){
-				hasPostProcessingActivated = (postProcessCheckbox.get('checked'))
-			});
-		}
-	);
-</c:if>
 $('#start-postprocessing').click(function(){
 	videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>', '<%=getVideoConversionStatusURL%>', <%=reqVideo.getVideoId()%>);
 });
