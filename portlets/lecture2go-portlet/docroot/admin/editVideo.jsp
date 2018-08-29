@@ -686,8 +686,10 @@ function updateVideoFileName(file){
 				on: {
 					   success: function() {
 					     var jsonResponse = this.get('responseData');
-			           	
-					     videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>','<%=getVideoConversionStatusURL%>',<%=reqVideo.getVideoId()%>);
+						 <c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider")%>'>
+					     	videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>','<%=getVideoConversionStatusURL%>',<%=reqVideo.getVideoId()%>);
+						 </c:if>
+
 					     toggleShare();
 					   }
 				}
@@ -1126,15 +1128,18 @@ AUI().use('aui-node',
   }
 );
 
-$('#start-postprocessing').click(function(){
-	videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>', '<%=getVideoConversionStatusURL%>', <%=reqVideo.getVideoId()%>);
-});
+<c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider")%>'>
+	$('#start-postprocessing').click(function(){
+		videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>', '<%=getVideoConversionStatusURL%>', <%=reqVideo.getVideoId()%>);
+	});
+	AUI().ready('', function(A){
+		// check conversion status
+		videoProcessor.pollStatus('<portlet:namespace/>','<%=getVideoConversionStatusURL%>','<%=convertVideoURL%>',<%=reqVideo.getVideoId()%>);
+	});
+</c:if>
 
 
-AUI().ready('', function(A){
-	// check conversion status
-	videoProcessor.pollStatus('<portlet:namespace/>','<%=getVideoConversionStatusURL%>','<%=convertVideoURL%>',<%=reqVideo.getVideoId()%>);
-});
+
 </script>
 
 <!-- Template -->

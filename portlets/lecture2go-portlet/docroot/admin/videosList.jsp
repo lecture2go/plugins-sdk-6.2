@@ -326,11 +326,13 @@
 </div>
 
 <script>
-AUI().ready('', function(A){
-	// check conversion status for every video
-	$('*[data-video-id]').each(function(){
-		videoProcessor.pollStatus('<portlet:namespace/>','<%=getVideoConversionStatusURL%>', '<%=convertVideoURL%>', $(this).attr("data-video-id"))
-	})
-});
+<c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider")%>'>
+	AUI().ready('', function(A){
+		// check conversion status for every video
+		$('*[data-video-id]').each(function(){
+			videoProcessor.pollStatus('<portlet:namespace/>','<%=getVideoConversionStatusURL%>', '<%=convertVideoURL%>', $(this).attr("data-video-id"))
+		})
+	});
+</c:if>
 
 </script>
