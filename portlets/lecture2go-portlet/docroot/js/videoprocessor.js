@@ -42,7 +42,8 @@ var videoProcessor = {
 		                 ].join("\n")).add(videoProcessor.getToolTipHtml());
 	},
 	convert: function(namespace, convertVideoURL, videoConversionStatusURL, id) {
-		$('*[data-video-id="'+id+'"]').html(videoProcessor.getConversionInitializedHtml());
+		$videoconversionNode = $('*[data-video-id="'+id+'"]');
+		$videoconversionNode.html(videoProcessor.getConversionInitializedHtml());
 		AUI().use('aui-io-request', 'aui-node',
 			function(A){
 				var videoId = namespace + "videoId";
@@ -56,7 +57,13 @@ var videoProcessor = {
 				 	//get server response
 					on: {
 						   success: function() {
-							   videoProcessor.pollStatus(namespace, videoConversionStatusURL, convertVideoURL, id);
+							   var success = this.get('responseData').status;
+							   if (success) {
+								   videoProcessor.pollStatus(namespace, videoConversionStatusURL, convertVideoURL, id);
+							   } else {
+									$videoconversionNode.html(videoProcessor.getConversionFailedHtml(namespace, convertVideoURL, videoConversionStatusURL, id));
+							   }
+
 						   }
 					}
 				});	
