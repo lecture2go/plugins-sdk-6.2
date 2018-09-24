@@ -170,7 +170,7 @@ public class OpenAccessVideos extends MVCPortlet {
 	    	try{
 	    		lectureseries = LectureseriesLocalServiceUtil.getLectureseries(objectId);
 	    		if(!secLink){
-	    			video = VideoLocalServiceUtil.getFullVideo(lectureseries.getLatestOpenAccessVideoId());
+	    			video = VideoLocalServiceUtil.getFullVideo(lectureseries.getPreviewVideoId());
 	    		}else{
 	    			Long videoId = VideoLocalServiceUtil.getLatestClosedAccessVideoId(objectId);
 	    			video = VideoLocalServiceUtil.getFullVideo(videoId);
