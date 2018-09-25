@@ -8,7 +8,7 @@
 						#set ($nav_item_caret="")
 						#set ($nav_item_css_class="lfr-nav-item")
 						#set ($nav_item_link_css_class="")
-
+						#set ($has_child_css_class="")
 					#if ($nav_item.isSelected())
 						#set ($nav_item_attr_selected="aria-selected='true'")
 						#set ($nav_item_css_class="$nav_item_css_class selected active")
