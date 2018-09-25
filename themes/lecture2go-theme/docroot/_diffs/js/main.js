@@ -43,9 +43,9 @@ function fixNavigationHoverOnChromeTouchDevices() {
 
 	if(isTouchDevice() && isChrome){
 		$(".nav>.lfr-nav-item").not(".responsive_li_item").mouseenter(function(){
-			this.addClass("hover open");
+			$(this).addClass("hover open");
 		}).mouseleave(function() {
-			this.removeClass("hover open");
+			$(this).removeClass("hover open");
 		});
 	}
 }
