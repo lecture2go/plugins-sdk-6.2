@@ -124,6 +124,10 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		return rvl;
 	}
 
+	public int countByLectureseries(Long lectureseriesId) throws SystemException {
+		return videoPersistence.countByLectureseries(lectureseriesId);
+	}
+
 	public List<Video> getByProducerAndLectureseries(Long producerId, Long lectureseriesId) throws SystemException {
 		List<Video> vl = videoPersistence.findByProducerAndLectureseries(producerId, lectureseriesId);
 		return vl;
@@ -576,6 +580,10 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		}
 	}
 
+	public int countByLectureseriesAndOpenaccess(Long lectureseriesId, int openAccess) throws SystemException{
+		return videoPersistence.countByLectureseriesAndOpenaccess(lectureseriesId, openAccess);
+	}
+	
 	public List<Video> getByLectureseriesAndOpenaccess(Long lectureseriesId, int openAccess) throws SystemException{
 		List<Video> vl = new ArrayList<Video>();
 		if(lectureseriesId!=0)vl=videoPersistence.findByLectureseriesAndOpenaccess(lectureseriesId, openAccess);	
