@@ -693,7 +693,10 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	}	
 
 	public List<Video> getBySearchWordAndLectureseriesId(String word, Long lectureseriesId) throws SystemException{
-		return VideoFinderUtil.findVideosBySearchWordAndLectureseriesId(word, lectureseriesId);
+		List<Video> vl = new ArrayList<Video>();
+		if(lectureseriesId!=0)vl=VideoFinderUtil.findVideosBySearchWordAndLectureseriesId(word, lectureseriesId);	
+		List<Video> rvl = getSortedVideoList(vl, lectureseriesId);		
+		return rvl;
 	}	
 	
 	public List<Video> getByHits(Long hits){
