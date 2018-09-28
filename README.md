@@ -9,6 +9,7 @@ Latest Updates
 ==============
 
 Bugfix Package LG_5005
+[Friday, September 28, 2018]
 
 #1125 RM - Hits after search request for lecture series ignore specific
 order defined by the admin.
