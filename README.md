@@ -7,7 +7,7 @@ Lecture2Go http://lecture2go.uni-hamburg.de is an open source platform for media
 
 Change Log
 ==============
-Bug fix Package LG_5005 on Friday, September 28, 2018
+Bug Fix Package LG_5005 on Friday, September 28, 2018
 
 - 1125 RM - Hits after search request for lecture series ignore specific
 order defined by the admin.
