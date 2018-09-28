@@ -7,19 +7,14 @@ Lecture2Go http://lecture2go.uni-hamburg.de is an open source platform for media
 
 Change Log
 ==============
-
 Bugfix Package LG_5005 on Friday, September 28, 2018
 
 - 1125 RM - Hits after search request for lecture series ignore specific
 order defined by the admin.
-
 - 1187 RM - Upload alert shows wrong upload size limit.
-
 - 1131 RM - Link to the lecture series ignores the defined video list
 order.
-
 - 1202 RM - Submenu does not work on touch screen systems with the chrome
 browser.
-
 - 1185 RM - Incorrect number of videos is displayed on the catalogue site
 for lecture series.
