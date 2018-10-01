@@ -235,7 +235,7 @@
 							    <%}%>
     		
 								<%if(video.isHasChapters() || video.isHasComments()){%>
-									    <div class="tab-pane" id="chapters">
+									    <ul class="tab-pane" id="chapters">
 									    	<liferay-portlet:resourceURL id="showSegments" var="segmentsURL" />
 											<script type="text/javascript">
 												$.ajax({
