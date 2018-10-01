@@ -17,9 +17,6 @@
 								<aui:input name="embed_code1" label="embed-html5" helpMessage="about-html5-embed" required="false" id="embed_code1" readonly="true" value="${video.embedHtml5}" onclick="document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_embed_code1.focus();document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_embed_code1.select();"/>							
 							</li>
 						</c:if>
-						<li>
-							<aui:input name="embed_code4" label="embed-commsy" helpMessage="about-commsy-embed" required="false" id="embed_code4" readonly="true" value="(:lecture2go ${video.videoId}:)" onclick="document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_embed_code4.focus();document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_embed_code4.select();"/>
-						</li>
 						<c:if test="${video.lectureseriesId>0}">
 							<li>
 								<aui:input name="embed_code2" label="lecture-series-url" helpMessage="about-lecture-series-url" required="false" id="embed_code2" readonly="true" value="${video.lectureseriesUrl}" onclick="document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_embed_code2.focus();document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_embed_code2.select();"/>
