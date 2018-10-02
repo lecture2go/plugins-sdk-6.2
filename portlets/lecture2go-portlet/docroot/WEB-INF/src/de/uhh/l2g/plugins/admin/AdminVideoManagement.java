@@ -382,8 +382,6 @@ public class AdminVideoManagement extends MVCPortlet {
 				} catch (NullPointerException e){
 					//e.printStackTrace();
 				}	
-				//
-				FFmpegManager.createThumbnail(fileLocation, thumbnailLocation);
 			} catch (NumberFormatException e) {
 				//e.printStackTrace();
 			} catch (SystemException e) {
