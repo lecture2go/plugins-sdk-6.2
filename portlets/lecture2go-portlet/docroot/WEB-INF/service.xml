@@ -489,6 +489,10 @@
         <finder name="Year" return-type="Collection">
             <finder-column name="year"></finder-column>
         </finder>
+        <finder name="PrefixAndYear" return-type="Collection">
+            <finder-column name="prefix"></finder-column>
+            <finder-column name="year"></finder-column>
+        </finder>
     </entity>
     <entity name="Category" local-service="true" remote-service="false">
     	<column name="categoryId" type="long" primary="true" id-type="increment"></column>
