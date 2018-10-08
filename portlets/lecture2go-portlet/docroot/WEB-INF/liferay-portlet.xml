@@ -197,10 +197,10 @@
 				</trigger>   
 			</scheduler-entry> 
 			<scheduler-entry> 
-				<scheduler-description>Term Scheduler is used to generate a new Term every half a year</scheduler-description> 
+				<scheduler-description>This scheduler is used to collect Statistical Data from Database</scheduler-description> 
 				<scheduler-event-listener-class>de.uhh.l2g.plugins.util.TermScheduler</scheduler-event-listener-class>  
 				<trigger>  
-					<cron><cron-trigger-value>0 0 * * 0 ? </cron-trigger-value></cron>  
+					<cron><cron-trigger-value>0 0 0,12 ? * *</cron-trigger-value></cron>  
 				</trigger>   
 			</scheduler-entry>    	
 			<instanceable>false</instanceable>
