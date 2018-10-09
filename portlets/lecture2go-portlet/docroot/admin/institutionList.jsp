@@ -1,3 +1,4 @@
+<%@page import="com.liferay.portal.service.persistence.PortletUtil"%>
 <%@include file="/init.jsp"%>
 
 
@@ -13,50 +14,36 @@
 
 <%
 //Variables required for Permissions
-
-//On Portlet Level:
-//portlet name like ind ResourcePermission Table: Resource Name != Portlet Name from portlet.xml
 String institutionPortletName = portletDisplay.getRootPortletId();
-
-//Scope(PrimKey): company wide, scope group or instance
-//Scope GroupId
-long groupId = scopeGroupId; 
-//long groupId = themeDisplay.getLayout().getGroupId();
-//Company Id of Application
-long companyId = themeDisplay.getLayout().getCompanyId();
-String companyIdString = String.valueOf(companyId);
-String groupIdString = String.valueOf(groupId);
 
 //Portlet Instance Id (can be string)
 String institutionPortletPrimKey = portletDisplay.getResourcePK();
-//On Model Level:
-String institutionModel = Institution.class.getName();
-String institutionHostModel = Institution_Host.class.getName();
 
+//page name
 String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 
 %>
 <%--END: DEBUG INFO--%>
 <%
 	//Current Selection in Request Object
-	long institutionId = Long.valueOf((Long) renderRequest.getAttribute("institutionId"));
-	long hostId = Long.valueOf((Long) renderRequest.getAttribute("hostId"));
+	long institutionId = ParamUtil.getLong(request, "institutionId");
+	long hostId = ParamUtil.getLong(request, "hostId");
 
 	//Get Top Level institution of current scope
-	Institution root = InstitutionLocalServiceUtil.getRootByGroupId(companyId, groupId);
+	Institution root = InstitutionLocalServiceUtil.getByParentId(0).iterator().next();
 	long rootId = GetterUtil.getLong(root.getInstitutionId());
 	
 	//Get First Level institution List
-	List<Institution> institutions = InstitutionLocalServiceUtil.getByGroupIdAndParent(groupId,rootId);
+	List<Institution> institutions = InstitutionLocalServiceUtil.getByParentId(rootId);
 	
 	//Get StreamingServers
-	List<Host> hostList = HostLocalServiceUtil.getByGroupId(groupId);
+	List<Host> hostList = HostLocalServiceUtil.getHosts(0, 100);
 	//System.out.println(hostList.toString());
 	
 	//Sort preset for first level Institutions
 	int maxOrder = InstitutionLocalServiceUtil.getMaxSortByParentId(rootId)+1;
 
-	Institution treeBase = InstitutionLocalServiceUtil.getByGroupIdAndId(groupId, rootId);
+	Institution treeBase = root;
     int ownInstitutionMax = InstitutionLocalServiceUtil.getMaxSortByParentId(rootId)+1;
 			
 %>
@@ -112,27 +99,10 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 			</aui:fieldset>
 		</c:if>
 		<%--INSTITUTION LIST END--%>
-
-		<%--ADD SUB_INSTITUTION -> Only Required if user can't see full listing, but is allowed to manage own entries --%>
-		<%-- Permission on Portlet Scope --%>
-		<c:if test='<%= permissionAdmin %>'>
-			<aui:fieldset column="false" label="sub-institutions" >
-				<aui:layout cssClass="aist">
-					<aui:fieldset>
-							<aui:form action="<%= addSubInstitutionURL %>" name="fm">
-								<aui:input name="subInstitution" label="sub-institution-name" inlineField="true" />
-								<aui:input cssClass="subInstOrder" name="subInstitutionOrder" label="order" inlineField="true" value='<%= ownInstitutionMax  %>'/>
-								<aui:input name='subInstitutionParentId' type='hidden' inlineField="true" value='<%= treeBase.getInstitutionId() %>'/>	
-								<aui:button type="submit" value="add" ></aui:button>				
-							</aui:form>
-				    </aui:fieldset>
-				</aui:layout>
-			</aui:fieldset>
-		</c:if>
 	
 		<%--TOP LEVEL INSTITUTIONS START--%>
 			<liferay-ui:search-container searchContainer="<%= searchInstitutionContainer %>" curParam ="curOuter" orderByType="asc" emptyResultsMessage="there-are-no-institutions" delta="5" iteratorURL="<%= outerURL %>" deltaConfigurable="true">
-				<liferay-ui:search-container-results results="<%=InstitutionLocalServiceUtil.getByGroupIdAndParent(groupId, rootId, searchContainer.getStart(), searchContainer.getEnd())%>" total="<%=InstitutionLocalServiceUtil.getByGroupIdAndParentCount(groupId, rootId)%>" />
+				<liferay-ui:search-container-results results="<%=InstitutionLocalServiceUtil.getByParentId(rootId)%>" total="<%=InstitutionLocalServiceUtil.getByParentId(rootId).size()%>" />
 				<liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.Institution" modelVar="institution" keyProperty="institutionId"  escapedModel="<%= false %>" indexVar="i">
 		        <liferay-ui:search-container-column-text name="institution" cssClass="toplevel-institutions">
 				        <%
@@ -142,7 +112,7 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 				 			String id_row = "Inst"+String.valueOf(institution.getInstitutionId());
 				 			String curParam_row = "curInner"+String.valueOf(institution.getInstitutionId());
 				 			long outerOrder = institution.getSort();
-				 			Host curHost = Institution_HostLocalServiceUtil.getByGroupIdAndInstitutionId(companyId, groupId, institution.getInstitutionId());
+				 			Host curHost = Institution_HostLocalServiceUtil.getByInstitutionId(institution.getInstitutionId());
  							String curHostName = AdminStreamerManagement.DEFAULT_STREAMER;
 				 			if (curHost != null && curHost.getDefaultHost() < 1 ) curHostName = curHost.getName();
 				 			int subInstitutionMax = InstitutionLocalServiceUtil.getMaxSortByParentId(institution.getPrimaryKey())+1;
@@ -183,7 +153,7 @@ String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 									</aui:fieldset>
 						
 								<liferay-ui:search-container searchContainer="<%= searchSubInstitutionContainer %>" curParam ="<%=curParam_row%>" orderByType="asc" emptyResultsMessage="there-are-no-institutions" iteratorURL="<%= innerURL %>" delta="100" deltaConfigurable="true" >
-									<liferay-ui:search-container-results results="<%=InstitutionLocalServiceUtil.getByGroupIdAndParent(groupId, institution.getPrimaryKey(), searchContainer.getStart(), searchContainer.getEnd())%>" total="<%=InstitutionLocalServiceUtil.getByGroupIdAndParentCount(groupId, institution.getPrimaryKey())%>" />
+									<liferay-ui:search-container-results results="<%=InstitutionLocalServiceUtil.getByParentId(institution.getPrimaryKey())%>" total="<%=InstitutionLocalServiceUtil.getByParentId( institution.getPrimaryKey()).size()%>" />
 										<liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.Institution" modelVar="subInstitution" rowVar="thisRow" keyProperty="institutionId"  escapedModel="<%=false%>" indexVar="j">
 										<c:choose>
 											<c:when  test='<%= true %>'> 

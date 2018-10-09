@@ -14,19 +14,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.model.ResourcePermission;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
-import de.uhh.l2g.plugins.NoPropertyException;
-import de.uhh.l2g.plugins.model.Institution;
-import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
-import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
-import de.uhh.l2g.plugins.util.PermissionManager;
 
 public class AdminInstitutionManagement extends MVCPortlet {
 	protected static Log LOG = LogFactoryUtil.getLog(AdminInstitutionManagement.class.getName());
@@ -46,12 +36,11 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		String institutionName = "";
 		String backURL = request.getParameter("backURL");
 		try {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(Institution.class.getName(), request);
 			institutionName = ParamUtil.getString(request, "institution");
 			long hostId = ParamUtil.getLong(request, "serverselect");
 			long parentId = ParamUtil.getLong(request, "parent");
 			int sort = ParamUtil.getInteger(request, "order");
-			InstitutionLocalServiceUtil.addInstitution(institutionName, hostId, parentId, sort, serviceContext);
+			InstitutionLocalServiceUtil.addInstitution(institutionName, hostId, parentId, sort);
 			response.sendRedirect(backURL);
 		} catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
@@ -67,12 +56,11 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		String institutionName = "";
 		String backURL = request.getParameter("backURL");
 		try {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(Institution.class.getName(), request);
 			institutionName = ParamUtil.getString(request, "subInstitution");
 			long hostId = 0;
 			long parentId = ParamUtil.getLong(request, "subInstitutionParentId");
 			int sort = ParamUtil.getInteger(request, "subInstitutionOrder");
-			InstitutionLocalServiceUtil.addInstitution(institutionName, hostId, parentId, sort, serviceContext);
+			InstitutionLocalServiceUtil.addInstitution(institutionName, hostId, parentId, sort);
 			response.sendRedirect(backURL);
 		} catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
@@ -81,13 +69,12 @@ public class AdminInstitutionManagement extends MVCPortlet {
 	}
 
 	public void updateInstitution(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(Institution.class.getName(), request);
 		String name = ParamUtil.getString(request, "outerListInstitution");
 		long institutionId = ParamUtil.getLong(request, "outerListInstitutionId");
 		int sort = ParamUtil.getInteger(request, "outerListOrder");
 		String backURL = request.getParameter("backURL");
 		try {
-			InstitutionLocalServiceUtil.updateInstitution(institutionId, name, sort, serviceContext);
+			InstitutionLocalServiceUtil.updateInstitution(institutionId, name, sort);
 			response.sendRedirect(backURL);
 		} catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
@@ -96,13 +83,12 @@ public class AdminInstitutionManagement extends MVCPortlet {
 	}
 
 	public void updateSubInstitution(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(Institution.class.getName(), request);
 		String institutionName = ParamUtil.getString(request, "innerListInstitution");
 		long institutionId = ParamUtil.getLong(request, "innerListInstitutionId");
 		int sort = ParamUtil.getInteger(request, "innerListOrder");
 		String backURL = request.getParameter("backURL");
 		try {
-			InstitutionLocalServiceUtil.updateInstitution(institutionId, institutionName, sort, serviceContext);
+			InstitutionLocalServiceUtil.updateInstitution(institutionId, institutionName, sort);
 			response.sendRedirect(backURL);
 		} catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
@@ -114,8 +100,7 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		long institutionId = ParamUtil.getLong(request, "outerListInstitutionId");
 		String backURL = request.getParameter("backURL");
 		try {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(Institution.class.getName(), request);
-			InstitutionLocalServiceUtil.deleteInstitution(institutionId, serviceContext);
+			InstitutionLocalServiceUtil.deleteInstitution(institutionId);
 			response.sendRedirect(backURL);
 		} catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
@@ -127,9 +112,8 @@ public class AdminInstitutionManagement extends MVCPortlet {
 		long institutionId = ParamUtil.getLong(request, "innerListInstitutionId");
 		String backURL = request.getParameter("backURL");
 		try {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(Institution.class.getName(), request);
 			response.sendRedirect(backURL);
-			InstitutionLocalServiceUtil.deleteInstitution(institutionId, serviceContext);
+			InstitutionLocalServiceUtil.deleteInstitution(institutionId);
 		} catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
 			LOG.error("Failed to remove SubInstitution");

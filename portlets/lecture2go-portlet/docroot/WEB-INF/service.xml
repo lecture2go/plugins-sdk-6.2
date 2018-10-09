@@ -74,8 +74,6 @@
     	<column name="www" type="String"></column>
     	<column name="level" type="int"></column>
     	<column name="sort" type="int"></column>
-        <column name="groupId" type="long"></column>
-        <column name="companyId" type="long"></column>
 		<order by="asc"> <order-column name="sort" />
 		</order>
     	<finder name="Parent" return-type="Collection">
@@ -100,58 +98,6 @@
     		<finder-column name="level"></finder-column>
     		<finder-column name="typ"></finder-column>
     	</finder>
-        <finder name="GroupId" return-type="Collection">
-            <finder-column name="groupId"></finder-column>
-        </finder>
-        <finder name="G_P" return-type="Collection">
-            <finder-column name="groupId"></finder-column>
-            <finder-column name="parentId"></finder-column>
-        </finder>
-        <finder name="G_N" return-type="Collection">
-            <finder-column name="name"></finder-column>
-            <finder-column name="groupId"></finder-column>
-        </finder>
-        <finder name="G_T" return-type="Collection">
-            <finder-column name="typ"></finder-column>
-            <finder-column name="groupId"></finder-column>
-        </finder>
-        <finder name="G_W" return-type="Collection">
-            <finder-column name="www"></finder-column>
-            <finder-column name="groupId"></finder-column>
-        </finder>
-        <finder name="G_L" return-type="Collection">
-            <finder-column name="level"></finder-column>
-            <finder-column name="groupId"></finder-column>
-        </finder>
-        <finder name="G_S" return-type="Collection">
-            <finder-column name="sort"></finder-column>
-            <finder-column name="groupId"></finder-column>
-        </finder>
-        <finder name="G_L_T" return-type="Collection">
-            <finder-column name="level"></finder-column>
-            <finder-column name="typ"></finder-column>
-            <finder-column name="groupId"></finder-column>
-        </finder>
-        <finder name="G_P_S" return-type="Collection">
-            <finder-column name="groupId"></finder-column>
-            <finder-column name="parentId"></finder-column>
-            <finder-column name="sort"></finder-column>
-        </finder>
-         <finder name="Root" return-type="Institution" where="parentId =0" unique="true">
-            <finder-column name="companyId"></finder-column>
-            <finder-column name="groupId"></finder-column>
-        </finder>
-        <finder name="G_I" return-type="Institution">
-            <finder-column name="groupId"></finder-column>
-            <finder-column name="institutionId"></finder-column>
-        </finder>
-        <finder name="CompanyId" return-type="Collection">
-            <finder-column name="companyId"></finder-column>
-        </finder>
-        <finder name="ParentIdAndCompanyId" return-type="Institution">
-            <finder-column name="parentId"></finder-column>
-            <finder-column name="companyId"></finder-column>
-        </finder>
     </entity>
     <entity name="Lectureseries_Institution" local-service="true" remote-service="false">
         <column name="lectureseriesInstitutionId" type="long" primary="true" id-type="increment"></column>
@@ -219,59 +165,34 @@
     	<column name="port" type="int"></column>
     	<column name="serverRoot" type="String"></column>
     	<column name="name" type="String"></column>
-		<column name="groupId" type="long"></column>
-        <column name="companyId" type="long"></column>
         <column name="defaultHost" type="int"></column>
         <order by="asc"> <order-column name="serverRoot" />
         </order>
-		<finder name="GroupId" return-type="Collection">
-            <finder-column name="groupId"></finder-column>
-        </finder>
-        <finder name="CompanyIdAndGroupId" return-type="Collection">
-       		<finder-column name="companyId"></finder-column>
-            <finder-column name="groupId"></finder-column>
-        </finder>
-        <finder name="G_H" return-type="Host">
-            <finder-column name="groupId"></finder-column>
+        <finder name="hostId" return-type="Host">
             <finder-column name="hostId"></finder-column>
         </finder>
-        <finder name="DefaultHost" return-type="Host" where="defaultHost &gt; 0">
-            <finder-column name="companyId"></finder-column>
-            <finder-column name="groupId"></finder-column>
+        <finder name="protocol" return-type="Collection">
+            <finder-column name="protocol"></finder-column>
+        </finder>
+        <finder name="streamer" return-type="Collection">
+            <finder-column name="streamer"></finder-column>
+        </finder>
+        <finder name="name" return-type="Host">
+            <finder-column name="name"></finder-column>
+        </finder>
+        <finder name="defaultHost" return-type="Host">
+            <finder-column name="defaultHost"></finder-column>
         </finder>
     </entity>
     <entity name="Institution_Host" local-service="true" remote-service="false">
         <column name="institutionHostId" type="long" primary="true"></column>
         <column name="institutionId" type="long"></column>
         <column name="hostId" type="long"></column>
-        <column name="groupId" type="long"></column>
-        <column name="companyId" type="long"></column>
         <finder name="institutionId" return-type="Collection" db-index="false">
             <finder-column name="institutionId" case-sensitive="false"></finder-column>
         </finder>
         <finder name="hostId" return-type="Collection" db-index="false">
             <finder-column name="hostId"></finder-column>
-        </finder>
-        <finder name="G_H" unique="false" return-type="Collection">
-            <finder-column name="groupId"></finder-column>
-            <finder-column name="hostId"></finder-column>
-        </finder>
-        <finder name="G_I" return-type="Institution_Host" unique="false" db-index="false">
-            <finder-column name="groupId"></finder-column>
-            <finder-column name="institutionId"></finder-column>
-        </finder>
-        <finder name="GroupId" return-type="Collection">
-            <finder-column name="groupId"></finder-column>
-        </finder>
-        <finder name="C_G_H" return-type="Collection">
-            <finder-column name="companyId"></finder-column>
-            <finder-column name="groupId"></finder-column>
-            <finder-column name="hostId"></finder-column>
-        </finder>
-        <finder name="C_G_I" return-type="Collection">
-            <finder-column name="companyId"></finder-column>
-            <finder-column name="groupId"></finder-column>
-            <finder-column name="institutionId"></finder-column>
         </finder>
     </entity>
     <entity name="Office" local-service="true" remote-service="false">
