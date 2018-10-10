@@ -22,8 +22,8 @@ import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
  */
 public final class TermScheduler extends PortletScheduler implements MessageListener {
 
-	private int wise = 8; // September
-	private int sose = 2; // March
+	private int wise = 9; // begins October
+	private int sose = 3; // begins April
 	
 	public int getWise() {
 		return wise;
@@ -57,17 +57,22 @@ public final class TermScheduler extends PortletScheduler implements MessageList
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		int month = cal.get(Calendar.MONTH);
+
 		Term term = new TermImpl();
 		// represent year as a string
 		int year = cal.get(Calendar.YEAR);
 		String yearString = String.valueOf(year).substring(2);
-
-		// checks if month is april
-		if (month >= 0 && month <= sose) {
+		
+		boolean create = false;
+		// prepare for sose
+		if (month >= (sose-1) && month <= sose) {
 			String prefix = "SoSe";
 			term.setYear(yearString);
 			term.setPrefix(prefix);
-		}else {
+			create = true;
+		}
+		//prepare for wise
+		if (month >= (wise-1) && month <= wise) {
 			String prefix = "WiSe";
 			int nextYear = ++year;
 			String nextYearString = String.valueOf(nextYear).substring(2);
@@ -76,14 +81,17 @@ public final class TermScheduler extends PortletScheduler implements MessageList
 			String composedYear = yearString + "/" + nextYearString;
 			term.setYear(composedYear);
 			term.setPrefix(prefix);
+			create = true;
 		}
 		// create if not yet done
 		try {
 			int foundedTerms = 0;
 			foundedTerms = TermLocalServiceUtil.getByPrefixAndYear(term.getPrefix(), term.getYear()).size();
-			if(foundedTerms==0){
+			
+			if(foundedTerms==0 && create == true){
 				TermLocalServiceUtil.addTerm(term);
 			}
+			LOG.info("Term Scheduler finished.");
 		} catch (Exception e) {
 			LOG.info("Error runnig the term scheduler.");
 		} 
