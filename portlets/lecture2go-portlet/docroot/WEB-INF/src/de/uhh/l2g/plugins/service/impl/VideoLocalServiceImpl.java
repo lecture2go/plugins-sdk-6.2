@@ -765,9 +765,12 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		if(vl == null || lectureseriesId < 1)
 			return sortedVideoList;
 		
-		for(Video objectVideo: vl) {
-			if(objectVideo.getFilename().trim().length()>0)sortedVideoList.add(objectVideo); 
+		ListIterator<Video> vli = vl.listIterator();
+		while(vli.hasNext()){
+			Video objectVideo = getFullVideo(vli.next().getVideoId());
+			if(objectVideo.getFilename().trim().length()>0)sortedVideoList.add(objectVideo);
 		}
+
 		int sortVideo = 0;
 		try {
 			Lectureseries lectureseriesObject = lectureseriesPersistence.findByPrimaryKey(lectureseriesId);
