@@ -12,25 +12,13 @@
 <%!com.liferay.portal.kernel.dao.search.SearchContainer<Host> searchHostContainer = null;%>
 
 <%
-String hostModel = Host.class.getName();
 PortletURL portletURL = renderResponse.createRenderURL();
-
-//Scope(PrimKey): company wide, scope group or instance
-//Scope GroupId
-long groupId = scopeGroupId; 
-//long groupId = themeDisplay.getLayout().getGroupId();
-//Company Id of Application
-long companyId = themeDisplay.getLayout().getCompanyId();
-String companyIdString = String.valueOf(companyId);
-String groupIdString = String.valueOf(groupId);
 String repDirectory = PropsUtil.get("lecture2go.media.repository");
 
 //Get StreamingServer Defaults
-Host defaultHost = HostLocalServiceUtil.getByDefault(companyId, groupId);
+Host defaultHost = HostLocalServiceUtil.getDefaultHost();
 
-
-
-if (defaultHost != null) {%>	
+ if (defaultHost != null) {%>	
 	<%--STREAMING SERVER START--%>
 		<%if(permissionAdmin){ %>
 			<aui:fieldset column="false" label="streaming-server" cssClass="add-institution" >
@@ -51,7 +39,7 @@ if (defaultHost != null) {%>
 			
 			<%-- LIST --%>
 				<liferay-ui:search-container searchContainer="<%= searchHostContainer %>" curParam ="curStreamingServer" orderByType="asc" emptyResultsMessage="there-are-no-hosts" iteratorURL="<%= innerURL %>" delta="20" deltaConfigurable="true" >
-					<liferay-ui:search-container-results results="<%=HostLocalServiceUtil.getByGroupId(groupId, searchContainer.getStart(), searchContainer.getEnd())%>" total="<%=HostLocalServiceUtil.getByGroupIdCount(groupId)%>" />
+					<liferay-ui:search-container-results results="<%=HostLocalServiceUtil.getAll(searchContainer.getStart(), searchContainer.getEnd())%>" total="<%=HostLocalServiceUtil.countAll()%>" />
 					<liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.Host" modelVar="Hosts" rowVar="thisRow" keyProperty="hostId"  escapedModel="<%= false %>" indexVar="k">
 	        			<liferay-ui:search-container-column-text name="Host" cssClass="toplevel-institutions">
 		        			<c:choose>
@@ -59,7 +47,7 @@ if (defaultHost != null) {%>
 			        		    	<%--DELETE: For advanced security, this should only be generated if user is allowed to delete Hosts--%>	    
 					        		<portlet:actionURL name="deleteStreamingServer" var="deleteStreamingServerURL">
 					        			<c:choose>
-					        				<c:when test='<%=  HostLocalServiceUtil.getLockingElements(groupId, Hosts.getHostId()) < 1 %>'>
+					        				<c:when test='<%=  HostLocalServiceUtil.getLockingElements(Hosts.getHostId()) < 1 %>'>
 					        					<portlet:param name="curStreamingServerId" value='<%= (new Long(Hosts.getHostId())).toString() %>' />
 											</c:when>
 											<c:otherwise>
@@ -86,7 +74,7 @@ if (defaultHost != null) {%>
 											<aui:input name="curStreamingServerId" type='hidden' inlineField="true" value = "<%= (new Long(Hosts.getHostId())).toString() %>"/>
 											<aui:button type="submit" value="edit"></aui:button>
 												<%--DELETE --%>
-												<c:if test='<%= (permissionAdmin||permissionCoordinator) && HostLocalServiceUtil.getLockingElements(groupId, Hosts.getHostId()) < 1 && !(Hosts.getDefaultHost() > 0) %>'>
+												<c:if test='<%= (permissionAdmin||permissionCoordinator) && HostLocalServiceUtil.getLockingElements(Hosts.getHostId()) < 1 && !(Hosts.getDefaultHost() > 0) %>'>
 													<aui:button name="delete" value="delete" type="button" href="<%=deleteStreamingServerURL.toString() %>" />
 												</c:if>
 										</aui:fieldset>

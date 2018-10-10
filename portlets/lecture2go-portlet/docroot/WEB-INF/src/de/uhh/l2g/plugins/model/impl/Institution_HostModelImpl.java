@@ -59,11 +59,9 @@ public class Institution_HostModelImpl extends BaseModelImpl<Institution_Host>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "institutionHostId", Types.BIGINT },
 			{ "institutionId", Types.BIGINT },
-			{ "hostId", Types.BIGINT },
-			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT }
+			{ "hostId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Institution_Host (institutionHostId LONG not null primary key,institutionId LONG,hostId LONG,groupId LONG,companyId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Institution_Host (institutionHostId LONG not null primary key,institutionId LONG,hostId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Institution_Host";
 	public static final String ORDER_BY_JPQL = " ORDER BY institution_Host.institutionHostId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Institution_Host.institutionHostId ASC";
@@ -79,11 +77,9 @@ public class Institution_HostModelImpl extends BaseModelImpl<Institution_Host>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.Institution_Host"),
 			true);
-	public static long COMPANYID_COLUMN_BITMASK = 1L;
-	public static long GROUPID_COLUMN_BITMASK = 2L;
-	public static long HOSTID_COLUMN_BITMASK = 4L;
-	public static long INSTITUTIONID_COLUMN_BITMASK = 8L;
-	public static long INSTITUTIONHOSTID_COLUMN_BITMASK = 16L;
+	public static long HOSTID_COLUMN_BITMASK = 1L;
+	public static long INSTITUTIONID_COLUMN_BITMASK = 2L;
+	public static long INSTITUTIONHOSTID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Institution_Host"));
 
@@ -127,8 +123,6 @@ public class Institution_HostModelImpl extends BaseModelImpl<Institution_Host>
 		attributes.put("institutionHostId", getInstitutionHostId());
 		attributes.put("institutionId", getInstitutionId());
 		attributes.put("hostId", getHostId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -151,18 +145,6 @@ public class Institution_HostModelImpl extends BaseModelImpl<Institution_Host>
 
 		if (hostId != null) {
 			setHostId(hostId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 	}
 
@@ -220,57 +202,13 @@ public class Institution_HostModelImpl extends BaseModelImpl<Institution_Host>
 		return _originalHostId;
 	}
 
-	@Override
-	public long getGroupId() {
-		return _groupId;
-	}
-
-	@Override
-	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
-		}
-
-		_groupId = groupId;
-	}
-
-	public long getOriginalGroupId() {
-		return _originalGroupId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
-	}
-
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
 			Institution_Host.class.getName(), getPrimaryKey());
 	}
 
@@ -298,8 +236,6 @@ public class Institution_HostModelImpl extends BaseModelImpl<Institution_Host>
 		institution_HostImpl.setInstitutionHostId(getInstitutionHostId());
 		institution_HostImpl.setInstitutionId(getInstitutionId());
 		institution_HostImpl.setHostId(getHostId());
-		institution_HostImpl.setGroupId(getGroupId());
-		institution_HostImpl.setCompanyId(getCompanyId());
 
 		institution_HostImpl.resetOriginalValues();
 
@@ -360,14 +296,6 @@ public class Institution_HostModelImpl extends BaseModelImpl<Institution_Host>
 
 		institution_HostModelImpl._setOriginalHostId = false;
 
-		institution_HostModelImpl._originalGroupId = institution_HostModelImpl._groupId;
-
-		institution_HostModelImpl._setOriginalGroupId = false;
-
-		institution_HostModelImpl._originalCompanyId = institution_HostModelImpl._companyId;
-
-		institution_HostModelImpl._setOriginalCompanyId = false;
-
 		institution_HostModelImpl._columnBitmask = 0;
 	}
 
@@ -381,16 +309,12 @@ public class Institution_HostModelImpl extends BaseModelImpl<Institution_Host>
 
 		institution_HostCacheModel.hostId = getHostId();
 
-		institution_HostCacheModel.groupId = getGroupId();
-
-		institution_HostCacheModel.companyId = getCompanyId();
-
 		return institution_HostCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(7);
 
 		sb.append("{institutionHostId=");
 		sb.append(getInstitutionHostId());
@@ -398,10 +322,6 @@ public class Institution_HostModelImpl extends BaseModelImpl<Institution_Host>
 		sb.append(getInstitutionId());
 		sb.append(", hostId=");
 		sb.append(getHostId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -409,7 +329,7 @@ public class Institution_HostModelImpl extends BaseModelImpl<Institution_Host>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Institution_Host");
@@ -426,14 +346,6 @@ public class Institution_HostModelImpl extends BaseModelImpl<Institution_Host>
 		sb.append(
 			"<column><column-name>hostId</column-name><column-value><![CDATA[");
 		sb.append(getHostId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -452,12 +364,6 @@ public class Institution_HostModelImpl extends BaseModelImpl<Institution_Host>
 	private long _hostId;
 	private long _originalHostId;
 	private boolean _setOriginalHostId;
-	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private Institution_Host _escapedModel;
 }

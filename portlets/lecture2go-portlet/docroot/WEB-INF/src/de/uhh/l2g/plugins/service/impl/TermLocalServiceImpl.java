@@ -63,4 +63,14 @@ public class TermLocalServiceImpl extends TermLocalServiceBaseImpl {
 	public void deleteById(Long id) throws NoSuchModelException, SystemException{
 		termPersistence.remove(id);
 	}
+	
+	public List<Term> getByPrefixAndYear(String prefix, String year) throws NoSuchModelException, SystemException{
+		List<Term> ret = new ArrayList<Term>();
+		if(prefix.length() > 0 && year.length() > 0){
+			if(termPersistence.findByPrefixAndYear(prefix, year).size()>0){
+				ret = termPersistence.findByPrefixAndYear(prefix, year);
+			}
+		}
+		return ret;
+	}
 }

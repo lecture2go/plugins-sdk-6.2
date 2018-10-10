@@ -3,7 +3,6 @@ package de.uhh.l2g.plugins.util;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
@@ -21,11 +20,10 @@ import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
  *
  *
  */
-public final class TermScheduler extends PortletScheduler implements
-		MessageListener {
+public final class TermScheduler extends PortletScheduler implements MessageListener {
 
-	private int wise = 36; // 36th week of the year ca. 4 weeks before winter term
-	private int sose = 10; // 10th week of the ca. 4 weeks before summer term
+	private int wise = 8; // September
+	private int sose = 2; // March
 	
 	public int getWise() {
 		return wise;
@@ -43,7 +41,6 @@ public final class TermScheduler extends PortletScheduler implements
 		this.sose = sose;
 	}
 
-	
 	public TermScheduler() {
 		super();
 		LOG = LogFactoryUtil.getLog(TermScheduler.class.getName());
@@ -53,28 +50,24 @@ public final class TermScheduler extends PortletScheduler implements
 	public void receive(Message message) throws MessageListenerException {
 		// uncoment for further debug messages
 		// super.receive(message);
-		LOG.info("Term Scheduler running "
-				+ message.getValues().get(SchedulerEngine.JOB_NAME).toString()
-				+ "...");
+		LOG.info("Term Scheduler running " + message.getValues().get(SchedulerEngine.JOB_NAME).toString() + "...");
+		
 		// Do Job
-		Date dt = new Date();
+		Date date= new Date();
 		Calendar cal = Calendar.getInstance();
-		cal.setTime(dt);
+		cal.setTime(date);
+		int month = cal.get(Calendar.MONTH);
 		Term term = new TermImpl();
-
 		// represent year as a string
 		int year = cal.get(Calendar.YEAR);
 		String yearString = String.valueOf(year).substring(2);
-		System.out.println("year: " + yearString + "week: " + cal.get(Calendar.WEEK_OF_YEAR));
 
 		// checks if month is april
-		if (cal.get(Calendar.WEEK_OF_YEAR) == sose) {
+		if (month >= 0 && month <= sose) {
 			String prefix = "SoSe";
 			term.setYear(yearString);
 			term.setPrefix(prefix);
-		}
-		// checks if month is october
-		else if (cal.get(Calendar.WEEK_OF_YEAR) == wise) {
+		}else {
 			String prefix = "WiSe";
 			int nextYear = ++year;
 			String nextYearString = String.valueOf(nextYear).substring(2);
@@ -84,12 +77,16 @@ public final class TermScheduler extends PortletScheduler implements
 			term.setYear(composedYear);
 			term.setPrefix(prefix);
 		}
-		//
+		// create if not yet done
 		try {
-			TermLocalServiceUtil.addTerm(term);
-		} catch (SystemException e) {
-			System.out.println(e);
-		}
+			int foundedTerms = 0;
+			foundedTerms = TermLocalServiceUtil.getByPrefixAndYear(term.getPrefix(), term.getYear()).size();
+			if(foundedTerms==0){
+				TermLocalServiceUtil.addTerm(term);
+			}
+		} catch (Exception e) {
+			LOG.info("Error runnig the term scheduler.");
+		} 
 	}
 
 	public void start() {
