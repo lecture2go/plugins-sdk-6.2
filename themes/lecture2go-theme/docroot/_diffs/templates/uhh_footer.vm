@@ -107,7 +107,7 @@
 	  </li>
 	</ul>
 	
-	<div class="copyright">&copy; 2016 Universität Hamburg. Alle Rechte vorbehalten</div>
+	<div class="copyright"></div>
 	
 	<div class="audit">
 	  <a title="Zur Seite &quot;audit familiengerechte hochschule&quot;" href="https://www.uni-hamburg.de/gleichstellung/familie/audit.html">
@@ -121,3 +121,8 @@
 	  </a>
 	</div>	
 </div>
+
+<script>
+	var currentYear = (new Date).getFullYear();
+	$(".copyright").text( "\u00A9 "+currentYear+" Universität Hamburg. Alle Rechte vorbehalten");
+</script>
