@@ -163,6 +163,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 	 * @param creatorId
 	 * @return a list with lectureseries which fit to the given filters
 	 */
+	@SuppressWarnings("unchecked")
 	public List<Lectureseries> findFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(Long institutionId, Long parentInstitutionId, Long termId, Long categoryId, Long creatorId, String searchQuery, int limit) {
 		int start =com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS;
 		int stop =com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS;
@@ -177,26 +178,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			session = openSession();
 			String sql = sqlFilterForOpenAccessLectureseries(institutionId, parentInstitutionId, termId, categoryId, creatorId, searchQuery);
 			SQLQuery q = session.createSQLQuery(sql);
-			q.addScalar("number_", Type.STRING);
-			q.addScalar("eventType", Type.STRING);
-			q.addScalar("categoryId", Type.LONG);
-			q.addScalar("name", Type.STRING);
-			q.addScalar("shortDesc", Type.STRING);
-			q.addScalar("termId", Type.LONG);
-			q.addScalar("language", Type.STRING);
-			q.addScalar("facultyName", Type.STRING);
-			q.addScalar("lectureseriesId", Type.STRING);
-			q.addScalar("password_", Type.STRING);
-			q.addScalar("approved", Type.STRING);
-			q.addScalar("longDesc", Type.STRING);
-			q.addScalar("latestOpenAccessVideoId", Type.LONG);
-			q.addScalar("videoSort", Type.INTEGER);
-			q.addScalar("USID", Type.STRING);
-			q.addScalar("previewVideoId", Type.LONG);
-			//additional parameter
-			q.addScalar("latestVideoUploadDate", Type.STRING);
-			q.addScalar("videoCount", Type.INTEGER);		
-			//
+	        q.addEntity("Lectureseries", LectureseriesImpl.class);
 			q.setCacheable(false);
 			
 			/*
@@ -216,10 +198,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 				if (parentInstitutionId > 0) qPos.add(parentInstitutionId);					
 				if (hasSearch) qPos.add("%" + searchQuery + "%");
 			}
-			
-			@SuppressWarnings("unchecked")
-			List <Object[]> l =  (List<Object[]>) QueryUtil.list(q, getDialect(),start , stop);
-			ret = assembleLectureseries(l);
+			ret = (List<Lectureseries>) QueryUtil.list(q, getDialect(), start, stop);
 		} catch (Exception e) {
 			try {
 				throw new SystemException(e);
@@ -243,12 +222,12 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 		// this is an additional query only used for searching. videos which are part of a lectureseries must be searched for the searchquery but are not relevant of the normal filtering
 		
 		//for lecture series
-		String lQuery = "SELECT l.number_, l.eventType, l.categoryId, l.name, l.shortDesc, l.termId, \"\" AS language, \"\" AS facultyName, l.lectureseriesId, NULL AS password_, 1 AS approved, l.longDesc, l. latestOpenAccessVideoId, l.latestVideoUploadDate, l.videoSort, l.USID, l.previewVideoId, COUNT(l.lectureseriesId) as videoCount FROM LG_Video v ";
+		String lQuery = "SELECT l.number_, l.eventType, l.categoryId, l.name, l.shortDesc, l.termId, \"\" AS language, \"\" AS facultyName, l.lectureseriesId, NULL AS password_, 1 AS approved, l.longDesc, l. latestOpenAccessVideoId, l.latestVideoUploadDate, l.latestVideoGenerationDate, l.videoSort, l.USID, l.previewVideoId FROM LG_Video v ";
 			   lQuery+= "JOIN LG_Lectureseries AS l ON (v.lectureseriesId = l.lectureseriesId)";
 		String lQueryForSeach="";
 		
 		//for videos
-		String vQuery = "SELECT \"00.000\" AS number_, NULL AS eventType, 0 AS categoryId, v.title AS name, v.title AS shortDesc, v.termId, \"\" AS language, \"\" AS facultyName, v.videoId AS lectureseriesId, NULL AS password_, 1 AS approved, v.title AS longDesc, v.lectureseriesId AS latestOpenAccessVideoId, v.uploadDate AS latestVideoUploadDate, 1 as videoSort, \"\"  as USID, 0 as previewVideoId, 1 as videoCount FROM LG_Video v ";
+		String vQuery = "SELECT \"00.000\" AS number_, NULL AS eventType, 0 AS categoryId, v.title AS name, v.title AS shortDesc, v.termId, \"\" AS language, \"\" AS facultyName, v.videoId AS lectureseriesId, NULL AS password_, 1 AS approved, v.title AS longDesc, v.lectureseriesId AS latestOpenAccessVideoId, v.uploadDate AS latestVideoUploadDate, v.generationDate as latestVideoGenerationDate, 1 as videoSort, \"\"  as USID, 0 as previewVideoId FROM LG_Video v ";
 		
 		//final query
 		String query = "";
@@ -407,18 +386,6 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 				Date date = format.parse(string);
 				l.setLatestVideoUploadDate(date);
 			}catch (Exception e){}
-			try{
-				Integer nV = VideoLocalServiceUtil.countByLectureseries(l.getLectureseriesId());
-				l.setNumberOfVideos(nV);
-			}catch (Exception e){
-				int i = 0;
-			}
-			try{
-				Integer nOAV = VideoLocalServiceUtil.countByLectureseriesAndOpenaccess(l.getLectureseriesId(), 1);
- 				l.setNumberOfOpenAccessVideos(nOAV);
-			}catch (Exception e){
-				int i = 0;
-			}
 			// 
 			ll.add(l);
 		}
