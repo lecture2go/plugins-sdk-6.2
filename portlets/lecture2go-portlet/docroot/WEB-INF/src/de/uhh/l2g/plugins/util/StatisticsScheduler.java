@@ -67,8 +67,8 @@ public class StatisticsScheduler extends PortletScheduler implements MessageList
 	   int privateVideos = 0;
 	   int publicVideos = 0;
 	   try {
-		   publicVideos=VideoLocalServiceUtil.getByOpenAccess(1).size();
-		   privateVideos=VideoLocalServiceUtil.getByOpenAccess(0).size();
+		   publicVideos=VideoLocalServiceUtil.getByOpenAccessAndUploadedFile(1);
+		   privateVideos=VideoLocalServiceUtil.getByOpenAccessAndUploadedFile(0);
 		   //TODO can not get the service context for using the addEntry method, because of the scheduler! And can't find workaround.
 		   StatisticLocalServiceUtil.add(privateVideos, publicVideos);
 	   } catch (PortalException e) {

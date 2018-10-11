@@ -41,7 +41,7 @@
 		institutions = InstitutionLocalServiceUtil.getAllSortedAsTree(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 		permissionCoordinator = false;
 	}
-	if(permissionCoordinator)institutions = InstitutionLocalServiceUtil.getByParent(CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getInstitutionId());
+	if(permissionCoordinator)institutions = InstitutionLocalServiceUtil.getByParentIdMap(CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId()).getInstitutionId());
 
 	String[] languages = LanguageUtil.get(pageContext, "languages-for-select").split(",");
 	String languageId="";
@@ -69,7 +69,7 @@
 	try{categories = CategoryLocalServiceUtil.getAllCategories(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);}catch(Exception e){}
 
 	Map<String,String> subInstitutions = new LinkedHashMap<String, String>();
-	subInstitutions = InstitutionLocalServiceUtil.getByParent(reqVideo.getRootInstitutionId());
+	subInstitutions = InstitutionLocalServiceUtil.getByParentIdMap(reqVideo.getRootInstitutionId());
 	List<Institution> producersSubInstitutions = InstitutionLocalServiceUtil.getByParentId(reqProducer.getInstitutionId());
 	ListIterator<Institution> itPSI = producersSubInstitutions.listIterator();
 	//video upload path
@@ -119,7 +119,7 @@
     	value: new Date(),
     	maxDate: '+1970/01/30',
     	minDate: false,
-    	step:10
+    	step:15
     });
   });
 </script>
@@ -1135,7 +1135,6 @@ AUI().use('aui-node',
  
   }
 );
-
 
 </script>
 

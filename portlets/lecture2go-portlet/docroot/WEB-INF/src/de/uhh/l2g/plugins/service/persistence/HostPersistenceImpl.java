@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
@@ -82,66 +83,284 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(HostModelImpl.ENTITY_CACHE_ENABLED,
 			HostModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID = new FinderPath(HostModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_FETCH_BY_HOSTID = new FinderPath(HostModelImpl.ENTITY_CACHE_ENABLED,
 			HostModelImpl.FINDER_CACHE_ENABLED, HostImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+			FINDER_CLASS_NAME_ENTITY, "fetchByhostId",
+			new String[] { Long.class.getName() },
+			HostModelImpl.HOSTID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_HOSTID = new FinderPath(HostModelImpl.ENTITY_CACHE_ENABLED,
+			HostModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByhostId",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns the host where hostId = &#63; or throws a {@link de.uhh.l2g.plugins.NoSuchHostException} if it could not be found.
+	 *
+	 * @param hostId the host ID
+	 * @return the matching host
+	 * @throws de.uhh.l2g.plugins.NoSuchHostException if a matching host could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Host findByhostId(long hostId)
+		throws NoSuchHostException, SystemException {
+		Host host = fetchByhostId(hostId);
+
+		if (host == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("hostId=");
+			msg.append(hostId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchHostException(msg.toString());
+		}
+
+		return host;
+	}
+
+	/**
+	 * Returns the host where hostId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param hostId the host ID
+	 * @return the matching host, or <code>null</code> if a matching host could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Host fetchByhostId(long hostId) throws SystemException {
+		return fetchByhostId(hostId, true);
+	}
+
+	/**
+	 * Returns the host where hostId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param hostId the host ID
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching host, or <code>null</code> if a matching host could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Host fetchByhostId(long hostId, boolean retrieveFromCache)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { hostId };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_HOSTID,
+					finderArgs, this);
+		}
+
+		if (result instanceof Host) {
+			Host host = (Host)result;
+
+			if ((hostId != host.getHostId())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_HOST_WHERE);
+
+			query.append(_FINDER_COLUMN_HOSTID_HOSTID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(hostId);
+
+				List<Host> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_HOSTID,
+						finderArgs, list);
+				}
+				else {
+					if ((list.size() > 1) && _log.isWarnEnabled()) {
+						_log.warn(
+							"HostPersistenceImpl.fetchByhostId(long, boolean) with parameters (" +
+							StringUtil.merge(finderArgs) +
+							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					}
+
+					Host host = list.get(0);
+
+					result = host;
+
+					cacheResult(host);
+
+					if ((host.getHostId() != hostId)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_HOSTID,
+							finderArgs, host);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_HOSTID,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (Host)result;
+		}
+	}
+
+	/**
+	 * Removes the host where hostId = &#63; from the database.
+	 *
+	 * @param hostId the host ID
+	 * @return the host that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Host removeByhostId(long hostId)
+		throws NoSuchHostException, SystemException {
+		Host host = findByhostId(hostId);
+
+		return remove(host);
+	}
+
+	/**
+	 * Returns the number of hosts where hostId = &#63;.
+	 *
+	 * @param hostId the host ID
+	 * @return the number of matching hosts
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByhostId(long hostId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_HOSTID;
+
+		Object[] finderArgs = new Object[] { hostId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_HOST_WHERE);
+
+			query.append(_FINDER_COLUMN_HOSTID_HOSTID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(hostId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_HOSTID_HOSTID_2 = "host.hostId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_PROTOCOL = new FinderPath(HostModelImpl.ENTITY_CACHE_ENABLED,
+			HostModelImpl.FINDER_CACHE_ENABLED, HostImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByprotocol",
 			new String[] {
-				Long.class.getName(),
+				String.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID =
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PROTOCOL =
 		new FinderPath(HostModelImpl.ENTITY_CACHE_ENABLED,
 			HostModelImpl.FINDER_CACHE_ENABLED, HostImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] { Long.class.getName() },
-			HostModelImpl.GROUPID_COLUMN_BITMASK |
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByprotocol",
+			new String[] { String.class.getName() },
+			HostModelImpl.PROTOCOL_COLUMN_BITMASK |
 			HostModelImpl.SERVERROOT_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(HostModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_PROTOCOL = new FinderPath(HostModelImpl.ENTITY_CACHE_ENABLED,
 			HostModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] { Long.class.getName() });
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByprotocol",
+			new String[] { String.class.getName() });
 
 	/**
-	 * Returns all the hosts where groupId = &#63;.
+	 * Returns all the hosts where protocol = &#63;.
 	 *
-	 * @param groupId the group ID
+	 * @param protocol the protocol
 	 * @return the matching hosts
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Host> findByGroupId(long groupId) throws SystemException {
-		return findByGroupId(groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	public List<Host> findByprotocol(String protocol) throws SystemException {
+		return findByprotocol(protocol, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
 	}
 
 	/**
-	 * Returns a range of all the hosts where groupId = &#63;.
+	 * Returns a range of all the hosts where protocol = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.HostModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param groupId the group ID
+	 * @param protocol the protocol
 	 * @param start the lower bound of the range of hosts
 	 * @param end the upper bound of the range of hosts (not inclusive)
 	 * @return the range of matching hosts
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Host> findByGroupId(long groupId, int start, int end)
+	public List<Host> findByprotocol(String protocol, int start, int end)
 		throws SystemException {
-		return findByGroupId(groupId, start, end, null);
+		return findByprotocol(protocol, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the hosts where groupId = &#63;.
+	 * Returns an ordered range of all the hosts where protocol = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.HostModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param groupId the group ID
+	 * @param protocol the protocol
 	 * @param start the lower bound of the range of hosts
 	 * @param end the upper bound of the range of hosts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -149,7 +368,7 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Host> findByGroupId(long groupId, int start, int end,
+	public List<Host> findByprotocol(String protocol, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -158,12 +377,12 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID;
-			finderArgs = new Object[] { groupId };
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PROTOCOL;
+			finderArgs = new Object[] { protocol };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID;
-			finderArgs = new Object[] { groupId, start, end, orderByComparator };
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_PROTOCOL;
+			finderArgs = new Object[] { protocol, start, end, orderByComparator };
 		}
 
 		List<Host> list = (List<Host>)FinderCacheUtil.getResult(finderPath,
@@ -171,7 +390,7 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 		if ((list != null) && !list.isEmpty()) {
 			for (Host host : list) {
-				if ((groupId != host.getGroupId())) {
+				if (!Validator.equals(protocol, host.getProtocol())) {
 					list = null;
 
 					break;
@@ -192,7 +411,19 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 			query.append(_SQL_SELECT_HOST_WHERE);
 
-			query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+			boolean bindProtocol = false;
+
+			if (protocol == null) {
+				query.append(_FINDER_COLUMN_PROTOCOL_PROTOCOL_1);
+			}
+			else if (protocol.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_PROTOCOL_PROTOCOL_3);
+			}
+			else {
+				bindProtocol = true;
+
+				query.append(_FINDER_COLUMN_PROTOCOL_PROTOCOL_2);
+			}
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -214,7 +445,9 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(groupId);
+				if (bindProtocol) {
+					qPos.add(protocol);
+				}
 
 				if (!pagination) {
 					list = (List<Host>)QueryUtil.list(q, getDialect(), start,
@@ -247,19 +480,19 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	}
 
 	/**
-	 * Returns the first host in the ordered set where groupId = &#63;.
+	 * Returns the first host in the ordered set where protocol = &#63;.
 	 *
-	 * @param groupId the group ID
+	 * @param protocol the protocol
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching host
 	 * @throws de.uhh.l2g.plugins.NoSuchHostException if a matching host could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Host findByGroupId_First(long groupId,
+	public Host findByprotocol_First(String protocol,
 		OrderByComparator orderByComparator)
 		throws NoSuchHostException, SystemException {
-		Host host = fetchByGroupId_First(groupId, orderByComparator);
+		Host host = fetchByprotocol_First(protocol, orderByComparator);
 
 		if (host != null) {
 			return host;
@@ -269,8 +502,8 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
-		msg.append(groupId);
+		msg.append("protocol=");
+		msg.append(protocol);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -278,17 +511,17 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	}
 
 	/**
-	 * Returns the first host in the ordered set where groupId = &#63;.
+	 * Returns the first host in the ordered set where protocol = &#63;.
 	 *
-	 * @param groupId the group ID
+	 * @param protocol the protocol
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching host, or <code>null</code> if a matching host could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Host fetchByGroupId_First(long groupId,
+	public Host fetchByprotocol_First(String protocol,
 		OrderByComparator orderByComparator) throws SystemException {
-		List<Host> list = findByGroupId(groupId, 0, 1, orderByComparator);
+		List<Host> list = findByprotocol(protocol, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -298,19 +531,19 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	}
 
 	/**
-	 * Returns the last host in the ordered set where groupId = &#63;.
+	 * Returns the last host in the ordered set where protocol = &#63;.
 	 *
-	 * @param groupId the group ID
+	 * @param protocol the protocol
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching host
 	 * @throws de.uhh.l2g.plugins.NoSuchHostException if a matching host could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Host findByGroupId_Last(long groupId,
+	public Host findByprotocol_Last(String protocol,
 		OrderByComparator orderByComparator)
 		throws NoSuchHostException, SystemException {
-		Host host = fetchByGroupId_Last(groupId, orderByComparator);
+		Host host = fetchByprotocol_Last(protocol, orderByComparator);
 
 		if (host != null) {
 			return host;
@@ -320,8 +553,8 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
-		msg.append(groupId);
+		msg.append("protocol=");
+		msg.append(protocol);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -329,23 +562,23 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	}
 
 	/**
-	 * Returns the last host in the ordered set where groupId = &#63;.
+	 * Returns the last host in the ordered set where protocol = &#63;.
 	 *
-	 * @param groupId the group ID
+	 * @param protocol the protocol
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching host, or <code>null</code> if a matching host could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Host fetchByGroupId_Last(long groupId,
+	public Host fetchByprotocol_Last(String protocol,
 		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByGroupId(groupId);
+		int count = countByprotocol(protocol);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<Host> list = findByGroupId(groupId, count - 1, count,
+		List<Host> list = findByprotocol(protocol, count - 1, count,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -356,17 +589,17 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	}
 
 	/**
-	 * Returns the hosts before and after the current host in the ordered set where groupId = &#63;.
+	 * Returns the hosts before and after the current host in the ordered set where protocol = &#63;.
 	 *
 	 * @param hostId the primary key of the current host
-	 * @param groupId the group ID
+	 * @param protocol the protocol
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next host
 	 * @throws de.uhh.l2g.plugins.NoSuchHostException if a host with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Host[] findByGroupId_PrevAndNext(long hostId, long groupId,
+	public Host[] findByprotocol_PrevAndNext(long hostId, String protocol,
 		OrderByComparator orderByComparator)
 		throws NoSuchHostException, SystemException {
 		Host host = findByPrimaryKey(hostId);
@@ -378,12 +611,12 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 			Host[] array = new HostImpl[3];
 
-			array[0] = getByGroupId_PrevAndNext(session, host, groupId,
+			array[0] = getByprotocol_PrevAndNext(session, host, protocol,
 					orderByComparator, true);
 
 			array[1] = host;
 
-			array[2] = getByGroupId_PrevAndNext(session, host, groupId,
+			array[2] = getByprotocol_PrevAndNext(session, host, protocol,
 					orderByComparator, false);
 
 			return array;
@@ -396,8 +629,8 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 		}
 	}
 
-	protected Host getByGroupId_PrevAndNext(Session session, Host host,
-		long groupId, OrderByComparator orderByComparator, boolean previous) {
+	protected Host getByprotocol_PrevAndNext(Session session, Host host,
+		String protocol, OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -410,7 +643,19 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 		query.append(_SQL_SELECT_HOST_WHERE);
 
-		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+		boolean bindProtocol = false;
+
+		if (protocol == null) {
+			query.append(_FINDER_COLUMN_PROTOCOL_PROTOCOL_1);
+		}
+		else if (protocol.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_PROTOCOL_PROTOCOL_3);
+		}
+		else {
+			bindProtocol = true;
+
+			query.append(_FINDER_COLUMN_PROTOCOL_PROTOCOL_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -480,7 +725,9 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		qPos.add(groupId);
+		if (bindProtocol) {
+			qPos.add(protocol);
+		}
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(host);
@@ -501,31 +748,31 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	}
 
 	/**
-	 * Removes all the hosts where groupId = &#63; from the database.
+	 * Removes all the hosts where protocol = &#63; from the database.
 	 *
-	 * @param groupId the group ID
+	 * @param protocol the protocol
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByGroupId(long groupId) throws SystemException {
-		for (Host host : findByGroupId(groupId, QueryUtil.ALL_POS,
+	public void removeByprotocol(String protocol) throws SystemException {
+		for (Host host : findByprotocol(protocol, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null)) {
 			remove(host);
 		}
 	}
 
 	/**
-	 * Returns the number of hosts where groupId = &#63;.
+	 * Returns the number of hosts where protocol = &#63;.
 	 *
-	 * @param groupId the group ID
+	 * @param protocol the protocol
 	 * @return the number of matching hosts
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByGroupId(long groupId) throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_GROUPID;
+	public int countByprotocol(String protocol) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_PROTOCOL;
 
-		Object[] finderArgs = new Object[] { groupId };
+		Object[] finderArgs = new Object[] { protocol };
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
@@ -535,7 +782,19 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 			query.append(_SQL_COUNT_HOST_WHERE);
 
-			query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+			boolean bindProtocol = false;
+
+			if (protocol == null) {
+				query.append(_FINDER_COLUMN_PROTOCOL_PROTOCOL_1);
+			}
+			else if (protocol.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_PROTOCOL_PROTOCOL_3);
+			}
+			else {
+				bindProtocol = true;
+
+				query.append(_FINDER_COLUMN_PROTOCOL_PROTOCOL_2);
+			}
 
 			String sql = query.toString();
 
@@ -548,7 +807,9 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(groupId);
+				if (bindProtocol) {
+					qPos.add(protocol);
+				}
 
 				count = (Long)q.uniqueResult();
 
@@ -567,77 +828,70 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "host.groupId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYIDANDGROUPID =
-		new FinderPath(HostModelImpl.ENTITY_CACHE_ENABLED,
+	private static final String _FINDER_COLUMN_PROTOCOL_PROTOCOL_1 = "host.protocol IS NULL";
+	private static final String _FINDER_COLUMN_PROTOCOL_PROTOCOL_2 = "host.protocol = ?";
+	private static final String _FINDER_COLUMN_PROTOCOL_PROTOCOL_3 = "(host.protocol IS NULL OR host.protocol = '')";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_STREAMER = new FinderPath(HostModelImpl.ENTITY_CACHE_ENABLED,
 			HostModelImpl.FINDER_CACHE_ENABLED, HostImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByCompanyIdAndGroupId",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBystreamer",
 			new String[] {
-				Long.class.getName(), Long.class.getName(),
+				String.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYIDANDGROUPID =
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STREAMER =
 		new FinderPath(HostModelImpl.ENTITY_CACHE_ENABLED,
 			HostModelImpl.FINDER_CACHE_ENABLED, HostImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByCompanyIdAndGroupId",
-			new String[] { Long.class.getName(), Long.class.getName() },
-			HostModelImpl.COMPANYID_COLUMN_BITMASK |
-			HostModelImpl.GROUPID_COLUMN_BITMASK |
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBystreamer",
+			new String[] { String.class.getName() },
+			HostModelImpl.STREAMER_COLUMN_BITMASK |
 			HostModelImpl.SERVERROOT_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYIDANDGROUPID = new FinderPath(HostModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_STREAMER = new FinderPath(HostModelImpl.ENTITY_CACHE_ENABLED,
 			HostModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCompanyIdAndGroupId",
-			new String[] { Long.class.getName(), Long.class.getName() });
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBystreamer",
+			new String[] { String.class.getName() });
 
 	/**
-	 * Returns all the hosts where companyId = &#63; and groupId = &#63;.
+	 * Returns all the hosts where streamer = &#63;.
 	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
+	 * @param streamer the streamer
 	 * @return the matching hosts
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Host> findByCompanyIdAndGroupId(long companyId, long groupId)
-		throws SystemException {
-		return findByCompanyIdAndGroupId(companyId, groupId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+	public List<Host> findBystreamer(String streamer) throws SystemException {
+		return findBystreamer(streamer, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
 	}
 
 	/**
-	 * Returns a range of all the hosts where companyId = &#63; and groupId = &#63;.
+	 * Returns a range of all the hosts where streamer = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.HostModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
+	 * @param streamer the streamer
 	 * @param start the lower bound of the range of hosts
 	 * @param end the upper bound of the range of hosts (not inclusive)
 	 * @return the range of matching hosts
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Host> findByCompanyIdAndGroupId(long companyId, long groupId,
-		int start, int end) throws SystemException {
-		return findByCompanyIdAndGroupId(companyId, groupId, start, end, null);
+	public List<Host> findBystreamer(String streamer, int start, int end)
+		throws SystemException {
+		return findBystreamer(streamer, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the hosts where companyId = &#63; and groupId = &#63;.
+	 * Returns an ordered range of all the hosts where streamer = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.HostModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
+	 * @param streamer the streamer
 	 * @param start the lower bound of the range of hosts
 	 * @param end the upper bound of the range of hosts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -645,9 +899,8 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Host> findByCompanyIdAndGroupId(long companyId, long groupId,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+	public List<Host> findBystreamer(String streamer, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -655,16 +908,12 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYIDANDGROUPID;
-			finderArgs = new Object[] { companyId, groupId };
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STREAMER;
+			finderArgs = new Object[] { streamer };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYIDANDGROUPID;
-			finderArgs = new Object[] {
-					companyId, groupId,
-					
-					start, end, orderByComparator
-				};
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_STREAMER;
+			finderArgs = new Object[] { streamer, start, end, orderByComparator };
 		}
 
 		List<Host> list = (List<Host>)FinderCacheUtil.getResult(finderPath,
@@ -672,8 +921,7 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 		if ((list != null) && !list.isEmpty()) {
 			for (Host host : list) {
-				if ((companyId != host.getCompanyId()) ||
-						(groupId != host.getGroupId())) {
+				if (!Validator.equals(streamer, host.getStreamer())) {
 					list = null;
 
 					break;
@@ -685,18 +933,28 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(4 +
+				query = new StringBundler(3 +
 						(orderByComparator.getOrderByFields().length * 3));
 			}
 			else {
-				query = new StringBundler(4);
+				query = new StringBundler(3);
 			}
 
 			query.append(_SQL_SELECT_HOST_WHERE);
 
-			query.append(_FINDER_COLUMN_COMPANYIDANDGROUPID_COMPANYID_2);
+			boolean bindStreamer = false;
 
-			query.append(_FINDER_COLUMN_COMPANYIDANDGROUPID_GROUPID_2);
+			if (streamer == null) {
+				query.append(_FINDER_COLUMN_STREAMER_STREAMER_1);
+			}
+			else if (streamer.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_STREAMER_STREAMER_3);
+			}
+			else {
+				bindStreamer = true;
+
+				query.append(_FINDER_COLUMN_STREAMER_STREAMER_2);
+			}
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -718,9 +976,9 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(companyId);
-
-				qPos.add(groupId);
+				if (bindStreamer) {
+					qPos.add(streamer);
+				}
 
 				if (!pagination) {
 					list = (List<Host>)QueryUtil.list(q, getDialect(), start,
@@ -753,35 +1011,30 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	}
 
 	/**
-	 * Returns the first host in the ordered set where companyId = &#63; and groupId = &#63;.
+	 * Returns the first host in the ordered set where streamer = &#63;.
 	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
+	 * @param streamer the streamer
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching host
 	 * @throws de.uhh.l2g.plugins.NoSuchHostException if a matching host could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Host findByCompanyIdAndGroupId_First(long companyId, long groupId,
+	public Host findBystreamer_First(String streamer,
 		OrderByComparator orderByComparator)
 		throws NoSuchHostException, SystemException {
-		Host host = fetchByCompanyIdAndGroupId_First(companyId, groupId,
-				orderByComparator);
+		Host host = fetchBystreamer_First(streamer, orderByComparator);
 
 		if (host != null) {
 			return host;
 		}
 
-		StringBundler msg = new StringBundler(6);
+		StringBundler msg = new StringBundler(4);
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
-		msg.append(companyId);
-
-		msg.append(", groupId=");
-		msg.append(groupId);
+		msg.append("streamer=");
+		msg.append(streamer);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -789,19 +1042,17 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	}
 
 	/**
-	 * Returns the first host in the ordered set where companyId = &#63; and groupId = &#63;.
+	 * Returns the first host in the ordered set where streamer = &#63;.
 	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
+	 * @param streamer the streamer
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching host, or <code>null</code> if a matching host could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Host fetchByCompanyIdAndGroupId_First(long companyId, long groupId,
+	public Host fetchBystreamer_First(String streamer,
 		OrderByComparator orderByComparator) throws SystemException {
-		List<Host> list = findByCompanyIdAndGroupId(companyId, groupId, 0, 1,
-				orderByComparator);
+		List<Host> list = findBystreamer(streamer, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -811,35 +1062,30 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	}
 
 	/**
-	 * Returns the last host in the ordered set where companyId = &#63; and groupId = &#63;.
+	 * Returns the last host in the ordered set where streamer = &#63;.
 	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
+	 * @param streamer the streamer
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching host
 	 * @throws de.uhh.l2g.plugins.NoSuchHostException if a matching host could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Host findByCompanyIdAndGroupId_Last(long companyId, long groupId,
+	public Host findBystreamer_Last(String streamer,
 		OrderByComparator orderByComparator)
 		throws NoSuchHostException, SystemException {
-		Host host = fetchByCompanyIdAndGroupId_Last(companyId, groupId,
-				orderByComparator);
+		Host host = fetchBystreamer_Last(streamer, orderByComparator);
 
 		if (host != null) {
 			return host;
 		}
 
-		StringBundler msg = new StringBundler(6);
+		StringBundler msg = new StringBundler(4);
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
-		msg.append(companyId);
-
-		msg.append(", groupId=");
-		msg.append(groupId);
+		msg.append("streamer=");
+		msg.append(streamer);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -847,25 +1093,24 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	}
 
 	/**
-	 * Returns the last host in the ordered set where companyId = &#63; and groupId = &#63;.
+	 * Returns the last host in the ordered set where streamer = &#63;.
 	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
+	 * @param streamer the streamer
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching host, or <code>null</code> if a matching host could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Host fetchByCompanyIdAndGroupId_Last(long companyId, long groupId,
+	public Host fetchBystreamer_Last(String streamer,
 		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByCompanyIdAndGroupId(companyId, groupId);
+		int count = countBystreamer(streamer);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<Host> list = findByCompanyIdAndGroupId(companyId, groupId,
-				count - 1, count, orderByComparator);
+		List<Host> list = findBystreamer(streamer, count - 1, count,
+				orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -875,19 +1120,18 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	}
 
 	/**
-	 * Returns the hosts before and after the current host in the ordered set where companyId = &#63; and groupId = &#63;.
+	 * Returns the hosts before and after the current host in the ordered set where streamer = &#63;.
 	 *
 	 * @param hostId the primary key of the current host
-	 * @param companyId the company ID
-	 * @param groupId the group ID
+	 * @param streamer the streamer
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next host
 	 * @throws de.uhh.l2g.plugins.NoSuchHostException if a host with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Host[] findByCompanyIdAndGroupId_PrevAndNext(long hostId,
-		long companyId, long groupId, OrderByComparator orderByComparator)
+	public Host[] findBystreamer_PrevAndNext(long hostId, String streamer,
+		OrderByComparator orderByComparator)
 		throws NoSuchHostException, SystemException {
 		Host host = findByPrimaryKey(hostId);
 
@@ -898,13 +1142,13 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 			Host[] array = new HostImpl[3];
 
-			array[0] = getByCompanyIdAndGroupId_PrevAndNext(session, host,
-					companyId, groupId, orderByComparator, true);
+			array[0] = getBystreamer_PrevAndNext(session, host, streamer,
+					orderByComparator, true);
 
 			array[1] = host;
 
-			array[2] = getByCompanyIdAndGroupId_PrevAndNext(session, host,
-					companyId, groupId, orderByComparator, false);
+			array[2] = getBystreamer_PrevAndNext(session, host, streamer,
+					orderByComparator, false);
 
 			return array;
 		}
@@ -916,9 +1160,8 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 		}
 	}
 
-	protected Host getByCompanyIdAndGroupId_PrevAndNext(Session session,
-		Host host, long companyId, long groupId,
-		OrderByComparator orderByComparator, boolean previous) {
+	protected Host getBystreamer_PrevAndNext(Session session, Host host,
+		String streamer, OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -931,9 +1174,19 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 		query.append(_SQL_SELECT_HOST_WHERE);
 
-		query.append(_FINDER_COLUMN_COMPANYIDANDGROUPID_COMPANYID_2);
+		boolean bindStreamer = false;
 
-		query.append(_FINDER_COLUMN_COMPANYIDANDGROUPID_GROUPID_2);
+		if (streamer == null) {
+			query.append(_FINDER_COLUMN_STREAMER_STREAMER_1);
+		}
+		else if (streamer.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_STREAMER_STREAMER_3);
+		}
+		else {
+			bindStreamer = true;
+
+			query.append(_FINDER_COLUMN_STREAMER_STREAMER_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -1003,9 +1256,9 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		qPos.add(companyId);
-
-		qPos.add(groupId);
+		if (bindStreamer) {
+			qPos.add(streamer);
+		}
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(host);
@@ -1026,47 +1279,53 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	}
 
 	/**
-	 * Removes all the hosts where companyId = &#63; and groupId = &#63; from the database.
+	 * Removes all the hosts where streamer = &#63; from the database.
 	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
+	 * @param streamer the streamer
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByCompanyIdAndGroupId(long companyId, long groupId)
-		throws SystemException {
-		for (Host host : findByCompanyIdAndGroupId(companyId, groupId,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+	public void removeBystreamer(String streamer) throws SystemException {
+		for (Host host : findBystreamer(streamer, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
 			remove(host);
 		}
 	}
 
 	/**
-	 * Returns the number of hosts where companyId = &#63; and groupId = &#63;.
+	 * Returns the number of hosts where streamer = &#63;.
 	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
+	 * @param streamer the streamer
 	 * @return the number of matching hosts
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByCompanyIdAndGroupId(long companyId, long groupId)
-		throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_COMPANYIDANDGROUPID;
+	public int countBystreamer(String streamer) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_STREAMER;
 
-		Object[] finderArgs = new Object[] { companyId, groupId };
+		Object[] finderArgs = new Object[] { streamer };
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(3);
+			StringBundler query = new StringBundler(2);
 
 			query.append(_SQL_COUNT_HOST_WHERE);
 
-			query.append(_FINDER_COLUMN_COMPANYIDANDGROUPID_COMPANYID_2);
+			boolean bindStreamer = false;
 
-			query.append(_FINDER_COLUMN_COMPANYIDANDGROUPID_GROUPID_2);
+			if (streamer == null) {
+				query.append(_FINDER_COLUMN_STREAMER_STREAMER_1);
+			}
+			else if (streamer.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_STREAMER_STREAMER_3);
+			}
+			else {
+				bindStreamer = true;
+
+				query.append(_FINDER_COLUMN_STREAMER_STREAMER_2);
+			}
 
 			String sql = query.toString();
 
@@ -1079,9 +1338,9 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(companyId);
-
-				qPos.add(groupId);
+				if (bindStreamer) {
+					qPos.add(streamer);
+				}
 
 				count = (Long)q.uniqueResult();
 
@@ -1100,43 +1359,39 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_COMPANYIDANDGROUPID_COMPANYID_2 = "host.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_COMPANYIDANDGROUPID_GROUPID_2 = "host.groupId = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_G_H = new FinderPath(HostModelImpl.ENTITY_CACHE_ENABLED,
+	private static final String _FINDER_COLUMN_STREAMER_STREAMER_1 = "host.streamer IS NULL";
+	private static final String _FINDER_COLUMN_STREAMER_STREAMER_2 = "host.streamer = ?";
+	private static final String _FINDER_COLUMN_STREAMER_STREAMER_3 = "(host.streamer IS NULL OR host.streamer = '')";
+	public static final FinderPath FINDER_PATH_FETCH_BY_NAME = new FinderPath(HostModelImpl.ENTITY_CACHE_ENABLED,
 			HostModelImpl.FINDER_CACHE_ENABLED, HostImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_H",
-			new String[] { Long.class.getName(), Long.class.getName() },
-			HostModelImpl.GROUPID_COLUMN_BITMASK |
-			HostModelImpl.HOSTID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_G_H = new FinderPath(HostModelImpl.ENTITY_CACHE_ENABLED,
+			FINDER_CLASS_NAME_ENTITY, "fetchByname",
+			new String[] { String.class.getName() },
+			HostModelImpl.NAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_NAME = new FinderPath(HostModelImpl.ENTITY_CACHE_ENABLED,
 			HostModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_H",
-			new String[] { Long.class.getName(), Long.class.getName() });
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByname",
+			new String[] { String.class.getName() });
 
 	/**
-	 * Returns the host where groupId = &#63; and hostId = &#63; or throws a {@link de.uhh.l2g.plugins.NoSuchHostException} if it could not be found.
+	 * Returns the host where name = &#63; or throws a {@link de.uhh.l2g.plugins.NoSuchHostException} if it could not be found.
 	 *
-	 * @param groupId the group ID
-	 * @param hostId the host ID
+	 * @param name the name
 	 * @return the matching host
 	 * @throws de.uhh.l2g.plugins.NoSuchHostException if a matching host could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Host findByG_H(long groupId, long hostId)
+	public Host findByname(String name)
 		throws NoSuchHostException, SystemException {
-		Host host = fetchByG_H(groupId, hostId);
+		Host host = fetchByname(name);
 
 		if (host == null) {
-			StringBundler msg = new StringBundler(6);
+			StringBundler msg = new StringBundler(4);
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", hostId=");
-			msg.append(hostId);
+			msg.append("name=");
+			msg.append(name);
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -1151,55 +1406,63 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	}
 
 	/**
-	 * Returns the host where groupId = &#63; and hostId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the host where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param groupId the group ID
-	 * @param hostId the host ID
+	 * @param name the name
 	 * @return the matching host, or <code>null</code> if a matching host could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Host fetchByG_H(long groupId, long hostId) throws SystemException {
-		return fetchByG_H(groupId, hostId, true);
+	public Host fetchByname(String name) throws SystemException {
+		return fetchByname(name, true);
 	}
 
 	/**
-	 * Returns the host where groupId = &#63; and hostId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the host where name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param groupId the group ID
-	 * @param hostId the host ID
+	 * @param name the name
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching host, or <code>null</code> if a matching host could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Host fetchByG_H(long groupId, long hostId, boolean retrieveFromCache)
+	public Host fetchByname(String name, boolean retrieveFromCache)
 		throws SystemException {
-		Object[] finderArgs = new Object[] { groupId, hostId };
+		Object[] finderArgs = new Object[] { name };
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_G_H,
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_NAME,
 					finderArgs, this);
 		}
 
 		if (result instanceof Host) {
 			Host host = (Host)result;
 
-			if ((groupId != host.getGroupId()) || (hostId != host.getHostId())) {
+			if (!Validator.equals(name, host.getName())) {
 				result = null;
 			}
 		}
 
 		if (result == null) {
-			StringBundler query = new StringBundler(4);
+			StringBundler query = new StringBundler(3);
 
 			query.append(_SQL_SELECT_HOST_WHERE);
 
-			query.append(_FINDER_COLUMN_G_H_GROUPID_2);
+			boolean bindName = false;
 
-			query.append(_FINDER_COLUMN_G_H_HOSTID_2);
+			if (name == null) {
+				query.append(_FINDER_COLUMN_NAME_NAME_1);
+			}
+			else if (name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_NAME_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				query.append(_FINDER_COLUMN_NAME_NAME_2);
+			}
 
 			String sql = query.toString();
 
@@ -1212,20 +1475,20 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(groupId);
-
-				qPos.add(hostId);
+				if (bindName) {
+					qPos.add(name);
+				}
 
 				List<Host> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_H,
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NAME,
 						finderArgs, list);
 				}
 				else {
 					if ((list.size() > 1) && _log.isWarnEnabled()) {
 						_log.warn(
-							"HostPersistenceImpl.fetchByG_H(long, long, boolean) with parameters (" +
+							"HostPersistenceImpl.fetchByname(String, boolean) with parameters (" +
 							StringUtil.merge(finderArgs) +
 							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 					}
@@ -1236,15 +1499,15 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 					cacheResult(host);
 
-					if ((host.getGroupId() != groupId) ||
-							(host.getHostId() != hostId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_H,
+					if ((host.getName() == null) ||
+							!host.getName().equals(name)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NAME,
 							finderArgs, host);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_H,
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_NAME,
 					finderArgs);
 
 				throw processException(e);
@@ -1263,46 +1526,54 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	}
 
 	/**
-	 * Removes the host where groupId = &#63; and hostId = &#63; from the database.
+	 * Removes the host where name = &#63; from the database.
 	 *
-	 * @param groupId the group ID
-	 * @param hostId the host ID
+	 * @param name the name
 	 * @return the host that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Host removeByG_H(long groupId, long hostId)
+	public Host removeByname(String name)
 		throws NoSuchHostException, SystemException {
-		Host host = findByG_H(groupId, hostId);
+		Host host = findByname(name);
 
 		return remove(host);
 	}
 
 	/**
-	 * Returns the number of hosts where groupId = &#63; and hostId = &#63;.
+	 * Returns the number of hosts where name = &#63;.
 	 *
-	 * @param groupId the group ID
-	 * @param hostId the host ID
+	 * @param name the name
 	 * @return the number of matching hosts
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByG_H(long groupId, long hostId) throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_H;
+	public int countByname(String name) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_NAME;
 
-		Object[] finderArgs = new Object[] { groupId, hostId };
+		Object[] finderArgs = new Object[] { name };
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(3);
+			StringBundler query = new StringBundler(2);
 
 			query.append(_SQL_COUNT_HOST_WHERE);
 
-			query.append(_FINDER_COLUMN_G_H_GROUPID_2);
+			boolean bindName = false;
 
-			query.append(_FINDER_COLUMN_G_H_HOSTID_2);
+			if (name == null) {
+				query.append(_FINDER_COLUMN_NAME_NAME_1);
+			}
+			else if (name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_NAME_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				query.append(_FINDER_COLUMN_NAME_NAME_2);
+			}
 
 			String sql = query.toString();
 
@@ -1315,9 +1586,9 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(groupId);
-
-				qPos.add(hostId);
+				if (bindName) {
+					qPos.add(name);
+				}
 
 				count = (Long)q.uniqueResult();
 
@@ -1336,43 +1607,39 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_G_H_GROUPID_2 = "host.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_H_HOSTID_2 = "host.hostId = ?";
+	private static final String _FINDER_COLUMN_NAME_NAME_1 = "host.name IS NULL";
+	private static final String _FINDER_COLUMN_NAME_NAME_2 = "host.name = ?";
+	private static final String _FINDER_COLUMN_NAME_NAME_3 = "(host.name IS NULL OR host.name = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_DEFAULTHOST = new FinderPath(HostModelImpl.ENTITY_CACHE_ENABLED,
 			HostModelImpl.FINDER_CACHE_ENABLED, HostImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByDefaultHost",
-			new String[] { Long.class.getName(), Long.class.getName() },
-			HostModelImpl.COMPANYID_COLUMN_BITMASK |
-			HostModelImpl.GROUPID_COLUMN_BITMASK);
+			FINDER_CLASS_NAME_ENTITY, "fetchBydefaultHost",
+			new String[] { Integer.class.getName() },
+			HostModelImpl.DEFAULTHOST_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_DEFAULTHOST = new FinderPath(HostModelImpl.ENTITY_CACHE_ENABLED,
 			HostModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByDefaultHost",
-			new String[] { Long.class.getName(), Long.class.getName() });
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBydefaultHost",
+			new String[] { Integer.class.getName() });
 
 	/**
-	 * Returns the host where companyId = &#63; and groupId = &#63; or throws a {@link de.uhh.l2g.plugins.NoSuchHostException} if it could not be found.
+	 * Returns the host where defaultHost = &#63; or throws a {@link de.uhh.l2g.plugins.NoSuchHostException} if it could not be found.
 	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
+	 * @param defaultHost the default host
 	 * @return the matching host
 	 * @throws de.uhh.l2g.plugins.NoSuchHostException if a matching host could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Host findByDefaultHost(long companyId, long groupId)
+	public Host findBydefaultHost(int defaultHost)
 		throws NoSuchHostException, SystemException {
-		Host host = fetchByDefaultHost(companyId, groupId);
+		Host host = fetchBydefaultHost(defaultHost);
 
 		if (host == null) {
-			StringBundler msg = new StringBundler(6);
+			StringBundler msg = new StringBundler(4);
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("companyId=");
-			msg.append(companyId);
-
-			msg.append(", groupId=");
-			msg.append(groupId);
+			msg.append("defaultHost=");
+			msg.append(defaultHost);
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -1387,32 +1654,29 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	}
 
 	/**
-	 * Returns the host where companyId = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the host where defaultHost = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
+	 * @param defaultHost the default host
 	 * @return the matching host, or <code>null</code> if a matching host could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Host fetchByDefaultHost(long companyId, long groupId)
-		throws SystemException {
-		return fetchByDefaultHost(companyId, groupId, true);
+	public Host fetchBydefaultHost(int defaultHost) throws SystemException {
+		return fetchBydefaultHost(defaultHost, true);
 	}
 
 	/**
-	 * Returns the host where companyId = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the host where defaultHost = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
+	 * @param defaultHost the default host
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching host, or <code>null</code> if a matching host could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Host fetchByDefaultHost(long companyId, long groupId,
-		boolean retrieveFromCache) throws SystemException {
-		Object[] finderArgs = new Object[] { companyId, groupId };
+	public Host fetchBydefaultHost(int defaultHost, boolean retrieveFromCache)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { defaultHost };
 
 		Object result = null;
 
@@ -1424,20 +1688,17 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 		if (result instanceof Host) {
 			Host host = (Host)result;
 
-			if ((companyId != host.getCompanyId()) ||
-					(groupId != host.getGroupId())) {
+			if ((defaultHost != host.getDefaultHost())) {
 				result = null;
 			}
 		}
 
 		if (result == null) {
-			StringBundler query = new StringBundler(4);
+			StringBundler query = new StringBundler(3);
 
 			query.append(_SQL_SELECT_HOST_WHERE);
 
-			query.append(_FINDER_COLUMN_DEFAULTHOST_COMPANYID_2);
-
-			query.append(_FINDER_COLUMN_DEFAULTHOST_GROUPID_2);
+			query.append(_FINDER_COLUMN_DEFAULTHOST_DEFAULTHOST_2);
 
 			String sql = query.toString();
 
@@ -1450,9 +1711,7 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(companyId);
-
-				qPos.add(groupId);
+				qPos.add(defaultHost);
 
 				List<Host> list = q.list();
 
@@ -1463,7 +1722,7 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 				else {
 					if ((list.size() > 1) && _log.isWarnEnabled()) {
 						_log.warn(
-							"HostPersistenceImpl.fetchByDefaultHost(long, long, boolean) with parameters (" +
+							"HostPersistenceImpl.fetchBydefaultHost(int, boolean) with parameters (" +
 							StringUtil.merge(finderArgs) +
 							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 					}
@@ -1474,8 +1733,7 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 					cacheResult(host);
 
-					if ((host.getCompanyId() != companyId) ||
-							(host.getGroupId() != groupId)) {
+					if ((host.getDefaultHost() != defaultHost)) {
 						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_DEFAULTHOST,
 							finderArgs, host);
 					}
@@ -1501,47 +1759,42 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	}
 
 	/**
-	 * Removes the host where companyId = &#63; and groupId = &#63; from the database.
+	 * Removes the host where defaultHost = &#63; from the database.
 	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
+	 * @param defaultHost the default host
 	 * @return the host that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Host removeByDefaultHost(long companyId, long groupId)
+	public Host removeBydefaultHost(int defaultHost)
 		throws NoSuchHostException, SystemException {
-		Host host = findByDefaultHost(companyId, groupId);
+		Host host = findBydefaultHost(defaultHost);
 
 		return remove(host);
 	}
 
 	/**
-	 * Returns the number of hosts where companyId = &#63; and groupId = &#63;.
+	 * Returns the number of hosts where defaultHost = &#63;.
 	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
+	 * @param defaultHost the default host
 	 * @return the number of matching hosts
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByDefaultHost(long companyId, long groupId)
-		throws SystemException {
+	public int countBydefaultHost(int defaultHost) throws SystemException {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_DEFAULTHOST;
 
-		Object[] finderArgs = new Object[] { companyId, groupId };
+		Object[] finderArgs = new Object[] { defaultHost };
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(3);
+			StringBundler query = new StringBundler(2);
 
 			query.append(_SQL_COUNT_HOST_WHERE);
 
-			query.append(_FINDER_COLUMN_DEFAULTHOST_COMPANYID_2);
-
-			query.append(_FINDER_COLUMN_DEFAULTHOST_GROUPID_2);
+			query.append(_FINDER_COLUMN_DEFAULTHOST_DEFAULTHOST_2);
 
 			String sql = query.toString();
 
@@ -1554,9 +1807,7 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(companyId);
-
-				qPos.add(groupId);
+				qPos.add(defaultHost);
 
 				count = (Long)q.uniqueResult();
 
@@ -1575,8 +1826,7 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_DEFAULTHOST_COMPANYID_2 = "host.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_DEFAULTHOST_GROUPID_2 = "host.groupId = ? AND host.defaultHost > 0";
+	private static final String _FINDER_COLUMN_DEFAULTHOST_DEFAULTHOST_2 = "host.defaultHost = ?";
 
 	public HostPersistenceImpl() {
 		setModelClass(Host.class);
@@ -1592,11 +1842,14 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 		EntityCacheUtil.putResult(HostModelImpl.ENTITY_CACHE_ENABLED,
 			HostImpl.class, host.getPrimaryKey(), host);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_H,
-			new Object[] { host.getGroupId(), host.getHostId() }, host);
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_HOSTID,
+			new Object[] { host.getHostId() }, host);
+
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NAME,
+			new Object[] { host.getName() }, host);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_DEFAULTHOST,
-			new Object[] { host.getCompanyId(), host.getGroupId() }, host);
+			new Object[] { host.getDefaultHost() }, host);
 
 		host.resetOriginalValues();
 	}
@@ -1672,13 +1925,19 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 	protected void cacheUniqueFindersCache(Host host) {
 		if (host.isNew()) {
-			Object[] args = new Object[] { host.getGroupId(), host.getHostId() };
+			Object[] args = new Object[] { host.getHostId() };
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_H, args,
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_HOSTID, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_H, args, host);
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_HOSTID, args, host);
 
-			args = new Object[] { host.getCompanyId(), host.getGroupId() };
+			args = new Object[] { host.getName() };
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_NAME, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NAME, args, host);
+
+			args = new Object[] { host.getDefaultHost() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_DEFAULTHOST, args,
 				Long.valueOf(1));
@@ -1689,19 +1948,27 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 			HostModelImpl hostModelImpl = (HostModelImpl)host;
 
 			if ((hostModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_G_H.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { host.getGroupId(), host.getHostId() };
+					FINDER_PATH_FETCH_BY_HOSTID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { host.getHostId() };
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_H, args,
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_HOSTID, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_H, args, host);
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_HOSTID, args,
+					host);
+			}
+
+			if ((hostModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_NAME.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { host.getName() };
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_NAME, args,
+					Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NAME, args, host);
 			}
 
 			if ((hostModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_DEFAULTHOST.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						host.getCompanyId(), host.getGroupId()
-					};
+				Object[] args = new Object[] { host.getDefaultHost() };
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_DEFAULTHOST,
 					args, Long.valueOf(1));
@@ -1714,33 +1981,40 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 	protected void clearUniqueFindersCache(Host host) {
 		HostModelImpl hostModelImpl = (HostModelImpl)host;
 
-		Object[] args = new Object[] { host.getGroupId(), host.getHostId() };
+		Object[] args = new Object[] { host.getHostId() };
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_H, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_H, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_HOSTID, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_HOSTID, args);
 
 		if ((hostModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_G_H.getColumnBitmask()) != 0) {
-			args = new Object[] {
-					hostModelImpl.getOriginalGroupId(),
-					hostModelImpl.getOriginalHostId()
-				};
+				FINDER_PATH_FETCH_BY_HOSTID.getColumnBitmask()) != 0) {
+			args = new Object[] { hostModelImpl.getOriginalHostId() };
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_H, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_H, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_HOSTID, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_HOSTID, args);
 		}
 
-		args = new Object[] { host.getCompanyId(), host.getGroupId() };
+		args = new Object[] { host.getName() };
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_NAME, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_NAME, args);
+
+		if ((hostModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_NAME.getColumnBitmask()) != 0) {
+			args = new Object[] { hostModelImpl.getOriginalName() };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_NAME, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_NAME, args);
+		}
+
+		args = new Object[] { host.getDefaultHost() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_DEFAULTHOST, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_DEFAULTHOST, args);
 
 		if ((hostModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_DEFAULTHOST.getColumnBitmask()) != 0) {
-			args = new Object[] {
-					hostModelImpl.getOriginalCompanyId(),
-					hostModelImpl.getOriginalGroupId()
-				};
+			args = new Object[] { hostModelImpl.getOriginalDefaultHost() };
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_DEFAULTHOST, args);
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_DEFAULTHOST, args);
@@ -1885,39 +2159,32 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 
 		else {
 			if ((hostModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { hostModelImpl.getOriginalGroupId() };
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PROTOCOL.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { hostModelImpl.getOriginalProtocol() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PROTOCOL, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PROTOCOL,
 					args);
 
-				args = new Object[] { hostModelImpl.getGroupId() };
+				args = new Object[] { hostModelImpl.getProtocol() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PROTOCOL, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PROTOCOL,
 					args);
 			}
 
 			if ((hostModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYIDANDGROUPID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						hostModelImpl.getOriginalCompanyId(),
-						hostModelImpl.getOriginalGroupId()
-					};
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STREAMER.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { hostModelImpl.getOriginalStreamer() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYIDANDGROUPID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYIDANDGROUPID,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_STREAMER, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STREAMER,
 					args);
 
-				args = new Object[] {
-						hostModelImpl.getCompanyId(), hostModelImpl.getGroupId()
-					};
+				args = new Object[] { hostModelImpl.getStreamer() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYIDANDGROUPID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYIDANDGROUPID,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_STREAMER, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STREAMER,
 					args);
 			}
 		}
@@ -1947,8 +2214,6 @@ public class HostPersistenceImpl extends BasePersistenceImpl<Host>
 		hostImpl.setPort(host.getPort());
 		hostImpl.setServerRoot(host.getServerRoot());
 		hostImpl.setName(host.getName());
-		hostImpl.setGroupId(host.getGroupId());
-		hostImpl.setCompanyId(host.getCompanyId());
 		hostImpl.setDefaultHost(host.getDefaultHost());
 
 		return hostImpl;
