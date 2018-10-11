@@ -129,7 +129,7 @@
 	<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
 	<%
 	try{
-		rInst=InstitutionLocalServiceUtil.getRoot(themeDisplay.getCompanyId(), themeDisplay.getLayout().getGroupId()); 
+		rInst=InstitutionLocalServiceUtil.getRoot(); 
 		if(rInst.getName().length()>0){%>
 		<A HREF="<%=backURL0%>"><%=rInst.getName() %></A>
 	<%} 
