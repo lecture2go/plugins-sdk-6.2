@@ -128,7 +128,7 @@
 				    		}catch(Exception e){}
 				      }  
 				      if (videoInstitutions.size()==0){
-				    	  Institution rootI = InstitutionLocalServiceUtil.getByParentIdAndCompanyId(0, company.getCompanyId());
+				    	  Institution rootI = InstitutionLocalServiceUtil.getRoot();
 				    	  %>
 								<A HREF="/"><%=companyName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
 							    <A HREF="<%=backURL0%>"><%=pageName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 				    	  

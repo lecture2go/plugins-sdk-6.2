@@ -53,7 +53,7 @@
 	if(permissionCoordinator){
 		Coordinator c = CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId());
 		if(institutionId==0)institutionId = c.getInstitutionId();
-		institutions = InstitutionLocalServiceUtil.getByParent(c.getInstitutionId());
+		institutions = InstitutionLocalServiceUtil.getByParentIdMap(c.getInstitutionId());
 		producers = ProducerLocalServiceUtil.getProducersByInstitutionId(c.getInstitutionId());
 	}
 
@@ -64,7 +64,7 @@
 		Institution i = InstitutionLocalServiceUtil.getById(p.getInstitutionId());
 		if(institutionId==0)institutionId = p.getInstitutionId();
 		//
-		institutions = InstitutionLocalServiceUtil.getByParent(p.getInstitutionId());
+		institutions = InstitutionLocalServiceUtil.getByParentIdMap(p.getInstitutionId());
 	}
 	
 	Locale[] languages = LanguageUtil.getAvailableLocales();

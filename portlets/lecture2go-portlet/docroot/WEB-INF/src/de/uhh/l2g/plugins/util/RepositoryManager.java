@@ -245,7 +245,7 @@ public class RepositoryManager {
 		
 		//retrieving hosts should only fail if default Host has not been generated yet
 		try {
-			hosts = HostLocalServiceUtil.getByGroupId(groupId);
+			hosts = HostLocalServiceUtil.getAll();
 		
 			//then directories
 			for (Host h : hosts) {

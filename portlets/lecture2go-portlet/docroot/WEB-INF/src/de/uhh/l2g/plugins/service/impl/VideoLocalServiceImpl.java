@@ -1,3 +1,4 @@
+
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
@@ -93,6 +94,10 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	 */
 	public List<Video> getByOpenAccess(int bool) throws SystemException {
 		return videoPersistence.findByOpenAccess(bool);
+	}
+
+	public int getByOpenAccessAndUploadedFile(int bool) throws SystemException {
+		return	videoPersistence.countByOpenAccessAndUploadedFile(bool);
 	}
 
 	public Video getLatestOpenAccessVideoForLectureseries(Long lectureseriesId) {
@@ -759,12 +764,13 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		
 		if(vl == null || lectureseriesId < 1)
 			return sortedVideoList;
-	
+		
 		ListIterator<Video> vli = vl.listIterator();
 		while(vli.hasNext()){
 			Video objectVideo = getFullVideo(vli.next().getVideoId());
 			if(objectVideo.getFilename().trim().length()>0)sortedVideoList.add(objectVideo);
 		}
+
 		int sortVideo = 0;
 		try {
 			Lectureseries lectureseriesObject = lectureseriesPersistence.findByPrimaryKey(lectureseriesId);

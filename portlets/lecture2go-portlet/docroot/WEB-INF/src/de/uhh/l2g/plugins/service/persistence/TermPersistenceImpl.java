@@ -1139,6 +1139,622 @@ public class TermPersistenceImpl extends BasePersistenceImpl<Term>
 	private static final String _FINDER_COLUMN_YEAR_YEAR_1 = "term.year IS NULL";
 	private static final String _FINDER_COLUMN_YEAR_YEAR_2 = "term.year = ?";
 	private static final String _FINDER_COLUMN_YEAR_YEAR_3 = "(term.year IS NULL OR term.year = '')";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_PREFIXANDYEAR =
+		new FinderPath(TermModelImpl.ENTITY_CACHE_ENABLED,
+			TermModelImpl.FINDER_CACHE_ENABLED, TermImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPrefixAndYear",
+			new String[] {
+				String.class.getName(), String.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PREFIXANDYEAR =
+		new FinderPath(TermModelImpl.ENTITY_CACHE_ENABLED,
+			TermModelImpl.FINDER_CACHE_ENABLED, TermImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPrefixAndYear",
+			new String[] { String.class.getName(), String.class.getName() },
+			TermModelImpl.PREFIX_COLUMN_BITMASK |
+			TermModelImpl.YEAR_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_PREFIXANDYEAR = new FinderPath(TermModelImpl.ENTITY_CACHE_ENABLED,
+			TermModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPrefixAndYear",
+			new String[] { String.class.getName(), String.class.getName() });
+
+	/**
+	 * Returns all the terms where prefix = &#63; and year = &#63;.
+	 *
+	 * @param prefix the prefix
+	 * @param year the year
+	 * @return the matching terms
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Term> findByPrefixAndYear(String prefix, String year)
+		throws SystemException {
+		return findByPrefixAndYear(prefix, year, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the terms where prefix = &#63; and year = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.TermModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param prefix the prefix
+	 * @param year the year
+	 * @param start the lower bound of the range of terms
+	 * @param end the upper bound of the range of terms (not inclusive)
+	 * @return the range of matching terms
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Term> findByPrefixAndYear(String prefix, String year,
+		int start, int end) throws SystemException {
+		return findByPrefixAndYear(prefix, year, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the terms where prefix = &#63; and year = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.TermModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param prefix the prefix
+	 * @param year the year
+	 * @param start the lower bound of the range of terms
+	 * @param end the upper bound of the range of terms (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching terms
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Term> findByPrefixAndYear(String prefix, String year,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PREFIXANDYEAR;
+			finderArgs = new Object[] { prefix, year };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_PREFIXANDYEAR;
+			finderArgs = new Object[] {
+					prefix, year,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<Term> list = (List<Term>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (Term term : list) {
+				if (!Validator.equals(prefix, term.getPrefix()) ||
+						!Validator.equals(year, term.getYear())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_TERM_WHERE);
+
+			boolean bindPrefix = false;
+
+			if (prefix == null) {
+				query.append(_FINDER_COLUMN_PREFIXANDYEAR_PREFIX_1);
+			}
+			else if (prefix.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_PREFIXANDYEAR_PREFIX_3);
+			}
+			else {
+				bindPrefix = true;
+
+				query.append(_FINDER_COLUMN_PREFIXANDYEAR_PREFIX_2);
+			}
+
+			boolean bindYear = false;
+
+			if (year == null) {
+				query.append(_FINDER_COLUMN_PREFIXANDYEAR_YEAR_1);
+			}
+			else if (year.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_PREFIXANDYEAR_YEAR_3);
+			}
+			else {
+				bindYear = true;
+
+				query.append(_FINDER_COLUMN_PREFIXANDYEAR_YEAR_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(TermModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindPrefix) {
+					qPos.add(prefix);
+				}
+
+				if (bindYear) {
+					qPos.add(year);
+				}
+
+				if (!pagination) {
+					list = (List<Term>)QueryUtil.list(q, getDialect(), start,
+							end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<Term>(list);
+				}
+				else {
+					list = (List<Term>)QueryUtil.list(q, getDialect(), start,
+							end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first term in the ordered set where prefix = &#63; and year = &#63;.
+	 *
+	 * @param prefix the prefix
+	 * @param year the year
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching term
+	 * @throws de.uhh.l2g.plugins.NoSuchTermException if a matching term could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Term findByPrefixAndYear_First(String prefix, String year,
+		OrderByComparator orderByComparator)
+		throws NoSuchTermException, SystemException {
+		Term term = fetchByPrefixAndYear_First(prefix, year, orderByComparator);
+
+		if (term != null) {
+			return term;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("prefix=");
+		msg.append(prefix);
+
+		msg.append(", year=");
+		msg.append(year);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchTermException(msg.toString());
+	}
+
+	/**
+	 * Returns the first term in the ordered set where prefix = &#63; and year = &#63;.
+	 *
+	 * @param prefix the prefix
+	 * @param year the year
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching term, or <code>null</code> if a matching term could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Term fetchByPrefixAndYear_First(String prefix, String year,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<Term> list = findByPrefixAndYear(prefix, year, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last term in the ordered set where prefix = &#63; and year = &#63;.
+	 *
+	 * @param prefix the prefix
+	 * @param year the year
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching term
+	 * @throws de.uhh.l2g.plugins.NoSuchTermException if a matching term could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Term findByPrefixAndYear_Last(String prefix, String year,
+		OrderByComparator orderByComparator)
+		throws NoSuchTermException, SystemException {
+		Term term = fetchByPrefixAndYear_Last(prefix, year, orderByComparator);
+
+		if (term != null) {
+			return term;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("prefix=");
+		msg.append(prefix);
+
+		msg.append(", year=");
+		msg.append(year);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchTermException(msg.toString());
+	}
+
+	/**
+	 * Returns the last term in the ordered set where prefix = &#63; and year = &#63;.
+	 *
+	 * @param prefix the prefix
+	 * @param year the year
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching term, or <code>null</code> if a matching term could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Term fetchByPrefixAndYear_Last(String prefix, String year,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByPrefixAndYear(prefix, year);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Term> list = findByPrefixAndYear(prefix, year, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the terms before and after the current term in the ordered set where prefix = &#63; and year = &#63;.
+	 *
+	 * @param termId the primary key of the current term
+	 * @param prefix the prefix
+	 * @param year the year
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next term
+	 * @throws de.uhh.l2g.plugins.NoSuchTermException if a term with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Term[] findByPrefixAndYear_PrevAndNext(long termId, String prefix,
+		String year, OrderByComparator orderByComparator)
+		throws NoSuchTermException, SystemException {
+		Term term = findByPrimaryKey(termId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Term[] array = new TermImpl[3];
+
+			array[0] = getByPrefixAndYear_PrevAndNext(session, term, prefix,
+					year, orderByComparator, true);
+
+			array[1] = term;
+
+			array[2] = getByPrefixAndYear_PrevAndNext(session, term, prefix,
+					year, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Term getByPrefixAndYear_PrevAndNext(Session session, Term term,
+		String prefix, String year, OrderByComparator orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_TERM_WHERE);
+
+		boolean bindPrefix = false;
+
+		if (prefix == null) {
+			query.append(_FINDER_COLUMN_PREFIXANDYEAR_PREFIX_1);
+		}
+		else if (prefix.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_PREFIXANDYEAR_PREFIX_3);
+		}
+		else {
+			bindPrefix = true;
+
+			query.append(_FINDER_COLUMN_PREFIXANDYEAR_PREFIX_2);
+		}
+
+		boolean bindYear = false;
+
+		if (year == null) {
+			query.append(_FINDER_COLUMN_PREFIXANDYEAR_YEAR_1);
+		}
+		else if (year.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_PREFIXANDYEAR_YEAR_3);
+		}
+		else {
+			bindYear = true;
+
+			query.append(_FINDER_COLUMN_PREFIXANDYEAR_YEAR_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(TermModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (bindPrefix) {
+			qPos.add(prefix);
+		}
+
+		if (bindYear) {
+			qPos.add(year);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(term);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<Term> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the terms where prefix = &#63; and year = &#63; from the database.
+	 *
+	 * @param prefix the prefix
+	 * @param year the year
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByPrefixAndYear(String prefix, String year)
+		throws SystemException {
+		for (Term term : findByPrefixAndYear(prefix, year, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(term);
+		}
+	}
+
+	/**
+	 * Returns the number of terms where prefix = &#63; and year = &#63;.
+	 *
+	 * @param prefix the prefix
+	 * @param year the year
+	 * @return the number of matching terms
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByPrefixAndYear(String prefix, String year)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_PREFIXANDYEAR;
+
+		Object[] finderArgs = new Object[] { prefix, year };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_TERM_WHERE);
+
+			boolean bindPrefix = false;
+
+			if (prefix == null) {
+				query.append(_FINDER_COLUMN_PREFIXANDYEAR_PREFIX_1);
+			}
+			else if (prefix.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_PREFIXANDYEAR_PREFIX_3);
+			}
+			else {
+				bindPrefix = true;
+
+				query.append(_FINDER_COLUMN_PREFIXANDYEAR_PREFIX_2);
+			}
+
+			boolean bindYear = false;
+
+			if (year == null) {
+				query.append(_FINDER_COLUMN_PREFIXANDYEAR_YEAR_1);
+			}
+			else if (year.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_PREFIXANDYEAR_YEAR_3);
+			}
+			else {
+				bindYear = true;
+
+				query.append(_FINDER_COLUMN_PREFIXANDYEAR_YEAR_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindPrefix) {
+					qPos.add(prefix);
+				}
+
+				if (bindYear) {
+					qPos.add(year);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_PREFIXANDYEAR_PREFIX_1 = "term.prefix IS NULL AND ";
+	private static final String _FINDER_COLUMN_PREFIXANDYEAR_PREFIX_2 = "term.prefix = ? AND ";
+	private static final String _FINDER_COLUMN_PREFIXANDYEAR_PREFIX_3 = "(term.prefix IS NULL OR term.prefix = '') AND ";
+	private static final String _FINDER_COLUMN_PREFIXANDYEAR_YEAR_1 = "term.year IS NULL";
+	private static final String _FINDER_COLUMN_PREFIXANDYEAR_YEAR_2 = "term.year = ?";
+	private static final String _FINDER_COLUMN_PREFIXANDYEAR_YEAR_3 = "(term.year IS NULL OR term.year = '')";
 
 	public TermPersistenceImpl() {
 		setModelClass(Term.class);
@@ -1386,6 +2002,28 @@ public class TermPersistenceImpl extends BasePersistenceImpl<Term>
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_YEAR, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_YEAR,
+					args);
+			}
+
+			if ((termModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PREFIXANDYEAR.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						termModelImpl.getOriginalPrefix(),
+						termModelImpl.getOriginalYear()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PREFIXANDYEAR,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PREFIXANDYEAR,
+					args);
+
+				args = new Object[] {
+						termModelImpl.getPrefix(), termModelImpl.getYear()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PREFIXANDYEAR,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PREFIXANDYEAR,
 					args);
 			}
 		}
