@@ -138,10 +138,6 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		return videoPersistence.countByLectureseries(lectureseriesId);
 	}
 
-	public int countByLectureseries(Long lectureseriesId) throws SystemException {
-		return videoPersistence.countByLectureseries(lectureseriesId);
-	}
-
 	public List<Video> getByProducerAndLectureseries(Long producerId, Long lectureseriesId) throws SystemException {
 		List<Video> vl = videoPersistence.findByProducerAndLectureseries(producerId, lectureseriesId);
 		return vl;
