@@ -7,6 +7,16 @@ Lecture2Go http://lecture2go.uni-hamburg.de is an open source platform for media
 
 Change Log
 ==============
+Bug Fix Package [master-v.1-b5050] on Thursday, October 11, 2018
+
+- 1167 RM - Term scheduler integration.
+- 1214 RM - Sub institutions can not be deleted
+- 1215 RM - Response time of the catalog page optimized.
+- 1165 RM - Download speed for closed access videos optimized.
+- 1188 RM - Preview image for short videos is not created.
+- 1041 RM - Wrong statistics for closed access videos.
+
+
 Bug Fix Package [master-v.1-b5005] on Friday, September 28, 2018
 
 - 1125 RM - Hits after search request for lecture series ignore specific
