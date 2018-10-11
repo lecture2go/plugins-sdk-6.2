@@ -34,6 +34,7 @@ public class CreatorsManagement extends MVCPortlet {
 			creator.setMiddleName(mn);
 			creator.setLastName(ln);
 			creator.setJobTitle(t);
+			creator.setFullName(fullName(fn, mn, ln, t));
 			CreatorLocalServiceUtil.addCreator(creator);
 			try {
 				response.sendRedirect(backURL);
