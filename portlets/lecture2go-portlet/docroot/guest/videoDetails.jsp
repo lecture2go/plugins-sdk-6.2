@@ -156,7 +156,7 @@
 		  			t = TermLocalServiceUtil.getById(lTermId).getPrefix()+" "+TermLocalServiceUtil.getById(lTermId).getYear();
 		  		}catch (Exception e){};
 			  		
-		  		if (t.trim().length()>0)series = lectureseries.getName() +"("+t+")";
+		  		if (t.trim().length()>0)series = lectureseries.getName()+" ("+t+")";
 		  		else series= lectureseries.getName();
 			  	%>
 		       <c:if test="${relatedVideos.size()>1}"><div class="player"></c:if>
