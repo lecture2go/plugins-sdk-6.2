@@ -95,7 +95,7 @@ function updateCreators(){
 			parameters['middleName'] = $div.find('input[name = '+namespace+'middleName]').val();
 			parameters['jobTitle'] = $div.find('input[name = '+namespace+'jobTitle]').val();
 			parameters['gender'] = "";
-			parameters['fullName'] = $div.find('input[name = '+namespace+'fullName]').val();
+			parameters['fullName'] = (parameters['jobTitle']+" "+(parameters['firstName']+" "+parameters['middleName']))+" "+parameters['lastName']);
 		}else{
 			parameters['creatorId'] = "0";
 			parameters['firstName'] = $div.find('input[name = '+namespace+'firstName]').val().trim();
