@@ -151,15 +151,14 @@
 			%>
 		</liferay-ui:search-container-results>
 	
-		<liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.Video" keyProperty="videoId" modelVar="video">
+		<liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.Video" keyProperty="videoId" modelVar="vid">
 				<% 
-					Video vid = VideoLocalServiceUtil.getFullVideo(video.getVideoId()); 
 					String url = "";
 					if(vid.getOpenAccess()==1)url=vid.getUrl();
 					else url=vid.getSecureUrl();
 				%>
 				<portlet:actionURL name="viewVideo" var="viewURL">
-					<portlet:param name="videoId" value="<%= String.valueOf(video.getVideoId())%>" />
+					<portlet:param name="videoId" value="<%= String.valueOf(vid.getVideoId())%>" />
 				</portlet:actionURL>
 				<liferay-ui:search-container-column-text name="">
 						<div class="adminrow wide">
@@ -298,7 +297,7 @@
 								<%}else{%>
 									 <a href="<%=activateDowonloadURL.toString()%>" title="<liferay-ui:message key='aktivate-download-help'/>" alt="<liferay-ui:message key='aktivate-download-help'/>">
 									    <span class="icon-large icon-download"></span>
-									 </a>		
+									 </a>
 								<%}	
 								
 								if (SegmentLocalServiceUtil.getSegmentsByVideoId(vid.getVideoId()).size()>0){%>

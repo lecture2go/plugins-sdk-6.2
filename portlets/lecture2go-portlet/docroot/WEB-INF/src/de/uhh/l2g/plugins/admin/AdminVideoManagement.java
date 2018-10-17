@@ -90,9 +90,12 @@ public class AdminVideoManagement extends MVCPortlet {
 		Video reqVideo = new VideoImpl();
 		Long reqVideoId = new Long(0);
 		try{reqVideoId = new Long(request.getParameterMap().get("videoId")[0]);}catch(Exception e){}
-		reqVideo = VideoLocalServiceUtil.getFullVideo(reqVideoId);
-
-		request.setAttribute("reqVideo", reqVideo);
+		try {
+			reqVideo = VideoLocalServiceUtil.getVideo(reqVideoId);
+			request.setAttribute("reqVideo", reqVideo);
+		} catch (Exception e) {
+			
+		}
 		String backURL = request.getParameter("backURL");
 		request.setAttribute("backURL", backURL);
 		response.setRenderParameter("jspPage", "/admin/segments.jsp");
@@ -113,13 +116,16 @@ public class AdminVideoManagement extends MVCPortlet {
 		Long reqVideoId = new Long(0);
 		Video reqVideo = new VideoImpl(); 
 		try{reqVideoId = new Long(request.getParameterMap().get("videoId")[0]);}catch(Exception e){}
-		try{reqVideo = VideoLocalServiceUtil.getFullVideo(reqVideoId);}catch(Exception e){}
+		try{reqVideo = VideoLocalServiceUtil.getVideo(reqVideoId);}catch(Exception e){}
 		
 		//hack for empty secure filename on the first upload
 		if(reqVideo.getFilename().length()==0 && reqVideo.getSecureFilename().length()==0){
 			reqVideo.setSecureFilename(Security.createSecureFileName()+".xx");
 			VideoLocalServiceUtil.updateVideo(reqVideo);
 		}
+		
+    	// create symlink to downloadable file if not existing
+		VideoLocalServiceUtil.createSymLinkToDownloadableFileIfNotExisting(reqVideoId);
 		
 		//requested producer
 		Producer reqProducer = new ProducerImpl();
@@ -324,7 +330,13 @@ public class AdminVideoManagement extends MVCPortlet {
 		Long userId = new Long(userID);
 		String resourceID = resourceRequest.getResourceID();
 		Long videoId = ParamUtil.getLong(resourceRequest, "videoId");
-		Video video = VideoLocalServiceUtil.getFullVideo(videoId);
+		
+		Video video = new VideoImpl();
+		try {
+			video = VideoLocalServiceUtil.getVideo(videoId);
+		} catch (Exception e) {
+			
+		}
 		
 		Metadata metadata = new MetadataImpl();
 		try {
@@ -370,6 +382,10 @@ public class AdminVideoManagement extends MVCPortlet {
 				//delete old thumbs
 				ProzessManager pm = new ProzessManager();
 				pm.deleteThumbnails(video);
+				
+				//create new thumbs
+				VideoLocalServiceUtil.createThumbnailsIfNotExisting(video.getVideoId());
+				
 				//and thumbs for segments
 				// delete all segment images from repository location
 				try{
@@ -1138,7 +1154,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		Video video = new VideoImpl();
 		Long reqVideoId = new Long(0);
 		try{reqVideoId = new Long(request.getParameterMap().get("videoId")[0]);}catch(Exception e){}
-		video = VideoLocalServiceUtil.getFullVideo(reqVideoId);
+		video = VideoLocalServiceUtil.getVideo(reqVideoId);
 		ProzessManager pm = new ProzessManager();	
 		pm.deleteVideo(video);
 		String backURL = request.getParameter("backURL");
@@ -1153,11 +1169,11 @@ public class AdminVideoManagement extends MVCPortlet {
 		Video video = new VideoImpl();
 		Long reqVideoId = new Long(0);
 		try{reqVideoId = new Long(request.getParameterMap().get("videoId")[0]);}catch(Exception e){}
-		video = VideoLocalServiceUtil.getFullVideo(reqVideoId);
-		ProzessManager pm = new ProzessManager();	
-		//deactivate open access
-		//and refresh lecture series with this video
 		try {
+			video = VideoLocalServiceUtil.getVideo(reqVideoId);
+			ProzessManager pm = new ProzessManager();	
+			//deactivate open access
+			//and refresh lecture series with this video
 			pm.deactivateOpenaccess(video);
 		} catch (PortalException e) {
 		} catch (SystemException e) {
@@ -1174,11 +1190,11 @@ public class AdminVideoManagement extends MVCPortlet {
 		Video video = new VideoImpl();
 		Long reqVideoId = new Long(0);
 		try{reqVideoId = new Long(request.getParameterMap().get("videoId")[0]);}catch(Exception e){}
-		video = VideoLocalServiceUtil.getFullVideo(reqVideoId);
 		//activate open access
 		//and refresh lecture series with this video
 		ProzessManager pm = new ProzessManager();	
 		try {
+			video = VideoLocalServiceUtil.getVideo(reqVideoId);
 			pm.activateOpenaccess(video);
 		} catch (SystemException e) {
 		} catch (PortalException e) {
@@ -1262,8 +1278,12 @@ public class AdminVideoManagement extends MVCPortlet {
 			List<Video> vl = VideoLocalServiceUtil.getAll();
 			ListIterator<Video> vit = vl.listIterator();
 			while(vit.hasNext()){
-				Video v = VideoLocalServiceUtil.getFullVideo(vit.next().getVideoId());
-				if(v.isHasChapters())updateVttChapterFile(v);
+				try {
+					Video v = VideoLocalServiceUtil.getVideo(vit.next().getVideoId());
+					if(v.isHasChapters())updateVttChapterFile(v);
+				} catch (Exception e) {
+					
+				}
 			}
 		} catch (SystemException e) {
 			//e.printStackTrace();

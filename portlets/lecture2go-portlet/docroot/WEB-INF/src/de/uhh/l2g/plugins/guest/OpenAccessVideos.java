@@ -170,21 +170,36 @@ public class OpenAccessVideos extends MVCPortlet {
 	    	try{
 	    		lectureseries = LectureseriesLocalServiceUtil.getLectureseries(objectId);
 	    		if(!secLink){
-	    			video = VideoLocalServiceUtil.getFullVideo(lectureseries.getPreviewVideoId());
+	    			try {
+		    			video = VideoLocalServiceUtil.getVideo(lectureseries.getPreviewVideoId());
+	    			} catch (Exception e) {
+	    				
+	    			}
 	    		}else{
 	    			Long videoId = VideoLocalServiceUtil.getLatestClosedAccessVideoId(objectId);
-	    			video = VideoLocalServiceUtil.getFullVideo(videoId);
+	    			try {
+	    				video = VideoLocalServiceUtil.getVideo(videoId);
+	    			} catch (Exception e) {
+	    				
+	    			}
 	    		}
 	    	}catch(Exception e){
 	    		objectExists = false;
 	    		response.setRenderParameter("jspPage","/guest/noVideosFound.jsp");	
 	    	}
 	    }else if(objectType.equals("v")){
-	    	video = VideoLocalServiceUtil.getFullVideo(objectId);
+	    	try {
+				video = VideoLocalServiceUtil.getVideo(objectId);
+			} catch (Exception e) {
+				
+			}
 	    	if(video.getVideoId()==0)objectExists=false;
 	    	try{lectureseries = LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId());}catch (Exception e){}
 	    }
 	    if(objectExists){
+	    	// create symlink to downloadable file if not existing
+	    	VideoLocalServiceUtil.createSymLinkToDownloadableFileIfNotExisting(video.getVideoId());
+	    	
 		    List<Video> relatedVideos = new ArrayList<Video>();
 		    //related videos by lectureseries id
 	    	try {
