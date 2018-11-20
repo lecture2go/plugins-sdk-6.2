@@ -900,7 +900,7 @@ function updateCreatorOnServer(jsonArray) {
 		 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>",
 		  },
 		  global: false,
-		  async:false,
+		  async: true,
 		  success: function(data) {
 		    //remove all creators 
 		    $( "#creators" ).empty();
