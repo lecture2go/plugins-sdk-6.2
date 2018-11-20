@@ -18,6 +18,7 @@ import javax.portlet.ResourceResponse;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.springframework.web.util.HtmlUtils;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -429,12 +430,24 @@ public class AdminVideoManagement extends MVCPortlet {
 		}
 		
 		if(resourceID.equals("convertVideo")){
-			JSONObject json = JSONFactoryUtil.createJSONObject();
+			String workflow = ParamUtil.getString(resourceRequest, "workflow");
+	 	    // TODO: get an map with arbitrary number of key-values (how to do with ParamUtil or ResourceRequest??)
+	 	    String layout = ParamUtil.getString(resourceRequest, "layout");
+	 	    String captionUrl = HtmlUtils.htmlEscape(ParamUtil.getString(resourceRequest, "captionurl"));
+		 	    
+	 	   JSONObject json = JSONFactoryUtil.createJSONObject();
 			// if activated, notify the video processor to convert the video
 			if (PropsUtil.contains("lecture2go.videoprocessing.provider") && (video.getContainerFormat().equalsIgnoreCase("mp4"))) {
 				String videoConversionUrl = PropsUtil.get("lecture2go.videoprocessing.provider.videoconversion");
-			
-				boolean isVideoConversionStarted = VideoProcessorManager.startVideoConversion(video.getVideoId());
+				
+				boolean isVideoConversionStarted;
+				if (workflow.isEmpty()) {
+					// the default case, use the workflow specified in properties file
+					isVideoConversionStarted = VideoProcessorManager.startVideoConversion(video.getVideoId());
+				} else {
+					// another workflow is specified, use this
+					isVideoConversionStarted = VideoProcessorManager.startVideoConversion(video.getVideoId(), workflow, captionUrl, layout);
+				}
 				if (isVideoConversionStarted) {
 					json.put("status", Boolean.TRUE);
 				} else {
