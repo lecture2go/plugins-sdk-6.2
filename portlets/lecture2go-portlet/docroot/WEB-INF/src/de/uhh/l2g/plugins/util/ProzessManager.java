@@ -701,7 +701,7 @@ public class ProzessManager {
 	 * @throws FileNotFoundException
 	 * @throws DocumentException
 	 */
-	private String getFileNameOfVideoWithReasonableBitrate(Host host, Video video, Producer producer) throws FileNotFoundException, DocumentException {
+	public String getFileNameOfVideoWithReasonableBitrate(Host host, Video video, Producer producer) throws FileNotFoundException, DocumentException {
 		final int targetBitrate = Integer.parseInt(PropsUtil.get("lecture2go.videoprocessing.targetdownloadbitrate"));
 		String filename = "";
 
