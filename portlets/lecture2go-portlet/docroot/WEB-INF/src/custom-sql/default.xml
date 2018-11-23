@@ -241,7 +241,7 @@
 			   (SELECT CASE DATEDIFF(NOW(),date) WHEN 0 THEN 0 WHEN 1 THEN "DAY" WHEN 7 THEN "WEEK" WHEN 31 THEN "MONTH" WHEN 365 THEN "YEAR" END) AS timespan, 
 			   (SELECT COUNT(*) FROM LG_Video WHERE openAccess = 1 AND filename IS NOT NULL) - publicVideos AS publicDiff, 
 			   (SELECT COUNT(*) FROM LG_Video WHERE openAccess = 0 AND filename IS NOT NULL) - privateVideos AS privateDiff,
-			   (SELECT COUNT(*) FROM LG_Video WHERE openAccess = 1 AND filename IS NOT NULL) - publicVideos + (SELECT COUNT(*) FROM LG_Video WHERE openAccess = 0 AND filename IS NOT NULL) - privateVideos AS totalDiff 
+			   (SELECT COUNT(*) FROM LG_Video WHERE filename IS NOT NULL) AS totalDiff
 			FROM LG_Statistic 
 			GROUP BY timespan;
 		]]>
