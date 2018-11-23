@@ -396,8 +396,12 @@ public class AdminVideoManagement extends MVCPortlet {
 		}
 		
 		if(resourceID.equals("updateThumbnail")){
+			ProzessManager pm = new ProzessManager();
+			Host host = HostLocalServiceUtil.getHost(video.getHostId());
+			Producer producer = ProducerLocalServiceUtil.getProducer(video.getProducerId());
+			//
 			String image="";
-			String fileLocation="";
+			String fileLocation = ProducerLocalServiceUtil.getProdUcer(video.getProducerId()).getHomeDir() + "/";
 			String thumbnailLocation = "";
 			int time = ParamUtil.getInteger(resourceRequest, "inputTime");
 			
@@ -407,14 +411,22 @@ public class AdminVideoManagement extends MVCPortlet {
 				if(video.getOpenAccess()==1){
 					image = video.getPreffix()+".jpg";
 					try {
-						fileLocation = ProducerLocalServiceUtil.getProdUcer(video.getProducerId()).getHomeDir() + "/" + video.getFilename();
+						if(VideoLocalServiceUtil.checkSmilFile(video)){
+							pm.getFileNameOfVideoWithReasonableBitrate(host, video, producer);
+						}else{
+							fileLocation = fileLocation + video.getFilename();
+						}
 					} catch (Exception e) {
 						//e.printStackTrace();
 					}
 				}else{
 					image = video.getSPreffix()+".jpg";
 					try {
-						fileLocation = ProducerLocalServiceUtil.getProdUcer(video.getProducerId()).getHomeDir() + "/" + video.getSecureFilename();
+						if(VideoLocalServiceUtil.checkSmilFile(video)){
+							pm.getFileNameOfVideoWithReasonableBitrate(host, video, producer);
+						}else{
+							fileLocation = fileLocation + video.getSecureFilename();
+						}						
 					} catch (Exception e) {
 						//e.printStackTrace();
 					}
