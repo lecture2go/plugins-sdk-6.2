@@ -412,7 +412,7 @@ public class AdminVideoManagement extends MVCPortlet {
 					image = video.getPreffix()+".jpg";
 					try {
 						if(VideoLocalServiceUtil.checkSmilFile(video)){
-							pm.getFileNameOfVideoWithReasonableBitrate(host, video, producer);
+							fileLocation = fileLocation + pm.getFileNameOfVideoWithReasonableBitrate(host, video, producer);
 						}else{
 							fileLocation = fileLocation + video.getFilename();
 						}
@@ -423,7 +423,7 @@ public class AdminVideoManagement extends MVCPortlet {
 					image = video.getSPreffix()+".jpg";
 					try {
 						if(VideoLocalServiceUtil.checkSmilFile(video)){
-							pm.getFileNameOfVideoWithReasonableBitrate(host, video, producer);
+							fileLocation = fileLocation + pm.getFileNameOfVideoWithReasonableBitrate(host, video, producer);
 						}else{
 							fileLocation = fileLocation + video.getSecureFilename();
 						}						
@@ -434,6 +434,7 @@ public class AdminVideoManagement extends MVCPortlet {
 				//
 				try {
 					thumbnailLocation = PropsUtil.get("lecture2go.images.system.path") + "/" + image;
+					System.out.println("fileLocation ### "+fileLocation+" ### "+"thumbnailLocation ### "+thumbnailLocation);
 					FFmpegManager.createThumbnail(fileLocation, thumbnailLocation, time);
 				} catch (Exception e) {
 					//e.printStackTrace();
