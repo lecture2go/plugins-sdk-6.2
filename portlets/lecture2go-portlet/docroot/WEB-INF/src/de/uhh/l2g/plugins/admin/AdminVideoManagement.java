@@ -401,7 +401,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			Producer producer = ProducerLocalServiceUtil.createProducer(0);
 			String fileLocation ="";
 			try{
-				producer = ProducerLocalServiceUtil.createProducer(0);
+				producer = ProducerLocalServiceUtil.getProducer(video.getProducerId());
 				host = HostLocalServiceUtil.getHost(video.getHostId());
 				fileLocation = ProducerLocalServiceUtil.getProdUcer(video.getProducerId()).getHomeDir() + "/";
 			}catch(Exception e){
