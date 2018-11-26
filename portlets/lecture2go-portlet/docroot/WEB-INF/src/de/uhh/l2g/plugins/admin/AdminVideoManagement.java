@@ -397,11 +397,19 @@ public class AdminVideoManagement extends MVCPortlet {
 		
 		if(resourceID.equals("updateThumbnail")){
 			ProzessManager pm = new ProzessManager();
-			Host host = HostLocalServiceUtil.getHost(video.getHostId());
-			Producer producer = ProducerLocalServiceUtil.getProducer(video.getProducerId());
+			Host host = HostLocalServiceUtil.createHost(0);
+			Producer producer = ProducerLocalServiceUtil.createProducer(0);
+			String fileLocation ="";
+			try{
+				producer = ProducerLocalServiceUtil.createProducer(0);
+				host = HostLocalServiceUtil.getHost(video.getHostId());
+				fileLocation = ProducerLocalServiceUtil.getProdUcer(video.getProducerId()).getHomeDir() + "/";
+			}catch(Exception e){
+				//
+			}
+			
 			//
 			String image="";
-			String fileLocation = ProducerLocalServiceUtil.getProdUcer(video.getProducerId()).getHomeDir() + "/";
 			String thumbnailLocation = "";
 			int time = ParamUtil.getInteger(resourceRequest, "inputTime");
 			
