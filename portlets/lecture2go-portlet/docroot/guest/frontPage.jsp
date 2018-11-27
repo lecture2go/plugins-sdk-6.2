@@ -97,11 +97,20 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 									Video vid = new VideoImpl();
 									if(lectser.getLatestOpenAccessVideoId()<0){
 										isVideo = true;
-										vid = VideoLocalServiceUtil.getFullVideo(lectser.getLectureseriesId());
+										try {
+											vid = VideoLocalServiceUtil.getVideo(lectser.getLectureseriesId());
+										} catch (Exception e) {
+											
+										}
 										oId = vid.getVideoId()+"";
 									}else{
 										oId = lectser.getLectureseriesId()+"";
-										vid = VideoLocalServiceUtil.getFullVideo(lectser.getLatestOpenAccessVideoId());
+										try {
+											vid = VideoLocalServiceUtil.getVideo(lectser.getLatestOpenAccessVideoId());
+										} catch (Exception e) {
+											
+										}
+
 									}
 
 									List<Video_Institution> vi = Video_InstitutionLocalServiceUtil.getByVideo(vid.getVideoId());
@@ -183,8 +192,13 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 								while(pli.hasNext()){
 									Video video = pli.next();
 									
-									Video vid = VideoLocalServiceUtil.getFullVideo(video.getVideoId());
-									
+									Video vid = new VideoImpl();
+									try {
+										vid = VideoLocalServiceUtil.getVideo(video.getVideoId());
+									} catch (Exception e) {
+										
+									}
+
 									boolean isVideo = (vid.getLectureseriesId() < 0);
 
 									String creators = CreatorLocalServiceUtil.getCommaSeparatedCreatorsByVideoIdAndMaxCreators(vid.getVideoId(),3);
