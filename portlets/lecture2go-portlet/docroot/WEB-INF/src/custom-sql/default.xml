@@ -235,13 +235,13 @@
 		
 	<sql id="de.uhh.l2g.plugins.service.persistence.StatisticFinder.createVideoStatisticView">
 		<![CDATA[
-			CREATE OR REPLACE VIEW LG_VideoStatistic AS
+			CREATE OR REPLACE VIEW LG_VideoStatistic AS 
 			SELECT 
 			   publicVideos AS public, privateVideos AS private, (publicVideos+privateVideos) as total, createDate as date, 
 			   (SELECT CASE DATEDIFF(NOW(),date) WHEN 0 THEN 0 WHEN 1 THEN "DAY" WHEN 7 THEN "WEEK" WHEN 31 THEN "MONTH" WHEN 365 THEN "YEAR" END) AS timespan, 
-			   (SELECT COUNT(*) FROM LG_Video WHERE openAccess = 1 AND filename IS NOT NULL) - publicVideos AS publicDiff, 
-			   (SELECT COUNT(*) FROM LG_Video WHERE openAccess = 0 AND filename IS NOT NULL) - privateVideos AS privateDiff,
-			   (SELECT COUNT(*) FROM LG_Video WHERE filename IS NOT NULL) AS totalDiff
+			   (SELECT COUNT(*) FROM LG_Video WHERE openAccess = 1 AND filename > '') - publicVideos AS publicDiff, 
+			   (SELECT COUNT(*) FROM LG_Video WHERE openAccess = 0 AND filename > '') - privateVideos AS privateDiff, 
+			   (publicVideos + privateVideos) AS totalDiff 
 			FROM LG_Statistic 
 			GROUP BY timespan;
 		]]>
