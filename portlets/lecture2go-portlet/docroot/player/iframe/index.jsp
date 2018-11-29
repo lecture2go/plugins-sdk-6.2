@@ -164,7 +164,11 @@
 		}
 	}
 	//only for open access and requests from CommSy accesseble
-	video = VideoLocalServiceUtil.getFullVideo(videoId);
+	try {
+		video = VideoLocalServiceUtil.getVideo(videoId);
+	} catch (Exception e) {
+		
+	}
 %>
 <body>
 <input type="hidden" id="openaccess" name="openaccess" value="<%=video.getOpenAccess()%>">
