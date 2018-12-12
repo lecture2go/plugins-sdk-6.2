@@ -6,10 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.portlet.ActionRequest;
@@ -470,17 +468,11 @@ public class AdminVideoManagement extends MVCPortlet {
 		
 		if(resourceID.equals("convertVideo")){
 			String workflow = ParamUtil.getString(resourceRequest, "workflow");
-			String additionalPropertiesString = ParamUtil.getString(resourceRequest, "additionalProperties");
-			
-			// the additionalProperties is given as a stringified JSON-Object, create a real JSON object for further processing
-	 	    JSONObject additionalProperties = null;
-	 	    try {
-	 	    	additionalProperties = JSONFactoryUtil.createJSONObject(additionalPropertiesString);
-	 	    } catch (Exception e) {
-	 	    	
-	 	    }
-	 	    			
-			JSONObject json = JSONFactoryUtil.createJSONObject();
+	 	    // TODO: get an map with arbitrary number of key-values (how to do with ParamUtil or ResourceRequest??)
+	 	    String layout = ParamUtil.getString(resourceRequest, "layout");
+	 	    String captionUrl = HtmlUtils.htmlEscape(ParamUtil.getString(resourceRequest, "captionurl"));
+		 	    
+	 	   JSONObject json = JSONFactoryUtil.createJSONObject();
 			// if activated, notify the video processor to convert the video
 			if (PropsUtil.contains("lecture2go.videoprocessing.provider") && (video.getContainerFormat().equalsIgnoreCase("mp4"))) {
 				String videoConversionUrl = PropsUtil.get("lecture2go.videoprocessing.provider.videoconversion");
@@ -491,7 +483,7 @@ public class AdminVideoManagement extends MVCPortlet {
 					isVideoConversionStarted = VideoProcessorManager.startVideoConversion(video.getVideoId());
 				} else {
 					// another workflow is specified, use this
-					isVideoConversionStarted = VideoProcessorManager.startVideoConversion(video.getVideoId(), workflow, additionalProperties);
+					isVideoConversionStarted = VideoProcessorManager.startVideoConversion(video.getVideoId(), workflow, captionUrl, layout);
 				}
 				if (isVideoConversionStarted) {
 					json.put("status", Boolean.TRUE);

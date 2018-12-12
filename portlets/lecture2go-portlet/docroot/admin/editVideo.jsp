@@ -696,8 +696,7 @@ function updateVideoFileName(file){
 				on: {
 					   success: function() {
 					     var jsonResponse = this.get('responseData');
-						 <c:if test='<%= ((PropsUtil.contains("lecture2go.videoprocessing.provider") && reqProducer.getProducerId() != 21923)  
-								 && (PropsUtil.contains("lecture2go.videoprocessing.provider") && !permissionChecker.isOmniadmin()))  %>'>
+						 <c:if test='<%= (PropsUtil.contains("lecture2go.videoprocessing.provider") && (reqProducer.getProducerId() != 21923 || !permissionChecker.isOmniadmin()))  %>'>
 					     	videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>','<%=getVideoConversionStatusURL%>',<%=reqVideo.getVideoId()%>);
 						 </c:if>
 
@@ -1144,11 +1143,7 @@ AUI().use('aui-node',
 		if ($('#<portlet:namespace/>captionlayout').val() == 0 || typeof $('#<portlet:namespace/>captionlayout').val() == "undefined") {
 			videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>', '<%=getVideoConversionStatusURL%>', <%=reqVideo.getVideoId()%>);
 		} else {
-			additionalProperties = {
-				"captionPosition": $('#<portlet:namespace/>captionlayout').val(), 
-				"captionLink": $('<div>').text($('#<portlet:namespace/>captionurl').val()).html()
-			}
-			videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>', '<%=getVideoConversionStatusURL%>', <%=reqVideo.getVideoId()%>, "l2go-composite-adaptive-publish", JSON.stringify(additionalProperties));
+			videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>', '<%=getVideoConversionStatusURL%>', <%=reqVideo.getVideoId()%>, "l2go-composite-adaptive-publish", $('#<portlet:namespace/>captionlayout').val(), $('#<portlet:namespace/>captionurl').val());
 		}
 	});
 	AUI().ready('', function(A){
@@ -1198,9 +1193,9 @@ AUI().use('aui-node',
 		var renderDate = day + "." + month + "." + year;
 		var lectureSeries = "";
 		if ($("#<portlet:namespace/>lectureseriesId").val() > 0) {
-			lectureSeries = $("#<portlet:namespace/>lectureseriesId option:selected").text().trim();
+			lectureSeries = $("#<portlet:namespace/>lectureseriesId option:selected").text();
 		}
-		var imageUrl = encodeURI("https://lecture2go.uni-hamburg.de/imagebuilder/l2goimage?author=" + authorsAsString +"&institution=" + institution + "&title=" + title + "&date=" + renderDate + "&series=" + lectureSeries + "&type=" + layoutname + "&downscale=false&submit=Bild+erzeugen");
+		var imageUrl = encodeURI("https://lecture2go.uni-hamburg.de/imagebuilder/l2goimage?author=" + authorsAsString +"&institution=" + institution + "&title=" + title + "&date=" + renderDate + "&series=" + lectureSeries + "&type=" + layoutname + "&downscale=false&additionalimage=campusinno&submit=Bild+erzeugen");
 		//$("#caption-image").attr({src: imageUrl});
 		$("#<portlet:namespace/>captionurl").attr({value: imageUrl});
 		if (layout>0) {
