@@ -24,6 +24,5 @@
 }
 -->
 </style>
-<liferay-ui:search-toggle buttonLabel="search" displayTerms="<%= displayTerms %>" id="toggle_id_video_search">
-</liferay-ui:search-toggle>
+
 
