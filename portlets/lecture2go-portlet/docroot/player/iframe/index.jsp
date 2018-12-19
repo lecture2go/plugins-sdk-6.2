@@ -158,12 +158,6 @@
 			//
 		}		
 	}
-	//only for open access and requests from CommSy accesseble
-	try {
-		video = VideoLocalServiceUtil.getVideo(videoId);
-	} catch (Exception e) {
-		
-	}
 
 %>
 <body>
@@ -271,9 +265,12 @@
 			        		<%
 			        			String url = "";
 			        			if(video.getOpenAccess()==1)url=video.getUrl();
-			        			else url=video.getSecureUrl();
+			        			else url="";
+			        		
+			        		if(!url.isEmpty()){
 			        		%>
 			                window.open('<%=url%>');
+			                <%}%>
 			            },
 			            tit
 			        )
