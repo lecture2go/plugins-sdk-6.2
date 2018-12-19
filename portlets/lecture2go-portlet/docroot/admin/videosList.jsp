@@ -130,6 +130,17 @@
 					<%}%>
 	</aui:fieldset>
 	
+	<%if(producerId>0){%>	
+		<portlet:actionURL name="addVideo" var="addVideoURL">
+			<portlet:param name="lectureseriesId" value='<%=lectureseriesId+""%>'/>
+				<portlet:param name="producerId" value='<%=producerId+""%>'/>
+				<portlet:param name="backURL" value="<%=String.valueOf(portletURL)%>"/>	
+			</portlet:actionURL>	
+			<a href="<%=addVideoURL.toString()%>" class="add-link">
+			    <liferay-ui:message key="add-video"/> <span class="icon-large icon-plus-sign"/>
+			</a>
+	<%}%>
+		
 	<aui:form action="<%= portletURLString %>" method="post" name="fm">
 			<liferay-ui:search-container emptyResultsMessage="no-videos-found" searchContainer="<%= videoSearchContainer %>">
 			<liferay-ui:search-form page="/admin/searchVideos.jsp" servletContext="<%= application %>" />
