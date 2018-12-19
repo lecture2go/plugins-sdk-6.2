@@ -41,15 +41,14 @@ var videoProcessor = {
 		                   "</span>"
 		                 ].join("\n")).add(videoProcessor.getToolTipHtml());
 	},
-	convert: function(namespace, convertVideoURL, videoConversionStatusURL, id, workflow, layout, captionurl) {
+	convert: function(namespace, convertVideoURL, videoConversionStatusURL, id, workflow, additionalProperties) {
 		$videoconversionNode = $('*[data-video-id="'+id+'"]');
 		$videoconversionNode.html(videoProcessor.getConversionInitializedHtml());
 		AUI().use('aui-io-request', 'aui-node',
 			function(A){
 				var videoId = namespace + "videoId";
 				var workflowDescriptor = namespace + "workflow";
-				var layoutDescriptor = namespace + "layout";
-				var captionurlDescriptor = namespace + "captionurl";
+				var additionalPropertiesDescriptor = namespace + "additionalProperties";
 				
 				var dataForPost = {};
 				dataForPost[videoId] = id;
@@ -57,14 +56,11 @@ var videoProcessor = {
 					// if there is a non-default workflow specified, send it
 					dataForPost[workflowDescriptor] = workflow;
 				}
-				if (typeof layout != "undefined") {
+				if (typeof additionalProperties != "undefined") {
 					// if there is are workflow variables specified, send them
-					dataForPost[layoutDescriptor] = layout;
+					dataForPost[additionalPropertiesDescriptor] = additionalProperties;
 				}
-				if (typeof captionurl != "undefined") {
-					// if there is are workflow variables specified, send them
-					dataForPost[captionurlDescriptor] = captionurl;
-				}
+
 				A.io.request(convertVideoURL, {
 				 	dataType: 'json',
 				 	method: 'POST',
