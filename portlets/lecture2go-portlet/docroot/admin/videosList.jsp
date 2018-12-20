@@ -30,9 +30,9 @@
 		}
 	}else{
 		if(permissionCoordinator){
+			renderRequest.setAttribute("coordinatorId",  coordinatorId+"");
 			coordinatorId = remoteUser.getUserId();
 			producerId = ServletRequestUtils.getLongParameter(request, "producerId", 0);
-			renderRequest.setAttribute("coordinatorId",  coordinatorId+"");
 			Long institutionId = CoordinatorLocalServiceUtil.getCoordinator(coordinatorId).getInstitutionId();
 			producers = ProducerLocalServiceUtil.getProducersByInstitutionId(institutionId);
 			if(producerId>0){
@@ -42,8 +42,8 @@
 			}
 		}else{
 			if(permissionProducer){
-				renderRequest.setAttribute("producerId",  producerId+"");
 				producerId = remoteUser.getUserId();
+				renderRequest.setAttribute("producerId",  producerId+"");
 				lectureseries = LectureseriesLocalServiceUtil.getFilteredByApprovedSemesterFacultyProducer(1, new Long(0), new Long(0), producerId);
 				lectureseriesAsTreeList = LectureseriesLocalServiceUtil.getFilteredByApprovedSemesterFacultyProducerAsTreeMapSortedByTerm(1, new Long(0), new Long(0), producerId);
 			}
@@ -66,6 +66,7 @@
 <div class="noresponsive">
 <label class="edit-video-lable"><%=pageName%></label>
 	<aui:fieldset helpMessage="" column="true" cssClass="list">
+		<div id="selectList">
 				<%if(permissionAdmin){%>
 								<portlet:renderURL var="sortByCoordinator">
 									<portlet:param name="jspPage" value="/admin/videosList.jsp" />
@@ -128,6 +129,7 @@
 									</aui:select>
 								</aui:form>				
 					<%}%>
+		</div>
 	</aui:fieldset>
 	
 	<%if(producerId>0){%>	
@@ -143,7 +145,10 @@
 		
 	<aui:form action="<%= portletURLString %>" method="post" name="fm">
 			<liferay-ui:search-container emptyResultsMessage="no-videos-found" searchContainer="<%= videoSearchContainer %>">
+			
+			<div id="modifiedSearch">
 			<liferay-ui:search-form page="/admin/searchVideos.jsp" servletContext="<%= application %>" />
+			</div>
 			
 			<liferay-ui:search-container-results 
 				results="<%= VideoSearchHelper.getVideo(displayTerms,videoSearchContainer.getStart(), videoSearchContainer.getEnd()) %>" 
