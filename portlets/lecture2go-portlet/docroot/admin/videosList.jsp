@@ -30,8 +30,8 @@
 		}
 	}else{
 		if(permissionCoordinator){
-			renderRequest.setAttribute("coordinatorId",  coordinatorId+"");
 			coordinatorId = remoteUser.getUserId();
+			renderRequest.setAttribute("coordinatorId",  coordinatorId+"");
 			producerId = ServletRequestUtils.getLongParameter(request, "producerId", 0);
 			Long institutionId = CoordinatorLocalServiceUtil.getCoordinator(coordinatorId).getInstitutionId();
 			producers = ProducerLocalServiceUtil.getProducersByInstitutionId(institutionId);
