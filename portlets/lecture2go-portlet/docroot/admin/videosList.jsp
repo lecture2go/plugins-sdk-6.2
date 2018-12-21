@@ -16,8 +16,6 @@
 	
 	if(permissionAdmin){
 		coordinators = CoordinatorLocalServiceUtil.getAllCoordinators(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
-		coordinatorId = ServletRequestUtils.getLongParameter(request, "coordinatorId", 0);
-		producerId = ServletRequestUtils.getLongParameter(request, "producerId", 0);
 		if(coordinatorId>0){
 			Long institutionId = CoordinatorLocalServiceUtil.getCoordinator(coordinatorId).getInstitutionId();
 			producers = ProducerLocalServiceUtil.getProducersByInstitutionId(institutionId);
@@ -31,7 +29,6 @@
 	}else{
 		if(permissionCoordinator){
 			coordinatorId = remoteUser.getUserId();
-			producerId = ServletRequestUtils.getLongParameter(request, "producerId", 0);
 			renderRequest.setAttribute("coordinatorId",  coordinatorId+"");
 			Long institutionId = CoordinatorLocalServiceUtil.getCoordinator(coordinatorId).getInstitutionId();
 			producers = ProducerLocalServiceUtil.getProducersByInstitutionId(institutionId);
@@ -42,8 +39,8 @@
 			}
 		}else{
 			if(permissionProducer){
-				renderRequest.setAttribute("producerId",  producerId+"");
 				producerId = remoteUser.getUserId();
+				renderRequest.setAttribute("producerId",  producerId+"");
 				lectureseries = LectureseriesLocalServiceUtil.getFilteredByApprovedSemesterFacultyProducer(1, new Long(0), new Long(0), producerId);
 				lectureseriesAsTreeList = LectureseriesLocalServiceUtil.getFilteredByApprovedSemesterFacultyProducerAsTreeMapSortedByTerm(1, new Long(0), new Long(0), producerId);
 			}
