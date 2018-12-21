@@ -30,6 +30,7 @@
 		if(permissionCoordinator){
 			coordinatorId = remoteUser.getUserId();
 			renderRequest.setAttribute("coordinatorId",  coordinatorId+"");
+			producerId = ServletRequestUtils.getLongParameter(request, "producerId", 0);
 			Long institutionId = CoordinatorLocalServiceUtil.getCoordinator(coordinatorId).getInstitutionId();
 			producers = ProducerLocalServiceUtil.getProducersByInstitutionId(institutionId);
 			if(producerId>0){
@@ -63,6 +64,7 @@
 <div class="noresponsive">
 <label class="edit-video-lable"><%=pageName%></label>
 	<aui:fieldset helpMessage="" column="true" cssClass="list">
+		<div id="selectList">
 				<%if(permissionAdmin){%>
 								<portlet:renderURL var="sortByCoordinator">
 									<portlet:param name="jspPage" value="/admin/videosList.jsp" />
@@ -125,6 +127,7 @@
 									</aui:select>
 								</aui:form>				
 					<%}%>
+		</div>
 	</aui:fieldset>
 	
 	<%if(producerId>0){%>	
@@ -140,7 +143,10 @@
 		
 	<aui:form action="<%= portletURLString %>" method="post" name="fm">
 			<liferay-ui:search-container emptyResultsMessage="no-videos-found" searchContainer="<%= videoSearchContainer %>">
+			
+			<div id="modifiedSearch">
 			<liferay-ui:search-form page="/admin/searchVideos.jsp" servletContext="<%= application %>" />
+			</div>
 			
 			<liferay-ui:search-container-results 
 				results="<%= VideoSearchHelper.getVideo(displayTerms,videoSearchContainer.getStart(), videoSearchContainer.getEnd()) %>" 
