@@ -7,33 +7,36 @@
 	AdminUserManagement aum = new AdminUserManagement();
 	aum.initL2goRoles(u,renderRequest); //init roles
 	List<Role> l2goRoles = aum.getL2GoRoles(u);
+	String keywords = ServletRequestUtils.getStringParameter(request, "keywords", "");
+	//update role id if keword has been set!
 	Long roleId = ServletRequestUtils.getLongParameter(request, "roleId", 0);
-
+	if(!keywords.isEmpty()) roleId = new Long(0);
+	//
 	PortletURL portletURL = renderResponse.createRenderURL();
 	portletURL.setParameter("roleId", roleId+"");
 	//
 	String portletURLString = portletURL.toString();
-	//
 	UserSearchContainer userSearchContainer = new UserSearchContainer(renderRequest, portletURL);	
 	UserDisplayTerms displayTerms = (UserDisplayTerms)userSearchContainer.getDisplayTerms();
 	//	
 	String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 %>
-
 <portlet:renderURL var="allRoles"><portlet:param name="jspPage" value="/admin/userList.jsp" /></portlet:renderURL>
 <div class="noresponsive">
 	<label class="edit-video-lable"><%=pageName%></label>
 	<aui:fieldset helpMessage="choose-filter" column="true" cssClass="list">
-		<aui:form action="<%= allRoles.toString() %>" method="post">
-			<aui:select name="roleId" label="" onChange="submit();">
-				<aui:option value=""><liferay-ui:message key="select-l2go-role"/></aui:option>
+		<form  action="<%= allRoles.toString() %>" method="post">
+			<select name="<portlet:namespace/>roleId" label="" onChange="submit();">
+				<option value=""><liferay-ui:message key="select-l2go-role"/></option>
 				<%for (int i = 0; i < l2goRoles.size(); i++) {
-					%>
-					<aui:option value='<%=l2goRoles.get(i).getRoleId()%>'><%=l2goRoles.get(i).getName()%></aui:option>
-					<%
+						if(l2goRoles.get(i).getRoleId()==roleId){%>
+							<option value='<%=l2goRoles.get(i).getRoleId()%>' selected="true"><%=l2goRoles.get(i).getName()%></option>
+						<%}else{%>
+							<option value='<%=l2goRoles.get(i).getRoleId()%>'><%=l2goRoles.get(i).getName()%></option>
+						<%}					
 				}%>
-			</aui:select>
-		</aui:form>
+			</select>
+		</form>
 	</aui:fieldset>
 	
 	<aui:form action="<%= portletURLString %>" method="post" name="fm">
