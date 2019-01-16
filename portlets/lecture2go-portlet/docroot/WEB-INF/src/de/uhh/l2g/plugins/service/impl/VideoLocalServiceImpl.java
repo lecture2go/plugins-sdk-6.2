@@ -207,9 +207,9 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		Host objectHost = objectVideo.getHost();
 		Producer objectProducer = objectVideo.getProducer();
 
-		// check if file with download-suffix exists, if not create it
-		// (this may happen if a file was set to be downloaded before the smil file existed)
-		if(objectVideo.getDownloadLink()==1 && checkSmilFile(objectVideo)){
+		// check if file with download-suffix exists, if not create it 
+		// (we always create a _symlink_ with download suffix even if download is not permitted, as this file is also used as an RSTP _fallback_)
+		if(checkSmilFile(objectVideo)){
 			File file = new File(PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + objectVideo.getCurrentPrefix()+PropsUtil.get("lecture2go.videoprocessing.downloadsuffix")+".mp4");
 			try {
 				if (!isSymlink(file)) {
@@ -408,6 +408,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		for(int i=0; i<uris.size();i++){
 			String playerUri = "";
 			playerUri += uris.get(i);
+			/*
 			if(video.getOpenAccess()==1){
 				if (checkSmilFile(video)) {
 					playerUri = playerUri.replace("[smilfile]", video.getPreffix()+".smil");
@@ -418,7 +419,12 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 					playerUri = playerUri.replace("[smilfile]", video.getSPreffix()+".smil");
 				}
 				playerUri = playerUri.replace("[filename]", video.getSecureFilename());
+			}*/
+			
+			if (checkSmilFile(video)) {
+				playerUri = playerUri.replace("[smilfile]", video.getCurrentPrefix() +".smil");
 			}
+			playerUri = playerUri.replace("[filename]", video.getCurrentMp4FilenameWithReasonableBitrate());
 			//
 			playerUri = playerUri.replace("[host]", host.getStreamer());
 			playerUri = playerUri.replace("[ext]", video.getContainerFormat());

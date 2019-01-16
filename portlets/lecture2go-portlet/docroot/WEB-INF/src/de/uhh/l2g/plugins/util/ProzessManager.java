@@ -89,13 +89,6 @@ public class ProzessManager {
 		video.setDownloadLink(0);
 		VideoLocalServiceUtil.updateVideo(video);
 		
-		if (VideoLocalServiceUtil.checkSmilFile(video)) {
-			String prefix = video.getOpenAccess()==1 ? video.getPreffix() : video.getSPreffix();
-			// delete old download symbolic link with secure file name if existing
-			File downloadSymLink = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + prefix + PropsUtil.get("lecture2go.videoprocessing.downloadsuffix") + ".mp4");
-			downloadSymLink.delete();
-		}
-		
 		//remove symbolic links
 		removeSymbolicLinks(video);
 		// generate RSS
@@ -112,15 +105,6 @@ public class ProzessManager {
 		Producer producer = ProducerLocalServiceUtil.getProducer(video.getProducerId());
 		
 		video.setDownloadLink(1);
-		
-		// if there is a smil file, create a symlink to the video file which has a reasonable bitrate
-		if (VideoLocalServiceUtil.checkSmilFile(video)) {
-			try {
-				createSymLinkToDownloadableFile(host, video, producer);
-			} catch (Exception e) {
-				//e.printStackTrace();
-			}
-		}
 		
 		VideoLocalServiceUtil.updateVideo(video);
 		//symbolic links for download
