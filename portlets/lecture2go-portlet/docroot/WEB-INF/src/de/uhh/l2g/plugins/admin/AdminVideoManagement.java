@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -104,7 +107,7 @@ public class AdminVideoManagement extends MVCPortlet {
 	
 	public void viewVideo(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
 		//TagcloudLocalServiceUtil.generateForAllVideos();
-		//updateSegmentsForVideos();
+		// updateSegmentsForVideos();
 		// requested producer id
 		Long reqPproducerId = (long)0;
 		try{reqPproducerId = new Long(request.getParameterMap().get("producerId")[0]);}catch(Exception e){}
@@ -1280,31 +1283,30 @@ public class AdminVideoManagement extends MVCPortlet {
 			sL = SegmentLocalServiceUtil.getSegmentsByVideoId(video.getVideoId());
 		} 
 		catch (PortalException e) {} 
-		catch (SystemException e) {}
-		//
+		catch (SystemException e) {}		
+		
 		ListIterator<Segment> sLi = sL.listIterator();
-		String text="WEBVTT \n\n";
+		List<String> lines = new ArrayList<String>();
+		lines.add("WEBVTT");
+		lines.add("");
 		while(sLi.hasNext()){
 			Segment seg = sLi.next();
-			text +=seg.getStart()+" --> "+seg.getEnd()+" \n";
+			lines.add(seg.getStart()+" --> "+seg.getEnd());
 			if(seg.getChapter()==1){
-				text +=seg.getTitle()+" \n\n";
+				lines.add(seg.getTitle());
+				lines.add("");
 			}else{
 				String desc="";
 				if(seg.getDescription().trim().length()>0)desc = " ("+seg.getDescription().trim() + ")";
-				text += seg.getTitle()+ desc + " \n\n";
+				lines.add(seg.getTitle() + desc);
+				lines.add("");
 			}
 		}
-		FileOutputStream s;
+		
 		try {
-			s = new FileOutputStream(dateiName);
-			for (int i = 0; i < text.length(); i++) {
-				s.write((byte) text.charAt(i));
-			}
-			s.close();
+			Files.write(Paths.get(dateiName), lines, StandardCharsets.UTF_8);
 		} 
-		catch (FileNotFoundException e) {} 
-		catch (IOException e) {}
+		catch (Exception e) {}
 	}
 	
 	public void updateSegmentsForVideos(){

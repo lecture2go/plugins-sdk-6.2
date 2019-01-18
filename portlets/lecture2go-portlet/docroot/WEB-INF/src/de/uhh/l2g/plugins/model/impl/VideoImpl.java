@@ -607,6 +607,31 @@ public class VideoImpl extends VideoBaseImpl {
 	}
 	
 	/**
+	 * Returns the current filename of the video with a reasonable _bitrate_, this is either the original file or, if multiple qualities are 
+	 * referenced from a _smil_ file, the version with the download suffix.
+	 * Checks if prefix is _openaccess_ or secure and returns the correct one.
+	 */
+	public String getCurrentMp4FilenameWithReasonableBitrate() {
+		return this.getCurrentPrefix() + getDownloadSuffix() + FILE_SUFFIX_MP4;
+	}
+	
+	/**
+	 * Returns the secure filename of the video with a reasonable _bitrate_, this is either the original file or, if multiple qualities are 
+	 * referenced from a _smil_ file, the version with the download suffix.
+	 */
+	public String getSecureMp4FilenameWithReasonableBitrate() {
+		return this.getSPreffix() + getDownloadSuffix() + FILE_SUFFIX_MP4;
+	}
+	
+	/**
+	 * Returns the _openaccess_ filename of the video with a reasonable _bitrate_, this is either the original file or, if multiple qualities are 
+	 * referenced from a _smil_ file, the version with the download suffix.
+	 */
+	public String getMp4FilenameWithReasonableBitrate() {
+		return this.getPreffix()+ getDownloadSuffix() + FILE_SUFFIX_MP4;
+	}
+	
+	/**
 	 * Returns the download link to the video file depending on the openaccess field
 	 */
 	public String getMp4DownloadLink() {
