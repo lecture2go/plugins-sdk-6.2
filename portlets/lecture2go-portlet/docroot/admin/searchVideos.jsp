@@ -56,9 +56,13 @@
 	}	
 	
 	.alert.alert-info {
-	    margin-top: 58px;
+	    margin-top: 0px;
 	}
-	
+
+    .aui .alert {
+        border-width: 0;
+    }
+        	
 -->
 </style>
 
