@@ -207,6 +207,13 @@ public class VideoImpl extends VideoBaseImpl {
 		return getOpenAccess()==1 ? getPreffix() : getSPreffix();
 	}
 	
+	/**
+	 * Returns the current file name depending on openaccess field
+	 */
+	public String getCurrentFilename() {
+		return getOpenAccess()==1 ? getFilename() : getSecureFilename();
+	}
+	
 	public String getLectureseriesName() {
 		return lectureseriesName;
 	}

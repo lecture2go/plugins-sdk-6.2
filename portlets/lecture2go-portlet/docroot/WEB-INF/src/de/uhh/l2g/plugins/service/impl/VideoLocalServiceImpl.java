@@ -208,7 +208,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		Producer objectProducer = objectVideo.getProducer();
 
 		// check if file with download-suffix exists, if not create it 
-		// (we always create a _symlink_ with download suffix even if download is not permitted, as this file is also used as an RSTP _fallback_)
+		// (we always create a _symlink_ with download suffix even if download is not permitted, as this file is also used as an RSTP fallback)
 		if(checkSmilFile(objectVideo)){
 			File file = new File(PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + objectVideo.getCurrentPrefix()+PropsUtil.get("lecture2go.videoprocessing.downloadsuffix")+".mp4");
 			try {
@@ -424,7 +424,15 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			if (checkSmilFile(video)) {
 				playerUri = playerUri.replace("[smilfile]", video.getCurrentPrefix() +".smil");
 			}
-			playerUri = playerUri.replace("[filename]", video.getCurrentMp4FilenameWithReasonableBitrate());
+			
+			String filename;
+			if (video.getContainerFormat().equals("mp4")) {
+				// this returns the correct filename even for videos with multiple qualities
+				filename = video.getCurrentMp4FilenameWithReasonableBitrate();
+			} else {
+				filename = video.getCurrentFilename();
+			}
+			playerUri = playerUri.replace("[filename]", filename);
 			//
 			playerUri = playerUri.replace("[host]", host.getStreamer());
 			playerUri = playerUri.replace("[ext]", video.getContainerFormat());
