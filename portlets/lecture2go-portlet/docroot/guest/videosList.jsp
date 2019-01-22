@@ -297,11 +297,19 @@
 			Video vidDummy = new VideoImpl();
 			if(lectser.getLatestOpenAccessVideoId()<0){
 				isVideo = true;
-				vidDummy = VideoLocalServiceUtil.getFullVideo(lectser.getLectureseriesId());
+				try {
+					vidDummy = VideoLocalServiceUtil.getVideo(lectser.getLectureseriesId());
+				} catch (Exception e) {
+					
+				}
 				oId = vidDummy.getVideoId()+"";
 			}else{
 				oId = lectser.getLectureseriesId()+"";
-				vidDummy = VideoLocalServiceUtil.getFullVideo(lectser.getPreviewVideoId());
+				try {
+					vidDummy = VideoLocalServiceUtil.getVideo(lectser.getPreviewVideoId());
+				} catch (Exception e) {
+					
+				}
 			}
 			int videoCount = lectser.getNumberOfOpenAccessVideos();
 			List<Creator> cl = CreatorLocalServiceUtil.getCreatorsByLectureseriesId(lectser.getLectureseriesId());
@@ -459,9 +467,11 @@
 						<ul id="<%="p"+oId%>" class="list-group toggler-content-collapsed content">
 							<%
 							while(vli.hasNext()){
-							Video v =  VideoLocalServiceUtil.getFullVideo(vli.next().getVideoId());
-							String vId = v.getVideoId()+"";
-       						int i=0;
+							try {
+								Video v =  VideoLocalServiceUtil.getVideo(vli.next().getVideoId());
+							
+								String vId = v.getVideoId()+"";
+	       						int i=0;
 							%>
 								<portlet:actionURL name="viewOpenAccessVideo" var="vURL">
 									<portlet:param name="objectId" value="<%=vId%>"/>
@@ -487,7 +497,11 @@
 		              						</div>
 	              						</div>
 								</li>
-							<%}%>
+							<%
+							} catch (Exception e) {
+								
+							}
+							}%>
 							<%if (isSearched && (videoCount>1)) { %>
 								<li class="videotile small show-all" onClick="window.location='<%=view1URL%>'">
 									<liferay-ui:message key="all-videos"/>

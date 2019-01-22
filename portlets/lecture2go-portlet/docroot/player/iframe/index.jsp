@@ -79,7 +79,7 @@
 	</style>
 	<script type="text/javascript">
 		function getOpenAccess(){
-			console.log("sgsdfg");
+			console.log("open access");
 			var oa = $("#openaccess").attr('value');
 			return oa;
 		}
@@ -91,21 +91,6 @@
 		    }
 		    return parentUrl;
 		}
-
-		function securityCheck(){
-			if(getOpenAccess().indexOf("1")>-1){
-				//load page
-			}else{
-				//stop loading page if not uni request
-				if(getParentUrl().indexOf("uni-hamburg")==-1 || getParentUrl().indexOf("null")==0){
-					window.stop();
-					document.write('<script type="text/undefined">')
-				}
-			}
-		}
-		$(document).ready(function(){
-			securityCheck();
-		});
 
 	</script>
 </head>
@@ -125,6 +110,10 @@
 
 	try{//parameter is long
 		videoId = new Long(request.getParameter("v"));
+		//not allowed for requested long id and closed access
+		//becouse cloased access id should be ecoded string
+		video = VideoLocalServiceUtil.getVideo(videoId);
+		if (video.getOpenAccess()==0)video.setVideoId(0);
 	}catch(NumberFormatException e){//parameter is path
 		al = request.getParameter("v").split("/");
 		// it can be on open access or closed access video !!!
@@ -151,9 +140,14 @@
 				end = s[2];
 			}catch(Exception a){}
 		}
+		//
+		try {
+			video = VideoLocalServiceUtil.getVideo(videoId);
+		} catch (Exception e2) {
+			//
+		}		
 	}
-	//only for open access and requests from CommSy accesseble
-	video = VideoLocalServiceUtil.getFullVideo(videoId);
+
 %>
 <body>
 <input type="hidden" id="openaccess" name="openaccess" value="<%=video.getOpenAccess()%>">
@@ -260,9 +254,12 @@
 			        		<%
 			        			String url = "";
 			        			if(video.getOpenAccess()==1)url=video.getUrl();
-			        			else url=video.getSecureUrl();
+			        			else url="";
+			        		
+			        		if(!url.isEmpty()){
 			        		%>
 			                window.open('<%=url%>');
+			                <%}%>
 			            },
 			            tit
 			        )

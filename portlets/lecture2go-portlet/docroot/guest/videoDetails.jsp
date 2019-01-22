@@ -53,8 +53,12 @@
 			    <c:if test="${relatedVideos.size()<=1}"> <div class="path-wide"></c:if>
 			    	<%
 			    	if(video.getLectureseriesId()>0){
-				    	for(int i=0; i<videoLectureseries.size(); i++){
-				    		Lectureseries lec = LectureseriesLocalServiceUtil.getLectureseries(videoLectureseries.get(i).getLectureseriesId());
+			    			/* disable multiple lectureseries for one video, this is not fully integrated and there may be problems with the video_lectureseries table
+			    			for(int i=0; i<videoLectureseries.size(); i++){
+			    			Lectureseries lec = LectureseriesLocalServiceUtil.getLectureseries(videoLectureseries.get(i).getLectureseriesId());
+			    			*/
+			    			Lectureseries lec = LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId());	
+			    	
 				    		List<Institution> institutions = InstitutionLocalServiceUtil.getByLectureseriesId(lec.getLectureseriesId(), com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 					    	// right now we only show the first institution and not linked institutions
 					    	// for(int j=0; j<institutions.size(); j++){
@@ -90,7 +94,7 @@
 					    		<%}%>
 						    	<br/>
 				    		<%}
-				    	}
+				    	//}
 			    	}else{
 				    	for(int i=0; i<videoInstitutions.size(); i++){
 				    		try{

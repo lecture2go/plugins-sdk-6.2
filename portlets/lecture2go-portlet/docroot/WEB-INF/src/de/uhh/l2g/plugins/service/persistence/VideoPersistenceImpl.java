@@ -6256,7 +6256,7 @@ public class VideoPersistenceImpl extends BasePersistenceImpl<Video>
 	}
 
 	private static final String _FINDER_COLUMN_OPENACCESSANDUPLOADEDFILE_OPENACCESS_2 =
-		"video.openAccess = ? AND video.filename LIKE '%.mp4'";
+		"video.openAccess = ? AND video.filename > ''";
 
 	public VideoPersistenceImpl() {
 		setModelClass(Video.class);
