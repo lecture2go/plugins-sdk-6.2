@@ -7,6 +7,19 @@ Lecture2Go http://lecture2go.uni-hamburg.de is an open source platform for media
 
 Change Log
 ==============
+Bug Fix and Feature Package [master-v.1-b5122] on Tuesday, January 22, 2019
+
+- 1150 RM - Saving of video meta data takes to long.
+- 1258 RM - Embed code in Moodle does not work.
+- 1269 RM - Chapter function: umlauts in timeline not utf8 encoded.
+- 1268 RM - RTSP Stream references always to the uploaded MP4 version.
+- 1238 RM - Incorrect statistics values in the system menu.
+- 1233 RM - Video detail page can not be accessed.
+- 1217 RM - Refactoring of getFullVideo method
+- 1216 RM - Search function in the "User Roles" interface implemented.
+- 1256 RM - Search function in the "My Videos" interface implemented.
+
+
 Bug Fix Package [master-v.1-b5050] on Thursday, October 11, 2018
 
 - 1167 RM - Term scheduler integration.
@@ -22,8 +35,7 @@ Bug Fix Package [master-v.1-b5005] on Friday, September 28, 2018
 - 1125 RM - Hits after search request for lecture series ignore specific
 order defined by the admin.
 - 1187 RM - Upload alert shows wrong upload size limit.
-- 1131 RM - Link to the lecture series ignores the defined video list
-order.
+- 1131 RM - Link to the lecture series ignores the defined video list order.
 - 1202 RM - Submenu does not work on touch screen systems with the chrome
 browser.
 - 1185 RM - Incorrect number of videos is displayed on the catalogue site
