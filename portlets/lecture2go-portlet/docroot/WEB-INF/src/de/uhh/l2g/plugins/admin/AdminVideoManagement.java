@@ -667,6 +667,8 @@ public class AdminVideoManagement extends MVCPortlet {
 			}
 			//metadata
 			try {
+				String description = ParamUtil.getString(resourceRequest, "description");
+				metadata.setDescription(description);				
 				metadata.setTitle(title);
 				metadata.setPublisher(publisher);
 				metadata.setLanguage(language);
@@ -835,8 +837,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			try {
 				MetadataLocalServiceUtil.updateMetadata(metadata);
 				logger.info("DESCRIPTION_UPDATE_SUCCESS");
-			} catch (SystemException e) {
-//				//e.printStackTrace();
+			} catch (Exception e) {
 				logger.info("DESCRIPTION_UPDATE_FAILED");
 			}
 			JSONObject json = JSONFactoryUtil.createJSONObject();
@@ -1133,8 +1134,8 @@ public class AdminVideoManagement extends MVCPortlet {
 			String subInstitutions = ParamUtil.getString(resourceRequest, "subInstitution");
 			try {
 				JSONArray institutionsArray = new JSONArray(subInstitutions);
-				//remove sub-institutions for video
 				try {
+					//remove sub-institutions for video
 					Video_InstitutionLocalServiceUtil.removeByVideoId(videoId);
 					//and update with new institutions from list
 					if(institutionsArray.length()>0){

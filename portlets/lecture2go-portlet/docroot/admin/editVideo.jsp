@@ -404,7 +404,7 @@
 				</script>
 				<br/>		
 				<aui:button-row>
-					<aui:button type="submit" value="apply-changes" onclick="applyAllMetadataChanges()" cssClass="btn-primary"/>
+					<aui:button type="submit" value="apply-changes" onclick="applyAllMetadataChanges();updateSubInstitutions();" cssClass="btn-primary"/>
 					<aui:button type="cancel" value="back" name="cancel"/>
 				</aui:button-row>
 				
@@ -755,6 +755,7 @@ function updateMetadata(){
 				 	   	<portlet:namespace/>categoryId: categoryId,
 				 	   	<portlet:namespace/>termId: termId,
 				 	   	<portlet:namespace/>password: A.one('#<portlet:namespace/>password').get('value'),
+				 	    <portlet:namespace/>description: descData
 			 	},
 			 	async:true,
 			 	//get server response
@@ -799,8 +800,7 @@ function applyAllMetadataChanges(){
 				if($("#<portlet:namespace/>title").val() && $("#creators > div").length>0){
 					// Select the node(s) using a css selector string
 				    var license = A.one("input[name=<portlet:namespace/>license]:checked").get("value");
-				    updateSubInstitutions();
-				    updateDescription(descData);
+				    //updateDescription(descData);
 				    updateLicense(license);
 				    updateCreators();
 				    updateMetadata();//last place, important!
@@ -838,23 +838,27 @@ function validate(){
 	);
 }
 
-function updateDescription(data) {
-	//set parameter to server for update 
-	$.ajax({
-		  type: "POST",
-		  url: "<%=updateDescriptionURL%>",
-		  dataType: 'json',
-		  data: {
-		 	   	<portlet:namespace/>description: data,
-		 	   	<portlet:namespace/>videoId: A.one('#<portlet:namespace/>videoId').get('value'),
-	 	  },
-		  global: false,
-		  async: true,
-		  success: function(data) {
-		    //
-			var jsonResponse = this.get('responseData');
-		  }
-	});
+function updateDescription(data){
+	AUI().use('aui-io-request', 'aui-node',
+		function(A){
+			A.io.request('<%=updateDescriptionURL%>', {
+		 	dataType: 'json',
+		 	method: 'POST',
+			 	//send data to server
+			 	data: {
+				 	   	<portlet:namespace/>description: data,
+				 	    <portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>"
+			 	},
+			 	async:true,
+			 	//get server response
+				on: {
+					   success: function() {
+					     var jsonResponse = this.get('responseData');
+					   }
+				}
+			});	
+		}
+	);
 }
 
 function deleteFile(fileName){
