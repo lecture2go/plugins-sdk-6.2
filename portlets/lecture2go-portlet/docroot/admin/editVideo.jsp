@@ -799,11 +799,10 @@ function applyAllMetadataChanges(){
 				if($("#<portlet:namespace/>title").val() && $("#creators > div").length>0){
 					// Select the node(s) using a css selector string
 				    var license = A.one("input[name=<portlet:namespace/>license]:checked").get("value");
-				    //alert(license2.get('value'));
+				    updateSubInstitutions();
 				    updateDescription(descData);
 				    updateLicense(license);
 				    updateCreators();
-				    updateSubInstitutions();
 				    updateMetadata();//last place, important!
 				 	//reset creator class
 				    $("#creators-custom").css({"background-color": "white", "color": "#555555"});
@@ -839,27 +838,23 @@ function validate(){
 	);
 }
 
-function updateDescription(data){
-	AUI().use('aui-io-request', 'aui-node',
-		function(A){
-			A.io.request('<%=updateDescriptionURL%>', {
-		 	dataType: 'json',
-		 	method: 'POST',
-			 	//send data to server
-			 	data: {
-				 	   	<portlet:namespace/>description: data,
-				 	   	<portlet:namespace/>videoId: A.one('#<portlet:namespace/>videoId').get('value'),
-			 	},
-			 	async:true,
-			 	//get server response
-				on: {
-					   success: function() {
-					     var jsonResponse = this.get('responseData');
-					   }
-				}
-			});	
-		}
-	);
+function updateDescription(data) {
+	//set parameter to server for update 
+	$.ajax({
+		  type: "POST",
+		  url: "<%=updateDescriptionURL%>",
+		  dataType: 'json',
+		  data: {
+		 	   	<portlet:namespace/>description: data,
+		 	   	<portlet:namespace/>videoId: A.one('#<portlet:namespace/>videoId').get('value'),
+	 	  },
+		  global: false,
+		  async: true,
+		  success: function(data) {
+		    //
+			var jsonResponse = this.get('responseData');
+		  }
+	});
 }
 
 function deleteFile(fileName){
