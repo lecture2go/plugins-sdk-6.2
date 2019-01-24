@@ -404,7 +404,7 @@
 				</script>
 				<br/>		
 				<aui:button-row>
-					<aui:button type="submit" value="apply-changes" onclick="applyAllMetadataChanges()" cssClass="btn-primary"/>
+					<aui:button type="submit" value="apply-changes" onclick="applyAllMetadataChanges();updateSubInstitutions();" cssClass="btn-primary"/>
 					<aui:button type="cancel" value="back" name="cancel"/>
 				</aui:button-row>
 				
@@ -755,6 +755,7 @@ function updateMetadata(){
 				 	   	<portlet:namespace/>categoryId: categoryId,
 				 	   	<portlet:namespace/>termId: termId,
 				 	   	<portlet:namespace/>password: A.one('#<portlet:namespace/>password').get('value'),
+				 	    <portlet:namespace/>description: descData
 			 	},
 			 	async:true,
 			 	//get server response
@@ -799,11 +800,9 @@ function applyAllMetadataChanges(){
 				if($("#<portlet:namespace/>title").val() && $("#creators > div").length>0){
 					// Select the node(s) using a css selector string
 				    var license = A.one("input[name=<portlet:namespace/>license]:checked").get("value");
-				    //alert(license2.get('value'));
-				    updateDescription(descData);
+				    //updateDescription(descData);
 				    updateLicense(license);
 				    updateCreators();
-				    updateSubInstitutions();
 				    updateMetadata();//last place, important!
 				 	//reset creator class
 				    $("#creators-custom").css({"background-color": "white", "color": "#555555"});
@@ -848,7 +847,7 @@ function updateDescription(data){
 			 	//send data to server
 			 	data: {
 				 	   	<portlet:namespace/>description: data,
-				 	   	<portlet:namespace/>videoId: A.one('#<portlet:namespace/>videoId').get('value'),
+				 	    <portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>"
 			 	},
 			 	async:true,
 			 	//get server response
