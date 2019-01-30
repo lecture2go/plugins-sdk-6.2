@@ -107,12 +107,6 @@ public class AdminVideoManagement extends MVCPortlet {
 	}
 	
 	public void viewVideo(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
-		try {
-			LectureseriesLocalServiceUtil.updateUploadLatestOpenAccessVideoAndGenerationDate();
-		} catch (SystemException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
 		//TagcloudLocalServiceUtil.generateForAllVideos();
 		// updateSegmentsForVideos();
 		// requested producer id
