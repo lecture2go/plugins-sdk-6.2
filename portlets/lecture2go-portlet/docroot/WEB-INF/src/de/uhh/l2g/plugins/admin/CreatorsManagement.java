@@ -78,7 +78,7 @@ public class CreatorsManagement extends MVCPortlet {
 			//e.printStackTrace();
 		}
 	}
-
+	
 	private boolean isValid(String fn, String ln) {
 		String _fn = fn.trim();
 		String _ln = ln.trim();
