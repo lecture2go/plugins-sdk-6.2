@@ -33,10 +33,13 @@
 				</aui:form>
 		</aui:layout> 
 	</aui:fieldset>
+
 	<liferay-ui:search-container emptyResultsMessage="no-l2go-roles-found" searchContainer="<%= creatorSearchContainer %>">
 		
 			<div id="modifiedSearch">
-				<liferay-ui:search-form page="/admin/searchCreators.jsp" servletContext="<%= application %>" />
+				<aui:form action="<%= portletURLString %>" method="post" name="fm">
+					<liferay-ui:search-form page="/admin/searchCreators.jsp" servletContext="<%= application %>" />
+				</aui:form>
 			</div>
 					
 			<liferay-ui:search-container-results 
