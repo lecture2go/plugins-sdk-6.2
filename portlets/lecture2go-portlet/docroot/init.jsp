@@ -142,6 +142,9 @@
 <%@page import="de.uhh.l2g.plugins.search.UserSearchContainer"%>
 <%@page import="de.uhh.l2g.plugins.search.UserDisplayTerms"%>
 <%@page import="de.uhh.l2g.plugins.search.UserSearchHelper"%>
+<%@page import="de.uhh.l2g.plugins.search.CreatorSearchContainer"%>
+<%@page import="de.uhh.l2g.plugins.search.CreatorDisplayTerms"%>
+<%@page import="de.uhh.l2g.plugins.search.CreatorSearchHelper"%>
 
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
