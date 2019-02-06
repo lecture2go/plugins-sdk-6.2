@@ -90,7 +90,6 @@
 <%@page import="de.uhh.l2g.plugins.service.VideoLocalServiceUtil"%>
 <%@page import="de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil"%>
 <%@page import="de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil"%>
-<%@page import="de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil"%>
 <%@page import="de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil"%>
 <%@page import="de.uhh.l2g.plugins.service.LicenseLocalServiceUtil"%>
 <%@page import="de.uhh.l2g.plugins.service.SegmentLocalServiceUtil"%>
@@ -106,7 +105,6 @@
 <%@page import="de.uhh.l2g.plugins.NoSuchMetadataException"%>
 
 <%@page import="de.uhh.l2g.plugins.model.impl.HostImpl"%>
-<%@page import="de.uhh.l2g.plugins.model.Video_Lectureseries"%>
 <%@page import="de.uhh.l2g.plugins.model.Video_Category"%>
 <%@page import="de.uhh.l2g.plugins.model.Term"%>
 <%@page import="de.uhh.l2g.plugins.model.Creator"%>
