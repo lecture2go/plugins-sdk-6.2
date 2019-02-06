@@ -34,7 +34,7 @@
 		</aui:layout> 
 	</aui:fieldset>
 
-	<liferay-ui:search-container emptyResultsMessage="no-l2go-roles-found" searchContainer="<%= creatorSearchContainer %>">
+	<liferay-ui:search-container emptyResultsMessage="no-creators-found" searchContainer="<%= creatorSearchContainer %>">
 		
 			<div id="modifiedSearch">
 				<aui:form action="<%= portletURLString %>" method="post" name="fm">
