@@ -39,7 +39,6 @@ import de.uhh.l2g.plugins.service.Lectureseries_CategoryLocalServiceUtil;
 import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil;
-import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.LectureseriesLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.LectureseriesFinderUtil;
 
@@ -138,9 +137,6 @@ public class LectureseriesLocalServiceImpl extends LectureseriesLocalServiceBase
 	
 	
 	public void updateOpenAccess(Video video, Lectureseries lectureseries) throws SystemException{
-		// video lecture series table by video
-		Video_LectureseriesLocalServiceUtil.updateOpenAccessByVideo(video);
-		
 		//lecture series
 		Video latestOpenAccessVideo = VideoLocalServiceUtil.getLatestOpenAccessVideoForLectureseries(lectureseries.getLectureseriesId());
 		lectureseries.setLatestOpenAccessVideoId(latestOpenAccessVideo.getVideoId());

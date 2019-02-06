@@ -48,7 +48,6 @@ import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.Video_Category;
 import de.uhh.l2g.plugins.model.Video_Creator;
 import de.uhh.l2g.plugins.model.Video_Institution;
-import de.uhh.l2g.plugins.model.Video_Lectureseries;
 import de.uhh.l2g.plugins.model.impl.CategoryImpl;
 import de.uhh.l2g.plugins.model.impl.CreatorImpl;
 import de.uhh.l2g.plugins.model.impl.InstitutionImpl;
@@ -61,7 +60,6 @@ import de.uhh.l2g.plugins.model.impl.VideoImpl;
 import de.uhh.l2g.plugins.model.impl.Video_CategoryImpl;
 import de.uhh.l2g.plugins.model.impl.Video_CreatorImpl;
 import de.uhh.l2g.plugins.model.impl.Video_InstitutionImpl;
-import de.uhh.l2g.plugins.model.impl.Video_LectureseriesImpl;
 import de.uhh.l2g.plugins.service.CategoryLocalServiceUtil;
 import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
@@ -78,7 +76,6 @@ import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
-import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.util.FFmpegManager;
 import de.uhh.l2g.plugins.util.FileManager;
 import de.uhh.l2g.plugins.util.HttpManager;
@@ -251,13 +248,6 @@ public class AdminVideoManagement extends MVCPortlet {
 		p.setNumberOfProductions(n);
 		ProducerLocalServiceUtil.updateProducer(p);
 			
-		//link to lectureseries list
-		Video_Lectureseries vl = new Video_LectureseriesImpl();
-		vl.setLectureseriesId(lectureseriesId);
-		vl.setVideoId(newVideo.getVideoId());
-		vl.setOpenAccess(newVideo.getOpenAccess()); 
-		Video_LectureseriesLocalServiceUtil.addVideo_Lectureseries(vl);
-		
 		// requested lecture series list
 		List<Lectureseries> reqLectureseriesList = new ArrayList<Lectureseries>();
 		try{reqLectureseriesList = LectureseriesLocalServiceUtil.getFilteredByApprovedSemesterFacultyProducer(1, (long) 0, (long) 0, producerId);}catch(Exception e){}
@@ -687,13 +677,6 @@ public class AdminVideoManagement extends MVCPortlet {
 						vi.setInstitutionParentId(in.getParentId());
 						Video_InstitutionLocalServiceUtil.addVideo_Institution(vi);
 					}
-					//update lg_video_lectureseries 
-					Video_Lectureseries vl = Video_LectureseriesLocalServiceUtil.createVideo_Lectureseries(0);
-					vl.setVideoId(video.getVideoId());
-					vl.setLectureseriesId(newLsId);
-					vl.setOpenAccess(video.getOpenAccess());
-					Video_LectureseriesLocalServiceUtil.removeByVideoId(video.getVideoId());//delete old entries
-					Video_LectureseriesLocalServiceUtil.addVideo_Lectureseries(vl);//add new
 					LectureseriesLocalServiceUtil.updateLectureseries(newLect);
 
 					//add lecture series parameter to tag cloud
@@ -702,9 +685,6 @@ public class AdminVideoManagement extends MVCPortlet {
 				}else{
 					java.util.Date date= new java.util.Date();
 					video.setLectureseriesId(-date.getTime());
-					//update table video_lectureseries
-					Video_LectureseriesLocalServiceUtil.removeByVideoId(video.getVideoId());
-					
 					//update institution for video only without lecture series
 					List<Video_Institution> vinst = Video_InstitutionLocalServiceUtil.getByVideo(video.getVideoId());
 					ListIterator<Video_Institution> vinstItt = vinst.listIterator();
@@ -855,8 +835,6 @@ public class AdminVideoManagement extends MVCPortlet {
 				else {
 					java.util.Date date= new java.util.Date();
 					video.setLectureseriesId(-date.getTime());
-					//update table video_lectureseries
-					Video_LectureseriesLocalServiceUtil.removeByVideoId(video.getVideoId());
 				}
 				video.setTags(tags);
 				if(lId>0){
@@ -886,14 +864,6 @@ public class AdminVideoManagement extends MVCPortlet {
 						vi.setInstitutionParentId(in.getParentId());
 						Video_InstitutionLocalServiceUtil.addVideo_Institution(vi);
 					}
-					//update lg_video_lectureseries 
-					Video_Lectureseries vl = new Video_LectureseriesImpl();
-					vl.setVideoId(video.getVideoId());
-					vl.setLectureseriesId(lId);
-					vl.setOpenAccess(video.getOpenAccess());
-					Video_LectureseriesLocalServiceUtil.removeByVideoId(video.getVideoId());//delete old entries
-					Video_LectureseriesLocalServiceUtil.addVideo_Lectureseries(vl);//add new
-					LectureseriesLocalServiceUtil.updateLectureseries(newLect);
 					//update lectureseries
 					LectureseriesLocalServiceUtil.updateOpenAccess(video, newLect);
 					LectureseriesLocalServiceUtil.updatePreviewVideoOpenAccess(newLect);
