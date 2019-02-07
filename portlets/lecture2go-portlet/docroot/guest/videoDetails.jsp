@@ -401,7 +401,7 @@
 			<script type="text/javascript">
 				$(function(){
 					//cookie
-					$.cookie("L2G_LSID", "<%=lectureseries.getLectureseriesId()%>");
+					$.cookie("L2G_LSID", "<%=lectureseries.getLectureseriesId()%>", { path: "/" });
 				});
 			</script>		
 			<!-- coockie end -->
