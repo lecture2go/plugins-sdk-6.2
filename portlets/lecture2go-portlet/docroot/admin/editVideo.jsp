@@ -112,6 +112,8 @@
 	  $("#upload-form").fadeIn(1000); 	
 	  $("#<portlet:namespace/>lecture2go-date").val(getDateTime());
 	  $("#<portlet:namespace/>meta-ebene").show();
+	  //load the date and time to another div
+	  loadDateTimepickerToTheMetadataSkeleton();
     }
     //
     $('#<portlet:namespace/>datetimepicker').datetimepicker({
@@ -119,12 +121,28 @@
     	dayOfWeekStart : 1,
     	lang:'en',
     	startDate:	new Date(),
-    	value: new Date(),
+    	value: "<%=video.getGenerationDate()%>",
     	maxDate: '+1970/01/30',
     	minDate: false,
-    	step:15
+    	step:5
     });
   });
+
+function loadDateTimepickerToTheMetadataSkeleton(){
+	 $('#date-time').appendTo('#l2gdate');
+     $('#date-time .button-holder').hide();//hide button because not used!
+	 //change the lable
+	 $('#date-time .control-label').text("<liferay-ui:message key='lecture2go-date'/>"); 	
+}
+
+function loadDateTimepickerToFirstTitle(){
+	 $('#date-time').appendTo('#date-time-form');
+	 $('#date-time').show();
+     $('#date-time .button-holder').show();//hide button because not used!
+	 //change the lable
+	 $('#date-time .control-label').text("<liferay-ui:message key='select-date-time-bevor-upload'/>"); 	
+}
+
 </script>
 
 <div class="noresponsive">
@@ -281,8 +299,8 @@
 						<%}%>				
 					</aui:select>
 					
-					<div id="l2gdate"><aui:input id="lecture2go-date" name="lecture2go-date" label="lecture2go-date" required="false" value="" disabled="true"/></div>
-		
+					<div id="l2gdate"></div>
+					
 					<aui:input name="tags" label="tags" required="false" value="<%=reqVideo.getTags()%>"/>
 		
 					<aui:input name="publisher" label="publisher" required="false" value="<%=reqMetadata.getPublisher()%>"/>
@@ -573,7 +591,7 @@ $(function () {
         		lectureseriesNumber: "<%=reqLectureseries.getNumber()%>",
         		fileName: fileName,
         		secureFileName: secureFileName,
-        		l2gDateTime: $("#<portlet:namespace></portlet:namespace>lecture2go-date").val(),
+        		l2gDateTime: $("#<portlet:namespace></portlet:namespace>datetimepicker").val(),
         		videoId: "<%=reqVideo.getVideoId()%>"
         };        
     });
@@ -826,6 +844,7 @@ function updateAllMetadata(){
 			 	   	"<portlet:namespace/>title": $('#<portlet:namespace/>title').val(),
 			 	   	"<portlet:namespace/>tags": $('#<portlet:namespace/>tags').val(),
 			 	   	"<portlet:namespace/>publisher": $('#<portlet:namespace/>publisher').val(),
+			 	   	"<portlet:namespace/>datetimepicker": $('#<portlet:namespace/>datetimepicker').val(),
 			 	   	"<portlet:namespace/>citationAllowedCheckbox": chebox,
 			 	   	"<portlet:namespace/>categoryId": categoryId,
 			 	   	"<portlet:namespace/>termId": termId,
@@ -996,7 +1015,7 @@ function applyDateTime(){
 				  $('#date-time-form').hide();
 				  $("#upload-form").fadeIn(500); 	
 				  $("#tm").text(getDateTime());
-				  $("#<portlet:namespace/>lecture2go-date").val(genDate);
+				  loadDateTimepickerToTheMetadataSkeleton();
 				  $("#l2gdate").fadeIn(1000);
 				  $("#<portlet:namespace/>meta-ebene").show();
 			  }
@@ -1021,7 +1040,7 @@ function applyFirstTitle(){
 					  alert('<liferay-ui:message key="please-enter-a-title"/>');
 				  }else{
 					  $('#first-title').hide();
-					  $("#date-time").show();	
+					  loadDateTimepickerToFirstTitle();
 					  $("#<portlet:namespace/>title").val(data.firsttitle);
 				  }
 			  }
