@@ -169,14 +169,6 @@
 		]]>
     </sql>
 
-    <sql id="de.uhh.l2g.plugins.service.persistence.LectureseriesFinder.findAllLectureseriesForVideo">
-		<![CDATA[
-			SELECT number_, eventType, categoryId, l.name, shortDesc, termId, language, facultyName, l.lectureseriesId, password_, approved, longDesc, latestOpenAccessVideoId, l.videoSort, l.USID, l.previewVideoId  
-			FROM LG_Lectureseries l, LG_Video_Lectureseries vl
-			WHERE (vl.videoId = ? AND l.lectureseriesId=vl.lectureseriesId)
-		]]>
-    </sql>
-
     <sql id="de.uhh.l2g.plugins.service.persistence.ProducerFinder.findProducerIds">
 		<![CDATA[
 			SELECT p.producerId

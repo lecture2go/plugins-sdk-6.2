@@ -73,7 +73,6 @@ import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
-import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideohitlistLocalServiceUtil;
 
 public class ProzessManager {
@@ -322,9 +321,6 @@ public class ProzessManager {
 			e1.printStackTrace();
 		}
 
-		// delete video_lectureseries
-		Video_LectureseriesLocalServiceUtil.removeByVideoId(video.getVideoId());
-				
 		// delete video_institution
 		Video_InstitutionLocalServiceUtil.removeByVideoId(video.getVideoId());
 				

@@ -82,8 +82,20 @@ function getJSONCreator (data){
 }
 
 
+var creatorsArray = [];
+
+function getJsonCreatorsArray(){
+	loadCreators();
+	return creatorsArray;
+}
+
 function updateCreators(){
-	var jsonArray = [];
+	loadCreators();
+	updateCreatorOnServer(creatorsArray);
+}
+
+var creatorsArray = [];
+function loadCreators(){
 	$('#creators').children().each(function(n){
 		var parameters = {};
 		var $div = $(this);
@@ -107,8 +119,7 @@ function updateCreators(){
 		}
 		console.log(parameters);
 		if(parameters['firstName'].length>0 && parameters['lastName'].length>0){
-			jsonArray[n]=parameters;
+			creatorsArray[n]=parameters;
 		}
-	});
-	updateCreatorOnServer(jsonArray);
+	});	
 }

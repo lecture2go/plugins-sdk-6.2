@@ -3,7 +3,6 @@
 <jsp:useBean id="video" type="de.uhh.l2g.plugins.model.Video" scope="request" />
 <jsp:useBean id="relatedVideos" type="java.util.List<de.uhh.l2g.plugins.model.Video>" scope="request" />
 <jsp:useBean id="segments" type="java.util.List<de.uhh.l2g.plugins.model.Segment>" scope="request" />
-<jsp:useBean id="videoLectureseries" type="java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries>" scope="request" />
 <jsp:useBean id="videoInstitutions" type="java.util.List<de.uhh.l2g.plugins.model.Video_Institution>" scope="request" />
 <jsp:useBean id="videoMetadata" type="de.uhh.l2g.plugins.model.Metadata" scope="request" />
 <jsp:useBean id="lectureseries" type="de.uhh.l2g.plugins.model.Lectureseries" scope="request" />
@@ -53,15 +52,8 @@
 			    <c:if test="${relatedVideos.size()<=1}"> <div class="path-wide"></c:if>
 			    	<%
 			    	if(video.getLectureseriesId()>0){
-			    			/* disable multiple lectureseries for one video, this is not fully integrated and there may be problems with the video_lectureseries table
-			    			for(int i=0; i<videoLectureseries.size(); i++){
-			    			Lectureseries lec = LectureseriesLocalServiceUtil.getLectureseries(videoLectureseries.get(i).getLectureseriesId());
-			    			*/
 			    			Lectureseries lec = LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId());	
-			    	
 				    		List<Institution> institutions = InstitutionLocalServiceUtil.getByLectureseriesId(lec.getLectureseriesId(), com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
-					    	// right now we only show the first institution and not linked institutions
-					    	// for(int j=0; j<institutions.size(); j++){
 							for(int j=0; j<1; j++){
 				    			Institution insti = InstitutionLocalServiceUtil.getById(institutions.get(j).getInstitutionId());    			
 				    			Institution pInst = InstitutionLocalServiceUtil.getById(institutions.get(j).getParentId());
@@ -170,11 +162,10 @@
 				      <%if(videoLicense.getL2go()==1){%>
 				      	<a href="/web/vod/licence-l2go" title="<liferay-ui:message key='l2go-license-click-for-info'/>"><liferay-ui:message key="license"/></a>
 				 	  <%}else{%>
-						<a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" title="<liferay-ui:message key='cc-license-click-for-info'/>"><liferay-ui:message key="license"/></a> 		
+						<a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" title="<liferay-ui:message key='cc-license-click-for-info'/>"><liferay-ui:message key="license"/>: <liferay-ui:message key='cy-nc-sa-license'/></a> 		
 				 	  <%}%>       
 				   </div>
 			       <div class="views"><liferay-ui:message key="views"/>: ${video.hits}</div>	
-			       	
 					  <c:if test="${relatedVideos.size()>1}"> <div class="meta-video-info"></c:if>
 					  <c:if test="${relatedVideos.size()<=1}"> <div class="meta-video-info-wide"></c:if>
 					    <div class="meta-title">
@@ -362,7 +353,7 @@
 			<script type="text/javascript">
 				$(function(){
 					//cookie
-					$.cookie("L2G_LSID", "<%=lectureseries.getLectureseriesId()%>");
+					$.cookie("L2G_LSID", "<%=lectureseries.getLectureseriesId()%>", { path: "/" });
 				});
 			</script>		
 			<!-- coockie end -->
