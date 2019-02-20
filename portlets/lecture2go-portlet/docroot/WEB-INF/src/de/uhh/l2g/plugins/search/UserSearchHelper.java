@@ -51,21 +51,25 @@ public class UserSearchHelper {
 				Junction junction = null;
 				junction = RestrictionsFactoryUtil.disjunction();
 				//
-				Criterion c1 = PropertyFactoryUtil.forName("usr.firstName").like("%" + keywords + "%");
-				junction.add(c1);
-				//
-				Criterion c2 = PropertyFactoryUtil.forName("usr.lastName").like("%" + keywords + "%");
-				junction.add(c2);
-				//
-				Criterion c3 = PropertyFactoryUtil.forName("usr.middleName").like("%" + keywords + "%");
-				junction.add(c3);
-				//
-				Criterion c4 = PropertyFactoryUtil.forName("usr.screenName").like("%" + keywords + "%");
-				junction.add(c4);
-				//
-				Criterion c5 = PropertyFactoryUtil.forName("usr.emailAddress").like("%" + keywords + "%");
-				junction.add(c5);
-				//
+				String[] kwordsSplit = keywords.split(" ");
+				for (String str: kwordsSplit) {           
+					if(!str.isEmpty()){
+						Criterion c1 = PropertyFactoryUtil.forName("usr.firstName").like("%" + str + "%");
+						junction.add(c1);
+						//
+						Criterion c2 = PropertyFactoryUtil.forName("usr.lastName").like("%" + str + "%");
+						junction.add(c2);
+						//
+						Criterion c3 = PropertyFactoryUtil.forName("usr.middleName").like("%" + str + "%");
+						junction.add(c3);
+						//
+						Criterion c4 = PropertyFactoryUtil.forName("usr.screenName").like("%" + str + "%");
+						junction.add(c4);
+						//
+						Criterion c5 = PropertyFactoryUtil.forName("usr.emailAddress").like("%" + str + "%");
+						junction.add(c5);
+					}
+				}
 				dynamicQuery.add(junction);
 				//order by 
 				dynamicQuery.addOrder(OrderFactoryUtil.desc("usr.firstName"));

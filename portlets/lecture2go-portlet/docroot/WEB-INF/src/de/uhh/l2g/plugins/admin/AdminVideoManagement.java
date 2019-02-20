@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -47,7 +48,6 @@ import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.Video_Category;
 import de.uhh.l2g.plugins.model.Video_Creator;
 import de.uhh.l2g.plugins.model.Video_Institution;
-import de.uhh.l2g.plugins.model.Video_Lectureseries;
 import de.uhh.l2g.plugins.model.impl.CategoryImpl;
 import de.uhh.l2g.plugins.model.impl.CreatorImpl;
 import de.uhh.l2g.plugins.model.impl.InstitutionImpl;
@@ -60,7 +60,6 @@ import de.uhh.l2g.plugins.model.impl.VideoImpl;
 import de.uhh.l2g.plugins.model.impl.Video_CategoryImpl;
 import de.uhh.l2g.plugins.model.impl.Video_CreatorImpl;
 import de.uhh.l2g.plugins.model.impl.Video_InstitutionImpl;
-import de.uhh.l2g.plugins.model.impl.Video_LectureseriesImpl;
 import de.uhh.l2g.plugins.service.CategoryLocalServiceUtil;
 import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
@@ -77,7 +76,6 @@ import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
-import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.util.FFmpegManager;
 import de.uhh.l2g.plugins.util.FileManager;
 import de.uhh.l2g.plugins.util.HttpManager;
@@ -250,13 +248,6 @@ public class AdminVideoManagement extends MVCPortlet {
 		p.setNumberOfProductions(n);
 		ProducerLocalServiceUtil.updateProducer(p);
 			
-		//link to lectureseries list
-		Video_Lectureseries vl = new Video_LectureseriesImpl();
-		vl.setLectureseriesId(lectureseriesId);
-		vl.setVideoId(newVideo.getVideoId());
-		vl.setOpenAccess(newVideo.getOpenAccess()); 
-		Video_LectureseriesLocalServiceUtil.addVideo_Lectureseries(vl);
-		
 		// requested lecture series list
 		List<Lectureseries> reqLectureseriesList = new ArrayList<Lectureseries>();
 		try{reqLectureseriesList = LectureseriesLocalServiceUtil.getFilteredByApprovedSemesterFacultyProducer(1, (long) 0, (long) 0, producerId);}catch(Exception e){}
@@ -509,6 +500,307 @@ public class AdminVideoManagement extends MVCPortlet {
 			writeJSON(resourceRequest, resourceResponse, json);
 		}
 		
+		if(resourceID.equals("updateAll")){
+			ArrayList<String> errors = new ArrayList();
+			//description start
+			String description = ParamUtil.getString(resourceRequest, "description");
+			metadata.setDescription(description);
+			try {
+				MetadataLocalServiceUtil.updateMetadata(metadata);
+			} catch (SystemException e) {
+				errors.add("DESCRIPTION_UPDATE_FAILED");
+			}			
+			//description end
+			
+			//licence start
+			String licens = ParamUtil.getString(resourceRequest, "license");
+			license.setCcbyncsa(0);
+			license.setL2go(0);
+			//save next
+			if(licens.equals("uhhl2go")){
+				license.setL2go(1);
+				license.setCcbyncsa(0);
+			}else{
+				license.setL2go(0);
+				license.setCcbyncsa(1);				
+			}
+			try {
+				LicenseLocalServiceUtil.updateLicense(license);
+			} catch (SystemException e) {
+				errors.add("LICENSE_UPDATE_FAILED");
+			}			
+			//licence end
+			
+			//creators start
+			String creatorsJsonArray = ParamUtil.getString(resourceRequest, "creatorsJsonArray");
+			try {
+				com.liferay.portal.kernel.json.JSONArray creatorsArray = JSONFactoryUtil.createJSONArray(creatorsJsonArray);
+				// remove creators for video
+				try {
+					Video_CreatorLocalServiceUtil.deleteByVideoId(videoId);
+					// and update with new creators from list
+					for (int i = 0; i < creatorsArray.length(); i++) {
+						com.liferay.portal.kernel.json.JSONObject creator = creatorsArray.getJSONObject(i);
+						Long creatorId = creator.getLong("creatorId");
+						String firstName = creator.getString("firstName");
+						String lastName = creator.getString("lastName");
+						String middleName = creator.getString("middleName");
+						String jobTitle = creator.getString("jobTitle");
+						String gender = creator.getString("gender");
+						String fullName = creator.getString("fullName");
+
+						Video_Creator vc = Video_CreatorLocalServiceUtil.createVideo_Creator(0);
+						Long newCreatorId = new Long(0);
+						// if creator exists in DB, just add to video
+						if (creatorId > new Long(0)) {
+							newCreatorId = creatorId;
+						} else {
+							// if new creator doesn't exits in the creators DB
+							// (check by full name),
+							// create a new one in DB and add to video
+							List<Creator> cL = CreatorLocalServiceUtil.getByFullName(fullName);
+							if (cL.size() == 0) {
+								Creator c = CreatorLocalServiceUtil.createCreator(0);
+								c.setFirstName(firstName);
+								c.setLastName(lastName);
+								c.setMiddleName(middleName);
+								c.setJobTitle(jobTitle);
+								c.setGender(gender);
+								c.setFullName(fullName);
+								newCreatorId = CreatorLocalServiceUtil.addCreator(c).getCreatorId();
+							} else {
+								newCreatorId = cL.listIterator().next().getCreatorId();
+							}
+						}
+						vc.setCreatorId(newCreatorId);
+						vc.setVideoId(videoId);
+						List<Video_Creator> vcl = new ArrayList<Video_Creator>();
+						vcl = Video_CreatorLocalServiceUtil.getByVideoCreator(videoId, newCreatorId);
+						if (vcl.size() == 0)
+							Video_CreatorLocalServiceUtil.addVideo_Creator(vc);
+					}
+				} catch (SystemException e) {
+					errors.add("CREATORS_UPDATE_FAILED_1");
+				}
+				// now update creators for the whole lecture series
+				Long lId = video.getLectureseriesId();
+				try {
+					if (lId > 0) CreatorLocalServiceUtil.updateCreatorsForLectureseriesOverTheAssigenedVideosByLectureseriesId(lId);
+				} catch (SystemException e) {
+					errors.add("CREATORS_UPDATE_FAILED_2");
+				}
+			} catch (com.liferay.portal.kernel.json.JSONException e) {
+				errors.add("CREATORS_UPDATE_FAILED_3");
+			}		
+			//creators end
+			
+			//sub institutions start
+			String subInstitutions = ParamUtil.getString(resourceRequest, "subInstitutions");
+			try {
+				com.liferay.portal.kernel.json.JSONArray institutionsArray = JSONFactoryUtil.createJSONArray(subInstitutions);
+				//remove sub-institutions for video
+				try {
+					Video_InstitutionLocalServiceUtil.removeByVideoId(videoId);
+					//and update with new institutions from list
+					if(institutionsArray.length()>0){
+						for (int i = 0; i< institutionsArray.length(); i++){
+							JSONObject institution =  institutionsArray.getJSONObject(i);
+							Long institutionId= institution.getLong("institutionId");
+							Institution in = InstitutionLocalServiceUtil.createInstitution(0);
+							try {
+								in = InstitutionLocalServiceUtil.getInstitution(institutionId);
+							} catch (PortalException e) {}
+							//
+							List<Video_Institution> vil = new ArrayList<Video_Institution>();
+							vil = Video_InstitutionLocalServiceUtil.getByVideoAndInstitution(videoId, institutionId);
+							
+							Video_Institution vi = Video_InstitutionLocalServiceUtil.createVideo_Institution(0);
+							vi.setInstitutionId(in.getInstitutionId());
+							vi.setVideoId(videoId);
+							if(in.getLevel()==1)vi.setInstitutionParentId(0);
+							else vi.setInstitutionParentId(in.getParentId());
+							if(vil.size()==0)Video_InstitutionLocalServiceUtil.addVideo_Institution(vi);
+						}						
+					}
+				} catch (SystemException e) {
+					errors.add("SUB_INSTITUTIONS_UPDATE_FAILED_1");
+				}
+			} catch (com.liferay.portal.kernel.json.JSONException e) {
+				errors.add("SUB_INSTITUTIONS_UPDATE_FAILED_2");
+			}			
+			//sub institutions end
+			
+			//metadata start
+			String title = ParamUtil.getString(resourceRequest, "title");
+			String language = ParamUtil.getString(resourceRequest, "language");
+			String tags = ParamUtil.getString(resourceRequest, "tags");
+			String publisher = ParamUtil.getString(resourceRequest, "publisher");
+			Long newLsId = ParamUtil.getLong(resourceRequest, "lectureseriesId");
+			Long termId = ParamUtil.getLong(resourceRequest, "termId");
+			Long categoryId = ParamUtil.getLong(resourceRequest, "categoryId");
+			Integer citationAllowed = ParamUtil.getInteger(resourceRequest, "citationAllowedCheckbox");
+	 	    String password = ParamUtil.getString(resourceRequest, "password");	
+	 	    //old lecture series
+	 	    Lectureseries oldLect = LectureseriesLocalServiceUtil.createLectureseries(0);
+			try { oldLect = LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId()); } catch (Exception e) {}
+			Long oldLsId = oldLect.getLectureseriesId();
+			//new lecture series
+			Lectureseries newLect = LectureseriesLocalServiceUtil.createLectureseries(0);
+			try { newLect = LectureseriesLocalServiceUtil.getLectureseries(newLsId); } catch (Exception e1) { } 
+			//search tags
+			ArrayList<String> tagCloudArrayString = new ArrayList<String>();
+			Category ctgr = CategoryLocalServiceUtil.createCategory(0);
+			
+			//check the lecture series id for further meta data informations update
+			try {
+				video.setTitle(title);
+				video.setLectureseriesId(newLsId);
+				video.setTags(tags);
+				if(newLsId.longValue()>0){
+					video.setLectureseriesId(newLsId);
+					//
+					termId = newLect.getTermId();
+					categoryId = newLect.getCategoryId();
+					//update lg_video_institution table
+					Video_InstitutionLocalServiceUtil.removeByVideoId(video.getVideoId());
+					List<Lectureseries_Institution> li = Lectureseries_InstitutionLocalServiceUtil.getByLectureseries(newLsId);
+					ListIterator<Lectureseries_Institution> l_i = li.listIterator();
+					//institutions for video
+					while(l_i.hasNext()){
+						Institution in = InstitutionLocalServiceUtil.createInstitution(0);
+						Lectureseries_Institution lectinst = l_i.next();
+						in = InstitutionLocalServiceUtil.getInstitution(lectinst.getInstitutionId());
+						tagCloudArrayString.add(in.getName());
+						Video_Institution vi = Video_InstitutionLocalServiceUtil.createVideo_Institution(0);
+						vi.setVideoId(video.getVideoId());
+						vi.setInstitutionId(lectinst.getInstitutionId());
+						vi.setInstitutionParentId(in.getParentId());
+						Video_InstitutionLocalServiceUtil.addVideo_Institution(vi);
+					}
+					LectureseriesLocalServiceUtil.updateLectureseries(newLect);
+
+					//add lecture series parameter to tag cloud
+					tagCloudArrayString.add(newLect.getName());
+					tagCloudArrayString.add(newLect.getNumber());
+				}else{
+					java.util.Date date= new java.util.Date();
+					video.setLectureseriesId(-date.getTime());
+					//update institution for video only without lecture series
+					List<Video_Institution> vinst = Video_InstitutionLocalServiceUtil.getByVideo(video.getVideoId());
+					ListIterator<Video_Institution> vinstItt = vinst.listIterator();
+					while(vinstItt.hasNext()){
+						Institution inst = InstitutionLocalServiceUtil.getById(vinstItt.next().getInstitutionId());
+						Institution parent = InstitutionLocalServiceUtil.getById(inst.getParentId());
+						tagCloudArrayString.add(inst.getName());
+						tagCloudArrayString.add(parent.getName());
+					}
+				}
+				//add category and term to tag cloud
+				//category
+				try{ctgr = CategoryLocalServiceUtil.getCategory(categoryId);}catch(Exception e){}			
+				tagCloudArrayString.add(ctgr.getName());
+				//term
+				try{
+					Term t = TermLocalServiceUtil.getTerm(termId);
+					tagCloudArrayString.add(t.getPrefix()+" "+t.getYear());
+				}catch(Exception e){}
+				video.setTermId(termId);
+				//and update categories in DB for video
+				Video_CategoryLocalServiceUtil.removeByVideo(videoId);
+				Video_Category vc = Video_CategoryLocalServiceUtil.createVideo_Category(0);
+				vc.setVideoId(videoId);
+				vc.setCategoryId(categoryId);
+				if(categoryId>0)Video_CategoryLocalServiceUtil.addVideo_Category(vc);
+				//title to tag cloud
+				tagCloudArrayString.add(video.getTitle());
+				
+				//add creators to tag cloud
+//				JSONArray creatorsArray = CreatorLocalServiceUtil.getJSONCreatorsByVideoId(videoId);
+//				for (int i = 0; i< creatorsArray.length(); i++){
+//					JSONObject creator;
+//					creator = creatorsArray.getJSONObject(i);
+//					tagCloudArrayString.add(creator.getString("fullName"));
+//				}
+				//update tag cloud for this video
+				TagcloudLocalServiceUtil.updateByObjectIdAndObjectClassType(tagCloudArrayString, video.getClass().getName(), video.getVideoId());
+				//set citation 
+				video.setCitation2go(citationAllowed);
+				//password
+				video.setPassword(password);
+				// update video
+				VideoLocalServiceUtil.updateVideo(video);
+				//update lecture series fields for latest open access video id 
+				// preview video id 
+				if(newLsId.longValue()==0 && newLsId.longValue()!=oldLsId.longValue()){
+					//update new and old lecture series
+					LectureseriesLocalServiceUtil.updateOpenAccess(video, oldLect);
+					LectureseriesLocalServiceUtil.updatePreviewVideoOpenAccess(oldLect);
+					LectureseriesLocalServiceUtil.updateUploadAndGenerationDate(oldLect);	
+				}
+				//update lecture series fields for latest open access video id 
+				// preview video id 
+				if(oldLsId.longValue()>0 && newLsId.longValue()!=oldLsId.longValue()){
+					//update new and old lecture series
+					LectureseriesLocalServiceUtil.updateOpenAccess(video, newLect);
+					LectureseriesLocalServiceUtil.updatePreviewVideoOpenAccess(newLect);
+					LectureseriesLocalServiceUtil.updateUploadAndGenerationDate(newLect);
+					//
+					LectureseriesLocalServiceUtil.updateOpenAccess(video, oldLect);
+					LectureseriesLocalServiceUtil.updatePreviewVideoOpenAccess(oldLect);
+					LectureseriesLocalServiceUtil.updateUploadAndGenerationDate(oldLect);						
+				}				
+				//update lg_lectureseries_creators
+				if(newLsId.longValue() != oldLsId.longValue())
+				{
+					try{
+						if(newLsId.longValue()>0)CreatorLocalServiceUtil.updateCreatorsForLectureseriesOverTheAssigenedVideosByLectureseriesId(newLsId);
+					}catch(SystemException e){}
+					//
+					try{
+						if(oldLsId.longValue()>0)CreatorLocalServiceUtil.updateCreatorsForLectureseriesOverTheAssigenedVideosByLectureseriesId(oldLsId);
+					}catch(SystemException e){}
+				}
+				
+			} catch (NumberFormatException e) {
+				errors.add("METADATA_UPDATE_FAILED_1");
+			} catch (SystemException e) {
+				errors.add("METADATA_UPDATE_FAILED_2");
+			} catch (PortalException e) {
+				errors.add("METADATA_UPDATE_FAILED_3");
+			}
+			//metadata
+			try {
+				metadata.setTitle(title);
+				metadata.setPublisher(publisher);
+				metadata.setLanguage(language);
+				MetadataLocalServiceUtil.updateMetadata(metadata);
+			} catch (NumberFormatException e) {
+				errors.add("METADATA_UPDATE_FAILED_4");
+			} catch (SystemException e) {
+				errors.add("METADATA_UPDATE_FAILED_5");
+			}
+			//rebuild rss
+			// generate RSS
+			ProzessManager pm = new ProzessManager();
+			for (String f: FileManager.MEDIA_FORMATS) {           
+				try {
+					pm.generateRSS(video, f);
+				} catch (Exception e) {
+					errors.add("METADATA_UPDATE_FAILED_6");
+				} 
+			}	 	    
+	 	    //metadata end
+	 	    
+			//return errors cont result after update
+			JSONObject jo = JSONFactoryUtil.createJSONObject();
+			jo.put("errorsCount", errors.size());
+			//
+			PrintWriter writer = resourceResponse.getWriter();
+	        writer.print(jo.toString());
+	        writer.flush();
+	        writer.close();
+		}
+		
 		if(resourceID.equals("updateMetadata")){
 			
 	 	    String title = ParamUtil.getString(resourceRequest, "title");
@@ -543,8 +835,6 @@ public class AdminVideoManagement extends MVCPortlet {
 				else {
 					java.util.Date date= new java.util.Date();
 					video.setLectureseriesId(-date.getTime());
-					//update table video_lectureseries
-					Video_LectureseriesLocalServiceUtil.removeByVideoId(video.getVideoId());
 				}
 				video.setTags(tags);
 				if(lId>0){
@@ -574,14 +864,6 @@ public class AdminVideoManagement extends MVCPortlet {
 						vi.setInstitutionParentId(in.getParentId());
 						Video_InstitutionLocalServiceUtil.addVideo_Institution(vi);
 					}
-					//update lg_video_lectureseries 
-					Video_Lectureseries vl = new Video_LectureseriesImpl();
-					vl.setVideoId(video.getVideoId());
-					vl.setLectureseriesId(lId);
-					vl.setOpenAccess(video.getOpenAccess());
-					Video_LectureseriesLocalServiceUtil.removeByVideoId(video.getVideoId());//delete old entries
-					Video_LectureseriesLocalServiceUtil.addVideo_Lectureseries(vl);//add new
-					LectureseriesLocalServiceUtil.updateLectureseries(newLect);
 					//update lectureseries
 					LectureseriesLocalServiceUtil.updateOpenAccess(video, newLect);
 					LectureseriesLocalServiceUtil.updatePreviewVideoOpenAccess(newLect);
@@ -667,6 +949,8 @@ public class AdminVideoManagement extends MVCPortlet {
 			}
 			//metadata
 			try {
+				String description = ParamUtil.getString(resourceRequest, "description");
+				metadata.setDescription(description);				
 				metadata.setTitle(title);
 				metadata.setPublisher(publisher);
 				metadata.setLanguage(language);
@@ -835,8 +1119,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			try {
 				MetadataLocalServiceUtil.updateMetadata(metadata);
 				logger.info("DESCRIPTION_UPDATE_SUCCESS");
-			} catch (SystemException e) {
-//				//e.printStackTrace();
+			} catch (Exception e) {
 				logger.info("DESCRIPTION_UPDATE_FAILED");
 			}
 			JSONObject json = JSONFactoryUtil.createJSONObject();
@@ -1133,8 +1416,8 @@ public class AdminVideoManagement extends MVCPortlet {
 			String subInstitutions = ParamUtil.getString(resourceRequest, "subInstitution");
 			try {
 				JSONArray institutionsArray = new JSONArray(subInstitutions);
-				//remove sub-institutions for video
 				try {
+					//remove sub-institutions for video
 					Video_InstitutionLocalServiceUtil.removeByVideoId(videoId);
 					//and update with new institutions from list
 					if(institutionsArray.length()>0){

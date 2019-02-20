@@ -39,7 +39,6 @@ import de.uhh.l2g.plugins.service.Lectureseries_CategoryLocalServiceUtil;
 import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil;
-import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.LectureseriesLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.LectureseriesFinderUtil;
 
@@ -138,9 +137,6 @@ public class LectureseriesLocalServiceImpl extends LectureseriesLocalServiceBase
 	
 	
 	public void updateOpenAccess(Video video, Lectureseries lectureseries) throws SystemException{
-		// video lecture series table by video
-		Video_LectureseriesLocalServiceUtil.updateOpenAccessByVideo(video);
-		
 		//lecture series
 		Video latestOpenAccessVideo = VideoLocalServiceUtil.getLatestOpenAccessVideoForLectureseries(lectureseries.getLectureseriesId());
 		lectureseries.setLatestOpenAccessVideoId(latestOpenAccessVideo.getVideoId());
@@ -195,11 +191,32 @@ public class LectureseriesLocalServiceImpl extends LectureseriesLocalServiceBase
 		LectureseriesLocalServiceUtil.updateLectureseries(lectureseries);						
 	}
 	
-	public void updateUploadAndGenerationDate() throws SystemException{
+	public void updateUploadLatestOpenAccessVideoAndGenerationDate() throws SystemException{
 		List<Lectureseries> all = getAll();
 		ListIterator<Lectureseries> itAll = all.listIterator();
 		while(itAll.hasNext()){
 			Lectureseries l = itAll.next();
+			Video v = new VideoImpl();
+			v = VideoLocalServiceUtil.getLatestOpenAccessVideoForLectureseries(l.getLectureseriesId());
+			l.setLatestVideoGenerationDate(v.getGenerationDate());
+			l.setLatestOpenAccessVideoId(v.getVideoId());
+			if(v.getUploadDate()!=null)l.setLatestVideoUploadDate(v.getUploadDate());
+			else {
+				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH-mm");
+				Date d = new Date();
+				try {
+					d = format.parse(v.getGenerationDate());
+					l.setLatestVideoUploadDate(d);
+				} catch (ParseException e) {
+					//e.printStackTrace();
+				}
+			}
+			LectureseriesLocalServiceUtil.updateLectureseries(l);
+		}
+	}
+	
+	public void updateUploadAndGenerationDate(Lectureseries lectureseries) throws SystemException{
+			Lectureseries l = lectureseries;
 			Video v = new VideoImpl();
 			try {
 				v = VideoLocalServiceUtil.getVideo(l.getLatestOpenAccessVideoId());
@@ -219,7 +236,6 @@ public class LectureseriesLocalServiceImpl extends LectureseriesLocalServiceBase
 			} catch (PortalException e) {
 				//e.printStackTrace();
 			}
-		}
 	}
 	
 	public void updateCategoryForLectureseries(Long lectureseriesId, Long newCategoryId) throws NoSuchModelException, SystemException{

@@ -33,6 +33,7 @@
 <liferay-portlet:resourceURL id="convertVideo" var="convertVideoURL" />
 <liferay-portlet:resourceURL id="getVideoConversionStatus" var="getVideoConversionStatusURL" />
 <liferay-portlet:resourceURL id="updateHtaccess" var="updateHtaccessURL" />
+<liferay-portlet:resourceURL id="updateAll" var="updateAllURL" />
 
 
 <%
@@ -394,7 +395,7 @@
 				</script>
 				<br/>		
 				<aui:button-row>
-					<aui:button type="submit" value="apply-changes" onclick="applyAllMetadataChanges()" cssClass="btn-primary"/>
+					<aui:button type="submit" value="apply-changes" onclick="updateAllMetadata();" cssClass="btn-primary"/>
 					<aui:button type="cancel" value="back" name="cancel"/>
 				</aui:button-row>
 				
@@ -743,6 +744,7 @@ function updateMetadata(){
 				 	   	<portlet:namespace/>categoryId: categoryId,
 				 	   	<portlet:namespace/>termId: termId,
 				 	   	<portlet:namespace/>password: A.one('#<portlet:namespace/>password').get('value'),
+				 	    <portlet:namespace/>description: descData
 			 	},
 			 	async:true,
 			 	//get server response
@@ -779,6 +781,63 @@ function updateLicense(data){
 	);
 }
 
+function updateAllMetadata(){
+	validate();//inpul correct?
+	var license = $("input[name=<portlet:namespace/>license]:checked").val();
+	var creatorsJsonArray = JSON.stringify(getJsonCreatorsArray());
+	var jsonSubInstitutionsArray = JSON.stringify(getJsonSubInstitutionsArray());
+	var termId=0;
+	var categoryId=0;
+	var chebox;
+	//
+	$('#<portlet:namespace/>citationAllowedCheckbox').prop("checked") ? chebox=1 : chebox=0;
+	
+	if (!$("#options").is(':hidden')) {
+		   termId = $('#<portlet:namespace/>termId').val();
+		   categoryId = $('#<portlet:namespace/>categoryId').val();
+	}
+	if($("#<portlet:namespace/>title").val() && $("#creators > div").length>0){
+		//action
+		$.ajax({
+			url: "${updateAllURL}",
+			method: "POST",
+			dataType: "json",
+			data: {
+					//metadata start
+					"<portlet:namespace/>videoId": "<%=reqVideo.getVideoId()%>",
+	            	"<portlet:namespace/>description": descData,
+	            	"<portlet:namespace/>license": license,
+	            	"<portlet:namespace/>creatorsJsonArray": creatorsJsonArray,  
+	            	"<portlet:namespace/>subInstitutions": jsonSubInstitutionsArray,
+			 	   	"<portlet:namespace/>lectureseriesId": $('#<portlet:namespace/>lectureseriesId').val(),
+			 	   	"<portlet:namespace/>language": $('#<portlet:namespace/>language').val(),
+			 	   	"<portlet:namespace/>title": $('#<portlet:namespace/>title').val(),
+			 	   	"<portlet:namespace/>tags": $('#<portlet:namespace/>tags').val(),
+			 	   	"<portlet:namespace/>publisher": $('#<portlet:namespace/>publisher').val(),
+			 	   	"<portlet:namespace/>citationAllowedCheckbox": chebox,
+			 	   	"<portlet:namespace/>categoryId": categoryId,
+			 	   	"<portlet:namespace/>termId": termId,
+			 	   	"<portlet:namespace/>password": $('#<portlet:namespace/>password').val()
+			 	   	//metadata end
+	 		},
+			success: function(res) {
+				 //reset creator class
+				 $("#creators-custom").css({"background-color": "white", "color": "#555555"});
+				 $("#creators-custom .control-label").css({"color": "#488f06"});
+			     $("#metadata-upload #creators").css({"color": "#488f06"});
+	           	 //update the thumb nail
+	           	 updateThumbnail();
+	           	 //json object
+	           	 if(res.errorsCount==0){
+	           		 alert("<liferay-ui:message key='changes-applied'/>");	                		 
+	           	 }else{
+	           		 alert("<liferay-ui:message key='changes-applied-with-warnings'/>");
+	           	 }
+			}
+		});
+	}
+} 
+
 function applyAllMetadataChanges(){
 	AUI().use(
 			'aui-node',
@@ -787,11 +846,9 @@ function applyAllMetadataChanges(){
 				if($("#<portlet:namespace/>title").val() && $("#creators > div").length>0){
 					// Select the node(s) using a css selector string
 				    var license = A.one("input[name=<portlet:namespace/>license]:checked").get("value");
-				    //alert(license2.get('value'));
-				    updateDescription(descData);
+				    //updateDescription(descData);
 				    updateLicense(license);
 				    updateCreators();
-				    updateSubInstitutions();
 				    updateMetadata();//last place, important!
 				 	//reset creator class
 				    $("#creators-custom").css({"background-color": "white", "color": "#555555"});
@@ -836,7 +893,7 @@ function updateDescription(data){
 			 	//send data to server
 			 	data: {
 				 	   	<portlet:namespace/>description: data,
-				 	   	<portlet:namespace/>videoId: A.one('#<portlet:namespace/>videoId').get('value'),
+				 	    <portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>"
 			 	},
 			 	async:true,
 			 	//get server response
@@ -1047,6 +1104,19 @@ function getDateTime(){
 			  }
 	  })
 	  return ret;
+}
+
+function getJsonSubInstitutionsArray(){
+	var namespace="<portlet:namespace/>";
+	var jsonArray = [];
+	$('.subInstitutions').children().each(function(n){
+		var parameters = {};
+		var $div = $(this);
+		var id = $div.attr('id');
+		parameters['institutionId'] = id;
+		jsonArray[n]=parameters;
+	});
+	return jsonArray;
 }
 
 function updateSubInstitutions(){

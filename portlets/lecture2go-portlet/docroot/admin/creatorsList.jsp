@@ -2,28 +2,19 @@
 
 <%
 	long groupId = themeDisplay.getLayout().getGroupId();
-	String name = User.class.getName();
-	User u = UserLocalServiceUtil.getUser(new Long (request.getRemoteUser()));
-	List<Creator> tempCreatorsList = new ArrayList();
-	tempCreatorsList = CreatorLocalServiceUtil.getAllCreators();
+	String name = Creator.class.getName();
 	PortletURL portletURL = renderResponse.createRenderURL();
-
-	String delta = "";
-	String cur = "";
-	
-	try{new Long(delta = request.getParameterMap().get("delta")[0]).toString();}catch(Exception e){}
-	try{new Long(cur = request.getParameterMap().get("cur")[0]).toString();}catch(Exception e){}
 	
 	PortletURL backURL = portletURL;
-	backURL.setParameter("delta", delta);
-	backURL.setParameter("cur", cur);
-	String[] ct =  LanguageUtil.get(pageContext, "creator-titles").split(",");
+	//
+	String portletURLString = portletURL.toString();
+	CreatorSearchContainer creatorSearchContainer = new CreatorSearchContainer(renderRequest, portletURL);	
+	CreatorDisplayTerms displayTerms = (CreatorDisplayTerms)creatorSearchContainer.getDisplayTerms();
+	//		
 	String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 %>
 
 <portlet:actionURL name="add" var="addURL">
-	<portlet:param name="delta" value='<%=delta%>' />
-	<portlet:param name="cur" value='<%=cur%>' />
 	<portlet:param name="backURL" value='<%=backURL.toString()%>' />
 </portlet:actionURL>
 
@@ -42,30 +33,29 @@
 				</aui:form>
 		</aui:layout> 
 	</aui:fieldset>
+
+	<liferay-ui:search-container emptyResultsMessage="no-creators-found" searchContainer="<%= creatorSearchContainer %>">
 		
-	<liferay-ui:search-container emptyResultsMessage="no-creators-found" delta="10" iteratorURL="<%= portletURL %>">
-		<liferay-ui:search-container-results>
-			<%
-				results = ListUtil.subList(tempCreatorsList, searchContainer.getStart(), searchContainer.getEnd());
-				total = tempCreatorsList.size();
-				pageContext.setAttribute("results", results);
-				pageContext.setAttribute("total", total);
-			%>
-		</liferay-ui:search-container-results>
-	
-		<liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.Creator" keyProperty="creatorId" modelVar="creator">
+			<div id="modifiedSearch">
+				<aui:form action="<%= portletURLString %>" method="post" name="fm">
+					<liferay-ui:search-form page="/admin/searchCreators.jsp" servletContext="<%= application %>" />
+				</aui:form>
+			</div>
+					
+			<liferay-ui:search-container-results 
+				results="<%= CreatorSearchHelper.getCreator(displayTerms,creatorSearchContainer.getStart(), creatorSearchContainer.getEnd()) %>" 
+				total="<%= CreatorSearchHelper.getTotalCreatorCount(displayTerms,creatorSearchContainer.getStart(), creatorSearchContainer.getEnd()) %>"
+			/>
+		
+			<liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.Creator" keyProperty="creatorId" modelVar="creator">
 			<% String creatorId = creator.getCreatorId()+""; %>
 			<portlet:actionURL name="edit" var="editURL">
 				<portlet:param name="creatorId" value='<%=creatorId%>' />
-				<portlet:param name="delta" value='<%=delta%>' />
-				<portlet:param name="cur" value='<%=cur%>' />
 				<portlet:param name="backURL" value='<%=backURL.toString()%>' />
 			</portlet:actionURL>
 			
 			<portlet:actionURL name="delete" var="removeURL">
 				<portlet:param name="creatorId" value='<%=creatorId%>' />
-				<portlet:param name="delta" value='<%=delta%>' />
-				<portlet:param name="cur" value='<%=cur%>' />
 				<portlet:param name="backURL" value='<%=backURL.toString()%>' />
 			</portlet:actionURL>		
 			
