@@ -334,7 +334,7 @@
         <finder name="Term" return-type="Collection">
             <finder-column name="termId"></finder-column>
         </finder>
-        <finder name="OpenAccessAndUploadedFile" return-type="Collection" where="filename LIKE '%.mp4'">
+        <finder name="OpenAccessAndUploadedFile" return-type="Collection" where="filename &gt; ''">
             <finder-column name="openAccess"></finder-column>
         </finder>
     </entity>

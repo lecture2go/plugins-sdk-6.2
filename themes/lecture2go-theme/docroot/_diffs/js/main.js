@@ -19,20 +19,23 @@ AUI().ready(
 			signIn.plug(Liferay.SignInModal);
 		}
 		
-		// fix navigation bug on chrome with touch devices
-		fixNavigationHoverOnChromeTouchDevices();
+		// fix navigation bug on chrome or firefox with touch devices
+		fixNavigationHoverOnTouchDevices();
 	}
 );
 
 /**
  * This is workaround to fix missing mouseover event handler for the navigation 
- * elements if the user has a touch device and uses chrome. This seems to be a bug
+ * elements if the user has a touch device and uses chrome or now also firefox (since 60+). This seems to be a bug
  * from Liferay/ AUI
  */
-function fixNavigationHoverOnChromeTouchDevices() {
-	var isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+function fixNavigationHoverOnTouchDevices() {
 	/* detect chrome */
-	var isChrome = !!window.chrome && !isOpera;
+	var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
+	
+	/* detect firefox */
+	var isFirefox = typeof InstallTrigger !== 'undefined';
+
 
 	/* detect touch device */
 	function isTouchDevice() {
@@ -41,7 +44,7 @@ function fixNavigationHoverOnChromeTouchDevices() {
 	    || (navigator.msMaxTouchPoints > 0));
 	}
 
-	if(isTouchDevice() && isChrome){
+	if(isTouchDevice() && (isChrome || isFirefox)){
 		$(".nav>.lfr-nav-item").not(".responsive_li_item").mouseenter(function(){
 			$(this).addClass("hover open");
 		}).mouseleave(function() {

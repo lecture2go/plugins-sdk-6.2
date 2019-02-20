@@ -31,7 +31,9 @@
 <liferay-portlet:resourceURL id="updateThumbnail" var="updateThumbnailURL" />
 <liferay-portlet:resourceURL id="getJSONVideo" var="getJSONVideoURL" />
 <liferay-portlet:resourceURL id="convertVideo" var="convertVideoURL" />
+<liferay-portlet:resourceURL id="getVideoConversionStatus" var="getVideoConversionStatusURL" />
 <liferay-portlet:resourceURL id="updateHtaccess" var="updateHtaccessURL" />
+
 
 <%
 	String actionURL = "";
@@ -155,6 +157,16 @@
 						<div id="progress" class="progress">
 					    	<div class="bar" style="width: 0%;"></div>
 						</div>
+						<c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider")%>'>
+							<c:if test="<%= permissionChecker.isOmniadmin() %>">
+								<!-- the admin has a button to start postprocessing manually -->
+								<div id="postprocessing" style="margin-bottom: 20px;">
+									<span class="conversion" data-video-id="<%=reqVideo.getVideoId()%>">
+									</span>
+									<aui:button type="button" id="start-postprocessing" value="Start Postprocessing"/>
+								</div>
+							</c:if>
+						</c:if>
 						<table id="uploaded-files" class="table"></table>
 					</div>
 				</aui:layout>
@@ -316,7 +328,7 @@
 						<div>
 							<%if(reqLicense.getL2go()==1){%><aui:input name="license"  id="uhhl2go" label="" value="uhhl2go" checked="true" type="radio"/><%}%>
 							<%if(reqLicense.getL2go()==0){%><aui:input name="license" id="uhhl2go" label="" value="uhhl2go" type="radio"/><%}%>
-							<a href="/web/vod/licence-l2go" target="_blank"><liferay-ui:message key="lecture2go-licence"/> </a>	 	      	      
+							<a href="/license" target="_blank"><liferay-ui:message key="lecture2go-licence"/> </a>	 	      	      
 						</div>	
 						<div>		
 							<%if(reqLicense.getCcbyncsa()==1){%><aui:input name="license" label="" id="ccbyncsa" value="ccbyncsa" checked="true" type="radio" /><%}%>
@@ -507,9 +519,6 @@ $(function () {
            
            //htaccess update function for physical file protectiom
            updateHtaccess();
-           
-           //htaccess update function for physical file protectiom
-           updateHtaccess();
        	   var st = false;
            
        	   jwplayer().remove();
@@ -677,29 +686,11 @@ function updateVideoFileName(file){
 				on: {
 					   success: function() {
 					     var jsonResponse = this.get('responseData');
-					     toggleShare();
-					   }
-				}
-			});	
-		}
-	);
-}
+						 <c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider")%>'>
+					     	videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>','<%=getVideoConversionStatusURL%>',<%=reqVideo.getVideoId()%>);
+						 </c:if>
 
-function convertVideo(){
-	AUI().use('aui-io-request', 'aui-node',
-		function(A){
-			A.io.request('<%=convertVideoURL%>', {
-		 	dataType: 'json',
-		 	method: 'POST',
-			 	//send data to server
-			 	data: {
-			 		<portlet:namespace/>videoId: A.one('#<portlet:namespace/>videoId').get('value'),
-			 		// may be filled with instructions (workflow to use etc.)
-			 	},
-			 	//get server response
-				on: {
-					   success: function() {
-					     var jsonResponse = this.get('responseData');					     
+					     toggleShare();
 					   }
 				}
 			});	
@@ -884,6 +875,7 @@ function deleteFile(fileName){
 		    	  	$("#date-time").hide();
 		    	  	$("#first-title").show();
 		    	  	$("#<portlet:namespace/>meta-ebene").hide();
+		    	  	$(".conversion").html('');
 		        }
 		        jwplayer().remove();
 		        //initialize and show player
@@ -1136,6 +1128,18 @@ AUI().use('aui-node',
   }
 );
 
+<c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider")%>'>
+	$('#start-postprocessing').click(function(){
+		videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>', '<%=getVideoConversionStatusURL%>', <%=reqVideo.getVideoId()%>);
+	});
+	AUI().ready('', function(A){
+		// check conversion status
+		videoProcessor.pollStatus('<portlet:namespace/>','<%=getVideoConversionStatusURL%>','<%=convertVideoURL%>',<%=reqVideo.getVideoId()%>);
+	});
+</c:if>
+
+
+
 </script>
 
 <!-- Template -->
@@ -1159,5 +1163,6 @@ AUI().use('aui-node',
         $.tmpl( "filesTemplate", vars ).appendTo( ".table" );
     });
 </script>
+
 
 <%@include file="includeCreatorTemplates.jsp" %>
