@@ -48,3 +48,4 @@ Bug Fix Package [master-v.1-b5005] on Friday, September 28, 2018
 - 1131 RM - Link to the lecture series ignores the defined video list order.
 - 1202 RM - Submenu does not work on touch screen systems with the chrome browser.
 - 1185 RM - Incorrect number of videos is displayed on the catalogue site for lecture series.
+ 
