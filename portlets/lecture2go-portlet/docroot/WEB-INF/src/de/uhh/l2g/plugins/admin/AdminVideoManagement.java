@@ -1,8 +1,6 @@
 package de.uhh.l2g.plugins.admin;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
@@ -32,7 +30,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
-import de.uhh.l2g.plugins.NoSuchLicenseException;
 import de.uhh.l2g.plugins.model.Category;
 import de.uhh.l2g.plugins.model.Creator;
 import de.uhh.l2g.plugins.model.Host;
@@ -78,10 +75,10 @@ import de.uhh.l2g.plugins.service.Video_CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.util.FFmpegManager;
 import de.uhh.l2g.plugins.util.FileManager;
-import de.uhh.l2g.plugins.util.HttpManager;
+import de.uhh.l2g.plugins.util.Htaccess;
 import de.uhh.l2g.plugins.util.ProzessManager;
 import de.uhh.l2g.plugins.util.Security;
-import de.uhh.l2g.plugins.util.Htaccess;
+import de.uhh.l2g.plugins.util.VideoGenerationDateComparator;
 import de.uhh.l2g.plugins.util.VideoProcessorManager;
 
 public class AdminVideoManagement extends MVCPortlet {
@@ -632,6 +629,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			
 			//metadata start
 			String title = ParamUtil.getString(resourceRequest, "title");
+			String datetime = ParamUtil.getString(resourceRequest, "datetimepicker");
 			String language = ParamUtil.getString(resourceRequest, "language");
 			String tags = ParamUtil.getString(resourceRequest, "tags");
 			String publisher = ParamUtil.getString(resourceRequest, "publisher");
@@ -721,6 +719,12 @@ public class AdminVideoManagement extends MVCPortlet {
 //					creator = creatorsArray.getJSONObject(i);
 //					tagCloudArrayString.add(creator.getString("fullName"));
 //				}
+				
+				//update date and time for this video if changed 
+				int compartion = VideoGenerationDateComparator.compare(video.getGenerationDate(), datetime);
+				//override the video date_time stamp!
+				if (compartion !=0)video.setGenerationDate(datetime);
+				
 				//update tag cloud for this video
 				TagcloudLocalServiceUtil.updateByObjectIdAndObjectClassType(tagCloudArrayString, video.getClass().getName(), video.getVideoId());
 				//set citation 
@@ -1311,6 +1315,21 @@ public class AdminVideoManagement extends MVCPortlet {
 				} catch (Exception e) {
 					//e.printStackTrace();
 				} 
+				
+				//update entries for lecture series object such as last open access video id
+				// and previe video for open access related videos
+				
+				Lectureseries ls = LectureseriesLocalServiceUtil.createLectureseries(0);
+				try {
+					ls = LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId());
+					if(ls.getLectureseriesId()>0) {
+						LectureseriesLocalServiceUtil.updateOpenAccess(video, ls);
+						LectureseriesLocalServiceUtil.updatePreviewVideoOpenAccess(ls);
+					}
+				} catch (Exception e) {
+					logger.info("FAILED_TO_FETCH_OR_UPDATE_LECTURESERIES ");
+				} 
+				
 				// delete all created files from the video-processor if activated
 				if (PropsUtil.contains("lecture2go.videoprocessing.provider")) {
 					// send DELETE request to video processor

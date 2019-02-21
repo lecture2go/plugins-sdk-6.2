@@ -40,5 +40,34 @@ public class VideoGenerationDateComparator implements Comparator<Video> {
 
 		return ret;
 	}
+	
+	/**
+	 * return 0 => is equal
+	 * return 1 => date 1 before date 2
+	 * return 1 => date 1 after date 2
+	 *
+	 * @param d1 the date 1
+	 * @param d2 the date 2
+	 * @return return number of integer 0, 1, or -1
+	 */	
+	public static int compare(String d1, String d2) {
+		Date date1 = new Date();
+		Date date2 = new Date();
+		//
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH-mm");
+		try {
+			date1 = df.parse(d1);
+			date2 = df.parse(d2);
+		} catch (ParseException e) {
+			//e.printStackTrace();
+		}
+		
+		int ret = 0;
+		if (date1.before(date2)) ret = 1;
+		if (date1.after(date2)) ret = -1;
+		if (date1.equals(date2)) ret = 0;
+		//
+		return ret;
+	}
 
 }
