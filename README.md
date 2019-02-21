@@ -10,12 +10,12 @@ Change Log
 ==============
 Bug Fix and Feature Package [master-v.1-b5146] on Wednesday, February 20, 2019
 
-#1273 RM - List of recently uploaded open access videos not updated correctly
-#1152 RM - Generation of the video hit list incorrectly
-#1262 RM - Renewed password entry on video call after call via series link
-#1257 RM - Change creation date of videos subsequent
-#1270 RM - Search function integrated in the "authors" view
-#1211 RM - The L2G_video_lectureseries table is reorganized.
+- 1273 RM - List of recently uploaded open access videos not updated correctly
+- 1152 RM - Generation of the video hit list incorrectly
+- 1262 RM - Renewed password entry on video call after call via series link
+- 1257 RM - Change creation date of videos subsequent
+- 1270 RM - Search function integrated in the "authors" view
+- 1211 RM - The L2G_video_lectureseries table is reorganized.
 
 
 Bug Fix and Feature Package [master-v.1-b5122] on Tuesday, January 22, 2019
@@ -48,3 +48,4 @@ Bug Fix Package [master-v.1-b5005] on Friday, September 28, 2018
 - 1131 RM - Link to the lecture series ignores the defined video list order.
 - 1202 RM - Submenu does not work on touch screen systems with the chrome browser.
 - 1185 RM - Incorrect number of videos is displayed on the catalogue site for lecture series.
+ 
