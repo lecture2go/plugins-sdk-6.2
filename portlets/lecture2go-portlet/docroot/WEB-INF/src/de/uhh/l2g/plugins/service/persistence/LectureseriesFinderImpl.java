@@ -184,8 +184,9 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			 *  the filter query has a variable number of parameters and those are used in subqueries (lectureseries/single videos/ all videos if a search is used)
 			 *  an array is created with the specific filter values and iterated for every subquery
 			 */
+			String searchString = searchQuery.replace("&amp;", "&");//get from entity &amp; only the character & for this specific search
 			QueryPos qPos = QueryPos.getInstance(q);
-			boolean hasSearch = (searchQuery.trim().length()>0);
+			boolean hasSearch = (searchString.trim().length()>0);
 			int y=1;
 			if (hasSearch)y=2;
 			//
@@ -195,14 +196,14 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 				if (categoryId > 0) qPos.add(categoryId);
 				if (institutionId > 0) qPos.add(institutionId);
 				if (parentInstitutionId > 0) qPos.add(parentInstitutionId);					
-				if (hasSearch) qPos.add("%" + searchQuery + "%");
+				if (hasSearch) qPos.add("%" + searchString + "%");
 			}
 			ret = (List<Lectureseries>) QueryUtil.list(q, getDialect(), start, stop);
 		} catch (Exception e) {
 			try {
 				throw new SystemException(e);
 			} catch (SystemException se) {
-				//e.printStackTrace();
+				e.printStackTrace();
 			}
 		} finally {
 			closeSession(session);
