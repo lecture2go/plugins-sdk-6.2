@@ -365,6 +365,15 @@ public class InstitutionLocalServiceWrapper implements InstitutionLocalService,
 	}
 
 	@Override
+	public de.uhh.l2g.plugins.model.Institution getByParentIdAndCompanyId(
+		long parentId, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchInstitutionException {
+		return _institutionLocalService.getByParentIdAndCompanyId(parentId,
+			companyId);
+	}
+
+	@Override
 	public java.util.Map<java.lang.String, java.lang.String> getByParent(
 		long parentId)
 		throws com.liferay.portal.kernel.exception.SystemException {

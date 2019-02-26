@@ -340,6 +340,13 @@ public class InstitutionLocalServiceUtil {
 		return getService().getByParentId(parentId);
 	}
 
+	public static de.uhh.l2g.plugins.model.Institution getByParentIdAndCompanyId(
+		long parentId, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchInstitutionException {
+		return getService().getByParentIdAndCompanyId(parentId, companyId);
+	}
+
 	public static java.util.Map<java.lang.String, java.lang.String> getByParent(
 		long parentId)
 		throws com.liferay.portal.kernel.exception.SystemException {

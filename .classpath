@@ -3,13 +3,13 @@
 	<classpathentry kind="src" path="apps/test-broken/test-broken-portlet/src/com/liferay/test"/>
 	<classpathentry kind="src" path="portlets/lecture2go-portlet/docroot/WEB-INF/service"/>
 	<classpathentry kind="src" path="portlets/lecture2go-portlet/docroot/WEB-INF/src"/>
-	<classpathentry kind="src" path="portlets/migration-portlet/docroot/WEB-INF/service"/>
-	<classpathentry kind="src" path="portlets/migration-portlet/docroot/WEB-INF/src"/>
 	<classpathentry kind="src" path="shared/portal-http-service/src"/>
 	<classpathentry kind="src" path="shared/portal-http-service/test/unit"/>
 	<classpathentry kind="src" path="tools/templates/portlet_spring_mvc_tmpl/docroot/WEB-INF/src"/>
 	<classpathentry kind="src" path="tools/templates/portlet_vaadin_tmpl/docroot/WEB-INF/src"/>
 	<classpathentry kind="src" path="webs/resources-importer-web/docroot/WEB-INF/src"/>
+	<classpathentry kind="lib" path=".ivy/ivy-2.3.0.jar"/>
+	<classpathentry kind="lib" path=".ivy/ivy-2.4.0.LIFERAY-PATCHED-1-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="apps/test-broken/test-broken-portlet/docroot/WEB-INF/lib/commons-logging.jar"/>
 	<classpathentry kind="lib" path="apps/test-broken/test-broken-portlet/lib/commons-logging.jar"/>
 	<classpathentry kind="lib" path="dependencies/aQute.bnd/lib/biz.aQute.bnd.jar"/>
@@ -78,36 +78,15 @@
 	<classpathentry kind="lib" path="portlets/lecture2go-portlet/docroot/WEB-INF/lib/jsornorg.jar"/>
 	<classpathentry kind="lib" path="portlets/lecture2go-portlet/docroot/WEB-INF/lib/jsr173_api.jar"/>
 	<classpathentry kind="lib" path="portlets/lecture2go-portlet/docroot/WEB-INF/lib/jstl.jar"/>
-	<classpathentry kind="lib" path="portlets/lecture2go-portlet/docroot/WEB-INF/lib/lecture2go-portlet-service.jar"/>
-	<classpathentry kind="lib" path="portlets/lecture2go-portlet/docroot/WEB-INF/lib/rt.jar"/>
 	<classpathentry kind="lib" path="portlets/lecture2go-portlet/docroot/WEB-INF/lib/spring-webmvc-portlet.jar"/>
 	<classpathentry kind="lib" path="portlets/lecture2go-portlet/docroot/WEB-INF/lib/spring-webmvc.jar"/>
 	<classpathentry kind="lib" path="portlets/lecture2go-portlet/docroot/WEB-INF/lib/spring.jar"/>
 	<classpathentry kind="lib" path="portlets/lecture2go-portlet/docroot/WEB-INF/lib/standard.jar"/>
 	<classpathentry kind="lib" path="portlets/lecture2go-portlet/docroot/WEB-INF/lib/wsdl4j-1.5.2.jar"/>
-	<classpathentry kind="lib" path="portlets/migration-portlet/docroot/WEB-INF/lib/commons-validator.jar"/>
-	<classpathentry kind="lib" path="portlets/migration-portlet/docroot/WEB-INF/lib/csv-tools-1.0.0.jar"/>
-	<classpathentry kind="lib" path="portlets/migration-portlet/docroot/WEB-INF/lib/lecture2go-portlet-service.jar"/>
-	<classpathentry kind="lib" path="portlets/migration-portlet/docroot/WEB-INF/lib/migration-portlet-service.jar"/>
-	<classpathentry kind="lib" path="portlets/migration-portlet/docroot/WEB-INF/lib/spring-aop-4.0.5.RELEASE.jar"/>
-	<classpathentry kind="lib" path="portlets/migration-portlet/docroot/WEB-INF/lib/spring-beans-4.0.5.RELEASE.jar"/>
-	<classpathentry kind="lib" path="portlets/migration-portlet/docroot/WEB-INF/lib/spring-context-4.0.5.RELEASE.jar"/>
-	<classpathentry kind="lib" path="portlets/migration-portlet/docroot/WEB-INF/lib/spring-core-4.0.5.RELEASE.jar"/>
-	<classpathentry kind="lib" path="portlets/migration-portlet/docroot/WEB-INF/lib/spring-expression-4.0.5.RELEASE.jar"/>
-	<classpathentry kind="lib" path="portlets/migration-portlet/docroot/WEB-INF/lib/spring-web-4.0.5.RELEASE.jar"/>
-	<classpathentry kind="lib" path="portlets/migration-portlet/docroot/WEB-INF/lib/spring-webmvc-4.0.5.RELEASE.jar"/>
-	<classpathentry kind="lib" path="portlets/migration-portlet/docroot/WEB-INF/lib/spring-webmvc-portlet-4.0.5.RELEASE.jar"/>
-	<classpathentry kind="lib" path="portlets/migration-portlet/docroot/WEB-INF/lib/velocity-tools.jar"/>
-	<classpathentry kind="lib" path="portlets/migration-portlet/docroot/WEB-INF/lib/velocity.jar"/>
 	<classpathentry kind="lib" path="shared/portal-http-service/lib/org.eclipse.osgi.services.jar"/>
 	<classpathentry kind="lib" path="shared/portal-http-service/lib/org.osgi.core.jar"/>
 	<classpathentry kind="lib" path="shared/portal-http-service/lib/portal-compat-shared.jar"/>
-	<classpathentry kind="lib" path="themes/lecture2go-theme/docroot/WEB-INF/lib/commons-logging.jar"/>
-	<classpathentry kind="lib" path="themes/lecture2go-theme/docroot/WEB-INF/lib/log4j.jar"/>
-	<classpathentry kind="lib" path="themes/lecture2go-theme/docroot/WEB-INF/lib/util-bridges.jar"/>
-	<classpathentry kind="lib" path="themes/lecture2go-theme/docroot/WEB-INF/lib/util-java.jar"/>
-	<classpathentry kind="lib" path="themes/lecture2go-theme/docroot/WEB-INF/lib/util-taglib.jar"/>
 	<classpathentry kind="lib" path="tools/gradle/gradle/wrapper/gradle-wrapper.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="output" path="portlets/migration-portlet/docroot/WEB-INF/classes"/>
+	<classpathentry kind="output" path="bin"/>
 </classpath>

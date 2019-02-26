@@ -13,7 +13,6 @@
 <%@page import="javax.portlet.PortletPreferences"%>
 <%@page import="javax.portlet.PortletURL"%>
 <%@page import="javax.portlet.PortletException"%>
-<%@page import="javax.portlet.RenderRequest"%>
 
 <%@page import="java.util.Arrays"%>
 <%@page import="java.util.Enumeration"%>
@@ -60,6 +59,7 @@
 <%@page import="com.liferay.portal.kernel.util.UnicodeFormatter"%>
 <%@page import="com.liferay.portal.kernel.language.LanguageUtil"%>
 <%@page import="com.liferay.portal.kernel.util.LocaleUtil"%>
+<%@page import="com.liferay.taglib.portlet.RenderURLParamsTag"%>
 <%@page import="com.liferay.util.portlet.PortletRequestUtil"%>
 <%@page import="com.liferay.portlet.PortletURLUtil"%>
 <%@page import="com.liferay.portal.kernel.util.PropsUtil"%>
@@ -161,29 +161,29 @@
 	//l2go student is logged in
 	boolean permissionStudent = false;
 
-	try{
-		Lecture2GoRoleChecker rcheck = new Lecture2GoRoleChecker();
-		remoteUser = UserLocalServiceUtil.getUser(new Long (request.getRemoteUser()));
-		permissionAdmin = rcheck.isL2gAdmin(remoteUser);
-		permissionCoordinator = rcheck.isCoordinator(remoteUser);
-		permissionProducer = rcheck.isProducer(remoteUser);
-		permissionStudent = rcheck.isStudent(remoteUser);
-		if(permissionAdmin){
-			permissionCoordinator=false;
+try{
+	Lecture2GoRoleChecker rcheck = new Lecture2GoRoleChecker();
+	remoteUser = UserLocalServiceUtil.getUser(new Long (request.getRemoteUser()));
+	permissionAdmin = rcheck.isL2gAdmin(remoteUser);
+	permissionCoordinator = rcheck.isCoordinator(remoteUser);
+	permissionProducer = rcheck.isProducer(remoteUser);
+	permissionStudent = rcheck.isStudent(remoteUser);
+	if(permissionAdmin){
+		permissionCoordinator=false;
+		permissionProducer=false;
+		permissionStudent=false;
+	}else{
+		if(permissionCoordinator){
 			permissionProducer=false;
-			permissionStudent=false;
+			permissionStudent=false;		
 		}else{
-			if(permissionCoordinator){
-				permissionProducer=false;
-				permissionStudent=false;		
-			}else{
-				if(permissionProducer){
-					permissionStudent=false;
-				}
+			if(permissionProducer){
+				permissionStudent=false;
 			}
 		}
-		PortletPreferences prefs = renderRequest.getPreferences();	
-	}catch(Exception e){
-		//
 	}
+	PortletPreferences prefs = renderRequest.getPreferences();	
+}catch(Exception e){
+	//
+}
 %>

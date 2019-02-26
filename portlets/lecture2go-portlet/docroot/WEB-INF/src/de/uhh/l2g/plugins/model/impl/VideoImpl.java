@@ -68,8 +68,8 @@ public class VideoImpl extends VideoBaseImpl {
 	private static final String DOWNLOADFOLDER 			= DOWNLOAD_SERVER + "/abo/";
 	private static final String VIDEOREPFOLDER 			= DOWNLOAD_SERVER + "/videorep/";
 
-	private static final String VIDEO_URL_BASE 			= WEBHOME + "/l2go/-/get/v/";
-	private static final String LECTURESERIES_URL_BASE 	= WEBHOME + "/l2go/-/get/l/";
+	//private static final String VIDEO_URL_BASE 			= WEBHOME + "/l2go/-/get/v/"; --> /web/vod/ is missing for local installations
+	//private static final String LECTURESERIES_URL_BASE 	= WEBHOME + "/l2go/-/get/l/"; --> /web/vod/ is missing for local installations
 	private static final String RSS_URL_BASE		 	= WEBROOT + "/rss/";
 	private static final String DOWNLOAD_SERVLET_BASE 	= PropsUtil.get("lecture2go.downloadserver.web.root") + "/servlet-file-download/getFile?downloadAllowed=";
 	
@@ -242,9 +242,12 @@ public class VideoImpl extends VideoBaseImpl {
 	 * Returns the complete URL to the lectureseries of this video
 	 */
 	public String getLectureseriesUrl() {
+		String webVod="";
+		if(WEBHOME.contains("localhost"))webVod="/web/vod/";
+		//
 		if (lectureseriesUrl == null) {
 			if (getLectureseriesId()>0) 
-				lectureseriesUrl = LECTURESERIES_URL_BASE + getLectureseriesId();
+				lectureseriesUrl = WEBHOME + webVod + "/l2go/-/get/l/" + getLectureseriesId();
 			else 
 				lectureseriesUrl = "";
 		}
@@ -470,8 +473,11 @@ public class VideoImpl extends VideoBaseImpl {
 	 * Returns the complete URL to the open access video
 	 */
 	public String getUrl() {
+		String webVod="";
+		if(WEBHOME.contains("localhost"))webVod="/web/vod";
+		//
 		if (url == null) {
-			url = VIDEO_URL_BASE + getVideoId();
+			url = WEBHOME + webVod + "/l2go/-/get/v/" + getVideoId();
 		}
 		return url; 
 	}
@@ -484,8 +490,11 @@ public class VideoImpl extends VideoBaseImpl {
 	 * Returns the complete secure URL to the NON open access video
 	 */
 	public String getSecureUrl() {
+		String webVod="";
+		if(WEBHOME.contains("localhost"))webVod="/web/vod/";
+		//
 		if (secureUrl == null) {
-			secureUrl = getOpenAccess()==1 ? "" : VIDEO_URL_BASE + getSPreffix();
+			secureUrl = getOpenAccess()==1 ? "" : WEBHOME + webVod + "/l2go/-/get/v/" + getSPreffix();
 		}
 		return secureUrl; 
 	}

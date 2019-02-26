@@ -57,6 +57,12 @@
 		<field name="companyId" type="long" />
 		<field name="defaultHost" type="int" />
 	</model>
+	<model name="de.uhh.l2g.plugins.model.InstallWizard">
+		<field name="installWizardId" type="long" />
+		<field name="wizartActive" type="int" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+	</model>
 	<model name="de.uhh.l2g.plugins.model.Institution">
 		<field name="institutionId" type="long" />
 		<field name="parentId" type="long" />
