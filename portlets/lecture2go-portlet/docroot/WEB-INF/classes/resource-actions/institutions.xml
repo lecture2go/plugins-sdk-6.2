@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+<!DOCTYPE resource-action-mapping PUBLIC
+"-//Liferay//DTD Resource Action Mapping 6.2.0//EN"
+"http://www.liferay.com/dtd/liferay-resource-action-mapping_6_2_0.dtd">
+
+<resource-action-mapping>
+
+
+    <portlet-resource>
+    <portlet-name>lg-admin-institution-management</portlet-name>
+    <permissions>
+      <supports>
+        <action-key>ADD_TO_PAGE</action-key>
+        <action-key>CONFIGURATION</action-key>
+        <action-key>DELETE</action-key>
+        <action-key>PERMISSIONS</action-key>
+        <action-key>UPDATE</action-key>
+        <action-key>VIEW</action-key>
+        <action-key>VIEW_ALL_INSTITUTIONS</action-key>
+        <action-key>VIEW_HOSTS</action-key>
+        <action-key>ADD_INSTITUTIONS</action-key>
+      </supports>
+      <site-member-defaults>
+      </site-member-defaults>
+      <guest-defaults>
+      </guest-defaults>
+      <guest-unsupported>
+        <action-key>ADD_TO_PAGE</action-key>
+        <action-key>CONFIGURATION</action-key>
+        <action-key>DELETE</action-key>
+        <action-key>PERMISSIONS</action-key>
+        <action-key>UPDATE</action-key>
+        <action-key>VIEW_ALL_INSTITUTIONS</action-key>
+        <action-key>VIEW_HOSTS</action-key>
+        <action-key>ADD_INSTITUTIONS</action-key>
+      </guest-unsupported>
+      <layout-manager>
+        <action-key>ADD_TO_PAGE</action-key>
+        <action-key>CONFIGURATION</action-key>
+        <action-key>DELETE</action-key>
+        <action-key>UPDATE</action-key>
+        <action-key>VIEW</action-key>
+      </layout-manager>
+      <owner-defaults>
+      	<action-key>VIEW</action-key>
+      	<action-key>UPDATE</action-key>
+      	<action-key>CONFIGURATION</action-key>
+      	<action-key>DELETE</action-key>
+      </owner-defaults>
+    </permissions>
+  </portlet-resource>
+
+
+
+
+   <model-resource>
+    <model-name>
+      de.uhh.l2g.plugins.model.Institution
+    </model-name>
+    <portlet-ref>
+      <portlet-name>lg-admin-institution-management</portlet-name>
+    </portlet-ref>
+    <permissions>
+        <supports>
+	      	<action-key>ADD_HOSTS</action-key>
+	      	<action-key>EDIT_HOSTS</action-key>
+	        <action-key>EDIT_ALL_INSTITUTIONS</action-key>
+
+	        <action-key>EDIT_OWN_INSTITUTIONS</action-key>
+	        <action-key>DELETE_INSTITUTIONS</action-key>
+	        <action-key>DELETE_SUB_INSTITUTIONS</action-key>
+	        <action-key>EDIT_TREE_ROOT</action-key>
+	 
+	      	<action-key>ADD_SUB_INSTITUTION_ENTRY</action-key>
+	        <action-key>PERMISSIONS</action-key>
+	        <action-key>UPDATE</action-key>
+	        <action-key>VIEW</action-key>
+        </supports>
+        <site-member-defaults>
+        	<action-key>VIEW</action-key>
+        </site-member-defaults>
+        <guest-defaults>
+        </guest-defaults>
+        <guest-unsupported>
+	      	<action-key>ADD_SUB_INSTITUTION_ENTRY</action-key>
+	      	<action-key>ADD_HOSTS</action-key>
+	      	<action-key>EDIT_HOSTS</action-key>
+	        <action-key>EDIT_ALL_INSTITUTIONS</action-key>
+	    
+	        <action-key>EDIT_OWN_INSTITUTIONS</action-key>
+	        <action-key>DELETE_INSTITUTIONS</action-key>
+	        <action-key>DELETE_SUB_INSTITUTIONS</action-key>
+	        <action-key>EDIT_TREE_ROOT</action-key>
+	        
+	      	<action-key>ADD_SUB_INSTITUTION_ENTRY</action-key>
+	        <action-key>PERMISSIONS</action-key>
+	        <action-key>UPDATE</action-key>
+        </guest-unsupported>
+    </permissions>
+  </model-resource>
+
+
+<model-resource>
+    <model-name>de.uhh.l2g.plugins.model.Host</model-name>
+    <portlet-ref>
+        <portlet-name>lg-admin-institution-management</portlet-name>
+    </portlet-ref>
+    <permissions>
+        <supports>
+            <action-key>ADD_HOST</action-key>
+            <action-key>EDIT_HOST</action-key>
+            <action-key>DELETE</action-key>
+            <action-key>PERMISSIONS</action-key>
+            <action-key>UPDATE</action-key>
+            <action-key>VIEW</action-key>
+        </supports>
+        <site-member-defaults>
+       		<action-key>VIEW</action-key>
+        </site-member-defaults>
+        <guest-defaults>
+        </guest-defaults>
+        <guest-unsupported>
+            <action-key>ADD_HOST</action-key>
+            <action-key>EDIT_HOST</action-key>
+            <action-key>UPDATE</action-key>
+            <action-key>PERMISSIONS</action-key>
+            <action-key>DELETE</action-key>
+        </guest-unsupported>
+    </permissions>
+
+</model-resource>
+
+<model-resource>
+    <model-name>de.uhh.l2g.plugins.model.Institution_Host</model-name>
+    <portlet-ref>
+        <portlet-name>lg-admin-institution-management</portlet-name>
+    </portlet-ref>
+    <permissions>
+        <supports>
+            <action-key>PERMISSIONS</action-key>
+            <action-key>UPDATE</action-key>
+            <action-key>ADD_LINK</action-key>
+            <action-key>DELETE</action-key>
+            <action-key>VIEW</action-key>        
+        </supports>
+        <site-member-defaults>
+       		<action-key>VIEW</action-key>
+        </site-member-defaults>
+        <guest-defaults>
+        </guest-defaults>
+        <guest-unsupported>
+            <action-key>UPDATE</action-key>
+            <action-key>PERMISSIONS</action-key>
+            <action-key>ADD_LINK</action-key>
+            <action-key>DELETE</action-key>
+        </guest-unsupported>
+    </permissions>
+
+</model-resource>
+
+</resource-action-mapping>

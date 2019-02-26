@@ -203,7 +203,7 @@ public class LectureseriesFinderImpl extends BasePersistenceImpl<Lectureseries> 
 			try {
 				throw new SystemException(e);
 			} catch (SystemException se) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		} finally {
 			closeSession(session);

@@ -39,7 +39,6 @@ import de.uhh.l2g.plugins.service.persistence.CoordinatorPersistence;
 import de.uhh.l2g.plugins.service.persistence.CreatorFinder;
 import de.uhh.l2g.plugins.service.persistence.CreatorPersistence;
 import de.uhh.l2g.plugins.service.persistence.HostPersistence;
-import de.uhh.l2g.plugins.service.persistence.InstallWizardPersistence;
 import de.uhh.l2g.plugins.service.persistence.InstitutionFinder;
 import de.uhh.l2g.plugins.service.persistence.InstitutionPersistence;
 import de.uhh.l2g.plugins.service.persistence.Institution_HostPersistence;
@@ -68,7 +67,6 @@ import de.uhh.l2g.plugins.service.persistence.VideoPersistence;
 import de.uhh.l2g.plugins.service.persistence.Video_CategoryPersistence;
 import de.uhh.l2g.plugins.service.persistence.Video_CreatorPersistence;
 import de.uhh.l2g.plugins.service.persistence.Video_InstitutionPersistence;
-import de.uhh.l2g.plugins.service.persistence.Video_LectureseriesPersistence;
 import de.uhh.l2g.plugins.service.persistence.VideohitlistPersistence;
 
 import java.io.Serializable;
@@ -489,44 +487,6 @@ public abstract class TermLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setHostPersistence(HostPersistence hostPersistence) {
 		this.hostPersistence = hostPersistence;
-	}
-
-	/**
-	 * Returns the install wizard local service.
-	 *
-	 * @return the install wizard local service
-	 */
-	public de.uhh.l2g.plugins.service.InstallWizardLocalService getInstallWizardLocalService() {
-		return installWizardLocalService;
-	}
-
-	/**
-	 * Sets the install wizard local service.
-	 *
-	 * @param installWizardLocalService the install wizard local service
-	 */
-	public void setInstallWizardLocalService(
-		de.uhh.l2g.plugins.service.InstallWizardLocalService installWizardLocalService) {
-		this.installWizardLocalService = installWizardLocalService;
-	}
-
-	/**
-	 * Returns the install wizard persistence.
-	 *
-	 * @return the install wizard persistence
-	 */
-	public InstallWizardPersistence getInstallWizardPersistence() {
-		return installWizardPersistence;
-	}
-
-	/**
-	 * Sets the install wizard persistence.
-	 *
-	 * @param installWizardPersistence the install wizard persistence
-	 */
-	public void setInstallWizardPersistence(
-		InstallWizardPersistence installWizardPersistence) {
-		this.installWizardPersistence = installWizardPersistence;
 	}
 
 	/**
@@ -1465,44 +1425,6 @@ public abstract class TermLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the video_ lectureseries local service.
-	 *
-	 * @return the video_ lectureseries local service
-	 */
-	public de.uhh.l2g.plugins.service.Video_LectureseriesLocalService getVideo_LectureseriesLocalService() {
-		return video_LectureseriesLocalService;
-	}
-
-	/**
-	 * Sets the video_ lectureseries local service.
-	 *
-	 * @param video_LectureseriesLocalService the video_ lectureseries local service
-	 */
-	public void setVideo_LectureseriesLocalService(
-		de.uhh.l2g.plugins.service.Video_LectureseriesLocalService video_LectureseriesLocalService) {
-		this.video_LectureseriesLocalService = video_LectureseriesLocalService;
-	}
-
-	/**
-	 * Returns the video_ lectureseries persistence.
-	 *
-	 * @return the video_ lectureseries persistence
-	 */
-	public Video_LectureseriesPersistence getVideo_LectureseriesPersistence() {
-		return video_LectureseriesPersistence;
-	}
-
-	/**
-	 * Sets the video_ lectureseries persistence.
-	 *
-	 * @param video_LectureseriesPersistence the video_ lectureseries persistence
-	 */
-	public void setVideo_LectureseriesPersistence(
-		Video_LectureseriesPersistence video_LectureseriesPersistence) {
-		this.video_LectureseriesPersistence = video_LectureseriesPersistence;
-	}
-
-	/**
 	 * Returns the videohitlist local service.
 	 *
 	 * @return the videohitlist local service
@@ -1736,10 +1658,6 @@ public abstract class TermLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected de.uhh.l2g.plugins.service.HostLocalService hostLocalService;
 	@BeanReference(type = HostPersistence.class)
 	protected HostPersistence hostPersistence;
-	@BeanReference(type = de.uhh.l2g.plugins.service.InstallWizardLocalService.class)
-	protected de.uhh.l2g.plugins.service.InstallWizardLocalService installWizardLocalService;
-	@BeanReference(type = InstallWizardPersistence.class)
-	protected InstallWizardPersistence installWizardPersistence;
 	@BeanReference(type = de.uhh.l2g.plugins.service.InstitutionLocalService.class)
 	protected de.uhh.l2g.plugins.service.InstitutionLocalService institutionLocalService;
 	@BeanReference(type = InstitutionPersistence.class)
@@ -1840,10 +1758,6 @@ public abstract class TermLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected de.uhh.l2g.plugins.service.Video_InstitutionLocalService video_InstitutionLocalService;
 	@BeanReference(type = Video_InstitutionPersistence.class)
 	protected Video_InstitutionPersistence video_InstitutionPersistence;
-	@BeanReference(type = de.uhh.l2g.plugins.service.Video_LectureseriesLocalService.class)
-	protected de.uhh.l2g.plugins.service.Video_LectureseriesLocalService video_LectureseriesLocalService;
-	@BeanReference(type = Video_LectureseriesPersistence.class)
-	protected Video_LectureseriesPersistence video_LectureseriesPersistence;
 	@BeanReference(type = de.uhh.l2g.plugins.service.VideohitlistLocalService.class)
 	protected de.uhh.l2g.plugins.service.VideohitlistLocalService videohitlistLocalService;
 	@BeanReference(type = VideohitlistPersistence.class)

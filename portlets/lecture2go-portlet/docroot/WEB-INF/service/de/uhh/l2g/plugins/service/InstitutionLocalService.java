@@ -259,48 +259,17 @@ public interface InstitutionLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<de.uhh.l2g.plugins.model.Institution> getByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<de.uhh.l2g.plugins.model.Institution> getRootInstitutionsByOpenAccessVideos()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public de.uhh.l2g.plugins.model.Institution getByGroupIdAndId(
-		long groupId, long institutionId)
+	public java.util.List<de.uhh.l2g.plugins.model.Institution> getByParentIdList(
+		long parentId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public de.uhh.l2g.plugins.model.Institution getRootByGroupId(
-		long companyId, long groupId)
+	public int getByParentIdCount(long parentId)
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<de.uhh.l2g.plugins.model.Institution> getByGroupIdAndParent(
-		long groupId, long parentId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<de.uhh.l2g.plugins.model.Institution> getByGroupIdAndParent(
-		long groupId, long parentId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getByGroupIdAndParentCount(long groupId, long parentId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<de.uhh.l2g.plugins.model.Institution> getByParentId(
-		long parentId, java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public de.uhh.l2g.plugins.model.Institution getRoot(long companyId,
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			de.uhh.l2g.plugins.NoSuchInstitutionException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<de.uhh.l2g.plugins.model.Institution> getByParentId(
@@ -308,13 +277,12 @@ public interface InstitutionLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public de.uhh.l2g.plugins.model.Institution getByParentIdAndCompanyId(
-		long parentId, long companyId)
+	public de.uhh.l2g.plugins.model.Institution getRoot()
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchInstitutionException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.Map<java.lang.String, java.lang.String> getByParent(
+	public java.util.Map<java.lang.String, java.lang.String> getByParentIdMap(
 		long parentId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -351,37 +319,26 @@ public interface InstitutionLocalService extends BaseLocalService,
 		java.util.ArrayList<java.lang.Long> videoIds, java.lang.Long parentId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getDefaultInstitutionId(long companyId, long groupId)
+	public long getDefaultInstitutionId()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	/**
-	* Special handling for default entry
-	* Default has to be Top Level Institution, must be replaced while migrating
-	*
-	* TODO: remove Default when migrating data
-	*/
 	public de.uhh.l2g.plugins.model.Institution addDefaultInstitution(
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public de.uhh.l2g.plugins.model.Institution addInstitution(
-		java.lang.String name, long hostId, long parentId, int sort,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		java.lang.String name, long hostId, long parentId, int sort)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public de.uhh.l2g.plugins.model.Institution updateInstitution(
-		long institutionId, java.lang.String name, int sort,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		long institutionId, java.lang.String name, int sort)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public de.uhh.l2g.plugins.model.Institution deleteInstitution(
-		long institutionId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+	public de.uhh.l2g.plugins.model.Institution removeByInstitutionId(
+		java.lang.Long institutionId);
 
 	public long updateCounter()
 		throws com.liferay.portal.kernel.exception.PortalException,
