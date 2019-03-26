@@ -1309,6 +1309,12 @@ AUI().use('aui-node',
 			synchronizeTitleFields();
 			refreshVideoCaptionPreviewImage();
 		});
+		
+		$('#<portlet:namespace/>creator').focusout(function() {
+			synchronizeAuthors();
+			refreshVideoCaptionPreviewImage();
+		});
+		
 		// lectureseries
 		$("#<portlet:namespace/>lectureseriesId").change(function(){
 			synchronizeLectureSeriesFields();
