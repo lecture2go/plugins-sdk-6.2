@@ -1345,7 +1345,7 @@ AUI().use('aui-node',
 		$('#start-video-caption-postprocessing').click(function(){
 			additionalProperties = {
 				"captionPosition": $('input[name=<portlet:namespace/>video-caption-layout]:checked').val(), 
-				"captionLink": getVideoCaptionUrl()
+				"captionLink": $("<div>").text(getVideoCaptionUrl()).html()
 			}
 			videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>', '<%=getVideoConversionStatusURL%>', <%=reqVideo.getVideoId()%>, "l2go-composite-adaptive-publish", JSON.stringify(additionalProperties));
 			// scroll to top to see conversion status
