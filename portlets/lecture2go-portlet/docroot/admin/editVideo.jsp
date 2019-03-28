@@ -394,7 +394,7 @@ function loadDateTimepickerToFirstTitle(){
 			<c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider")%>'>
 				<div id="postprocessing">
 					<label class="edit-video-lable" id="edit-video-lable-6">
-						<i id="l6" class="aui icon-chevron-down thumb"></i>
+						<i id="l6" class="aui icon-chevron-down thumb-90"></i>
 						<liferay-ui:message key="include-video-caption"/>
 						<liferay-ui:icon-help message="include-video-caption-description"/>
 					</label>
@@ -1272,6 +1272,7 @@ AUI().use('aui-node',
 
 	/* ### POSTPROCESSING SPECIFIC ##### */
 	 
+	$(function(){$( "#postprocessing-content" ).hide();});
 	$( "#edit-video-lable-6" ).click(function() {
 	 	$( "#postprocessing-content" ).slideToggle( "slow" );
 	 	$("#l6", this).toggleClass("thumb thumb-90");
@@ -1348,6 +1349,10 @@ AUI().use('aui-node',
 				"captionLink": $("<div>").text(getVideoCaptionUrl()).html()
 			}
 			videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>', '<%=getVideoConversionStatusURL%>', <%=reqVideo.getVideoId()%>, "l2go-composite-adaptive-publish", JSON.stringify(additionalProperties));
+			
+			// close the postprocessing area
+			$( "#postprocessing-content" ).slideToggle( "slow" );
+	 		$("#l6").toggleClass("thumb thumb-90");
 			// scroll to top to see conversion status
 			$("html, body").animate({ scrollTop: 0 }, "slow");
 		});
