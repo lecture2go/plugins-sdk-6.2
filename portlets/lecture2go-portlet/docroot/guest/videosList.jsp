@@ -524,7 +524,8 @@
 //workaround: as neither DOM-ready nor Liferay.Portlet.ready are working right now, set an interval until the element is there
 var checkExist = setInterval(function() {
 	if ($('#_lgopenaccessvideos_WAR_lecture2goportlet_lectureseriesesSearchContainer').length) {
-		var searchQuery = '<%= searchQuery %>';
+		// decode the search query to plain text (via a in cache div)
+		var searchQuery = $('<div/>').html('<%= searchQuery %>').text();
 		var markOptions = {
 			"separateWordSearch": false,
 			 "each": function(node){
