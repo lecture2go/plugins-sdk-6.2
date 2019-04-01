@@ -1057,6 +1057,9 @@ function applyDateTime(){
 				  loadDateTimepickerToTheMetadataSkeleton();
 				  $("#l2gdate").fadeIn(1000);
 				  $("#<portlet:namespace/>meta-ebene").show();
+				  <c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider")%>'>
+					initializeCaptionGeneration();
+				  </c:if>
 			  }
 	  });
 }
@@ -1362,6 +1365,14 @@ AUI().use('aui-node',
 		// check conversion status
 		videoProcessor.pollStatus('<portlet:namespace/>','<%=getVideoConversionStatusURL%>','<%=convertVideoURL%>',<%=reqVideo.getVideoId()%>);
 	});
+
+	function initializeCaptionGeneration() {
+		// synchronize the video-caption form to the metadata form 
+		synchronizeTitleFields();
+		synchronizeLectureSeriesFields();
+		synchronizeDateFields();
+		synchronizeAuthors();
+	}
 
 	
 	function synchronizeTitleFields() {
