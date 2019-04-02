@@ -279,67 +279,17 @@
 		
 									<%if(video.isHasChapters() || video.isHasComments()){%>
 									    <ul class="tab-pane" id="chapters">
-									    	<liferay-portlet:resourceURL id="showSegments" var="segmentsURL" />
-											<script type="text/javascript">
-												$.ajax({
-												    url: '<%=segmentsURL%>',
-												    method: 'POST',
-												    dataType: "json",
-												    data: {
-												 	   	<portlet:namespace/>videoId: "<%=video.getVideoId()%>",
-												    },
-												    success: function(data, textStatus, jqXHR) {
-												        // since we are using jQuery, you don't need to parse response
-												        drawSegmentRow(data);
-												    }
-												});	
-											
-												function hideSegment(sId){
-													$("b#pf2_"+sId).hide();
-													$("b#pf1_"+sId).show();
-													$("b#iav"+sId).hide();		
-												}
-												function showSegment(sId){
-													$("b#pf1_"+sId).hide();
-													$("b#pf2_"+sId).show();
-													$("b#iav"+sId).show();		
-												}
-												function loadSegment(sId){
-													$("b#pf2_"+sId).show();
-													$("b#pf1_"+sId).hide();
-													$("b#iav"+sId).show();
-												}
-												
-												function drawSegmentRow(data) {
-													for (var i = 0; i < data.length; i++) {
-														drawRow(data[i]);
-												    }
-												}
-												
-												function drawRow(segment) {
-												    if(segment.chapter==1){
-												    	// segment is a chapter
-												    	newRow='<li class="chaptertile" id="' + segment.segmentId + '" begin="' + segment.start + '" end="' + segment.end + '">';
-												    	
-												    	newRow=newRow + '<div class="image">';
-												    	newRow=newRow + '<a><img src="'+segment.image+'"></a>';
-												    	newRow=newRow + '</div>';
-												    	
-												    	newRow=newRow + '<div class="title">';
-												    	newRow=newRow + '<a><b>' + segment.start +'</b> '+segment.title+'</a>';
-												    	newRow=newRow + '</div>';
-											    	
-											    	newRow=newRow + '</li>';
-													}
-													
-													if(segment.previousSegmentId == -1){
-														$("#chapters").append(newRow);
-													}else{
-														$(newRow).insertAfter("#"+ segment.previousSegmentId);
-													}
-												}
-											</script>
-									    </ul>
+									    	<c:forEach items="<%=segments %>" var="segment">
+									    		<li class="chaptertile" id="${segment.segmentId}" begin="${segment.start}" end="${segment.end}">
+													<div class="image">
+												    	<a><img src="${segment.image}"></a>
+												    </div>
+												    <div class="title">
+												    	<a><b>${segment.start} </b> ${segment.title}</a>
+												    </div>
+											    </li>
+									    	</c:forEach>
+								    	</ul>
 							    	<%}%>
 							</div>    
 						</div>
