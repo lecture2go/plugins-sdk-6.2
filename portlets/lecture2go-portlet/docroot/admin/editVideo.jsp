@@ -1241,6 +1241,9 @@ var c = 0;
 
 function remb(c){
 	$("#"+c).remove();
+	<c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider")%>'>
+		synchronizeAuthors();
+	</c:if>
 }
 
 AUI().use('aui-node',
@@ -1289,6 +1292,7 @@ AUI().use('aui-node',
 	
 	
 	AUI().ready('', function(A){
+		console.log("page load complete");
 		// synchronize the video-caption form to the metadata form on page load
 		synchronizeTitleFields();
 		synchronizeLectureSeriesFields();
