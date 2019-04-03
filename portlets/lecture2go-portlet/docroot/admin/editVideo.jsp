@@ -121,10 +121,10 @@
     	dayOfWeekStart : 1,
     	lang:'en',
     	startDate:	new Date(),
-    	value: "<%=video.getGenerationDate()%>",
+    	value: "<%=video.getGenerationDate().equals("") ? new Date() : video.getGenerationDate() %>",
     	maxDate: '+1970/01/30',
     	minDate: false,
-    	step:5
+    	step: 15
     });
   });
 
