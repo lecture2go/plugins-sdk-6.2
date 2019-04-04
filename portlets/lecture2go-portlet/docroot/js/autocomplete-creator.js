@@ -9,7 +9,8 @@ function showCreatorsList(data) {
 }
 
 
-function autocompleteCreator($creatorInputObject) {
+function autocompleteCreator($creatorInputObject, validationFunction) {
+	avoidClosing = false;
 	$creatorInputObject.autocomplete({
 	    source: function(request, response) {
 	        var results = $.ui.autocomplete.filter(allCreatorsInJQueryAutocompleteFormat, request.term);
@@ -27,6 +28,9 @@ function autocompleteCreator($creatorInputObject) {
 				$creatorInputObject.val('');
 				c++;
 				appendCreator(c);
+				if( typeof validationFunction == "function" ) {
+					validationFunction();
+				}
 				$creatorInputObject.autocomplete('close');
 			});
 		},
@@ -47,6 +51,10 @@ function autocompleteCreator($creatorInputObject) {
   		        var vars = getJSONCreator(ui.item.id);
   		        $.template( "filesTemplate", $("#created") );
   		        $.tmpl( "filesTemplate", vars ).appendTo( "#creators" );
+  		        if( typeof validationFunction == "function" )
+					validationFunction();
+  				/* empty the creator input field */
+  		     	ui.item.value="";
   			}
 		}
 	});
@@ -117,7 +125,6 @@ function loadCreators(){
 			parameters['gender'] = "";
 			parameters['fullName'] = (parameters['jobTitle'].trim()+" "+(parameters['firstName'].trim()+" "+parameters['middleName'].trim()).trim()+" "+parameters['lastName'].trim()).trim();		
 		}
-		console.log(parameters);
 		if(parameters['firstName'].length>0 && parameters['lastName'].length>0){
 			creatorsArray[n]=parameters;
 		}

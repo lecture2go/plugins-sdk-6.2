@@ -505,7 +505,7 @@ $(function () {
 		$options.hide();
 	}
 	
-	autocompleteCreator($("#<portlet:namespace/>creator"));
+	autocompleteCreator($("#<portlet:namespace/>creator"), validate);
 });
 
 function toggleLectureseries(){
@@ -891,10 +891,8 @@ function updateAllMetadata(){
 			 	   	//metadata end
 	 		},
 			success: function(res) {
-				 //reset creator class
-				 $("#creators-custom").css({"background-color": "white", "color": "#555555"});
-				 $("#creators-custom .control-label").css({"color": "#488f06"});
-			     $("#metadata-upload #creators").css({"color": "#488f06"});
+				 // required creator field color needs to be set manually 
+				 $("#creators-custom .control-group").removeClass("error").addClass("success");
 	           	 //update the thumb nail
 	           	 updateThumbnail();
 	           	 //json object
@@ -920,10 +918,8 @@ function applyAllMetadataChanges(){
 				    updateLicense(license);
 				    updateCreators();
 				    updateMetadata();//last place, important!
-				 	//reset creator class
-				    $("#creators-custom").css({"background-color": "white", "color": "#555555"});
-				    $("#creators-custom .control-label").css({"color": "#488f06"});
-				    $("#metadata-upload #creators").css({"color": "#488f06"});
+				 	// required creator field color needs to be set manually 
+				 	$("#creators-custom .control-group").removeClass("error").addClass("success");
 					updateThumbnail();
 				    alert("<liferay-ui:message key='changes-applied'/>");					
 				}
@@ -937,9 +933,9 @@ function validate(){
 			'aui-node',
 			function(A) {
 				if($("#creators > div").length==0){
-				    //update creator class
-				    $("#creators-custom").css({"background-color": "#b50303", "color": "white"});
-				    $("#creators-custom .control-label").css({"color": "white"});
+				    // required creator field color needs to be set manually 
+				 	$("#creators-custom .control-group").removeClass("success").addClass("error");
+
 					$('html, body').animate({
 		                   scrollTop: $("#creators-custom").offset().top
 		               }, 1000);
@@ -948,6 +944,8 @@ function validate(){
 			        }	
 					//alert("<liferay-ui:message key='please-add-creators'/>");
 				}else{
+					// required creator field color needs to be set manually 
+					$("#creators-custom .control-group").removeClass("error").addClass("success");
 					$('#<portlet:namespace></portlet:namespace>cancel').show();
 				}
 			}
@@ -1241,6 +1239,7 @@ var c = 0;
 
 function remb(c){
 	$("#"+c).remove();
+	validate();
 	<c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider")%>'>
 		synchronizeAuthors();
 	</c:if>
@@ -1292,7 +1291,6 @@ AUI().use('aui-node',
 	
 	
 	AUI().ready('', function(A){
-		console.log("page load complete");
 		// synchronize the video-caption form to the metadata form on page load
 		synchronizeTitleFields();
 		synchronizeLectureSeriesFields();
