@@ -22,6 +22,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.springframework.web.util.HtmlUtils;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -175,8 +176,17 @@ public class AdminVideoManagement extends MVCPortlet {
 		
 		//requested license
 		License reqLicense = new LicenseImpl();
-		try{reqLicense = LicenseLocalServiceUtil.getByVideoId(reqVideo.getVideoId());}catch(Exception e){}
+		try {
+			reqLicense = LicenseLocalServiceUtil.getLicense(reqVideo.getLicenseId());
+		}catch(Exception e){}
 		request.setAttribute("reqLicense", reqLicense);
+		
+		// requested license list - all licenses to choose from
+		List<License> reqLicenseList = new ArrayList<License>();
+		try{
+			reqLicenseList = LicenseLocalServiceUtil.getLicenses(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		}catch(Exception e){}
+		request.setAttribute("reqLicenseList", reqLicenseList);
 		
 		String backURL = request.getParameter("backURL");
 		request.setAttribute("backURL", backURL);
@@ -255,13 +265,21 @@ public class AdminVideoManagement extends MVCPortlet {
 		reqSubInstitutions = Video_InstitutionLocalServiceUtil.getByVideo(video.getVideoId());
 		request.setAttribute("reqSubInstitutions", reqSubInstitutions);
 
-		//licence
+		//license
+		// use the first selectable license as a default license on video creation
 		License license = new LicenseImpl();
-		license.setVideoId(newVideo.getVideoId());
-		license.setCcbyncsa(0);
-		license.setL2go(1);
-		LicenseLocalServiceUtil.addLicense(license);
+		try {
+			license = LicenseLocalServiceUtil.getBySelectable(true).get(0);
+		}catch(Exception e){}
 		request.setAttribute("reqLicense", license);
+		
+		// requested license list
+		List<License> reqLicenseList = new ArrayList<License>();
+		try{
+			//reqLicenseList = LicenseLocalServiceUtil.getBySelectable(true);
+			reqLicenseList = LicenseLocalServiceUtil.getLicenses(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		}catch(Exception e){}
+		request.setAttribute("reqLicenseList", reqLicenseList);
 
 		//update lg_video_institution table and update previewVideoId in lg_lecturseries table
 		if(lectureseriesId>0){
@@ -338,12 +356,6 @@ public class AdminVideoManagement extends MVCPortlet {
 			//e.printStackTrace();
 		} catch (SystemException e) {
 			//e.printStackTrace();
-		}
-		License license = new LicenseImpl();
-		try {
-			license = LicenseLocalServiceUtil.getByVideoId(video.getVideoId());
-		} catch (Exception e1) {
-			//e1.printStackTrace();
 		}
 		
 		if(resourceID.equals("updateVideoFileName")){
@@ -516,24 +528,9 @@ public class AdminVideoManagement extends MVCPortlet {
 			}			
 			//description end
 			
-			//licence start
-			String licens = ParamUtil.getString(resourceRequest, "license");
-			license.setCcbyncsa(0);
-			license.setL2go(0);
-			//save next
-			if(licens.equals("uhhl2go")){
-				license.setL2go(1);
-				license.setCcbyncsa(0);
-			}else{
-				license.setL2go(0);
-				license.setCcbyncsa(1);				
-			}
-			try {
-				LicenseLocalServiceUtil.updateLicense(license);
-			} catch (SystemException e) {
-				errors.add("LICENSE_UPDATE_FAILED");
-			}			
-			//licence end
+			//license
+			Long licenseId = ParamUtil.getLong(resourceRequest, "license");
+			video.setLicenseId(licenseId);
 			
 			//creators start
 			String creatorsJsonArray = ParamUtil.getString(resourceRequest, "creatorsJsonArray");
@@ -1098,30 +1095,6 @@ public class AdminVideoManagement extends MVCPortlet {
 				jo.put("exist", "0");
 			}
 			writeJSON(resourceRequest, resourceResponse, jo);
-		}
-		
-		if(resourceID.equals("updateLicense")){
-			String licens = ParamUtil.getString(resourceRequest, "license");
-			//reset first
-			license.setCcbyncsa(0);
-			license.setL2go(0);
-			//save next
-			if(licens.equals("uhhl2go")){
-				license.setL2go(1);
-				license.setCcbyncsa(0);
-			}else{
-				license.setL2go(0);
-				license.setCcbyncsa(1);				
-			}
-			try {
-				LicenseLocalServiceUtil.updateLicense(license);
-				logger.info("LICENSE_UPDATE_SUCCESS");
-			} catch (SystemException e) {
-//				//e.printStackTrace();
-				logger.info("LICENSE_UPDATE_FAILED");
-			}
-			JSONObject json = JSONFactoryUtil.createJSONObject();
-			writeJSON(resourceRequest, resourceResponse, json);
 		}
 		
 		if(resourceID.equals("updateDescription")){

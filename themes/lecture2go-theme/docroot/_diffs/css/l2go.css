@@ -3177,3 +3177,7 @@ label[for=_lgadminvideomanagement_WAR_lecture2goportlet_speakeronly]:before {
 				color: inherit; 
 				cursor: not-allowed;
 }
+
+.disabled {
+	color: #eaeaea !important;
+}

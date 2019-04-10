@@ -158,13 +158,11 @@
 		       <c:if test="${relatedVideos.size()>1}"><div class="player"></c:if>
 			   <c:if test="${relatedVideos.size()<=1}"><div class="player-wide"></c:if>
 				<%@ include file="/player/includePlayer.jsp"%>
-				   <div class="license">
-				      <%if(videoLicense.getL2go()==1){%>
-				      	<a href="/license-l2go" title="<liferay-ui:message key='l2go-license-click-for-info'/>"><liferay-ui:message key="license"/>: <liferay-ui:message key='l2go-license'/></a>
-				 	  <%}else{%>
-						<a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" title="<liferay-ui:message key='cc-license-click-for-info'/>"><liferay-ui:message key="license"/>: <liferay-ui:message key='cy-nc-sa-license'/></a> 		
-				 	  <%}%>       
-				   </div>
+					<div class="license">
+			   			<c:if test="${not empty license}">
+			   				<a href="${license.url}" title="${license.fullName}"><liferay-ui:message key="license"/>: ${license.shortIdentifier}</a>   
+				   		</c:if>
+				   	</div>
 			       <div class="views"><liferay-ui:message key="views"/>: ${video.hits}</div>	
 					  <c:if test="${relatedVideos.size()>1}"> <div class="meta-video-info"></c:if>
 					  <c:if test="${relatedVideos.size()<=1}"> <div class="meta-video-info-wide"></c:if>

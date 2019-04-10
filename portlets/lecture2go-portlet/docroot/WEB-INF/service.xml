@@ -229,20 +229,6 @@
 			<finder-column name="videoId"></finder-column>
 		</finder>
 	</entity>
-	<entity name="License" local-service="true" remote-service="false">
-		<column name="licenseId" type="long" primary="true" id-type="increment"></column>
-		<column name="videoId" type="long"></column>
-		<column name="ccby" type="int"></column>
-		<column name="ccbybc" type="int"></column>
-		<column name="ccbyncnd" type="int"></column>
-		<column name="ccbyncsa" type="int"></column>
-		<column name="ccbysa" type="int"></column>
-		<column name="ccbync" type="int"></column>
-		<column name="l2go" type="int"></column>
-		<finder name="Video" return-type="de.uhh.l2g.plugins.model.License">
-			<finder-column name="videoId"></finder-column>
-		</finder>
-	</entity>
 	<entity name="Metadata" local-service="true" remote-service="false">
 		<column name="metadataId" type="long" primary="true" id-type="increment"></column>
 		<column name="type" type="String"></column>
@@ -295,6 +281,7 @@
 		<column name="termId" type="long"></column>
 		<column name="tags" type="String"></column>
 		<column name="password" type="String"></column>
+        <column name="licenseId" type="long"></column>
 		<order by="desc">
 			<order-column name="videoId" order-by="desc"></order-column>
 			<order-column name="uploadDate" order-by="desc"></order-column>
@@ -338,6 +325,9 @@
 		<finder name="OpenAccessAndUploadedFile" return-type="Collection" where="filename &gt; ''">
 			<finder-column name="openAccess"></finder-column>
 		</finder>
+        <finder name="License" return-type="Collection">
+            <finder-column name="licenseId"></finder-column>
+        </finder>
 	</entity>
 	<entity name="Video_Institution" local-service="true" remote-service="false">
 		<column name="videoInstitutionId" type="long" primary="true" id-type="increment"></column>
@@ -561,6 +551,18 @@
 			<finder-column name="schedulerClassName"></finder-column>
 		</finder>
 	</entity>
+    <entity name="License" local-service="true" remote-service="false">
+        <column name="licenseId" type="long" primary="true" id-type="increment"></column>
+        <column name="fullName" type="String"></column>
+        <column name="shortIdentifier" type="String"></column>
+        <column name="url" type="String"></column>
+        <column name="schemeName" type="String"></column>
+        <column name="schemeUrl" type="String"></column>
+        <column name="selectable" type="boolean" localized="false"></column>
+        <finder name="Selectable" return-type="Collection">
+            <finder-column name="selectable"></finder-column>
+        </finder>
+    </entity>
 	<exceptions>
 		<exception>HostName</exception>
 		<exception>HostStreamer</exception>
