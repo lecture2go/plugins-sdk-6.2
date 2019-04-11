@@ -559,6 +559,7 @@
         <column name="schemeName" type="String"></column>
         <column name="schemeUrl" type="String"></column>
         <column name="selectable" type="boolean" localized="false"></column>
+        <column name="description" type="String"></column>
         <finder name="Selectable" return-type="Collection">
             <finder-column name="selectable"></finder-column>
         </finder>
