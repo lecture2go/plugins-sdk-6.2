@@ -2,6 +2,7 @@
 
 <jsp:useBean id="reqLectureseriesList" type="java.util.List<de.uhh.l2g.plugins.model.Lectureseries>" scope="request" />
 <jsp:useBean id="reqLectureseries" type="de.uhh.l2g.plugins.model.Lectureseries" scope="request" />
+<jsp:useBean id="reqLicenseList" type="java.util.List<de.uhh.l2g.plugins.model.License>" scope="request" />
 <jsp:useBean id="reqLicense" type="de.uhh.l2g.plugins.model.License" scope="request" />
 <jsp:useBean id="reqProducer" type="de.uhh.l2g.plugins.model.Producer" scope="request" />
 <jsp:useBean id="video" type="de.uhh.l2g.plugins.model.Video" scope="request" />
@@ -11,7 +12,6 @@
 
 <liferay-portlet:resourceURL id="updateMetadata" var="updateURL" />
 <liferay-portlet:resourceURL id="updateDescription" var="updateDescriptionURL" />
-<liferay-portlet:resourceURL id="updateLicense" var="updateLicenseURL" />
 <liferay-portlet:resourceURL id="updateVideoFileName" var="updateVideoFileNameURL" />
 <liferay-portlet:resourceURL id="videoFileNameExists" var="videoFileNameExistsURL" />
 <liferay-portlet:resourceURL id="deleteFile" var="deleteFileURL" />
@@ -344,16 +344,25 @@ function loadDateTimepickerToFirstTitle(){
 						<liferay-ui:message key="license"/>
 					</label>
 					<div id="license-content">
-						<div>
-							<%if(reqLicense.getL2go()==1){%><aui:input name="license"  id="uhhl2go" label="" value="uhhl2go" checked="true" type="radio"/><%}%>
-							<%if(reqLicense.getL2go()==0){%><aui:input name="license" id="uhhl2go" label="" value="uhhl2go" type="radio"/><%}%>
-							<a href="/license" target="_blank"><liferay-ui:message key="lecture2go-licence"/> </a>	 	      	      
-						</div>	
-						<div>		
-							<%if(reqLicense.getCcbyncsa()==1){%><aui:input name="license" label="" id="ccbyncsa" value="ccbyncsa" checked="true" type="radio" /><%}%>
-							<%if(reqLicense.getCcbyncsa()==0){%><aui:input name="license" label="" id="ccbyncsa" value="ccbyncsa" type="radio"/><%}%>
-							<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank"> <liferay-ui:message key="cc-license-click-for-info"/> </a>
-						</div>
+						<c:forEach items="<%=reqLicenseList %>" var="license">
+							<c:choose>
+								<c:when test="${license.selectable}" >
+								<div>
+									<aui:input name="license" label="" value="${license.licenseId}" checked="${license.licenseId == reqLicense.licenseId ? 'true' : 'false'}" type="radio"/>
+									<a href="${license.url}" title="${license.fullName}" target="_blank">${license.shortIdentifier} </a>	 	      
+								</div>
+								</c:when>
+							    <c:otherwise>
+							    	<!-- previously chosen but not selectable any more -->
+							    	<c:if test="${license.licenseId == reqLicense.licenseId}">
+							    		<div>
+							    			<aui:input name="license" label="" value="${license.licenseId}" checked="true" type="radio" disabled="true"/>
+											<a href="${license.url}" class="disabled" title="${license.fullName}" target="_blank">${license.shortIdentifier} </a>	
+							    		</div>
+							    	</c:if>
+								</c:otherwise>
+							</c:choose>	
+						</c:forEach>
 					</div>
 				</div>
 				<script>
@@ -813,30 +822,8 @@ function updateMetadata(){
 				 	   	<portlet:namespace/>categoryId: categoryId,
 				 	   	<portlet:namespace/>termId: termId,
 				 	   	<portlet:namespace/>password: A.one('#<portlet:namespace/>password').get('value'),
-				 	    <portlet:namespace/>description: descData
-			 	},
-			 	async:true,
-			 	//get server response
-				on: {
-					   success: function() {
-					     var jsonResponse = this.get('responseData');
-					   }
-				}
-			});	
-		}
-	);
-}
-
-function updateLicense(data){	
-	AUI().use('aui-io-request', 'aui-node',
-		function(A){
-			A.io.request('<%=updateLicenseURL%>', {
-		 	dataType: 'json',
-		 	method: 'POST',
-			 	//send data to server
-			 	data: {
-				 	   	<portlet:namespace/>license: data,
-				 	   	<portlet:namespace/>videoId: A.one('#<portlet:namespace/>videoId').get('value'),
+				 	    <portlet:namespace/>description: descData,
+				 	    <portlet:namespace/>licenseId: A.one("input[name=<portlet:namespace/>license]:checked").get("value")
 			 	},
 			 	async:true,
 			 	//get server response
@@ -912,10 +899,7 @@ function applyAllMetadataChanges(){
 			function(A) {
 				validate();//inpul correct?
 				if($("#<portlet:namespace/>title").val() && $("#creators > div").length>0){
-					// Select the node(s) using a css selector string
-				    var license = A.one("input[name=<portlet:namespace/>license]:checked").get("value");
 				    //updateDescription(descData);
-				    updateLicense(license);
 				    updateCreators();
 				    updateMetadata();//last place, important!
 				 	// required creator field color needs to be set manually 

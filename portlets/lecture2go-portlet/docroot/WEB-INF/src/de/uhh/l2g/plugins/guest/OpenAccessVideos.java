@@ -200,7 +200,7 @@ public class OpenAccessVideos extends MVCPortlet {
 		    //license for video
 		    License l = new LicenseImpl();
 		    try {
-				l = LicenseLocalServiceUtil.getByVideoId(video.getVideoId());
+				l = LicenseLocalServiceUtil.getLicense(video.getLicenseId());
 			} catch (Exception e) {} 
 		    
 		    //update video hits
@@ -256,7 +256,7 @@ public class OpenAccessVideos extends MVCPortlet {
 	    		}
 	    	}
 		    
-		    request.setAttribute("videoLicense",l);
+		    request.setAttribute("license",l);
 		    request.setAttribute("videoMetadata",m);
 		    request.setAttribute("videoInstitutions",vi);
 		    request.setAttribute("video",video);
