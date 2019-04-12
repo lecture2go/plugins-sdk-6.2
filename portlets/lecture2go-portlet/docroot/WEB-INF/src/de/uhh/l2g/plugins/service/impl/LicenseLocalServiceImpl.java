@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,13 +14,12 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import java.util.List;
+
 import com.liferay.portal.kernel.exception.SystemException;
 
-import de.uhh.l2g.plugins.NoSuchLicenseException;
 import de.uhh.l2g.plugins.model.License;
-import de.uhh.l2g.plugins.service.LicenseLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.LicenseLocalServiceBaseImpl;
-import de.uhh.l2g.plugins.service.persistence.LicenseUtil;
 
 /**
  * The implementation of the license local service.
@@ -43,30 +42,7 @@ public class LicenseLocalServiceImpl extends LicenseLocalServiceBaseImpl {
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.LicenseLocalServiceUtil} to access the license local service.
 	 */
 	
-	public de.uhh.l2g.plugins.model.License getByVideoId(Long videoId){
-		License l = LicenseLocalServiceUtil.createLicense(0);
-		try {
-			l = licensePersistence.findByVideo(videoId);
-		} catch (NoSuchLicenseException e) {
-			// TODO Auto-generated catch block
-//			e.printStackTrace();
-		} catch (SystemException e) {
-			// TODO Auto-generated catch block
-//			e.printStackTrace();
-		}
-		return l;
-	}
-	
-	public boolean deleteByVideoId(Long videoId) {
-		boolean ret = false;
-		try {
-			LicenseUtil.removeByVideo(videoId);
-		} catch (SystemException e) {
-			ret = true;
-			//e.printStackTrace();
-		} catch (NoSuchLicenseException e) {
-			//e.printStackTrace();
-		}
-		return ret;
+	public List<License> getBySelectable(boolean isSelectable) throws SystemException {
+		return licensePersistence.findBySelectable(isSelectable);
 	}
 }
