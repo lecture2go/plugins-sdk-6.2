@@ -64,7 +64,6 @@ import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LastvideolistLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
-import de.uhh.l2g.plugins.service.LicenseLocalServiceUtil;
 import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
@@ -343,8 +342,6 @@ public class ProzessManager {
 			e2.printStackTrace();
 		}
 		
-		LicenseLocalServiceUtil.deleteByVideoId(video.getVideoId());
-
 		// delete video from videohitlist
 		try {
 			VideohitlistLocalServiceUtil.deleteByVideoId(video.getVideoId());
