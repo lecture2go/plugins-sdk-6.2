@@ -223,6 +223,14 @@ public class AdminVideoManagement extends MVCPortlet {
 		ProducerImpl reqProducer = new ProducerImpl();
 		reqProducer = (ProducerImpl)ProducerLocalServiceUtil.getProdUcer(producerId);
 		request.setAttribute("reqProducer", reqProducer);
+	
+		//license
+		// use the first selectable license as a default license on video creation
+		License license = new LicenseImpl();
+		try {
+			license = LicenseLocalServiceUtil.getBySelectable(true).get(0);
+		}catch(Exception e){}
+		request.setAttribute("reqLicense", license);
 		
 		//video
 		Video newVideo = new VideoImpl();
@@ -241,6 +249,7 @@ public class AdminVideoManagement extends MVCPortlet {
 		newVideo.setOpenAccess(0);
 		newVideo.setSecureFilename(Security.createSecureFileName()+".xx");
 		newVideo.setCitation2go(1);
+		newVideo.setLicenseId(license.getLicenseId());
 		//save it
 		Video video = VideoLocalServiceUtil.addVideo(newVideo);
 		request.setAttribute("reqVideo", newVideo);
@@ -265,13 +274,6 @@ public class AdminVideoManagement extends MVCPortlet {
 		reqSubInstitutions = Video_InstitutionLocalServiceUtil.getByVideo(video.getVideoId());
 		request.setAttribute("reqSubInstitutions", reqSubInstitutions);
 
-		//license
-		// use the first selectable license as a default license on video creation
-		License license = new LicenseImpl();
-		try {
-			license = LicenseLocalServiceUtil.getBySelectable(true).get(0);
-		}catch(Exception e){}
-		request.setAttribute("reqLicense", license);
 		
 		// requested license list
 		List<License> reqLicenseList = new ArrayList<License>();
