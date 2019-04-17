@@ -761,12 +761,16 @@ function updateVideoFileName(file){
 					   success: function() {
 					     var jsonResponse = this.get('responseData');
 						 <c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider") %>'>
-					     	videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>','<%=getVideoConversionStatusURL%>',<%=reqVideo.getVideoId()%>);
-							// enable the button for video caption postprocessing
-							$("#start-video-caption-postprocessing").removeAttr("disabled");
-							$("#start-video-caption-postprocessing").removeClass("disabled");
-							
-							$("#start-video-caption-postprocessing-area > .taglib-icon-help").hide();
+						 	// do not try to convert mp3s, this won't work
+							var fileExtension = file.name.split('.').pop();
+						 	if (!(fileExtension == "mp3" || file.type == "audio/mp3")) {
+						     	videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>','<%=getVideoConversionStatusURL%>',<%=reqVideo.getVideoId()%>);
+								// enable the button for video caption postprocessing
+								$("#start-video-caption-postprocessing").removeAttr("disabled");
+								$("#start-video-caption-postprocessing").removeClass("disabled");
+								
+								$("#start-video-caption-postprocessing-area > .taglib-icon-help").hide();
+						 	}
 						</c:if>
 
 					     toggleShare();
