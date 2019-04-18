@@ -27,9 +27,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
 import de.uhh.l2g.plugins.model.Creator;
+import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.Lectureseries_Creator;
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.impl.Lectureseries_CreatorImpl;
+import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Lectureseries_CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.CreatorLocalServiceBaseImpl;
@@ -124,6 +126,24 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 		}
 		return cl;
 	}
+	
+	public void updateAllCreatorsForLectureseriesOverTheAssigenedVideosByLectureseriesId() {
+		List<Lectureseries> all = new ArrayList<Lectureseries>();
+		try {
+			all = LectureseriesLocalServiceUtil.getAll();
+		} catch (SystemException e) {
+			//e.printStackTrace();
+		}
+		
+		for (Lectureseries lectureseries: all) {
+			try {
+				updateCreatorsForLectureseriesOverTheAssigenedVideosByLectureseriesId(lectureseries.getLectureseriesId());
+			} catch (SystemException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	
 	public String getCommaSeparatedCreatorsByVideoIdAndMaxCreators(Long videoId, int maxCreators){
 		List<Creator> creatorList = getCreatorsByVideoId(videoId);
