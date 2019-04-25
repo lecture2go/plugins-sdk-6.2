@@ -336,6 +336,19 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	//				//e.printStackTrace();
 				}
 			}
+			
+			if(video.getVttFile().isFile()){
+				JSONObject vtt = new JSONObject();
+				try {
+					vtt.put("name", video.getVttFile().getName());
+					vtt.put("id", video.getVttFile().getName().replace(".", ""));
+					vtt.put("size", video.getVttFile().getTotalSpace());
+					vtt.put("type", "vtt");
+					json.put(vtt);
+				} catch (JSONException e) {
+	//				//e.printStackTrace();
+				}
+			}
 		
 		} catch (Exception e) {
 
@@ -479,6 +492,38 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		video.setJsonPlayerUris(playerUrisSortedJSON);
 	}
 	
+	
+	/**
+	 * This adds the "tracks" section for the video player json if there are any captions or chapters
+	 */
+	public void addTracksToVideoPlayer(Video video){
+		JSONArray playerTracksJSON = new JSONArray();
+		try {
+			// add chapter info to track if video has chapters
+			if (video.isHasChapters()) {
+				JSONObject chapterTrackJSON = new JSONObject();
+				chapterTrackJSON.put("file", video.getVttChapterFile());
+				chapterTrackJSON.put("kind", "chapters");
+				playerTracksJSON.put(chapterTrackJSON);
+			}
+			
+			// add captions info to track if video has captions
+			if (video.isHasCaption()) {
+				JSONObject captionTrackJSON = new JSONObject();
+				captionTrackJSON.put("file", video.getVttCaptionUrl());
+				captionTrackJSON.put("kind", "captions");
+				captionTrackJSON.put("label", "Test");
+				playerTracksJSON.put(captionTrackJSON);
+			}
+		} catch (Exception e) {
+			
+		}
+
+		video.setJsonPlayerTracks(playerTracksJSON);
+	}
+		
+
+	
 	public Video getBySecureUrl(String surl) throws NoSuchVideoException, SystemException{
 		return VideoFinderUtil.findVideoBySerureUrl(surl);
 	}
@@ -615,6 +660,20 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		}
 		return ret;
 	}
+	
+	/**
+	 * Creates a symlink for the caption of the video to to captions folder
+	 */
+	public void createSymLinkForCaptionIfExisting(Long videoId) throws PortalException, SystemException {
+		Video video = getVideo(videoId);
+		File vttFile = video.getVttFile();
+		if(vttFile.isFile()){
+			String symLinkPath = PropsUtil.get("lecture2go.captions.system.path") + "/" + vttFile.getName();
+			ProzessManager pm = new ProzessManager();
+			pm.generateSymLink(vttFile.getAbsolutePath(), symLinkPath);
+		}
+	}
+	
 
 	/**
 	 * Checks if file is a symoblic link

@@ -13,7 +13,7 @@
 .jwplayer .jw-rightclick.jw-open {
     display: none;
 }
-
+/*
 .jw-icon.jw-icon-inline.jw-button-color.jw-reset.jw-icon-cc.jw-settings-submenu-button {
 	display: none !important;
 }
@@ -21,6 +21,7 @@
 .jw-icon.jw-icon-inline.jw-button-color.jw-reset.jw-settings-captions.jw-submenu-captions {
 	display: none !important;
 }
+*/
 -->
 </style>
 
@@ -56,7 +57,6 @@
 	        frameEnd = <%=timeEnd%>;		
 		}
 		
-		var vttFile ="${video.vttChapterFile}";
 		
         // Hier wird der JW-Player initialisiert
         // Interessant ist hierbei, dass es mehrere Quellen geben kann
@@ -67,10 +67,9 @@
             image: "${video.image}",
             cast: {},
             sources: ${video.jsonPlayerUris},
-            tracks: [{
-                file: vttFile,
-                kind:'chapters'
-            }],
+            <c:if test="${video.hasCaption || video.hasChapters}">
+	            tracks: ${video.jsonPlayerTracks},
+            </c:if>
             hlshtml: true,
             androidhls: true
         });

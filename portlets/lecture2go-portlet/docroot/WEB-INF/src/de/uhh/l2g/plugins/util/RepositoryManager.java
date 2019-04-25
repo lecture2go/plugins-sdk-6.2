@@ -116,12 +116,14 @@ public class RepositoryManager {
 			createFolder(PropsUtil.get("lecture2go.images.system.path")); //image subfolder
 			createFolder(PropsUtil.get("lecture2go.symboliclinks.repository.root")); //abo
 			createFolder(PropsUtil.get("lecture2go.chapters.system.path")); //chapters
+			createFolder(PropsUtil.get("lecture2go.captions.system.path")); //captions
 			createFolder(PropsUtil.get("lecture2go.security.folder")); //security
 			createFolder(PropsUtil.get("lecture2go.rss.system.path")); //rss
 			createVHosts(groupId);
 			//
 			symlinkToAboHome();
 			symlinkToChapterHome();
+			symlinkToCaptionsHome();
 			symlinkToImagesHome();
 			symlinkToRssHome();
 			symlinkToVideorepHome();
@@ -142,9 +144,10 @@ public class RepositoryManager {
 		File imagesRep = new File(PropsUtil.get("lecture2go.images.system.path"));
 		File securityRep = new File(PropsUtil.get("lecture2go.security.folder"));
 		File chaptersRep = new File(PropsUtil.get("lecture2go.chapters.system.path"));
+		File captionsRep = new File(PropsUtil.get("lecture2go.captions.system.path"));
 		File rssRep = new File(PropsUtil.get("lecture2go.rss.system.path"));
 		
-		if(mediaRep.isDirectory() && aboRep.isDirectory() && imagesRep.isDirectory() && securityRep.isDirectory() && chaptersRep.isDirectory() && rssRep.isDirectory())exists = true;
+		if(mediaRep.isDirectory() && aboRep.isDirectory() && imagesRep.isDirectory() && securityRep.isDirectory() && chaptersRep.isDirectory() && rssRep.isDirectory() && captionsRep.isDirectory())exists = true;
 		
 		return exists;
 	}
@@ -157,6 +160,19 @@ public class RepositoryManager {
 		File chapterFolder = new File(PropsUtil.get("lecture2go.chapters.system.path"));
 		if (chapterFolder.exists()) {
 			String cmd = "ln -s " + chapterFolder.getAbsolutePath() + " " + System.getProperty("catalina.base") + "/" + "webapps" + "/" + "chapters";
+			try { runCmd.exec(cmd); ret = true;} catch (IOException e) {}
+		}		
+		return ret;
+	}
+	
+	/**
+	 * Symlink to captions home.
+	 */
+	public static boolean symlinkToCaptionsHome(){
+		boolean ret = false;
+		File captionsFolder = new File(PropsUtil.get("lecture2go.captions.system.path"));
+		if (captionsFolder.exists()) {
+			String cmd = "ln -s " + captionsFolder.getAbsolutePath() + " " + System.getProperty("catalina.base") + "/" + "webapps" + "/" + "captions";
 			try { runCmd.exec(cmd); ret = true;} catch (IOException e) {}
 		}		
 		return ret;

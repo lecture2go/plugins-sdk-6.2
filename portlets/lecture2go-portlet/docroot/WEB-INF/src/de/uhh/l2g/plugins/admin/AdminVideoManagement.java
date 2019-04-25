@@ -975,6 +975,16 @@ public class AdminVideoManagement extends MVCPortlet {
 				////e.printStackTrace();
 			}
 		}
+		
+		if (resourceID.equals("handleVttUpload")) {
+			JSONObject jo = JSONFactoryUtil.createJSONObject();
+			try {
+				VideoLocalServiceUtil.createSymLinkForCaptionIfExisting(videoId);
+				writeJSON(resourceRequest, resourceResponse, jo);
+			} catch (Exception e) {
+				
+			}
+		}
 
 		if (resourceID.equals("updateHtaccess")) {
 			try {

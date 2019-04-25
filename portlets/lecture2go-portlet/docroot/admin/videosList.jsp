@@ -226,6 +226,10 @@
 											
 											if(vid.getPdfFile().isFile()){%>
 												<liferay-ui:message key="pdf-text"/> &nbsp;
+											<%}
+											
+											if(vid.getVttFile().isFile()){%>
+												<liferay-ui:message key="vtt-caption"/> &nbsp;
 											<%}%>
 											</div>
 										<div class="admin-videolist-date">
