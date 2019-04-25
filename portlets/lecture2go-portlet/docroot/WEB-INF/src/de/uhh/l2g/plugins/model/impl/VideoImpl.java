@@ -294,7 +294,7 @@ public class VideoImpl extends VideoBaseImpl {
 	 */
 	public JSONArray getJsonPlayerTracks() {
 		if (jsonPlayerTracks == null) {
-			VideoLocalServiceUtil.addTracksToVideoPlayer(this);
+			VideoLocalServiceUtil.addTextTracks2Video(this);
 		}
 		return jsonPlayerTracks;
 	}

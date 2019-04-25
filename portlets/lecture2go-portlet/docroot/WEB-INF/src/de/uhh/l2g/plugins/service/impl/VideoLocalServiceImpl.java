@@ -29,6 +29,7 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Locale;
 import java.util.NoSuchElementException;
 
 import org.json.JSONArray;
@@ -38,6 +39,8 @@ import org.json.JSONObject;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import de.uhh.l2g.plugins.NoSuchInstitutionException;
@@ -60,6 +63,7 @@ import de.uhh.l2g.plugins.model.impl.VideoImpl;
 import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LastvideolistLocalServiceUtil;
+import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
 import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.VideoLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.VideoFinderUtil;
@@ -496,7 +500,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	/**
 	 * This adds the "tracks" section for the video player json if there are any captions or chapters
 	 */
-	public void addTracksToVideoPlayer(Video video){
+	public void addTextTracks2Video(Video video, Locale userLocale){
 		JSONArray playerTracksJSON = new JSONArray();
 		try {
 			// add chapter info to track if video has chapters
@@ -509,20 +513,37 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			
 			// add captions info to track if video has captions
 			if (video.isHasCaption()) {
+				
+				String language = "Default"; // fallback
+				
+				if (userLocale != null) {
+					// use the video language (as user locale-translated full name) as subtitle language
+					try {
+						String languageId = MetadataLocalServiceUtil.getMetadata(video.getMetadataId()).getLanguage();
+						language = LocaleUtil.fromLanguageId(languageId).getDisplayLanguage(userLocale);
+					} catch (Exception e) {
+						// no language or language could not be parsed, just use the default language string
+					}
+				}
+				
 				JSONObject captionTrackJSON = new JSONObject();
 				captionTrackJSON.put("file", video.getVttCaptionUrl());
 				captionTrackJSON.put("kind", "captions");
-				captionTrackJSON.put("label", "Test");
+				captionTrackJSON.put("label", language);
 				playerTracksJSON.put(captionTrackJSON);
 			}
 		} catch (Exception e) {
 			
 		}
-
 		video.setJsonPlayerTracks(playerTracksJSON);
 	}
-		
-
+	
+	/**
+	 * This adds the "tracks" section for the video player json if there are any captions or chapters
+	 */
+	public void addTextTracks2Video(Video video){
+		addTextTracks2Video(video, null);
+	}
 	
 	public Video getBySecureUrl(String surl) throws NoSuchVideoException, SystemException{
 		return VideoFinderUtil.findVideoBySerureUrl(surl);
