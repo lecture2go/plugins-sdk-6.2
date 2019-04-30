@@ -44,7 +44,7 @@
 	String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
 	
 	// this is necessary because we want to pass the current locale of the user to the method, as the result for the caption label is language specific
-	VideoLocalServiceUtil.addTextTracks2Video(video, themeDisplay.getLocale());
+	VideoLocalServiceUtil.addTextTracks2VideoWithLanguageLabel(video, themeDisplay.getLocale());
 %>
 
 <%if(video.getVideoId()>0){%>

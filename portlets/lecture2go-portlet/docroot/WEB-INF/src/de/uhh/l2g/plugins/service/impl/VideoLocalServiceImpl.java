@@ -15,7 +15,10 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.sql.Date;
@@ -31,6 +34,8 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
 import java.util.NoSuchElementException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -498,9 +503,10 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	
 	
 	/**
-	 * This adds the "tracks" section for the video player json if there are any captions or chapters
+	 * This adds the "tracks" section for the video player json if there are any captions or chapters and sets the label to
+	 * language of the caption file (translated to the userLocale)
 	 */
-	public void addTextTracks2Video(Video video, Locale userLocale){
+	public void addTextTracks2VideoWithLanguageLabel(Video video, Locale userLocale){
 		JSONArray playerTracksJSON = new JSONArray();
 		try {
 			// add chapter info to track if video has chapters
@@ -513,18 +519,8 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			
 			// add captions info to track if video has captions
 			if (video.isHasCaption()) {
-				
-				String language = "Default"; // fallback
-				
-				if (userLocale != null) {
-					// use the video language (as user locale-translated full name) as subtitle language
-					try {
-						String languageId = MetadataLocalServiceUtil.getMetadata(video.getMetadataId()).getLanguage();
-						language = LocaleUtil.fromLanguageId(languageId).getDisplayLanguage(userLocale);
-					} catch (Exception e) {
-						// no language or language could not be parsed, just use the default language string
-					}
-				}
+				// try to retrieve the language from the caption file itself, returns a default value if language property could not be read
+				String language = retrieveLanguageDisplayNameOfCaptionFile(video.getVttFile(), userLocale);
 				
 				JSONObject captionTrackJSON = new JSONObject();
 				captionTrackJSON.put("file", video.getVttCaptionUrl());
@@ -542,7 +538,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	 * This adds the "tracks" section for the video player json if there are any captions or chapters
 	 */
 	public void addTextTracks2Video(Video video){
-		addTextTracks2Video(video, null);
+		addTextTracks2VideoWithLanguageLabel(video, null);
 	}
 	
 	public Video getBySecureUrl(String surl) throws NoSuchVideoException, SystemException{
@@ -704,5 +700,44 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	 */
 	public boolean isSymlink(File file) throws IOException {
 		return Files.isSymbolicLink(file.toPath());
+	}
+	
+	/**
+	 * Tries to retrieve the language from the caption file and returns a translated language display name
+	 * 
+	 * Reads first line of file (specs of webvtt define headers must be before first line break) and looks for a language property
+	 * (upside is this is faster, as only one line needs to be parsed)
+	 * @param captionFile the caption file from which the language will be extracted
+	 * @param userLocale the locale which is used to return the translated language display name
+	 * @return the language display name in the language of the locale property or "Default" if none found
+	 */
+	public String retrieveLanguageDisplayNameOfCaptionFile(File captionFile, Locale userLocale) {
+		String language = "Default"; // fallback
+		
+		// try to read the languageId (e.g. "de", "en_US", "en-US") from the caption file
+		try {
+	        // read only the first line of caption file
+			BufferedReader captionFileBufferedReader = new BufferedReader(new FileReader(captionFile));
+			String captionFileHeader = captionFileBufferedReader.readLine();
+			captionFileBufferedReader.close();
+			
+			// search the header for the language property via regex
+			String patternString = "Language:\\s*([^\\s]*)"; //"Language:" following 0 to n whitespaces and the languageId until next whitespace occurs]
+		    Pattern pattern = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
+		    Matcher matcher = pattern.matcher(captionFileHeader);
+		    if (matcher.find()) {
+		    	// group 1 is the correct regexp group match to match only the language-id without the property-prefix ("Language:")
+		    	String languageId = matcher.group(1);
+		    	// use Liferay API to get a user readable name for the language from the language-id while using the current users local
+		    	// e.g. "German" for the languageId "de_DE" when the userLocale is english
+				language = LocaleUtil.fromLanguageId(languageId).getDisplayLanguage(userLocale);
+		    }
+		} catch (Exception e) {
+			// vtt file can not be read, return the default language String
+			e.printStackTrace();
+			return language;
+		}
+	    
+	    return language;
 	}
 }
