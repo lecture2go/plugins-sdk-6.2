@@ -521,7 +521,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			if (video.isHasCaption()) {
 				// try to retrieve the language from the caption file itself, returns a default value if language property could not be read
 				String language = retrieveLanguageDisplayNameOfCaptionFile(video.getVttFile(), userLocale);
-				
+
 				JSONObject captionTrackJSON = new JSONObject();
 				captionTrackJSON.put("file", video.getVttCaptionUrl());
 				captionTrackJSON.put("kind", "captions");
@@ -705,8 +705,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	/**
 	 * Tries to retrieve the language from the caption file and returns a translated language display name
 	 * 
-	 * Reads first line of file (specs of webvtt define headers must be before first line break) and looks for a language property
-	 * (upside is this is faster, as only one line needs to be parsed)
+	 * Reads first lines of the file (specs of webvtt define headers must be before first blank line) and looks for a language property
 	 * @param captionFile the caption file from which the language will be extracted
 	 * @param userLocale the locale which is used to return the translated language display name
 	 * @return the language display name in the language of the locale property or "Default" if none found
@@ -714,28 +713,36 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	public String retrieveLanguageDisplayNameOfCaptionFile(File captionFile, Locale userLocale) {
 		String language = "Default"; // fallback
 		
-		// try to read the languageId (e.g. "de", "en_US", "en-US") from the caption file
+		// try to read the languageId (e.g. "de", "en_US", "en-US") from the caption file header
 		try {
-	        // read only the first line of caption file
-			BufferedReader captionFileBufferedReader = new BufferedReader(new FileReader(captionFile));
-			String captionFileHeader = captionFileBufferedReader.readLine();
-			captionFileBufferedReader.close();
-			
-			// search the header for the language property via regex
 			String patternString = "Language:\\s*([^\\s]*)"; //"Language:" following 0 to n whitespaces and the languageId until next whitespace occurs]
 		    Pattern pattern = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
-		    Matcher matcher = pattern.matcher(captionFileHeader);
-		    if (matcher.find()) {
-		    	// group 1 is the correct regexp group match to match only the language-id without the property-prefix ("Language:")
-		    	String languageId = matcher.group(1);
-		    	// use Liferay API to get a user readable name for the language from the language-id while using the current users local
-		    	// e.g. "German" for the languageId "de_DE" when the userLocale is english
-				language = LocaleUtil.fromLanguageId(languageId).getDisplayLanguage(userLocale);
-		    }
+		    Matcher matcher;
+			
+			BufferedReader captionFileBufferedReader = new BufferedReader(new FileReader(captionFile));
+            String line;
+            // we read the file until the first blank line, as this separates the header from the rest of the file
+			while ((line = captionFileBufferedReader.readLine()) != null) {
+				if (line.isEmpty()) {
+					// the header is finished, do not parse the file any further
+					break;
+				}
+				// search the current line for the language property via regex
+			    matcher = pattern.matcher(line);
+			    if (matcher.find()) {
+			    	// group 1 is the correct regexp group match to match only the language-id without the property-prefix ("Language:")
+			    	String languageId = matcher.group(1);
+			    	// use Liferay API to get a user readable name for the language from the language-id while using the current users local
+			    	// e.g. "German" for the languageId "de_DE" when the userLocale is english
+					language = LocaleUtil.fromLanguageId(languageId,true).getDisplayLanguage(userLocale);
+			    	break;
+			    }
+            }
+			captionFileBufferedReader.close();
 		} catch (Exception e) {
 			// vtt file can not be read, return the default language String
 			e.printStackTrace();
-			return language;
+			return "Default";
 		}
 	    
 	    return language;
