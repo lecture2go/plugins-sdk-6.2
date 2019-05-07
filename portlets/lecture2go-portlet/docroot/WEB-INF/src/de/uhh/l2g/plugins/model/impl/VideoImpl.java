@@ -65,6 +65,7 @@ public class VideoImpl extends VideoBaseImpl {
 	private static final String DOWNLOAD_SERVER			= PropsUtil.get("lecture2go.downloadserver.web.root");
 	private static final String IMAGES_URL 				= PropsUtil.get("lecture2go.web.root") + "/images/";
 	private static final String CHAPTERFOLDER 			= PropsUtil.get("lecture2go.chapters.web.root");
+	private static final String CAPTIONSFOLDER 			= PropsUtil.get("lecture2go.captions.web.root");
 	private static final String DOWNLOADFOLDER 			= DOWNLOAD_SERVER + "/abo/";
 	private static final String VIDEOREPFOLDER 			= DOWNLOAD_SERVER + "/videorep/";
 
@@ -126,11 +127,12 @@ public class VideoImpl extends VideoBaseImpl {
 	
 	private ArrayList<String> playerUris;
 	private JSONArray jsonPlayerUris;
+	private JSONArray jsonPlayerTracks;
 	
 	private String vttChapterFile;
+	private String vttCaptionUrl;
 	private String vttThumbsFilde;
 	
-	private Boolean hasChapters;
 	private boolean hasComments = false;
 	
 	private String url;
@@ -153,6 +155,8 @@ public class VideoImpl extends VideoBaseImpl {
 	private File flvFile;
 	private File oggFile;
 	private File webmFile;
+	private File vttFile;
+
 	
 	private String mp4DownloadLink;
 	private String pdfDownloadLink;
@@ -286,6 +290,21 @@ public class VideoImpl extends VideoBaseImpl {
 	}
 	
 	/**
+	 * Returns and sets the URIs for the video player as a JSONAray
+	 */
+	public JSONArray getJsonPlayerTracks() {
+		if (jsonPlayerTracks == null) {
+			VideoLocalServiceUtil.addTextTracks2Video(this);
+		}
+		return jsonPlayerTracks;
+	}
+
+	public void setJsonPlayerTracks(JSONArray jsonPlayerTracks) {
+		this.jsonPlayerTracks = jsonPlayerTracks;
+	}
+	
+	
+	/**
 	 * Returns the complete embed code for commsy depending on the openaccess field
 	 */
 	public String getEmbedCommsy() {
@@ -351,6 +370,20 @@ public class VideoImpl extends VideoBaseImpl {
 	
 	public void setVttChapterFile(String vttChapterFile) {
 		this.vttChapterFile = vttChapterFile;
+	}
+	
+	/**
+	 * Returns the url to the vtt-caption-file
+	 */
+	public String getVttCaptionUrl() {
+		if (vttCaptionUrl == null) {
+			vttCaptionUrl = CAPTIONSFOLDER + "/" + getCurrentPrefix() + FILE_SUFFIX_VTT;
+		}
+		return vttCaptionUrl;
+	}
+	
+	public void setVttCaptionUrl(String vttCaptionUrl) {
+		this.vttCaptionUrl = vttCaptionUrl;
 	}
 
 	public String getVttThumbsFilde() {
@@ -441,21 +474,16 @@ public class VideoImpl extends VideoBaseImpl {
 	/**
 	 * Checks if file has chapters
 	 */
-	public Boolean isHasChapters() {
-		// must be Boolean instead of simple boolean to allow for null
-		if (hasChapters == null) {
-			try {
-				hasChapters = SegmentLocalServiceUtil.getSegmentsByVideoId(getVideoId()).size()>0;
-			} catch (Exception e) {
-				e.printStackTrace();
-				return false;
-			}
+	public boolean isHasChapters() {
+		boolean hasChapters;
+		try {
+			hasChapters = SegmentLocalServiceUtil.getSegmentsByVideoId(getVideoId()).size()>0;
+		} catch (Exception e) {
+			e.printStackTrace();
+			hasChapters = false;
 		}
+
 		return hasChapters;
-	}
-	
-	public void setHasChapters(boolean hasChapters) {
-		this.hasChapters = hasChapters;
 	}
 
 	public boolean isHasComments() {
@@ -611,6 +639,20 @@ public class VideoImpl extends VideoBaseImpl {
 	
 	public void setWebmFile(File webmFile) {
 		this.webmFile = webmFile;
+	}
+	
+	/**
+	 * Returns the vtt file (unchecked if existing) from the user repository
+	 */
+	public File getVttFile() {
+		if (vttFile == null) {
+			vttFile = getFile(FILE_SUFFIX_VTT);
+		}
+		return vttFile;
+	}
+	
+	public void setVttFile(File vttFile) {
+		this.vttFile = vttFile;
 	}
 	
 	/**
@@ -896,6 +938,10 @@ public class VideoImpl extends VideoBaseImpl {
 	
 	public void setCreators(String creators) {
 		this.creators = creators;
+	}
+	
+	public boolean isHasCaption() {
+		return getVttFile().isFile();
 	}
 	
 	/**

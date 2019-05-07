@@ -33,6 +33,7 @@
 <liferay-portlet:resourceURL id="convertVideo" var="convertVideoURL" />
 <liferay-portlet:resourceURL id="getVideoConversionStatus" var="getVideoConversionStatusURL" />
 <liferay-portlet:resourceURL id="updateHtaccess" var="updateHtaccessURL" />
+<liferay-portlet:resourceURL id="handleVttUpload" var="handleVttUploadURL" />
 <liferay-portlet:resourceURL id="updateAll" var="updateAllURL" />
 
 
@@ -534,7 +535,7 @@ $(function () {
         dataType: 'json',
         add: function(e, data) {
             var uploadErrors = [];
-			var acceptFileTypes = /(mp4|m4v|m4a|audio\/mp3|audio\/mpeg|audio|pdf)$/i;//file types
+			var acceptFileTypes = /(mp4|m4v|m4a|audio\/mp3|audio\/mpeg|audio|pdf|vtt)$/i;//file types
 			
 			for(i=0;i<data.originalFiles.length; i++){
 	            if (data.originalFiles[i]['type'].length && !acceptFileTypes.test(data.originalFiles[i]['type'])) {
@@ -590,6 +591,9 @@ $(function () {
 	           		validate();
 				}
            }
+           
+           // handle subtitle file if existing
+           handleVttUpload();
            
            //htaccess update function for physical file protectiom
            updateHtaccess();
@@ -730,6 +734,24 @@ function updateHtaccess (){
 	$.ajax({
 		  type: "POST",
 		  url: "<%=updateHtaccessURL%>",
+		  dataType: 'json',
+		  data: {
+			  <portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>"
+		  },
+		  global: false,
+		  async: false,
+		  success: function(data) {
+		    ret = 1;
+		  }
+	});
+	return ret;
+}
+
+function handleVttUpload (){
+	var ret = 0;
+	$.ajax({
+		  type: "POST",
+		  url: "<%=handleVttUploadURL%>",
 		  dataType: 'json',
 		  data: {
 			  <portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>"
