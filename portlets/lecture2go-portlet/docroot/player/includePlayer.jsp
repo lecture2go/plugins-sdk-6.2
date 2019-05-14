@@ -237,7 +237,27 @@
             	$citationiframe.val(iframe);
             }
         });
+        
+    	/* this is a workaround for our jwplayer version which renders captions wrong when video is fullscreen on the iphone */
+		var isIphone = jwplayer().getEnvironment().OS.iPhone;
+    	// full screen event is triggered when entering or exiting fullscreen
+    	jwplayer().on('fullscreen', function(){
+    		if (isIphone) {
+    			if (jwplayer().getFullscreen()) {
+    			    var screenHeight = window.screen.availHeight;
+    			    // set the font size in relation to the screenHeight
+    			    var fontSize = Math.round(screenHeight * 0.07);
+    		        jwplayer().setCaptions({"fontSize": fontSize});
+    			} else {
+    				// not fullscreen, reset the font size
+    				jwplayer().setCaptions({"fontSize": "initial"});
+    			}
+    		}
+    	});
+    	/* end workaround */
     });
+    
+
 
 </script>
 
