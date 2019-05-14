@@ -495,6 +495,11 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				if(downloadAllowed && video.getOpenAccess()==0){
 					uri=downloadServ+"/down/"+l2go_path+"/"+video.getSecureFilename();
 				}
+				// in some cases this is necessary to correct the filename of the open access files in the download folder
+				// (case: smil file available for adaptive streaming, in combination with open access and download allowed -> wrong filename (with suffix) is set for the downloadfolder (but correct one for rtsp streaming))
+				if(downloadAllowed && video.getOpenAccess()==1){
+					uri=downloadServ+"/abo/"+video.getFilename();
+				}
 				try {
 					o.put("file", uri);
 				} catch (JSONException e) {
