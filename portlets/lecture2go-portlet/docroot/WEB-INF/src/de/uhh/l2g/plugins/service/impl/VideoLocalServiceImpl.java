@@ -224,6 +224,13 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				if (!isSymlink(file)) {
 					ProzessManager pm = new ProzessManager();
 					pm.createSymLinkToDownloadableFile(objectHost, objectVideo, objectProducer);
+					// remove the download sym link to the original video file in the download repository and replace it with a symlink to the new downloadable file
+					File symLink = new File(PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/" + objectVideo.getFilename());
+					symLink.delete(); 
+					// recreate the sym link if applicable
+					if (objectVideo.getOpenAccess() == 1 && objectVideo.getDownloadLink() == 1) {
+						pm.generateSymbolicLinks(objectVideo);
+					}
 				}
 			} catch (Exception e) {
 				//e.printStackTrace();
@@ -487,6 +494,11 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				//and oper or closed case
 				if(downloadAllowed && video.getOpenAccess()==0){
 					uri=downloadServ+"/down/"+l2go_path+"/"+video.getSecureFilename();
+				}
+				// in some cases this is necessary to correct the filename of the open access files in the download folder
+				// (case: smil file available for adaptive streaming, in combination with open access and download allowed -> wrong filename (with suffix) is set for the downloadfolder (but correct one for rtsp streaming))
+				if(downloadAllowed && video.getOpenAccess()==1){
+					uri=downloadServ+"/abo/"+video.getFilename();
 				}
 				try {
 					o.put("file", uri);
