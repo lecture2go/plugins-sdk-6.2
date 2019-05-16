@@ -164,6 +164,11 @@ public class ProzessManager {
 			File downloadSymLink = new File(path + "/" + videoSPreffix + PropsUtil.get("lecture2go.videoprocessing.downloadsuffix") + ".mp4");
 			downloadSymLink.delete();
 			
+			// delete the download sym link in the download repository which may point to the original video file 
+			// (will be correctly recreated in the generateSymboliLinks method)
+			File symLink = new File(PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/" + video.getFilename());
+			symLink.delete(); 
+			
 			// create a symlink to the video file which has a reasonable bitrate
 			try {
 				createSymLinkToDownloadableFile(host, video, producer);
