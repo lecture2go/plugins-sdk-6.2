@@ -175,20 +175,15 @@ public class TagcloudLocalServiceImpl extends TagcloudLocalServiceBaseImpl {
 			//e.printStackTrace();
 		}
 		
-		//Creators
+		//Creators (only creators of videos which are open access may be used)	
 		try {
-			List<Lectureseries_Creator> lcl = Lectureseries_CreatorLocalServiceUtil.getByLectureseriesId(l.getLectureseriesId());
-			ListIterator<Lectureseries_Creator> li2 = lcl.listIterator();
+			List<Creator> creators = CreatorLocalServiceUtil.getCreatorsByLectureseriesIdForOpenAccessVideosOnly(l.getLectureseriesId());
+			ListIterator<Creator> li2 = creators.listIterator();
 			while(li2.hasNext()){
-				long creatId = li2.next().getCreatorId();
-				try {
-					Creator cr = CreatorLocalServiceUtil.getCreator(creatId);
-					tagCloudArrayString.add(cr.getFullName());
-				} catch (PortalException e) {
-					//e.printStackTrace();
-				}
+				Creator cr = li2.next();
+				tagCloudArrayString.add(cr.getFullName());
 			}
-		} catch (SystemException e) {
+		} catch (Exception e) {
 			//e.printStackTrace();
 		}
 		

@@ -39,6 +39,7 @@ import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.Videohitlist;
 import de.uhh.l2g.plugins.model.impl.VideohitlistImpl;
 import de.uhh.l2g.plugins.service.StatisticLocalServiceUtil;
+import de.uhh.l2g.plugins.service.TagcloudLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideohitlistLocalServiceUtil;
 import de.uhh.l2g.plugins.util.PermissionManager;
@@ -66,7 +67,11 @@ public class StatisticManagement extends MVCPortlet {
 	
 	@Override
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException, IOException {
-        
+		// ****** START - DO NOT USE IN PRODUCTION ******
+		// this block is temporary for fixing the tagcloud table 
+		// TagcloudLocalServiceUtil.generateForAllLectureseries();
+		// ****** END ******
+
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			         ScheduledThread.class.getName(), renderRequest);

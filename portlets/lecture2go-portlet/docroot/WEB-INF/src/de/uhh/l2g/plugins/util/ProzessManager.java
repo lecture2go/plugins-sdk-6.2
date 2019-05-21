@@ -191,6 +191,10 @@ public class ProzessManager {
 		for (String f: FileManager.MEDIA_FORMATS) {           
 			generateRSS(video, f);
 		}
+		
+		//update tag cloud for the lectureseries of this video (necessary to add creators of the now-open-access-video to the tagcloud)
+		TagcloudLocalServiceUtil.generateForLectureseries(video.getLectureseriesId());
+		
 		//update LectureSeries previewVideoId
 		LectureseriesLocalServiceUtil.updatePreviewVideoOpenAccess(lectureseries);
 		//
@@ -287,6 +291,9 @@ public class ProzessManager {
 		
 		// refresh open access for lecture series
 		LectureseriesLocalServiceUtil.updateOpenAccess(video, lectureseries); 
+		
+		//update tag cloud for the lectureseries of this video (necessary to remove creators of the now-closed-access-video to the tagcloud)
+		TagcloudLocalServiceUtil.generateForLectureseries(video.getLectureseriesId());
 		
 		//update LectureSeries previewVideoId
 		LectureseriesLocalServiceUtil.updatePreviewVideoOpenAccess(lectureseries);
