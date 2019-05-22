@@ -107,7 +107,7 @@ public class SegmentLocalServiceImpl extends SegmentLocalServiceBaseImpl {
 		// generate thumbs
 		// for audio
 		if (objectVideo.getContainerFormat().equals("mp3")) {
-			objectSegment.setImage(PropsUtil.get("lecture2go.web.root") + PropsUtil.get("lecture2go.theme.root.path") + "/images/l2go/audio_only_small.png");
+			objectSegment.setImage(PropsUtil.get("lecture2go.web.root") + "/lecture2go-portlet/img/audio_only_small.png");
 		}
 		// for video
 		if (objectVideo.getContainerFormat().equals("mp4")) {
