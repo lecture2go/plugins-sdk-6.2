@@ -173,6 +173,7 @@
             	var sec = $(this).attr("begin");
             	sec = timeToSeconds(sec);
                 jwplayer().seek(sec);
+                $("html, body").animate({ scrollTop: 0 }, "slow");
             });
             
             $chapters.find("input[alt='delete']").on("click", function(event) {
