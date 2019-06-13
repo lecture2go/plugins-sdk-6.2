@@ -152,7 +152,7 @@
 		  			t = TermLocalServiceUtil.getById(lTermId).getPrefix()+" "+TermLocalServiceUtil.getById(lTermId).getYear();
 		  		}catch (Exception e){};
 			  		
-		  		if (t.trim().length()>0)series = lectureseries.getName()+" ("+t+")";
+		  		if (t.trim().length()>0)series = lectureseries.getName() +"("+t+")";
 		  		else series= lectureseries.getName();
 			  	%>
 		       <c:if test="${relatedVideos.size()>1}"><div class="player"></c:if>
@@ -160,7 +160,7 @@
 				<%@ include file="/player/includePlayer.jsp"%>
 				   <div class="license">
 				      <%if(videoLicense.getL2go()==1){%>
-				      	<a href="/web/vod/licence-l2go" title="<liferay-ui:message key='l2go-license-click-for-info'/>"><liferay-ui:message key="license"/></a>
+				      	<a href="/license-l2go" title="<liferay-ui:message key='l2go-license-click-for-info'/>"><liferay-ui:message key="license"/>: <liferay-ui:message key='l2go-license'/></a>
 				 	  <%}else{%>
 						<a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" title="<liferay-ui:message key='cc-license-click-for-info'/>"><liferay-ui:message key="license"/>: <liferay-ui:message key='cy-nc-sa-license'/></a> 		
 				 	  <%}%>       
@@ -211,7 +211,7 @@
 							    <%if(video.getOpenAccess()==1){%>
 							   	 	<li><a href="#share" data-toggle="tab"><liferay-ui:message key="share"/></a></li>
 							    <%}%>
-							    
+							    <li><a href="#support" data-toggle="tab"><liferay-ui:message key="support"/></a></li>
 							    <%if(video.isHasChapters()){ %>
 							    	<li><a href="#chapters" data-toggle="tab"><liferay-ui:message key="chapters"/></a></li>
 							    <%}%>				    
@@ -228,8 +228,56 @@
 								        <p><%@ include file="/guest/includeShare.jsp" %></p>
 								    </div>
 							    <%}%>
-    		
-								<%if(video.isHasChapters() || video.isHasComments()){%>
+								    <div class="tab-pane" id="support">
+								        <p>
+											<%
+												Integer facultyId = (int)video.getRootInstitutionId();
+												String institut = "";
+												String option1 = PortalUtil.getOriginalServletRequest(request).getParameter("option1"); 
+												
+												// <option value="1">UHH-BWL</option>
+												// <option value="2">UHH-EW</option>
+												// <option value="3">UHH-GWiss</option>
+												// <option value="4">UHH-Jura</option>
+												// <option value="5">UHH-Medizin</option>
+												// <option value="6">UHH-MIN</option>
+												// <option value="7">UHH-PB</option>
+												// <option value="8">UHH-WiSo</option>
+												// <option value="9">UHH-UK</option>
+												// <option value="10">UHH-ZfW</option>
+												// <option value="11">HFH</option>
+												// <option value="13">andere Institution</option><option value="12">HfMT</option>
+												
+												switch(facultyId){
+													case 3: institut = "4";break; //jura
+													case 4: institut = "8";break; //wiso
+													case 5: institut = "5";break; //medizin
+													case 6: institut = "2";break; //erz. wiss
+													case 7: institut = "3";break; //g.wiss
+													case 8: institut = "6";break; //min
+													case 203: institut = "7";break; //pb
+													case 204: institut = "1";break; //bwl
+													default: institut = "0";break; //andere, bzw. übergreifend
+												}
+												
+												String url=video.getUrl();
+												if(video.getOpenAccess()==0)url=video.getSecureUrl();
+												
+												//bereich
+												String bereich = "3";
+												String suppLink ="https://www.uni-hamburg.de/elearning/dienstleistung/support.html";
+												String param="?institut="+institut+"&bereich="+bereich+"&betreff="+url+"#new_mailform3";
+												suppLink += param;
+											%>
+											<div id="meta-share">
+												<div class="supportlink">
+													<p class="smallitalic"><liferay-ui:message key="support-notification"/>
+													<a href="<%=suppLink%>" target="_blank" style="color:#c40017"><liferay-ui:message key="support-formular-link"/></a>
+												</div>
+											</div>		        
+								    </div>
+		
+									<%if(video.isHasChapters() || video.isHasComments()){%>
 									    <ul class="tab-pane" id="chapters">
 									    	<liferay-portlet:resourceURL id="showSegments" var="segmentsURL" />
 											<script type="text/javascript">

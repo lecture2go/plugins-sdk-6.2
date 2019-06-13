@@ -333,9 +333,15 @@ public class LectureseriesLocalServiceUtil {
 		getService().updatePreviewVideoOpenAccess(lectureseries);
 	}
 
-	public static void updateUploadAndGenerationDate()
+	public static void updateUploadLatestOpenAccessVideoAndGenerationDate()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().updateUploadAndGenerationDate();
+		getService().updateUploadLatestOpenAccessVideoAndGenerationDate();
+	}
+
+	public static void updateUploadAndGenerationDate(
+		de.uhh.l2g.plugins.model.Lectureseries lectureseries)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().updateUploadAndGenerationDate(lectureseries);
 	}
 
 	public static void updateCategoryForLectureseries(

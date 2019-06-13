@@ -225,6 +225,7 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 	}
 	
 	public List<Video> findVideosBySearchWord(String word, int limit) {
+		word = word.replace("&amp;", "&");//get from entity &amp; only the character & for this specific search
 		word="%"+word+"%";
 		Session session = null;
 		try {
@@ -262,6 +263,7 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 	}
 	
 	public List<Video> findVideosBySearchWordAndLectureseriesId(String word, long lectureseriesId) {
+		word = word.replace("&amp;", "&");//get from entity &amp; only the character & for this specific search
 		word="%"+word+"%";
 		Session session = null;
 		try {

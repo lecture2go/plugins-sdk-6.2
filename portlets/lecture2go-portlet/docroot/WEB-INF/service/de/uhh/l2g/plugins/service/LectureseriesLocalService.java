@@ -296,7 +296,11 @@ public interface LectureseriesLocalService extends BaseLocalService,
 		de.uhh.l2g.plugins.model.Lectureseries lectureseries)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public void updateUploadAndGenerationDate()
+	public void updateUploadLatestOpenAccessVideoAndGenerationDate()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void updateUploadAndGenerationDate(
+		de.uhh.l2g.plugins.model.Lectureseries lectureseries)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public void updateCategoryForLectureseries(java.lang.Long lectureseriesId,

@@ -37,13 +37,32 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Locale;
 import java.util.SimpleTimeZone;
+import java.util.TimeZone;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -53,12 +72,15 @@ import com.liferay.portal.kernel.util.PropsUtil;
 
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
+import de.uhh.l2g.plugins.model.Metadata;
 import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.Video_Institution;
 import de.uhh.l2g.plugins.model.impl.InstitutionImpl;
+import de.uhh.l2g.plugins.model.impl.MetadataImpl;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
+import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
@@ -218,7 +240,7 @@ public class RSSManager {
 	 * @throws SystemException 
 	 * @throws PortalException 
 	 */
-	public void createRssFile(List<Video> videoList, String type) throws IOException, PortalException, SystemException {
+	/*	public void createRssFile(List<Video> videoList, String type) throws IOException, PortalException, SystemException {
 		Log LOG = LogFactoryUtil.getLog(RSSManager.class.getName());
 		try {
 			String imageLink = PropsUtil.get("lecture2go.web.home") + PropsUtil.get("lecture2go.theme.root.path") + "/" + "images" + "/" + "l2go" + "/" + "itunesu" + "/" + "logo.jpg";
@@ -328,15 +350,248 @@ public class RSSManager {
 			if(!rrsDirectory.exists())rrsDirectory.mkdir();
 			
 			String dateiName = rrsDirectory + "/" + rssFilename;
-			FileOutputStream schreibeStrom = new FileOutputStream(dateiName);
+			/*FileOutputStream schreibeStrom = new FileOutputStream(dateiName);
 
 			for (int i = 0; i < text.length(); i++) {
 				schreibeStrom.write((byte) text.charAt(i));
 			}
 			schreibeStrom.close();
+
+			
+			String[] linesArray = text.split("\n"); 
+			ArrayList<String> lines = new ArrayList<String>(Arrays.asList(linesArray));
+			
+			
+			try {
+				Files.write(Paths.get(dateiName), lines, StandardCharsets.UTF_8);
+			} 
+			catch (Exception e) {}
+			
 		} catch (NullPointerException npe) {
 			LOG.error("RSS FAILED !");
 		}
+	}*/
+	
+	
+	public void createRssFile(List<Video> videoList, String type) throws IOException, PortalException, SystemException {
+		Log LOG = LogFactoryUtil.getLog(RSSManager.class.getName());
+		
+		// prepare the publication date (the current time) in RFC-822 date-time format
+		SimpleDateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
+		formatter.setTimeZone(TimeZone.getTimeZone("CET"));
+		String pubDate = formatter.format(new Date());
+		
+		/*
+		// prepare the lecture2go logo
+		String imageLink = "";
+		File imageF = new File(PropsUtil.get("lecture2go.web.home")+"/lecture2go-portlet/img/l2go_logo_transp.png");
+		if (imageF.isFile()) imageLink = PropsUtil.get("lecture2go.web.home")+"/lecture2go-portlet/img/l2go_logo_transp.png";
+		*/
+		
+		// prepare the link to the lectureseries
+		String lectureseriesUrl = videoList.get(0).getLectureseriesUrl();
+		
+		// prepare the language (we set the language to the language of the first video in the list)
+		Metadata metadata = new MetadataImpl();
+		try {
+			metadata = MetadataLocalServiceUtil.getMetadata(videoList.get(0).getMetadataId());
+		} catch (PortalException e1) {
+			e1.printStackTrace();
+		} catch (SystemException e1) {
+			e1.printStackTrace();
+		}
+		// we need to replace the hyphen to be ISO-639 language code compliant
+		String language = metadata.getLanguage().replaceAll("_", "-");		
+		
+		// prepare the image url
+		String imageUrl = getAbsoluteUrl(videoList.get(0).getImageMedium());
+		
+		// starting XML DOM
+		DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
+		try {
+			DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
+			Document doc = documentBuilder.newDocument();
+			String namespaceURI = "http://www.itunes.com/dtds/podcast-1.0.dtd";
+			String itunesuURI = "http://www.itunesu.com/feed";
+			Element rootElement = doc.createElement("rss");
+			rootElement.setAttribute("xmlns:itunes", namespaceURI);
+			rootElement.setAttribute("xmlns:itunesu", itunesuURI);
+			rootElement.setAttribute("version", "2.0");
+
+
+			doc.appendChild(rootElement);
+			
+			// channel node
+			Element channelElement = doc.createElement("channel");
+			rootElement.appendChild(channelElement);
+			// title
+			Element titleElement = doc.createElement("title");
+			titleElement.setTextContent(title);
+			channelElement.appendChild(titleElement);
+			// link
+			Element linkElement = doc.createElement("link");
+			//linkElement.setTextContent(PropsUtil.get("lecture2go.web.home"));
+			linkElement.setTextContent(lectureseriesUrl);
+			channelElement.appendChild(linkElement);
+			// description
+			Element descriptionElement = doc.createElement("description");
+			descriptionElement.setTextContent(description.replaceAll("\\<[^>]*>","")); // remove all html tags from description
+			channelElement.appendChild(descriptionElement);
+			//  language
+			Element languageElement = doc.createElement("language");
+			languageElement.setTextContent(language);
+			channelElement.appendChild(languageElement);
+			// copyright
+			Element copyrightElement = doc.createElement("copyright");
+			copyrightElement.setTextContent("University of Hamburg Lecture2Go " + Calendar.getInstance().get(Calendar.YEAR));
+			channelElement.appendChild(copyrightElement);
+			// itunes:author 
+			Element authorElement = doc.createElement("itunes:author");
+			authorElement.setTextContent("University of Hamburg - Lecture2Go");
+			channelElement.appendChild(authorElement);
+			// itunes:summary
+			Element summaryElement = doc.createElement("itunes:summary");
+			summaryElement.setTextContent("The University of Hamburg offers a steadily growing portion of its lectures online and similar to a take-away. For further information and more video lectures visit the central media platform of the University of Hamburg at http://lecture2go.uni-hamburg.de!");
+			channelElement.appendChild(summaryElement);
+			// itunes:image
+			Element itunesImageElement = doc.createElement("itunes:image");
+			itunesImageElement.setAttribute("href", imageUrl);
+			channelElement.appendChild(itunesImageElement);
+			// pubDate
+			Element pubDateElement = doc.createElement("pubDate");
+			pubDateElement.setTextContent(pubDate);
+			channelElement.appendChild(pubDateElement);
+			// lastBuildDate
+			Element lastBuildDateElement = doc.createElement("lastBuildDate");
+			lastBuildDateElement.setTextContent(pubDate);
+			channelElement.appendChild(lastBuildDateElement);
+			// image
+			Element imageElement = doc.createElement("image");
+			// image - title
+			Element imageTitleElement = doc.createElement("title");
+			imageTitleElement.setTextContent(title);
+			imageElement.appendChild(imageTitleElement);
+			// image - link
+			Element imageLinkElement = doc.createElement("link");
+			imageLinkElement.setTextContent(lectureseriesUrl);
+			imageElement.appendChild(imageLinkElement);
+			// image - url
+			Element imageUrlElement = doc.createElement("url");
+			imageUrlElement.setTextContent(imageUrl);
+			imageElement.appendChild(imageUrlElement);
+			channelElement.appendChild(imageElement);
+			
+			// list of items
+			for (Video v: videoList) {
+				// reload the video with all informations
+				//v = VideoLocalServiceUtil.getVideo(v.getVideoId());
+				
+				// prepare title
+				String title = v.getTitle().trim();
+				
+				// prepare the duration field
+				String duration = "";
+				if(v.getDuration().length() > 0)
+				{
+					// remove the milliseconds
+					duration = v.getDuration().substring(0,v.getDuration().length()-3).trim();
+				}
+				// prepare the link to video
+				String link = PropsUtil.get("lecture2go.web.home")+"/l2go/-/get/v/"+v.getVideoId();
+				
+				// prepare the publication date of the video
+				String mediaPubDate = parseCETDate(v.getGenerationDate());
+				
+				// prepare the item image
+				String videoImage = getAbsoluteUrl(v.getImageMedium());
+
+				// item
+				Element itemElement = doc.createElement("item");
+				// item - title
+				Element itemTitleElement = doc.createElement("title");
+				itemTitleElement.setTextContent(title);
+				itemElement.appendChild(itemTitleElement);
+				// item - itunes:summary
+				Element itemSummaryElement = doc.createElement("itunes:summary");
+				itemSummaryElement.setTextContent(link);
+				itemElement.appendChild(itemSummaryElement);
+				// item - itunes:duration
+				Element itemDurationElement = doc.createElement("itunes:duration");
+				itemDurationElement.setTextContent(duration);
+				itemElement.appendChild(itemDurationElement);
+				// item - itunes:image
+				Element itemImageElement = doc.createElement("itunes:image");
+				itemImageElement.setAttribute("href", videoImage);
+				itemElement.appendChild(itemImageElement);
+				// item - link
+				Element itemLinkElement = doc.createElement("link");
+				itemLinkElement.setTextContent(link);
+				itemElement.appendChild(itemLinkElement);
+				// item - enclosure: include only if a file is downloadable
+				if (v.getDownloadLink()==1) {			
+					String mimeType = "";
+					String url = "";
+					String length = "";
+					if (type.equals("mp4") && v.getMp4File().isFile()) {
+						mimeType = "video/mp4";
+						url = v.getMp4DownloadLink();
+						length = Long.toString(v.getMp4File().length());
+						itemElement.appendChild(buildEnclosureElement(doc, url, mimeType, length));
+					} else if (type.equals("mp3") && v.getMp3File().isFile()) {
+						mimeType = "audio/mpeg";
+						url = v.getMp3DownloadLink();
+						length = Long.toString(v.getMp3File().length());
+						itemElement.appendChild(buildEnclosureElement(doc, url, mimeType, length));
+					}
+				}
+				// item pubDate
+				Element itemPubDateElement = doc.createElement("pubDate");
+				itemPubDateElement.setTextContent(mediaPubDate);
+				itemElement.appendChild(itemPubDateElement);
+				// item - guid
+				Element itemGuidElement = doc.createElement("guid");
+				itemGuidElement.setTextContent(link);
+				itemElement.appendChild(itemGuidElement);				
+				channelElement.appendChild(itemElement);
+			}
+			
+			// write the xml file
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			// sets the indentation amount for the output
+			Transformer transformer = transformerFactory.newTransformer();
+			DOMSource source = new DOMSource(doc);
+			
+			File rrsDirectory = new File(System.getProperty("catalina.base") + "/" + "webapps" + "/" + "rss" + "/" );
+			if(!rrsDirectory.exists())rrsDirectory.mkdir();
+			
+			String fileName = rrsDirectory + "/" + rssFilename;
+			
+			StreamResult result = new StreamResult(new File(fileName));
+			
+			// activate indentation
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+			transformer.transform(source, result);
+			
+		} catch (Exception e) {
+			LOG.error("RSS FAILED !");
+		}
+	}
+	
+	private Element buildEnclosureElement(Document doc, String url, String mimeType, String length) {
+		Element itemEnclosureElement = doc.createElement("enclosure");
+		itemEnclosureElement.setAttribute("url", url);
+		itemEnclosureElement.setAttribute("type", mimeType);
+		itemEnclosureElement.setAttribute("length", length);
+		return itemEnclosureElement;
+	}
+	
+	private String getAbsoluteUrl(String url) {
+		// only absolute urls should be used, add base url accordingly
+		if (!(url.startsWith("http://") || url.startsWith("https://"))) { 
+			url = PropsUtil.get("lecture2go.web.root") + url;
+		}
+		return url;
 	}
 
 	/**
@@ -401,22 +656,25 @@ public class RSSManager {
 	 * @param l2goDate the l2go date
 	 * @return the string
 	 */
-	public String parseGMTDate(String l2goDate) {
+	public String parseCETDate(String l2goDate) {
+		// input
+		SimpleDateFormat inputFormatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm");
+        inputFormatter.setTimeZone(TimeZone.getTimeZone("CET"));
 
-		Date ret = null;
-		java.text.SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy - HH:mm");
-		java.util.Calendar cal = Calendar.getInstance(new SimpleTimeZone(0, "GTM"));
-		format.setCalendar(cal);
-		try {
-			ret = format.parse(l2goDate);
-		} catch (ParseException e) {
-			
-			//e.printStackTrace();
-			ret = null;
-		}
-		String[] dt = ret.toString().split(" ");
-		String s = dt[0] + ", " + dt[2] + " " + dt[1] + " " + dt[5] + " " + dt[3] + " +0200";
-		return s;
+        // output
+       	SimpleDateFormat outputFormatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
+       	outputFormatter.setTimeZone(TimeZone.getTimeZone("CET"));
+		
+        Date inputDate = new Date();
+        try {
+            inputDate = inputFormatter.parse(l2goDate);
+        } catch (Exception e) {
+        	return "";
+        }
+        
+		String outputDate = outputFormatter.format(inputDate);
+		
+		return outputDate;
 	}
 
 	/** The rss filename. */

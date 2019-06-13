@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project name="lecture2go-cluster-deployment" basedir="." default="deploy-to-all-nodes">
+   <property file="l2go-deploy.properties"/>
+	
+   <target name="deploy-to-all-nodes">
+   		<echo>Cluster deployment started.</echo>
+   		<antcall target="deploy-to-node1" />
+		<antcall target="deploy-to-node2" />
+   </target>
+   
+   <target name="deploy-to-node1">
+   		<echo>Deploy to node1.</echo>
+   		<copy todir="${l2g.cluster.node1}">
+		  <fileset dir="${l2g.dist.dir}"/>
+		</copy>
+   </target>
+      
+   <target name="deploy-to-node2">
+   		<echo>Deploy to node2.</echo>
+	   		<copy todir="${l2g.cluster.node2}">
+			  <fileset dir="${l2g.dist.dir}"/>
+			</copy>
+   </target>
+
+   <target name="clean">
+   		<echo>Delete WAR files.</echo>
+   		<delete>
+		  <fileset dir="${l2g.dist.dir}"/>
+		</delete>
+   </target>
+</project>
