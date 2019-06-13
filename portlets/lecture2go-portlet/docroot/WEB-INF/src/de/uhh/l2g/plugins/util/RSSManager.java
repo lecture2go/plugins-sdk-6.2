@@ -388,23 +388,26 @@ public class RSSManager {
 		if (imageF.isFile()) imageLink = PropsUtil.get("lecture2go.web.home")+"/lecture2go-portlet/img/l2go_logo_transp.png";
 		*/
 		
-		// prepare the link to the lectureseries
-		String lectureseriesUrl = videoList.get(0).getLectureseriesUrl();
-		
-		// prepare the language (we set the language to the language of the first video in the list)
-		Metadata metadata = new MetadataImpl();
-		try {
-			metadata = MetadataLocalServiceUtil.getMetadata(videoList.get(0).getMetadataId());
-		} catch (PortalException e1) {
-			e1.printStackTrace();
-		} catch (SystemException e1) {
-			e1.printStackTrace();
+		// prepare the link to the lectureseries and the image url of the whole rss feed
+		String lectureseriesUrl = "";
+		String imageUrl = "";
+		String language = "";
+		if (!videoList.isEmpty()) {
+			lectureseriesUrl = videoList.get(0).getLectureseriesUrl();
+			imageUrl = getAbsoluteUrl(videoList.get(0).getImageMedium());
+			// prepare the language (we set the language to the language of the first video in the list)
+			Metadata metadata = new MetadataImpl();
+			try {
+				metadata = MetadataLocalServiceUtil.getMetadata(videoList.get(0).getMetadataId());
+			} catch (PortalException e1) {
+				e1.printStackTrace();
+			} catch (SystemException e1) {
+				e1.printStackTrace();
+			}
+			// we need to replace the hyphen to be ISO-639 language code compliant
+			language = metadata.getLanguage().replaceAll("_", "-");	
 		}
-		// we need to replace the hyphen to be ISO-639 language code compliant
-		String language = metadata.getLanguage().replaceAll("_", "-");		
 		
-		// prepare the image url
-		String imageUrl = getAbsoluteUrl(videoList.get(0).getImageMedium());
 		
 		// starting XML DOM
 		DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();

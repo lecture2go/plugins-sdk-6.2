@@ -15,7 +15,10 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.sql.Date;
@@ -29,7 +32,10 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Locale;
 import java.util.NoSuchElementException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,6 +44,8 @@ import org.json.JSONObject;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import de.uhh.l2g.plugins.NoSuchInstitutionException;
@@ -60,6 +68,7 @@ import de.uhh.l2g.plugins.model.impl.VideoImpl;
 import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LastvideolistLocalServiceUtil;
+import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
 import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.VideoLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.VideoFinderUtil;
@@ -215,6 +224,13 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				if (!isSymlink(file)) {
 					ProzessManager pm = new ProzessManager();
 					pm.createSymLinkToDownloadableFile(objectHost, objectVideo, objectProducer);
+					// remove the download sym link to the original video file in the download repository and replace it with a symlink to the new downloadable file
+					File symLink = new File(PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/" + objectVideo.getFilename());
+					symLink.delete(); 
+					// recreate the sym link if applicable
+					if (objectVideo.getOpenAccess() == 1 && objectVideo.getDownloadLink() == 1) {
+						pm.generateSymbolicLinks(objectVideo);
+					}
 				}
 			} catch (Exception e) {
 				//e.printStackTrace();
@@ -332,6 +348,19 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 					webm.put("size", video.getWebmFile().getTotalSpace());
 					webm.put("type", "webm");
 					json.put(webm);
+				} catch (JSONException e) {
+	//				//e.printStackTrace();
+				}
+			}
+			
+			if(video.getVttFile().isFile()){
+				JSONObject vtt = new JSONObject();
+				try {
+					vtt.put("name", video.getVttFile().getName());
+					vtt.put("id", video.getVttFile().getName().replace(".", ""));
+					vtt.put("size", video.getVttFile().getTotalSpace());
+					vtt.put("type", "vtt");
+					json.put(vtt);
 				} catch (JSONException e) {
 	//				//e.printStackTrace();
 				}
@@ -466,6 +495,11 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				if(downloadAllowed && video.getOpenAccess()==0){
 					uri=downloadServ+"/down/"+l2go_path+"/"+video.getSecureFilename();
 				}
+				// in some cases this is necessary to correct the filename of the open access files in the download folder
+				// (case: smil file available for adaptive streaming, in combination with open access and download allowed -> wrong filename (with suffix) is set for the downloadfolder (but correct one for rtsp streaming))
+				if(downloadAllowed && video.getOpenAccess()==1){
+					uri=downloadServ+"/abo/"+video.getFilename();
+				}
 				try {
 					o.put("file", uri);
 				} catch (JSONException e) {
@@ -477,6 +511,46 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		}
 		//
 		video.setJsonPlayerUris(playerUrisSortedJSON);
+	}
+	
+	
+	/**
+	 * This adds the "tracks" section for the video player json if there are any captions or chapters and sets the label to
+	 * language of the caption file (translated to the userLocale)
+	 */
+	public void addTextTracks2VideoWithLanguageLabel(Video video, Locale userLocale){
+		JSONArray playerTracksJSON = new JSONArray();
+		try {
+			// add chapter info to track if video has chapters
+			if (video.isHasChapters()) {
+				JSONObject chapterTrackJSON = new JSONObject();
+				chapterTrackJSON.put("file", video.getVttChapterFile());
+				chapterTrackJSON.put("kind", "chapters");
+				playerTracksJSON.put(chapterTrackJSON);
+			}
+			
+			// add captions info to track if video has captions
+			if (video.isHasCaption()) {
+				// try to retrieve the language from the caption file itself, returns a default value if language property could not be read
+				String language = retrieveLanguageDisplayNameOfCaptionFile(video.getVttFile(), userLocale);
+
+				JSONObject captionTrackJSON = new JSONObject();
+				captionTrackJSON.put("file", video.getVttCaptionUrl());
+				captionTrackJSON.put("kind", "captions");
+				captionTrackJSON.put("label", language);
+				playerTracksJSON.put(captionTrackJSON);
+			}
+		} catch (Exception e) {
+			
+		}
+		video.setJsonPlayerTracks(playerTracksJSON);
+	}
+	
+	/**
+	 * This adds the "tracks" section for the video player json if there are any captions or chapters
+	 */
+	public void addTextTracks2Video(Video video){
+		addTextTracks2VideoWithLanguageLabel(video, null);
 	}
 	
 	public Video getBySecureUrl(String surl) throws NoSuchVideoException, SystemException{
@@ -615,6 +689,20 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		}
 		return ret;
 	}
+	
+	/**
+	 * Creates a symlink for the caption of the video to to captions folder
+	 */
+	public void createSymLinkForCaptionIfExisting(Long videoId) throws PortalException, SystemException {
+		Video video = getVideo(videoId);
+		File vttFile = video.getVttFile();
+		if(vttFile.isFile()){
+			String symLinkPath = PropsUtil.get("lecture2go.captions.system.path") + "/" + vttFile.getName();
+			ProzessManager pm = new ProzessManager();
+			pm.generateSymLink(vttFile.getAbsolutePath(), symLinkPath);
+		}
+	}
+	
 
 	/**
 	 * Checks if file is a symoblic link
@@ -624,5 +712,51 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	 */
 	public boolean isSymlink(File file) throws IOException {
 		return Files.isSymbolicLink(file.toPath());
+	}
+	
+	/**
+	 * Tries to retrieve the language from the caption file and returns a translated language display name
+	 * 
+	 * Reads first lines of the file (specs of webvtt define headers must be before first blank line) and looks for a language property
+	 * @param captionFile the caption file from which the language will be extracted
+	 * @param userLocale the locale which is used to return the translated language display name
+	 * @return the language display name in the language of the locale property or "Default" if none found
+	 */
+	public String retrieveLanguageDisplayNameOfCaptionFile(File captionFile, Locale userLocale) {
+		String language = "Default"; // fallback
+		
+		// try to read the languageId (e.g. "de", "en_US", "en-US") from the caption file header
+		try {
+			String patternString = "Language:\\s*([^\\s]*)"; //"Language:" following 0 to n whitespaces and the languageId until next whitespace occurs]
+		    Pattern pattern = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
+		    Matcher matcher;
+			
+			BufferedReader captionFileBufferedReader = new BufferedReader(new FileReader(captionFile));
+            String line;
+            // we read the file until the first blank line, as this separates the header from the rest of the file
+			while ((line = captionFileBufferedReader.readLine()) != null) {
+				if (line.isEmpty()) {
+					// the header is finished, do not parse the file any further
+					break;
+				}
+				// search the current line for the language property via regex
+			    matcher = pattern.matcher(line);
+			    if (matcher.find()) {
+			    	// group 1 is the correct regexp group match to match only the language-id without the property-prefix ("Language:")
+			    	String languageId = matcher.group(1);
+			    	// use Liferay API to get a user readable name for the language from the language-id while using the current users local
+			    	// e.g. "German" for the languageId "de_DE" when the userLocale is english
+					language = LocaleUtil.fromLanguageId(languageId,true).getDisplayLanguage(userLocale);
+			    	break;
+			    }
+            }
+			captionFileBufferedReader.close();
+		} catch (Exception e) {
+			// vtt file can not be read, return the default language String
+			e.printStackTrace();
+			return "Default";
+		}
+	    
+	    return language;
 	}
 }

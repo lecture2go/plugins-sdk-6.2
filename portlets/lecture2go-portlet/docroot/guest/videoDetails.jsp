@@ -6,7 +6,7 @@
 <jsp:useBean id="videoInstitutions" type="java.util.List<de.uhh.l2g.plugins.model.Video_Institution>" scope="request" />
 <jsp:useBean id="videoMetadata" type="de.uhh.l2g.plugins.model.Metadata" scope="request" />
 <jsp:useBean id="lectureseries" type="de.uhh.l2g.plugins.model.Lectureseries" scope="request" />
-<jsp:useBean id="videoLicense" type="de.uhh.l2g.plugins.model.License" scope="request" />
+<jsp:useBean id="license" type="de.uhh.l2g.plugins.model.License" scope="request" />
 <jsp:useBean id="objectType" type="java.lang.String" scope="request" />
 <jsp:useBean id="objectId" type="java.lang.String" scope="request" />
 
@@ -42,6 +42,9 @@
 		isCitation2Go = true;
 
 	String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
+	
+	// this is necessary because we want to pass the current locale of the user to the method, as the result for the caption label is language specific
+	VideoLocalServiceUtil.addTextTracks2VideoWithLanguageLabel(video, themeDisplay.getLocale());
 %>
 
 <%if(video.getVideoId()>0){%>
@@ -158,13 +161,11 @@
 		       <c:if test="${relatedVideos.size()>1}"><div class="player"></c:if>
 			   <c:if test="${relatedVideos.size()<=1}"><div class="player-wide"></c:if>
 				<%@ include file="/player/includePlayer.jsp"%>
-				   <div class="license">
-				      <%if(videoLicense.getL2go()==1){%>
-				      	<a href="/license-l2go" title="<liferay-ui:message key='l2go-license-click-for-info'/>"><liferay-ui:message key="license"/>: <liferay-ui:message key='l2go-license'/></a>
-				 	  <%}else{%>
-						<a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" title="<liferay-ui:message key='cc-license-click-for-info'/>"><liferay-ui:message key="license"/>: <liferay-ui:message key='cy-nc-sa-license'/></a> 		
-				 	  <%}%>       
-				   </div>
+					<div class="license">
+			   			<c:if test="${not empty license}">
+			   				<a href="${license.url}" title="${license.fullName}"><liferay-ui:message key="license"/>: ${license.shortIdentifier}</a>   
+				   		</c:if>
+				   	</div>
 			       <div class="views"><liferay-ui:message key="views"/>: ${video.hits}</div>	
 					  <c:if test="${relatedVideos.size()>1}"> <div class="meta-video-info"></c:if>
 					  <c:if test="${relatedVideos.size()<=1}"> <div class="meta-video-info-wide"></c:if>
@@ -279,67 +280,17 @@
 		
 									<%if(video.isHasChapters() || video.isHasComments()){%>
 									    <ul class="tab-pane" id="chapters">
-									    	<liferay-portlet:resourceURL id="showSegments" var="segmentsURL" />
-											<script type="text/javascript">
-												$.ajax({
-												    url: '<%=segmentsURL%>',
-												    method: 'POST',
-												    dataType: "json",
-												    data: {
-												 	   	<portlet:namespace/>videoId: "<%=video.getVideoId()%>",
-												    },
-												    success: function(data, textStatus, jqXHR) {
-												        // since we are using jQuery, you don't need to parse response
-												        drawSegmentRow(data);
-												    }
-												});	
-											
-												function hideSegment(sId){
-													$("b#pf2_"+sId).hide();
-													$("b#pf1_"+sId).show();
-													$("b#iav"+sId).hide();		
-												}
-												function showSegment(sId){
-													$("b#pf1_"+sId).hide();
-													$("b#pf2_"+sId).show();
-													$("b#iav"+sId).show();		
-												}
-												function loadSegment(sId){
-													$("b#pf2_"+sId).show();
-													$("b#pf1_"+sId).hide();
-													$("b#iav"+sId).show();
-												}
-												
-												function drawSegmentRow(data) {
-													for (var i = 0; i < data.length; i++) {
-														drawRow(data[i]);
-												    }
-												}
-												
-												function drawRow(segment) {
-												    if(segment.chapter==1){
-												    	// segment is a chapter
-												    	newRow='<li class="chaptertile" id="' + segment.segmentId + '" begin="' + segment.start + '" end="' + segment.end + '">';
-												    	
-												    	newRow=newRow + '<div class="image">';
-												    	newRow=newRow + '<a><img src="'+segment.image+'"></a>';
-												    	newRow=newRow + '</div>';
-												    	
-												    	newRow=newRow + '<div class="title">';
-												    	newRow=newRow + '<a><b>' + segment.start +'</b> '+segment.title+'</a>';
-												    	newRow=newRow + '</div>';
-											    	
-											    	newRow=newRow + '</li>';
-													}
-													
-													if(segment.previousSegmentId == -1){
-														$("#chapters").append(newRow);
-													}else{
-														$(newRow).insertAfter("#"+ segment.previousSegmentId);
-													}
-												}
-											</script>
-									    </ul>
+									    	<c:forEach items="<%=segments %>" var="segment">
+									    		<li class="chaptertile" id="${segment.segmentId}" begin="${segment.start}" end="${segment.end}">
+													<div class="image">
+												    	<a><img src="${segment.image}"></a>
+												    </div>
+												    <div class="title">
+												    	<a><b>${segment.start} </b> ${segment.title}</a>
+												    </div>
+											    </li>
+									    	</c:forEach>
+								    	</ul>
 							    	<%}%>
 							</div>    
 						</div>

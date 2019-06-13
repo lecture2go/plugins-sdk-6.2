@@ -136,8 +136,6 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		
 		User user = UserLocalServiceUtil.getUser(new Long(request.getRemoteUser()));
 		EmailManager em = new EmailManager();
-		//search tags
-		ArrayList<String> tagCloudArrayString = new ArrayList<String>();
 
 		Long lId = new Long(request.getParameter("lectureseriesId"));
 		String[] producers = request.getParameterValues("producers");
@@ -148,11 +146,6 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		Long semesterId = new Long(0);
 		try{
 			semesterId = new Long(request.getParameter("semesterId"));
-			Term t = TermLocalServiceUtil.getTerm(semesterId);
-			tagCloudArrayString.add(t.getPrefix());
-			tagCloudArrayString.add(t.getYear());
-			tagCloudArrayString.add(t.getPrefix());
-			tagCloudArrayString.add(t.getPrefix()+" "+t.getYear());
 		}catch(Exception e){}
 		Long categoryId = new Long(0);
 		try{
@@ -209,9 +202,6 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			lf.setInstitutionParentId(inst.getParentId());
 			if(!Lectureseries_InstitutionLocalServiceUtil.institutionAssignedToLectureseries(lf))
 				Lectureseries_InstitutionLocalServiceUtil.addLectureseries_Institution(lf);
-			//
-			tagCloudArrayString.add(inst.getName());
-			tagCloudArrayString.add(parentInst.getName());
 		}
 		
 		// get all videos of this lectureSeries 
@@ -261,15 +251,9 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			//e.printStackTrace();
 		}
 		
-		//update tagclout category
-		Category ctgr = new CategoryImpl();
-		try{ctgr = CategoryLocalServiceUtil.getCategory(lectureseries.getCategoryId());}catch(Exception e){}		
-		tagCloudArrayString.add(ctgr.getName());
-		tagCloudArrayString.add(lectureseries.getName());
-		tagCloudArrayString.add(lectureseries.getNumber());
 
-		//edit tag cloud
-		TagcloudLocalServiceUtil.updateByObjectIdAndObjectClassType(tagCloudArrayString, lectureseries.getClass().getName(), lectureseries.getLectureseriesId());
+		//update tag cloud
+		TagcloudLocalServiceUtil.generateForLectureseries(lectureseries.getLectureseriesId());
 
 		//email notification after edit
 
@@ -295,9 +279,6 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 	public void addLectureseries(ActionRequest request, ActionResponse response) throws SystemException, PortalException, UnsupportedEncodingException {
 		User user = UserLocalServiceUtil.getUser(new Long(request.getRemoteUser()));
 		EmailManager em = new EmailManager();
-		//search tags
-		String tagCloudString = "";
-		ArrayList<String> tagCloudArrayString = new ArrayList<String>();
 		
 		String s = request.getParameter("longDesc");
 		String[] producers = request.getParameterValues("producers");
@@ -306,9 +287,6 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		Long semesterId = new Long(0);
 		try{
 			semesterId = new Long(request.getParameter("semesterId"));
-			Term t = TermLocalServiceUtil.getTerm(semesterId);
-			tagCloudString += t.getPrefix()+ " ### "+t.getYear()+" ### "+t.getPrefix()+" "+t.getYear()+" ### ";
-			tagCloudArrayString.add(t.getPrefix()+" "+t.getYear());
 		}catch(Exception e){}
 		Long categoryId = new Long(0);
 		try{
@@ -364,8 +342,6 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			lf.setInstitutionId(inst.getInstitutionId());
 			lf.setInstitutionParentId(inst.getParentId());
 			Lectureseries_InstitutionLocalServiceUtil.addLectureseries_Institution(lf);
-			tagCloudArrayString.add(inst.getName());
-			tagCloudArrayString.add(parentInst.getName());
 		}
 
 		//new creators
@@ -400,11 +376,6 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 				if(Lectureseries_CreatorLocalServiceUtil.getByLectureseriesIdAndCreatorId(lId, cId).size()==0){
 					Lectureseries_CreatorLocalServiceUtil.addLectureseries_Creator(lc);
 				}
-				Creator cr = CreatorLocalServiceUtil.getCreator(cId);
-				tagCloudArrayString.add(cr.getFirstName());
-				tagCloudArrayString.add(cr.getLastName());
-				tagCloudArrayString.add(cr.getFullName());
-				
 			}
 		}catch (NullPointerException e){}
 		//link to producer
@@ -415,17 +386,9 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			Producer_LectureseriesLocalServiceUtil.addProducer_Lectureseries(pl);
 		}
 		
-		//category 
-		Tagcloud tagcloud = new TagcloudImpl();
-		Category ctgr = new CategoryImpl();
-		try{ctgr = CategoryLocalServiceUtil.getCategory(newlect.getCategoryId());}catch(Exception e){}			
-		tagCloudArrayString.add(ctgr.getName());
-		tagCloudArrayString.add(newlect.getName());
-		tagCloudArrayString.add(newlect.getNumber());
 		
 		//Tag cloud
-		tagcloud.setTags(tagCloudString);
-		TagcloudLocalServiceUtil.add(tagCloudArrayString, newlect.getClass().getName(), newlect.getLectureseriesId()); 
+		TagcloudLocalServiceUtil.generateForLectureseries(newlect.getLectureseriesId());
 
 		//
 		request.setAttribute("institutions", institutions);
