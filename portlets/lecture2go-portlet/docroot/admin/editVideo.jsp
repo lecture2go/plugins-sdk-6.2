@@ -177,21 +177,11 @@ function loadDateTimepickerToFirstTitle(){
 					    	<div class="bar" style="width: 0%;"></div>
 						</div>
 						<c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider")%>'>
-							<div id="postprocessing" style="margin-bottom: 20px;">
+							<div id="postprocessing-info" style="margin-bottom: 20px;">
 								<span class="conversion" data-video-id="<%=reqVideo.getVideoId()%>">
 								</span>
 									<c:if test="<%= permissionChecker.isOmniadmin() || reqProducer.getProducerId() == 21923 %>">
 										<!-- the admin has a button to start postprocessing manually -->
-	
-										<aui:input id="captionurl" name="captionurl" label="Imagebuilder-URL" style="width:100%"/>
-										<aui:input id="captioninstitution" name="captioninstitution" label="Institution"/>
-										<aui:select name="captionlayout" label="Layout">
-											<aui:option value="0">-keine Legende-</aui:option>
-											<aui:option value="1">Speaker left</aui:option>
-											<aui:option value="2">Speaker right</aui:option>
-											<aui:option value="3">Speaker only</aui:option>
-										</aui:select><br/><br/><br/>
-										<img id="caption-image" src=""/>
 										<aui:button type="button" id="start-postprocessing" value="Start Postprocessing"/>
 									</c:if>
 								</div>
@@ -400,6 +390,51 @@ function loadDateTimepickerToFirstTitle(){
 					  $("#l4", this).toggleClass("thumb thumb-90");
 					});
 				</script>
+
+			<c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider")%>'>
+				<div id="postprocessing">
+					<label class="edit-video-lable" id="edit-video-lable-6">
+						<i id="l6" class="aui icon-chevron-down thumb-90"></i>
+						<liferay-ui:message key="include-video-caption"/>
+						<liferay-ui:icon-help message="include-video-caption-description"/>
+					</label>
+	
+					<div id="postprocessing-content" >
+						<div id="include-video-caption">
+							<div id="include-video-caption-content">
+								<aui:input name="video-caption-institution" label="institution-of-creator" required="false" value="" helpMessage="institution-of-creator-explanation"/>
+								
+								<!-- layout select radio buttons -->
+								<div>
+									<aui:input name="video-caption-layout" id="speakerleft" label="speaker-left" value="1" checked="true" type="radio" required="false" helpMessage="video-caption-speaker-left-explanation"/>
+									<aui:input name="video-caption-layout" id="speakerright" label="speaker-right" value="2" checked="" type="radio" required="false" helpMessage="video-caption-speaker-right-explanation"/>
+									<aui:input name="video-caption-layout" id="speakeronly" label="speaker-only" value="3" checked="" type="radio" required="false" helpMessage="video-caption-speaker-only-explanation"/>
+								</div>
+								<div style="clear: both">
+									<img id="video-caption-previewimage-speakerslides" src=""/>
+									<img id="video-caption-previewimage-speakeronly" src=""/>
+								</div>
+	
+								<label style="clear:both;" id="edit-video-lable-7">
+									<i id="l7" class="aui icon-chevron-down thumb-90"></i>
+									<liferay-ui:message key="additional-video-caption-fields"/>
+									<liferay-ui:icon-help message="additional-video-caption-fields-explanation"/>
+								</label>
+								<div id="include-video-caption-content-additional">
+									<aui:input name="video-caption-title" label="title" required="false" value=""/>
+									<aui:input name="video-caption-creators" label="creators" required="false" value=""/>
+									<aui:input name="video-caption-date" label="date" required="false" value=""/>
+									<aui:input name="video-caption-lectureseries" label="lectureseries" required="false" value=""/>
+								</div>
+								<div id="start-video-caption-postprocessing-area">
+									<aui:button type="button" id="start-video-caption-postprocessing" value="include-video-caption" disabled="true"/>
+									<liferay-ui:icon-help message="start-video-caption-postprocessing-disabled-explanation"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</c:if>
 
 				<div id="video-thumbnail">
 					<label class="edit-video-lable" id="edit-video-lable-5">
@@ -716,10 +751,14 @@ function updateVideoFileName(file){
 				on: {
 					   success: function() {
 					     var jsonResponse = this.get('responseData');
-						 <c:if test='<%= ((PropsUtil.contains("lecture2go.videoprocessing.provider") && reqProducer.getProducerId() != 21923)  
-								 && (PropsUtil.contains("lecture2go.videoprocessing.provider") && !permissionChecker.isOmniadmin()))  %>'>
+						 <c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider") %>'>
 					     	videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>','<%=getVideoConversionStatusURL%>',<%=reqVideo.getVideoId()%>);
-						 </c:if>
+							// enable the button for video caption postprocessing
+							$("#start-video-caption-postprocessing").removeAttr("disabled");
+							$("#start-video-caption-postprocessing").removeClass("disabled");
+							
+							$("#start-video-caption-postprocessing-area > .taglib-icon-help").hide();
+						</c:if>
 
 					     toggleShare();
 					   }
@@ -1018,6 +1057,9 @@ function applyDateTime(){
 				  loadDateTimepickerToTheMetadataSkeleton();
 				  $("#l2gdate").fadeIn(1000);
 				  $("#<portlet:namespace/>meta-ebene").show();
+				  <c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider")%>'>
+					initializeCaptionGeneration();
+				  </c:if>
 			  }
 	  });
 }
@@ -1199,6 +1241,9 @@ var c = 0;
 
 function remb(c){
 	$("#"+c).remove();
+	<c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider")%>'>
+		synchronizeAuthors();
+	</c:if>
 }
 
 AUI().use('aui-node',
@@ -1230,76 +1275,177 @@ AUI().use('aui-node',
 );
 
 <c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider")%>'>
-	$('#start-postprocessing').click(function(){
-		if ($('#<portlet:namespace/>captionlayout').val() == 0 || typeof $('#<portlet:namespace/>captionlayout').val() == "undefined") {
+
+	/* ### POSTPROCESSING SPECIFIC ##### */
+	 
+	$(function(){$( "#postprocessing-content" ).hide();});
+	$( "#edit-video-lable-6" ).click(function() {
+	 	$( "#postprocessing-content" ).slideToggle( "slow" );
+	 	$("#l6", this).toggleClass("thumb thumb-90");
+	});
+	
+	$(function(){$("#include-video-caption-content-additional").hide();});
+	$( "#edit-video-lable-7" ).click(function() {
+	 	$( "#include-video-caption-content-additional" ).slideToggle( "slow" );
+	 	$("#l7", this).toggleClass("thumb thumb-90");
+	});
+	
+	
+	AUI().ready('', function(A){
+		console.log("page load complete");
+		// synchronize the video-caption form to the metadata form on page load
+		synchronizeTitleFields();
+		synchronizeLectureSeriesFields();
+		synchronizeDateFields();
+		synchronizeAuthors();
+	
+		// load the video caption image on page load
+		refreshVideoCaptionPreviewImage();
+	
+		// enable the button for video caption postprocessing, if there is already a mp4 file
+		if (defaultContainer() == 'mp4') {
+			// enable button
+			$("#start-video-caption-postprocessing").removeAttr("disabled");
+			$("#start-video-caption-postprocessing").removeClass("disabled");
+			// hide disabled help text
+			$("#start-video-caption-postprocessing-area > .taglib-icon-help").hide();
+		}
+	
+		// change video caption if video data set is changed
+		// title
+		$("#<portlet:namespace/>title").keyup(function(){
+			synchronizeTitleFields();
+			refreshVideoCaptionPreviewImage();
+		});
+		
+		$('#<portlet:namespace/>creator').focusout(function() {
+			synchronizeAuthors();
+			refreshVideoCaptionPreviewImage();
+		});
+		
+		// lectureseries
+		$("#<portlet:namespace/>lectureseriesId").change(function(){
+			synchronizeLectureSeriesFields();
+			refreshVideoCaptionPreviewImage();
+		});
+		// date
+		$("#<portlet:namespace/>datetimepicker.field").change(function(){
+			synchronizeDateFields();
+			refreshVideoCaptionPreviewImage();
+		});
+	
+		// change video caption if video caption specific fields are changed
+		// layout
+		$("input[type=radio][name=<portlet:namespace/>video-caption-layout]").change(function(){
+			refreshVideoCaptionPreviewImage();
+		});
+		// every input field
+		$("#include-video-caption-content input").keyup(function(){
+			refreshVideoCaptionPreviewImage();
+		});
+	
+		// the default postprocessing button
+		$('#start-postprocessing').click(function(){
 			videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>', '<%=getVideoConversionStatusURL%>', <%=reqVideo.getVideoId()%>);
-		} else {
+		});
+	
+		// the video-caption-postprocessing button (additional properties are used)
+		$('#start-video-caption-postprocessing').click(function(){
 			additionalProperties = {
-				"captionPosition": $('#<portlet:namespace/>captionlayout').val(), 
-				"captionLink": $('<div>').text($('#<portlet:namespace/>captionurl').val()).html()
+				"captionPosition": $('input[name=<portlet:namespace/>video-caption-layout]:checked').val(), 
+				"captionLink": $("<div>").text(getVideoCaptionUrl()).html()
 			}
 			videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>', '<%=getVideoConversionStatusURL%>', <%=reqVideo.getVideoId()%>, "l2go-composite-adaptive-publish", JSON.stringify(additionalProperties));
-		}
+			
+			// close the postprocessing area
+			$( "#postprocessing-content" ).slideToggle( "slow" );
+	 		$("#l6").toggleClass("thumb thumb-90");
+			// scroll to top to see conversion status
+			$("html, body").animate({ scrollTop: 0 }, "slow");
+		});
 	});
+
 	AUI().ready('', function(A){
 		// check conversion status
 		videoProcessor.pollStatus('<portlet:namespace/>','<%=getVideoConversionStatusURL%>','<%=convertVideoURL%>',<%=reqVideo.getVideoId()%>);
 	});
 
-	<c:if test='<%= permissionChecker.isOmniadmin() || reqProducer.getProducerId() == 21923 %>'>
-	AUI().ready('', function(A){
-		fillImageBuilderUrl();
+	function initializeCaptionGeneration() {
+		// synchronize the video-caption form to the metadata form 
+		synchronizeTitleFields();
+		synchronizeLectureSeriesFields();
+		synchronizeDateFields();
+		synchronizeAuthors();
+	}
 
-		$('#<portlet:namespace/>captioninstitution').keyup(function(){
-			var institution = $('#<portlet:namespace/>captioninstitution').val();
-			fillImageBuilderUrl(institution,$('#<portlet:namespace/>captionlayout').val());
-		});
-		$('#<portlet:namespace/>captionlayout').on('change',function(){
-			var layout = $('#<portlet:namespace/>captionlayout').val();
-			fillImageBuilderUrl($('#<portlet:namespace/>captioninstitution').val(),layout);
-		});
-		$('#<portlet:namespace/>captionurl').keyup(function(){
-			if ($('#<portlet:namespace/>captionlayout').val() > 0) {
-				$("#caption-image").attr({src: $('#<portlet:namespace/>captionurl').val()});
-			} else {				
-				$("#caption-image").attr({src: ""});
-			}
-		});
-	});
+	
+	function synchronizeTitleFields() {
+		$("#<portlet:namespace/>video-caption-title").val($("#<portlet:namespace/>title").val());
+	}
 
+	function synchronizeLectureSeriesFields() {
+		// only paste lectureseries name if a lectureseries is selected (not "without lectureseries")
+		if ($("#<portlet:namespace/>lectureseriesId").val() == 0) {
+			$("#<portlet:namespace/>video-caption-lectureseries").val("");
+		} else {
+			$("#<portlet:namespace/>video-caption-lectureseries").val($("#<portlet:namespace/>lectureseriesId option:selected").text().trim());
+		}
+	}
 
-	function fillImageBuilderUrl(institution, layout) {
-		// create url to imagebuilder 
-		var authorArray = [];
-		$("#creators").children().each(function() { 
-			authorArray.push($(this).text().trim());
-		});
-		var authorsAsString = authorArray.join(", "); 
-		// todo: no hardcoding
-		var institution = (typeof institution === "undefined" ? "" : institution);
-		var layoutname = (typeof layout === "undefined" || (layout < 3) ? "speakerslides" : "speakeronly"); // default to speakerslides
-		var title = $("#<portlet:namespace/>title").val();
-		
-		// ugly way to transform date (js does not have a native date format function)
-		var date = $("#<portlet:namespace/>lecture2go-date").val();
+	function synchronizeDateFields() {
+		var date = $("#<portlet:namespace/>datetimepicker.field").val();
 		var year = date.slice(0,4);
 		var month = date.slice(5,7);
 		var day = date.slice(8,10);
 		var renderDate = day + "." + month + "." + year;
-		var lectureSeries = "";
-		if ($("#<portlet:namespace/>lectureseriesId").val() > 0) {
-			lectureSeries = $("#<portlet:namespace/>lectureseriesId option:selected").text().trim();
+		$("#<portlet:namespace/>video-caption-date").val(renderDate);
+
+		refreshVideoCaptionPreviewImage();
+	}
+
+	function synchronizeAuthors() {
+		var authorArray = [];
+		$("#creators").children().each(function() { 
+			authorArray.push($(this).text().trim());
+		});
+		var authorsAsString = authorArray.join(", ");
+		$("#<portlet:namespace/>video-caption-creators").val(authorsAsString);
+		refreshVideoCaptionPreviewImage();
+	}
+
+	function getVideoCaptionUrl() {
+		// create url to imagebuilder 
+		var title = $("#<portlet:namespace/>video-caption-title").val();
+		var creators = $("#<portlet:namespace/>video-caption-creators").val();
+		var institution = $("#<portlet:namespace/>video-caption-institution").val();
+		
+		//ugly way to transform date (js does not have a native date format function)
+		var date = $("#<portlet:namespace/>video-caption-date").val();
+
+		var lectureseries = $("#<portlet:namespace/>video-caption-lectureseries").val();
+		var layout = $('input[name=<portlet:namespace/>video-caption-layout]:checked').val();
+		if (layout == 1 || layout == 2) {
+			layoutname = "speakerslides";
+		} else if (layout == 3) {
+			layoutname = "speakeronly";
 		}
-		var imageUrl = encodeURI("https://lecture2go.uni-hamburg.de/imagebuilder/l2goimage?author=" + authorsAsString +"&institution=" + institution + "&title=" + title + "&date=" + renderDate + "&series=" + lectureSeries + "&type=" + layoutname + "&downscale=false&submit=Bild+erzeugen");
-		//$("#caption-image").attr({src: imageUrl});
-		$("#<portlet:namespace/>captionurl").attr({value: imageUrl});
-		if (layout>0) {
-			$("#caption-image").attr({src: imageUrl});
-		} else {				
-			$("#caption-image").attr({src: ""});
+
+		var imageUrl = encodeURI("https://lecture2go.uni-hamburg.de/imagebuilder/l2goimage?author=" + creators +"&institution=" + institution + "&title=" + title + "&date=" + date + "&series=" + lectureseries + "&type=" + layoutname + "&downscale=false");
+		return imageUrl;
+	}
+
+	function refreshVideoCaptionPreviewImage() {
+		var imageUrl = getVideoCaptionUrl();
+
+		if (layoutname == "speakerslides") {
+			$("#video-caption-previewimage-speakeronly").attr({src: ""});
+			$("#video-caption-previewimage-speakerslides").attr({src: imageUrl});
+		} else {
+			$("#video-caption-previewimage-speakerslides").attr({src: ""});
+			$("#video-caption-previewimage-speakeronly").attr({src: imageUrl});
 		}
 	}
-	</c:if>
+
 </c:if>
 
 
