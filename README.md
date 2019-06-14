@@ -29,11 +29,12 @@ Bug Fix and Feature Package [master-v.1-b5162] on Friday, June 14, 2019
 
 - 1032 RM - Subtitles integration.
 > For an upgrade follow the steps below:
+
 > A "captions" folder is introduced to store (via symlinks) the subtitles for the end-user;
 > Two entries need to be added to the properties file:
-> 
+
 > lecture2go.captions.web.root=${lecture2go.web.root}/captions
-> 
+
 > lecture2go.captions.system.path=${lecture2go.media.repository}/captions
 
 
