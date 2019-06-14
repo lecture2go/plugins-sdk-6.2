@@ -26,7 +26,7 @@ Bug Fix and Feature Package [master-v.1-b5162] on Friday, June 14, 2019
   - The AdminLectureSeriesManagement.generateRSSforAllLectureseriesWhithOpenaccessVideos () method should be run if all RSS feeds are to be regenerated.
 
 - 1032 RM - Subtitles integration.
-  - For an upgrade follow the steps below:
+  - For an upgrade only follow the steps below:
   - A "captions" folder is introduced to store (via symlinks) the subtitles for the end-user;
   - Two entries need to be added to the properties file:
       - lecture2go.captions.web.root=${lecture2go.web.root}/captions
@@ -34,7 +34,7 @@ Bug Fix and Feature Package [master-v.1-b5162] on Friday, June 14, 2019
 
 
 - 1333 RM - Add CC-BY-SA (4.0) and more to selectable licenses
-  - For an upgrade follow the steps below: 
+  - For an upgrade only follow the steps below: 
   - INSERT INTO LG_License (licenseId,fullName, shortIdentifier, url, schemeName, schemeUrl, selectable, description) VALUES (1,"USTOM LICENSE", "UNI-CUSTOM-LICENSE", "https://your-custom-license", NULL, NULL, 1, NULL);
   - INSERT INTO LG_License (licenseId,fullName, shortIdentifier, url, schemeName, schemeUrl, selectable, description) VALUES (2,"Creative Commons Attribution Non Commercial Share Alike 3.0", "CC-BY-NC-SA-3.0", "https://creativecommons.org/licenses/by-nc-sa/3.0/", "SPDX", "https://spdx.org/licenses/", 1, NULL);
   - UPDATE LG_Video SET licenseId = 1 WHERE videoId IN (SELECT videoId FROM LG_License_old WHERE l2go);
