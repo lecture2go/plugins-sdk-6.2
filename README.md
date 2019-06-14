@@ -27,7 +27,7 @@ Bug Fix and Feature Package [master-v.1-b5162] on Friday, June 14, 2019
 > The AdminLectureSeriesManagement.generateRSSforAllLectureseriesWhithOpenaccessVideos () method should be run if all RSS feeds are to be regenerated.
 
 
-- 1032 RM - Subtitles integration.
+> - 1032 RM - Subtitles integration.
 > For an upgrade follow the steps below:
 
 > A "captions" folder is introduced to store (via symlinks) the subtitles for the end-user;
