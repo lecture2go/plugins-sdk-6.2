@@ -6,6 +6,7 @@
 	<import class="de.uhh.l2g.plugins.model.Coordinator" />
 	<import class="de.uhh.l2g.plugins.model.Creator" />
 	<import class="de.uhh.l2g.plugins.model.Host" />
+	<import class="de.uhh.l2g.plugins.model.InstallWizard" />
 	<import class="de.uhh.l2g.plugins.model.Institution" />
 	<import class="de.uhh.l2g.plugins.model.Institution_Host" />
 	<import class="de.uhh.l2g.plugins.model.Lastvideolist" />
@@ -70,6 +71,15 @@
 		<property name="serverRoot" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="defaultHost" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+	</class>
+	<class name="de.uhh.l2g.plugins.model.impl.InstallWizardImpl" table="LG_InstallWizard">
+		<cache usage="read-write" />
+		<id name="installWizardId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="wizartActive" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.InstitutionImpl" table="LG_Institution">
 		<cache usage="read-write" />
@@ -151,14 +161,13 @@
 		<id name="licenseId" type="long">
 			<generator class="increment" />
 		</id>
-		<property name="videoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="ccby" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="ccbybc" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="ccbyncnd" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="ccbyncsa" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="ccbysa" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="ccbync" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="l2go" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="fullName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="shortIdentifier" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="url" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="schemeName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="schemeUrl" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="selectable" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.MetadataImpl" table="LG_Metadata">
 		<cache usage="read-write" />
@@ -299,6 +308,7 @@
 		<property name="termId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="tags" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="password" type="com.liferay.portal.dao.orm.hibernate.StringType" column="password_" />
+		<property name="licenseId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.Video_CategoryImpl" table="LG_Video_Category">
 		<cache usage="read-write" />

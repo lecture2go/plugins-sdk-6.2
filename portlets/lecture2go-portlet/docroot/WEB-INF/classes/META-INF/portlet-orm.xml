@@ -57,6 +57,17 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.InstallWizardModelImpl">
+		<attributes>
+			<id name="installWizardId" />
+			<basic name="wizartActive" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.InstitutionModelImpl">
 		<attributes>
 			<id name="institutionId" />
@@ -155,14 +166,13 @@
 	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.LicenseModelImpl">
 		<attributes>
 			<id name="licenseId" />
-			<basic name="videoId" />
-			<basic name="ccby" />
-			<basic name="ccbybc" />
-			<basic name="ccbyncnd" />
-			<basic name="ccbyncsa" />
-			<basic name="ccbysa" />
-			<basic name="ccbync" />
-			<basic name="l2go" />
+			<basic name="fullName" />
+			<basic name="shortIdentifier" />
+			<basic name="url" />
+			<basic name="schemeName" />
+			<basic name="schemeUrl" />
+			<basic name="selectable" />
+			<basic name="description" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -346,6 +356,7 @@
 			<basic name="password">
 				<column name="PASSWORD_" />
 			</basic>
+			<basic name="licenseId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -414,6 +425,10 @@
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.HostImpl" name="Host">
 		<table name="LG_Host" />
+		<attributes />
+	</entity>
+	<entity class="de.uhh.l2g.plugins.model.impl.InstallWizardImpl" name="InstallWizard">
+		<table name="LG_InstallWizard" />
 		<attributes />
 	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.InstitutionImpl" name="Institution">
@@ -522,6 +537,7 @@
 			<transient name="image" />
 			<transient name="imageMedium" />
 			<transient name="imageSmall" />
+			<transient name="jsonPlayerTracks" />
 			<transient name="jsonPlayerUris" />
 			<transient name="lectureseriesName" />
 			<transient name="lectureseriesNumber" />
@@ -549,7 +565,9 @@
 			<transient name="shortTitle" />
 			<transient name="simpleDate" />
 			<transient name="url" />
+			<transient name="vttCaptionUrl" />
 			<transient name="vttChapterFile" />
+			<transient name="vttFile" />
 			<transient name="vttThumbsFilde" />
 			<transient name="webmDownloadLink" />
 			<transient name="webmFile" />

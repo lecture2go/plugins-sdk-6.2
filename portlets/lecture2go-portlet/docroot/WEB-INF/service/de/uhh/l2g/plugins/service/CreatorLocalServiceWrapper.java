@@ -332,6 +332,11 @@ public class CreatorLocalServiceWrapper implements CreatorLocalService,
 	}
 
 	@Override
+	public void updateAllCreatorsForLectureseriesOverTheAssigenedVideosByLectureseriesId() {
+		_creatorLocalService.updateAllCreatorsForLectureseriesOverTheAssigenedVideosByLectureseriesId();
+	}
+
+	@Override
 	public java.lang.String getCommaSeparatedCreatorsByVideoIdAndMaxCreators(
 		java.lang.Long videoId, int maxCreators) {
 		return _creatorLocalService.getCommaSeparatedCreatorsByVideoIdAndMaxCreators(videoId,

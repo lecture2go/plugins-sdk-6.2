@@ -271,13 +271,10 @@ public class LicenseLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static de.uhh.l2g.plugins.model.License getByVideoId(
-		java.lang.Long videoId) {
-		return getService().getByVideoId(videoId);
-	}
-
-	public static boolean deleteByVideoId(java.lang.Long videoId) {
-		return getService().deleteByVideoId(videoId);
+	public static java.util.List<de.uhh.l2g.plugins.model.License> getBySelectable(
+		boolean isSelectable)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getBySelectable(isSelectable);
 	}
 
 	public static void clearService() {

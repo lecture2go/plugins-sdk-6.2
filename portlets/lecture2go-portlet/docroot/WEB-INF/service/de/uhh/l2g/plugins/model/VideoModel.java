@@ -391,6 +391,20 @@ public interface VideoModel extends BaseModel<Video> {
 	 */
 	public void setPassword(String password);
 
+	/**
+	 * Returns the license ID of this video.
+	 *
+	 * @return the license ID of this video
+	 */
+	public long getLicenseId();
+
+	/**
+	 * Sets the license ID of this video.
+	 *
+	 * @param licenseId the license ID of this video
+	 */
+	public void setLicenseId(long licenseId);
+
 	@Override
 	public boolean isNew();
 

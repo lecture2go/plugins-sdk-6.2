@@ -251,7 +251,7 @@ public interface LicenseLocalService extends BaseLocalService,
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public de.uhh.l2g.plugins.model.License getByVideoId(java.lang.Long videoId);
-
-	public boolean deleteByVideoId(java.lang.Long videoId);
+	public java.util.List<de.uhh.l2g.plugins.model.License> getBySelectable(
+		boolean isSelectable)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

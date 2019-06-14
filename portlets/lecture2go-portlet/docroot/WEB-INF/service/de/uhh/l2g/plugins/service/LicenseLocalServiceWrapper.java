@@ -281,13 +281,10 @@ public class LicenseLocalServiceWrapper implements LicenseLocalService,
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.License getByVideoId(java.lang.Long videoId) {
-		return _licenseLocalService.getByVideoId(videoId);
-	}
-
-	@Override
-	public boolean deleteByVideoId(java.lang.Long videoId) {
-		return _licenseLocalService.deleteByVideoId(videoId);
+	public java.util.List<de.uhh.l2g.plugins.model.License> getBySelectable(
+		boolean isSelectable)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _licenseLocalService.getBySelectable(isSelectable);
 	}
 
 	/**

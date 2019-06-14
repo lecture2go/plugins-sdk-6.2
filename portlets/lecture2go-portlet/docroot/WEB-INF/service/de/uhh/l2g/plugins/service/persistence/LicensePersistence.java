@@ -38,58 +38,141 @@ public interface LicensePersistence extends BasePersistence<License> {
 	 */
 
 	/**
-	* Returns the license where videoId = &#63; or throws a {@link de.uhh.l2g.plugins.NoSuchLicenseException} if it could not be found.
+	* Returns all the licenses where selectable = &#63;.
 	*
-	* @param videoId the video ID
-	* @return the matching license
+	* @param selectable the selectable
+	* @return the matching licenses
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<de.uhh.l2g.plugins.model.License> findBySelectable(
+		boolean selectable)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the licenses where selectable = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.LicenseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param selectable the selectable
+	* @param start the lower bound of the range of licenses
+	* @param end the upper bound of the range of licenses (not inclusive)
+	* @return the range of matching licenses
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<de.uhh.l2g.plugins.model.License> findBySelectable(
+		boolean selectable, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the licenses where selectable = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.LicenseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param selectable the selectable
+	* @param start the lower bound of the range of licenses
+	* @param end the upper bound of the range of licenses (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching licenses
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<de.uhh.l2g.plugins.model.License> findBySelectable(
+		boolean selectable, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first license in the ordered set where selectable = &#63;.
+	*
+	* @param selectable the selectable
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching license
 	* @throws de.uhh.l2g.plugins.NoSuchLicenseException if a matching license could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.License findByVideo(long videoId)
+	public de.uhh.l2g.plugins.model.License findBySelectable_First(
+		boolean selectable,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchLicenseException;
 
 	/**
-	* Returns the license where videoId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the first license in the ordered set where selectable = &#63;.
 	*
-	* @param videoId the video ID
-	* @return the matching license, or <code>null</code> if a matching license could not be found
+	* @param selectable the selectable
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching license, or <code>null</code> if a matching license could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.License fetchByVideo(long videoId)
+	public de.uhh.l2g.plugins.model.License fetchBySelectable_First(
+		boolean selectable,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the license where videoId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the last license in the ordered set where selectable = &#63;.
 	*
-	* @param videoId the video ID
-	* @param retrieveFromCache whether to use the finder cache
-	* @return the matching license, or <code>null</code> if a matching license could not be found
+	* @param selectable the selectable
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching license
+	* @throws de.uhh.l2g.plugins.NoSuchLicenseException if a matching license could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public de.uhh.l2g.plugins.model.License fetchByVideo(long videoId,
-		boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes the license where videoId = &#63; from the database.
-	*
-	* @param videoId the video ID
-	* @return the license that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public de.uhh.l2g.plugins.model.License removeByVideo(long videoId)
+	public de.uhh.l2g.plugins.model.License findBySelectable_Last(
+		boolean selectable,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			de.uhh.l2g.plugins.NoSuchLicenseException;
 
 	/**
-	* Returns the number of licenses where videoId = &#63;.
+	* Returns the last license in the ordered set where selectable = &#63;.
 	*
-	* @param videoId the video ID
+	* @param selectable the selectable
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching license, or <code>null</code> if a matching license could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.License fetchBySelectable_Last(
+		boolean selectable,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the licenses before and after the current license in the ordered set where selectable = &#63;.
+	*
+	* @param licenseId the primary key of the current license
+	* @param selectable the selectable
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next license
+	* @throws de.uhh.l2g.plugins.NoSuchLicenseException if a license with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public de.uhh.l2g.plugins.model.License[] findBySelectable_PrevAndNext(
+		long licenseId, boolean selectable,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.NoSuchLicenseException;
+
+	/**
+	* Removes all the licenses where selectable = &#63; from the database.
+	*
+	* @param selectable the selectable
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeBySelectable(boolean selectable)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of licenses where selectable = &#63;.
+	*
+	* @param selectable the selectable
 	* @return the number of matching licenses
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByVideo(long videoId)
+	public int countBySelectable(boolean selectable)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

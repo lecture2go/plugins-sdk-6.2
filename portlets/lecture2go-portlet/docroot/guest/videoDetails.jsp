@@ -212,7 +212,7 @@
 							    <%if(video.getOpenAccess()==1){%>
 							   	 	<li><a href="#share" data-toggle="tab"><liferay-ui:message key="share"/></a></li>
 							    <%}%>
-							    <li><a href="#support" data-toggle="tab"><liferay-ui:message key="support"/></a></li>
+
 							    <%if(video.isHasChapters()){ %>
 							    	<li><a href="#chapters" data-toggle="tab"><liferay-ui:message key="chapters"/></a></li>
 							    <%}%>				    
@@ -229,55 +229,7 @@
 								        <p><%@ include file="/guest/includeShare.jsp" %></p>
 								    </div>
 							    <%}%>
-								    <div class="tab-pane" id="support">
-								        <p>
-											<%
-												Integer facultyId = (int)video.getRootInstitutionId();
-												String institut = "";
-												String option1 = PortalUtil.getOriginalServletRequest(request).getParameter("option1"); 
-												
-												// <option value="1">UHH-BWL</option>
-												// <option value="2">UHH-EW</option>
-												// <option value="3">UHH-GWiss</option>
-												// <option value="4">UHH-Jura</option>
-												// <option value="5">UHH-Medizin</option>
-												// <option value="6">UHH-MIN</option>
-												// <option value="7">UHH-PB</option>
-												// <option value="8">UHH-WiSo</option>
-												// <option value="9">UHH-UK</option>
-												// <option value="10">UHH-ZfW</option>
-												// <option value="11">HFH</option>
-												// <option value="13">andere Institution</option><option value="12">HfMT</option>
-												
-												switch(facultyId){
-													case 3: institut = "4";break; //jura
-													case 4: institut = "8";break; //wiso
-													case 5: institut = "5";break; //medizin
-													case 6: institut = "2";break; //erz. wiss
-													case 7: institut = "3";break; //g.wiss
-													case 8: institut = "6";break; //min
-													case 203: institut = "7";break; //pb
-													case 204: institut = "1";break; //bwl
-													default: institut = "0";break; //andere, bzw. übergreifend
-												}
-												
-												String url=video.getUrl();
-												if(video.getOpenAccess()==0)url=video.getSecureUrl();
-												
-												//bereich
-												String bereich = "3";
-												String suppLink ="https://www.uni-hamburg.de/elearning/dienstleistung/support.html";
-												String param="?institut="+institut+"&bereich="+bereich+"&betreff="+url+"#new_mailform3";
-												suppLink += param;
-											%>
-											<div id="meta-share">
-												<div class="supportlink">
-													<p class="smallitalic"><liferay-ui:message key="support-notification"/>
-													<a href="<%=suppLink%>" target="_blank" style="color:#c40017"><liferay-ui:message key="support-formular-link"/></a>
-												</div>
-											</div>		        
-								    </div>
-		
+									
 									<%if(video.isHasChapters() || video.isHasComments()){%>
 									    <ul class="tab-pane" id="chapters">
 									    	<c:forEach items="<%=segments %>" var="segment">

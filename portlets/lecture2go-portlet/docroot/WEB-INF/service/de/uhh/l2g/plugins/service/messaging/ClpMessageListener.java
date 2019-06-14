@@ -22,6 +22,7 @@ import de.uhh.l2g.plugins.service.ClpSerializer;
 import de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
+import de.uhh.l2g.plugins.service.InstallWizardLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LastvideolistLocalServiceUtil;
@@ -68,6 +69,8 @@ public class ClpMessageListener extends BaseMessageListener {
 			CreatorLocalServiceUtil.clearService();
 
 			HostLocalServiceUtil.clearService();
+
+			InstallWizardLocalServiceUtil.clearService();
 
 			InstitutionLocalServiceUtil.clearService();
 

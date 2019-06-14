@@ -29,6 +29,7 @@ import de.uhh.l2g.plugins.model.CategoryClp;
 import de.uhh.l2g.plugins.model.CoordinatorClp;
 import de.uhh.l2g.plugins.model.CreatorClp;
 import de.uhh.l2g.plugins.model.HostClp;
+import de.uhh.l2g.plugins.model.InstallWizardClp;
 import de.uhh.l2g.plugins.model.InstitutionClp;
 import de.uhh.l2g.plugins.model.Institution_HostClp;
 import de.uhh.l2g.plugins.model.LastvideolistClp;
@@ -142,6 +143,10 @@ public class ClpSerializer {
 
 		if (oldModelClassName.equals(HostClp.class.getName())) {
 			return translateInputHost(oldModel);
+		}
+
+		if (oldModelClassName.equals(InstallWizardClp.class.getName())) {
+			return translateInputInstallWizard(oldModel);
 		}
 
 		if (oldModelClassName.equals(InstitutionClp.class.getName())) {
@@ -286,6 +291,16 @@ public class ClpSerializer {
 		HostClp oldClpModel = (HostClp)oldModel;
 
 		BaseModel<?> newModel = oldClpModel.getHostRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputInstallWizard(BaseModel<?> oldModel) {
+		InstallWizardClp oldClpModel = (InstallWizardClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getInstallWizardRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -656,6 +671,43 @@ public class ClpSerializer {
 
 		if (oldModelClassName.equals("de.uhh.l2g.plugins.model.impl.HostImpl")) {
 			return translateOutputHost(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
+
+		if (oldModelClassName.equals(
+					"de.uhh.l2g.plugins.model.impl.InstallWizardImpl")) {
+			return translateOutputInstallWizard(oldModel);
 		}
 		else if (oldModelClassName.endsWith("Clp")) {
 			try {
@@ -1666,6 +1718,10 @@ public class ClpSerializer {
 			return new de.uhh.l2g.plugins.NoSuchHostException();
 		}
 
+		if (className.equals("de.uhh.l2g.plugins.NoSuchInstallWizardException")) {
+			return new de.uhh.l2g.plugins.NoSuchInstallWizardException();
+		}
+
 		if (className.equals("de.uhh.l2g.plugins.NoSuchInstitutionException")) {
 			return new de.uhh.l2g.plugins.NoSuchInstitutionException();
 		}
@@ -1804,6 +1860,16 @@ public class ClpSerializer {
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
 		newModel.setHostRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputInstallWizard(BaseModel<?> oldModel) {
+		InstallWizardClp newModel = new InstallWizardClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setInstallWizardRemoteModel(oldModel);
 
 		return newModel;
 	}

@@ -282,6 +282,8 @@ public interface CreatorLocalService extends BaseLocalService,
 		java.lang.Long lectureseriesId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public void updateAllCreatorsForLectureseriesOverTheAssigenedVideosByLectureseriesId();
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getCommaSeparatedCreatorsByVideoIdAndMaxCreators(
 		java.lang.Long videoId, int maxCreators);

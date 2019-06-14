@@ -319,6 +319,11 @@ public class CreatorLocalServiceUtil {
 				   .updateCreatorsForLectureseriesOverTheAssigenedVideosByLectureseriesId(lectureseriesId);
 	}
 
+	public static void updateAllCreatorsForLectureseriesOverTheAssigenedVideosByLectureseriesId() {
+		getService()
+			.updateAllCreatorsForLectureseriesOverTheAssigenedVideosByLectureseriesId();
+	}
+
 	public static java.lang.String getCommaSeparatedCreatorsByVideoIdAndMaxCreators(
 		java.lang.Long videoId, int maxCreators) {
 		return getService()

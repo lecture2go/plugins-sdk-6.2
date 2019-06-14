@@ -30,14 +30,13 @@ public class LicenseSoap implements Serializable {
 		LicenseSoap soapModel = new LicenseSoap();
 
 		soapModel.setLicenseId(model.getLicenseId());
-		soapModel.setVideoId(model.getVideoId());
-		soapModel.setCcby(model.getCcby());
-		soapModel.setCcbybc(model.getCcbybc());
-		soapModel.setCcbyncnd(model.getCcbyncnd());
-		soapModel.setCcbyncsa(model.getCcbyncsa());
-		soapModel.setCcbysa(model.getCcbysa());
-		soapModel.setCcbync(model.getCcbync());
-		soapModel.setL2go(model.getL2go());
+		soapModel.setFullName(model.getFullName());
+		soapModel.setShortIdentifier(model.getShortIdentifier());
+		soapModel.setUrl(model.getUrl());
+		soapModel.setSchemeName(model.getSchemeName());
+		soapModel.setSchemeUrl(model.getSchemeUrl());
+		soapModel.setSelectable(model.getSelectable());
+		soapModel.setDescription(model.getDescription());
 
 		return soapModel;
 	}
@@ -98,77 +97,72 @@ public class LicenseSoap implements Serializable {
 		_licenseId = licenseId;
 	}
 
-	public long getVideoId() {
-		return _videoId;
+	public String getFullName() {
+		return _fullName;
 	}
 
-	public void setVideoId(long videoId) {
-		_videoId = videoId;
+	public void setFullName(String fullName) {
+		_fullName = fullName;
 	}
 
-	public int getCcby() {
-		return _ccby;
+	public String getShortIdentifier() {
+		return _shortIdentifier;
 	}
 
-	public void setCcby(int ccby) {
-		_ccby = ccby;
+	public void setShortIdentifier(String shortIdentifier) {
+		_shortIdentifier = shortIdentifier;
 	}
 
-	public int getCcbybc() {
-		return _ccbybc;
+	public String getUrl() {
+		return _url;
 	}
 
-	public void setCcbybc(int ccbybc) {
-		_ccbybc = ccbybc;
+	public void setUrl(String url) {
+		_url = url;
 	}
 
-	public int getCcbyncnd() {
-		return _ccbyncnd;
+	public String getSchemeName() {
+		return _schemeName;
 	}
 
-	public void setCcbyncnd(int ccbyncnd) {
-		_ccbyncnd = ccbyncnd;
+	public void setSchemeName(String schemeName) {
+		_schemeName = schemeName;
 	}
 
-	public int getCcbyncsa() {
-		return _ccbyncsa;
+	public String getSchemeUrl() {
+		return _schemeUrl;
 	}
 
-	public void setCcbyncsa(int ccbyncsa) {
-		_ccbyncsa = ccbyncsa;
+	public void setSchemeUrl(String schemeUrl) {
+		_schemeUrl = schemeUrl;
 	}
 
-	public int getCcbysa() {
-		return _ccbysa;
+	public boolean getSelectable() {
+		return _selectable;
 	}
 
-	public void setCcbysa(int ccbysa) {
-		_ccbysa = ccbysa;
+	public boolean isSelectable() {
+		return _selectable;
 	}
 
-	public int getCcbync() {
-		return _ccbync;
+	public void setSelectable(boolean selectable) {
+		_selectable = selectable;
 	}
 
-	public void setCcbync(int ccbync) {
-		_ccbync = ccbync;
+	public String getDescription() {
+		return _description;
 	}
 
-	public int getL2go() {
-		return _l2go;
-	}
-
-	public void setL2go(int l2go) {
-		_l2go = l2go;
+	public void setDescription(String description) {
+		_description = description;
 	}
 
 	private long _licenseId;
-	private long _videoId;
-	private int _ccby;
-	private int _ccbybc;
-	private int _ccbyncnd;
-	private int _ccbyncsa;
-	private int _ccbysa;
-	private int _ccbync;
-	private int _l2go;
+	private String _fullName;
+	private String _shortIdentifier;
+	private String _url;
+	private String _schemeName;
+	private String _schemeUrl;
+	private boolean _selectable;
+	private String _description;
 }

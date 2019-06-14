@@ -319,8 +319,18 @@ public class TagcloudLocalServiceWrapper implements TagcloudLocalService,
 	}
 
 	@Override
+	public void generateForLectureseries(java.lang.Long lectureseriesId) {
+		_tagcloudLocalService.generateForLectureseries(lectureseriesId);
+	}
+
+	@Override
 	public void generateForAllVideos() {
 		_tagcloudLocalService.generateForAllVideos();
+	}
+
+	@Override
+	public void generateForVideo(java.lang.Long videoId) {
+		_tagcloudLocalService.generateForVideo(videoId);
 	}
 
 	/**

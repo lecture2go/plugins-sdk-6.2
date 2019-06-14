@@ -430,6 +430,25 @@ public class VideoLocalServiceWrapper implements VideoLocalService,
 		_videoLocalService.addPlayerUris2Video(video);
 	}
 
+	/**
+	* This adds the "tracks" section for the video player json if there are any captions or chapters and sets the label to
+	* language of the caption file (translated to the userLocale)
+	*/
+	@Override
+	public void addTextTracks2VideoWithLanguageLabel(
+		de.uhh.l2g.plugins.model.Video video, java.util.Locale userLocale) {
+		_videoLocalService.addTextTracks2VideoWithLanguageLabel(video,
+			userLocale);
+	}
+
+	/**
+	* This adds the "tracks" section for the video player json if there are any captions or chapters
+	*/
+	@Override
+	public void addTextTracks2Video(de.uhh.l2g.plugins.model.Video video) {
+		_videoLocalService.addTextTracks2Video(video);
+	}
+
 	@Override
 	public de.uhh.l2g.plugins.model.Video getBySecureUrl(java.lang.String surl)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -502,6 +521,16 @@ public class VideoLocalServiceWrapper implements VideoLocalService,
 	}
 
 	/**
+	* Creates a symlink for the caption of the video to to captions folder
+	*/
+	@Override
+	public void createSymLinkForCaptionIfExisting(java.lang.Long videoId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_videoLocalService.createSymLinkForCaptionIfExisting(videoId);
+	}
+
+	/**
 	* Checks if file is a symoblic link
 	*
 	* @param file the file to check
@@ -511,6 +540,22 @@ public class VideoLocalServiceWrapper implements VideoLocalService,
 	@Override
 	public boolean isSymlink(java.io.File file) throws java.io.IOException {
 		return _videoLocalService.isSymlink(file);
+	}
+
+	/**
+	* Tries to retrieve the language from the caption file and returns a translated language display name
+	*
+	* Reads first lines of the file (specs of webvtt define headers must be before first blank line) and looks for a language property
+	*
+	* @param captionFile the caption file from which the language will be extracted
+	* @param userLocale the locale which is used to return the translated language display name
+	* @return the language display name in the language of the locale property or "Default" if none found
+	*/
+	@Override
+	public java.lang.String retrieveLanguageDisplayNameOfCaptionFile(
+		java.io.File captionFile, java.util.Locale userLocale) {
+		return _videoLocalService.retrieveLanguageDisplayNameOfCaptionFile(captionFile,
+			userLocale);
 	}
 
 	/**

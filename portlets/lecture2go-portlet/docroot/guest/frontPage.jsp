@@ -1,7 +1,9 @@
+<%@page import="de.uhh.l2g.plugins.util.RepositoryManager"%>
 <%@page import="de.uhh.l2g.plugins.model.impl.InstitutionImpl"%>
 <%@page import="com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil"%>
 <%@page import="com.liferay.portlet.journal.model.JournalArticle"%>
 <%@page import="com.liferay.portal.kernel.workflow.WorkflowConstants"%>
+<%@page import="de.uhh.l2g.plugins.util.InstallWizardManager"%>
 <%@include file="/init.jsp"%>
 <%
 Long institutionId = new Long(0);
@@ -14,21 +16,23 @@ String searchQuery = "";
 //get latest 
 //-lecture series = lectureseriesId>0
 //-videos = lectureseriesId<0
-//example -> top 10
+//example -> top 12
 List<Lectureseries> latest = LectureseriesLocalServiceUtil.getLatest(12);
 ListIterator<Lectureseries> lli = latest.listIterator();
 
 //get popular videos
-//example -> top 10
+//example -> top 12
 List<Video> popular = VideoLocalServiceUtil.getPopular(12);
 ListIterator<Video> pli = popular.listIterator();
 
 //get all root (1st level) institutions with open access videos
 List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutionsByOpenAccessVideos();
 
-
+//this proceeds only if the install wizart is activ
+InstallWizardManager installWizardManager = new InstallWizardManager(portletGroupId, company.getCompanyId());
+installWizardManager.installRepository();
 %>
-
+   
 <div class="front-page-teaser">
  	<div class="bg-video-container">
 		<video id="bg-vid" autoplay loop poster="/lecture2go-portlet/img/background_still.jpg" preload="none" muted>
@@ -43,7 +47,11 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 	<div class="l2go-info-container">
 		<div class="l2go-info">
 			<div class="l2go-title">
-				Lecture<span class="orange">2</span>Go
+				<%if(company.getName().equals("Lecture2Go")){%>
+					Lecture<span class="orange">2</span>Go
+				<%}else{%>
+					<%=company.getName()%>
+				<%}%>
 			</div>
 			<div class="l2go-subtitle">
 				<p><liferay-ui:message key="l2go-description"/></p>
@@ -59,26 +67,6 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 
 
 <div id="front-page-content">
-	<% 
-		// this is a temporary solution to show a web content for important news below the teaser
-		String articleId = "78499";
-		long groupId = themeDisplay.getLayout().getGroupId();
-				
-		// check if the article is approved, if not there will be not 'lead-box'-div
-		boolean articleApproved = true;
-		try {
-			JournalArticle j = JournalArticleLocalServiceUtil.getLatestArticle(groupId, articleId, WorkflowConstants.STATUS_APPROVED);
-		} catch(Exception e) {
-			articleApproved = false;
-		}
-		
-	%>
-	<c:if test='<%=articleApproved %>'>
-		<div class="lead-box">
-			<liferay-ui:journal-article articleId="<%=articleId%>" groupId="<%=groupId%>"/>
-		</div>
-	</c:if>
-	
 <!-- new videos -->
 	<div class="news">
 		<h4><liferay-ui:message key="last-added"/></h4>

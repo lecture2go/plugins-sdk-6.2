@@ -81,9 +81,10 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 			{ "citation2go", Types.INTEGER },
 			{ "termId", Types.BIGINT },
 			{ "tags", Types.CLOB },
-			{ "password_", Types.VARCHAR }
+			{ "password_", Types.VARCHAR },
+			{ "licenseId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Video (videoId LONG not null primary key,title STRING null,lectureseriesId LONG,producerId LONG,containerFormat VARCHAR(75) null,filename TEXT null,resolution VARCHAR(75) null,duration VARCHAR(75) null,hostId LONG,fileSize VARCHAR(75) null,generationDate VARCHAR(75) null,openAccess INTEGER,downloadLink INTEGER,metadataId LONG,secureFilename VARCHAR(75) null,hits LONG,uploadDate DATE null,permittedToSegment INTEGER,rootInstitutionId LONG,citation2go INTEGER,termId LONG,tags TEXT null,password_ VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Video (videoId LONG not null primary key,title STRING null,lectureseriesId LONG,producerId LONG,containerFormat VARCHAR(75) null,filename TEXT null,resolution VARCHAR(75) null,duration VARCHAR(75) null,hostId LONG,fileSize VARCHAR(75) null,generationDate VARCHAR(75) null,openAccess INTEGER,downloadLink INTEGER,metadataId LONG,secureFilename VARCHAR(75) null,hits LONG,uploadDate DATE null,permittedToSegment INTEGER,rootInstitutionId LONG,citation2go INTEGER,termId LONG,tags TEXT null,password_ VARCHAR(75) null,licenseId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Video";
 	public static final String ORDER_BY_JPQL = " ORDER BY video.videoId DESC, video.uploadDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Video.videoId DESC, LG_Video.uploadDate DESC";
@@ -102,13 +103,14 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	public static long DOWNLOADLINK_COLUMN_BITMASK = 1L;
 	public static long FILENAME_COLUMN_BITMASK = 2L;
 	public static long LECTURESERIESID_COLUMN_BITMASK = 4L;
-	public static long OPENACCESS_COLUMN_BITMASK = 8L;
-	public static long PASSWORD_COLUMN_BITMASK = 16L;
-	public static long PRODUCERID_COLUMN_BITMASK = 32L;
-	public static long ROOTINSTITUTIONID_COLUMN_BITMASK = 64L;
-	public static long TERMID_COLUMN_BITMASK = 128L;
-	public static long UPLOADDATE_COLUMN_BITMASK = 256L;
-	public static long VIDEOID_COLUMN_BITMASK = 512L;
+	public static long LICENSEID_COLUMN_BITMASK = 8L;
+	public static long OPENACCESS_COLUMN_BITMASK = 16L;
+	public static long PASSWORD_COLUMN_BITMASK = 32L;
+	public static long PRODUCERID_COLUMN_BITMASK = 64L;
+	public static long ROOTINSTITUTIONID_COLUMN_BITMASK = 128L;
+	public static long TERMID_COLUMN_BITMASK = 256L;
+	public static long UPLOADDATE_COLUMN_BITMASK = 512L;
+	public static long VIDEOID_COLUMN_BITMASK = 1024L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Video"));
 
@@ -172,6 +174,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		attributes.put("termId", getTermId());
 		attributes.put("tags", getTags());
 		attributes.put("password", getPassword());
+		attributes.put("licenseId", getLicenseId());
 
 		return attributes;
 	}
@@ -315,6 +318,12 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 
 		if (password != null) {
 			setPassword(password);
+		}
+
+		Long licenseId = (Long)attributes.get("licenseId");
+
+		if (licenseId != null) {
+			setLicenseId(licenseId);
 		}
 	}
 
@@ -702,6 +711,28 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		return GetterUtil.getString(_originalPassword);
 	}
 
+	@Override
+	public long getLicenseId() {
+		return _licenseId;
+	}
+
+	@Override
+	public void setLicenseId(long licenseId) {
+		_columnBitmask |= LICENSEID_COLUMN_BITMASK;
+
+		if (!_setOriginalLicenseId) {
+			_setOriginalLicenseId = true;
+
+			_originalLicenseId = _licenseId;
+		}
+
+		_licenseId = licenseId;
+	}
+
+	public long getOriginalLicenseId() {
+		return _originalLicenseId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -756,6 +787,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		videoImpl.setTermId(getTermId());
 		videoImpl.setTags(getTags());
 		videoImpl.setPassword(getPassword());
+		videoImpl.setLicenseId(getLicenseId());
 
 		videoImpl.resetOriginalValues();
 
@@ -853,6 +885,10 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		videoModelImpl._setOriginalTermId = false;
 
 		videoModelImpl._originalPassword = videoModelImpl._password;
+
+		videoModelImpl._originalLicenseId = videoModelImpl._licenseId;
+
+		videoModelImpl._setOriginalLicenseId = false;
 
 		videoModelImpl._columnBitmask = 0;
 	}
@@ -974,12 +1010,14 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 			videoCacheModel.password = null;
 		}
 
+		videoCacheModel.licenseId = getLicenseId();
+
 		return videoCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(47);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("{videoId=");
 		sb.append(getVideoId());
@@ -1027,6 +1065,8 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		sb.append(getTags());
 		sb.append(", password=");
 		sb.append(getPassword());
+		sb.append(", licenseId=");
+		sb.append(getLicenseId());
 		sb.append("}");
 
 		return sb.toString();
@@ -1034,7 +1074,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(73);
+		StringBundler sb = new StringBundler(76);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Video");
@@ -1132,6 +1172,10 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 			"<column><column-name>password</column-name><column-value><![CDATA[");
 		sb.append(getPassword());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>licenseId</column-name><column-value><![CDATA[");
+		sb.append(getLicenseId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1178,6 +1222,9 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	private String _tags;
 	private String _password;
 	private String _originalPassword;
+	private long _licenseId;
+	private long _originalLicenseId;
+	private boolean _setOriginalLicenseId;
 	private long _columnBitmask;
 	private Video _escapedModel;
 }

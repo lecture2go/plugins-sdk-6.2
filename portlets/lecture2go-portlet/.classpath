@@ -8,10 +8,10 @@
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/liferay-portal-6.2-ce-ga3/tomcat-7.0.42/webapps/ROOT/WEB-INF/lib/ant.jar"/>
-	<classpathentry kind="lib" path="/liferay-portal-6.2-ce-ga3/tomcat-7.0.42/webapps/ROOT/WEB-INF/lib/commons-collections.jar"/>
-	<classpathentry kind="lib" path="/liferay-portal-6.2-ce-ga3/tomcat-7.0.42/webapps/ROOT/WEB-INF/lib/commons-fileupload.jar"/>
-	<classpathentry kind="lib" path="/liferay-portal-6.2-ce-ga3/tomcat-7.0.42/lib/jasper.jar"/>
+	<classpathentry kind="lib" path="/usr/local/l2go/portal-6.2-ce-ga6/tomcat-7.0.62/webapps/ROOT/WEB-INF/lib/ant.jar"/>
+	<classpathentry kind="lib" path="/usr/local/l2go/portal-6.2-ce-ga6/tomcat-7.0.62/webapps/ROOT/WEB-INF/lib/commons-collections.jar"/>
+	<classpathentry kind="lib" path="/usr/local/l2go/portal-6.2-ce-ga6/tomcat-7.0.62/webapps/ROOT/WEB-INF/lib/commons-fileupload.jar"/>
+	<classpathentry kind="lib" path="/usr/local/l2go/portal-6.2-ce-ga6/tomcat-7.0.62/lib/jasper-el.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/com.liferay.ide.eclipse.server.tomcat.runtimeClasspathProvider/Liferay v6.2 CE (Tomcat 7)">
 		<attributes>
@@ -24,7 +24,15 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/lecture2go/liferay/workspace-for-liferay-6.2.0/plugins-sdk-6.2/themes/lecture2go-theme/docroot/WEB-INF/lib/util-java.jar"/>
-	<classpathentry kind="lib" path="/lecture2go/liferay/workspace-for-liferay-6.2.0/plugins-sdk-6.2/themes/lecture2go-theme/docroot/WEB-INF/lib/util-bridges.jar"/>
+	<classpathentry kind="lib" path="/usr/local/l2go/portal-6.2-ce-ga6/tomcat-7.0.62/webapps/ROOT/WEB-INF/lib/util-bridges.jar">
+		<attributes>
+			<attribute name="javadoc_location" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/usr/local/l2go/portal-6.2-ce-ga6/tomcat-7.0.62/webapps/ROOT/WEB-INF/lib/util-java.jar">
+		<attributes>
+			<attribute name="javadoc_location" value=""/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="docroot/WEB-INF/classes"/>
 </classpath>

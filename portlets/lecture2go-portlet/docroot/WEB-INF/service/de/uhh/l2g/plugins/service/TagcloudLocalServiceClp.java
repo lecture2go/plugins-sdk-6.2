@@ -138,9 +138,17 @@ public class TagcloudLocalServiceClp implements TagcloudLocalService {
 
 		_methodParameterTypes23 = new String[] {  };
 
-		_methodName24 = "generateForAllVideos";
+		_methodName24 = "generateForLectureseries";
 
-		_methodParameterTypes24 = new String[] {  };
+		_methodParameterTypes24 = new String[] { "java.lang.Long" };
+
+		_methodName25 = "generateForAllVideos";
+
+		_methodParameterTypes25 = new String[] {  };
+
+		_methodName26 = "generateForVideo";
+
+		_methodParameterTypes26 = new String[] { "java.lang.Long" };
 	}
 
 	@Override
@@ -837,10 +845,50 @@ public class TagcloudLocalServiceClp implements TagcloudLocalService {
 	}
 
 	@Override
-	public void generateForAllVideos() {
+	public void generateForLectureseries(java.lang.Long lectureseriesId) {
 		try {
 			_invokableLocalService.invokeMethod(_methodName24,
-				_methodParameterTypes24, new Object[] {  });
+				_methodParameterTypes24,
+				new Object[] { ClpSerializer.translateInput(lectureseriesId) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
+	public void generateForAllVideos() {
+		try {
+			_invokableLocalService.invokeMethod(_methodName25,
+				_methodParameterTypes25, new Object[] {  });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
+	public void generateForVideo(java.lang.Long videoId) {
+		try {
+			_invokableLocalService.invokeMethod(_methodName26,
+				_methodParameterTypes26,
+				new Object[] { ClpSerializer.translateInput(videoId) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -904,4 +952,8 @@ public class TagcloudLocalServiceClp implements TagcloudLocalService {
 	private String[] _methodParameterTypes23;
 	private String _methodName24;
 	private String[] _methodParameterTypes24;
+	private String _methodName25;
+	private String[] _methodParameterTypes25;
+	private String _methodName26;
+	private String[] _methodParameterTypes26;
 }

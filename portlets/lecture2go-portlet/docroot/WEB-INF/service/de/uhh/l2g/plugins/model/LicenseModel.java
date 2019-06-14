@@ -14,6 +14,7 @@
 
 package de.uhh.l2g.plugins.model;
 
+import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
@@ -71,116 +72,115 @@ public interface LicenseModel extends BaseModel<License> {
 	public void setLicenseId(long licenseId);
 
 	/**
-	 * Returns the video ID of this license.
+	 * Returns the full name of this license.
 	 *
-	 * @return the video ID of this license
+	 * @return the full name of this license
 	 */
-	public long getVideoId();
+	@AutoEscape
+	public String getFullName();
 
 	/**
-	 * Sets the video ID of this license.
+	 * Sets the full name of this license.
 	 *
-	 * @param videoId the video ID of this license
+	 * @param fullName the full name of this license
 	 */
-	public void setVideoId(long videoId);
+	public void setFullName(String fullName);
 
 	/**
-	 * Returns the ccby of this license.
+	 * Returns the short identifier of this license.
 	 *
-	 * @return the ccby of this license
+	 * @return the short identifier of this license
 	 */
-	public int getCcby();
+	@AutoEscape
+	public String getShortIdentifier();
 
 	/**
-	 * Sets the ccby of this license.
+	 * Sets the short identifier of this license.
 	 *
-	 * @param ccby the ccby of this license
+	 * @param shortIdentifier the short identifier of this license
 	 */
-	public void setCcby(int ccby);
+	public void setShortIdentifier(String shortIdentifier);
 
 	/**
-	 * Returns the ccbybc of this license.
+	 * Returns the url of this license.
 	 *
-	 * @return the ccbybc of this license
+	 * @return the url of this license
 	 */
-	public int getCcbybc();
+	@AutoEscape
+	public String getUrl();
 
 	/**
-	 * Sets the ccbybc of this license.
+	 * Sets the url of this license.
 	 *
-	 * @param ccbybc the ccbybc of this license
+	 * @param url the url of this license
 	 */
-	public void setCcbybc(int ccbybc);
+	public void setUrl(String url);
 
 	/**
-	 * Returns the ccbyncnd of this license.
+	 * Returns the scheme name of this license.
 	 *
-	 * @return the ccbyncnd of this license
+	 * @return the scheme name of this license
 	 */
-	public int getCcbyncnd();
+	@AutoEscape
+	public String getSchemeName();
 
 	/**
-	 * Sets the ccbyncnd of this license.
+	 * Sets the scheme name of this license.
 	 *
-	 * @param ccbyncnd the ccbyncnd of this license
+	 * @param schemeName the scheme name of this license
 	 */
-	public void setCcbyncnd(int ccbyncnd);
+	public void setSchemeName(String schemeName);
 
 	/**
-	 * Returns the ccbyncsa of this license.
+	 * Returns the scheme url of this license.
 	 *
-	 * @return the ccbyncsa of this license
+	 * @return the scheme url of this license
 	 */
-	public int getCcbyncsa();
+	@AutoEscape
+	public String getSchemeUrl();
 
 	/**
-	 * Sets the ccbyncsa of this license.
+	 * Sets the scheme url of this license.
 	 *
-	 * @param ccbyncsa the ccbyncsa of this license
+	 * @param schemeUrl the scheme url of this license
 	 */
-	public void setCcbyncsa(int ccbyncsa);
+	public void setSchemeUrl(String schemeUrl);
 
 	/**
-	 * Returns the ccbysa of this license.
+	 * Returns the selectable of this license.
 	 *
-	 * @return the ccbysa of this license
+	 * @return the selectable of this license
 	 */
-	public int getCcbysa();
+	public boolean getSelectable();
 
 	/**
-	 * Sets the ccbysa of this license.
+	 * Returns <code>true</code> if this license is selectable.
 	 *
-	 * @param ccbysa the ccbysa of this license
+	 * @return <code>true</code> if this license is selectable; <code>false</code> otherwise
 	 */
-	public void setCcbysa(int ccbysa);
+	public boolean isSelectable();
 
 	/**
-	 * Returns the ccbync of this license.
+	 * Sets whether this license is selectable.
 	 *
-	 * @return the ccbync of this license
+	 * @param selectable the selectable of this license
 	 */
-	public int getCcbync();
+	public void setSelectable(boolean selectable);
 
 	/**
-	 * Sets the ccbync of this license.
+	 * Returns the description of this license.
 	 *
-	 * @param ccbync the ccbync of this license
+	 * @return the description of this license
 	 */
-	public void setCcbync(int ccbync);
+	@AutoEscape
+	public String getDescription();
 
 	/**
-	 * Returns the l2go of this license.
+	 * Sets the description of this license.
 	 *
-	 * @return the l2go of this license
+	 * @param description the description of this license
 	 */
-	public int getL2go();
-
-	/**
-	 * Sets the l2go of this license.
-	 *
-	 * @param l2go the l2go of this license
-	 */
-	public void setL2go(int l2go);
+	public void setDescription(String description);
 
 	@Override
 	public boolean isNew();

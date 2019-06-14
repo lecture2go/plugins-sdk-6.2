@@ -270,5 +270,9 @@ public interface TagcloudLocalService extends BaseLocalService,
 
 	public void generateForAllLectureseries();
 
+	public void generateForLectureseries(java.lang.Long lectureseriesId);
+
 	public void generateForAllVideos();
+
+	public void generateForVideo(java.lang.Long videoId);
 }

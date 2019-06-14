@@ -80,6 +80,13 @@ public interface Video extends VideoModel, PersistedModel {
 	public void setPlayerUris(java.util.ArrayList<java.lang.String> playerUris);
 
 	/**
+	* Returns and sets the URIs for the video player as a JSONAray
+	*/
+	public org.json.JSONArray getJsonPlayerTracks();
+
+	public void setJsonPlayerTracks(org.json.JSONArray jsonPlayerTracks);
+
+	/**
 	* Returns the complete embed code for commsy depending on the openaccess field
 	*/
 	public java.lang.String getEmbedCommsy();
@@ -106,6 +113,13 @@ public interface Video extends VideoModel, PersistedModel {
 	public java.lang.String getVttChapterFile();
 
 	public void setVttChapterFile(java.lang.String vttChapterFile);
+
+	/**
+	* Returns the url to the vtt-caption-file
+	*/
+	public java.lang.String getVttCaptionUrl();
+
+	public void setVttCaptionUrl(java.lang.String vttCaptionUrl);
 
 	public java.lang.String getVttThumbsFilde();
 
@@ -142,9 +156,7 @@ public interface Video extends VideoModel, PersistedModel {
 	/**
 	* Checks if file has chapters
 	*/
-	public java.lang.Boolean isHasChapters();
-
-	public void setHasChapters(boolean hasChapters);
+	public boolean isHasChapters();
 
 	public boolean isHasComments();
 
@@ -224,6 +236,13 @@ public interface Video extends VideoModel, PersistedModel {
 	public java.io.File getWebmFile();
 
 	public void setWebmFile(java.io.File webmFile);
+
+	/**
+	* Returns the vtt file (unchecked if existing) from the user repository
+	*/
+	public java.io.File getVttFile();
+
+	public void setVttFile(java.io.File vttFile);
 
 	/**
 	* Returns the current filename of the video with a reasonable _bitrate_, this is either the original file or, if multiple qualities are
@@ -363,4 +382,6 @@ public interface Video extends VideoModel, PersistedModel {
 	public java.lang.String getCreators();
 
 	public void setCreators(java.lang.String creators);
+
+	public boolean isHasCaption();
 }

@@ -405,6 +405,22 @@ public class VideoLocalServiceUtil {
 		getService().addPlayerUris2Video(video);
 	}
 
+	/**
+	* This adds the "tracks" section for the video player json if there are any captions or chapters and sets the label to
+	* language of the caption file (translated to the userLocale)
+	*/
+	public static void addTextTracks2VideoWithLanguageLabel(
+		de.uhh.l2g.plugins.model.Video video, java.util.Locale userLocale) {
+		getService().addTextTracks2VideoWithLanguageLabel(video, userLocale);
+	}
+
+	/**
+	* This adds the "tracks" section for the video player json if there are any captions or chapters
+	*/
+	public static void addTextTracks2Video(de.uhh.l2g.plugins.model.Video video) {
+		getService().addTextTracks2Video(video);
+	}
+
 	public static de.uhh.l2g.plugins.model.Video getBySecureUrl(
 		java.lang.String surl)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -467,6 +483,15 @@ public class VideoLocalServiceUtil {
 	}
 
 	/**
+	* Creates a symlink for the caption of the video to to captions folder
+	*/
+	public static void createSymLinkForCaptionIfExisting(java.lang.Long videoId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().createSymLinkForCaptionIfExisting(videoId);
+	}
+
+	/**
 	* Checks if file is a symoblic link
 	*
 	* @param file the file to check
@@ -476,6 +501,22 @@ public class VideoLocalServiceUtil {
 	public static boolean isSymlink(java.io.File file)
 		throws java.io.IOException {
 		return getService().isSymlink(file);
+	}
+
+	/**
+	* Tries to retrieve the language from the caption file and returns a translated language display name
+	*
+	* Reads first lines of the file (specs of webvtt define headers must be before first blank line) and looks for a language property
+	*
+	* @param captionFile the caption file from which the language will be extracted
+	* @param userLocale the locale which is used to return the translated language display name
+	* @return the language display name in the language of the locale property or "Default" if none found
+	*/
+	public static java.lang.String retrieveLanguageDisplayNameOfCaptionFile(
+		java.io.File captionFile, java.util.Locale userLocale) {
+		return getService()
+				   .retrieveLanguageDisplayNameOfCaptionFile(captionFile,
+			userLocale);
 	}
 
 	public static void clearService() {

@@ -73,14 +73,13 @@ public class LicenseClp extends BaseModelImpl<License> implements License {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("licenseId", getLicenseId());
-		attributes.put("videoId", getVideoId());
-		attributes.put("ccby", getCcby());
-		attributes.put("ccbybc", getCcbybc());
-		attributes.put("ccbyncnd", getCcbyncnd());
-		attributes.put("ccbyncsa", getCcbyncsa());
-		attributes.put("ccbysa", getCcbysa());
-		attributes.put("ccbync", getCcbync());
-		attributes.put("l2go", getL2go());
+		attributes.put("fullName", getFullName());
+		attributes.put("shortIdentifier", getShortIdentifier());
+		attributes.put("url", getUrl());
+		attributes.put("schemeName", getSchemeName());
+		attributes.put("schemeUrl", getSchemeUrl());
+		attributes.put("selectable", getSelectable());
+		attributes.put("description", getDescription());
 
 		return attributes;
 	}
@@ -93,52 +92,46 @@ public class LicenseClp extends BaseModelImpl<License> implements License {
 			setLicenseId(licenseId);
 		}
 
-		Long videoId = (Long)attributes.get("videoId");
+		String fullName = (String)attributes.get("fullName");
 
-		if (videoId != null) {
-			setVideoId(videoId);
+		if (fullName != null) {
+			setFullName(fullName);
 		}
 
-		Integer ccby = (Integer)attributes.get("ccby");
+		String shortIdentifier = (String)attributes.get("shortIdentifier");
 
-		if (ccby != null) {
-			setCcby(ccby);
+		if (shortIdentifier != null) {
+			setShortIdentifier(shortIdentifier);
 		}
 
-		Integer ccbybc = (Integer)attributes.get("ccbybc");
+		String url = (String)attributes.get("url");
 
-		if (ccbybc != null) {
-			setCcbybc(ccbybc);
+		if (url != null) {
+			setUrl(url);
 		}
 
-		Integer ccbyncnd = (Integer)attributes.get("ccbyncnd");
+		String schemeName = (String)attributes.get("schemeName");
 
-		if (ccbyncnd != null) {
-			setCcbyncnd(ccbyncnd);
+		if (schemeName != null) {
+			setSchemeName(schemeName);
 		}
 
-		Integer ccbyncsa = (Integer)attributes.get("ccbyncsa");
+		String schemeUrl = (String)attributes.get("schemeUrl");
 
-		if (ccbyncsa != null) {
-			setCcbyncsa(ccbyncsa);
+		if (schemeUrl != null) {
+			setSchemeUrl(schemeUrl);
 		}
 
-		Integer ccbysa = (Integer)attributes.get("ccbysa");
+		Boolean selectable = (Boolean)attributes.get("selectable");
 
-		if (ccbysa != null) {
-			setCcbysa(ccbysa);
+		if (selectable != null) {
+			setSelectable(selectable);
 		}
 
-		Integer ccbync = (Integer)attributes.get("ccbync");
+		String description = (String)attributes.get("description");
 
-		if (ccbync != null) {
-			setCcbync(ccbync);
-		}
-
-		Integer l2go = (Integer)attributes.get("l2go");
-
-		if (l2go != null) {
-			setL2go(l2go);
+		if (description != null) {
+			setDescription(description);
 		}
 	}
 
@@ -166,21 +159,21 @@ public class LicenseClp extends BaseModelImpl<License> implements License {
 	}
 
 	@Override
-	public long getVideoId() {
-		return _videoId;
+	public String getFullName() {
+		return _fullName;
 	}
 
 	@Override
-	public void setVideoId(long videoId) {
-		_videoId = videoId;
+	public void setFullName(String fullName) {
+		_fullName = fullName;
 
 		if (_licenseRemoteModel != null) {
 			try {
 				Class<?> clazz = _licenseRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setVideoId", long.class);
+				Method method = clazz.getMethod("setFullName", String.class);
 
-				method.invoke(_licenseRemoteModel, videoId);
+				method.invoke(_licenseRemoteModel, fullName);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -189,21 +182,22 @@ public class LicenseClp extends BaseModelImpl<License> implements License {
 	}
 
 	@Override
-	public int getCcby() {
-		return _ccby;
+	public String getShortIdentifier() {
+		return _shortIdentifier;
 	}
 
 	@Override
-	public void setCcby(int ccby) {
-		_ccby = ccby;
+	public void setShortIdentifier(String shortIdentifier) {
+		_shortIdentifier = shortIdentifier;
 
 		if (_licenseRemoteModel != null) {
 			try {
 				Class<?> clazz = _licenseRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setCcby", int.class);
+				Method method = clazz.getMethod("setShortIdentifier",
+						String.class);
 
-				method.invoke(_licenseRemoteModel, ccby);
+				method.invoke(_licenseRemoteModel, shortIdentifier);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -212,21 +206,21 @@ public class LicenseClp extends BaseModelImpl<License> implements License {
 	}
 
 	@Override
-	public int getCcbybc() {
-		return _ccbybc;
+	public String getUrl() {
+		return _url;
 	}
 
 	@Override
-	public void setCcbybc(int ccbybc) {
-		_ccbybc = ccbybc;
+	public void setUrl(String url) {
+		_url = url;
 
 		if (_licenseRemoteModel != null) {
 			try {
 				Class<?> clazz = _licenseRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setCcbybc", int.class);
+				Method method = clazz.getMethod("setUrl", String.class);
 
-				method.invoke(_licenseRemoteModel, ccbybc);
+				method.invoke(_licenseRemoteModel, url);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -235,21 +229,21 @@ public class LicenseClp extends BaseModelImpl<License> implements License {
 	}
 
 	@Override
-	public int getCcbyncnd() {
-		return _ccbyncnd;
+	public String getSchemeName() {
+		return _schemeName;
 	}
 
 	@Override
-	public void setCcbyncnd(int ccbyncnd) {
-		_ccbyncnd = ccbyncnd;
+	public void setSchemeName(String schemeName) {
+		_schemeName = schemeName;
 
 		if (_licenseRemoteModel != null) {
 			try {
 				Class<?> clazz = _licenseRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setCcbyncnd", int.class);
+				Method method = clazz.getMethod("setSchemeName", String.class);
 
-				method.invoke(_licenseRemoteModel, ccbyncnd);
+				method.invoke(_licenseRemoteModel, schemeName);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -258,21 +252,21 @@ public class LicenseClp extends BaseModelImpl<License> implements License {
 	}
 
 	@Override
-	public int getCcbyncsa() {
-		return _ccbyncsa;
+	public String getSchemeUrl() {
+		return _schemeUrl;
 	}
 
 	@Override
-	public void setCcbyncsa(int ccbyncsa) {
-		_ccbyncsa = ccbyncsa;
+	public void setSchemeUrl(String schemeUrl) {
+		_schemeUrl = schemeUrl;
 
 		if (_licenseRemoteModel != null) {
 			try {
 				Class<?> clazz = _licenseRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setCcbyncsa", int.class);
+				Method method = clazz.getMethod("setSchemeUrl", String.class);
 
-				method.invoke(_licenseRemoteModel, ccbyncsa);
+				method.invoke(_licenseRemoteModel, schemeUrl);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -281,21 +275,26 @@ public class LicenseClp extends BaseModelImpl<License> implements License {
 	}
 
 	@Override
-	public int getCcbysa() {
-		return _ccbysa;
+	public boolean getSelectable() {
+		return _selectable;
 	}
 
 	@Override
-	public void setCcbysa(int ccbysa) {
-		_ccbysa = ccbysa;
+	public boolean isSelectable() {
+		return _selectable;
+	}
+
+	@Override
+	public void setSelectable(boolean selectable) {
+		_selectable = selectable;
 
 		if (_licenseRemoteModel != null) {
 			try {
 				Class<?> clazz = _licenseRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setCcbysa", int.class);
+				Method method = clazz.getMethod("setSelectable", boolean.class);
 
-				method.invoke(_licenseRemoteModel, ccbysa);
+				method.invoke(_licenseRemoteModel, selectable);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -304,44 +303,21 @@ public class LicenseClp extends BaseModelImpl<License> implements License {
 	}
 
 	@Override
-	public int getCcbync() {
-		return _ccbync;
+	public String getDescription() {
+		return _description;
 	}
 
 	@Override
-	public void setCcbync(int ccbync) {
-		_ccbync = ccbync;
+	public void setDescription(String description) {
+		_description = description;
 
 		if (_licenseRemoteModel != null) {
 			try {
 				Class<?> clazz = _licenseRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setCcbync", int.class);
+				Method method = clazz.getMethod("setDescription", String.class);
 
-				method.invoke(_licenseRemoteModel, ccbync);
-			}
-			catch (Exception e) {
-				throw new UnsupportedOperationException(e);
-			}
-		}
-	}
-
-	@Override
-	public int getL2go() {
-		return _l2go;
-	}
-
-	@Override
-	public void setL2go(int l2go) {
-		_l2go = l2go;
-
-		if (_licenseRemoteModel != null) {
-			try {
-				Class<?> clazz = _licenseRemoteModel.getClass();
-
-				Method method = clazz.getMethod("setL2go", int.class);
-
-				method.invoke(_licenseRemoteModel, l2go);
+				method.invoke(_licenseRemoteModel, description);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -419,14 +395,13 @@ public class LicenseClp extends BaseModelImpl<License> implements License {
 		LicenseClp clone = new LicenseClp();
 
 		clone.setLicenseId(getLicenseId());
-		clone.setVideoId(getVideoId());
-		clone.setCcby(getCcby());
-		clone.setCcbybc(getCcbybc());
-		clone.setCcbyncnd(getCcbyncnd());
-		clone.setCcbyncsa(getCcbyncsa());
-		clone.setCcbysa(getCcbysa());
-		clone.setCcbync(getCcbync());
-		clone.setL2go(getL2go());
+		clone.setFullName(getFullName());
+		clone.setShortIdentifier(getShortIdentifier());
+		clone.setUrl(getUrl());
+		clone.setSchemeName(getSchemeName());
+		clone.setSchemeUrl(getSchemeUrl());
+		clone.setSelectable(getSelectable());
+		clone.setDescription(getDescription());
 
 		return clone;
 	}
@@ -479,26 +454,24 @@ public class LicenseClp extends BaseModelImpl<License> implements License {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{licenseId=");
 		sb.append(getLicenseId());
-		sb.append(", videoId=");
-		sb.append(getVideoId());
-		sb.append(", ccby=");
-		sb.append(getCcby());
-		sb.append(", ccbybc=");
-		sb.append(getCcbybc());
-		sb.append(", ccbyncnd=");
-		sb.append(getCcbyncnd());
-		sb.append(", ccbyncsa=");
-		sb.append(getCcbyncsa());
-		sb.append(", ccbysa=");
-		sb.append(getCcbysa());
-		sb.append(", ccbync=");
-		sb.append(getCcbync());
-		sb.append(", l2go=");
-		sb.append(getL2go());
+		sb.append(", fullName=");
+		sb.append(getFullName());
+		sb.append(", shortIdentifier=");
+		sb.append(getShortIdentifier());
+		sb.append(", url=");
+		sb.append(getUrl());
+		sb.append(", schemeName=");
+		sb.append(getSchemeName());
+		sb.append(", schemeUrl=");
+		sb.append(getSchemeUrl());
+		sb.append(", selectable=");
+		sb.append(getSelectable());
+		sb.append(", description=");
+		sb.append(getDescription());
 		sb.append("}");
 
 		return sb.toString();
@@ -506,7 +479,7 @@ public class LicenseClp extends BaseModelImpl<License> implements License {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.License");
@@ -517,36 +490,32 @@ public class LicenseClp extends BaseModelImpl<License> implements License {
 		sb.append(getLicenseId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>videoId</column-name><column-value><![CDATA[");
-		sb.append(getVideoId());
+			"<column><column-name>fullName</column-name><column-value><![CDATA[");
+		sb.append(getFullName());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>ccby</column-name><column-value><![CDATA[");
-		sb.append(getCcby());
+			"<column><column-name>shortIdentifier</column-name><column-value><![CDATA[");
+		sb.append(getShortIdentifier());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>ccbybc</column-name><column-value><![CDATA[");
-		sb.append(getCcbybc());
+			"<column><column-name>url</column-name><column-value><![CDATA[");
+		sb.append(getUrl());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>ccbyncnd</column-name><column-value><![CDATA[");
-		sb.append(getCcbyncnd());
+			"<column><column-name>schemeName</column-name><column-value><![CDATA[");
+		sb.append(getSchemeName());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>ccbyncsa</column-name><column-value><![CDATA[");
-		sb.append(getCcbyncsa());
+			"<column><column-name>schemeUrl</column-name><column-value><![CDATA[");
+		sb.append(getSchemeUrl());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>ccbysa</column-name><column-value><![CDATA[");
-		sb.append(getCcbysa());
+			"<column><column-name>selectable</column-name><column-value><![CDATA[");
+		sb.append(getSelectable());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>ccbync</column-name><column-value><![CDATA[");
-		sb.append(getCcbync());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>l2go</column-name><column-value><![CDATA[");
-		sb.append(getL2go());
+			"<column><column-name>description</column-name><column-value><![CDATA[");
+		sb.append(getDescription());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -555,14 +524,13 @@ public class LicenseClp extends BaseModelImpl<License> implements License {
 	}
 
 	private long _licenseId;
-	private long _videoId;
-	private int _ccby;
-	private int _ccbybc;
-	private int _ccbyncnd;
-	private int _ccbyncsa;
-	private int _ccbysa;
-	private int _ccbync;
-	private int _l2go;
+	private String _fullName;
+	private String _shortIdentifier;
+	private String _url;
+	private String _schemeName;
+	private String _schemeUrl;
+	private boolean _selectable;
+	private String _description;
 	private BaseModel<?> _licenseRemoteModel;
 	private Class<?> _clpSerializerClass = de.uhh.l2g.plugins.service.ClpSerializer.class;
 }

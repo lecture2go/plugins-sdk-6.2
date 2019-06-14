@@ -53,6 +53,7 @@ public class VideoSoap implements Serializable {
 		soapModel.setTermId(model.getTermId());
 		soapModel.setTags(model.getTags());
 		soapModel.setPassword(model.getPassword());
+		soapModel.setLicenseId(model.getLicenseId());
 
 		return soapModel;
 	}
@@ -289,6 +290,14 @@ public class VideoSoap implements Serializable {
 		_password = password;
 	}
 
+	public long getLicenseId() {
+		return _licenseId;
+	}
+
+	public void setLicenseId(long licenseId) {
+		_licenseId = licenseId;
+	}
+
 	private long _videoId;
 	private String _title;
 	private long _lectureseriesId;
@@ -312,4 +321,5 @@ public class VideoSoap implements Serializable {
 	private long _termId;
 	private String _tags;
 	private String _password;
+	private long _licenseId;
 }

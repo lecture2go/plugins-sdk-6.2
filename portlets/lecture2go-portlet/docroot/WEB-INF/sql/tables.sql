@@ -102,14 +102,13 @@ create table LG_Lectureseries_Institution (
 
 create table LG_License (
 	licenseId LONG not null primary key,
-	videoId LONG,
-	ccby INTEGER,
-	ccbybc INTEGER,
-	ccbyncnd INTEGER,
-	ccbyncsa INTEGER,
-	ccbysa INTEGER,
-	ccbync INTEGER,
-	l2go INTEGER
+	fullName VARCHAR(75) null,
+	shortIdentifier VARCHAR(75) null,
+	url VARCHAR(75) null,
+	schemeName VARCHAR(75) null,
+	schemeUrl VARCHAR(75) null,
+	selectable BOOLEAN,
+	description VARCHAR(75) null
 );
 
 create table LG_Metadata (
@@ -227,7 +226,8 @@ create table LG_Video (
 	citation2go INTEGER,
 	termId LONG,
 	tags TEXT null,
-	password_ VARCHAR(75) null
+	password_ VARCHAR(75) null,
+	licenseId LONG
 );
 
 create table LG_VideoStatistic (

@@ -1,5 +1,3 @@
-<script type="text/javascript">jwplayer.key="qKvU61clkb6v98R2Yoc/cL6x7dFfJ3we+r6nxD6iB0Q=";</script>
-
 <style>
 <!--
 .jw-reset.jw-settings-content-item {

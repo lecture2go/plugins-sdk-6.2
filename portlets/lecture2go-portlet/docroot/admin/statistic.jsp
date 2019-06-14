@@ -5,10 +5,6 @@
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui"%>
 
 <%
-JSONObject jsonObject = StatisticLocalServiceUtil.getAllStatistics();
-
-JSONArray array = (JSONArray) jsonObject.get("statistic");
-
 String totalVideos = "-";
 String totalPublic = "";
 String totalPrivate = "";
@@ -28,36 +24,43 @@ String totalOneMonthPrivate = "0";
 String totalOneYear ="0";
 String totalOneYearPublic = "0";
 String totalOneYearPrivate = "0";
-
-for(int i=0;i<array.length();i++){
-    JSONObject object = array.getJSONObject(i);
-    String timespan = (String)object.get("timespan");
-    
-    if(timespan.equals("0")){
-    	 totalVideos = object.get("total") + "";
-    	 totalPublic = object.get("public") + "";
-		 totalPrivate = object.get("private") + "";    	
-    }
-    if(timespan.equals("DAY")){
-		 totalYesterday = object.get("totalDiff") + "";
-		 totalYesterdayPublic = object.get("publicDiff") + "";
-		 totalYesterdayPrivate = object.get("privateDiff") + "";    	
-    }
-    if(timespan.equals("WEEK")){
-		 totalOneWeek = object.get("totalDiff") + "";
-		 totalOneWeekPublic = object.get("publicDiff") + "";
-		 totalOneWeekPrivate = object.get("privateDiff") + "";  	
-    }
-    if(timespan.equals("MONTH")){
-		 totalOneMonth = object.get("totalDiff") + "";
-		 totalOneMonthPublic = object.get("publicDiff") + "";
-		 totalOneMonthPrivate = object.get("privateDiff") + "";    	
-    }
-    if(timespan.equals("YEAR")){
-		 totalOneYear = object.get("totalDiff") + "";
-		 totalOneYearPublic = object.get("publicDiff") + "";
-		 totalOneYearPrivate = object.get("privateDiff") + "";
-    }
+try{
+	JSONObject jsonObject = StatisticLocalServiceUtil.getAllStatistics();
+	
+	JSONArray array = (JSONArray) jsonObject.get("statistic");
+	
+	for(int i=0;i<array.length();i++){
+	    JSONObject object = array.getJSONObject(i);
+	    String timespan = (String)object.get("timespan");
+	    
+	    if(timespan.equals("0")){
+	    	 totalVideos = object.get("total") + "";
+	    	 totalPublic = object.get("public") + "";
+			 totalPrivate = object.get("private") + "";    	
+	    }
+	    if(timespan.equals("DAY")){
+			 totalYesterday = object.get("totalDiff") + "";
+			 totalYesterdayPublic = object.get("publicDiff") + "";
+			 totalYesterdayPrivate = object.get("privateDiff") + "";    	
+	    }
+	    if(timespan.equals("WEEK")){
+			 totalOneWeek = object.get("totalDiff") + "";
+			 totalOneWeekPublic = object.get("publicDiff") + "";
+			 totalOneWeekPrivate = object.get("privateDiff") + "";  	
+	    }
+	    if(timespan.equals("MONTH")){
+			 totalOneMonth = object.get("totalDiff") + "";
+			 totalOneMonthPublic = object.get("publicDiff") + "";
+			 totalOneMonthPrivate = object.get("privateDiff") + "";    	
+	    }
+	    if(timespan.equals("YEAR")){
+			 totalOneYear = object.get("totalDiff") + "";
+			 totalOneYearPublic = object.get("publicDiff") + "";
+			 totalOneYearPrivate = object.get("privateDiff") + "";
+	    }
+	}
+}catch(NullPointerException npe){
+	System.out.print(npe);
 }
 
 %>

@@ -1,3 +1,37 @@
+Bug Fix and Feature Package [master-v.1-b5162] on Friday, June 14, 2019
+
+#1316 RM - Opening and closing of div elements in the video admin area works incorrectly.
+#1354 RM - Download file points to wrong location.
+#1366 RM - RSS creation aborts for data without open access videos.
+#1315 RM - Author field in the admin area remains red after saving the new entry.
+#1237 RM - Problems with the chapter functionality on edge browsers.
+#1295 RM - Videos and lecture series with special characters can not be found.
+#1299 RM - Videos and lecture series with the special character "&" are not highlighted after searching request. 
+#1348 RM - Download fall back for public videos refers to incorrect file location.
+#1341 RM - Searching for speakers does not return individual videos.
+#1346 RM - Chapters for audio files have broken pictures.
+#1358 RM - Chapter clicks do not jump to the video.
+#1357 RM - Search for Lecturers returns (empty) hits for closed-access videos.
+#996 RM  - Coding problems with feeds.
+The AdminLectureSeriesManagement.generateRSSforAllLectureseriesWhithOpenaccessVideos () method should be run if all RSS feeds are to be regenerated.
+
+#1032 RM - Subtitles integration.
+For an upgrade follow the steps below:
+A "captions" folder is introduced to store (via symlinks) the subtitles for the end-user;
+Two entries need to be added to the properties file:
+lecture2go.captions.web.root=${lecture2go.web.root}/captions
+lecture2go.captions.system.path=${lecture2go.media.repository}/captions
+
+#1333 RM - Add CC-BY-SA (4.0) and more to selectable licenses
+For an upgrade follow the steps below:
+INSERT INTO LG_License (licenseId,fullName, shortIdentifier, url, schemeName, schemeUrl, selectable, description) 
+VALUES (1,"Lecture2Go-Lizenz", "UHH-L2G", "https://lecture2go.uni-hamburg.de/license-l2go", NULL, NULL, 1, NULL);
+INSERT INTO LG_License (licenseId,fullName, shortIdentifier, url, schemeName, schemeUrl, selectable, description) 
+VALUES (2,"Creative Commons Attribution Non Commercial Share Alike 3.0", "CC-BY-NC-SA-3.0", "https://creativecommons.org/licenses/by-nc-sa/3.0/", "SPDX", "https://spdx.org/licenses/", 1, NULL);
+UPDATE LG_Video SET licenseId = 1
+WHERE videoId IN (SELECT videoId FROM LG_License_old WHERE l2go);
+UPDATE LG_Video SET licenseId = 2 WHERE videoId IN (SELECT videoId FROM LG_License_old WHERE ccbyncsa);
+
 Bug Fix and Feature Package [master-v.1-b5146] on Wednesday, February 20, 2019
 
 1273 RM - List of recently uploaded open access videos not updated correctly

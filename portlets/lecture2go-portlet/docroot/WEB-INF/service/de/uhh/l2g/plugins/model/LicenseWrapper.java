@@ -49,14 +49,13 @@ public class LicenseWrapper implements License, ModelWrapper<License> {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("licenseId", getLicenseId());
-		attributes.put("videoId", getVideoId());
-		attributes.put("ccby", getCcby());
-		attributes.put("ccbybc", getCcbybc());
-		attributes.put("ccbyncnd", getCcbyncnd());
-		attributes.put("ccbyncsa", getCcbyncsa());
-		attributes.put("ccbysa", getCcbysa());
-		attributes.put("ccbync", getCcbync());
-		attributes.put("l2go", getL2go());
+		attributes.put("fullName", getFullName());
+		attributes.put("shortIdentifier", getShortIdentifier());
+		attributes.put("url", getUrl());
+		attributes.put("schemeName", getSchemeName());
+		attributes.put("schemeUrl", getSchemeUrl());
+		attributes.put("selectable", getSelectable());
+		attributes.put("description", getDescription());
 
 		return attributes;
 	}
@@ -69,52 +68,46 @@ public class LicenseWrapper implements License, ModelWrapper<License> {
 			setLicenseId(licenseId);
 		}
 
-		Long videoId = (Long)attributes.get("videoId");
+		String fullName = (String)attributes.get("fullName");
 
-		if (videoId != null) {
-			setVideoId(videoId);
+		if (fullName != null) {
+			setFullName(fullName);
 		}
 
-		Integer ccby = (Integer)attributes.get("ccby");
+		String shortIdentifier = (String)attributes.get("shortIdentifier");
 
-		if (ccby != null) {
-			setCcby(ccby);
+		if (shortIdentifier != null) {
+			setShortIdentifier(shortIdentifier);
 		}
 
-		Integer ccbybc = (Integer)attributes.get("ccbybc");
+		String url = (String)attributes.get("url");
 
-		if (ccbybc != null) {
-			setCcbybc(ccbybc);
+		if (url != null) {
+			setUrl(url);
 		}
 
-		Integer ccbyncnd = (Integer)attributes.get("ccbyncnd");
+		String schemeName = (String)attributes.get("schemeName");
 
-		if (ccbyncnd != null) {
-			setCcbyncnd(ccbyncnd);
+		if (schemeName != null) {
+			setSchemeName(schemeName);
 		}
 
-		Integer ccbyncsa = (Integer)attributes.get("ccbyncsa");
+		String schemeUrl = (String)attributes.get("schemeUrl");
 
-		if (ccbyncsa != null) {
-			setCcbyncsa(ccbyncsa);
+		if (schemeUrl != null) {
+			setSchemeUrl(schemeUrl);
 		}
 
-		Integer ccbysa = (Integer)attributes.get("ccbysa");
+		Boolean selectable = (Boolean)attributes.get("selectable");
 
-		if (ccbysa != null) {
-			setCcbysa(ccbysa);
+		if (selectable != null) {
+			setSelectable(selectable);
 		}
 
-		Integer ccbync = (Integer)attributes.get("ccbync");
+		String description = (String)attributes.get("description");
 
-		if (ccbync != null) {
-			setCcbync(ccbync);
-		}
-
-		Integer l2go = (Integer)attributes.get("l2go");
-
-		if (l2go != null) {
-			setL2go(l2go);
+		if (description != null) {
+			setDescription(description);
 		}
 	}
 
@@ -159,163 +152,153 @@ public class LicenseWrapper implements License, ModelWrapper<License> {
 	}
 
 	/**
-	* Returns the video ID of this license.
+	* Returns the full name of this license.
 	*
-	* @return the video ID of this license
+	* @return the full name of this license
 	*/
 	@Override
-	public long getVideoId() {
-		return _license.getVideoId();
+	public java.lang.String getFullName() {
+		return _license.getFullName();
 	}
 
 	/**
-	* Sets the video ID of this license.
+	* Sets the full name of this license.
 	*
-	* @param videoId the video ID of this license
+	* @param fullName the full name of this license
 	*/
 	@Override
-	public void setVideoId(long videoId) {
-		_license.setVideoId(videoId);
+	public void setFullName(java.lang.String fullName) {
+		_license.setFullName(fullName);
 	}
 
 	/**
-	* Returns the ccby of this license.
+	* Returns the short identifier of this license.
 	*
-	* @return the ccby of this license
+	* @return the short identifier of this license
 	*/
 	@Override
-	public int getCcby() {
-		return _license.getCcby();
+	public java.lang.String getShortIdentifier() {
+		return _license.getShortIdentifier();
 	}
 
 	/**
-	* Sets the ccby of this license.
+	* Sets the short identifier of this license.
 	*
-	* @param ccby the ccby of this license
+	* @param shortIdentifier the short identifier of this license
 	*/
 	@Override
-	public void setCcby(int ccby) {
-		_license.setCcby(ccby);
+	public void setShortIdentifier(java.lang.String shortIdentifier) {
+		_license.setShortIdentifier(shortIdentifier);
 	}
 
 	/**
-	* Returns the ccbybc of this license.
+	* Returns the url of this license.
 	*
-	* @return the ccbybc of this license
+	* @return the url of this license
 	*/
 	@Override
-	public int getCcbybc() {
-		return _license.getCcbybc();
+	public java.lang.String getUrl() {
+		return _license.getUrl();
 	}
 
 	/**
-	* Sets the ccbybc of this license.
+	* Sets the url of this license.
 	*
-	* @param ccbybc the ccbybc of this license
+	* @param url the url of this license
 	*/
 	@Override
-	public void setCcbybc(int ccbybc) {
-		_license.setCcbybc(ccbybc);
+	public void setUrl(java.lang.String url) {
+		_license.setUrl(url);
 	}
 
 	/**
-	* Returns the ccbyncnd of this license.
+	* Returns the scheme name of this license.
 	*
-	* @return the ccbyncnd of this license
+	* @return the scheme name of this license
 	*/
 	@Override
-	public int getCcbyncnd() {
-		return _license.getCcbyncnd();
+	public java.lang.String getSchemeName() {
+		return _license.getSchemeName();
 	}
 
 	/**
-	* Sets the ccbyncnd of this license.
+	* Sets the scheme name of this license.
 	*
-	* @param ccbyncnd the ccbyncnd of this license
+	* @param schemeName the scheme name of this license
 	*/
 	@Override
-	public void setCcbyncnd(int ccbyncnd) {
-		_license.setCcbyncnd(ccbyncnd);
+	public void setSchemeName(java.lang.String schemeName) {
+		_license.setSchemeName(schemeName);
 	}
 
 	/**
-	* Returns the ccbyncsa of this license.
+	* Returns the scheme url of this license.
 	*
-	* @return the ccbyncsa of this license
+	* @return the scheme url of this license
 	*/
 	@Override
-	public int getCcbyncsa() {
-		return _license.getCcbyncsa();
+	public java.lang.String getSchemeUrl() {
+		return _license.getSchemeUrl();
 	}
 
 	/**
-	* Sets the ccbyncsa of this license.
+	* Sets the scheme url of this license.
 	*
-	* @param ccbyncsa the ccbyncsa of this license
+	* @param schemeUrl the scheme url of this license
 	*/
 	@Override
-	public void setCcbyncsa(int ccbyncsa) {
-		_license.setCcbyncsa(ccbyncsa);
+	public void setSchemeUrl(java.lang.String schemeUrl) {
+		_license.setSchemeUrl(schemeUrl);
 	}
 
 	/**
-	* Returns the ccbysa of this license.
+	* Returns the selectable of this license.
 	*
-	* @return the ccbysa of this license
+	* @return the selectable of this license
 	*/
 	@Override
-	public int getCcbysa() {
-		return _license.getCcbysa();
+	public boolean getSelectable() {
+		return _license.getSelectable();
 	}
 
 	/**
-	* Sets the ccbysa of this license.
+	* Returns <code>true</code> if this license is selectable.
 	*
-	* @param ccbysa the ccbysa of this license
+	* @return <code>true</code> if this license is selectable; <code>false</code> otherwise
 	*/
 	@Override
-	public void setCcbysa(int ccbysa) {
-		_license.setCcbysa(ccbysa);
+	public boolean isSelectable() {
+		return _license.isSelectable();
 	}
 
 	/**
-	* Returns the ccbync of this license.
+	* Sets whether this license is selectable.
 	*
-	* @return the ccbync of this license
+	* @param selectable the selectable of this license
 	*/
 	@Override
-	public int getCcbync() {
-		return _license.getCcbync();
+	public void setSelectable(boolean selectable) {
+		_license.setSelectable(selectable);
 	}
 
 	/**
-	* Sets the ccbync of this license.
+	* Returns the description of this license.
 	*
-	* @param ccbync the ccbync of this license
+	* @return the description of this license
 	*/
 	@Override
-	public void setCcbync(int ccbync) {
-		_license.setCcbync(ccbync);
+	public java.lang.String getDescription() {
+		return _license.getDescription();
 	}
 
 	/**
-	* Returns the l2go of this license.
+	* Sets the description of this license.
 	*
-	* @return the l2go of this license
+	* @param description the description of this license
 	*/
 	@Override
-	public int getL2go() {
-		return _license.getL2go();
-	}
-
-	/**
-	* Sets the l2go of this license.
-	*
-	* @param l2go the l2go of this license
-	*/
-	@Override
-	public void setL2go(int l2go) {
-		_license.setL2go(l2go);
+	public void setDescription(java.lang.String description) {
+		_license.setDescription(description);
 	}
 
 	@Override

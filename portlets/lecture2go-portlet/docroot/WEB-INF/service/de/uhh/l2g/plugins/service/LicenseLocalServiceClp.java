@@ -110,13 +110,9 @@ public class LicenseLocalServiceClp implements LicenseLocalService {
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
 
-		_methodName19 = "getByVideoId";
+		_methodName19 = "getBySelectable";
 
-		_methodParameterTypes19 = new String[] { "java.lang.Long" };
-
-		_methodName20 = "deleteByVideoId";
-
-		_methodParameterTypes20 = new String[] { "java.lang.Long" };
+		_methodParameterTypes19 = new String[] { "boolean" };
 	}
 
 	@Override
@@ -666,16 +662,21 @@ public class LicenseLocalServiceClp implements LicenseLocalService {
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.License getByVideoId(java.lang.Long videoId) {
+	public java.util.List<de.uhh.l2g.plugins.model.License> getBySelectable(
+		boolean isSelectable)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName19,
-					_methodParameterTypes19,
-					new Object[] { ClpSerializer.translateInput(videoId) });
+					_methodParameterTypes19, new Object[] { isSelectable });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
@@ -686,31 +687,7 @@ public class LicenseLocalServiceClp implements LicenseLocalService {
 			}
 		}
 
-		return (de.uhh.l2g.plugins.model.License)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public boolean deleteByVideoId(java.lang.Long videoId) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName20,
-					_methodParameterTypes20,
-					new Object[] { ClpSerializer.translateInput(videoId) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return ((Boolean)returnObj).booleanValue();
+		return (java.util.List<de.uhh.l2g.plugins.model.License>)ClpSerializer.translateOutput(returnObj);
 	}
 
 	private InvokableLocalService _invokableLocalService;
@@ -752,6 +729,4 @@ public class LicenseLocalServiceClp implements LicenseLocalService {
 	private String[] _methodParameterTypes17;
 	private String _methodName19;
 	private String[] _methodParameterTypes19;
-	private String _methodName20;
-	private String[] _methodParameterTypes20;
 }

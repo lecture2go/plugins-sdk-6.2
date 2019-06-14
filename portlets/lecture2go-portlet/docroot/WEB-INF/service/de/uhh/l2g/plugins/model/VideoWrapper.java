@@ -72,6 +72,7 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 		attributes.put("termId", getTermId());
 		attributes.put("tags", getTags());
 		attributes.put("password", getPassword());
+		attributes.put("licenseId", getLicenseId());
 
 		return attributes;
 	}
@@ -215,6 +216,12 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 
 		if (password != null) {
 			setPassword(password);
+		}
+
+		Long licenseId = (Long)attributes.get("licenseId");
+
+		if (licenseId != null) {
+			setLicenseId(licenseId);
 		}
 	}
 
@@ -698,6 +705,26 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 		_video.setPassword(password);
 	}
 
+	/**
+	* Returns the license ID of this video.
+	*
+	* @return the license ID of this video
+	*/
+	@Override
+	public long getLicenseId() {
+		return _video.getLicenseId();
+	}
+
+	/**
+	* Sets the license ID of this video.
+	*
+	* @param licenseId the license ID of this video
+	*/
+	@Override
+	public void setLicenseId(long licenseId) {
+		_video.setLicenseId(licenseId);
+	}
+
 	@Override
 	public boolean isNew() {
 		return _video.isNew();
@@ -905,6 +932,19 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 	}
 
 	/**
+	* Returns and sets the URIs for the video player as a JSONAray
+	*/
+	@Override
+	public org.json.JSONArray getJsonPlayerTracks() {
+		return _video.getJsonPlayerTracks();
+	}
+
+	@Override
+	public void setJsonPlayerTracks(org.json.JSONArray jsonPlayerTracks) {
+		_video.setJsonPlayerTracks(jsonPlayerTracks);
+	}
+
+	/**
 	* Returns the complete embed code for commsy depending on the openaccess field
 	*/
 	@Override
@@ -954,6 +994,19 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 	@Override
 	public void setVttChapterFile(java.lang.String vttChapterFile) {
 		_video.setVttChapterFile(vttChapterFile);
+	}
+
+	/**
+	* Returns the url to the vtt-caption-file
+	*/
+	@Override
+	public java.lang.String getVttCaptionUrl() {
+		return _video.getVttCaptionUrl();
+	}
+
+	@Override
+	public void setVttCaptionUrl(java.lang.String vttCaptionUrl) {
+		_video.setVttCaptionUrl(vttCaptionUrl);
 	}
 
 	@Override
@@ -1040,13 +1093,8 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 	* Checks if file has chapters
 	*/
 	@Override
-	public java.lang.Boolean isHasChapters() {
+	public boolean isHasChapters() {
 		return _video.isHasChapters();
-	}
-
-	@Override
-	public void setHasChapters(boolean hasChapters) {
-		_video.setHasChapters(hasChapters);
 	}
 
 	@Override
@@ -1195,6 +1243,19 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 	@Override
 	public void setWebmFile(java.io.File webmFile) {
 		_video.setWebmFile(webmFile);
+	}
+
+	/**
+	* Returns the vtt file (unchecked if existing) from the user repository
+	*/
+	@Override
+	public java.io.File getVttFile() {
+		return _video.getVttFile();
+	}
+
+	@Override
+	public void setVttFile(java.io.File vttFile) {
+		_video.setVttFile(vttFile);
 	}
 
 	/**
@@ -1451,6 +1512,11 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 	@Override
 	public void setCreators(java.lang.String creators) {
 		_video.setCreators(creators);
+	}
+
+	@Override
+	public boolean isHasCaption() {
+		return _video.isHasCaption();
 	}
 
 	@Override

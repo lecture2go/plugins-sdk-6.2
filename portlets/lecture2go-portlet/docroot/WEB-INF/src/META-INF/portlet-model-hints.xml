@@ -55,6 +55,12 @@
 		</field>
 		<field name="defaultHost" type="int" />
 	</model>
+	<model name="de.uhh.l2g.plugins.model.InstallWizard">
+		<field name="installWizardId" type="long" />
+		<field name="wizartActive" type="int" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+	</model>
 	<model name="de.uhh.l2g.plugins.model.Institution">
 		<field name="institutionId" type="long" />
 		<field name="parentId" type="long" />
@@ -131,14 +137,13 @@
 	</model>
 	<model name="de.uhh.l2g.plugins.model.License">
 		<field name="licenseId" type="long" />
-		<field name="videoId" type="long" />
-		<field name="ccby" type="int" />
-		<field name="ccbybc" type="int" />
-		<field name="ccbyncnd" type="int" />
-		<field name="ccbyncsa" type="int" />
-		<field name="ccbysa" type="int" />
-		<field name="ccbync" type="int" />
-		<field name="l2go" type="int" />
+		<field name="fullName" type="String" />
+		<field name="shortIdentifier" type="String" />
+		<field name="url" type="String" />
+		<field name="schemeName" type="String" />
+		<field name="schemeUrl" type="String" />
+		<field name="selectable" type="boolean" />
+		<field name="description" type="String" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Metadata">
 		<field name="metadataId" type="long" />
@@ -272,6 +277,7 @@
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="password" type="String" />
+		<field name="licenseId" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Video_Category">
 		<field name="videoCategoryId" type="long" />

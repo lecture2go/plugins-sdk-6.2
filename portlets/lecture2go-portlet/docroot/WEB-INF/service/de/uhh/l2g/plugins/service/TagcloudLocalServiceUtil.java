@@ -307,8 +307,16 @@ public class TagcloudLocalServiceUtil {
 		getService().generateForAllLectureseries();
 	}
 
+	public static void generateForLectureseries(java.lang.Long lectureseriesId) {
+		getService().generateForLectureseries(lectureseriesId);
+	}
+
 	public static void generateForAllVideos() {
 		getService().generateForAllVideos();
+	}
+
+	public static void generateForVideo(java.lang.Long videoId) {
+		getService().generateForVideo(videoId);
 	}
 
 	public static void clearService() {
