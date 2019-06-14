@@ -23,7 +23,7 @@ Bug Fix and Feature Package [master-v.1-b5162] on Friday, June 14, 2019
 - 1358 RM - Chapter clicks do not jump to the video.
 - 1357 RM - Search for Lecturers returns (empty) hits for closed-access videos.
 - 996 RM  - Coding problems with feeds.
-> The AdminLectureSeriesManagement.generateRSSforAllLectureseriesWhithOpenaccessVideos () method should be run if all RSS feeds are to be regenerated.
+  - The AdminLectureSeriesManagement.generateRSSforAllLectureseriesWhithOpenaccessVideos () method should be run if all RSS feeds are to be regenerated.
 
 - 1032 RM - Subtitles integration.
 > For an upgrade follow the steps below:
