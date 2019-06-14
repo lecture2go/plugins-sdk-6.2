@@ -27,6 +27,7 @@ Bug Fix and Feature Package [master-v.1-b5162] on Friday, June 14, 2019
 
 - 1032 RM - Subtitles integration.
 > For an upgrade follow the steps below:
+> 
 > A "captions" folder is introduced to store (via symlinks) the subtitles for the end-user;
 > Two entries need to be added to the properties file:
 > lecture2go.captions.web.root=${lecture2go.web.root}/captions
@@ -34,6 +35,7 @@ Bug Fix and Feature Package [master-v.1-b5162] on Friday, June 14, 2019
 
 - 1333 RM - Add CC-BY-SA (4.0) and more to selectable licenses
 > For an upgrade follow the steps below:
+> 
 > INSERT INTO LG_License (licenseId,fullName, shortIdentifier, url, schemeName, schemeUrl, selectable, description) 
 > VALUES (1,"Lecture2Go-Lizenz", "UHH-L2G", "https://lecture2go.uni-hamburg.de/license-l2go", NULL, NULL, 1, NULL);
 > 
