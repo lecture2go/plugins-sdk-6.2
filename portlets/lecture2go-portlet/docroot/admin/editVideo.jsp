@@ -533,6 +533,10 @@ $(function () {
 	
 	$('#fileupload').fileupload({
         dataType: 'json',
+        beforeSend: function(xhr, data) {
+        	// send a custom header to notify the upload servlet where to put the temporary files upon upload
+            xhr.setRequestHeader('X-tempdir', "<%=uploadRepository%>");
+        },
         add: function(e, data) {
             var uploadErrors = [];
 			var acceptFileTypes = /(mp4|m4v|m4a|audio\/mp3|audio\/mpeg|audio|pdf|vtt)$/i;//file types
