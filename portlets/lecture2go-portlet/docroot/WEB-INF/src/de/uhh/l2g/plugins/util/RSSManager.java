@@ -72,6 +72,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
+import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.Metadata;
 import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.model.Video;
@@ -80,6 +81,7 @@ import de.uhh.l2g.plugins.model.impl.InstitutionImpl;
 import de.uhh.l2g.plugins.model.impl.MetadataImpl;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
+import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
@@ -392,6 +394,8 @@ public class RSSManager {
 		String lectureseriesUrl = "";
 		String imageUrl = "";
 		String language = "";
+		// the default description consists of a space, because some feed readers require a non-empty description field 
+		String description = " ";
 		if (!videoList.isEmpty()) {
 			lectureseriesUrl = videoList.get(0).getLectureseriesUrl();
 			imageUrl = getAbsoluteUrl(videoList.get(0).getImageMedium());
@@ -406,6 +410,16 @@ public class RSSManager {
 			}
 			// we need to replace the hyphen to be ISO-639 language code compliant
 			language = metadata.getLanguage().replaceAll("_", "-");	
+			
+			// prepare the description
+			try {
+				Lectureseries lec = LectureseriesLocalServiceUtil.getLectureseries(videoList.get(0).getLectureseriesId());
+				// replace empty description value with real description if there is any (all html tags removed)
+				if (!(lec.getLongDesc().isEmpty())) {
+					description = lec.getLongDesc().replaceAll("\\<[^>]*>","");
+				}
+			} catch (Exception e) {
+			}
 		}
 		
 		
@@ -438,7 +452,7 @@ public class RSSManager {
 			channelElement.appendChild(linkElement);
 			// description
 			Element descriptionElement = doc.createElement("description");
-			descriptionElement.setTextContent(description.replaceAll("\\<[^>]*>","")); // remove all html tags from description
+			descriptionElement.setTextContent(description);
 			channelElement.appendChild(descriptionElement);
 			//  language
 			Element languageElement = doc.createElement("language");

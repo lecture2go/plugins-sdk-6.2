@@ -1318,6 +1318,11 @@ public class AdminVideoManagement extends MVCPortlet {
 						//e.printStackTrace();
 					}
 			}
+			
+			// clean up symbolic links for the deleted file if there are any (e.g. download-folder, caption-folder)
+			ProzessManager pm = new ProzessManager();
+			pm.removeSymbolicLinksForSingularFileIfExisting(fileName);
+		
 			writeJSON(resourceRequest, resourceResponse, jarr);
 		}
 		
