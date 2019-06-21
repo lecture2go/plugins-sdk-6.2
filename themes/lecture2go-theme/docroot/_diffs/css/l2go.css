@@ -1789,6 +1789,7 @@ li.chaptertile {
 
 #_lgadminstreamingservermanagement_WAR_lecture2goportlet_name, #_lgadminstreamingservermanagement_WAR_lecture2goportlet_curStreamingServerName {
     width: 100px;
+    color: #8d8d8d !important;
 }
 
 .add-institution .btn.btn-primary {
