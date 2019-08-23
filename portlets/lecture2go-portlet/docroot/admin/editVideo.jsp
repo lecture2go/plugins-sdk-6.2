@@ -1063,15 +1063,19 @@ function applyDateTime(){
 			  global: false,
 			  async:false,
 			  success: function(data) {
-				  $('#date-time-form').hide();
-				  $("#upload-form").fadeIn(500); 	
-				  $("#tm").text(getDateTime());
-				  loadDateTimepickerToTheMetadataSkeleton();
-				  $("#l2gdate").fadeIn(1000);
-				  $("#<portlet:namespace/>meta-ebene").show();
-				  <c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider")%>'>
-					initializeCaptionGeneration();
-				  </c:if>
+				  if(!data.generationDate){
+					  alert('<liferay-ui:message key="please-enter-a-date"/>');
+				  }else{
+					  $('#date-time-form').hide();
+					  $("#upload-form").fadeIn(500); 	
+					  $("#tm").text(getDateTime());
+					  loadDateTimepickerToTheMetadataSkeleton();
+					  $("#l2gdate").fadeIn(1000);
+					  $("#<portlet:namespace/>meta-ebene").show();
+					  <c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider")%>'>
+						initializeCaptionGeneration();
+					  </c:if>
+				  }
 			  }
 	  });
 }
