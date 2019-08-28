@@ -61,6 +61,7 @@ public class InstallWizardManager {
 				InstallWizardLocalServiceUtil.activate(installWizard);
 				// install wizart is active
 				if(installWizard.getWizartActive()==1){
+					System.out.print("Create media repository!");
 					//call the repository manager for repository implementation. 
 					//insure, that there aren't any symbolic links in the tomcat webapp root directory
 					//generated before (e. for abo->, videorep->, rss-> etc.)
