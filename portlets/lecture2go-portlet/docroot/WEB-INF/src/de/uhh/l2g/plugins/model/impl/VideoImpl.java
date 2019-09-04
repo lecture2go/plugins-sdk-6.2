@@ -101,7 +101,7 @@ public class VideoImpl extends VideoBaseImpl {
 	private static final int EMBED_WIDTH	= 647;
 	private static final int EMBED_HEIGHT	= 373;
 
-	private static final String HTML5_EMBED_VIDEO_START 	= "<video width='" + EMBED_WIDTH + "' height='" + EMBED_HEIGHT + "' controls><source src='";
+	private static final String HTML5_EMBED_VIDEO_START 	= "<video width='" + EMBED_WIDTH + "' height='" + EMBED_HEIGHT;
 	private static final String HTML5_EMBED_VIDEO_END		= "' type='video/mp4'>Your browser does not support the video tag.</video>"; 
 	private static final String HTML5_EMBED_AUDIO_START 	= "<audio controls><source src='";
 	private static final String HTML5_EMBED_AUDIO_END		= "' type='audio/mpeg'>Your browser does not support the audio element.</audio>";  
@@ -992,9 +992,9 @@ public class VideoImpl extends VideoBaseImpl {
 	 */
 	private String getVideoEmbedHtml5() {
 		if(getOpenAccess()==1){
-			return HTML5_EMBED_VIDEO_START + DOWNLOADFOLDER + getPreffix() + FILE_SUFFIX_MP4 + HTML5_EMBED_VIDEO_END;
+			return HTML5_EMBED_VIDEO_START + "' controls='' " + "poster='"+getImage()+"'><source src='" + DOWNLOADFOLDER + getPreffix() + FILE_SUFFIX_MP4 + HTML5_EMBED_VIDEO_END;
 		} else {
-			return HTML5_EMBED_VIDEO_START + VIDEOREPFOLDER + getHost().getServerRoot() + "/" + getProducer().getHomeDir() + "/" + getSPreffix() + getDownloadSuffix() + FILE_SUFFIX_MP4 + HTML5_EMBED_VIDEO_END;
+			return HTML5_EMBED_VIDEO_START + "' controls='' " + "poster='"+getImage()+"'><source src='" + VIDEOREPFOLDER + getHost().getServerRoot() + "/" + getProducer().getHomeDir() + "/" + getSPreffix() + getDownloadSuffix() + FILE_SUFFIX_MP4 + HTML5_EMBED_VIDEO_END;
 		}
 	}
 	
