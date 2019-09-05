@@ -515,7 +515,7 @@ $(function () {
 		$options.hide();
 	}
 	
-	autocompleteCreator($("#<portlet:namespace/>creator"), validate);
+	autocompleteCreator($("#<portlet:namespace/>creator"), validate, typeof newCreatorHandler == "undefined" ? null : newCreatorHandler);
 });
 
 function toggleLectureseries(){
@@ -1295,6 +1295,11 @@ AUI().use('aui-node',
 
 	/* ### POSTPROCESSING SPECIFIC ##### */
 	 
+	function newCreatorHandler() {
+			synchronizeAuthors();
+			refreshVideoCaptionPreviewImage();
+	}
+	
 	$(function(){$( "#postprocessing-content" ).hide();});
 	$( "#edit-video-lable-6" ).click(function() {
 	 	$( "#postprocessing-content" ).slideToggle( "slow" );
@@ -1421,9 +1426,23 @@ AUI().use('aui-node',
 
 	function synchronizeAuthors() {
 		var authorArray = [];
-		$("#creators").children().each(function() { 
+		// creators which are already in the database are handled (id starts with "c")
+		$("#creators").children("[id^='c']").each(function() { 
 			authorArray.push($(this).text().trim());
 		});
+		// creators which are just added are handled (id starts with "nc")
+		$("#creators").children("[id^='nc']").each(function() { 
+			// build the name manually
+			var name = [
+				$(this).find("#<portlet:namespace/>jobTitle").val(),
+				$(this).find("#<portlet:namespace/>firstName").val(),
+				$(this).find("#<portlet:namespace/>middleName").val(),
+				$(this).find("#<portlet:namespace/>lastName").val()
+				].join(" ");
+
+			authorArray.push(name);
+		});
+		
 		var authorsAsString = authorArray.join(", ");
 		$("#<portlet:namespace/>video-caption-creators").val(authorsAsString);
 		refreshVideoCaptionPreviewImage();
