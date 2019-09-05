@@ -912,6 +912,11 @@ function updateAllMetadata(){
 				 $("#creators-custom .control-group").removeClass("error").addClass("success");
 	           	 //update the thumb nail
 	           	 updateThumbnail();
+
+				 // reload the creators list
+	           	 $( "#creators" ).empty();
+	           	 showCreatorsList(getJsonCreatorsArray());
+
 	           	 //json object
 	           	 if(res.errorsCount==0){
 	           		 alert("<liferay-ui:message key='changes-applied'/>");	                		 
