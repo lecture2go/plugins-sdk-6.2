@@ -162,7 +162,7 @@ function activateThumbnailGeneration() {
 
 <div class="noresponsive">
 	<div id="upload">
-		<label class="edit-video-lable"><liferay-ui:message key="upload"/></label>
+		<label class="edit-video-lable"><liferay-ui:message key="upload"/><liferay-ui:icon-help message="upload-explanation"/></label>
 		<div id="date-time-form">
 			<aui:fieldset column="true">
 				<aui:layout>
