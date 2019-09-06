@@ -127,6 +127,10 @@
     	minDate: false,
     	step: 15
     });
+    
+	if (defaultContainer() == 'mp4') {
+		activateThumbnailGeneration();
+	}
   });
 
 function loadDateTimepickerToTheMetadataSkeleton(){
@@ -144,11 +148,21 @@ function loadDateTimepickerToFirstTitle(){
 	 $('#date-time .control-label').text("<liferay-ui:message key='select-date-time-bevor-upload'/>"); 	
 }
 
+function deactivateThumbnailGeneration() {
+	$("#thumbnail-content-active").hide();
+	$("#thumbnail-content-inactive").show();
+}
+
+function activateThumbnailGeneration() {
+	$("#thumbnail-content-inactive").hide();
+	$("#thumbnail-content-active").show();
+}
+
 </script>
 
 <div class="noresponsive">
 	<div id="upload">
-		<label class="edit-video-lable"><liferay-ui:message key="upload"/></label>
+		<label class="edit-video-lable"><liferay-ui:message key="upload"/><liferay-ui:icon-help message="upload-explanation"/></label>
 		<div id="date-time-form">
 			<aui:fieldset column="true">
 				<aui:layout>
@@ -454,8 +468,13 @@ function loadDateTimepickerToFirstTitle(){
 					
 					<div id="thumbnail-content">
 						<!-- thumbnail start --> 
+						<div id="thumbnail-content-active" style="display:none;">
 							<liferay-ui:message key="video-thumbnail-about"/>
 							<%@include file="/player/includePlayerForThumbnail.jsp"%>
+						</div>
+						<div id="thumbnail-content-inactive">
+							<liferay-ui:message key="video-thumbnail-not-available"/>
+						</div>
 						<!-- thumbnail end -->	      	      
 					</div>
 				</div>
@@ -515,7 +534,7 @@ $(function () {
 		$options.hide();
 	}
 	
-	autocompleteCreator($("#<portlet:namespace/>creator"), validate);
+	autocompleteCreator($("#<portlet:namespace/>creator"), validate, typeof newCreatorHandler == "undefined" ? null : newCreatorHandler);
 });
 
 function toggleLectureseries(){
@@ -786,9 +805,14 @@ function updateVideoFileName(file){
 				on: {
 					   success: function() {
 					     var jsonResponse = this.get('responseData');
+					     
+					     var fileExtension = file.name.split('.').pop();
+						 if (fileExtension == "mp4" || file.type == "video/mp4") {
+							 activateThumbnailGeneration();
+						 }
+					     
 						 <c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider") %>'>
 						 	// do not try to convert mp3s, this won't work
-							var fileExtension = file.name.split('.').pop();
 						 	if (!(fileExtension == "mp3" || file.type == "audio/mp3")) {
 						     	videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>','<%=getVideoConversionStatusURL%>',<%=reqVideo.getVideoId()%>);
 								// enable the button for video caption postprocessing
@@ -912,6 +936,11 @@ function updateAllMetadata(){
 				 $("#creators-custom .control-group").removeClass("error").addClass("success");
 	           	 //update the thumb nail
 	           	 updateThumbnail();
+
+				 // reload the creators list
+	           	 $( "#creators" ).empty();
+	           	 showCreatorsList(getJsonCreatorsArray());
+
 	           	 //json object
 	           	 if(res.errorsCount==0){
 	           		 alert("<liferay-ui:message key='changes-applied'/>");	                		 
@@ -1015,6 +1044,7 @@ function deleteFile(fileName){
 		    	  	$("#first-title").show();
 		    	  	$("#<portlet:namespace/>meta-ebene").hide();
 		    	  	$(".conversion").html('');
+		    	  	deactivateThumbnailGeneration();
 		        }
 		        jwplayer().remove();
 		        //initialize and show player
@@ -1295,6 +1325,11 @@ AUI().use('aui-node',
 
 	/* ### POSTPROCESSING SPECIFIC ##### */
 	 
+	function newCreatorHandler() {
+			synchronizeAuthors();
+			refreshVideoCaptionPreviewImage();
+	}
+	
 	$(function(){$( "#postprocessing-content" ).hide();});
 	$( "#edit-video-lable-6" ).click(function() {
 	 	$( "#postprocessing-content" ).slideToggle( "slow" );
@@ -1421,9 +1456,23 @@ AUI().use('aui-node',
 
 	function synchronizeAuthors() {
 		var authorArray = [];
-		$("#creators").children().each(function() { 
+		// creators which are already in the database are handled (id starts with "c")
+		$("#creators").children("[id^='c']").each(function() { 
 			authorArray.push($(this).text().trim());
 		});
+		// creators which are just added are handled (id starts with "nc")
+		$("#creators").children("[id^='nc']").each(function() { 
+			// build the name manually
+			var name = [
+				$(this).find("#<portlet:namespace/>jobTitle").val(),
+				$(this).find("#<portlet:namespace/>firstName").val(),
+				$(this).find("#<portlet:namespace/>middleName").val(),
+				$(this).find("#<portlet:namespace/>lastName").val()
+				].join(" ");
+
+			authorArray.push(name);
+		});
+		
 		var authorsAsString = authorArray.join(", ");
 		$("#<portlet:namespace/>video-caption-creators").val(authorsAsString);
 		refreshVideoCaptionPreviewImage();

@@ -9,7 +9,7 @@ function showCreatorsList(data) {
 }
 
 
-function autocompleteCreator($creatorInputObject, validationFunction) {
+function autocompleteCreator($creatorInputObject, validationFunction, newCreatorHandler) {
 	avoidClosing = false;
 	$creatorInputObject.autocomplete({
 	    source: function(request, response) {
@@ -27,7 +27,7 @@ function autocompleteCreator($creatorInputObject, validationFunction) {
 				/* empty the creator input field */
 				$creatorInputObject.val('');
 				c++;
-				appendCreator(c);
+				appendCreator(c, newCreatorHandler);
 				if( typeof validationFunction == "function" ) {
 					validationFunction();
 				}
@@ -53,6 +53,9 @@ function autocompleteCreator($creatorInputObject, validationFunction) {
   		        $.tmpl( "filesTemplate", vars ).appendTo( "#creators" );
   		        if( typeof validationFunction == "function" )
 					validationFunction();
+  		        if( typeof newCreatorHandler == "function" ) {
+  		        	newCreatorHandler();
+  		        }
   				/* empty the creator input field */
   		     	ui.item.value="";
   			}
@@ -60,11 +63,17 @@ function autocompleteCreator($creatorInputObject, validationFunction) {
 	});
 }
 
-function appendCreator(c){
+function appendCreator(c, newCreatorHandler){
 	$(function () {
     	var vars = {'counter':c};
     	$.template( "filesTemplate", $("#newCreator") );
     	$.tmpl( "filesTemplate", vars ).appendTo( "#creators" );
+    	// set a event handler for the newly created creator input fields
+    	$('#nc'+c).keyup(function() {
+    		if( typeof newCreatorHandler == "function" ) {
+				newCreatorHandler();
+			}
+    	});
 	});
 };
 
