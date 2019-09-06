@@ -127,6 +127,10 @@
     	minDate: false,
     	step: 15
     });
+    
+	if (defaultContainer() == 'mp4') {
+		activateThumbnailGeneration();
+	}
   });
 
 function loadDateTimepickerToTheMetadataSkeleton(){
@@ -142,6 +146,16 @@ function loadDateTimepickerToFirstTitle(){
      $('#date-time .button-holder').show();//hide button because not used!
 	 //change the lable
 	 $('#date-time .control-label').text("<liferay-ui:message key='select-date-time-bevor-upload'/>"); 	
+}
+
+function deactivateThumbnailGeneration() {
+	$("#thumbnail-content-active").hide();
+	$("#thumbnail-content-inactive").show();
+}
+
+function activateThumbnailGeneration() {
+	$("#thumbnail-content-inactive").hide();
+	$("#thumbnail-content-active").show();
 }
 
 </script>
@@ -454,8 +468,13 @@ function loadDateTimepickerToFirstTitle(){
 					
 					<div id="thumbnail-content">
 						<!-- thumbnail start --> 
+						<div id="thumbnail-content-active" style="display:none;">
 							<liferay-ui:message key="video-thumbnail-about"/>
 							<%@include file="/player/includePlayerForThumbnail.jsp"%>
+						</div>
+						<div id="thumbnail-content-inactive">
+							<liferay-ui:message key="video-thumbnail-not-available"/>
+						</div>
 						<!-- thumbnail end -->	      	      
 					</div>
 				</div>
@@ -786,9 +805,14 @@ function updateVideoFileName(file){
 				on: {
 					   success: function() {
 					     var jsonResponse = this.get('responseData');
+					     
+					     var fileExtension = file.name.split('.').pop();
+						 if (fileExtension == "mp4" || file.type == "video/mp4") {
+							 activateThumbnailGeneration();
+						 }
+					     
 						 <c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider") %>'>
 						 	// do not try to convert mp3s, this won't work
-							var fileExtension = file.name.split('.').pop();
 						 	if (!(fileExtension == "mp3" || file.type == "audio/mp3")) {
 						     	videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>','<%=getVideoConversionStatusURL%>',<%=reqVideo.getVideoId()%>);
 								// enable the button for video caption postprocessing
@@ -1020,6 +1044,7 @@ function deleteFile(fileName){
 		    	  	$("#first-title").show();
 		    	  	$("#<portlet:namespace/>meta-ebene").hide();
 		    	  	$(".conversion").html('');
+		    	  	deactivateThumbnailGeneration();
 		        }
 		        jwplayer().remove();
 		        //initialize and show player
