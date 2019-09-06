@@ -77,6 +77,7 @@ import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.util.FFmpegManager;
 import de.uhh.l2g.plugins.util.FileManager;
 import de.uhh.l2g.plugins.util.Htaccess;
+import de.uhh.l2g.plugins.util.OaiPmhManager;
 import de.uhh.l2g.plugins.util.ProzessManager;
 import de.uhh.l2g.plugins.util.Security;
 import de.uhh.l2g.plugins.util.VideoGenerationDateComparator;
@@ -775,6 +776,9 @@ public class AdminVideoManagement extends MVCPortlet {
 				} 
 			}	 	    
 	 	    //metadata end
+			
+			// update the video in the OAI-PMH repository if existing
+			OaiPmhManager.modify(video.getVideoId());
 	 	    
 			//return errors cont result after update
 			JSONObject jo = JSONFactoryUtil.createJSONObject();
@@ -974,6 +978,9 @@ public class AdminVideoManagement extends MVCPortlet {
 			} catch (SystemException e) {
 				////e.printStackTrace();
 			}
+			
+			// update the video in the OAI-PMH repository if existing
+			OaiPmhManager.modify(video.getVideoId());
 		}
 		
 		if (resourceID.equals("handleVttUpload")) {
@@ -1476,6 +1483,9 @@ public class AdminVideoManagement extends MVCPortlet {
 		} catch (IOException e) {
 			//e.printStackTrace();
 		}
+		
+		// unpublish the video in the OAI-PMH repository if existing
+		OaiPmhManager.unpublish(video.getVideoId());
 	}
 	
 	public void lockVideo(ActionRequest request, ActionResponse response){

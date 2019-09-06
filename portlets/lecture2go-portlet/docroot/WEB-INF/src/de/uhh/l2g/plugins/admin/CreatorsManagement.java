@@ -15,6 +15,7 @@ import com.liferay.util.bridges.mvc.MVCPortlet;
 import de.uhh.l2g.plugins.model.Creator;
 import de.uhh.l2g.plugins.model.impl.CreatorImpl;
 import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
+import de.uhh.l2g.plugins.util.OaiPmhManager;
 
 public class CreatorsManagement extends MVCPortlet {
 
@@ -59,12 +60,17 @@ public class CreatorsManagement extends MVCPortlet {
 			creator.setJobTitle(t);
 			creator.setFullName(fullName(fn, mn, ln, t));
 			CreatorLocalServiceUtil.updateCreator(creator);
+			
+			// update the datestamp of all OAIRecords linked to the changed creator
+			OaiPmhManager.modifyByCreator(reqCreatorId);
 			try {
 				response.sendRedirect(backURL);
 			} catch (IOException e) {
 				//e.printStackTrace();
 			}
 		}
+		
+
 	}
 	
 	public void delete(ActionRequest request, ActionResponse response) throws SystemException, PortalException{

@@ -564,6 +564,19 @@
             <finder-column name="selectable"></finder-column>
         </finder>
     </entity>
+    <entity name="OaiRecord" remote-service="false" local-service="true">
+        <column name="oaiRecordId" primary="true" type="long" id-type="increment"></column>
+        <column name="videoId" type="long" accessor="false"></column>
+        <column name="identifier" type="String"></column>
+        <column name="datestamp" type="Date"></column>
+        <column name="deleted" type="boolean"></column>
+        <order by="desc">
+            <order-column name="datestamp" order-by="desc"></order-column>
+        </order>
+        <finder name="Video" return-type="OaiRecord" unique="true">
+            <finder-column name="videoId"></finder-column>
+        </finder>
+    </entity>
 	<exceptions>
 		<exception>HostName</exception>
 		<exception>HostStreamer</exception>
