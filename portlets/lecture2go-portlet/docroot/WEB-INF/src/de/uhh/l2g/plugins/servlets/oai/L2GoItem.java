@@ -100,6 +100,11 @@ public class L2GoItem implements Item {
 			// there is a problem getting the video, no metadata can be filled, abort and return an empty object
 			 return new org.dspace.xoai.model.oaipmh.Metadata(toMetadata());
 		}
+		
+		// *** Identifier ***
+		String urlIdentifier = v.getUrl();
+		this.with("urlIdentifier", urlIdentifier);
+		this.with("identifierType", "URL");
 
 		// *** Title ***
 		String title = v.getTitle();
@@ -120,13 +125,12 @@ public class L2GoItem implements Item {
 		// *** Creators ***
 		List<Creator> creators = CreatorLocalServiceUtil.getCreatorsByVideoId(v.getVideoId());
 		for (Creator c: creators) {
-			String fullName = c.getFullName();
-			String firstName = c.getFirstName();
-			String lastName = c.getLastName();
-
-			this.with("fullName", fullName);
-			this.with("firstName", firstName);
-			this.with("lastName", lastName);
+		    Map<String, Object> creator = new HashMap<String, Object>();
+		    creator.put("fullName", c.getFullName());
+		    creator.put("firstName", c.getFirstName());
+		    creator.put("lastName", c.getLastName());
+		    
+		    this.with("creator", creator);
 		}
 		
 		// *** GenerationDate ***
@@ -203,17 +207,18 @@ public class L2GoItem implements Item {
 		License license;
 		try {
 			license = LicenseLocalServiceUtil.getLicense(v.getLicenseId());
-			String rights = license.getFullName();
-			this.with("rights", rights);
+
+		    Map<String, Object> licenseMap = new HashMap<String, Object>();
+			licenseMap.put("fullName", license.getFullName());
+			licenseMap.put("shortIdentifier", license.getShortIdentifier());
+			licenseMap.put("url", license.getUrl());
+			licenseMap.put("schemeUrl", license.getSchemeUrl());
+			licenseMap.put("schemeName", license.getSchemeName());
+
+			this.with("license", licenseMap);
 		} catch (Exception e) {
 			// there is a problem getting the license, that's not too good but nevermind and fill the other metadata
-		} 
-
-			
-
-			
-
-
+		}
 
         return new org.dspace.xoai.model.oaipmh.Metadata(toMetadata());
 		/*
@@ -227,23 +232,38 @@ public class L2GoItem implements Item {
 	
 	private XOAIMetadata toMetadata() {
         XOAIMetadata builder = new XOAIMetadata();
-        for (String key : values.keySet()) {
-            Element elementBuilder = new Element(key);
-            Object value = values.get(key);
-            if (value instanceof String)
-                elementBuilder.withField(key, (String) value);
-            else if (value instanceof Date)
-                elementBuilder.withField(key, ((Date) value).toString());
-            else if (value instanceof List) {
-                List<String> obj = (List<String>) value;
-                int i = 1;
-                for (String e : obj)
-                    elementBuilder.withField(key + (i++), e);
-            }
-            builder.withElement(elementBuilder);
-        }
-        return builder;
+       
+		for (String key : values.keySet()) {
+			Element elementBuilder = buildElement(key, values.get(key));
+			builder.withElement(elementBuilder);
+		}
+
+		return builder;
+   
     }
+	
+	private Element buildElement(String key, Object value) {
+        Element elementBuilder = new Element(key);
+        if (value instanceof String)
+            elementBuilder.withField(key, (String) value);
+        else if (value instanceof Date)
+            elementBuilder.withField(key, ((Date) value).toString());
+        else if (value instanceof List) {
+            List<String> obj = (List<String>) value;
+            int i = 1;
+            for (String e : obj)
+                elementBuilder.withField(key + (i++), e);
+        }
+        else if (value instanceof HashMap) {
+    		for (String k : ((Map<String, Object>) value).keySet()) {
+				Element childElement = buildElement(k, ((Map<String, Object>) value).get(k));
+	        	elementBuilder.withElement(childElement);
+    		}
+        }
+    
+		return elementBuilder;
+	}
+	
 	
 /*
 	@Override
