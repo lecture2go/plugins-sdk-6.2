@@ -2,10 +2,7 @@ package de.uhh.l2g.plugins.servlets.oai;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -17,38 +14,23 @@ import org.dspace.xoai.dataprovider.filter.Scope;
 import org.dspace.xoai.dataprovider.filter.ScopedFilter;
 import org.dspace.xoai.dataprovider.handlers.results.ListItemIdentifiersResult;
 import org.dspace.xoai.dataprovider.handlers.results.ListItemsResults;
-import org.dspace.xoai.dataprovider.model.InMemoryItem;
 import org.dspace.xoai.dataprovider.model.Item;
 import org.dspace.xoai.dataprovider.model.ItemIdentifier;
-import org.dspace.xoai.dataprovider.repository.InMemoryItemRepository;
 import org.dspace.xoai.dataprovider.repository.ItemRepository;
 
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.StringUtil;
+
 import org.dspace.xoai.dataprovider.model.conditions.Condition;
 import com.lyncode.builder.ListBuilder;
 
-import de.uhh.l2g.plugins.model.Creator;
-import de.uhh.l2g.plugins.model.License;
-import de.uhh.l2g.plugins.model.Metadata;
-import de.uhh.l2g.plugins.model.Video;
-import de.uhh.l2g.plugins.model.impl.VideoImpl;
-import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
-import de.uhh.l2g.plugins.service.LicenseLocalServiceUtil;
-import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
-import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
-import de.uhh.l2g.plugins.service.persistence.VideoUtil;
+import de.uhh.l2g.plugins.model.OaiRecord;
+import de.uhh.l2g.plugins.model.impl.OaiRecordImpl;
+import de.uhh.l2g.plugins.service.OaiRecordLocalServiceUtil;
 import de.uhh.l2g.plugins.servlets.oai.filters.DateFromFilter;
 import de.uhh.l2g.plugins.servlets.oai.filters.DateUntilFilter;
 import de.uhh.l2g.plugins.servlets.oai.filters.L2GoFilter;
-import de.uhh.l2g.plugins.servlets.oai.filters.OpenAccessFilter;
-
-import static java.lang.Math.min;
 
 
 
@@ -61,32 +43,23 @@ public class L2GoItemRepository implements ItemRepository {
 	@Override
 	public Item getItem(String identifier) throws IdDoesNotExistException, OAIException {
 		// build the lightweight item for the identifier without the metadata
-		
 		Long videoId = Long.parseLong(identifier);
 		
 		L2GoItem item = new L2GoItem(); 
 		
-		Video v = new VideoImpl();
+		OaiRecord oaiRecord = new OaiRecordImpl();
+		
 		try {
-			v = VideoLocalServiceUtil.getVideo(videoId);
+			oaiRecord = OaiRecordLocalServiceUtil.getByVideo(videoId);
 		} catch (Exception e) {
 			throw new IdDoesNotExistException();
 		}
 		
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH-mm");
-		Date generationDate = new Date();
-		try {
-			generationDate = format.parse(v.getGenerationDate());
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 		item
 			.with("identifier", identifier)
 			.with("deleted", false)
 			.with("sets", new ListBuilder<String>().add(randomAlphabetic(3)).build())
-			.with("datestamp", generationDate);
+			.with("datestamp", oaiRecord.getDatestamp());
 		
 		//L2GoItem item = fillItem(identifier);
 		return item;
@@ -106,17 +79,14 @@ public class L2GoItemRepository implements ItemRepository {
         return new ListItemIdentifiersResult(queryResult.hasMore(), queryResult.getResults());
 	}
 	
-	
-	
-	
-	
+
 	/**
 	 * This translates the scoped filters to a dynamic query
 	 * @param filters the scopedFilters which are used for restricting the query to the database
 	 * @return the dynamic query which can be further processed
 	 */
 	private DynamicQuery getDynamicQueryFromFilters(List<ScopedFilter> filters) {
-		DynamicQuery dynamicQuery = VideoLocalServiceUtil.dynamicQuery();
+		DynamicQuery dynamicQuery = OaiRecordLocalServiceUtil.dynamicQuery();
 		
 		for (ScopedFilter scopedFilter: filters) {
 			// if filter is a L2GoFilter and has the Query scope add the criterion to the query
@@ -338,10 +308,7 @@ public class L2GoItemRepository implements ItemRepository {
 	 * @throws OAIException 
 	 * @throws IdDoesNotExistException 
 	 */
-	private QueryResult retrieveItems(List<ScopedFilter> filters, int offset, int length) throws IdDoesNotExistException, OAIException {
-		// add an openaccess filter for all queries
-		filters.add(new ScopedFilter(getOpenAccessFilter(), Scope.Query));
-		
+	private QueryResult retrieveItems(List<ScopedFilter> filters, int offset, int length) throws IdDoesNotExistException, OAIException {		
 		List<ItemIdentifier> l2GoItems =  new ArrayList<ItemIdentifier>();
 		
 		long count = 0;
@@ -350,15 +317,15 @@ public class L2GoItemRepository implements ItemRepository {
 		DynamicQuery dynamicQuery = getDynamicQueryFromFilters(filters);
 		
 		// TODO: this must be set to the new data type, when implemented
-		List<Video> videos;
+		List<OaiRecord> oaiRecords;
+		
 		try {
-			videos = VideoLocalServiceUtil.dynamicQuery(dynamicQuery,offset, offset + length);
-
-			// get the count of all videos
-			count = VideoLocalServiceUtil.dynamicQueryCount(dynamicQuery);
+			oaiRecords = OaiRecordLocalServiceUtil.dynamicQuery(dynamicQuery,offset, offset + length);
+			// get the count of all OaiRecords
+			count = OaiRecordLocalServiceUtil.dynamicQueryCount(dynamicQuery);
 			
-			for (Video video: videos) {
-				l2GoItems.add(getItem(String.valueOf(video.getVideoId())));
+			for (OaiRecord oaiRecord: oaiRecords) {
+				l2GoItems.add(getItem(String.valueOf(oaiRecord.getVideoId())));
 			}
 		}
 		catch (SystemException e) {
@@ -366,15 +333,6 @@ public class L2GoItemRepository implements ItemRepository {
 		}
 
 		return new QueryResult(l2GoItems, offset + length < count, count);
-	}
-
-	private Condition getOpenAccessFilter() {
-		return new Condition() {
-			@Override
-			public Filter getFilter(FilterResolver filterResolver) {
-                return new OpenAccessFilter();
-			}
-        };
 	}
 	
 	private Condition getDateFromFilter(final Date from) {

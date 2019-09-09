@@ -23,6 +23,6 @@ public class DateFromFilter extends L2GoFilter {
 	}
 	
 	public Criterion getCriterion() {
-		return RestrictionsFactoryUtil.ge("uploadDate", date);
+		return RestrictionsFactoryUtil.ge("datestamp", date);
 	}
 }

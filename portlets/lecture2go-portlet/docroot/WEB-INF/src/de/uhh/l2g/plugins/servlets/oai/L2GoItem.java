@@ -1,22 +1,17 @@
 package de.uhh.l2g.plugins.servlets.oai;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
-import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.dspace.xoai.dataprovider.exceptions.IdDoesNotExistException;
-import org.dspace.xoai.dataprovider.model.InMemoryItem;
 import org.dspace.xoai.dataprovider.model.Item;
 import org.dspace.xoai.dataprovider.model.Set;
 import org.dspace.xoai.model.oaipmh.About;
 import org.dspace.xoai.model.xoai.Element;
 import org.dspace.xoai.model.xoai.XOAIMetadata;
-
 import com.google.common.base.Function;
 import com.lyncode.builder.ListBuilder;
 
@@ -45,7 +40,6 @@ public class L2GoItem implements Item {
 
 	@Override
 	public Date getDatestamp() {
-		//TODO get real datestamp
 		return (Date) values.get("datestamp");
 	}
 
@@ -104,11 +98,17 @@ public class L2GoItem implements Item {
 				c.getFullName();
 			}
 			
-			// PublicationYear
+			// GenerationData
 			// todo - transform to year
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH-mm");
-			Date generationDate = format.parse(v.getGenerationDate());
-			this.with("datestamp", generationDate);
+			// parse generation date
+			SimpleDateFormat parseFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm");
+			Date generationDate = parseFormat.parse(v.getGenerationDate());
+			
+			// format generation date
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			String generationDateString = format.format(generationDate);
+
+			this.with("generationDate", generationDateString);
 		
 			// ResourceType
 			String containerFormat = v.getContainerFormat();

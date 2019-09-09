@@ -24,7 +24,7 @@ public class DateUntilFilter extends L2GoFilter {
 
 	@Override
 	public Criterion getCriterion() {
-		return RestrictionsFactoryUtil.le("uploadDate", date);
+		return RestrictionsFactoryUtil.le("datestamp", date);
 	}
 
 }
