@@ -1,6 +1,8 @@
 package de.uhh.l2g.plugins.servlets.oai;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -13,17 +15,26 @@ import org.dspace.xoai.model.oaipmh.About;
 import org.dspace.xoai.model.xoai.Element;
 import org.dspace.xoai.model.xoai.XOAIMetadata;
 import com.google.common.base.Function;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.lyncode.builder.ListBuilder;
 
+import de.uhh.l2g.plugins.model.Category;
 import de.uhh.l2g.plugins.model.Creator;
+import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.License;
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.impl.VideoImpl;
 import de.uhh.l2g.plugins.model.Metadata;
+import de.uhh.l2g.plugins.model.Term;
+import de.uhh.l2g.plugins.service.CategoryLocalServiceUtil;
 import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
+import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
+import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LicenseLocalServiceUtil;
 import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
+import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil;
 
 public class L2GoItem implements Item {
 
@@ -45,7 +56,6 @@ public class L2GoItem implements Item {
 
 	@Override
 	public String getIdentifier() {
-		// TODO change video id as identifier to URL
 		return (String) values.get("identifier");
 	}
 
@@ -76,68 +86,135 @@ public class L2GoItem implements Item {
 	
 	@Override
 	public org.dspace.xoai.model.oaipmh.Metadata getMetadata() {
-		Long videoId = Long.parseLong(getIdentifier());
+		// in this method all relevant metadata for an video is collected and put into a Metadata object
+		
+		//Long videoId = Long.parseLong(getIdentifier());
+		// extract the video id from the identifier
+		String videoIdString = StringUtil.extractLast(getIdentifier(), ":");
+		Long videoId = Long.parseLong(videoIdString);	
 
 		Video v = new VideoImpl();
 		try {
 			v = VideoLocalServiceUtil.getVideo(videoId);
 		} catch (Exception e) {
-			//throw new IdDoesNotExistException();
+			// there is a problem getting the video, no metadata can be filled, abort and return an empty object
+			 return new org.dspace.xoai.model.oaipmh.Metadata(toMetadata());
 		}
 
-		try {
-			
-			// Title
-			String title = v.getTitle();
-			this.with("title", title);
-
-
-			// Creators
-			List<Creator> creators = CreatorLocalServiceUtil.getCreatorsByVideoId(v.getVideoId());
-			for (Creator c: creators) {
-				c.getFullName();
+		// *** Title ***
+		String title = v.getTitle();
+		this.with("title", title);
+		
+		// *** Title of series (if existing) ***
+		if (v.getLectureseriesId() > 0 ) {
+			Lectureseries lectureseries;
+			try {
+				lectureseries = LectureseriesLocalServiceUtil.getLectureseries(v.getLectureseriesId());
+				String seriesTitle = lectureseries.getName();
+				this.with("seriesTitle", seriesTitle);
+			} catch (Exception e) {
+				// there is a problem getting the rootInstition/ publisher, that's not too good but nevermind and fill the other metadata
 			}
-			
-			// GenerationData
-			// todo - transform to year
-			// parse generation date
-			SimpleDateFormat parseFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm");
-			Date generationDate = parseFormat.parse(v.getGenerationDate());
-			
+		}
+		
+		// *** Creators ***
+		List<Creator> creators = CreatorLocalServiceUtil.getCreatorsByVideoId(v.getVideoId());
+		for (Creator c: creators) {
+			String fullName = c.getFullName();
+			String firstName = c.getFirstName();
+			String lastName = c.getLastName();
+
+			this.with("fullName", fullName);
+			this.with("firstName", firstName);
+			this.with("lastName", lastName);
+		}
+		
+		// *** GenerationDate ***
+		// parse generation date
+		SimpleDateFormat parseFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm");
+		Date generationDate;
+		try {
+			generationDate = parseFormat.parse(v.getGenerationDate());
 			// format generation date
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			String generationDateString = format.format(generationDate);
 
 			this.with("generationDate", generationDateString);
+		} catch (ParseException e) {
+			// the generation data can not be paresd, that's not too good but nevermind and fill the other metadata
+		}
+	
+		// *** ContainerFormat ***
+		String containerFormat = v.getContainerFormat();
+		this.with("containerFormat", containerFormat);
 		
-			// ResourceType
-			String containerFormat = v.getContainerFormat();
-			this.with("containerFormat", containerFormat);
-			
-			
-			// Contributor 
-			// todo
-			
-			// Language
-			Metadata metadata = MetadataLocalServiceUtil.getMetadata(v.getMetadataId());
+		// *** Publisher ***
+		String rootInstitution;
+		try {
+			rootInstitution = InstitutionLocalServiceUtil.getRoot().getName();
+			this.with("publisher", rootInstitution);
+		} catch (Exception e) {
+			// there is a problem getting the rootInstition/ publisher, that's not too good but nevermind and fill the other metadata
+		} 
+		
+		// *** Contributor  ***
+		// todo
+		
+		// *** Language ***
+		Metadata metadata;
+		try {
+			metadata = MetadataLocalServiceUtil.getMetadata(v.getMetadataId());
 			String language = metadata.getLanguage();
 			this.with("language", language);
+		} catch (Exception e) {
+			// there is a problem getting the metadata, that's not too good but nevermind and fill the other metadata
+		} 
+		
 
-			
-			// Size
-			// todo - transform
-			String duration = v.getDuration();
-			this.with("duration", duration);
-			
-			// Rights
-			License license = LicenseLocalServiceUtil.getLicense(v.getLicenseId());
+		
+		// *** Term ***
+		try {
+			Term term = TermLocalServiceUtil.getTerm(v.getTermId());
+			if (!term.getYear().isEmpty()) {
+				String termFullName = term.getFullName();
+				this.with("term", termFullName);
+			}
+		} catch (Exception e) {
+			// there is a problem getting the term, that's not too good but nevermind and fill the other metadata
+		}
+		
+		// *** Category ***
+		try {
+			Long categoryId = Video_CategoryLocalServiceUtil.getByVideo(v.getVideoId()).get(0).getCategoryId();
+			Category category = CategoryLocalServiceUtil.getCategory(categoryId);
+			String categoryName = category.getName();
+			this.with("category", categoryName);
+		} catch (Exception e) {
+			// there is a problem getting the category, that's not too good but nevermind and fill the other metadata
+		}
+
+		
+		// *** Duration ***
+		// todo - transform
+		String duration = v.getDuration();
+		this.with("duration", duration);
+		
+		// *** License ***
+		License license;
+		try {
+			license = LicenseLocalServiceUtil.getLicense(v.getLicenseId());
 			String rights = license.getFullName();
 			this.with("rights", rights);
+		} catch (Exception e) {
+			// there is a problem getting the license, that's not too good but nevermind and fill the other metadata
+		} 
 
 			
-		} catch (Exception e) {
-			// TODO: exception handling -> no video with id
-		}
+
+			
+
+
+
         return new org.dspace.xoai.model.oaipmh.Metadata(toMetadata());
 		/*
 		XOAIMetadata builder = new XOAIMetadata();

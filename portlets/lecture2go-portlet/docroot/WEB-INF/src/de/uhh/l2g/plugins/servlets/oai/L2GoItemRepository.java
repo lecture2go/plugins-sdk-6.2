@@ -42,21 +42,20 @@ public class L2GoItemRepository implements ItemRepository {
 
 	@Override
 	public Item getItem(String identifier) throws IdDoesNotExistException, OAIException {
-		// build the lightweight item for the identifier without the metadata
-		Long videoId = Long.parseLong(identifier);
-		
+		// build the lightweight item for the identifier without the metadata		
 		L2GoItem item = new L2GoItem(); 
 		
 		OaiRecord oaiRecord = new OaiRecordImpl();
 		
 		try {
-			oaiRecord = OaiRecordLocalServiceUtil.getByVideo(videoId);
+			oaiRecord = OaiRecordLocalServiceUtil.getByIdentifier(identifier);
 		} catch (Exception e) {
+			// identifier does not exist
 			throw new IdDoesNotExistException();
 		}
 		
 		item
-			.with("identifier", identifier)
+			.with("identifier", oaiRecord.getIdentifier())
 			.with("deleted", false)
 			.with("sets", new ListBuilder<String>().add(randomAlphabetic(3)).build())
 			.with("datestamp", oaiRecord.getDatestamp());
@@ -325,7 +324,7 @@ public class L2GoItemRepository implements ItemRepository {
 			count = OaiRecordLocalServiceUtil.dynamicQueryCount(dynamicQuery);
 			
 			for (OaiRecord oaiRecord: oaiRecords) {
-				l2GoItems.add(getItem(String.valueOf(oaiRecord.getVideoId())));
+				l2GoItems.add(getItem(oaiRecord.getIdentifier()));
 			}
 		}
 		catch (SystemException e) {

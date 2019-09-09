@@ -54,6 +54,10 @@ public class OaiRecordLocalServiceImpl extends OaiRecordLocalServiceBaseImpl {
 		return oaiRecordPersistence.findByVideo(videoId);
 	}
 	
+	public OaiRecord getByIdentifier(String identifier) throws SystemException, NoSuchOaiRecordException {
+		return oaiRecordPersistence.findByIdentifier(identifier);
+	}
+	
 	public List<OaiRecord> getByCreator(Long creatorId) throws SystemException, NoSuchOaiRecordException {
 		List<Video_Creator>  vcl = Video_CreatorLocalServiceUtil.getByCreator(creatorId);
 		List<OaiRecord> oaiRecords = new ArrayList<OaiRecord>();

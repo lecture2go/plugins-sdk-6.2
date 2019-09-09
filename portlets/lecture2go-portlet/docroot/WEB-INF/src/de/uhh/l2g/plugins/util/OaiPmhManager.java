@@ -175,7 +175,8 @@ public class OaiPmhManager {
 	 */
 	private static OaiRecord fillOaiRecord(OaiRecord oaiRecord, Long videoId, boolean deleted) {
 		oaiRecord.setVideoId(videoId);
-		oaiRecord.setIdentifier("lecture2go:" + videoId);
+		// todo: set in portal ext properties
+		oaiRecord.setIdentifier("oai:lecture2go.uni-hamburg.de:" + videoId);
 		oaiRecord.setDatestamp(DateUtil.newDate());
 		oaiRecord.setDeleted(deleted);
 		return oaiRecord;
