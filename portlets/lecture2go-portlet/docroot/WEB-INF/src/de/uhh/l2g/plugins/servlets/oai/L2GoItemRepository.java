@@ -56,7 +56,7 @@ public class L2GoItemRepository implements ItemRepository {
 		
 		item
 			.with("identifier", oaiRecord.getIdentifier())
-			.with("deleted", false)
+			.with("deleted", oaiRecord.getDeleted())
 			.with("sets", new ListBuilder<String>().add(randomAlphabetic(3)).build())
 			.with("datestamp", oaiRecord.getDatestamp());
 		
