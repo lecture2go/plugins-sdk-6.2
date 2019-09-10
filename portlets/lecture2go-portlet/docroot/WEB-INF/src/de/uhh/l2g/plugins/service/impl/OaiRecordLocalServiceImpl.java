@@ -15,6 +15,7 @@
 package de.uhh.l2g.plugins.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.liferay.portal.kernel.exception.SystemException;
@@ -28,6 +29,8 @@ import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.OaiRecordLocalServiceBaseImpl;
+import de.uhh.l2g.plugins.service.persistence.OaiRecordFinder;
+import de.uhh.l2g.plugins.service.persistence.OaiRecordFinderUtil;
 
 /**
  * The implementation of the oai record local service.
@@ -56,6 +59,10 @@ public class OaiRecordLocalServiceImpl extends OaiRecordLocalServiceBaseImpl {
 	
 	public OaiRecord getByIdentifier(String identifier) throws SystemException, NoSuchOaiRecordException {
 		return oaiRecordPersistence.findByIdentifier(identifier);
+	}
+	
+	public Date getEarliestDatestamp() {
+		return OaiRecordFinderUtil.findEarliestDatestamp();
 	}
 	
 	public List<OaiRecord> getByCreator(Long creatorId) throws SystemException, NoSuchOaiRecordException {

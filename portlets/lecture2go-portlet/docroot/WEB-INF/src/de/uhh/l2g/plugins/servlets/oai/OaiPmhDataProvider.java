@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,17 +23,23 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.dspace.xoai.dataprovider.DataProvider;
 import org.dspace.xoai.dataprovider.exceptions.OAIException;
+import org.dspace.xoai.dataprovider.handlers.IdentifyHandler.XOAIDescription;
 import org.dspace.xoai.dataprovider.model.Context;
 import org.dspace.xoai.dataprovider.model.MetadataFormat;
 import org.dspace.xoai.dataprovider.parameters.OAIRequest;
 import org.dspace.xoai.dataprovider.repository.InMemoryItemRepository;
 import org.dspace.xoai.dataprovider.repository.Repository;
 import org.dspace.xoai.dataprovider.repository.RepositoryConfiguration;
+import org.dspace.xoai.model.oaipmh.DeletedRecord;
+import org.dspace.xoai.model.oaipmh.Description;
+import org.dspace.xoai.model.oaipmh.Granularity;
 import org.dspace.xoai.model.oaipmh.OAIPMH;
+import org.dspace.xoai.services.impl.UTCDateProvider;
 import org.dspace.xoai.xml.XmlWriter;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.lyncode.xml.exceptions.XmlWriteException;
 
 import de.uhh.l2g.plugins.model.Creator;
@@ -42,6 +49,7 @@ import de.uhh.l2g.plugins.model.Metadata;
 import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LicenseLocalServiceUtil;
 import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
+import de.uhh.l2g.plugins.service.OaiRecordLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 
 /**
@@ -63,12 +71,44 @@ public class OaiPmhDataProvider extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-
 		response.setContentType("text/xml;charset=UTF-8");
 		
 		// repository
-		RepositoryConfiguration repositoryConfig = new RepositoryConfiguration().withDefaults();
-		//Repository repository = Repository.repository().withConfiguration(repositoryConfig).withItemRepository(new InMemoryItemRepository().withRandomItems(100));
+		
+		// retrieve earliest datestamp
+		Date earliestDatestamp = OaiRecordLocalServiceUtil.getEarliestDatestamp();
+		if (earliestDatestamp == null) {
+			// set to 1970 if no earliest datestamp can be obtained from the OaiRecords
+			earliestDatestamp = new Date(0L);
+		}
+		
+		// set the optional oai-identifier-description
+		OaiIdentifierDescription oaiIdentifierDescription = new OaiIdentifierDescription()
+				.withRepositoryIdentifier(PropsUtil.get("lecture2go.oaipmh.identifier"))
+				.withDelimiter(":");
+		
+		String descriptionString = "";
+		try {
+			descriptionString = XmlWriter.toString(oaiIdentifierDescription);
+		} catch (Exception e) {
+			// there is a problem creating an xml encoded string for the oai description: proceed anyway, as this is optional
+		}
+		
+				
+		RepositoryConfiguration repositoryConfig = new RepositoryConfiguration()
+				.withRepositoryName(PropsUtil.get("lecture2go.oaipmh.repositoryName"))
+				.withAdminEmail(PropsUtil.get("lecture2go.oaipmh.adminEmail"))
+				.withBaseUrl(PropsUtil.get("lecture2go.oaipmh.baseURL"))
+				.withMaxListIdentifiers(100)
+				.withMaxListRecords(100)
+				.withMaxListSets(100)
+				.withDeleteMethod(DeletedRecord.PERSISTENT)
+				.withGranularity(Granularity.Second)
+				.withEarliestDate(earliestDatestamp);
+		
+		if (!descriptionString.isEmpty()) {
+			repositoryConfig.withDescription(descriptionString);
+		}
 
 		Repository repository = Repository.repository().withConfiguration(repositoryConfig).withItemRepository(new L2GoItemRepository());
 		
@@ -84,7 +124,7 @@ public class OaiPmhDataProvider extends HttpServlet {
 			transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-			
+            
 			// define datacite metadataformat
 			MetadataFormat dataCiteMetadataFormat = new MetadataFormat().withPrefix("oai_datacite")
 					.withNamespace("http://schema.datacite.org/oai/oai-1.1/")
@@ -104,7 +144,6 @@ public class OaiPmhDataProvider extends HttpServlet {
 			// init dataProvider
 			DataProvider dataProvider = DataProvider.dataProvider(context, repository);
 			
-			
 			// get the request parameters
 			Map<String, String[]> requestParameterMap = request.getParameterMap();
 			
@@ -113,7 +152,7 @@ public class OaiPmhDataProvider extends HttpServlet {
 			for (Map.Entry<String, String[]> entry : requestParameterMap.entrySet()) {
 				map.put(entry.getKey(), Arrays.asList(entry.getValue()));
 			}
-			
+						
 			// handle OAI request
 			OAIRequest requestParameters = new OAIRequest(map);
 				OAIPMH oaiPmh = dataProvider.handle(requestParameters);

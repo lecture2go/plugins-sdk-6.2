@@ -243,5 +243,11 @@
 		<![CDATA[
 			SELECT * FROM LG_VideoStatistic WHERE total > 0;
 		]]>
+    </sql>
+    
+    	<sql id="de.uhh.l2g.plugins.service.persistence.OaiRecordFinder.findEarliestDatestamp">
+		<![CDATA[
+			SELECT MIN(datestamp) as earliestDatestamp FROM LG_OaiRecord;
+		]]>
     </sql>		
 </custom-sql>
