@@ -576,6 +576,9 @@
         <finder name="Video" return-type="OaiRecord" unique="true">
             <finder-column name="videoId"></finder-column>
         </finder>
+        <finder name="Identifier" return-type="OaiRecord" unique="true">
+            <finder-column name="identifier"></finder-column>
+        </finder>
     </entity>
 	<exceptions>
 		<exception>HostName</exception>
