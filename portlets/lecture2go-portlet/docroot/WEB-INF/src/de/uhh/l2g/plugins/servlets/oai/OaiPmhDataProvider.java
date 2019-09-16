@@ -2,7 +2,9 @@ package de.uhh.l2g.plugins.servlets.oai;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -10,12 +12,10 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerFactory;
@@ -23,34 +23,20 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.dspace.xoai.dataprovider.DataProvider;
 import org.dspace.xoai.dataprovider.exceptions.OAIException;
-import org.dspace.xoai.dataprovider.handlers.IdentifyHandler.XOAIDescription;
 import org.dspace.xoai.dataprovider.model.Context;
 import org.dspace.xoai.dataprovider.model.MetadataFormat;
 import org.dspace.xoai.dataprovider.parameters.OAIRequest;
-import org.dspace.xoai.dataprovider.repository.InMemoryItemRepository;
 import org.dspace.xoai.dataprovider.repository.Repository;
 import org.dspace.xoai.dataprovider.repository.RepositoryConfiguration;
 import org.dspace.xoai.model.oaipmh.DeletedRecord;
-import org.dspace.xoai.model.oaipmh.Description;
 import org.dspace.xoai.model.oaipmh.Granularity;
 import org.dspace.xoai.model.oaipmh.OAIPMH;
-import org.dspace.xoai.services.impl.UTCDateProvider;
 import org.dspace.xoai.xml.XmlWriter;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.lyncode.xml.exceptions.XmlWriteException;
 
-import de.uhh.l2g.plugins.model.Creator;
-import de.uhh.l2g.plugins.model.License;
-import de.uhh.l2g.plugins.model.Video;
-import de.uhh.l2g.plugins.model.Metadata;
-import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
-import de.uhh.l2g.plugins.service.LicenseLocalServiceUtil;
-import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
 import de.uhh.l2g.plugins.service.OaiRecordLocalServiceUtil;
-import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 
 /**
  * Servlet implementation class TestServlet
@@ -113,30 +99,35 @@ public class OaiPmhDataProvider extends HttpServlet {
 		Repository repository = Repository.repository().withConfiguration(repositoryConfig).withItemRepository(new L2GoItemRepository());
 		
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
-		Transformer transformer;
+		Transformer dataCiteTransformer;
+		Transformer dublinCoreTransformer;
 		try {
-			// set up transformer
-			//File stylesheet = new File("/Users/matthiashitzler/Documents/oai_datacite.xml");
-            //StreamSource stylesource = new StreamSource(stylesheet); 
-
-			//transformer = transformerFactory.newTransformer(stylesource);
-
+			// set up datacite transformer
+			InputStream dataCiteStylesheet =  getServletContext().getResourceAsStream("/WEB-INF/oai_datacite.xml");
+            StreamSource dataCiteStylesource = new StreamSource(dataCiteStylesheet); 
+			dataCiteTransformer = transformerFactory.newTransformer(dataCiteStylesource);
+			
+			// set up dublincore transformer
+			InputStream dublinCoreStylesheet =  getServletContext().getResourceAsStream("/WEB-INF/oai_dublincore.xml");
+            StreamSource dublinCoreStylesource = new StreamSource(dublinCoreStylesheet); 
+			dublinCoreTransformer = transformerFactory.newTransformer(dublinCoreStylesource);
+/*
 			transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-            
+           */ 
 			// define datacite metadataformat
 			MetadataFormat dataCiteMetadataFormat = new MetadataFormat().withPrefix("oai_datacite")
-					.withNamespace("http://schema.datacite.org/oai/oai-1.1/")
-					.withSchemaLocation("http://schema.datacite.org/oai/oai-1.1/oai.xsd")
-					.withTransformer(transformer);
+					.withNamespace("http://datacite.org/schema/kernel-4")
+					.withSchemaLocation("http://schema.datacite.org/meta/kernel-4.2/metadata.xsd")
+					.withTransformer(dataCiteTransformer);
 
 			// define dublin core metadataformat
 			MetadataFormat dublinCoreMetadataFormat = new MetadataFormat()
 					.withPrefix("oai_dc")
 					.withNamespace("http://www.openarchives.org/OAI/2.0/oai_dc/")
 					.withSchemaLocation("http://www.openarchives.org/OAI/2.0/oai_dc.xsd")
-					.withTransformer(transformer);
+					.withTransformer(dublinCoreTransformer);
 			
 			// context
 			Context context = new Context().withMetadataFormat(dataCiteMetadataFormat).withMetadataFormat(dublinCoreMetadataFormat);
@@ -174,75 +165,6 @@ public class OaiPmhDataProvider extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
-		
-		
-		/*try {
-			//VideoLocalServiceUtil.getVideo(22524).getTitle();
-			List<Video> allOpenAccessVideos = VideoLocalServiceUtil.getByOpenAccess(1);
-			long startTime = System.currentTimeMillis();
-
-			for (Video v: allOpenAccessVideos) {
-				// Identifier
-				Long id = v.getVideoId();
-				
-				// Title
-				String title = v.getTitle();
-				
-				// Creators
-				List<Creator> creators = CreatorLocalServiceUtil.getCreatorsByVideoId(v.getVideoId());
-				for (Creator c: creators) {
-					c.getFullName();
-				}
-				
-				// PublicationYear
-				// todo - transform to year
-				String publicationYear = v.getGenerationDate();
-			
-				// ResourceType
-				String resourceType = "";
-				if (v.getContainerFormat() == "mp4") {
-					resourceType = "Audiovisual";
-				}
-				if (v.getContainerFormat() == "mp3") {
-					resourceType = "Sound";
-				}
-				
-				// Contributor 
-				// todo
-				
-				// Date
-				// todo - transform to YYYY-MM-DD or similar
-				v.getGenerationDate();
-				
-				// Language
-				Metadata metadata = MetadataLocalServiceUtil.getMetadata(v.getMetadataId());
-				String language = metadata.getLanguage();
-				
-				// Size
-				// todo - transform
-				String size = v.getDuration();
-				
-				// Rights
-				License license = LicenseLocalServiceUtil.getLicense(v.getLicenseId());
-				String Rights = license.getFullName();
-				
-				
-			}
-			long endTime = System.currentTimeMillis();
-			long timeElapsed = endTime - startTime;
-
-			response.getWriter().append("done in " + timeElapsed + " ms");
-		} catch (PortalException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SystemException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	*/
 	}
 
 	/**

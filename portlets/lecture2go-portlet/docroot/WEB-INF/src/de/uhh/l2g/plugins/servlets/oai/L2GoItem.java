@@ -4,6 +4,7 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +15,10 @@ import org.dspace.xoai.dataprovider.model.Set;
 import org.dspace.xoai.model.oaipmh.About;
 import org.dspace.xoai.model.xoai.Element;
 import org.dspace.xoai.model.xoai.XOAIMetadata;
+import org.jsoup.Jsoup;
+
 import com.google.common.base.Function;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.lyncode.builder.ListBuilder;
 
@@ -36,10 +40,10 @@ import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil;
 
+
 public class L2GoItem implements Item {
 
 	public L2GoItem() {
-		// TODO Auto-generated constructor stub
 	}
 	
     private Map<String, Object> values = new HashMap<String, Object>();
@@ -47,6 +51,10 @@ public class L2GoItem implements Item {
     public L2GoItem with(String name, Object value) {
         values.put(name, value);
         return this;
+    }
+    
+    public Long getVideoId() {
+    	return (Long) values.get("videoId");
     }
 
 	@Override
@@ -61,7 +69,6 @@ public class L2GoItem implements Item {
 
 	@Override
 	public List<Set> getSets() {
-		// TODO Auto-generated method stub
         List<String> list = ((List<String>) values.get("sets"));
         return new ListBuilder<String>().add(list.toArray(new String[list.size()])).build(new Function<String, org.dspace.xoai.dataprovider.model.Set>() {
             @Override
@@ -83,15 +90,11 @@ public class L2GoItem implements Item {
 		return null;
 	}
 	
-	
 	@Override
 	public org.dspace.xoai.model.oaipmh.Metadata getMetadata() {
 		// in this method all relevant metadata for an video is collected and put into a Metadata object
 		
-		//Long videoId = Long.parseLong(getIdentifier());
-		// extract the video id from the identifier
-		String videoIdString = StringUtil.extractLast(getIdentifier(), ":");
-		Long videoId = Long.parseLong(videoIdString);	
+		Long videoId = getVideoId();
 
 		Video v = new VideoImpl();
 		try {
@@ -110,28 +113,38 @@ public class L2GoItem implements Item {
 		String title = v.getTitle();
 		this.with("title", title);
 		
-		// *** Title of series (if existing) ***
+		// *** Metadata of series (if existing) ***
 		if (v.getLectureseriesId() > 0 ) {
 			Lectureseries lectureseries;
 			try {
 				lectureseries = LectureseriesLocalServiceUtil.getLectureseries(v.getLectureseriesId());
 				String seriesTitle = lectureseries.getName();
 				this.with("seriesTitle", seriesTitle);
+				
+				String seriesUrl = lectureseries.getOpenAccessURI();
+				this.with("seriesUrl", seriesUrl);
 			} catch (Exception e) {
-				// there is a problem getting the rootInstition/ publisher, that's not too good but nevermind and fill the other metadata
+				// there is a problem getting the title of the lectureseries, that's not too good but nevermind and fill the other metadata
 			}
 		}
 		
 		// *** Creators ***
 		List<Creator> creators = CreatorLocalServiceUtil.getCreatorsByVideoId(v.getVideoId());
+		List<Object> creatorsList = new ArrayList<Object>();
+	    Map<String, Object> creatorsHashmap = new HashMap<String, Object>();
+	    
 		for (Creator c: creators) {
 		    Map<String, Object> creator = new HashMap<String, Object>();
 		    creator.put("fullName", c.getFullName());
 		    creator.put("firstName", c.getFirstName());
+		    if (!c.getMiddleName().isEmpty()) {
+			    creator.put("middleName", c.getMiddleName());
+		    }
 		    creator.put("lastName", c.getLastName());
-		    
-		    this.with("creator", creator);
+		    creatorsList.add(creator);
 		}
+	    this.with("creators", creatorsList);
+
 		
 		// *** GenerationDate ***
 		// parse generation date
@@ -147,6 +160,27 @@ public class L2GoItem implements Item {
 		} catch (ParseException e) {
 			// the generation data can not be paresd, that's not too good but nevermind and fill the other metadata
 		}
+		
+		// *** UploadDate ***
+		Date uploadDate;
+		uploadDate = v.getUploadDate();
+		// format generation date
+		if (v.getUploadDate() != null) {
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			String uploadDateString = format.format(uploadDate);
+		
+			this.with("uploadDate", uploadDateString);
+		}
+		
+		// *** Tags ***
+		String[] tags = v.getTags().split(";|,");
+		if (tags.length>1) {
+			List<String> tagsList = new ArrayList<String>();
+			for (String tag: tags) {
+				tagsList.add(tag.trim());
+			}
+			this.with("tags", tagsList);
+		}
 	
 		// *** ContainerFormat ***
 		String containerFormat = v.getContainerFormat();
@@ -161,11 +195,9 @@ public class L2GoItem implements Item {
 			// there is a problem getting the rootInstition/ publisher, that's not too good but nevermind and fill the other metadata
 		} 
 		
-		// *** Contributor  ***
-		// todo
 		
 		// *** Language ***
-		Metadata metadata;
+		Metadata metadata = null;
 		try {
 			metadata = MetadataLocalServiceUtil.getMetadata(v.getMetadataId());
 			String language = metadata.getLanguage();
@@ -174,6 +206,47 @@ public class L2GoItem implements Item {
 			// there is a problem getting the metadata, that's not too good but nevermind and fill the other metadata
 		} 
 		
+		
+		// *** Contributor ***
+		// contributor - datamanager
+		if (PropsUtil.contains("lecture2go.oaipmh.datamanager")) {
+			this.with("dataManager", PropsUtil.get("lecture2go.oaipmh.datamanager"));
+		}
+		
+		// contributor - producer
+		// the producing institution - we use the puslisher field for now, this must be handled better
+		String producer;
+		try {
+			producer = metadata.getPublisher();
+			if (!producer.isEmpty()) {
+				this.with("producer", producer);
+			}
+		} catch (Exception e) {
+			// there is a problem getting the producer, that's not too good but nevermind and fill the other metadata
+		} 
+		
+		// *** Description ***
+		// remove all html tags
+		
+		String description = metadata.getDescription();
+
+		if (description.isEmpty()) {
+			// try to get the description of the series
+			if (v.getLectureseriesId() > 0 ) {
+				Lectureseries lectureseries;
+				try {
+					lectureseries = LectureseriesLocalServiceUtil.getLectureseries(v.getLectureseriesId());
+					description = lectureseries.getLongDesc();
+				} catch (Exception e) {
+					// there is a problem getting the description of the lectureseries, that's not too good but nevermind and fill the other metadata
+				}
+			}
+		}
+	
+		if (!description.isEmpty()) {
+			description = Jsoup.parse(description).wholeText().replaceAll("[\\r]", "");
+			this.with("description", description);
+		}
 
 		
 		// *** Term ***
@@ -196,11 +269,9 @@ public class L2GoItem implements Item {
 		} catch (Exception e) {
 			// there is a problem getting the category, that's not too good but nevermind and fill the other metadata
 		}
-
 		
 		// *** Duration ***
-		// todo - transform
-		String duration = v.getDuration();
+		String duration = v.getDuration().trim();
 		this.with("duration", duration);
 		
 		// *** License ***
@@ -208,26 +279,20 @@ public class L2GoItem implements Item {
 		try {
 			license = LicenseLocalServiceUtil.getLicense(v.getLicenseId());
 
-		    Map<String, Object> licenseMap = new HashMap<String, Object>();
-			licenseMap.put("fullName", license.getFullName());
-			licenseMap.put("shortIdentifier", license.getShortIdentifier());
-			licenseMap.put("url", license.getUrl());
-			licenseMap.put("schemeUrl", license.getSchemeUrl());
-			licenseMap.put("schemeName", license.getSchemeName());
-
-			this.with("license", licenseMap);
+			this.with("licenseFullName", license.getFullName());
+			this.with("licenseShortIdentifier", license.getShortIdentifier());
+			this.with("licenseUrl", license.getUrl());
+			if (!license.getSchemeUrl().isEmpty()) {
+				this.with("licenseSchemeUrl", license.getSchemeUrl());
+			}
+			if (!license.getSchemeName().isEmpty()) {
+				this.with("licenseSchemeName", license.getSchemeName());
+			}
 		} catch (Exception e) {
 			// there is a problem getting the license, that's not too good but nevermind and fill the other metadata
 		}
 
         return new org.dspace.xoai.model.oaipmh.Metadata(toMetadata());
-		/*
-		XOAIMetadata builder = new XOAIMetadata();
-		Element titleElement = new Element("title");
-		titleElement.withField("title", "test");
-		builder.withElement(titleElement);
-		return new org.dspace.xoai.model.oaipmh.Metadata(builder);
-		*/
 	}
 	
 	private XOAIMetadata toMetadata() {
@@ -249,10 +314,19 @@ public class L2GoItem implements Item {
         else if (value instanceof Date)
             elementBuilder.withField(key, ((Date) value).toString());
         else if (value instanceof List) {
+        	List<Object> obj = (List<Object>) value;
+        	for (Object o: obj) {
+        		Element childElement = buildElement(key, o);
+        		elementBuilder.withElement(childElement);
+        	}
+        	/*
+        	for (List<Object> list )
             List<String> obj = (List<String>) value;
             int i = 1;
             for (String e : obj)
-                elementBuilder.withField(key + (i++), e);
+                //elementBuilder.withField(key + (i++), e);
+                elementBuilder.withField(key, e);
+*/
         }
         else if (value instanceof HashMap) {
     		for (String k : ((Map<String, Object>) value).keySet()) {
