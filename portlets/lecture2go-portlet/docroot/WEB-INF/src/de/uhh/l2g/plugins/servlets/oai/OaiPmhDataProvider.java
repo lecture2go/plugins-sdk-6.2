@@ -149,6 +149,11 @@ public class OaiPmhDataProvider extends HttpServlet {
 				OAIPMH oaiPmh = dataProvider.handle(requestParameters);
 				OutputStream outputStream = response.getOutputStream();
 				XmlWriter writer = new XmlWriter(outputStream);
+				if (PropsUtil.contains("lecture2go.oaipmh.stylesheet")) {
+					String stylesheetRelativePath = PropsUtil.get("lecture2go.oaipmh.stylesheet");
+					writer.writeProcessingInstruction("xml-stylesheet type='text/xsl' href='"+stylesheetRelativePath+"'");
+				}
+				
 				oaiPmh.write(writer);
 	            writer.flush();
 	            writer.close();
