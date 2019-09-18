@@ -1,10 +1,8 @@
 package de.uhh.l2g.plugins.servlets.oai;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -68,6 +66,7 @@ public class OaiPmhDataProvider extends HttpServlet {
 			earliestDatestamp = new Date(0L);
 		}
 		
+		
 		// set the optional oai-identifier-description
 		OaiIdentifierDescription oaiIdentifierDescription = new OaiIdentifierDescription()
 				.withRepositoryIdentifier(PropsUtil.get("lecture2go.oaipmh.identifier"))
@@ -95,8 +94,13 @@ public class OaiPmhDataProvider extends HttpServlet {
 		if (!descriptionString.isEmpty()) {
 			repositoryConfig.withDescription(descriptionString);
 		}
+		
+		L2GoSetRepository l2gSetRepository = new L2GoSetRepository();
+		if (Boolean.getBoolean(PropsUtil.get("lecture2go.oaipmh.supportsets")) == false) {
+			l2gSetRepository.doesNotSupportSets();
+		}
 
-		Repository repository = Repository.repository().withConfiguration(repositoryConfig).withItemRepository(new L2GoItemRepository()).withSetRepository(new L2GoSetRepository());
+		Repository repository = Repository.repository().withConfiguration(repositoryConfig).withItemRepository(new L2GoItemRepository()).withSetRepository(l2gSetRepository);
 		
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		Transformer dataCiteTransformer;
