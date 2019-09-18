@@ -56,7 +56,7 @@ public class OaiPmhDataProvider extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// the access to the oai pmh dataprovider may be disabled via the config file
-		if (!Boolean.getBoolean(PropsUtil.get("lecture2go.oaipmh.accessible"))) {
+		if (!Boolean.parseBoolean(PropsUtil.get("lecture2go.oaipmh.accessible"))) {
 			response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
 			PrintWriter out = response.getWriter();
 			out.println("OAI-PMH service is unavailable");
@@ -76,16 +76,15 @@ public class OaiPmhDataProvider extends HttpServlet {
 		
 		// set the optional oai-identifier-description
 		OaiIdentifierDescription oaiIdentifierDescription = new OaiIdentifierDescription()
-				.withRepositoryIdentifier(PropsUtil.get("lecture2go.oaipmh.identifier"))
-				.withDelimiter(":");
+				.withRepositoryIdentifier(PropsUtil.get("lecture2go.oaipmh.identifierprefix"))
+				.withDelimiter(PropsUtil.get("lecture2go.oaipmh.identifierdelimiter"));
 		
 		String descriptionString = "";
 		try {
 			descriptionString = XmlWriter.toString(oaiIdentifierDescription);
 		} catch (Exception e) {
 			// there is a problem creating an xml encoded string for the oai description: proceed anyway, as this is optional
-		}
-		
+		}		
 				
 		RepositoryConfiguration repositoryConfig = new RepositoryConfiguration()
 				.withRepositoryName(PropsUtil.get("lecture2go.oaipmh.repositoryName"))
