@@ -417,13 +417,15 @@ public class L2GoItemRepository implements ItemRepository {
 
 		// get the dynamic query according to the filters
 		DynamicQuery dynamicQuery = getDynamicQueryFromFilters(filters);
+		// we need to set another dynamicQuery for the count or otherwise there would be problems when using the same dynamicQuery for different purposes
+		DynamicQuery countDynamicQuery = getDynamicQueryFromFilters(filters);
 		
 		List<OaiRecord> oaiRecords;
 		
 		try {
 			oaiRecords = OaiRecordLocalServiceUtil.dynamicQuery(dynamicQuery,offset, offset + length);
-			// get the count of all OaiRecords
-			count = OaiRecordLocalServiceUtil.dynamicQueryCount(dynamicQuery);
+			// get the count of all OaiRecords which fit the filters
+			count = OaiRecordLocalServiceUtil.dynamicQueryCount(countDynamicQuery);
 			
 			for (OaiRecord oaiRecord: oaiRecords) {
 				l2GoItems.add(getItem(oaiRecord.getIdentifier()));
@@ -443,13 +445,15 @@ public class L2GoItemRepository implements ItemRepository {
 
 		// get the dynamic query according to the filters
 		DynamicQuery dynamicQuery = getDynamicQueryFromFiltersFilteredBySet(filters);
+		// we need to set another dynamicQuery for the count or otherwise there would be problems when using the same dynamicQuery for different purposes
+		DynamicQuery countDynamicQuery = getDynamicQueryFromFiltersFilteredBySet(filters);
 		
 		List<OaiRecord> oaiRecords;
 		
 		try {
 			oaiRecords = OaiRecordLocalServiceUtil.dynamicQuery(dynamicQuery,offset, offset + length);
-			// get the count of all OaiRecords
-			count = OaiRecordLocalServiceUtil.dynamicQueryCount(dynamicQuery);
+			// get the count of all OaiRecords which fit the filters
+			count = OaiRecordLocalServiceUtil.dynamicQueryCount(countDynamicQuery);
 			
 			for (OaiRecord oaiRecord: oaiRecords) {
 				l2GoItems.add(getItem(oaiRecord.getIdentifier()));
