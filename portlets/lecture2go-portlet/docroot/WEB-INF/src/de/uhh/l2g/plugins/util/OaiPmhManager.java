@@ -31,6 +31,9 @@ public class OaiPmhManager {
 	 * @param videoId the id of the video which will be published to the OAI-PMH-repository 
 	 */
 	public static void publish(Long videoId) {
+		if (!checkOaiPmhServiceAllowed()) {
+			return;
+		}
 		// check if an OaiRecord already exists for this videoId
 		try {
 			OaiRecord oaiRecord = OaiRecordLocalServiceUtil.getByVideo(videoId);
@@ -57,6 +60,9 @@ public class OaiPmhManager {
 	 * @param videoId the id of the video which will be unpublished from the OAI-PMH-repository
 	 */
 	public static void unpublish(Long videoId) {
+		if (!checkOaiPmhServiceAllowed()) {
+			return;
+		}
 		try {
 			// check if an OaiRecord even exists for this videoId
 			OaiRecord oaiRecord = OaiRecordLocalServiceUtil.getByVideo(videoId);
@@ -75,6 +81,9 @@ public class OaiPmhManager {
 	 * @param videoId the id of the video whose datestamp will be modified
 	 */
 	public static void modify(Long videoId) {
+		if (!checkOaiPmhServiceAllowed()) {
+			return;
+		}
 		try {
 			// check if an OaiRecord even exists for this videoId
 			OaiRecord oaiRecord = OaiRecordLocalServiceUtil.getByVideo(videoId);
@@ -96,6 +105,9 @@ public class OaiPmhManager {
 	 * @param creatorId the creatorId
 	 */
 	public static void modifyByCreator(Long creatorId) {
+		if (!checkOaiPmhServiceAllowed()) {
+			return;
+		}
 		List<OaiRecord> oaiRecords;
 		try {
 			oaiRecords = OaiRecordLocalServiceUtil.getByCreator(creatorId);
@@ -115,6 +127,9 @@ public class OaiPmhManager {
 	 * @param categoryId the categoryId
 	 */
 	public static void modifyByCategory(Long categoryId) {
+		if (!checkOaiPmhServiceAllowed()) {
+			return;
+		}
 		List<OaiRecord> oaiRecords;
 		try {
 			oaiRecords = OaiRecordLocalServiceUtil.getByCategory(categoryId);
@@ -134,6 +149,9 @@ public class OaiPmhManager {
 	 * @param lectureseriesId the lectureseriesId
 	 */
 	public static void modifyByLectureseries(Long lectureseriesId) {
+		if (!checkOaiPmhServiceAllowed()) {
+			return;
+		}
 		List<OaiRecord> oaiRecords;
 		try {
 			oaiRecords = OaiRecordLocalServiceUtil.getByLectureseries(lectureseriesId);
@@ -156,6 +174,9 @@ public class OaiPmhManager {
 	 * This publishes all open access video to the OAI-PMH-repository
 	 */
 	public static void publishAllOpenAccessVideos() {
+		if (!checkOaiPmhServiceAllowed()) {
+			return;
+		}
 		try {
 			List<Video> videos = VideoLocalServiceUtil.getByOpenAccess(1);
 			for (Video video: videos) {
@@ -181,5 +202,13 @@ public class OaiPmhManager {
 		oaiRecord.setDatestamp(DateUtil.newDate());
 		oaiRecord.setDeleted(deleted);
 		return oaiRecord;
+	}
+	
+	/**
+	 * Checks if the oai-pmh data updating is allowed via config or not
+	 * @return true if service is allowed, false if not
+	 */
+	private static boolean checkOaiPmhServiceAllowed() {
+		return Boolean.parseBoolean(PropsUtil.get("lecture2go.oaipmh.active"));
 	}
 }
