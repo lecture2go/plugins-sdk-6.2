@@ -245,9 +245,16 @@
 		]]>
     </sql>
     
-    	<sql id="de.uhh.l2g.plugins.service.persistence.OaiRecordFinder.findEarliestDatestamp">
+    <sql id="de.uhh.l2g.plugins.service.persistence.OaiRecordFinder.findEarliestDatestamp">
 		<![CDATA[
 			SELECT MIN(datestamp) as earliestDatestamp FROM LG_OaiRecord;
 		]]>
-    </sql>		
+    </sql>
+    
+     <sql id="de.uhh.l2g.plugins.service.persistence.OaiSetFinder.findByOaiRecord">
+		<![CDATA[
+			SELECT s.* FROM LG_OaiSet s JOIN LG_OaiRecord_OaiSet rs ON s.oaiSetId=rs.oaiSetId WHERE rs.oaiRecordId = ?
+		]]>
+    </sql>
+    	
 </custom-sql>

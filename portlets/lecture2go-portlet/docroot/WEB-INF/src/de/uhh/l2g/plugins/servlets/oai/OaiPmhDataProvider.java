@@ -96,7 +96,7 @@ public class OaiPmhDataProvider extends HttpServlet {
 			repositoryConfig.withDescription(descriptionString);
 		}
 
-		Repository repository = Repository.repository().withConfiguration(repositoryConfig).withItemRepository(new L2GoItemRepository());
+		Repository repository = Repository.repository().withConfiguration(repositoryConfig).withItemRepository(new L2GoItemRepository()).withSetRepository(new L2GoSetRepository());
 		
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		Transformer dataCiteTransformer;

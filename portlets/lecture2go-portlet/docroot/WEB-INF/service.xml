@@ -570,6 +570,7 @@
         <column name="identifier" type="String"></column>
         <column name="datestamp" type="Date"></column>
         <column name="deleted" type="boolean"></column>
+        
         <order by="desc">
             <order-column name="datestamp" order-by="desc"></order-column>
         </order>
@@ -578,6 +579,23 @@
         </finder>
         <finder name="Identifier" return-type="OaiRecord" unique="true">
             <finder-column name="identifier"></finder-column>
+        </finder>
+    </entity>
+    <entity name="OaiSet" local-service="true" remote-service="false">
+        <column name="oaiSetId" primary="true" type="long" id-type="increment"></column>
+        <column name="setSpec" type="String"></column>
+        <column name="setName" type="String"></column>
+        <column name="setDescription" type="String"></column>
+    </entity>
+    <entity name="OaiRecord_OaiSet" local-service="true" remote-service="false">
+        <column name="oaiRecordOaiSetId" type="long" primary="true" id-type="increment"></column>
+        <column name="oaiRecordId" type="long"></column>
+        <column name="oaiSetId" type="long"></column>
+        <finder name="oaiSet" return-type="Collection">
+            <finder-column name="oaiSetId"></finder-column>
+        </finder>
+        <finder name="oaiRecord" return-type="Collection">
+            <finder-column name="oaiRecordId"></finder-column>
         </finder>
     </entity>
 	<exceptions>
