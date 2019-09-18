@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import de.uhh.l2g.plugins.NoSuchOaiRecordException;
 import de.uhh.l2g.plugins.model.OaiRecord;
@@ -175,8 +176,8 @@ public class OaiPmhManager {
 	 */
 	private static OaiRecord fillOaiRecord(OaiRecord oaiRecord, Long videoId, boolean deleted) {
 		oaiRecord.setVideoId(videoId);
-		// todo: set in portal ext properties
-		oaiRecord.setIdentifier("oai:lecture2go.uni-hamburg.de:" + videoId);
+		String identifierPrefix = PropsUtil.get("lecture2go.oai.pmh.identifierprefix");
+		oaiRecord.setIdentifier(identifierPrefix + PropsUtil.get("lecture2go.oaipmh.identifierdelimiter") + videoId);
 		oaiRecord.setDatestamp(DateUtil.newDate());
 		oaiRecord.setDeleted(deleted);
 		return oaiRecord;
