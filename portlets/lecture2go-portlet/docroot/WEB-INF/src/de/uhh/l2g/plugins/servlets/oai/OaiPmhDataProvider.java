@@ -64,6 +64,7 @@ public class OaiPmhDataProvider extends HttpServlet {
 			return;
 		}
 		
+
 		// repository
 		
 		// retrieve earliest datestamp
@@ -84,12 +85,15 @@ public class OaiPmhDataProvider extends HttpServlet {
 			descriptionString = XmlWriter.toString(oaiIdentifierDescription);
 		} catch (Exception e) {
 			// there is a problem creating an xml encoded string for the oai description: proceed anyway, as this is optional
-		}		
+		}
+		
+		// get the base URL from the request
+		String baseUrl = request.getRequestURL().toString();
 				
 		RepositoryConfiguration repositoryConfig = new RepositoryConfiguration()
-				.withRepositoryName(PropsUtil.get("lecture2go.oaipmh.repositoryName"))
-				.withAdminEmail(PropsUtil.get("lecture2go.oaipmh.adminEmail"))
-				.withBaseUrl(PropsUtil.get("lecture2go.oaipmh.baseURL"))
+				.withRepositoryName(PropsUtil.get("lecture2go.oaipmh.repositoryname"))
+				.withAdminEmail(PropsUtil.get("lecture2go.oaipmh.adminemail"))
+				.withBaseUrl(baseUrl)
 				.withMaxListIdentifiers(100)
 				.withMaxListRecords(100)
 				.withMaxListSets(100)
