@@ -3,6 +3,7 @@ package de.uhh.l2g.plugins.servlets.oai;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -54,8 +55,14 @@ public class OaiPmhDataProvider extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		response.setContentType("text/xml;charset=UTF-8");
+		// the access to the oai pmh dataprovider may be disabled via the config file
+		if (!Boolean.getBoolean(PropsUtil.get("lecture2go.oaipmh.accessible"))) {
+			response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
+			PrintWriter out = response.getWriter();
+			out.println("OAI-PMH service is unavailable");
+			out.flush();
+			return;
+		}
 		
 		// repository
 		
@@ -149,18 +156,19 @@ public class OaiPmhDataProvider extends HttpServlet {
 			}
 						
 			// handle OAI request
+			response.setContentType("text/xml;charset=UTF-8");
 			OAIRequest requestParameters = new OAIRequest(map);
-				OAIPMH oaiPmh = dataProvider.handle(requestParameters);
-				OutputStream outputStream = response.getOutputStream();
-				XmlWriter writer = new XmlWriter(outputStream);
-				if (PropsUtil.contains("lecture2go.oaipmh.stylesheet")) {
-					String stylesheetRelativePath = PropsUtil.get("lecture2go.oaipmh.stylesheet");
-					writer.writeProcessingInstruction("xml-stylesheet type='text/xsl' href='"+stylesheetRelativePath+"'");
-				}
-				
-				oaiPmh.write(writer);
-	            writer.flush();
-	            writer.close();
+			OAIPMH oaiPmh = dataProvider.handle(requestParameters);
+			OutputStream outputStream = response.getOutputStream();
+			XmlWriter writer = new XmlWriter(outputStream);
+			if (PropsUtil.contains("lecture2go.oaipmh.stylesheet")) {
+				String stylesheetRelativePath = PropsUtil.get("lecture2go.oaipmh.stylesheet");
+				writer.writeProcessingInstruction("xml-stylesheet type='text/xsl' href='"+stylesheetRelativePath+"'");
+			}
+			
+			oaiPmh.write(writer);
+            writer.flush();
+            writer.close();
 		} catch (TransformerConfigurationException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
