@@ -1,7 +1,5 @@
 package de.uhh.l2g.plugins.servlets.oai;
 
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,7 +17,6 @@ import org.jsoup.Jsoup;
 
 import com.google.common.base.Function;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.lyncode.builder.ListBuilder;
 
 import de.uhh.l2g.plugins.model.Category;
@@ -40,7 +37,10 @@ import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil;
 
-
+/**
+ * The L2GoItem which holds the values of an OAI-PMH-item 
+ * The metadata from Lecture2Go is collected here and mapped to the XOAI-default metadata format
+ */
 public class L2GoItem implements Item {
 
 	public L2GoItem() {
@@ -295,6 +295,10 @@ public class L2GoItem implements Item {
         return new org.dspace.xoai.model.oaipmh.Metadata(toMetadata());
 	}
 	
+	/**
+	 * Here the item is mapped to the generic XOAI metadata
+	 * @return the data in XOAI-metadata-format
+	 */
 	private XOAIMetadata toMetadata() {
         XOAIMetadata builder = new XOAIMetadata();
        
@@ -307,27 +311,30 @@ public class L2GoItem implements Item {
    
     }
 	
+	/**
+	 * Handles the xml element building depending on the object type
+	 * Uses recursion to traverse lists and hashmaps to create sub-elements
+	 * @param key the key of the hashmap
+	 * @param value the value of the hashmap
+	 * @return the element (may contain sub-elements)
+	 */
 	private Element buildElement(String key, Object value) {
         Element elementBuilder = new Element(key);
+        // Strings are simple
         if (value instanceof String)
             elementBuilder.withField(key, (String) value);
+        // Dates are simple
         else if (value instanceof Date)
             elementBuilder.withField(key, ((Date) value).toString());
+        // Lists are traversed recursive
         else if (value instanceof List) {
         	List<Object> obj = (List<Object>) value;
         	for (Object o: obj) {
         		Element childElement = buildElement(key, o);
         		elementBuilder.withElement(childElement);
         	}
-        	/*
-        	for (List<Object> list )
-            List<String> obj = (List<String>) value;
-            int i = 1;
-            for (String e : obj)
-                //elementBuilder.withField(key + (i++), e);
-                elementBuilder.withField(key, e);
-*/
         }
+        // Hashmaps are traversed recursive
         else if (value instanceof HashMap) {
     		for (String k : ((Map<String, Object>) value).keySet()) {
 				Element childElement = buildElement(k, ((Map<String, Object>) value).get(k));
@@ -337,114 +344,5 @@ public class L2GoItem implements Item {
     
 		return elementBuilder;
 	}
-	
-	
-/*
-	@Override
-	public org.dspace.xoai.model.oaipmh.Metadata getMetadata() {
-        XOAIMetadata builder = new XOAIMetadata();
-		try {
-			Video v = VideoLocalServiceUtil.getVideo(1);
-			
-			// Identifier
-			
-			// Title
-			String title = v.getTitle();
-			Element titleElement = new Element("title");
-			titleElement.withField("title", title);
-			builder.withElement(titleElement);
-           
-			// Creators
-			List<Creator> creators = CreatorLocalServiceUtil.getCreatorsByVideoId(v.getVideoId());
-
-			for (Creator c: creators) {
-				builder.withElement(new Element("creator")
-						.withElement(new Element("fullName").withField("fullName", c.getFullName()))
-						.withElement(new Element("firstName").withField("firstName", c.getFirstName()))
-						.withElement(new Element("lastName").withField("lastName", c.getLastName()))
-						);
-			}
-			/*
-				Element creatorElement = new Element("creator");
-				Element creatorFullName = new Element("fullName");
-				Element creatorElement = new Element ("jobTitle");
-				Element creatorFirstName = new Element ("firstName");
-				Element creatorMiddleName = new Element ("middleName");
-				Element creatorLastName = new Element ("lastName");
-				
-				creatorElement.withElement(creatorFullName.withField("fullName", c.getFullName()));
-				creatorElement.withElement(creatorElement.withField("jobTitle", c.getJobTitle()));
-				creatorElement.withElement(creatorLastName).withElement()
-
-				titleElement.withField("", title);
-
-				Element creatorNameElement
-				c.getFullName();        	
-				builder.withElement(creatorElement);
-
-			}
-			*/
-
-	/*
-			
-			// PublicationYear
-			// todo - transform to year
-			String publicationYear = v.getGenerationDate();
-		
-			// ResourceType
-			String resourceType = "";
-			if (v.getContainerFormat() == "mp4") {
-				resourceType = "Audiovisual";
-			}
-			if (v.getContainerFormat() == "mp3") {
-				resourceType = "Sound";
-			}
-			
-			// Contributor 
-			// todo
-			
-			// Date
-			// todo - transform to YYYY-MM-DD or similar
-			v.getGenerationDate();
-			
-			// Language
-			Metadata metadata = MetadataLocalServiceUtil.getMetadata(v.getMetadataId());
-			String language = metadata.getLanguage();
-			
-			// Size
-			// todo - transform
-			String size = v.getDuration();
-			
-			// Rights
-			License license = LicenseLocalServiceUtil.getLicense(v.getLicenseId());
-			String Rights = license.getFullName();
-			
-		// TODO Auto-generated method stub
-		return null;
-	}
-		*/
-		/*
-	private Element getTitleElement() {
-		// <titles>
-		Element titlesElement = new Element("titles");
-		// <title>
-		Element titleElement = new Element("title");
-		//titleElement.withField("title", title);
-		// </title>
-		titlesElement.withElement(titleElement);
-	    //builder.withElement(titlesElement);
-	    // </titles>
-		return null;
-	}
-	*/
-	
-    public L2GoItem withDefaults() {
-        this
-                .with("identifier", "lecture2go.uni-hamburg.de/123")
-                .with("datestamp", new Date())
-                .with("sets", new ListBuilder<String>().add(randomAlphabetic(3)).build())
-                .with("deleted", false);
-        return this;
-    }
 
 }

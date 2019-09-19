@@ -1,9 +1,7 @@
 package de.uhh.l2g.plugins.servlets.oai;
 
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -27,7 +25,6 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 
 import org.dspace.xoai.dataprovider.model.conditions.Condition;
-import com.lyncode.builder.ListBuilder;
 
 import de.uhh.l2g.plugins.model.OaiRecord;
 import de.uhh.l2g.plugins.model.OaiRecord_OaiSet;
@@ -42,15 +39,15 @@ import de.uhh.l2g.plugins.servlets.oai.filters.SetFilter;
 
 
 
+/**
+ * The item repository which handles lecture2go items
+ * Here the data is fetched (via Liferay dynamic queries) for the OAI-PMH-responses regarding identifiers and items
+ */
 public class L2GoItemRepository implements ItemRepository {
-
-	public L2GoItemRepository() {
-		// TODO Auto-generated constructor stub
-	}
 
 	@Override
 	public Item getItem(String identifier) throws IdDoesNotExistException, OAIException {
-		// build the lightweight item for the identifier without the metadata		
+		// returns the oai record item without metadata
 		L2GoItem item = new L2GoItem(); 
 		
 		OaiRecord oaiRecord = new OaiRecordImpl();
@@ -61,26 +58,15 @@ public class L2GoItemRepository implements ItemRepository {
 			// identifier does not exist
 			throw new IdDoesNotExistException();
 		}
-		
-		//List<OaiSet> oaiSets = new ArrayList<OaiSet>();
-		/*try {
-			oaiSets = OaiSetLocalServiceUtil.getOaiRecordOaiSets(oaiRecord.getOaiRecordId());
-		} catch (SystemException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/
-
 
 				
-		item
-			.with("identifier", oaiRecord.getIdentifier())
+		item.with("identifier", oaiRecord.getIdentifier())
 			.with("videoId", oaiRecord.getVideoId())
 			.with("deleted", oaiRecord.getDeleted())
 			.with("datestamp", oaiRecord.getDatestamp());
 		
+		// if the item has sets add them, otherwise add an empty list
 		List<OaiSet> oaiSets = OaiSetLocalServiceUtil.getByOaiRecordId(oaiRecord.getOaiRecordId());
-		
 		List<String> oaiSetsString = new ArrayList<String>();
 		if (oaiSets != null) {
 			for (OaiSet oaiSet: oaiSets) {
@@ -89,18 +75,12 @@ public class L2GoItemRepository implements ItemRepository {
 		}
 		item.with("sets", oaiSetsString);
 
-		
-
-		
-		//L2GoItem item = fillItem(identifier);
 		return item;
 	}
 	
-	
 	@Override
-	public ListItemIdentifiersResult getItemIdentifiers(List<ScopedFilter> filters, int offset, int length)
-			throws OAIException {
-		
+	public ListItemIdentifiersResult getItemIdentifiers(List<ScopedFilter> filters, int offset, int length) throws OAIException {
+		// default case without from/ until parameters so no filters added
 		QueryResult queryResult;
 		try {
 			queryResult = retrieveItems(filters, offset, length);
@@ -110,7 +90,154 @@ public class L2GoItemRepository implements ItemRepository {
         return new ListItemIdentifiersResult(queryResult.hasMore(), queryResult.getResults());
 	}
 	
+	@Override
+	public ListItemIdentifiersResult getItemIdentifiers(List<ScopedFilter> filters, int offset, int length, Date from)
+			throws OAIException {
+		// restrict by from date, so the DateFromFilter is added
+        filters.add(new ScopedFilter(getDateFromFilter(from), Scope.Query));
+        return this.getItemIdentifiers(filters, offset, length);
+	}
 
+	@Override
+	public ListItemIdentifiersResult getItemIdentifiersUntil(List<ScopedFilter> filters, int offset, int length,
+			Date until) throws OAIException {
+		// restrict by until date, so the DateUntilFilter is added
+        filters.add(new ScopedFilter(getDateUntilFilter(until), Scope.Query));
+        return this.getItemIdentifiers(filters, offset, length);
+	}
+
+	@Override
+	public ListItemIdentifiersResult getItemIdentifiers(List<ScopedFilter> filters, int offset, int length, Date from,
+			Date until) throws OAIException {
+		// restrict by from and until date, so the DateFromFilter and DateUntilFilter are added
+        filters.add(new ScopedFilter(getDateFromFilter(from), Scope.Query));
+        filters.add(new ScopedFilter(getDateUntilFilter(until), Scope.Query));
+        return this.getItemIdentifiers(filters, offset, length);
+	}
+
+	@Override
+	public ListItemIdentifiersResult getItemIdentifiers(List<ScopedFilter> filters, int offset, int length,
+			String setSpec) throws OAIException {
+		// default case with set restriction, but without from/ until parameters
+		filters.add(new ScopedFilter(getSetFilter(setSpec), Scope.Query));
+		QueryResult queryResult;
+		try {
+			queryResult = retrieveItemsFilteredBySet(filters, offset, length, setSpec);
+		} catch (IdDoesNotExistException e) {
+			throw new OAIException();
+		}
+		
+        return new ListItemIdentifiersResult(queryResult.hasMore(), queryResult.getResults());
+	}
+
+	@Override
+	public ListItemIdentifiersResult getItemIdentifiers(List<ScopedFilter> filters, int offset, int length,
+			String setSpec, Date from) throws OAIException {
+		// restrict by from date, so the DateFromFilter is added
+        filters.add(new ScopedFilter(getDateFromFilter(from), Scope.Query));
+        return this.getItemIdentifiers(filters, offset, length, setSpec);
+	}
+
+	@Override
+	public ListItemIdentifiersResult getItemIdentifiersUntil(List<ScopedFilter> filters, int offset, int length,
+			String setSpec, Date until) throws OAIException {
+		// restrict by until date, so the DateUntilFilter is added
+        filters.add(new ScopedFilter(getDateUntilFilter(until), Scope.Query));
+        return this.getItemIdentifiers(filters, offset, length, setSpec);
+	}
+
+	@Override
+	public ListItemIdentifiersResult getItemIdentifiers(List<ScopedFilter> filters, int offset, int length,
+			String setSpec, Date from, Date until) throws OAIException {
+		// restrict by from and until date, so the DateFromFilter and DateUntilFilter are added
+		filters.add(new ScopedFilter(getDateFromFilter(from), Scope.Query));
+        filters.add(new ScopedFilter(getDateUntilFilter(until), Scope.Query));
+        return this.getItemIdentifiers(filters, offset, length, setSpec);
+	}
+
+	
+	@Override
+	public ListItemsResults getItems(List<ScopedFilter> filters, int offset, int length) throws OAIException {
+		// default case without from/ until parameters so no filters added
+		QueryResult queryResult;
+		try {
+			queryResult = retrieveItems(filters, offset, length);
+		} catch (IdDoesNotExistException e) {
+			throw new OAIException();
+		}
+		
+		List<? extends ItemIdentifier> result = queryResult.getResults();
+		
+        return new ListItemsResults(queryResult.hasMore(), (List<Item>) result);
+	}
+	
+
+	@Override
+	public ListItemsResults getItems(List<ScopedFilter> filters, int offset, int length, Date from)
+			throws OAIException {
+		// restrict by from date, so the DateFromFilter is added
+        filters.add(new ScopedFilter(getDateFromFilter(from), Scope.Query));
+        return this.getItems(filters, offset, length);
+	}
+
+	@Override
+	public ListItemsResults getItemsUntil(List<ScopedFilter> filters, int offset, int length, Date until)
+			throws OAIException {
+		// restrict by until date, so the DateUntilFilter is added
+        filters.add(new ScopedFilter(getDateUntilFilter(until), Scope.Query));
+        return this.getItems(filters, offset, length);
+	}
+
+	@Override
+	public ListItemsResults getItems(List<ScopedFilter> filters, int offset, int length, Date from, Date until)
+			throws OAIException {
+		// restrict by from and until date, so the DateFromFilter and DateUntilFilter are added
+        filters.add(new ScopedFilter(getDateFromFilter(from), Scope.Query));
+        filters.add(new ScopedFilter(getDateUntilFilter(until), Scope.Query));
+        return this.getItems(filters, offset, length);
+	}
+
+	@Override
+	public ListItemsResults getItems(List<ScopedFilter> filters, int offset, int length, String setSpec)
+			throws OAIException {
+		// default case with set restriction, but without from/ until parameters
+		QueryResult queryResult;
+		try {
+			queryResult = retrieveItemsFilteredBySet(filters, offset, length, setSpec);
+		} catch (IdDoesNotExistException e) {
+			throw new OAIException();
+		}
+		
+		List<? extends ItemIdentifier> result = queryResult.getResults();
+		
+        return new ListItemsResults(queryResult.hasMore(), (List<Item>) result);
+	}
+
+	@Override
+	public ListItemsResults getItems(List<ScopedFilter> filters, int offset, int length, String setSpec, Date from)
+			throws OAIException {
+		// restrict by from date, so the DateFromFilter is added
+        filters.add(new ScopedFilter(getDateFromFilter(from), Scope.Query));
+        return this.getItems(filters, offset, length, setSpec);
+	}
+
+	@Override
+	public ListItemsResults getItemsUntil(List<ScopedFilter> filters, int offset, int length, String setSpec,
+			Date until) throws OAIException {
+		// restrict by until date, so the DateUntilFilter is added
+        filters.add(new ScopedFilter(getDateUntilFilter(until), Scope.Query));
+        return this.getItems(filters, offset, length, setSpec);
+	}
+
+	@Override
+	public ListItemsResults getItems(List<ScopedFilter> filters, int offset, int length, String setSpec, Date from,
+			Date until) throws OAIException {
+		// restrict by from and until date, so the DateFromFilter and DateUntilFilter are added
+        filters.add(new ScopedFilter(getDateFromFilter(from), Scope.Query));
+        filters.add(new ScopedFilter(getDateUntilFilter(until), Scope.Query));
+        return this.getItems(filters, offset, length, setSpec);
+	}
+	
 	/**
 	 * This translates the scoped filters to a dynamic query
 	 * @param filters the scopedFilters which are used for restricting the query to the database
@@ -179,230 +306,8 @@ public class L2GoItemRepository implements ItemRepository {
 	}
 	
 	
-	@Override
-	public ListItemIdentifiersResult getItemIdentifiers(List<ScopedFilter> filters, int offset, int length, Date from)
-			throws OAIException {
-		
-        filters.add(new ScopedFilter(getDateFromFilter(from), Scope.Query));
-        return this.getItemIdentifiers(filters, offset, length);
-	}
-	
-
-
-	@Override
-	public ListItemIdentifiersResult getItemIdentifiersUntil(List<ScopedFilter> filters, int offset, int length,
-			Date until) throws OAIException {
-		
-        filters.add(new ScopedFilter(getDateUntilFilter(until), Scope.Query));
-        return this.getItemIdentifiers(filters, offset, length);
-	}
-
-	@Override
-	public ListItemIdentifiersResult getItemIdentifiers(List<ScopedFilter> filters, int offset, int length, Date from,
-			Date until) throws OAIException {
-
-        filters.add(new ScopedFilter(getDateFromFilter(from), Scope.Query));
-        filters.add(new ScopedFilter(getDateUntilFilter(until), Scope.Query));
-        return this.getItemIdentifiers(filters, offset, length);
-	}
-
-	@Override
-	public ListItemIdentifiersResult getItemIdentifiers(List<ScopedFilter> filters, int offset, int length,
-			String setSpec) throws OAIException {
-		filters.add(new ScopedFilter(getSetFilter(setSpec), Scope.Query));
-		
-		QueryResult queryResult;
-		try {
-			queryResult = retrieveItemsFilteredBySet(filters, offset, length, setSpec);
-		} catch (IdDoesNotExistException e) {
-			throw new OAIException();
-		}
-		
-        return new ListItemIdentifiersResult(queryResult.hasMore(), queryResult.getResults());
-	}
-
-	@Override
-	public ListItemIdentifiersResult getItemIdentifiers(List<ScopedFilter> filters, int offset, int length,
-			String setSpec, Date from) throws OAIException {
-
-        filters.add(new ScopedFilter(getDateFromFilter(from), Scope.Query));
-        return this.getItemIdentifiers(filters, offset, length, setSpec);
-	}
-
-	@Override
-	public ListItemIdentifiersResult getItemIdentifiersUntil(List<ScopedFilter> filters, int offset, int length,
-			String setSpec, Date until) throws OAIException {
-		
-        filters.add(new ScopedFilter(getDateUntilFilter(until), Scope.Query));
-        return this.getItemIdentifiers(filters, offset, length, setSpec);
-	}
-
-	@Override
-	public ListItemIdentifiersResult getItemIdentifiers(List<ScopedFilter> filters, int offset, int length,
-			String setSpec, Date from, Date until) throws OAIException {
-		
-		filters.add(new ScopedFilter(getDateFromFilter(from), Scope.Query));
-        filters.add(new ScopedFilter(getDateUntilFilter(until), Scope.Query));
-        return this.getItemIdentifiers(filters, offset, length, setSpec);
-	}
-
-	
-	@Override
-	public ListItemsResults getItems(List<ScopedFilter> filters, int offset, int length) throws OAIException {
-		
-		QueryResult queryResult;
-		try {
-			queryResult = retrieveItems(filters, offset, length);
-		} catch (IdDoesNotExistException e) {
-			throw new OAIException();
-		}
-		
-		List<? extends ItemIdentifier> result = queryResult.getResults();
-		
-        return new ListItemsResults(queryResult.hasMore(), (List<Item>) result);
-	}
-	
-
-	@Override
-	public ListItemsResults getItems(List<ScopedFilter> filters, int offset, int length, Date from)
-			throws OAIException {
-
-        filters.add(new ScopedFilter(getDateFromFilter(from), Scope.Query));
-        return this.getItems(filters, offset, length);
-	}
-
-	@Override
-	public ListItemsResults getItemsUntil(List<ScopedFilter> filters, int offset, int length, Date until)
-			throws OAIException {
-		
-        filters.add(new ScopedFilter(getDateUntilFilter(until), Scope.Query));
-        return this.getItems(filters, offset, length);
-	}
-
-	@Override
-	public ListItemsResults getItems(List<ScopedFilter> filters, int offset, int length, Date from, Date until)
-			throws OAIException {
-
-        filters.add(new ScopedFilter(getDateFromFilter(from), Scope.Query));
-        filters.add(new ScopedFilter(getDateUntilFilter(until), Scope.Query));
-        return this.getItems(filters, offset, length);
-	}
-
-	@Override
-	public ListItemsResults getItems(List<ScopedFilter> filters, int offset, int length, String setSpec)
-			throws OAIException {
-		QueryResult queryResult;
-		try {
-			queryResult = retrieveItemsFilteredBySet(filters, offset, length, setSpec);
-		} catch (IdDoesNotExistException e) {
-			throw new OAIException();
-		}
-		
-		List<? extends ItemIdentifier> result = queryResult.getResults();
-		
-        return new ListItemsResults(queryResult.hasMore(), (List<Item>) result);
-	}
-
-	@Override
-	public ListItemsResults getItems(List<ScopedFilter> filters, int offset, int length, String setSpec, Date from)
-			throws OAIException {
-
-        filters.add(new ScopedFilter(getDateFromFilter(from), Scope.Query));
-        return this.getItems(filters, offset, length, setSpec);
-	}
-
-	@Override
-	public ListItemsResults getItemsUntil(List<ScopedFilter> filters, int offset, int length, String setSpec,
-			Date until) throws OAIException {
-
-        filters.add(new ScopedFilter(getDateUntilFilter(until), Scope.Query));
-        return this.getItems(filters, offset, length, setSpec);
-	}
-
-	@Override
-	public ListItemsResults getItems(List<ScopedFilter> filters, int offset, int length, String setSpec, Date from,
-			Date until) throws OAIException {
-
-        filters.add(new ScopedFilter(getDateFromFilter(from), Scope.Query));
-        filters.add(new ScopedFilter(getDateUntilFilter(until), Scope.Query));
-        return this.getItems(filters, offset, length, setSpec);
-	}
-	
-	// metadata for item has been moved to L2GoItem
-	/*
-	private L2GoItem fillItem(String identifier) throws IdDoesNotExistException {
-		// get the id of the video from the identifier, which is the url is this case
-		//String videoIdString = StringUtil.extractLast(identifier, "/");
-		Long videoId = Long.parseLong(identifier);
-		
-		L2GoItem l2GoItem = new L2GoItem(); 
-		
-		Video v = new VideoImpl();
-		try {
-			v = VideoLocalServiceUtil.getVideo(videoId);
-		} catch (Exception e) {
-			throw new IdDoesNotExistException();
-		}
-
-		try {
-			
-			// Identifier
-			l2GoItem.with("identifier", identifier);
-			
-			// Title
-			String title = v.getTitle();
-			l2GoItem.with("title", title);
-
-
-			// Creators
-			List<Creator> creators = CreatorLocalServiceUtil.getCreatorsByVideoId(v.getVideoId());
-			for (Creator c: creators) {
-				c.getFullName();
-			}
-			
-			// PublicationYear
-			// todo - transform to year
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH-mm");
-			Date generationDate = format.parse(v.getGenerationDate());
-			l2GoItem.with("datestamp", generationDate);
-		
-			// ResourceType
-			String containerFormat = v.getContainerFormat();
-			l2GoItem.with("containerFormat", containerFormat);
-			
-			
-			// Contributor 
-			// todo
-			
-			// Language
-			Metadata metadata = MetadataLocalServiceUtil.getMetadata(v.getMetadataId());
-			String language = metadata.getLanguage();
-			l2GoItem.with("language", language);
-
-			
-			// Size
-			// todo - transform
-			String duration = v.getDuration();
-			l2GoItem.with("duration", duration);
-			
-			// Rights
-			License license = LicenseLocalServiceUtil.getLicense(v.getLicenseId());
-			String rights = license.getFullName();
-			l2GoItem.with("rights", rights);
-
-			
-		} catch (Exception e) {
-			// TODO: exception handling -> no video with id
-		}
-	
-		l2GoItem.with("deleted", false).with("sets", new ListBuilder<String>().add(randomAlphabetic(3)).build());
-		
-		return l2GoItem;
-	}
-	*/
-	
 	/**
-	 * Uses the Liferay DynamicQuery to fetch the corresponding data and add them to 
+	 * Uses the Liferay DynamicQuery to fetch the corresponding data and add them to the query result
 	 * @param filters
 	 * @param offset
 	 * @param length
@@ -438,6 +343,16 @@ public class L2GoItemRepository implements ItemRepository {
 		return new QueryResult(l2GoItems, offset + length < count, count);
 	}
 	
+	/**
+	 * Uses the Liferay DynamicQuery to fetch the corresponding data filtered by set and add them to the query result
+	 * @param filters
+	 * @param offset
+	 * @param length
+	 * @param setSpec
+	 * @return
+	 * @throws IdDoesNotExistException
+	 * @throws OAIException
+	 */
 	private QueryResult retrieveItemsFilteredBySet(List<ScopedFilter> filters, int offset, int length, String setSpec) throws IdDoesNotExistException, OAIException {		
 		List<ItemIdentifier> l2GoItems =  new ArrayList<ItemIdentifier>();
 		
@@ -466,6 +381,11 @@ public class L2GoItemRepository implements ItemRepository {
 		return new QueryResult(l2GoItems, offset + length < count, count);
 	}
 	
+	/**
+	 * returns the DateFromFilter as a condition
+	 * @param from the from date to filter
+	 * @return
+	 */
 	private Condition getDateFromFilter(final Date from) {
 		return new Condition() {
 			@Override
@@ -475,6 +395,11 @@ public class L2GoItemRepository implements ItemRepository {
         };
 	}
 	
+	/**
+	 * returns the UntilFromFilter as a condition
+	 * @param unti the until date to filter
+	 * @return
+	 */
 	private Condition getDateUntilFilter(final Date unti) {
 		return new Condition() {
 			@Override
@@ -484,6 +409,11 @@ public class L2GoItemRepository implements ItemRepository {
         };
 	}
 	
+	/**
+	 * returns the SetFilter as a condition
+	 * @param set the set to filter
+	 * @return
+	 */
 	private Condition getSetFilter(final String set) {
 		return new Condition() {
 			@Override
@@ -493,6 +423,9 @@ public class L2GoItemRepository implements ItemRepository {
         };
 	}
 	
+	/**
+	 * A helper class to maintain results from the query
+	 */
 	private class QueryResult {
         private List<ItemIdentifier> results;
         private boolean hasMore;

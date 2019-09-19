@@ -8,9 +8,13 @@ import org.dspace.xoai.xml.XmlWriter;
 
 import com.lyncode.xml.exceptions.XmlWriteException;
 
+
+/**
+ * This description for oai identifier (see: http://www.openarchives.org/OAI/2.0/guidelines-oai-identifier.htm) is used with the verb identify
+ * and returns an xml encoded info about the oai identifier used in the repository
+ */
 public class OaiIdentifierDescription implements XmlWritable {
 	private static final String NAMESPACE_URI = "http://www.openarchives.org/OAI/2.0/oai-identifier";
-
 	private static final String SCHEMA_LOCATION = "http://www.openarchives.org/OAI/2.0/oai-identifier.xsd";
 	
 	protected String repositoryIdentifier;

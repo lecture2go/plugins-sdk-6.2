@@ -13,7 +13,9 @@ import de.uhh.l2g.plugins.service.OaiSetLocalServiceUtil;
 
 import org.dspace.xoai.dataprovider.model.Set;
 
-
+/**
+ * The set repository which handles sets
+ */
 public class L2GoSetRepository implements SetRepository {
     private boolean supportSets = true;
     private List<Set> sets = new ArrayList<Set>();
