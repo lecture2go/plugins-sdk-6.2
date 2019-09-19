@@ -141,6 +141,12 @@ public class L2GoItem implements Item {
 			    creator.put("middleName", c.getMiddleName());
 		    }
 		    creator.put("lastName", c.getLastName());
+		    if (!c.getAffiliation().isEmpty()) {
+			    creator.put("affiliation", c.getAffiliation());
+		    }
+		    if (!c.getOrcidId().isEmpty()) {
+			    creator.put("orcidId", c.getOrcidId());
+		    }
 		    creatorsList.add(creator);
 		}
 	    this.with("creators", creatorsList);
