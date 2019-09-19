@@ -116,8 +116,8 @@ public class OaiPmhDataProvider extends HttpServlet {
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		
 		List<MetadataFormat> metadataFormats = new ArrayList<MetadataFormat>();
-		metadataFormats.add(initializeMetadataFormat(transformerFactory, "/WEB-INF/oai_datacite.xml", "oai_datacite", "http://datacite.org/schema/kernel-4", "http://schema.datacite.org/meta/kernel-4.2/metadata.xsd"));
-		metadataFormats.add(initializeMetadataFormat(transformerFactory, "/WEB-INF/oai_dublincore.xml", "oai_dc", "http://www.openarchives.org/OAI/2.0/oai_dc/", "http://www.openarchives.org/OAI/2.0/oai_dc.xsd"));
+		metadataFormats.add(initializeMetadataFormat(transformerFactory, "/WEB-INF/oai/oai_datacite.xml", "oai_datacite", "http://datacite.org/schema/kernel-4", "http://schema.datacite.org/meta/kernel-4.2/metadata.xsd"));
+		metadataFormats.add(initializeMetadataFormat(transformerFactory, "/WEB-INF/oai/oai_dublincore.xml", "oai_dc", "http://www.openarchives.org/OAI/2.0/oai_dc/", "http://www.openarchives.org/OAI/2.0/oai_dc.xsd"));
 
 		// context
 		Context context = new Context();

@@ -72,6 +72,17 @@
 					<familyName>
 						<xsl:value-of select="doc:element[@name='lastName']/doc:field[@name='lastName']"/>
 					</familyName>
+					<xsl:if test="doc:element[@name='affiliation']/doc:field[@name='affiliation']">
+						<affiliation>
+							<xsl:value-of select="doc:element[@name='affiliation']/doc:field[@name='affiliation']"/>
+						</affiliation>
+					</xsl:if>
+					<xsl:if test="doc:element[@name='orcidId']/doc:field[@name='orcidId']">
+						<nameIdentifier schemeURI="http://orcid.org/" nameIdentifierScheme="ORCID">
+							<xsl:value-of select="doc:element[@name='orcidId']/doc:field[@name='orcidId']"/>
+						</nameIdentifier>
+					</xsl:if>
+					
 				</creator>
 			</xsl:for-each>
 		</creators>
