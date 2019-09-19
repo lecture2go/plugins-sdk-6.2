@@ -80,13 +80,12 @@ public class L2GoItem implements Item {
 
 	@Override
 	public boolean isDeleted() {
-		// TODO Auto-generated method stub
         return (Boolean) values.get("deleted");
 	}
 
 	@Override
 	public List<About> getAbout() {
-		// TODO Auto-generated method stub
+		// this is an optional field (see https://www.openarchives.org/OAI/openarchivesprotocol.html#Record), we do not use it
 		return null;
 	}
 	
