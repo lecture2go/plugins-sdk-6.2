@@ -36,6 +36,8 @@ public class CreatorFinderImpl extends BasePersistenceImpl<Creator> implements C
 			q.addScalar("jobTitle", Type.STRING);
 			q.addScalar("gender", Type.STRING);
 			q.addScalar("fullName", Type.STRING);
+			q.addScalar("affiliation", Type.STRING);
+			q.addScalar("orcidId", Type.STRING);
 			q.setCacheable(false);
 			QueryPos qPos = QueryPos.getInstance(q);
 			qPos.add(lectureseriesId);
@@ -67,6 +69,8 @@ public class CreatorFinderImpl extends BasePersistenceImpl<Creator> implements C
 			q.addScalar("jobTitle", Type.STRING);
 			q.addScalar("gender", Type.STRING);
 			q.addScalar("fullName", Type.STRING);
+			q.addScalar("affiliation", Type.STRING);
+			q.addScalar("orcidId", Type.STRING);
 			q.setCacheable(false);
 			QueryPos qPos = QueryPos.getInstance(q);
 			qPos.add(videoId);
@@ -98,6 +102,8 @@ public class CreatorFinderImpl extends BasePersistenceImpl<Creator> implements C
 			q.addScalar("jobTitle", Type.STRING);
 			q.addScalar("gender", Type.STRING);
 			q.addScalar("fullName", Type.STRING);
+			q.addScalar("affiliation", Type.STRING);
+			q.addScalar("orcidId", Type.STRING);
 			q.setCacheable(false);
 			QueryPos qPos = QueryPos.getInstance(q);
 			qPos.add(lectureseriesId);
@@ -129,6 +135,8 @@ public class CreatorFinderImpl extends BasePersistenceImpl<Creator> implements C
 			q.addScalar("jobTitle", Type.STRING);
 			q.addScalar("gender", Type.STRING);
 			q.addScalar("fullName", Type.STRING);
+			q.addScalar("affiliation", Type.STRING);
+			q.addScalar("orcidId", Type.STRING);
 			q.setCacheable(false);
 			@SuppressWarnings("unchecked")
 			List <Object[]> fl =  (List<Object[]>) QueryUtil.list(q, getDialect(),com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
@@ -192,6 +200,8 @@ public class CreatorFinderImpl extends BasePersistenceImpl<Creator> implements C
 			f.setJobTitle((String) creator[4]);
 			f.setGender((String) creator[5]);
 			f.setFullName((String) creator[6]);
+			f.setAffiliation((String) creator[7]);
+			f.setOrcidId((String) creator[8]);
 			fl.add(f);
 		}
 		return fl;
