@@ -197,7 +197,7 @@ public class OaiPmhManager {
 	 */
 	private static OaiRecord fillOaiRecord(OaiRecord oaiRecord, Long videoId, boolean deleted) {
 		oaiRecord.setVideoId(videoId);
-		String identifierPrefix = PropsUtil.get("lecture2go.oai.pmh.identifierprefix");
+		String identifierPrefix = PropsUtil.get("lecture2go.oaipmh.identifierprefix");
 		oaiRecord.setIdentifier(identifierPrefix + PropsUtil.get("lecture2go.oaipmh.identifierdelimiter") + videoId);
 		oaiRecord.setDatestamp(DateUtil.newDate());
 		oaiRecord.setDeleted(deleted);
