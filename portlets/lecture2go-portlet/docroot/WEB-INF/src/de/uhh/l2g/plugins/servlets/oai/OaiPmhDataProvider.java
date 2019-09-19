@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -38,7 +39,7 @@ import com.lyncode.xml.exceptions.XmlWriteException;
 import de.uhh.l2g.plugins.service.OaiRecordLocalServiceUtil;
 
 /**
- * Servlet implementation class TestServlet
+ * The OAI-PMH-Dataprovider Servlet entry point
  */
 public class OaiPmhDataProvider extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -64,27 +65,11 @@ public class OaiPmhDataProvider extends HttpServlet {
 			return;
 		}
 		
-
-		// repository
-		
-		// retrieve earliest datestamp
+		// retrieve the earliest datestamp of all oaiRecords
 		Date earliestDatestamp = OaiRecordLocalServiceUtil.getEarliestDatestamp();
 		if (earliestDatestamp == null) {
 			// set to 1970 if no earliest datestamp can be obtained from the OaiRecords
 			earliestDatestamp = new Date(0L);
-		}
-		
-		
-		// set the optional oai-identifier-description
-		OaiIdentifierDescription oaiIdentifierDescription = new OaiIdentifierDescription()
-				.withRepositoryIdentifier(PropsUtil.get("lecture2go.oaipmh.identifierprefix"))
-				.withDelimiter(PropsUtil.get("lecture2go.oaipmh.identifierdelimiter"));
-		
-		String descriptionString = "";
-		try {
-			descriptionString = XmlWriter.toString(oaiIdentifierDescription);
-		} catch (Exception e) {
-			// there is a problem creating an xml encoded string for the oai description: proceed anyway, as this is optional
 		}
 		
 		// get the base URL from the request
@@ -94,105 +79,151 @@ public class OaiPmhDataProvider extends HttpServlet {
 				.withRepositoryName(PropsUtil.get("lecture2go.oaipmh.repositoryname"))
 				.withAdminEmail(PropsUtil.get("lecture2go.oaipmh.adminemail"))
 				.withBaseUrl(baseUrl)
-				.withMaxListIdentifiers(100)
-				.withMaxListRecords(100)
-				.withMaxListSets(100)
+				.withMaxListIdentifiers(Integer.parseInt(PropsUtil.get("lecture2go.oaipmh.limitperrequest.identifiers")))
+				.withMaxListRecords(Integer.parseInt(PropsUtil.get("lecture2go.oaipmh.limitperrequest.records")))
+				.withMaxListSets(Integer.parseInt(PropsUtil.get("lecture2go.oaipmh.limitperrequest.sets")))
 				.withDeleteMethod(DeletedRecord.PERSISTENT)
 				.withGranularity(Granularity.Second)
 				.withEarliestDate(earliestDatestamp);
 		
-		if (!descriptionString.isEmpty()) {
-			repositoryConfig.withDescription(descriptionString);
+		// set the optional oai-identifier-description (this also overwrites the awful xoai description, which is hardcoded if no description is given)
+		OaiIdentifierDescription oaiIdentifierDescription = new OaiIdentifierDescription()
+				.withRepositoryIdentifier(PropsUtil.get("lecture2go.oaipmh.identifierprefix"))
+				.withDelimiter(PropsUtil.get("lecture2go.oaipmh.identifierdelimiter"));
+		try {
+			String descriptionString = "";
+			descriptionString = XmlWriter.toString(oaiIdentifierDescription);
+			if (!descriptionString.isEmpty()) {
+				repositoryConfig.withDescription(descriptionString);
+			}
+		} catch (Exception e) {
+			// there is a problem creating an xml encoded string for the oai description: proceed anyway, as this is optional
 		}
 		
+		// the set repository (sets may be deactivated via config
 		L2GoSetRepository l2gSetRepository = new L2GoSetRepository();
-		if (Boolean.getBoolean(PropsUtil.get("lecture2go.oaipmh.supportsets")) == false) {
+		if (!Boolean.parseBoolean(PropsUtil.get("lecture2go.oaipmh.supportsets"))) {
 			l2gSetRepository.doesNotSupportSets();
 		}
 
-		Repository repository = Repository.repository().withConfiguration(repositoryConfig).withItemRepository(new L2GoItemRepository()).withSetRepository(l2gSetRepository);
+		// initialize the repository with the relevant infos
+		Repository repository = Repository.repository().
+				withConfiguration(repositoryConfig).
+				withItemRepository(new L2GoItemRepository()).
+				withSetRepository(l2gSetRepository);
 		
+		// initialize the transformers for the metadata formats
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
-		Transformer dataCiteTransformer;
-		Transformer dublinCoreTransformer;
-		try {
-			// set up datacite transformer
-			InputStream dataCiteStylesheet =  getServletContext().getResourceAsStream("/WEB-INF/oai_datacite.xml");
-            StreamSource dataCiteStylesource = new StreamSource(dataCiteStylesheet); 
-			dataCiteTransformer = transformerFactory.newTransformer(dataCiteStylesource);
-			
-			// set up dublincore transformer
-			InputStream dublinCoreStylesheet =  getServletContext().getResourceAsStream("/WEB-INF/oai_dublincore.xml");
-            StreamSource dublinCoreStylesource = new StreamSource(dublinCoreStylesheet); 
-			dublinCoreTransformer = transformerFactory.newTransformer(dublinCoreStylesource);
-/*
-			transformer = transformerFactory.newTransformer();
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-           */ 
-			// define datacite metadataformat
-			MetadataFormat dataCiteMetadataFormat = new MetadataFormat().withPrefix("oai_datacite")
-					.withNamespace("http://datacite.org/schema/kernel-4")
-					.withSchemaLocation("http://schema.datacite.org/meta/kernel-4.2/metadata.xsd")
-					.withTransformer(dataCiteTransformer);
+		
+		List<MetadataFormat> metadataFormats = new ArrayList<MetadataFormat>();
+		metadataFormats.add(initializeMetadataFormat(transformerFactory, "/WEB-INF/oai_datacite.xml", "oai_datacite", "http://datacite.org/schema/kernel-4", "http://schema.datacite.org/meta/kernel-4.2/metadata.xsd"));
+		metadataFormats.add(initializeMetadataFormat(transformerFactory, "/WEB-INF/oai_dublincore.xml", "oai_dc", "http://www.openarchives.org/OAI/2.0/oai_dc/", "http://www.openarchives.org/OAI/2.0/oai_dc.xsd"));
 
-			// define dublin core metadataformat
-			MetadataFormat dublinCoreMetadataFormat = new MetadataFormat()
-					.withPrefix("oai_dc")
-					.withNamespace("http://www.openarchives.org/OAI/2.0/oai_dc/")
-					.withSchemaLocation("http://www.openarchives.org/OAI/2.0/oai_dc.xsd")
-					.withTransformer(dublinCoreTransformer);
-			
-			// context
-			Context context = new Context().withMetadataFormat(dataCiteMetadataFormat).withMetadataFormat(dublinCoreMetadataFormat);
-			
-			// init dataProvider
-			DataProvider dataProvider = DataProvider.dataProvider(context, repository);
-			
-			// get the request parameters
-			Map<String, String[]> requestParameterMap = request.getParameterMap();
-			
-			// translate to map consisting of a list instead of array, as the OAIRequest uses a list here
-			Map<String, List<String>> map = new HashMap();
-			for (Map.Entry<String, String[]> entry : requestParameterMap.entrySet()) {
-				map.put(entry.getKey(), Arrays.asList(entry.getValue()));
-			}
-						
-			// handle OAI request
-			response.setContentType("text/xml;charset=UTF-8");
-			OAIRequest requestParameters = new OAIRequest(map);
-			OAIPMH oaiPmh = dataProvider.handle(requestParameters);
+		// context
+		Context context = new Context();
+		
+		// add the metadata-formats to the context
+		for (MetadataFormat metadataFormat: metadataFormats) {
+			if (metadataFormat != null) 
+				context.withMetadataFormat(metadataFormat);
+		}
+		
+		
+		// init dataProvider
+		DataProvider dataProvider = DataProvider.dataProvider(context, repository);
+		
+		// get the request parameters as map
+		Map<String, List<String>> requestAsMap = requestAsMap(request);
+
+					
+		// handle OAI request
+		response.setContentType("text/xml;charset=UTF-8");
+		OAIRequest requestParameters = new OAIRequest(requestAsMap);
+		OAIPMH oaiPmh;
+		try {
+			oaiPmh = dataProvider.handle(requestParameters);
 			OutputStream outputStream = response.getOutputStream();
-			XmlWriter writer = new XmlWriter(outputStream);
+			XmlWriter writer;
+			writer = new XmlWriter(outputStream);
 			if (PropsUtil.contains("lecture2go.oaipmh.stylesheet")) {
 				String stylesheetRelativePath = PropsUtil.get("lecture2go.oaipmh.stylesheet");
-				writer.writeProcessingInstruction("xml-stylesheet type='text/xsl' href='"+stylesheetRelativePath+"'");
+				try {
+					writer.writeProcessingInstruction("xml-stylesheet type='text/xsl' href='"+stylesheetRelativePath+"'");
+				} catch (XMLStreamException e) {
+					// no problem, only the xsl stylesheet for end users have a problem, proceed
+				}
 			}
-			
+				
 			oaiPmh.write(writer);
-            writer.flush();
-            writer.close();
-		} catch (TransformerConfigurationException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			writer.flush();
+	        writer.close();
 		} catch (OAIException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (XmlWriteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			sendServerError(response);
 		} catch (XMLStreamException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			sendServerError(response);
+		} catch (XmlWriteException e) {
+			sendServerError(response);
 		}
 	}
+
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
+	}
+	
+	/**
+	 * Sends a server error
+	 * @param response
+	 */
+	private void sendServerError(HttpServletResponse response) {
+		try {
+			response.sendError(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
+		} catch (IOException e) {
+		}
+	}
+	
+	/**
+	 * Translates a request to a complex map to use with OAIRequest
+	 * @param request
+	 * @return
+	 */
+	private Map<String, List<String>> requestAsMap(HttpServletRequest request) {
+		Map<String, String[]> requestParameterMap = request.getParameterMap();
+		
+		// translate to map consisting of a list instead of array, as the OAIRequest uses a list here
+		Map<String, List<String>> map = new HashMap<String, List<String>>();
+		for (Map.Entry<String, String[]> entry : requestParameterMap.entrySet()) {
+			map.put(entry.getKey(), Arrays.asList(entry.getValue()));
+		}
+		return map;
+	}
+
+	/**
+	 * Initializes the metadataformat with the corresponding transformation stylesheet
+	 * @param transformerFactory
+	 * @param pathToXSLT
+	 * @param prefix
+	 * @param namespace
+	 * @param SchemaLocation
+	 * @return
+	 */
+	private MetadataFormat initializeMetadataFormat(TransformerFactory transformerFactory, String pathToXSLT, String prefix, String namespace, String SchemaLocation) {
+		InputStream stylesheet = getServletContext().getResourceAsStream(pathToXSLT);
+	    StreamSource stylesource = new StreamSource(stylesheet);
+		try {
+			Transformer transformer = transformerFactory.newTransformer(stylesource);
+			MetadataFormat metadataFormat = new MetadataFormat().withPrefix(prefix)
+					.withNamespace(namespace)
+					.withSchemaLocation(SchemaLocation)
+					.withTransformer(transformer);
+			return metadataFormat;
+		} catch (TransformerConfigurationException e) {
+			return null;
+		}
 	}
 
 }
