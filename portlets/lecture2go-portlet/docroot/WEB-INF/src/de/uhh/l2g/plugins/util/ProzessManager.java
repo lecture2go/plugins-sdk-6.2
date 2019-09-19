@@ -203,7 +203,10 @@ public class ProzessManager {
 		// refresh last video list
 		VideoLocalServiceUtil.createLastVideoList();
 		// refresh open acces for lecture series
-		LectureseriesLocalServiceUtil.updateOpenAccess(video, lectureseries); 
+		LectureseriesLocalServiceUtil.updateOpenAccess(video, lectureseries);
+		
+		// publish the video to the OAI-PMH repository
+		OaiPmhManager.publish(video.getVideoId());
 	}
 
 	@SuppressWarnings("static-access")
@@ -297,6 +300,9 @@ public class ProzessManager {
 		
 		//update LectureSeries previewVideoId
 		LectureseriesLocalServiceUtil.updatePreviewVideoOpenAccess(lectureseries);
+		
+		// unpublish the video from the OAI-PMH repository
+		OaiPmhManager.unpublish(video.getVideoId());
 	}
 
 	public void deleteThumbnails(Video video) {
@@ -463,6 +469,9 @@ public class ProzessManager {
 			// send DELETE request to video processor
 			VideoProcessorManager.deleteVideoConversion(video.getVideoId());
 		}
+		
+		// unpublish the video from the OAI-PMH repository
+		OaiPmhManager.unpublish(video.getVideoId());
 		
 		return true;
 	}

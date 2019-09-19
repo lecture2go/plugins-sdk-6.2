@@ -73,6 +73,7 @@ import de.uhh.l2g.plugins.util.EmailManager;
 import de.uhh.l2g.plugins.util.FileManager;
 import de.uhh.l2g.plugins.util.Htaccess;
 import de.uhh.l2g.plugins.util.Lecture2GoRoleChecker;
+import de.uhh.l2g.plugins.util.OaiPmhManager;
 import de.uhh.l2g.plugins.util.ProzessManager;
 
 public class AdminLectureSeriesManagement extends MVCPortlet {
@@ -255,6 +256,9 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		//update tag cloud
 		TagcloudLocalServiceUtil.generateForLectureseries(lectureseries.getLectureseriesId());
 
+		// update the datestamp of all OAIRecords linked to the changed lectureseries
+		OaiPmhManager.modifyByLectureseries(lId);
+		
 		//email notification after edit
 
 		//send an email to all producer, if logged in as coordinator or admin

@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--  http://www.openarchives.org/OAI/2.0/oai_dc.xsl-->
+<xsl:stylesheet 
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+	xmlns:doc="http://www.lyncode.com/xoai"
+	version="1.0">
+	<xsl:output omit-xml-declaration="yes" method="xml" indent="yes" />
+	
+	<xsl:template match="/doc:metadata">
+		<oai_datacite schemaLocation="http://schema.datacite.org/oai/oai-1.1/ http://schema.datacite.org/oai/oai-1.1/oai.xsd">
+			<schemaVersion>2.0</schemaVersion>
+			<payload>
+				<resource xmlns="http://datacite.org/schema/kernel-4.2"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://datacite.org/schema/kernel-4.2 http://schema.datacite.org/meta/kernel-4.2/metadata.xsd">  
+  					<xsl:apply-templates select="doc:element[@name='urlIdentifier']/doc:field[@name='urlIdentifier']"/>
+  					<xsl:apply-templates select="doc:element[@name='creators']"/>
+  					<xsl:apply-templates select="doc:element[@name='title']/doc:field[@name='title']"/>
+
+					<xsl:apply-templates select="doc:element[@name='publisher']/doc:field[@name='publisher']"/>
+  					<xsl:apply-templates select="doc:element[@name='generationDate']/doc:field[@name='generationDate']"/>
+  					<xsl:apply-templates select="doc:element[@name='tags']"/>
+
+  					<xsl:if test="doc:element[@name='dataManager']/doc:field[@name='dataManager'] or doc:element[@name='producer']/doc:field[@name='producer']">
+	  					<contributors>
+	  						<xsl:apply-templates select="doc:element[@name='dataManager']/doc:field[@name='dataManager']"/>
+	  						<xsl:apply-templates select="doc:element[@name='producer']/doc:field[@name='producer']"/>
+	  					</contributors>
+	  				</xsl:if>
+
+	  				<xsl:if test="doc:element[@name='generationDate']/doc:field[@name='generationDate'] or doc:element[@name='uploadDate']/doc:field[@name='uploadDate']">
+	  					<dates>
+	  						<xsl:apply-templates select="doc:element[@name='generationDate']/doc:field[@name='generationDate']"/>
+	  						<xsl:apply-templates select="doc:element[@name='uploadDate']/doc:field[@name='uploadDate']"/>
+	  					</dates>
+	  				</xsl:if>
+	  				<xsl:apply-templates select="doc:element[@name='language']/doc:field[@name='language']"/>
+	  				<xsl:apply-templates select="doc:element[@name='category']/doc:field[@name='category']"/>
+	  				<xsl:apply-templates select="doc:element[@name='duration']/doc:field[@name='duration']"/>
+	  				<xsl:apply-templates select="doc:element[@name='licenseShortIdentifier']/doc:field[@name='licenseShortIdentifier']"/>
+	  				<xsl:apply-templates select="doc:element[@name='description']/doc:field[@name='description']"/>
+	  				<xsl:apply-templates select="doc:element[@name='containerFormat']/doc:field[@name='containerFormat']"/>
+	  				<xsl:apply-templates select="doc:element[@name='seriesUrl']/doc:field[@name='seriesUrl']"/>
+  				</resource>
+			</payload>
+		</oai_datacite>
+	</xsl:template>
+
+	<!-- identifier -->
+	<xsl:template match="doc:element[@name='urlIdentifier']/doc:field[@name='urlIdentifier']">
+		<identifier identifierType="URL"><xsl:value-of select="."/></identifier>
+	</xsl:template>
+
+	<!-- creators -->
+	<xsl:template match="doc:element[@name='creators']">
+		<creators>
+			<xsl:for-each select="doc:element[@name='creators']">
+				<creator>
+					<creatorName nameType="Personal">
+						<xsl:value-of select="doc:element[@name='lastName']/doc:field[@name='lastName']"/>
+						<xsl:value-of select="concat(', ',doc:element[@name='firstName']/doc:field[@name='firstName'])"/>
+						<xsl:if test="doc:element[@name='middleName']/doc:field[@name='middleName']">
+							<xsl:value-of select="concat(' ',doc:element[@name='middleName']/doc:field[@name='middleName'])"/>
+						</xsl:if>
+					</creatorName>
+					<givenName>
+						<xsl:value-of select="doc:element[@name='firstName']/doc:field[@name='firstName']"/>
+						<xsl:if test="doc:element[@name='middleName']/doc:field[@name='middleName']">
+							<xsl:value-of select="concat(' ',doc:element[@name='middleName']/doc:field[@name='middleName'])"/>
+						</xsl:if>
+					</givenName>
+					<familyName>
+						<xsl:value-of select="doc:element[@name='lastName']/doc:field[@name='lastName']"/>
+					</familyName>
+					<xsl:if test="doc:element[@name='affiliation']/doc:field[@name='affiliation']">
+						<affiliation>
+							<xsl:value-of select="doc:element[@name='affiliation']/doc:field[@name='affiliation']"/>
+						</affiliation>
+					</xsl:if>
+					<xsl:if test="doc:element[@name='orcidId']/doc:field[@name='orcidId']">
+						<nameIdentifier schemeURI="http://orcid.org/" nameIdentifierScheme="ORCID">
+							<xsl:value-of select="doc:element[@name='orcidId']/doc:field[@name='orcidId']"/>
+						</nameIdentifier>
+					</xsl:if>
+					
+				</creator>
+			</xsl:for-each>
+		</creators>
+	</xsl:template>
+
+	<!-- title -->
+	<xsl:template match="doc:element[@name='title']/doc:field[@name='title']">
+		<titles>
+			<title><xsl:value-of select="."/></title>
+			<xsl:apply-templates select="/doc:metadata/doc:element[@name='seriesTitle']/doc:field[@name='seriesTitle']"/>
+		</titles>
+	</xsl:template>
+
+	<!-- subtitle -->
+	<xsl:template match="/doc:metadata/doc:element[@name='seriesTitle']/doc:field[@name='seriesTitle']">
+		<title titleType="Subtitle"><xsl:value-of select="."/></title>
+	</xsl:template>
+
+	<!-- publisher -->
+	<xsl:template match="doc:element[@name='publisher']/doc:field[@name='publisher']">
+		<publisher><xsl:value-of select="."/></publisher>
+	</xsl:template>
+
+	<!-- publicationYear -->
+	<xsl:template match="doc:element[@name='generationDate']/doc:field[@name='generationDate']">
+		<publicationYear><xsl:value-of select="substring(.,1,4)"/></publicationYear>
+	</xsl:template>
+
+	<!-- tags -->
+	<xsl:template match="doc:element[@name='tags']">
+		<subjects>
+			<xsl:for-each select="doc:element[@name='tags']">
+				<subject>
+					<xsl:value-of select="doc:field[@name='tags']"/>
+				</subject>
+			</xsl:for-each>
+		</subjects>
+	</xsl:template>
+
+	<!-- contributor - dataManager -->
+	<xsl:template match="doc:element[@name='dataManager']/doc:field[@name='dataManager']">
+		<contributor contributorType="DataManager">
+			<contributorName nameType="Organizational">
+				<xsl:value-of select="."/>
+			</contributorName>
+		</contributor>
+	</xsl:template>
+
+	<!-- contributor - producer -->
+	<xsl:template match="doc:element[@name='producer']/doc:field[@name='producer']">
+		<contributor contributorType="Producer">
+			<contributorName nameType="Organizational">
+				<xsl:value-of select="."/>
+			</contributorName>
+		</contributor>
+	</xsl:template>
+
+	<!-- dates - created -->
+	<xsl:template match="doc:element[@name='generationDate']/doc:field[@name='generationDate']">
+		<date dateType="Created">
+			<xsl:value-of select="."/>
+		</date>
+	</xsl:template>
+
+	<!-- dates - submitted -->
+	<xsl:template match="doc:element[@name='uploadDate']/doc:field[@name='uploadDate']">
+		<date dateType="Submitted">
+			<xsl:value-of select="."/>
+		</date>
+	</xsl:template>
+
+	<!-- language -->
+	<xsl:template match="doc:element[@name='language']/doc:field[@name='language']">
+		<language>
+			<xsl:value-of select="substring(.,1,2)"/>
+		</language>
+	</xsl:template>
+
+	<!-- resourceType -->
+	<xsl:template match="doc:element[@name='category']/doc:field[@name='category']">
+		<resourceType>
+			<xsl:attribute name="resourceTypeGeneral">
+				<xsl:choose>
+					<xsl:when test="/doc:metadata/doc:element[@name='containerFormat']/doc:field[@name='containerFormat'] = 'mp4'">Audiovisual</xsl:when>
+					<xsl:when test="/doc:metadata/doc:element[@name='containerFormat']/doc:field[@name='containerFormat'] = 'mp3'">Sound</xsl:when>
+					<xsl:otherwise>Other</xsl:otherwise>
+				</xsl:choose>
+			</xsl:attribute>
+			<xsl:value-of select="."/>
+		</resourceType>
+	</xsl:template>
+
+	<!-- sizes -->
+	<xsl:template match="doc:element[@name='duration']/doc:field[@name='duration']">
+		<sizes>
+			<size><xsl:value-of select="substring(.,1,8)"/></size>
+		</sizes>
+	</xsl:template>
+
+	<!-- rights -->
+	<xsl:template match="doc:element[@name='licenseShortIdentifier']/doc:field[@name='licenseShortIdentifier']">
+		<rightsList>
+			<rights>
+				<xsl:attribute name="rightsIdentifier">
+					<xsl:value-of select="."/>
+				</xsl:attribute>
+				<xsl:attribute name="rightsURI">
+					<xsl:value-of select="/doc:metadata/doc:element[@name='licenseUrl']/doc:field[@name='licenseUrl']"/>
+				</xsl:attribute>
+				<xsl:if test = "/doc:metadata/doc:element[@name='licenseSchemeName']/doc:field[@name='licenseSchemeName']">
+					<xsl:attribute name="rightsIdentifierScheme">
+						<xsl:value-of select="/doc:metadata/doc:element[@name='licenseSchemeName']/doc:field[@name='licenseSchemeName']"/>
+					</xsl:attribute>
+				</xsl:if>
+				<xsl:if test = "/doc:metadata/doc:element[@name='licenseSchemeUrl']/doc:field[@name='licenseSchemeUrl']">
+					<xsl:attribute name="schemeURI">
+						<xsl:value-of select="/doc:metadata/doc:element[@name='licenseSchemeUrl']/doc:field[@name='licenseSchemeUrl']"/>
+					</xsl:attribute>
+				</xsl:if>
+			</rights>
+		</rightsList>
+	</xsl:template>
+
+	<!-- description -->
+	<xsl:template match="doc:element[@name='description']/doc:field[@name='description']">
+		<descriptions>
+			<description descriptionType="Other"><xsl:value-of select="."/></description>
+		</descriptions>
+	</xsl:template>
+
+	<!-- formats -->
+	<xsl:template match="doc:element[@name='containerFormat']/doc:field[@name='containerFormat']">
+		<formats>
+			<format>
+				<xsl:choose>
+					<xsl:when test=". = 'mp4'">video/mpeg</xsl:when>
+					<xsl:when test=". = 'mp3'">audio/mpeg</xsl:when>
+					<xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
+				</xsl:choose>
+			</format>
+		</formats>
+	</xsl:template>
+
+	<!-- relatedIdentifier -->
+	<xsl:template match="doc:element[@name='seriesUrl']/doc:field[@name='seriesUrl']">
+		<relatedIdentifiers>
+			<relatedIdentifier relatedIdentifierType="URL" relationType="IsPartOf"><xsl:value-of select="."/>
+			</relatedIdentifier>
+		</relatedIdentifiers>
+	</xsl:template>
+
+
+
+</xsl:stylesheet>

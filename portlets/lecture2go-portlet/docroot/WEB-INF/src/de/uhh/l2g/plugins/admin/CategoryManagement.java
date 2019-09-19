@@ -18,6 +18,7 @@ import de.uhh.l2g.plugins.model.impl.CategoryImpl;
 import de.uhh.l2g.plugins.model.impl.TermImpl;
 import de.uhh.l2g.plugins.service.CategoryLocalServiceUtil;
 import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
+import de.uhh.l2g.plugins.util.OaiPmhManager;
 
 public class CategoryManagement extends MVCPortlet {
 
@@ -46,6 +47,9 @@ public class CategoryManagement extends MVCPortlet {
 		Category category = CategoryLocalServiceUtil.getCategory(reqCategoryId);
 		category.setName(name);
 		CategoryLocalServiceUtil.updateCategory(category);
+		
+		// update the datestamp of all OAIRecords linked to the changed category
+		OaiPmhManager.modifyByCategory(reqCategoryId);
 		try {
 			response.sendRedirect(backURL);
 		} catch (IOException e) {
