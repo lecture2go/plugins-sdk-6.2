@@ -5,6 +5,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.sun.org.apache.xml.internal.security.utils.Base64;
@@ -19,6 +21,7 @@ public class HttpManager {
 	private String url;
 	private String user;
 	private String pass;
+	private HashMap<String, String> headers = new HashMap<String, String>();
 
 	
 	/**
@@ -44,6 +47,7 @@ public class HttpManager {
 	    this.connection.setRequestMethod("GET");
 	    this.connection.setDoInput(true);
 	    this.connection.setDoOutput(false);
+	    addHeadersToConnection();
 		
 		return this.connection;
 	}
@@ -75,6 +79,7 @@ public class HttpManager {
 	    this.connection.setDoOutput(true);
 	    this.connection.setRequestProperty("Accept-Charset", charset);
 	    this.connection.setRequestProperty("Content-type", "application/json");
+	    addHeadersToConnection();
 	    
 	    // write to the connection
 	    OutputStream output = this.connection.getOutputStream();
@@ -114,6 +119,7 @@ public class HttpManager {
 	    this.connection.setDoOutput(true);
 	    this.connection.setRequestProperty("Accept-Charset", charset);
 	    this.connection.setRequestProperty("Content-type", "application/json");
+	    addHeadersToConnection();
 	    
 	    // write to the connection
 	    OutputStream output = this.connection.getOutputStream();
@@ -145,6 +151,8 @@ public class HttpManager {
 	    // set the connection parameters
 		this.connection.setDoOutput(true);
 	    this.connection.setRequestMethod("DELETE");
+	    addHeadersToConnection();
+	    
 	    this.connection.getResponseCode();
 		return this.connection;
 	}
@@ -181,4 +189,19 @@ public class HttpManager {
         	this.connection.disconnect();
         }
     }
+
+	public void addHeader(String headerField, String headerValue) {
+		headers.put(headerField, headerValue);
+	} 
+	
+	public HashMap<String, String> getHeaders() {
+		return headers;
+	} 
+	
+	private void addHeadersToConnection() {
+		 // add all specified headers
+	    for (Map.Entry<String, String> header : this.headers.entrySet()) {
+			this.connection.setRequestProperty(header.getKey(), header.getValue());
+		}
+	}
 }

@@ -32,6 +32,10 @@ public class VideoProcessorManager {
 	 * @param videoId the id of the video which will be converted
 	 */
 	public static boolean startVideoConversion(Long videoId) {
+		// if there is a videoprocessing workflow defined in the properties use this, otherwise the default workflow defined at the video-processor will be used
+		if (PropsUtil.contains("lecture2go.videoprocessing.workflow")) {
+			return startVideoConversion(videoId, PropsUtil.get("lecture2go.videoprocessing.workflow"), null); 
+		}
 		return startVideoConversion(videoId, null, null);
 	}
 	
@@ -83,6 +87,7 @@ public class VideoProcessorManager {
 				// send POST request to video processor
 				try {
 					HttpManager httpManager = new HttpManager();
+					httpManager.addHeader("Tenant", PropsUtil.get("lecture2go.videoprocessing.tenant"));
 					httpManager.setUrl(videoConversionUrl);
 					if (PropsUtil.contains("lecture2go.videoprocessing.basicauth.user") && PropsUtil.contains("lecture2go.videoprocessing.basicauth.pass")) {
 						httpManager.setUser(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.user"));
@@ -130,6 +135,7 @@ public class VideoProcessorManager {
 			try {
 				HttpManager httpManager = new HttpManager();
 				httpManager.setUrl(videoConversionUrl);
+				httpManager.addHeader("Tenant", PropsUtil.get("lecture2go.videoprocessing.tenant"));
 				if (PropsUtil.contains("lecture2go.videoprocessing.basicauth.user") && PropsUtil.contains("lecture2go.videoprocessing.basicauth.pass")) {
 					httpManager.setUser(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.user"));
 					httpManager.setPass(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.pass"));
@@ -160,6 +166,7 @@ public class VideoProcessorManager {
 			try {
 				HttpManager httpManager = new HttpManager();
 				httpManager.setUrl(videoConversionUrl);
+				httpManager.addHeader("Tenant", PropsUtil.get("lecture2go.videoprocessing.tenant"));
 				if (PropsUtil.contains("lecture2go.videoprocessing.basicauth.user") && PropsUtil.contains("lecture2go.videoprocessing.basicauth.pass")) {
 					httpManager.setUser(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.user"));
 					httpManager.setPass(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.pass"));
@@ -197,6 +204,7 @@ public class VideoProcessorManager {
 			try {
 				HttpManager httpManager = new HttpManager();
 				httpManager.setUrl(videoConversionUrl);
+				httpManager.addHeader("Tenant", PropsUtil.get("lecture2go.videoprocessing.tenant"));
 				if (PropsUtil.contains("lecture2go.videoprocessing.basicauth.user") && PropsUtil.contains("lecture2go.videoprocessing.basicauth.pass")) {
 					httpManager.setUser(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.user"));
 					httpManager.setPass(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.pass"));
