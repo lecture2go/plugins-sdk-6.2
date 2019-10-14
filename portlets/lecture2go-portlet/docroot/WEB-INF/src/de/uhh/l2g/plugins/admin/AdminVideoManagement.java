@@ -1352,6 +1352,13 @@ public class AdminVideoManagement extends MVCPortlet {
 			writeJSON(resourceRequest, resourceResponse, json);			
 		}
 		
+		if(resourceID.equals("getJSONAllCreators")){
+			
+			JSONArray json = CreatorLocalServiceUtil.getJSONCreatorsByVideoId(video.getVideoId());
+			
+			writeJSON(resourceRequest, resourceResponse, json);			
+		}
+		
 		if(resourceID.equals("updateCreators")){
 			String creators = ParamUtil.getString(resourceRequest, "creator");
 			try {

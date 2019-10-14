@@ -20,6 +20,7 @@
 <liferay-portlet:resourceURL id="updateCreators" var="updateCreatorsURL" />
 <liferay-portlet:resourceURL id="updateSubInstitutions" var="updateSubInstitutionsURL" />
 <liferay-portlet:resourceURL id="getJSONCreator" var="getJSONCreatorURL" />
+<liferay-portlet:resourceURL id="getJSONAllCreators" var="getJSONAllCreatorsURL" />
 <liferay-portlet:resourceURL id="updateupdateOpenAccessForLectureseries" var="updateupdateOpenAccessForLectureseriesURL" />
 <liferay-portlet:resourceURL id="videoUpdateGenerationDate" var="videoUpdateGenerationDateURL" />
 <liferay-portlet:resourceURL id="getGenerationDate" var="getGenerationDateURL" />
@@ -517,6 +518,7 @@ var c = 0;
 /* these variables are set here but used in the external autocomplete-creator.js file, be sure to include this js AFTER the jsp is rendered*/
 var allCreatorsInJQueryAutocompleteFormat = <%= allCreatorsJSON.toString()%>;
 var getJSONCreatorURL = "<%=getJSONCreatorURL%>";
+var getJSONAllCreatorsURL = "<%=getJSONAllCreatorsURL%>";
 var namespace = "<portlet:namespace/>";
 <%
 String assignedCreators ="";
@@ -939,7 +941,7 @@ function updateAllMetadata(){
 
 				 // reload the creators list
 	           	 $( "#creators" ).empty();
-	           	 showCreatorsList(getJsonCreatorsArray());
+	           	 showCreatorsList(getJSONAllCreators(<%=reqVideo.getVideoId()%>));
 
 	           	 //json object
 	           	 if(res.errorsCount==0){

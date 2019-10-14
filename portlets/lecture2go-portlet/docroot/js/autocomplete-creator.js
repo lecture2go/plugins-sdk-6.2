@@ -98,6 +98,26 @@ function getJSONCreator (data){
 	return ret;
 }
 
+function getJSONAllCreators (videoId){
+	var ret;	
+	var videoIdKey = namespace + "videoId";
+	var dataJSON = {};
+	dataJSON[videoIdKey] = videoId;
+	console.log(dataJSON);
+	$.ajax({
+		  type: "POST",
+		  url: getJSONAllCreatorsURL,
+		  dataType: 'json',
+		  data: dataJSON,
+		  global: false,
+		  async:false,
+		  success: function(data) {
+		    ret = data;
+		  }
+	})
+	console.log(ret);
+	return ret;
+}
 
 var creatorsArray = [];
 
@@ -113,6 +133,7 @@ function updateCreators(){
 
 var creatorsArray = [];
 function loadCreators(){
+	creatorsArray = [];
 	$('#creators').children().each(function(n){
 		var parameters = {};
 		var $div = $(this);
