@@ -426,9 +426,7 @@ function activateThumbnailGeneration() {
 	
 					<div id="postprocessing-content" >
 						<div id="include-video-caption">
-							<div id="include-video-caption-content">
-								<aui:input name="video-caption-institution" label="institution-of-creator" required="false" value="" helpMessage="institution-of-creator-explanation"/>
-								
+							<div id="include-video-caption-content">								
 								<!-- layout select radio buttons -->
 								<div>
 									<aui:input name="video-caption-layout" id="speakerleft" label="speaker-left" value="1" checked="true" type="radio" required="false" helpMessage="video-caption-speaker-left-explanation"/>
@@ -448,6 +446,7 @@ function activateThumbnailGeneration() {
 								<div id="include-video-caption-content-additional">
 									<aui:input name="video-caption-title" label="title" required="false" value=""/>
 									<aui:input name="video-caption-creators" label="creators" required="false" value=""/>
+									<aui:input name="video-caption-institution" label="institution-of-creator" required="false" value=""/>
 									<aui:input name="video-caption-date" label="date" required="false" value=""/>
 									<aui:input name="video-caption-lectureseries" label="lectureseries" required="false" value=""/>
 								</div>
@@ -1477,7 +1476,21 @@ AUI().use('aui-node',
 		
 		var authorsAsString = authorArray.join(", ");
 		$("#<portlet:namespace/>video-caption-creators").val(authorsAsString);
+		synchronizeAffiliations();
 		refreshVideoCaptionPreviewImage();
+	}
+	
+
+	function synchronizeAffiliations() {
+		var affiliationArray = [];
+		var jsonCreatorArray = getJsonCreatorsArray();
+		for (var key in jsonCreatorArray) {
+			if (jsonCreatorArray[key].affiliation != "") {
+				affiliationArray.push(jsonCreatorArray[key].affiliation);
+			}
+		}
+		var affiliationsAsString = affiliationArray.join(", ");
+		$("#<portlet:namespace/>video-caption-institution").val(affiliationsAsString);
 	}
 
 	function getVideoCaptionUrl() {

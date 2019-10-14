@@ -146,6 +146,8 @@ function loadCreators(){
 			parameters['jobTitle'] = $div.find('input[name = '+namespace+'jobTitle]').val();
 			parameters['gender'] = "";
 			parameters['fullName'] = $div.find('input[name = '+namespace+'fullName]').val();
+			parameters['affiliation'] = $div.find('input[name = '+namespace+'affiliation]').val();
+			parameters['orcidId'] = $div.find('input[name = '+namespace+'orcidId]').val();
 		}else{
 			parameters['creatorId'] = "0";
 			parameters['firstName'] = $div.find('input[name = '+namespace+'firstName]').val().trim();
@@ -154,6 +156,8 @@ function loadCreators(){
 			parameters['jobTitle'] = $div.find('input[name = '+namespace+'jobTitle]').val().trim();
 			parameters['gender'] = "";
 			parameters['fullName'] = (parameters['jobTitle'].trim()+" "+(parameters['firstName'].trim()+" "+parameters['middleName'].trim()).trim()+" "+parameters['lastName'].trim()).trim();		
+			parameters['affiliation'] = $div.find('input[name = '+namespace+'affiliation]').val();
+			parameters['orcidId'] = $div.find('input[name = '+namespace+'orcidId]').val();
 		}
 		if(parameters['firstName'].length>0 && parameters['lastName'].length>0){
 			creatorsArray[n]=parameters;

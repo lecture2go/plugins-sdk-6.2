@@ -207,6 +207,8 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 				c.put("jobTitle", cr.getJobTitle());
 				c.put("gender", cr.getGender());
 				c.put("fullName", cr.getFullName());
+				c.put("affiliation", cr.getAffiliation());
+				c.put("orcidId", cr.getOrcidId());
 				json.put(c);
 			} catch (JSONException e) {
 				//e.printStackTrace();
@@ -230,6 +232,8 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 				c.put("jobTitle", cr.getJobTitle());
 				c.put("gender", cr.getGender());
 				c.put("fullName", cr.getFullName());
+				c.put("affiliation", cr.getAffiliation());
+				c.put("orcidId", cr.getOrcidId());
 				json.put(c);
 			} catch (JSONException e) {
 				//e.printStackTrace();
@@ -250,6 +254,8 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 			c.put("jobTitle", cr.getJobTitle());
 			c.put("gender", cr.getGender());
 			c.put("fullName", cr.getFullName());
+			c.put("affiliation", cr.getAffiliation());
+			c.put("orcidId", cr.getOrcidId());
 			json.put(c);
 		} catch (JSONException e) {
 			//e.printStackTrace();
