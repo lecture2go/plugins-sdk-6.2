@@ -546,6 +546,9 @@ public class AdminVideoManagement extends MVCPortlet {
 						String jobTitle = creator.getString("jobTitle");
 						String gender = creator.getString("gender");
 						String fullName = creator.getString("fullName");
+						String affiliation = creator.getString("affiliation");
+						String orcidId = creator.getString("orcidId");
+
 
 						Video_Creator vc = Video_CreatorLocalServiceUtil.createVideo_Creator(0);
 						Long newCreatorId = new Long(0);
@@ -565,6 +568,8 @@ public class AdminVideoManagement extends MVCPortlet {
 								c.setJobTitle(jobTitle);
 								c.setGender(gender);
 								c.setFullName(fullName);
+								c.setAffiliation(affiliation);
+								c.setOrcidId(orcidId);
 								newCreatorId = CreatorLocalServiceUtil.addCreator(c).getCreatorId();
 							} else {
 								newCreatorId = cL.listIterator().next().getCreatorId();
@@ -1376,6 +1381,8 @@ public class AdminVideoManagement extends MVCPortlet {
 						String jobTitle = creator.getString("jobTitle");
 						String gender = creator.getString("gender");
 						String fullName = creator.getString("fullName");
+						String affiliation = creator.getString("affiliation");
+						String orcidId = creator.getString("orcidId");
 						
 						Video_Creator vc = new Video_CreatorImpl();
 						Long newCreatorId = new Long(0);
@@ -1394,6 +1401,8 @@ public class AdminVideoManagement extends MVCPortlet {
 								c.setJobTitle(jobTitle);
 								c.setGender(gender);
 								c.setFullName(fullName);
+								c.setAffiliation(affiliation);
+								c.setOrcidId(orcidId);
 								newCreatorId = CreatorLocalServiceUtil.addCreator(c).getCreatorId();
 							}else{
 								newCreatorId = cL.listIterator().next().getCreatorId();

@@ -1836,7 +1836,8 @@ li.chaptertile {
 
 div[id^="nc"] {
 	background-color: #F9F9F9;
-	width: auto !important;
+	/*width: auto !important;*/
+	width: 600px !important;
 	margin-bottom: 10px;
 	padding: 5px 30px 5px 10px;
 	position: relative;
@@ -1860,7 +1861,7 @@ div[id^="nc"] input {
 
 div[id^="nc"] a.icon-large.icon-remove {
 	position: absolute !important;
-    bottom: 20px;
+    top: 61px;
     margin-left: 10px;
 }
 
@@ -1871,14 +1872,25 @@ input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_jobTitle,
 input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_middleName,
 input#_lgadmincreatorsmanagement_WAR_lecture2goportlet_middleName {
 	width: 80px;
-	height: 21px;
+	/*height: 21px;*/
 }
 
 input#_lgadminvideomanagement_WAR_lecture2goportlet_firstName,
 input#_lgadminvideomanagement_WAR_lecture2goportlet_lastName,
 input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_firstName,
-input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_lastName {
+input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_lastName,
+input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_affiliation, 
+input#_lgadminvideomanagement_WAR_lecture2goportlet_affiliation,
+input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_orcidId, 
+input#_lgadminvideomanagement_WAR_lecture2goportlet_orcidId {
 	width: 135px;
+}
+
+input#_lgadmincreatorsmanagement_WAR_lecture2goportlet_firstName, 
+input#_lgadmincreatorsmanagement_WAR_lecture2goportlet_lastName, , 
+input#_lgadmincreatorsmanagement_WAR_lecture2goportlet_affiliation,
+input#_lgadmincreatorsmanagement_WAR_lecture2goportlet_orcidId {
+	width: 160px;
 }
 
 #permissions div label {
