@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 
 import de.uhh.l2g.plugins.model.Lectureseries_Category;
 import de.uhh.l2g.plugins.service.base.Lectureseries_CategoryLocalServiceBaseImpl;
+import de.uhh.l2g.plugins.service.persistence.Lectureseries_CategoryUtil;
 
 /**
  * The implementation of the lectureseries_ category local service.
@@ -58,5 +59,16 @@ public class Lectureseries_CategoryLocalServiceImpl
 			}
 		} catch (SystemException e) {}
 	}
+	
+	public boolean removeByLectureseriesId(Long lectureseriesId) {
+		boolean ret = false;
+		try {
+			Lectureseries_CategoryUtil.removeByLectureseries(lectureseriesId);
+		} catch (SystemException e) {
+			ret = true;
+			//e.printStackTrace();
+		}
+		return ret;
+	}	
 	
 }
