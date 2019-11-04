@@ -586,6 +586,8 @@ $(function () {
             }
         },
         done: function (e, data) {
+        	// set progress bar to zero
+           setTimeout(function(){$('#progress .bar').css('width',0 + '%')}, 1000);
            var vars = data.jqXHR.responseJSON;
            $.template( "filesTemplate", $("#template") );
            $("#"+vars[0].id).remove();   
@@ -642,9 +644,10 @@ $(function () {
         },
         progressall: function (e, data) {
 	        var progress = parseInt(data.loaded / data.total * 100, 10);
-	        if (progress==100){
-	        	setTimeout(function(){$('#progress .bar').css('width',0 + '%')}, 2000);
-	        }else{
+	        
+	        if (progress<=95) {
+				/* this is a workaround for wrong calculated data.loaded values on some machines, which led to inaccurate (too fast) progress
+				the progress war will now be stuck at 95% until really finished, which is now handeled in the done callback. */
 		        $('#progress .bar').css('width',progress + '%');
 		        if($('#<portlet:namespace></portlet:namespace>cancel').is(":visible")){
 		        	$('#<portlet:namespace></portlet:namespace>cancel').hide();	

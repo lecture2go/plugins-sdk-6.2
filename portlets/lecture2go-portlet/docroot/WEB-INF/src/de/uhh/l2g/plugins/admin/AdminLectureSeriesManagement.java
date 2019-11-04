@@ -107,6 +107,7 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			//dependencies
 			Lectureseries_InstitutionLocalServiceUtil.removeByLectureseriesId(lId);//institution
 			Producer_LectureseriesLocalServiceUtil.removeByLectureseriesId(lId);//producer
+			Lectureseries_CategoryLocalServiceUtil.removeByLectureseriesId(lId);//category
 			VideoLocalServiceUtil.unlinkLectureseriesFromVideos(lId);//video
 			TagcloudLocalServiceUtil.deleteByObjectId(lId);//tag cloud
 		} catch (PortalException e) {
