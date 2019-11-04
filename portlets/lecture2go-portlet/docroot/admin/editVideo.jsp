@@ -429,10 +429,20 @@ function activateThumbnailGeneration() {
 							<div id="include-video-caption-content">								
 								<!-- layout select radio buttons -->
 								<div>
+								<aui:row>
 									<aui:input name="video-caption-layout" id="speakerleft" label="speaker-left" value="1" checked="true" type="radio" required="false" helpMessage="video-caption-speaker-left-explanation"/>
 									<aui:input name="video-caption-layout" id="speakerright" label="speaker-right" value="2" checked="" type="radio" required="false" helpMessage="video-caption-speaker-right-explanation"/>
 									<aui:input name="video-caption-layout" id="speakeronly" label="speaker-only" value="3" checked="" type="radio" required="false" helpMessage="video-caption-speaker-only-explanation"/>
+								</aui:row>
 								</div>
+								<c:if test="<%= permissionChecker.isOmniadmin() || reqProducer.getProducerId() == 21923 %>">
+									<div>
+										<aui:select size="1" name="video-caption-additional-image" label="additional-image">
+											<aui:option value="0">-<liferay-ui:message key="without-additional-image"/>-</aui:option>
+											<aui:option value="campusinno">Campus Innovation Logo</aui:option>
+										</aui:select>
+									</div>
+								</c:if>
 								<div style="clear: both">
 									<img id="video-caption-previewimage-speakerslides" src=""/>
 									<img id="video-caption-previewimage-speakeronly" src=""/>
@@ -1398,6 +1408,12 @@ AUI().use('aui-node',
 		$("#include-video-caption-content input").keyup(function(){
 			refreshVideoCaptionPreviewImage();
 		});
+		
+		<c:if test="<%= permissionChecker.isOmniadmin() || reqProducer.getProducerId() == 21923 %>">
+			$("#<portlet:namespace/>video-caption-additional-image").change(function(){
+				refreshVideoCaptionPreviewImage();
+			});
+		</c:if>
 	
 		// the default postprocessing button
 		$('#start-postprocessing').click(function(){
@@ -1512,8 +1528,18 @@ AUI().use('aui-node',
 		} else if (layout == 3) {
 			layoutname = "speakeronly";
 		}
+		
 
-		var imageUrl = encodeURI("https://lecture2go.uni-hamburg.de/imagebuilder/l2goimage?author=" + creators +"&institution=" + institution + "&title=" + title + "&date=" + date + "&series=" + lectureseries + "&type=" + layoutname + "&downscale=false");
+		var imageUrlUnencoded = "https://lecture2go.uni-hamburg.de/imagebuilder/l2goimage?author=" + creators +"&institution=" + institution + "&title=" + title + "&date=" + date + "&series=" + lectureseries + "&type=" + layoutname + "&downscale=false";
+		
+		<c:if test="<%= permissionChecker.isOmniadmin() || reqProducer.getProducerId() == 21923 %>">
+			var additionalImage = $("#<portlet:namespace/>video-caption-additional-image").val();
+			if (additionalImage != 0) {
+				imageUrlUnencoded = imageUrlUnencoded + "&additionalimage=" + additionalImage;
+			}
+		</c:if>
+		
+		var imageUrl = encodeURI(imageUrlUnencoded);
 		return imageUrl;
 	}
 
