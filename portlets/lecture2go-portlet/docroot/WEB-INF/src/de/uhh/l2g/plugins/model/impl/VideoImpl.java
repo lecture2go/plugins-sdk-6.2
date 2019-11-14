@@ -61,6 +61,7 @@ public class VideoImpl extends VideoBaseImpl {
 	private static final String WEBHOME 				= PropsUtil.get("lecture2go.web.home");
 	private static final String WEBROOT 				= PropsUtil.get("lecture2go.web.root");
 	private static final String MEDIA_REPOSITORY		= PropsUtil.get("lecture2go.media.repository");
+	private static final String TENANT_SUB_FOLDER		= PropsUtil.get("lecture2go.media.repository.tenantpath"); 
 	private static final String IMAGES_REPOSITORY		= PropsUtil.get("lecture2go.images.system.path") + "/";
 	private static final String DOWNLOAD_SERVER			= PropsUtil.get("lecture2go.downloadserver.web.root");
 	private static final String IMAGES_URL 				= PropsUtil.get("lecture2go.web.root") + "/images/";
@@ -1052,7 +1053,9 @@ public class VideoImpl extends VideoBaseImpl {
 	 * @return the download link
 	 */
 	private String getSecureFileDownloadLink(String suffix) {
-		return DOWNLOAD_SERVLET_BASE + getDownloadLink() + "&downloadPath=/" + getHost().getName() + "/" + getProducer().getHomeDir() + "/" + getSPreffix() + suffix;
+		// this is an optional part for allowing tenant specific paths
+		String subFolder = TENANT_SUB_FOLDER != null ? TENANT_SUB_FOLDER + "/" : "";
+		return DOWNLOAD_SERVLET_BASE + getDownloadLink() + "&downloadPath=/" + subFolder + getHost().getName() + "/" + getProducer().getHomeDir() + "/" + getSPreffix() + suffix;
 	}
 	
 	/**
