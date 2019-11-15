@@ -67,8 +67,8 @@ public class VideoImpl extends VideoBaseImpl {
 	private static final String IMAGES_URL 				= PropsUtil.get("lecture2go.web.root") + "/images/";
 	private static final String CHAPTERFOLDER 			= PropsUtil.get("lecture2go.chapters.web.root");
 	private static final String CAPTIONSFOLDER 			= PropsUtil.get("lecture2go.captions.web.root");
-	private static final String DOWNLOADFOLDER 			= DOWNLOAD_SERVER + "/abo/";
-	private static final String VIDEOREPFOLDER 			= DOWNLOAD_SERVER + "/videorep/";
+	private static final String DOWNLOADFOLDER 			= DOWNLOAD_SERVER + "/" + PropsUtil.get("lecture2go.downloadserver.path") + "/";
+	private static final String VIDEOREPFOLDER 			= DOWNLOAD_SERVER + "/" + PropsUtil.get("lecture2go.downloadserver.videorep.path") + "/";
 
 	private static final String VIDEO_URL_BASE 			= WEBHOME + "/l2go/-/get/v/";
 	private static final String LECTURESERIES_URL_BASE 	= WEBHOME + "/l2go/-/get/l/";
