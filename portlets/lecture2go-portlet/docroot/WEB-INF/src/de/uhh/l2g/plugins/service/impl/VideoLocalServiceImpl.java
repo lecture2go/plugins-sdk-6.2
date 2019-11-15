@@ -484,8 +484,8 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			String downloadServ = PropsUtil.get("lecture2go.downloadserver.web.root");
 
 			//check player files!
-			boolean smilFileAllowed = (uri.contains("vod/_definst/smil") && checkSmilFile(video) && container.contains("m3u8"));
-			boolean hlsStreamingAllowed = ((uri.contains("vod/_definst/mp4") || uri.contains("vod/_definst/mp3"))  && !checkSmilFile(video));
+			boolean smilFileAllowed = (uri.contains("/_definst/smil") && checkSmilFile(video) && container.contains("m3u8"));
+			boolean hlsStreamingAllowed = ((uri.contains("/_definst/mp4") || uri.contains("/_definst/mp3"))  && !checkSmilFile(video));
 			boolean downloadAllowed = (uri.contains(downloadServ) && video.getDownloadLink()==1);
 			boolean rtspAllowed = (uri.contains("rtsp"));
 
@@ -493,12 +493,14 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				//custom case for download allowed 
 				//and oper or closed case
 				if(downloadAllowed && video.getOpenAccess()==0){
-					uri=downloadServ+"/down/"+l2go_path+"/"+video.getSecureFilename();
+					String downloadServerDownPath = "/" + PropsUtil.get("lecture2go.downloadserver.down.path") + "/";
+					uri=downloadServ+downloadServerDownPath+l2go_path+"/"+video.getSecureFilename();
 				}
 				// in some cases this is necessary to correct the filename of the open access files in the download folder
 				// (case: smil file available for adaptive streaming, in combination with open access and download allowed -> wrong filename (with suffix) is set for the downloadfolder (but correct one for rtsp streaming))
 				if(downloadAllowed && video.getOpenAccess()==1){
-					uri=downloadServ+"/abo/"+video.getFilename();
+					String downloadServerPath = "/" + PropsUtil.get("lecture2go.downloadserver.path") + "/";
+					uri=downloadServ+downloadServerPath+video.getFilename();
 				}
 				try {
 					o.put("file", uri);
