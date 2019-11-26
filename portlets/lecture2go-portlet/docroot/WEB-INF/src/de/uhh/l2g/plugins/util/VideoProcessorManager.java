@@ -34,7 +34,7 @@ public class VideoProcessorManager {
 	public static boolean startVideoConversion(Long videoId) {
 		// if there is a videoprocessing workflow defined in the properties use this, otherwise the default workflow defined at the video-processor will be used
 		if (PropsUtil.contains("lecture2go.videoprocessing.workflow")) {
-			return startVideoConversion(videoId, PropsUtil.get("lecture2go.videoprocessing.workflow"), null); 
+			return startVideoConversion(videoId, PropsUtil.get("lecture2go.videoprocessing.workflow"), JSONFactoryUtil.createJSONObject()); 
 		}
 		return startVideoConversion(videoId, null, null);
 	}
