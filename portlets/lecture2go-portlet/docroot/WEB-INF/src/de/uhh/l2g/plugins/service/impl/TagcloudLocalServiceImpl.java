@@ -224,6 +224,9 @@ public class TagcloudLocalServiceImpl extends TagcloudLocalServiceBaseImpl {
 		//self
 		tagCloudArrayString.add(v.getTitle());
 		
+		//tags
+		tagCloudArrayString.add(v.getTags());
+		
 		//lecture series for this video
 		try {
 			Lectureseries lect = LectureseriesLocalServiceUtil.getLectureseries(v.getLectureseriesId());
