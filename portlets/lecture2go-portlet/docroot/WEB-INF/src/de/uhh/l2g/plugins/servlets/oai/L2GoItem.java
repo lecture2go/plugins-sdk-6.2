@@ -103,6 +103,10 @@ public class L2GoItem implements Item {
 			 return new org.dspace.xoai.model.oaipmh.Metadata(toMetadata());
 		}
 		
+		// *** ID ***
+		String id = String.valueOf(videoId);
+		this.with("id", id);
+		
 		// *** Identifier ***
 		String urlIdentifier = v.getUrl();
 		this.with("urlIdentifier", urlIdentifier);
