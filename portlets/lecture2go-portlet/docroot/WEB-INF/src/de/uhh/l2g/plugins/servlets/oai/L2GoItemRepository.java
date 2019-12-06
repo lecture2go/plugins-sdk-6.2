@@ -20,6 +20,7 @@ import org.dspace.xoai.dataprovider.repository.ItemRepository;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -245,6 +246,8 @@ public class L2GoItemRepository implements ItemRepository {
 	 */
 	private DynamicQuery getDynamicQueryFromFilters(List<ScopedFilter> filters) {
 		DynamicQuery dynamicQuery = OaiRecordLocalServiceUtil.dynamicQuery();
+		// newest records first
+		dynamicQuery.addOrder(OrderFactoryUtil.desc("datestamp"));
 		
 		for (ScopedFilter scopedFilter: filters) {
 			// if filter is a L2GoFilter and has the Query scope add the criterion to the query
