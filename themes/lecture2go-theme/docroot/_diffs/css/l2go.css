@@ -1952,7 +1952,6 @@ label.edit-video-lable.first {
 }
 
 #uploaded-files {
-    color: #c40017 !important;
     font-size: 13px !important;
     font-style: normal;
 }
@@ -2905,7 +2904,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 
 strong, b, th, #kopf .sprachwechsel {
     font-family: TheSansUHHBold,sans-serif;
-    font-weight: normal;
+    font-weight: normal !important;
 }
 
 .aui .portlet, .aui .portlet-borderless-container {
