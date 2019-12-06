@@ -1436,8 +1436,9 @@ AUI().use('aui-node',
 				"captionPosition": $('input[name=<portlet:namespace/>video-caption-layout]:checked').val(), 
 				"captionLink": $("<div>").text(getVideoCaptionUrl()).html()
 			}
-			videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>', '<%=getVideoConversionStatusURL%>', <%=reqVideo.getVideoId()%>, videoCaptionWorkflowName, JSON.stringify(additionalProperties));
-			
+			videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>', '<%=getVideoConversionStatusURL%>', <%=reqVideo.getVideoId()%>,videoCaptionWorkflowName, JSON.stringify(additionalProperties));
+			// show remove button
+			$("#remove-video-caption-postprocessing-area").removeClass("hide").addClass("show-inline");
 			// close the postprocessing area
 			$( "#postprocessing-content" ).slideToggle( "slow" );
 	 		$("#l6").toggleClass("thumb thumb-90");
@@ -1449,7 +1450,8 @@ AUI().use('aui-node',
 		// the video-caption-postprocessing button (additional properties are used)
 		$('#remove-video-caption-postprocessing').click(function(){
 	     	videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>','<%=getVideoConversionStatusURL%>',<%=reqVideo.getVideoId()%>);
-	     	//$("#remove-video-caption-postprocessing-area").removeClass("show-inline").addClass("hide");
+			// hide remove button
+	     	$("#remove-video-caption-postprocessing-area").removeClass("show-inline").addClass("hide");
 			// close the postprocessing area
 			$( "#postprocessing-content" ).slideToggle( "slow" );
 	 		$("#l6").toggleClass("thumb thumb-90");
