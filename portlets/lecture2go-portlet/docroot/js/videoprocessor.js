@@ -41,6 +41,32 @@ var videoProcessor = {
 		                   "</span>"
 		                 ].join("\n")).add(videoProcessor.getToolTipHtml());
 	},
+	checkVideoCaptionRemoveButton: function(namespace, videoConversionWorkflowURL, id, videoCaptionWorkflow) {
+		$removeVideoCaptionArea = $("#remove-video-caption-postprocessing-area")
+		// check if  current video conversion workflow is the video captioning workflow
+		AUI().use('aui-io-request', 'aui-node',
+			function(A){
+				var videoId = namespace + "videoId";
+				var dataForPost = {};
+				dataForPost[videoId] = id;
+				A.io.request(videoConversionWorkflowURL, {
+				 	dataType: 'json',
+				 	method: 'POST',
+				 	//send data to server
+				 	data: dataForPost,
+				 	//get server response
+					on: {
+						success: function() {
+							var videoConversionWorkflow = this.get('responseData').videoConversionWorkflow;
+							if (videoConversionWorkflow == videoCaptionWorkflow) {
+								$removeVideoCaptionArea.removeClass("hide").addClass("show-inline");
+							}
+					   }
+					}
+				});
+			}
+		);
+	},
 	convert: function(namespace, convertVideoURL, videoConversionStatusURL, id, workflow, additionalProperties) {
 		$videoconversionNode = $('*[data-video-id="'+id+'"]');
 		$videoconversionNode.html(videoProcessor.getConversionInitializedHtml());

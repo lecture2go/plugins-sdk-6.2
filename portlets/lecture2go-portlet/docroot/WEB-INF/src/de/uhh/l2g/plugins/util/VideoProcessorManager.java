@@ -197,49 +197,22 @@ public class VideoProcessorManager {
 	 * @return the exact status returned by the videoconversion provider
 	 */
 	public static String getVideoConversionStatusForVideoId(Long videoId) {
-		String status = "";
-		if (PropsUtil.contains("lecture2go.videoprocessing.provider")) {
-			String videoConversionUrl = PropsUtil.get("lecture2go.videoprocessing.provider.videoconversion") + "/sourceid/" + String.valueOf(videoId);
-			// send GET request to video processor to check 
-			try {
-				HttpManager httpManager = new HttpManager();
-				httpManager.setUrl(videoConversionUrl);
-				httpManager.addHeader("Tenant", PropsUtil.get("lecture2go.videoprocessing.tenant"));
-				if (PropsUtil.contains("lecture2go.videoprocessing.basicauth.user") && PropsUtil.contains("lecture2go.videoprocessing.basicauth.pass")) {
-					httpManager.setUser(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.user"));
-					httpManager.setPass(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.pass"));
-				}
-				HttpURLConnection conn = httpManager.sendGet();
-				httpManager.close();
-			
-				// videoprocessor return status 200 ok, if a given video id was processed
-				int responseCode = conn.getResponseCode();
-				if (responseCode == 200) {
-					BufferedReader in = new BufferedReader(
-					        new InputStreamReader(conn.getInputStream()));
-					String inputLine;
-					StringBuffer response = new StringBuffer();
-
-					while ((inputLine = in.readLine()) != null) {
-						response.append(inputLine);
-					}
-					in.close();
-
-					JSONObject jsonResponse = JSONFactoryUtil.createJSONObject(response.toString());
-					
-					// get the conversion status
-					status = jsonResponse.getString("status");	
-				} else {
-					LOG.error("Failed getting the info of a video conversion of video with id: " + videoId + ". Responsecode: " + responseCode); 
-				}
-			} catch (IOException e) {
-				LOG.error("Failed connecting to videoprocessor to get status of video with id: " + videoId); 
-			} catch (JSONException e) {
-				LOG.error("Failed reading json from videoprocessor for video with id: " + videoId); 
-			}
-		}
-		return status;
+		JSONObject jsonResponse = getVideoConversionResponseAsJson(videoId);
+		// return the conversion status
+		return jsonResponse.getString("status");	
+				
 	}
+	
+	/**
+	 * Returns the workflow of the video conversion
+	 * @param videoId the id of the video
+	 * @return the simple status
+	 */
+	public static String getVideoConversionWorkflow(Long videoId) {
+		JSONObject jsonResponse = getVideoConversionResponseAsJson(videoId);
+		// return conversion workflow
+		return jsonResponse.getString("workflow");	
+	}	
 	
 	/**
 	 * Returns a simple status: Error, Running, Finished
@@ -271,4 +244,53 @@ public class VideoProcessorManager {
 		}
 		return simpleStatus;
 	}	
+	
+
+	/**
+	 * Returns the video conversion object as a JSONObject
+	 * @param videoId the id of the video
+	 * @return the video conversion as a JSONObject
+	 */
+	private static JSONObject getVideoConversionResponseAsJson(Long videoId) {
+		if (PropsUtil.contains("lecture2go.videoprocessing.provider")) {
+			String videoConversionUrl = PropsUtil.get("lecture2go.videoprocessing.provider.videoconversion") + "/sourceid/" + String.valueOf(videoId);
+			// send GET request to video processor to check 
+			try {
+				HttpManager httpManager = new HttpManager();
+				httpManager.setUrl(videoConversionUrl);
+				httpManager.addHeader("Tenant", PropsUtil.get("lecture2go.videoprocessing.tenant"));
+				if (PropsUtil.contains("lecture2go.videoprocessing.basicauth.user") && PropsUtil.contains("lecture2go.videoprocessing.basicauth.pass")) {
+					httpManager.setUser(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.user"));
+					httpManager.setPass(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.pass"));
+				}
+				HttpURLConnection conn = httpManager.sendGet();
+				httpManager.close();
+			
+				// videoprocessor return status 200 ok, if a given video id was processed
+				int responseCode = conn.getResponseCode();
+				if (responseCode == 200) {
+					BufferedReader in = new BufferedReader(
+					        new InputStreamReader(conn.getInputStream()));
+					String inputLine;
+					StringBuffer response = new StringBuffer();
+
+					while ((inputLine = in.readLine()) != null) {
+						response.append(inputLine);
+					}
+					in.close();
+
+					JSONObject jsonResponse = JSONFactoryUtil.createJSONObject(response.toString());
+					
+					return jsonResponse;
+				} else {
+					LOG.error("Failed getting the info of a video conversion of video with id: " + videoId + ". Responsecode: " + responseCode); 
+				}
+			} catch (IOException e) {
+				LOG.error("Failed connecting to videoprocessor to get status of video with id: " + videoId); 
+			} catch (JSONException e) {
+				LOG.error("Failed reading json from videoprocessor for video with id: " + videoId); 
+			}
+		}
+		return null;
+	}
 }

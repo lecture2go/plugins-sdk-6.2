@@ -33,6 +33,7 @@
 <liferay-portlet:resourceURL id="getJSONVideo" var="getJSONVideoURL" />
 <liferay-portlet:resourceURL id="convertVideo" var="convertVideoURL" />
 <liferay-portlet:resourceURL id="getVideoConversionStatus" var="getVideoConversionStatusURL" />
+<liferay-portlet:resourceURL id="getVideoConversionWorkflow" var="getVideoConversionWorkflowURL" />
 <liferay-portlet:resourceURL id="updateHtaccess" var="updateHtaccessURL" />
 <liferay-portlet:resourceURL id="handleVttUpload" var="handleVttUploadURL" />
 <liferay-portlet:resourceURL id="updateAll" var="updateAllURL" />
@@ -460,10 +461,15 @@ function activateThumbnailGeneration() {
 									<aui:input name="video-caption-date" label="date" required="false" value=""/>
 									<aui:input name="video-caption-lectureseries" label="lectureseries" required="false" value=""/>
 								</div>
-								<div id="start-video-caption-postprocessing-area">
+								<span id="start-video-caption-postprocessing-area">
 									<aui:button type="button" id="start-video-caption-postprocessing" value="include-video-caption" disabled="true"/>
 									<liferay-ui:icon-help message="start-video-caption-postprocessing-disabled-explanation"/>
-								</div>
+								</span>
+								<span id="remove-video-caption-postprocessing-area" class="hide">
+									<aui:button type="button" id="remove-video-caption-postprocessing" value="remove-video-caption"/>
+									<liferay-ui:icon-help message="remove-video-caption-postprocessing-disabled-explanation"/>
+								</span>
+							
 							</div>
 						</div>
 					</div>
@@ -1358,6 +1364,10 @@ AUI().use('aui-node',
 	
 	
 	AUI().ready('', function(A){
+		
+		// set video caption workflow name
+		var videoCaptionWorkflowName = "l2go-composite-adaptive-publish";
+		
 		// synchronize the video-caption form to the metadata form on page load
 		synchronizeTitleFields();
 		synchronizeLectureSeriesFields();
@@ -1426,7 +1436,7 @@ AUI().use('aui-node',
 				"captionPosition": $('input[name=<portlet:namespace/>video-caption-layout]:checked').val(), 
 				"captionLink": $("<div>").text(getVideoCaptionUrl()).html()
 			}
-			videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>', '<%=getVideoConversionStatusURL%>', <%=reqVideo.getVideoId()%>, "l2go-composite-adaptive-publish", JSON.stringify(additionalProperties));
+			videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>', '<%=getVideoConversionStatusURL%>', <%=reqVideo.getVideoId()%>, videoCaptionWorkflowName, JSON.stringify(additionalProperties));
 			
 			// close the postprocessing area
 			$( "#postprocessing-content" ).slideToggle( "slow" );
@@ -1434,6 +1444,21 @@ AUI().use('aui-node',
 			// scroll to top to see conversion status
 			$("html, body").animate({ scrollTop: 0 }, "slow");
 		});
+		
+		
+		// the video-caption-postprocessing button (additional properties are used)
+		$('#remove-video-caption-postprocessing').click(function(){
+	     	videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>','<%=getVideoConversionStatusURL%>',<%=reqVideo.getVideoId()%>);
+	     	//$("#remove-video-caption-postprocessing-area").removeClass("show-inline").addClass("hide");
+			// close the postprocessing area
+			$( "#postprocessing-content" ).slideToggle( "slow" );
+	 		$("#l6").toggleClass("thumb thumb-90");
+			// scroll to top to see conversion status
+			$("html, body").animate({ scrollTop: 0 }, "slow");
+		});
+		
+		// check if the video has a caption removal button should be shown or not
+		videoProcessor.checkVideoCaptionRemoveButton('<portlet:namespace/>','<%=getVideoConversionWorkflowURL%>',<%=reqVideo.getVideoId()%>,videoCaptionWorkflowName);
 	});
 
 	AUI().ready('', function(A){

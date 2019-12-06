@@ -513,6 +513,18 @@ public class AdminVideoManagement extends MVCPortlet {
 			writeJSON(resourceRequest, resourceResponse, json);
 		}
 		
+		if(resourceID.equals("getVideoConversionWorkflow")){
+			JSONObject json = JSONFactoryUtil.createJSONObject();
+			// get the video conversion workflow
+			if (PropsUtil.contains("lecture2go.videoprocessing.provider")) {
+				String videoConversionUrl = PropsUtil.get("lecture2go.videoprocessing.provider.videoconversion");
+				String videoConversionWorkflow = VideoProcessorManager.getVideoConversionWorkflow(video.getVideoId());
+				
+				json.put("videoConversionWorkflow", videoConversionWorkflow);
+			}
+			writeJSON(resourceRequest, resourceResponse, json);
+		}
+		
 		if(resourceID.equals("updateAll")){
 			ArrayList<String> errors = new ArrayList();
 			//description start

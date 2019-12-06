@@ -30,6 +30,14 @@
 */
 
 
+.hide {
+	display: none;
+}
+
+.show-inline {
+	display: inline;
+}
+
 
 /*** MOVED FROM MIN-960  ***/
 
