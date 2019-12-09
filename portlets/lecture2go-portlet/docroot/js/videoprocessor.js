@@ -41,6 +41,14 @@ var videoProcessor = {
 		                   "</span>"
 		                 ].join("\n")).add(videoProcessor.getToolTipHtml());
 	},
+	getVideoCaptionWhenUploadFinishedHtml: function() {
+		return $([
+						  "<span class='conversion-running'>",
+			              "  <span class='icon-exclamation-sign'> </span>",
+			              Liferay.Language.get('conversion-video-caption-after-upload'),
+			              "</span>"
+		                 ].join("\n")).add(videoProcessor.getToolTipHtml());
+	},
 	checkVideoCaptionRemoveButton: function(namespace, videoConversionWorkflowURL, id, videoCaptionWorkflow) {
 		$removeVideoCaptionArea = $("#remove-video-caption-postprocessing-area")
 		// check if  current video conversion workflow is the video captioning workflow
