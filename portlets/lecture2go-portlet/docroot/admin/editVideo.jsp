@@ -1575,32 +1575,30 @@ AUI().use('aui-node',
 
 	function getVideoCaptionUrl() {
 		// create url to imagebuilder 
-		var title = $("#<portlet:namespace/>video-caption-title").val();
-		var creators = $("#<portlet:namespace/>video-caption-creators").val();
-		var institution = $("#<portlet:namespace/>video-caption-institution").val();
+		var title = encodeURIComponent($("#<portlet:namespace/>video-caption-title").val());
+		var creators = encodeURIComponent($("#<portlet:namespace/>video-caption-creators").val());
+		var institution = encodeURIComponent($("#<portlet:namespace/>video-caption-institution").val());
 		
-		//ugly way to transform date (js does not have a native date format function)
-		var date = $("#<portlet:namespace/>video-caption-date").val();
+		var date = encodeURIComponent($("#<portlet:namespace/>video-caption-date").val());
 
-		var lectureseries = $("#<portlet:namespace/>video-caption-lectureseries").val();
+		var lectureseries = encodeURIComponent($("#<portlet:namespace/>video-caption-lectureseries").val());
 		var layout = $('input[name=<portlet:namespace/>video-caption-layout]:checked').val();
 		if (layout == 1 || layout == 2) {
 			layoutname = "speakerslides";
 		} else if (layout == 3) {
 			layoutname = "speakeronly";
 		}
-		
 
-		var imageUrlUnencoded = "https://lecture2go.uni-hamburg.de/imagebuilder/l2goimage?author=" + creators +"&institution=" + institution + "&title=" + title + "&date=" + date + "&series=" + lectureseries + "&type=" + layoutname + "&downscale=false";
+
+		var imageUrl = "https://lecture2go.uni-hamburg.de/imagebuilder/l2goimage?author=" + creators +"&institution=" + institution + "&title=" + title + "&date=" + date + "&series=" + lectureseries + "&type=" + layoutname + "&downscale=false";
 		
 		<c:if test="<%= permissionChecker.isOmniadmin() || reqProducer.getProducerId() == 21923 %>">
 			var additionalImage = $("#<portlet:namespace/>video-caption-additional-image").val();
 			if (additionalImage != 0) {
-				imageUrlUnencoded = imageUrlUnencoded + "&additionalimage=" + additionalImage;
+				imageUrl = imageUrl + "&additionalimage=" + additionalImage;
 			}
 		</c:if>
 		
-		var imageUrl = encodeURI(imageUrlUnencoded);
 		return imageUrl;
 	}
 
