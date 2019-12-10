@@ -198,6 +198,9 @@ public class VideoProcessorManager {
 	 */
 	public static String getVideoConversionStatusForVideoId(Long videoId) {
 		JSONObject jsonResponse = getVideoConversionResponseAsJson(videoId);
+		if (jsonResponse == null) {
+			return "";
+		}
 		// return the conversion status
 		return jsonResponse.getString("status");	
 				
@@ -210,8 +213,11 @@ public class VideoProcessorManager {
 	 */
 	public static String getVideoConversionWorkflow(Long videoId) {
 		JSONObject jsonResponse = getVideoConversionResponseAsJson(videoId);
+		if (jsonResponse == null) {
+			return "";
+		}
 		// return conversion workflow
-		return jsonResponse.getString("workflow");	
+		return jsonResponse.getString("workflow");
 	}	
 	
 	/**
