@@ -33,6 +33,7 @@
 <liferay-portlet:resourceURL id="getJSONVideo" var="getJSONVideoURL" />
 <liferay-portlet:resourceURL id="convertVideo" var="convertVideoURL" />
 <liferay-portlet:resourceURL id="getVideoConversionStatus" var="getVideoConversionStatusURL" />
+<liferay-portlet:resourceURL id="getVideoConversionWorkflow" var="getVideoConversionWorkflowURL" />
 <liferay-portlet:resourceURL id="updateHtaccess" var="updateHtaccessURL" />
 <liferay-portlet:resourceURL id="handleVttUpload" var="handleVttUploadURL" />
 <liferay-portlet:resourceURL id="updateAll" var="updateAllURL" />
@@ -460,10 +461,17 @@ function activateThumbnailGeneration() {
 									<aui:input name="video-caption-date" label="date" required="false" value=""/>
 									<aui:input name="video-caption-lectureseries" label="lectureseries" required="false" value=""/>
 								</div>
-								<div id="start-video-caption-postprocessing-area">
-									<aui:button type="button" id="start-video-caption-postprocessing" value="include-video-caption" disabled="true"/>
-									<liferay-ui:icon-help message="start-video-caption-postprocessing-disabled-explanation"/>
+								<div style="clear:both;">
+									<span id="start-video-caption-postprocessing-area">
+										<aui:button type="button" id="start-video-caption-postprocessing" value="include-video-caption" />
+										<liferay-ui:icon-help message="start-video-caption-postprocessing-disabled-explanation"/>
+									</span>
+									<span id="remove-video-caption-postprocessing-area" class="hide">
+										<aui:button type="button" id="remove-video-caption-postprocessing" value="remove-video-caption"/>
+										<liferay-ui:icon-help message="remove-video-caption-postprocessing-disabled-explanation"/>
+									</span>
 								</div>
+							
 							</div>
 						</div>
 					</div>
@@ -828,12 +836,18 @@ function updateVideoFileName(file){
 						 <c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider") %>'>
 						 	// do not try to convert mp3s, this won't work
 						 	if (!(fileExtension == "mp3" || file.type == "audio/mp3")) {
-						     	videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>','<%=getVideoConversionStatusURL%>',<%=reqVideo.getVideoId()%>);
-								// enable the button for video caption postprocessing
-								$("#start-video-caption-postprocessing").removeAttr("disabled");
-								$("#start-video-caption-postprocessing").removeClass("disabled");
-								
-								$("#start-video-caption-postprocessing-area > .taglib-icon-help").hide();
+						 		if (hasVideoCaption) {
+									startVideoCaptionPostprocessing();
+						 		} else {
+							     	videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>','<%=getVideoConversionStatusURL%>',<%=reqVideo.getVideoId()%>);
+						 		}
+						 	} else {
+						 		// it is a mp3, disable video caption
+						 		$("#start-video-caption-postprocessing").prop("disabled",true);
+								$("#start-video-caption-postprocessing").addClass("disabled");
+								$("#remove-video-caption-postprocessing-area").removeClass("show-inline").addClass("hide");
+								$(".conversion").html("");
+								$("#start-video-caption-postprocessing-area > .taglib-icon-help").show();
 						 	}
 						</c:if>
 
@@ -1338,7 +1352,10 @@ AUI().use('aui-node',
 <c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider")%>'>
 
 	/* ### POSTPROCESSING SPECIFIC ##### */
-	 
+	
+	// hide the tool tip on default
+	$("#start-video-caption-postprocessing-area > .taglib-icon-help").hide();
+	
 	function newCreatorHandler() {
 			synchronizeAuthors();
 			refreshVideoCaptionPreviewImage();
@@ -1358,6 +1375,12 @@ AUI().use('aui-node',
 	
 	
 	AUI().ready('', function(A){
+		hasVideoCaption = false;		
+	
+		
+		// set video caption workflow name
+		var videoCaptionWorkflowName = "l2go-composite-adaptive-publish";
+		
 		// synchronize the video-caption form to the metadata form on page load
 		synchronizeTitleFields();
 		synchronizeLectureSeriesFields();
@@ -1367,13 +1390,13 @@ AUI().use('aui-node',
 		// load the video caption image on page load
 		refreshVideoCaptionPreviewImage();
 	
-		// enable the button for video caption postprocessing, if there is already a mp4 file
-		if (defaultContainer() == 'mp4') {
-			// enable button
-			$("#start-video-caption-postprocessing").removeAttr("disabled");
-			$("#start-video-caption-postprocessing").removeClass("disabled");
-			// hide disabled help text
-			$("#start-video-caption-postprocessing-area > .taglib-icon-help").hide();
+		// disable the button for video caption postprocessing, if it is a audio file type
+		if (defaultContainer() == 'mp3') {
+			// disable button
+			$("#start-video-caption-postprocessing").prop("disabled",true);
+			$("#start-video-caption-postprocessing").addClass("disabled");
+			// show disabled help text
+			$("#start-video-caption-postprocessing-area > .taglib-icon-help").show();
 		}
 	
 		// change video caption if video data set is changed
@@ -1422,11 +1445,18 @@ AUI().use('aui-node',
 	
 		// the video-caption-postprocessing button (additional properties are used)
 		$('#start-video-caption-postprocessing').click(function(){
-			additionalProperties = {
-				"captionPosition": $('input[name=<portlet:namespace/>video-caption-layout]:checked').val(), 
-				"captionLink": $("<div>").text(getVideoCaptionUrl()).html()
+			// show remove button
+			$("#remove-video-caption-postprocessing-area").removeClass("hide").addClass("show-inline");
+			// check if video file is uploaded yet
+			if (!(defaultContainer() == 'mp4')) {
+				// set flag to start video caption include after the upload is finished
+				hasVideoCaption = true;
+				// display corresponding message
+				$('.conversion').html(videoProcessor.getVideoCaptionWhenUploadFinishedHtml());
+			} else {
+				// video file is already there, start the video caption postprocessing
+				startVideoCaptionPostprocessing();
 			}
-			videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>', '<%=getVideoConversionStatusURL%>', <%=reqVideo.getVideoId()%>, "l2go-composite-adaptive-publish", JSON.stringify(additionalProperties));
 			
 			// close the postprocessing area
 			$( "#postprocessing-content" ).slideToggle( "slow" );
@@ -1434,12 +1464,43 @@ AUI().use('aui-node',
 			// scroll to top to see conversion status
 			$("html, body").animate({ scrollTop: 0 }, "slow");
 		});
+		
+		
+		// the video-caption-postprocessing button (additional properties are used)
+		$('#remove-video-caption-postprocessing').click(function(){
+			if (!(defaultContainer() == 'mp4')) {
+				// no video file uploaded yet, just set the flag to start the default video conversion after the upload is finished
+				hasVideoCaption = false;
+				$('.conversion').html("");
+			} else {
+				videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>','<%=getVideoConversionStatusURL%>',<%=reqVideo.getVideoId()%>);
+			}
+	     	
+			// hide remove button
+	     	$("#remove-video-caption-postprocessing-area").removeClass("show-inline").addClass("hide");
+			// close the postprocessing area
+			$( "#postprocessing-content" ).slideToggle( "slow" );
+	 		$("#l6").toggleClass("thumb thumb-90");
+			// scroll to top to see conversion status
+			$("html, body").animate({ scrollTop: 0 }, "slow");
+		});
+		
+		// check if the video has a caption removal button should be shown or not
+		videoProcessor.checkVideoCaptionRemoveButton('<portlet:namespace/>','<%=getVideoConversionWorkflowURL%>',<%=reqVideo.getVideoId()%>,videoCaptionWorkflowName);
 	});
 
 	AUI().ready('', function(A){
 		// check conversion status
 		videoProcessor.pollStatus('<portlet:namespace/>','<%=getVideoConversionStatusURL%>','<%=convertVideoURL%>',<%=reqVideo.getVideoId()%>);
 	});
+	
+	function startVideoCaptionPostprocessing() {
+		additionalProperties = {
+				"captionPosition": $('input[name=<portlet:namespace/>video-caption-layout]:checked').val(), 
+				"captionLink": $("<div>").text(getVideoCaptionUrl()).html()
+			}
+		videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>', '<%=getVideoConversionStatusURL%>', <%=reqVideo.getVideoId()%>,"l2go-composite-adaptive-publish", JSON.stringify(additionalProperties));
+	}
 
 	function initializeCaptionGeneration() {
 		// synchronize the video-caption form to the metadata form 
@@ -1514,32 +1575,30 @@ AUI().use('aui-node',
 
 	function getVideoCaptionUrl() {
 		// create url to imagebuilder 
-		var title = $("#<portlet:namespace/>video-caption-title").val();
-		var creators = $("#<portlet:namespace/>video-caption-creators").val();
-		var institution = $("#<portlet:namespace/>video-caption-institution").val();
+		var title = encodeURIComponent($("#<portlet:namespace/>video-caption-title").val());
+		var creators = encodeURIComponent($("#<portlet:namespace/>video-caption-creators").val());
+		var institution = encodeURIComponent($("#<portlet:namespace/>video-caption-institution").val());
 		
-		//ugly way to transform date (js does not have a native date format function)
-		var date = $("#<portlet:namespace/>video-caption-date").val();
+		var date = encodeURIComponent($("#<portlet:namespace/>video-caption-date").val());
 
-		var lectureseries = $("#<portlet:namespace/>video-caption-lectureseries").val();
+		var lectureseries = encodeURIComponent($("#<portlet:namespace/>video-caption-lectureseries").val());
 		var layout = $('input[name=<portlet:namespace/>video-caption-layout]:checked').val();
 		if (layout == 1 || layout == 2) {
 			layoutname = "speakerslides";
 		} else if (layout == 3) {
 			layoutname = "speakeronly";
 		}
-		
 
-		var imageUrlUnencoded = "https://lecture2go.uni-hamburg.de/imagebuilder/l2goimage?author=" + creators +"&institution=" + institution + "&title=" + title + "&date=" + date + "&series=" + lectureseries + "&type=" + layoutname + "&downscale=false";
+
+		var imageUrl = "https://lecture2go.uni-hamburg.de/imagebuilder/l2goimage?author=" + creators +"&institution=" + institution + "&title=" + title + "&date=" + date + "&series=" + lectureseries + "&type=" + layoutname + "&downscale=false";
 		
 		<c:if test="<%= permissionChecker.isOmniadmin() || reqProducer.getProducerId() == 21923 %>">
 			var additionalImage = $("#<portlet:namespace/>video-caption-additional-image").val();
 			if (additionalImage != 0) {
-				imageUrlUnencoded = imageUrlUnencoded + "&additionalimage=" + additionalImage;
+				imageUrl = imageUrl + "&additionalimage=" + additionalImage;
 			}
 		</c:if>
 		
-		var imageUrl = encodeURI(imageUrlUnencoded);
 		return imageUrl;
 	}
 
