@@ -440,6 +440,8 @@
 		<column name="jobTitle" type="String"></column>
 		<column name="gender" type="String"></column>
 		<column name="fullName" type="String"></column>
+        <column name="affiliation" type="String"></column>
+        <column name="orcidId" type="String"></column>
 		<order by="asc">
 			<order-column name="lastName" order-by="asc"></order-column>
 		</order>
@@ -458,6 +460,9 @@
 		<finder name="FullName" return-type="Collection">
 			<finder-column name="fullName"></finder-column>
 		</finder>
+        <finder name="Affiliation" return-type="Collection">
+            <finder-column name="affiliation"></finder-column>
+        </finder>
 	</entity>
 	<entity name="Lectureseries_Creator" local-service="true" remote-service="false">
 		<column name="lectureseriesCreatorId" type="long" primary="true" id-type="increment"></column>
@@ -564,6 +569,7 @@
             <finder-column name="selectable"></finder-column>
         </finder>
     </entity>
+<<<<<<< HEAD
     <entity local-service="true" remote-service="false"
     	name="InstallWizard">
 
@@ -582,6 +588,42 @@
             <finder-column name="companyId"></finder-column>
         </finder>
     </entity>    
+=======
+    <entity name="OaiRecord" remote-service="false" local-service="true">
+        <column name="oaiRecordId" primary="true" type="long" id-type="increment"></column>
+        <column name="videoId" type="long" accessor="false"></column>
+        <column name="identifier" type="String"></column>
+        <column name="datestamp" type="Date"></column>
+        <column name="deleted" type="boolean"></column>
+        
+        <order by="desc">
+            <order-column name="datestamp" order-by="desc"></order-column>
+        </order>
+        <finder name="Video" return-type="OaiRecord" unique="true">
+            <finder-column name="videoId"></finder-column>
+        </finder>
+        <finder name="Identifier" return-type="OaiRecord" unique="true">
+            <finder-column name="identifier"></finder-column>
+        </finder>
+    </entity>
+    <entity name="OaiSet" local-service="true" remote-service="false">
+        <column name="oaiSetId" primary="true" type="long" id-type="increment"></column>
+        <column name="setSpec" type="String"></column>
+        <column name="setName" type="String"></column>
+        <column name="setDescription" type="String"></column>
+    </entity>
+    <entity name="OaiRecord_OaiSet" local-service="true" remote-service="false">
+        <column name="oaiRecordOaiSetId" type="long" primary="true" id-type="increment"></column>
+        <column name="oaiRecordId" type="long"></column>
+        <column name="oaiSetId" type="long"></column>
+        <finder name="oaiSet" return-type="Collection">
+            <finder-column name="oaiSetId"></finder-column>
+        </finder>
+        <finder name="oaiRecord" return-type="Collection">
+            <finder-column name="oaiRecordId"></finder-column>
+        </finder>
+    </entity>
+>>>>>>> refs/remotes/lecture2go@gitlab/master
 	<exceptions>
 		<exception>HostName</exception>
 		<exception>HostStreamer</exception>

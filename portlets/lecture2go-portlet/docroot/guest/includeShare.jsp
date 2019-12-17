@@ -64,7 +64,7 @@
 		$('#socialshareprivacy').socialSharePrivacy({
 			services : {
 				gplus : {
-					status : 'on'
+					status : 'off'
 				}
 			}
 		});

@@ -77,6 +77,7 @@ import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.util.FFmpegManager;
 import de.uhh.l2g.plugins.util.FileManager;
 import de.uhh.l2g.plugins.util.Htaccess;
+import de.uhh.l2g.plugins.util.OaiPmhManager;
 import de.uhh.l2g.plugins.util.ProzessManager;
 import de.uhh.l2g.plugins.util.Security;
 import de.uhh.l2g.plugins.util.VideoGenerationDateComparator;
@@ -512,6 +513,18 @@ public class AdminVideoManagement extends MVCPortlet {
 			writeJSON(resourceRequest, resourceResponse, json);
 		}
 		
+		if(resourceID.equals("getVideoConversionWorkflow")){
+			JSONObject json = JSONFactoryUtil.createJSONObject();
+			// get the video conversion workflow
+			if (PropsUtil.contains("lecture2go.videoprocessing.provider")) {
+				String videoConversionUrl = PropsUtil.get("lecture2go.videoprocessing.provider.videoconversion");
+				String videoConversionWorkflow = VideoProcessorManager.getVideoConversionWorkflow(video.getVideoId());
+				
+				json.put("videoConversionWorkflow", videoConversionWorkflow);
+			}
+			writeJSON(resourceRequest, resourceResponse, json);
+		}
+		
 		if(resourceID.equals("updateAll")){
 			ArrayList<String> errors = new ArrayList();
 			//description start
@@ -545,6 +558,9 @@ public class AdminVideoManagement extends MVCPortlet {
 						String jobTitle = creator.getString("jobTitle");
 						String gender = creator.getString("gender");
 						String fullName = creator.getString("fullName");
+						String affiliation = creator.getString("affiliation");
+						String orcidId = creator.getString("orcidId");
+
 
 						Video_Creator vc = Video_CreatorLocalServiceUtil.createVideo_Creator(0);
 						Long newCreatorId = new Long(0);
@@ -564,6 +580,8 @@ public class AdminVideoManagement extends MVCPortlet {
 								c.setJobTitle(jobTitle);
 								c.setGender(gender);
 								c.setFullName(fullName);
+								c.setAffiliation(affiliation);
+								c.setOrcidId(orcidId);
 								newCreatorId = CreatorLocalServiceUtil.addCreator(c).getCreatorId();
 							} else {
 								newCreatorId = cL.listIterator().next().getCreatorId();
@@ -775,6 +793,9 @@ public class AdminVideoManagement extends MVCPortlet {
 				} 
 			}	 	    
 	 	    //metadata end
+			
+			// update the video in the OAI-PMH repository if existing
+			OaiPmhManager.modify(video.getVideoId());
 	 	    
 			//return errors cont result after update
 			JSONObject jo = JSONFactoryUtil.createJSONObject();
@@ -974,6 +995,9 @@ public class AdminVideoManagement extends MVCPortlet {
 			} catch (SystemException e) {
 				////e.printStackTrace();
 			}
+			
+			// update the video in the OAI-PMH repository if existing
+			OaiPmhManager.modify(video.getVideoId());
 		}
 		
 		if (resourceID.equals("handleVttUpload")) {
@@ -1318,6 +1342,11 @@ public class AdminVideoManagement extends MVCPortlet {
 						//e.printStackTrace();
 					}
 			}
+			
+			// clean up symbolic links for the deleted file if there are any (e.g. download-folder, caption-folder)
+			ProzessManager pm = new ProzessManager();
+			pm.removeSymbolicLinksForSingularFileIfExisting(fileName);
+		
 			writeJSON(resourceRequest, resourceResponse, jarr);
 		}
 		
@@ -1340,6 +1369,13 @@ public class AdminVideoManagement extends MVCPortlet {
 			writeJSON(resourceRequest, resourceResponse, json);			
 		}
 		
+		if(resourceID.equals("getJSONAllCreators")){
+			
+			JSONArray json = CreatorLocalServiceUtil.getJSONCreatorsByVideoId(video.getVideoId());
+			
+			writeJSON(resourceRequest, resourceResponse, json);			
+		}
+		
 		if(resourceID.equals("updateCreators")){
 			String creators = ParamUtil.getString(resourceRequest, "creator");
 			try {
@@ -1357,6 +1393,8 @@ public class AdminVideoManagement extends MVCPortlet {
 						String jobTitle = creator.getString("jobTitle");
 						String gender = creator.getString("gender");
 						String fullName = creator.getString("fullName");
+						String affiliation = creator.getString("affiliation");
+						String orcidId = creator.getString("orcidId");
 						
 						Video_Creator vc = new Video_CreatorImpl();
 						Long newCreatorId = new Long(0);
@@ -1375,6 +1413,8 @@ public class AdminVideoManagement extends MVCPortlet {
 								c.setJobTitle(jobTitle);
 								c.setGender(gender);
 								c.setFullName(fullName);
+								c.setAffiliation(affiliation);
+								c.setOrcidId(orcidId);
 								newCreatorId = CreatorLocalServiceUtil.addCreator(c).getCreatorId();
 							}else{
 								newCreatorId = cL.listIterator().next().getCreatorId();
@@ -1471,6 +1511,9 @@ public class AdminVideoManagement extends MVCPortlet {
 		} catch (IOException e) {
 			//e.printStackTrace();
 		}
+		
+		// unpublish the video in the OAI-PMH repository if existing
+		OaiPmhManager.unpublish(video.getVideoId());
 	}
 	
 	public void lockVideo(ActionRequest request, ActionResponse response){

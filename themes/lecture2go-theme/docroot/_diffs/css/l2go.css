@@ -30,6 +30,14 @@
 */
 
 
+.hide {
+	display: none;
+}
+
+.show-inline {
+	display: inline;
+}
+
 
 /*** MOVED FROM MIN-960  ***/
 
@@ -1789,6 +1797,7 @@ li.chaptertile {
 
 #_lgadminstreamingservermanagement_WAR_lecture2goportlet_name, #_lgadminstreamingservermanagement_WAR_lecture2goportlet_curStreamingServerName {
     width: 100px;
+    color: #8d8d8d !important;
 }
 
 .add-institution .btn.btn-primary {
@@ -1835,7 +1844,8 @@ li.chaptertile {
 
 div[id^="nc"] {
 	background-color: #F9F9F9;
-	width: auto !important;
+	/*width: auto !important;*/
+	width: 600px !important;
 	margin-bottom: 10px;
 	padding: 5px 30px 5px 10px;
 	position: relative;
@@ -1859,7 +1869,7 @@ div[id^="nc"] input {
 
 div[id^="nc"] a.icon-large.icon-remove {
 	position: absolute !important;
-    bottom: 20px;
+    top: 61px;
     margin-left: 10px;
 }
 
@@ -1870,14 +1880,25 @@ input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_jobTitle,
 input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_middleName,
 input#_lgadmincreatorsmanagement_WAR_lecture2goportlet_middleName {
 	width: 80px;
-	height: 21px;
+	/*height: 21px;*/
 }
 
 input#_lgadminvideomanagement_WAR_lecture2goportlet_firstName,
 input#_lgadminvideomanagement_WAR_lecture2goportlet_lastName,
 input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_firstName,
-input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_lastName {
+input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_lastName,
+input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_affiliation, 
+input#_lgadminvideomanagement_WAR_lecture2goportlet_affiliation,
+input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_orcidId, 
+input#_lgadminvideomanagement_WAR_lecture2goportlet_orcidId {
 	width: 135px;
+}
+
+input#_lgadmincreatorsmanagement_WAR_lecture2goportlet_firstName, 
+input#_lgadmincreatorsmanagement_WAR_lecture2goportlet_lastName, , 
+input#_lgadmincreatorsmanagement_WAR_lecture2goportlet_affiliation,
+input#_lgadmincreatorsmanagement_WAR_lecture2goportlet_orcidId {
+	width: 160px;
 }
 
 #permissions div label {
@@ -1939,7 +1960,6 @@ label.edit-video-lable.first {
 }
 
 #uploaded-files {
-    color: #c40017 !important;
     font-size: 13px !important;
     font-style: normal;
 }
@@ -2892,7 +2912,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 
 strong, b, th, #kopf .sprachwechsel {
     font-family: TheSansUHHBold,sans-serif;
-    font-weight: normal;
+    font-weight: normal !important;
 }
 
 .aui .portlet, .aui .portlet-borderless-container {

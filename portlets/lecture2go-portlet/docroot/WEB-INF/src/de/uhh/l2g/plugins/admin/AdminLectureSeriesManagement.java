@@ -73,6 +73,7 @@ import de.uhh.l2g.plugins.util.EmailManager;
 import de.uhh.l2g.plugins.util.FileManager;
 import de.uhh.l2g.plugins.util.Htaccess;
 import de.uhh.l2g.plugins.util.Lecture2GoRoleChecker;
+import de.uhh.l2g.plugins.util.OaiPmhManager;
 import de.uhh.l2g.plugins.util.ProzessManager;
 
 public class AdminLectureSeriesManagement extends MVCPortlet {
@@ -106,6 +107,7 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			//dependencies
 			Lectureseries_InstitutionLocalServiceUtil.removeByLectureseriesId(lId);//institution
 			Producer_LectureseriesLocalServiceUtil.removeByLectureseriesId(lId);//producer
+			Lectureseries_CategoryLocalServiceUtil.removeByLectureseriesId(lId);//category
 			VideoLocalServiceUtil.unlinkLectureseriesFromVideos(lId);//video
 			TagcloudLocalServiceUtil.deleteByObjectId(lId);//tag cloud
 		} catch (PortalException e) {
@@ -255,6 +257,9 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		//update tag cloud
 		TagcloudLocalServiceUtil.generateForLectureseries(lectureseries.getLectureseriesId());
 
+		// update the datestamp of all OAIRecords linked to the changed lectureseries
+		OaiPmhManager.modifyByLectureseries(lId);
+		
 		//email notification after edit
 
 		//send an email to all producer, if logged in as coordinator or admin

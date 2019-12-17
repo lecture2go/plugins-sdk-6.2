@@ -20,11 +20,15 @@
 		    width: 100% !important;
 		    padding: 0 .5em;
 		}
-
+		
 		.jw-controlbar {
 		    width: calc(100% - 100px) !important;
 		}
 
+		.jw-text-track-cue.jw-reset {
+		    line-height: 1.4em;
+		}
+		
 		.jw-background-color {
    		background-color: rgba(33, 33, 33, 0.8);
 		}
@@ -170,7 +174,7 @@
 				        isCitation = true;
 			        }
 
-					var vttChapterFile ="<%=video.getVttChapterFile()%>";
+					var vttTracks =<%=video.getJsonPlayerTracks()%>;
 			        //
 
 					var img = "<%=video.getImage()%>";
@@ -179,12 +183,8 @@
        			    	height: "100%",
 			            aspectratio: "16:9",
 			            image: img,
-			            sources: <%=video.getJsonPlayerUris()%>,
-			            tracks: [{
-			               			file: vttChapterFile,
-			                		kind:'chapters'
-				            	}
-			            ],
+			            sources: <%=video.getJsonPlayerUris()%>,		            
+			            tracks: vttTracks,				        
 			            hlshtml: true,
 			            androidhls: true
 			        }).onReady(function() {
@@ -262,8 +262,7 @@
 			                <%}%>
 			            },
 			            tit
-			        )
-
+			        );
 		</script>
 	<%}%>
 </body>

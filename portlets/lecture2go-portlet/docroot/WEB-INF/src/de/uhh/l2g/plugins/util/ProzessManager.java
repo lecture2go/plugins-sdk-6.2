@@ -203,7 +203,10 @@ public class ProzessManager {
 		// refresh last video list
 		VideoLocalServiceUtil.createLastVideoList();
 		// refresh open acces for lecture series
-		LectureseriesLocalServiceUtil.updateOpenAccess(video, lectureseries); 
+		LectureseriesLocalServiceUtil.updateOpenAccess(video, lectureseries);
+		
+		// publish the video to the OAI-PMH repository
+		OaiPmhManager.publish(video.getVideoId());
 	}
 
 	@SuppressWarnings("static-access")
@@ -297,6 +300,9 @@ public class ProzessManager {
 		
 		//update LectureSeries previewVideoId
 		LectureseriesLocalServiceUtil.updatePreviewVideoOpenAccess(lectureseries);
+		
+		// unpublish the video from the OAI-PMH repository
+		OaiPmhManager.unpublish(video.getVideoId());
 	}
 
 	public void deleteThumbnails(Video video) {
@@ -463,6 +469,9 @@ public class ProzessManager {
 			// send DELETE request to video processor
 			VideoProcessorManager.deleteVideoConversion(video.getVideoId());
 		}
+		
+		// unpublish the video from the OAI-PMH repository
+		OaiPmhManager.unpublish(video.getVideoId());
 		
 		return true;
 	}
@@ -646,6 +655,23 @@ public class ProzessManager {
 		}
 		return ret;
 	}
+	
+	/**
+	 * Remove the symbolic link for one file from all possible sym link folders
+	 * @param filename the name of the file which should be deleted (only filename)
+	 */
+	public void removeSymbolicLinksForSingularFileIfExisting(String filename){
+		// remove symbolic link from download folder if existing
+		File symLinkDownloadfolder = new File(PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/" + filename);
+		symLinkDownloadfolder.delete(); // just returns false if file not existing
+		
+		// remove symbolic link from caption folder if existing (necessary for vtt caption files)
+		if (filename.endsWith(".vtt")) {
+			File symLinkCaptionFolder = new File(PropsUtil.get("lecture2go.captions.system.path") + "/" + filename);
+			symLinkCaptionFolder.delete();
+		}
+	}
+	
 
 	public boolean removeSymbolicLinks(Video v){
 		boolean ret = false;

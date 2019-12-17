@@ -15,6 +15,7 @@ import com.liferay.util.bridges.mvc.MVCPortlet;
 import de.uhh.l2g.plugins.model.Creator;
 import de.uhh.l2g.plugins.model.impl.CreatorImpl;
 import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
+import de.uhh.l2g.plugins.util.OaiPmhManager;
 
 public class CreatorsManagement extends MVCPortlet {
 
@@ -28,12 +29,16 @@ public class CreatorsManagement extends MVCPortlet {
 		String mn=request.getParameter("middleName");
 		String ln=request.getParameter("lastName");
 		String t=request.getParameter("jobTitle");
+		String a=request.getParameter("affiliation");
+		String o=request.getParameter("orcidId");
 		if (isValid(fn, ln)) {
 			Creator creator = new CreatorImpl();
 			creator.setFirstName(fn);
 			creator.setMiddleName(mn);
 			creator.setLastName(ln);
 			creator.setJobTitle(t);
+			creator.setAffiliation(a);
+			creator.setOrcidId(o);
 			creator.setFullName(fullName(fn, mn, ln, t));
 			CreatorLocalServiceUtil.addCreator(creator);
 			try {
@@ -51,20 +56,29 @@ public class CreatorsManagement extends MVCPortlet {
 		String mn=request.getParameter("middleName");
 		String ln=request.getParameter("lastName");
 		String t=request.getParameter("jobTitle");
+		String a=request.getParameter("affiliation");
+		String o=request.getParameter("orcidId");
 		if (isValid(fn, ln)) {
 			Creator creator = CreatorLocalServiceUtil.getCreator(reqCreatorId);
 			creator.setFirstName(fn);
 			creator.setMiddleName(mn);
 			creator.setLastName(ln);
 			creator.setJobTitle(t);
+			creator.setAffiliation(a);
+			creator.setOrcidId(o);
 			creator.setFullName(fullName(fn, mn, ln, t));
 			CreatorLocalServiceUtil.updateCreator(creator);
+			
+			// update the datestamp of all OAIRecords linked to the changed creator
+			OaiPmhManager.modifyByCreator(reqCreatorId);
 			try {
 				response.sendRedirect(backURL);
 			} catch (IOException e) {
 				//e.printStackTrace();
 			}
 		}
+		
+
 	}
 	
 	public void delete(ActionRequest request, ActionResponse response) throws SystemException, PortalException{

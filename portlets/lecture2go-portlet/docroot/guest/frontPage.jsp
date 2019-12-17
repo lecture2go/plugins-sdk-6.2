@@ -104,9 +104,13 @@ installWizardManager.installRepository();
 									List<Video_Institution> vi = Video_InstitutionLocalServiceUtil.getByVideo(vid.getVideoId());
 						        	// only get the first institution
 						        	Institution inst = new InstitutionImpl();
+						        	Institution rootInst = new InstitutionImpl();
 						        	try{
 						        		inst=InstitutionLocalServiceUtil.getById(vi.get(0).getInstitutionId());
-						        	}catch(Exception e){}
+						        	}catch(Exception e){
+						        		// no institution for the video, use the root institution
+						        		rootInst=InstitutionLocalServiceUtil.getById(vid.getRootInstitutionId());
+						        	}
 						        	
 									%>
 									
@@ -143,7 +147,14 @@ installWizardManager.installRepository();
 													%>
 										        	<span class="label label-light2"><%=instLink%></span>												
 												</div>
-												<%}%>
+												<%} else if(rootInst.getInstitutionId()>0){ %>
+													<div class="labels">
+														<%
+															String instLink="<a href='/l2go/-/get/0/"+rootInst.getInstitutionId()+"/0/0/0/'>"+rootInst.getName()+"</a>"; 
+														%>
+											        	<span class="label label-light2"><%=instLink%></span>												
+													</div>
+												<%} %>
 											</div> 
 										</div>
 										
@@ -201,9 +212,13 @@ installWizardManager.installRepository();
 						        	List<Video_Institution> vi = Video_InstitutionLocalServiceUtil.getByVideo(vid.getVideoId());
 						        	// only get the first institution
 						        	Institution inst = new InstitutionImpl();
+						        	Institution rootInst = new InstitutionImpl();
 						        	try{
 						        		inst=InstitutionLocalServiceUtil.getById(vi.get(0).getInstitutionId());
-						        	}catch(Exception e){}							%>
+						        	}catch(Exception e){
+						        		// no institution for the video, use the root institution
+						        		rootInst=InstitutionLocalServiceUtil.getById(vid.getRootInstitutionId());
+						        	}						%>
 								<c:if test="${count % 4 == 0 && count != 0}">
 									<!-- row-fluid -->
 										</div>
@@ -237,7 +252,14 @@ installWizardManager.installRepository();
 												%>
 									        	<span class="label label-light2"><%=instLink%></span>
 									        </div>
-									        <%} %>
+									        <%} else if(rootInst.getInstitutionId()>0){ %>
+												<div class="labels">
+													<%
+														String instLink="<a href='/l2go/-/get/0/"+rootInst.getInstitutionId()+"/0/0/0/'>"+rootInst.getName()+"</a>"; 
+													%>
+										        	<span class="label label-light2"><%=instLink%></span>												
+												</div>
+											<%} %>
 										</div>
 									</div>
 								<c:set var="count" value="${count + 1}" scope="page"/>

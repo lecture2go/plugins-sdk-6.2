@@ -375,15 +375,19 @@
 										          %>
 										          <span class="label label-light2"><%=cat%></span>
 										          <%
-										          		try{
+										          		String instLink= "";
+										         	 	try{
 															Institution inst = InstitutionLocalServiceUtil.getById(vi.get(0).getInstitutionId());
-															String instLink="<a href='/l2go/-/get/"+inst.getInstitutionId() + "/" + inst.getParentId() + "/0/0/0/'>" + inst.getName() + "</a>"; 
-											          		%>
-													          <span class="label label-light2"><%=instLink%></span>
-											          		<%
+															instLink="<a href='/l2go/-/get/"+inst.getInstitutionId() + "/" + inst.getParentId() + "/0/0/0/'>" + inst.getName() + "</a>"; 
+											          		
 										          		}catch(Exception e){
-										          			//
+										          			// no institution for the video, use the root institution
+										          			Institution rootInst=InstitutionLocalServiceUtil.getById(vidDummy.getRootInstitutionId());
+															instLink="<a href='/l2go/-/get/0/" + rootInst.getInstitutionId() + "/0/0/0/'>" + rootInst.getName() + "</a>"; 
 										          		}
+											          %>
+											         	 <span class="label label-light2"><%=instLink%></span>
+									          		<%
 										          %>
 										        </div>
 									        </div>	

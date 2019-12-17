@@ -61,13 +61,14 @@ public class VideoImpl extends VideoBaseImpl {
 	private static final String WEBROOT 				= PropsUtil.get("lecture2go.web.root");
 	private static final String WEBHOME 				= WEBROOT.contains("localhost") ? WEBROOT+"/web/vod" : WEBROOT;
 	private static final String MEDIA_REPOSITORY		= PropsUtil.get("lecture2go.media.repository");
+	private static final String TENANT_SUB_FOLDER		= PropsUtil.get("lecture2go.media.repository.tenantpath"); 
 	private static final String IMAGES_REPOSITORY		= PropsUtil.get("lecture2go.images.system.path") + "/";
 	private static final String DOWNLOAD_SERVER			= PropsUtil.get("lecture2go.downloadserver.web.root");
 	private static final String IMAGES_URL 				= WEBROOT + "/images/";
 	private static final String CHAPTERFOLDER 			= PropsUtil.get("lecture2go.chapters.web.root");
 	private static final String CAPTIONSFOLDER 			= PropsUtil.get("lecture2go.captions.web.root");
-	private static final String DOWNLOADFOLDER 			= DOWNLOAD_SERVER + "/abo/";
-	private static final String VIDEOREPFOLDER 			= DOWNLOAD_SERVER + "/videorep/";
+	private static final String DOWNLOADFOLDER 			= DOWNLOAD_SERVER + "/" + PropsUtil.get("lecture2go.downloadserver.path") + "/";
+	private static final String VIDEOREPFOLDER 			= DOWNLOAD_SERVER + "/" + PropsUtil.get("lecture2go.downloadserver.videorep.path") + "/";
 
 	private static final String VIDEO_URL_BASE 			= WEBHOME + "/l2go/-/get/v/";
 	private static final String LECTURESERIES_URL_BASE 	= WEBHOME + "/l2go/-/get/l/";
@@ -101,7 +102,7 @@ public class VideoImpl extends VideoBaseImpl {
 	private static final int EMBED_WIDTH	= 647;
 	private static final int EMBED_HEIGHT	= 373;
 
-	private static final String HTML5_EMBED_VIDEO_START 	= "<video width='" + EMBED_WIDTH + "' height='" + EMBED_HEIGHT + "' controls><source src='";
+	private static final String HTML5_EMBED_VIDEO_START 	= "<video width='" + EMBED_WIDTH + "' height='" + EMBED_HEIGHT;
 	private static final String HTML5_EMBED_VIDEO_END		= "' type='video/mp4'>Your browser does not support the video tag.</video>"; 
 	private static final String HTML5_EMBED_AUDIO_START 	= "<audio controls><source src='";
 	private static final String HTML5_EMBED_AUDIO_END		= "' type='audio/mpeg'>Your browser does not support the audio element.</audio>";  
@@ -992,9 +993,9 @@ public class VideoImpl extends VideoBaseImpl {
 	 */
 	private String getVideoEmbedHtml5() {
 		if(getOpenAccess()==1){
-			return HTML5_EMBED_VIDEO_START + DOWNLOADFOLDER + getPreffix() + FILE_SUFFIX_MP4 + HTML5_EMBED_VIDEO_END;
+			return HTML5_EMBED_VIDEO_START + "' controls='' " + "poster='"+getImage()+"'><source src='" + DOWNLOADFOLDER + getPreffix() + FILE_SUFFIX_MP4 + HTML5_EMBED_VIDEO_END;
 		} else {
-			return HTML5_EMBED_VIDEO_START + VIDEOREPFOLDER + getHost().getServerRoot() + "/" + getProducer().getHomeDir() + "/" + getSPreffix() + getDownloadSuffix() + FILE_SUFFIX_MP4 + HTML5_EMBED_VIDEO_END;
+			return HTML5_EMBED_VIDEO_START + "' controls='' " + "poster='"+getImage()+"'><source src='" + VIDEOREPFOLDER + getHost().getServerRoot() + "/" + getProducer().getHomeDir() + "/" + getSPreffix() + getDownloadSuffix() + FILE_SUFFIX_MP4 + HTML5_EMBED_VIDEO_END;
 		}
 	}
 	
@@ -1052,7 +1053,9 @@ public class VideoImpl extends VideoBaseImpl {
 	 * @return the download link
 	 */
 	private String getSecureFileDownloadLink(String suffix) {
-		return DOWNLOAD_SERVLET_BASE + getDownloadLink() + "&downloadPath=/" + getHost().getName() + "/" + getProducer().getHomeDir() + "/" + getSPreffix() + suffix;
+		// this is an optional part for allowing tenant specific paths
+		String subFolder = TENANT_SUB_FOLDER != null ? TENANT_SUB_FOLDER + "/" : "";
+		return DOWNLOAD_SERVLET_BASE + getDownloadLink() + "&downloadPath=/" + subFolder + getHost().getName() + "/" + getProducer().getHomeDir() + "/" + getSPreffix() + suffix;
 	}
 	
 	/**
