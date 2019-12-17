@@ -569,26 +569,6 @@
             <finder-column name="selectable"></finder-column>
         </finder>
     </entity>
-<<<<<<< HEAD
-    <entity local-service="true" remote-service="false"
-    	name="InstallWizard">
-
-    	<!-- PK fields -->
-
-    	<column name="installWizardId" type="long" primary="true"></column>
-
-    	<!-- Group instance -->
-
-    	<!-- Audit fields -->
-        <column name="wizartActive" type="int"></column>
-        <column name="groupId" type="long"></column>
-        <column name="companyId" type="long"></column>
-        <finder name="groupAndCompyny" return-type="InstallWizard">
-            <finder-column name="groupId"></finder-column>
-            <finder-column name="companyId"></finder-column>
-        </finder>
-    </entity>    
-=======
     <entity name="OaiRecord" remote-service="false" local-service="true">
         <column name="oaiRecordId" primary="true" type="long" id-type="increment"></column>
         <column name="videoId" type="long" accessor="false"></column>
@@ -623,7 +603,6 @@
             <finder-column name="oaiRecordId"></finder-column>
         </finder>
     </entity>
->>>>>>> refs/remotes/lecture2go@gitlab/master
 	<exceptions>
 		<exception>HostName</exception>
 		<exception>HostStreamer</exception>
