@@ -60,7 +60,7 @@ public class OaiIdentifierDescription implements XmlWritable {
 		 	writer.writeElement("scheme", getScheme());
             writer.writeElement("repositoryIdentifier", getRepositoryIdentifier());
             writer.writeElement("delimiter", getDelimiter());
-            writer.writeElement("sampleIdentifier", getRepositoryIdentifier() + getDelimiter() + 123);
+            writer.writeElement("sampleIdentifier", getScheme() +  getDelimiter() + getRepositoryIdentifier() + getDelimiter() + 123);
             writer.writeEndElement();
 		} catch (XMLStreamException e) {
             throw new XmlWriteException(e);
