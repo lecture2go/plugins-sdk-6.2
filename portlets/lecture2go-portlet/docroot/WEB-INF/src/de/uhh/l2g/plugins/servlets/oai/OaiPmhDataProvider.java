@@ -88,6 +88,7 @@ public class OaiPmhDataProvider extends HttpServlet {
 		
 		// set the optional oai-identifier-description (this also overwrites the awful xoai description, which is hardcoded if no description is given)
 		OaiIdentifierDescription oaiIdentifierDescription = new OaiIdentifierDescription()
+				.withScheme(PropsUtil.get("lecture2go.oaipmh.identifierscheme"))
 				.withRepositoryIdentifier(PropsUtil.get("lecture2go.oaipmh.identifierprefix"))
 				.withDelimiter(PropsUtil.get("lecture2go.oaipmh.identifierdelimiter"));
 		try {

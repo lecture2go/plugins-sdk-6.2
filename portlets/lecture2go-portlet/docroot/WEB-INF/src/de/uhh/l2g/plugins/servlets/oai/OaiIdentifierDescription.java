@@ -19,6 +19,7 @@ public class OaiIdentifierDescription implements XmlWritable {
 	
 	protected String repositoryIdentifier;
 	protected String delimiter;
+	protected String scheme;
 
     public String getRepositoryIdentifier() {
         return repositoryIdentifier;
@@ -38,6 +39,15 @@ public class OaiIdentifierDescription implements XmlWritable {
         return this;
     }
     
+    public String getScheme() {
+        return scheme;
+    }
+
+    public OaiIdentifierDescription withScheme(String scheme) {
+        this.scheme = scheme;
+        return this;
+    }
+    
 	@Override
 	public void write(XmlWriter writer) throws XmlWriteException {
 		try {
@@ -47,7 +57,7 @@ public class OaiIdentifierDescription implements XmlWritable {
             writer.writeNamespace(XSISchema.PREFIX, XSISchema.NAMESPACE_URI);
 	        writer.writeAttribute(XSISchema.PREFIX, XSISchema.NAMESPACE_URI, "schemaLocation", NAMESPACE_URI + " " + SCHEMA_LOCATION);
 
-		 	writer.writeElement("scheme", "oai");
+		 	writer.writeElement("scheme", getScheme());
             writer.writeElement("repositoryIdentifier", getRepositoryIdentifier());
             writer.writeElement("delimiter", getDelimiter());
             writer.writeElement("sampleIdentifier", getRepositoryIdentifier() + getDelimiter() + 123);

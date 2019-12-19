@@ -36,6 +36,7 @@ import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
 import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil;
+import de.uhh.l2g.plugins.util.XmlUtil;
 
 /**
  * The L2GoItem which holds the values of an OAI-PMH-item 
@@ -91,6 +92,8 @@ public class L2GoItem implements Item {
 	
 	@Override
 	public org.dspace.xoai.model.oaipmh.Metadata getMetadata() {
+		XmlUtil xmlUtil = new XmlUtil();
+
 		// in this method all relevant metadata for an video is collected and put into a Metadata object
 		
 		Long videoId = getVideoId();
@@ -113,15 +116,14 @@ public class L2GoItem implements Item {
 		this.with("identifierType", "URL");
 
 		// *** Title ***
-		String title = v.getTitle();
-		this.with("title", title);
+		this.with("title", xmlUtil.cleanInvalidXmlCharacters(v.getTitle()));
 		
 		// *** Metadata of series (if existing) ***
 		if (v.getLectureseriesId() > 0 ) {
 			Lectureseries lectureseries;
 			try {
 				lectureseries = LectureseriesLocalServiceUtil.getLectureseries(v.getLectureseriesId());
-				String seriesTitle = lectureseries.getName();
+				String seriesTitle = xmlUtil.cleanInvalidXmlCharacters(lectureseries.getName());
 				this.with("seriesTitle", seriesTitle);
 				
 				String seriesUrl = lectureseries.getOpenAccessURI();
@@ -138,17 +140,17 @@ public class L2GoItem implements Item {
 	    
 		for (Creator c: creators) {
 		    Map<String, Object> creator = new HashMap<String, Object>();
-		    creator.put("fullName", c.getFullName());
-		    creator.put("firstName", c.getFirstName());
+		    creator.put("fullName", xmlUtil.cleanInvalidXmlCharacters(c.getFullName()));
+		    creator.put("firstName", xmlUtil.cleanInvalidXmlCharacters(c.getFirstName()));
 		    if (!c.getMiddleName().isEmpty()) {
-			    creator.put("middleName", c.getMiddleName());
+			    creator.put("middleName", xmlUtil.cleanInvalidXmlCharacters(c.getMiddleName()));
 		    }
-		    creator.put("lastName", c.getLastName());
+		    creator.put("lastName", xmlUtil.cleanInvalidXmlCharacters(c.getLastName()));
 		    if (!c.getAffiliation().isEmpty()) {
-			    creator.put("affiliation", c.getAffiliation());
+			    creator.put("affiliation", xmlUtil.cleanInvalidXmlCharacters(c.getAffiliation()));
 		    }
 		    if (!c.getOrcidId().isEmpty()) {
-			    creator.put("orcidId", c.getOrcidId());
+			    creator.put("orcidId", xmlUtil.cleanInvalidXmlCharacters(c.getOrcidId()));
 		    }
 		    creatorsList.add(creator);
 		}
@@ -226,7 +228,7 @@ public class L2GoItem implements Item {
 		// the producing institution - we use the puslisher field for now, this must be handled better
 		String producer;
 		try {
-			producer = metadata.getPublisher();
+			producer = xmlUtil.cleanInvalidXmlCharacters(metadata.getPublisher());
 			if (!producer.isEmpty()) {
 				this.with("producer", producer);
 			}
@@ -245,7 +247,7 @@ public class L2GoItem implements Item {
 				Lectureseries lectureseries;
 				try {
 					lectureseries = LectureseriesLocalServiceUtil.getLectureseries(v.getLectureseriesId());
-					description = lectureseries.getLongDesc();
+					description = xmlUtil.cleanInvalidXmlCharacters(lectureseries.getLongDesc());
 				} catch (Exception e) {
 					// there is a problem getting the description of the lectureseries, that's not too good but nevermind and fill the other metadata
 				}
