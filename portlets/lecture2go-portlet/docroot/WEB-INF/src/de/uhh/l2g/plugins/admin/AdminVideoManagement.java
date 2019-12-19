@@ -491,6 +491,9 @@ public class AdminVideoManagement extends MVCPortlet {
 					// another workflow is specified, use this
 					isVideoConversionStarted = VideoProcessorManager.startVideoConversion(video.getVideoId(), workflow, additionalProperties);
 				}
+				//create thumbnails if not existing, this may be necessary if the thumbnails were generated and deleted by the video-processor (happens with the video caption integration)
+				VideoLocalServiceUtil.createThumbnailsIfNotExisting(video.getVideoId());
+				
 				if (isVideoConversionStarted) {
 					json.put("status", Boolean.TRUE);
 				} else {
