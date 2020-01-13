@@ -31,6 +31,8 @@
 		<header-portlet-javascript>/js/jwplayer.custom.util.js</header-portlet-javascript>
 		<footer-portlet-javascript>/js/videoprocessor.js</footer-portlet-javascript>
 		<footer-portlet-javascript>/js/autocomplete-creator.js</footer-portlet-javascript>
+		<footer-portlet-javascript>/js/crypto-js.min.js</footer-portlet-javascript>
+		<footer-portlet-javascript>/js/evaporate.js</footer-portlet-javascript>
 	</portlet>
 	<portlet>
 		<portlet-name>lg-admin-creators-management</portlet-name>
