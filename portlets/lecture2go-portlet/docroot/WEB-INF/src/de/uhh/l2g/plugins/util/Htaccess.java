@@ -143,22 +143,12 @@ public class Htaccess {
 					if (video.getFilename().length() > 10) {
 						// all files starting with the file prefix will get added to the htaccess list 
 						// (this includes file extensions as well as potential suffixes)
-						bw.write("<FilesMatch \"^" + Pattern.quote(video.getPreffix()) + ".*\">");
+						bw.write("<FilesMatch \"^" + Pattern.quote(video.getCurrentPrefix()) + ".*\">");
 						bw.newLine();
 						bw.write("Require user " + lectureseriesId);
 						bw.newLine();
 						bw.write("</FilesMatch>");
 						bw.newLine();
-					
-						// this check is important, otherwise the regex would fit for all files in the directory (/.*/)
-						if (video.getSPreffix() != "") { 
-							bw.write("<FilesMatch \"^" + Pattern.quote(video.getSPreffix()) + ".*\">");
-							bw.newLine();
-							bw.write("Require user " + lectureseriesId);
-							bw.newLine();
-							bw.write("</FilesMatch>");
-							bw.newLine();
-						}
 					}
 				}
 
