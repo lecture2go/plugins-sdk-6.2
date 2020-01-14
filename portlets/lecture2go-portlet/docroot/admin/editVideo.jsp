@@ -1300,7 +1300,7 @@ function updateThumbnail(){
 		  url: "<%=updateThumbnailURL%>",
 		  dataType: 'json',
 		  data: {
-		 	   	<portlet:namespace/>inputTime: Math.floor(jwplayer().getPosition()),
+		 	   	<portlet:namespace/>inputTime: jwplayer().getPosition(),
 		 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>",
 		  },
 		  global: false,

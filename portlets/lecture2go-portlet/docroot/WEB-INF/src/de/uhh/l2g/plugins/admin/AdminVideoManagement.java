@@ -427,7 +427,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			//
 			String image="";
 			String thumbnailLocation = "";
-			int time = ParamUtil.getInteger(resourceRequest, "inputTime");
+			float time = ParamUtil.getFloat(resourceRequest, "inputTime");
 			
 			//proceed only if time > 0
 			if(time > 0){
