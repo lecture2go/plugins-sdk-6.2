@@ -1351,9 +1351,13 @@ thead, th {
     width: 100%;
 }
 
-#permissions, #embed, #license, #_lgadminvideomanagement_WAR_lecture2goportlet_metadata, #embed, #postprocessing, #video-thumbnail {
+#permissions, #embed, #license, #_lgadminvideomanagement_WAR_lecture2goportlet_metadata, #embed, #postprocessing, #video-thumbnail, #video-rawdata {
     margin-top: 50px;
     overflow: auto;
+}
+
+#video-rawdata {
+	width: 693px;
 }
 
 #embedForm {
@@ -1936,7 +1940,7 @@ input#_lgadmincreatorsmanagement_WAR_lecture2goportlet_orcidId {
     margin-top: 0;
 }
 
-#license div a {
+#license-content div a {
     margin-left: 20px;
 }
 
