@@ -364,6 +364,7 @@ function activateThumbnailGeneration() {
 						<liferay-ui:message key="license"/>
 					</label>
 					<div id="license-content">
+						<p><liferay-ui:message key="license-description"/></p>
 						<c:forEach items="<%=reqLicenseList %>" var="license">
 							<c:choose>
 								<c:when test="${license.selectable}" >
