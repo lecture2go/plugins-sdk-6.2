@@ -37,6 +37,9 @@
 <liferay-portlet:resourceURL id="updateHtaccess" var="updateHtaccessURL" />
 <liferay-portlet:resourceURL id="handleVttUpload" var="handleVttUploadURL" />
 <liferay-portlet:resourceURL id="updateAll" var="updateAllURL" />
+<liferay-portlet:resourceURL id="signS3Request" var="signS3RequestURL" />
+<liferay-portlet:resourceURL id="getS3RawDataForVideo" var="getS3RawDataForVideoURL" />
+<liferay-portlet:resourceURL id="deleteS3Object" var="deleteS3ObjectURL" />
 
 
 <%
@@ -361,6 +364,7 @@ function activateThumbnailGeneration() {
 						<liferay-ui:message key="license"/>
 					</label>
 					<div id="license-content">
+						<p><liferay-ui:message key="license-description"/></p>
 						<c:forEach items="<%=reqLicenseList %>" var="license">
 							<c:choose>
 								<c:when test="${license.selectable}" >
@@ -503,6 +507,34 @@ function activateThumbnailGeneration() {
 					  $("#l5", this).toggleClass("thumb-90 thumb");
 					});
 				</script>
+				
+				<c:if test='<%= PropsUtil.contains("lecture2go.s3.bucket") %>'>
+
+					<div id="video-rawdata">
+						<label class="edit-video-lable" id="edit-video-lable-8">
+							<i id="l8" class="aui icon-chevron-down thumb-90"></i>
+							<liferay-ui:message key="video-rawdata" />
+						</label>
+						
+						<div id="rawdata-content">
+							<p><liferay-ui:message key="video-rawdata-about"/></p>
+							<input type="file" id="files"  multiple />
+							<div id="progress-raw" class="progress">
+						    	<div class="bar" style="width: 0%;"></div>
+							</div>
+							<table id="uploaded-rawdata" class="table"></table>
+						</div>
+					</div>
+					<script>
+						$(function(){$( "#rawdata-content" ).hide();});
+						$( "#edit-video-lable-8" ).click(function() {
+						  $( "#rawdata-content" ).slideToggle( "slow" );
+						  $("#l8", this).toggleClass("thumb thumb-90");
+						});
+					</script>
+				</c:if>
+					
+				
 				<br/>		
 				<aui:button-row>
 					<aui:button type="submit" value="apply-changes" onclick="updateAllMetadata();" cssClass="btn-primary"/>
@@ -609,7 +641,7 @@ $(function () {
            var vars = data.jqXHR.responseJSON;
            $.template( "filesTemplate", $("#template") );
            $("#"+vars[0].id).remove();   
-           $.tmpl( "filesTemplate", vars ).appendTo( ".table" );
+           $.tmpl( "filesTemplate", vars ).appendTo( "#uploaded-files" );
            if(isFirstUpload()==1){//update
         	   	var f1 = "mp4";
            		var f2 = "mp3";
@@ -688,8 +720,121 @@ $(function () {
         		videoId: "<%=reqVideo.getVideoId()%>"
         };        
     });
-   
-});
+
+	<c:if test='<%= PropsUtil.contains("lecture2go.s3.bucket") %>'>
+		populateS3RawDataList();
+
+		Evaporate.create({
+				// TODO: get from config/ or S3Manager
+			    aws_url: 'https://<%=PropsUtil.get("lecture2go.s3.endpoint")%>',
+			    aws_key: '<%=PropsUtil.get("lecture2go.s3.accesskey")%>',
+			    bucket: '<%=PropsUtil.get("lecture2go.s3.bucket")%>',
+			    awsRegion: '<%=PropsUtil.get("lecture2go.s3.region")%>',
+			    //signerUrl: 'http://localhost:8081/s3upload/signAuth',
+			    signerUrl: '<%=signS3RequestURL%>',
+			    partSize: 6 * 1024 * 1024,
+			    awsSignatureVersion: '4',
+			    computeContentMd5: true,
+			    cryptoMd5Method: function (data) { return CryptoJS.MD5(CryptoJS.lib.WordArray.create(data)).toString(CryptoJS.enc.Base64); },
+			    cryptoHexEncodedHash256: function (data) { return CryptoJS.SHA256(data).toString(CryptoJS.enc.hex); }
+			  })
+			  .then(
+			    // Successfully created evaporate instance `_e_`
+			    function success(_e_) {
+			      var fileInput = document.getElementById('files'),
+			          filePromises = [];
+
+			      // Start a new evaporate upload anytime new files are added in the file input
+			      fileInput.onchange = function(evt) {
+			        var files = evt.target.files;
+			        for (var i = 0; i < files.length; i++) {
+			          var promise = _e_.add({
+			        	name: 'raw-data/' +  "<%=reqVideo.getVideoId()%>" + "/" + files[i].name,
+			        	file: files[i],
+			            progress: function (progress) {
+		        			$('#progress-raw .bar').css('width',progress*100 + '%');
+			              	console.log('making progress: ' + progress);
+			            }
+			          })
+			          .then(function (awsKey) {
+			          	$('#progress-raw .bar').css('width', '0%');
+			          	
+			          });
+			          filePromises.push(promise);
+			        }
+
+			        // Wait until all promises are complete
+			        Promise.all(filePromises)
+			          .then(function () {
+			        	  populateS3RawDataList();
+			            console.log('All files were uploaded successfully.');
+			          }, function (reason) {
+			            console.log('All files were not uploaded successfully:', reason);
+			          });
+
+			        // Clear out the file picker input
+			        evt.target.value = '';
+			      };
+			    },
+
+			    // Failed to create new instance of evaporate
+			    function failure(reason) {
+			       console.log('Evaporate failed to initialize: ', reason)
+			    }
+			  );
+			</c:if>   
+}); 
+
+
+<c:if test='<%= PropsUtil.contains("lecture2go.s3.bucket") %>'>
+
+
+function populateS3RawDataList(){
+	$.ajax({
+		  type: "POST",
+		  url: "<%=getS3RawDataForVideoURL%>",
+		  dataType: 'json',
+		  data: {
+		 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>",
+		  },
+		  global: false,
+		  async:true,
+		  success: function(data) {
+			  $('#uploaded-rawdata').html("");
+			  for(var k in data) {
+				  var $tr = $('<tr>').attr("data-id",data[k].key).append(
+					  $('<td>').html('<a href="' + data[k].presignedUrl + '" target="_blank">' + data[k].filename + '</a>'),
+					  $('<td>').text(data[k].fileSize),
+					  $('<td>').html('<a class="icon-large icon-remove" onclick="deleteS3Object(&quot;'+data[k].key+'&quot;);"></a>')
+				  ).appendTo('#uploaded-rawdata');
+			  }
+		  },
+		  error: function() {
+		  		var $error = $('<p>').text("<liferay-ui:message key='video-rawdata-error-connecting'/>").appendTo('#uploaded-rawdata');
+		  }
+	});
+}
+
+function deleteS3Object(key){
+	if(confirm('<liferay-ui:message key="really-delete-question"/>')){
+		$.ajax({
+			  type: "POST",
+			  url: "<%=deleteS3ObjectURL%>",
+			  dataType: 'json',
+			  data: {
+			 	   	<portlet:namespace/>key: key,
+			 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>",
+			  },
+			  global: false,
+			  async:true,
+			  success: function(data) {
+				  populateS3RawDataList();
+			  }
+		});
+	}
+}
+
+</c:if>
 
 function updateNumberOfProductions(){
 	var ret="";
@@ -1300,7 +1445,7 @@ function updateThumbnail(){
 		  url: "<%=updateThumbnailURL%>",
 		  dataType: 'json',
 		  data: {
-		 	   	<portlet:namespace/>inputTime: Math.floor(jwplayer().getPosition()),
+		 	   	<portlet:namespace/>inputTime: jwplayer().getPosition(),
 		 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>",
 		  },
 		  global: false,
@@ -1638,7 +1783,7 @@ AUI().use('aui-node',
     	var vars = <%=VideoLocalServiceUtil.getJSONVideo(reqVideo.getVideoId()).toString()%>;
         console.log(vars);
         $.template( "filesTemplate", $("#template") );
-        $.tmpl( "filesTemplate", vars ).appendTo( ".table" );
+        $.tmpl( "filesTemplate", vars ).appendTo( "#uploaded-files" );
     });
 </script>
 

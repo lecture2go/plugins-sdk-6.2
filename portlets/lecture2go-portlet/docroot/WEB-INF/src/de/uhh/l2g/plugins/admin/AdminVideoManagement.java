@@ -17,7 +17,9 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.springframework.web.util.HtmlUtils;
@@ -79,6 +81,7 @@ import de.uhh.l2g.plugins.util.FileManager;
 import de.uhh.l2g.plugins.util.Htaccess;
 import de.uhh.l2g.plugins.util.OaiPmhManager;
 import de.uhh.l2g.plugins.util.ProzessManager;
+import de.uhh.l2g.plugins.util.S3Manager;
 import de.uhh.l2g.plugins.util.Security;
 import de.uhh.l2g.plugins.util.VideoGenerationDateComparator;
 import de.uhh.l2g.plugins.util.VideoProcessorManager;
@@ -427,7 +430,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			//
 			String image="";
 			String thumbnailLocation = "";
-			int time = ParamUtil.getInteger(resourceRequest, "inputTime");
+			float time = ParamUtil.getFloat(resourceRequest, "inputTime");
 			
 			//proceed only if time > 0
 			if(time > 0){
@@ -491,6 +494,9 @@ public class AdminVideoManagement extends MVCPortlet {
 					// another workflow is specified, use this
 					isVideoConversionStarted = VideoProcessorManager.startVideoConversion(video.getVideoId(), workflow, additionalProperties);
 				}
+				//create thumbnails if not existing, this may be necessary if the thumbnails were generated and deleted by the video-processor (happens with the video caption integration)
+				VideoLocalServiceUtil.createThumbnailsIfNotExisting(video.getVideoId());
+				
 				if (isVideoConversionStarted) {
 					json.put("status", Boolean.TRUE);
 				} else {
@@ -1494,6 +1500,53 @@ public class AdminVideoManagement extends MVCPortlet {
 				//e.printStackTrace();
 			}
 			writeJSON(resourceRequest, resourceResponse, CreatorLocalServiceUtil.getJSONCreatorsByVideoId(videoId));			
+		}
+		
+		if(resourceID.equals("signS3Request")){
+			// get the data send by the evaporateJS s3 upload framework
+			String signData = ParamUtil.getString(resourceRequest, "to_sign");
+			String dateStamp = ParamUtil.getString(resourceRequest, "datetime").substring(0, 8);
+		
+			S3Manager s3 = new S3Manager().withDefaultCredentials();
+	
+			if(StringUtils.isEmpty(signData)) {
+				resourceResponse.setProperty(ResourceResponse.HTTP_STATUS_CODE, Integer.toString(HttpServletResponse.SC_BAD_REQUEST));
+	        } else {
+	            try {
+	            	resourceResponse.getWriter().write(s3.getSignatureKey(s3.getSignatureKey(dateStamp, signData)));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+	        }
+		}
+		
+		if(resourceID.equals("getS3RawDataForVideo")){
+			S3Manager s3 = new S3Manager().withDefaults();
+			
+			s3.initS3Client();
+			
+			com.liferay.portal.kernel.json.JSONArray jsonArray = s3.getItemsFromBucketWithPrefixAsJson("raw-data/" + videoId + "/");
+			
+			if (jsonArray == null) {
+				resourceResponse.setProperty(ResourceResponse.HTTP_STATUS_CODE, Integer.toString(HttpServletResponse.SC_SERVICE_UNAVAILABLE));
+			}
+	
+			writeJSON(resourceRequest, resourceResponse, jsonArray);
+		}
+		
+		if(resourceID.equals("deleteS3Object")){
+			JSONObject jo = JSONFactoryUtil.createJSONObject();
+
+			String objectKey = ParamUtil.getString(resourceRequest, "key");
+			
+			S3Manager s3 = new S3Manager().withDefaults();
+			
+			s3.initS3Client();
+			
+			s3.deleteObject(objectKey);
+				
+			writeJSON(resourceRequest, resourceResponse, jo);
+
 		}
 		
 	}
