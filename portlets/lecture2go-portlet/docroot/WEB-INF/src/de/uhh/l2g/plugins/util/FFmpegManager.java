@@ -205,9 +205,9 @@ public class FFmpegManager {
 	public static boolean createThumbnail(String fileLocation, String thumbnailLocation, float sec) {
 		Runtime runCmd = Runtime.getRuntime();
 		String thumbPreffLoc = thumbnailLocation.split(".jpg")[0];
-		String command = PropsUtil.get("lecture2go.ffmpeg.bin") + " -ss "+sec+" -i " + fileLocation + " -f image2 -vframes 1 " + thumbnailLocation + " -y";
-		String command1 = PropsUtil.get("lecture2go.ffmpeg.bin") + " -ss "+sec+" -i " + fileLocation + " -f image2 -vframes 1 -filter:v scale='130:-1' " + thumbPreffLoc + "_s.jpg -y";
-		String command2 = PropsUtil.get("lecture2go.ffmpeg.bin") + " -ss "+sec+" -i " + fileLocation + " -f image2 -vframes 1 -filter:v scale='300:-1' " + thumbPreffLoc + "_m.jpg -y";
+		String command = PropsUtil.get("lecture2go.ffmpeg.bin") + " -noaccurate_seek -ss "+sec+" -i " + fileLocation + " -f image2 -vframes 1 " + thumbnailLocation + " -y";
+		String command1 = PropsUtil.get("lecture2go.ffmpeg.bin") + " -noaccurate_seek -ss "+sec+" -i " + fileLocation + " -f image2 -vframes 1 -filter:v scale='130:-1' " + thumbPreffLoc + "_s.jpg -y";
+		String command2 = PropsUtil.get("lecture2go.ffmpeg.bin") + " -noaccurate_seek -ss "+sec+" -i " + fileLocation + " -f image2 -vframes 1 -filter:v scale='300:-1' " + thumbPreffLoc + "_m.jpg -y";
 		boolean ret = true;
 		if(!imageRepositoryFolderExists()) createImageRepositoryFolder();
 		
