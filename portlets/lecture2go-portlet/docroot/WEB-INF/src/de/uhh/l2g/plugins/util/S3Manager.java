@@ -35,7 +35,7 @@ public class S3Manager {
 	private String serviceName;
 	private String endpoint;
 	private String bucket;
-	private String httpProtocol = "http://";
+	private String httpProtocol = "https://";
 	
 	// the default exipration time for presigned URLs
 	private final long defaultExpirationMillis = 1000*60*60;
