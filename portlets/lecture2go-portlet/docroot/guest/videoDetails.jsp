@@ -47,7 +47,7 @@
 	VideoLocalServiceUtil.addTextTracks2VideoWithLanguageLabel(video, themeDisplay.getLocale());
 %>
 
-<%if(video.getVideoId()>0){%>
+<%if(video.getVideoId()>0 && !video.hasMissingMetadata()){%>
 	<%if(video.getAccessPermitted()==1){%>
 		<%if(video.getOpenAccess()==1 || video.getOpenAccess()==0){%>
 			<div class="col-xs-10 col-md-10">

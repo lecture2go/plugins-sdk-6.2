@@ -136,6 +136,15 @@
 	if (defaultContainer() == 'mp4') {
 		activateThumbnailGeneration();
 	}
+	
+	// track form changes
+	hasFormChanged = false;
+	$('#<portlet:namespace/>metadata').on('change', ':input', function(e){
+		// :input selects all form fields
+		console.log("form has changed");
+	 	hasFormChanged = true;
+	});
+
   });
 
 function loadDateTimepickerToTheMetadataSkeleton(){
@@ -221,8 +230,6 @@ function activateThumbnailGeneration() {
 					<liferay-ui:message key="metadata"/>
 				</label>
 				<div id="metadata-upload">
-					<aui:input id="stayhere" name="stayhere" label="" required="true" value="" type="hidden"/>
-					
 					<div id="titledefault"><aui:input id="title" name="title" label="title" required="true" value="<%=reqVideo.getTitle()%>" /></div>
 					
 					<div id="creators-custom">
@@ -279,6 +286,9 @@ function activateThumbnailGeneration() {
 						</div>	
 									
 						<aui:select id="termId" size="1" name="termId" label="term" required="true">
+							<c:if test="<%= (reqVideo.getTermId()==0) %>">
+								<aui:option disabled='true' selected="true"><liferay-ui:message key="select-term"/></aui:option>
+							</c:if>
 							<%for (int i = 0; i < semesters.size(); i++) {
 								if (reqVideo.getTermId()==semesters.get(i).getTermId()) {%>
 									<aui:option value='<%=semesters.get(i).getTermId()%>' selected="true"><%=semesters.get(i).getPrefix()+"&nbsp;"+semesters.get(i).getYear()%></aui:option>
@@ -292,8 +302,13 @@ function activateThumbnailGeneration() {
 							<%
 							Long cId = new Long(0);
 							try{cId = Video_CategoryLocalServiceUtil.getByVideo(reqVideo.getVideoId()).get(0).getCategoryId();}catch(Exception e){}
-							
-							for (int i = 0; i < categories.size(); i++) {
+							%>
+
+							<c:if test="<%= (cId==0) %>">
+								<aui:option disabled='true' selected="true"><liferay-ui:message key="select-category"/></aui:option>
+							</c:if>
+
+							<%for (int i = 0; i < categories.size(); i++) {
 								if (cId==categories.get(i).getCategoryId()) {%>
 									<aui:option value='<%=categories.get(i).getCategoryId()%>' selected="true"><%=categories.get(i).getName()%></aui:option>
 								<%} else {%>
@@ -304,6 +319,11 @@ function activateThumbnailGeneration() {
 					</div>
 		
 					<aui:select size="1" name="language" label="language" required="true">
+						
+						<c:if test="<%= reqMetadata.getLanguage().isEmpty() %>">
+							<aui:option disabled='true' selected="true"><liferay-ui:message key="select-language"/></aui:option>
+						</c:if>
+
 						<%for (int i=0; i<languages.length; i++){%>
 								<aui:option value='<%=languages[i]%>' selected="<%=reqMetadata.getLanguage().contains(languages[i]) %>"><%=languages[i]%></aui:option>
 						<%}%>				
@@ -1065,7 +1085,9 @@ function updateMetadata(){
 }
 
 function updateAllMetadata(){
-	validate();//inpul correct?
+	if (!validate()) {
+		return;
+	}
 	var license = $("input[name=<portlet:namespace/>license]:checked").val();
 	var creatorsJsonArray = JSON.stringify(getJsonCreatorsArray());
 	var jsonSubInstitutionsArray = JSON.stringify(getJsonSubInstitutionsArray());
@@ -1079,50 +1101,49 @@ function updateAllMetadata(){
 		   termId = $('#<portlet:namespace/>termId').val();
 		   categoryId = $('#<portlet:namespace/>categoryId').val();
 	}
-	if($("#<portlet:namespace/>title").val() && $("#creators > div").length>0){
-		//action
-		$.ajax({
-			url: "${updateAllURL}",
-			method: "POST",
-			dataType: "json",
-			data: {
-					//metadata start
-					"<portlet:namespace/>videoId": "<%=reqVideo.getVideoId()%>",
-	            	"<portlet:namespace/>description": descData,
-	            	"<portlet:namespace/>license": license,
-	            	"<portlet:namespace/>creatorsJsonArray": creatorsJsonArray,  
-	            	"<portlet:namespace/>subInstitutions": jsonSubInstitutionsArray,
-			 	   	"<portlet:namespace/>lectureseriesId": $('#<portlet:namespace/>lectureseriesId').val(),
-			 	   	"<portlet:namespace/>language": $('#<portlet:namespace/>language').val(),
-			 	   	"<portlet:namespace/>title": $('#<portlet:namespace/>title').val(),
-			 	   	"<portlet:namespace/>tags": $('#<portlet:namespace/>tags').val(),
-			 	   	"<portlet:namespace/>publisher": $('#<portlet:namespace/>publisher').val(),
-			 	   	"<portlet:namespace/>datetimepicker": $('#<portlet:namespace/>datetimepicker').val(),
-			 	   	"<portlet:namespace/>citationAllowedCheckbox": chebox,
-			 	   	"<portlet:namespace/>categoryId": categoryId,
-			 	   	"<portlet:namespace/>termId": termId,
-			 	   	"<portlet:namespace/>password": $('#<portlet:namespace/>password').val()
-			 	   	//metadata end
-	 		},
-			success: function(res) {
-				 // required creator field color needs to be set manually 
-				 $("#creators-custom .control-group").removeClass("error").addClass("success");
-	           	 //update the thumb nail
-	           	 updateThumbnail();
+	//action
+	$.ajax({
+		url: "${updateAllURL}",
+		method: "POST",
+		dataType: "json",
+		data: {
+				//metadata start
+				"<portlet:namespace/>videoId": "<%=reqVideo.getVideoId()%>",
+            	"<portlet:namespace/>description": descData,
+            	"<portlet:namespace/>license": license,
+            	"<portlet:namespace/>creatorsJsonArray": creatorsJsonArray,  
+            	"<portlet:namespace/>subInstitutions": jsonSubInstitutionsArray,
+		 	   	"<portlet:namespace/>lectureseriesId": $('#<portlet:namespace/>lectureseriesId').val(),
+		 	   	"<portlet:namespace/>language": $('#<portlet:namespace/>language').val(),
+		 	   	"<portlet:namespace/>title": $('#<portlet:namespace/>title').val(),
+		 	   	"<portlet:namespace/>tags": $('#<portlet:namespace/>tags').val(),
+		 	   	"<portlet:namespace/>publisher": $('#<portlet:namespace/>publisher').val(),
+		 	   	"<portlet:namespace/>datetimepicker": $('#<portlet:namespace/>datetimepicker').val(),
+		 	   	"<portlet:namespace/>citationAllowedCheckbox": chebox,
+		 	   	"<portlet:namespace/>categoryId": categoryId,
+		 	   	"<portlet:namespace/>termId": termId,
+		 	   	"<portlet:namespace/>password": $('#<portlet:namespace/>password').val()
+		 	   	//metadata end
+ 		},
+		success: function(res) {
+			 // required creator field color needs to be set manually 
+			 $("#creators-custom .control-group").removeClass("error").addClass("success");
+           	 //update the thumb nail
+           	 updateThumbnail();
 
-				 // reload the creators list
-	           	 $( "#creators" ).empty();
-	           	 showCreatorsList(getJSONAllCreators(<%=reqVideo.getVideoId()%>));
+			 // reload the creators list
+           	 $( "#creators" ).empty();
+           	 showCreatorsList(getJSONAllCreators(<%=reqVideo.getVideoId()%>));
 
-	           	 //json object
-	           	 if(res.errorsCount==0){
-	           		 alert("<liferay-ui:message key='changes-applied'/>");	                		 
-	           	 }else{
-	           		 alert("<liferay-ui:message key='changes-applied-with-warnings'/>");
-	           	 }
-			}
-		});
-	}
+           	 //json object
+           	 if(res.errorsCount==0){
+           		 alert("<liferay-ui:message key='changes-applied'/>");	                		 
+           	 }else{
+           		 alert("<liferay-ui:message key='changes-applied-with-warnings'/>");
+           	 }
+		}
+	});
+
 } 
 
 function applyAllMetadataChanges(){
@@ -1145,27 +1166,14 @@ function applyAllMetadataChanges(){
 
 
 function validate(){
-	AUI().use(
-			'aui-node',
-			function(A) {
-				if($("#creators > div").length==0){
-				    // required creator field color needs to be set manually 
-				 	$("#creators-custom .control-group").removeClass("success").addClass("error");
-
-					$('html, body').animate({
-		                   scrollTop: $("#creators-custom").offset().top
-		               }, 1000);
-			        if($('#<portlet:namespace></portlet:namespace>cancel').is(":visible")){
-			        	$('#<portlet:namespace></portlet:namespace>cancel').hide();	
-			        }	
-					//alert("<liferay-ui:message key='please-add-creators'/>");
-				}else{
-					// required creator field color needs to be set manually 
-					$("#creators-custom .control-group").removeClass("error").addClass("success");
-					$('#<portlet:namespace></portlet:namespace>cancel').show();
-				}
-			}
-	);
+	formValidator.validate();
+	if (formValidator.hasErrors()) {
+		if($('#<portlet:namespace></portlet:namespace>cancel').is(":visible")){
+			$('#<portlet:namespace></portlet:namespace>cancel').hide();	
+		}	
+	}
+	
+	return !formValidator.hasErrors()
 }
 
 function updateDescription(data){
@@ -1303,6 +1311,7 @@ function applyFirstTitle(){
 					  $('#first-title').hide();
 					  loadDateTimepickerToFirstTitle();
 					  $("#<portlet:namespace/>title").val(data.firsttitle);
+					  validate();
 				  }
 			  }
 	  });
@@ -1787,5 +1796,56 @@ AUI().use('aui-node',
     });
 </script>
 
+<aui:script use="aui-form-validator">
+formValidator = new A.FormValidator({
+	boundingBox: document.<portlet:namespace/>metadata,
+
+	rules: {
+		<portlet:namespace/>title: {
+			required: true
+		},
+		<portlet:namespace/>creator: {
+			required: function() {
+				return ($("#creators > div").length==0);
+			}
+		},
+		<portlet:namespace/>termId: {
+			required: function() {
+				return ($( "#<portlet:namespace/>lectureseriesId option:selected" ).val()==0);
+			}
+		},
+		<portlet:namespace/>categoryId: {
+			required: function() {
+				return ($( "#<portlet:namespace/>lectureseriesId option:selected" ).val()==0);
+			}
+		},
+		<portlet:namespace/>language: {
+			required: true
+		}
+	}
+
+});
+
+validate();
+
+function closeBrowser(e) {
+	// check if data is invalid or data was changed, if so display default browser popup upon closing window
+	if (!validate() || hasFormChanged) {
+		if(!e) e = window.event;
+	    //e.cancelBubble is supported by IE - this will kill the bubbling process.
+	    e.cancelBubble = true;
+	    e.returnValue = '';
+
+	    //e.stopPropagation works in Firefox.
+	    if (e.stopPropagation) {
+	        e.stopPropagation();
+	        e.preventDefault();
+	    }
+	}
+}
+window.onbeforeunload=closeBrowser;
+
+
+</aui:script>
 
 <%@include file="includeCreatorTemplates.jsp" %>

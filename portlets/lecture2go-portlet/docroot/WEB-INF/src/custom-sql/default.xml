@@ -256,5 +256,11 @@
 			SELECT s.* FROM LG_OaiSet s JOIN LG_OaiRecord_OaiSet rs ON s.oaiSetId=rs.oaiSetId WHERE rs.oaiRecordId = ?
 		]]>
     </sql>
+    
+    <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.checkVideoHasMissingMetadata">
+		<![CDATA[
+			SELECT v.* FROM LG_Video v JOIN LG_Metadata m ON v.metadataId=m.metadataId LEFT JOIN LG_Video_Category vc ON v.videoId=vc.videoId WHERE v.videoId = ? AND (m.title="" OR m.language="" OR vc.videoCategoryId IS NULL)
+		]]>
+    </sql>
     	
 </custom-sql>

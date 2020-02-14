@@ -177,6 +177,7 @@ public class OpenAccessVideos extends MVCPortlet {
 	    		int os = 0;
 	    		if(video.getOpenAccess()==1)os=1;
 				relatedVideos = VideoLocalServiceUtil.getByLectureseriesAndOpenaccess(lectureseries.getLectureseriesId(),os);
+				relatedVideos = VideoLocalServiceUtil.stripVideosWithMissingMetadataFromList(relatedVideos);
 			} catch (SystemException e) {}
 		    
 		    //chapters and segments
