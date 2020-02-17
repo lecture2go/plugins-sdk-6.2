@@ -246,8 +246,6 @@ public class L2GoItemRepository implements ItemRepository {
 	 */
 	private DynamicQuery getDynamicQueryFromFilters(List<ScopedFilter> filters) {
 		DynamicQuery dynamicQuery = OaiRecordLocalServiceUtil.dynamicQuery();
-		// newest records first
-		dynamicQuery.addOrder(OrderFactoryUtil.desc("datestamp"));
 		
 		for (ScopedFilter scopedFilter: filters) {
 			// if filter is a L2GoFilter and has the Query scope add the criterion to the query

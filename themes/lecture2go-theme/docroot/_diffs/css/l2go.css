@@ -1542,6 +1542,9 @@ li.chaptertile {
     padding: 0 0 10px;
 }
 
+.adminrow.wide.error {
+	background-color: #fafafa;	
+}
 
 .admintile.wide.icons {
 	-webkit-box-flex: 0;
@@ -1623,6 +1626,10 @@ li.chaptertile {
 	margin-top: 13px;
 }
 
+.admintile.wide .admin-videolist-info {
+	color: #d81b1b;
+}
+
 .video-edit-wrapper .icon-large:before {
 	font-size: 20px;
     padding: 5px;
@@ -1696,6 +1703,22 @@ li.chaptertile {
 	
     width: 240px;
     height: 30px;
+}
+
+.aui select.error-field {
+    border: 1px solid;
+}
+
+.aui .control-group.success input, .aui .control-group.success textarea {
+	border: 1px solid #DDD;
+}
+
+.aui .control-group.success select {
+	border: 0;
+}
+
+.aui .control-group.success .checkbox, .aui .control-group.success .radio, .aui .control-group.success input, .aui .control-group.success select, .aui .control-group.success textarea {
+	color: inherit;
 }
 
 #heading {

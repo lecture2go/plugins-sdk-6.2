@@ -642,6 +642,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		List<Video> vl = new ArrayList<Video>();
 		try {
 			vl = getByLectureseriesAndOpenaccess(lectureseriesId,0);
+			vl = stripVideosWithMissingMetadataFromList(vl);
 		} catch (SystemException e) {
 			//e.printStackTrace();
 		}
@@ -760,5 +761,20 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		}
 	    
 	    return language;
+	}
+	
+	public boolean hasMissingMetadata(Long videoId) {
+		return VideoFinderUtil.checkVideoHasMissingMetadata(videoId);
+	}
+	
+	public List<Video> stripVideosWithMissingMetadataFromList(List<Video> videos) {
+		ListIterator<Video> vi = videos.listIterator();
+		while (vi.hasNext()) {
+		   Video v = vi.next();
+		   if (v.isWithMissingMetadata()) {
+			   vi.remove();
+		   }
+		}
+		return videos;
 	}
 }
