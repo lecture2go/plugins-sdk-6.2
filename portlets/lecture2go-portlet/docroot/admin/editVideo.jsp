@@ -139,6 +139,8 @@
 	
 	// track form changes
 	hasFormChanged = false;
+	
+	submitted = false;
 	$('#<portlet:namespace/>metadata').on('change', ':input', function(e){
 		// :input selects all form fields
 		console.log("form has changed");
@@ -1088,6 +1090,9 @@ function updateAllMetadata(){
 	if (!validate()) {
 		return;
 	}
+	submitted = true;
+	console.log("hallo");
+	
 	var license = $("input[name=<portlet:namespace/>license]:checked").val();
 	var creatorsJsonArray = JSON.stringify(getJsonCreatorsArray());
 	var jsonSubInstitutionsArray = JSON.stringify(getJsonSubInstitutionsArray());
@@ -1830,7 +1835,7 @@ validate();
 
 function closeBrowser(e) {
 	// check if data is invalid or data was changed, if so display default browser popup upon closing window
-	if (!validate() || hasFormChanged) {
+	if ((!validate() || hasFormChanged) && !submitted) {
 		if(!e) e = window.event;
 	    //e.cancelBubble is supported by IE - this will kill the bubbling process.
 	    e.cancelBubble = true;
