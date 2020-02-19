@@ -27,12 +27,15 @@ Bug Fix and Feature Package [master-v.1-b5196] on Friday, Februar 21, 2020
 - 1580 RM - EditVideo removal of creators not working
 - 1581 RM – Upload failure
 - 1628 RM – category relation not deleted when series is deleted
-- 1635 RM – CSS: remove double bold for elements using <strong> tag
+- 1635 RM – CSS: remove double bold for elements using strong tag
 - 1664 RM – Remove red color from uploaded files
 - 1667 RM – tag search
 - 1721 RM - removal of invalid xml control characters for oai pmh, add correct cursor information
 - 1731 RM – wrong htaccess entries
-  
+- 1577 RM - Download button works directly
+- 1501 RM - Explanations of upload formats
+- 1672 RM - Video tags in search
+- 1379 RM - integrate subtitles in Iframes  
   
 Bug Fix and Feature Package [master-v.1-b5162] on Friday, June 14, 2019
 
