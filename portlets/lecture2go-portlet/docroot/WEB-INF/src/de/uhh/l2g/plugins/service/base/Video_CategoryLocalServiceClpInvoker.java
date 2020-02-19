@@ -106,29 +106,29 @@ public class Video_CategoryLocalServiceClpInvoker {
 				"de.uhh.l2g.plugins.model.Video_Category"
 			};
 
-		_methodName156 = "getBeanIdentifier";
+		_methodName168 = "getBeanIdentifier";
 
-		_methodParameterTypes156 = new String[] {  };
+		_methodParameterTypes168 = new String[] {  };
 
-		_methodName157 = "setBeanIdentifier";
+		_methodName169 = "setBeanIdentifier";
 
-		_methodParameterTypes157 = new String[] { "java.lang.String" };
+		_methodParameterTypes169 = new String[] { "java.lang.String" };
 
-		_methodName162 = "getByVideo";
+		_methodName174 = "getByVideo";
 
-		_methodParameterTypes162 = new String[] { "java.lang.Long" };
+		_methodParameterTypes174 = new String[] { "java.lang.Long" };
 
-		_methodName163 = "getByCategory";
+		_methodName175 = "getByCategory";
 
-		_methodParameterTypes163 = new String[] { "java.lang.Long" };
+		_methodParameterTypes175 = new String[] { "java.lang.Long" };
 
-		_methodName164 = "removeByVideo";
+		_methodName176 = "removeByVideo";
 
-		_methodParameterTypes164 = new String[] { "java.lang.Long" };
+		_methodParameterTypes176 = new String[] { "java.lang.Long" };
 
-		_methodName165 = "updateCategoryByVideoAndCategory";
+		_methodName177 = "updateCategoryByVideoAndCategory";
 
-		_methodParameterTypes165 = new String[] {
+		_methodParameterTypes177 = new String[] {
 				"java.lang.Long", "java.lang.Long", "java.lang.Long"
 			};
 	}
@@ -222,37 +222,37 @@ public class Video_CategoryLocalServiceClpInvoker {
 			return Video_CategoryLocalServiceUtil.updateVideo_Category((de.uhh.l2g.plugins.model.Video_Category)arguments[0]);
 		}
 
-		if (_methodName156.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes156, parameterTypes)) {
+		if (_methodName168.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes168, parameterTypes)) {
 			return Video_CategoryLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName157.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes157, parameterTypes)) {
+		if (_methodName169.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes169, parameterTypes)) {
 			Video_CategoryLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName162.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
+		if (_methodName174.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes174, parameterTypes)) {
 			return Video_CategoryLocalServiceUtil.getByVideo((java.lang.Long)arguments[0]);
 		}
 
-		if (_methodName163.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes163, parameterTypes)) {
+		if (_methodName175.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes175, parameterTypes)) {
 			return Video_CategoryLocalServiceUtil.getByCategory((java.lang.Long)arguments[0]);
 		}
 
-		if (_methodName164.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes164, parameterTypes)) {
+		if (_methodName176.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes176, parameterTypes)) {
 			Video_CategoryLocalServiceUtil.removeByVideo((java.lang.Long)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName165.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes165, parameterTypes)) {
+		if (_methodName177.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes177, parameterTypes)) {
 			Video_CategoryLocalServiceUtil.updateCategoryByVideoAndCategory((java.lang.Long)arguments[0],
 				(java.lang.Long)arguments[1], (java.lang.Long)arguments[2]);
 
@@ -294,16 +294,16 @@ public class Video_CategoryLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName156;
-	private String[] _methodParameterTypes156;
-	private String _methodName157;
-	private String[] _methodParameterTypes157;
-	private String _methodName162;
-	private String[] _methodParameterTypes162;
-	private String _methodName163;
-	private String[] _methodParameterTypes163;
-	private String _methodName164;
-	private String[] _methodParameterTypes164;
-	private String _methodName165;
-	private String[] _methodParameterTypes165;
+	private String _methodName168;
+	private String[] _methodParameterTypes168;
+	private String _methodName169;
+	private String[] _methodParameterTypes169;
+	private String _methodName174;
+	private String[] _methodParameterTypes174;
+	private String _methodName175;
+	private String[] _methodParameterTypes175;
+	private String _methodName176;
+	private String[] _methodParameterTypes176;
+	private String _methodName177;
+	private String[] _methodParameterTypes177;
 }

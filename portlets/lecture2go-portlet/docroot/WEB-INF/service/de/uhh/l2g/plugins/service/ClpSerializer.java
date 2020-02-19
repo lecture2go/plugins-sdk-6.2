@@ -29,7 +29,6 @@ import de.uhh.l2g.plugins.model.CategoryClp;
 import de.uhh.l2g.plugins.model.CoordinatorClp;
 import de.uhh.l2g.plugins.model.CreatorClp;
 import de.uhh.l2g.plugins.model.HostClp;
-import de.uhh.l2g.plugins.model.InstallWizardClp;
 import de.uhh.l2g.plugins.model.InstitutionClp;
 import de.uhh.l2g.plugins.model.Institution_HostClp;
 import de.uhh.l2g.plugins.model.LastvideolistClp;
@@ -39,6 +38,9 @@ import de.uhh.l2g.plugins.model.Lectureseries_CreatorClp;
 import de.uhh.l2g.plugins.model.Lectureseries_InstitutionClp;
 import de.uhh.l2g.plugins.model.LicenseClp;
 import de.uhh.l2g.plugins.model.MetadataClp;
+import de.uhh.l2g.plugins.model.OaiRecordClp;
+import de.uhh.l2g.plugins.model.OaiRecord_OaiSetClp;
+import de.uhh.l2g.plugins.model.OaiSetClp;
 import de.uhh.l2g.plugins.model.OfficeClp;
 import de.uhh.l2g.plugins.model.ProducerClp;
 import de.uhh.l2g.plugins.model.Producer_LectureseriesClp;
@@ -145,10 +147,6 @@ public class ClpSerializer {
 			return translateInputHost(oldModel);
 		}
 
-		if (oldModelClassName.equals(InstallWizardClp.class.getName())) {
-			return translateInputInstallWizard(oldModel);
-		}
-
 		if (oldModelClassName.equals(InstitutionClp.class.getName())) {
 			return translateInputInstitution(oldModel);
 		}
@@ -184,6 +182,18 @@ public class ClpSerializer {
 
 		if (oldModelClassName.equals(MetadataClp.class.getName())) {
 			return translateInputMetadata(oldModel);
+		}
+
+		if (oldModelClassName.equals(OaiRecordClp.class.getName())) {
+			return translateInputOaiRecord(oldModel);
+		}
+
+		if (oldModelClassName.equals(OaiRecord_OaiSetClp.class.getName())) {
+			return translateInputOaiRecord_OaiSet(oldModel);
+		}
+
+		if (oldModelClassName.equals(OaiSetClp.class.getName())) {
+			return translateInputOaiSet(oldModel);
 		}
 
 		if (oldModelClassName.equals(OfficeClp.class.getName())) {
@@ -297,16 +307,6 @@ public class ClpSerializer {
 		return newModel;
 	}
 
-	public static Object translateInputInstallWizard(BaseModel<?> oldModel) {
-		InstallWizardClp oldClpModel = (InstallWizardClp)oldModel;
-
-		BaseModel<?> newModel = oldClpModel.getInstallWizardRemoteModel();
-
-		newModel.setModelAttributes(oldClpModel.getModelAttributes());
-
-		return newModel;
-	}
-
 	public static Object translateInputInstitution(BaseModel<?> oldModel) {
 		InstitutionClp oldClpModel = (InstitutionClp)oldModel;
 
@@ -394,6 +394,36 @@ public class ClpSerializer {
 		MetadataClp oldClpModel = (MetadataClp)oldModel;
 
 		BaseModel<?> newModel = oldClpModel.getMetadataRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputOaiRecord(BaseModel<?> oldModel) {
+		OaiRecordClp oldClpModel = (OaiRecordClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getOaiRecordRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputOaiRecord_OaiSet(BaseModel<?> oldModel) {
+		OaiRecord_OaiSetClp oldClpModel = (OaiRecord_OaiSetClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getOaiRecord_OaiSetRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputOaiSet(BaseModel<?> oldModel) {
+		OaiSetClp oldClpModel = (OaiSetClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getOaiSetRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -671,43 +701,6 @@ public class ClpSerializer {
 
 		if (oldModelClassName.equals("de.uhh.l2g.plugins.model.impl.HostImpl")) {
 			return translateOutputHost(oldModel);
-		}
-		else if (oldModelClassName.endsWith("Clp")) {
-			try {
-				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
-
-				Method getClpSerializerClassMethod = oldModelClass.getMethod(
-						"getClpSerializerClass");
-
-				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
-
-				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
-
-				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
-						BaseModel.class);
-
-				Class<?> oldModelModelClass = oldModel.getModelClass();
-
-				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
-						oldModelModelClass.getSimpleName() + "RemoteModel");
-
-				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
-
-				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
-						oldRemoteModel);
-
-				return newModel;
-			}
-			catch (Throwable t) {
-				if (_log.isInfoEnabled()) {
-					_log.info("Unable to translate " + oldModelClassName, t);
-				}
-			}
-		}
-
-		if (oldModelClassName.equals(
-					"de.uhh.l2g.plugins.model.impl.InstallWizardImpl")) {
-			return translateOutputInstallWizard(oldModel);
 		}
 		else if (oldModelClassName.endsWith("Clp")) {
 			try {
@@ -1041,6 +1034,116 @@ public class ClpSerializer {
 		if (oldModelClassName.equals(
 					"de.uhh.l2g.plugins.model.impl.MetadataImpl")) {
 			return translateOutputMetadata(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
+
+		if (oldModelClassName.equals(
+					"de.uhh.l2g.plugins.model.impl.OaiRecordImpl")) {
+			return translateOutputOaiRecord(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
+
+		if (oldModelClassName.equals(
+					"de.uhh.l2g.plugins.model.impl.OaiRecord_OaiSetImpl")) {
+			return translateOutputOaiRecord_OaiSet(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
+
+		if (oldModelClassName.equals("de.uhh.l2g.plugins.model.impl.OaiSetImpl")) {
+			return translateOutputOaiSet(oldModel);
 		}
 		else if (oldModelClassName.endsWith("Clp")) {
 			try {
@@ -1718,10 +1821,6 @@ public class ClpSerializer {
 			return new de.uhh.l2g.plugins.NoSuchHostException();
 		}
 
-		if (className.equals("de.uhh.l2g.plugins.NoSuchInstallWizardException")) {
-			return new de.uhh.l2g.plugins.NoSuchInstallWizardException();
-		}
-
 		if (className.equals("de.uhh.l2g.plugins.NoSuchInstitutionException")) {
 			return new de.uhh.l2g.plugins.NoSuchInstitutionException();
 		}
@@ -1760,6 +1859,19 @@ public class ClpSerializer {
 
 		if (className.equals("de.uhh.l2g.plugins.NoSuchMetadataException")) {
 			return new de.uhh.l2g.plugins.NoSuchMetadataException();
+		}
+
+		if (className.equals("de.uhh.l2g.plugins.NoSuchOaiRecordException")) {
+			return new de.uhh.l2g.plugins.NoSuchOaiRecordException();
+		}
+
+		if (className.equals(
+					"de.uhh.l2g.plugins.NoSuchOaiRecord_OaiSetException")) {
+			return new de.uhh.l2g.plugins.NoSuchOaiRecord_OaiSetException();
+		}
+
+		if (className.equals("de.uhh.l2g.plugins.NoSuchOaiSetException")) {
+			return new de.uhh.l2g.plugins.NoSuchOaiSetException();
 		}
 
 		if (className.equals("de.uhh.l2g.plugins.NoSuchOfficeException")) {
@@ -1864,16 +1976,6 @@ public class ClpSerializer {
 		return newModel;
 	}
 
-	public static Object translateOutputInstallWizard(BaseModel<?> oldModel) {
-		InstallWizardClp newModel = new InstallWizardClp();
-
-		newModel.setModelAttributes(oldModel.getModelAttributes());
-
-		newModel.setInstallWizardRemoteModel(oldModel);
-
-		return newModel;
-	}
-
 	public static Object translateOutputInstitution(BaseModel<?> oldModel) {
 		InstitutionClp newModel = new InstitutionClp();
 
@@ -1963,6 +2065,36 @@ public class ClpSerializer {
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
 		newModel.setMetadataRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputOaiRecord(BaseModel<?> oldModel) {
+		OaiRecordClp newModel = new OaiRecordClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setOaiRecordRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputOaiRecord_OaiSet(BaseModel<?> oldModel) {
+		OaiRecord_OaiSetClp newModel = new OaiRecord_OaiSetClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setOaiRecord_OaiSetRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputOaiSet(BaseModel<?> oldModel) {
+		OaiSetClp newModel = new OaiSetClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setOaiSetRemoteModel(oldModel);
 
 		return newModel;
 	}

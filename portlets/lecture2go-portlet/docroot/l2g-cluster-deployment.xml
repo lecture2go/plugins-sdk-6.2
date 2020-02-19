@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project name="lecture2go-hfbk-deployment" basedir="." default="deploy-to-hfbk">
+   <property file="l2go-deploy.properties"/>
+	
+   <target name="deploy-to-hfbk">
+   		<echo>Deploy to hfbk.</echo>
+   		<copy todir="${l2g.cluster.node1}">
+		  <fileset dir="${l2g.dist.dir}"/>
+		</copy>
+   </target>
+
+   <target name="clean">
+   		<echo>Delete WAR files.</echo>
+   		<delete>
+		  <fileset dir="${l2g.dist.dir}"/>
+		</delete>
+   </target>
+</project>

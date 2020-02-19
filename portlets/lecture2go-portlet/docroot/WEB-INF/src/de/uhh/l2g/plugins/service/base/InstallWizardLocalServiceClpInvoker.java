@@ -113,12 +113,6 @@ public class InstallWizardLocalServiceClpInvoker {
 		_methodName157 = "setBeanIdentifier";
 
 		_methodParameterTypes157 = new String[] { "java.lang.String" };
-
-		_methodName162 = "activate";
-
-		_methodParameterTypes162 = new String[] {
-				"de.uhh.l2g.plugins.model.InstallWizard"
-			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -222,13 +216,6 @@ public class InstallWizardLocalServiceClpInvoker {
 			return null;
 		}
 
-		if (_methodName162.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
-			InstallWizardLocalServiceUtil.activate((de.uhh.l2g.plugins.model.InstallWizard)arguments[0]);
-
-			return null;
-		}
-
 		throw new UnsupportedOperationException();
 	}
 
@@ -268,6 +255,4 @@ public class InstallWizardLocalServiceClpInvoker {
 	private String[] _methodParameterTypes156;
 	private String _methodName157;
 	private String[] _methodParameterTypes157;
-	private String _methodName162;
-	private String[] _methodParameterTypes162;
 }

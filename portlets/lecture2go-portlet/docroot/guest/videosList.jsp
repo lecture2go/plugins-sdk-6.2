@@ -64,25 +64,33 @@
  	if (hasParentInstitutionFiltered) {
 		presentParentInstitutions.add(InstitutionLocalServiceUtil.getById(parentInstitutionId));
 	} else {
-		presentParentInstitutions = InstitutionLocalServiceUtil.getInstitutionsFromLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds);
+		if (FeatureManager.hasInstitutionCatalogFilter()) {
+			presentParentInstitutions = InstitutionLocalServiceUtil.getInstitutionsFromLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds);
+		}
 	} 
 	
  	if (hasParentInstitutionFiltered && hasInstitutionFiltered) {
 		presentInstitutions.add(InstitutionLocalServiceUtil.getById(institutionId));
 	} else {
-		presentInstitutions = InstitutionLocalServiceUtil.getInstitutionsFromLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds, parentInstitutionId);
+		if (FeatureManager.hasSubInstitutionCatalogFilter()) {
+			presentInstitutions = InstitutionLocalServiceUtil.getInstitutionsFromLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds, parentInstitutionId);
+		}
 	}
 	
 	if (hasTermFiltered) {
 		presentTerms.add(TermLocalServiceUtil.getById(termId));
 	} else {
-		presentTerms = TermLocalServiceUtil.getTermsFromLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds);
+		if (FeatureManager.hasTermsCatalogFilter()) {
+			presentTerms = TermLocalServiceUtil.getTermsFromLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds);
+		}
 	}
 	
 	if (hasCategoryFiltered) {
 		presentCategories.add(CategoryLocalServiceUtil.getById(categoryId));
 	} else {
-		presentCategories = CategoryLocalServiceUtil.getCategoriesFromLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds);
+		if (FeatureManager.hasCategoryCatalogFilter()) {
+			presentCategories = CategoryLocalServiceUtil.getCategoriesFromLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds);
+		}
 	}
 	
 	List<Lectureseries> tempLectureseriesList = new ArrayList();
@@ -124,17 +132,9 @@
 	</portlet:actionURL>
 		
 	<div class="path-wide">
-	<A HREF=<%=portalURL%>><%=companyName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+	<A HREF=<%=portalURL%>><%=companyName %></A><span class="divider">/</span> 
 	<A HREF="<%=backURL0%>"><%=pageName %></A>
-	<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
 	<%
-	try{
-		rInst=InstitutionLocalServiceUtil.getRoot(); 
-		if(rInst.getName().length()>0){%>
-		<A HREF="<%=backURL0%>"><%=rInst.getName() %></A>
-	<%} 
-	}catch(Exception e){}
-
 	try{
 		pInst=InstitutionLocalServiceUtil.getById(parentInstitutionId);
 		if(pInst.getName().length()>0){%>
@@ -146,7 +146,7 @@
 			<portlet:param name="categoryId" value="0"/>
 			<portlet:param name="creatorId" value="0"/>
 		</portlet:actionURL>
-		<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+		<span class="divider">/</span> 
 		<A HREF="<%=backURL1%>"><%=pInst.getName() %></A>
 	<%}		
 	}catch(Exception e){}
@@ -162,7 +162,7 @@
 				<portlet:param name="categoryId" value="0"/>
 				<portlet:param name="creatorId" value="0"/>
 			</portlet:actionURL>	
-			<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+			<span class="divider">/</span> 
 			<A HREF="<%=backURL2%>"><%=insti.getName() %></A> 
 		<%}		
 	}catch(Exception e){}

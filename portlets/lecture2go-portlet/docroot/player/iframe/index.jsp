@@ -6,13 +6,9 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<script type="text/javascript" src="/lecture2go-portlet/js/jquery-2.1.4.min.js"></script>
-<!-- for self hostet player 
 	<script type="text/javascript" src="/lecture2go-portlet/player/jwplayer-7.12.13/jwplayer.js"></script>
-	<script type="text/javascript">jwplayer.key="get-your-licence-from-jw-player";</script>
-!-->
-<!-- for cloud hosted player -->
-	<script type="text/javascript" src="https://content.jwplatform.com/libraries/meCDJ4WV.js"></script>
-<!-- for cloud hosted end -->
+	<script type="text/javascript">jwplayer.key="201IIc3/RasApk0L1+d1fv9pi5UCUsF6VvHj1C+EfkI=";</script>
+
 	<title>Lecture2o-Embed</title>
 	<style type="text/css">
 
@@ -22,7 +18,7 @@
 		}
 		
 		.jw-controlbar {
-		    width: calc(100% - 100px) !important;
+		    width: calc(100% - 130px) !important;
 		}
 
 		.jw-text-track-cue.jw-reset {
@@ -46,7 +42,7 @@
 
 		.jw-icon.jw-dock-image.jw-reset::before {
 		    color: #fff;
-		    content: "Lecture2Go";
+		    content: "HFBK-Mediathek";
 		    float: right;
 		    font-family: arial;
 		    font-size: 15px;
@@ -97,6 +93,22 @@
 		}
 
 	</script>
+	<!-- Matomo -->
+	<script type="text/javascript">
+	  var _paq = window._paq || [];
+	  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+	  _paq.push(['trackPageView']);
+	  _paq.push(['enableLinkTracking']);
+	  (function() {
+	    var u="https://matomo.uni-hamburg.de/";
+	    _paq.push(['setTrackerUrl', u+'matomo.php']);
+	    _paq.push(['setSiteId', '210']);
+	    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+	    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+	  })();
+	</script>
+	<noscript><p><img src="https://matomo.uni-hamburg.de/matomo.php?idsite=210&amp;rec=1" style="border:0;" alt="" /></p></noscript>
+	<!-- End Matomo Code -->
 </head>
 
 <%@ page import="de.uhh.l2g.plugins.service.VideoLocalServiceUtil"%>
@@ -182,9 +194,18 @@
 			            width: "100%",
        			    	height: "100%",
 			            aspectratio: "16:9",
-			            image: img,
-			            sources: <%=video.getJsonPlayerUris()%>,		            
-			            tracks: vttTracks,				        
+			            playbackRateControls: [0.75, 1, 1.25, 1.5],
+			            cast: {},
+			            playlist: [{
+			                <%if(video.is360()){%>
+			                        stereomode: 'monoscopic',
+			                <%}%>
+			                image: "<%=video.getImage()%>",
+			                sources: <%=video.getJsonPlayerUris()%>,
+			                <%if(video.isHasCaption() || video.isHasChapters()){%>
+			                        tracks: <%=video.getJsonPlayerTracks()%>,
+			                <%}%>
+			            }],				        
 			            hlshtml: true,
 			            androidhls: true
 			        }).onReady(function() {
@@ -240,13 +261,13 @@
 
 			        });
 			        //
-			        var tit="Lecture2Go";
+			        var tit="HFBK-Mediathek";
 			        if(isCitation){
 			        	tit="Zitat2Go";
 			        }
 			        jwplayer().addButton(
 			        	"",
-			        	"Dieses Video auf Lecture2Go ansehen",
+			        	"Dieses Video auf der HFBK-Mediathek ansehen",
 			        	function() {
 			        		//stop player
 			        		jwplayer().stop();

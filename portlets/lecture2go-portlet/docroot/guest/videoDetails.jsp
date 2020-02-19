@@ -79,13 +79,12 @@
 									<portlet:param name="creatorId" value="0"/>
 								</portlet:actionURL>	
 								
-								<A HREF="<%=portalURL%>"><%=companyName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
-								<A HREF="<%=backURL0%>"><%=pageName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
-								<A HREF="<%=backURL0%>"><%=rInst.getName() %></A> <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
-						    	<A HREF="<%=backURL1%>"><%=pInst.getName() %></A> <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+								<A HREF="<%=portalURL%>"><%=companyName %></A><span class="divider">/</span> 
+								<A HREF="<%=backURL0%>"><%=pageName %></A><span class="divider">/</span> 
+						    	<A HREF="<%=backURL1%>"><%=pInst.getName() %></A> <span class="divider">/</span> 
 						    	<A HREF="<%=backURL2%>"><%=insti.getName() %></A> 
 						    	<%if(lec.getLectureseriesId()>0) {%>
-					    			<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <SPAN><%=lec.getName()%></SPAN>
+					    			<span class="divider">/</span> <SPAN><%=lec.getName()%></SPAN>
 					    		<%}%>
 						    	<br/>
 				    		<%}
@@ -114,12 +113,12 @@
 										<portlet:param name="creatorId" value="0"/>
 									</portlet:actionURL>		    	
 							    	
-   									<A HREF="/"><%=companyName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
-							    	<A HREF="<%=backURL0%>"><%=pageName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
-							    	<A HREF="<%=backURL0%>"><%=rInst.getName() %></A> <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+   									<A HREF="/"><%=companyName %></A><span class="divider">/</span> 
+							    	<A HREF="<%=backURL0%>"><%=pageName %></A><span class="divider">/</span> 
+							    	<A HREF="<%=backURL0%>"><%=rInst.getName() %></A> <span class="divider">/</span> 
 							    	<%if(pInst.getLevel()>0) {%>
 							    	  <A HREF="<%=backURL3%>"><%=pInst.getName() %></A>
-							    	  <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+							    	  <span class="divider">/</span> 
 							    	<%}%>
 							    	<A HREF="<%=backURL4%>"><%=insti.getName() %></A>	
 							    	<br/> 
@@ -129,8 +128,8 @@
 				      if (videoInstitutions.size()==0){
 				    	  Institution rootI = InstitutionLocalServiceUtil.getRoot();
 				    	  %>
-								<A HREF="/"><%=companyName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
-							    <A HREF="<%=backURL0%>"><%=pageName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 				    	  
+								<A HREF="/"><%=companyName %></A><span class="divider">/</span> 
+							    <A HREF="<%=backURL0%>"><%=pageName %></A><span class="divider">/</span> 				    	  
 							    <A HREF="<%=backURL0%>"><%=rootI.getName() %></A>
 							    <br/> 				    	  
 				    	  <%
@@ -212,7 +211,7 @@
 							    <%if(video.getOpenAccess()==1){%>
 							   	 	<li><a href="#share" data-toggle="tab"><liferay-ui:message key="share"/></a></li>
 							    <%}%>
-
+							    <li><a href="#support" data-toggle="tab"><liferay-ui:message key="support"/></a></li>
 							    <%if(video.isHasChapters()){ %>
 							    	<li><a href="#chapters" data-toggle="tab"><liferay-ui:message key="chapters"/></a></li>
 							    <%}%>				    
@@ -229,7 +228,19 @@
 								        <p><%@ include file="/guest/includeShare.jsp" %></p>
 								    </div>
 							    <%}%>
-									
+								    <div class="tab-pane" id="support">
+								        <p>
+											<%
+												String supportLink = PropsUtil.get("lecture2go.support.link");
+											%>
+											<div id="meta-share">
+												<div class="supportlink">
+													<p class="smallitalic"><liferay-ui:message key="support-notification"/></p>
+													<a href="<%=supportLink%>"><liferay-ui:message key="support-formular-link"/></a>
+												</div>
+											</div>		        
+								    </div>
+		
 									<%if(video.isHasChapters() || video.isHasComments()){%>
 									    <ul class="tab-pane" id="chapters">
 									    	<c:forEach items="<%=segments %>" var="segment">

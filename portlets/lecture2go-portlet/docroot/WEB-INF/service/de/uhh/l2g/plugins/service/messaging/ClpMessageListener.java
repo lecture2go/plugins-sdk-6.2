@@ -22,7 +22,6 @@ import de.uhh.l2g.plugins.service.ClpSerializer;
 import de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
-import de.uhh.l2g.plugins.service.InstallWizardLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LastvideolistLocalServiceUtil;
@@ -32,6 +31,9 @@ import de.uhh.l2g.plugins.service.Lectureseries_CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Lectureseries_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LicenseLocalServiceUtil;
 import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
+import de.uhh.l2g.plugins.service.OaiRecordLocalServiceUtil;
+import de.uhh.l2g.plugins.service.OaiRecord_OaiSetLocalServiceUtil;
+import de.uhh.l2g.plugins.service.OaiSetLocalServiceUtil;
 import de.uhh.l2g.plugins.service.OfficeLocalServiceUtil;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Producer_LectureseriesLocalServiceUtil;
@@ -70,8 +72,6 @@ public class ClpMessageListener extends BaseMessageListener {
 
 			HostLocalServiceUtil.clearService();
 
-			InstallWizardLocalServiceUtil.clearService();
-
 			InstitutionLocalServiceUtil.clearService();
 
 			Institution_HostLocalServiceUtil.clearService();
@@ -89,6 +89,12 @@ public class ClpMessageListener extends BaseMessageListener {
 			LicenseLocalServiceUtil.clearService();
 
 			MetadataLocalServiceUtil.clearService();
+
+			OaiRecordLocalServiceUtil.clearService();
+
+			OaiRecord_OaiSetLocalServiceUtil.clearService();
+
+			OaiSetLocalServiceUtil.clearService();
 
 			OfficeLocalServiceUtil.clearService();
 

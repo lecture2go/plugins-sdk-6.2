@@ -384,4 +384,8 @@ public interface Video extends VideoModel, PersistedModel {
 	public void setCreators(java.lang.String creators);
 
 	public boolean isHasCaption();
+
+	public void set360(boolean is360);
+
+	public boolean is360();
 }

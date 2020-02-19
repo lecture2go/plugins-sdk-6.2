@@ -298,6 +298,11 @@ public class Lectureseries_CategoryLocalServiceWrapper
 			categoryId, newCategoryId);
 	}
 
+	@Override
+	public boolean removeByLectureseriesId(java.lang.Long lectureseriesId) {
+		return _lectureseries_CategoryLocalService.removeByLectureseriesId(lectureseriesId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

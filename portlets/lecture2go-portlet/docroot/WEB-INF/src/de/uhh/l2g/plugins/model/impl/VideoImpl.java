@@ -20,24 +20,25 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.ListIterator;
 
 import org.json.JSONArray;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Producer;
-import de.uhh.l2g.plugins.model.Segment;
+import de.uhh.l2g.plugins.model.Video_Category;
+import de.uhh.l2g.plugins.service.CategoryLocalServiceUtil;
 import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
-import de.uhh.l2g.plugins.service.persistence.ProducerPersistenceImpl;
-import de.uhh.l2g.plugins.util.ProzessManager;
+import de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil;
 
 /**
  * The extended model implementation for the Video service. Represents a row in the &quot;LG_Video&quot; database table, with each column mapped to a property of this class.
@@ -58,13 +59,13 @@ public class VideoImpl extends VideoBaseImpl {
 	/**
 	 * This model uses quite a few constants, some may be better kept in a config file...
 	 */
+	private static final String WEBHOME 				= PropsUtil.get("lecture2go.web.home");
 	private static final String WEBROOT 				= PropsUtil.get("lecture2go.web.root");
-	private static final String WEBHOME 				= WEBROOT.contains("localhost") ? WEBROOT+"/web/vod" : WEBROOT;
 	private static final String MEDIA_REPOSITORY		= PropsUtil.get("lecture2go.media.repository");
 	private static final String TENANT_SUB_FOLDER		= PropsUtil.get("lecture2go.media.repository.tenantpath"); 
 	private static final String IMAGES_REPOSITORY		= PropsUtil.get("lecture2go.images.system.path") + "/";
 	private static final String DOWNLOAD_SERVER			= PropsUtil.get("lecture2go.downloadserver.web.root");
-	private static final String IMAGES_URL 				= WEBROOT + "/images/";
+	private static final String IMAGES_URL 				= PropsUtil.get("lecture2go.web.root") + "/images/";
 	private static final String CHAPTERFOLDER 			= PropsUtil.get("lecture2go.chapters.web.root");
 	private static final String CAPTIONSFOLDER 			= PropsUtil.get("lecture2go.captions.web.root");
 	private static final String DOWNLOADFOLDER 			= DOWNLOAD_SERVER + "/" + PropsUtil.get("lecture2go.downloadserver.path") + "/";
@@ -1105,4 +1106,31 @@ public class VideoImpl extends VideoBaseImpl {
 		else 
 			return IMAGES_URL + getCurrentPrefix() + imageSuffix;
 	}
+	
+	boolean is360 = false;
+
+	public void set360(boolean is360) {
+		this.is360 = is360;
+	}
+
+	public boolean is360(){
+		try {
+			List<Video_Category> list = Video_CategoryLocalServiceUtil.getByVideo(super.getVideoId());
+			ListIterator<Video_Category> it = list.listIterator();
+			while(it.hasNext()){
+				String cat = "";
+				Video_Category vc = it.next();
+				try {
+					cat = CategoryLocalServiceUtil.getById(vc.getCategoryId()).getName();
+					if(cat.contains("360")) is360 = true;
+				} catch (NoSuchModelException e) {
+					//
+				}
+			}
+		} catch (SystemException e) {
+			//
+		}
+		return is360;
+	}
+	
 }

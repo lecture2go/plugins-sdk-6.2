@@ -133,6 +133,7 @@
 <%@page import="de.uhh.l2g.plugins.util.Lecture2GoRoleChecker"%>
 <%@page import="de.uhh.l2g.plugins.util.Security"%>
 <%@page import="de.uhh.l2g.plugins.util.VideoProcessorManager"%>
+<%@page import="de.uhh.l2g.plugins.util.FeatureManager"%>
 
 <%@page import="de.uhh.l2g.plugins.search.VideoSearchContainer"%>
 <%@page import="de.uhh.l2g.plugins.search.VideoDisplayTerms"%>

@@ -462,15 +462,15 @@ public class RSSManager {
 			channelElement.appendChild(languageElement);
 			// copyright
 			Element copyrightElement = doc.createElement("copyright");
-			copyrightElement.setTextContent("University of Hamburg Lecture2Go " + Calendar.getInstance().get(Calendar.YEAR));
+			copyrightElement.setTextContent(PropsUtil.get("lecture2go.rss.copyrightholder") + " " + Calendar.getInstance().get(Calendar.YEAR));
 			channelElement.appendChild(copyrightElement);
 			// itunes:author 
 			Element authorElement = doc.createElement("itunes:author");
-			authorElement.setTextContent("University of Hamburg - Lecture2Go");
+			authorElement.setTextContent(PropsUtil.get("lecture2go.rss.publisher"));
 			channelElement.appendChild(authorElement);
 			// itunes:summary
 			Element summaryElement = doc.createElement("itunes:summary");
-			summaryElement.setTextContent("The University of Hamburg offers a steadily growing portion of its lectures online and similar to a take-away. For further information and more video lectures visit the central media platform of the University of Hamburg at http://lecture2go.uni-hamburg.de!");
+			summaryElement.setTextContent(PropsUtil.get("lecture2go.rss.description"));
 			channelElement.appendChild(summaryElement);
 			// itunes:image
 			Element itunesImageElement = doc.createElement("itunes:image");

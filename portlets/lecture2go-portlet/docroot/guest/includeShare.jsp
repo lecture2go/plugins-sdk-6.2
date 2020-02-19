@@ -17,6 +17,11 @@
 								<aui:input name="embed_code1" label="embed-html5" helpMessage="about-html5-embed" required="false" id="embed_code1" readonly="true" value="${video.embedHtml5}" onclick="document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_embed_code1.focus();document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_embed_code1.select();"/>							
 							</li>
 						</c:if>
+						<c:if test="<%= FeatureManager.hasCommsy()%>">
+							<li>
+								<aui:input name="embed_code4" label="embed-commsy" helpMessage="about-commsy-embed" required="false" id="embed_code4" readonly="true" value="(:lecture2go ${video.videoId}:)" onclick="document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_embed_code4.focus();document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_embed_code4.select();"/>
+							</li>
+						</c:if>
 						<c:if test="${video.lectureseriesId>0}">
 							<li>
 								<aui:input name="embed_code2" label="lecture-series-url" helpMessage="about-lecture-series-url" required="false" id="embed_code2" readonly="true" value="${video.lectureseriesUrl}" onclick="document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_embed_code2.focus();document.embedForm._lgopenaccessvideos_WAR_lecture2goportlet_embed_code2.select();"/>
@@ -28,7 +33,8 @@
 		<!-- embed end -->
 		
 		<!-- citation2go allowed -->
-		<c:if test="${video.citation2go==1}">
+		<c:if test="<%= FeatureManager.hasCitation2Go()%>">
+			<c:if test="${video.citation2go==1}">
 				<div class="sharetile">
 					<p class="tileheading"><liferay-ui:message key="citation2go"/></p>
 					<div id="c2g-generate">
@@ -49,26 +55,31 @@
 						</ul>
 					</div>
 				</div>
+			</c:if>
 		</c:if>
 		<!-- citation2go allowed end-->		
 		
 		<!-- Facebook Twitter Google+ -->
-		<div class="sharetile">
-			<p class="tileheading"><liferay-ui:message key="social-media"/></p>
-			<div id="socialshareprivacy"></div>
-		</div>
+		<c:if test="<%= FeatureManager.hasSocialMediaSharing()%>">
+			<div class="sharetile">
+				<p class="tileheading"><liferay-ui:message key="social-media"/></p>
+				<div id="socialshareprivacy"></div>
+			</div>
+		</c:if>
 		<!-- Facebook Twitter Google+ Ende -->
 	</form>
-		
-	<script type="text/javascript">
-		$('#socialshareprivacy').socialSharePrivacy({
-			services : {
-				gplus : {
-					status : 'off'
+	
+	<c:if test="<%= FeatureManager.hasSocialMediaSharing()%>">
+		<script type="text/javascript">
+			$('#socialshareprivacy').socialSharePrivacy({
+				services : {
+					gplus : {
+						status : 'off'
+					}
 				}
-			}
-		});
-	</script>
+			});
+		</script>
+	</c:if>
 	
 	<%@ include file="/guest/includeQR.jsp" %>
 </div>

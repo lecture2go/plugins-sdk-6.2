@@ -82,8 +82,9 @@ public class OaiRecordModelImpl extends BaseModelImpl<OaiRecord>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.OaiRecord"),
 			true);
-	public static long VIDEOID_COLUMN_BITMASK = 1L;
-	public static long DATESTAMP_COLUMN_BITMASK = 2L;
+	public static long IDENTIFIER_COLUMN_BITMASK = 1L;
+	public static long VIDEOID_COLUMN_BITMASK = 2L;
+	public static long DATESTAMP_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.OaiRecord"));
 
@@ -210,7 +211,17 @@ public class OaiRecordModelImpl extends BaseModelImpl<OaiRecord>
 
 	@Override
 	public void setIdentifier(String identifier) {
+		_columnBitmask |= IDENTIFIER_COLUMN_BITMASK;
+
+		if (_originalIdentifier == null) {
+			_originalIdentifier = _identifier;
+		}
+
 		_identifier = identifier;
+	}
+
+	public String getOriginalIdentifier() {
+		return GetterUtil.getString(_originalIdentifier);
 	}
 
 	@Override
@@ -332,6 +343,8 @@ public class OaiRecordModelImpl extends BaseModelImpl<OaiRecord>
 
 		oaiRecordModelImpl._setOriginalVideoId = false;
 
+		oaiRecordModelImpl._originalIdentifier = oaiRecordModelImpl._identifier;
+
 		oaiRecordModelImpl._columnBitmask = 0;
 	}
 
@@ -427,6 +440,7 @@ public class OaiRecordModelImpl extends BaseModelImpl<OaiRecord>
 	private long _originalVideoId;
 	private boolean _setOriginalVideoId;
 	private String _identifier;
+	private String _originalIdentifier;
 	private Date _datestamp;
 	private boolean _deleted;
 	private long _columnBitmask;

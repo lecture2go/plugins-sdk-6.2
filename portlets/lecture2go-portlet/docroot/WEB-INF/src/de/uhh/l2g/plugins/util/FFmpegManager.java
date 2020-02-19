@@ -202,10 +202,10 @@ public class FFmpegManager {
 	 *            the thumbnail location
 	 * @return true, if successful
 	 */
-	public static boolean createThumbnail(String fileLocation, String thumbnailLocation, float sec) {
+	public static boolean createThumbnail(String fileLocation, String thumbnailLocation, int sec) {
 		Runtime runCmd = Runtime.getRuntime();
 		String thumbPreffLoc = thumbnailLocation.split(".jpg")[0];
-		String command = PropsUtil.get("lecture2go.ffmpeg.bin") + " -noaccurate_seek -ss "+sec+" -i " + fileLocation + " -f image2 -vframes 1 " + thumbnailLocation + " -y";
+	    String command = PropsUtil.get("lecture2go.ffmpeg.bin") + " -noaccurate_seek -ss "+sec+" -i " + fileLocation + " -f image2 -vframes 1 " + thumbnailLocation + " -y";
 		String command1 = PropsUtil.get("lecture2go.ffmpeg.bin") + " -noaccurate_seek -ss "+sec+" -i " + fileLocation + " -f image2 -vframes 1 -filter:v scale='130:-1' " + thumbPreffLoc + "_s.jpg -y";
 		String command2 = PropsUtil.get("lecture2go.ffmpeg.bin") + " -noaccurate_seek -ss "+sec+" -i " + fileLocation + " -f image2 -vframes 1 -filter:v scale='300:-1' " + thumbPreffLoc + "_m.jpg -y";
 		boolean ret = true;
