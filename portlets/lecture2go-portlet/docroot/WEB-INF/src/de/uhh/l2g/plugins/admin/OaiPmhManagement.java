@@ -21,6 +21,7 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import de.uhh.l2g.plugins.model.ScheduledThread;
+import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.util.OaiPmhManager;
 import de.uhh.l2g.plugins.util.PermissionManager;
 
@@ -72,6 +73,15 @@ public class OaiPmhManagement extends MVCPortlet {
 	
 	public void republishAll(ActionRequest request, ActionResponse response) {
 		OaiPmhManager.publishAllOpenAccessVideos();
+		response.setRenderParameter("mvcPath", "/admin/oaipmh.jsp");
+	}
+	
+	/**
+	 * Fixes missing fields in the video object/ related tables, which can be derived from the related lectureseries
+	 * Not directly related to OAI-PMH, may be moved to a more general module
+	 */
+	public void fixMissingMetadataForVideoFromRelatedLectureseries(ActionRequest request, ActionResponse response) {
+		VideoLocalServiceUtil.fixMissingMetadataForVideosFromRelatedLectureseries();
 		response.setRenderParameter("mvcPath", "/admin/oaipmh.jsp");
 	}
 
