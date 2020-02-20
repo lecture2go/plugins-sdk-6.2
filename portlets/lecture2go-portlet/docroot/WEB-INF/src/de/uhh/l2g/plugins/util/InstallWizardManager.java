@@ -57,7 +57,7 @@ public class InstallWizardManager {
 	
 	public void installRepository() {
 		File repository = new File(PropsUtil.get("lecture2go.media.repository"));
-		if(!repository.isFile())
+		if(!repository.exists() && !repository.isDirectory())
 			try {
 				InstallWizardLocalServiceUtil.activate(installWizard);
 				// install wizart is active

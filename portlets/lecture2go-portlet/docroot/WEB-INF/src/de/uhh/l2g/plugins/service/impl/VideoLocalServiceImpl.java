@@ -15,13 +15,19 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import com.liferay.portal.NoSuchModelException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
+
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
-import java.sql.Date;
+import java.nio.file.Path;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,9 +37,7 @@ import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Locale;
-import java.util.NoSuchElementException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,35 +45,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.liferay.portal.NoSuchModelException;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
-
-import de.uhh.l2g.plugins.NoSuchInstitutionException;
-import de.uhh.l2g.plugins.NoSuchLectureseriesException;
 import de.uhh.l2g.plugins.NoSuchProducerException;
 import de.uhh.l2g.plugins.NoSuchVideoException;
 import de.uhh.l2g.plugins.model.Host;
-import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Lastvideolist;
 import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.Producer;
-import de.uhh.l2g.plugins.model.Segment;
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.impl.HostImpl;
-import de.uhh.l2g.plugins.model.impl.InstitutionImpl;
 import de.uhh.l2g.plugins.model.impl.LastvideolistImpl;
-import de.uhh.l2g.plugins.model.impl.LectureseriesImpl;
 import de.uhh.l2g.plugins.model.impl.ProducerImpl;
 import de.uhh.l2g.plugins.model.impl.VideoImpl;
-import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LastvideolistLocalServiceUtil;
-import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
-import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.VideoLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.VideoFinderUtil;
 import de.uhh.l2g.plugins.util.FFmpegManager;
@@ -713,7 +701,8 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	 * @throws IOException
 	 */
 	public boolean isSymlink(File file) throws IOException {
-		return Files.isSymbolicLink(file.toPath());
+		Path path = FileSystems.getDefault().getPath(file.getPath());
+		return Files.isSymbolicLink(path);
 	}
 	
 	/**

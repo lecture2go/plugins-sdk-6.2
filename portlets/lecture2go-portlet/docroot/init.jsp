@@ -101,6 +101,7 @@
 <%@page import="de.uhh.l2g.plugins.service.CreatorLocalServiceUtil"%>
 <%@page import="de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil" %>
 <%@page import="de.uhh.l2g.plugins.service.MetadataLocalServiceUtil"%>
+<%@page import="de.uhh.l2g.plugins.service.InstallWizardLocalServiceUtil"%>
 
 <%@page import="de.uhh.l2g.plugins.NoSuchMetadataException"%>
 

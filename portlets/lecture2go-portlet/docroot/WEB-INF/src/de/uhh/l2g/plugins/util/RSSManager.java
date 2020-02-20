@@ -1,5 +1,11 @@
 package de.uhh.l2g.plugins.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
+
 /***************************************************************************
  * The Lecture2Go software is based on the liferay portal 6.1.1 
  * <http://www.liferay.com>
@@ -34,23 +40,14 @@ package de.uhh.l2g.plugins.util;
  ***************************************************************************/
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
-import java.util.SimpleTimeZone;
 import java.util.TimeZone;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -64,27 +61,16 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
-
-import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.Metadata;
-import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.Video_Institution;
 import de.uhh.l2g.plugins.model.impl.InstitutionImpl;
 import de.uhh.l2g.plugins.model.impl.MetadataImpl;
-import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
-import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
-import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 
 
