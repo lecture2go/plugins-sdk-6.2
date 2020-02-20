@@ -11,6 +11,8 @@
 	<bean id="de.uhh.l2g.plugins.service.persistence.CreatorFinder" class="de.uhh.l2g.plugins.service.persistence.CreatorFinderImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.HostLocalService" class="de.uhh.l2g.plugins.service.impl.HostLocalServiceImpl" />
 	<bean id="de.uhh.l2g.plugins.service.persistence.HostPersistence" class="de.uhh.l2g.plugins.service.persistence.HostPersistenceImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.InstallWizardLocalService" class="de.uhh.l2g.plugins.service.impl.InstallWizardLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.InstallWizardPersistence" class="de.uhh.l2g.plugins.service.persistence.InstallWizardPersistenceImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.InstitutionLocalService" class="de.uhh.l2g.plugins.service.impl.InstitutionLocalServiceImpl" />
 	<bean id="de.uhh.l2g.plugins.service.persistence.InstitutionPersistence" class="de.uhh.l2g.plugins.service.persistence.InstitutionPersistenceImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.persistence.InstitutionFinder" class="de.uhh.l2g.plugins.service.persistence.InstitutionFinderImpl" parent="basePersistence" />

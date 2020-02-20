@@ -106,17 +106,17 @@ public class LastvideolistLocalServiceClpInvoker {
 				"de.uhh.l2g.plugins.model.Lastvideolist"
 			};
 
-		_methodName168 = "getBeanIdentifier";
+		_methodName172 = "getBeanIdentifier";
 
-		_methodParameterTypes168 = new String[] {  };
+		_methodParameterTypes172 = new String[] {  };
 
-		_methodName169 = "setBeanIdentifier";
+		_methodName173 = "setBeanIdentifier";
 
-		_methodParameterTypes169 = new String[] { "java.lang.String" };
+		_methodParameterTypes173 = new String[] { "java.lang.String" };
 
-		_methodName174 = "deleteByVideoId";
+		_methodName178 = "deleteByVideoId";
 
-		_methodParameterTypes174 = new String[] { "java.lang.Long" };
+		_methodParameterTypes178 = new String[] { "java.lang.Long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -208,20 +208,20 @@ public class LastvideolistLocalServiceClpInvoker {
 			return LastvideolistLocalServiceUtil.updateLastvideolist((de.uhh.l2g.plugins.model.Lastvideolist)arguments[0]);
 		}
 
-		if (_methodName168.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes168, parameterTypes)) {
+		if (_methodName172.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes172, parameterTypes)) {
 			return LastvideolistLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName169.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes169, parameterTypes)) {
+		if (_methodName173.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes173, parameterTypes)) {
 			LastvideolistLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName174.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes174, parameterTypes)) {
+		if (_methodName178.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes178, parameterTypes)) {
 			LastvideolistLocalServiceUtil.deleteByVideoId((java.lang.Long)arguments[0]);
 
 			return null;
@@ -262,10 +262,10 @@ public class LastvideolistLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName168;
-	private String[] _methodParameterTypes168;
-	private String _methodName169;
-	private String[] _methodParameterTypes169;
-	private String _methodName174;
-	private String[] _methodParameterTypes174;
+	private String _methodName172;
+	private String[] _methodParameterTypes172;
+	private String _methodName173;
+	private String[] _methodParameterTypes173;
+	private String _methodName178;
+	private String[] _methodParameterTypes178;
 }

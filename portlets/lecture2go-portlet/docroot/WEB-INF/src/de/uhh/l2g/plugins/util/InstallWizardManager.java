@@ -48,8 +48,9 @@ public class InstallWizardManager {
 		this.companyId = companyId;
 		this.groupId = groupId;
 		try {
-			installWizard = InstallWizardLocalServiceUtil.getInstallWizard(1);
+		installWizard = InstallWizardLocalServiceUtil.getInstallWizard(1);
 		} catch (Exception e) {
+			System.out.println("--->" + e);
 			LOG.error("Install wizard not found for companyId - "+companyId+" and group id - "+groupId+"!");
 		} 
 	}

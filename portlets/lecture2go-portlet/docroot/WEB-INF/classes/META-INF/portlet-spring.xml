@@ -33,6 +33,14 @@
 	<bean id="de.uhh.l2g.plugins.service.persistence.LicensePersistence" class="de.uhh.l2g.plugins.service.persistence.LicensePersistenceImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.MetadataLocalService" class="de.uhh.l2g.plugins.service.impl.MetadataLocalServiceImpl" />
 	<bean id="de.uhh.l2g.plugins.service.persistence.MetadataPersistence" class="de.uhh.l2g.plugins.service.persistence.MetadataPersistenceImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.OaiRecordLocalService" class="de.uhh.l2g.plugins.service.impl.OaiRecordLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.OaiRecordPersistence" class="de.uhh.l2g.plugins.service.persistence.OaiRecordPersistenceImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.OaiRecordFinder" class="de.uhh.l2g.plugins.service.persistence.OaiRecordFinderImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.OaiRecord_OaiSetLocalService" class="de.uhh.l2g.plugins.service.impl.OaiRecord_OaiSetLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.OaiRecord_OaiSetPersistence" class="de.uhh.l2g.plugins.service.persistence.OaiRecord_OaiSetPersistenceImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.OaiSetLocalService" class="de.uhh.l2g.plugins.service.impl.OaiSetLocalServiceImpl" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.OaiSetPersistence" class="de.uhh.l2g.plugins.service.persistence.OaiSetPersistenceImpl" parent="basePersistence" />
+	<bean id="de.uhh.l2g.plugins.service.persistence.OaiSetFinder" class="de.uhh.l2g.plugins.service.persistence.OaiSetFinderImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.OfficeLocalService" class="de.uhh.l2g.plugins.service.impl.OfficeLocalServiceImpl" />
 	<bean id="de.uhh.l2g.plugins.service.persistence.OfficePersistence" class="de.uhh.l2g.plugins.service.persistence.OfficePersistenceImpl" parent="basePersistence" />
 	<bean id="de.uhh.l2g.plugins.service.ProducerLocalService" class="de.uhh.l2g.plugins.service.impl.ProducerLocalServiceImpl" />

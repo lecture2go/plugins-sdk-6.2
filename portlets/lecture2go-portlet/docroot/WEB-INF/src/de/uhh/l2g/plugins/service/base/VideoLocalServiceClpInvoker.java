@@ -100,173 +100,173 @@ public class VideoLocalServiceClpInvoker {
 
 		_methodParameterTypes15 = new String[] { "de.uhh.l2g.plugins.model.Video" };
 
-		_methodName168 = "getBeanIdentifier";
+		_methodName172 = "getBeanIdentifier";
 
-		_methodParameterTypes168 = new String[] {  };
+		_methodParameterTypes172 = new String[] {  };
 
-		_methodName169 = "setBeanIdentifier";
+		_methodName173 = "setBeanIdentifier";
 
-		_methodParameterTypes169 = new String[] { "java.lang.String" };
+		_methodParameterTypes173 = new String[] { "java.lang.String" };
 
-		_methodName174 = "getByOpenAccess";
+		_methodName178 = "getByOpenAccess";
 
-		_methodParameterTypes174 = new String[] { "int" };
+		_methodParameterTypes178 = new String[] { "int" };
 
-		_methodName175 = "getByOpenAccessAndUploadedFile";
+		_methodName179 = "getByOpenAccessAndUploadedFile";
 
-		_methodParameterTypes175 = new String[] { "int" };
+		_methodParameterTypes179 = new String[] { "int" };
 
-		_methodName176 = "getLatestOpenAccessVideoForLectureseries";
+		_methodName180 = "getLatestOpenAccessVideoForLectureseries";
 
-		_methodParameterTypes176 = new String[] { "java.lang.Long" };
+		_methodParameterTypes180 = new String[] { "java.lang.Long" };
 
-		_methodName177 = "getByTerm";
-
-		_methodParameterTypes177 = new String[] { "java.lang.Long" };
-
-		_methodName178 = "unlinkLectureseriesFromVideos";
-
-		_methodParameterTypes178 = new String[] { "java.lang.Long" };
-
-		_methodName179 = "getByRootInstitution";
-
-		_methodParameterTypes179 = new String[] { "java.lang.Long" };
-
-		_methodName180 = "getByFilename";
-
-		_methodParameterTypes180 = new String[] { "java.lang.String" };
-
-		_methodName181 = "getByProducer";
+		_methodName181 = "getByTerm";
 
 		_methodParameterTypes181 = new String[] { "java.lang.Long" };
 
-		_methodName182 = "getByLectureseries";
+		_methodName182 = "unlinkLectureseriesFromVideos";
 
 		_methodParameterTypes182 = new String[] { "java.lang.Long" };
 
-		_methodName183 = "countByLectureseries";
+		_methodName183 = "getByRootInstitution";
 
 		_methodParameterTypes183 = new String[] { "java.lang.Long" };
 
-		_methodName184 = "getByProducerAndLectureseries";
+		_methodName184 = "getByFilename";
 
-		_methodParameterTypes184 = new String[] {
+		_methodParameterTypes184 = new String[] { "java.lang.String" };
+
+		_methodName185 = "getByProducer";
+
+		_methodParameterTypes185 = new String[] { "java.lang.Long" };
+
+		_methodName186 = "getByLectureseries";
+
+		_methodParameterTypes186 = new String[] { "java.lang.Long" };
+
+		_methodName187 = "countByLectureseries";
+
+		_methodParameterTypes187 = new String[] { "java.lang.Long" };
+
+		_methodName188 = "getByProducerAndLectureseries";
+
+		_methodParameterTypes188 = new String[] {
 				"java.lang.Long", "java.lang.Long"
 			};
 
-		_methodName185 = "getByProducerAndDownloadLink";
+		_methodName189 = "getByProducerAndDownloadLink";
 
-		_methodParameterTypes185 = new String[] { "java.lang.Long", "int" };
+		_methodParameterTypes189 = new String[] { "java.lang.Long", "int" };
 
-		_methodName186 = "getPopular";
+		_methodName190 = "getPopular";
 
-		_methodParameterTypes186 = new String[] { "int" };
+		_methodParameterTypes190 = new String[] { "int" };
 
-		_methodName187 = "getLatestVideos";
-
-		_methodParameterTypes187 = new String[] {  };
-
-		_methodName188 = "createThumbnailsIfNotExisting";
-
-		_methodParameterTypes188 = new String[] { "java.lang.Long" };
-
-		_methodName189 = "createSymLinkToDownloadableFileIfNotExisting";
-
-		_methodParameterTypes189 = new String[] { "java.lang.Long" };
-
-		_methodName190 = "getJSONVideo";
-
-		_methodParameterTypes190 = new String[] { "java.lang.Long" };
-
-		_methodName191 = "createLastVideoList";
+		_methodName191 = "getLatestVideos";
 
 		_methodParameterTypes191 = new String[] {  };
 
-		_methodName192 = "countByLectureseriesAndOpenaccess";
+		_methodName192 = "createThumbnailsIfNotExisting";
 
-		_methodParameterTypes192 = new String[] { "java.lang.Long", "int" };
+		_methodParameterTypes192 = new String[] { "java.lang.Long" };
 
-		_methodName193 = "getByLectureseriesAndOpenaccess";
+		_methodName193 = "createSymLinkToDownloadableFileIfNotExisting";
 
-		_methodParameterTypes193 = new String[] { "java.lang.Long", "int" };
+		_methodParameterTypes193 = new String[] { "java.lang.Long" };
 
-		_methodName194 = "addPlayerUris2Video";
+		_methodName194 = "getJSONVideo";
 
-		_methodParameterTypes194 = new String[] { "de.uhh.l2g.plugins.model.Video" };
+		_methodParameterTypes194 = new String[] { "java.lang.Long" };
 
-		_methodName195 = "addTextTracks2VideoWithLanguageLabel";
+		_methodName195 = "createLastVideoList";
 
-		_methodParameterTypes195 = new String[] {
+		_methodParameterTypes195 = new String[] {  };
+
+		_methodName196 = "countByLectureseriesAndOpenaccess";
+
+		_methodParameterTypes196 = new String[] { "java.lang.Long", "int" };
+
+		_methodName197 = "getByLectureseriesAndOpenaccess";
+
+		_methodParameterTypes197 = new String[] { "java.lang.Long", "int" };
+
+		_methodName198 = "addPlayerUris2Video";
+
+		_methodParameterTypes198 = new String[] { "de.uhh.l2g.plugins.model.Video" };
+
+		_methodName199 = "addTextTracks2VideoWithLanguageLabel";
+
+		_methodParameterTypes199 = new String[] {
 				"de.uhh.l2g.plugins.model.Video", "java.util.Locale"
 			};
 
-		_methodName196 = "addTextTracks2Video";
+		_methodName200 = "addTextTracks2Video";
 
-		_methodParameterTypes196 = new String[] { "de.uhh.l2g.plugins.model.Video" };
+		_methodParameterTypes200 = new String[] { "de.uhh.l2g.plugins.model.Video" };
 
-		_methodName197 = "getBySecureUrl";
+		_methodName201 = "getBySecureUrl";
 
-		_methodParameterTypes197 = new String[] { "java.lang.String" };
+		_methodParameterTypes201 = new String[] { "java.lang.String" };
 
-		_methodName198 = "getAll";
+		_methodName202 = "getAll";
 
-		_methodParameterTypes198 = new String[] {  };
+		_methodParameterTypes202 = new String[] {  };
 
-		_methodName199 = "getBySearchWord";
+		_methodName203 = "getBySearchWord";
 
-		_methodParameterTypes199 = new String[] { "java.lang.String", "int" };
+		_methodParameterTypes203 = new String[] { "java.lang.String", "int" };
 
-		_methodName200 = "getByAllSearchWords";
-
-		_methodParameterTypes200 = new String[] {  };
-
-		_methodName201 = "getBySearchWordAndLectureseriesId";
-
-		_methodParameterTypes201 = new String[] {
-				"java.lang.String", "java.lang.Long"
-			};
-
-		_methodName202 = "getByHits";
-
-		_methodParameterTypes202 = new String[] { "java.lang.Long" };
-
-		_methodName203 = "getByHitsAndOpenAccess";
-
-		_methodParameterTypes203 = new String[] { "java.lang.Long" };
-
-		_methodName204 = "getByHits";
+		_methodName204 = "getByAllSearchWords";
 
 		_methodParameterTypes204 = new String[] {  };
 
-		_methodName205 = "updateVideo";
+		_methodName205 = "getBySearchWordAndLectureseriesId";
 
-		_methodParameterTypes205 = new String[] { "de.uhh.l2g.plugins.model.Video" };
+		_methodParameterTypes205 = new String[] {
+				"java.lang.String", "java.lang.Long"
+			};
 
-		_methodName207 = "getLatestClosedAccessVideoId";
+		_methodName206 = "getByHits";
+
+		_methodParameterTypes206 = new String[] { "java.lang.Long" };
+
+		_methodName207 = "getByHitsAndOpenAccess";
 
 		_methodParameterTypes207 = new String[] { "java.lang.Long" };
 
-		_methodName208 = "checkSmilFile";
+		_methodName208 = "getByHits";
 
-		_methodParameterTypes208 = new String[] { "de.uhh.l2g.plugins.model.Video" };
+		_methodParameterTypes208 = new String[] {  };
 
-		_methodName209 = "fileStringSegmentFoundInArray";
+		_methodName209 = "updateVideo";
 
-		_methodParameterTypes209 = new String[] {
+		_methodParameterTypes209 = new String[] { "de.uhh.l2g.plugins.model.Video" };
+
+		_methodName211 = "getLatestClosedAccessVideoId";
+
+		_methodParameterTypes211 = new String[] { "java.lang.Long" };
+
+		_methodName212 = "checkSmilFile";
+
+		_methodParameterTypes212 = new String[] { "de.uhh.l2g.plugins.model.Video" };
+
+		_methodName213 = "fileStringSegmentFoundInArray";
+
+		_methodParameterTypes213 = new String[] {
 				"java.lang.String", "org.json.JSONArray"
 			};
 
-		_methodName210 = "createSymLinkForCaptionIfExisting";
+		_methodName214 = "createSymLinkForCaptionIfExisting";
 
-		_methodParameterTypes210 = new String[] { "java.lang.Long" };
+		_methodParameterTypes214 = new String[] { "java.lang.Long" };
 
-		_methodName211 = "isSymlink";
+		_methodName215 = "isSymlink";
 
-		_methodParameterTypes211 = new String[] { "java.io.File" };
+		_methodParameterTypes215 = new String[] { "java.io.File" };
 
-		_methodName212 = "retrieveLanguageDisplayNameOfCaptionFile";
+		_methodName216 = "retrieveLanguageDisplayNameOfCaptionFile";
 
-		_methodParameterTypes212 = new String[] {
+		_methodParameterTypes216 = new String[] {
 				"java.io.File", "java.util.Locale"
 			};
 	}
@@ -360,227 +360,227 @@ public class VideoLocalServiceClpInvoker {
 			return VideoLocalServiceUtil.updateVideo((de.uhh.l2g.plugins.model.Video)arguments[0]);
 		}
 
-		if (_methodName168.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes168, parameterTypes)) {
+		if (_methodName172.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes172, parameterTypes)) {
 			return VideoLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName169.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes169, parameterTypes)) {
+		if (_methodName173.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes173, parameterTypes)) {
 			VideoLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName174.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes174, parameterTypes)) {
-			return VideoLocalServiceUtil.getByOpenAccess(((Integer)arguments[0]).intValue());
-		}
-
-		if (_methodName175.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes175, parameterTypes)) {
-			return VideoLocalServiceUtil.getByOpenAccessAndUploadedFile(((Integer)arguments[0]).intValue());
-		}
-
-		if (_methodName176.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes176, parameterTypes)) {
-			return VideoLocalServiceUtil.getLatestOpenAccessVideoForLectureseries((java.lang.Long)arguments[0]);
-		}
-
-		if (_methodName177.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes177, parameterTypes)) {
-			return VideoLocalServiceUtil.getByTerm((java.lang.Long)arguments[0]);
-		}
-
 		if (_methodName178.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes178, parameterTypes)) {
-			return VideoLocalServiceUtil.unlinkLectureseriesFromVideos((java.lang.Long)arguments[0]);
+			return VideoLocalServiceUtil.getByOpenAccess(((Integer)arguments[0]).intValue());
 		}
 
 		if (_methodName179.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes179, parameterTypes)) {
-			return VideoLocalServiceUtil.getByRootInstitution((java.lang.Long)arguments[0]);
+			return VideoLocalServiceUtil.getByOpenAccessAndUploadedFile(((Integer)arguments[0]).intValue());
 		}
 
 		if (_methodName180.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes180, parameterTypes)) {
-			return VideoLocalServiceUtil.getByFilename((java.lang.String)arguments[0]);
+			return VideoLocalServiceUtil.getLatestOpenAccessVideoForLectureseries((java.lang.Long)arguments[0]);
 		}
 
 		if (_methodName181.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes181, parameterTypes)) {
-			return VideoLocalServiceUtil.getByProducer((java.lang.Long)arguments[0]);
+			return VideoLocalServiceUtil.getByTerm((java.lang.Long)arguments[0]);
 		}
 
 		if (_methodName182.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes182, parameterTypes)) {
-			return VideoLocalServiceUtil.getByLectureseries((java.lang.Long)arguments[0]);
+			return VideoLocalServiceUtil.unlinkLectureseriesFromVideos((java.lang.Long)arguments[0]);
 		}
 
 		if (_methodName183.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes183, parameterTypes)) {
-			return VideoLocalServiceUtil.countByLectureseries((java.lang.Long)arguments[0]);
+			return VideoLocalServiceUtil.getByRootInstitution((java.lang.Long)arguments[0]);
 		}
 
 		if (_methodName184.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes184, parameterTypes)) {
-			return VideoLocalServiceUtil.getByProducerAndLectureseries((java.lang.Long)arguments[0],
-				(java.lang.Long)arguments[1]);
+			return VideoLocalServiceUtil.getByFilename((java.lang.String)arguments[0]);
 		}
 
 		if (_methodName185.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes185, parameterTypes)) {
-			return VideoLocalServiceUtil.getByProducerAndDownloadLink((java.lang.Long)arguments[0],
-				((Integer)arguments[1]).intValue());
+			return VideoLocalServiceUtil.getByProducer((java.lang.Long)arguments[0]);
 		}
 
 		if (_methodName186.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes186, parameterTypes)) {
-			return VideoLocalServiceUtil.getPopular(((Integer)arguments[0]).intValue());
+			return VideoLocalServiceUtil.getByLectureseries((java.lang.Long)arguments[0]);
 		}
 
 		if (_methodName187.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes187, parameterTypes)) {
-			return VideoLocalServiceUtil.getLatestVideos();
+			return VideoLocalServiceUtil.countByLectureseries((java.lang.Long)arguments[0]);
 		}
 
 		if (_methodName188.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes188, parameterTypes)) {
+			return VideoLocalServiceUtil.getByProducerAndLectureseries((java.lang.Long)arguments[0],
+				(java.lang.Long)arguments[1]);
+		}
+
+		if (_methodName189.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes189, parameterTypes)) {
+			return VideoLocalServiceUtil.getByProducerAndDownloadLink((java.lang.Long)arguments[0],
+				((Integer)arguments[1]).intValue());
+		}
+
+		if (_methodName190.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes190, parameterTypes)) {
+			return VideoLocalServiceUtil.getPopular(((Integer)arguments[0]).intValue());
+		}
+
+		if (_methodName191.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes191, parameterTypes)) {
+			return VideoLocalServiceUtil.getLatestVideos();
+		}
+
+		if (_methodName192.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes192, parameterTypes)) {
 			VideoLocalServiceUtil.createThumbnailsIfNotExisting((java.lang.Long)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName189.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes189, parameterTypes)) {
+		if (_methodName193.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes193, parameterTypes)) {
 			VideoLocalServiceUtil.createSymLinkToDownloadableFileIfNotExisting((java.lang.Long)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName190.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes190, parameterTypes)) {
-			return VideoLocalServiceUtil.getJSONVideo((java.lang.Long)arguments[0]);
-		}
-
-		if (_methodName191.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes191, parameterTypes)) {
-			VideoLocalServiceUtil.createLastVideoList();
-
-			return null;
-		}
-
-		if (_methodName192.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes192, parameterTypes)) {
-			return VideoLocalServiceUtil.countByLectureseriesAndOpenaccess((java.lang.Long)arguments[0],
-				((Integer)arguments[1]).intValue());
-		}
-
-		if (_methodName193.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes193, parameterTypes)) {
-			return VideoLocalServiceUtil.getByLectureseriesAndOpenaccess((java.lang.Long)arguments[0],
-				((Integer)arguments[1]).intValue());
-		}
-
 		if (_methodName194.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes194, parameterTypes)) {
-			VideoLocalServiceUtil.addPlayerUris2Video((de.uhh.l2g.plugins.model.Video)arguments[0]);
-
-			return null;
+			return VideoLocalServiceUtil.getJSONVideo((java.lang.Long)arguments[0]);
 		}
 
 		if (_methodName195.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes195, parameterTypes)) {
-			VideoLocalServiceUtil.addTextTracks2VideoWithLanguageLabel((de.uhh.l2g.plugins.model.Video)arguments[0],
-				(java.util.Locale)arguments[1]);
+			VideoLocalServiceUtil.createLastVideoList();
 
 			return null;
 		}
 
 		if (_methodName196.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes196, parameterTypes)) {
+			return VideoLocalServiceUtil.countByLectureseriesAndOpenaccess((java.lang.Long)arguments[0],
+				((Integer)arguments[1]).intValue());
+		}
+
+		if (_methodName197.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes197, parameterTypes)) {
+			return VideoLocalServiceUtil.getByLectureseriesAndOpenaccess((java.lang.Long)arguments[0],
+				((Integer)arguments[1]).intValue());
+		}
+
+		if (_methodName198.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes198, parameterTypes)) {
+			VideoLocalServiceUtil.addPlayerUris2Video((de.uhh.l2g.plugins.model.Video)arguments[0]);
+
+			return null;
+		}
+
+		if (_methodName199.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes199, parameterTypes)) {
+			VideoLocalServiceUtil.addTextTracks2VideoWithLanguageLabel((de.uhh.l2g.plugins.model.Video)arguments[0],
+				(java.util.Locale)arguments[1]);
+
+			return null;
+		}
+
+		if (_methodName200.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes200, parameterTypes)) {
 			VideoLocalServiceUtil.addTextTracks2Video((de.uhh.l2g.plugins.model.Video)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName197.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes197, parameterTypes)) {
-			return VideoLocalServiceUtil.getBySecureUrl((java.lang.String)arguments[0]);
-		}
-
-		if (_methodName198.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes198, parameterTypes)) {
-			return VideoLocalServiceUtil.getAll();
-		}
-
-		if (_methodName199.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes199, parameterTypes)) {
-			return VideoLocalServiceUtil.getBySearchWord((java.lang.String)arguments[0],
-				((Integer)arguments[1]).intValue());
-		}
-
-		if (_methodName200.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes200, parameterTypes)) {
-			return VideoLocalServiceUtil.getByAllSearchWords();
-		}
-
 		if (_methodName201.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes201, parameterTypes)) {
-			return VideoLocalServiceUtil.getBySearchWordAndLectureseriesId((java.lang.String)arguments[0],
-				(java.lang.Long)arguments[1]);
+			return VideoLocalServiceUtil.getBySecureUrl((java.lang.String)arguments[0]);
 		}
 
 		if (_methodName202.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes202, parameterTypes)) {
-			return VideoLocalServiceUtil.getByHits((java.lang.Long)arguments[0]);
+			return VideoLocalServiceUtil.getAll();
 		}
 
 		if (_methodName203.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes203, parameterTypes)) {
-			return VideoLocalServiceUtil.getByHitsAndOpenAccess((java.lang.Long)arguments[0]);
+			return VideoLocalServiceUtil.getBySearchWord((java.lang.String)arguments[0],
+				((Integer)arguments[1]).intValue());
 		}
 
 		if (_methodName204.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes204, parameterTypes)) {
-			return VideoLocalServiceUtil.getByHits();
+			return VideoLocalServiceUtil.getByAllSearchWords();
 		}
 
 		if (_methodName205.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes205, parameterTypes)) {
-			return VideoLocalServiceUtil.updateVideo((de.uhh.l2g.plugins.model.Video)arguments[0]);
+			return VideoLocalServiceUtil.getBySearchWordAndLectureseriesId((java.lang.String)arguments[0],
+				(java.lang.Long)arguments[1]);
+		}
+
+		if (_methodName206.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes206, parameterTypes)) {
+			return VideoLocalServiceUtil.getByHits((java.lang.Long)arguments[0]);
 		}
 
 		if (_methodName207.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes207, parameterTypes)) {
-			return VideoLocalServiceUtil.getLatestClosedAccessVideoId((java.lang.Long)arguments[0]);
+			return VideoLocalServiceUtil.getByHitsAndOpenAccess((java.lang.Long)arguments[0]);
 		}
 
 		if (_methodName208.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes208, parameterTypes)) {
-			return VideoLocalServiceUtil.checkSmilFile((de.uhh.l2g.plugins.model.Video)arguments[0]);
+			return VideoLocalServiceUtil.getByHits();
 		}
 
 		if (_methodName209.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes209, parameterTypes)) {
+			return VideoLocalServiceUtil.updateVideo((de.uhh.l2g.plugins.model.Video)arguments[0]);
+		}
+
+		if (_methodName211.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes211, parameterTypes)) {
+			return VideoLocalServiceUtil.getLatestClosedAccessVideoId((java.lang.Long)arguments[0]);
+		}
+
+		if (_methodName212.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes212, parameterTypes)) {
+			return VideoLocalServiceUtil.checkSmilFile((de.uhh.l2g.plugins.model.Video)arguments[0]);
+		}
+
+		if (_methodName213.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes213, parameterTypes)) {
 			return VideoLocalServiceUtil.fileStringSegmentFoundInArray((java.lang.String)arguments[0],
 				(org.json.JSONArray)arguments[1]);
 		}
 
-		if (_methodName210.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes210, parameterTypes)) {
+		if (_methodName214.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes214, parameterTypes)) {
 			VideoLocalServiceUtil.createSymLinkForCaptionIfExisting((java.lang.Long)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName211.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes211, parameterTypes)) {
+		if (_methodName215.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes215, parameterTypes)) {
 			return VideoLocalServiceUtil.isSymlink((java.io.File)arguments[0]);
 		}
 
-		if (_methodName212.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes212, parameterTypes)) {
+		if (_methodName216.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes216, parameterTypes)) {
 			return VideoLocalServiceUtil.retrieveLanguageDisplayNameOfCaptionFile((java.io.File)arguments[0],
 				(java.util.Locale)arguments[1]);
 		}
@@ -620,18 +620,10 @@ public class VideoLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName168;
-	private String[] _methodParameterTypes168;
-	private String _methodName169;
-	private String[] _methodParameterTypes169;
-	private String _methodName174;
-	private String[] _methodParameterTypes174;
-	private String _methodName175;
-	private String[] _methodParameterTypes175;
-	private String _methodName176;
-	private String[] _methodParameterTypes176;
-	private String _methodName177;
-	private String[] _methodParameterTypes177;
+	private String _methodName172;
+	private String[] _methodParameterTypes172;
+	private String _methodName173;
+	private String[] _methodParameterTypes173;
 	private String _methodName178;
 	private String[] _methodParameterTypes178;
 	private String _methodName179;
@@ -688,16 +680,24 @@ public class VideoLocalServiceClpInvoker {
 	private String[] _methodParameterTypes204;
 	private String _methodName205;
 	private String[] _methodParameterTypes205;
+	private String _methodName206;
+	private String[] _methodParameterTypes206;
 	private String _methodName207;
 	private String[] _methodParameterTypes207;
 	private String _methodName208;
 	private String[] _methodParameterTypes208;
 	private String _methodName209;
 	private String[] _methodParameterTypes209;
-	private String _methodName210;
-	private String[] _methodParameterTypes210;
 	private String _methodName211;
 	private String[] _methodParameterTypes211;
 	private String _methodName212;
 	private String[] _methodParameterTypes212;
+	private String _methodName213;
+	private String[] _methodParameterTypes213;
+	private String _methodName214;
+	private String[] _methodParameterTypes214;
+	private String _methodName215;
+	private String[] _methodParameterTypes215;
+	private String _methodName216;
+	private String[] _methodParameterTypes216;
 }

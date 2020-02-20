@@ -59,8 +59,8 @@ public class VideoImpl extends VideoBaseImpl {
 	/**
 	 * This model uses quite a few constants, some may be better kept in a config file...
 	 */
-	private static final String WEBHOME 				= PropsUtil.get("lecture2go.web.home");
 	private static final String WEBROOT 				= PropsUtil.get("lecture2go.web.root");
+	private static final String WEBHOME 				= WEBROOT.contains("localhost") ? WEBROOT+"/web/vod" : WEBROOT;
 	private static final String MEDIA_REPOSITORY		= PropsUtil.get("lecture2go.media.repository");
 	private static final String TENANT_SUB_FOLDER		= PropsUtil.get("lecture2go.media.repository.tenantpath"); 
 	private static final String IMAGES_REPOSITORY		= PropsUtil.get("lecture2go.images.system.path") + "/";
