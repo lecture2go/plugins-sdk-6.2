@@ -292,12 +292,12 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 
 <script>
 $(document).ready(function(){
-
     // process different things depending on the screen size
-	mediaCheck({
-	  	media: '(min-width: 768px)',
-	  	entry: function() {
-	  		transformSearchToWideView();
+    MQS.add({
+        ref: 'desktop',
+        mediaQuery: '(min-width: 768px)', 
+        action: () => {
+        	transformSearchToWideView();
 		  	//hide all carousel items but the first and show carousel navigation
 		  	$("#news-carousel .item:not(:first)").removeClass("active");
 		  	$("#popular-carousel .item:not(:first)").removeClass("active");
@@ -305,16 +305,22 @@ $(document).ready(function(){
 		  	showOrHideCarouselControl('#news-carousel');
 		  	showOrHideCarouselControl('#popular-carousel');
 		  	addBGVideo();
-		 },
-	  exit: function() {
-		  	transformSearchToSmallView();
+        } 
+    });
+    
+    MQS.add({
+        ref: 'mobile',
+        mediaQuery: '(max-width: 767px)', 
+        action: () => {
+        	transformSearchToSmallView();
 		  	// do not show the big button on desktop
 		  	$(".filter-facility-menu").hide();
 		  	//show all carousel items and hide carousel navigation
 		  	$(".item").addClass("active");
 		  	$(".carousel-control").hide();
-		 }
-	});
+        }
+    });
+    
 
 	// handle the previous and next buttons of the carousel
     //showOrHideCarouselControl('#news-carousel');
