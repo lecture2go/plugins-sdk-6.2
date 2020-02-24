@@ -44,6 +44,7 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 	public static final String FIND_VIDEOS_BY_HITS_AND_OPEN_ACCESS = VideoFinder.class.getName() + ".findVideosByHitsAndOpenAccess";
 	public static final String FIND_POPULAR_VIDEOS = VideoFinder.class.getName() + ".findPopularVideos";
 	public static final String CHECK_VIDEO_HAS_MISSING_METADATA = VideoFinder.class.getName() + ".checkVideoHasMissingMetadata";
+	public static final String FIND_VIDEOS_WITH_MISSING_METADATA = VideoFinder.class.getName() + ".findWithMissingMetadata";
 
 	public List<Video> findPopular(int limit) {
 		int start= com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS;
@@ -509,5 +510,25 @@ public class VideoFinderImpl extends BasePersistenceImpl<Video> implements Video
 			closeSession(session);
 		}
 		return false;
+	}
+	
+	public List<Video> findVideosWithMissingMetadata() {
+		List<Video> ret = new ArrayList<Video>();
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(FIND_VIDEOS_WITH_MISSING_METADATA);
+			SQLQuery q = session.createSQLQuery(sql);
+			q.addEntity("Video", VideoImpl.class);
+			q.setCacheable(false);
+			QueryPos qPos = QueryPos.getInstance(q);
+			ret = (List<Video>) QueryUtil.list(q, getDialect(), com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+			
+		} catch (Exception e) {
+			
+		} finally {
+			closeSession(session);
+		}
+		return ret;
 	}
 }

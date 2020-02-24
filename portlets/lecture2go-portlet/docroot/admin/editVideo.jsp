@@ -544,6 +544,7 @@ function activateThumbnailGeneration() {
 							<div id="progress-raw" class="progress">
 						    	<div class="bar" style="width: 0%;"></div>
 							</div>
+							<div id="rawdata-notice"></div>
 							<table id="uploaded-rawdata" class="table"></table>
 						</div>
 					</div>
@@ -745,14 +746,25 @@ $(function () {
 
 	<c:if test='<%= PropsUtil.contains("lecture2go.s3.bucket") %>'>
 		populateS3RawDataList();
+		
+		function setChunkSize(size) {
+			var chunksize;
+			/* the chunksize should be as small as needed, as the md5 hashsum calculation can be expensive for the local CPU and
+			freeze the webpage, S3 allows for a max number of 10.000 chunks per upload */
+		    if      (size>=500000000000) {chunksize = 200*1024*1024;} // >approx. 500Gb => 200Mb chunks
+		    else if (size>=300000000000)  {chunksize = 50*1024*1024;} //approx. 300-500GB => 50MB chunks
+		    else if (size>=200000000000)  {chunksize = 30*1024*1024;} //approx. 200GB-300GB => 30Mb chunks
+		    else if (size>=100000000000)  {chunksize = 20*1024*1024;} //approx. 100GB-200GB => 20MB chunks
+		    else if (size>=50000000000)   {chunksize = 10*1024*1024;} //approx. 50GB-100GB => 10MB chunks
+		    else                         {chunksize = 6 * 1024 * 1024;} //<50GB => 6MB chunk minimum
+		    return chunksize;
+		}
 
 		Evaporate.create({
-				// TODO: get from config/ or S3Manager
 			    aws_url: 'https://<%=PropsUtil.get("lecture2go.s3.endpoint")%>',
 			    aws_key: '<%=PropsUtil.get("lecture2go.s3.accesskey")%>',
 			    bucket: '<%=PropsUtil.get("lecture2go.s3.bucket")%>',
 			    awsRegion: '<%=PropsUtil.get("lecture2go.s3.region")%>',
-			    //signerUrl: 'http://localhost:8081/s3upload/signAuth',
 			    signerUrl: '<%=signS3RequestURL%>',
 			    partSize: 6 * 1024 * 1024,
 			    awsSignatureVersion: '4',
@@ -777,6 +789,9 @@ $(function () {
 		        			$('#progress-raw .bar').css('width',progress*100 + '%');
 			              	console.log('making progress: ' + progress);
 			            }
+			          },
+			          { 			        	
+				      	partSize: setChunkSize(files[i].size)
 			          })
 			          .then(function (awsKey) {
 			          	$('#progress-raw .bar').css('width', '0%');
@@ -832,7 +847,7 @@ function populateS3RawDataList(){
 			  }
 		  },
 		  error: function() {
-		  		var $error = $('<p>').text("<liferay-ui:message key='video-rawdata-error-connecting'/>").appendTo('#uploaded-rawdata');
+			  $('#rawdata-notice').html("<p><liferay-ui:message key='video-rawdata-error-connecting'/></p>");
 		  }
 	});
 }
