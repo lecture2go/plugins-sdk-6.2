@@ -560,7 +560,7 @@ function activateThumbnailGeneration() {
 				
 				<br/>		
 				<aui:button-row>
-					<aui:button type="submit" value="apply-changes" onclick="updateAllMetadata();" cssClass="btn-primary"/>
+					<aui:button value="apply-changes" onclick="updateAllMetadata();" cssClass="btn-primary"/>
 					<aui:button type="cancel" value="back" name="cancel"/>
 				</aui:button-row>
 				
@@ -1170,7 +1170,7 @@ function applyAllMetadataChanges(){
 	AUI().use(
 			'aui-node',
 			function(A) {
-				validate();//inpul correct?
+				validate();//input correct?
 				if($("#<portlet:namespace/>title").val() && $("#creators > div").length>0){
 				    //updateDescription(descData);
 				    updateCreators();
@@ -1187,10 +1187,15 @@ function applyAllMetadataChanges(){
 
 function validate(){
 	formValidator.validate();
+
 	if (formValidator.hasErrors()) {
 		if($('#<portlet:namespace></portlet:namespace>cancel').is(":visible")){
 			$('#<portlet:namespace></portlet:namespace>cancel').hide();	
-		}	
+		}
+	} else {
+		if($('#<portlet:namespace></portlet:namespace>cancel').is(":hidden")){
+			$('#<portlet:namespace></portlet:namespace>cancel').show();	
+		}
 	}
 	
 	return !formValidator.hasErrors()
@@ -1817,17 +1822,25 @@ AUI().use('aui-node',
 </script>
 
 <aui:script use="aui-form-validator">
+
+// set a custom rule for valid creator input
+A.config.FormValidator.RULES.creatorSelected = function(val, fieldNode, ruleValue) {
+    return (($("#creators > div").length>0));
+};
+
 formValidator = new A.FormValidator({
 	boundingBox: document.<portlet:namespace/>metadata,
-
 	rules: {
 		<portlet:namespace/>title: {
 			required: true
 		},
 		<portlet:namespace/>creator: {
-			required: function() {
+			// the creator field is valid if there is at least one creator selected, this check will only be trigger upon user input
+			creatorSelected: true,
+			// further the required marker is necessary, otherwise the field will not be marked invalid without user input
+			required :function() {
 				return ($("#creators > div").length==0);
-			}
+			},
 		},
 		<portlet:namespace/>termId: {
 			required: function() {
@@ -1845,6 +1858,17 @@ formValidator = new A.FormValidator({
 	}
 
 });
+
+// overwrite the default aui-form-validator validate method to NOT focus the next invalid field, as this makes it
+// uncomfortable to add multiple creators for example
+formValidator.validate = function() {
+	formValidator.eachRule(
+        function(rule, fieldName) {
+        	console.log(rule);
+        	formValidator.validateField(fieldName);
+        }
+	);
+}
 
 validate();
 
