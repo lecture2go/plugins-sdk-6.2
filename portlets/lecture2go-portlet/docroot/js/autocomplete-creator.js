@@ -10,6 +10,7 @@ function showCreatorsList(data) {
 
 
 function autocompleteCreator($creatorInputObject, validationFunction, newCreatorHandler) {
+	// validationFunction is not used any more...
 	avoidClosing = false;
 	$creatorInputObject.autocomplete({
 	    source: function(request, response) {
@@ -28,9 +29,6 @@ function autocompleteCreator($creatorInputObject, validationFunction, newCreator
 				$creatorInputObject.val('');
 				c++;
 				appendCreator(c, newCreatorHandler);
-				if( typeof validationFunction == "function" ) {
-					validationFunction();
-				}
 				$creatorInputObject.autocomplete('close');
 			});
 		},
@@ -52,8 +50,6 @@ function autocompleteCreator($creatorInputObject, validationFunction, newCreator
   		        var vars = getJSONCreator(ui.item.id);
   		        $.template( "filesTemplate", $("#created") );
   		        $.tmpl( "filesTemplate", vars ).appendTo( "#creators" );
-  		        if( typeof validationFunction == "function" )
-					validationFunction();
   		        if( typeof newCreatorHandler == "function" ) {
   		        	newCreatorHandler();
   		        }

@@ -1860,16 +1860,6 @@ formValidator = new A.FormValidator({
 
 });
 
-// overwrite the default aui-form-validator validate method to NOT focus the next invalid field, as this makes it
-// uncomfortable to add multiple creators for example
-formValidator.validate = function() {
-	formValidator.eachRule(
-        function(rule, fieldName) {
-        	console.log(rule);
-        	formValidator.validateField(fieldName);
-        }
-	);
-}
 
 validate();
 
