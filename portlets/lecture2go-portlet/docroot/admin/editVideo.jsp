@@ -1494,6 +1494,7 @@ var c = 0;
 
 function remb(c){
 	$("#"+c).remove();
+	hasFormChanged = true;
 	validate();
 	<c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider")%>'>
 		synchronizeAuthors();

@@ -47,6 +47,7 @@ function autocompleteCreator($creatorInputObject, validationFunction, newCreator
         	}
         },
 		select: function (event, ui) {
+			hasFormChanged = true;
 			if(ui.item.id>0){
   		        var vars = getJSONCreator(ui.item.id);
   		        $.template( "filesTemplate", $("#created") );
