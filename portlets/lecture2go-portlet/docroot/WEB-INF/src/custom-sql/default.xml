@@ -259,13 +259,13 @@
     
     <sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.checkVideoHasMissingMetadata">
 		<![CDATA[
-			SELECT v.* FROM LG_Video v JOIN LG_Metadata m ON v.metadataId=m.metadataId LEFT JOIN LG_Video_Category vc ON v.videoId=vc.videoId LEFT JOIN LG_Video_Creator vc2 ON v.videoId=vc2.videoId WHERE v.videoId = ? AND (m.title="" OR m.language="" OR vc.videoCategoryId IS NULL OR vc2.videoCreatorId IS NULL)
+			SELECT v.* FROM LG_Video v JOIN LG_Metadata m ON v.metadataId=m.metadataId LEFT JOIN LG_Video_Category vc ON v.videoId=vc.videoId LEFT JOIN LG_Video_Creator vc2 ON v.videoId=vc2.videoId WHERE v.videoId = ? AND (m.title="" OR m.language="" OR vc.videoCategoryId IS NULL OR vc2.videoCreatorId IS NULL) GROUP BY videoId
 		]]>
     </sql>
     
 	<sql id="de.uhh.l2g.plugins.service.persistence.VideoFinder.findWithMissingMetadata">
 		<![CDATA[
-			SELECT v.* FROM LG_Video v JOIN LG_Metadata m ON v.metadataId=m.metadataId LEFT JOIN LG_Video_Category vc ON v.videoId=vc.videoId LEFT JOIN LG_Video_Creator vc2 ON v.videoId=vc2.videoId WHERE m.title="" OR m.language="" OR vc.videoCategoryId IS NULL OR vc2.videoCreatorId IS NULL
+			SELECT v.* FROM LG_Video v JOIN LG_Metadata m ON v.metadataId=m.metadataId LEFT JOIN LG_Video_Category vc ON v.videoId=vc.videoId LEFT JOIN LG_Video_Creator vc2 ON v.videoId=vc2.videoId WHERE m.title="" OR m.language="" OR vc.videoCategoryId IS NULL OR vc2.videoCreatorId IS NULL GROUP BY videoId
 		]]>
     </sql>
     	
