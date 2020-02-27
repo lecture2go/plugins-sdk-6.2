@@ -287,7 +287,7 @@ function activateThumbnailGeneration() {
 						</div>	
 									
 						<aui:select id="termId" size="1" name="termId" label="term" required="true">
-							<c:if test="<%= (reqVideo.getTermId()==0) %>">
+							<c:if test="<%= (reqVideo.getTermId()==0 && semesters.size()>1) %>">
 								<aui:option disabled='true' selected="true"><liferay-ui:message key="select-term"/></aui:option>
 							</c:if>
 							<%for (int i = 0; i < semesters.size(); i++) {
@@ -305,7 +305,7 @@ function activateThumbnailGeneration() {
 							try{cId = Video_CategoryLocalServiceUtil.getByVideo(reqVideo.getVideoId()).get(0).getCategoryId();}catch(Exception e){}
 							%>
 
-							<c:if test="<%= (cId==0) %>">
+							<c:if test="<%= (cId==0 && categories.size()>1) %>">
 								<aui:option disabled='true' selected="true"><liferay-ui:message key="select-category"/></aui:option>
 							</c:if>
 
@@ -321,7 +321,7 @@ function activateThumbnailGeneration() {
 		
 					<aui:select size="1" name="language" label="language" required="true">
 						
-						<c:if test="<%= reqMetadata.getLanguage().isEmpty() %>">
+						<c:if test="<%= reqMetadata.getLanguage().isEmpty() && languages.length>1 %>">
 							<aui:option disabled='true' selected="true"><liferay-ui:message key="select-language"/></aui:option>
 						</c:if>
 
