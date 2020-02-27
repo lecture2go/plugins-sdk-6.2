@@ -143,7 +143,6 @@
 	submitted = false;
 	$('#<portlet:namespace/>metadata').on('change', ':input', function(e){
 		// :input selects all form fields
-		console.log("form has changed");
 	 	hasFormChanged = true;
 	});
 
@@ -1495,7 +1494,10 @@ var c = 0;
 function remb(c){
 	$("#"+c).remove();
 	hasFormChanged = true;
-	validate();
+	// validate the metadata if no creator is in the creator list, to mark the field as invalid
+	if ($("#creators > div").length==0) {
+		validate();
+	}
 	<c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider")%>'>
 		synchronizeAuthors();
 	</c:if>
