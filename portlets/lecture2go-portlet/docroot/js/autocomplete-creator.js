@@ -71,6 +71,12 @@ function appendCreator(c, newCreatorHandler){
 				newCreatorHandler();
 			}
     	});
+    	// the user can save the new creator(s) with an enter key press
+    	$('#nc'+c).on('keypress', function(event) {
+    		if(event.which == 13) {
+    			updateCreators();
+    		}
+    	});
 	});
 };
 
