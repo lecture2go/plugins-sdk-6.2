@@ -143,7 +143,6 @@
 	submitted = false;
 	$('#<portlet:namespace/>metadata').on('change', ':input', function(e){
 		// :input selects all form fields
-		console.log("form has changed");
 	 	hasFormChanged = true;
 	});
 
@@ -288,7 +287,7 @@ function activateThumbnailGeneration() {
 						</div>	
 									
 						<aui:select id="termId" size="1" name="termId" label="term" required="true">
-							<c:if test="<%= (reqVideo.getTermId()==0) %>">
+							<c:if test="<%= (reqVideo.getTermId()==0 && semesters.size()>1) %>">
 								<aui:option disabled='true' selected="true"><liferay-ui:message key="select-term"/></aui:option>
 							</c:if>
 							<%for (int i = 0; i < semesters.size(); i++) {
@@ -306,7 +305,7 @@ function activateThumbnailGeneration() {
 							try{cId = Video_CategoryLocalServiceUtil.getByVideo(reqVideo.getVideoId()).get(0).getCategoryId();}catch(Exception e){}
 							%>
 
-							<c:if test="<%= (cId==0) %>">
+							<c:if test="<%= (cId==0 && categories.size()>1) %>">
 								<aui:option disabled='true' selected="true"><liferay-ui:message key="select-category"/></aui:option>
 							</c:if>
 
@@ -322,7 +321,7 @@ function activateThumbnailGeneration() {
 		
 					<aui:select size="1" name="language" label="language" required="true">
 						
-						<c:if test="<%= reqMetadata.getLanguage().isEmpty() %>">
+						<c:if test="<%= reqMetadata.getLanguage().isEmpty() && languages.length>1 %>">
 							<aui:option disabled='true' selected="true"><liferay-ui:message key="select-language"/></aui:option>
 						</c:if>
 
@@ -560,7 +559,7 @@ function activateThumbnailGeneration() {
 				
 				<br/>		
 				<aui:button-row>
-					<aui:button type="submit" value="apply-changes" onclick="updateAllMetadata();" cssClass="btn-primary"/>
+					<aui:button value="apply-changes" onclick="updateAllMetadata();" cssClass="btn-primary"/>
 					<aui:button type="cancel" value="back" name="cancel"/>
 				</aui:button-row>
 				
@@ -1170,7 +1169,7 @@ function applyAllMetadataChanges(){
 	AUI().use(
 			'aui-node',
 			function(A) {
-				validate();//inpul correct?
+				validate();//input correct?
 				if($("#<portlet:namespace/>title").val() && $("#creators > div").length>0){
 				    //updateDescription(descData);
 				    updateCreators();
@@ -1187,10 +1186,15 @@ function applyAllMetadataChanges(){
 
 function validate(){
 	formValidator.validate();
+
 	if (formValidator.hasErrors()) {
 		if($('#<portlet:namespace></portlet:namespace>cancel').is(":visible")){
 			$('#<portlet:namespace></portlet:namespace>cancel').hide();	
-		}	
+		}
+	} else {
+		if($('#<portlet:namespace></portlet:namespace>cancel').is(":hidden")){
+			$('#<portlet:namespace></portlet:namespace>cancel').show();	
+		}
 	}
 	
 	return !formValidator.hasErrors()
@@ -1489,7 +1493,11 @@ var c = 0;
 
 function remb(c){
 	$("#"+c).remove();
-	validate();
+	hasFormChanged = true;
+	// validate the metadata if no creator is in the creator list, to mark the field as invalid
+	if ($("#creators > div").length==0) {
+		validate();
+	}
 	<c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider")%>'>
 		synchronizeAuthors();
 	</c:if>
@@ -1817,17 +1825,25 @@ AUI().use('aui-node',
 </script>
 
 <aui:script use="aui-form-validator">
+
+// set a custom rule for valid creator input
+A.config.FormValidator.RULES.creatorSelected = function(val, fieldNode, ruleValue) {
+    return (($("#creators > div").length>0));
+};
+
 formValidator = new A.FormValidator({
 	boundingBox: document.<portlet:namespace/>metadata,
-
 	rules: {
 		<portlet:namespace/>title: {
 			required: true
 		},
 		<portlet:namespace/>creator: {
-			required: function() {
+			// the creator field is valid if there is at least one creator selected, this check will only be trigger upon user input
+			creatorSelected: true,
+			// further the required marker is necessary, otherwise the field will not be marked invalid without user input
+			required :function() {
 				return ($("#creators > div").length==0);
-			}
+			},
 		},
 		<portlet:namespace/>termId: {
 			required: function() {
@@ -1845,6 +1861,7 @@ formValidator = new A.FormValidator({
 	}
 
 });
+
 
 validate();
 
