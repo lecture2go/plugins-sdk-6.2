@@ -8,6 +8,35 @@ Lecture2Go http://lecture2go.uni-hamburg.de is an open source platform for media
 
 Change Log
 ==============
+
+Candidat Bug Fix and Feature Package [master-v.1-b5222] on Friday, Februar 28, 2020
+
+- 1356 RM - fix RSS generation for lectureseries without open videos
+- 1364 RM - Streaming-Server-Portlet-Problem
+- 1372 RM - avoid file transfers after upload
+- 1373 RM - No description in RSS feed
+- 1377 RM - Delete symlinks upon file deletion
+- 1491 RM - disallow empty upload date
+- 1515 RM - remove google plus
+- 1519 RM - optimize visualisation of added creators upon saving
+- 1520 RM - Hide thumbnail generation tool if no video exists
+- 1521 RM - Rename Lectureseries to series
+- 1522 RM - preview picture (HTML5 Embed Code) not existing
+- 1529 RM - Missing tag when no institution is connected to video
+- 1574 RM – wrong text in video caption
+- 1580 RM - EditVideo removal of creators not working
+- 1581 RM – Upload failure
+- 1628 RM – category relation not deleted when series is deleted
+- 1635 RM – CSS: remove double bold for elements using strong tag
+- 1664 RM – Remove red color from uploaded files
+- 1667 RM – tag search
+- 1721 RM - removal of invalid xml control characters for oai pmh, add correct cursor information
+- 1731 RM – wrong htaccess entries
+- 1577 RM - Download button works directly
+- 1501 RM - Explanations of upload formats
+- 1672 RM - Video tags in search
+- 1379 RM - integrate subtitles in Iframes  
+  
 Bug Fix and Feature Package [master-v.1-b5162] on Friday, June 14, 2019
 
 - 1316 RM - Opening and closing of div elements in the video admin area works incorrectly.

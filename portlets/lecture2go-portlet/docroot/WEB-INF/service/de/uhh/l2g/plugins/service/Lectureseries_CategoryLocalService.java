@@ -257,4 +257,6 @@ public interface Lectureseries_CategoryLocalService extends BaseLocalService,
 	public void updateCategoryByLectureseriesAndCategory(
 		java.lang.Long lectureseriesId, java.lang.Long categoryId,
 		java.lang.Long newCategoryId);
+
+	public boolean removeByLectureseriesId(java.lang.Long lectureseriesId);
 }

@@ -55,6 +55,8 @@ public class CreatorWrapper implements Creator, ModelWrapper<Creator> {
 		attributes.put("jobTitle", getJobTitle());
 		attributes.put("gender", getGender());
 		attributes.put("fullName", getFullName());
+		attributes.put("affiliation", getAffiliation());
+		attributes.put("orcidId", getOrcidId());
 
 		return attributes;
 	}
@@ -101,6 +103,18 @@ public class CreatorWrapper implements Creator, ModelWrapper<Creator> {
 
 		if (fullName != null) {
 			setFullName(fullName);
+		}
+
+		String affiliation = (String)attributes.get("affiliation");
+
+		if (affiliation != null) {
+			setAffiliation(affiliation);
+		}
+
+		String orcidId = (String)attributes.get("orcidId");
+
+		if (orcidId != null) {
+			setOrcidId(orcidId);
 		}
 	}
 
@@ -262,6 +276,46 @@ public class CreatorWrapper implements Creator, ModelWrapper<Creator> {
 	@Override
 	public void setFullName(java.lang.String fullName) {
 		_creator.setFullName(fullName);
+	}
+
+	/**
+	* Returns the affiliation of this creator.
+	*
+	* @return the affiliation of this creator
+	*/
+	@Override
+	public java.lang.String getAffiliation() {
+		return _creator.getAffiliation();
+	}
+
+	/**
+	* Sets the affiliation of this creator.
+	*
+	* @param affiliation the affiliation of this creator
+	*/
+	@Override
+	public void setAffiliation(java.lang.String affiliation) {
+		_creator.setAffiliation(affiliation);
+	}
+
+	/**
+	* Returns the orcid ID of this creator.
+	*
+	* @return the orcid ID of this creator
+	*/
+	@Override
+	public java.lang.String getOrcidId() {
+		return _creator.getOrcidId();
+	}
+
+	/**
+	* Sets the orcid ID of this creator.
+	*
+	* @param orcidId the orcid ID of this creator
+	*/
+	@Override
+	public void setOrcidId(java.lang.String orcidId) {
+		_creator.setOrcidId(orcidId);
 	}
 
 	@Override

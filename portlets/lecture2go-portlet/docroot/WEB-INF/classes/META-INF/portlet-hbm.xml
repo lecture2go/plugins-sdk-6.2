@@ -16,6 +16,9 @@
 	<import class="de.uhh.l2g.plugins.model.Lectureseries_Institution" />
 	<import class="de.uhh.l2g.plugins.model.License" />
 	<import class="de.uhh.l2g.plugins.model.Metadata" />
+	<import class="de.uhh.l2g.plugins.model.OaiRecord" />
+	<import class="de.uhh.l2g.plugins.model.OaiRecord_OaiSet" />
+	<import class="de.uhh.l2g.plugins.model.OaiSet" />
 	<import class="de.uhh.l2g.plugins.model.Office" />
 	<import class="de.uhh.l2g.plugins.model.Producer" />
 	<import class="de.uhh.l2g.plugins.model.Producer_Lectureseries" />
@@ -59,6 +62,8 @@
 		<property name="jobTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="gender" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="fullName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="affiliation" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="orcidId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.HostImpl" table="LG_Host">
 		<cache usage="read-write" />
@@ -180,6 +185,33 @@
 		<property name="subject" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="publisher" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="de.uhh.l2g.plugins.model.impl.OaiRecordImpl" table="LG_OaiRecord">
+		<cache usage="read-write" />
+		<id name="oaiRecordId" type="long">
+			<generator class="increment" />
+		</id>
+		<property name="videoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="identifier" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="datestamp" type="org.hibernate.type.TimestampType" />
+		<property name="deleted" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+	</class>
+	<class name="de.uhh.l2g.plugins.model.impl.OaiRecord_OaiSetImpl" table="LG_OaiRecord_OaiSet">
+		<cache usage="read-write" />
+		<id name="oaiRecordOaiSetId" type="long">
+			<generator class="increment" />
+		</id>
+		<property name="oaiRecordId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="oaiSetId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="de.uhh.l2g.plugins.model.impl.OaiSetImpl" table="LG_OaiSet">
+		<cache usage="read-write" />
+		<id name="oaiSetId" type="long">
+			<generator class="increment" />
+		</id>
+		<property name="setSpec" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="setName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="setDescription" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.OfficeImpl" table="LG_Office">
 		<cache usage="read-write" />

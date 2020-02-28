@@ -121,6 +121,10 @@ public class Lectureseries_CategoryLocalServiceClp
 		_methodParameterTypes19 = new String[] {
 				"java.lang.Long", "java.lang.Long", "java.lang.Long"
 			};
+
+		_methodName20 = "removeByLectureseriesId";
+
+		_methodParameterTypes20 = new String[] { "java.lang.Long" };
 	}
 
 	@Override
@@ -711,6 +715,30 @@ public class Lectureseries_CategoryLocalServiceClp
 		}
 	}
 
+	@Override
+	public boolean removeByLectureseriesId(java.lang.Long lectureseriesId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20,
+					new Object[] { ClpSerializer.translateInput(lectureseriesId) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Boolean)returnObj).booleanValue();
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -750,4 +778,6 @@ public class Lectureseries_CategoryLocalServiceClp
 	private String[] _methodParameterTypes17;
 	private String _methodName19;
 	private String[] _methodParameterTypes19;
+	private String _methodName20;
+	private String[] _methodParameterTypes20;
 }

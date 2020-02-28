@@ -1,3 +1,5 @@
+<script type="text/javascript">jwplayer.key="qKvU61clkb6v98R2Yoc/cL6x7dFfJ3we+r6nxD6iB0Q=";</script>
+
 <style>
 <!--
 .jw-reset.jw-settings-content-item {
@@ -62,12 +64,18 @@
             width: "100%",
             aspectratio: "16:9",
             playbackRateControls: [0.75, 1, 1.25, 1.5],
-            image: "${video.image}",
             cast: {},
-            sources: ${video.jsonPlayerUris},
-            <c:if test="${video.hasCaption || video.hasChapters}">
-	            tracks: ${video.jsonPlayerTracks},
-            </c:if>
+            playlist: [{
+                <c:if test="${video.is360()}">
+                        stereomode: 'monoscopic',
+                </c:if>
+                image: "${video.image}",
+                sources: ${video.jsonPlayerUris},
+                <c:if test="${video.hasCaption || video.hasChapters}">
+                        tracks: ${video.jsonPlayerTracks},
+                </c:if>
+            }],
+
             hlshtml: true,
             androidhls: true
         });

@@ -1520,6 +1520,16 @@ public class VideoWrapper implements Video, ModelWrapper<Video> {
 	}
 
 	@Override
+	public void set360(boolean is360) {
+		_video.set360(is360);
+	}
+
+	@Override
+	public boolean is360() {
+		return _video.is360();
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;

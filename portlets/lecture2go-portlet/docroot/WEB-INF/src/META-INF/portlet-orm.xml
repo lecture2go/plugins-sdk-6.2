@@ -1,5 +1,61 @@
 <?xml version="1.0"?>
 
+<!--
+  License
+
+  The Lecture2Go software is based on the liferay portal 6.2-ga6
+  <http://www.liferay.com> (Copyright notice see below)
+
+  Lecture2Go <http://lecture2go.uni-hamburg.de> is an open source
+  platform for media management and distribution. Our goal is to
+  support the free access to knowledge because this is a component
+  of each democratic society. The open source software is aimed at
+  academic institutions and has to strengthen the blended learning.
+
+  All Lecture2Go plugins are continuously being developed and improved.
+  For more details please visit <http://lecture2go-open-source.rrz.uni-hamburg.de>
+
+  Copyright (c) 2013 - present University of Hamburg / Computer and Data Center (RRZ)
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  GNU General Public License for more details.
+
+
+  You should have received a copy of the GNU General Public License
+  along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+  +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++
+
+  The Liferay Plugins SDK:
+
+  Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+
+  This library is free software; you can redistribute it and/or modify it under
+  the terms of the GNU Lesser General Public License as published by the Free
+  Software Foundation; either version 2.1 of the License, or (at your option)
+  any later version.
+
+  This library is distributed in the hope that it will be useful, but WITHOUT
+  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+  details.
+
+  Third Party Software
+
+  Lecture2Go uses third-party libraries which may be distributed under different licenses
+  to the above (but are compatible with the used GPL license). Informations about these
+  licenses and copyright informations are mostly detailed in the library source code or jars themselves.
+  You must agree to the terms of these licenses, in addition to  the above Lecture2Go source code license,
+  in order to use this software.
+-->
 <entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
 	<persistence-unit-metadata>
 		<xml-mapping-metadata-complete/>
@@ -38,6 +94,8 @@
 			<basic name="jobTitle" />
 			<basic name="gender" />
 			<basic name="fullName" />
+			<basic name="affiliation" />
+			<basic name="orcidId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -189,6 +247,41 @@
 			<basic name="subject" />
 			<basic name="description" />
 			<basic name="publisher" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.OaiRecordModelImpl">
+		<attributes>
+			<id name="oaiRecordId" />
+			<basic name="videoId" />
+			<basic name="identifier" />
+			<basic name="datestamp">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="deleted" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.OaiRecord_OaiSetModelImpl">
+		<attributes>
+			<id name="oaiRecordOaiSetId" />
+			<basic name="oaiRecordId" />
+			<basic name="oaiSetId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.OaiSetModelImpl">
+		<attributes>
+			<id name="oaiSetId" />
+			<basic name="setSpec" />
+			<basic name="setName" />
+			<basic name="setDescription" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -471,6 +564,18 @@
 		<table name="LG_Metadata" />
 		<attributes />
 	</entity>
+	<entity class="de.uhh.l2g.plugins.model.impl.OaiRecordImpl" name="OaiRecord">
+		<table name="LG_OaiRecord" />
+		<attributes />
+	</entity>
+	<entity class="de.uhh.l2g.plugins.model.impl.OaiRecord_OaiSetImpl" name="OaiRecord_OaiSet">
+		<table name="LG_OaiRecord_OaiSet" />
+		<attributes />
+	</entity>
+	<entity class="de.uhh.l2g.plugins.model.impl.OaiSetImpl" name="OaiSet">
+		<table name="LG_OaiSet" />
+		<attributes />
+	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.OfficeImpl" name="Office">
 		<table name="LG_Office" />
 		<attributes />
@@ -522,6 +627,7 @@
 	<entity class="de.uhh.l2g.plugins.model.impl.VideoImpl" name="Video">
 		<table name="LG_Video" />
 		<attributes>
+			<transient name="360" />
 			<transient name="accessPermitted" />
 			<transient name="bitrate" />
 			<transient name="creatorFullName" />

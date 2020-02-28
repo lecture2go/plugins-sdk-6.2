@@ -283,6 +283,11 @@ public class Lectureseries_CategoryLocalServiceUtil {
 			categoryId, newCategoryId);
 	}
 
+	public static boolean removeByLectureseriesId(
+		java.lang.Long lectureseriesId) {
+		return getService().removeByLectureseriesId(lectureseriesId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

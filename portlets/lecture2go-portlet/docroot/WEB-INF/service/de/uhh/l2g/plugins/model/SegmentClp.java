@@ -331,22 +331,6 @@ public class SegmentClp extends BaseModelImpl<Segment> implements Segment {
 	}
 
 	@Override
-	public void setNumber(int number) {
-		try {
-			String methodName = "setNumber";
-
-			Class<?>[] parameterTypes = new Class<?>[] { int.class };
-
-			Object[] parameterValues = new Object[] { number };
-
-			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
-		}
-		catch (Exception e) {
-			throw new UnsupportedOperationException(e);
-		}
-	}
-
-	@Override
 	public java.lang.String getImage() {
 		try {
 			String methodName = "getImage";
@@ -366,13 +350,29 @@ public class SegmentClp extends BaseModelImpl<Segment> implements Segment {
 	}
 
 	@Override
-	public void setImage(java.lang.String image) {
+	public void setSeconds(int seconds) {
 		try {
-			String methodName = "setImage";
+			String methodName = "setSeconds";
 
-			Class<?>[] parameterTypes = new Class<?>[] { java.lang.String.class };
+			Class<?>[] parameterTypes = new Class<?>[] { int.class };
 
-			Object[] parameterValues = new Object[] { image };
+			Object[] parameterValues = new Object[] { seconds };
+
+			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public void setPreviusSegmentId(long previusSegmentId) {
+		try {
+			String methodName = "setPreviusSegmentId";
+
+			Class<?>[] parameterTypes = new Class<?>[] { long.class };
+
+			Object[] parameterValues = new Object[] { previusSegmentId };
 
 			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
 		}
@@ -385,25 +385,6 @@ public class SegmentClp extends BaseModelImpl<Segment> implements Segment {
 	public int getSeconds() {
 		try {
 			String methodName = "getSeconds";
-
-			Class<?>[] parameterTypes = new Class<?>[] {  };
-
-			Object[] parameterValues = new Object[] {  };
-
-			Integer returnObj = (Integer)invokeOnRemoteModel(methodName,
-					parameterTypes, parameterValues);
-
-			return returnObj;
-		}
-		catch (Exception e) {
-			throw new UnsupportedOperationException(e);
-		}
-	}
-
-	@Override
-	public int getNumber() {
-		try {
-			String methodName = "getNumber";
 
 			Class<?>[] parameterTypes = new Class<?>[] {  };
 
@@ -439,13 +420,32 @@ public class SegmentClp extends BaseModelImpl<Segment> implements Segment {
 	}
 
 	@Override
-	public void setPreviusSegmentId(long previusSegmentId) {
+	public int getNumber() {
 		try {
-			String methodName = "setPreviusSegmentId";
+			String methodName = "getNumber";
 
-			Class<?>[] parameterTypes = new Class<?>[] { long.class };
+			Class<?>[] parameterTypes = new Class<?>[] {  };
 
-			Object[] parameterValues = new Object[] { previusSegmentId };
+			Object[] parameterValues = new Object[] {  };
+
+			Integer returnObj = (Integer)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public void setNumber(int number) {
+		try {
+			String methodName = "setNumber";
+
+			Class<?>[] parameterTypes = new Class<?>[] { int.class };
+
+			Object[] parameterValues = new Object[] { number };
 
 			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
 		}
@@ -455,13 +455,13 @@ public class SegmentClp extends BaseModelImpl<Segment> implements Segment {
 	}
 
 	@Override
-	public void setSeconds(int seconds) {
+	public void setImage(java.lang.String image) {
 		try {
-			String methodName = "setSeconds";
+			String methodName = "setImage";
 
-			Class<?>[] parameterTypes = new Class<?>[] { int.class };
+			Class<?>[] parameterTypes = new Class<?>[] { java.lang.String.class };
 
-			Object[] parameterValues = new Object[] { seconds };
+			Object[] parameterValues = new Object[] { image };
 
 			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
 		}

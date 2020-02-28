@@ -1,3 +1,59 @@
+/*******************************************************************************
+ * License
+ * 
+ * The Lecture2Go software is based on the liferay portal 6.2-ga6
+ * <http://www.liferay.com> (Copyright notice see below)
+ * 
+ * Lecture2Go <http://lecture2go.uni-hamburg.de> is an open source
+ * platform for media management and distribution. Our goal is to
+ * support the free access to knowledge because this is a component
+ * of each democratic society. The open source software is aimed at
+ * academic institutions and has to strengthen the blended learning.
+ * 
+ * All Lecture2Go plugins are continuously being developed and improved.
+ * For more details please visit <http://lecture2go-open-source.rrz.uni-hamburg.de>
+ * 
+ * Copyright (c) 2013 - present University of Hamburg / Computer and Data Center (RRZ)
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * 
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * 
+ * +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++ +++
+ * 
+ * The Liferay Plugins SDK:
+ * 
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ * 
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ * 
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ * 
+ * Third Party Software
+ * 
+ * Lecture2Go uses third-party libraries which may be distributed under different licenses 
+ * to the above (but are compatible with the used GPL license). Informations about these 
+ * licenses and copyright informations are mostly detailed in the library source code or jars themselves. 
+ * You must agree to the terms of these licenses, in addition to  the above Lecture2Go source code license, 
+ * in order to use this software.
+ ******************************************************************************/
 package de.uhh.l2g.plugins.util;
 
 import java.io.BufferedReader;
@@ -32,6 +88,10 @@ public class VideoProcessorManager {
 	 * @param videoId the id of the video which will be converted
 	 */
 	public static boolean startVideoConversion(Long videoId) {
+		// if there is a videoprocessing workflow defined in the properties use this, otherwise the default workflow defined at the video-processor will be used
+		if (PropsUtil.contains("lecture2go.videoprocessing.workflow")) {
+			return startVideoConversion(videoId, PropsUtil.get("lecture2go.videoprocessing.workflow"), JSONFactoryUtil.createJSONObject()); 
+		}
 		return startVideoConversion(videoId, null, null);
 	}
 	
@@ -83,6 +143,7 @@ public class VideoProcessorManager {
 				// send POST request to video processor
 				try {
 					HttpManager httpManager = new HttpManager();
+					httpManager.addHeader("Tenant", PropsUtil.get("lecture2go.videoprocessing.tenant"));
 					httpManager.setUrl(videoConversionUrl);
 					if (PropsUtil.contains("lecture2go.videoprocessing.basicauth.user") && PropsUtil.contains("lecture2go.videoprocessing.basicauth.pass")) {
 						httpManager.setUser(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.user"));
@@ -130,6 +191,7 @@ public class VideoProcessorManager {
 			try {
 				HttpManager httpManager = new HttpManager();
 				httpManager.setUrl(videoConversionUrl);
+				httpManager.addHeader("Tenant", PropsUtil.get("lecture2go.videoprocessing.tenant"));
 				if (PropsUtil.contains("lecture2go.videoprocessing.basicauth.user") && PropsUtil.contains("lecture2go.videoprocessing.basicauth.pass")) {
 					httpManager.setUser(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.user"));
 					httpManager.setPass(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.pass"));
@@ -160,6 +222,7 @@ public class VideoProcessorManager {
 			try {
 				HttpManager httpManager = new HttpManager();
 				httpManager.setUrl(videoConversionUrl);
+				httpManager.addHeader("Tenant", PropsUtil.get("lecture2go.videoprocessing.tenant"));
 				if (PropsUtil.contains("lecture2go.videoprocessing.basicauth.user") && PropsUtil.contains("lecture2go.videoprocessing.basicauth.pass")) {
 					httpManager.setUser(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.user"));
 					httpManager.setPass(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.pass"));
@@ -190,48 +253,28 @@ public class VideoProcessorManager {
 	 * @return the exact status returned by the videoconversion provider
 	 */
 	public static String getVideoConversionStatusForVideoId(Long videoId) {
-		String status = "";
-		if (PropsUtil.contains("lecture2go.videoprocessing.provider")) {
-			String videoConversionUrl = PropsUtil.get("lecture2go.videoprocessing.provider.videoconversion") + "/sourceid/" + String.valueOf(videoId);
-			// send GET request to video processor to check 
-			try {
-				HttpManager httpManager = new HttpManager();
-				httpManager.setUrl(videoConversionUrl);
-				if (PropsUtil.contains("lecture2go.videoprocessing.basicauth.user") && PropsUtil.contains("lecture2go.videoprocessing.basicauth.pass")) {
-					httpManager.setUser(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.user"));
-					httpManager.setPass(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.pass"));
-				}
-				HttpURLConnection conn = httpManager.sendGet();
-				httpManager.close();
-			
-				// videoprocessor return status 200 ok, if a given video id was processed
-				int responseCode = conn.getResponseCode();
-				if (responseCode == 200) {
-					BufferedReader in = new BufferedReader(
-					        new InputStreamReader(conn.getInputStream()));
-					String inputLine;
-					StringBuffer response = new StringBuffer();
-
-					while ((inputLine = in.readLine()) != null) {
-						response.append(inputLine);
-					}
-					in.close();
-
-					JSONObject jsonResponse = JSONFactoryUtil.createJSONObject(response.toString());
-					
-					// get the conversion status
-					status = jsonResponse.getString("status");	
-				} else {
-					LOG.error("Failed getting the info of a video conversion of video with id: " + videoId + ". Responsecode: " + responseCode); 
-				}
-			} catch (IOException e) {
-				LOG.error("Failed connecting to videoprocessor to get status of video with id: " + videoId); 
-			} catch (JSONException e) {
-				LOG.error("Failed reading json from videoprocessor for video with id: " + videoId); 
-			}
+		JSONObject jsonResponse = getVideoConversionResponseAsJson(videoId);
+		if (jsonResponse == null) {
+			return "";
 		}
-		return status;
+		// return the conversion status
+		return jsonResponse.getString("status");	
+				
 	}
+	
+	/**
+	 * Returns the workflow of the video conversion
+	 * @param videoId the id of the video
+	 * @return the simple status
+	 */
+	public static String getVideoConversionWorkflow(Long videoId) {
+		JSONObject jsonResponse = getVideoConversionResponseAsJson(videoId);
+		if (jsonResponse == null) {
+			return "";
+		}
+		// return conversion workflow
+		return jsonResponse.getString("workflow");
+	}	
 	
 	/**
 	 * Returns a simple status: Error, Running, Finished
@@ -263,4 +306,53 @@ public class VideoProcessorManager {
 		}
 		return simpleStatus;
 	}	
+	
+
+	/**
+	 * Returns the video conversion object as a JSONObject
+	 * @param videoId the id of the video
+	 * @return the video conversion as a JSONObject
+	 */
+	private static JSONObject getVideoConversionResponseAsJson(Long videoId) {
+		if (PropsUtil.contains("lecture2go.videoprocessing.provider")) {
+			String videoConversionUrl = PropsUtil.get("lecture2go.videoprocessing.provider.videoconversion") + "/sourceid/" + String.valueOf(videoId);
+			// send GET request to video processor to check 
+			try {
+				HttpManager httpManager = new HttpManager();
+				httpManager.setUrl(videoConversionUrl);
+				httpManager.addHeader("Tenant", PropsUtil.get("lecture2go.videoprocessing.tenant"));
+				if (PropsUtil.contains("lecture2go.videoprocessing.basicauth.user") && PropsUtil.contains("lecture2go.videoprocessing.basicauth.pass")) {
+					httpManager.setUser(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.user"));
+					httpManager.setPass(PropsUtil.get("lecture2go.videoprocessing.provider.basicauth.pass"));
+				}
+				HttpURLConnection conn = httpManager.sendGet();
+				httpManager.close();
+			
+				// videoprocessor return status 200 ok, if a given video id was processed
+				int responseCode = conn.getResponseCode();
+				if (responseCode == 200) {
+					BufferedReader in = new BufferedReader(
+					        new InputStreamReader(conn.getInputStream()));
+					String inputLine;
+					StringBuffer response = new StringBuffer();
+
+					while ((inputLine = in.readLine()) != null) {
+						response.append(inputLine);
+					}
+					in.close();
+
+					JSONObject jsonResponse = JSONFactoryUtil.createJSONObject(response.toString());
+					
+					return jsonResponse;
+				} else {
+					LOG.error("Failed getting the info of a video conversion of video with id: " + videoId + ". Responsecode: " + responseCode); 
+				}
+			} catch (IOException e) {
+				LOG.error("Failed connecting to videoprocessor to get status of video with id: " + videoId); 
+			} catch (JSONException e) {
+				LOG.error("Failed reading json from videoprocessor for video with id: " + videoId); 
+			}
+		}
+		return null;
+	}
 }
