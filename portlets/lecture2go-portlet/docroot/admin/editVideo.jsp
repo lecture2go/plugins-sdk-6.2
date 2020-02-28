@@ -721,9 +721,6 @@ $(function () {
 				/* this is a workaround for wrong calculated data.loaded values on some machines, which led to inaccurate (too fast) progress
 				the progress war will now be stuck at 95% until really finished, which is now handeled in the done callback. */
 		        $('#progress .bar').css('width',progress + '%');
-		        if($('#<portlet:namespace></portlet:namespace>cancel').is(":visible")){
-		        	$('#<portlet:namespace></portlet:namespace>cancel').hide();	
-		        }
 	        }
    		},
 		dropZone: $('#dropzone')
@@ -1186,16 +1183,6 @@ function applyAllMetadataChanges(){
 
 function validate(){
 	formValidator.validate();
-
-	if (formValidator.hasErrors()) {
-		if($('#<portlet:namespace></portlet:namespace>cancel').is(":visible")){
-			$('#<portlet:namespace></portlet:namespace>cancel').hide();	
-		}
-	} else {
-		if($('#<portlet:namespace></portlet:namespace>cancel').is(":hidden")){
-			$('#<portlet:namespace></portlet:namespace>cancel').show();	
-		}
-	}
 	
 	return !formValidator.hasErrors()
 }
