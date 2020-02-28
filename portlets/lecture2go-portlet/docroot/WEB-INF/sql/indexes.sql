@@ -3,6 +3,7 @@ create index IX_8FA32867 on LG_Category (name);
 create index IX_4EE19791 on LG_Coordinator (institutionId);
 create index IX_8439EBD on LG_Coordinator (officeId);
 
+create index IX_C68EFED2 on LG_Creator (affiliation);
 create index IX_D3B1627D on LG_Creator (firstName);
 create index IX_E933BBBC on LG_Creator (fullName);
 create index IX_8BEDCA83 on LG_Creator (lastName);
@@ -76,6 +77,12 @@ create index IX_4B074373 on LG_Lectureseries_Institution (lectureseriesId, insti
 
 create index IX_A6E366AD on LG_License (selectable);
 create index IX_C0376223 on LG_License (videoId);
+
+create unique index IX_44262C7 on LG_OaiRecord (identifier);
+create unique index IX_DE1F02FC on LG_OaiRecord (videoId);
+
+create index IX_7B3E5947 on LG_OaiRecord_OaiSet (oaiRecordId);
+create index IX_8F9F11E6 on LG_OaiRecord_OaiSet (oaiSetId);
 
 create index IX_41F2963D on LG_Office (institutionId);
 

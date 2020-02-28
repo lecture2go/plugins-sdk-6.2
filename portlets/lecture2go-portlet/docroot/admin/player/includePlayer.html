@@ -1,3 +1,4 @@
+<script type="text/javascript">jwplayer.key="qKvU61clkb6v98R2Yoc/cL6x7dFfJ3we+r6nxD6iB0Q=";</script>
 
 <style>
 <!--
@@ -63,13 +64,18 @@
             width: "100%",
             aspectratio: "16:9",
             playbackRateControls: [0.75, 1, 1.25, 1.5],
-            image: "${reqVideo.image}",
             cast: {},
-            sources: ${reqVideo.jsonPlayerUris},
-            tracks: [{
-                file: vttFile,
-                kind:'chapters'
+            playlist: [{
+                <c:if test="${reqVideo.is360()}">
+                        stereomode: 'monoscopic',
+                </c:if>
+                image: "${reqVideo.image}",
+                sources: ${reqVideo.jsonPlayerUris},
+                <c:if test="${reqVideo.hasCaption || reqVideo.hasChapters}">
+                        tracks: ${reqVideo.jsonPlayerTracks},
+                </c:if>
             }],
+
             hlshtml: true,
             androidhls: true
         });

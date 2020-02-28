@@ -9,7 +9,7 @@ function showCreatorsList(data) {
 }
 
 
-function autocompleteCreator($creatorInputObject, validationFunction) {
+function autocompleteCreator($creatorInputObject, validationFunction, newCreatorHandler) {
 	avoidClosing = false;
 	$creatorInputObject.autocomplete({
 	    source: function(request, response) {
@@ -27,7 +27,7 @@ function autocompleteCreator($creatorInputObject, validationFunction) {
 				/* empty the creator input field */
 				$creatorInputObject.val('');
 				c++;
-				appendCreator(c);
+				appendCreator(c, newCreatorHandler);
 				if( typeof validationFunction == "function" ) {
 					validationFunction();
 				}
@@ -53,6 +53,9 @@ function autocompleteCreator($creatorInputObject, validationFunction) {
   		        $.tmpl( "filesTemplate", vars ).appendTo( "#creators" );
   		        if( typeof validationFunction == "function" )
 					validationFunction();
+  		        if( typeof newCreatorHandler == "function" ) {
+  		        	newCreatorHandler();
+  		        }
   				/* empty the creator input field */
   		     	ui.item.value="";
   			}
@@ -60,11 +63,17 @@ function autocompleteCreator($creatorInputObject, validationFunction) {
 	});
 }
 
-function appendCreator(c){
+function appendCreator(c, newCreatorHandler){
 	$(function () {
     	var vars = {'counter':c};
     	$.template( "filesTemplate", $("#newCreator") );
     	$.tmpl( "filesTemplate", vars ).appendTo( "#creators" );
+    	// set a event handler for the newly created creator input fields
+    	$('#nc'+c).keyup(function() {
+    		if( typeof newCreatorHandler == "function" ) {
+				newCreatorHandler();
+			}
+    	});
 	});
 };
 
@@ -89,6 +98,26 @@ function getJSONCreator (data){
 	return ret;
 }
 
+function getJSONAllCreators (videoId){
+	var ret;	
+	var videoIdKey = namespace + "videoId";
+	var dataJSON = {};
+	dataJSON[videoIdKey] = videoId;
+	console.log(dataJSON);
+	$.ajax({
+		  type: "POST",
+		  url: getJSONAllCreatorsURL,
+		  dataType: 'json',
+		  data: dataJSON,
+		  global: false,
+		  async:false,
+		  success: function(data) {
+		    ret = data;
+		  }
+	})
+	console.log(ret);
+	return ret;
+}
 
 var creatorsArray = [];
 
@@ -104,6 +133,7 @@ function updateCreators(){
 
 var creatorsArray = [];
 function loadCreators(){
+	creatorsArray = [];
 	$('#creators').children().each(function(n){
 		var parameters = {};
 		var $div = $(this);
@@ -116,6 +146,8 @@ function loadCreators(){
 			parameters['jobTitle'] = $div.find('input[name = '+namespace+'jobTitle]').val();
 			parameters['gender'] = "";
 			parameters['fullName'] = $div.find('input[name = '+namespace+'fullName]').val();
+			parameters['affiliation'] = $div.find('input[name = '+namespace+'affiliation]').val();
+			parameters['orcidId'] = $div.find('input[name = '+namespace+'orcidId]').val();
 		}else{
 			parameters['creatorId'] = "0";
 			parameters['firstName'] = $div.find('input[name = '+namespace+'firstName]').val().trim();
@@ -124,6 +156,8 @@ function loadCreators(){
 			parameters['jobTitle'] = $div.find('input[name = '+namespace+'jobTitle]').val().trim();
 			parameters['gender'] = "";
 			parameters['fullName'] = (parameters['jobTitle'].trim()+" "+(parameters['firstName'].trim()+" "+parameters['middleName'].trim()).trim()+" "+parameters['lastName'].trim()).trim();		
+			parameters['affiliation'] = $div.find('input[name = '+namespace+'affiliation]').val();
+			parameters['orcidId'] = $div.find('input[name = '+namespace+'orcidId]').val();
 		}
 		if(parameters['firstName'].length>0 && parameters['lastName'].length>0){
 			creatorsArray[n]=parameters;

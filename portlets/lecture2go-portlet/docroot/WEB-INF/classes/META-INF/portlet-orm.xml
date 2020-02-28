@@ -38,6 +38,8 @@
 			<basic name="jobTitle" />
 			<basic name="gender" />
 			<basic name="fullName" />
+			<basic name="affiliation" />
+			<basic name="orcidId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -189,6 +191,41 @@
 			<basic name="subject" />
 			<basic name="description" />
 			<basic name="publisher" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.OaiRecordModelImpl">
+		<attributes>
+			<id name="oaiRecordId" />
+			<basic name="videoId" />
+			<basic name="identifier" />
+			<basic name="datestamp">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="deleted" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.OaiRecord_OaiSetModelImpl">
+		<attributes>
+			<id name="oaiRecordOaiSetId" />
+			<basic name="oaiRecordId" />
+			<basic name="oaiSetId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="de.uhh.l2g.plugins.model.impl.OaiSetModelImpl">
+		<attributes>
+			<id name="oaiSetId" />
+			<basic name="setSpec" />
+			<basic name="setName" />
+			<basic name="setDescription" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -471,6 +508,18 @@
 		<table name="LG_Metadata" />
 		<attributes />
 	</entity>
+	<entity class="de.uhh.l2g.plugins.model.impl.OaiRecordImpl" name="OaiRecord">
+		<table name="LG_OaiRecord" />
+		<attributes />
+	</entity>
+	<entity class="de.uhh.l2g.plugins.model.impl.OaiRecord_OaiSetImpl" name="OaiRecord_OaiSet">
+		<table name="LG_OaiRecord_OaiSet" />
+		<attributes />
+	</entity>
+	<entity class="de.uhh.l2g.plugins.model.impl.OaiSetImpl" name="OaiSet">
+		<table name="LG_OaiSet" />
+		<attributes />
+	</entity>
 	<entity class="de.uhh.l2g.plugins.model.impl.OfficeImpl" name="Office">
 		<table name="LG_Office" />
 		<attributes />
@@ -522,6 +571,7 @@
 	<entity class="de.uhh.l2g.plugins.model.impl.VideoImpl" name="Video">
 		<table name="LG_Video" />
 		<attributes>
+			<transient name="360" />
 			<transient name="accessPermitted" />
 			<transient name="bitrate" />
 			<transient name="creatorFullName" />

@@ -106,70 +106,70 @@ public class StatisticLocalServiceClpInvoker {
 				"de.uhh.l2g.plugins.model.Statistic"
 			};
 
-		_methodName156 = "getBeanIdentifier";
+		_methodName172 = "getBeanIdentifier";
 
-		_methodParameterTypes156 = new String[] {  };
+		_methodParameterTypes172 = new String[] {  };
 
-		_methodName157 = "setBeanIdentifier";
+		_methodName173 = "setBeanIdentifier";
 
-		_methodParameterTypes157 = new String[] { "java.lang.String" };
+		_methodParameterTypes173 = new String[] { "java.lang.String" };
 
-		_methodName162 = "getAllStatistics";
+		_methodName178 = "getAllStatistics";
 
-		_methodParameterTypes162 = new String[] {  };
+		_methodParameterTypes178 = new String[] {  };
 
-		_methodName163 = "getByCompanyIdandGroupId";
+		_methodName179 = "getByCompanyIdandGroupId";
 
-		_methodParameterTypes163 = new String[] { "long", "long" };
+		_methodParameterTypes179 = new String[] { "long", "long" };
 
-		_methodName164 = "getByStatisticId";
+		_methodName180 = "getByStatisticId";
 
-		_methodParameterTypes164 = new String[] { "long" };
+		_methodParameterTypes180 = new String[] { "long" };
 
-		_methodName165 = "getByStatisticId";
+		_methodName181 = "getByStatisticId";
 
-		_methodParameterTypes165 = new String[] { "long", "long", "long" };
+		_methodParameterTypes181 = new String[] { "long", "long", "long" };
 
-		_methodName166 = "removeVideoStatisticDefaultTable";
+		_methodName182 = "removeVideoStatisticDefaultTable";
 
-		_methodParameterTypes166 = new String[] {  };
+		_methodParameterTypes182 = new String[] {  };
 
-		_methodName167 = "addVideoStatisticView";
+		_methodName183 = "addVideoStatisticView";
 
-		_methodParameterTypes167 = new String[] {  };
+		_methodParameterTypes183 = new String[] {  };
 
-		_methodName169 = "addDefaultEntry";
+		_methodName185 = "addDefaultEntry";
 
-		_methodParameterTypes169 = new String[] {
+		_methodParameterTypes185 = new String[] {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName170 = "addEntry";
+		_methodName186 = "addEntry";
 
-		_methodParameterTypes170 = new String[] {
+		_methodParameterTypes186 = new String[] {
 				"int", "int", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName171 = "add";
+		_methodName187 = "add";
 
-		_methodParameterTypes171 = new String[] { "int", "int" };
+		_methodParameterTypes187 = new String[] { "int", "int" };
 
-		_methodName172 = "updateEntry";
+		_methodName188 = "updateEntry";
 
-		_methodParameterTypes172 = new String[] {
+		_methodParameterTypes188 = new String[] {
 				"long", "int", "int",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName173 = "deleteLinkById";
+		_methodName189 = "deleteLinkById";
 
-		_methodParameterTypes173 = new String[] {
+		_methodParameterTypes189 = new String[] {
 				"long", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName174 = "updateCounter";
+		_methodName190 = "updateCounter";
 
-		_methodParameterTypes174 = new String[] {  };
+		_methodParameterTypes190 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -261,85 +261,85 @@ public class StatisticLocalServiceClpInvoker {
 			return StatisticLocalServiceUtil.updateStatistic((de.uhh.l2g.plugins.model.Statistic)arguments[0]);
 		}
 
-		if (_methodName156.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes156, parameterTypes)) {
+		if (_methodName172.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes172, parameterTypes)) {
 			return StatisticLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName157.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes157, parameterTypes)) {
+		if (_methodName173.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes173, parameterTypes)) {
 			StatisticLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName162.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
+		if (_methodName178.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes178, parameterTypes)) {
 			return StatisticLocalServiceUtil.getAllStatistics();
 		}
 
-		if (_methodName163.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes163, parameterTypes)) {
+		if (_methodName179.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes179, parameterTypes)) {
 			return StatisticLocalServiceUtil.getByCompanyIdandGroupId(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue());
 		}
 
-		if (_methodName164.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes164, parameterTypes)) {
+		if (_methodName180.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes180, parameterTypes)) {
 			return StatisticLocalServiceUtil.getByStatisticId(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName165.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes165, parameterTypes)) {
+		if (_methodName181.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes181, parameterTypes)) {
 			return StatisticLocalServiceUtil.getByStatisticId(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue());
 		}
 
-		if (_methodName166.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes166, parameterTypes)) {
+		if (_methodName182.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes182, parameterTypes)) {
 			return StatisticLocalServiceUtil.removeVideoStatisticDefaultTable();
 		}
 
-		if (_methodName167.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes167, parameterTypes)) {
+		if (_methodName183.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes183, parameterTypes)) {
 			return StatisticLocalServiceUtil.addVideoStatisticView();
 		}
 
-		if (_methodName169.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes169, parameterTypes)) {
+		if (_methodName185.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes185, parameterTypes)) {
 			return StatisticLocalServiceUtil.addDefaultEntry((com.liferay.portal.service.ServiceContext)arguments[0]);
 		}
 
-		if (_methodName170.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes170, parameterTypes)) {
+		if (_methodName186.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes186, parameterTypes)) {
 			return StatisticLocalServiceUtil.addEntry(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue(),
 				(com.liferay.portal.service.ServiceContext)arguments[2]);
 		}
 
-		if (_methodName171.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes171, parameterTypes)) {
+		if (_methodName187.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes187, parameterTypes)) {
 			return StatisticLocalServiceUtil.add(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
-		if (_methodName172.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes172, parameterTypes)) {
+		if (_methodName188.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes188, parameterTypes)) {
 			return StatisticLocalServiceUtil.updateEntry(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				((Integer)arguments[2]).intValue(),
 				(com.liferay.portal.service.ServiceContext)arguments[3]);
 		}
 
-		if (_methodName173.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes173, parameterTypes)) {
+		if (_methodName189.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes189, parameterTypes)) {
 			return StatisticLocalServiceUtil.deleteLinkById(((Long)arguments[0]).longValue(),
 				(com.liferay.portal.service.ServiceContext)arguments[1]);
 		}
 
-		if (_methodName174.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes174, parameterTypes)) {
+		if (_methodName190.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes190, parameterTypes)) {
 			return StatisticLocalServiceUtil.updateCounter();
 		}
 
@@ -378,32 +378,32 @@ public class StatisticLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName156;
-	private String[] _methodParameterTypes156;
-	private String _methodName157;
-	private String[] _methodParameterTypes157;
-	private String _methodName162;
-	private String[] _methodParameterTypes162;
-	private String _methodName163;
-	private String[] _methodParameterTypes163;
-	private String _methodName164;
-	private String[] _methodParameterTypes164;
-	private String _methodName165;
-	private String[] _methodParameterTypes165;
-	private String _methodName166;
-	private String[] _methodParameterTypes166;
-	private String _methodName167;
-	private String[] _methodParameterTypes167;
-	private String _methodName169;
-	private String[] _methodParameterTypes169;
-	private String _methodName170;
-	private String[] _methodParameterTypes170;
-	private String _methodName171;
-	private String[] _methodParameterTypes171;
 	private String _methodName172;
 	private String[] _methodParameterTypes172;
 	private String _methodName173;
 	private String[] _methodParameterTypes173;
-	private String _methodName174;
-	private String[] _methodParameterTypes174;
+	private String _methodName178;
+	private String[] _methodParameterTypes178;
+	private String _methodName179;
+	private String[] _methodParameterTypes179;
+	private String _methodName180;
+	private String[] _methodParameterTypes180;
+	private String _methodName181;
+	private String[] _methodParameterTypes181;
+	private String _methodName182;
+	private String[] _methodParameterTypes182;
+	private String _methodName183;
+	private String[] _methodParameterTypes183;
+	private String _methodName185;
+	private String[] _methodParameterTypes185;
+	private String _methodName186;
+	private String[] _methodParameterTypes186;
+	private String _methodName187;
+	private String[] _methodParameterTypes187;
+	private String _methodName188;
+	private String[] _methodParameterTypes188;
+	private String _methodName189;
+	private String[] _methodParameterTypes189;
+	private String _methodName190;
+	private String[] _methodParameterTypes190;
 }

@@ -19,7 +19,9 @@ create table LG_Creator (
 	middleName STRING null,
 	jobTitle STRING null,
 	gender VARCHAR(75) null,
-	fullName STRING null
+	fullName STRING null,
+	affiliation VARCHAR(75) null,
+	orcidId VARCHAR(75) null
 );
 
 create table LG_Host (
@@ -119,6 +121,27 @@ create table LG_Metadata (
 	subject STRING null,
 	description TEXT null,
 	publisher STRING null
+);
+
+create table LG_OaiRecord (
+	oaiRecordId LONG not null primary key,
+	videoId LONG,
+	identifier VARCHAR(75) null,
+	datestamp DATE null,
+	deleted BOOLEAN
+);
+
+create table LG_OaiRecord_OaiSet (
+	oaiRecordOaiSetId LONG not null primary key,
+	oaiRecordId LONG,
+	oaiSetId LONG
+);
+
+create table LG_OaiSet (
+	oaiSetId LONG not null primary key,
+	setSpec VARCHAR(75) null,
+	setName VARCHAR(75) null,
+	setDescription VARCHAR(75) null
 );
 
 create table LG_Office (

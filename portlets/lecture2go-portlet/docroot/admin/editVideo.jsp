@@ -20,6 +20,7 @@
 <liferay-portlet:resourceURL id="updateCreators" var="updateCreatorsURL" />
 <liferay-portlet:resourceURL id="updateSubInstitutions" var="updateSubInstitutionsURL" />
 <liferay-portlet:resourceURL id="getJSONCreator" var="getJSONCreatorURL" />
+<liferay-portlet:resourceURL id="getJSONAllCreators" var="getJSONAllCreatorsURL" />
 <liferay-portlet:resourceURL id="updateupdateOpenAccessForLectureseries" var="updateupdateOpenAccessForLectureseriesURL" />
 <liferay-portlet:resourceURL id="videoUpdateGenerationDate" var="videoUpdateGenerationDateURL" />
 <liferay-portlet:resourceURL id="getGenerationDate" var="getGenerationDateURL" />
@@ -32,6 +33,7 @@
 <liferay-portlet:resourceURL id="getJSONVideo" var="getJSONVideoURL" />
 <liferay-portlet:resourceURL id="convertVideo" var="convertVideoURL" />
 <liferay-portlet:resourceURL id="getVideoConversionStatus" var="getVideoConversionStatusURL" />
+<liferay-portlet:resourceURL id="getVideoConversionWorkflow" var="getVideoConversionWorkflowURL" />
 <liferay-portlet:resourceURL id="updateHtaccess" var="updateHtaccessURL" />
 <liferay-portlet:resourceURL id="handleVttUpload" var="handleVttUploadURL" />
 <liferay-portlet:resourceURL id="updateAll" var="updateAllURL" />
@@ -127,6 +129,10 @@
     	minDate: false,
     	step: 15
     });
+    
+	if (defaultContainer() == 'mp4') {
+		activateThumbnailGeneration();
+	}
   });
 
 function loadDateTimepickerToTheMetadataSkeleton(){
@@ -144,11 +150,21 @@ function loadDateTimepickerToFirstTitle(){
 	 $('#date-time .control-label').text("<liferay-ui:message key='select-date-time-bevor-upload'/>"); 	
 }
 
+function deactivateThumbnailGeneration() {
+	$("#thumbnail-content-active").hide();
+	$("#thumbnail-content-inactive").show();
+}
+
+function activateThumbnailGeneration() {
+	$("#thumbnail-content-inactive").hide();
+	$("#thumbnail-content-active").show();
+}
+
 </script>
 
 <div class="noresponsive">
 	<div id="upload">
-		<label class="edit-video-lable"><liferay-ui:message key="upload"/></label>
+		<label class="edit-video-lable"><liferay-ui:message key="upload"/><liferay-ui:icon-help message="upload-explanation"/></label>
 		<div id="date-time-form">
 			<aui:fieldset column="true">
 				<aui:layout>
@@ -177,6 +193,16 @@ function loadDateTimepickerToFirstTitle(){
 						<div id="progress" class="progress">
 					    	<div class="bar" style="width: 0%;"></div>
 						</div>
+						<c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider")%>'>
+							<div id="postprocessing-info" style="margin-bottom: 20px;">
+								<span class="conversion" data-video-id="<%=reqVideo.getVideoId()%>">
+								</span>
+									<c:if test="<%= permissionChecker.isOmniadmin() || reqProducer.getProducerId() == 21923 %>">
+										<!-- the admin has a button to start postprocessing manually -->
+										<aui:button type="button" id="start-postprocessing" value="Start Postprocessing"/>
+									</c:if>
+								</div>
+						</c:if>
 						<table id="uploaded-files" class="table"></table>
 					</div>
 				</aui:layout>
@@ -299,7 +325,8 @@ function loadDateTimepickerToFirstTitle(){
 					  $("#l1", this).toggleClass("thumb thumb-90");
 					});
 				</script>
-				
+							
+			    <c:if test="<%= FeatureManager.hasCitation2Go() || reqVideo.getOpenAccess()==0 %>">
 				<div id="permissions">
 					<label class="edit-video-lable" id="edit-video-lable-2">
 						<i id="l2" class="aui icon-chevron-down thumb"></i>
@@ -313,6 +340,7 @@ function loadDateTimepickerToFirstTitle(){
 						<%}else{%>
 							<aui:input name="password" id="password" type="hidden" value="<%=reqVideo.getPassword()%>"/>
 						<%}%>
+						<c:if test="<%= FeatureManager.hasCitation2Go()%>">
 						<div id="c2g">
 							<%if(reqVideo.getCitation2go()==0){%>
 						  		<aui:input name="citationAllowed" type="checkbox" label="citation-allowed" id="citationAllowed"></aui:input>
@@ -320,6 +348,7 @@ function loadDateTimepickerToFirstTitle(){
 							  <aui:input name="citationAllowed" type="checkbox" label="citation-allowed" id="citationAllowed" checked="true"></aui:input>
 						    <%}%>
 						</div>
+						</c:if>
 					</div>
 				</div>
 				<script>
@@ -328,6 +357,7 @@ function loadDateTimepickerToFirstTitle(){
 					  $("#l2", this).toggleClass("thumb thumb-90");
 					});
 				</script>
+				</c:if>
 				
 				<div id="license">
 					<label class="edit-video-lable" id="edit-video-lable-3">
@@ -380,7 +410,9 @@ function loadDateTimepickerToFirstTitle(){
 						<%if(reqVideo.getDownloadLink()==1){%>
 							<aui:input name="embed_code1" label="embed-html5" helpMessage="about-html5-embed" required="false" id="embed_code1" readonly="true" value="<%=reqVideo.getEmbedHtml5()%>" onclick="document.embed-content._lgadminvideomanagement_WAR_lecture2goportlet_embed_code1.focus();document.embed-content._lgadminvideomanagement_WAR_lecture2goportlet_embed_code1.select();"/>							
 						<%}%>
-						<aui:input name="embed_code4" label="embed-commsy" helpMessage="about-commsy-embed" required="false" id="embed_code4" readonly="true" value="<%=reqVideo.getEmbedCommsy()%>" onclick="document.embed-content._lgadminvideomanagement_WAR_lecture2goportlet_embed_code4.focus();document.embed-content._lgadminvideomanagement_WAR_lecture2goportlet_embed_code4.select();"/>
+						<c:if test="<%= FeatureManager.hasCommsy() %>">
+							<aui:input name="embed_code4" label="embed-commsy" helpMessage="about-commsy-embed" required="false" id="embed_code4" readonly="true" value="<%=reqVideo.getEmbedCommsy()%>" onclick="document.embed-content._lgadminvideomanagement_WAR_lecture2goportlet_embed_code4.focus();document.embed-content._lgadminvideomanagement_WAR_lecture2goportlet_embed_code4.select();"/>
+						</c:if>						
 						<!-- embed end -->	      	      
 					</div>
 				</div>
@@ -391,6 +423,69 @@ function loadDateTimepickerToFirstTitle(){
 					});
 				</script>
 
+			<c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider")%>'>
+				<c:if test='<%= FeatureManager.hasCaptionInclude() %>'>		
+				<div id="postprocessing">
+					<label class="edit-video-lable" id="edit-video-lable-6">
+						<i id="l6" class="aui icon-chevron-down thumb-90"></i>
+						<liferay-ui:message key="include-video-caption"/>
+						<liferay-ui:icon-help message="include-video-caption-description"/>
+					</label>
+	
+					<div id="postprocessing-content" >
+						<div id="include-video-caption">
+							<div id="include-video-caption-content">								
+								<!-- layout select radio buttons -->
+								<div>
+								<aui:row>
+									<aui:input name="video-caption-layout" id="speakerleft" label="speaker-left" value="1" checked="true" type="radio" required="false" helpMessage="video-caption-speaker-left-explanation"/>
+									<aui:input name="video-caption-layout" id="speakerright" label="speaker-right" value="2" checked="" type="radio" required="false" helpMessage="video-caption-speaker-right-explanation"/>
+									<aui:input name="video-caption-layout" id="speakeronly" label="speaker-only" value="3" checked="" type="radio" required="false" helpMessage="video-caption-speaker-only-explanation"/>
+								</aui:row>
+								</div>
+								<c:if test="<%= permissionChecker.isOmniadmin() || reqProducer.getProducerId() == 21923 %>">
+									<div>
+										<aui:select size="1" name="video-caption-additional-image" label="additional-image">
+											<aui:option value="0">-<liferay-ui:message key="without-additional-image"/>-</aui:option>
+											<aui:option value="campusinno">Campus Innovation Logo</aui:option>
+										</aui:select>
+									</div>
+								</c:if>
+								<div style="clear: both">
+									<img id="video-caption-previewimage-speakerslides" src=""/>
+									<img id="video-caption-previewimage-speakeronly" src=""/>
+								</div>
+	
+								<label style="clear:both;" id="edit-video-lable-7">
+									<i id="l7" class="aui icon-chevron-down thumb-90"></i>
+									<liferay-ui:message key="additional-video-caption-fields"/>
+									<liferay-ui:icon-help message="additional-video-caption-fields-explanation"/>
+								</label>
+								<div id="include-video-caption-content-additional">
+									<aui:input name="video-caption-title" label="title" required="false" value=""/>
+									<aui:input name="video-caption-creators" label="creators" required="false" value=""/>
+									<aui:input name="video-caption-institution" label="institution-of-creator" required="false" value=""/>
+									<aui:input name="video-caption-date" label="date" required="false" value=""/>
+									<aui:input name="video-caption-lectureseries" label="lectureseries" required="false" value=""/>
+								</div>
+								<div style="clear:both;">
+									<span id="start-video-caption-postprocessing-area">
+										<aui:button type="button" id="start-video-caption-postprocessing" value="include-video-caption" />
+										<liferay-ui:icon-help message="start-video-caption-postprocessing-disabled-explanation"/>
+									</span>
+									<span id="remove-video-caption-postprocessing-area" class="hide">
+										<aui:button type="button" id="remove-video-caption-postprocessing" value="remove-video-caption"/>
+										<liferay-ui:icon-help message="remove-video-caption-postprocessing-disabled-explanation"/>
+									</span>
+								</div>
+							
+							</div>
+						</div>
+					</div>
+				</div>
+				</c:if>
+			</c:if>
+
 				<div id="video-thumbnail">
 					<label class="edit-video-lable" id="edit-video-lable-5">
 						<i id="l5" class="aui icon-chevron-down thumb-90"></i>
@@ -399,8 +494,13 @@ function loadDateTimepickerToFirstTitle(){
 					
 					<div id="thumbnail-content">
 						<!-- thumbnail start --> 
+						<div id="thumbnail-content-active" style="display:none;">
 							<liferay-ui:message key="video-thumbnail-about"/>
 							<%@include file="/player/includePlayerForThumbnail.jsp"%>
+						</div>
+						<div id="thumbnail-content-inactive">
+							<liferay-ui:message key="video-thumbnail-not-available"/>
+						</div>
 						<!-- thumbnail end -->	      	      
 					</div>
 				</div>
@@ -443,6 +543,7 @@ var c = 0;
 /* these variables are set here but used in the external autocomplete-creator.js file, be sure to include this js AFTER the jsp is rendered*/
 var allCreatorsInJQueryAutocompleteFormat = <%= allCreatorsJSON.toString()%>;
 var getJSONCreatorURL = "<%=getJSONCreatorURL%>";
+var getJSONAllCreatorsURL = "<%=getJSONAllCreatorsURL%>";
 var namespace = "<portlet:namespace/>";
 <%
 String assignedCreators ="";
@@ -460,7 +561,7 @@ $(function () {
 		$options.hide();
 	}
 	
-	autocompleteCreator($("#<portlet:namespace/>creator"), validate);
+	autocompleteCreator($("#<portlet:namespace/>creator"), validate, typeof newCreatorHandler == "undefined" ? null : newCreatorHandler);
 });
 
 function toggleLectureseries(){
@@ -478,6 +579,10 @@ $(function () {
 	
 	$('#fileupload').fileupload({
         dataType: 'json',
+        beforeSend: function(xhr, data) {
+        	// send a custom header to notify the upload servlet where to put the temporary files upon upload
+            xhr.setRequestHeader('X-tempdir', "<%=uploadRepository%>");
+        },
         add: function(e, data) {
             var uploadErrors = [];
 			var acceptFileTypes = /(mp4|m4v|m4a|audio\/mp3|audio\/mpeg|audio|pdf|vtt)$/i;//file types
@@ -507,6 +612,8 @@ $(function () {
             }
         },
         done: function (e, data) {
+        	// set progress bar to zero
+           setTimeout(function(){$('#progress .bar').css('width',0 + '%')}, 1000);
            var vars = data.jqXHR.responseJSON;
            $.template( "filesTemplate", $("#template") );
            $("#"+vars[0].id).remove();   
@@ -563,9 +670,10 @@ $(function () {
         },
         progressall: function (e, data) {
 	        var progress = parseInt(data.loaded / data.total * 100, 10);
-	        if (progress==100){
-	        	setTimeout(function(){$('#progress .bar').css('width',0 + '%')}, 2000);
-	        }else{
+	        
+	        if (progress<=95) {
+				/* this is a workaround for wrong calculated data.loaded values on some machines, which led to inaccurate (too fast) progress
+				the progress war will now be stuck at 95% until really finished, which is now handeled in the done callback. */
 		        $('#progress .bar').css('width',progress + '%');
 		        if($('#<portlet:namespace></portlet:namespace>cancel').is(":visible")){
 		        	$('#<portlet:namespace></portlet:namespace>cancel').hide();	
@@ -727,6 +835,39 @@ function updateVideoFileName(file){
 				on: {
 					   success: function() {
 					     var jsonResponse = this.get('responseData');
+					     
+					     var fileExtension = file.name.split('.').pop();
+						 if (fileExtension == "mp4" || file.type == "video/mp4") {
+							 activateThumbnailGeneration();
+						 }
+					     
+						 <c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider") %>'>
+						 	<c:choose>
+							 	<c:when test='<%= FeatureManager.hasCaptionInclude() %>'>	
+								 	// do not try to convert mp3s, this won't work
+								 	if (!(fileExtension == "mp3" || file.type == "audio/mp3")) {
+								 		if (hasVideoCaption) {
+											startVideoCaptionPostprocessing();
+								 		} else {
+									     	videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>','<%=getVideoConversionStatusURL%>',<%=reqVideo.getVideoId()%>);
+								 		}
+								 	} else {
+								 		// it is a mp3, disable video caption
+								 		$("#start-video-caption-postprocessing").prop("disabled",true);
+										$("#start-video-caption-postprocessing").addClass("disabled");
+										$("#remove-video-caption-postprocessing-area").removeClass("show-inline").addClass("hide");
+										$(".conversion").html("");
+										$("#start-video-caption-postprocessing-area > .taglib-icon-help").show();
+								 	}
+							 	</c:when>
+							 	<c:otherwise>
+							 		// do not try to convert mp3s, this won't work
+							        if (!(fileExtension == "mp3" || file.type == "audio/mp3")) {
+							        	videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>','<%=getVideoConversionStatusURL%>',<%=reqVideo.getVideoId()%>);
+							        }
+							    </c:otherwise>
+							</c:choose>
+						</c:if>
 
 					     toggleShare();
 					   }
@@ -777,7 +918,9 @@ function updateMetadata(){
 				 	   	<portlet:namespace/>title: A.one('#<portlet:namespace/>title').get('value'),
 				 	   	<portlet:namespace/>tags: A.one('#<portlet:namespace/>tags').get('value'),
 				 	   	<portlet:namespace/>publisher: A.one('#<portlet:namespace/>publisher').get('value'),
-				 	   	<portlet:namespace/>citationAllowedCheckbox: A.one('#<portlet:namespace/>citationAllowedCheckbox').get('checked'),
+						<c:if test="<%=FeatureManager.hasCitation2Go()%>">
+				 	   		<portlet:namespace/>citationAllowedCheckbox: A.one('#<portlet:namespace/>citationAllowedCheckbox').get('checked'),
+				 	   	</c:if>
 				 	   	<portlet:namespace/>categoryId: categoryId,
 				 	   	<portlet:namespace/>termId: termId,
 				 	   	<portlet:namespace/>password: A.one('#<portlet:namespace/>password').get('value'),
@@ -830,7 +973,9 @@ function updateAllMetadata(){
 			 	   	"<portlet:namespace/>tags": $('#<portlet:namespace/>tags').val(),
 			 	   	"<portlet:namespace/>publisher": $('#<portlet:namespace/>publisher').val(),
 			 	   	"<portlet:namespace/>datetimepicker": $('#<portlet:namespace/>datetimepicker').val(),
-			 	   	"<portlet:namespace/>citationAllowedCheckbox": chebox,
+					<c:if test="<%=FeatureManager.hasCitation2Go()%>">
+			 	   		"<portlet:namespace/>citationAllowedCheckbox": chebox,
+			 	   	</c:if>
 			 	   	"<portlet:namespace/>categoryId": categoryId,
 			 	   	"<portlet:namespace/>termId": termId,
 			 	   	"<portlet:namespace/>password": $('#<portlet:namespace/>password').val()
@@ -841,6 +986,11 @@ function updateAllMetadata(){
 				 $("#creators-custom .control-group").removeClass("error").addClass("success");
 	           	 //update the thumb nail
 	           	 updateThumbnail();
+
+				 // reload the creators list
+	           	 $( "#creators" ).empty();
+	           	 showCreatorsList(getJSONAllCreators(<%=reqVideo.getVideoId()%>));
+
 	           	 //json object
 	           	 if(res.errorsCount==0){
 	           		 alert("<liferay-ui:message key='changes-applied'/>");	                		 
@@ -944,6 +1094,7 @@ function deleteFile(fileName){
 		    	  	$("#first-title").show();
 		    	  	$("#<portlet:namespace/>meta-ebene").hide();
 		    	  	$(".conversion").html('');
+		    	  	deactivateThumbnailGeneration();
 		        }
 		        jwplayer().remove();
 		        //initialize and show player
@@ -1001,8 +1152,10 @@ function applyDateTime(){
 					  loadDateTimepickerToTheMetadataSkeleton();
 					  $("#l2gdate").fadeIn(1000);
 					  $("#<portlet:namespace/>meta-ebene").show();
-					  <c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider")%>'>
-						initializeCaptionGeneration();
+					  <c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider") && FeatureManager.hasCaptionInclude()%>'>
+						if (typeof initializeCaptionGeneration  !== 'undefined') {
+							initializeCaptionGeneration();
+						}
 					  </c:if>
 				  }
 			  }
@@ -1187,6 +1340,11 @@ var c = 0;
 function remb(c){
 	$("#"+c).remove();
 	validate();
+	<c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider") && FeatureManager.hasCaptionInclude() %>'>
+		if (typeof synchronizeAuthors !== 'undefined') {
+			synchronizeAuthors();
+		}
+	</c:if>
 }
 
 AUI().use('aui-node',
@@ -1194,15 +1352,18 @@ AUI().use('aui-node',
 	// Select the node(s) using a css selector string
     var subInstitutionId = A.one('#<portlet:namespace/>subInstitutionId');
     var subInstitutions = A.one('.subInstitutions');
-	var citationAllowed = A.one('#<portlet:namespace/>citationAllowedCheckbox');
-
-	citationAllowed.on(
-			'click',
-			function(A){
-				toggleCitationAllowed(citationAllowed.get('checked'))
-			}
-	)
-    
+	
+	<c:if test='<%= FeatureManager.hasCitation2Go() %>'>
+		var citationAllowed = A.one('#<portlet:namespace/>citationAllowedCheckbox');
+	
+		citationAllowed.on(
+				'click',
+				function(A){
+					toggleCitationAllowed(citationAllowed.get('checked'))
+				}
+		)
+	</c:if>
+	
     subInstitutionId.on(
           'change',
           function(A) {
@@ -1216,6 +1377,280 @@ AUI().use('aui-node',
  
   }
 );
+
+<c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider")%>'>
+
+	/* ### POSTPROCESSING SPECIFIC ##### */
+	
+	AUI().ready('', function(A){
+		// check conversion status
+		videoProcessor.pollStatus('<portlet:namespace/>','<%=getVideoConversionStatusURL%>','<%=convertVideoURL%>',<%=reqVideo.getVideoId()%>);
+		
+		// the default postprocessing button
+		$('#start-postprocessing').click(function(){
+			videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>', '<%=getVideoConversionStatusURL%>', <%=reqVideo.getVideoId()%>);
+		});
+	});
+	
+	<c:if test='<%= FeatureManager.hasCaptionInclude() %>'>		
+	/* ### POSTPROCESSING SPECIFIC ##### */
+	
+	// hide the tool tip on default
+	$("#start-video-caption-postprocessing-area > .taglib-icon-help").hide();
+	
+	function newCreatorHandler() {
+			synchronizeAuthors();
+			refreshVideoCaptionPreviewImage();
+	}
+	
+	$(function(){$( "#postprocessing-content" ).hide();});
+	$( "#edit-video-lable-6" ).click(function() {
+	 	$( "#postprocessing-content" ).slideToggle( "slow" );
+	 	$("#l6", this).toggleClass("thumb thumb-90");
+	});
+	
+	$(function(){$("#include-video-caption-content-additional").hide();});
+	$( "#edit-video-lable-7" ).click(function() {
+	 	$( "#include-video-caption-content-additional" ).slideToggle( "slow" );
+	 	$("#l7", this).toggleClass("thumb thumb-90");
+	});
+	
+	
+	AUI().ready('', function(A){
+		hasVideoCaption = false;		
+	
+		
+		// set video caption workflow name
+		var videoCaptionWorkflowName = "l2go-composite-adaptive-publish";
+		
+		// synchronize the video-caption form to the metadata form on page load
+		synchronizeTitleFields();
+		synchronizeLectureSeriesFields();
+		synchronizeDateFields();
+		synchronizeAuthors();
+	
+		// load the video caption image on page load
+		refreshVideoCaptionPreviewImage();
+	
+		// disable the button for video caption postprocessing, if it is a audio file type
+		if (defaultContainer() == 'mp3') {
+			// disable button
+			$("#start-video-caption-postprocessing").prop("disabled",true);
+			$("#start-video-caption-postprocessing").addClass("disabled");
+			// show disabled help text
+			$("#start-video-caption-postprocessing-area > .taglib-icon-help").show();
+		}
+	
+		// change video caption if video data set is changed
+		// title
+		$("#<portlet:namespace/>title").keyup(function(){
+			synchronizeTitleFields();
+			refreshVideoCaptionPreviewImage();
+		});
+		
+		$('#<portlet:namespace/>creator').focusout(function() {
+			synchronizeAuthors();
+			refreshVideoCaptionPreviewImage();
+		});
+		
+		// lectureseries
+		$("#<portlet:namespace/>lectureseriesId").change(function(){
+			synchronizeLectureSeriesFields();
+			refreshVideoCaptionPreviewImage();
+		});
+		// date
+		$("#<portlet:namespace/>datetimepicker.field").change(function(){
+			synchronizeDateFields();
+			refreshVideoCaptionPreviewImage();
+		});
+	
+		// change video caption if video caption specific fields are changed
+		// layout
+		$("input[type=radio][name=<portlet:namespace/>video-caption-layout]").change(function(){
+			refreshVideoCaptionPreviewImage();
+		});
+		// every input field
+		$("#include-video-caption-content input").keyup(function(){
+			refreshVideoCaptionPreviewImage();
+		});
+		
+		<c:if test="<%= permissionChecker.isOmniadmin() || reqProducer.getProducerId() == 21923 %>">
+			$("#<portlet:namespace/>video-caption-additional-image").change(function(){
+				refreshVideoCaptionPreviewImage();
+			});
+		</c:if>
+	
+		// the video-caption-postprocessing button (additional properties are used)
+		$('#start-video-caption-postprocessing').click(function(){
+			// show remove button
+			$("#remove-video-caption-postprocessing-area").removeClass("hide").addClass("show-inline");
+			// check if video file is uploaded yet
+			if (!(defaultContainer() == 'mp4')) {
+				// set flag to start video caption include after the upload is finished
+				hasVideoCaption = true;
+				// display corresponding message
+				$('.conversion').html(videoProcessor.getVideoCaptionWhenUploadFinishedHtml());
+			} else {
+				// video file is already there, start the video caption postprocessing
+				startVideoCaptionPostprocessing();
+			}
+			
+			// close the postprocessing area
+			$( "#postprocessing-content" ).slideToggle( "slow" );
+	 		$("#l6").toggleClass("thumb thumb-90");
+			// scroll to top to see conversion status
+			$("html, body").animate({ scrollTop: 0 }, "slow");
+		});
+		
+		
+		// the video-caption-postprocessing button (additional properties are used)
+		$('#remove-video-caption-postprocessing').click(function(){
+			if (!(defaultContainer() == 'mp4')) {
+				// no video file uploaded yet, just set the flag to start the default video conversion after the upload is finished
+				hasVideoCaption = false;
+				$('.conversion').html("");
+			} else {
+				videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>','<%=getVideoConversionStatusURL%>',<%=reqVideo.getVideoId()%>);
+			}
+	     	
+			// hide remove button
+	     	$("#remove-video-caption-postprocessing-area").removeClass("show-inline").addClass("hide");
+			// close the postprocessing area
+			$( "#postprocessing-content" ).slideToggle( "slow" );
+	 		$("#l6").toggleClass("thumb thumb-90");
+			// scroll to top to see conversion status
+			$("html, body").animate({ scrollTop: 0 }, "slow");
+		});
+		
+		// check if the video has a caption removal button should be shown or not
+		videoProcessor.checkVideoCaptionRemoveButton('<portlet:namespace/>','<%=getVideoConversionWorkflowURL%>',<%=reqVideo.getVideoId()%>,videoCaptionWorkflowName);
+	});
+	
+	function startVideoCaptionPostprocessing() {
+		additionalProperties = {
+				"captionPosition": $('input[name=<portlet:namespace/>video-caption-layout]:checked').val(), 
+				"captionLink": $("<div>").text(getVideoCaptionUrl()).html()
+			}
+		videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>', '<%=getVideoConversionStatusURL%>', <%=reqVideo.getVideoId()%>,"l2go-composite-adaptive-publish", JSON.stringify(additionalProperties));
+	}
+
+	function initializeCaptionGeneration() {
+		// synchronize the video-caption form to the metadata form 
+		synchronizeTitleFields();
+		synchronizeLectureSeriesFields();
+		synchronizeDateFields();
+		synchronizeAuthors();
+	}
+
+	
+	function synchronizeTitleFields() {
+		$("#<portlet:namespace/>video-caption-title").val($("#<portlet:namespace/>title").val());
+	}
+
+	function synchronizeLectureSeriesFields() {
+		// only paste lectureseries name if a lectureseries is selected (not "without lectureseries")
+		if ($("#<portlet:namespace/>lectureseriesId").val() == 0) {
+			$("#<portlet:namespace/>video-caption-lectureseries").val("");
+		} else {
+			$("#<portlet:namespace/>video-caption-lectureseries").val($("#<portlet:namespace/>lectureseriesId option:selected").text().trim());
+		}
+	}
+
+	function synchronizeDateFields() {
+		var date = $("#<portlet:namespace/>datetimepicker.field").val();
+		var year = date.slice(0,4);
+		var month = date.slice(5,7);
+		var day = date.slice(8,10);
+		var renderDate = day + "." + month + "." + year;
+		$("#<portlet:namespace/>video-caption-date").val(renderDate);
+
+		refreshVideoCaptionPreviewImage();
+	}
+
+	function synchronizeAuthors() {
+		var authorArray = [];
+		// creators which are already in the database are handled (id starts with "c")
+		$("#creators").children("[id^='c']").each(function() { 
+			authorArray.push($(this).text().trim());
+		});
+		// creators which are just added are handled (id starts with "nc")
+		$("#creators").children("[id^='nc']").each(function() { 
+			// build the name manually
+			var name = [
+				$(this).find("#<portlet:namespace/>jobTitle").val(),
+				$(this).find("#<portlet:namespace/>firstName").val(),
+				$(this).find("#<portlet:namespace/>middleName").val(),
+				$(this).find("#<portlet:namespace/>lastName").val()
+				].join(" ");
+
+			authorArray.push(name);
+		});
+		
+		var authorsAsString = authorArray.join(", ");
+		$("#<portlet:namespace/>video-caption-creators").val(authorsAsString);
+		synchronizeAffiliations();
+		refreshVideoCaptionPreviewImage();
+	}
+	
+
+	function synchronizeAffiliations() {
+		var affiliationArray = [];
+		var jsonCreatorArray = getJsonCreatorsArray();
+		for (var key in jsonCreatorArray) {
+			if (jsonCreatorArray[key].affiliation != "") {
+				affiliationArray.push(jsonCreatorArray[key].affiliation);
+			}
+		}
+		var affiliationsAsString = affiliationArray.join(", ");
+		$("#<portlet:namespace/>video-caption-institution").val(affiliationsAsString);
+	}
+
+	function getVideoCaptionUrl() {
+		// create url to imagebuilder 
+		var title = encodeURIComponent($("#<portlet:namespace/>video-caption-title").val());
+		var creators = encodeURIComponent($("#<portlet:namespace/>video-caption-creators").val());
+		var institution = encodeURIComponent($("#<portlet:namespace/>video-caption-institution").val());
+		
+		var date = encodeURIComponent($("#<portlet:namespace/>video-caption-date").val());
+
+		var lectureseries = encodeURIComponent($("#<portlet:namespace/>video-caption-lectureseries").val());
+		var layout = $('input[name=<portlet:namespace/>video-caption-layout]:checked').val();
+		if (layout == 1 || layout == 2) {
+			layoutname = "speakerslides";
+		} else if (layout == 3) {
+			layoutname = "speakeronly";
+		}
+
+
+		var imageUrl = "https://lecture2go.uni-hamburg.de/imagebuilder/l2goimage?author=" + creators +"&institution=" + institution + "&title=" + title + "&date=" + date + "&series=" + lectureseries + "&type=" + layoutname + "&downscale=false";
+		
+		<c:if test="<%= permissionChecker.isOmniadmin() || reqProducer.getProducerId() == 21923 %>">
+			var additionalImage = $("#<portlet:namespace/>video-caption-additional-image").val();
+			if (additionalImage != 0) {
+				imageUrl = imageUrl + "&additionalimage=" + additionalImage;
+			}
+		</c:if>
+		
+		return imageUrl;
+	}
+
+	function refreshVideoCaptionPreviewImage() {
+		var imageUrl = getVideoCaptionUrl();
+
+		if (layoutname == "speakerslides") {
+			$("#video-caption-previewimage-speakeronly").attr({src: ""});
+			$("#video-caption-previewimage-speakerslides").attr({src: imageUrl});
+		} else {
+			$("#video-caption-previewimage-speakerslides").attr({src: ""});
+			$("#video-caption-previewimage-speakeronly").attr({src: imageUrl});
+		}
+	}
+
+	</c:if>
+
+</c:if>
+
+
 
 </script>
 

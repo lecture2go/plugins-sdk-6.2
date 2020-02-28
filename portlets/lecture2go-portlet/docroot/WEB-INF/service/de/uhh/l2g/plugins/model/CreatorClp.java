@@ -79,6 +79,8 @@ public class CreatorClp extends BaseModelImpl<Creator> implements Creator {
 		attributes.put("jobTitle", getJobTitle());
 		attributes.put("gender", getGender());
 		attributes.put("fullName", getFullName());
+		attributes.put("affiliation", getAffiliation());
+		attributes.put("orcidId", getOrcidId());
 
 		return attributes;
 	}
@@ -125,6 +127,18 @@ public class CreatorClp extends BaseModelImpl<Creator> implements Creator {
 
 		if (fullName != null) {
 			setFullName(fullName);
+		}
+
+		String affiliation = (String)attributes.get("affiliation");
+
+		if (affiliation != null) {
+			setAffiliation(affiliation);
+		}
+
+		String orcidId = (String)attributes.get("orcidId");
+
+		if (orcidId != null) {
+			setOrcidId(orcidId);
 		}
 	}
 
@@ -289,6 +303,52 @@ public class CreatorClp extends BaseModelImpl<Creator> implements Creator {
 		}
 	}
 
+	@Override
+	public String getAffiliation() {
+		return _affiliation;
+	}
+
+	@Override
+	public void setAffiliation(String affiliation) {
+		_affiliation = affiliation;
+
+		if (_creatorRemoteModel != null) {
+			try {
+				Class<?> clazz = _creatorRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setAffiliation", String.class);
+
+				method.invoke(_creatorRemoteModel, affiliation);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getOrcidId() {
+		return _orcidId;
+	}
+
+	@Override
+	public void setOrcidId(String orcidId) {
+		_orcidId = orcidId;
+
+		if (_creatorRemoteModel != null) {
+			try {
+				Class<?> clazz = _creatorRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setOrcidId", String.class);
+
+				method.invoke(_creatorRemoteModel, orcidId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
 	public BaseModel<?> getCreatorRemoteModel() {
 		return _creatorRemoteModel;
 	}
@@ -365,6 +425,8 @@ public class CreatorClp extends BaseModelImpl<Creator> implements Creator {
 		clone.setJobTitle(getJobTitle());
 		clone.setGender(getGender());
 		clone.setFullName(getFullName());
+		clone.setAffiliation(getAffiliation());
+		clone.setOrcidId(getOrcidId());
 
 		return clone;
 	}
@@ -415,7 +477,7 @@ public class CreatorClp extends BaseModelImpl<Creator> implements Creator {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{creatorId=");
 		sb.append(getCreatorId());
@@ -431,6 +493,10 @@ public class CreatorClp extends BaseModelImpl<Creator> implements Creator {
 		sb.append(getGender());
 		sb.append(", fullName=");
 		sb.append(getFullName());
+		sb.append(", affiliation=");
+		sb.append(getAffiliation());
+		sb.append(", orcidId=");
+		sb.append(getOrcidId());
 		sb.append("}");
 
 		return sb.toString();
@@ -438,7 +504,7 @@ public class CreatorClp extends BaseModelImpl<Creator> implements Creator {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Creator");
@@ -472,6 +538,14 @@ public class CreatorClp extends BaseModelImpl<Creator> implements Creator {
 			"<column><column-name>fullName</column-name><column-value><![CDATA[");
 		sb.append(getFullName());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>affiliation</column-name><column-value><![CDATA[");
+		sb.append(getAffiliation());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>orcidId</column-name><column-value><![CDATA[");
+		sb.append(getOrcidId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -485,6 +559,8 @@ public class CreatorClp extends BaseModelImpl<Creator> implements Creator {
 	private String _jobTitle;
 	private String _gender;
 	private String _fullName;
+	private String _affiliation;
+	private String _orcidId;
 	private BaseModel<?> _creatorRemoteModel;
 	private Class<?> _clpSerializerClass = de.uhh.l2g.plugins.service.ClpSerializer.class;
 }

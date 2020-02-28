@@ -24,10 +24,12 @@
 		<aui:layout>
 				<aui:form action="<%=addURL%>" commandName="model" name="metadata">
 					<div class="add-new-creator-term-object">
-						<aui:input name="jobTitle" value="" type="text" label="job-title"/>
+						<aui:input name="jobTitle" value="" type="text" label="job-title" helpMessage="job-title-help-text" />
 						<aui:input name="firstName" value="" type="text" label="first-name"/>
 						<aui:input name="middleName" value="" type="text" label="middle-name"/>
 						<aui:input name="lastName" value="" type="text" label="last-name"/>
+						<aui:input name="affiliation" value="" type="text" label="affiliation" helpMessage="institution-of-creator-explanation"/>
+						<aui:input name="orcidId" value="" type="text" label="orcid-id" helpMessage="orcid-explanation"/>
 						<aui:button type="submit" value="add" id="add"/>
 					</div>
 				</aui:form>
@@ -63,10 +65,12 @@
 				<aui:form action="<%=editURL%>" commandName="model">
 					  <div class="adminrow wide">
 						<div class="admintile wide">
-							<aui:input name="jobTitle" value="<%=creator.getJobTitle()%>" type="job-title" label=""/>
+							<aui:input name="jobTitle" value="<%=creator.getJobTitle()%>" type="text" label=""/>
 							<aui:input name="firstName" value="<%=creator.getFirstName()%>" type="text" label=""/>
 							<aui:input name="middleName" value="<%=creator.getMiddleName()%>" type="text" label=""/>
 							<aui:input name="lastName" value="<%=creator.getLastName()%>" type="text" label=""/>
+							<aui:input name="affiliation" value="<%=creator.getAffiliation()%>" type="text" label=""/>
+							<aui:input name="orcidId" value="<%=creator.getOrcidId()%>" type="text" label=""/>
 							<aui:input name="creatorId" value="<%=creator.getCreatorId()%>" type="hidden"/>
 						</div>
 						<div class="admintile wide icons creators">
