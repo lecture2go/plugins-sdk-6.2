@@ -168,7 +168,7 @@ input, select {
 
 	.navbar .nav > li > a {
 		&:focus, &:hover {
-			color: #c40017;
+			color: $primary-color;
 		}
 	}
 

@@ -80,7 +80,7 @@
 }
 
 .aui a:hover {
-    color: #c40017;
+    color: $primary-color;
     text-decoration: underline;
 }
 
@@ -355,7 +355,7 @@ p.smallitalic {
 }
 
 .allcreators a:hover {
-    color: #c40017 !important;
+    color: $primary-color !important;
 }
 
 #myToggler .toggler-header-collapsed:hover .video-image-overlay, #myToggler .toggler-header-collapsed:hover .tri, #myToggler .toggler-header-expanded .video-image-overlay, #myToggler .toggler-header-expanded .tri {
@@ -427,7 +427,7 @@ p.smallitalic {
     left: 10px;
     position: absolute;
     top: 10px;
-    background-color: #C40017;
+    background-color: $primary-color;
     color: #FFF;
     margin-left: 7px;
     visibility: hidden;
@@ -614,7 +614,7 @@ p.smallitalic {
 }
 
 .creator-small2.related:hover {
-    color: #c40017;
+    color: $primary-color;
 }
 
 .creator-small2.related {
@@ -1068,7 +1068,7 @@ thead, th {
 }
 
 .aui .nav-tabs > .active > a, .aui .nav-tabs > .active > a:hover, .aui .nav-tabs > .active > a:focus {
-    color: #c40017;
+    color: $primary-color;
     background-color: #eee;
     -moz-border-top-colors: none;
     -moz-border-right-colors: none;
@@ -1128,7 +1128,7 @@ thead, th {
 }
 
 .lectureseries-title a:hover {
-    color: #c40017;
+    color: $primary-color;
 }
 
 .aui .nav {
@@ -1709,7 +1709,7 @@ li.chaptertile {
     border-color: #fff -moz-use-text-color -moz-use-text-color;
     border-style: solid none none;
     border-width: 1px 0 0;
-    color: #c40017;
+    color: $primary-color;
     padding-left: 0;
     word-wrap: break-word;
 }
@@ -1909,7 +1909,7 @@ label.edit-video-lable.first {
 }
 
 #uploaded-files {
-    color: #c40017 !important;
+    color: $primary-color !important;
     font-size: 13px !important;
     font-style: normal;
 }
@@ -2562,7 +2562,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 
 .lead-box a,
 .meta-description a {
-    color: #c40017;
+    color: $primary-color;
 }
 
 .big-search {
@@ -2764,7 +2764,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 }
 
 .journal-content-article a {
-    color: #c40017;
+    color: $primary-color;
 }
 
 .journal-content-article a:HOVER {
@@ -3088,7 +3088,7 @@ strong, b, th, #kopf .sprachwechsel {
 }
 
 .conversion-failed {
-	color: #c40017;
+	color: $primary-color;
 }
 
 #postprocessing-content label.control-label {
