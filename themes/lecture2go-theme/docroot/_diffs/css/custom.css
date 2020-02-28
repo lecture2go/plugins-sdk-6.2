@@ -33,7 +33,7 @@ $dockbarOpenGradientEnd: #e9e9e9;
 .aui {
 	
 	h1,h2,h3,h4,h5 {
-		font-family: TheSansUHHBold,sans-serif;
+		font-family: $font-bold;
 		font-weight: normal;
 	}
 	
@@ -416,7 +416,7 @@ $dockbarOpenGradientEnd: #e9e9e9;
 			> a {
 				padding: 0px;
 				height: 33px;
-				font-family: TheSansUHHBold,sans-serif;
+				font-family: $font-bold;
     			font-size: 14px;
     			line-height: 33px;
     			text-align: center;

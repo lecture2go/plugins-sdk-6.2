@@ -1,35 +1,5 @@
 @import "compass";
-
-/*** these styles may be needed for an in-between resolution (between 768 and 960/980) ***/
-/*
-.sharetile {
-    width: 131px;
-}
-
-.video-image-wrapper {
-    height: 110px;
-    margin-right: 8px;
-    max-width: 250px;
-}
-
-.path {
-    font-size: 11px;
-    width: 100%;
-}
-
-.catalogue-container .row-fluid .span3 {
-    margin: 0px;
-    padding: 0px;
-    float: left;
-}
-
-#searchedvideo {
-    width: 30em;
-}
-
-*/
-
-
+@import url(variables.css);
 
 /*** MOVED FROM MIN-960  ***/
 
@@ -100,7 +70,7 @@
     float: right;
     margin-right: 6px;
     margin-top: 41px;
-    font-family: TheSansUHHBold,sans-serif;
+    font-family: $font-bold;
     font-weight: normal;
     font-size: 20px;
 }
@@ -239,7 +209,7 @@
     border-width: 1px;
     color: #4e4e4e;
     display: block;
-    font-family: TheSansUHH,sans-serif !important;
+    font-family: $font-bold !important;
     font-size: 12px;
     margin-left: 3px;
     margin-top: -3px;
@@ -318,7 +288,7 @@ mark {
 }
 
 .aui .navbar .nav {
-    font-family: TheSansUHHBold,sans-serif !important;
+    font-family: $font-bold !important;
     font-size: 14px;
     width: 100%;
 }
@@ -574,7 +544,7 @@ p.smallitalic {
 
 .path > span,
 .path-wide > span {
-   	font-family: TheSansUHHBold, sans-serif;
+   	font-family: $font-bold;
     font-weight: normal;
 }
 
@@ -952,7 +922,7 @@ thead, th {
 }
 
 .title-small {
-	font-family: TheSansUHHBold, sans-serif;
+	font-family: $font-bold;
     font-weight: normal;
     font-size: 14px;
     line-height: 17px;
@@ -1151,7 +1121,7 @@ thead, th {
 }
 
 .lectureseries-title {
-	font-family: TheSansUHHBold, sans-serif;
+	font-family: $font-bold;
 	font-size: 16px;
 	margin-bottom: 10px;
 	overflow: hidden;
@@ -1185,7 +1155,7 @@ thead, th {
 	color: #4d4d4d;
     font-size: 15px;
     font-weight: normal;
-    font-family: TheSansUHHBold, sans-serif;
+    font-family: $font-bold;
     line-height: inherit;
     margin-top: 30px;
 }
@@ -1565,7 +1535,7 @@ li.chaptertile {
 
 .admintile.wide > a {
     font-size: 14px;
-    font-family: TheSansUHHBold,sans-serif;
+    font-family: $font-bold;
 }
 
 .admintile.wide.icons > a {
@@ -1597,12 +1567,12 @@ li.chaptertile {
 }
 
 .admintile.wide .admin-videolist-video-title {
-    font-family: TheSansUHHBold, sans-serif;
+    font-family: $font-bold;
     margin-bottom: 0px;
 }
 
 .admintile.wide .admin-videolist-lectureseries-title {
-	font-family: TheSansUHHItalic,sans-serif;
+	font-family: $font-italics;
     margin-bottom: 0px;
 }
 
@@ -1655,7 +1625,7 @@ li.chaptertile {
 }
 
 .aui input[type="color"], .aui input[type="date"], .aui input[type="datetime"], .aui input[type="datetime-local"], .aui input[type="email"], .aui input[type="month"], .aui input[type="number"], .aui input[type="password"], .aui input[type="search"], .aui input[type="tel"], .aui input[type="text"], .aui input[type="time"], .aui input[type="url"], .aui input[type="week"], .aui select, .aui textarea, .aui .uneditable-input {
-    font-family: TheSansUHH,sans-serif;
+    font-family: $font-bold;
     font-size: 14px;
 }
 
@@ -1929,7 +1899,7 @@ input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_lastName {
 
 .edit-video-lable {
     border-bottom: 3px solid #f0f0f0;
-    font-family: TheSansUHHBold, sans-serif;
+    font-family: $font-bold;
     font-size: 15px !important;
     font-style: normal;
 }
@@ -2079,7 +2049,7 @@ label.edit-video-lable.first {
 }
 
 .aui .navbar.dockbar .navbar-inner li.sign-in {
-    font-family: TheSansUHH,sans-serif;
+    font-family: $font-bold;
     font-size: 11px;
 }
 
@@ -2161,7 +2131,7 @@ div.filter-menu-link span.icon-large.icon-remove {
 }
 
 #impressum, #disclaimer, #tw, #fb, #privacy-policy {
-    font-family: TheSansUHHBold,sans-serif;
+    font-family: $font-bold;
 }
 
 #license .control-group.form-inline {
@@ -2212,7 +2182,7 @@ div.filter-menu-link span.icon-large.icon-remove {
 }
 
 .title-text {
-	font-family: TheSansUHHBold, sans-serif;
+	font-family: $font-bold;
     color: #4d4d4d !important;
     float: left;
     font-size: 14px;
@@ -2891,7 +2861,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 }
 
 strong, b, th, #kopf .sprachwechsel {
-    font-family: TheSansUHHBold,sans-serif;
+    font-family: $font-bold;
     font-weight: normal;
 }
 
