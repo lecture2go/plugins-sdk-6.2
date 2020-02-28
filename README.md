@@ -9,7 +9,7 @@ Lecture2Go http://lecture2go.uni-hamburg.de is an open source platform for media
 Change Log
 ==============
 
-Candidat Bug Fix and Feature Package [master-v.1-b5196] on Friday, Februar 21, 2020
+Candidat Bug Fix and Feature Package [master-v.1-b5219] on Thursday, Februar 27, 2020
 
 - 1356 RM - fix RSS generation for lectureseries without open videos
 - 1364 RM - Streaming-Server-Portlet-Problem
