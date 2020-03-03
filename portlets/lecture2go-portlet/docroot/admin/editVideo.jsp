@@ -37,6 +37,9 @@
 <liferay-portlet:resourceURL id="updateHtaccess" var="updateHtaccessURL" />
 <liferay-portlet:resourceURL id="handleVttUpload" var="handleVttUploadURL" />
 <liferay-portlet:resourceURL id="updateAll" var="updateAllURL" />
+<liferay-portlet:resourceURL id="signS3Request" var="signS3RequestURL" />
+<liferay-portlet:resourceURL id="getS3RawDataForVideo" var="getS3RawDataForVideoURL" />
+<liferay-portlet:resourceURL id="deleteS3Object" var="deleteS3ObjectURL" />
 
 
 <%
@@ -133,6 +136,16 @@
 	if (defaultContainer() == 'mp4') {
 		activateThumbnailGeneration();
 	}
+	
+	// track form changes
+	hasFormChanged = false;
+	
+	submitted = false;
+	$('#<portlet:namespace/>metadata').on('change', ':input', function(e){
+		// :input selects all form fields
+	 	hasFormChanged = true;
+	});
+
   });
 
 function loadDateTimepickerToTheMetadataSkeleton(){
@@ -218,8 +231,6 @@ function activateThumbnailGeneration() {
 					<liferay-ui:message key="metadata"/>
 				</label>
 				<div id="metadata-upload">
-					<aui:input id="stayhere" name="stayhere" label="" required="true" value="" type="hidden"/>
-					
 					<div id="titledefault"><aui:input id="title" name="title" label="title" required="true" value="<%=reqVideo.getTitle()%>" /></div>
 					
 					<div id="creators-custom">
@@ -276,6 +287,9 @@ function activateThumbnailGeneration() {
 						</div>	
 									
 						<aui:select id="termId" size="1" name="termId" label="term" required="true">
+							<c:if test="<%= (reqVideo.getTermId()==0 && semesters.size()>1) %>">
+								<aui:option disabled='true' selected="true"><liferay-ui:message key="select-term"/></aui:option>
+							</c:if>
 							<%for (int i = 0; i < semesters.size(); i++) {
 								if (reqVideo.getTermId()==semesters.get(i).getTermId()) {%>
 									<aui:option value='<%=semesters.get(i).getTermId()%>' selected="true"><%=semesters.get(i).getPrefix()+"&nbsp;"+semesters.get(i).getYear()%></aui:option>
@@ -289,8 +303,13 @@ function activateThumbnailGeneration() {
 							<%
 							Long cId = new Long(0);
 							try{cId = Video_CategoryLocalServiceUtil.getByVideo(reqVideo.getVideoId()).get(0).getCategoryId();}catch(Exception e){}
-							
-							for (int i = 0; i < categories.size(); i++) {
+							%>
+
+							<c:if test="<%= (cId==0 && categories.size()>1) %>">
+								<aui:option disabled='true' selected="true"><liferay-ui:message key="select-category"/></aui:option>
+							</c:if>
+
+							<%for (int i = 0; i < categories.size(); i++) {
 								if (cId==categories.get(i).getCategoryId()) {%>
 									<aui:option value='<%=categories.get(i).getCategoryId()%>' selected="true"><%=categories.get(i).getName()%></aui:option>
 								<%} else {%>
@@ -301,6 +320,11 @@ function activateThumbnailGeneration() {
 					</div>
 		
 					<aui:select size="1" name="language" label="language" required="true">
+						
+						<c:if test="<%= reqMetadata.getLanguage().isEmpty() && languages.length>1 %>">
+							<aui:option disabled='true' selected="true"><liferay-ui:message key="select-language"/></aui:option>
+						</c:if>
+
 						<%for (int i=0; i<languages.length; i++){%>
 								<aui:option value='<%=languages[i]%>' selected="<%=reqMetadata.getLanguage().contains(languages[i]) %>"><%=languages[i]%></aui:option>
 						<%}%>				
@@ -361,6 +385,7 @@ function activateThumbnailGeneration() {
 						<liferay-ui:message key="license"/>
 					</label>
 					<div id="license-content">
+						<p><liferay-ui:message key="license-description"/></p>
 						<c:forEach items="<%=reqLicenseList %>" var="license">
 							<c:choose>
 								<c:when test="${license.selectable}" >
@@ -503,9 +528,38 @@ function activateThumbnailGeneration() {
 					  $("#l5", this).toggleClass("thumb-90 thumb");
 					});
 				</script>
+				
+				<c:if test='<%= PropsUtil.contains("lecture2go.s3.bucket") %>'>
+
+					<div id="video-rawdata">
+						<label class="edit-video-lable" id="edit-video-lable-8">
+							<i id="l8" class="aui icon-chevron-down thumb-90"></i>
+							<liferay-ui:message key="video-rawdata" />
+						</label>
+						
+						<div id="rawdata-content">
+							<p><liferay-ui:message key="video-rawdata-about"/></p>
+							<input type="file" id="files"  multiple />
+							<div id="progress-raw" class="progress">
+						    	<div class="bar" style="width: 0%;"></div>
+							</div>
+							<div id="rawdata-notice"></div>
+							<table id="uploaded-rawdata" class="table"></table>
+						</div>
+					</div>
+					<script>
+						$(function(){$( "#rawdata-content" ).hide();});
+						$( "#edit-video-lable-8" ).click(function() {
+						  $( "#rawdata-content" ).slideToggle( "slow" );
+						  $("#l8", this).toggleClass("thumb thumb-90");
+						});
+					</script>
+				</c:if>
+					
+				
 				<br/>		
 				<aui:button-row>
-					<aui:button type="submit" value="apply-changes" onclick="updateAllMetadata();" cssClass="btn-primary"/>
+					<aui:button value="apply-changes" onclick="updateAllMetadata();" cssClass="btn-primary"/>
 					<aui:button type="cancel" value="back" name="cancel"/>
 				</aui:button-row>
 				
@@ -609,7 +663,7 @@ $(function () {
            var vars = data.jqXHR.responseJSON;
            $.template( "filesTemplate", $("#template") );
            $("#"+vars[0].id).remove();   
-           $.tmpl( "filesTemplate", vars ).appendTo( ".table" );
+           $.tmpl( "filesTemplate", vars ).appendTo( "#uploaded-files" );
            if(isFirstUpload()==1){//update
         	   	var f1 = "mp4";
            		var f2 = "mp3";
@@ -667,9 +721,6 @@ $(function () {
 				/* this is a workaround for wrong calculated data.loaded values on some machines, which led to inaccurate (too fast) progress
 				the progress war will now be stuck at 95% until really finished, which is now handeled in the done callback. */
 		        $('#progress .bar').css('width',progress + '%');
-		        if($('#<portlet:namespace></portlet:namespace>cancel').is(":visible")){
-		        	$('#<portlet:namespace></portlet:namespace>cancel').hide();	
-		        }
 	        }
    		},
 		dropZone: $('#dropzone')
@@ -688,8 +739,135 @@ $(function () {
         		videoId: "<%=reqVideo.getVideoId()%>"
         };        
     });
-   
-});
+
+	<c:if test='<%= PropsUtil.contains("lecture2go.s3.bucket") %>'>
+		populateS3RawDataList();
+		
+		function setChunkSize(size) {
+			var chunksize;
+			/* the chunksize should be as small as needed, as the md5 hashsum calculation can be expensive for the local CPU and
+			freeze the webpage, S3 allows for a max number of 10.000 chunks per upload */
+		    if      (size>=500000000000) {chunksize = 200*1024*1024;} // >approx. 500Gb => 200Mb chunks
+		    else if (size>=300000000000)  {chunksize = 50*1024*1024;} //approx. 300-500GB => 50MB chunks
+		    else if (size>=200000000000)  {chunksize = 30*1024*1024;} //approx. 200GB-300GB => 30Mb chunks
+		    else if (size>=100000000000)  {chunksize = 20*1024*1024;} //approx. 100GB-200GB => 20MB chunks
+		    else if (size>=50000000000)   {chunksize = 10*1024*1024;} //approx. 50GB-100GB => 10MB chunks
+		    else                         {chunksize = 6 * 1024 * 1024;} //<50GB => 6MB chunk minimum
+		    return chunksize;
+		}
+
+		Evaporate.create({
+			    aws_url: 'https://<%=PropsUtil.get("lecture2go.s3.endpoint")%>',
+			    aws_key: '<%=PropsUtil.get("lecture2go.s3.accesskey")%>',
+			    bucket: '<%=PropsUtil.get("lecture2go.s3.bucket")%>',
+			    awsRegion: '<%=PropsUtil.get("lecture2go.s3.region")%>',
+			    signerUrl: '<%=signS3RequestURL%>',
+			    partSize: 6 * 1024 * 1024,
+			    awsSignatureVersion: '4',
+			    computeContentMd5: true,
+			    cryptoMd5Method: function (data) { return CryptoJS.MD5(CryptoJS.lib.WordArray.create(data)).toString(CryptoJS.enc.Base64); },
+			    cryptoHexEncodedHash256: function (data) { return CryptoJS.SHA256(data).toString(CryptoJS.enc.hex); }
+			  })
+			  .then(
+			    // Successfully created evaporate instance `_e_`
+			    function success(_e_) {
+			      var fileInput = document.getElementById('files'),
+			          filePromises = [];
+
+			      // Start a new evaporate upload anytime new files are added in the file input
+			      fileInput.onchange = function(evt) {
+			        var files = evt.target.files;
+			        for (var i = 0; i < files.length; i++) {
+			          var promise = _e_.add({
+			        	name: 'raw-data/' +  "<%=reqVideo.getVideoId()%>" + "/" + files[i].name,
+			        	file: files[i],
+			            progress: function (progress) {
+		        			$('#progress-raw .bar').css('width',progress*100 + '%');
+			              	console.log('making progress: ' + progress);
+			            }
+			          },
+			          { 			        	
+				      	partSize: setChunkSize(files[i].size)
+			          })
+			          .then(function (awsKey) {
+			          	$('#progress-raw .bar').css('width', '0%');
+			          	
+			          });
+			          filePromises.push(promise);
+			        }
+
+			        // Wait until all promises are complete
+			        Promise.all(filePromises)
+			          .then(function () {
+			        	  populateS3RawDataList();
+			            console.log('All files were uploaded successfully.');
+			          }, function (reason) {
+			            console.log('All files were not uploaded successfully:', reason);
+			          });
+
+			        // Clear out the file picker input
+			        evt.target.value = '';
+			      };
+			    },
+
+			    // Failed to create new instance of evaporate
+			    function failure(reason) {
+			       console.log('Evaporate failed to initialize: ', reason)
+			    }
+			  );
+			</c:if>   
+}); 
+
+
+<c:if test='<%= PropsUtil.contains("lecture2go.s3.bucket") %>'>
+
+
+function populateS3RawDataList(){
+	$.ajax({
+		  type: "POST",
+		  url: "<%=getS3RawDataForVideoURL%>",
+		  dataType: 'json',
+		  data: {
+		 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>",
+		  },
+		  global: false,
+		  async:true,
+		  success: function(data) {
+			  $('#uploaded-rawdata').html("");
+			  for(var k in data) {
+				  var $tr = $('<tr>').attr("data-id",data[k].key).append(
+					  $('<td>').html('<a href="' + data[k].presignedUrl + '" target="_blank">' + data[k].filename + '</a>'),
+					  $('<td>').text(data[k].fileSize),
+					  $('<td>').html('<a class="icon-large icon-remove" onclick="deleteS3Object(&quot;'+data[k].key+'&quot;);"></a>')
+				  ).appendTo('#uploaded-rawdata');
+			  }
+		  },
+		  error: function() {
+			  $('#rawdata-notice').html("<p><liferay-ui:message key='video-rawdata-error-connecting'/></p>");
+		  }
+	});
+}
+
+function deleteS3Object(key){
+	if(confirm('<liferay-ui:message key="really-delete-question"/>')){
+		$.ajax({
+			  type: "POST",
+			  url: "<%=deleteS3ObjectURL%>",
+			  dataType: 'json',
+			  data: {
+			 	   	<portlet:namespace/>key: key,
+			 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>",
+			  },
+			  global: false,
+			  async:true,
+			  success: function(data) {
+				  populateS3RawDataList();
+			  }
+		});
+	}
+}
+
+</c:if>
 
 function updateNumberOfProductions(){
 	var ret="";
@@ -920,7 +1098,12 @@ function updateMetadata(){
 }
 
 function updateAllMetadata(){
-	validate();//inpul correct?
+	if (!validate()) {
+		return;
+	}
+	submitted = true;
+	console.log("hallo");
+	
 	var license = $("input[name=<portlet:namespace/>license]:checked").val();
 	var creatorsJsonArray = JSON.stringify(getJsonCreatorsArray());
 	var jsonSubInstitutionsArray = JSON.stringify(getJsonSubInstitutionsArray());
@@ -934,57 +1117,56 @@ function updateAllMetadata(){
 		   termId = $('#<portlet:namespace/>termId').val();
 		   categoryId = $('#<portlet:namespace/>categoryId').val();
 	}
-	if($("#<portlet:namespace/>title").val() && $("#creators > div").length>0){
-		//action
-		$.ajax({
-			url: "${updateAllURL}",
-			method: "POST",
-			dataType: "json",
-			data: {
-					//metadata start
-					"<portlet:namespace/>videoId": "<%=reqVideo.getVideoId()%>",
-	            	"<portlet:namespace/>description": descData,
-	            	"<portlet:namespace/>license": license,
-	            	"<portlet:namespace/>creatorsJsonArray": creatorsJsonArray,  
-	            	"<portlet:namespace/>subInstitutions": jsonSubInstitutionsArray,
-			 	   	"<portlet:namespace/>lectureseriesId": $('#<portlet:namespace/>lectureseriesId').val(),
-			 	   	"<portlet:namespace/>language": $('#<portlet:namespace/>language').val(),
-			 	   	"<portlet:namespace/>title": $('#<portlet:namespace/>title').val(),
-			 	   	"<portlet:namespace/>tags": $('#<portlet:namespace/>tags').val(),
-			 	   	"<portlet:namespace/>publisher": $('#<portlet:namespace/>publisher').val(),
-			 	   	"<portlet:namespace/>datetimepicker": $('#<portlet:namespace/>datetimepicker').val(),
-			 	   	"<portlet:namespace/>citationAllowedCheckbox": chebox,
-			 	   	"<portlet:namespace/>categoryId": categoryId,
-			 	   	"<portlet:namespace/>termId": termId,
-			 	   	"<portlet:namespace/>password": $('#<portlet:namespace/>password').val()
-			 	   	//metadata end
-	 		},
-			success: function(res) {
-				 // required creator field color needs to be set manually 
-				 $("#creators-custom .control-group").removeClass("error").addClass("success");
-	           	 //update the thumb nail
-	           	 updateThumbnail();
+	//action
+	$.ajax({
+		url: "${updateAllURL}",
+		method: "POST",
+		dataType: "json",
+		data: {
+				//metadata start
+				"<portlet:namespace/>videoId": "<%=reqVideo.getVideoId()%>",
+            	"<portlet:namespace/>description": descData,
+            	"<portlet:namespace/>license": license,
+            	"<portlet:namespace/>creatorsJsonArray": creatorsJsonArray,  
+            	"<portlet:namespace/>subInstitutions": jsonSubInstitutionsArray,
+		 	   	"<portlet:namespace/>lectureseriesId": $('#<portlet:namespace/>lectureseriesId').val(),
+		 	   	"<portlet:namespace/>language": $('#<portlet:namespace/>language').val(),
+		 	   	"<portlet:namespace/>title": $('#<portlet:namespace/>title').val(),
+		 	   	"<portlet:namespace/>tags": $('#<portlet:namespace/>tags').val(),
+		 	   	"<portlet:namespace/>publisher": $('#<portlet:namespace/>publisher').val(),
+		 	   	"<portlet:namespace/>datetimepicker": $('#<portlet:namespace/>datetimepicker').val(),
+		 	   	"<portlet:namespace/>citationAllowedCheckbox": chebox,
+		 	   	"<portlet:namespace/>categoryId": categoryId,
+		 	   	"<portlet:namespace/>termId": termId,
+		 	   	"<portlet:namespace/>password": $('#<portlet:namespace/>password').val()
+		 	   	//metadata end
+ 		},
+		success: function(res) {
+			 // required creator field color needs to be set manually 
+			 $("#creators-custom .control-group").removeClass("error").addClass("success");
+           	 //update the thumb nail
+           	 updateThumbnail();
 
-				 // reload the creators list
-	           	 $( "#creators" ).empty();
-	           	 showCreatorsList(getJSONAllCreators(<%=reqVideo.getVideoId()%>));
+			 // reload the creators list
+           	 $( "#creators" ).empty();
+           	 showCreatorsList(getJSONAllCreators(<%=reqVideo.getVideoId()%>));
 
-	           	 //json object
-	           	 if(res.errorsCount==0){
-	           		 alert("<liferay-ui:message key='changes-applied'/>");	                		 
-	           	 }else{
-	           		 alert("<liferay-ui:message key='changes-applied-with-warnings'/>");
-	           	 }
-			}
-		});
-	}
+           	 //json object
+           	 if(res.errorsCount==0){
+           		 alert("<liferay-ui:message key='changes-applied'/>");	                		 
+           	 }else{
+           		 alert("<liferay-ui:message key='changes-applied-with-warnings'/>");
+           	 }
+		}
+	});
+
 } 
 
 function applyAllMetadataChanges(){
 	AUI().use(
 			'aui-node',
 			function(A) {
-				validate();//inpul correct?
+				validate();//input correct?
 				if($("#<portlet:namespace/>title").val() && $("#creators > div").length>0){
 				    //updateDescription(descData);
 				    updateCreators();
@@ -1000,27 +1182,9 @@ function applyAllMetadataChanges(){
 
 
 function validate(){
-	AUI().use(
-			'aui-node',
-			function(A) {
-				if($("#creators > div").length==0){
-				    // required creator field color needs to be set manually 
-				 	$("#creators-custom .control-group").removeClass("success").addClass("error");
-
-					$('html, body').animate({
-		                   scrollTop: $("#creators-custom").offset().top
-		               }, 1000);
-			        if($('#<portlet:namespace></portlet:namespace>cancel').is(":visible")){
-			        	$('#<portlet:namespace></portlet:namespace>cancel').hide();	
-			        }	
-					//alert("<liferay-ui:message key='please-add-creators'/>");
-				}else{
-					// required creator field color needs to be set manually 
-					$("#creators-custom .control-group").removeClass("error").addClass("success");
-					$('#<portlet:namespace></portlet:namespace>cancel').show();
-				}
-			}
-	);
+	formValidator.validate();
+	
+	return !formValidator.hasErrors()
 }
 
 function updateDescription(data){
@@ -1158,6 +1322,7 @@ function applyFirstTitle(){
 					  $('#first-title').hide();
 					  loadDateTimepickerToFirstTitle();
 					  $("#<portlet:namespace/>title").val(data.firsttitle);
+					  validate();
 				  }
 			  }
 	  });
@@ -1300,7 +1465,7 @@ function updateThumbnail(){
 		  url: "<%=updateThumbnailURL%>",
 		  dataType: 'json',
 		  data: {
-		 	   	<portlet:namespace/>inputTime: Math.floor(jwplayer().getPosition()),
+		 	   	<portlet:namespace/>inputTime: jwplayer().getPosition(),
 		 	   	<portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>",
 		  },
 		  global: false,
@@ -1315,7 +1480,11 @@ var c = 0;
 
 function remb(c){
 	$("#"+c).remove();
-	validate();
+	hasFormChanged = true;
+	// validate the metadata if no creator is in the creator list, to mark the field as invalid
+	if ($("#creators > div").length==0) {
+		validate();
+	}
 	<c:if test='<%= PropsUtil.contains("lecture2go.videoprocessing.provider")%>'>
 		synchronizeAuthors();
 	</c:if>
@@ -1638,9 +1807,69 @@ AUI().use('aui-node',
     	var vars = <%=VideoLocalServiceUtil.getJSONVideo(reqVideo.getVideoId()).toString()%>;
         console.log(vars);
         $.template( "filesTemplate", $("#template") );
-        $.tmpl( "filesTemplate", vars ).appendTo( ".table" );
+        $.tmpl( "filesTemplate", vars ).appendTo( "#uploaded-files" );
     });
 </script>
 
+<aui:script use="aui-form-validator">
+
+// set a custom rule for valid creator input
+A.config.FormValidator.RULES.creatorSelected = function(val, fieldNode, ruleValue) {
+    return (($("#creators > div").length>0));
+};
+
+formValidator = new A.FormValidator({
+	boundingBox: document.<portlet:namespace/>metadata,
+	rules: {
+		<portlet:namespace/>title: {
+			required: true
+		},
+		<portlet:namespace/>creator: {
+			// the creator field is valid if there is at least one creator selected, this check will only be trigger upon user input
+			creatorSelected: true,
+			// further the required marker is necessary, otherwise the field will not be marked invalid without user input
+			required :function() {
+				return ($("#creators > div").length==0);
+			},
+		},
+		<portlet:namespace/>termId: {
+			required: function() {
+				return ($( "#<portlet:namespace/>lectureseriesId option:selected" ).val()==0);
+			}
+		},
+		<portlet:namespace/>categoryId: {
+			required: function() {
+				return ($( "#<portlet:namespace/>lectureseriesId option:selected" ).val()==0);
+			}
+		},
+		<portlet:namespace/>language: {
+			required: true
+		}
+	}
+
+});
+
+
+validate();
+
+function closeBrowser(e) {
+	// check if data is invalid or data was changed, if so display default browser popup upon closing window
+	if ((!validate() || hasFormChanged) && !submitted) {
+		if(!e) e = window.event;
+	    //e.cancelBubble is supported by IE - this will kill the bubbling process.
+	    e.cancelBubble = true;
+	    e.returnValue = '';
+
+	    //e.stopPropagation works in Firefox.
+	    if (e.stopPropagation) {
+	        e.stopPropagation();
+	        e.preventDefault();
+	    }
+	}
+}
+window.onbeforeunload=closeBrowser;
+
+
+</aui:script>
 
 <%@include file="includeCreatorTemplates.jsp" %>

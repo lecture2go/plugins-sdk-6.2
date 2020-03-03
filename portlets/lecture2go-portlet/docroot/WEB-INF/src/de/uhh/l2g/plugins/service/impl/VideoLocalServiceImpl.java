@@ -59,17 +59,21 @@ import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.model.Segment;
 import de.uhh.l2g.plugins.model.Video;
+import de.uhh.l2g.plugins.model.Video_Category;
 import de.uhh.l2g.plugins.model.impl.HostImpl;
 import de.uhh.l2g.plugins.model.impl.InstitutionImpl;
 import de.uhh.l2g.plugins.model.impl.LastvideolistImpl;
 import de.uhh.l2g.plugins.model.impl.LectureseriesImpl;
 import de.uhh.l2g.plugins.model.impl.ProducerImpl;
 import de.uhh.l2g.plugins.model.impl.VideoImpl;
+import de.uhh.l2g.plugins.model.impl.Video_CategoryImpl;
 import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LastvideolistLocalServiceUtil;
+import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
 import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.VideoLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.VideoFinderUtil;
 import de.uhh.l2g.plugins.util.FFmpegManager;
@@ -642,6 +646,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		List<Video> vl = new ArrayList<Video>();
 		try {
 			vl = getByLectureseriesAndOpenaccess(lectureseriesId,0);
+			vl = stripVideosWithMissingMetadataFromList(vl);
 		} catch (SystemException e) {
 			//e.printStackTrace();
 		}
@@ -760,5 +765,67 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		}
 	    
 	    return language;
+	}
+	
+	public boolean hasMissingMetadata(Long videoId) {
+		return VideoFinderUtil.checkVideoHasMissingMetadata(videoId);
+	}
+	
+	public List<Video> getVideosWithMissingMetadata() {
+		return VideoFinderUtil.findVideosWithMissingMetadata();
+	}
+	
+	public List<Video> stripVideosWithMissingMetadataFromList(List<Video> videos) {
+		ListIterator<Video> vi = videos.listIterator();
+		while (vi.hasNext()) {
+		   Video v = vi.next();
+		   if (v.isWithMissingMetadata()) {
+			   vi.remove();
+		   }
+		}
+		return videos;
+	}
+	
+	/**
+	 * This method is only used to fix missing database entries
+	 * Uses the lectureseries information for filling the missing data
+	 */
+	public void fixMissingMetadataForVideosFromRelatedLectureseries() {
+		// get list of videos with missing metadata
+		List<Video> lv = getVideosWithMissingMetadata();
+		for (Video v: lv) {
+			// only fix videos with related lectureseries, otherwise we have no information which data is correct, those need to be fixed manually
+			if (v.getLectureseriesId()>0) {
+				Lectureseries l = new LectureseriesImpl();
+				try {
+					l = LectureseriesLocalServiceUtil.getLectureseries(v.getLectureseriesId());
+				} catch (Exception e) {
+					// there is no lectureseries with the given id (should not happen), continue to next video in loop
+					e.printStackTrace();
+					continue;
+				}
+				
+				// fix wrong term with information from lectureseries
+				if (v.getTermId()==0) {
+					v.setTermId(l.getTermId());
+					this.updateVideo(v);
+				}
+				
+				// fix missing category with information from lectureseries
+				try {
+					if (Video_CategoryLocalServiceUtil.getByVideo(v.getVideoId()).isEmpty()) {
+						Video_Category vc = Video_CategoryLocalServiceUtil.createVideo_Category(0);
+						vc.setVideoId(v.getVideoId());
+						vc.setCategoryId(l.getCategoryId());
+						Video_CategoryLocalServiceUtil.addVideo_Category(vc);
+					}
+				} catch (SystemException e) {
+					e.printStackTrace();
+					continue;
+				}
+			}
+			
+		}
+		
 	}
 }
