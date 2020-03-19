@@ -256,6 +256,11 @@
     		}
     	});
     	/* end workaround */
+    	
+    	// overwrite the default jwplayer error message for a custom message
+    	jwplayer().on('error', function(e){
+   			$(".jw-error-text").text('<liferay-ui:message key="player-error"/>');
+    	});
     });
     
 
