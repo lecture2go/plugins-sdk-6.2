@@ -1548,7 +1548,7 @@ AUI().use('aui-node',
 	
 		
 		// set video caption workflow name
-		var videoCaptionWorkflowName = "l2go-composite-adaptive-publish";
+		var videoCaptionWorkflowName = '<%= PropsUtil.get("lecture2go.videoprocessing.workflow.composite")%>';
 		
 		// synchronize the video-caption form to the metadata form on page load
 		synchronizeTitleFields();
@@ -1668,7 +1668,7 @@ AUI().use('aui-node',
 				"captionPosition": $('input[name=<portlet:namespace/>video-caption-layout]:checked').val(), 
 				"captionLink": $("<div>").text(getVideoCaptionUrl()).html()
 			}
-		videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>', '<%=getVideoConversionStatusURL%>', <%=reqVideo.getVideoId()%>,"l2go-composite-adaptive-publish", JSON.stringify(additionalProperties));
+		videoProcessor.convert('<portlet:namespace/>','<%=convertVideoURL%>', '<%=getVideoConversionStatusURL%>', <%=reqVideo.getVideoId()%>,'<%= PropsUtil.get("lecture2go.videoprocessing.workflow.composite")%>', JSON.stringify(additionalProperties));
 	}
 
 	function initializeCaptionGeneration() {
