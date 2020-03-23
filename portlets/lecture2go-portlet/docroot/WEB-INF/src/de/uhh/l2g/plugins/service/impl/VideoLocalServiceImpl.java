@@ -192,18 +192,25 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 					//SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
 					//the above commented line was changed to the one below, as per Grodriguez's pertinent comment:
 					SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+					java.util.Date date = null;
 					try {
-						java.util.Date date = sdf.parse(myDateString);
+						date = sdf.parse(myDateString);
+					} catch (Exception e) {
+						// the duration could not be parsed
+					}
+					int dur;
+					if (date != null) {
 						Calendar calendar = GregorianCalendar.getInstance(); // creates a new calendar instance
 						calendar.setTime(date);   // assigns calendar to given date 
 						int hour = calendar.get(Calendar.HOUR);
 						int min = calendar.get(Calendar.MINUTE);
 						int sec = calendar.get(Calendar.SECOND);
-						int dur = hour+sec+min;
-						FFmpegManager.createThumbnail(videoFile.getPath(), thumbnailLocation, dur/2);
-					} catch (ParseException e) {
-						// TODO Auto-generated catch block
+						dur = hour+sec+min;
+					} else {
+						// if duration could not be parsed use a default of 2 seconds
+						dur = 2;
 					}
+					FFmpegManager.createThumbnail(videoFile.getPath(), thumbnailLocation, dur/2);
 				}
 			}
 		}

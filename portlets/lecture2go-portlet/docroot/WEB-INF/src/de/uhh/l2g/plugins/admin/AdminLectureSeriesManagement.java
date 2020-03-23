@@ -306,7 +306,7 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		
 		//build lecture series object
 		LectureseriesImpl lectureseries = new LectureseriesImpl();
-		lectureseries.setApproved(0);
+		lectureseries.setApproved(1);
 		// If no lectureseries number is set, the default-number 00.000 will be set
 		lectureseries.setNumber("".equals(request.getParameter("number")) ? LanguageUtil.get(getPortletConfig(), locale, "lecture-series-default-number"):request.getParameter("number"));
 		lectureseries.setCategoryId(categoryId);
@@ -400,6 +400,9 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		request.setAttribute("producers", producers);
 		request.setAttribute("backURL", backURL);
 		//send an email to coordinator and administrator, if logged in as producer
+		
+		// the approval is deactivated, do not send mails to producer,coordinators etc.
+		/*
 		if(new Lecture2GoRoleChecker().isProducer(user)){
 			//get producer details
 			Producer p = new ProducerImpl();
@@ -441,6 +444,7 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 			// Send mail to L2Go
 			em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), PropsUtil.get("lecture2go.response.email.address")  , SUBJECT, BODY);
 		}	
+		**/
 		
 	}
 	
