@@ -8,12 +8,18 @@ import java.util.ListIterator;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.MimeResponse;
 import javax.portlet.PortletException;
+import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.servlet.http.Cookie;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.lang.RandomStringUtils;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -268,10 +274,32 @@ public class OpenAccessVideos extends MVCPortlet {
 		    request.setAttribute("timeEnd",timeEnd);
 		    request.setAttribute("objectType",objectType);
 		    request.setAttribute("objectId",oid);
-		    
+	        
+		    //
+		    buildOpenGraphMetaTag("og:title", video.getTitle(), response);
+	        buildOpenGraphMetaTag("og:url", video.getUrl(), response);
+	        buildOpenGraphMetaTag("og:image", video.getImage(), response);
+	        buildOpenGraphMetaTag("og:description", lectureseries.getLongDesc(), response);
+	        
 		    if(video.getVideoId()==0) response.setRenderParameter("jspPage","/guest/noVideosFound.jsp");	
 		    else response.setRenderParameter("jspPage","/guest/videoDetails.jsp");	    	
 	    }
 	}
+	
+	private void buildOpenGraphMetaTag(String property, String content, ActionResponse response){
+
+        Document doc = null;
+        try {
+            doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }
+
+        Element element = doc.createElement( "meta");
+        element.setAttribute( "content", content );
+        element.setAttribute( "property", property );
+        response.addProperty( MimeResponse.MARKUP_HEAD_ELEMENT, element );
+
+    }
 	
 }
