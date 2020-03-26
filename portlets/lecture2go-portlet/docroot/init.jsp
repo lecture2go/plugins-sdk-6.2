@@ -160,6 +160,8 @@
 	boolean permissionProducer = false;
 	//l2go student is logged in
 	boolean permissionStudent = false;
+	//l2go producerPending is logged in
+	boolean permissionProducerPending = false;
 
 	try{
 		Lecture2GoRoleChecker rcheck = new Lecture2GoRoleChecker();
@@ -168,6 +170,7 @@
 		permissionCoordinator = rcheck.isCoordinator(remoteUser);
 		permissionProducer = rcheck.isProducer(remoteUser);
 		permissionStudent = rcheck.isStudent(remoteUser);
+		permissionProducerPending = rcheck.isProducerPending(remoteUser);
 		if(permissionAdmin){
 			permissionCoordinator=false;
 			permissionProducer=false;

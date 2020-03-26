@@ -14,6 +14,7 @@ public class Lecture2GoRoleChecker extends RoleLocalServiceUtil {
 	private  boolean coordinator = false;
 	private  boolean l2gAdmin = false;
 	private  boolean student = false;
+	private  boolean producerPending = false;
 	
 	public  boolean isProducer(User user) {
 		List<Role> rL = new ArrayList<Role>();
@@ -55,5 +56,16 @@ public class Lecture2GoRoleChecker extends RoleLocalServiceUtil {
 		for (Role role : rL) if(role.getName().equals("L2Go Student"))student=true;
 		return student;
 	}
+	public  boolean isProducerPending(User user) {
+		List<Role> rL = new ArrayList<Role>();
+		try {
+			rL = user.getRoles();
+		} catch (SystemException e) {
+			////e.printStackTrace();
+		}
+		for (Role role : rL) if(role.getName().equals("L2Go Producer Pending"))producerPending=true;
+		return producerPending;
+	}
+	
 	
 }

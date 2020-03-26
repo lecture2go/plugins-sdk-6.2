@@ -1,18 +1,8 @@
 <%@include file="/init.jsp"%>
 
-<%
-	User u = UserLocalServiceUtil.getUser(new Long (request.getRemoteUser()));
-
-	boolean hasPendingRole = false;
-	for (Role role: u.getRoles()) {
-		if (role.getName().equals("L2Go Pending")) {
-			hasPendingRole = true;
-		}
-	}
-	
+<%	
 	List<Institution> institutions = InstitutionLocalServiceUtil.getByLevel(1);
 %>
-
 
 <portlet:actionURL name="editRole" var="editURL">
 	<portlet:param name="userId" value='<%=""+user.getUserId()%>'/>
@@ -24,7 +14,7 @@
 	<aui:fieldset helpMessage="" column="true" label='<%=LanguageUtil.get(pageContext, "l2go-roles-for")+" "+user.getFullName()%>'>
 		<aui:layout>
 			<div id="metadata-upload">
-				<c:if test='<%= hasPendingRole %>'>
+				<c:if test='<%= permissionProducerPending %>'>
 					<aui:column>
 						<aui:select name="pfId" label="">
 							<aui:option value=""><liferay-ui:message key="select-institution"/></aui:option>
@@ -46,3 +36,9 @@
 	</aui:fieldset>
 </aui:form>
 </div>
+
+<script>
+	$('#<portlet:namespace/>cancel').click(function(){
+		   window.location.href="/";
+	});
+</script>
