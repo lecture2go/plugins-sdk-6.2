@@ -20,7 +20,27 @@
 	UserDisplayTerms displayTerms = (UserDisplayTerms)userSearchContainer.getDisplayTerms();
 	//	
 	String pageName = themeDisplay.getLayout().getName(themeDisplay.getLocale());
+				
+	boolean hasPendingRole = false;
+	for (Role role: u.getRoles()) {
+		if (role.getName().equals("L2Go Pending")) {
+			hasPendingRole = true;
+		}
+	}
 %>
+
+<!-- if user has pending role, load the selectUserInstitution.jsp instead of the list -->
+<c:choose>
+	<c:when test = "<%=hasPendingRole %>">
+		<liferay-util:include 
+		  page="/admin/selectUserInstitution.jsp" 
+		  servletContext="<%= application %>"
+		/>
+	</c:when>
+	
+	<c:otherwise>
+	
+
 <portlet:renderURL var="allRoles"><portlet:param name="jspPage" value="/admin/userList.jsp" /></portlet:renderURL>
 <div class="noresponsive">
 	<label class="edit-video-lable"><%=pageName%></label>
@@ -116,3 +136,6 @@
 		</liferay-ui:search-container>
 	</aui:form>
 </div>
+
+</c:otherwise>
+</c:choose>
