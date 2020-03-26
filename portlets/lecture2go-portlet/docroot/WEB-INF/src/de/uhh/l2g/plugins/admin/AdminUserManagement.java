@@ -59,6 +59,7 @@ public class AdminUserManagement extends MVCPortlet {
 	public static final String L2G_COORDINATOR = "L2Go Coordinator";
 	public static final String L2G_PRODUCER = "L2Go Producer";
 	public static final String L2G_STUDENT = "L2Go Student";
+	public static final String L2G_PENDING = "L2Go Pending";
 
 	public void viewRole(ActionRequest request, ActionResponse response) throws SystemException, PortalException {
 		//updateUsersScreenName();
@@ -264,6 +265,10 @@ public class AdminUserManagement extends MVCPortlet {
 				deleteL2GoRole(L2G_ADMIN, u);
 		}catch(NullPointerException npe){}
 		// l2go admin request --- end
+		
+		// remove l2go pending role
+		deleteL2GoRole(L2G_PENDING, u);
+		
 		String backURL = request.getParameter("backURL");
 		try {
 			response.sendRedirect(backURL);
