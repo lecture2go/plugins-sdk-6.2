@@ -15,6 +15,7 @@
 package de.uhh.l2g.plugins.service.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -387,4 +388,35 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 		//
 		return counter.getCurrentId();
 	}
+	
+	/**
+	 * Prepares the list of institutions for pending producers selection
+	 * (institutions which should not be selected can be defined via properties file)
+	 * @return the list of institutions for the producer to select
+	 * @throws SystemException
+	 */
+	public List<Institution> getForProducerPending() throws SystemException {
+		// this is a unmodifiable list, so we copy the elements later on
+		List<Institution> institutions = getByLevel(1);
+		 
+		if (PropsUtil.contains("lecture2go.producer.pending.restrictedinstitutions")) {
+			// get the restricted institutions ids from the properties file
+			String[] restrictInstitutionIds = PropsUtil.getArray("lecture2go.producer.pending.restrictedinstitutions");
+			
+			List<Long> restrictInstitutionIdsList = new ArrayList<Long>();
+			for (String restrictInstitutionIdString : restrictInstitutionIds) {
+				restrictInstitutionIdsList.add(Long.parseLong(restrictInstitutionIdString));
+			}
+			
+			List<Institution> nonRestrictedInstitutions = new ArrayList<Institution>();
+			for (Institution institution: institutions) {
+				if (!restrictInstitutionIdsList.contains(institution.getInstitutionId())) {
+					nonRestrictedInstitutions.add(institution);
+				}
+			}
+			return nonRestrictedInstitutions;
+		}
+		return institutions;
+	}
+	
 }

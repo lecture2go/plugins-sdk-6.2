@@ -9,6 +9,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.RoleServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -38,17 +41,21 @@ public class LoginAction extends Action {
     public void run(HttpServletRequest req, HttpServletResponse res) {
 
     	// only handle login processing if qualifiedgroups is defined in properties file 
-    	if (!PropsUtil.contains("lecture2go.producer.qualifiedgroups")) {
+    	if (!PropsUtil.contains("lecture2go.producer.pending.qualifiedgroups")) {
     		return;
     	}
     	
     	User user;
 		try {
 			user = PortalUtil.getUser(req);
+			// add permissionchecker manually as it may not be available (necessary for role check)
+	    	PermissionChecker checker = PermissionCheckerFactoryUtil.create(user);
+	    	PermissionThreadLocal.setPermissionChecker(checker);
 		} catch (Exception e) {
 			// user could not be retrieved from request
 			 return;
 		}
+
 
     	// only handle login processing if user has no active l2go role
     	if (hasRole(user, L2G_COORDINATOR) ||
@@ -59,8 +66,8 @@ public class LoginAction extends Action {
     	}
     	
     	// no active l2go role, check if user is member of qualified groups
-    	String qualifiedGroups = PropsUtil.get("lecture2go.producer.qualifiedgroups");
-    	List<String> qualifiedGroupList = Arrays.asList(qualifiedGroups.split("\\s*,\\s*"));
+    	String[] qualifiedGroups = PropsUtil.getArray("lecture2go.producer.pending.qualifiedgroups");
+    	List<String> qualifiedGroupList = Arrays.asList(qualifiedGroups);
     	
     	boolean hasQualifiedUserGroup = hasUserGroup(user, qualifiedGroupList);
     	
@@ -83,7 +90,7 @@ public class LoginAction extends Action {
     	Map params = new HashMap();
     	
 		// users with no role selected and which are qualified to self-select their institution are redirected
-		LastPath lastPath = new LastPath( "", PropsUtil.get("lecture2go.producer.pendingpage"), params );
+		LastPath lastPath = new LastPath( "", PropsUtil.get("lecture2go.producer.pending.page"), params );
 
         session.setAttribute( WebKeys.LAST_PATH, lastPath );
 
@@ -99,9 +106,12 @@ public class LoginAction extends Action {
     	try {
 			return RoleServiceUtil.hasUserRole(user.getUserId(), user.getCompanyId(), role, false);
 		} catch (PortalException e) {
+			e.printStackTrace();
 			// role could not be checked, return false
 			return false;			
 		} catch (SystemException e) {
+			e.printStackTrace();
+
 			// role could not be checked, return false
 			return false;
 		}
