@@ -2,6 +2,8 @@
 
 <%	
 	List<Institution> institutions = InstitutionLocalServiceUtil.getForProducerPending();
+	String articleId = PropsUtil.get("lecture2go.producer.pending.articleId");
+	long groupId = themeDisplay.getLayout().getGroupId();
 %>
 
 <portlet:actionURL name="editRole" var="editURL">
@@ -9,7 +11,9 @@
 	<portlet:param name="backURL" value="/"/>
 </portlet:actionURL>
 
-<div class="noresponsive">
+<div>
+	<liferay-ui:journal-article articleId="<%=articleId%>" groupId="<%=groupId%>"/>
+</div>
 <aui:form action="<%= editURL.toString() %>" method="post">
 	<aui:fieldset helpMessage="" column="true" label='<%=LanguageUtil.get(pageContext, "l2go-roles-for")+" "+user.getFullName()%>'>
 		<aui:layout>
@@ -35,7 +39,6 @@
 		</aui:layout>
 	</aui:fieldset>
 </aui:form>
-</div>
 
 <script>
 	$('#<portlet:namespace/>submit').click(function(){
