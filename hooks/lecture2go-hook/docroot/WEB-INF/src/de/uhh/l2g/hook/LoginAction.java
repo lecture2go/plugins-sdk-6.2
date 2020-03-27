@@ -38,7 +38,7 @@ public class LoginAction extends Action {
     public void run(HttpServletRequest req, HttpServletResponse res) {
 
     	// only handle login processing if qualifiedgroups is defined in properties file 
-    	if (!PropsUtil.contains("lecture2go.producer.qualifiedgroups")) {
+    	if (!PropsUtil.contains("lecture2go.producer.pending.qualifiedgroups")) {
     		return;
     	}
     	
@@ -59,8 +59,8 @@ public class LoginAction extends Action {
     	}
     	
     	// no active l2go role, check if user is member of qualified groups
-    	String qualifiedGroups = PropsUtil.get("lecture2go.producer.qualifiedgroups");
-    	List<String> qualifiedGroupList = Arrays.asList(qualifiedGroups.split("\\s*,\\s*"));
+    	String[] qualifiedGroups = PropsUtil.getArray("lecture2go.producer.pending.qualifiedgroups");
+    	List<String> qualifiedGroupList = Arrays.asList(qualifiedGroups);
     	
     	boolean hasQualifiedUserGroup = hasUserGroup(user, qualifiedGroupList);
     	
@@ -83,7 +83,7 @@ public class LoginAction extends Action {
     	Map params = new HashMap();
     	
 		// users with no role selected and which are qualified to self-select their institution are redirected
-		LastPath lastPath = new LastPath( "", PropsUtil.get("lecture2go.producer.pendingpage"), params );
+		LastPath lastPath = new LastPath( "", PropsUtil.get("lecture2go.producer.pending.page"), params );
 
         session.setAttribute( WebKeys.LAST_PATH, lastPath );
 

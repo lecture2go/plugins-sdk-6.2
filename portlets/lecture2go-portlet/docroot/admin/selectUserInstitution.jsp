@@ -1,7 +1,7 @@
 <%@include file="/init.jsp"%>
 
 <%	
-	List<Institution> institutions = InstitutionLocalServiceUtil.getByLevel(1);
+	List<Institution> institutions = InstitutionLocalServiceUtil.getForProducerPending();
 %>
 
 <portlet:actionURL name="editRole" var="editURL">
