@@ -9,6 +9,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.RoleServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -45,10 +48,14 @@ public class LoginAction extends Action {
     	User user;
 		try {
 			user = PortalUtil.getUser(req);
+			// add permissionchecker manually as it may not be available (necessary for role check)
+	    	PermissionChecker checker = PermissionCheckerFactoryUtil.create(user);
+	    	PermissionThreadLocal.setPermissionChecker(checker);
 		} catch (Exception e) {
 			// user could not be retrieved from request
 			 return;
 		}
+
 
     	// only handle login processing if user has no active l2go role
     	if (hasRole(user, L2G_COORDINATOR) ||
@@ -99,9 +106,12 @@ public class LoginAction extends Action {
     	try {
 			return RoleServiceUtil.hasUserRole(user.getUserId(), user.getCompanyId(), role, false);
 		} catch (PortalException e) {
+			e.printStackTrace();
 			// role could not be checked, return false
 			return false;			
 		} catch (SystemException e) {
+			e.printStackTrace();
+
 			// role could not be checked, return false
 			return false;
 		}
