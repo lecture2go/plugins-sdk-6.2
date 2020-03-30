@@ -337,17 +337,23 @@ public class AdminUserManagement extends MVCPortlet {
 	private void handleProducerRequest(ActionRequest request) throws NumberFormatException, PortalException, SystemException, IOException {
 		User u = UserLocalServiceUtil.getUser(new Long(request.getParameter("userId")));
 		Producer p = new ProducerImpl();
+		boolean existingProducer = false;
 		//initialize producer
 		try {
+			// throws exception if producer does not exists
 			p = ProducerLocalServiceUtil.getProducer(u.getUserId());
+			existingProducer = true;
 		} catch (Exception e) {
 			p.setProducerId(u.getUserId());
 		}
 		// save role to l2go producer table
 		p.setInstitutionId(new Long(request.getParameter("pfId")));
 		p.setApproved(1);
-		// home directory 
-		p.setHomeDir(u.getScreenName());
+		// home directory
+		if (!existingProducer) {
+			// only set home directory for new producers
+			p.setHomeDir(u.getScreenName());
+		}
 		p.setIdNum(u.getScreenName());
 		// repository for producer
 		Host h = new HostImpl();
