@@ -15,7 +15,7 @@
 	<liferay-ui:journal-article articleId="<%=articleId%>" groupId="<%=groupId%>"/>
 </div>
 <aui:form action="<%= editURL.toString() %>" method="post">
-	<aui:fieldset helpMessage="" column="true" label='<%=LanguageUtil.get(pageContext, "l2go-roles-for")+" "+user.getFullName()%>'>
+	<aui:fieldset helpMessage="" column="true" label='<%=LanguageUtil.get(pageContext, "please-select-your-institution")%>'>
 		<aui:layout>
 			<div id="metadata-upload">
 				<c:if test='<%= permissionProducerPending %>'>
@@ -30,10 +30,8 @@
 				</c:if>
 				<aui:input type="hidden" name="isStud" value="false"/>				
 			
-				
 				<aui:button-row>
 		      		<aui:button type="submit" name="submit"/>
-		      		<aui:button type="cancel" value="cancel" name="cancel"/>
 		    	</aui:button-row>
 			</div>
 		</aui:layout>
