@@ -20,6 +20,8 @@ import java.util.ListIterator;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import de.uhh.l2g.plugins.NoSuchTagcloudException;
 import de.uhh.l2g.plugins.model.Category;
@@ -71,6 +73,19 @@ public class TagcloudLocalServiceImpl extends TagcloudLocalServiceBaseImpl {
 	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.TagcloudLocalServiceUtil} to access the tagcloud local service.
 	 */
+	protected static Log LOG = LogFactoryUtil.getLog(Tagcloud.class.getName());
+
+	public Tagcloud addTagcloud(Tagcloud object){
+		Long id;
+		try {
+			id = counterLocalService.increment();
+			object.setPrimaryKey(id);
+			tagcloudPersistence.update(object);
+		} catch (SystemException e) {
+			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
+		}
+		return object;
+	}
 	
 	public void deleteByObjectId(long objectId) throws SystemException{
 		tagcloudPersistence.removeByObjectId(objectId);

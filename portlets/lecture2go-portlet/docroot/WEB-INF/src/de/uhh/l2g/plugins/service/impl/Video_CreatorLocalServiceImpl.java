@@ -17,7 +17,10 @@ package de.uhh.l2g.plugins.service.impl;
 import java.util.List;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import de.uhh.l2g.plugins.model.Video_Category;
 import de.uhh.l2g.plugins.model.Video_Creator;
 import de.uhh.l2g.plugins.service.base.Video_CreatorLocalServiceBaseImpl;
 
@@ -42,6 +45,19 @@ public class Video_CreatorLocalServiceImpl
 	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.Video_CreatorLocalServiceUtil} to access the video_ creator local service.
 	 */
+	protected static Log LOG = LogFactoryUtil.getLog(Video_Creator.class.getName());
+
+	public Video_Creator addVideo_Creator(Video_Creator object){
+		Long id;
+		try {
+			id = counterLocalService.increment();
+			object.setPrimaryKey(id);
+			video_CreatorPersistence.update(object);
+		} catch (SystemException e) {
+			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
+		}
+		return object;
+	}
 	
 	public void deleteByVideoId(Long videoId) throws SystemException{
 		video_CreatorPersistence.removeByVideo(videoId);

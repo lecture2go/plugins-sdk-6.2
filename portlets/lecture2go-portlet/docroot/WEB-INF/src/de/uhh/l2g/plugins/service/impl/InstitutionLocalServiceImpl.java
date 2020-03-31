@@ -36,6 +36,7 @@ import com.liferay.portal.service.ServiceContext;
 
 import de.uhh.l2g.plugins.InstitutionNameException;
 import de.uhh.l2g.plugins.NoSuchInstitutionException;
+import de.uhh.l2g.plugins.model.Creator;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Institution_Host;
 import de.uhh.l2g.plugins.model.impl.InstitutionImpl;
@@ -75,6 +76,18 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 	 */
 	protected static Log LOG = LogFactoryUtil.getLog(Institution.class.getName());
 
+	public Institution addInstitution(Institution object){
+		Long id;
+		try {
+			id = counterLocalService.increment();
+			object.setPrimaryKey(id);
+			institutionPersistence.update(object);
+		} catch (SystemException e) {
+			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
+		}
+		return object;
+	}
+	
 	public Institution getById(long institutionId) throws SystemException {
 		return institutionPersistence.fetchByPrimaryKey(institutionId);
 	}

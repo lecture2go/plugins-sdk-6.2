@@ -87,7 +87,7 @@
 
 	Host host = new HostImpl();	
 	host = HostLocalServiceUtil.getByHostId(reqVideo.getHostId());
-	uploadRepository=PropsUtil.get("lecture2go.media.repository")+"/"+host.getServerRoot()+"/"+reqProducer.getIdNum();
+	uploadRepository=PropsUtil.get("lecture2go.media.repository")+"/"+host.getDirectory()+"/"+reqProducer.getIdNum();
 
 	Map<Term, List<Lectureseries>> lectureseriesAsTreeList = new TreeMap<Term, List<Lectureseries>>();
 	if(reqVideo.getVideoId()>0)lectureseriesAsTreeList = LectureseriesLocalServiceUtil.getFilteredByApprovedSemesterFacultyProducerAsTreeMapSortedByTerm(1, (long) 0, (long) 0, reqVideo.getProducerId());

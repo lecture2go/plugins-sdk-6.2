@@ -22,8 +22,11 @@ import java.util.ListIterator;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 
+import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.model.Segment;
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.impl.SegmentImpl;
@@ -53,6 +56,20 @@ public class SegmentLocalServiceImpl extends SegmentLocalServiceBaseImpl {
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.SegmentLocalServiceUtil} to access the segment local service.
 	 */
 
+	protected static Log LOG = LogFactoryUtil.getLog(Segment.class.getName());
+
+	public Segment addSegment(Segment object){
+		Long id;
+		try {
+			id = counterLocalService.increment();
+			object.setPrimaryKey(id);
+			segmentPersistence.update(object);
+		} catch (SystemException e) {
+			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
+		}
+		return object;
+	}
+	
 	public void deleteThumbhailsFromSegments(List<Segment> segmentList) throws PortalException, SystemException {
 		Iterator<Segment> it = segmentList.iterator();
 		while (it.hasNext()) {
@@ -119,19 +136,6 @@ public class SegmentLocalServiceImpl extends SegmentLocalServiceBaseImpl {
 	
 	public void deleteByVideoId(Long videoId) throws SystemException {
 		 segmentPersistence.removeByVideo(videoId);
-	}
-	
-	/**
-	 * Adds the segment to the database and generates thumb nail. Also notifies the appropriate model listeners.
-	 *
-	 * @param segment the segment
-	 * @return the segment that was added
-	 * @throws SystemException if a system exception occurred
-	 */
-	public Segment createSegment(Segment segment) throws SystemException, PortalException{
-		Segment s = SegmentLocalServiceUtil.addSegment(segment);
-		Segment sNew = getSegmentById(s.getPrimaryKey());
-		return sNew;
 	}
 	
 	public Segment removeSegment(Long segmentId) throws SystemException, PortalException{

@@ -1020,7 +1020,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			try {
 				Host host = HostLocalServiceUtil.getHost(video.getHostId());
 				Producer producer = ProducerLocalServiceUtil.getProducer(video.getProducerId());
-				String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/";
+				String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getDirectory() + "/" + producer.getHomeDir() + "/";
 				long producerId = video.getProducerId();
 				List<Video> lockedVideosByProducer;
 				lockedVideosByProducer = VideoLocalServiceUtil.getByProducerAndDownloadLink(producerId, 0);
@@ -1168,7 +1168,7 @@ public class AdminVideoManagement extends MVCPortlet {
 				segment.setUserId(userId);
 				try {
 					// save
-					Segment s = SegmentLocalServiceUtil.createSegment(segment);
+					Segment s = SegmentLocalServiceUtil.addSegment(segment);
 					
 					JSONObject jo = JSONFactoryUtil.createJSONObject();
 					jo.put("chapter", s.getChapter());
@@ -1279,7 +1279,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			//delete file
 			String fPath="";
 			try {
-				fPath = PropsUtil.get("lecture2go.media.repository")+"/"+HostLocalServiceUtil.getByHostId(video.getHostId()).getServerRoot()+"/"+ProducerLocalServiceUtil.getProducer(video.getProducerId()).getHomeDir()+"/";
+				fPath = PropsUtil.get("lecture2go.media.repository")+"/"+HostLocalServiceUtil.getByHostId(video.getHostId()).getDirectory()+"/"+ProducerLocalServiceUtil.getProducer(video.getProducerId()).getHomeDir()+"/";
 				mainContainerFormat = VideoLocalServiceUtil.getVideo(videoId).getContainerFormat();
 			} catch (PortalException e) {
 				//e.printStackTrace();

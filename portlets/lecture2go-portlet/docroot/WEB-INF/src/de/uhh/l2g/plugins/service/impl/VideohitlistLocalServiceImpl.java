@@ -15,7 +15,11 @@
 package de.uhh.l2g.plugins.service.impl;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import de.uhh.l2g.plugins.model.Video_Institution;
+import de.uhh.l2g.plugins.model.Videohitlist;
 import de.uhh.l2g.plugins.service.base.VideohitlistLocalServiceBaseImpl;
 
 /**
@@ -39,6 +43,19 @@ public class VideohitlistLocalServiceImpl
 	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.VideohitlistLocalServiceUtil} to access the videohitlist local service.
 	 */
+	protected static Log LOG = LogFactoryUtil.getLog(Videohitlist.class.getName());
+
+	public Videohitlist addVideohitlist(Videohitlist object){
+		Long id;
+		try {
+			id = counterLocalService.increment();
+			object.setPrimaryKey(id);
+			videohitlistPersistence.update(object);
+		} catch (SystemException e) {
+			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
+		}
+		return object;
+	}
 	
 	public void deleteByVideoId(Long videoId) throws SystemException{
 		videohitlistPersistence.removeByVideo(videoId);

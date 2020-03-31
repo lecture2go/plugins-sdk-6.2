@@ -19,7 +19,10 @@ import java.util.List;
 import java.util.ListIterator;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import de.uhh.l2g.plugins.model.Term;
 import de.uhh.l2g.plugins.model.Video_Category;
 import de.uhh.l2g.plugins.service.base.Video_CategoryLocalServiceBaseImpl;
 
@@ -43,6 +46,19 @@ public class Video_CategoryLocalServiceImpl extends Video_CategoryLocalServiceBa
 	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil} to access the video_ category local service.
 	 */
+	protected static Log LOG = LogFactoryUtil.getLog(Video_Category.class.getName());
+
+	public Video_Category addVideo_Category(Video_Category object){
+		Long id;
+		try {
+			id = counterLocalService.increment();
+			object.setPrimaryKey(id);
+			video_CategoryPersistence.update(object);
+		} catch (SystemException e) {
+			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
+		}
+		return object;
+	}
 	
 	public List<Video_Category> getByVideo(Long videoId) throws SystemException{
 		return video_CategoryPersistence.findByVideo(videoId);

@@ -58,17 +58,14 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 	public static final String TABLE_NAME = "LG_Host";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "hostId", Types.BIGINT },
-			{ "protocol", Types.VARCHAR },
-			{ "streamer", Types.VARCHAR },
-			{ "port", Types.INTEGER },
-			{ "serverRoot", Types.VARCHAR },
+			{ "directory", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
 			{ "defaultHost", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Host (hostId LONG not null primary key,protocol STRING null,streamer STRING null,port INTEGER,serverRoot STRING null,name STRING null,defaultHost INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Host (hostId LONG not null primary key,directory VARCHAR(75) null,name VARCHAR(75) null,defaultHost INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Host";
-	public static final String ORDER_BY_JPQL = " ORDER BY host.serverRoot ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY LG_Host.serverRoot ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY host.directory ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY LG_Host.directory ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -82,11 +79,9 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.Host"),
 			true);
 	public static long DEFAULTHOST_COLUMN_BITMASK = 1L;
-	public static long HOSTID_COLUMN_BITMASK = 2L;
-	public static long NAME_COLUMN_BITMASK = 4L;
-	public static long PROTOCOL_COLUMN_BITMASK = 8L;
-	public static long STREAMER_COLUMN_BITMASK = 16L;
-	public static long SERVERROOT_COLUMN_BITMASK = 32L;
+	public static long DIRECTORY_COLUMN_BITMASK = 2L;
+	public static long HOSTID_COLUMN_BITMASK = 4L;
+	public static long NAME_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.Host"));
 
@@ -128,10 +123,7 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("hostId", getHostId());
-		attributes.put("protocol", getProtocol());
-		attributes.put("streamer", getStreamer());
-		attributes.put("port", getPort());
-		attributes.put("serverRoot", getServerRoot());
+		attributes.put("directory", getDirectory());
 		attributes.put("name", getName());
 		attributes.put("defaultHost", getDefaultHost());
 
@@ -146,28 +138,10 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 			setHostId(hostId);
 		}
 
-		String protocol = (String)attributes.get("protocol");
+		String directory = (String)attributes.get("directory");
 
-		if (protocol != null) {
-			setProtocol(protocol);
-		}
-
-		String streamer = (String)attributes.get("streamer");
-
-		if (streamer != null) {
-			setStreamer(streamer);
-		}
-
-		Integer port = (Integer)attributes.get("port");
-
-		if (port != null) {
-			setPort(port);
-		}
-
-		String serverRoot = (String)attributes.get("serverRoot");
-
-		if (serverRoot != null) {
-			setServerRoot(serverRoot);
+		if (directory != null) {
+			setDirectory(directory);
 		}
 
 		String name = (String)attributes.get("name");
@@ -206,80 +180,28 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 	}
 
 	@Override
-	public String getProtocol() {
-		if (_protocol == null) {
+	public String getDirectory() {
+		if (_directory == null) {
 			return StringPool.BLANK;
 		}
 		else {
-			return _protocol;
+			return _directory;
 		}
 	}
 
 	@Override
-	public void setProtocol(String protocol) {
-		_columnBitmask |= PROTOCOL_COLUMN_BITMASK;
-
-		if (_originalProtocol == null) {
-			_originalProtocol = _protocol;
-		}
-
-		_protocol = protocol;
-	}
-
-	public String getOriginalProtocol() {
-		return GetterUtil.getString(_originalProtocol);
-	}
-
-	@Override
-	public String getStreamer() {
-		if (_streamer == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _streamer;
-		}
-	}
-
-	@Override
-	public void setStreamer(String streamer) {
-		_columnBitmask |= STREAMER_COLUMN_BITMASK;
-
-		if (_originalStreamer == null) {
-			_originalStreamer = _streamer;
-		}
-
-		_streamer = streamer;
-	}
-
-	public String getOriginalStreamer() {
-		return GetterUtil.getString(_originalStreamer);
-	}
-
-	@Override
-	public int getPort() {
-		return _port;
-	}
-
-	@Override
-	public void setPort(int port) {
-		_port = port;
-	}
-
-	@Override
-	public String getServerRoot() {
-		if (_serverRoot == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _serverRoot;
-		}
-	}
-
-	@Override
-	public void setServerRoot(String serverRoot) {
+	public void setDirectory(String directory) {
 		_columnBitmask = -1L;
 
-		_serverRoot = serverRoot;
+		if (_originalDirectory == null) {
+			_originalDirectory = _directory;
+		}
+
+		_directory = directory;
+	}
+
+	public String getOriginalDirectory() {
+		return GetterUtil.getString(_originalDirectory);
 	}
 
 	@Override
@@ -361,10 +283,7 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 		HostImpl hostImpl = new HostImpl();
 
 		hostImpl.setHostId(getHostId());
-		hostImpl.setProtocol(getProtocol());
-		hostImpl.setStreamer(getStreamer());
-		hostImpl.setPort(getPort());
-		hostImpl.setServerRoot(getServerRoot());
+		hostImpl.setDirectory(getDirectory());
 		hostImpl.setName(getName());
 		hostImpl.setDefaultHost(getDefaultHost());
 
@@ -377,7 +296,7 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 	public int compareTo(Host host) {
 		int value = 0;
 
-		value = getServerRoot().compareTo(host.getServerRoot());
+		value = getDirectory().compareTo(host.getDirectory());
 
 		if (value != 0) {
 			return value;
@@ -421,9 +340,7 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 
 		hostModelImpl._setOriginalHostId = false;
 
-		hostModelImpl._originalProtocol = hostModelImpl._protocol;
-
-		hostModelImpl._originalStreamer = hostModelImpl._streamer;
+		hostModelImpl._originalDirectory = hostModelImpl._directory;
 
 		hostModelImpl._originalName = hostModelImpl._name;
 
@@ -440,30 +357,12 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 
 		hostCacheModel.hostId = getHostId();
 
-		hostCacheModel.protocol = getProtocol();
+		hostCacheModel.directory = getDirectory();
 
-		String protocol = hostCacheModel.protocol;
+		String directory = hostCacheModel.directory;
 
-		if ((protocol != null) && (protocol.length() == 0)) {
-			hostCacheModel.protocol = null;
-		}
-
-		hostCacheModel.streamer = getStreamer();
-
-		String streamer = hostCacheModel.streamer;
-
-		if ((streamer != null) && (streamer.length() == 0)) {
-			hostCacheModel.streamer = null;
-		}
-
-		hostCacheModel.port = getPort();
-
-		hostCacheModel.serverRoot = getServerRoot();
-
-		String serverRoot = hostCacheModel.serverRoot;
-
-		if ((serverRoot != null) && (serverRoot.length() == 0)) {
-			hostCacheModel.serverRoot = null;
+		if ((directory != null) && (directory.length() == 0)) {
+			hostCacheModel.directory = null;
 		}
 
 		hostCacheModel.name = getName();
@@ -481,18 +380,12 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{hostId=");
 		sb.append(getHostId());
-		sb.append(", protocol=");
-		sb.append(getProtocol());
-		sb.append(", streamer=");
-		sb.append(getStreamer());
-		sb.append(", port=");
-		sb.append(getPort());
-		sb.append(", serverRoot=");
-		sb.append(getServerRoot());
+		sb.append(", directory=");
+		sb.append(getDirectory());
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", defaultHost=");
@@ -504,7 +397,7 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Host");
@@ -515,20 +408,8 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 		sb.append(getHostId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>protocol</column-name><column-value><![CDATA[");
-		sb.append(getProtocol());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>streamer</column-name><column-value><![CDATA[");
-		sb.append(getStreamer());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>port</column-name><column-value><![CDATA[");
-		sb.append(getPort());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>serverRoot</column-name><column-value><![CDATA[");
-		sb.append(getServerRoot());
+			"<column><column-name>directory</column-name><column-value><![CDATA[");
+		sb.append(getDirectory());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
@@ -549,12 +430,8 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 	private long _hostId;
 	private long _originalHostId;
 	private boolean _setOriginalHostId;
-	private String _protocol;
-	private String _originalProtocol;
-	private String _streamer;
-	private String _originalStreamer;
-	private int _port;
-	private String _serverRoot;
+	private String _directory;
+	private String _originalDirectory;
 	private String _name;
 	private String _originalName;
 	private int _defaultHost;

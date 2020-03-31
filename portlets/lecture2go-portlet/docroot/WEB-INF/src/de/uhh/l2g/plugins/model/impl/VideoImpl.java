@@ -970,7 +970,7 @@ public class VideoImpl extends VideoBaseImpl {
 	 * @return the directory of the video
 	 */
 	private String getHomedirPath(){
-		return MEDIA_REPOSITORY + "/" + getHost().getServerRoot() + "/" + getProducer().getHomeDir() + "/";
+		return MEDIA_REPOSITORY + "/" + getHost().getDirectory() + "/" + getProducer().getHomeDir() + "/";
 	}
 	
 	/**
@@ -999,7 +999,7 @@ public class VideoImpl extends VideoBaseImpl {
 		if(getOpenAccess()==1){
 			return HTML5_EMBED_VIDEO_START + "' controls='' " + "poster='"+getImage()+"'><source src='" + DOWNLOADFOLDER + getPreffix() + FILE_SUFFIX_MP4 + HTML5_EMBED_VIDEO_END;
 		} else {
-			return HTML5_EMBED_VIDEO_START + "' controls='' " + "poster='"+getImage()+"'><source src='" + VIDEOREPFOLDER + getHost().getServerRoot() + "/" + getProducer().getHomeDir() + "/" + getSPreffix() + getDownloadSuffix() + FILE_SUFFIX_MP4 + HTML5_EMBED_VIDEO_END;
+			return HTML5_EMBED_VIDEO_START + "' controls='' " + "poster='"+getImage()+"'><source src='" + VIDEOREPFOLDER + getHost().getDirectory() + "/" + getProducer().getHomeDir() + "/" + getSPreffix() + getDownloadSuffix() + FILE_SUFFIX_MP4 + HTML5_EMBED_VIDEO_END;
 		}
 	}
 	
@@ -1011,7 +1011,7 @@ public class VideoImpl extends VideoBaseImpl {
 		if(getOpenAccess()==1){
 			return HTML5_EMBED_AUDIO_START + DOWNLOADFOLDER + getPreffix() + FILE_SUFFIX_MP3 + HTML5_EMBED_AUDIO_END;
 		}else{
-			return HTML5_EMBED_AUDIO_START + VIDEOREPFOLDER + getHost().getServerRoot() + "/" + getProducer().getHomeDir() + "/" + getSecureFilename()+ HTML5_EMBED_AUDIO_END;
+			return HTML5_EMBED_AUDIO_START + VIDEOREPFOLDER + getHost().getDirectory() + "/" + getProducer().getHomeDir() + "/" + getSecureFilename()+ HTML5_EMBED_AUDIO_END;
 		}	
 	}
 	

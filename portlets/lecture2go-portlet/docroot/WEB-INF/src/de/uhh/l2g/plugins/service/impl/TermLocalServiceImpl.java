@@ -19,7 +19,10 @@ import java.util.List;
 
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import de.uhh.l2g.plugins.model.Tagcloud;
 import de.uhh.l2g.plugins.model.Term;
 import de.uhh.l2g.plugins.service.base.TermLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.TermFinderUtil;
@@ -44,6 +47,19 @@ public class TermLocalServiceImpl extends TermLocalServiceBaseImpl {
 	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.TermLocalServiceUtil} to access the term local service.
 	 */
+	protected static Log LOG = LogFactoryUtil.getLog(Term.class.getName());
+
+	public Term addTerm(Term object){
+		Long id;
+		try {
+			id = counterLocalService.increment();
+			object.setPrimaryKey(id);
+			termPersistence.update(object);
+		} catch (SystemException e) {
+			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
+		}
+		return object;
+	}
 	
 	public List<Term> getAllSemesters() throws SystemException {
 		List<Term> sl = new ArrayList<Term>();

@@ -18,7 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import de.uhh.l2g.plugins.model.Video_Creator;
 import de.uhh.l2g.plugins.model.Video_Institution;
 import de.uhh.l2g.plugins.service.base.Video_InstitutionLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.Video_InstitutionUtil;
@@ -44,6 +47,20 @@ public class Video_InstitutionLocalServiceImpl
 	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil} to access the video_ institution local service.
 	 */
+	
+	protected static Log LOG = LogFactoryUtil.getLog(Video_Institution.class.getName());
+
+	public Video_Institution addVideo_Institution(Video_Institution object){
+		Long id;
+		try {
+			id = counterLocalService.increment();
+			object.setPrimaryKey(id);
+			video_InstitutionPersistence.update(object);
+		} catch (SystemException e) {
+			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
+		}
+		return object;
+	}
 	
 	public boolean removeByVideoId(Long videoId) {
 		boolean ret = false;

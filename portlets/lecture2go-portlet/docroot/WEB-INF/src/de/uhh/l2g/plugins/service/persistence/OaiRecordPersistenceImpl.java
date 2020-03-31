@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
@@ -292,6 +293,248 @@ public class OaiRecordPersistenceImpl extends BasePersistenceImpl<OaiRecord>
 	}
 
 	private static final String _FINDER_COLUMN_VIDEO_VIDEOID_2 = "oaiRecord.videoId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_IDENTIFIER = new FinderPath(OaiRecordModelImpl.ENTITY_CACHE_ENABLED,
+			OaiRecordModelImpl.FINDER_CACHE_ENABLED, OaiRecordImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByIdentifier",
+			new String[] { String.class.getName() },
+			OaiRecordModelImpl.IDENTIFIER_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_IDENTIFIER = new FinderPath(OaiRecordModelImpl.ENTITY_CACHE_ENABLED,
+			OaiRecordModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByIdentifier",
+			new String[] { String.class.getName() });
+
+	/**
+	 * Returns the oai record where identifier = &#63; or throws a {@link de.uhh.l2g.plugins.NoSuchOaiRecordException} if it could not be found.
+	 *
+	 * @param identifier the identifier
+	 * @return the matching oai record
+	 * @throws de.uhh.l2g.plugins.NoSuchOaiRecordException if a matching oai record could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public OaiRecord findByIdentifier(String identifier)
+		throws NoSuchOaiRecordException, SystemException {
+		OaiRecord oaiRecord = fetchByIdentifier(identifier);
+
+		if (oaiRecord == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("identifier=");
+			msg.append(identifier);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchOaiRecordException(msg.toString());
+		}
+
+		return oaiRecord;
+	}
+
+	/**
+	 * Returns the oai record where identifier = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param identifier the identifier
+	 * @return the matching oai record, or <code>null</code> if a matching oai record could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public OaiRecord fetchByIdentifier(String identifier)
+		throws SystemException {
+		return fetchByIdentifier(identifier, true);
+	}
+
+	/**
+	 * Returns the oai record where identifier = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param identifier the identifier
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching oai record, or <code>null</code> if a matching oai record could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public OaiRecord fetchByIdentifier(String identifier,
+		boolean retrieveFromCache) throws SystemException {
+		Object[] finderArgs = new Object[] { identifier };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_IDENTIFIER,
+					finderArgs, this);
+		}
+
+		if (result instanceof OaiRecord) {
+			OaiRecord oaiRecord = (OaiRecord)result;
+
+			if (!Validator.equals(identifier, oaiRecord.getIdentifier())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_OAIRECORD_WHERE);
+
+			boolean bindIdentifier = false;
+
+			if (identifier == null) {
+				query.append(_FINDER_COLUMN_IDENTIFIER_IDENTIFIER_1);
+			}
+			else if (identifier.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_IDENTIFIER_IDENTIFIER_3);
+			}
+			else {
+				bindIdentifier = true;
+
+				query.append(_FINDER_COLUMN_IDENTIFIER_IDENTIFIER_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindIdentifier) {
+					qPos.add(identifier);
+				}
+
+				List<OaiRecord> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_IDENTIFIER,
+						finderArgs, list);
+				}
+				else {
+					OaiRecord oaiRecord = list.get(0);
+
+					result = oaiRecord;
+
+					cacheResult(oaiRecord);
+
+					if ((oaiRecord.getIdentifier() == null) ||
+							!oaiRecord.getIdentifier().equals(identifier)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_IDENTIFIER,
+							finderArgs, oaiRecord);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_IDENTIFIER,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (OaiRecord)result;
+		}
+	}
+
+	/**
+	 * Removes the oai record where identifier = &#63; from the database.
+	 *
+	 * @param identifier the identifier
+	 * @return the oai record that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public OaiRecord removeByIdentifier(String identifier)
+		throws NoSuchOaiRecordException, SystemException {
+		OaiRecord oaiRecord = findByIdentifier(identifier);
+
+		return remove(oaiRecord);
+	}
+
+	/**
+	 * Returns the number of oai records where identifier = &#63;.
+	 *
+	 * @param identifier the identifier
+	 * @return the number of matching oai records
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByIdentifier(String identifier) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_IDENTIFIER;
+
+		Object[] finderArgs = new Object[] { identifier };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_OAIRECORD_WHERE);
+
+			boolean bindIdentifier = false;
+
+			if (identifier == null) {
+				query.append(_FINDER_COLUMN_IDENTIFIER_IDENTIFIER_1);
+			}
+			else if (identifier.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_IDENTIFIER_IDENTIFIER_3);
+			}
+			else {
+				bindIdentifier = true;
+
+				query.append(_FINDER_COLUMN_IDENTIFIER_IDENTIFIER_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindIdentifier) {
+					qPos.add(identifier);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_IDENTIFIER_IDENTIFIER_1 = "oaiRecord.identifier IS NULL";
+	private static final String _FINDER_COLUMN_IDENTIFIER_IDENTIFIER_2 = "oaiRecord.identifier = ?";
+	private static final String _FINDER_COLUMN_IDENTIFIER_IDENTIFIER_3 = "(oaiRecord.identifier IS NULL OR oaiRecord.identifier = '')";
 
 	public OaiRecordPersistenceImpl() {
 		setModelClass(OaiRecord.class);
@@ -309,6 +552,9 @@ public class OaiRecordPersistenceImpl extends BasePersistenceImpl<OaiRecord>
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_VIDEO,
 			new Object[] { oaiRecord.getVideoId() }, oaiRecord);
+
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_IDENTIFIER,
+			new Object[] { oaiRecord.getIdentifier() }, oaiRecord);
 
 		oaiRecord.resetOriginalValues();
 	}
@@ -391,6 +637,13 @@ public class OaiRecordPersistenceImpl extends BasePersistenceImpl<OaiRecord>
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_VIDEO, args,
 				oaiRecord);
+
+			args = new Object[] { oaiRecord.getIdentifier() };
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_IDENTIFIER, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_IDENTIFIER, args,
+				oaiRecord);
 		}
 		else {
 			OaiRecordModelImpl oaiRecordModelImpl = (OaiRecordModelImpl)oaiRecord;
@@ -403,6 +656,16 @@ public class OaiRecordPersistenceImpl extends BasePersistenceImpl<OaiRecord>
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_VIDEO, args,
 					oaiRecord);
+			}
+
+			if ((oaiRecordModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_IDENTIFIER.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { oaiRecord.getIdentifier() };
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_IDENTIFIER,
+					args, Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_IDENTIFIER,
+					args, oaiRecord);
 			}
 		}
 	}
@@ -421,6 +684,19 @@ public class OaiRecordPersistenceImpl extends BasePersistenceImpl<OaiRecord>
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_VIDEO, args);
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_VIDEO, args);
+		}
+
+		args = new Object[] { oaiRecord.getIdentifier() };
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_IDENTIFIER, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_IDENTIFIER, args);
+
+		if ((oaiRecordModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_IDENTIFIER.getColumnBitmask()) != 0) {
+			args = new Object[] { oaiRecordModelImpl.getOriginalIdentifier() };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_IDENTIFIER, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_IDENTIFIER, args);
 		}
 	}
 

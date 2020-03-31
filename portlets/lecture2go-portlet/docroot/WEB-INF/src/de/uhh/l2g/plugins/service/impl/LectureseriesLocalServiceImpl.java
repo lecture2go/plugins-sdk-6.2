@@ -28,10 +28,12 @@ import java.util.TreeMap;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import de.uhh.l2g.plugins.model.Lectureseries;
-import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.Term;
+import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.impl.LectureseriesImpl;
 import de.uhh.l2g.plugins.model.impl.VideoImpl;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
@@ -62,6 +64,19 @@ public class LectureseriesLocalServiceImpl extends LectureseriesLocalServiceBase
 	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil} to access the lectureseries local service.
 	 */
+	protected static Log LOG = LogFactoryUtil.getLog(Lectureseries.class.getName());
+
+	public Lectureseries addLectureseries(Lectureseries lectureseries){
+		Long id;
+		try {
+			id = counterLocalService.increment();
+			lectureseries.setLectureseriesId(id);
+			lectureseriesPersistence.update(lectureseries);
+		} catch (SystemException e) {
+			LOG.error("can't add new lecture series " + lectureseries.getName() + "!");
+		}
+		return lectureseries;
+	}
 	
 	@Override
 	public Lectureseries updateLectureseries(Lectureseries lectureseries){

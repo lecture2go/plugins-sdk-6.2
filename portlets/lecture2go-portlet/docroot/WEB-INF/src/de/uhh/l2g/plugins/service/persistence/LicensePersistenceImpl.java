@@ -82,95 +82,128 @@ public class LicensePersistenceImpl extends BasePersistenceImpl<License>
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(LicenseModelImpl.ENTITY_CACHE_ENABLED,
 			LicenseModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_FETCH_BY_VIDEO = new FinderPath(LicenseModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_SELECTABLE =
+		new FinderPath(LicenseModelImpl.ENTITY_CACHE_ENABLED,
 			LicenseModelImpl.FINDER_CACHE_ENABLED, LicenseImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByVideo",
-			new String[] { Long.class.getName() },
-			LicenseModelImpl.VIDEOID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_VIDEO = new FinderPath(LicenseModelImpl.ENTITY_CACHE_ENABLED,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySelectable",
+			new String[] {
+				Boolean.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SELECTABLE =
+		new FinderPath(LicenseModelImpl.ENTITY_CACHE_ENABLED,
+			LicenseModelImpl.FINDER_CACHE_ENABLED, LicenseImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySelectable",
+			new String[] { Boolean.class.getName() },
+			LicenseModelImpl.SELECTABLE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_SELECTABLE = new FinderPath(LicenseModelImpl.ENTITY_CACHE_ENABLED,
 			LicenseModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByVideo",
-			new String[] { Long.class.getName() });
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySelectable",
+			new String[] { Boolean.class.getName() });
 
 	/**
-	 * Returns the license where videoId = &#63; or throws a {@link de.uhh.l2g.plugins.NoSuchLicenseException} if it could not be found.
+	 * Returns all the licenses where selectable = &#63;.
 	 *
-	 * @param videoId the video ID
-	 * @return the matching license
-	 * @throws de.uhh.l2g.plugins.NoSuchLicenseException if a matching license could not be found
+	 * @param selectable the selectable
+	 * @return the matching licenses
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public License findByVideo(long videoId)
-		throws NoSuchLicenseException, SystemException {
-		License license = fetchByVideo(videoId);
-
-		if (license == null) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("videoId=");
-			msg.append(videoId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
-			}
-
-			throw new NoSuchLicenseException(msg.toString());
-		}
-
-		return license;
-	}
-
-	/**
-	 * Returns the license where videoId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param videoId the video ID
-	 * @return the matching license, or <code>null</code> if a matching license could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public License fetchByVideo(long videoId) throws SystemException {
-		return fetchByVideo(videoId, true);
-	}
-
-	/**
-	 * Returns the license where videoId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param videoId the video ID
-	 * @param retrieveFromCache whether to use the finder cache
-	 * @return the matching license, or <code>null</code> if a matching license could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public License fetchByVideo(long videoId, boolean retrieveFromCache)
+	public List<License> findBySelectable(boolean selectable)
 		throws SystemException {
-		Object[] finderArgs = new Object[] { videoId };
+		return findBySelectable(selectable, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
 
-		Object result = null;
+	/**
+	 * Returns a range of all the licenses where selectable = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.LicenseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param selectable the selectable
+	 * @param start the lower bound of the range of licenses
+	 * @param end the upper bound of the range of licenses (not inclusive)
+	 * @return the range of matching licenses
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<License> findBySelectable(boolean selectable, int start, int end)
+		throws SystemException {
+		return findBySelectable(selectable, start, end, null);
+	}
 
-		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_VIDEO,
-					finderArgs, this);
+	/**
+	 * Returns an ordered range of all the licenses where selectable = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.LicenseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param selectable the selectable
+	 * @param start the lower bound of the range of licenses
+	 * @param end the upper bound of the range of licenses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching licenses
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<License> findBySelectable(boolean selectable, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SELECTABLE;
+			finderArgs = new Object[] { selectable };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_SELECTABLE;
+			finderArgs = new Object[] { selectable, start, end, orderByComparator };
 		}
 
-		if (result instanceof License) {
-			License license = (License)result;
+		List<License> list = (List<License>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
 
-			if ((videoId != license.getVideoId())) {
-				result = null;
+		if ((list != null) && !list.isEmpty()) {
+			for (License license : list) {
+				if ((selectable != license.getSelectable())) {
+					list = null;
+
+					break;
+				}
 			}
 		}
 
-		if (result == null) {
-			StringBundler query = new StringBundler(3);
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
 
 			query.append(_SQL_SELECT_LICENSE_WHERE);
 
-			query.append(_FINDER_COLUMN_VIDEO_VIDEOID_2);
+			query.append(_FINDER_COLUMN_SELECTABLE_SELECTABLE_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(LicenseModelImpl.ORDER_BY_JPQL);
+			}
 
 			String sql = query.toString();
 
@@ -183,37 +216,27 @@ public class LicensePersistenceImpl extends BasePersistenceImpl<License>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(videoId);
+				qPos.add(selectable);
 
-				List<License> list = q.list();
+				if (!pagination) {
+					list = (List<License>)QueryUtil.list(q, getDialect(),
+							start, end, false);
 
-				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_VIDEO,
-						finderArgs, list);
+					Collections.sort(list);
+
+					list = new UnmodifiableList<License>(list);
 				}
 				else {
-					if ((list.size() > 1) && _log.isWarnEnabled()) {
-						_log.warn(
-							"LicensePersistenceImpl.fetchByVideo(long, boolean) with parameters (" +
-							StringUtil.merge(finderArgs) +
-							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-					}
-
-					License license = list.get(0);
-
-					result = license;
-
-					cacheResult(license);
-
-					if ((license.getVideoId() != videoId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_VIDEO,
-							finderArgs, license);
-					}
+					list = (List<License>)QueryUtil.list(q, getDialect(),
+							start, end);
 				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_VIDEO,
-					finderArgs);
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -222,41 +245,292 @@ public class LicensePersistenceImpl extends BasePersistenceImpl<License>
 			}
 		}
 
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (License)result;
-		}
+		return list;
 	}
 
 	/**
-	 * Removes the license where videoId = &#63; from the database.
+	 * Returns the first license in the ordered set where selectable = &#63;.
 	 *
-	 * @param videoId the video ID
-	 * @return the license that was removed
+	 * @param selectable the selectable
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching license
+	 * @throws de.uhh.l2g.plugins.NoSuchLicenseException if a matching license could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public License removeByVideo(long videoId)
+	public License findBySelectable_First(boolean selectable,
+		OrderByComparator orderByComparator)
 		throws NoSuchLicenseException, SystemException {
-		License license = findByVideo(videoId);
+		License license = fetchBySelectable_First(selectable, orderByComparator);
 
-		return remove(license);
+		if (license != null) {
+			return license;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("selectable=");
+		msg.append(selectable);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchLicenseException(msg.toString());
 	}
 
 	/**
-	 * Returns the number of licenses where videoId = &#63;.
+	 * Returns the first license in the ordered set where selectable = &#63;.
 	 *
-	 * @param videoId the video ID
+	 * @param selectable the selectable
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching license, or <code>null</code> if a matching license could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public License fetchBySelectable_First(boolean selectable,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<License> list = findBySelectable(selectable, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last license in the ordered set where selectable = &#63;.
+	 *
+	 * @param selectable the selectable
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching license
+	 * @throws de.uhh.l2g.plugins.NoSuchLicenseException if a matching license could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public License findBySelectable_Last(boolean selectable,
+		OrderByComparator orderByComparator)
+		throws NoSuchLicenseException, SystemException {
+		License license = fetchBySelectable_Last(selectable, orderByComparator);
+
+		if (license != null) {
+			return license;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("selectable=");
+		msg.append(selectable);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchLicenseException(msg.toString());
+	}
+
+	/**
+	 * Returns the last license in the ordered set where selectable = &#63;.
+	 *
+	 * @param selectable the selectable
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching license, or <code>null</code> if a matching license could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public License fetchBySelectable_Last(boolean selectable,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countBySelectable(selectable);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<License> list = findBySelectable(selectable, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the licenses before and after the current license in the ordered set where selectable = &#63;.
+	 *
+	 * @param licenseId the primary key of the current license
+	 * @param selectable the selectable
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next license
+	 * @throws de.uhh.l2g.plugins.NoSuchLicenseException if a license with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public License[] findBySelectable_PrevAndNext(long licenseId,
+		boolean selectable, OrderByComparator orderByComparator)
+		throws NoSuchLicenseException, SystemException {
+		License license = findByPrimaryKey(licenseId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			License[] array = new LicenseImpl[3];
+
+			array[0] = getBySelectable_PrevAndNext(session, license,
+					selectable, orderByComparator, true);
+
+			array[1] = license;
+
+			array[2] = getBySelectable_PrevAndNext(session, license,
+					selectable, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected License getBySelectable_PrevAndNext(Session session,
+		License license, boolean selectable,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_LICENSE_WHERE);
+
+		query.append(_FINDER_COLUMN_SELECTABLE_SELECTABLE_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(LicenseModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(selectable);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(license);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<License> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the licenses where selectable = &#63; from the database.
+	 *
+	 * @param selectable the selectable
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeBySelectable(boolean selectable)
+		throws SystemException {
+		for (License license : findBySelectable(selectable, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(license);
+		}
+	}
+
+	/**
+	 * Returns the number of licenses where selectable = &#63;.
+	 *
+	 * @param selectable the selectable
 	 * @return the number of matching licenses
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByVideo(long videoId) throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_VIDEO;
+	public int countBySelectable(boolean selectable) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_SELECTABLE;
 
-		Object[] finderArgs = new Object[] { videoId };
+		Object[] finderArgs = new Object[] { selectable };
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
@@ -266,7 +540,7 @@ public class LicensePersistenceImpl extends BasePersistenceImpl<License>
 
 			query.append(_SQL_COUNT_LICENSE_WHERE);
 
-			query.append(_FINDER_COLUMN_VIDEO_VIDEOID_2);
+			query.append(_FINDER_COLUMN_SELECTABLE_SELECTABLE_2);
 
 			String sql = query.toString();
 
@@ -279,7 +553,7 @@ public class LicensePersistenceImpl extends BasePersistenceImpl<License>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(videoId);
+				qPos.add(selectable);
 
 				count = (Long)q.uniqueResult();
 
@@ -298,7 +572,7 @@ public class LicensePersistenceImpl extends BasePersistenceImpl<License>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_VIDEO_VIDEOID_2 = "license.videoId = ?";
+	private static final String _FINDER_COLUMN_SELECTABLE_SELECTABLE_2 = "license.selectable = ?";
 
 	public LicensePersistenceImpl() {
 		setModelClass(License.class);
@@ -313,9 +587,6 @@ public class LicensePersistenceImpl extends BasePersistenceImpl<License>
 	public void cacheResult(License license) {
 		EntityCacheUtil.putResult(LicenseModelImpl.ENTITY_CACHE_ENABLED,
 			LicenseImpl.class, license.getPrimaryKey(), license);
-
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_VIDEO,
-			new Object[] { license.getVideoId() }, license);
 
 		license.resetOriginalValues();
 	}
@@ -373,8 +644,6 @@ public class LicensePersistenceImpl extends BasePersistenceImpl<License>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		clearUniqueFindersCache(license);
 	}
 
 	@Override
@@ -385,48 +654,6 @@ public class LicensePersistenceImpl extends BasePersistenceImpl<License>
 		for (License license : licenses) {
 			EntityCacheUtil.removeResult(LicenseModelImpl.ENTITY_CACHE_ENABLED,
 				LicenseImpl.class, license.getPrimaryKey());
-
-			clearUniqueFindersCache(license);
-		}
-	}
-
-	protected void cacheUniqueFindersCache(License license) {
-		if (license.isNew()) {
-			Object[] args = new Object[] { license.getVideoId() };
-
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_VIDEO, args,
-				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_VIDEO, args, license);
-		}
-		else {
-			LicenseModelImpl licenseModelImpl = (LicenseModelImpl)license;
-
-			if ((licenseModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_VIDEO.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { license.getVideoId() };
-
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_VIDEO, args,
-					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_VIDEO, args,
-					license);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(License license) {
-		LicenseModelImpl licenseModelImpl = (LicenseModelImpl)license;
-
-		Object[] args = new Object[] { license.getVideoId() };
-
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_VIDEO, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_VIDEO, args);
-
-		if ((licenseModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_VIDEO.getColumnBitmask()) != 0) {
-			args = new Object[] { licenseModelImpl.getOriginalVideoId() };
-
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_VIDEO, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_VIDEO, args);
 		}
 	}
 
@@ -539,6 +766,8 @@ public class LicensePersistenceImpl extends BasePersistenceImpl<License>
 
 		boolean isNew = license.isNew();
 
+		LicenseModelImpl licenseModelImpl = (LicenseModelImpl)license;
+
 		Session session = null;
 
 		try {
@@ -566,11 +795,29 @@ public class LicensePersistenceImpl extends BasePersistenceImpl<License>
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
+		else {
+			if ((licenseModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SELECTABLE.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						licenseModelImpl.getOriginalSelectable()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SELECTABLE,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SELECTABLE,
+					args);
+
+				args = new Object[] { licenseModelImpl.getSelectable() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SELECTABLE,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SELECTABLE,
+					args);
+			}
+		}
+
 		EntityCacheUtil.putResult(LicenseModelImpl.ENTITY_CACHE_ENABLED,
 			LicenseImpl.class, license.getPrimaryKey(), license);
-
-		clearUniqueFindersCache(license);
-		cacheUniqueFindersCache(license);
 
 		return license;
 	}
@@ -586,14 +833,13 @@ public class LicensePersistenceImpl extends BasePersistenceImpl<License>
 		licenseImpl.setPrimaryKey(license.getPrimaryKey());
 
 		licenseImpl.setLicenseId(license.getLicenseId());
-		licenseImpl.setVideoId(license.getVideoId());
-		licenseImpl.setCcby(license.getCcby());
-		licenseImpl.setCcbybc(license.getCcbybc());
-		licenseImpl.setCcbyncnd(license.getCcbyncnd());
-		licenseImpl.setCcbyncsa(license.getCcbyncsa());
-		licenseImpl.setCcbysa(license.getCcbysa());
-		licenseImpl.setCcbync(license.getCcbync());
-		licenseImpl.setL2go(license.getL2go());
+		licenseImpl.setFullName(license.getFullName());
+		licenseImpl.setShortIdentifier(license.getShortIdentifier());
+		licenseImpl.setUrl(license.getUrl());
+		licenseImpl.setSchemeName(license.getSchemeName());
+		licenseImpl.setSchemeUrl(license.getSchemeUrl());
+		licenseImpl.setSelectable(license.isSelectable());
+		licenseImpl.setDescription(license.getDescription());
 
 		return licenseImpl;
 	}

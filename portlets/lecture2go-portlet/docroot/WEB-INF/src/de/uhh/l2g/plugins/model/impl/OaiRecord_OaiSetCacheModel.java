@@ -17,7 +17,7 @@ package de.uhh.l2g.plugins.model.impl;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
 
-import de.uhh.l2g.plugins.model.Lastvideolist;
+import de.uhh.l2g.plugins.model.OaiRecord_OaiSet;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -25,52 +25,58 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
 /**
- * The cache model class for representing Lastvideolist in entity cache.
+ * The cache model class for representing OaiRecord_OaiSet in entity cache.
  *
  * @author Iavor Sturm
- * @see Lastvideolist
+ * @see OaiRecord_OaiSet
  * @generated
  */
-public class LastvideolistCacheModel implements CacheModel<Lastvideolist>,
+public class OaiRecord_OaiSetCacheModel implements CacheModel<OaiRecord_OaiSet>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(7);
 
-		sb.append("{lastvideolistId=");
-		sb.append(lastvideolistId);
-		sb.append(", videoId=");
-		sb.append(videoId);
+		sb.append("{oaiRecordOaiSetId=");
+		sb.append(oaiRecordOaiSetId);
+		sb.append(", oaiRecordId=");
+		sb.append(oaiRecordId);
+		sb.append(", oaiSetId=");
+		sb.append(oaiSetId);
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	@Override
-	public Lastvideolist toEntityModel() {
-		LastvideolistImpl lastvideolistImpl = new LastvideolistImpl();
+	public OaiRecord_OaiSet toEntityModel() {
+		OaiRecord_OaiSetImpl oaiRecord_OaiSetImpl = new OaiRecord_OaiSetImpl();
 
-		lastvideolistImpl.setLastvideolistId(lastvideolistId);
-		lastvideolistImpl.setVideoId(videoId);
+		oaiRecord_OaiSetImpl.setOaiRecordOaiSetId(oaiRecordOaiSetId);
+		oaiRecord_OaiSetImpl.setOaiRecordId(oaiRecordId);
+		oaiRecord_OaiSetImpl.setOaiSetId(oaiSetId);
 
-		lastvideolistImpl.resetOriginalValues();
+		oaiRecord_OaiSetImpl.resetOriginalValues();
 
-		return lastvideolistImpl;
+		return oaiRecord_OaiSetImpl;
 	}
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		lastvideolistId = objectInput.readLong();
-		videoId = objectInput.readLong();
+		oaiRecordOaiSetId = objectInput.readLong();
+		oaiRecordId = objectInput.readLong();
+		oaiSetId = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(lastvideolistId);
-		objectOutput.writeLong(videoId);
+		objectOutput.writeLong(oaiRecordOaiSetId);
+		objectOutput.writeLong(oaiRecordId);
+		objectOutput.writeLong(oaiSetId);
 	}
 
-	public long lastvideolistId;
-	public long videoId;
+	public long oaiRecordOaiSetId;
+	public long oaiRecordId;
+	public long oaiSetId;
 }

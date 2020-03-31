@@ -2217,6 +2217,543 @@ public class CreatorPersistenceImpl extends BasePersistenceImpl<Creator>
 	private static final String _FINDER_COLUMN_FULLNAME_FULLNAME_1 = "creator.fullName IS NULL";
 	private static final String _FINDER_COLUMN_FULLNAME_FULLNAME_2 = "creator.fullName = ?";
 	private static final String _FINDER_COLUMN_FULLNAME_FULLNAME_3 = "(creator.fullName IS NULL OR creator.fullName = '')";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_AFFILIATION =
+		new FinderPath(CreatorModelImpl.ENTITY_CACHE_ENABLED,
+			CreatorModelImpl.FINDER_CACHE_ENABLED, CreatorImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAffiliation",
+			new String[] {
+				String.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_AFFILIATION =
+		new FinderPath(CreatorModelImpl.ENTITY_CACHE_ENABLED,
+			CreatorModelImpl.FINDER_CACHE_ENABLED, CreatorImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAffiliation",
+			new String[] { String.class.getName() },
+			CreatorModelImpl.AFFILIATION_COLUMN_BITMASK |
+			CreatorModelImpl.LASTNAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_AFFILIATION = new FinderPath(CreatorModelImpl.ENTITY_CACHE_ENABLED,
+			CreatorModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAffiliation",
+			new String[] { String.class.getName() });
+
+	/**
+	 * Returns all the creators where affiliation = &#63;.
+	 *
+	 * @param affiliation the affiliation
+	 * @return the matching creators
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Creator> findByAffiliation(String affiliation)
+		throws SystemException {
+		return findByAffiliation(affiliation, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the creators where affiliation = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.CreatorModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param affiliation the affiliation
+	 * @param start the lower bound of the range of creators
+	 * @param end the upper bound of the range of creators (not inclusive)
+	 * @return the range of matching creators
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Creator> findByAffiliation(String affiliation, int start,
+		int end) throws SystemException {
+		return findByAffiliation(affiliation, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the creators where affiliation = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link de.uhh.l2g.plugins.model.impl.CreatorModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param affiliation the affiliation
+	 * @param start the lower bound of the range of creators
+	 * @param end the upper bound of the range of creators (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching creators
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Creator> findByAffiliation(String affiliation, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_AFFILIATION;
+			finderArgs = new Object[] { affiliation };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_AFFILIATION;
+			finderArgs = new Object[] { affiliation, start, end, orderByComparator };
+		}
+
+		List<Creator> list = (List<Creator>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (Creator creator : list) {
+				if (!Validator.equals(affiliation, creator.getAffiliation())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_CREATOR_WHERE);
+
+			boolean bindAffiliation = false;
+
+			if (affiliation == null) {
+				query.append(_FINDER_COLUMN_AFFILIATION_AFFILIATION_1);
+			}
+			else if (affiliation.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_AFFILIATION_AFFILIATION_3);
+			}
+			else {
+				bindAffiliation = true;
+
+				query.append(_FINDER_COLUMN_AFFILIATION_AFFILIATION_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CreatorModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindAffiliation) {
+					qPos.add(affiliation);
+				}
+
+				if (!pagination) {
+					list = (List<Creator>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<Creator>(list);
+				}
+				else {
+					list = (List<Creator>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first creator in the ordered set where affiliation = &#63;.
+	 *
+	 * @param affiliation the affiliation
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching creator
+	 * @throws de.uhh.l2g.plugins.NoSuchCreatorException if a matching creator could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Creator findByAffiliation_First(String affiliation,
+		OrderByComparator orderByComparator)
+		throws NoSuchCreatorException, SystemException {
+		Creator creator = fetchByAffiliation_First(affiliation,
+				orderByComparator);
+
+		if (creator != null) {
+			return creator;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("affiliation=");
+		msg.append(affiliation);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCreatorException(msg.toString());
+	}
+
+	/**
+	 * Returns the first creator in the ordered set where affiliation = &#63;.
+	 *
+	 * @param affiliation the affiliation
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching creator, or <code>null</code> if a matching creator could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Creator fetchByAffiliation_First(String affiliation,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<Creator> list = findByAffiliation(affiliation, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last creator in the ordered set where affiliation = &#63;.
+	 *
+	 * @param affiliation the affiliation
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching creator
+	 * @throws de.uhh.l2g.plugins.NoSuchCreatorException if a matching creator could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Creator findByAffiliation_Last(String affiliation,
+		OrderByComparator orderByComparator)
+		throws NoSuchCreatorException, SystemException {
+		Creator creator = fetchByAffiliation_Last(affiliation, orderByComparator);
+
+		if (creator != null) {
+			return creator;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("affiliation=");
+		msg.append(affiliation);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCreatorException(msg.toString());
+	}
+
+	/**
+	 * Returns the last creator in the ordered set where affiliation = &#63;.
+	 *
+	 * @param affiliation the affiliation
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching creator, or <code>null</code> if a matching creator could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Creator fetchByAffiliation_Last(String affiliation,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByAffiliation(affiliation);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Creator> list = findByAffiliation(affiliation, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the creators before and after the current creator in the ordered set where affiliation = &#63;.
+	 *
+	 * @param creatorId the primary key of the current creator
+	 * @param affiliation the affiliation
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next creator
+	 * @throws de.uhh.l2g.plugins.NoSuchCreatorException if a creator with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Creator[] findByAffiliation_PrevAndNext(long creatorId,
+		String affiliation, OrderByComparator orderByComparator)
+		throws NoSuchCreatorException, SystemException {
+		Creator creator = findByPrimaryKey(creatorId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Creator[] array = new CreatorImpl[3];
+
+			array[0] = getByAffiliation_PrevAndNext(session, creator,
+					affiliation, orderByComparator, true);
+
+			array[1] = creator;
+
+			array[2] = getByAffiliation_PrevAndNext(session, creator,
+					affiliation, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Creator getByAffiliation_PrevAndNext(Session session,
+		Creator creator, String affiliation,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_CREATOR_WHERE);
+
+		boolean bindAffiliation = false;
+
+		if (affiliation == null) {
+			query.append(_FINDER_COLUMN_AFFILIATION_AFFILIATION_1);
+		}
+		else if (affiliation.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_AFFILIATION_AFFILIATION_3);
+		}
+		else {
+			bindAffiliation = true;
+
+			query.append(_FINDER_COLUMN_AFFILIATION_AFFILIATION_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CreatorModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (bindAffiliation) {
+			qPos.add(affiliation);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(creator);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<Creator> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the creators where affiliation = &#63; from the database.
+	 *
+	 * @param affiliation the affiliation
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByAffiliation(String affiliation)
+		throws SystemException {
+		for (Creator creator : findByAffiliation(affiliation,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(creator);
+		}
+	}
+
+	/**
+	 * Returns the number of creators where affiliation = &#63;.
+	 *
+	 * @param affiliation the affiliation
+	 * @return the number of matching creators
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByAffiliation(String affiliation) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_AFFILIATION;
+
+		Object[] finderArgs = new Object[] { affiliation };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_CREATOR_WHERE);
+
+			boolean bindAffiliation = false;
+
+			if (affiliation == null) {
+				query.append(_FINDER_COLUMN_AFFILIATION_AFFILIATION_1);
+			}
+			else if (affiliation.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_AFFILIATION_AFFILIATION_3);
+			}
+			else {
+				bindAffiliation = true;
+
+				query.append(_FINDER_COLUMN_AFFILIATION_AFFILIATION_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindAffiliation) {
+					qPos.add(affiliation);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_AFFILIATION_AFFILIATION_1 = "creator.affiliation IS NULL";
+	private static final String _FINDER_COLUMN_AFFILIATION_AFFILIATION_2 = "creator.affiliation = ?";
+	private static final String _FINDER_COLUMN_AFFILIATION_AFFILIATION_3 = "(creator.affiliation IS NULL OR creator.affiliation = '')";
 
 	public CreatorPersistenceImpl() {
 		setModelClass(Creator.class);
@@ -2511,6 +3048,25 @@ public class CreatorPersistenceImpl extends BasePersistenceImpl<Creator>
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FULLNAME,
 					args);
 			}
+
+			if ((creatorModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_AFFILIATION.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						creatorModelImpl.getOriginalAffiliation()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_AFFILIATION,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_AFFILIATION,
+					args);
+
+				args = new Object[] { creatorModelImpl.getAffiliation() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_AFFILIATION,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_AFFILIATION,
+					args);
+			}
 		}
 
 		EntityCacheUtil.putResult(CreatorModelImpl.ENTITY_CACHE_ENABLED,
@@ -2536,6 +3092,8 @@ public class CreatorPersistenceImpl extends BasePersistenceImpl<Creator>
 		creatorImpl.setJobTitle(creator.getJobTitle());
 		creatorImpl.setGender(creator.getGender());
 		creatorImpl.setFullName(creator.getFullName());
+		creatorImpl.setAffiliation(creator.getAffiliation());
+		creatorImpl.setOrcidId(creator.getOrcidId());
 
 		return creatorImpl;
 	}

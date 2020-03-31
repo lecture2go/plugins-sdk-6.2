@@ -19,10 +19,13 @@ import java.util.List;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
 import de.uhh.l2g.plugins.NoSuchCoordinatorException;
+import de.uhh.l2g.plugins.model.Category;
 import de.uhh.l2g.plugins.model.Coordinator;
 import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.impl.CoordinatorImpl;
@@ -50,6 +53,20 @@ public class CoordinatorLocalServiceImpl extends CoordinatorLocalServiceBaseImpl
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil} to access the coordinator local service.
 	 */
 
+	protected static Log LOG = LogFactoryUtil.getLog(Coordinator.class.getName());
+	
+	public Coordinator addCoordinator(Coordinator object){
+		Long id;
+		try {
+			id = counterLocalService.increment();
+			object.setPrimaryKey(id);
+			coordinatorPersistence.update(object);
+		} catch (SystemException e) {
+			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
+		}
+		return object;
+	}
+	
 	private List<Coordinator> fillProps(List<Coordinator> cl) throws SystemException{
 		Iterator<Coordinator> it = cl.iterator();
 		while (it.hasNext()){

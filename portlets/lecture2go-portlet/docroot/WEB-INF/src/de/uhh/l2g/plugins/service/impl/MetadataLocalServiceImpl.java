@@ -14,6 +14,11 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import de.uhh.l2g.plugins.model.Metadata;
 import de.uhh.l2g.plugins.service.base.MetadataLocalServiceBaseImpl;
 
 /**
@@ -36,4 +41,19 @@ public class MetadataLocalServiceImpl extends MetadataLocalServiceBaseImpl {
 	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.MetadataLocalServiceUtil} to access the metadata local service.
 	 */
+	
+	protected static Log LOG = LogFactoryUtil.getLog(Metadata.class.getName());
+
+	public Metadata addMetadata(Metadata object){
+		Long id;
+		try {
+			id = counterLocalService.increment();
+			object.setPrimaryKey(id);
+			metadataPersistence.update(object);
+		} catch (SystemException e) {
+			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
+		}
+		return object;
+	}
+	
 }

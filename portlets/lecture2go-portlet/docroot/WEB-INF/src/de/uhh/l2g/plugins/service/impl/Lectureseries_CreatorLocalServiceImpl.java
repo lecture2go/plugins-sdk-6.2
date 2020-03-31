@@ -17,7 +17,10 @@ package de.uhh.l2g.plugins.service.impl;
 import java.util.List;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.Lectureseries_Creator;
 import de.uhh.l2g.plugins.service.base.Lectureseries_CreatorLocalServiceBaseImpl;
 
@@ -42,6 +45,19 @@ public class Lectureseries_CreatorLocalServiceImpl
 	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.Lectureseries_CreatorLocalServiceUtil} to access the lectureseries_ creator local service.
 	 */
+	protected static Log LOG = LogFactoryUtil.getLog(Lectureseries_Creator.class.getName());
+
+	public Lectureseries_Creator addLectureseries_Creator(Lectureseries_Creator object){
+		Long id;
+		try {
+			id = counterLocalService.increment();
+			object.setPrimaryKey(id);
+			lectureseries_CreatorPersistence.update(object);
+		} catch (SystemException e) {
+			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
+		}
+		return object;
+	}
 	
 	public void removeByLectureseriesId(Long lectureseriesId) throws SystemException{
 		lectureseries_CreatorPersistence.removeByLectureseries(lectureseriesId);
