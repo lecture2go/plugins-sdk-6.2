@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Locale;
+import java.util.NoSuchElementException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -14,6 +16,7 @@ import javax.portlet.RenderRequest;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -33,6 +36,7 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.RoleServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -46,11 +50,13 @@ import de.uhh.l2g.plugins.model.Institution_Host;
 import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.model.impl.CoordinatorImpl;
 import de.uhh.l2g.plugins.model.impl.HostImpl;
+import de.uhh.l2g.plugins.model.impl.InstitutionImpl;
 import de.uhh.l2g.plugins.model.impl.ProducerImpl;
 import de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
+import de.uhh.l2g.plugins.util.EmailManager;
 import de.uhh.l2g.plugins.util.PermissionManager;
 
 public class AdminUserManagement extends MVCPortlet {
@@ -59,7 +65,7 @@ public class AdminUserManagement extends MVCPortlet {
 	public static final String L2G_COORDINATOR = "L2Go Coordinator";
 	public static final String L2G_PRODUCER = "L2Go Producer";
 	public static final String L2G_STUDENT = "L2Go Student";
-	public static final String L2G_PENDING = "L2Go Pending";
+	public static final String L2G_PRODUCER_PENDING = "L2Go Producer Pending";
 
 	public void viewRole(ActionRequest request, ActionResponse response) throws SystemException, PortalException {
 		//updateUsersScreenName();
@@ -241,9 +247,10 @@ public class AdminUserManagement extends MVCPortlet {
 
 		// producer request --- start
 		try{//parameter is null for not authorized user to use this function
-			if (!request.getParameter("pfId").isEmpty())
+			if (!request.getParameter("pfId").isEmpty()) {
 				handleProducerRequest(request);
-			else {
+				sendNotifyMailNewProducer(request.getLocale(),u);
+			} else {
 				// delete role for user
 				deleteL2GoRole(L2G_PRODUCER, u);
 			}
@@ -266,8 +273,8 @@ public class AdminUserManagement extends MVCPortlet {
 		}catch(NullPointerException npe){}
 		// l2go admin request --- end
 		
-		// remove l2go pending role
-		deleteL2GoRole(L2G_PENDING, u);
+		// remove l2go pending role if set
+		deleteL2GoRole(L2G_PRODUCER_PENDING, u);
 		
 		String backURL = request.getParameter("backURL");
 		try {
@@ -330,17 +337,23 @@ public class AdminUserManagement extends MVCPortlet {
 	private void handleProducerRequest(ActionRequest request) throws NumberFormatException, PortalException, SystemException, IOException {
 		User u = UserLocalServiceUtil.getUser(new Long(request.getParameter("userId")));
 		Producer p = new ProducerImpl();
+		boolean existingProducer = false;
 		//initialize producer
 		try {
+			// throws exception if producer does not exists
 			p = ProducerLocalServiceUtil.getProducer(u.getUserId());
+			existingProducer = true;
 		} catch (Exception e) {
 			p.setProducerId(u.getUserId());
 		}
 		// save role to l2go producer table
 		p.setInstitutionId(new Long(request.getParameter("pfId")));
 		p.setApproved(1);
-		// home directory 
-		p.setHomeDir(u.getScreenName());
+		// home directory
+		if (!existingProducer) {
+			// only set home directory for new producers
+			p.setHomeDir(u.getScreenName());
+		}
 		p.setIdNum(u.getScreenName());
 		// repository for producer
 		Host h = new HostImpl();
@@ -602,6 +615,44 @@ public class AdminUserManagement extends MVCPortlet {
 			//e.printStackTrace();
 		}
 		
+	}
+	
+	/**
+	 * Send mail notification to coordinator and admins, for new or edited producer right
+	 * @param locale language locale
+	 * @param user the user which producer rights changed
+	 */
+	private void sendNotifyMailNewProducer(Locale locale, User user) {
+		// notify coordinators and admins via mail that a user was edited
+		EmailManager em = new EmailManager();
+
+		// get coordinator of producer/ user
+		Producer producer = new ProducerImpl();
+		Institution institution = new InstitutionImpl();
+		try {
+			producer = ProducerLocalServiceUtil.getProducer(user.getUserId());
+			institution = InstitutionLocalServiceUtil.getInstitution(producer.getInstitutionId());
+		} catch(Exception e) {
+			// producer or linked institution does not exist, something went wrong
+			return;
+		}
+		
+		String SUBJECT = LanguageUtil.format(getPortletConfig(), locale, "mail-new-producer-subject",new String[]{user.getFullName()});
+		String BODY = LanguageUtil.format(getPortletConfig(), locale, "mail-new-producer-body",new String[]{institution.getName(),user.getFullName()});
+
+		Coordinator coordinator = new CoordinatorImpl();
+		boolean coordExists = false;
+		try{
+			coordinator = CoordinatorLocalServiceUtil.getByInstitution(producer.getInstitutionId());
+			if(coordinator.getCoordinatorId()>0)coordExists = true;
+			if(coordExists){
+				String COORDEMAILADDRESS = coordinator.getEmailAddress();
+				// Send mail to Coordinator
+				em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), COORDEMAILADDRESS, SUBJECT, BODY);
+			}
+		}catch(Exception e){}
+		// Send mail to L2Go
+		em.sendEmail(PropsUtil.get("lecture2go.response.email.address"), PropsUtil.get("lecture2go.response.email.address"), SUBJECT, BODY);
 	}
 	
 }
