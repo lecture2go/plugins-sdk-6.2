@@ -15,7 +15,7 @@
 	<liferay-ui:journal-article articleId="<%=articleId%>" groupId="<%=groupId%>"/>
 </div>
 <aui:form action="<%= editURL.toString() %>" method="post">
-	<aui:fieldset helpMessage="" column="true" label='<%=LanguageUtil.get(pageContext, "please-select-your-institution")%>'>
+	<aui:fieldset helpMessage="" column="true">
 		<aui:layout>
 			<div id="metadata-upload">
 				<c:if test='<%= permissionProducerPending %>'>
