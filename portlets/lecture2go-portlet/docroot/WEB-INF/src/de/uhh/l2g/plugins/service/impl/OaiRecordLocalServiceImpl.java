@@ -19,8 +19,11 @@ import java.util.Date;
 import java.util.List;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import de.uhh.l2g.plugins.NoSuchOaiRecordException;
+import de.uhh.l2g.plugins.model.Category;
 import de.uhh.l2g.plugins.model.OaiRecord;
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.Video_Category;
@@ -52,6 +55,20 @@ public class OaiRecordLocalServiceImpl extends OaiRecordLocalServiceBaseImpl {
 	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.OaiRecordLocalServiceUtil} to access the oai record local service.
 	 */
+	
+	protected static Log LOG = LogFactoryUtil.getLog(OaiRecord.class.getName());
+
+	public OaiRecord addOaiRecord(OaiRecord object){
+		Long id;
+		try {
+			id = counterLocalService.increment();
+			object.setPrimaryKey(id);
+			oaiRecordPersistence.update(object);
+		} catch (SystemException e) {
+			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
+		}
+		return object;
+	}
 	
 	public OaiRecord getByVideo(Long videoId) throws SystemException, NoSuchOaiRecordException {
 		return oaiRecordPersistence.findByVideo(videoId);
