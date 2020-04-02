@@ -624,6 +624,7 @@ $(function () {
 	toggleShare();
 	
 	$('#fileupload').fileupload({
+		maxChunkSize: 10000000,
         dataType: 'json',
         beforeSend: function(xhr, data) {
         	// send a custom header to notify the upload servlet where to put the temporary files upon upload
@@ -659,7 +660,7 @@ $(function () {
         },
         done: function (e, data) {
         	// set progress bar to zero
-           setTimeout(function(){$('#progress .bar').css('width',0 + '%')}, 1000);
+           setTimeout(function(){$('#progress .bar').css('width',0 + '%')}, 100);
            var vars = data.jqXHR.responseJSON;
            $.template( "filesTemplate", $("#template") );
            $("#"+vars[0].id).remove();   
@@ -717,9 +718,9 @@ $(function () {
         progressall: function (e, data) {
 	        var progress = parseInt(data.loaded / data.total * 100, 10);
 	        
-	        if (progress<=95) {
+	        if (progress<=98) {
 				/* this is a workaround for wrong calculated data.loaded values on some machines, which led to inaccurate (too fast) progress
-				the progress war will now be stuck at 95% until really finished, which is now handeled in the done callback. */
+				the progress war will now be stuck at 98% until really finished, which is now handeled in the done callback. */
 		        $('#progress .bar').css('width',progress + '%');
 	        }
    		},
@@ -1102,7 +1103,6 @@ function updateAllMetadata(){
 		return;
 	}
 	submitted = true;
-	console.log("hallo");
 	
 	var license = $("input[name=<portlet:namespace/>license]:checked").val();
 	var creatorsJsonArray = JSON.stringify(getJsonCreatorsArray());
