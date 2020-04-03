@@ -15,7 +15,7 @@
 	<liferay-ui:journal-article articleId="<%=articleId%>" groupId="<%=groupId%>"/>
 </div>
 <aui:form action="<%= editURL.toString() %>" method="post">
-	<aui:fieldset helpMessage="" column="true" label='<%=LanguageUtil.get(pageContext, "l2go-roles-for")+" "+user.getFullName()%>'>
+	<aui:fieldset helpMessage="" column="true">
 		<aui:layout>
 			<div id="metadata-upload">
 				<c:if test='<%= permissionProducerPending %>'>
@@ -23,17 +23,15 @@
 						<aui:select name="pfId" label="" required="true">
 							<aui:option disabled='true' selected="true"><liferay-ui:message key="select-institution"/></aui:option>
 							<%for (int i = 0; i < institutions.size(); i++) {%>
-								<aui:option value='<%=institutions.get(i).getInstitutionId()%>'><liferay-ui:message key="producer-for"/> <%=institutions.get(i).getName() %></aui:option>
+								<aui:option value='<%=institutions.get(i).getInstitutionId()%>'><%=institutions.get(i).getName() %></aui:option>
 							<% } %>
 						</aui:select>
 					</aui:column>
 				</c:if>
 				<aui:input type="hidden" name="isStud" value="false"/>				
 			
-				
 				<aui:button-row>
 		      		<aui:button type="submit" name="submit"/>
-		      		<aui:button type="cancel" value="cancel" name="cancel"/>
 		    	</aui:button-row>
 			</div>
 		</aui:layout>
