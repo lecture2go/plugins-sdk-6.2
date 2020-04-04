@@ -61,9 +61,9 @@ public class OaiRecordLocalServiceImpl extends OaiRecordLocalServiceBaseImpl {
 	public OaiRecord addOaiRecord(OaiRecord object){
 		Long id;
 		try {
-			id = counterLocalService.increment();
+			id = counterLocalService.increment(OaiRecord.class.getName());
 			object.setPrimaryKey(id);
-			oaiRecordPersistence.update(object);
+			super.addOaiRecord(object);
 		} catch (SystemException e) {
 			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
 		}

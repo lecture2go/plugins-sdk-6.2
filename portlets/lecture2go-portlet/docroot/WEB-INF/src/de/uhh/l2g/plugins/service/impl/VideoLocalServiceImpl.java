@@ -114,9 +114,9 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	public Video addVideo(Video object){
 		Long id;
 		try {
-			id = counterLocalService.increment();
+			id = counterLocalService.increment(Video.class.getName());
 			object.setPrimaryKey(id);
-			videoPersistence.update(object);
+			super.addVideo(object);
 		} catch (SystemException e) {
 			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
 		}

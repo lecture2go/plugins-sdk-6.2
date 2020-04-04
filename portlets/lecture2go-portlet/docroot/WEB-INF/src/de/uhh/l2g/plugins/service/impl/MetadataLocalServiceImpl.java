@@ -47,9 +47,9 @@ public class MetadataLocalServiceImpl extends MetadataLocalServiceBaseImpl {
 	public Metadata addMetadata(Metadata object){
 		Long id;
 		try {
-			id = counterLocalService.increment();
+			id = counterLocalService.increment(Metadata.class.getName());
 			object.setPrimaryKey(id);
-			metadataPersistence.update(object);
+			super.addMetadata(object);
 		} catch (SystemException e) {
 			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
 		}

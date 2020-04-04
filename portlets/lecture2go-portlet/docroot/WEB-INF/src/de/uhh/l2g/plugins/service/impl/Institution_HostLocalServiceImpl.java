@@ -164,12 +164,12 @@ public class Institution_HostLocalServiceImpl extends Institution_HostLocalServi
 	}
 
 	public Institution_Host addEntry(long institutionId, long hostId, ServiceContext serviceContext) throws SystemException, PortalException {
-		long institution_HostId = counterLocalService.increment();
+		long institution_HostId = counterLocalService.increment(Institution_Host.class.getName());
 		Institution_Host institution_Host = institution_HostPersistence.create(institution_HostId);
 		institution_Host.setInstitutionId(institutionId);
 		institution_Host.setHostId(hostId);
 		institution_Host.setExpandoBridgeAttributes(serviceContext);
-		institution_HostPersistence.update(institution_Host);
+		super.addInstitution_Host(institution_Host);
 		//
 		return institution_Host;
 	}

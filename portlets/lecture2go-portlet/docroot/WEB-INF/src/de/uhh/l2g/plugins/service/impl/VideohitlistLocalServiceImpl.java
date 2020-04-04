@@ -48,9 +48,9 @@ public class VideohitlistLocalServiceImpl
 	public Videohitlist addVideohitlist(Videohitlist object){
 		Long id;
 		try {
-			id = counterLocalService.increment();
+			id = counterLocalService.increment(Videohitlist.class.getName());
 			object.setPrimaryKey(id);
-			videohitlistPersistence.update(object);
+			super.addVideohitlist(object);
 		} catch (SystemException e) {
 			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
 		}

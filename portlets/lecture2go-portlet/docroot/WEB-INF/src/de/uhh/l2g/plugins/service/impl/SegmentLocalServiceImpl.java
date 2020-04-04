@@ -61,9 +61,9 @@ public class SegmentLocalServiceImpl extends SegmentLocalServiceBaseImpl {
 	public Segment addSegment(Segment object){
 		Long id;
 		try {
-			id = counterLocalService.increment();
+			id = counterLocalService.increment(Segment.class.getName());
 			object.setPrimaryKey(id);
-			segmentPersistence.update(object);
+			super.addSegment(object);
 		} catch (SystemException e) {
 			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
 		}

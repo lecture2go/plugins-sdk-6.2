@@ -48,9 +48,9 @@ public class LastvideolistLocalServiceImpl
 	public Lastvideolist addLastvideolist(Lastvideolist object){
 		Long id;
 		try {
-			id = counterLocalService.increment();
+			id = counterLocalService.increment(Lastvideolist.class.getName());
 			object.setLastvideolistId(id);
-			lastvideolistPersistence.update(object);
+			super.addLastvideolist(object);
 		} catch (SystemException e) {
 			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
 		}

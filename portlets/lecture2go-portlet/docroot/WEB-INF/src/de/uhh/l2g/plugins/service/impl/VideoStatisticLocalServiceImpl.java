@@ -51,9 +51,9 @@ public class VideoStatisticLocalServiceImpl
 	public VideoStatistic addVideoStatistic(VideoStatistic object){
 		Long id;
 		try {
-			id = counterLocalService.increment();
+			id = counterLocalService.increment(VideoStatistic.class.getName());
 			object.setPrimaryKey(id);
-			videoStatisticPersistence.update(object);
+			super.addVideoStatistic(object);
 		} catch (SystemException e) {
 			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
 		}

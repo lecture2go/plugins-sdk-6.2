@@ -50,9 +50,9 @@ public class Video_CreatorLocalServiceImpl
 	public Video_Creator addVideo_Creator(Video_Creator object){
 		Long id;
 		try {
-			id = counterLocalService.increment();
+			id = counterLocalService.increment(Video_Creator.class.getName());
 			object.setPrimaryKey(id);
-			video_CreatorPersistence.update(object);
+			super.addVideo_Creator(object);
 		} catch (SystemException e) {
 			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
 		}

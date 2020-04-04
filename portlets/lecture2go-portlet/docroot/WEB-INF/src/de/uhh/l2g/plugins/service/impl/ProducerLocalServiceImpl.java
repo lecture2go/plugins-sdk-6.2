@@ -64,9 +64,9 @@ public class ProducerLocalServiceImpl extends ProducerLocalServiceBaseImpl {
 	public Producer addProducer(Producer object){
 		Long id;
 		try {
-			id = counterLocalService.increment();
+			id = counterLocalService.increment(Producer.class.getName());
 			object.setPrimaryKey(id);
-			producerPersistence.update(object);
+			super.addProducer(object);
 		} catch (SystemException e) {
 			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
 		}

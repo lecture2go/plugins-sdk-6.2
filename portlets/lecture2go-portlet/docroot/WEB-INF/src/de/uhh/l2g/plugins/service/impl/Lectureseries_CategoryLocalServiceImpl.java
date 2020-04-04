@@ -53,9 +53,9 @@ public class Lectureseries_CategoryLocalServiceImpl
 	public Lectureseries_Category addLectureseries_Category(Lectureseries_Category lectureseries_Category){
 		Long id;
 		try {
-			id = counterLocalService.increment();
+			id = counterLocalService.increment(Lectureseries_Category.class.getName());
 			lectureseries_Category.setPrimaryKey(id);
-			lectureseries_CategoryPersistence.update(lectureseries_Category);
+			super.addLectureseries_Category(lectureseries_Category);
 		} catch (SystemException e) {
 			LOG.error("can't add new lectures_categorei with id " + lectureseries_Category.getLectureseriesCategoryId() + "!");
 		}

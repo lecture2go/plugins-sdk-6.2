@@ -66,9 +66,9 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 	public Creator addCreator(Creator object){
 		Long id;
 		try {
-			id = counterLocalService.increment();
+			id = counterLocalService.increment(Creator.class.getName());
 			object.setPrimaryKey(id);
-			creatorPersistence.update(object);
+			super.addCreator(object);
 		} catch (SystemException e) {
 			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
 		}

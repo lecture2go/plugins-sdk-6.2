@@ -76,6 +76,7 @@ import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
+import de.uhh.l2g.plugins.util.CounterManager;
 import de.uhh.l2g.plugins.util.FFmpegManager;
 import de.uhh.l2g.plugins.util.FileManager;
 import de.uhh.l2g.plugins.util.Htaccess;
@@ -293,7 +294,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			ListIterator<Lectureseries_Institution> i = li.listIterator();
 			while(i.hasNext()){
 				Institution ins = InstitutionLocalServiceUtil.getInstitution(i.next().getInstitutionId());
-				Video_Institution vi = new Video_InstitutionImpl();
+				Video_Institution vi = Video_InstitutionLocalServiceUtil.createVideo_Institution(0);
 				vi.setVideoId(video.getVideoId());
 				vi.setInstitutionId(ins.getInstitutionId());
 				vi.setInstitutionParentId(ins.getParentId());
@@ -301,7 +302,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			}
 		}else{//no lecture series 
 			Institution ins = InstitutionLocalServiceUtil.getInstitution(video.getRootInstitutionId());
-			Video_Institution vi = new Video_InstitutionImpl();
+			Video_Institution vi = Video_InstitutionLocalServiceUtil.createVideo_Institution(0);
 			vi.setVideoId(video.getVideoId());
 			vi.setInstitutionId(video.getRootInstitutionId());
 			
@@ -871,7 +872,7 @@ public class AdminVideoManagement extends MVCPortlet {
 						Lectureseries_Institution lectinst = l_i.next();
 						in = InstitutionLocalServiceUtil.getInstitution(lectinst.getInstitutionId());
 						tagCloudArrayString.add(in.getName());
-						Video_Institution vi = new Video_InstitutionImpl();
+						Video_Institution vi = Video_InstitutionLocalServiceUtil.createVideo_Institution(0);
 						vi.setVideoId(video.getVideoId());
 						vi.setInstitutionId(lectinst.getInstitutionId());
 						vi.setInstitutionParentId(in.getParentId());
@@ -1468,7 +1469,7 @@ public class AdminVideoManagement extends MVCPortlet {
 							List<Video_Institution> vil = new ArrayList<Video_Institution>();
 							vil = Video_InstitutionLocalServiceUtil.getByVideoAndInstitution(videoId, institutionId);
 							
-							Video_Institution vi = new Video_InstitutionImpl();
+							Video_Institution vi = Video_InstitutionLocalServiceUtil.createVideo_Institution(0);
 							vi.setInstitutionId(in.getInstitutionId());
 							vi.setVideoId(videoId);
 							if(in.getLevel()==1)vi.setInstitutionParentId(0);

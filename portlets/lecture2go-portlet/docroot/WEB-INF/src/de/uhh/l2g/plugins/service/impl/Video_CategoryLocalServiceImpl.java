@@ -51,9 +51,9 @@ public class Video_CategoryLocalServiceImpl extends Video_CategoryLocalServiceBa
 	public Video_Category addVideo_Category(Video_Category object){
 		Long id;
 		try {
-			id = counterLocalService.increment();
+			id = counterLocalService.increment(Video_Category.class.getName());
 			object.setPrimaryKey(id);
-			video_CategoryPersistence.update(object);
+			super.addVideo_Category(object);
 		} catch (SystemException e) {
 			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
 		}

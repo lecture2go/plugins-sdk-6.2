@@ -157,11 +157,11 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 	}
 
 	public Host addHost(String name) throws SystemException, PortalException {
-		long hostId = counterLocalService.increment();
+		long hostId = counterLocalService.increment(Host.class.getName());
 		Host host = hostPersistence.create(hostId);
 		host.setName(name);
 		host.setDirectory("vh_"+hostId);
-		hostPersistence.update(host);
+		super.addHost(host);
 
 		// Create Directory
 		try {

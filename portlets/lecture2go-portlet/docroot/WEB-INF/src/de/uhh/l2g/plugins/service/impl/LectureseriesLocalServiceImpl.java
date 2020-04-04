@@ -69,9 +69,9 @@ public class LectureseriesLocalServiceImpl extends LectureseriesLocalServiceBase
 	public Lectureseries addLectureseries(Lectureseries lectureseries){
 		Long id;
 		try {
-			id = counterLocalService.increment();
+			id = counterLocalService.increment(Lectureseries.class.getName());
 			lectureseries.setLectureseriesId(id);
-			lectureseriesPersistence.update(lectureseries);
+			super.addLectureseries(lectureseries);
 		} catch (SystemException e) {
 			LOG.error("can't add new lecture series " + lectureseries.getName() + "!");
 		}

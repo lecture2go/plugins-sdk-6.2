@@ -58,9 +58,9 @@ public class CoordinatorLocalServiceImpl extends CoordinatorLocalServiceBaseImpl
 	public Coordinator addCoordinator(Coordinator object){
 		Long id;
 		try {
-			id = counterLocalService.increment();
+			id = counterLocalService.increment(Coordinator.class.getName());
 			object.setPrimaryKey(id);
-			coordinatorPersistence.update(object);
+			super.addCoordinator(object);
 		} catch (SystemException e) {
 			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
 		}

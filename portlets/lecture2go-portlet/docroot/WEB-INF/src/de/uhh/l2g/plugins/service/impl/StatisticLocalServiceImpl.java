@@ -81,9 +81,9 @@ public class StatisticLocalServiceImpl extends StatisticLocalServiceBaseImpl {
 	public Statistic addStatistic(Statistic object){
 		Long id;
 		try {
-			id = counterLocalService.increment();
+			id = counterLocalService.increment(Statistic.class.getName());
 			object.setPrimaryKey(id);
-			statisticPersistence.update(object);
+			super.addStatistic(object);
 		} catch (SystemException e) {
 			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
 		}

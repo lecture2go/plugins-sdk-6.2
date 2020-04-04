@@ -62,7 +62,7 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 			{ "name", Types.VARCHAR },
 			{ "defaultHost", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_Host (hostId LONG not null primary key,directory VARCHAR(75) null,name VARCHAR(75) null,defaultHost INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table LG_Host (hostId LONG not null primary key,directory VARCHAR(75) null,name STRING null,defaultHost INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table LG_Host";
 	public static final String ORDER_BY_JPQL = " ORDER BY host.directory ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Host.directory ASC";

@@ -52,9 +52,9 @@ public class CategoryLocalServiceImpl extends CategoryLocalServiceBaseImpl {
 	public Category addCategory(Category object){
 		Long id;
 		try {
-			id = counterLocalService.increment();
+			id = counterLocalService.increment(Category.class.getName());
 			object.setPrimaryKey(id);
-			categoryPersistence.update(object);
+			super.addCategory(object);
 		} catch (SystemException e) {
 			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
 		}

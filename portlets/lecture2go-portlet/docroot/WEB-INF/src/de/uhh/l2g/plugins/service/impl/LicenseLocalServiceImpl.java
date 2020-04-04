@@ -50,9 +50,9 @@ public class LicenseLocalServiceImpl extends LicenseLocalServiceBaseImpl {
 	public License addLicense(License object){
 		Long id;
 		try {
-			id = counterLocalService.increment();
+			id = counterLocalService.increment(License.class.getName());
 			object.setPrimaryKey(id);
-			licensePersistence.update(object);
+			super.addLicense(object);
 		} catch (SystemException e) {
 			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
 		}

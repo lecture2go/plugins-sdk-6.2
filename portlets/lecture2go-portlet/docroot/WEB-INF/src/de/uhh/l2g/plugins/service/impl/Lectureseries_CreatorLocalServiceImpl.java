@@ -50,9 +50,9 @@ public class Lectureseries_CreatorLocalServiceImpl
 	public Lectureseries_Creator addLectureseries_Creator(Lectureseries_Creator object){
 		Long id;
 		try {
-			id = counterLocalService.increment();
+			id = counterLocalService.increment(Lectureseries_Creator.class.getName());
 			object.setPrimaryKey(id);
-			lectureseries_CreatorPersistence.update(object);
+			super.addLectureseries_Creator(object);
 		} catch (SystemException e) {
 			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
 		}

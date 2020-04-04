@@ -53,9 +53,9 @@ public class Lectureseries_InstitutionLocalServiceImpl
 	public Lectureseries_Institution addLectureseries_Institution(Lectureseries_Institution object){
 		Long id;
 		try {
-			id = counterLocalService.increment();
+			id = counterLocalService.increment(Lectureseries_Institution.class.getName());
 			object.setPrimaryKey(id);
-			lectureseries_InstitutionPersistence.update(object);
+			super.addLectureseries_Institution(object);
 		} catch (SystemException e) {
 			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
 		}

@@ -80,9 +80,9 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 	public Institution addInstitution(Institution object){
 		Long id;
 		try {
-			id = counterLocalService.increment();
+			id = counterLocalService.increment(Institution.class.getName());
 			object.setPrimaryKey(id);
-			institutionPersistence.update(object);
+			super.addInstitution(object);
 		} catch (SystemException e) {
 			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
 		}

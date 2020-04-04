@@ -52,9 +52,9 @@ public class TermLocalServiceImpl extends TermLocalServiceBaseImpl {
 	public Term addTerm(Term object){
 		Long id;
 		try {
-			id = counterLocalService.increment();
+			id = counterLocalService.increment(Term.class.getName());
 			object.setPrimaryKey(id);
-			termPersistence.update(object);
+			super.addTerm(object);
 		} catch (SystemException e) {
 			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
 		}

@@ -53,9 +53,9 @@ public class Producer_LectureseriesLocalServiceImpl
 	public Producer_Lectureseries addProducer_Lectureseries(Producer_Lectureseries object){
 		Long id;
 		try {
-			id = counterLocalService.increment();
+			id = counterLocalService.increment(Producer_Lectureseries.class.getName());
 			object.setPrimaryKey(id);
-			producer_LectureseriesPersistence.update(object);
+			super.addProducer_Lectureseries(object);
 		} catch (SystemException e) {
 			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
 		}

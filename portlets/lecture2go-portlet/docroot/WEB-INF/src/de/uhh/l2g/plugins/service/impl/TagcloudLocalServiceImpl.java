@@ -78,9 +78,9 @@ public class TagcloudLocalServiceImpl extends TagcloudLocalServiceBaseImpl {
 	public Tagcloud addTagcloud(Tagcloud object){
 		Long id;
 		try {
-			id = counterLocalService.increment();
+			id = counterLocalService.increment(Tagcloud.class.getName());
 			object.setPrimaryKey(id);
-			tagcloudPersistence.update(object);
+			super.addTagcloud(object);
 		} catch (SystemException e) {
 			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
 		}
