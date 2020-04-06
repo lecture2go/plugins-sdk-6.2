@@ -72,7 +72,7 @@ public class VideoProcessorManager {
 				
 				// set the complete path to the file
 				Video video = VideoLocalServiceUtil.getVideo(videoId);
-				String folder = PropsUtil.get("lecture2go.media.repository")+"/"+HostLocalServiceUtil.getByHostId(video.getHostId()).getServerRoot()+"/"+ProducerLocalServiceUtil.getProducer(video.getProducerId()).getHomeDir()+"/";
+				String folder = PropsUtil.get("lecture2go.media.repository")+"/"+HostLocalServiceUtil.getByHostId(video.getHostId()).getDirectory()+"/"+ProducerLocalServiceUtil.getProducer(video.getProducerId()).getHomeDir()+"/";
 				String filePath;
 				if(video.getOpenAccess()==1){
 					filePath = folder + video.getFilename();

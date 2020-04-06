@@ -19,7 +19,10 @@ import java.util.List;
 import java.util.ListIterator;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.Lectureseries_Category;
 import de.uhh.l2g.plugins.service.base.Lectureseries_CategoryLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.Lectureseries_CategoryUtil;
@@ -45,6 +48,19 @@ public class Lectureseries_CategoryLocalServiceImpl
 	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.Lectureseries_CategoryLocalServiceUtil} to access the lectureseries_ category local service.
 	 */
+	protected static Log LOG = LogFactoryUtil.getLog(Lectureseries_Category.class.getName());
+
+	public Lectureseries_Category addLectureseries_Category(Lectureseries_Category lectureseries_Category){
+		Long id;
+		try {
+			id = counterLocalService.increment(Lectureseries_Category.class.getName());
+			lectureseries_Category.setPrimaryKey(id);
+			super.addLectureseries_Category(lectureseries_Category);
+		} catch (SystemException e) {
+			LOG.error("can't add new lectures_categorei with id " + lectureseries_Category.getLectureseriesCategoryId() + "!");
+		}
+		return lectureseries_Category;
+	}
 	
 	public void updateCategoryByLectureseriesAndCategory(Long lectureseriesId, Long categoryId, Long newCategoryId){
 		List<Lectureseries_Category> lca = new ArrayList<Lectureseries_Category>();

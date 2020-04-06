@@ -41,6 +41,7 @@ import de.uhh.l2g.plugins.StatisticDateException;
 import de.uhh.l2g.plugins.StatisticValueException;
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Institution;
+import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.model.Statistic;
 import de.uhh.l2g.plugins.model.impl.StatisticImpl;
 import de.uhh.l2g.plugins.service.ClpSerializer;
@@ -69,8 +70,7 @@ import de.uhh.l2g.plugins.util.RepositoryManager;
  * @see de.uhh.l2g.plugins.service.StatisticLocalServiceUtil
  */
 @SuppressWarnings("unused")
-public class StatisticLocalServiceImpl
-	extends StatisticLocalServiceBaseImpl {
+public class StatisticLocalServiceImpl extends StatisticLocalServiceBaseImpl {
 
 	 protected static Log LOG = LogFactoryUtil.getLog(Statistic.class.getName());	
 	/*
@@ -78,6 +78,18 @@ public class StatisticLocalServiceImpl
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.StatisticLocalServiceUtil} to access the institution_ host local service.
 	 */
 
+	public Statistic addStatistic(Statistic object){
+		Long id;
+		try {
+			id = counterLocalService.increment(Statistic.class.getName());
+			object.setPrimaryKey(id);
+			super.addStatistic(object);
+		} catch (SystemException e) {
+			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
+		}
+		return object;
+	}
+		
 	public JSONObject getAllStatistics() throws SystemException {
 			return StatisticFinderUtil.findAllStatistics();
 	}

@@ -169,7 +169,7 @@ public class Institution_HostLocalServiceImpl extends Institution_HostLocalServi
 		institution_Host.setInstitutionId(institutionId);
 		institution_Host.setHostId(hostId);
 		institution_Host.setExpandoBridgeAttributes(serviceContext);
-		institution_HostPersistence.update(institution_Host);
+		super.addInstitution_Host(institution_Host);
 		//
 		return institution_Host;
 	}
@@ -194,33 +194,6 @@ public class Institution_HostLocalServiceImpl extends Institution_HostLocalServi
 		long ihId = institution_Host.getInstitutionHostId();
 		institution_Host = deleteInstitution_Host(ihId);
 		return institution_Host;
-	}
-
-	public long updateCounter() throws SystemException, PortalException {
-		// get current Counter
-		Counter counter = CounterLocalServiceUtil.getCounter(Institution_Host.class.getName());
-		LOG.debug(counter.getCurrentId());
-		int count = Institution_HostLocalServiceUtil.getInstitution_HostsCount();
-		LOG.debug(count);
-		long institution_hostId = 0; // actual maxId
-
-		if (count > 0) {
-			// Retrieve actual table data
-			ClassLoader classLoader = (ClassLoader) PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(), "portletClassLoader");
-			DynamicQuery query = DynamicQueryFactoryUtil.forClass(Institution_Host.class, classLoader).addOrder(OrderFactoryUtil.desc("institutionHostId"));
-			query.setLimit(0, 1);
-			List<Institution_Host> institution_hosts = Institution_HostLocalServiceUtil.dynamicQuery(query);
-			if (institution_hosts.size() > 0)
-				institution_hostId = institution_hosts.get(0).getInstitutionHostId();
-		}
-
-		LOG.debug(institution_hostId);
-		// Update Counter if asynchronous with estimated value or data reseted
-		if (counter.getCurrentId() < institution_hostId || institution_hostId == 0) {
-			counter.setCurrentId(institution_hostId);
-			CounterLocalServiceUtil.updateCounter(counter);
-		}
-		return counter.getCurrentId();
 	}
 
 }

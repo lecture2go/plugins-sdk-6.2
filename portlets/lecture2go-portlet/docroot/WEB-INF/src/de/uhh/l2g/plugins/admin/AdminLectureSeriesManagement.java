@@ -219,7 +219,7 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 				Institution inst = new InstitutionImpl();
 				inst = InstitutionLocalServiceUtil.getById(new Long(
 						institutions[j]));
-				Video_Institution vi = new Video_InstitutionImpl();
+				Video_Institution vi = Video_InstitutionLocalServiceUtil.createVideo_Institution(0);
 				vi.setVideoId(video.getVideoId());
 				vi.setInstitutionId(inst.getInstitutionId());
 				vi.setInstitutionParentId(inst.getParentId());
