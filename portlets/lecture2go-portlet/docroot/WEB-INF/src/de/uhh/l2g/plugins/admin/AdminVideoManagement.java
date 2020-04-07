@@ -784,10 +784,10 @@ public class AdminVideoManagement extends MVCPortlet {
 			//update tag cloud for this video
 			TagcloudLocalServiceUtil.generateForVideo(video.getVideoId());
 			//update tag cloud for the lectureseries of this video
-			TagcloudLocalServiceUtil.generateForLectureseries(video.getLectureseriesId());
+			if(video.getLectureseriesId()>0)TagcloudLocalServiceUtil.generateForLectureseries(video.getLectureseriesId());
 			// update tag cloud for the old lectureseries of this video
 			if(newLsId.longValue() != oldLsId.longValue())
-				TagcloudLocalServiceUtil.generateForLectureseries(oldLsId);
+				if(oldLsId>0)TagcloudLocalServiceUtil.generateForLectureseries(oldLsId);
 			
 			//rebuild rss
 			// generate RSS
