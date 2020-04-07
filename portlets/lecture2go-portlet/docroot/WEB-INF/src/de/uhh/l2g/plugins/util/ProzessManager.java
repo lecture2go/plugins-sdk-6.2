@@ -193,7 +193,7 @@ public class ProzessManager {
 		}
 		
 		//update tag cloud for the lectureseries of this video (necessary to add creators of the now-open-access-video to the tagcloud)
-		TagcloudLocalServiceUtil.generateForLectureseries(video.getLectureseriesId());
+		if(video.getLectureseriesId()>0)TagcloudLocalServiceUtil.generateForLectureseries(video.getLectureseriesId());
 		
 		//update LectureSeries previewVideoId
 		LectureseriesLocalServiceUtil.updatePreviewVideoOpenAccess(lectureseries);
@@ -201,7 +201,7 @@ public class ProzessManager {
 		String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getDirectory() + "/" + producer.getHomeDir() + "/";
 		HTACCESS.makeHtaccess(url, VideoLocalServiceUtil.getByProducerAndDownloadLink(producer.getProducerId(), 0));
 		// refresh last video list
-		VideoLocalServiceUtil.createLastVideoList();
+		//VideoLocalServiceUtil.createLastVideoList();
 		// refresh open acces for lecture series
 		LectureseriesLocalServiceUtil.updateOpenAccess(video, lectureseries);
 		
@@ -290,13 +290,13 @@ public class ProzessManager {
 		HTACCESS.makeHtaccess(url, VideoLocalServiceUtil.getByProducerAndDownloadLink(producer.getProducerId(), 0));
 		
 		// refresh last video list
-		VideoLocalServiceUtil.createLastVideoList();
+		//VideoLocalServiceUtil.createLastVideoList();
 		
 		// refresh open access for lecture series
 		LectureseriesLocalServiceUtil.updateOpenAccess(video, lectureseries); 
 		
 		//update tag cloud for the lectureseries of this video (necessary to remove creators of the now-closed-access-video to the tagcloud)
-		TagcloudLocalServiceUtil.generateForLectureseries(video.getLectureseriesId());
+		if(video.getLectureseriesId()>0)TagcloudLocalServiceUtil.generateForLectureseries(video.getLectureseriesId());
 		
 		//update LectureSeries previewVideoId
 		LectureseriesLocalServiceUtil.updatePreviewVideoOpenAccess(lectureseries);
@@ -325,33 +325,33 @@ public class ProzessManager {
 		try {
 			lectureseries = LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId());
 		} catch (Exception e3) {
-			e3.printStackTrace();
+			//e3.printStackTrace();
 		}
 
 		try {
 			host = HostLocalServiceUtil.getHost(video.getHostId());
 		} catch (PortalException e1) {
-			e1.printStackTrace();
+//			e1.printStackTrace();
 		} catch (SystemException e1) {
-			e1.printStackTrace();
+//			e1.printStackTrace();
 		}
 		
 		Producer producer = new ProducerImpl();
 		try {
 			producer = ProducerLocalServiceUtil.getProducer(video.getProducerId());
 		} catch (PortalException e1) {
-			e1.printStackTrace();
+//			e1.printStackTrace();
 		} catch (SystemException e1) {
-			e1.printStackTrace();
+//			e1.printStackTrace();
 		}
 		
 		Metadata metadata = new MetadataImpl();
 		try {
 			metadata = MetadataLocalServiceUtil.getMetadata(video.getMetadataId());
 		} catch (PortalException e1) {
-			e1.printStackTrace();
+//			e1.printStackTrace();
 		} catch (SystemException e1) {
-			e1.printStackTrace();
+//			e1.printStackTrace();
 		}
 
 		// delete video_institution
@@ -373,14 +373,14 @@ public class ProzessManager {
 		try {
 			SegmentLocalServiceUtil.deleteByVideoId(video.getVideoId());
 		} catch (SystemException e2) {
-			e2.printStackTrace();
+			//e2.printStackTrace();
 		}
 		
 		// delete video from videohitlist
 		try {
 			VideohitlistLocalServiceUtil.deleteByVideoId(video.getVideoId());
 		} catch (SystemException e2) {
-			e2.printStackTrace();
+			//e2.printStackTrace();
 		}
 		
 		// delete meta data which belongs to video 
@@ -394,7 +394,7 @@ public class ProzessManager {
 		try {
 			VideoLocalServiceUtil.deleteVideo(video);
 		} catch (SystemException e1) {
-			e1.printStackTrace();
+			//e1.printStackTrace();
 		}
 		
 		//delete physical files 
@@ -482,9 +482,9 @@ public class ProzessManager {
 		try {
 			host = HostLocalServiceUtil.getHost(video.getHostId());
 		} catch (PortalException e1) {
-			e1.printStackTrace();
+			//e1.printStackTrace();
 		} catch (SystemException e1) {
-			e1.printStackTrace();
+			//e1.printStackTrace();
 		}
 		
 		Producer producer = new ProducerImpl();
@@ -512,7 +512,7 @@ public class ProzessManager {
 		try {
 			SegmentLocalServiceUtil.deleteByVideoId(video.getVideoId());
 		} catch (SystemException e2) {
-			e2.printStackTrace();
+			//e2.printStackTrace();
 		}
 		
 		//delete physical files 
@@ -559,7 +559,7 @@ public class ProzessManager {
 			video.setFileSize("");
 			VideoLocalServiceUtil.updateVideo(video);
 		} catch (SystemException e1) {
-			e1.printStackTrace();
+			//e1.printStackTrace();
 		}
 		return true;
 	}
