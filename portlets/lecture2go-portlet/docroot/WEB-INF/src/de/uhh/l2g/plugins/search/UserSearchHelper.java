@@ -70,9 +70,6 @@ public class UserSearchHelper {
 						junction.add(c5);
 					}
 				}
-				Criterion c6 = PropertyFactoryUtil.forName("usr.status").eq("0");
-				junction.add(c6);
-				//
 				dynamicQuery.add(junction);
 				//order by 
 				dynamicQuery.addOrder(OrderFactoryUtil.desc("usr.firstName"));
@@ -87,19 +84,7 @@ public class UserSearchHelper {
 			}
 			//no parameter chosen
 			if ((!Validator.isDigit(rId) || rId.equals("0")) && Validator.isBlank(keywords)) {
-				ClassLoader classLoader = (ClassLoader) PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(), "portletClassLoader");
-				DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(User.class, "usr", classLoader);
-				Junction junction = null;
-				junction = RestrictionsFactoryUtil.disjunction();
-				//
-				Criterion c = PropertyFactoryUtil.forName("usr.status").eq(0);
-				junction.add(c);
-				//
-				dynamicQuery.add(junction);
-				//order by 
-				dynamicQuery.addOrder(OrderFactoryUtil.desc("usr.firstName"));
-				//fire up the query
-				userList = UserLocalServiceUtil.dynamicQuery(dynamicQuery);
+				userList = UserLocalServiceUtil.getUsers(1, UserLocalServiceUtil.getUsersCount());
 			}
 		} catch (Exception e) {
 			LOG.warn("can't fetch user list!");
