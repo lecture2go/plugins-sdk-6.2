@@ -293,7 +293,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			ListIterator<Lectureseries_Institution> i = li.listIterator();
 			while(i.hasNext()){
 				Institution ins = InstitutionLocalServiceUtil.getInstitution(i.next().getInstitutionId());
-				Video_Institution vi = new Video_InstitutionImpl();
+				Video_Institution vi = Video_InstitutionLocalServiceUtil.createVideo_Institution(0);
 				vi.setVideoId(video.getVideoId());
 				vi.setInstitutionId(ins.getInstitutionId());
 				vi.setInstitutionParentId(ins.getParentId());
@@ -301,7 +301,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			}
 		}else{//no lecture series 
 			Institution ins = InstitutionLocalServiceUtil.getInstitution(video.getRootInstitutionId());
-			Video_Institution vi = new Video_InstitutionImpl();
+			Video_Institution vi = Video_InstitutionLocalServiceUtil.createVideo_Institution(0);
 			vi.setVideoId(video.getVideoId());
 			vi.setInstitutionId(video.getRootInstitutionId());
 			
@@ -783,10 +783,10 @@ public class AdminVideoManagement extends MVCPortlet {
 			//update tag cloud for this video
 			TagcloudLocalServiceUtil.generateForVideo(video.getVideoId());
 			//update tag cloud for the lectureseries of this video
-			TagcloudLocalServiceUtil.generateForLectureseries(video.getLectureseriesId());
+			if(video.getLectureseriesId()>0)TagcloudLocalServiceUtil.generateForLectureseries(video.getLectureseriesId());
 			// update tag cloud for the old lectureseries of this video
 			if(newLsId.longValue() != oldLsId.longValue())
-				TagcloudLocalServiceUtil.generateForLectureseries(oldLsId);
+				if(oldLsId>0)TagcloudLocalServiceUtil.generateForLectureseries(oldLsId);
 			
 			//rebuild rss
 			// generate RSS
@@ -871,7 +871,7 @@ public class AdminVideoManagement extends MVCPortlet {
 						Lectureseries_Institution lectinst = l_i.next();
 						in = InstitutionLocalServiceUtil.getInstitution(lectinst.getInstitutionId());
 						tagCloudArrayString.add(in.getName());
-						Video_Institution vi = new Video_InstitutionImpl();
+						Video_Institution vi = Video_InstitutionLocalServiceUtil.createVideo_Institution(0);
 						vi.setVideoId(video.getVideoId());
 						vi.setInstitutionId(lectinst.getInstitutionId());
 						vi.setInstitutionParentId(in.getParentId());
@@ -1020,7 +1020,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			try {
 				Host host = HostLocalServiceUtil.getHost(video.getHostId());
 				Producer producer = ProducerLocalServiceUtil.getProducer(video.getProducerId());
-				String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/";
+				String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getDirectory() + "/" + producer.getHomeDir() + "/";
 				long producerId = video.getProducerId();
 				List<Video> lockedVideosByProducer;
 				lockedVideosByProducer = VideoLocalServiceUtil.getByProducerAndDownloadLink(producerId, 0);
@@ -1168,7 +1168,7 @@ public class AdminVideoManagement extends MVCPortlet {
 				segment.setUserId(userId);
 				try {
 					// save
-					Segment s = SegmentLocalServiceUtil.createSegment(segment);
+					Segment s = SegmentLocalServiceUtil.addSegment(segment);
 					
 					JSONObject jo = JSONFactoryUtil.createJSONObject();
 					jo.put("chapter", s.getChapter());
@@ -1279,7 +1279,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			//delete file
 			String fPath="";
 			try {
-				fPath = PropsUtil.get("lecture2go.media.repository")+"/"+HostLocalServiceUtil.getByHostId(video.getHostId()).getServerRoot()+"/"+ProducerLocalServiceUtil.getProducer(video.getProducerId()).getHomeDir()+"/";
+				fPath = PropsUtil.get("lecture2go.media.repository")+"/"+HostLocalServiceUtil.getByHostId(video.getHostId()).getDirectory()+"/"+ProducerLocalServiceUtil.getProducer(video.getProducerId()).getHomeDir()+"/";
 				mainContainerFormat = VideoLocalServiceUtil.getVideo(videoId).getContainerFormat();
 			} catch (PortalException e) {
 				//e.printStackTrace();
@@ -1468,7 +1468,7 @@ public class AdminVideoManagement extends MVCPortlet {
 							List<Video_Institution> vil = new ArrayList<Video_Institution>();
 							vil = Video_InstitutionLocalServiceUtil.getByVideoAndInstitution(videoId, institutionId);
 							
-							Video_Institution vi = new Video_InstitutionImpl();
+							Video_Institution vi = Video_InstitutionLocalServiceUtil.createVideo_Institution(0);
 							vi.setInstitutionId(in.getInstitutionId());
 							vi.setVideoId(videoId);
 							if(in.getLevel()==1)vi.setInstitutionParentId(0);

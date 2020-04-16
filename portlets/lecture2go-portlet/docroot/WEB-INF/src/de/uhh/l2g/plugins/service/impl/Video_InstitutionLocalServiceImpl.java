@@ -17,9 +17,25 @@ package de.uhh.l2g.plugins.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.liferay.counter.model.Counter;
+import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.dao.orm.Criterion;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Junction;
+import com.liferay.portal.kernel.dao.orm.Projection;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
+import de.uhh.l2g.plugins.model.Institution_Host;
+import de.uhh.l2g.plugins.model.Video_Creator;
 import de.uhh.l2g.plugins.model.Video_Institution;
+import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.Video_InstitutionLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.Video_InstitutionUtil;
 
@@ -44,6 +60,20 @@ public class Video_InstitutionLocalServiceImpl
 	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil} to access the video_ institution local service.
 	 */
+	
+	protected static Log LOG = LogFactoryUtil.getLog(Video_Institution.class.getName());
+
+	public Video_Institution addVideo_Institution(Video_Institution object){
+		Long id;
+		try {
+			id = counterLocalService.increment(Video_Institution.class.getName());
+			object.setPrimaryKey(id);
+			super.addVideo_Institution(object);
+		} catch (Exception e) {
+			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
+		}
+		return object;
+	}
 	
 	public boolean removeByVideoId(Long videoId) {
 		boolean ret = false;

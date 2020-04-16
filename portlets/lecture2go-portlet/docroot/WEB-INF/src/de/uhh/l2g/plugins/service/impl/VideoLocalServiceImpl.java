@@ -45,6 +45,8 @@ import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 
@@ -60,6 +62,7 @@ import de.uhh.l2g.plugins.model.Producer;
 import de.uhh.l2g.plugins.model.Segment;
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.Video_Category;
+import de.uhh.l2g.plugins.model.Videohitlist;
 import de.uhh.l2g.plugins.model.impl.HostImpl;
 import de.uhh.l2g.plugins.model.impl.InstitutionImpl;
 import de.uhh.l2g.plugins.model.impl.LastvideolistImpl;
@@ -105,6 +108,21 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	 * de.uhh.l2g.plugins.service.VideoLocalServiceUtil} to access the video
 	 * local service.
 	 */
+	
+	protected static Log LOG = LogFactoryUtil.getLog(Video.class.getName());
+
+	public Video addVideo(Video object){
+		Long id;
+		try {
+			id = counterLocalService.increment(Video.class.getName());
+			object.setPrimaryKey(id);
+			super.addVideo(object);
+		} catch (SystemException e) {
+			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
+		}
+		return object;
+	}
+	
 	public List<Video> getByOpenAccess(int bool) throws SystemException {
 		return videoPersistence.findByOpenAccess(bool);
 	}
@@ -230,7 +248,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		// check if file with download-suffix exists, if not create it 
 		// (we always create a _symlink_ with download suffix even if download is not permitted, as this file is also used as an RSTP fallback)
 		if(checkSmilFile(objectVideo)){
-			File file = new File(PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + objectVideo.getCurrentPrefix()+PropsUtil.get("lecture2go.videoprocessing.downloadsuffix")+".mp4");
+			File file = new File(PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getDirectory() + "/" + objectProducer.getHomeDir() + "/" + objectVideo.getCurrentPrefix()+PropsUtil.get("lecture2go.videoprocessing.downloadsuffix")+".mp4");
 			try {
 				if (!isSymlink(file)) {
 					ProzessManager pm = new ProzessManager();
@@ -474,11 +492,11 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			}
 			playerUri = playerUri.replace("[filename]", filename);
 			//
-			playerUri = playerUri.replace("[host]", host.getStreamer());
+			playerUri = playerUri.replace("[host]", host.getName());
 			playerUri = playerUri.replace("[ext]", video.getContainerFormat());
 			playerUri = playerUri.replace("[l2go_path]", l2go_path);
-			playerUri = playerUri.replace("[protocol]", host.getProtocol());
-			playerUri = playerUri.replace("[port]", host.getPort()+"");
+//			playerUri = playerUri.replace("[protocol]", host.getProtocol());
+//			playerUri = playerUri.replace("[port]", host.getPort()+"");
 			//
 			if( playerUri.length()>0 && !playerUri.contains("[") && !playerUri.contains("]") )playerUris.add(playerUri);
 			
@@ -680,7 +698,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		} catch (SystemException e1) {
 //			e1.printStackTrace();
 		}
-		String  mediaRep = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir();
+		String  mediaRep = PropsUtil.get("lecture2go.media.repository") + "/" + host.getDirectory() + "/" + producer.getHomeDir();
 
 		// set prefix according to openaccess filename or secured
 		String prefix = video.getOpenAccess()==1 ? video.getPreffix() : video.getSPreffix();

@@ -23,14 +23,11 @@ public class AdminStreamerManagement extends MVCPortlet {
 	public static final String DEFAULT_STREAMER = "Default";
 
 	public void updateStreamingServer(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
-		String hostName = ParamUtil.getString(request, "curStreamingServerName");
-		String ip = ParamUtil.getString(request, "curStreamingServerIP");
-		int port = ParamUtil.getInteger(request, "curStreamingServerPort");
-		long hostId = ParamUtil.getLong(request, "curStreamingServerId");
-		String protocol = ParamUtil.getString(request, "curStreamingServerProtocol");
-		LOG.info("Trying to update " + hostName + ": " + ip);
+		String name = ParamUtil.getString(request, "hostName");
+		long hostId = ParamUtil.getLong(request, "hostId");
+		LOG.info("Trying to update: " + name);
 		try {
-			HostLocalServiceUtil.updateHost(hostId, hostName, ip, protocol, port);
+			HostLocalServiceUtil.updateHost(hostId, name);
 		} catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
 			LOG.error("Failed updating Streaming Server", e);
@@ -40,7 +37,7 @@ public class AdminStreamerManagement extends MVCPortlet {
 	}
 	
 	public void deleteStreamingServer(ActionRequest request, ActionResponse response) {
-		long hostId = ParamUtil.getLong(request, "curStreamingServerId");
+		long hostId = ParamUtil.getLong(request, "hostId");
 		LOG.info("Trying to remove " + hostId);
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(Host.class.getName(), request);
@@ -55,17 +52,13 @@ public class AdminStreamerManagement extends MVCPortlet {
 	}	
 	
 	public void addStreamingServer(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
-		String hostName = "";
-		String ip = ParamUtil.getString(request, "ip");
-		String protocol = ParamUtil.getString(request, "protocol");
-		int port = ParamUtil.getInteger(request, "port");
-		LOG.info("Trying to add " + hostName + ": " + ip);
+		String name = ParamUtil.getString(request, "hostName");
+		LOG.info("Trying to add " + name);
 		try {
-			HostLocalServiceUtil.addHost(hostName, ip, protocol, port);
+			HostLocalServiceUtil.addHost(name);
 		} catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
 			LOG.error("Failed adding Streaming Server", e);
-			//PortalUtil.copyRequestParameters(request, response);
 			response.setRenderParameter("mvcPath", "/admin/streamingServerList.jsp");
 		}
 	}

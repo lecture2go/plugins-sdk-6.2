@@ -93,7 +93,7 @@ public class ProzessManager {
 		for (String f: FileManager.MEDIA_FORMATS) {           
 			generateRSS(video, f);
 		}
-		String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/";
+		String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getDirectory() + "/" + producer.getHomeDir() + "/";
 		HTACCESS.makeHtaccess(url, VideoLocalServiceUtil.getByProducerAndDownloadLink(producer.getProducerId(), 0));
 	}
 
@@ -111,7 +111,7 @@ public class ProzessManager {
 		for (String f: FileManager.MEDIA_FORMATS) {
 			generateRSS(video, f);
 		}
-		String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/";
+		String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getDirectory() + "/" + producer.getHomeDir() + "/";
 		HTACCESS.makeHtaccess(url, VideoLocalServiceUtil.getByProducerAndDownloadLink(producer.getProducerId(), 0));
 	}
 
@@ -125,7 +125,7 @@ public class ProzessManager {
 		}catch(Exception e){}
 
 		// first rename the file from the filesystem first
-		String path = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir();
+		String path = PropsUtil.get("lecture2go.media.repository") + "/" + host.getDirectory() + "/" + producer.getHomeDir();
 		String videoPreffix = video.getPreffix();
 		String videoSPreffix = video.getSPreffix();
 		try {
@@ -193,15 +193,15 @@ public class ProzessManager {
 		}
 		
 		//update tag cloud for the lectureseries of this video (necessary to add creators of the now-open-access-video to the tagcloud)
-		TagcloudLocalServiceUtil.generateForLectureseries(video.getLectureseriesId());
+		if(video.getLectureseriesId()>0)TagcloudLocalServiceUtil.generateForLectureseries(video.getLectureseriesId());
 		
 		//update LectureSeries previewVideoId
 		LectureseriesLocalServiceUtil.updatePreviewVideoOpenAccess(lectureseries);
 		//
-		String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/";
+		String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getDirectory() + "/" + producer.getHomeDir() + "/";
 		HTACCESS.makeHtaccess(url, VideoLocalServiceUtil.getByProducerAndDownloadLink(producer.getProducerId(), 0));
 		// refresh last video list
-		VideoLocalServiceUtil.createLastVideoList();
+		//VideoLocalServiceUtil.createLastVideoList();
 		// refresh open acces for lecture series
 		LectureseriesLocalServiceUtil.updateOpenAccess(video, lectureseries);
 		
@@ -219,7 +219,7 @@ public class ProzessManager {
 		}catch(Exception e){}
 		
 		// then update the filesystem
-		String path = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir();
+		String path = PropsUtil.get("lecture2go.media.repository") + "/" + host.getDirectory() + "/" + producer.getHomeDir();
 		String videoPreffix = video.getPreffix();
 		
 		//default media
@@ -286,17 +286,17 @@ public class ProzessManager {
 		// delete video from videohitlist
 		VideohitlistLocalServiceUtil.deleteByVideoId(video.getVideoId());
 		
-		String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/";
+		String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getDirectory() + "/" + producer.getHomeDir() + "/";
 		HTACCESS.makeHtaccess(url, VideoLocalServiceUtil.getByProducerAndDownloadLink(producer.getProducerId(), 0));
 		
 		// refresh last video list
-		VideoLocalServiceUtil.createLastVideoList();
+		//VideoLocalServiceUtil.createLastVideoList();
 		
 		// refresh open access for lecture series
 		LectureseriesLocalServiceUtil.updateOpenAccess(video, lectureseries); 
 		
 		//update tag cloud for the lectureseries of this video (necessary to remove creators of the now-closed-access-video to the tagcloud)
-		TagcloudLocalServiceUtil.generateForLectureseries(video.getLectureseriesId());
+		if(video.getLectureseriesId()>0)TagcloudLocalServiceUtil.generateForLectureseries(video.getLectureseriesId());
 		
 		//update LectureSeries previewVideoId
 		LectureseriesLocalServiceUtil.updatePreviewVideoOpenAccess(lectureseries);
@@ -325,33 +325,33 @@ public class ProzessManager {
 		try {
 			lectureseries = LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId());
 		} catch (Exception e3) {
-			e3.printStackTrace();
+			//e3.printStackTrace();
 		}
 
 		try {
 			host = HostLocalServiceUtil.getHost(video.getHostId());
 		} catch (PortalException e1) {
-			e1.printStackTrace();
+//			e1.printStackTrace();
 		} catch (SystemException e1) {
-			e1.printStackTrace();
+//			e1.printStackTrace();
 		}
 		
 		Producer producer = new ProducerImpl();
 		try {
 			producer = ProducerLocalServiceUtil.getProducer(video.getProducerId());
 		} catch (PortalException e1) {
-			e1.printStackTrace();
+//			e1.printStackTrace();
 		} catch (SystemException e1) {
-			e1.printStackTrace();
+//			e1.printStackTrace();
 		}
 		
 		Metadata metadata = new MetadataImpl();
 		try {
 			metadata = MetadataLocalServiceUtil.getMetadata(video.getMetadataId());
 		} catch (PortalException e1) {
-			e1.printStackTrace();
+//			e1.printStackTrace();
 		} catch (SystemException e1) {
-			e1.printStackTrace();
+//			e1.printStackTrace();
 		}
 
 		// delete video_institution
@@ -373,14 +373,14 @@ public class ProzessManager {
 		try {
 			SegmentLocalServiceUtil.deleteByVideoId(video.getVideoId());
 		} catch (SystemException e2) {
-			e2.printStackTrace();
+			//e2.printStackTrace();
 		}
 		
 		// delete video from videohitlist
 		try {
 			VideohitlistLocalServiceUtil.deleteByVideoId(video.getVideoId());
 		} catch (SystemException e2) {
-			e2.printStackTrace();
+			//e2.printStackTrace();
 		}
 		
 		// delete meta data which belongs to video 
@@ -394,7 +394,7 @@ public class ProzessManager {
 		try {
 			VideoLocalServiceUtil.deleteVideo(video);
 		} catch (SystemException e1) {
-			e1.printStackTrace();
+			//e1.printStackTrace();
 		}
 		
 		//delete physical files 
@@ -406,14 +406,14 @@ public class ProzessManager {
 		if (video.getFilename() != null) {
 			for (String f: FileManager.MEDIA_FORMATS) {           
 				//all media
-				File file = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + videoPreffix + "." + f);
+				File file = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getDirectory() + "/" + producer.getHomeDir() + "/" + videoPreffix + "." + f);
 				file.delete();
 				//all symbolic links
 				File symLink = new File(PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/" + videoPreffix + "." + f);
 				symLink.delete();
 			}
 			// delete old download symbolic link if existing
-			File downloadSymLink = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + videoPreffix + PropsUtil.get("lecture2go.videoprocessing.downloadsuffix") + ".mp4");
+			File downloadSymLink = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getDirectory() + "/" + producer.getHomeDir() + "/" + videoPreffix + PropsUtil.get("lecture2go.videoprocessing.downloadsuffix") + ".mp4");
 			downloadSymLink.delete();
 			
 			//delete the old symbolic link to the caption file
@@ -439,7 +439,7 @@ public class ProzessManager {
 		ProducerLocalServiceUtil.updateProducer(producer);
 		
 		//Update htaccess
-		String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/";
+		String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getDirectory() + "/" + producer.getHomeDir() + "/";
 		HTACCESS.makeHtaccess(url, VideoLocalServiceUtil.getByProducerAndDownloadLink(producer.getProducerId(), 0));
 		
 		// refresh open access for lecture series
@@ -482,9 +482,9 @@ public class ProzessManager {
 		try {
 			host = HostLocalServiceUtil.getHost(video.getHostId());
 		} catch (PortalException e1) {
-			e1.printStackTrace();
+			//e1.printStackTrace();
 		} catch (SystemException e1) {
-			e1.printStackTrace();
+			//e1.printStackTrace();
 		}
 		
 		Producer producer = new ProducerImpl();
@@ -512,7 +512,7 @@ public class ProzessManager {
 		try {
 			SegmentLocalServiceUtil.deleteByVideoId(video.getVideoId());
 		} catch (SystemException e2) {
-			e2.printStackTrace();
+			//e2.printStackTrace();
 		}
 		
 		//delete physical files 
@@ -522,7 +522,7 @@ public class ProzessManager {
 		
 		for (String f: FileManager.MEDIA_FORMATS) {           
 			//all media
-			File file = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + videoPreffix + "." + f);
+			File file = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getDirectory() + "/" + producer.getHomeDir() + "/" + videoPreffix + "." + f);
 			file.delete();
 			//all symbolic links
 			File symLink = new File(PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/" + videoPreffix + "." + f);
@@ -537,7 +537,7 @@ public class ProzessManager {
 		}
 		
 		//Update htaccess
-		String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/";
+		String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getDirectory() + "/" + producer.getHomeDir() + "/";
 		try {
 			HTACCESS.makeHtaccess(url, VideoLocalServiceUtil.getByProducerAndDownloadLink(producer.getProducerId(), 0));
 		} catch (SystemException e) {
@@ -559,7 +559,7 @@ public class ProzessManager {
 			video.setFileSize("");
 			VideoLocalServiceUtil.updateVideo(video);
 		} catch (SystemException e1) {
-			e1.printStackTrace();
+			//e1.printStackTrace();
 		}
 		return true;
 	}
@@ -592,7 +592,7 @@ public class ProzessManager {
 	}
 
 	public void addNewMediaDirectoryForProducer(Host host, Producer producer) throws IOException {
-		File folder = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/");
+		File folder = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getDirectory() + "/" + producer.getHomeDir() + "/");
 		if (!folder.exists()) {
 			if (folder.mkdir()) {
 				Runtime runtime = Runtime.getRuntime();
@@ -631,11 +631,11 @@ public class ProzessManager {
 			String mFileAbo;
 			if (mf == "mp4" && VideoLocalServiceUtil.checkSmilFile(v)) {
 				// if there is a smil file, do not use the default video file but the specific version with download suffix
-				mFile = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + PropsUtil.get("lecture2go.videoprocessing.downloadsuffix") + ".mp4";
+				mFile = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getDirectory() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + PropsUtil.get("lecture2go.videoprocessing.downloadsuffix") + ".mp4";
 				mFileAbo = PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/" + v.getPreffix() + ".mp4";
 			} else {
 				// default handling of all files
-				mFile = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getServerRoot() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + "." + mf;
+				mFile = PropsUtil.get("lecture2go.media.repository") + "/" + objectHost.getDirectory() + "/" + objectProducer.getHomeDir() + "/" + v.getPreffix() + "." + mf;
 				mFileAbo = PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/" + v.getPreffix() + "." + mf;
 			}
 			
@@ -716,7 +716,7 @@ public class ProzessManager {
 	 * @throws DocumentException
 	 */
 	public void createSymLinkToDownloadableFile(Host host, Video video, Producer producer) throws FileNotFoundException, DocumentException {
-		String homePath = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/";
+		String homePath = PropsUtil.get("lecture2go.media.repository") + "/" + host.getDirectory() + "/" + producer.getHomeDir() + "/";
 		// parses optimal file from the smil file
 		String filename = getFileNameOfVideoWithReasonableBitrate(host, video, producer);
 		String filePath = homePath + filename;
@@ -740,7 +740,7 @@ public class ProzessManager {
 		final int targetBitrate = Integer.parseInt(PropsUtil.get("lecture2go.videoprocessing.targetdownloadbitrate"));
 		String filename = "";
 
-		String mediaRep = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir();
+		String mediaRep = PropsUtil.get("lecture2go.media.repository") + "/" + host.getDirectory() + "/" + producer.getHomeDir();
 		// set prefix according to openaccess filename or secured
 		String prefix = video.getOpenAccess()==1 ? video.getPreffix() : video.getSPreffix();
 		String smilPath = mediaRep + "/" + prefix +".smil";

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
@@ -58,16 +59,15 @@ public class LicenseModelImpl extends BaseModelImpl<License>
 	public static final String TABLE_NAME = "LG_License";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "licenseId", Types.BIGINT },
-			{ "videoId", Types.BIGINT },
-			{ "ccby", Types.INTEGER },
-			{ "ccbybc", Types.INTEGER },
-			{ "ccbyncnd", Types.INTEGER },
-			{ "ccbyncsa", Types.INTEGER },
-			{ "ccbysa", Types.INTEGER },
-			{ "ccbync", Types.INTEGER },
-			{ "l2go", Types.INTEGER }
+			{ "fullName", Types.VARCHAR },
+			{ "shortIdentifier", Types.VARCHAR },
+			{ "url", Types.VARCHAR },
+			{ "schemeName", Types.VARCHAR },
+			{ "schemeUrl", Types.VARCHAR },
+			{ "selectable", Types.BOOLEAN },
+			{ "description", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LG_License (licenseId LONG not null primary key,videoId LONG,ccby INTEGER,ccbybc INTEGER,ccbyncnd INTEGER,ccbyncsa INTEGER,ccbysa INTEGER,ccbync INTEGER,l2go INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table LG_License (licenseId LONG not null primary key,fullName VARCHAR(75) null,shortIdentifier VARCHAR(75) null,url VARCHAR(75) null,schemeName VARCHAR(75) null,schemeUrl VARCHAR(75) null,selectable BOOLEAN,description VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table LG_License";
 	public static final String ORDER_BY_JPQL = " ORDER BY license.licenseId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_License.licenseId ASC";
@@ -83,7 +83,7 @@ public class LicenseModelImpl extends BaseModelImpl<License>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.License"),
 			true);
-	public static long VIDEOID_COLUMN_BITMASK = 1L;
+	public static long SELECTABLE_COLUMN_BITMASK = 1L;
 	public static long LICENSEID_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.de.uhh.l2g.plugins.model.License"));
@@ -126,14 +126,13 @@ public class LicenseModelImpl extends BaseModelImpl<License>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("licenseId", getLicenseId());
-		attributes.put("videoId", getVideoId());
-		attributes.put("ccby", getCcby());
-		attributes.put("ccbybc", getCcbybc());
-		attributes.put("ccbyncnd", getCcbyncnd());
-		attributes.put("ccbyncsa", getCcbyncsa());
-		attributes.put("ccbysa", getCcbysa());
-		attributes.put("ccbync", getCcbync());
-		attributes.put("l2go", getL2go());
+		attributes.put("fullName", getFullName());
+		attributes.put("shortIdentifier", getShortIdentifier());
+		attributes.put("url", getUrl());
+		attributes.put("schemeName", getSchemeName());
+		attributes.put("schemeUrl", getSchemeUrl());
+		attributes.put("selectable", getSelectable());
+		attributes.put("description", getDescription());
 
 		return attributes;
 	}
@@ -146,52 +145,46 @@ public class LicenseModelImpl extends BaseModelImpl<License>
 			setLicenseId(licenseId);
 		}
 
-		Long videoId = (Long)attributes.get("videoId");
+		String fullName = (String)attributes.get("fullName");
 
-		if (videoId != null) {
-			setVideoId(videoId);
+		if (fullName != null) {
+			setFullName(fullName);
 		}
 
-		Integer ccby = (Integer)attributes.get("ccby");
+		String shortIdentifier = (String)attributes.get("shortIdentifier");
 
-		if (ccby != null) {
-			setCcby(ccby);
+		if (shortIdentifier != null) {
+			setShortIdentifier(shortIdentifier);
 		}
 
-		Integer ccbybc = (Integer)attributes.get("ccbybc");
+		String url = (String)attributes.get("url");
 
-		if (ccbybc != null) {
-			setCcbybc(ccbybc);
+		if (url != null) {
+			setUrl(url);
 		}
 
-		Integer ccbyncnd = (Integer)attributes.get("ccbyncnd");
+		String schemeName = (String)attributes.get("schemeName");
 
-		if (ccbyncnd != null) {
-			setCcbyncnd(ccbyncnd);
+		if (schemeName != null) {
+			setSchemeName(schemeName);
 		}
 
-		Integer ccbyncsa = (Integer)attributes.get("ccbyncsa");
+		String schemeUrl = (String)attributes.get("schemeUrl");
 
-		if (ccbyncsa != null) {
-			setCcbyncsa(ccbyncsa);
+		if (schemeUrl != null) {
+			setSchemeUrl(schemeUrl);
 		}
 
-		Integer ccbysa = (Integer)attributes.get("ccbysa");
+		Boolean selectable = (Boolean)attributes.get("selectable");
 
-		if (ccbysa != null) {
-			setCcbysa(ccbysa);
+		if (selectable != null) {
+			setSelectable(selectable);
 		}
 
-		Integer ccbync = (Integer)attributes.get("ccbync");
+		String description = (String)attributes.get("description");
 
-		if (ccbync != null) {
-			setCcbync(ccbync);
-		}
-
-		Integer l2go = (Integer)attributes.get("l2go");
-
-		if (l2go != null) {
-			setL2go(l2go);
+		if (description != null) {
+			setDescription(description);
 		}
 	}
 
@@ -206,95 +199,120 @@ public class LicenseModelImpl extends BaseModelImpl<License>
 	}
 
 	@Override
-	public long getVideoId() {
-		return _videoId;
+	public String getFullName() {
+		if (_fullName == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _fullName;
+		}
 	}
 
 	@Override
-	public void setVideoId(long videoId) {
-		_columnBitmask |= VIDEOID_COLUMN_BITMASK;
+	public void setFullName(String fullName) {
+		_fullName = fullName;
+	}
 
-		if (!_setOriginalVideoId) {
-			_setOriginalVideoId = true;
+	@Override
+	public String getShortIdentifier() {
+		if (_shortIdentifier == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _shortIdentifier;
+		}
+	}
 
-			_originalVideoId = _videoId;
+	@Override
+	public void setShortIdentifier(String shortIdentifier) {
+		_shortIdentifier = shortIdentifier;
+	}
+
+	@Override
+	public String getUrl() {
+		if (_url == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _url;
+		}
+	}
+
+	@Override
+	public void setUrl(String url) {
+		_url = url;
+	}
+
+	@Override
+	public String getSchemeName() {
+		if (_schemeName == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _schemeName;
+		}
+	}
+
+	@Override
+	public void setSchemeName(String schemeName) {
+		_schemeName = schemeName;
+	}
+
+	@Override
+	public String getSchemeUrl() {
+		if (_schemeUrl == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _schemeUrl;
+		}
+	}
+
+	@Override
+	public void setSchemeUrl(String schemeUrl) {
+		_schemeUrl = schemeUrl;
+	}
+
+	@Override
+	public boolean getSelectable() {
+		return _selectable;
+	}
+
+	@Override
+	public boolean isSelectable() {
+		return _selectable;
+	}
+
+	@Override
+	public void setSelectable(boolean selectable) {
+		_columnBitmask |= SELECTABLE_COLUMN_BITMASK;
+
+		if (!_setOriginalSelectable) {
+			_setOriginalSelectable = true;
+
+			_originalSelectable = _selectable;
 		}
 
-		_videoId = videoId;
+		_selectable = selectable;
 	}
 
-	public long getOriginalVideoId() {
-		return _originalVideoId;
-	}
-
-	@Override
-	public int getCcby() {
-		return _ccby;
+	public boolean getOriginalSelectable() {
+		return _originalSelectable;
 	}
 
 	@Override
-	public void setCcby(int ccby) {
-		_ccby = ccby;
+	public String getDescription() {
+		if (_description == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _description;
+		}
 	}
 
 	@Override
-	public int getCcbybc() {
-		return _ccbybc;
-	}
-
-	@Override
-	public void setCcbybc(int ccbybc) {
-		_ccbybc = ccbybc;
-	}
-
-	@Override
-	public int getCcbyncnd() {
-		return _ccbyncnd;
-	}
-
-	@Override
-	public void setCcbyncnd(int ccbyncnd) {
-		_ccbyncnd = ccbyncnd;
-	}
-
-	@Override
-	public int getCcbyncsa() {
-		return _ccbyncsa;
-	}
-
-	@Override
-	public void setCcbyncsa(int ccbyncsa) {
-		_ccbyncsa = ccbyncsa;
-	}
-
-	@Override
-	public int getCcbysa() {
-		return _ccbysa;
-	}
-
-	@Override
-	public void setCcbysa(int ccbysa) {
-		_ccbysa = ccbysa;
-	}
-
-	@Override
-	public int getCcbync() {
-		return _ccbync;
-	}
-
-	@Override
-	public void setCcbync(int ccbync) {
-		_ccbync = ccbync;
-	}
-
-	@Override
-	public int getL2go() {
-		return _l2go;
-	}
-
-	@Override
-	public void setL2go(int l2go) {
-		_l2go = l2go;
+	public void setDescription(String description) {
+		_description = description;
 	}
 
 	public long getColumnBitmask() {
@@ -329,14 +347,13 @@ public class LicenseModelImpl extends BaseModelImpl<License>
 		LicenseImpl licenseImpl = new LicenseImpl();
 
 		licenseImpl.setLicenseId(getLicenseId());
-		licenseImpl.setVideoId(getVideoId());
-		licenseImpl.setCcby(getCcby());
-		licenseImpl.setCcbybc(getCcbybc());
-		licenseImpl.setCcbyncnd(getCcbyncnd());
-		licenseImpl.setCcbyncsa(getCcbyncsa());
-		licenseImpl.setCcbysa(getCcbysa());
-		licenseImpl.setCcbync(getCcbync());
-		licenseImpl.setL2go(getL2go());
+		licenseImpl.setFullName(getFullName());
+		licenseImpl.setShortIdentifier(getShortIdentifier());
+		licenseImpl.setUrl(getUrl());
+		licenseImpl.setSchemeName(getSchemeName());
+		licenseImpl.setSchemeUrl(getSchemeUrl());
+		licenseImpl.setSelectable(getSelectable());
+		licenseImpl.setDescription(getDescription());
 
 		licenseImpl.resetOriginalValues();
 
@@ -389,9 +406,9 @@ public class LicenseModelImpl extends BaseModelImpl<License>
 	public void resetOriginalValues() {
 		LicenseModelImpl licenseModelImpl = this;
 
-		licenseModelImpl._originalVideoId = licenseModelImpl._videoId;
+		licenseModelImpl._originalSelectable = licenseModelImpl._selectable;
 
-		licenseModelImpl._setOriginalVideoId = false;
+		licenseModelImpl._setOriginalSelectable = false;
 
 		licenseModelImpl._columnBitmask = 0;
 	}
@@ -402,47 +419,79 @@ public class LicenseModelImpl extends BaseModelImpl<License>
 
 		licenseCacheModel.licenseId = getLicenseId();
 
-		licenseCacheModel.videoId = getVideoId();
+		licenseCacheModel.fullName = getFullName();
 
-		licenseCacheModel.ccby = getCcby();
+		String fullName = licenseCacheModel.fullName;
 
-		licenseCacheModel.ccbybc = getCcbybc();
+		if ((fullName != null) && (fullName.length() == 0)) {
+			licenseCacheModel.fullName = null;
+		}
 
-		licenseCacheModel.ccbyncnd = getCcbyncnd();
+		licenseCacheModel.shortIdentifier = getShortIdentifier();
 
-		licenseCacheModel.ccbyncsa = getCcbyncsa();
+		String shortIdentifier = licenseCacheModel.shortIdentifier;
 
-		licenseCacheModel.ccbysa = getCcbysa();
+		if ((shortIdentifier != null) && (shortIdentifier.length() == 0)) {
+			licenseCacheModel.shortIdentifier = null;
+		}
 
-		licenseCacheModel.ccbync = getCcbync();
+		licenseCacheModel.url = getUrl();
 
-		licenseCacheModel.l2go = getL2go();
+		String url = licenseCacheModel.url;
+
+		if ((url != null) && (url.length() == 0)) {
+			licenseCacheModel.url = null;
+		}
+
+		licenseCacheModel.schemeName = getSchemeName();
+
+		String schemeName = licenseCacheModel.schemeName;
+
+		if ((schemeName != null) && (schemeName.length() == 0)) {
+			licenseCacheModel.schemeName = null;
+		}
+
+		licenseCacheModel.schemeUrl = getSchemeUrl();
+
+		String schemeUrl = licenseCacheModel.schemeUrl;
+
+		if ((schemeUrl != null) && (schemeUrl.length() == 0)) {
+			licenseCacheModel.schemeUrl = null;
+		}
+
+		licenseCacheModel.selectable = getSelectable();
+
+		licenseCacheModel.description = getDescription();
+
+		String description = licenseCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			licenseCacheModel.description = null;
+		}
 
 		return licenseCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{licenseId=");
 		sb.append(getLicenseId());
-		sb.append(", videoId=");
-		sb.append(getVideoId());
-		sb.append(", ccby=");
-		sb.append(getCcby());
-		sb.append(", ccbybc=");
-		sb.append(getCcbybc());
-		sb.append(", ccbyncnd=");
-		sb.append(getCcbyncnd());
-		sb.append(", ccbyncsa=");
-		sb.append(getCcbyncsa());
-		sb.append(", ccbysa=");
-		sb.append(getCcbysa());
-		sb.append(", ccbync=");
-		sb.append(getCcbync());
-		sb.append(", l2go=");
-		sb.append(getL2go());
+		sb.append(", fullName=");
+		sb.append(getFullName());
+		sb.append(", shortIdentifier=");
+		sb.append(getShortIdentifier());
+		sb.append(", url=");
+		sb.append(getUrl());
+		sb.append(", schemeName=");
+		sb.append(getSchemeName());
+		sb.append(", schemeUrl=");
+		sb.append(getSchemeUrl());
+		sb.append(", selectable=");
+		sb.append(getSelectable());
+		sb.append(", description=");
+		sb.append(getDescription());
 		sb.append("}");
 
 		return sb.toString();
@@ -450,7 +499,7 @@ public class LicenseModelImpl extends BaseModelImpl<License>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.License");
@@ -461,36 +510,32 @@ public class LicenseModelImpl extends BaseModelImpl<License>
 		sb.append(getLicenseId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>videoId</column-name><column-value><![CDATA[");
-		sb.append(getVideoId());
+			"<column><column-name>fullName</column-name><column-value><![CDATA[");
+		sb.append(getFullName());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>ccby</column-name><column-value><![CDATA[");
-		sb.append(getCcby());
+			"<column><column-name>shortIdentifier</column-name><column-value><![CDATA[");
+		sb.append(getShortIdentifier());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>ccbybc</column-name><column-value><![CDATA[");
-		sb.append(getCcbybc());
+			"<column><column-name>url</column-name><column-value><![CDATA[");
+		sb.append(getUrl());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>ccbyncnd</column-name><column-value><![CDATA[");
-		sb.append(getCcbyncnd());
+			"<column><column-name>schemeName</column-name><column-value><![CDATA[");
+		sb.append(getSchemeName());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>ccbyncsa</column-name><column-value><![CDATA[");
-		sb.append(getCcbyncsa());
+			"<column><column-name>schemeUrl</column-name><column-value><![CDATA[");
+		sb.append(getSchemeUrl());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>ccbysa</column-name><column-value><![CDATA[");
-		sb.append(getCcbysa());
+			"<column><column-name>selectable</column-name><column-value><![CDATA[");
+		sb.append(getSelectable());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>ccbync</column-name><column-value><![CDATA[");
-		sb.append(getCcbync());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>l2go</column-name><column-value><![CDATA[");
-		sb.append(getL2go());
+			"<column><column-name>description</column-name><column-value><![CDATA[");
+		sb.append(getDescription());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -503,16 +548,15 @@ public class LicenseModelImpl extends BaseModelImpl<License>
 			License.class
 		};
 	private long _licenseId;
-	private long _videoId;
-	private long _originalVideoId;
-	private boolean _setOriginalVideoId;
-	private int _ccby;
-	private int _ccbybc;
-	private int _ccbyncnd;
-	private int _ccbyncsa;
-	private int _ccbysa;
-	private int _ccbync;
-	private int _l2go;
+	private String _fullName;
+	private String _shortIdentifier;
+	private String _url;
+	private String _schemeName;
+	private String _schemeUrl;
+	private boolean _selectable;
+	private boolean _originalSelectable;
+	private boolean _setOriginalSelectable;
+	private String _description;
 	private long _columnBitmask;
 	private License _escapedModel;
 }

@@ -17,7 +17,10 @@ package de.uhh.l2g.plugins.service.impl;
 import java.util.List;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.VideoStatistic;
 import de.uhh.l2g.plugins.service.base.VideoStatisticLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.VideoStatisticFinderUtil;
@@ -42,6 +45,20 @@ public class VideoStatisticLocalServiceImpl
 	 * NOTE FOR DEVELOPERS:
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.VideoStatisticLocalServiceUtil} to access the video statistic local service.
     */
+	
+	protected static Log LOG = LogFactoryUtil.getLog(VideoStatistic.class.getName());
+
+	public VideoStatistic addVideoStatistic(VideoStatistic object){
+		Long id;
+		try {
+			id = counterLocalService.increment(VideoStatistic.class.getName());
+			object.setPrimaryKey(id);
+			super.addVideoStatistic(object);
+		} catch (SystemException e) {
+			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
+		}
+		return object;
+	}
 	
 	public List<VideoStatistic> getByCompanyIdAndGroupId(long companyId, long groupId) throws SystemException {
 		return videoStatisticPersistence.findByCompanyIdAndGroupId(companyId, groupId);

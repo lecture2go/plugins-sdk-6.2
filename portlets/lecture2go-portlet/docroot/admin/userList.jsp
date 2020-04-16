@@ -93,7 +93,7 @@
 										String fN = "";
 										try{
 											fN= InstitutionLocalServiceUtil.getInstitution(fId).getName(); 
-											n+= LanguageUtil.get(pageContext, "producer-for")+" "+fN+"<br/>";
+											n+= fN+"<br/>";
 										}catch (Exception e){}
 									}
 									if(!rn.contains("L2Go Producer") && !rn.contains("L2Go Coordinator")){

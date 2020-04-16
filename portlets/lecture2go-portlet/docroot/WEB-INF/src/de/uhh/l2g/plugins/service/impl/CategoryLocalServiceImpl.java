@@ -19,8 +19,11 @@ import java.util.List;
 
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import de.uhh.l2g.plugins.model.Category;
+import de.uhh.l2g.plugins.model.Coordinator;
 import de.uhh.l2g.plugins.service.base.CategoryLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.CategoryFinderUtil;
 
@@ -44,6 +47,20 @@ public class CategoryLocalServiceImpl extends CategoryLocalServiceBaseImpl {
 	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.CategoryLocalServiceUtil} to access the category local service.
 	 */
+	protected static Log LOG = LogFactoryUtil.getLog(Category.class.getName());
+
+	public Category addCategory(Category object){
+		Long id;
+		try {
+			id = counterLocalService.increment(Category.class.getName());
+			object.setPrimaryKey(id);
+			super.addCategory(object);
+		} catch (SystemException e) {
+			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
+		}
+		return object;
+	}
+	
 	public List<Category> getAllCategories(int begin, int end) throws SystemException {
 		List<Category> cl = new ArrayList<Category>();
 		cl = categoryPersistence.findAll(begin, end);

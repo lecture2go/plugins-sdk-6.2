@@ -15,7 +15,11 @@
 package de.uhh.l2g.plugins.service.impl;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import de.uhh.l2g.plugins.model.Institution;
+import de.uhh.l2g.plugins.model.Lastvideolist;
 import de.uhh.l2g.plugins.service.base.LastvideolistLocalServiceBaseImpl;
 
 /**
@@ -39,6 +43,19 @@ public class LastvideolistLocalServiceImpl
 	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.LastvideolistLocalServiceUtil} to access the lastvideolist local service.
 	 */
+	protected static Log LOG = LogFactoryUtil.getLog(Lastvideolist.class.getName());
+
+	public Lastvideolist addLastvideolist(Lastvideolist object){
+		Long id;
+		try {
+			id = counterLocalService.increment(Lastvideolist.class.getName());
+			object.setLastvideolistId(id);
+			super.addLastvideolist(object);
+		} catch (SystemException e) {
+			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
+		}
+		return object;
+	}
 	
 	public void deleteByVideoId(Long videoId) {
 		try {

@@ -377,7 +377,7 @@ public class AdminUserManagement extends MVCPortlet {
 	
 	public static boolean createProducersRepository(Host host, Producer producer) throws IOException{
 		boolean ret = false;
-		File folder = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/");
+		File folder = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getDirectory() + "/" + producer.getHomeDir() + "/");
 		Runtime runtime = Runtime.getRuntime();
 		if (!folder.exists()) {
 			//create repository for producer

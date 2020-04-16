@@ -177,9 +177,9 @@ public class FFmpegManager {
 			String command = "";
 			int sec = new Integer(time.split(":")[0]) * 60 * 60 + new Integer(time.split(":")[1]) * 60 + new Integer(time.split(":")[2]);
 			if (video.getOpenAccess()==1)
-				command = PropsUtil.get("lecture2go.ffmpeg.bin") + " -ss " + sec + " -i " + PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + video.getFilename() + " -f image2 -vframes 1 -filter:v scale='130:-1' " + thumbnailLocation + "/" + video.getVideoId() + "_"+ sec + ".jpg";
+				command = PropsUtil.get("lecture2go.ffmpeg.bin") + " -ss " + sec + " -i " + PropsUtil.get("lecture2go.media.repository") + "/" + host.getDirectory() + "/" + producer.getHomeDir() + "/" + video.getFilename() + " -f image2 -vframes 1 -filter:v scale='130:-1' " + thumbnailLocation + "/" + video.getVideoId() + "_"+ sec + ".jpg";
 			else
-				command = PropsUtil.get("lecture2go.ffmpeg.bin") + " -ss " + sec + " -i " + PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + video.getSecureFilename() + " -f image2 -vframes 1 -filter:v scale='130:-1' " + thumbnailLocation + "/" + video.getVideoId()+ "_" + sec + ".jpg";
+				command = PropsUtil.get("lecture2go.ffmpeg.bin") + " -ss " + sec + " -i " + PropsUtil.get("lecture2go.media.repository") + "/" + host.getDirectory() + "/" + producer.getHomeDir() + "/" + video.getSecureFilename() + " -f image2 -vframes 1 -filter:v scale='130:-1' " + thumbnailLocation + "/" + video.getVideoId()+ "_" + sec + ".jpg";
 			try {
 				runCmd.exec(command);
 				ret = true;
@@ -396,9 +396,9 @@ public class FFmpegManager {
 		try {
 			String videopfad = "";
 			if (video.getOpenAccess()==1)
-				videopfad = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + video.getFilename();
+				videopfad = PropsUtil.get("lecture2go.media.repository") + "/" + host.getDirectory() + "/" + producer.getHomeDir() + "/" + video.getFilename();
 			else
-				videopfad = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + video.getSecureFilename();
+				videopfad = PropsUtil.get("lecture2go.media.repository") + "/" + host.getDirectory() + "/" + producer.getHomeDir() + "/" + video.getSecureFilename();
 			FFmpegManager ffmpegp = new FFmpegManager(videopfad);
 			video.setDuration(ffmpegp.getVideoDuration());
 			video.setResolution(ffmpegp.getVideoResolution());

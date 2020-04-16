@@ -15,6 +15,7 @@
 package de.uhh.l2g.plugins.model.impl;
 
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 
 import de.uhh.l2g.plugins.model.License;
@@ -34,26 +35,24 @@ import java.io.ObjectOutput;
 public class LicenseCacheModel implements CacheModel<License>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{licenseId=");
 		sb.append(licenseId);
-		sb.append(", videoId=");
-		sb.append(videoId);
-		sb.append(", ccby=");
-		sb.append(ccby);
-		sb.append(", ccbybc=");
-		sb.append(ccbybc);
-		sb.append(", ccbyncnd=");
-		sb.append(ccbyncnd);
-		sb.append(", ccbyncsa=");
-		sb.append(ccbyncsa);
-		sb.append(", ccbysa=");
-		sb.append(ccbysa);
-		sb.append(", ccbync=");
-		sb.append(ccbync);
-		sb.append(", l2go=");
-		sb.append(l2go);
+		sb.append(", fullName=");
+		sb.append(fullName);
+		sb.append(", shortIdentifier=");
+		sb.append(shortIdentifier);
+		sb.append(", url=");
+		sb.append(url);
+		sb.append(", schemeName=");
+		sb.append(schemeName);
+		sb.append(", schemeUrl=");
+		sb.append(schemeUrl);
+		sb.append(", selectable=");
+		sb.append(selectable);
+		sb.append(", description=");
+		sb.append(description);
 		sb.append("}");
 
 		return sb.toString();
@@ -64,14 +63,50 @@ public class LicenseCacheModel implements CacheModel<License>, Externalizable {
 		LicenseImpl licenseImpl = new LicenseImpl();
 
 		licenseImpl.setLicenseId(licenseId);
-		licenseImpl.setVideoId(videoId);
-		licenseImpl.setCcby(ccby);
-		licenseImpl.setCcbybc(ccbybc);
-		licenseImpl.setCcbyncnd(ccbyncnd);
-		licenseImpl.setCcbyncsa(ccbyncsa);
-		licenseImpl.setCcbysa(ccbysa);
-		licenseImpl.setCcbync(ccbync);
-		licenseImpl.setL2go(l2go);
+
+		if (fullName == null) {
+			licenseImpl.setFullName(StringPool.BLANK);
+		}
+		else {
+			licenseImpl.setFullName(fullName);
+		}
+
+		if (shortIdentifier == null) {
+			licenseImpl.setShortIdentifier(StringPool.BLANK);
+		}
+		else {
+			licenseImpl.setShortIdentifier(shortIdentifier);
+		}
+
+		if (url == null) {
+			licenseImpl.setUrl(StringPool.BLANK);
+		}
+		else {
+			licenseImpl.setUrl(url);
+		}
+
+		if (schemeName == null) {
+			licenseImpl.setSchemeName(StringPool.BLANK);
+		}
+		else {
+			licenseImpl.setSchemeName(schemeName);
+		}
+
+		if (schemeUrl == null) {
+			licenseImpl.setSchemeUrl(StringPool.BLANK);
+		}
+		else {
+			licenseImpl.setSchemeUrl(schemeUrl);
+		}
+
+		licenseImpl.setSelectable(selectable);
+
+		if (description == null) {
+			licenseImpl.setDescription(StringPool.BLANK);
+		}
+		else {
+			licenseImpl.setDescription(description);
+		}
 
 		licenseImpl.resetOriginalValues();
 
@@ -81,37 +116,71 @@ public class LicenseCacheModel implements CacheModel<License>, Externalizable {
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		licenseId = objectInput.readLong();
-		videoId = objectInput.readLong();
-		ccby = objectInput.readInt();
-		ccbybc = objectInput.readInt();
-		ccbyncnd = objectInput.readInt();
-		ccbyncsa = objectInput.readInt();
-		ccbysa = objectInput.readInt();
-		ccbync = objectInput.readInt();
-		l2go = objectInput.readInt();
+		fullName = objectInput.readUTF();
+		shortIdentifier = objectInput.readUTF();
+		url = objectInput.readUTF();
+		schemeName = objectInput.readUTF();
+		schemeUrl = objectInput.readUTF();
+		selectable = objectInput.readBoolean();
+		description = objectInput.readUTF();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(licenseId);
-		objectOutput.writeLong(videoId);
-		objectOutput.writeInt(ccby);
-		objectOutput.writeInt(ccbybc);
-		objectOutput.writeInt(ccbyncnd);
-		objectOutput.writeInt(ccbyncsa);
-		objectOutput.writeInt(ccbysa);
-		objectOutput.writeInt(ccbync);
-		objectOutput.writeInt(l2go);
+
+		if (fullName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(fullName);
+		}
+
+		if (shortIdentifier == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(shortIdentifier);
+		}
+
+		if (url == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(url);
+		}
+
+		if (schemeName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(schemeName);
+		}
+
+		if (schemeUrl == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(schemeUrl);
+		}
+
+		objectOutput.writeBoolean(selectable);
+
+		if (description == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(description);
+		}
 	}
 
 	public long licenseId;
-	public long videoId;
-	public int ccby;
-	public int ccbybc;
-	public int ccbyncnd;
-	public int ccbyncsa;
-	public int ccbysa;
-	public int ccbync;
-	public int l2go;
+	public String fullName;
+	public String shortIdentifier;
+	public String url;
+	public String schemeName;
+	public String schemeUrl;
+	public boolean selectable;
+	public String description;
 }

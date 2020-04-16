@@ -37,7 +37,7 @@ import java.util.Date;
 public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(47);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("{videoId=");
 		sb.append(videoId);
@@ -85,6 +85,8 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 		sb.append(tags);
 		sb.append(", password=");
 		sb.append(password);
+		sb.append(", licenseId=");
+		sb.append(licenseId);
 		sb.append("}");
 
 		return sb.toString();
@@ -189,6 +191,8 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 			videoImpl.setPassword(password);
 		}
 
+		videoImpl.setLicenseId(licenseId);
+
 		videoImpl.resetOriginalValues();
 
 		return videoImpl;
@@ -219,6 +223,7 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 		termId = objectInput.readLong();
 		tags = objectInput.readUTF();
 		password = objectInput.readUTF();
+		licenseId = objectInput.readLong();
 	}
 
 	@Override
@@ -311,6 +316,8 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 		else {
 			objectOutput.writeUTF(password);
 		}
+
+		objectOutput.writeLong(licenseId);
 	}
 
 	public long videoId;
@@ -336,4 +343,5 @@ public class VideoCacheModel implements CacheModel<Video>, Externalizable {
 	public long termId;
 	public String tags;
 	public String password;
+	public long licenseId;
 }

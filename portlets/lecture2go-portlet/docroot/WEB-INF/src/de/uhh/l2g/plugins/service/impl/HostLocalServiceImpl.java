@@ -75,7 +75,7 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 	 */
 
 	protected static Log LOG = LogFactoryUtil.getLog(Host.class.getName());
-	protected static final String SYS_ROOT = "vh_0000";
+	protected static final String SYS_ROOT = "vh_000";
 	protected static final String SYS_SERVER = "localhost";
 	protected static final String SYS_PROTOCOL = "http";
 	protected static final int SYS_PORT = 80;
@@ -156,75 +156,16 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 		}
 	}
 
-	/**
-	 * Special handling for default entries (no update)
-	 * 
-	 */
-	public Host addDefaultHost(ServiceContext serviceContext) throws SystemException, PortalException {
-		long hostId = counterLocalService.increment(Host.class.getName());
-		Host defaultHost = hostPersistence.create(hostId);
-
-		LOG.debug("Writing Host");
-		defaultHost.setName(AdminStreamerManagement.DEFAULT_STREAMER);
-
-		// Load from Portal Properties
-		String streamer = GetterUtil.getString(PropsUtil.get("lecture2go.default.streamingHost"));
-		String protocol = GetterUtil.getString(PropsUtil.get("lecture2go.default.streamingProtocol"));
-		String serverRoot = GetterUtil.getString(PropsUtil.get("lecture2go.default.serverRoot"));
-		int port = Integer.valueOf(GetterUtil.getInteger(PropsUtil.get("lecture2go.default.streamingPort")));
-
-		if (streamer.isEmpty()) {
-			streamer = RepositoryManager.SYS_SERVER;
-			LOG.error("Portal property lecture2go.default.streamingHost not set. Using default!");
-		}
-		if (protocol.isEmpty()) {
-			protocol = RepositoryManager.SYS_PROTOCOL;
-			LOG.error("Portal property lecture2go.default.streamingProtocol not set. Using default!");
-		}
-		if (serverRoot.isEmpty()) {
-			serverRoot = RepositoryManager.SYS_ROOT;
-			LOG.error("Portal property lecture2go.default.serverRoot not set. Using default!");
-		}
-		if (port == 0) {
-			port = RepositoryManager.SYS_PORT;
-			LOG.error("Portal property lecture2go.default.streamingPort not set. Using default!");
-		}
-		defaultHost.setStreamer(streamer);
-		defaultHost.setProtocol(protocol);
-		defaultHost.setServerRoot(serverRoot);
-		defaultHost.setPort(port);
-		defaultHost.setDefaultHost(1);
-
-		defaultHost.setExpandoBridgeAttributes(serviceContext);
-
-		hostPersistence.update(defaultHost);
-
-		String repository = GetterUtil.getString(PropsUtil.get("lecture2go.media.repository"));
-		if (repository.isEmpty()) {
-			LOG.error("Portal property lecture2go.media.repository not set. This path must be specified set before installation!");
-			throw new NoPropertyException();
-		}
-		try {
-			RepositoryManager.createFolder(PropsUtil.get("lecture2go.media.repository") + "/" + defaultHost.getServerRoot());
-		} catch (IOException e) {
-			LOG.error("Folder creation failed!", e);
-		}
-		return defaultHost;
-	}
-
-	public Host addHost(String name, String streamLocation, String protocol, int port) throws SystemException, PortalException {
+	public Host addHost(String name) throws SystemException, PortalException {
 		long hostId = counterLocalService.increment(Host.class.getName());
 		Host host = hostPersistence.create(hostId);
-		host.setName(RepositoryManager.prepareServerRoot(hostId));
-		host.setStreamer(streamLocation);
-		host.setProtocol(protocol);
-		host.setServerRoot(RepositoryManager.prepareServerRoot(hostId));
-		host.setPort(port);
-		hostPersistence.update(host);
+		host.setName(name);
+		host.setDirectory("vh_"+hostId);
+		super.addHost(host);
 
 		// Create Directory
 		try {
-			RepositoryManager.createFolder(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot());
+			RepositoryManager.createFolder(PropsUtil.get("lecture2go.media.repository") + "/" + host.getDirectory());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
@@ -232,16 +173,11 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 		return host;
 	}
 
-	public Host updateHost(long hostId, String name, String streamLocation, String protocol, int port) throws SystemException, PortalException {
-		validate(name, streamLocation);
+	public Host updateHost(long hostId, String name) throws SystemException, PortalException {
 		Host host = getHost(hostId);
 		host.setName(name);
 		// host.setStreamingServerTemplateId(streamingServerTemplateId);
-		host.setStreamer(streamLocation);
-		host.setProtocol(protocol);
 		// Server Root will be constant over all changes
-		// host.setServerRoot(serverRoot);
-		host.setPort(port);
 		hostPersistence.update(host);
 		return host;
 	}
@@ -254,17 +190,12 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 	 */
 	public Host deleteHost(long hostId, ServiceContext serviceContext) throws PortalException, SystemException {
 		long companyId = serviceContext.getCompanyId();
-		long groupId = serviceContext.getScopeGroupId();
 		Host host = getHost(hostId);
 		int l = getLockingElements(hostId);
 
 		if (l < 1) {
 			resourceLocalService.deleteResource(companyId, Host.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL, hostId);
 			host = deleteHost(hostId);
-			//delete directory
-			//String hostDir = PropsUtil.get("lecture2go.media.repository") +"/" +host.getServerRoot(); 
-			//File d = new File(hostDir);
-			//d.delete();
 		} else {
 			String message = LanguageUtil.format(serviceContext.getLocale(), "There are {0} objects still refering to this institution", l);
 			SessionMessages.add(serviceContext.getRequest(), "deletion-locked", message);
@@ -273,39 +204,4 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 		return host;
 	}
 
-	public long updateCounter() throws SystemException, PortalException {
-		// current counter
-		Counter counter = CounterLocalServiceUtil.getCounter(Host.class.getName());
-		LOG.debug(counter.getCurrentId());
-		// check Host Count (if 1 it is supposed to be default host)
-		if (GetterUtil.getString(PropsUtil.get("counter.increment")).isEmpty()) {
-			LOG.info("It's strongly suggested to set portal property: counter.increment." + Host.class.getName() + "=1");
-		}
-		int count = HostLocalServiceUtil.getHostsCount();
-		LOG.debug(count);
-		long newHostId = 0; // Reset if table is empty
-		long hostId = 0; // the actual Id value
-
-		if (count > 0) { // our db is filled... with something at least
-			// Retrieve actual table data
-			ClassLoader classLoader = (ClassLoader) PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(), "portletClassLoader");
-			DynamicQuery query = DynamicQueryFactoryUtil.forClass(Host.class, classLoader).addOrder(OrderFactoryUtil.desc("hostId"));
-			query.setLimit(0, 1);
-			List<Host> hosts = HostLocalServiceUtil.dynamicQuery(query);
-			if (hosts.size() > 0) hostId = hosts.get(0).getHostId(); // current maximum Id
-		}
-		
-		// Check back with real directory (there might be old directories, our
-		// DB does not know or remember)
-		newHostId = java.lang.Math.max(RepositoryManager.getMaximumRealServerRootId(), hostId);
-		LOG.debug(newHostId);
-		
-		// Increment Counter if assynchrone with estimated value or data reseted
-		if (counter.getCurrentId() < newHostId || newHostId == 0) {
-			counter.setCurrentId(newHostId);
-			CounterLocalServiceUtil.updateCounter(counter);
-		}
-
-		return counter.getCurrentId();
-	}
 }

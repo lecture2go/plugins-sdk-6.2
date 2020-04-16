@@ -238,7 +238,7 @@ public class RepositoryManager {
 	 */
 	public static boolean symlinkToUserHome(Host host, Producer producer){
 		boolean ret = false;
-		File folder = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/");
+		File folder = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getDirectory() + "/" + producer.getHomeDir() + "/");
 		File httpFolder = new File(PropsUtil.get("lecture2go.httpstreaming.video.repository") + "/" + producer.getInstitutionId() + "l2g" + producer.getHomeDir());
 		if (!httpFolder.exists()) {
 			String cmd = "ln -s " + folder.getAbsolutePath() + " " + httpFolder.getAbsolutePath();
@@ -270,10 +270,10 @@ public class RepositoryManager {
 					
 					List<Producer> producers = ProducerLocalServiceUtil.getProducersByHostId(h.getHostId());
 					//create host
-					createFolder(PropsUtil.get("lecture2go.media.repository")+"/"+h.getServerRoot());
+					createFolder(PropsUtil.get("lecture2go.media.repository")+"/"+h.getDirectory());
 					//and user directories 
 					for (Producer p : producers) {
-						createFolder(PropsUtil.get("lecture2go.media.repository")+"/"+h.getServerRoot()+"/"+p.getHomeDir());
+						createFolder(PropsUtil.get("lecture2go.media.repository")+"/"+h.getDirectory()+"/"+p.getHomeDir());
 						//create symbolic link to required directory
 						symlinkToUserHome(h, p);
 					}
@@ -285,67 +285,4 @@ public class RepositoryManager {
 		}
 	}
 	
-	/**
-	 * Prepare directory name by extending server Root prefix with id.
-	 * 
-	 * Does not distinguish default directory for multi site/company yet
-	 * 
-	 * @param hostId
-	 * @return the directory name
-	 */
-	public static String prepareServerRoot(long hostId){
-		String base = GetterUtil.getString(PropsUtil.get("lecture2go.default.serverRoot"),SYS_ROOT);
-		if (base == null || base.isEmpty()) return "";
-		
-		String[] segs = base.split(Pattern.quote( "_" ) );
-
-		String prefix = segs[0];
-		int positions = segs[1].length();
-		if (positions<1) positions = 4; //default
-		
-		String numbering = "";
-		int id = (int) hostId;
-		if (id < Math.pow(10,positions)){
-			for (int i = 1; i <= positions; i++){
-				numbering = numbering+String.valueOf((int)Math.floor(id/(Math.pow(10,positions-i))));
-				id = (int) (id % (Math.pow(10,positions-i)));
-				LOG.debug(numbering);
-			}
-			return prefix+"_"+numbering;
-		}
-		else return "";
-		
-	}
-	
-	/**
-	 * Retrieve highest Folder Id from repository
-	 * 
-	 * @return maximum folder id
-	 * @throws SystemException 
-	 * @throws PortalException 
-	 */
-	public static long getMaximumRealServerRootId() throws SystemException, PortalException{
-		
-		//Retrieve maximum host id (highest existing folder name must end with larger)	
-		Counter hcounter = CounterLocalServiceUtil.getCounter(Host.class.getName());
-		long hId =  hcounter.getCurrentId();    //directory numbering will overflow for large values...
-		String curRootDir = prepareServerRoot(hId);
-		if (PropsUtil.get("lecture2go.media.repository").isEmpty()){ 
-			LOG.error("Portal Property lecture2go.media.repository not set. This property is required before instalation!");
-			throw new NoPropertyException();
-		}
-		File folder = new File(PropsUtil.get("lecture2go.media.repository")+"/"+curRootDir);
-		while(folder.isDirectory()){
-			hId++;
-			curRootDir = prepareServerRoot(hId);
-			folder = new File(PropsUtil.get("lecture2go.media.repository")+"/"+curRootDir);
-		}
-		return hId-1;
-			
-	}
-
-
-	
-	
-
 }

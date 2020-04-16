@@ -35,7 +35,7 @@ import java.io.ObjectOutput;
 public class CreatorCacheModel implements CacheModel<Creator>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{creatorId=");
 		sb.append(creatorId);
@@ -51,6 +51,10 @@ public class CreatorCacheModel implements CacheModel<Creator>, Externalizable {
 		sb.append(gender);
 		sb.append(", fullName=");
 		sb.append(fullName);
+		sb.append(", affiliation=");
+		sb.append(affiliation);
+		sb.append(", orcidId=");
+		sb.append(orcidId);
 		sb.append("}");
 
 		return sb.toString();
@@ -104,6 +108,20 @@ public class CreatorCacheModel implements CacheModel<Creator>, Externalizable {
 			creatorImpl.setFullName(fullName);
 		}
 
+		if (affiliation == null) {
+			creatorImpl.setAffiliation(StringPool.BLANK);
+		}
+		else {
+			creatorImpl.setAffiliation(affiliation);
+		}
+
+		if (orcidId == null) {
+			creatorImpl.setOrcidId(StringPool.BLANK);
+		}
+		else {
+			creatorImpl.setOrcidId(orcidId);
+		}
+
 		creatorImpl.resetOriginalValues();
 
 		return creatorImpl;
@@ -118,6 +136,8 @@ public class CreatorCacheModel implements CacheModel<Creator>, Externalizable {
 		jobTitle = objectInput.readUTF();
 		gender = objectInput.readUTF();
 		fullName = objectInput.readUTF();
+		affiliation = objectInput.readUTF();
+		orcidId = objectInput.readUTF();
 	}
 
 	@Override
@@ -166,6 +186,20 @@ public class CreatorCacheModel implements CacheModel<Creator>, Externalizable {
 		else {
 			objectOutput.writeUTF(fullName);
 		}
+
+		if (affiliation == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(affiliation);
+		}
+
+		if (orcidId == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(orcidId);
+		}
 	}
 
 	public long creatorId;
@@ -175,4 +209,6 @@ public class CreatorCacheModel implements CacheModel<Creator>, Externalizable {
 	public String jobTitle;
 	public String gender;
 	public String fullName;
+	public String affiliation;
+	public String orcidId;
 }
