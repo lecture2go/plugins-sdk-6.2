@@ -1059,7 +1059,7 @@ public class VideoImpl extends VideoBaseImpl {
 	private String getSecureFileDownloadLink(String suffix) {
 		// this is an optional part for allowing tenant specific paths
 		String subFolder = TENANT_SUB_FOLDER != null ? TENANT_SUB_FOLDER + "/" : "";
-		return DOWNLOAD_SERVLET_BASE + getDownloadLink() + "&downloadPath=/" + subFolder + getHost().getName() + "/" + getProducer().getHomeDir() + "/" + getSPreffix() + suffix;
+		return DOWNLOAD_SERVLET_BASE + getDownloadLink() + "&downloadPath=/" + subFolder + getHost().getDirectory() + "/" + getProducer().getHomeDir() + "/" + getSPreffix() + suffix;
 	}
 	
 	/**
