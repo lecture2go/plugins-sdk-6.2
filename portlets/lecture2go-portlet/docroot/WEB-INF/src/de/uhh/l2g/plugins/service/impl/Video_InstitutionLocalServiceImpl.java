@@ -38,7 +38,6 @@ import de.uhh.l2g.plugins.model.Video_Institution;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.Video_InstitutionLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.service.persistence.Video_InstitutionUtil;
-import de.uhh.l2g.plugins.util.CounterManager;
 
 /**
  * The implementation of the video_ institution local service.
