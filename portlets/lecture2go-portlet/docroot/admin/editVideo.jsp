@@ -27,6 +27,8 @@
 <liferay-portlet:resourceURL id="videoUpdateFirstTitle" var="videoUpdateFirstTitleURL" />
 <liferay-portlet:resourceURL id="getFileName" var="getFileNameURL" />
 <liferay-portlet:resourceURL id="getSecureFileName" var="getSecureFileNameURL" />
+<liferay-portlet:resourceURL id="getSecureToken" var="getSecureTokenURL" />
+<liferay-portlet:resourceURL id="getSecureTokenExpirationTime" var="getSecureTokenExpirationTimeURL" />
 <liferay-portlet:resourceURL id="getShare" var="getShareURL" />
 <liferay-portlet:resourceURL id="updateNumberOfProductions" var="updateNumberOfProductionsURL" />
 <liferay-portlet:resourceURL id="updateThumbnail" var="updateThumbnailURL" />
@@ -627,8 +629,12 @@ $(function () {
 		maxChunkSize: 10000000,
         dataType: 'json',
         beforeSend: function(xhr, data) {
+        	secureTokenExpirationTime = getSecureTokenExpirationTime();
         	// send a custom header to notify the upload servlet where to put the temporary files upon upload
             xhr.setRequestHeader('X-tempdir', "<%=uploadRepository%>");
+            xhr.setRequestHeader('X-token', getSecureToken(secureTokenExpirationTime));
+            xhr.setRequestHeader('X-expiration', secureTokenExpirationTime);
+            xhr.setRequestHeader('X-videoId', "<%=reqVideo.getVideoId()%>");
         },
         add: function(e, data) {
             var uploadErrors = [];
@@ -1380,6 +1386,45 @@ function getShare(){
 			  async:false,
 			  success: function(data) {
 				 ret=data; 
+			  }
+	  });
+	  return ret;
+}
+
+function getSecureToken(expirationTime) {
+	var ret ="";
+	  //
+	  $.ajax({
+			  type: "POST",
+			  url: "<%=getSecureTokenURL%>",
+			  dataType: 'json',
+			  data: {
+				  <portlet:namespace/>secureTokenExpirationTime: expirationTime,
+			 	  <portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>"
+			  },
+			  global: false,
+			  async:false,
+			  success: function(data) {
+				 ret=data.secureToken; 
+			  }
+	  });
+	  return ret;
+}
+
+function getSecureTokenExpirationTime() {
+	var ret ="";
+	  //
+	  $.ajax({
+			  type: "POST",
+			  url: "<%=getSecureTokenExpirationTimeURL%>",
+			  dataType: 'json',
+			  data: {
+			 	  <portlet:namespace/>videoId: "<%=reqVideo.getVideoId()%>"
+			  },
+			  global: false,
+			  async:false,
+			  success: function(data) {
+				 ret=data.secureTokenExpirationTime; 
 			  }
 	  });
 	  return ret;

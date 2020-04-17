@@ -1089,6 +1089,28 @@ public class AdminVideoManagement extends MVCPortlet {
 			jo.put("secureFileName", secureFileName);
 			writeJSON(resourceRequest, resourceResponse, jo);
 		}
+		
+		if(resourceID.equals("getSecureTokenExpirationTime")){
+			// the upload is initialized directly, so the token is only valid a short time (1 minute)
+			long expiration = System.currentTimeMillis() + (1000*60);
+			JSONObject jo = JSONFactoryUtil.createJSONObject();
+			jo.put("secureTokenExpirationTime", String.valueOf(expiration));
+			writeJSON(resourceRequest, resourceResponse, jo);
+		}
+		
+		if(resourceID.equals("getSecureToken")){
+			String expirationTime = ParamUtil.getString(resourceRequest, "secureTokenExpirationTime");
+
+			JSONObject jo = JSONFactoryUtil.createJSONObject();
+			try {
+				String secureToken = Security.getSignatureKey(Security.getSignatureKey(expirationTime, String.valueOf(video.getVideoId())));
+				jo.put("secureToken", secureToken);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			writeJSON(resourceRequest, resourceResponse, jo);
+		}
 
 		if(resourceID.equals("getShare")){
 			JSONObject jo = JSONFactoryUtil.createJSONObject();
