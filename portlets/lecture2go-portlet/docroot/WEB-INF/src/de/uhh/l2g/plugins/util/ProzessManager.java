@@ -40,6 +40,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.apache.http.util.TextUtils;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
@@ -166,8 +168,10 @@ public class ProzessManager {
 			
 			// delete the download sym link in the download repository which may point to the original video file 
 			// (will be correctly recreated in the generateSymboliLinks method)
-			File symLink = new File(PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/" + video.getFilename());
-			symLink.delete(); 
+			if (!TextUtils.isEmpty(video.getFilename())) {
+				File symLink = new File(PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/" + video.getFilename());
+				symLink.delete(); 
+			}
 			
 			// create a symlink to the video file which has a reasonable bitrate
 			try {
@@ -662,9 +666,10 @@ public class ProzessManager {
 	 */
 	public void removeSymbolicLinksForSingularFileIfExisting(String filename){
 		// remove symbolic link from download folder if existing
-		File symLinkDownloadfolder = new File(PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/" + filename);
-		symLinkDownloadfolder.delete(); // just returns false if file not existing
-		
+		if (!TextUtils.isEmpty(filename)) {
+			File symLinkDownloadfolder = new File(PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/" + filename);
+			symLinkDownloadfolder.delete(); // just returns false if file not existing
+		}
 		// remove symbolic link from caption folder if existing (necessary for vtt caption files)
 		if (filename.endsWith(".vtt")) {
 			File symLinkCaptionFolder = new File(PropsUtil.get("lecture2go.captions.system.path") + "/" + filename);
