@@ -37,6 +37,7 @@ import java.util.NoSuchElementException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.http.util.TextUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -254,8 +255,11 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 					ProzessManager pm = new ProzessManager();
 					pm.createSymLinkToDownloadableFile(objectHost, objectVideo, objectProducer);
 					// remove the download sym link to the original video file in the download repository and replace it with a symlink to the new downloadable file
-					File symLink = new File(PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/" + objectVideo.getFilename());
-					symLink.delete(); 
+					if (!TextUtils.isEmpty(objectVideo.getFilename())) {
+						File symLink = new File(PropsUtil.get("lecture2go.symboliclinks.repository.root") + "/" + objectVideo.getFilename());
+						symLink.delete(); 
+					}
+					
 					// recreate the sym link if applicable
 					if (objectVideo.getOpenAccess() == 1 && objectVideo.getDownloadLink() == 1) {
 						pm.generateSymbolicLinks(objectVideo);
