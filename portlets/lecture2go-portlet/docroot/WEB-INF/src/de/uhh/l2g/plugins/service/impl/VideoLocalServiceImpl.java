@@ -782,7 +782,13 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			    	String languageId = matcher.group(1);
 			    	// use Liferay API to get a user readable name for the language from the language-id while using the current users local
 			    	// e.g. "German" for the languageId "de_DE" when the userLocale is english
-					language = LocaleUtil.fromLanguageId(languageId,true).getDisplayLanguage(userLocale);
+					
+					if (userLocale != null) {
+						language = LocaleUtil.fromLanguageId(languageId,true).getDisplayLanguage(userLocale);
+					} else {
+				    	// for iframe embeds we have no userLocale, use the default language
+				    	language = LocaleUtil.fromLanguageId(languageId,true).getDisplayLanguage();
+					}
 			    	break;
 			    }
             }
