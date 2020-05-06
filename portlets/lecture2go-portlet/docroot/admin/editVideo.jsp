@@ -1006,7 +1006,6 @@ function updateVideoFileName(file){
 				 	   	<portlet:namespace/>videoId: A.one('#<portlet:namespace/>videoId').get('value'),
 				 	   	<portlet:namespace/>fileName: file.fileName,
 				 	   	<portlet:namespace/>secureFileName: file.secureFileName,
-				 	   	<portlet:namespace/>generationDate: file.generationDate
 			 	},
 			 	//get server response
 				on: {
