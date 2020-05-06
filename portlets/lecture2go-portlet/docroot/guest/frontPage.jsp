@@ -217,8 +217,10 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 									String lectureseries = "";
 									
 									if (!isVideo) {
-										Lectureseries lec = LectureseriesLocalServiceUtil.getLectureseries(vid.getLectureseriesId());
-										lectureseries = lec.getName();
+										try {
+											Lectureseries lec = LectureseriesLocalServiceUtil.getLectureseries(vid.getLectureseriesId());
+											lectureseries = lec.getName();
+										} catch (Exception e) {}
 									}
 									
 						        	List<Video_Institution> vi = Video_InstitutionLocalServiceUtil.getByVideo(vid.getVideoId());
