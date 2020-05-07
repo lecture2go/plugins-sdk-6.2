@@ -122,8 +122,12 @@ public class OpenAccessVideos extends MVCPortlet {
 					} catch (SystemException e1) {}
 		    	 }
 			    if(objectType.equals("l")){ //for lecture series objects
-			    	objectId = LectureseriesLocalServiceUtil.getByUSID(oid).getLectureseriesId();
-					secLink = true;
+			    	try {
+			    		objectId = LectureseriesLocalServiceUtil.getByUSID(oid).getLectureseriesId();
+						secLink = true;
+			    	} catch (Exception e2) {
+			    		// USID does not exist, a "no videos found" page will be returned
+			    	}
 			    }
 	    	}
 	    }
