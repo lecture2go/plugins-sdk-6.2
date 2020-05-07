@@ -1085,7 +1085,6 @@ public class VideoImpl extends VideoBaseImpl {
 	      SimpleDateFormat dateFormatter =  new SimpleDateFormat(targetFormat); 
 	      return dateFormatter.format(generationDate);
 	    } catch (ParseException e) {
-	      e.printStackTrace();
 	      // return the unformatted date if something goes wrong
 	      return unformattedDate;
 	    }

@@ -361,14 +361,12 @@ public class AdminVideoManagement extends MVCPortlet {
 		if(resourceID.equals("updateVideoFileName")){
 			String fileName = ParamUtil.getString(resourceRequest, "fileName");
 			String secureFileName = ParamUtil.getString(resourceRequest, "secureFileName");
-			String generationDate = ParamUtil.getString(resourceRequest, "generationDate");
 			String containerFormat = fileName.split("\\.")[fileName.split("\\.").length-1];
 			//update data base
 			try {
 				video.setFilename(fileName);
 				video.setSecureFilename(secureFileName);
 				video.setContainerFormat(containerFormat);
-				video.setGenerationDate(generationDate);
 				video.setUploadDate(new Date());
 				VideoLocalServiceUtil.updateVideo(video);
 				FFmpegManager.updateFfmpegMetadata(video);
@@ -1551,6 +1549,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			
 			if (jsonArray == null) {
 				resourceResponse.setProperty(ResourceResponse.HTTP_STATUS_CODE, Integer.toString(HttpServletResponse.SC_SERVICE_UNAVAILABLE));
+				jsonArray = JSONFactoryUtil.createJSONArray();
 			}
 	
 			writeJSON(resourceRequest, resourceResponse, jsonArray);

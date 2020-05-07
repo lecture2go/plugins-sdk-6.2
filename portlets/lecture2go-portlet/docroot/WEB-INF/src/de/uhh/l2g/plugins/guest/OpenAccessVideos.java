@@ -69,11 +69,11 @@ public class OpenAccessVideos extends MVCPortlet {
 	
 	public void addFilter(ActionRequest request, ActionResponse response){
 		String jspPage = request.getParameter("jspPage");
-		Long institutionId = new Long(request.getParameter("institutionId"));
-		Long parentInstitutionId = new Long(request.getParameter("parentInstitutionId"));
-		Long termId = new Long(request.getParameter("termId"));
-		Long categoryId = new Long(request.getParameter("categoryId"));
-		Long creatorId = new Long(request.getParameter("creatorId"));
+		Long institutionId =  getLongParameterFromString(request, "institutionId");
+		Long parentInstitutionId = getLongParameterFromString(request,"parentInstitutionId");
+		Long termId = getLongParameterFromString(request, "termId");
+		Long categoryId = getLongParameterFromString(request, "categoryId");
+		Long creatorId = getLongParameterFromString(request,"creatorId");
 		String searchQuery = "";
 		if (request.getParameter("searchQuery") != null) {
 			searchQuery = request.getParameter("searchQuery");
@@ -108,25 +108,36 @@ public class OpenAccessVideos extends MVCPortlet {
 	    try{
 	    	objectId = new Long(oid);
 	    }catch(NumberFormatException e){
-		    if(objectType.equals("v")){ //for video objects
-	    		try {
-					objectId = VideoLocalServiceUtil.getBySecureUrl(oid).getVideoId();		
-					secLink = true;
-				} catch (NoSuchVideoException e1) {
-				} catch (SystemException e1) {}
-	    	 }
-		    if(objectType.equals("l")){ //for lecture series objects
-		    	objectId = LectureseriesLocalServiceUtil.getByUSID(oid).getLectureseriesId();
-				secLink = true;
-		    }
+	    	// objectId can not be parsed as long, first check if it contains a html anchor symbol (which was transmitted via URL encoding, otherwise 
+	    	// request.getParameter would have removed this from the parameter
+	    	if (oid.contains("#")) {
+	    		objectId = Long.valueOf(oid.substring(0 , oid.indexOf("#")));
+	    	} else {
+	    		// no encoded URL parts, so it may be secure video or lectureseries objects
+			    if(objectType.equals("v")){ //for video objects
+		    		try {
+						objectId = VideoLocalServiceUtil.getBySecureUrl(oid).getVideoId();		
+						secLink = true;
+					} catch (NoSuchVideoException e1) {
+					} catch (SystemException e1) {}
+		    	 }
+			    if(objectType.equals("l")){ //for lecture series objects
+			    	try {
+			    		objectId = LectureseriesLocalServiceUtil.getByUSID(oid).getLectureseriesId();
+						secLink = true;
+			    	} catch (Exception e2) {
+			    		// USID does not exist, a "no videos found" page will be returned
+			    	}
+			    }
+	    	}
 	    }
 
 	    Long timeStart = new Long(0);
 	    Long timeEnd = new Long(0);
 	    
 	    try{
-	    	timeStart = new Long(ParamUtil.getString(request, "timeStart"));
-	    	timeEnd = new Long(ParamUtil.getString(request, "timeEnd"));
+	    	timeStart = getLongParameterFromString(request, "timeStart");
+	    	timeEnd = getLongParameterFromString(request, "timeEnd");
 	    }catch(Exception e){}
 	   
 	    Video video = new VideoImpl();
@@ -246,7 +257,6 @@ public class OpenAccessVideos extends MVCPortlet {
 						}
 					}
 				}catch(java.lang.NullPointerException e){
-					System.out.print(e);
 				}
 	    		
 	    		//3. authentication by video password
@@ -302,4 +312,29 @@ public class OpenAccessVideos extends MVCPortlet {
 
     }
 	
+	/**
+	 * This method parses a Long value from a string request parameter
+	 * It may strip trailing non-numeric characters. This is done because in some situations (URL encoded HTML anchor: %23 => #)
+	 * there may be additional wrong characters in the request parameter 
+	 * @param request the actionRequest
+	 * @param parameterName the name of the parameter
+	 * @return the parameter value as Long
+	 */
+	private Long getLongParameterFromString(ActionRequest request, String parameterName) {
+		String parameter = request.getParameter(parameterName);
+		Long parameterAsLong;
+		try {
+			parameterAsLong = new Long(request.getParameter(parameterName));
+		} catch (Exception e) {
+			// removes first non digit and everything after it
+			try {
+				parameterAsLong = Long.valueOf(parameter.replaceAll("\\D.*", ""));
+			} catch (Exception e1) {
+				// parameter is not parsable even with non digits removed
+				parameterAsLong = new Long(0);
+			}
+		}		
+		return parameterAsLong;
+	}
+
 }
