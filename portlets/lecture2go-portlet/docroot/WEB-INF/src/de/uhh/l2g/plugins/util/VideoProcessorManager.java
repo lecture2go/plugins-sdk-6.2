@@ -367,8 +367,6 @@ public class VideoProcessorManager {
 					JSONObject jsonResponse = JSONFactoryUtil.createJSONObject(response.toString());
 					
 					return jsonResponse;
-				} else {
-					LOG.error("Failed getting the info of a video conversion of video with id: " + videoId + ". Responsecode: " + responseCode); 
 				}
 			} catch (IOException e) {
 				LOG.error("Failed connecting to videoprocessor to get status of video with id: " + videoId); 
