@@ -1549,6 +1549,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			
 			if (jsonArray == null) {
 				resourceResponse.setProperty(ResourceResponse.HTTP_STATUS_CODE, Integer.toString(HttpServletResponse.SC_SERVICE_UNAVAILABLE));
+				jsonArray = JSONFactoryUtil.createJSONArray();
 			}
 	
 			writeJSON(resourceRequest, resourceResponse, jsonArray);
