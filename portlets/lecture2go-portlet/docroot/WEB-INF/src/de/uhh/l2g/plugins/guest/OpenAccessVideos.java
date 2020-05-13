@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
@@ -52,6 +54,8 @@ import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.util.ProzessManager;
 
 public class OpenAccessVideos extends MVCPortlet {
+	protected static Log LOG = LogFactoryUtil.getLog(Video.class.getName());
+	
 	@Override
 	public void serveResource( ResourceRequest resourceRequest, ResourceResponse resourceResponse ) throws IOException, PortletException {
 		String resourceID = resourceRequest.getResourceID();
@@ -222,12 +226,12 @@ public class OpenAccessVideos extends MVCPortlet {
 			} catch (Exception e) {} 
 		    
 		    //update video hits
-		    Long hits = video.getHits();
-		    hits = hits+1;
-		    video.setHits(hits);
 		    try {
-				VideoLocalServiceUtil.updateVideo(video);
-			} catch (SystemException e) {}
+			    video = VideoLocalServiceUtil.incrementHitCounter(video);
+		    } catch(SystemException e) {
+				LOG.error("Can't update hit counter for video with id " + video.getVideoId() + "!");
+		    }
+		  
 		    
 		    //check password access
 		    if(secLink==false){
