@@ -32,9 +32,11 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
+import de.uhh.l2g.plugins.NoSuchAutocompleteException;
 import de.uhh.l2g.plugins.NoSuchLectureseriesException;
 import de.uhh.l2g.plugins.NoSuchLicenseException;
 import de.uhh.l2g.plugins.NoSuchVideoException;
+import de.uhh.l2g.plugins.model.Autocomplete;
 import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.License;
 import de.uhh.l2g.plugins.model.Metadata;
@@ -45,6 +47,7 @@ import de.uhh.l2g.plugins.model.impl.LectureseriesImpl;
 import de.uhh.l2g.plugins.model.impl.LicenseImpl;
 import de.uhh.l2g.plugins.model.impl.MetadataImpl;
 import de.uhh.l2g.plugins.model.impl.VideoImpl;
+import de.uhh.l2g.plugins.service.AutocompleteLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LicenseLocalServiceUtil;
 import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
@@ -68,7 +71,16 @@ public class OpenAccessVideos extends MVCPortlet {
 	public static JSONArray wordsJSONArray = JSONFactoryUtil.createJSONArray();
 	private void getSearchWords(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws IOException, PortletException {
 		PrintWriter out = resourceResponse.getWriter();
-		out.println(wordsJSONArray);
+		String wordsJSONArrayString = "";
+		try {
+			Autocomplete autocomplete = AutocompleteLocalServiceUtil.getSingularAutocomplete();
+			wordsJSONArrayString = autocomplete.getSearchWordsJson();
+		} catch (NoSuchAutocompleteException e) {
+			// no autocomplete yet, return empty String
+		} catch (SystemException e) {
+			// something went wrong with fetching the data, return empty String, too
+		}
+		out.println(wordsJSONArrayString);
 	}
 	
 	public void addFilter(ActionRequest request, ActionResponse response){

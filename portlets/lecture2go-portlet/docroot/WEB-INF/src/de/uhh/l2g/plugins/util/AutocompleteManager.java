@@ -9,7 +9,9 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 
+import de.uhh.l2g.plugins.NoSuchAutocompleteException;
 import de.uhh.l2g.plugins.guest.OpenAccessVideos;
+import de.uhh.l2g.plugins.model.Autocomplete;
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 
@@ -79,6 +81,18 @@ public class AutocompleteManager {
 			strJSON.put("word", str);
 			OpenAccessVideos.wordsJSONArray.put(strJSON);
 			//System.out.println(str);
+		}
+		
+		try {
+			// update autocomplete record
+			Autocomplete autocomplete = AutocompleteLocalServiceUtil.getSingularAutocomplete();
+			autocomplete.setSearchWordsJson(OpenAccessVideos.wordsJSONArray.toString());
+			AutocompleteLocalServiceUtil.updateAutocomplete(autocomplete);
+		} catch (NoSuchAutocompleteException e) {
+			// no autocomplete record, this happens on a new setup, create one
+			Autocomplete autocomplete = AutocompleteLocalServiceUtil.createAutocomplete(0);
+			autocomplete.setSearchWordsJson(OpenAccessVideos.wordsJSONArray.toString());
+			AutocompleteLocalServiceUtil.addAutocomplete(autocomplete);
 		}
 		return true;
 	}

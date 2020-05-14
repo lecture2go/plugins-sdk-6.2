@@ -597,6 +597,10 @@
             <finder-column name="oaiRecordId"></finder-column>
         </finder>
     </entity>
+    <entity name="Autocomplete" remote-service="false" local-service="true">
+        <column name="autocompleteId" primary="true" type="long"></column>
+        <column type="String" name="searchWordsJson" accessor="false"></column>
+    </entity>
 	<exceptions>
 		<exception>HostName</exception>
 		<exception>HostStreamer</exception>
