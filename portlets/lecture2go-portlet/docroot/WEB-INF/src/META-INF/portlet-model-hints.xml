@@ -7,6 +7,12 @@
 	<hint-collection name="SHORTTEXT">
 		<hint name="max-length">4000</hint>
 	</hint-collection>
+	<model name="de.uhh.l2g.plugins.model.Autocomplete">
+		<field name="autocompleteId" type="long" />
+		<field name="searchWordsJson" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+	</model>
 	<model name="de.uhh.l2g.plugins.model.Category">
 		<field name="categoryId" type="long" />
 		<field name="parentId" type="long" />
@@ -40,16 +46,7 @@
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Host">
 		<field name="hostId" type="long" />
-		<field name="protocol" type="String">
-			<hint-collection name="SHORTTEXT" />
-		</field>
-		<field name="streamer" type="String">
-			<hint-collection name="SHORTTEXT" />
-		</field>
-		<field name="port" type="int" />
-		<field name="serverRoot" type="String">
-			<hint-collection name="SHORTTEXT" />
-		</field>
+		<field name="directory" type="String" />
 		<field name="name" type="String">
 			<hint-collection name="SHORTTEXT" />
 		</field>
@@ -76,7 +73,7 @@
 		<field name="hostId" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Lastvideolist">
-		<field name="lastvideolistId" type="int" />
+		<field name="lastvideolistId" type="long" />
 		<field name="videoId" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Lectureseries">
@@ -131,14 +128,13 @@
 	</model>
 	<model name="de.uhh.l2g.plugins.model.License">
 		<field name="licenseId" type="long" />
-		<field name="videoId" type="long" />
-		<field name="ccby" type="int" />
-		<field name="ccbybc" type="int" />
-		<field name="ccbyncnd" type="int" />
-		<field name="ccbyncsa" type="int" />
-		<field name="ccbysa" type="int" />
-		<field name="ccbync" type="int" />
-		<field name="l2go" type="int" />
+		<field name="fullName" type="String" />
+		<field name="shortIdentifier" type="String" />
+		<field name="url" type="String" />
+		<field name="schemeName" type="String" />
+		<field name="schemeUrl" type="String" />
+		<field name="selectable" type="boolean" />
+		<field name="description" type="String" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Metadata">
 		<field name="metadataId" type="long" />
@@ -156,6 +152,24 @@
 		<field name="publisher" type="String">
 			<hint-collection name="SHORTTEXT" />
 		</field>
+	</model>
+	<model name="de.uhh.l2g.plugins.model.OaiRecord">
+		<field name="oaiRecordId" type="long" />
+		<field name="videoId" type="long" />
+		<field name="identifier" type="String" />
+		<field name="datestamp" type="Date" />
+		<field name="deleted" type="boolean" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.OaiRecord_OaiSet">
+		<field name="oaiRecordOaiSetId" type="long" />
+		<field name="oaiRecordId" type="long" />
+		<field name="oaiSetId" type="long" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.OaiSet">
+		<field name="oaiSetId" type="long" />
+		<field name="setSpec" type="String" />
+		<field name="setName" type="String" />
+		<field name="setDescription" type="String" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Office">
 		<field name="officeId" type="long" />
@@ -272,6 +286,7 @@
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="password" type="String" />
+		<field name="licenseId" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Video_Category">
 		<field name="videoCategoryId" type="long" />

@@ -635,6 +635,16 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		return v;
 	}
 	
+	public Video incrementHitCounter(Video video) throws SystemException {
+		/* We explicitly clear the cache. This seems necessary for clustering, as the remove cache trigger is send and handled with some delay, so a page view may
+		   overwrite changes made in the backend if the entity still remains in the cache. */
+		videoPersistence.clearCache(video);
+		video = videoPersistence.fetchByPrimaryKey(video.getVideoId());
+		video.setHits(video.getHits()+1);
+		videoPersistence.update(video);
+		return video;
+	}
+	
 	
 	private List<Video> getSortedVideoList(List<Video> vl, Long lectureseriesId) throws SystemException
 	{ 

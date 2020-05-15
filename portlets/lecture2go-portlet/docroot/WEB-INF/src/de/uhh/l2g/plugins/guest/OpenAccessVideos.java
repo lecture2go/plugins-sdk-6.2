@@ -26,13 +26,17 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
+import de.uhh.l2g.plugins.NoSuchAutocompleteException;
 import de.uhh.l2g.plugins.NoSuchLectureseriesException;
 import de.uhh.l2g.plugins.NoSuchLicenseException;
 import de.uhh.l2g.plugins.NoSuchVideoException;
+import de.uhh.l2g.plugins.model.Autocomplete;
 import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.License;
 import de.uhh.l2g.plugins.model.Metadata;
@@ -43,6 +47,7 @@ import de.uhh.l2g.plugins.model.impl.LectureseriesImpl;
 import de.uhh.l2g.plugins.model.impl.LicenseImpl;
 import de.uhh.l2g.plugins.model.impl.MetadataImpl;
 import de.uhh.l2g.plugins.model.impl.VideoImpl;
+import de.uhh.l2g.plugins.service.AutocompleteLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.LicenseLocalServiceUtil;
 import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
@@ -52,6 +57,8 @@ import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.util.ProzessManager;
 
 public class OpenAccessVideos extends MVCPortlet {
+	protected static Log LOG = LogFactoryUtil.getLog(Video.class.getName());
+	
 	@Override
 	public void serveResource( ResourceRequest resourceRequest, ResourceResponse resourceResponse ) throws IOException, PortletException {
 		String resourceID = resourceRequest.getResourceID();
@@ -64,7 +71,16 @@ public class OpenAccessVideos extends MVCPortlet {
 	public static JSONArray wordsJSONArray = JSONFactoryUtil.createJSONArray();
 	private void getSearchWords(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws IOException, PortletException {
 		PrintWriter out = resourceResponse.getWriter();
-		out.println(wordsJSONArray);
+		String wordsJSONArrayString = "";
+		try {
+			Autocomplete autocomplete = AutocompleteLocalServiceUtil.getSingularAutocomplete();
+			wordsJSONArrayString = autocomplete.getSearchWordsJson();
+		} catch (NoSuchAutocompleteException e) {
+			// no autocomplete yet, return empty String
+		} catch (SystemException e) {
+			// something went wrong with fetching the data, return empty String, too
+		}
+		out.println(wordsJSONArrayString);
 	}
 	
 	public void addFilter(ActionRequest request, ActionResponse response){
@@ -222,12 +238,12 @@ public class OpenAccessVideos extends MVCPortlet {
 			} catch (Exception e) {} 
 		    
 		    //update video hits
-		    Long hits = video.getHits();
-		    hits = hits+1;
-		    video.setHits(hits);
 		    try {
-				VideoLocalServiceUtil.updateVideo(video);
-			} catch (SystemException e) {}
+			    video = VideoLocalServiceUtil.incrementHitCounter(video);
+		    } catch(SystemException e) {
+				LOG.error("Can't update hit counter for video with id " + video.getVideoId() + "!");
+		    }
+		  
 		    
 		    //check password access
 		    if(secLink==false){
