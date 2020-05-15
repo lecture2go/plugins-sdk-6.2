@@ -13,6 +13,7 @@ import de.uhh.l2g.plugins.NoSuchAutocompleteException;
 import de.uhh.l2g.plugins.guest.OpenAccessVideos;
 import de.uhh.l2g.plugins.model.Autocomplete;
 import de.uhh.l2g.plugins.model.Video;
+import de.uhh.l2g.plugins.service.AutocompleteLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 
 
