@@ -156,10 +156,11 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 		}
 	}
 
-	public Host addHost(String name) throws SystemException, PortalException {
+	public Host addHost(String name, String prefix) throws SystemException, PortalException {
 		long hostId = counterLocalService.increment(Host.class.getName());
 		Host host = hostPersistence.create(hostId);
 		host.setName(name);
+		host.setPrefix(prefix);
 		host.setDirectory("vh_"+hostId);
 		super.addHost(host);
 
@@ -173,9 +174,10 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 		return host;
 	}
 
-	public Host updateHost(long hostId, String name) throws SystemException, PortalException {
+	public Host updateHost(long hostId, String name, String prefix) throws SystemException, PortalException {
 		Host host = getHost(hostId);
 		host.setName(name);
+		host.setPrefix(prefix);
 		// host.setStreamingServerTemplateId(streamingServerTemplateId);
 		// Server Root will be constant over all changes
 		hostPersistence.update(host);

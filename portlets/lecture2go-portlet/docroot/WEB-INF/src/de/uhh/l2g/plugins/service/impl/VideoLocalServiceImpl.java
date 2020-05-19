@@ -498,6 +498,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			//
 			playerUri = playerUri.replace("[host]", host.getName());
 			playerUri = playerUri.replace("[ext]", video.getContainerFormat());
+			playerUri = playerUri.replace("[prefix]", host.getPrefix());
 			playerUri = playerUri.replace("[l2go_path]", l2go_path);
 //			playerUri = playerUri.replace("[protocol]", host.getProtocol());
 //			playerUri = playerUri.replace("[port]", host.getPort()+"");
