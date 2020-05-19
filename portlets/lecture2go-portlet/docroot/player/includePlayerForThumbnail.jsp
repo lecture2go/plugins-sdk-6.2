@@ -1,4 +1,4 @@
-<script type="text/javascript">jwplayer.key="qKvU61clkb6v98R2Yoc/cL6x7dFfJ3we+r6nxD6iB0Q=";</script>
+<script type="text/javascript">jwplayer.key="your-licence-here";</script>
 
 <script>
 
