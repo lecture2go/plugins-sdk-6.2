@@ -25,9 +25,10 @@ public class AdminStreamerManagement extends MVCPortlet {
 	public void updateStreamingServer(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
 		String name = ParamUtil.getString(request, "hostName");
 		long hostId = ParamUtil.getLong(request, "hostId");
+		String hostPrefix = ParamUtil.getString(request, "hostPrefix");
 		LOG.info("Trying to update: " + name);
 		try {
-			HostLocalServiceUtil.updateHost(hostId, name);
+			HostLocalServiceUtil.updateHost(hostId, name, hostPrefix);
 		} catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
 			LOG.error("Failed updating Streaming Server", e);
@@ -53,9 +54,10 @@ public class AdminStreamerManagement extends MVCPortlet {
 	
 	public void addStreamingServer(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
 		String name = ParamUtil.getString(request, "hostName");
+		String hostPrefix = ParamUtil.getString(request, "hostPrefix");
 		LOG.info("Trying to add " + name);
 		try {
-			HostLocalServiceUtil.addHost(name);
+			HostLocalServiceUtil.addHost(name, hostPrefix);
 		} catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
 			LOG.error("Failed adding Streaming Server", e);

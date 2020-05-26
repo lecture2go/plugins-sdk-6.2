@@ -27,6 +27,7 @@ Host defaultHost = HostLocalServiceUtil.getDefaultHost();
 						 <aui:button-row>
 						 	 <aui:fieldset column="true">
 				 	         <aui:input label="host-name" name="hostName" inlineField="true" required="true" value=''></aui:input>
+				 	         <aui:input label="host-prefix" name="hostPrefix" inlineField="true" required="false" value=''></aui:input>
 						 	 <aui:button type="submit" value="add"></aui:button>
 						 	 </aui:fieldset>
 						 </aui:button-row>
@@ -62,7 +63,8 @@ Host defaultHost = HostLocalServiceUtil.getDefaultHost();
 										} else {
 											hn=host.getName();
 										}%>
-											<aui:input name="hostName" label="" inlineField="true" value = "<%= host.getName() %>" />				
+											<aui:input name="hostName" label="" inlineField="true" value = "<%= host.getName() %>" />
+											<aui:input name="hostPrefix" label="" inlineField="true" value = "<%= host.getPrefix() %>" />							
 											<aui:input name="hostId" type='hidden' inlineField="true" value = "<%= host.getHostId() %>"/>
 											<aui:button type="submit" value="edit"></aui:button>
 												<%--DELETE --%>

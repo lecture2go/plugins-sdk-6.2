@@ -163,6 +163,7 @@
 		<column name="directory" type="String"></column>
 		<column name="name" type="String"></column>
 		<column name="defaultHost" type="int"></column>
+        <column name="prefix" type="String"></column>
 		<order by="asc">
 			<order-column name="directory"></order-column>
 		</order>
