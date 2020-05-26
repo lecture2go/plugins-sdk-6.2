@@ -15,8 +15,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.nio.file.attribute.FileTime;
 import java.util.Date;
+
+import org.apache.commons.io.FilenameUtils;
 
 /**
  * This scheduler deletes partial files from aborted chunked uploads
@@ -24,7 +25,7 @@ import java.util.Date;
 public final class DeleteAbortedChunkedUploadsScheduler extends PortletScheduler implements MessageListener {
 
 	private static final long serialVersionUID = 1L;
-	private static final String chunkedUploadFileExtension = ".chunk";
+	private static final String chunkedUploadFileExtension = "chunk";
 	
     public DeleteAbortedChunkedUploadsScheduler(){
     	super();
@@ -65,9 +66,8 @@ public final class DeleteAbortedChunkedUploadsScheduler extends PortletScheduler
 		Files.walkFileTree(path, new SimpleFileVisitor<Path>(){
 			@Override
 			public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-				if(!attrs.isDirectory() && file.toString().toLowerCase().endsWith(chunkedUploadFileExtension)){
-					FileTime lastModifiedDate = attrs.lastModifiedTime();
-					boolean isOlderThanThreshold = (nowInMillis - lastModifiedDate.toMillis()) > threshold;
+				if(!attrs.isDirectory() && FilenameUtils.isExtension(file.toString(), chunkedUploadFileExtension)){
+					boolean isOlderThanThreshold = (nowInMillis - attrs.lastModifiedTime().toMillis()) > threshold;
 			 		if (isOlderThanThreshold) {
 			 			try {
 				 			Files.delete(file);
