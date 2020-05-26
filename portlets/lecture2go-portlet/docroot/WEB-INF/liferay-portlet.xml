@@ -192,6 +192,15 @@
 				</cron>
 			</trigger>
 		</scheduler-entry>
+		<scheduler-entry>
+			<scheduler-description>This scheduler is used to delete aborted chunked uploads from the file system which are older than 1 day</scheduler-description>
+			<scheduler-event-listener-class>de.uhh.l2g.plugins.util.DeleteAbortedChunkedUploadsScheduler</scheduler-event-listener-class>
+			<trigger>
+				<cron>
+					<cron-trigger-value>0 0 3 * * ?</cron-trigger-value>
+				</cron>
+			</trigger>
+		</scheduler-entry>
 		<instanceable>false</instanceable>
 		<private-request-attributes>false</private-request-attributes>
 		<header-portlet-javascript>/js/jquery.tmpl.min.js</header-portlet-javascript>
