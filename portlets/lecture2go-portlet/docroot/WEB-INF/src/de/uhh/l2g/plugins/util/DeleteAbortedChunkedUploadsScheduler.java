@@ -33,7 +33,7 @@ public final class DeleteAbortedChunkedUploadsScheduler extends PortletScheduler
     }
     
 	public DeleteAbortedChunkedUploadsScheduler(String schedulerClassName, ServiceContext serviceContext) {
-		super(AutocompleteScheduler.class.getName(), serviceContext);
+		super(DeleteAbortedChunkedUploadsScheduler.class.getName(), serviceContext);
 	    this.schedulerClassName = DeleteAbortedChunkedUploadsScheduler.class.getName();
 	    LOG = LogFactoryUtil.getLog(this.schedulerClassName);
 	}
