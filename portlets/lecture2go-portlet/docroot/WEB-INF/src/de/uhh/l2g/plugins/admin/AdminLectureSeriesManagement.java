@@ -399,6 +399,13 @@ public class AdminLectureSeriesManagement extends MVCPortlet {
 		request.setAttribute("institutions", institutions);
 		request.setAttribute("producers", producers);
 		request.setAttribute("backURL", backURL);
+		
+		try {
+			response.sendRedirect(backURL);
+		} catch (IOException e) {
+			//e.printStackTrace();
+		}		
+		
 		//send an email to coordinator and administrator, if logged in as producer
 		
 		// the approval is deactivated, do not send mails to producer,coordinators etc.

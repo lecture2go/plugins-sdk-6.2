@@ -69,11 +69,19 @@ public final class DeleteAbortedChunkedUploadsScheduler extends PortletScheduler
 				if(!attrs.isDirectory() && FilenameUtils.isExtension(file.toString(), chunkedUploadFileExtension)){
 					boolean isOlderThanThreshold = (nowInMillis - attrs.lastModifiedTime().toMillis()) > threshold;
 			 		if (isOlderThanThreshold) {
-			 			try {
+			 			// double check if the file which should be deleted, is really not a file we need
+			 			for (String extension: FileManager.MEDIA_FORMATS) {     
+			 				if (FilenameUtils.isExtension(file.toString(), extension)) {
+			 				    return FileVisitResult.CONTINUE;
+			 				}
+			 			}
+			 				
+		 				try {
 				 			Files.delete(file);
+			 		        LOG.info("Aborted upload chunk: " + file + " was deleted.");
 			 			} catch(IOException e) {
 			 		        LOG.error("Deletion of " + file + " was not possible.");
-			 			}
+			 			}			 			
 			 		}
 				}
 			    return FileVisitResult.CONTINUE;

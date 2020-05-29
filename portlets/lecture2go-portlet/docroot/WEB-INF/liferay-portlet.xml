@@ -175,15 +175,6 @@
 			</trigger>
 		</scheduler-entry>
 		<scheduler-entry>
-			<scheduler-description>This scheduler is used to update the last video list in database</scheduler-description>
-			<scheduler-event-listener-class>de.uhh.l2g.plugins.util.LastVideoListScheduler</scheduler-event-listener-class>
-			<trigger>
-				<cron>
-					<cron-trigger-value>0 */5 * * * ?</cron-trigger-value>
-				</cron>
-			</trigger>
-		</scheduler-entry>
-		<scheduler-entry>
 			<scheduler-description>This scheduler is used to collect Statistical Data from Database</scheduler-description>
 			<scheduler-event-listener-class>de.uhh.l2g.plugins.util.TermScheduler</scheduler-event-listener-class>
 			<trigger>
