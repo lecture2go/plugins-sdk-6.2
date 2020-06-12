@@ -155,6 +155,9 @@ public class Htaccess {
 			}
 			bw.flush();
 			bw.close();
+			
+			// make the file readable to be used by the Apache Server
+			file.setReadable(true,false);
 		} catch (IOException e) {
 			////e.printStackTrace();
 		}
