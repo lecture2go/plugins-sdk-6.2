@@ -141,6 +141,8 @@
 	
 	// track form changes
 	hasFormChanged = false;
+	// track if file is uploading
+	hasFileUploading = false;
 	
 	submitted = false;
 	$('#<portlet:namespace/>metadata').on('change', ':input', function(e){
@@ -637,6 +639,7 @@ $(function () {
             xhr.setRequestHeader('X-videoId', "<%=reqVideo.getVideoId()%>");
         },
         add: function(e, data) {
+        	hasFileUploading = true;
             var uploadErrors = [];
 			var acceptFileTypes = /(mp4|m4v|m4a|audio\/mp3|audio\/mpeg|audio|pdf|vtt)$/i;//file types
 			
@@ -665,6 +668,7 @@ $(function () {
             }
         },
         done: function (e, data) {
+			hasFileUploading = false;
         	// set progress bar to zero
            setTimeout(function(){$('#progress .bar').css('width',0 + '%')}, 100);
            var vars = data.jqXHR.responseJSON;
@@ -1898,7 +1902,8 @@ validate();
 
 function closeBrowser(e) {
 	// check if data is invalid or data was changed, if so display default browser popup upon closing window
-	if ((!validate() || hasFormChanged) && !submitted) {
+	if (((!validate() || hasFormChanged) && !submitted)
+		|| hasFileUploading) {
 		if(!e) e = window.event;
 	    //e.cancelBubble is supported by IE - this will kill the bubbling process.
 	    e.cancelBubble = true;
