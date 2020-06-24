@@ -188,9 +188,11 @@ public class OpenAccessVideos extends MVCPortlet {
 			} catch (Exception e) {
 				
 			}
-	    	if(video.getVideoId()==0)objectExists=false;
 	    	try{lectureseries = LectureseriesLocalServiceUtil.getLectureseries(video.getLectureseriesId());}catch (Exception e){}
 	    }
+	    
+    	if(video.getVideoId()==0)objectExists=false;
+    	
 	    if(objectExists){
 	    	// create symlink to downloadable file if not existing
 	    	VideoLocalServiceUtil.createSymLinkToDownloadableFileIfNotExisting(video.getVideoId());
