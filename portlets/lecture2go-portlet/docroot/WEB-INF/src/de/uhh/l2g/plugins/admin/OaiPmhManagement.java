@@ -11,6 +11,7 @@ import javax.portlet.RenderResponse;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
@@ -21,6 +22,7 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import de.uhh.l2g.plugins.model.ScheduledThread;
+import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.util.OaiPmhManager;
 import de.uhh.l2g.plugins.util.PermissionManager;
@@ -75,6 +77,30 @@ public class OaiPmhManagement extends MVCPortlet {
 		OaiPmhManager.publishAllOpenAccessVideos();
 		response.setRenderParameter("mvcPath", "/admin/oaipmh.jsp");
 	}
+	
+	public void republishVideo(ActionRequest request, ActionResponse response) {
+		long videoId = ParamUtil.getLong(request, "videoId");
+		try {
+			Video video = VideoLocalServiceUtil.getVideo(videoId);
+			// only publish if video is open access
+			if (video.getOpenAccess() == 1) {
+				OaiPmhManager.publish(videoId);
+			}
+		} catch (Exception e) {
+		}
+		response.setRenderParameter("mvcPath", "/admin/oaipmh.jsp");
+	}
+	
+	public void unpublishVideo(ActionRequest request, ActionResponse response) {
+		long videoId = ParamUtil.getLong(request, "videoId");
+		try {
+			Video video = VideoLocalServiceUtil.getVideo(videoId);
+			OaiPmhManager.unpublish(videoId);
+		} catch (Exception e) {
+		}
+		response.setRenderParameter("mvcPath", "/admin/oaipmh.jsp");
+	}
+	
 	
 	/**
 	 * Fixes missing fields in the video object/ related tables, which can be derived from the related lectureseries
