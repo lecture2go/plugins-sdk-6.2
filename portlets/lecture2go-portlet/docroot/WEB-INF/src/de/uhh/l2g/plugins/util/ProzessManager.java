@@ -153,6 +153,9 @@ public class ProzessManager {
 				video.setOpenAccess(1);
 				video.setSecureFilename("");
 				VideoLocalServiceUtil.updateVideo(video);
+				
+				// publish the video to the OAI-PMH repository
+				OaiPmhManager.publish(video.getVideoId());
 			}
 		} catch (Exception e) {}
 		
@@ -208,9 +211,6 @@ public class ProzessManager {
 		//VideoLocalServiceUtil.createLastVideoList();
 		// refresh open acces for lecture series
 		LectureseriesLocalServiceUtil.updateOpenAccess(video, lectureseries);
-		
-		// publish the video to the OAI-PMH repository
-		OaiPmhManager.publish(video.getVideoId());
 	}
 
 	@SuppressWarnings("static-access")
@@ -237,6 +237,9 @@ public class ProzessManager {
 			String secureUrl = Security.createSecureFileName() + "." + video.getContainerFormat();
 			video.setSecureFilename(secureUrl);
 			VideoLocalServiceUtil.updateVideo(video);
+			
+			// unpublish the video from the OAI-PMH repository
+			OaiPmhManager.unpublish(video.getVideoId());
 		
 			String videoSPreffix = video.getSPreffix();
 			//for images
@@ -304,9 +307,6 @@ public class ProzessManager {
 		
 		//update LectureSeries previewVideoId
 		LectureseriesLocalServiceUtil.updatePreviewVideoOpenAccess(lectureseries);
-		
-		// unpublish the video from the OAI-PMH repository
-		OaiPmhManager.unpublish(video.getVideoId());
 	}
 
 	public void deleteThumbnails(Video video) {
@@ -401,6 +401,9 @@ public class ProzessManager {
 			//e1.printStackTrace();
 		}
 		
+		// unpublish the video from the OAI-PMH repository
+		OaiPmhManager.unpublish(video.getVideoId());
+		
 		//delete physical files 
 		String videoPreffix = "";
 		if (video.getOpenAccess()==1) videoPreffix = video.getPreffix();
@@ -473,9 +476,6 @@ public class ProzessManager {
 			// send DELETE request to video processor
 			VideoProcessorManager.deleteVideoConversion(video.getVideoId());
 		}
-		
-		// unpublish the video from the OAI-PMH repository
-		OaiPmhManager.unpublish(video.getVideoId());
 		
 		return true;
 	}
