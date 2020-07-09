@@ -41,6 +41,10 @@
 
 /*** MOVED FROM MIN-960  ***/
 
+.add-link {
+font-size: 20px;
+} 
+
 .aui #navigation {
     display: table;
     float: left;
