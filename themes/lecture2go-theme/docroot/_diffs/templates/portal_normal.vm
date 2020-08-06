@@ -47,7 +47,7 @@ $theme.include($body_top_include)
 		<div id="heading">
 			<h1 class="site-title">
 				<a class="$logo_css_class" href="http://www.uni-hamburg.de" title="#language_format ("go-to-x", [$site_name])">
-					<img alt="$logo_description" height="$site_logo_height" src="$site_logo" width="$site_logo_width" />
+					<img alt="Universität Hamburg" height="$site_logo_height" src="$site_logo" width="$site_logo_width" />
 				</a>
 				<div class="l2go-logo">
 					#if ($show_site_name)
