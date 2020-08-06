@@ -283,7 +283,7 @@
 									    	<c:forEach items="<%=segments %>" var="segment">
 									    		<li class="chaptertile" id="${segment.segmentId}" begin="${segment.start}" end="${segment.end}">
 													<div class="image">
-												    	<a><img src="${segment.image}"></a>
+												    	<a><img src="${segment.image}" alt="<liferay-ui:message key="thumbnail"/> - ${segment.title}"></a>
 												    </div>
 												    <div class="title">
 												    	<a><b>${segment.start} </b> ${segment.title}</a>
@@ -325,7 +325,7 @@
 								</c:if>
 								<li class="videotile small related ${activeClass}" onClick="window.location='<%=viewOpenAccessVideoURL1.toString()%>'">
 										<div class="video-image-wrapper-small related">
-											<img class="video-image related" src="<%=vid.getImageSmall()%>">
+											<img class="video-image related" src="<%=vid.getImageSmall()%>" alt="<liferay-ui:message key="thumbnail"/> - <%=vid.getTitle() %>" />
 										</div>
 										<div class="metainfo-small related">
 												<%

@@ -137,7 +137,7 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 										<div class="span3 video-box" onClick="window.location='<%=vid.getUrl() %>'">											
 											<div class="video-box-image-container">
 												<div class="video-box-image">
-													<img src="<%=vid.getImageMedium() %>">
+													<img src="<%=vid.getImageMedium() %>" alt="<liferay-ui:message key="thumbnail"/> - <%=vid.getTitle() %>" />
 												</div>
 											</div>
 
@@ -244,7 +244,7 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 									<div class="span3 video-box" onClick="window.location='<%=vid.getUrl() %>'">	
 										<div class="video-box-image-container">
 											<div class="video-box-image"> 
-												<img src="<%=vid.getImageMedium() %>">
+												<img src="<%=vid.getImageMedium() %>" alt="<liferay-ui:message key="thumbnail"/> - <%=vid.getTitle() %>" />
 											</div>
 										</div>
 	
