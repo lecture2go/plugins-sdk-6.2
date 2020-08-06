@@ -179,8 +179,8 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 						</div>
 					</div>
 				</div>
-				<a class="left carousel-control" href="#news-carousel" data-slide="prev"><i class="icon-chevron-left"></i></a>
-				<a class="right carousel-control" href="#news-carousel" data-slide="next"><i class="icon-chevron-right"></i></a>
+				<a class="left carousel-control" href="#news-carousel" data-slide="prev" aria-role='button' aria-label='<liferay-ui:message key="previous-elements"/>'><i class="icon-chevron-left"></i></a>
+				<a class="right carousel-control" href="#news-carousel" data-slide="next" aria-role='button' aria-label='<liferay-ui:message key="next-elements"/>'><i class="icon-chevron-right"></i></a>
 			</div>
 		</div>
 	</div>
@@ -283,8 +283,8 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 						</div>
 					</div>
 				</div>
-				<a class="left carousel-control" href="#popular-carousel" data-slide="prev"><i class="icon-chevron-left"></i></a>
-				<a class="right carousel-control" href="#popular-carousel" data-slide="next"><i class="icon-chevron-right"></i></a>
+				<a class="left carousel-control" href="#popular-carousel" data-slide="prev" aria-role='button' aria-label='<liferay-ui:message key="previous-elements"/>'><i class="icon-chevron-left"></i></a>
+				<a class="right carousel-control" href="#popular-carousel" data-slide="next" aria-role='button' aria-label='<liferay-ui:message key="next-elements"/>'><i class="icon-chevron-right"></i></a>
 			</div>
 		</div>
 	</div>

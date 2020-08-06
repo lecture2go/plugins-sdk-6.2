@@ -304,7 +304,7 @@
 			  %>
 			    <div class="related">
 					<div class="col-md-5">
-						    <div class="related-lectureseries-name"><liferay-ui:message key="lecture-series"/> &nbsp;<a target="_blank" class="icon-small icon-rss" href="${video.mp4RssLink}"></a> </div>
+						    <div class="related-lectureseries-name"><liferay-ui:message key="lecture-series"/> &nbsp;<a title="<liferay-ui:message key='rss-feed'/>" aria-label="<liferay-ui:message key='rss-feed'/>" target="_blank" class="icon-small icon-rss" href="${video.mp4RssLink}"></a> </div>
 							<ul class="ul-related">
 								<%
 								ListIterator<Video> vli = relatedVideos.listIterator();

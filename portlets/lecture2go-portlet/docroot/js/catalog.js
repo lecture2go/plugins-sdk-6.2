@@ -32,7 +32,16 @@ $( function() {
 		var tile = $("#_lgopenaccessvideos_WAR_lecture2goportlet_lectureseriesesSearchContainer div.videotile.wide");
 		tile.on({
 			click: function () {
-					$(this).find("button").toggleClass("rotated");
+					$button = $(this).find("button");
+					$button.toggleClass("rotated");
+					if ($button.hasClass("rotated")) {
+						$button.attr("aria-label",Liferay.Language.get('close-video-list'));
+						$button.attr("title",Liferay.Language.get('close-video-list'));
+					} else {
+						$button.attr("aria-label",Liferay.Language.get('open-video-list'));
+						$button.attr("title",Liferay.Language.get('open-video-list'));
+					}					
+					
 					$(this).siblings("div").find("ul").slideToggle();
 			},
 			mouseenter: function () {

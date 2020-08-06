@@ -427,7 +427,7 @@
 											</div>
 											
 											<div class="video-content-footer">
-										        <button id="<%="b"+oId%>" >
+										        <button title="<liferay-ui:message key='open-video-list'/>" aria-label="<liferay-ui:message key='open-video-list'/>" id="<%="b"+oId%>" >
 													<span class="lfr-icon-menu-text">
 														<i class="icon-large icon-chevron-down"></i>
 													</span>	
@@ -536,7 +536,11 @@ var checkExist = setInterval(function() {
 				 // open the video list of a lectureseries if a search query is found in a video BUT NOT in the lectureseries itself
 				 if(!(($(node).closest(".table-cell").find(".videotile.wide").find("mark")).length)){
 					// open the video list of a lectureseries if a video is found
-					 $(node).closest("ul").show();
+					$(node).closest("ul").show();
+					$button = $(node).closest(".table-cell").find(".video-content-footer").find("button");
+				 	$button.addClass("rotated");
+				 	$button.attr("aria-label","<liferay-ui:message key='close-video-list'/>");
+					$button.attr("title","<liferay-ui:message key='close-video-list'/>");				
 				 }
 			
 			 }
