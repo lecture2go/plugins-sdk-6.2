@@ -332,7 +332,9 @@
 													String date = "";
 							           				try{ date = vid.getDate().trim().substring(0, 10);}catch(Exception e){}
 												%>
-												<div class="title-small related"><%=vid.getTitle()%></div>
+												<a href="<%=viewOpenAccessVideoURL1.toString()%>">
+													<div class="title-small related"><%=vid.getTitle()%></div>
+												</a>
 							          			<p class="creator-small2 related">
 												<%=vid.getLinkedCreators() %>
 							           			</p>

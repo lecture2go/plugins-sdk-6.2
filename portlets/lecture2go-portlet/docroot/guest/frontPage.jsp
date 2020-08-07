@@ -143,7 +143,9 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 
 											<div class="video-box-content">
 												<div class="date"><%=vid.getSimpleDate() %></div>
-												<div class="title-small dot-ellipsis dot-height-60 dot-resize-update "><%=vid.getTitle() %></div>
+												<a href='<%=vid.getUrl() %>'>					
+													<div class="title-small dot-ellipsis dot-height-60 dot-resize-update "><%=vid.getTitle() %></div>
+												</a>
 												<div class="creator-small2 dot-ellipsis dot-height-25 dot-resize-update "><%=vid.getLinkedCreators() %></div>
 												<div class="lectureseries-small dot-ellipsis dot-height-25 dot-resize-update">
 													<% if (!isVideo) { %>
@@ -250,7 +252,9 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 	
 										<div class="video-box-content"> 
 											<div class="date"><%=vid.getSimpleDate() %></div>
-											<div class="title-small dot-ellipsis dot-height-60 dot-resize-update "><%= vid.getTitle() %></div>
+											<a href='<%=vid.getUrl() %>'>					
+												<div class="title-small dot-ellipsis dot-height-60 dot-resize-update "><%= vid.getTitle() %></div>
+											</a>
 											<div class="creator-small2 dot-ellipsis dot-height-25 dot-resize-update "><%= vid.getLinkedCreators() %></div>
 											<div class="lectureseries-small dot-ellipsis dot-height-25 dot-resize-update">
 												<% if (!isVideo) { %>
