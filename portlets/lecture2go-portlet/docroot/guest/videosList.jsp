@@ -494,7 +494,9 @@
 		              					%>
 										<div class="metainfo-small">
 		              						<div class="generation-date"><%=date%></div>
-											<div class="title-small"><%=v.getTitle()%></div>		              							
+											<a href='<%=vURL%>'>
+												<div class="title-small"><%=v.getTitle()%></div>		   
+											</a>           							
 			              					<div class="allcreators">		              							
 		              							<%=v.getLinkedCreators()%>
 		              						</div>
