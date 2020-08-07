@@ -73,7 +73,9 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.springframework.web.util.HtmlUtils;
@@ -135,6 +137,7 @@ import de.uhh.l2g.plugins.util.FileManager;
 import de.uhh.l2g.plugins.util.Htaccess;
 import de.uhh.l2g.plugins.util.OaiPmhManager;
 import de.uhh.l2g.plugins.util.ProzessManager;
+import de.uhh.l2g.plugins.util.S3Manager;
 import de.uhh.l2g.plugins.util.Security;
 import de.uhh.l2g.plugins.util.VideoGenerationDateComparator;
 import de.uhh.l2g.plugins.util.VideoProcessorManager;
@@ -346,7 +349,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			ListIterator<Lectureseries_Institution> i = li.listIterator();
 			while(i.hasNext()){
 				Institution ins = InstitutionLocalServiceUtil.getInstitution(i.next().getInstitutionId());
-				Video_Institution vi = new Video_InstitutionImpl();
+				Video_Institution vi = Video_InstitutionLocalServiceUtil.createVideo_Institution(0);
 				vi.setVideoId(video.getVideoId());
 				vi.setInstitutionId(ins.getInstitutionId());
 				vi.setInstitutionParentId(ins.getParentId());
@@ -354,7 +357,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			}
 		}else{//no lecture series 
 			Institution ins = InstitutionLocalServiceUtil.getInstitution(video.getRootInstitutionId());
-			Video_Institution vi = new Video_InstitutionImpl();
+			Video_Institution vi = Video_InstitutionLocalServiceUtil.createVideo_Institution(0);
 			vi.setVideoId(video.getVideoId());
 			vi.setInstitutionId(video.getRootInstitutionId());
 			
@@ -414,14 +417,12 @@ public class AdminVideoManagement extends MVCPortlet {
 		if(resourceID.equals("updateVideoFileName")){
 			String fileName = ParamUtil.getString(resourceRequest, "fileName");
 			String secureFileName = ParamUtil.getString(resourceRequest, "secureFileName");
-			String generationDate = ParamUtil.getString(resourceRequest, "generationDate");
 			String containerFormat = fileName.split("\\.")[fileName.split("\\.").length-1];
 			//update data base
 			try {
 				video.setFilename(fileName);
 				video.setSecureFilename(secureFileName);
 				video.setContainerFormat(containerFormat);
-				video.setGenerationDate(generationDate);
 				video.setUploadDate(new Date());
 				VideoLocalServiceUtil.updateVideo(video);
 				FFmpegManager.updateFfmpegMetadata(video);
@@ -483,7 +484,7 @@ public class AdminVideoManagement extends MVCPortlet {
 			//
 			String image="";
 			String thumbnailLocation = "";
-			int time = ParamUtil.getInteger(resourceRequest, "inputTime");
+			float time = ParamUtil.getFloat(resourceRequest, "inputTime");
 			
 			//proceed only if time > 0
 			if(time > 0){
@@ -515,7 +516,7 @@ public class AdminVideoManagement extends MVCPortlet {
 				try {
 					thumbnailLocation = PropsUtil.get("lecture2go.images.system.path") + "/" + image;
 					System.out.println("fileLocation ### "+fileLocation+" ### "+"thumbnailLocation ### "+thumbnailLocation);
-					FFmpegManager.createThumbnail(fileLocation, thumbnailLocation, time);
+					FFmpegManager.createThumbnail(fileLocation, thumbnailLocation);
 				} catch (Exception e) {
 					//e.printStackTrace();
 				}
@@ -836,10 +837,10 @@ public class AdminVideoManagement extends MVCPortlet {
 			//update tag cloud for this video
 			TagcloudLocalServiceUtil.generateForVideo(video.getVideoId());
 			//update tag cloud for the lectureseries of this video
-			TagcloudLocalServiceUtil.generateForLectureseries(video.getLectureseriesId());
+			if(video.getLectureseriesId()>0)TagcloudLocalServiceUtil.generateForLectureseries(video.getLectureseriesId());
 			// update tag cloud for the old lectureseries of this video
 			if(newLsId.longValue() != oldLsId.longValue())
-				TagcloudLocalServiceUtil.generateForLectureseries(oldLsId);
+				if(oldLsId>0)TagcloudLocalServiceUtil.generateForLectureseries(oldLsId);
 			
 			//rebuild rss
 			// generate RSS
@@ -924,7 +925,7 @@ public class AdminVideoManagement extends MVCPortlet {
 						Lectureseries_Institution lectinst = l_i.next();
 						in = InstitutionLocalServiceUtil.getInstitution(lectinst.getInstitutionId());
 						tagCloudArrayString.add(in.getName());
-						Video_Institution vi = new Video_InstitutionImpl();
+						Video_Institution vi = Video_InstitutionLocalServiceUtil.createVideo_Institution(0);
 						vi.setVideoId(video.getVideoId());
 						vi.setInstitutionId(lectinst.getInstitutionId());
 						vi.setInstitutionParentId(in.getParentId());
@@ -1142,6 +1143,28 @@ public class AdminVideoManagement extends MVCPortlet {
 			jo.put("secureFileName", secureFileName);
 			writeJSON(resourceRequest, resourceResponse, jo);
 		}
+		
+		if(resourceID.equals("getSecureTokenExpirationTime")){
+			// the upload is initialized directly, so the token is only valid a short time (1 minute)
+			long expiration = System.currentTimeMillis() + (1000*60);
+			JSONObject jo = JSONFactoryUtil.createJSONObject();
+			jo.put("secureTokenExpirationTime", String.valueOf(expiration));
+			writeJSON(resourceRequest, resourceResponse, jo);
+		}
+		
+		if(resourceID.equals("getSecureToken")){
+			String expirationTime = ParamUtil.getString(resourceRequest, "secureTokenExpirationTime");
+
+			JSONObject jo = JSONFactoryUtil.createJSONObject();
+			try {
+				String secureToken = Security.getSignatureKey(Security.getSignatureKey(expirationTime, String.valueOf(video.getVideoId())));
+				jo.put("secureToken", secureToken);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			writeJSON(resourceRequest, resourceResponse, jo);
+		}
 
 		if(resourceID.equals("getShare")){
 			JSONObject jo = JSONFactoryUtil.createJSONObject();
@@ -1221,7 +1244,7 @@ public class AdminVideoManagement extends MVCPortlet {
 				segment.setUserId(userId);
 				try {
 					// save
-					Segment s = SegmentLocalServiceUtil.createSegment(segment);
+					Segment s = SegmentLocalServiceUtil.addSegment(segment);
 					
 					JSONObject jo = JSONFactoryUtil.createJSONObject();
 					jo.put("chapter", s.getChapter());
@@ -1521,7 +1544,7 @@ public class AdminVideoManagement extends MVCPortlet {
 							List<Video_Institution> vil = new ArrayList<Video_Institution>();
 							vil = Video_InstitutionLocalServiceUtil.getByVideoAndInstitution(videoId, institutionId);
 							
-							Video_Institution vi = new Video_InstitutionImpl();
+							Video_Institution vi = Video_InstitutionLocalServiceUtil.createVideo_Institution(0);
 							vi.setInstitutionId(in.getInstitutionId());
 							vi.setVideoId(videoId);
 							if(in.getLevel()==1)vi.setInstitutionParentId(0);
@@ -1553,6 +1576,54 @@ public class AdminVideoManagement extends MVCPortlet {
 				//e.printStackTrace();
 			}
 			writeJSON(resourceRequest, resourceResponse, CreatorLocalServiceUtil.getJSONCreatorsByVideoId(videoId));			
+		}
+		
+		if(resourceID.equals("signS3Request")){
+			// get the data send by the evaporateJS s3 upload framework
+			String signData = ParamUtil.getString(resourceRequest, "to_sign");
+			String dateStamp = ParamUtil.getString(resourceRequest, "datetime").substring(0, 8);
+		
+			S3Manager s3 = new S3Manager().withDefaultCredentials();
+	
+			if(StringUtils.isEmpty(signData)) {
+				resourceResponse.setProperty(ResourceResponse.HTTP_STATUS_CODE, Integer.toString(HttpServletResponse.SC_BAD_REQUEST));
+	        } else {
+	            try {
+	            	resourceResponse.getWriter().write(s3.getSignatureKey(s3.getSignatureKey(dateStamp, signData)));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+	        }
+		}
+		
+		if(resourceID.equals("getS3RawDataForVideo")){
+			S3Manager s3 = new S3Manager().withDefaults();
+			
+			s3.initS3Client();
+			
+			com.liferay.portal.kernel.json.JSONArray jsonArray = s3.getItemsFromBucketWithPrefixAsJson("raw-data/" + videoId + "/");
+			
+			if (jsonArray == null) {
+				resourceResponse.setProperty(ResourceResponse.HTTP_STATUS_CODE, Integer.toString(HttpServletResponse.SC_SERVICE_UNAVAILABLE));
+				jsonArray = JSONFactoryUtil.createJSONArray();
+			}
+	
+			writeJSON(resourceRequest, resourceResponse, jsonArray);
+		}
+		
+		if(resourceID.equals("deleteS3Object")){
+			JSONObject jo = JSONFactoryUtil.createJSONObject();
+
+			String objectKey = ParamUtil.getString(resourceRequest, "key");
+			
+			S3Manager s3 = new S3Manager().withDefaults();
+			
+			s3.initS3Client();
+			
+			s3.deleteObject(objectKey);
+				
+			writeJSON(resourceRequest, resourceResponse, jo);
+
 		}
 		
 	}

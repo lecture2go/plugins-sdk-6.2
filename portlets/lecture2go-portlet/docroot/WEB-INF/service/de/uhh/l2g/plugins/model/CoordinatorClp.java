@@ -171,41 +171,6 @@ public class CoordinatorClp extends BaseModelImpl<Coordinator>
 	}
 
 	@Override
-	public java.lang.String getFirstName() {
-		try {
-			String methodName = "getFirstName";
-
-			Class<?>[] parameterTypes = new Class<?>[] {  };
-
-			Object[] parameterValues = new Object[] {  };
-
-			java.lang.String returnObj = (java.lang.String)invokeOnRemoteModel(methodName,
-					parameterTypes, parameterValues);
-
-			return returnObj;
-		}
-		catch (Exception e) {
-			throw new UnsupportedOperationException(e);
-		}
-	}
-
-	@Override
-	public void setLastLoginDate(java.util.Date lastLoginDate) {
-		try {
-			String methodName = "setLastLoginDate";
-
-			Class<?>[] parameterTypes = new Class<?>[] { java.util.Date.class };
-
-			Object[] parameterValues = new Object[] { lastLoginDate };
-
-			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
-		}
-		catch (Exception e) {
-			throw new UnsupportedOperationException(e);
-		}
-	}
-
-	@Override
 	public java.lang.String getLastName() {
 		try {
 			String methodName = "getLastName";
@@ -218,57 +183,6 @@ public class CoordinatorClp extends BaseModelImpl<Coordinator>
 					parameterTypes, parameterValues);
 
 			return returnObj;
-		}
-		catch (Exception e) {
-			throw new UnsupportedOperationException(e);
-		}
-	}
-
-	@Override
-	public void setEmailAddress(java.lang.String emailAddress) {
-		try {
-			String methodName = "setEmailAddress";
-
-			Class<?>[] parameterTypes = new Class<?>[] { java.lang.String.class };
-
-			Object[] parameterValues = new Object[] { emailAddress };
-
-			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
-		}
-		catch (Exception e) {
-			throw new UnsupportedOperationException(e);
-		}
-	}
-
-	@Override
-	public java.util.Date getLastLoginDate() {
-		try {
-			String methodName = "getLastLoginDate";
-
-			Class<?>[] parameterTypes = new Class<?>[] {  };
-
-			Object[] parameterValues = new Object[] {  };
-
-			java.util.Date returnObj = (java.util.Date)invokeOnRemoteModel(methodName,
-					parameterTypes, parameterValues);
-
-			return returnObj;
-		}
-		catch (Exception e) {
-			throw new UnsupportedOperationException(e);
-		}
-	}
-
-	@Override
-	public void setFirstName(java.lang.String firstName) {
-		try {
-			String methodName = "setFirstName";
-
-			Class<?>[] parameterTypes = new Class<?>[] { java.lang.String.class };
-
-			Object[] parameterValues = new Object[] { firstName };
-
-			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
 		}
 		catch (Exception e) {
 			throw new UnsupportedOperationException(e);
@@ -304,6 +218,92 @@ public class CoordinatorClp extends BaseModelImpl<Coordinator>
 			Object[] parameterValues = new Object[] { lastName };
 
 			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public java.util.Date getLastLoginDate() {
+		try {
+			String methodName = "getLastLoginDate";
+
+			Class<?>[] parameterTypes = new Class<?>[] {  };
+
+			Object[] parameterValues = new Object[] {  };
+
+			java.util.Date returnObj = (java.util.Date)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public void setLastLoginDate(java.util.Date lastLoginDate) {
+		try {
+			String methodName = "setLastLoginDate";
+
+			Class<?>[] parameterTypes = new Class<?>[] { java.util.Date.class };
+
+			Object[] parameterValues = new Object[] { lastLoginDate };
+
+			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public void setEmailAddress(java.lang.String emailAddress) {
+		try {
+			String methodName = "setEmailAddress";
+
+			Class<?>[] parameterTypes = new Class<?>[] { java.lang.String.class };
+
+			Object[] parameterValues = new Object[] { emailAddress };
+
+			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public void setFirstName(java.lang.String firstName) {
+		try {
+			String methodName = "setFirstName";
+
+			Class<?>[] parameterTypes = new Class<?>[] { java.lang.String.class };
+
+			Object[] parameterValues = new Object[] { firstName };
+
+			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public java.lang.String getFirstName() {
+		try {
+			String methodName = "getFirstName";
+
+			Class<?>[] parameterTypes = new Class<?>[] {  };
+
+			Object[] parameterValues = new Object[] {  };
+
+			java.lang.String returnObj = (java.lang.String)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
 		}
 		catch (Exception e) {
 			throw new UnsupportedOperationException(e);
