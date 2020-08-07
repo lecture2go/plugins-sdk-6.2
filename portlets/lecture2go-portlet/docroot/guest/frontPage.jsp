@@ -36,7 +36,7 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 		    <img src="/lecture2go-portlet/img/background_still.jpg">
 		</video>
 		<div class="dark-overlay"></div>
-		<div id="vid-control">
+		<div id="vid-control" role="button" tabindex="0" aria-label="Pause Video">
 			<i class="icon-pause"></i>
 		</div>
 	</div>
@@ -350,9 +350,11 @@ $(document).ready(function(){
   		if (video.paused) {
   			video.play();
   			$controlIcon.switchClass("icon-play", "icon-pause");
+  			$('#vid-control').attr("aria-label", "Pause video");
   		} else {
   			video.pause();
   			$controlIcon.switchClass("icon-pause", "icon-play");
+  			$('#vid-control').attr("aria-label", "Play video");
   		}
 	});
 
