@@ -84,7 +84,8 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 		<h4><liferay-ui:message key="last-added"/></h4>
 		<div class="video-box-list-container">
 			<div id="news-carousel" class="carousel slide" data-interval="false" data-wrap="false">
-            <!-- Carousel items -->
+				<a class="left carousel-control" href="#news-carousel" data-slide="prev" aria-role='button' aria-label='<liferay-ui:message key="previous-elements"/>'><i class="icon-chevron-left"></i></a>
+           		<!-- Carousel items -->
 	            <div class="carousel-inner">
 	                <div class="item active">
 						<div class="row-fluid video-box-list">
@@ -181,7 +182,6 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 						</div>
 					</div>
 				</div>
-				<a class="left carousel-control" href="#news-carousel" data-slide="prev" aria-role='button' aria-label='<liferay-ui:message key="previous-elements"/>'><i class="icon-chevron-left"></i></a>
 				<a class="right carousel-control" href="#news-carousel" data-slide="next" aria-role='button' aria-label='<liferay-ui:message key="next-elements"/>'><i class="icon-chevron-right"></i></a>
 			</div>
 		</div>
@@ -196,7 +196,8 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 		<h4><liferay-ui:message key="popular-videos"/></h4>
 		<div class="video-box-list-container">
 			<div id="popular-carousel" class="carousel slide" data-interval="false" data-wrap="false">
-            <!-- Carousel items -->
+				<a class="left carousel-control" href="#popular-carousel" data-slide="prev" aria-role='button' aria-label='<liferay-ui:message key="previous-elements"/>'><i class="icon-chevron-left"></i></a>
+            	<!-- Carousel items -->
 	            <div class="carousel-inner">
 	                <div class="item active">
 						<div class="row-fluid video-box-list">
@@ -287,7 +288,6 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 						</div>
 					</div>
 				</div>
-				<a class="left carousel-control" href="#popular-carousel" data-slide="prev" aria-role='button' aria-label='<liferay-ui:message key="previous-elements"/>'><i class="icon-chevron-left"></i></a>
 				<a class="right carousel-control" href="#popular-carousel" data-slide="next" aria-role='button' aria-label='<liferay-ui:message key="next-elements"/>'><i class="icon-chevron-right"></i></a>
 			</div>
 		</div>
@@ -354,7 +354,7 @@ $(document).ready(function(){
   		} else {
   			video.pause();
   			$controlIcon.switchClass("icon-pause", "icon-play");
-  			$('#vid-control').attr("aria-label", "Play video");
+  			$('#vid-control').attr("aria-label", "Pause video");
   		}
 	});
 
