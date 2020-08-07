@@ -630,28 +630,9 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 	}
 
 	@Override
-	public int getNumberOfOpenAccessVideos() {
+	public java.lang.String getClosedAccessURI() {
 		try {
-			String methodName = "getNumberOfOpenAccessVideos";
-
-			Class<?>[] parameterTypes = new Class<?>[] {  };
-
-			Object[] parameterValues = new Object[] {  };
-
-			Integer returnObj = (Integer)invokeOnRemoteModel(methodName,
-					parameterTypes, parameterValues);
-
-			return returnObj;
-		}
-		catch (Exception e) {
-			throw new UnsupportedOperationException(e);
-		}
-	}
-
-	@Override
-	public java.lang.String getOpenAccessURI() {
-		try {
-			String methodName = "getOpenAccessURI";
+			String methodName = "getClosedAccessURI";
 
 			Class<?>[] parameterTypes = new Class<?>[] {  };
 
@@ -687,22 +668,6 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 	}
 
 	@Override
-	public void setType(java.lang.String type) {
-		try {
-			String methodName = "setType";
-
-			Class<?>[] parameterTypes = new Class<?>[] { java.lang.String.class };
-
-			Object[] parameterValues = new Object[] { type };
-
-			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
-		}
-		catch (Exception e) {
-			throw new UnsupportedOperationException(e);
-		}
-	}
-
-	@Override
 	public int getNumberOfVideos() {
 		try {
 			String methodName = "getNumberOfVideos";
@@ -722,15 +687,50 @@ public class LectureseriesClp extends BaseModelImpl<Lectureseries>
 	}
 
 	@Override
-	public java.lang.String getClosedAccessURI() {
+	public void setType(java.lang.String type) {
 		try {
-			String methodName = "getClosedAccessURI";
+			String methodName = "setType";
+
+			Class<?>[] parameterTypes = new Class<?>[] { java.lang.String.class };
+
+			Object[] parameterValues = new Object[] { type };
+
+			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public java.lang.String getOpenAccessURI() {
+		try {
+			String methodName = "getOpenAccessURI";
 
 			Class<?>[] parameterTypes = new Class<?>[] {  };
 
 			Object[] parameterValues = new Object[] {  };
 
 			java.lang.String returnObj = (java.lang.String)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public int getNumberOfOpenAccessVideos() {
+		try {
+			String methodName = "getNumberOfOpenAccessVideos";
+
+			Class<?>[] parameterTypes = new Class<?>[] {  };
+
+			Object[] parameterValues = new Object[] {  };
+
+			Integer returnObj = (Integer)invokeOnRemoteModel(methodName,
 					parameterTypes, parameterValues);
 
 			return returnObj;
