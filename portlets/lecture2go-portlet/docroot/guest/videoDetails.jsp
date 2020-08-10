@@ -283,7 +283,7 @@
 									    	<c:forEach items="<%=segments %>" var="segment">
 									    		<li class="chaptertile" id="${segment.segmentId}" begin="${segment.start}" end="${segment.end}">
 													<div class="image">
-												    	<a><img src="${segment.image}"></a>
+												    	<a><img src="${segment.image}" alt="<liferay-ui:message key="thumbnail"/> - ${segment.title}"></a>
 												    </div>
 												    <div class="title">
 												    	<a><b>${segment.start} </b> ${segment.title}</a>
@@ -304,7 +304,7 @@
 			  %>
 			    <div class="related">
 					<div class="col-md-5">
-						    <div class="related-lectureseries-name"><liferay-ui:message key="lecture-series"/> &nbsp;<a target="_blank" class="icon-small icon-rss" href="${video.mp4RssLink}"></a> </div>
+						    <div class="related-lectureseries-name"><liferay-ui:message key="lecture-series"/> &nbsp;<a title="<liferay-ui:message key='rss-feed'/>" aria-label="<liferay-ui:message key='rss-feed'/>" target="_blank" class="icon-small icon-rss" href="${video.mp4RssLink}"></a> </div>
 							<ul class="ul-related">
 								<%
 								ListIterator<Video> vli = relatedVideos.listIterator();
@@ -325,14 +325,16 @@
 								</c:if>
 								<li class="videotile small related ${activeClass}" onClick="window.location='<%=viewOpenAccessVideoURL1.toString()%>'">
 										<div class="video-image-wrapper-small related">
-											<img class="video-image related" src="<%=vid.getImageSmall()%>">
+											<img class="video-image related" src="<%=vid.getImageSmall()%>" alt="<liferay-ui:message key="thumbnail"/> - <%=vid.getTitle() %>" />
 										</div>
 										<div class="metainfo-small related">
 												<%
 													String date = "";
 							           				try{ date = vid.getDate().trim().substring(0, 10);}catch(Exception e){}
 												%>
-												<div class="title-small related"><%=vid.getTitle()%></div>
+												<a href="<%=viewOpenAccessVideoURL1.toString()%>">
+													<div class="title-small related"><%=vid.getTitle()%></div>
+												</a>
 							          			<p class="creator-small2 related">
 												<%=vid.getLinkedCreators() %>
 							           			</p>

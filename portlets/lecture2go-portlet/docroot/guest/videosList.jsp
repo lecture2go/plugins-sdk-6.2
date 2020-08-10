@@ -337,7 +337,7 @@
 									%>
 								<div class="videotile wide" onClick="window.location='<%=view1URL%>'">
 									<div class="video-image-wrapper">
-									   <img class="video-image-big" src="<%=vidDummy.getImageMedium()%>"/>
+									   <img class="video-image-big" src="<%=vidDummy.getImageMedium()%>" alt="<liferay-ui:message key="thumbnail"/> - <%=vidDummy.getTitle() %>" />
 									</div>
 									<div class="video-content-wrapper">
 										<div class="video-content">
@@ -399,7 +399,7 @@
 								%>
 										<div class="videotile wide">
 									        <div class="video-image-wrapper">
-									          <img class="video-image-big layered-paper darker" src="<%=vidDummy.getImageMedium()%>"/>
+									          <img class="video-image-big layered-paper darker" src="<%=vidDummy.getImageMedium()%>" alt="<liferay-ui:message key="thumbnail"/> - <%=vidDummy.getTitle() %>" />
 											  <span class="badge"><%=videoCount%></span>
 									          <span class="tri"></span>
 									          <span class="overlay"></span>
@@ -427,7 +427,7 @@
 											</div>
 											
 											<div class="video-content-footer">
-										        <button id="<%="b"+oId%>" >
+										        <button title="<liferay-ui:message key='open-video-list'/>" aria-label="<liferay-ui:message key='open-video-list'/>" id="<%="b"+oId%>" >
 													<span class="lfr-icon-menu-text">
 														<i class="icon-large icon-chevron-down"></i>
 													</span>	
@@ -483,7 +483,7 @@
 								<li class="videotile small" onClick="window.location='<%=vURL%>'">
 										<div class="videotile metainfolist small">
 											<div class="video-image-wrapper-small">
-												<img class="video-image" src="<%=v.getImageSmall()%>">
+												<img class="video-image" src="<%=v.getImageSmall()%>" alt="<liferay-ui:message key="thumbnail"/> - <%=v.getTitle() %>" />
 											</div>
 										</div>
 										<%
@@ -536,7 +536,11 @@ var checkExist = setInterval(function() {
 				 // open the video list of a lectureseries if a search query is found in a video BUT NOT in the lectureseries itself
 				 if(!(($(node).closest(".table-cell").find(".videotile.wide").find("mark")).length)){
 					// open the video list of a lectureseries if a video is found
-					 $(node).closest("ul").show();
+					$(node).closest("ul").show();
+					$button = $(node).closest(".table-cell").find(".video-content-footer").find("button");
+				 	$button.addClass("rotated");
+				 	$button.attr("aria-label","<liferay-ui:message key='close-video-list'/>");
+					$button.attr("title","<liferay-ui:message key='close-video-list'/>");				
 				 }
 			
 			 }

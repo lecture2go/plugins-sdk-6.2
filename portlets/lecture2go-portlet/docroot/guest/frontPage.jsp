@@ -137,13 +137,15 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 										<div class="span3 video-box" onClick="window.location='<%=vid.getUrl() %>'">											
 											<div class="video-box-image-container">
 												<div class="video-box-image">
-													<img src="<%=vid.getImageMedium() %>">
+													<img src="<%=vid.getImageMedium() %>" alt="<liferay-ui:message key="thumbnail"/> - <%=vid.getTitle() %>" />
 												</div>
 											</div>
 
 											<div class="video-box-content">
 												<div class="date"><%=vid.getSimpleDate() %></div>
-												<div class="title-small dot-ellipsis dot-height-60 dot-resize-update "><%=vid.getTitle() %></div>
+												<a href='<%=vid.getUrl() %>'>					
+													<div class="title-small dot-ellipsis dot-height-60 dot-resize-update "><%=vid.getTitle() %></div>
+												</a>
 												<div class="creator-small2 dot-ellipsis dot-height-25 dot-resize-update "><%=vid.getLinkedCreators() %></div>
 												<div class="lectureseries-small dot-ellipsis dot-height-25 dot-resize-update">
 													<% if (!isVideo) { %>
@@ -179,8 +181,8 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 						</div>
 					</div>
 				</div>
-				<a class="left carousel-control" href="#news-carousel" data-slide="prev"><i class="icon-chevron-left"></i></a>
-				<a class="right carousel-control" href="#news-carousel" data-slide="next"><i class="icon-chevron-right"></i></a>
+				<a class="left carousel-control" href="#news-carousel" data-slide="prev" aria-role='button' aria-label='<liferay-ui:message key="previous-elements"/>'><i class="icon-chevron-left"></i></a>
+				<a class="right carousel-control" href="#news-carousel" data-slide="next" aria-role='button' aria-label='<liferay-ui:message key="next-elements"/>'><i class="icon-chevron-right"></i></a>
 			</div>
 		</div>
 	</div>
@@ -244,13 +246,15 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 									<div class="span3 video-box" onClick="window.location='<%=vid.getUrl() %>'">	
 										<div class="video-box-image-container">
 											<div class="video-box-image"> 
-												<img src="<%=vid.getImageMedium() %>">
+												<img src="<%=vid.getImageMedium() %>" alt="<liferay-ui:message key="thumbnail"/> - <%=vid.getTitle() %>" />
 											</div>
 										</div>
 	
 										<div class="video-box-content"> 
 											<div class="date"><%=vid.getSimpleDate() %></div>
-											<div class="title-small dot-ellipsis dot-height-60 dot-resize-update "><%= vid.getTitle() %></div>
+											<a href='<%=vid.getUrl() %>'>					
+												<div class="title-small dot-ellipsis dot-height-60 dot-resize-update "><%= vid.getTitle() %></div>
+											</a>
 											<div class="creator-small2 dot-ellipsis dot-height-25 dot-resize-update "><%= vid.getLinkedCreators() %></div>
 											<div class="lectureseries-small dot-ellipsis dot-height-25 dot-resize-update">
 												<% if (!isVideo) { %>
@@ -283,8 +287,8 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 						</div>
 					</div>
 				</div>
-				<a class="left carousel-control" href="#popular-carousel" data-slide="prev"><i class="icon-chevron-left"></i></a>
-				<a class="right carousel-control" href="#popular-carousel" data-slide="next"><i class="icon-chevron-right"></i></a>
+				<a class="left carousel-control" href="#popular-carousel" data-slide="prev" aria-role='button' aria-label='<liferay-ui:message key="previous-elements"/>'><i class="icon-chevron-left"></i></a>
+				<a class="right carousel-control" href="#popular-carousel" data-slide="next" aria-role='button' aria-label='<liferay-ui:message key="next-elements"/>'><i class="icon-chevron-right"></i></a>
 			</div>
 		</div>
 	</div>
