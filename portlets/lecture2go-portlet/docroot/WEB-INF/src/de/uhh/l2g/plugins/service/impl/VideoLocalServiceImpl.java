@@ -536,7 +536,7 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 				//custom case for download allowed 
 				//and oper or closed case
 				if(downloadAllowed && video.getOpenAccess()==0){
-					String downloadServerDownPath = "/" + PropsUtil.get("lecture2go.downloadserver.down.path") + "/";
+					String downloadServerDownPath = "/" + PropsUtil.get("lecture2go.downloadserver.videorep.path") + "/";
 					uri=downloadServ+downloadServerDownPath+l2go_path+"/"+video.getSecureFilename();
 				}
 				// in some cases this is necessary to correct the filename of the open access files in the download folder
