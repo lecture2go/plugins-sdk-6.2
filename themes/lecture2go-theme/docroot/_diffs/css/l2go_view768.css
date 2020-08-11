@@ -454,7 +454,12 @@
 	}
 	
 	#banner .meta {
-	    display: none;
+	    top: 3px;
+    	right: 5px;
+	}
+	
+	#banner .meta a:not(.language) {
+		display: none;
 	}
 
 	#_lgopenaccessvideos_WAR_lecture2goportlet_searchButton {
@@ -573,7 +578,10 @@
 		margin: 0px;
 	}
 	#footer .right {
-    	display: none;
+		float: left !important;
+   		margin-left: 10px;
+    	font-size: 13px;
+    	text-align: left;
 	}
 	#footer #fuss {
 	    margin-top: 0px;

@@ -29,7 +29,7 @@ $theme.include($body_top_include)
 				<a href="$sign_in_url">$sign_in_text</a> 
 				&nbsp;&nbsp;&nbsp;
 				#foreach( $language in $languageUtil.getAvailableLocales() )
-					<a href="/$language.getLanguage()/web$themeDisplay.getLayout().getGroup().getFriendlyURL()">$language.getLanguage()</a>
+					<a class="language" href="/$language.getLanguage()/web$themeDisplay.getLayout().getGroup().getFriendlyURL()">$language.getLanguage()</a>
 					#if( $velocityHasNext )&nbsp;|&nbsp;#end
 				#end
 			#else
