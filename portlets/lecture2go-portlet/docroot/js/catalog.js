@@ -13,6 +13,25 @@ $( function() {
 	    $('#loadMoreTerms').hide();
 	});
 	
+	
+	// add missing accessibility to the filter toggles (Liferay 6.2 - liferay ui tag does not natively support this)
+	$(".toggler-header").attr("tabindex","0");
+	$(".toggler-header").attr("role", "switch");
+	$("#filter-institution").find(".toggler-header").attr("aria-label",Liferay.Language.get('show-filter') + " " + Liferay.Language.get('institution'));
+	$("#filter-subinstitution").find(".toggler-header").attr("aria-label",+ Liferay.Language.get('show-filter') + " " + Liferay.Language.get('subinstitution'));
+	$("#filter-term").find(".toggler-header").attr("aria-label",Liferay.Language.get('show-filter') + " " + Liferay.Language.get('term'));
+	$("#filter-category").find(".toggler-header").attr("aria-label",Liferay.Language.get('show-filter') + " " + Liferay.Language.get('category'));
+
+	// switch aria role attribute on manual toggle
+	$(".toggler-header").on("click", function() {
+		switchAriaForFilter($(this));
+	});
+	
+	// set correct aria role attribute on page load
+	$(".toggler-header").each(function() {
+		setCorrectAriaForFilter($(this));
+	});
+	
 	// toggles the panel if necessary
     toggleFilterPanel();
     
@@ -67,6 +86,9 @@ function toggleFilterPanel(){
         action: () => {
         	$('.accordion-group').find('.toggler-content-collapsed').addClass('toggler-content-expanded').removeClass('toggler-content-collapsed');
 		  	$('.accordion-group').find('.toggler-header-collapsed').addClass('toggler-header-expanded').removeClass('toggler-header-collapsed');
+			$(".toggler-header").each(function() {
+				setCorrectAriaForFilter($(this));
+			});
         }
 	 });
 	
@@ -78,6 +100,28 @@ function toggleFilterPanel(){
       		$('.notFiltered').find('.toggler-header-expanded').addClass('toggler-header-collapsed').removeClass('toggler-header-expanded');
       		$('.filtered').find('.toggler-header-collapsed').addClass('toggler-header-expanded').removeClass('toggler-header-collapsed');
   		    $('.filtered').find('.toggler-content-collapsed').addClass('toggler-content-expanded').removeClass('toggler-content-collapsed');
+  			$(".toggler-header").each(function() {
+  				setCorrectAriaForFilter($(this));
+  			});
         }
 	 });
+}
+
+function setCorrectAriaForFilter($element) {
+	$togglerHeader = $(".toggler-header");
+	if ($element.hasClass("toggler-header-collapsed")) {
+		$element.attr("aria-checked",false);
+	} else {
+		$element.attr("aria-checked",true);
+	}
+}
+
+function switchAriaForFilter($element) {
+	$togglerHeader = $(".toggler-header");
+	if ($element.attr("aria-checked") == "true") {
+		$element.attr("aria-checked",false);
+	} else {
+		$element.attr("aria-checked",true);
+	}
+
 }
