@@ -179,7 +179,7 @@
 	}
 	
 	/* Catalog */
-	.lectureseries-title {
+	h2.lectureseries-title {
 		font-size: 14px;
 		/*height: 60px; */
 		margin-bottom: 5px;
@@ -364,7 +364,7 @@
 		height: auto;
 	}
 	
-	.video-box-content .title-small {
+	.video-box-content h3.title-small {
 		width: 100%;
 		margin: 0;
 		color: #000;
@@ -466,7 +466,7 @@
 	    height: 31px;
 	    padding: 2px;
 	    right: 6px;
-	    top: 2px;
+	    top: 14px;
 	    width: 31px;
 	}
 

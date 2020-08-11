@@ -169,14 +169,14 @@
 			       <div class="views"><liferay-ui:message key="views"/>: ${video.hits}</div>	
 					  <c:if test="${relatedVideos.size()>1}"> <div class="meta-video-info"></c:if>
 					  <c:if test="${relatedVideos.size()<=1}"> <div class="meta-video-info-wide"></c:if>
-					    <div class="meta-title">
+					    <h2 class="meta-title">
 							<%
 								if(isCitation2Go){
 									%><div class="c2go-title"><liferay-ui:message key='citation-of'/></div><%
 								}
 							%>	
 						    <%=title%>
-					    </div>
+					    </h2>
 				      	<div class="meta-creators">
 										<%
 									        String date1 = "";
@@ -304,7 +304,7 @@
 			  %>
 			    <div class="related">
 					<div class="col-md-5">
-						    <div class="related-lectureseries-name"><liferay-ui:message key="lecture-series"/> &nbsp;<a title="<liferay-ui:message key='rss-feed'/>" aria-label="<liferay-ui:message key='rss-feed'/>" target="_blank" class="icon-small icon-rss" href="${video.mp4RssLink}"></a> </div>
+						    <div class="related-lectureseries-name"><h3><liferay-ui:message key="lecture-series"/></h3> &nbsp;<a title="<liferay-ui:message key='rss-feed'/>" aria-label="<liferay-ui:message key='rss-feed'/>" target="_blank" class="icon-small icon-rss" href="${video.mp4RssLink}"></a> </div>
 							<ul class="ul-related">
 								<%
 								ListIterator<Video> vli = relatedVideos.listIterator();
@@ -333,7 +333,7 @@
 							           				try{ date = vid.getDate().trim().substring(0, 10);}catch(Exception e){}
 												%>
 												<a href="<%=viewOpenAccessVideoURL1.toString()%>">
-													<div class="title-small related"><%=vid.getTitle()%></div>
+													<h4 class="title-small related"><%=vid.getTitle()%></h4>
 												</a>
 							          			<p class="creator-small2 related">
 												<%=vid.getLinkedCreators() %>
