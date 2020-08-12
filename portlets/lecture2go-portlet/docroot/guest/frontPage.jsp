@@ -81,7 +81,7 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 	
 <!-- new videos -->
 	<div class="news">
-		<h4><liferay-ui:message key="last-added"/></h4>
+		<h2><liferay-ui:message key="last-added"/></h2>
 		<div class="video-box-list-container">
 			<div id="news-carousel" class="carousel slide" data-interval="false" data-wrap="false">
 				<a class="left carousel-control" href="#news-carousel" data-slide="prev" aria-role='button' aria-label='<liferay-ui:message key="previous-elements"/>'><i class="icon-chevron-left"></i></a>
@@ -145,7 +145,7 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 											<div class="video-box-content">
 												<div class="date"><%=vid.getSimpleDate() %></div>
 												<a href='<%=vid.getUrl() %>'>					
-													<div class="title-small dot-ellipsis dot-height-60 dot-resize-update "><%=vid.getTitle() %></div>
+													<h3 class="title-small dot-ellipsis dot-height-60 dot-resize-update "><%=vid.getTitle() %></h3>
 												</a>
 												<div class="creator-small2 dot-ellipsis dot-height-25 dot-resize-update "><%=vid.getLinkedCreators() %></div>
 												<div class="lectureseries-small dot-ellipsis dot-height-25 dot-resize-update">
@@ -193,7 +193,7 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 
 <!-- popular videos -->
 	<div class="popular">
-		<h4><liferay-ui:message key="popular-videos"/></h4>
+		<h2><liferay-ui:message key="popular-videos"/></h2>
 		<div class="video-box-list-container">
 			<div id="popular-carousel" class="carousel slide" data-interval="false" data-wrap="false">
 				<a class="left carousel-control" href="#popular-carousel" data-slide="prev" aria-role='button' aria-label='<liferay-ui:message key="previous-elements"/>'><i class="icon-chevron-left"></i></a>
@@ -254,7 +254,7 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 										<div class="video-box-content"> 
 											<div class="date"><%=vid.getSimpleDate() %></div>
 											<a href='<%=vid.getUrl() %>'>					
-												<div class="title-small dot-ellipsis dot-height-60 dot-resize-update "><%= vid.getTitle() %></div>
+												<h3 class="title-small dot-ellipsis dot-height-60 dot-resize-update "><%= vid.getTitle() %></h3>
 											</a>
 											<div class="creator-small2 dot-ellipsis dot-height-25 dot-resize-update "><%= vid.getLinkedCreators() %></div>
 											<div class="lectureseries-small dot-ellipsis dot-height-25 dot-resize-update">

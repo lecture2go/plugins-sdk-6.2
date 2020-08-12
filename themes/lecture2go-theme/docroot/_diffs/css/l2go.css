@@ -826,6 +826,12 @@ not used anymore??
     margin-left: 13px;
 }
 
+#videolist h3 {
+	font-size: 14px;
+	line-height: 17px;
+	margin: 0 0 5px 0;
+}
+
 #searchedvideo {
     display: block;
     overflow: hidden;
@@ -1162,7 +1168,7 @@ thead, th {
     margin-top: 53px;
 }
 
-.lectureseries-title {
+h2.lectureseries-title {
 	font-family: TheSansUHHBold, sans-serif;
 	font-size: 16px;
 	margin-bottom: 10px;
@@ -1193,13 +1199,13 @@ thead, th {
     float: right;
 }
 
-.meta-title {
+h2.meta-title {
 	color: #4d4d4d;
     font-size: 15px;
     font-weight: normal;
     font-family: TheSansUHHBold, sans-serif;
     line-height: inherit;
-    margin-top: 30px;
+    margin: 30px 0 0 0;
 }
 
 .views {
@@ -1271,6 +1277,13 @@ thead, th {
 .related-lectureseries-name {
 	font-size: 13px;
 	padding-bottom: 5px;
+}
+
+.related-lectureseries-name h3 {
+	font-size: 13px;
+    line-height: 20px;
+    display: inline;
+    padding-left: 5px;
 }
 
 .date.related {
@@ -1727,6 +1740,7 @@ li.chaptertile {
 
 #heading {
    	margin-top: -30px;
+   	margin-bottom: 12px;
    	padding-bottom: 7px;
 }
 
@@ -2557,6 +2571,11 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	position: relative;
 }
 
+#front-page-content h2 {
+	font-size: 17.5px;
+	margin-top: 10px;
+}
+
 /*** front page background-video specific ***/
 	
 .bg-video-container {
@@ -2804,14 +2823,17 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 }
 
 
-.video-box-content .title-small {
+.video-box-content h3.title-small   {
 	color: #4d4d4d;
 	font-size: 14px;
 	width: 100%;
 	margin: 19px 0 8px 0;
 	color: #000;
+	line-height: 17px;
 	/*height: 60px;*/
 }
+
+
 
 .video-box-content .creator-small2 {
     margin: 0 0 8px 0;

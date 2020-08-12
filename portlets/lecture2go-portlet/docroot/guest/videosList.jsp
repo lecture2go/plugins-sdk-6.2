@@ -347,13 +347,13 @@
 											%>
 											<span class="term-of-creation"><%=term%></span>
 											
-									        <div class="lectureseries-title dot-ellipsis dot-resize-update">
+									        <h2 class="lectureseries-title dot-ellipsis dot-resize-update">
 									        	<%
 									        	String lectName = "";
 									        	try{lectName=lectser.getName();}catch(Exception e){}
 									        	%>
 									        	<a href="<%=view1URL%>"><%=lectName%></a>
-									        </div>
+									        </h2>
 												
 												<div class="allcreators">
 													<%=vidDummy.getLinkedCreators() %>
@@ -413,13 +413,13 @@
 											%>
 											<span class="term-of-creation"><%=term%></span>
 										        
-											<div class="lectureseries-title dot-ellipsis dot-resize-update dot-height-40">
+											<h2 class="lectureseries-title dot-ellipsis dot-resize-update dot-height-40">
 									        	<%
 									        	String lectName = "";
 									        	try{lectName=lectser.getName();}catch(Exception e){}
 									        	%>
 									        	<a href="<%=view1URL%>"><%=lectName%></a>
-									        </div>
+									        </h2>
 												
 												<div class="allcreators">
 													<%=CreatorLocalServiceUtil.getCommaSeparatedLinkedCreatorsByLectureseriesIdAndMaxCreators(vidDummy.getLectureseriesId(), 3)%>
@@ -495,7 +495,7 @@
 										<div class="metainfo-small">
 		              						<div class="generation-date"><%=date%></div>
 											<a href='<%=vURL%>'>
-												<div class="title-small"><%=v.getTitle()%></div>		   
+												<h3 class="title-small"><%=v.getTitle()%></h3>		   
 											</a>           							
 			              					<div class="allcreators">		              							
 		              							<%=v.getLinkedCreators()%>
