@@ -386,8 +386,8 @@ function transformSearchToWideView() {
 
 function transformSearchToSmallView() {
   	// move search box from center to top
-  	$(".search").prependTo("#content");
-	$('#_lgopenaccessvideos_WAR_lecture2goportlet_searchButton span').text("");
+  	$(".search").appendTo("header");
+  	$('#_lgopenaccessvideos_WAR_lecture2goportlet_searchButton span').text("");
 	$('#_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery').attr("placeholder", "<liferay-ui:message key='search-videos'/>");
 }
 
