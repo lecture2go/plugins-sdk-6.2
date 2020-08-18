@@ -79,11 +79,11 @@
 									<portlet:param name="creatorId" value="0"/>
 								</portlet:actionURL>	
 								
-								<A HREF="<%=portalURL%>"><%=companyName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
-								<A HREF="<%=backURL0%>"><%=pageName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
-								<A HREF="<%=backURL0%>"><%=rInst.getName() %></A> <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
-						    	<A HREF="<%=backURL1%>"><%=pInst.getName() %></A> <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
-						    	<A HREF="<%=backURL2%>"><%=insti.getName() %></A> 
+								<A HREF="<%=portalURL%>" aria-label='<liferay-ui:message key="company-name"/>'><%=companyName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+								<A HREF="<%=backURL0%>" aria-label='<liferay-ui:message key="page-name"/>'><%=pageName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+								<A HREF="<%=backURL0%>" aria-label='<liferay-ui:message key="root-institution-name"/>'><%=rInst.getName() %></A> <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+						    	<A HREF="<%=backURL1%>" aria-label='<liferay-ui:message key="parent-institution-name"/>'><%=pInst.getName() %></A> <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+						    	<A HREF="<%=backURL2%>" aria-label='<liferay-ui:message key="institution-name"/>'><%=insti.getName() %></A> 
 						    	<%if(lec.getLectureseriesId()>0) {%>
 					    			<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <SPAN><%=lec.getName()%></SPAN>
 					    		<%}%>
@@ -114,14 +114,14 @@
 										<portlet:param name="creatorId" value="0"/>
 									</portlet:actionURL>		    	
 							    	
-   									<A HREF="/"><%=companyName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
-							    	<A HREF="<%=backURL0%>"><%=pageName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
-							    	<A HREF="<%=backURL0%>"><%=rInst.getName() %></A> <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+   									<A HREF="/" aria-label='<liferay-ui:message key="company-name"/>'><%=companyName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+							    	<A HREF="<%=backURL0%>" aria-label='<liferay-ui:message key="page-name"/>'><%=pageName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+							    	<A HREF="<%=backURL0%>" aria-label='<liferay-ui:message key="root-institution-name"/>'><%=rInst.getName() %></A> <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
 							    	<%if(pInst.getLevel()>0) {%>
-							    	  <A HREF="<%=backURL3%>"><%=pInst.getName() %></A>
+							    	  <A HREF="<%=backURL3%>" aria-label='<liferay-ui:message key="parent-institution-name"/>'><%=pInst.getName() %></A>
 							    	  <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
 							    	<%}%>
-							    	<A HREF="<%=backURL4%>"><%=insti.getName() %></A>	
+							    	<A HREF="<%=backURL4%>" aria-label='<liferay-ui:message key="institution-name"/>'><%=insti.getName() %></A>	
 							    	<br/> 
 					      		<%
 				    		}catch(Exception e){}
@@ -129,9 +129,9 @@
 				      if (videoInstitutions.size()==0){
 				    	  Institution rootI = InstitutionLocalServiceUtil.getRoot();
 				    	  %>
-								<A HREF="/"><%=companyName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
-							    <A HREF="<%=backURL0%>"><%=pageName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 				    	  
-							    <A HREF="<%=backURL0%>"><%=rootI.getName() %></A>
+								<A HREF="/" aria-label='<liferay-ui:message key="company-name"/>'><%=companyName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+							    <A HREF="<%=backURL0%>" aria-label='<liferay-ui:message key="page-name"/>'><%=pageName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 				    	  
+							    <A HREF="<%=backURL0%>" aria-label='<liferay-ui:message key="root-institution-name"/>'><%=rootI.getName() %></A>
 							    <br/> 				    	  
 				    	  <%
 				      }
@@ -210,11 +210,11 @@
 								    <li id="down"><a href="#download" data-toggle="tab"><liferay-ui:message key="download"/></a></li>
 							    </c:if>
 							    <%if(video.getOpenAccess()==1){%>
-							   	 	<li><a href="#share" data-toggle="tab"><liferay-ui:message key="share"/></a></li>
+							   	 	<li><a href="#share" data-toggle="tab" aria-label='<liferay-ui:message key="share"/>'><liferay-ui:message key="share"/></a></li>
 							    <%}%>
-							    <li><a href="#support" data-toggle="tab"><liferay-ui:message key="support"/></a></li>
+							    <li><a href="#support" data-toggle="tab" aria-label='<liferay-ui:message key="support"/>'><liferay-ui:message key="support"/></a></li>
 							    <%if(video.isHasChapters()){ %>
-							    	<li><a href="#chapters" data-toggle="tab"><liferay-ui:message key="chapters"/></a></li>
+							    	<li><a href="#chapters" data-toggle="tab" aria-label='<liferay-ui:message key="chapters"/>'><liferay-ui:message key="chapters"/></a></li>
 							    <%}%>				    
 							</ul>
 							    
@@ -273,7 +273,7 @@
 											<div id="meta-share">
 												<div class="supportlink">
 													<p class="smallitalic"><liferay-ui:message key="support-notification"/>
-													<a href="<%=suppLink%>" target="_blank" style="color:#c40017"><liferay-ui:message key="support-formular-link"/></a>
+													<a href="<%=suppLink%>" target="_blank" style="color:#c40017" aria-label='<liferay-ui:message key="support-formular-link"/>'><liferay-ui:message key="support-formular-link"/></a>
 												</div>
 											</div>		        
 								    </div>
@@ -283,7 +283,7 @@
 									    	<c:forEach items="<%=segments %>" var="segment">
 									    		<li class="chaptertile" id="${segment.segmentId}" begin="${segment.start}" end="${segment.end}">
 													<div class="image">
-												    	<a><img src="${segment.image}" alt="<liferay-ui:message key="thumbnail"/> - ${segment.title}"></a>
+												    	<a aria-label='<liferay-ui:message key="go-to-video-segment"/>'><img src="${segment.image}" alt="<liferay-ui:message key="thumbnail"/> - ${segment.title}"></a>
 												    </div>
 												    <div class="title">
 												    	<a><b>${segment.start} </b> ${segment.title}</a>
@@ -332,7 +332,7 @@
 													String date = "";
 							           				try{ date = vid.getDate().trim().substring(0, 10);}catch(Exception e){}
 												%>
-												<a href="<%=viewOpenAccessVideoURL1.toString()%>">
+												<a href="<%=viewOpenAccessVideoURL1.toString()%>" aria-label='<liferay-ui:message key="go-to-video"/>'>
 													<h4 class="title-small related"><%=vid.getTitle()%></h4>
 												</a>
 							          			<p class="creator-small2 related">
