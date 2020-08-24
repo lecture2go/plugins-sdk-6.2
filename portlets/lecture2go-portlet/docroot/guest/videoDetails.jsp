@@ -79,13 +79,13 @@
 									<portlet:param name="creatorId" value="0"/>
 								</portlet:actionURL>	
 								
-								<A HREF="<%=portalURL%>" aria-label='<liferay-ui:message key="company-name"/>'><%=companyName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
-								<A HREF="<%=backURL0%>" aria-label='<liferay-ui:message key="page-name"/>'><%=pageName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
-								<A HREF="<%=backURL0%>" aria-label='<liferay-ui:message key="root-institution-name"/>'><%=rInst.getName() %></A> <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
-						    	<A HREF="<%=backURL1%>" aria-label='<liferay-ui:message key="parent-institution-name"/>'><%=pInst.getName() %></A> <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+								<A HREF="<%=portalURL%>" aria-label='<liferay-ui:message key="company-name"/>'><%=companyName %></A><span class="uhh-icon-arrow-right"></span> 
+								<A HREF="<%=backURL0%>" aria-label='<liferay-ui:message key="page-name"/>'><%=pageName %></A><span class="uhh-icon-arrow-right"></span> 
+								<A HREF="<%=backURL0%>" aria-label='<liferay-ui:message key="root-institution-name"/>'><%=rInst.getName() %></A> <span class="uhh-icon-arrow-right"></span> 
+						    	<A HREF="<%=backURL1%>" aria-label='<liferay-ui:message key="parent-institution-name"/>'><%=pInst.getName() %></A> <span class="uhh-icon-arrow-right"></span> 
 						    	<A HREF="<%=backURL2%>" aria-label='<liferay-ui:message key="institution-name"/>'><%=insti.getName() %></A> 
 						    	<%if(lec.getLectureseriesId()>0) {%>
-					    			<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <SPAN><%=lec.getName()%></SPAN>
+					    			<span class="uhh-icon-arrow-right"></span> <SPAN><%=lec.getName()%></SPAN>
 					    		<%}%>
 						    	<br/>
 				    		<%}
@@ -114,12 +114,12 @@
 										<portlet:param name="creatorId" value="0"/>
 									</portlet:actionURL>		    	
 							    	
-   									<A HREF="/" aria-label='<liferay-ui:message key="company-name"/>'><%=companyName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
-							    	<A HREF="<%=backURL0%>" aria-label='<liferay-ui:message key="page-name"/>'><%=pageName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
-							    	<A HREF="<%=backURL0%>" aria-label='<liferay-ui:message key="root-institution-name"/>'><%=rInst.getName() %></A> <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+   									<A HREF="/" aria-label='<liferay-ui:message key="company-name"/>'><%=companyName %></A><span class="uhh-icon-arrow-right"></span> 
+							    	<A HREF="<%=backURL0%>" aria-label='<liferay-ui:message key="page-name"/>'><%=pageName %></A><span class="uhh-icon-arrow-right"></span> 
+							    	<A HREF="<%=backURL0%>" aria-label='<liferay-ui:message key="root-institution-name"/>'><%=rInst.getName() %></A> <span class="uhh-icon-arrow-right"></span> 
 							    	<%if(pInst.getLevel()>0) {%>
 							    	  <A HREF="<%=backURL3%>" aria-label='<liferay-ui:message key="parent-institution-name"/>'><%=pInst.getName() %></A>
-							    	  <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+							    	  <span class="uhh-icon-arrow-right"></span> 
 							    	<%}%>
 							    	<A HREF="<%=backURL4%>" aria-label='<liferay-ui:message key="institution-name"/>'><%=insti.getName() %></A>	
 							    	<br/> 
@@ -129,8 +129,8 @@
 				      if (videoInstitutions.size()==0){
 				    	  Institution rootI = InstitutionLocalServiceUtil.getRoot();
 				    	  %>
-								<A HREF="/" aria-label='<liferay-ui:message key="company-name"/>'><%=companyName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
-							    <A HREF="<%=backURL0%>" aria-label='<liferay-ui:message key="page-name"/>'><%=pageName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 				    	  
+								<A HREF="/" aria-label='<liferay-ui:message key="company-name"/>'><%=companyName %></A><span class="uhh-icon-arrow-right"></span> 
+							    <A HREF="<%=backURL0%>" aria-label='<liferay-ui:message key="page-name"/>'><%=pageName %></A><span class="uhh-icon-arrow-right"></span> 				    	  
 							    <A HREF="<%=backURL0%>" aria-label='<liferay-ui:message key="root-institution-name"/>'><%=rootI.getName() %></A>
 							    <br/> 				    	  
 				    	  <%
@@ -304,7 +304,7 @@
 			  %>
 			    <div class="related">
 					<div class="col-md-5">
-						    <div class="related-lectureseries-name"><h3><liferay-ui:message key="lecture-series"/></h3> &nbsp;<a title="<liferay-ui:message key='rss-feed'/>" aria-label="<liferay-ui:message key='rss-feed'/>" target="_blank" class="icon-small icon-rss" href="${video.mp4RssLink}"></a> </div>
+						    <div class="related-lectureseries-name"><h3><liferay-ui:message key="lecture-series"/></h3> <a title="<liferay-ui:message key='rss-feed'/>" aria-label="<liferay-ui:message key='rss-feed'/>" target="_blank" class="icon-small icon-rss" href="${video.mp4RssLink}"></a> </div>
 							<ul class="ul-related">
 								<%
 								ListIterator<Video> vli = relatedVideos.listIterator();
