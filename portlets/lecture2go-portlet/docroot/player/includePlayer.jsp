@@ -188,28 +188,41 @@
             var startTimeStr = undefined;
             var endTimeStr = undefined;
 
-            // Benutzer setzt Start des Clips
-            $inputTimeStart.click(function() {
-                	startFrameTime = Math.round(jwplayer().getPosition());
-                    startTimeStr = secondsToTime(Math.floor(startFrameTime));
 
-                    $inputTimeStart.val(startTimeStr);
-                    
-                    if (startFrameTime && endFrameTime) {
-                    	// Falls Startzeit nach Endzeit liegt, Zeiten angleichen
-                    	if (startFrameTime > endFrameTime) {
-                    		endFrameTime = startFrameTime;
-                    		endTimeStr = secondsToTime(Math.floor(endFrameTime));
-                    		$inputTimeEnd.val(endTimeStr);
-                    		
-                    	}
-                    	generateClipLink (Math.round(startFrameTime), Math.round(endFrameTime));
-                    	console.log("start: " + startFrameTime + ", end: " + endFrameTime);
-                    }
+            // Benutzer setzt Start des Clips
+            $inputTimeStart.click(setStartTime);
+            
+            $inputTimeStart.keypress(function() {
+                if (event.which == 13) setStartTime();
             });
+            
+           	function setStartTime() {
+           		startFrameTime = Math.round(jwplayer().getPosition());
+                startTimeStr = secondsToTime(Math.floor(startFrameTime));
+
+                $inputTimeStart.val(startTimeStr);
+                
+                if (startFrameTime && endFrameTime) {
+                	// Falls Startzeit nach Endzeit liegt, Zeiten angleichen
+                	if (startFrameTime > endFrameTime) {
+                		endFrameTime = startFrameTime;
+                		endTimeStr = secondsToTime(Math.floor(endFrameTime));
+                		$inputTimeEnd.val(endTimeStr);
+                		
+                	}
+                	generateClipLink (Math.round(startFrameTime), Math.round(endFrameTime));
+                	console.log("start: " + startFrameTime + ", end: " + endFrameTime);
+                }
+           	}
 
             // Benutzer setzt Ende des Clips
-            $inputTimeEnd.click(function() {
+            $inputTimeEnd.click(setEndTime);
+            
+            $inputTimeEnd.keypress(function() {
+                if (event.which == 13) setEndTime();
+            });
+            
+            function setEndTime() {
             	endFrameTime = jwplayer().getPosition();
                 EndTimeStr = secondsToTime(Math.floor(endFrameTime));
 
@@ -227,7 +240,7 @@
                 	console.log("start: " + startFrameTime + ", end: " + endFrameTime);
                 }
                 validateClipTime();
-            });
+           	}
             
             function generateClipLink (firstFrame, lastFrame) {
             	$citation.val("${video.url}"+"/"+firstFrame+"/"+lastFrame);
