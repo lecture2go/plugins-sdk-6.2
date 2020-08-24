@@ -43,6 +43,7 @@
 
 .add-link {
 font-size: 20px;
+margin-bottom: 10px;
 } 
 
 .aui #navigation {
@@ -2654,7 +2655,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 .l2go-subtitle {
     font-size: 18px;
     text-align: center;
-    margin-bottom: 8%;
+    margin-bottom: 5%;
 }
 
 .lead-box {

@@ -31,13 +31,13 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 
 <div class="front-page-teaser">
  	<div class="bg-video-container">
-		<video id="bg-vid" autoplay loop poster="/lecture2go-portlet/img/background_still.jpg" preload="none" muted>
+		<video id="bg-vid" loop poster="/lecture2go-portlet/img/background_still.jpg" preload="none" muted>
 		    <!-- the video source is added dynamically to avoid unnecessary traffic -->
 		    <img src="/lecture2go-portlet/img/background_still.jpg">
 		</video>
 		<div class="dark-overlay"></div>
 		<div id="vid-control" role="button" tabindex="0" aria-label="Pause Video">
-			<i class="icon-pause"></i>
+			<i class="icon-play"></i>
 		</div>
 	</div>
 	<div class="l2go-info-container">
@@ -144,7 +144,7 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 
 											<div class="video-box-content">
 												<div class="date"><%=vid.getSimpleDate() %></div>
-												<a href='<%=vid.getUrl() %>'>					
+												<a href='<%=vid.getUrl() %>' aria-label="<liferay-ui:message key="video-titel"/>" >					
 													<h3 class="title-small dot-ellipsis dot-height-60 dot-resize-update "><%=vid.getTitle() %></h3>
 												</a>
 												<div class="creator-small2 dot-ellipsis dot-height-25 dot-resize-update "><%=vid.getLinkedCreators() %></div>
@@ -158,14 +158,14 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 												<%if(inst.getInstitutionId()>0){ %>
 												<div class="labels">
 													<%
-														String instLink="<a href='/l2go/-/get/"+inst.getInstitutionId()+"/"+inst.getParentId()+"/0/0/0/'>"+inst.getName()+"</a>"; 
+														String instLink="<a href='/l2go/-/get/"+inst.getInstitutionId()+"/"+inst.getParentId()+"/0/0/0/' aria-label='institution-name'>"+inst.getName()+"</a>"; 
 													%>
 										        	<span class="label label-light2"><%=instLink%></span>												
 												</div>
 												<%} else if(rootInst.getInstitutionId()>0){ %>
 													<div class="labels">
 														<%
-															String instLink="<a href='/l2go/-/get/0/"+rootInst.getInstitutionId()+"/0/0/0/'>"+rootInst.getName()+"</a>"; 
+															String instLink="<a href='/l2go/-/get/0/"+rootInst.getInstitutionId()+"/0/0/0/' aria-label='institution-name'>"+rootInst.getName()+"</a>"; 
 														%>
 											        	<span class="label label-light2"><%=instLink%></span>												
 													</div>
@@ -253,7 +253,7 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 	
 										<div class="video-box-content"> 
 											<div class="date"><%=vid.getSimpleDate() %></div>
-											<a href='<%=vid.getUrl() %>'>					
+											<a href='<%=vid.getUrl() %>' aria-label='video-title'>					
 												<h3 class="title-small dot-ellipsis dot-height-60 dot-resize-update "><%= vid.getTitle() %></h3>
 											</a>
 											<div class="creator-small2 dot-ellipsis dot-height-25 dot-resize-update "><%= vid.getLinkedCreators() %></div>
@@ -267,14 +267,14 @@ List<Institution> institutions = InstitutionLocalServiceUtil.getRootInstitutions
 											<%if(inst.getInstitutionId()>0){ %>
 											<div class="labels">
 												<%
-													String instLink="<a href='/l2go/-/get/"+inst.getInstitutionId()+"/"+inst.getParentId()+"/0/0/0/'>"+inst.getName()+"</a>"; 
+													String instLink="<a href='/l2go/-/get/"+inst.getInstitutionId()+"/"+inst.getParentId()+"/0/0/0/' aria-label='institution-name'>"+inst.getName()+"</a>"; 
 												%>
 									        	<span class="label label-light2"><%=instLink%></span>
 									        </div>
 									        <%} else if(rootInst.getInstitutionId()>0){ %>
 												<div class="labels">
 													<%
-														String instLink="<a href='/l2go/-/get/0/"+rootInst.getInstitutionId()+"/0/0/0/'>"+rootInst.getName()+"</a>"; 
+														String instLink="<a href='/l2go/-/get/0/"+rootInst.getInstitutionId()+"/0/0/0/'  aria-label='institution-name'>"+rootInst.getName()+"</a>"; 
 													%>
 										        	<span class="label label-light2"><%=instLink%></span>												
 												</div>
