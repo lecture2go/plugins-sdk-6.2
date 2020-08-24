@@ -62,7 +62,9 @@ margin-bottom: 10px;
     margin: 0 5px;
     overflow: hidden;
     text-align: center;
-    width: 13px;	
+    width: 13px;
+    height: 8px;
+    display: inline-block;
 }
 
 .aui .icon-chevron-right::before {
@@ -1285,6 +1287,7 @@ h2.meta-title {
     line-height: 20px;
     display: inline;
     padding-left: 5px;
+    padding-right: 3px;
 }
 
 .date.related {
@@ -2104,6 +2107,18 @@ label.edit-video-lable.first {
     right: 20px;
     top: 12px;
     z-index: 9999;
+}
+
+#banner .meta a:not(.language) {
+    margin: 0 8px;
+}
+
+#banner .meta a:last-child:not(.language) {
+    margin: 0 0 0 8px;
+}
+
+a.language {
+    margin: 0px 2px;
 }
 
 .aui .dockbar-split .dockbar .navbar-inner .nav-account-controls > li > a, .aui .dockbar-split .dockbar .navbar-inner .nav-account-controls li.open > a {

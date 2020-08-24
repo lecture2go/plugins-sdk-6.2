@@ -124,9 +124,9 @@
 	</portlet:actionURL>
 		
 	<div class="path-wide">
-	<A HREF=<%=portalURL%> aria-label='<liferay-ui:message key="company-name"/>'><%=companyName %></A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+	<A HREF=<%=portalURL%> aria-label='<liferay-ui:message key="company-name"/>'><%=companyName %></A><span class="uhh-icon-arrow-right"></span> 
 	<A HREF="<%=backURL0%>" aria-label='<liferay-ui:message key="page-name"/>'><%=pageName %></A>
-	<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+	<span class="uhh-icon-arrow-right"></span> 
 	<%
 	try{
 		rInst=InstitutionLocalServiceUtil.getRoot(); 
@@ -146,7 +146,7 @@
 			<portlet:param name="categoryId" value="0"/>
 			<portlet:param name="creatorId" value="0"/>
 		</portlet:actionURL>
-		<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+		<span class="uhh-icon-arrow-right"></span> 
 		<A HREF="<%=backURL1%>" aria-label='<liferay-ui:message key="parent-institution-name"/>'><%=pInst.getName() %></A>
 	<%}		
 	}catch(Exception e){}
@@ -162,7 +162,7 @@
 				<portlet:param name="categoryId" value="0"/>
 				<portlet:param name="creatorId" value="0"/>
 			</portlet:actionURL>	
-			<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+			<span class="uhh-icon-arrow-right"></span> 
 			<A HREF="<%=backURL2%>" aria-label='<liferay-ui:message key="institution-name"/>'><%=insti.getName() %></A> 
 		<%}		
 	}catch(Exception e){}
