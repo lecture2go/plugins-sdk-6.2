@@ -112,6 +112,8 @@ $theme.include($body_top_include)
 			<a href="/disclaimer" id="disclaimer">#language("disclaimer")</a>
 			<span class="sep">|</span>
 			#language("privacy-policy")
+			<span class="sep">|</span>
+			#language("accessibility")			
 		</div>	
 		
 	</footer>
