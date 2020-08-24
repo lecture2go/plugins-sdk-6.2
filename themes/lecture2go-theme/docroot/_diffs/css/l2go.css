@@ -892,8 +892,11 @@ a.list-group-item:hover, a.list-group-item:focus {
     border-top: 1px solid #E5E5E5;
 }
 
-.tileheading {
+.sharetile h3 {
     font-size: 17px;
+    font-family: TheSansUHH;
+    margin: 0;
+    line-height: 20px;
 }
 
 thead, th {
