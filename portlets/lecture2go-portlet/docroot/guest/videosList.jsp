@@ -124,8 +124,8 @@
 	</portlet:actionURL>
 		
 	<div class="path-wide">
-	<A HREF=<%=portalURL%> aria-label='<liferay-ui:message key="company-name"/>'><%=companyName %></A><span class="uhh-icon-arrow-right"></span> 
-	<A HREF="<%=backURL0%>" aria-label='<liferay-ui:message key="page-name"/>'><%=pageName %></A>
+	<A HREF=<%=portalURL%>><%=companyName %></A><span class="uhh-icon-arrow-right"></span> 
+	<A HREF="<%=backURL0%>" aria-label='<liferay-ui:message key="page-name"/>: <%=pageName %>'><%=pageName %></A>
 	<span class="uhh-icon-arrow-right"></span> 
 	<%
 	try{
@@ -147,7 +147,7 @@
 			<portlet:param name="creatorId" value="0"/>
 		</portlet:actionURL>
 		<span class="uhh-icon-arrow-right"></span> 
-		<A HREF="<%=backURL1%>" aria-label='<liferay-ui:message key="parent-institution-name"/>'><%=pInst.getName() %></A>
+		<A HREF="<%=backURL1%>" aria-label='<liferay-ui:message key="parent-institution-name"/>: <%=pInst.getName() %>'><%=pInst.getName() %></A>
 	<%}		
 	}catch(Exception e){}
 
@@ -163,7 +163,7 @@
 				<portlet:param name="creatorId" value="0"/>
 			</portlet:actionURL>	
 			<span class="uhh-icon-arrow-right"></span> 
-			<A HREF="<%=backURL2%>" aria-label='<liferay-ui:message key="institution-name"/>'><%=insti.getName() %></A> 
+			<A HREF="<%=backURL2%>" aria-label='<liferay-ui:message key="institution-name"/>: <%=insti.getName() %>'><%=insti.getName() %></A> 
 		<%}		
 	}catch(Exception e){}
 %>
@@ -234,7 +234,7 @@
 					</c:forEach>
 					</ul>
 					<c:if test="${hasManyTerms}">
-						<a href="#" id="loadMoreTerms" aria-label='<liferay-ui:message key="more"/>'><liferay-ui:message key="more"/></a>
+						<a href="#" id="loadMoreTerms" aria-label='<liferay-ui:message key="load-more-terms"/>'><liferay-ui:message key="more"/></a>
 					</c:if>
 				</liferay-ui:panel>
 				<%}%>
@@ -352,7 +352,7 @@
 									        	String lectName = "";
 									        	try{lectName=lectser.getName();}catch(Exception e){}
 									        	%>
-									        	<a href="<%=view1URL%>" aria-label='<liferay-ui:message key="lectureseries-title"/>'><%=lectName%></a>
+									        	<a href="<%=view1URL%>" aria-label='<liferay-ui:message key="lectureseries-title"/>: <%=lectName%>'><%=lectName%></a>
 									        </h2>
 												
 												<div class="allcreators">
@@ -367,7 +367,7 @@
 										        	List<Video_Institution> vi = Video_InstitutionLocalServiceUtil.getByVideo(vidDummy.getVideoId());
 										            try{
 										            	Long cId = Video_CategoryLocalServiceUtil.getByVideo(lectser.getLectureseriesId()).get(0).getCategoryId();
-										            	cat ="<a href='/l2go/-/get/0/0/"+cId+"/0/0/' aria-label='category'>"+CategoryLocalServiceUtil.getById(cId).getName()+"</a>";
+										            	cat ="<a href='/l2go/-/get/0/0/"+cId+"/0/0/' aria-label='"+LanguageUtil.get(themeDisplay.getLocale(),"category")+": "+CategoryLocalServiceUtil.getById(cId).getName()+"'>"+CategoryLocalServiceUtil.getById(cId).getName()+"</a>";
 	
 										            }catch(Exception e){
 										            	System.out.print(e);
@@ -378,12 +378,12 @@
 										          		String instLink= "";
 										         	 	try{
 															Institution inst = InstitutionLocalServiceUtil.getById(vi.get(0).getInstitutionId());
-															instLink="<a href='/l2go/-/get/"+inst.getInstitutionId() + "/" + inst.getParentId() + "/0/0/0/'>" + inst.getName() + "</a>"; 
+															instLink="<a href='/l2go/-/get/"+inst.getInstitutionId() + "/" + inst.getParentId() + "/0/0/0/' aria-label='"+LanguageUtil.get(themeDisplay.getLocale(),"institution-name")+": " +inst.getName() + "'>" + inst.getName() + "</a>"; 
 											          		
 										          		}catch(Exception e){
 										          			// no institution for the video, use the root institution
 										          			Institution rootInst=InstitutionLocalServiceUtil.getById(vidDummy.getRootInstitutionId());
-															instLink="<a href='/l2go/-/get/0/" + rootInst.getInstitutionId() + "/0/0/0/' aria-label='root-institution-name'>" + rootInst.getName() + "</a>"; 
+															instLink="<a href='/l2go/-/get/0/" + rootInst.getInstitutionId() + "/0/0/0/' aria-label='"+LanguageUtil.get(themeDisplay.getLocale(),"root-institution-name")+": " + rootInst.getName() +"'>" + rootInst.getName() + "</a>"; 
 										          		}
 											          %>
 											         	 <span class="label label-light2"><%=instLink%></span>
@@ -436,7 +436,7 @@
 										          <%
 										        	String cat ="";
 										            try{
-											        	cat ="<a href='/l2go/-/get/0/0/"+lectser.getCategoryId()+"/0/0/' aria-label='category'>"+CategoryLocalServiceUtil.getById(lectser.getCategoryId()).getName()+"</a>";
+											        	cat ="<a href='/l2go/-/get/0/0/"+lectser.getCategoryId()+"/0/0/' aria-label='"+LanguageUtil.get(themeDisplay.getLocale(),"category")+": "+CategoryLocalServiceUtil.getById(lectser.getCategoryId()).getName()+"'>"+CategoryLocalServiceUtil.getById(lectser.getCategoryId()).getName()+"</a>";
 										            }catch(Exception e){}
 										        	List<Lectureseries_Institution> li = Lectureseries_InstitutionLocalServiceUtil.getByLectureseries(lectser.getLectureseriesId());
 													%>
@@ -445,7 +445,7 @@
 										          		try{
 												        	Institution inst = InstitutionLocalServiceUtil.getById(li.get(0).getInstitutionId());
 												        	
-															String instLink="<a href='/l2go/-/get/"+inst.getInstitutionId()+"/" + inst.getParentId() + "/0/0/0/' aria-label='institution'>"+inst.getName()+"</a>"; 
+															String instLink="<a href='/l2go/-/get/"+inst.getInstitutionId()+"/" + inst.getParentId() + "/0/0/0/' aria-label='"+LanguageUtil.get(themeDisplay.getLocale(),"institution")+": " + inst.getName() +"'>"+inst.getName()+"</a>"; 
 											          		%>
 													          <span class="label label-light2"><%=instLink%></span>
 											          		<%
