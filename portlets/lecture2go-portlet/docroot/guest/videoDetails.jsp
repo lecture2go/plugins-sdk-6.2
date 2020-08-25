@@ -396,8 +396,8 @@
     $( document ).ready(function() {
 		$('.meta-description').readmore({
 			collapsedHeight: 60,
-		  	moreLink: '<a href="#"><div><liferay-ui:message key="more"/><img class ="down_up" src="/lecture2go-theme/images/arrow_down.svg"/></div></a>',
-		  	lessLink: '<a href="#"><div><liferay-ui:message key="less"/><img class ="down_up" src="/lecture2go-theme/images/arrow_up.svg"/></div></a>'
+		  	moreLink: '<a href="#" aria-label="<liferay-ui:message key='more'/>"><div><liferay-ui:message key="more"/><img class ="down_up" src="/lecture2go-theme/images/arrow_down.svg"/></div></a>',
+		  	lessLink: '<a href="#" aria-label="<liferay-ui:message key='more'/>"><div><liferay-ui:message key="less"/><img class ="down_up" src="/lecture2go-theme/images/arrow_up.svg"/></div></a>'
 		});
 	}); 
 </script> 
