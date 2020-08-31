@@ -163,7 +163,7 @@
 							<portlet:param name="videoId" value="<%= String.valueOf(vid.getVideoId())%>" />
 						</portlet:actionURL>
 						<liferay-ui:search-container-column-text name="">
-								<div class="adminrow wide ${vid.withMissingMetadata ? 'error': ''}">
+								<div class="adminrow wide">
 								<%
 									Lectureseries ls = new LectureseriesImpl();
 									if(vid.getLectureseriesId()>0)ls = LectureseriesLocalServiceUtil.getLectureseries(vid.getLectureseriesId());
@@ -183,7 +183,7 @@
 									    <img class="video-image-big" src="<%=vid.getImageMedium()%>"/>
 									</div>
 									<div class="admintile wide video-content-wrapper">
-										<div class="admin-videolist-video-title" <% if(!vid.getFilename().equals("")&&!vid.isWithMissingMetadata()){%> onClick="window.open('<%=url%>')" <%} %>>
+										<div class="admin-videolist-video-title" <% if(!vid.getFilename().equals("")){%> onClick="window.open('<%=url%>')" <%} %>>
 											<%= vName %>
 										</div>
 										<div class="admin-videolist-creator-title">
@@ -232,27 +232,12 @@
 												<liferay-ui:message key="vtt-caption"/> &nbsp;
 											<%}%>
 											</div>
-
-										<c:if test='${vid.withMissingMetadata }'>
-											<div class="admin-videolist-info">
-												<span class='icon-exclamation-sign'> </span>
-												<liferay-ui:message key="missing-metadata"/>
-											</div>
-										</c:if>
-
 										<div class="admin-videolist-date">
 											<%=vid.getDate()%> | <liferay-ui:message key="hits"/>: <%=vid.getHits()%>
 											<span class="conversion" data-video-id="<%=vid.getVideoId()%>">
 									      	</span>
 										</div>
-								<%} else {%>
-								<c:if test='${vid.withMissingMetadata }'>
-									<div class="admin-videolist-info">
-										<span class='icon-exclamation-sign'> </span>
-										<liferay-ui:message key="missing-metadata"/>
-									</div>
-								</c:if>
-								<%} %>
+								<%}%>
 								</div>
 								<div class="video-edit-wrapper">
 						
@@ -300,7 +285,7 @@
 									   <span class="icon-large icon-pencil"></span>
 									</a>
 									
-									<%if(vid.getFilename().length()>0 && !vid.isWithMissingMetadata()){
+									<%if(vid.getFilename().length()>0){
 										if (vid.getOpenAccess()==1){%>
 										<a href="<%=lockURL.toString()%>" title="<liferay-ui:message key='lock-help'/>" alt="<liferay-ui:message key='lock-help'/>">
 										   <span class="icon-large icon-unlock" onclick="return confirm('<liferay-ui:message key="really-lock-question"/>')"></span>

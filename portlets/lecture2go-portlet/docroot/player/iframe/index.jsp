@@ -41,7 +41,7 @@
 
 		.jw-icon.jw-dock-image.jw-reset::before {
 		    color: #fff;
-		    content: "HFBK-Mediathek";
+		    content: "Lecture2Go";
 		    float: right;
 		    font-family: arial;
 		    font-size: 15px;
@@ -92,22 +92,7 @@
 		}
 
 	</script>
-	<!-- Matomo -->
-	<script type="text/javascript">
-	  var _paq = window._paq || [];
-	  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-	  _paq.push(['trackPageView']);
-	  _paq.push(['enableLinkTracking']);
-	  (function() {
-	    var u="https://matomo.uni-hamburg.de/";
-	    _paq.push(['setTrackerUrl', u+'matomo.php']);
-	    _paq.push(['setSiteId', '210']);
-	    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-	    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-	  })();
-	</script>
-	<noscript><p><img src="https://matomo.uni-hamburg.de/matomo.php?idsite=210&amp;rec=1" style="border:0;" alt="" /></p></noscript>
-	<!-- End Matomo Code -->
+
 </head>
 
 <%@ page import="de.uhh.l2g.plugins.service.VideoLocalServiceUtil"%>
@@ -263,13 +248,13 @@
 
 			        });
 			        //
-			        var tit="HFBK-Mediathek";
+			        var tit="Lecture2Go";
 			        if(isCitation){
 			        	tit="Zitat2Go";
 			        }
 			        jwplayer().addButton(
 			        	"",
-			        	"Dieses Video auf der HFBK-Mediathek ansehen",
+			        	"Dieses Video auf Lecture2Go ansehen",
 			        	function() {
 			        		//stop player
 			        		jwplayer().stop();

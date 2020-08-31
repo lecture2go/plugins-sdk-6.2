@@ -16,6 +16,5 @@
 		<portlet id="lg-front-page"></portlet>
 		<portlet id="lg-admin-streaming-server-management"></portlet>
 		<portlet id="lg-admin-oaipmh-management"></portlet>
-		<portlet id="lg-admin-videoprocessing-management"></portlet>
 	</category>
 </display>

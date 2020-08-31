@@ -9,13 +9,7 @@
 	</hint-collection>
 	<model name="de.uhh.l2g.plugins.model.Autocomplete">
 		<field name="autocompleteId" type="long" />
-<<<<<<< HEAD
 		<field name="searchWordsJson" type="String" />
-=======
-		<field name="searchWordsJson" type="String">
-			<hint-collection name="TEXTAREA" />
-		</field>
->>>>>>> refs/heads/uhh-master
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Category">
 		<field name="categoryId" type="long" />

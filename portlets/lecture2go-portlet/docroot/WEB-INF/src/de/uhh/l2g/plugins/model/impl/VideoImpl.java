@@ -190,10 +190,6 @@ public class VideoImpl extends VideoBaseImpl {
 		return VideoLocalServiceUtil.hasMissingMetadata(getVideoId());
 	}
 	
-	public boolean isWithMissingMetadata() {
-		return VideoLocalServiceUtil.hasMissingMetadata(getVideoId());
-	}
-	
 	public Host getHost() {
 		if (host == null) {
 			try {
