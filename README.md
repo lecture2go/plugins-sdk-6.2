@@ -9,6 +9,29 @@ Lecture2Go http://lecture2go.uni-hamburg.de is an open source platform for media
 Change Log
 ==============
 
+Bug Fix and Feature Package [master-v.2-b5256] on Monday, August 31, 2020
+
+- 2005 RM - citation2go via keyboard control
+- 1985 RM - aria label contains link text
+- 1987 RM - process descriptions texts to be more accessible
+- 1990 RM - meaningful link texts, fixed W3C syntax error
+- 1996 RM - No flickering for frontpage media
+- 1987 RM - remove unnecessary &nbsp; for spacing elements
+- 1972 RM - optimize header tags
+- 1972 RM - Optimize header structure on site title/ header tag
+- 1983 RM - add language selection and footer to mobile view
+- 1977 RM - optimize focus for accessbility
+- 1976 RM - Fix menu accessibility
+- 1976 RM - optimize carousel navigation on frontpage via keyboard 
+- 1947 RM - OAI-PMH lists wrong datasets fix
+- 1902 RM - remove LastVideoList scheduler
+- 1846 RM - secure token integration to the upload servlet
+- 1856 RM - Scheduler for deletion of aborted chunked uploads
+- 1874 RM - add cluster support for autocomplete scheduler 
+- 1816 RM - fix for thumbnails creation for videos with unknown duration
+- 1777 RM - secure upload 
+- 1581 RM - activate chunked uploading
+
 Bug Fix and Feature Package [master-v.1-b5226] on Friday, Februar 28, 2020
 
 - 1356 RM - fix RSS generation for lectureseries without open videos
