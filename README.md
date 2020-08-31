@@ -25,8 +25,9 @@ Bug Fix and Feature Package [master-v.2-b5256] on Monday, August 31, 2020
 - 1976 RM - optimize carousel navigation on frontpage via keyboard 
 - 1947 RM - OAI-PMH lists wrong datasets fix
 - 1902 RM - remove LastVideoList scheduler
+- 1821 RM - cluster support added
 - 1846 RM - secure token integration to the upload servlet
-- 1856 RM - Scheduler for deletion of aborted chunked uploads
+- 1856 RM - scheduler for deletion of aborted chunked uploads
 - 1874 RM - add cluster support for autocomplete scheduler 
 - 1816 RM - fix for thumbnails creation for videos with unknown duration
 - 1777 RM - secure upload 
