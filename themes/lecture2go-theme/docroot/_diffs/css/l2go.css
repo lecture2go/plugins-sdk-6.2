@@ -1,7 +1,51 @@
 @import "compass";
 @import url(variables.css);
 
+/*** these styles may be needed for an in-between resolution (between 768 and 960/980) ***/
+/*
+.sharetile {
+    width: 131px;
+}
+
+.video-image-wrapper {
+    height: 110px;
+    margin-right: 8px;
+    max-width: 250px;
+}
+
+.path {
+    font-size: 11px;
+    width: 100%;
+}
+
+.catalogue-container .row-fluid .span3 {
+    margin: 0px;
+    padding: 0px;
+    float: left;
+}
+
+#searchedvideo {
+    width: 30em;
+}
+
+*/
+
+
+.hide {
+	display: none;
+}
+
+.show-inline {
+	display: inline;
+}
+
+
 /*** MOVED FROM MIN-960  ***/
+
+.add-link {
+font-size: 20px;
+margin-bottom: 10px;
+} 
 
 .aui #navigation {
     display: table;
@@ -19,7 +63,9 @@
     margin: 0 5px;
     overflow: hidden;
     text-align: center;
-    width: 13px;	
+    width: 13px;
+    height: 8px;
+    display: inline-block;
 }
 
 .aui .icon-chevron-right::before {
@@ -784,6 +830,12 @@ not used anymore??
     margin-left: 13px;
 }
 
+#videolist h3 {
+	font-size: 14px;
+	line-height: 17px;
+	margin: 0 0 5px 0;
+}
+
 #searchedvideo {
     display: block;
     overflow: hidden;
@@ -841,8 +893,11 @@ a.list-group-item:hover, a.list-group-item:focus {
     border-top: 1px solid #E5E5E5;
 }
 
-.tileheading {
+.sharetile h3 {
     font-size: 17px;
+    font-family: $font-bold;
+    margin: 0;
+    line-height: 20px;
 }
 
 thead, th {
@@ -1120,7 +1175,7 @@ thead, th {
     margin-top: 53px;
 }
 
-.lectureseries-title {
+h2.lectureseries-title {
 	font-family: $font-bold;
 	font-size: 16px;
 	margin-bottom: 10px;
@@ -1151,13 +1206,13 @@ thead, th {
     float: right;
 }
 
-.meta-title {
+h2.meta-title {
 	color: #4d4d4d;
     font-size: 15px;
     font-weight: normal;
     font-family: $font-bold;
     line-height: inherit;
-    margin-top: 30px;
+    margin: 30px 0 0 0;
 }
 
 .views {
@@ -1229,6 +1284,14 @@ thead, th {
 .related-lectureseries-name {
 	font-size: 13px;
 	padding-bottom: 5px;
+}
+
+.related-lectureseries-name h3 {
+	font-size: 13px;
+    line-height: 20px;
+    display: inline;
+    padding-left: 5px;
+    padding-right: 3px;
 }
 
 .date.related {
@@ -1316,6 +1379,10 @@ thead, th {
 #permissions, #embed, #license, #_lgadminvideomanagement_WAR_lecture2goportlet_metadata, #embed, #postprocessing, #video-thumbnail {
     margin-top: 50px;
     overflow: auto;
+}
+
+#video-rawdata {
+	width: 693px;
 }
 
 #embedForm {
@@ -1500,6 +1567,9 @@ li.chaptertile {
     padding: 0 0 10px;
 }
 
+.adminrow.wide.error {
+	background-color: #fafafa;	
+}
 
 .admintile.wide.icons {
 	-webkit-box-flex: 0;
@@ -1581,6 +1651,10 @@ li.chaptertile {
 	margin-top: 13px;
 }
 
+.admintile.wide .admin-videolist-info {
+	color: #d81b1b;
+}
+
 .video-edit-wrapper .icon-large:before {
 	font-size: 20px;
     padding: 5px;
@@ -1656,8 +1730,25 @@ li.chaptertile {
     height: 30px;
 }
 
+.aui select.error-field {
+    border: 1px solid;
+}
+
+.aui .control-group.success input, .aui .control-group.success textarea {
+	border: 1px solid #DDD;
+}
+
+.aui .control-group.success select {
+	border: 0;
+}
+
+.aui .control-group.success .checkbox, .aui .control-group.success .radio, .aui .control-group.success input, .aui .control-group.success select, .aui .control-group.success textarea {
+	color: inherit;
+}
+
 #heading {
    	margin-top: -30px;
+   	margin-bottom: 12px;
    	padding-bottom: 7px;
 }
 
@@ -1759,6 +1850,7 @@ li.chaptertile {
 
 #_lgadminstreamingservermanagement_WAR_lecture2goportlet_name, #_lgadminstreamingservermanagement_WAR_lecture2goportlet_curStreamingServerName {
     width: 100px;
+    color: #8d8d8d !important;
 }
 
 .add-institution .btn.btn-primary {
@@ -1805,7 +1897,8 @@ li.chaptertile {
 
 div[id^="nc"] {
 	background-color: #F9F9F9;
-	width: auto !important;
+	/*width: auto !important;*/
+	width: 600px !important;
 	margin-bottom: 10px;
 	padding: 5px 30px 5px 10px;
 	position: relative;
@@ -1829,7 +1922,7 @@ div[id^="nc"] input {
 
 div[id^="nc"] a.icon-large.icon-remove {
 	position: absolute !important;
-    bottom: 20px;
+    top: 61px;
     margin-left: 10px;
 }
 
@@ -1840,14 +1933,25 @@ input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_jobTitle,
 input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_middleName,
 input#_lgadmincreatorsmanagement_WAR_lecture2goportlet_middleName {
 	width: 80px;
-	height: 21px;
+	/*height: 21px;*/
 }
 
 input#_lgadminvideomanagement_WAR_lecture2goportlet_firstName,
 input#_lgadminvideomanagement_WAR_lecture2goportlet_lastName,
 input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_firstName,
-input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_lastName {
+input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_lastName,
+input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_affiliation, 
+input#_lgadminvideomanagement_WAR_lecture2goportlet_affiliation,
+input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_orcidId, 
+input#_lgadminvideomanagement_WAR_lecture2goportlet_orcidId {
 	width: 135px;
+}
+
+input#_lgadmincreatorsmanagement_WAR_lecture2goportlet_firstName, 
+input#_lgadmincreatorsmanagement_WAR_lecture2goportlet_lastName, , 
+input#_lgadmincreatorsmanagement_WAR_lecture2goportlet_affiliation,
+input#_lgadmincreatorsmanagement_WAR_lecture2goportlet_orcidId {
+	width: 160px;
 }
 
 #permissions div label {
@@ -1885,7 +1989,7 @@ input#_lgadminlectureseriesmanagement_WAR_lecture2goportlet_lastName {
     margin-top: 0;
 }
 
-#license div a {
+#license-content div a {
     margin-left: 20px;
 }
 
@@ -1909,7 +2013,6 @@ label.edit-video-lable.first {
 }
 
 #uploaded-files {
-    color: $primary-color !important;
     font-size: 13px !important;
     font-style: normal;
 }
@@ -2008,6 +2111,18 @@ label.edit-video-lable.first {
     right: 20px;
     top: 12px;
     z-index: 9999;
+}
+
+#banner .meta a:not(.language) {
+    margin: 0 8px;
+}
+
+#banner .meta a:last-child:not(.language) {
+    margin: 0 0 0 8px;
+}
+
+a.language {
+    margin: 0px 2px;
 }
 
 .aui .dockbar-split .dockbar .navbar-inner .nav-account-controls > li > a, .aui .dockbar-split .dockbar .navbar-inner .nav-account-controls li.open > a {
@@ -2130,7 +2245,7 @@ div.filter-menu-link span.icon-large.icon-remove {
     height: 12px !important;
 }
 
-#impressum, #disclaimer, #tw, #fb, #privacy-policy {
+#impressum, #disclaimer, #tw, #fb, #privacy-policy, #accessibility {
     font-family: $font-bold;
 }
 
@@ -2476,6 +2591,11 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 	position: relative;
 }
 
+#front-page-content h2 {
+	font-size: 17.5px;
+	margin-top: 10px;
+}
+
 /*** front page background-video specific ***/
 	
 .bg-video-container {
@@ -2539,7 +2659,7 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 .l2go-subtitle {
     font-size: 18px;
     text-align: center;
-    margin-bottom: 8%;
+    margin-bottom: 5%;
 }
 
 .lead-box {
@@ -2723,14 +2843,17 @@ div#streamingServerSettings div.accordion-heading.toggler-header.toggler-header-
 }
 
 
-.video-box-content .title-small {
+.video-box-content h3.title-small   {
 	color: #4d4d4d;
 	font-size: 14px;
 	width: 100%;
 	margin: 19px 0 8px 0;
 	color: #000;
+	line-height: 17px;
 	/*height: 60px;*/
 }
+
+
 
 .video-box-content .creator-small2 {
     margin: 0 0 8px 0;
@@ -3150,4 +3273,8 @@ label[for=_lgadminvideomanagement_WAR_lecture2goportlet_speakeronly]:before {
 
 .disabled {
 	color: #eaeaea !important;
+}
+
+:focus {
+	outline: solid 1px blue !important; 
 }
