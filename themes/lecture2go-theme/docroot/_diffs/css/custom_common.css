@@ -72,6 +72,32 @@ input, select {
 			background-color: #EDF8FD;
 		}
 	}
+	
+	.control-group.success {
+		input, textarea {
+			color: #8D8D8D;
+			
+			&:focus {
+			      -webkit-box-shadow: 0 0 6px #f8b9b7;
+			      -moz-box-shadow: 0 0 6px #f8b9b7;
+			      box-shadow: 0 0 6px #f8b9b7;
+			      border-color: rgba(0,172,255,0.8);
+			}
+		}
+		
+		select {
+			color: #484848;
+			&:focus {
+			      -webkit-box-shadow: 0 0 6px #f8b9b7;
+			      -moz-box-shadow: 0 0 6px #f8b9b7;
+			      box-shadow: 0 0 6px #f8b9b7;
+			}
+		}
+
+		.control-label {
+			color: #555;
+		}
+	}
 
 	input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="time"], input[type="url"], input[type="week"], select, textarea, .uneditable-input {
 		border: 1px solid #DDD;

@@ -356,7 +356,7 @@
 	</entity>
 	<entity name="Term" local-service="true" remote-service="false">
 		<!-- PK fields -->
-		<column name="termId" type="long" primary="true" id-type="increment"></column>
+		<column name="termId" type="long" primary="true"></column>
 		<!-- Group instance -->
 		<!-- Audit fields -->
 		<column name="parentId" type="long"></column>
@@ -490,7 +490,7 @@
 		</finder>
 	</entity>
 	<entity name="Tagcloud" local-service="true" remote-service="false">
-		<column name="tagcloudId" type="long" primary="true" id-type="increment"></column>
+		<column name="tagcloudId" type="long" primary="true"></column>
 		<column name="objectClassType" type="String"></column>
 		<column name="objectId" type="long"></column>
 		<column name="tags" type="String"></column>

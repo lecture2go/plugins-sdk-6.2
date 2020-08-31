@@ -63,7 +63,11 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 			{ "defaultHost", Types.INTEGER },
 			{ "prefix", Types.VARCHAR }
 		};
+<<<<<<< HEAD
 	public static final String TABLE_SQL_CREATE = "create table LG_Host (hostId LONG not null primary key,directory VARCHAR(75) null,name STRING null,defaultHost INTEGER,prefix VARCHAR(75) null)";
+=======
+	public static final String TABLE_SQL_CREATE = "create table LG_Host (hostId LONG not null primary key,directory VARCHAR(75) null,name STRING null,defaultHost INTEGER)";
+>>>>>>> refs/heads/uhh-master
 	public static final String TABLE_SQL_DROP = "drop table LG_Host";
 	public static final String ORDER_BY_JPQL = " ORDER BY host.directory ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LG_Host.directory ASC";
@@ -412,7 +416,11 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 
 	@Override
 	public String toString() {
+<<<<<<< HEAD
 		StringBundler sb = new StringBundler(11);
+=======
+		StringBundler sb = new StringBundler(9);
+>>>>>>> refs/heads/uhh-master
 
 		sb.append("{hostId=");
 		sb.append(getHostId());
@@ -431,7 +439,11 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 
 	@Override
 	public String toXmlString() {
+<<<<<<< HEAD
 		StringBundler sb = new StringBundler(19);
+=======
+		StringBundler sb = new StringBundler(16);
+>>>>>>> refs/heads/uhh-master
 
 		sb.append("<model><model-name>");
 		sb.append("de.uhh.l2g.plugins.model.Host");

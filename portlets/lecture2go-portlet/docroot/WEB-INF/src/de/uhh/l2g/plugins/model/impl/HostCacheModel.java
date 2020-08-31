@@ -35,7 +35,11 @@ import java.io.ObjectOutput;
 public class HostCacheModel implements CacheModel<Host>, Externalizable {
 	@Override
 	public String toString() {
+<<<<<<< HEAD
 		StringBundler sb = new StringBundler(11);
+=======
+		StringBundler sb = new StringBundler(9);
+>>>>>>> refs/heads/uhh-master
 
 		sb.append("{hostId=");
 		sb.append(hostId);
