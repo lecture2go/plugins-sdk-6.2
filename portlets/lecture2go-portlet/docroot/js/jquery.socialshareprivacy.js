@@ -134,7 +134,7 @@
 
         var facebook_on = (options.services.facebook.status === 'on');
         var twitter_on  = (options.services.twitter.status  === 'on');
-        var gplus_on    = (options.services.gplus.status    === 'on');
+        var gplus_on    = (options.services.gplus.status    === 'off');
 
         // check if at least one service is "on"
         if (!facebook_on && !twitter_on && !gplus_on) {
