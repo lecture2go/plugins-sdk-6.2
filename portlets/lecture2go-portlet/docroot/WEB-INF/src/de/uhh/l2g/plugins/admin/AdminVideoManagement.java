@@ -81,8 +81,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.RoleServiceUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import de.uhh.l2g.plugins.model.Category;
@@ -166,6 +170,9 @@ public class AdminVideoManagement extends MVCPortlet {
 		//TagcloudLocalServiceUtil.generateForAllLectureseries();
 		// ****** END ******
 		// updateSegmentsForVideos();
+		
+		// user
+        User user = PortalUtil.getUser(request);
 
 		// requested producer id
 		Long reqPproducerId = (long)0;
