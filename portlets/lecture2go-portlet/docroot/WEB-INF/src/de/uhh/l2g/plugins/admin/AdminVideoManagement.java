@@ -131,6 +131,7 @@ import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.util.FFmpegManager;
 import de.uhh.l2g.plugins.util.FileManager;
 import de.uhh.l2g.plugins.util.Htaccess;
+import de.uhh.l2g.plugins.util.Lecture2GoRoleChecker;
 import de.uhh.l2g.plugins.util.OaiPmhManager;
 import de.uhh.l2g.plugins.util.ProzessManager;
 import de.uhh.l2g.plugins.util.S3Manager;
@@ -255,7 +256,19 @@ public class AdminVideoManagement extends MVCPortlet {
 
 		request.setAttribute("reqVideo", reqVideo);
 		request.setAttribute("video", reqVideo);
-		response.setRenderParameter("jspPage", "/admin/editVideo.jsp");
+		
+		//load view only for autorized user
+		String view="/admin/editVideo.jsp";
+		Lecture2GoRoleChecker roleCheck = new Lecture2GoRoleChecker();
+		if (roleCheck.isProducer(user) && !roleCheck.isCoordinator(user) && reqProducer.getProducerId()!=user.getUserId()){
+			try{
+				response.sendRedirect(backURL);
+			}catch(IOException e){
+				view="/";
+			}
+		}
+		response.setRenderParameter("jspPage", view);
+		
 	}
 	
 	public void addVideo(ActionRequest request, ActionResponse response) throws SystemException, PortalException {
