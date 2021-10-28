@@ -1,5 +1,5 @@
-Lecture2Go Plugins
-==================
+Lecture2Go Plugins SDK
+======================
 
 This software is based on the Liferay 6.2 http://www.liferay.com
 
